@@ -43,6 +43,9 @@
 #include "gimp-intl.h"
 
 
+/* #define DEBUG_ACTIVE_STATE 1 */
+
+
 enum
 {
   PROP_0,
@@ -1007,7 +1010,8 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *display)
 {
-  gboolean press;
+  GimpToolActiveModifiers active_modifiers;
+  gboolean                press;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
@@ -1018,6 +1022,8 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
 
   g_return_if_fail (display == tool->focus_display);
 
+  active_modifiers = gimp_tool_control_get_active_modifiers (tool->control);
+
   if (state_changed (tool->active_modifier_state, state, GDK_SHIFT_MASK,
                      &press))
     {
@@ -1026,15 +1032,29 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
                   press ? "pressed" : "released");
 #endif
 
-      if (! press && (tool->button_press_state & GDK_SHIFT_MASK))
+      switch (active_modifiers)
         {
-          tool->button_press_state &= ~GDK_SHIFT_MASK;
-        }
-      else
-        {
-          gimp_tool_active_modifier_key (tool, GDK_SHIFT_MASK,
-                                         press, state,
-                                         display);
+        case GIMP_TOOL_ACTIVE_MODIFIERS_OFF:
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SAME:
+          gimp_tool_modifier_key (tool, GDK_SHIFT_MASK,
+                                  press, state,
+                                  display);
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE:
+          if (! press && (tool->button_press_state & GDK_SHIFT_MASK))
+            {
+              tool->button_press_state &= ~GDK_SHIFT_MASK;
+            }
+          else
+            {
+              gimp_tool_active_modifier_key (tool, GDK_SHIFT_MASK,
+                                             press, state,
+                                             display);
+            }
+          break;
         }
     }
 
@@ -1046,15 +1066,29 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
                   press ? "pressed" : "released");
 #endif
 
-      if (! press && (tool->button_press_state & GDK_CONTROL_MASK))
+      switch (active_modifiers)
         {
-          tool->button_press_state &= ~GDK_CONTROL_MASK;
-        }
-      else
-        {
-          gimp_tool_active_modifier_key (tool, GDK_CONTROL_MASK,
-                                         press, state,
-                                         display);
+        case GIMP_TOOL_ACTIVE_MODIFIERS_OFF:
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SAME:
+          gimp_tool_modifier_key (tool, GDK_CONTROL_MASK,
+                                  press, state,
+                                  display);
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE:
+          if (! press && (tool->button_press_state & GDK_CONTROL_MASK))
+            {
+              tool->button_press_state &= ~GDK_CONTROL_MASK;
+            }
+          else
+            {
+              gimp_tool_active_modifier_key (tool, GDK_CONTROL_MASK,
+                                             press, state,
+                                             display);
+            }
+          break;
         }
     }
 
@@ -1066,15 +1100,29 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
                   press ? "pressed" : "released");
 #endif
 
-      if (! press && (tool->button_press_state & GDK_MOD1_MASK))
+      switch (active_modifiers)
         {
-          tool->button_press_state &= ~GDK_MOD1_MASK;
-        }
-      else
-        {
-          gimp_tool_active_modifier_key (tool, GDK_MOD1_MASK,
-                                         press, state,
-                                         display);
+        case GIMP_TOOL_ACTIVE_MODIFIERS_OFF:
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SAME:
+          gimp_tool_modifier_key (tool, GDK_MOD1_MASK,
+                                  press, state,
+                                  display);
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE:
+          if (! press && (tool->button_press_state & GDK_MOD1_MASK))
+            {
+              tool->button_press_state &= ~GDK_MOD1_MASK;
+            }
+          else
+            {
+              gimp_tool_active_modifier_key (tool, GDK_MOD1_MASK,
+                                             press, state,
+                                             display);
+            }
+          break;
         }
     }
 
@@ -1086,15 +1134,29 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
                   press ? "pressed" : "released");
 #endif
 
-      if (! press && (tool->button_press_state & GDK_MOD2_MASK))
+      switch (active_modifiers)
         {
-          tool->button_press_state &= ~GDK_MOD2_MASK;
-        }
-      else
-        {
-          gimp_tool_active_modifier_key (tool, GDK_MOD2_MASK,
-                                         press, state,
-                                         display);
+        case GIMP_TOOL_ACTIVE_MODIFIERS_OFF:
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SAME:
+          gimp_tool_modifier_key (tool, GDK_MOD2_MASK,
+                                  press, state,
+                                  display);
+          break;
+
+        case GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE:
+          if (! press && (tool->button_press_state & GDK_MOD2_MASK))
+            {
+              tool->button_press_state &= ~GDK_MOD2_MASK;
+            }
+          else
+            {
+              gimp_tool_active_modifier_key (tool, GDK_MOD2_MASK,
+                                             press, state,
+                                             display);
+            }
+          break;
         }
     }
 

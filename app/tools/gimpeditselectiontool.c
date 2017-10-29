@@ -171,7 +171,12 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 static void
 gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_select)
 {
+  GimpTool *tool = GIMP_TOOL (edit_select);
+
   edit_select->first_move = TRUE;
+
+  gimp_tool_control_set_active_modifiers (tool->control,
+                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
 }
 
 static void

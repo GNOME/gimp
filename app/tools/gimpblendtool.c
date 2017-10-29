@@ -198,6 +198,8 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                             GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click        (tool->control, TRUE);
   gimp_tool_control_set_wants_double_click (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers   (tool->control,
+                                            GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
   gimp_tool_control_set_precision          (tool->control,
                                             GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor        (tool->control,

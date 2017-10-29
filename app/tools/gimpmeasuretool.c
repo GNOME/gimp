@@ -143,6 +143,8 @@ gimp_measure_tool_init (GimpMeasureTool *measure)
   GimpTool *tool = GIMP_TOOL (measure);
 
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers   (tool->control,
+                                            GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
   gimp_tool_control_set_precision          (tool->control,
                                             GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_cursor             (tool->control,

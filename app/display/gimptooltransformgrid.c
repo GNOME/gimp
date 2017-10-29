@@ -111,6 +111,7 @@ struct _GimpToolTransformGridPrivate
   gdouble                curx;         /*  current x coord                    */
   gdouble                cury;         /*  current y coord                    */
 
+  gdouble                button_down;  /*  is the mouse button pressed        */
   gdouble                mousex;       /*  x coord where mouse was clicked    */
   gdouble                mousey;       /*  y coord where mouse was clicked    */
 
@@ -172,10 +173,6 @@ static void     gimp_tool_transform_grid_hover          (GimpToolWidget        *
                                                          const GimpCoords      *coords,
                                                          GdkModifierType        state,
                                                          gboolean               proximity);
-static void     gimp_tool_transform_grid_motion_modifier(GimpToolWidget        *widget,
-                                                         GdkModifierType        key,
-                                                         gboolean               press,
-                                                         GdkModifierType        state);
 static void     gimp_tool_transform_grid_hover_modifier (GimpToolWidget        *widget,
                                                          GdkModifierType        key,
                                                          gboolean               press,
@@ -216,7 +213,6 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
   widget_class->button_release  = gimp_tool_transform_grid_button_release;
   widget_class->motion          = gimp_tool_transform_grid_motion;
   widget_class->hover           = gimp_tool_transform_grid_hover;
-  widget_class->motion_modifier = gimp_tool_transform_grid_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_transform_grid_hover_modifier;
   widget_class->get_cursor      = gimp_tool_transform_grid_get_cursor;
 
@@ -1137,8 +1133,9 @@ gimp_tool_transform_grid_button_press (GimpToolWidget      *widget,
   GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpToolTransformGridPrivate *private = grid->private;
 
-  private->mousex = coords->x;
-  private->mousey = coords->y;
+  private->button_down = TRUE;
+  private->mousex      = coords->x;
+  private->mousey      = coords->y;
 
   if (private->handle != GIMP_TRANSFORM_HANDLE_NONE)
     {
@@ -1202,6 +1199,10 @@ gimp_tool_transform_grid_button_release (GimpToolWidget        *widget,
                                          GdkModifierType        state,
                                          GimpButtonReleaseType  release_type)
 {
+  GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
+  GimpToolTransformGridPrivate *private = grid->private;
+
+  private->button_down = FALSE;
 }
 
 void
@@ -1945,10 +1946,10 @@ gimp_tool_transform_grid_modifier (GimpToolWidget  *widget,
 }
 
 static void
-gimp_tool_transform_grid_motion_modifier (GimpToolWidget  *widget,
-                                          GdkModifierType  key,
-                                          gboolean         press,
-                                          GdkModifierType  state)
+gimp_tool_transform_grid_hover_modifier (GimpToolWidget  *widget,
+                                         GdkModifierType  key,
+                                         gboolean         press,
+                                         GdkModifierType  state)
 {
   GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpToolTransformGridPrivate *private = grid->private;
@@ -1956,19 +1957,13 @@ gimp_tool_transform_grid_motion_modifier (GimpToolWidget  *widget,
 
   gimp_tool_transform_grid_modifier (widget, key);
 
-  /*  send a non-motion to update the grid with the new constraints  */
-  coords.x = private->curx;
-  coords.y = private->cury;
-  gimp_tool_transform_grid_motion (widget, &coords, 0, state);
-}
-
-static void
-gimp_tool_transform_grid_hover_modifier (GimpToolWidget  *widget,
-                                         GdkModifierType  key,
-                                         gboolean         press,
-                                         GdkModifierType  state)
-{
-  gimp_tool_transform_grid_modifier (widget, key);
+  if (private->button_down)
+    {
+      /*  send a non-motion to update the grid with the new constraints  */
+      coords.x = private->curx;
+      coords.y = private->cury;
+      gimp_tool_transform_grid_motion (widget, &coords, 0, state);
+    }
 }
 
 static gboolean

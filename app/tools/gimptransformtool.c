@@ -91,11 +91,6 @@ static void      gimp_transform_tool_modifier_key        (GimpTool              
                                                           gboolean               press,
                                                           GdkModifierType        state,
                                                           GimpDisplay           *display);
-static void      gimp_transform_tool_active_modifier_key (GimpTool              *tool,
-                                                          GdkModifierType        key,
-                                                          gboolean               press,
-                                                          GdkModifierType        state,
-                                                          GimpDisplay           *display);
 static void      gimp_transform_tool_cursor_update       (GimpTool              *tool,
                                                           const GimpCoords      *coords,
                                                           GdkModifierType        state,
@@ -181,7 +176,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->button_release      = gimp_transform_tool_button_release;
   tool_class->motion              = gimp_transform_tool_motion;
   tool_class->modifier_key        = gimp_transform_tool_modifier_key;
-  tool_class->active_modifier_key = gimp_transform_tool_active_modifier_key;
   tool_class->cursor_update       = gimp_transform_tool_cursor_update;
   tool_class->can_undo            = gimp_transform_tool_can_undo;
   tool_class->can_redo            = gimp_transform_tool_can_redo;
@@ -206,20 +200,21 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
 
-  gimp_tool_control_set_action_opacity (tool->control,
-                                        "tools/tools-transform-preview-opacity-set");
-
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask  (tool->control,
-                                     GIMP_DIRTY_IMAGE_SIZE |
-                                     GIMP_DIRTY_DRAWABLE   |
-                                     GIMP_DIRTY_SELECTION  |
-                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
-  gimp_tool_control_set_precision   (tool->control,
-                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
-  gimp_tool_control_set_cursor      (tool->control,
-                                     GIMP_CURSOR_CROSSHAIR_SMALL);
+  gimp_tool_control_set_scroll_lock      (tool->control, TRUE);
+  gimp_tool_control_set_preserve         (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask       (tool->control,
+                                          GIMP_DIRTY_IMAGE_SIZE |
+                                          GIMP_DIRTY_DRAWABLE   |
+                                          GIMP_DIRTY_SELECTION  |
+                                          GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_active_modifiers (tool->control,
+                                          GIMP_TOOL_ACTIVE_MODIFIERS_SAME);
+  gimp_tool_control_set_precision        (tool->control,
+                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
+  gimp_tool_control_set_cursor           (tool->control,
+                                          GIMP_CURSOR_CROSSHAIR_SMALL);
+  gimp_tool_control_set_action_opacity   (tool->control,
+                                          "tools/tools-transform-preview-opacity-set");
 
   tr_tool->progress_text = _("Transforming");
 
@@ -445,33 +440,6 @@ gimp_transform_tool_motion (GimpTool         *tool,
 }
 
 static void
-gimp_transform_tool_modifier (GimpTool        *tool,
-                              GdkModifierType  key)
-{
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-
-  if (key == gimp_get_constrain_behavior_mask ())
-    {
-      g_object_set (options,
-                    "frompivot-scale",       ! options->frompivot_scale,
-                    "frompivot-shear",       ! options->frompivot_shear,
-                    "frompivot-perspective", ! options->frompivot_perspective,
-                    NULL);
-    }
-  else if (key == gimp_get_extend_selection_mask ())
-    {
-      g_object_set (options,
-                    "cornersnap",            ! options->cornersnap,
-                    "constrain-move",        ! options->constrain_move,
-                    "constrain-scale",       ! options->constrain_scale,
-                    "constrain-rotate",      ! options->constrain_rotate,
-                    "constrain-shear",       ! options->constrain_shear,
-                    "constrain-perspective", ! options->constrain_perspective,
-                    NULL);
-    }
-}
-
-static void
 gimp_transform_tool_modifier_key (GimpTool        *tool,
                                   GdkModifierType  key,
                                   gboolean         press,
@@ -480,6 +448,8 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
+  g_printerr ("modifier key\n");
+
   if (tr_tool->widget)
     {
       GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
@@ -487,27 +457,27 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
     }
   else
     {
-      gimp_transform_tool_modifier (tool, key);
-    }
-}
+      GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
-static void
-gimp_transform_tool_active_modifier_key (GimpTool        *tool,
-                                         GdkModifierType  key,
-                                         gboolean         press,
-                                         GdkModifierType  state,
-                                         GimpDisplay     *display)
-{
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-
-  if (tr_tool->widget)
-    {
-      GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press,
-                                                           state, display);
-    }
-  else
-    {
-      gimp_transform_tool_modifier (tool, key);
+      if (key == gimp_get_constrain_behavior_mask ())
+        {
+          g_object_set (options,
+                        "frompivot-scale",       ! options->frompivot_scale,
+                        "frompivot-shear",       ! options->frompivot_shear,
+                        "frompivot-perspective", ! options->frompivot_perspective,
+                        NULL);
+        }
+      else if (key == gimp_get_extend_selection_mask ())
+        {
+          g_object_set (options,
+                        "cornersnap",            ! options->cornersnap,
+                        "constrain-move",        ! options->constrain_move,
+                        "constrain-scale",       ! options->constrain_scale,
+                        "constrain-rotate",      ! options->constrain_rotate,
+                        "constrain-shear",       ! options->constrain_shear,
+                        "constrain-perspective", ! options->constrain_perspective,
+                        NULL);
+        }
     }
 }
 

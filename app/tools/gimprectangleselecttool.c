@@ -184,15 +184,17 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_tool)
                                  GIMP_TYPE_RECTANGLE_SELECT_TOOL,
                                  GimpRectangleSelectToolPrivate);
 
-  gimp_tool_control_set_wants_click (tool->control, TRUE);
-  gimp_tool_control_set_precision   (tool->control,
-                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_RECT_SELECT);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask  (tool->control,
-                                     GIMP_DIRTY_IMAGE_SIZE |
-                                     GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_wants_click      (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers (tool->control,
+                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  gimp_tool_control_set_precision        (tool->control,
+                                          GIMP_CURSOR_PRECISION_PIXEL_BORDER);
+  gimp_tool_control_set_tool_cursor      (tool->control,
+                                          GIMP_TOOL_CURSOR_RECT_SELECT);
+  gimp_tool_control_set_preserve         (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask       (tool->control,
+                                          GIMP_DIRTY_IMAGE_SIZE |
+                                          GIMP_DIRTY_SELECTION);
 }
 
 static void

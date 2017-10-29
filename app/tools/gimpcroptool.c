@@ -140,11 +140,15 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
 {
   GimpTool *tool = GIMP_TOOL (crop_tool);
 
-  gimp_tool_control_set_wants_click (tool->control, TRUE);
-  gimp_tool_control_set_precision   (tool->control,
-                                     GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-  gimp_tool_control_set_cursor      (tool->control, GIMP_CURSOR_CROSSHAIR_SMALL);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
+  gimp_tool_control_set_wants_click      (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers (tool->control,
+                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  gimp_tool_control_set_precision        (tool->control,
+                                          GIMP_CURSOR_PRECISION_PIXEL_BORDER);
+  gimp_tool_control_set_cursor           (tool->control,
+                                          GIMP_CURSOR_CROSSHAIR_SMALL);
+  gimp_tool_control_set_tool_cursor      (tool->control,
+                                          GIMP_TOOL_CURSOR_CROP);
 
   gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
                                      _("Click-Drag to draw a crop rectangle"));

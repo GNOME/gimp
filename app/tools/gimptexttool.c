@@ -249,6 +249,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   gimp_tool_control_set_wants_double_click   (tool->control, TRUE);
   gimp_tool_control_set_wants_triple_click   (tool->control, TRUE);
   gimp_tool_control_set_wants_all_key_events (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers     (tool->control,
+                                              GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
   gimp_tool_control_set_precision            (tool->control,
                                               GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_tool_cursor          (tool->control,
