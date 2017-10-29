@@ -390,7 +390,7 @@ load_image (GFile   *file,
       (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
       ((bh.bytes != 1) && (bh.bytes != 2) && (bh.bytes != 4) &&
        (bh.bytes != 18)) ||
-      (G_MAXSIZE / bh.width / bh.height / bh.bytes < 1))
+      (G_MAXSIZE / bh.width / bh.height / MAX (4, bh.bytes) < 1))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
