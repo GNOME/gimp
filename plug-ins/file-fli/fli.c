@@ -25,6 +25,8 @@
 
 #include "config.h"
 
+#include <glib/gstdio.h>
+
 #include <string.h>
 #include <stdio.h>
 
@@ -461,23 +463,27 @@ void fli_read_brun(FILE *f, s_fli_header *fli_header, unsigned char *framebuf)
 	unsigned short yc;
 	unsigned char *pos;
 	for (yc=0; yc < fli_header->height; yc++) {
-		unsigned short xc, pc, pcnt;
+		unsigned short pc, pcnt;
+		size_t n, xc;
 		pc=fli_read_char(f);
 		xc=0;
 		pos=framebuf+(fli_header->width * yc);
+		n=(size_t)fli_header->width * (fli_header->height-yc);
 		for (pcnt=pc; pcnt>0; pcnt--) {
 			unsigned short ps;
 			ps=fli_read_char(f);
 			if (ps & 0x80) {
 				unsigned short len;
-				for (len=-(signed char)ps; len>0; len--) {
+				for (len=-(signed char)ps; len>0 && xc<n; len--) {
 					pos[xc++]=fli_read_char(f);
 				}
 			} else {
 				unsigned char val;
+				size_t len;
+				len=MIN(n-xc,ps);
 				val=fli_read_char(f);
-				memset(&(pos[xc]), val, ps);
-				xc+=ps;
+				memset(&(pos[xc]), val, len);
+				xc+=len;
 			}
 		}
 	}
@@ -565,25 +571,34 @@ void fli_read_lc(FILE *f, s_fli_header *fli_header, unsigned char *old_framebuf,
 	memcpy(framebuf, old_framebuf, fli_header->width * fli_header->height);
 	firstline = fli_read_short(f);
 	numline = fli_read_short(f);
+	if (numline > fli_header->height || fli_header->height-numline < firstline)
+		return;
+
 	for (yc=0; yc < numline; yc++) {
-		unsigned short xc, pc, pcnt;
+		unsigned short pc, pcnt;
+		size_t n, xc;
 		pc=fli_read_char(f);
 		xc=0;
 		pos=framebuf+(fli_header->width * (firstline+yc));
+		n=(size_t)fli_header->width * (fli_header->height-firstline-yc);
 		for (pcnt=pc; pcnt>0; pcnt--) {
 			unsigned short ps,skip;
 			skip=fli_read_char(f);
 			ps=fli_read_char(f);
-			xc+=skip;
+			xc+=MIN(n-xc,skip);
 			if (ps & 0x80) {
 				unsigned char val;
+				size_t len;
 				ps=-(signed char)ps;
 				val=fli_read_char(f);
-				memset(&(pos[xc]), val, ps);
-				xc+=ps;
+				len=MIN(n-xc,ps);
+				memset(&(pos[xc]), val, len);
+				xc+=len;
 			} else {
-				fread(&(pos[xc]), ps, 1, f);
-				xc+=ps;
+				size_t len;
+				len=MIN(n-xc,ps);
+				fread(&(pos[xc]), len, 1, f);
+				xc+=len;
 			}
 		}
 	}
@@ -691,7 +706,8 @@ void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebu
 	yc=0;
 	numline = fli_read_short(f);
 	for (lc=0; lc < numline; lc++) {
-		unsigned short xc, pc, pcnt, lpf, lpn;
+		unsigned short pc, pcnt, lpf, lpn;
+		size_t n, xc;
 		pc=fli_read_short(f);
 		lpf=0; lpn=0;
 		while (pc & 0x8000) {
@@ -702,26 +718,30 @@ void fli_read_lc_2(FILE *f, s_fli_header *fli_header, unsigned char *old_framebu
 			}
 			pc=fli_read_short(f);
 		}
+		yc=MIN(yc, fli_header->height);
 		xc=0;
 		pos=framebuf+(fli_header->width * yc);
+		n=(size_t)fli_header->width * (fli_header->height-yc);
 		for (pcnt=pc; pcnt>0; pcnt--) {
 			unsigned short ps,skip;
 			skip=fli_read_char(f);
 			ps=fli_read_char(f);
-			xc+=skip;
+			xc+=MIN(n-xc,skip);
 			if (ps & 0x80) {
 				unsigned char v1,v2;
 				ps=-(signed char)ps;
 				v1=fli_read_char(f);
 				v2=fli_read_char(f);
-				while (ps>0) {
+				while (ps>0 && xc+1<n) {
 					pos[xc++]=v1;
 					pos[xc++]=v2;
 					ps--;
 				}
 			} else {
-				fread(&(pos[xc]), ps, 2, f);
-				xc+=ps << 1;
+				size_t len;
+				len=MIN((n-xc)/2,ps);
+				fread(&(pos[xc]), len, 2, f);
+				xc+=len << 1;
 			}
 		}
 		if (lpf) pos[xc]=lpn;
