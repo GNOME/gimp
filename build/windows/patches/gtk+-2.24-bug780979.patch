@@ -1,0 +1,32 @@
+--- a/gdk/win32/gdkwindow-win32.c
++++ b/gdk/win32/gdkwindow-win32.c
+@@ -2767,6 +2767,10 @@ _gdk_windowing_window_at_pointer (GdkDisplay *display,
+        * WindowFromPoint() can find our windows, we follow similar logic
+        * here, and ignore invisible and disabled windows.
+        */
++      UINT cwp_flags = CWP_SKIPDISABLED  |
++                       CWP_SKIPINVISIBLE |
++                       CWP_SKIPTRANSPARENT;
++
+       hwnd = GetDesktopWindow ();
+       do {
+         window = gdk_win32_handle_table_lookup ((GdkNativeWindow) hwnd);
+@@ -2777,8 +2781,7 @@ _gdk_windowing_window_at_pointer (GdkDisplay *display,
+           break;
+ 
+         screen_to_client (hwnd, screen_pt, &client_pt);
+-        hwndc = ChildWindowFromPointEx (hwnd, client_pt, CWP_SKIPDISABLED  |
+-                                                         CWP_SKIPINVISIBLE);
++        hwndc = ChildWindowFromPointEx (hwnd, client_pt, cwp_flags);
+ 
+ 	/* Verify that we're really inside the client area of the window */
+ 	if (hwndc != hwnd)
+@@ -2789,6 +2792,8 @@ _gdk_windowing_window_at_pointer (GdkDisplay *display,
+ 	      hwndc = hwnd;
+ 	  }
+ 
++        /* Only ignore top-level transparent windows */
++        cwp_flags &= ~CWP_SKIPTRANSPARENT;
+       } while (hwndc != hwnd && (hwnd = hwndc, 1));
+ 
+     }
