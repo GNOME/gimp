@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-29 23:30+0100\n"
-"PO-Revision-Date: 2017-10-30 11:09+0100\n"
+"POT-Creation-Date: 2017-10-31 00:38+0100\n"
+"PO-Revision-Date: 2017-10-31 00:55+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11419,7 +11419,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:303
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:304
 #: ../app/core/gimptooloptions.c:348 ../app/gui/session.c:494
 #: ../app/menus/menus.c:468 ../app/widgets/gimpdevices.c:207
 #, c-format
@@ -11929,12 +11929,12 @@ msgstr "Preimpostazioni strumento"
 msgid "Font"
 msgstr "Carattere"
 
-#: ../app/core/gimpdata.c:581 ../app/core/gimpdata.c:589
+#: ../app/core/gimpdata.c:582 ../app/core/gimpdata.c:590
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Errore durante il salvataggio di \"%s\": "
 
-#: ../app/core/gimpdata.c:595
+#: ../app/core/gimpdata.c:596
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Errore durante il salvataggio di \"%s\""
@@ -16441,7 +16441,9 @@ msgstr "%s per i valori bloccati"
 
 #: ../app/display/gimptoolline.c:1492
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "Fare clic e trascinare per spostare il cursore; trascinare via per rimuovere il cursore"
+msgstr ""
+"Fare clic e trascinare per spostare il cursore; trascinare via per rimuovere "
+"il cursore"
 
 #: ../app/display/gimptoolline.c:1497
 msgid "Click-Drag to move or remove the slider"
@@ -17954,123 +17956,148 @@ msgstr "Un nome pennello vuoto non è valido"
 msgid "Brush '%s' not found"
 msgstr "Pennello \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:90
+#: ../app/pdb/gimppdb-utils.c:91
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Il pennello \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:116
+#: ../app/pdb/gimppdb-utils.c:98
+#, c-format
+msgid "Brush '%s' is not renamable"
+msgstr "Il pennello \"%s\" non è rinominabile"
+
+#: ../app/pdb/gimppdb-utils.c:124
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Il pennello \"%s\" non è un pennello generato"
 
-#: ../app/pdb/gimppdb-utils.c:137
+#: ../app/pdb/gimppdb-utils.c:145
 msgid "Invalid empty paint dynamics name"
 msgstr "Un nome vuoto per le dinamiche di disegno non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:146
+#: ../app/pdb/gimppdb-utils.c:154
 #, c-format
 msgid "Paint dynamics '%s' not found"
 msgstr "Dinamiche di disegno \"%s\" non trovate"
 
-#: ../app/pdb/gimppdb-utils.c:151
+#: ../app/pdb/gimppdb-utils.c:160
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Dinamiche di disegno \"%s\" non modificabili"
 
-#: ../app/pdb/gimppdb-utils.c:172
+#: ../app/pdb/gimppdb-utils.c:167
+#, c-format
+msgid "Paint dynamics '%s' is not renamable"
+msgstr "Dinamiche di disegno \"%s\" non rinominabili"
+
+#: ../app/pdb/gimppdb-utils.c:188
 msgid "Invalid empty MyPaint brush name"
 msgstr "Un nome pennello MyPaint vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:181
+#: ../app/pdb/gimppdb-utils.c:197
 #, c-format
 msgid "MyPaint brush '%s' not found"
 msgstr "Pennello MyPaint \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:186
+#: ../app/pdb/gimppdb-utils.c:203
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
 msgstr "Il pennello MyPaint \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:206
+#: ../app/pdb/gimppdb-utils.c:210
+#, c-format
+msgid "MyPaint brush '%s' is not renamable"
+msgstr "Il pennello MyPaint \"%s\" non è rinominabile"
+
+#: ../app/pdb/gimppdb-utils.c:230
 msgid "Invalid empty pattern name"
 msgstr "Un nome motivo vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:215
+#: ../app/pdb/gimppdb-utils.c:239
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Motivo \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:235
+#: ../app/pdb/gimppdb-utils.c:259
 msgid "Invalid empty gradient name"
 msgstr "Un nome gradiente vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:244
+#: ../app/pdb/gimppdb-utils.c:268
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Gradiente \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:249
+#: ../app/pdb/gimppdb-utils.c:274
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Il gradiente \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:270
+#: ../app/pdb/gimppdb-utils.c:281
+#, c-format
+msgid "Gradient '%s' is not renamable"
+msgstr "Il gradiente \"%s\" non è rinominabile"
+
+#: ../app/pdb/gimppdb-utils.c:302
 msgid "Invalid empty palette name"
 msgstr "Un nome tavolozza vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:279
+#: ../app/pdb/gimppdb-utils.c:311
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Tavolozza \"%s\" non trovata"
 
-#: ../app/pdb/gimppdb-utils.c:284
+#: ../app/pdb/gimppdb-utils.c:317
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "La tavolozza \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:304
+#: ../app/pdb/gimppdb-utils.c:324
+#, c-format
+msgid "Palette '%s' is not renamable"
+msgstr "La tavolozza \"%s\" non è rinominabile"
+
+#: ../app/pdb/gimppdb-utils.c:344
 msgid "Invalid empty font name"
 msgstr "Un nome carattere vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:314
+#: ../app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Carattere \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:333
+#: ../app/pdb/gimppdb-utils.c:373
 msgid "Invalid empty buffer name"
 msgstr "Un nome buffer vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:343
+#: ../app/pdb/gimppdb-utils.c:383
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Buffer con nome \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:362
+#: ../app/pdb/gimppdb-utils.c:402
 msgid "Invalid empty paint method name"
 msgstr "Un nome vuoto per il metodo di disegno non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:372
+#: ../app/pdb/gimppdb-utils.c:412
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Il metodo di disegno \"%s\" non esiste"
 
-#: ../app/pdb/gimppdb-utils.c:391
+#: ../app/pdb/gimppdb-utils.c:431
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato aggiunto ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:401
+#: ../app/pdb/gimppdb-utils.c:441
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato allegato ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:427
+#: ../app/pdb/gimppdb-utils.c:467
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -18079,7 +18106,7 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è figlio diretto di "
 "un albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:455
+#: ../app/pdb/gimppdb-utils.c:495
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -18088,29 +18115,29 @@ msgstr ""
 "Gli elementi \"%s\" (%d) e \"%s\" (%d) non possono essere usati perché non "
 "sono parte dello stesso albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:480
+#: ../app/pdb/gimppdb-utils.c:520
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "L'elemento \"%s\" (%d) non deve essere un antenato di \"%s\" (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:504
+#: ../app/pdb/gimppdb-utils.c:544
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "L'elemento \"%s\" (%d) è già stato aggiunto ad un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:512
+#: ../app/pdb/gimppdb-utils.c:552
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Tentativo di aggiungere la voce \"%s\" (%d) all'immagine sbagliata"
 
-#: ../app/pdb/gimppdb-utils.c:532
+#: ../app/pdb/gimppdb-utils.c:572
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché il suo contenuto è "
 "bloccato"
 
-#: ../app/pdb/gimppdb-utils.c:542
+#: ../app/pdb/gimppdb-utils.c:582
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -18118,37 +18145,37 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché la sua posizione e "
 "dimensione sono bloccate."
 
-#: ../app/pdb/gimppdb-utils.c:562
+#: ../app/pdb/gimppdb-utils.c:602
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:582
+#: ../app/pdb/gimppdb-utils.c:622
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:603
+#: ../app/pdb/gimppdb-utils.c:643
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "Il livello \"%s\" (%d) non può essere usato perché non è un livello di testo"
 
-#: ../app/pdb/gimppdb-utils.c:644
+#: ../app/pdb/gimppdb-utils.c:684
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "L'immagine \"%s\" (%d) è di tipo \"%s\", ma era prevista un'immagine di tipo "
 "\"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:667
+#: ../app/pdb/gimppdb-utils.c:707
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di tipo \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:687
+#: ../app/pdb/gimppdb-utils.c:727
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -18157,22 +18184,22 @@ msgstr ""
 "L'immagine \"%s\" (%d) ha precisione \"%s\", invece era prevista una "
 "precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:710
+#: ../app/pdb/gimppdb-utils.c:750
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:734 ../app/pdb/image-guides-cmds.c:179
+#: ../app/pdb/gimppdb-utils.c:774 ../app/pdb/image-guides-cmds.c:179
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "L'immagine \"%s\" (%d) non contiene una guida con ID %d"
 
-#: ../app/pdb/gimppdb-utils.c:757 ../app/pdb/image-sample-points-cmds.c:144
+#: ../app/pdb/gimppdb-utils.c:797 ../app/pdb/image-sample-points-cmds.c:144
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "L'immagine \"%s\" (%d) non contiene punti di campionamento con ID %d"
 
-#: ../app/pdb/gimppdb-utils.c:785
+#: ../app/pdb/gimppdb-utils.c:825
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "L'oggetto vettori %d non contiene un tracciato con ID %d"
@@ -19366,7 +19393,10 @@ msgstr "Modalità istantanea (%s)"
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
-msgstr "Il gradiente attivo è non scrivibile e non può essere modificato direttamente. Togliere la spunta a questa opzione per modificarne una copia di esso."
+msgstr ""
+"Il gradiente attivo è non scrivibile e non può essere modificato "
+"direttamente. Togliere la spunta a questa opzione per modificarne una copia "
+"di esso."
 
 #: ../app/tools/gimpblendtool.c:156
 msgid "Blend"
