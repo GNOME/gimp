@@ -72,7 +72,8 @@ static gboolean   gimp_internal_data_delete_data_file (Gimp                     
 
 /*  static variables  */
 
-static const GimpInternalDataFile internal_data_files[] = {
+static const GimpInternalDataFile internal_data_files[] =
+{
   /* Custom gradient */
   {
     .name      = "custom" GIMP_GRADIENT_FILE_EXTENSION,
@@ -254,7 +255,7 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE,
-                                            G_FILE_CREATE_REPLACE_DESTINATION,
+                                            G_FILE_CREATE_NONE,
                                             NULL, error));
 
   g_object_unref (file);
