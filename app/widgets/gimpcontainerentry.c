@@ -40,6 +40,8 @@
 
 static void     gimp_container_entry_view_iface_init (GimpContainerViewInterface *iface);
 
+static void     gimp_container_entry_finalize     (GObject                *object);
+
 static void     gimp_container_entry_set_context  (GimpContainerView      *view,
                                                    GimpContext            *context);
 static gpointer gimp_container_entry_insert_item  (GimpContainerView      *view,
@@ -87,6 +89,7 @@ gimp_container_entry_class_init (GimpContainerEntryClass *klass)
 
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
+  object_class->finalize     = gimp_container_entry_finalize;
 
   gimp_container_view_install_properties (object_class);
 }
@@ -119,6 +122,8 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   GtkCellRenderer    *cell;
   GType               types[GIMP_CONTAINER_TREE_STORE_N_COLUMNS];
   gint                n_types = 0;
+
+  entry->viewable = NULL;
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
                              "inline-completion",  TRUE,
@@ -209,6 +214,21 @@ gimp_container_entry_get_model (GimpContainerView *view)
 }
 
 static void
+gimp_container_entry_finalize (GObject *object)
+{
+  GimpContainerEntry *entry = GIMP_CONTAINER_ENTRY (object);
+
+  if (entry->viewable)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (entry->viewable),
+                                    (gpointer) &entry->viewable);
+      entry->viewable = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_container_entry_set_context (GimpContainerView *view,
                                   GimpContext       *context)
 {
@@ -266,7 +286,22 @@ gimp_container_entry_rename_item (GimpContainerView *view,
                                   GimpViewable      *viewable,
                                   gpointer           insert_data)
 {
-  GtkTreeModel *model = gimp_container_entry_get_model (view);
+  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+  GtkEntry           *entry           = GTK_ENTRY (view);
+  GtkTreeModel       *model           = gimp_container_entry_get_model (view);
+
+  if (viewable == container_entry->viewable)
+    {
+      g_signal_handlers_block_by_func (entry,
+                                       gimp_container_entry_changed,
+                                       view);
+
+      gtk_entry_set_text (entry, gimp_object_get_name (viewable));
+
+      g_signal_handlers_unblock_by_func (entry,
+                                         gimp_container_entry_changed,
+                                         view);
+    }
 
   gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
                                          viewable,
@@ -278,15 +313,27 @@ gimp_container_entry_select_item (GimpContainerView *view,
                                   GimpViewable      *viewable,
                                   gpointer           insert_data)
 {
-  GtkEntry    *entry = GTK_ENTRY (view);
-  GtkTreeIter *iter  = insert_data;
+  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (view);
+  GtkEntry           *entry           = GTK_ENTRY (view);
+  GtkTreeIter        *iter            = insert_data;
 
   g_signal_handlers_block_by_func (entry,
                                    gimp_container_entry_changed,
                                    view);
 
+  if (container_entry->viewable)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (container_entry->viewable),
+                                    (gpointer) &container_entry->viewable);
+      container_entry->viewable = NULL;
+    }
+
   if (iter)
     {
+      container_entry->viewable = viewable;
+      g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
+                                 (gpointer) &container_entry->viewable);
+
       gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
     }
   else
@@ -333,12 +380,20 @@ static void
 gimp_container_entry_changed (GtkEntry          *entry,
                               GimpContainerView *view)
 {
-  GimpContainer *container = gimp_container_view_get_container (view);
-  GimpObject    *object;
-  const gchar   *text;
+  GimpContainerEntry *container_entry = GIMP_CONTAINER_ENTRY (entry);
+  GimpContainer      *container       = gimp_container_view_get_container (view);
+  GimpObject         *object;
+  const gchar        *text;
 
   if (! container)
     return;
+
+  if (container_entry->viewable)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (container_entry->viewable),
+                                    (gpointer) &container_entry->viewable);
+      container_entry->viewable = NULL;
+    }
 
   text = gtk_entry_get_text (entry);
 
@@ -346,6 +401,10 @@ gimp_container_entry_changed (GtkEntry          *entry,
 
   if (object)
     {
+      container_entry->viewable = GIMP_VIEWABLE (object);
+      g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
+                                 (gpointer) &container_entry->viewable);
+
       gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
       gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
     }

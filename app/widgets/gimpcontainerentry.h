@@ -35,6 +35,8 @@ typedef struct _GimpContainerEntryClass  GimpContainerEntryClass;
 struct _GimpContainerEntry
 {
   GtkEntry        parent_instance;
+
+  GimpViewable   *viewable;
 };
 
 struct _GimpContainerEntryClass
