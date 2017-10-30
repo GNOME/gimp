@@ -95,7 +95,7 @@ brush_duplicate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
@@ -138,7 +138,7 @@ brush_is_generated_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         generated = GIMP_IS_BRUSH_GENERATED (brush);
@@ -174,7 +174,7 @@ brush_rename_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
 
       if (brush)
         {
@@ -209,7 +209,7 @@ brush_delete_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
         success = gimp_data_factory_data_delete (gimp->brush_factory,
@@ -240,7 +240,7 @@ brush_is_editable_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         editable = gimp_data_is_writable (GIMP_DATA (brush));
@@ -277,7 +277,7 @@ brush_get_info_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
@@ -331,7 +331,7 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         {
@@ -395,7 +395,7 @@ brush_get_spacing_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         spacing = gimp_brush_get_spacing (brush);
@@ -429,7 +429,7 @@ brush_set_spacing_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         gimp_brush_set_spacing (brush, spacing);
@@ -458,7 +458,7 @@ brush_get_shape_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         shape = GIMP_BRUSH_GENERATED (brush)->shape;
@@ -494,7 +494,7 @@ brush_set_shape_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
@@ -532,7 +532,7 @@ brush_get_radius_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         radius = GIMP_BRUSH_GENERATED (brush)->radius;
@@ -568,7 +568,7 @@ brush_set_radius_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
@@ -606,7 +606,7 @@ brush_get_spikes_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
@@ -642,7 +642,7 @@ brush_set_spikes_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
@@ -680,7 +680,7 @@ brush_get_hardness_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
@@ -716,7 +716,7 @@ brush_set_hardness_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
@@ -754,7 +754,7 @@ brush_get_aspect_ratio_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
@@ -790,7 +790,7 @@ brush_set_aspect_ratio_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {
@@ -828,7 +828,7 @@ brush_get_angle_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         angle = GIMP_BRUSH_GENERATED (brush)->angle;
@@ -864,7 +864,7 @@ brush_set_angle_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+      GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (brush)
         {

@@ -47,12 +47,12 @@
 static GimpGradient *
 gradient_get (Gimp                 *gimp,
               const gchar          *name,
-              gboolean              writable,
+              GimpPDBDataAccess     access,
               gint                  segment,
               GimpGradientSegment **seg,
               GError              **error)
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, writable, error);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, access, error);
 
   *seg = NULL;
 
@@ -71,7 +71,7 @@ gradient_get_range (Gimp                 *gimp,
                     GimpGradientSegment **end_seg,
                     GError              **error)
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, TRUE, error);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   *start_seg = NULL;
   *end_seg   = NULL;
@@ -145,7 +145,7 @@ gradient_duplicate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient)
         {
@@ -188,7 +188,7 @@ gradient_is_editable_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient)
         editable = gimp_data_is_writable (GIMP_DATA (gradient));
@@ -224,7 +224,7 @@ gradient_rename_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, TRUE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
 
       if (gradient)
         {
@@ -259,7 +259,7 @@ gradient_delete_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient && gimp_data_is_deletable (GIMP_DATA (gradient)))
         success = gimp_data_factory_data_delete (gimp->gradient_factory,
@@ -293,7 +293,7 @@ gradient_get_number_of_segments_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient)
         {
@@ -335,7 +335,7 @@ gradient_get_uniform_samples_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient)
         {
@@ -403,7 +403,7 @@ gradient_get_custom_samples_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
+      GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (gradient)
         {
@@ -469,7 +469,7 @@ gradient_segment_get_left_color_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -516,7 +516,7 @@ gradient_segment_set_left_color_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
 
       if (seg)
         {
@@ -554,7 +554,7 @@ gradient_segment_get_right_color_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -601,7 +601,7 @@ gradient_segment_set_right_color_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
 
       if (seg)
         {
@@ -638,7 +638,7 @@ gradient_segment_get_left_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -681,7 +681,7 @@ gradient_segment_set_left_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
 
       if (seg)
         {
@@ -722,7 +722,7 @@ gradient_segment_get_middle_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -765,7 +765,7 @@ gradient_segment_set_middle_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
 
       if (seg)
         {
@@ -807,7 +807,7 @@ gradient_segment_get_right_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -850,7 +850,7 @@ gradient_segment_set_right_pos_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, TRUE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
 
       if (seg)
         {
@@ -892,7 +892,7 @@ gradient_segment_get_blending_function_invoker (GimpProcedure         *procedure
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {
@@ -933,7 +933,7 @@ gradient_segment_get_coloring_type_invoker (GimpProcedure         *procedure,
       GimpGradient        *gradient;
       GimpGradientSegment *seg;
 
-      gradient = gradient_get (gimp, name, FALSE, segment, &seg, error);
+      gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
 
       if (seg)
         {

@@ -60,10 +60,10 @@ gimp_pdb_get_data_factory_item (GimpDataFactory *data_factory,
 
 
 GimpBrush *
-gimp_pdb_get_brush (Gimp         *gimp,
-                    const gchar  *name,
-                    gboolean      writable,
-                    GError      **error)
+gimp_pdb_get_brush (Gimp               *gimp,
+                    const gchar        *name,
+                    GimpPDBDataAccess   access,
+                    GError            **error)
 {
   GimpBrush *brush;
 
@@ -84,10 +84,18 @@ gimp_pdb_get_brush (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' not found"), name);
     }
-  else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (brush)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Brush '%s' is not editable"), name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (brush)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Brush '%s' is not renamable"), name);
       return NULL;
     }
 
@@ -95,17 +103,17 @@ gimp_pdb_get_brush (Gimp         *gimp,
 }
 
 GimpBrush *
-gimp_pdb_get_generated_brush (Gimp         *gimp,
-                              const gchar  *name,
-                              gboolean      writable,
-                              GError      **error)
+gimp_pdb_get_generated_brush (Gimp               *gimp,
+                              const gchar        *name,
+                              GimpPDBDataAccess   access,
+                              GError            **error)
 {
   GimpBrush *brush;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  brush = gimp_pdb_get_brush (gimp, name, writable, error);
+  brush = gimp_pdb_get_brush (gimp, name, access, error);
 
   if (! brush)
     return NULL;
@@ -121,10 +129,10 @@ gimp_pdb_get_generated_brush (Gimp         *gimp,
 }
 
 GimpDynamics *
-gimp_pdb_get_dynamics (Gimp         *gimp,
-                       const gchar  *name,
-                       gboolean      writable,
-                       GError      **error)
+gimp_pdb_get_dynamics (Gimp               *gimp,
+                       const gchar        *name,
+                       GimpPDBDataAccess   access,
+                       GError            **error)
 {
   GimpDynamics *dynamics;
 
@@ -145,10 +153,18 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Paint dynamics '%s' not found"), name);
     }
-  else if (writable && ! gimp_data_is_writable (GIMP_DATA (dynamics)))
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (dynamics)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Paint dynamics '%s' is not editable"), name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (dynamics)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Paint dynamics '%s' is not renamable"), name);
       return NULL;
     }
 
@@ -156,10 +172,10 @@ gimp_pdb_get_dynamics (Gimp         *gimp,
 }
 
 GimpMybrush *
-gimp_pdb_get_mybrush (Gimp         *gimp,
-                      const gchar  *name,
-                      gboolean      writable,
-                      GError      **error)
+gimp_pdb_get_mybrush (Gimp               *gimp,
+                      const gchar        *name,
+                      GimpPDBDataAccess   access,
+                      GError            **error)
 {
   GimpMybrush *brush;
 
@@ -180,10 +196,18 @@ gimp_pdb_get_mybrush (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("MyPaint brush '%s' not found"), name);
     }
-  else if (writable && ! gimp_data_is_writable (GIMP_DATA (brush)))
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (brush)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("MyPaint brush '%s' is not editable"), name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (brush)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("MyPaint brush '%s' is not renamable"), name);
       return NULL;
     }
 
@@ -219,10 +243,10 @@ gimp_pdb_get_pattern (Gimp         *gimp,
 }
 
 GimpGradient *
-gimp_pdb_get_gradient (Gimp         *gimp,
-                       const gchar  *name,
-                       gboolean      writable,
-                       GError      **error)
+gimp_pdb_get_gradient (Gimp               *gimp,
+                       const gchar        *name,
+                       GimpPDBDataAccess   access,
+                       GError            **error)
 {
   GimpGradient *gradient;
 
@@ -243,10 +267,18 @@ gimp_pdb_get_gradient (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Gradient '%s' not found"), name);
     }
-  else if (writable && ! gimp_data_is_writable (GIMP_DATA (gradient)))
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (gradient)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Gradient '%s' is not editable"), name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (gradient)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Gradient '%s' is not renamable"), name);
       return NULL;
     }
 
@@ -254,10 +286,10 @@ gimp_pdb_get_gradient (Gimp         *gimp,
 }
 
 GimpPalette *
-gimp_pdb_get_palette (Gimp         *gimp,
-                      const gchar  *name,
-                      gboolean      writable,
-                      GError      **error)
+gimp_pdb_get_palette (Gimp               *gimp,
+                      const gchar        *name,
+                      GimpPDBDataAccess   access,
+                      GError            **error)
 {
   GimpPalette *palette;
 
@@ -278,10 +310,18 @@ gimp_pdb_get_palette (Gimp         *gimp,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Palette '%s' not found"), name);
     }
-  else if (writable && ! gimp_data_is_writable (GIMP_DATA (palette)))
+  else if ((access & GIMP_PDB_DATA_ACCESS_WRITE) &&
+           ! gimp_data_is_writable (GIMP_DATA (palette)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Palette '%s' is not editable"), name);
+      return NULL;
+    }
+  else if ((access & GIMP_PDB_DATA_ACCESS_RENAME) &&
+           ! gimp_viewable_is_name_editable (GIMP_VIEWABLE (palette)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Palette '%s' is not renamable"), name);
       return NULL;
     }
 

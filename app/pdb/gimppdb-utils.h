@@ -21,30 +21,30 @@
 
 GimpBrush     * gimp_pdb_get_brush              (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpBrush     * gimp_pdb_get_generated_brush    (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpDynamics  * gimp_pdb_get_dynamics           (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpMybrush   * gimp_pdb_get_mybrush            (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpPattern   * gimp_pdb_get_pattern            (Gimp               *gimp,
                                                  const gchar        *name,
                                                  GError            **error);
 GimpGradient  * gimp_pdb_get_gradient           (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpPalette   * gimp_pdb_get_palette            (Gimp               *gimp,
                                                  const gchar        *name,
-                                                 gboolean            writable,
+                                                 GimpPDBDataAccess   access,
                                                  GError            **error);
 GimpFont      * gimp_pdb_get_font               (Gimp               *gimp,
                                                  const gchar        *name,

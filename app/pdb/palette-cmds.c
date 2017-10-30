@@ -96,7 +96,7 @@ palette_duplicate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         {
@@ -141,7 +141,7 @@ palette_rename_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
 
       if (palette)
         {
@@ -176,7 +176,7 @@ palette_delete_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
         success = gimp_data_factory_data_delete (gimp->palette_factory,
@@ -207,7 +207,7 @@ palette_is_editable_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         editable = gimp_data_is_writable (GIMP_DATA (palette));
@@ -241,7 +241,7 @@ palette_get_info_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         num_colors = gimp_palette_get_n_colors (palette);
@@ -276,7 +276,7 @@ palette_get_colors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         {
@@ -326,7 +326,7 @@ palette_get_columns_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         num_columns = gimp_palette_get_columns (palette);
@@ -360,7 +360,7 @@ palette_set_columns_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (palette)
         gimp_palette_set_columns (palette, columns);
@@ -393,7 +393,7 @@ palette_add_entry_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (palette)
         {
@@ -432,7 +432,7 @@ palette_delete_entry_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (palette)
         {
@@ -470,7 +470,7 @@ palette_entry_get_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         {
@@ -513,7 +513,7 @@ palette_entry_set_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (palette)
         success = gimp_palette_set_entry_color (palette, entry_num, &color);
@@ -544,7 +544,7 @@ palette_entry_get_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (palette)
         {
@@ -587,7 +587,7 @@ palette_entry_set_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+      GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
       if (palette)
         success = gimp_palette_set_entry_name (palette, entry_num, entry_name);

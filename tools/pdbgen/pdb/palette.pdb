@@ -66,7 +66,7 @@ sub palette_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     editable = gimp_data_is_writable (GIMP_DATA (palette));
@@ -96,7 +96,7 @@ sub palette_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
@@ -137,7 +137,7 @@ sub palette_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
 
   if (palette)
     {
@@ -165,7 +165,7 @@ sub palette_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
     success = gimp_data_factory_data_delete (gimp->palette_factory,
@@ -201,7 +201,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     num_colors = gimp_palette_get_n_colors (palette);
@@ -237,7 +237,7 @@ HELP
 	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
@@ -283,7 +283,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     num_columns = gimp_palette_get_columns (palette);
@@ -314,7 +314,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     gimp_palette_set_columns (palette, columns);
@@ -352,7 +352,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     {
@@ -388,7 +388,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     {
@@ -431,7 +431,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
@@ -471,7 +471,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     success = gimp_palette_set_entry_color (palette, entry_num, &color);
@@ -507,7 +507,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (palette)
     {
@@ -547,7 +547,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
+  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (palette)
     success = gimp_palette_set_entry_name (palette, entry_num, entry_name);

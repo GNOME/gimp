@@ -66,7 +66,7 @@ sub brush_duplicate {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
@@ -105,7 +105,7 @@ sub brush_is_generated {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     generated = GIMP_IS_BRUSH_GENERATED (brush);
@@ -135,7 +135,7 @@ sub brush_is_editable {
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     editable = gimp_data_is_writable (GIMP_DATA (brush));
@@ -167,7 +167,7 @@ sub brush_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
 
   if (brush)
     {
@@ -195,7 +195,7 @@ sub brush_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
     success = gimp_data_factory_data_delete (gimp->brush_factory,
@@ -237,7 +237,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
@@ -291,7 +291,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     {
@@ -347,7 +347,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     spacing = gimp_brush_get_spacing (brush);
@@ -385,7 +385,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     shape = GIMP_BRUSH_GENERATED (brush)->shape;
@@ -419,7 +419,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     radius = GIMP_BRUSH_GENERATED (brush)->radius;
@@ -453,7 +453,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
@@ -490,7 +490,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
@@ -525,7 +525,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
@@ -559,7 +559,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, FALSE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     angle = GIMP_BRUSH_GENERATED (brush)->angle;
@@ -590,7 +590,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     gimp_brush_set_spacing (brush, spacing);
@@ -630,7 +630,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
@@ -670,7 +670,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
@@ -710,7 +710,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
@@ -751,7 +751,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
@@ -792,7 +792,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {
@@ -832,7 +832,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, TRUE, error);
+  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
 
   if (brush)
     {

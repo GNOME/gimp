@@ -1384,7 +1384,7 @@ context_set_dynamics_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, FALSE, error);
+      GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (dynamics)
         gimp_context_set_dynamics (context, dynamics);
@@ -1439,7 +1439,7 @@ context_set_mypaint_brush_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, FALSE, error);
+      GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
       if (brush)
         gimp_context_set_mybrush (context, brush);

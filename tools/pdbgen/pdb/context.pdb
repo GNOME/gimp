@@ -1498,7 +1498,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, FALSE, error);
+  GimpDynamics *dynamics = gimp_pdb_get_dynamics (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (dynamics)
     gimp_context_set_dynamics (context, dynamics);
@@ -1559,7 +1559,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, FALSE, error);
+  GimpMybrush *brush = gimp_pdb_get_mybrush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
 
   if (brush)
     gimp_context_set_mybrush (context, brush);

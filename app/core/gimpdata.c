@@ -370,7 +370,8 @@ gimp_data_get_memsize (GimpObject *object,
 static gboolean
 gimp_data_is_name_editable (GimpViewable *viewable)
 {
-  return gimp_data_is_writable (GIMP_DATA (viewable));
+  return gimp_data_is_writable (GIMP_DATA (viewable)) &&
+         ! gimp_data_is_internal (GIMP_DATA (viewable));
 }
 
 static void
