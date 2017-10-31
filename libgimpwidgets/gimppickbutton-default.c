@@ -234,17 +234,35 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
 #else
 
-  GdkWindow        *root_window = gdk_screen_get_root_window (screen);
+  GdkWindow        *window;
+  gint              x_window;
+  gint              y_window;
   cairo_surface_t  *image;
   cairo_t          *cr;
   guchar           *data;
   guchar            color[3];
 
+  /* we try to pick from the local window under the cursor, and fall back to
+   * picking from the root window if this fails (i.e., if the cursor is not
+   * under a local window).  on wayland, picking from the root window is not
+   * supported, so this at least allows us to pick from local windows.  see
+   * bug #780375.
+   */
+  window = gdk_display_get_window_at_pointer (gdk_screen_get_display (screen),
+                                              &x_window, &y_window);
+
+  if (! window)
+    {
+      window   = gdk_screen_get_root_window (screen);
+      x_window = x_root;
+      y_window = y_root;
+    }
+
   image = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
 
   cr = cairo_create (image);
 
-  gdk_cairo_set_source_window (cr, root_window, -x_root, -y_root);
+  gdk_cairo_set_source_window (cr, window, -x_window, -y_window);
   cairo_paint (cr);
 
   cairo_destroy (cr);
