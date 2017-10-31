@@ -48,9 +48,14 @@ gimp_temp_buf_new (gint        width,
                    const Babl *format)
 {
   GimpTempBuf *temp;
+  gint         bpp;
 
-  g_return_val_if_fail (width > 0 && height > 0, NULL);
   g_return_val_if_fail (format != NULL, NULL);
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+
+  g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
+  g_return_val_if_fail (G_MAXSIZE / width / height / bpp > 0, NULL);
 
   temp = g_slice_new (GimpTempBuf);
 
@@ -58,8 +63,7 @@ gimp_temp_buf_new (gint        width,
   temp->width     = width;
   temp->height    = height;
   temp->format    = format;
-  temp->data      = gegl_malloc (width * height *
-                                 babl_format_get_bytes_per_pixel (format));
+  temp->data      = gegl_malloc ((gsize) width * height * bpp);
 
   return temp;
 }
@@ -246,7 +250,8 @@ gimp_temp_buf_get_data (const GimpTempBuf *buf)
 gsize
 gimp_temp_buf_get_data_size (const GimpTempBuf *buf)
 {
-  return babl_format_get_bytes_per_pixel (buf->format) * buf->width * buf->height;
+  return (gsize) babl_format_get_bytes_per_pixel (buf->format) *
+                 buf->width * buf->height;
 }
 
 guchar *
