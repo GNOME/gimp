@@ -119,7 +119,7 @@ gimp_pattern_load (GimpContext   *context,
           goto error;
         }
 
-      utf8 = gimp_any_to_utf8 (name, -1,
+      utf8 = gimp_any_to_utf8 (name, bn_size - 1,
                                _("Invalid UTF-8 string in pattern file '%s'."),
                                gimp_file_get_utf8_name (file));
       g_free (name);
