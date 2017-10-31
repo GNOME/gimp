@@ -376,7 +376,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  name = gimp_any_to_utf8 (temp, -1,
+  name = gimp_any_to_utf8 (temp, ph.header_size - sizeof (PatternHeader) - 1,
                            _("Invalid UTF-8 string in pattern file '%s'."),
                            gimp_filename_to_utf8 (filename));
   g_free (temp);

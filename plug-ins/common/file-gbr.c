@@ -461,7 +461,7 @@ load_image (const gchar  *filename,
           return -1;
         }
 
-      name = gimp_any_to_utf8 (temp, -1,
+      name = gimp_any_to_utf8 (temp, size - 1,
                                _("Invalid UTF-8 string in brush file '%s'."),
                                gimp_filename_to_utf8 (filename));
       g_free (temp);
