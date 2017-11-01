@@ -1,0 +1,42 @@
+plugin_name = 'map-object'
+
+rc_file = platform_win32 ? windows.compile_resources(
+  gimp_plugins_rc,
+  args: [
+    '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+    '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+    '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+  ],
+  include_directories: [
+    rootInclude, appInclude,
+  ],
+) : []
+
+executable(plugin_name,
+  [
+    'arcball.c',
+    'map-object-apply.c',
+    'map-object-image.c',
+    'map-object-main.c',
+    'map-object-preview.c',
+    'map-object-shade.c',
+    'map-object-stock.c',
+    'map-object-ui.c',
+    rc_file,
+  ],
+  include_directories: [ rootInclude, ],
+  dependencies: [
+    gtk2, gegl, math,
+  ],
+  link_with: [
+    libgimp,
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+    libgimpui,
+    libgimpwidgets,
+  ],
+  install: true,
+  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+)
