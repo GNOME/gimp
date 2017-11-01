@@ -1,0 +1,17 @@
+patterns = files(
+  '3dgreen.pat',
+  'blue.pat',
+  'bluegrid.pat',
+  'bluesquares.pat',
+  'blueweb.pat',
+  'fibers.pat',
+  'nops.pat',
+  'pastel.pat',
+  'qube1.pat',
+  'recessed.pat',
+  'redcube.pat',
+  'sm_squares.pat',
+  'Stripes1px.pat',
+  'Stripes2px.pat',
+  'warning.pat',
+)
