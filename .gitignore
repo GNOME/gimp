@@ -1,3 +1,6 @@
+.vscode
+_build
+
 *.la
 *.lo
 *.o
