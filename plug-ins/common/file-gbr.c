@@ -406,6 +406,12 @@ load_image (GFile   *file,
       /* Version 1 didn't have a magic number and had no spacing  */
       bh.spacing = 25;
       bh.header_size += 8;
+      if (bh.header_size < sizeof (BrushHeader))
+        {
+          g_message (_("Unsupported brush format"));
+          g_object_unref (input);
+          return -1;
+        }
       break;
 
     case 2:
