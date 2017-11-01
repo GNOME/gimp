@@ -1,0 +1,68 @@
+#ifndef __GIMP_VERSION_H__
+#define __GIMP_VERSION_H__
+
+/* gimpversion.h.in -> gimpversion.h
+ * This file is configured by Meson. Please modify meson.build files.
+ */
+#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
+#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#endif
+
+G_BEGIN_DECLS
+
+
+/**
+ * SECTION: gimpversion
+ * @title: gimpversion
+ * @short_description: Macros and constants useful for determining
+ *                     GIMP's version number and capabilities.
+ *
+ * Macros and constants useful for determining GIMP's version number and
+ * capabilities.
+ **/
+
+/**
+ * GIMP_MAJOR_VERSION:
+ *
+ * The major GIMP version number.
+ **/
+#define GIMP_MAJOR_VERSION                              (@GIMP_MAJOR_VERSION@)
+
+/**
+ * GIMP_MINOR_VERSION:
+ *
+ * The minor GIMP version number.
+ **/
+#define GIMP_MINOR_VERSION                              (@GIMP_MINOR_VERSION@)
+
+/**
+ * GIMP_MICRO_VERSION:
+ *
+ * The micro GIMP version number.
+ **/
+#define GIMP_MICRO_VERSION                              (@GIMP_MICRO_VERSION@)
+
+/**
+ * GIMP_VERSION:
+ *
+ * The GIMP version as a string.
+ **/
+#define GIMP_VERSION                                    "@GIMP_VERSION@"
+
+/**
+ * GIMP_API_VERSION:
+ *
+ * Since: 2.2
+ **/
+#define GIMP_API_VERSION                                "@GIMP_API_VERSION@"
+
+#define GIMP_CHECK_VERSION(major, minor, micro) \
+    (GIMP_MAJOR_VERSION > (major) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
+     (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION == (minor) && \
+      GIMP_MICRO_VERSION >= (micro)))
+
+
+G_END_DECLS
+
+#endif /* __GIMP_VERSION_H__ */
