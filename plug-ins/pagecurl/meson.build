@@ -1,0 +1,71 @@
+plugin_name = 'pagecurl'
+
+plugin_sources = [
+  'pagecurl.c',
+]
+
+pagecurl_icons_images = [
+  'curl0.png',
+  'curl1.png',
+  'curl2.png',
+  'curl3.png',
+  'curl4.png',
+  'curl5.png',
+  'curl6.png',
+  'curl7.png',
+]
+resourcename = 'pagecurl-icons'
+xml_content  = '<?xml version="1.0" encoding="UTF-8"?>\n'
+xml_content += '<gresources>\n'
+xml_content += '  <gresource prefix="/org/gimp/icons">\n'
+foreach file : pagecurl_icons_images
+  xml_content+='    <file preprocess="to-pixdata">'+ file +'</file>\n'
+endforeach
+xml_content += '  </gresource>\n'
+xml_content += '</gresources>\n'
+
+xml_file = configure_file(
+  output: resourcename + '.gresource.xml',
+  command: [ 'echo', xml_content ],
+  capture: true,
+)
+
+plugin_sources += gnome.compile_resources(
+  resourcename,
+  xml_file,
+  c_name: resourcename.underscorify(),
+)
+
+
+if platform_windows
+  plugin_sources += windows.compile_resources(
+    gimp_plugins_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
+
+executable(plugin_name,
+  plugin_sources,
+  include_directories: [ rootInclude, ],
+  dependencies: [
+    gtk3, gegl, math,
+  ],
+  link_with: [
+    libgimp,
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+    libgimpui,
+    libgimpwidgets,
+  ],
+  install: true,
+  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+)
