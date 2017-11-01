@@ -1,0 +1,32 @@
+presets = [
+  'ApplyCanvas',
+  'Ballpark',
+  'Canvas',
+  'Crosshatch',
+  'Cubism',
+  'Dotify',
+  'Embroidery',
+  'Feathers',
+  'Felt-marker',
+  'Flowerbed',
+  'Furry',
+  'Line-art-2',
+  'Line-art',
+  'Maggot-invasion',
+  'MarbleMadness',
+  'Mossy',
+  'Painted_Rock',
+  'Parquette',
+  'Patchwork',
+  'Ringworks',
+  'Sample',
+  'Smash',
+  'Straws',
+  'Weave',
+  'Wormcan',
+]
+
+install_data(
+  presets,
+  install_dir: gimpdatadir / 'gimpressionist' / 'Presets',
+)
