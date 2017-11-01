@@ -1,0 +1,18 @@
+tool_presets = files(
+  'Airbrush-Color-From-Gradient.gtp',
+  'Airbrush.gtp',
+  'Basic-Knife.gtp',
+  'Basic-Round-Detail.gtp',
+  'Basic-Round.gtp',
+  'Bristles.gtp',
+  'Eraser-Hard.gtp',
+  'Noise.gtp',
+  'Paintbrush-Color-From-Gradient.gtp',
+  'Pencil-Color-From-Gradient.gtp',
+  'Smudge-Rough.gtp',
+  'Smudge-Soft.gtp',
+  'Soft-Oil.gtp',
+  'Splatters.gtp',
+  'Structure.gtp',
+  'Vegetal.gtp',
+)
