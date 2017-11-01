@@ -1,0 +1,12 @@
+if gtkdoc_scan.found()
+  # subdir('app')
+  # subdir('libgimp')
+  # subdir('libgimpbase')
+  # subdir('libgimpcolor')
+  # subdir('libgimpconfig')
+  # subdir('libgimpmath')
+  # subdir('libgimpmodule')
+  # subdir('libgimpthumb')
+  # subdir('libgimpwidgets')
+  subdir('tools')
+endif
