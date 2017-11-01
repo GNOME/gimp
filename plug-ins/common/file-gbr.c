@@ -413,6 +413,12 @@ load_image (const gchar  *filename,
       /* And we need to rewind the handle, 4 due spacing and 4 due magic */
       lseek (fd, -8, SEEK_CUR);
       bh.header_size += 8;
+      if (bh.header_size < sizeof (BrushHeader))
+        {
+          g_message (_("Unsupported brush format"));
+          g_object_unref (input);
+          return -1;
+        }
       break;
 
     case 3: /*  cinepaint brush  */

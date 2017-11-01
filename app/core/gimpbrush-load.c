@@ -161,7 +161,7 @@ gimp_brush_load_brush (GimpContext  *context,
                        GError      **error)
 {
   GimpBrush   *brush;
-  gint         bn_size;
+  gsize        bn_size;
   BrushHeader  header;
   gchar       *name = NULL;
   guchar      *pixmap;
@@ -257,6 +257,12 @@ gimp_brush_load_brush (GimpContext  *context,
                    _("Fatal parse error in brush file '%s': "
                      "Unknown version %d."),
                    gimp_filename_to_utf8 (filename), header.version);
+      return NULL;
+    }
+
+  if (header.header_size < sizeof (BrushHeader))
+    {
+      g_message (_("Unsupported brush format"));
       return NULL;
     }
 
