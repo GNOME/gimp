@@ -736,6 +736,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
   private->changing_value  = FALSE;
   private->relative_change = FALSE;
+  private->pointer_warp    = FALSE;
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
@@ -766,8 +767,6 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
           private->start_screen    = gdk_event_get_screen ((GdkEvent *) event);
           private->start_pointer_x = floor (event->x_root);
           private->start_pointer_y = floor (event->y_root);
-
-          private->pointer_warp = FALSE;
 
           return TRUE;
 
@@ -872,7 +871,7 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
        * the mouse across half the screen.)  yes, this is an ugly ugly hack :)
        */
 
-      if (private->relative_change && private->pointer_warp)
+      if (private->pointer_warp)
         {
           if (pointer_x == private->pointer_warp_x)
             return TRUE;
