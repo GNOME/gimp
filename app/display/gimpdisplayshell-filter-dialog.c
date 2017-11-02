@@ -118,7 +118,8 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
       g_object_unref (stack);
     }
 
-  editor = gimp_color_display_editor_new (shell->filter_stack,
+  editor = gimp_color_display_editor_new (shell->display->gimp,
+                                          shell->filter_stack,
                                           gimp_display_shell_get_color_config (shell),
                                           GIMP_COLOR_MANAGED (shell));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);

@@ -29,6 +29,12 @@
 
 #include "widgets-types.h"
 
+#include "propgui/propgui-types.h"
+
+#include "core/gimp.h"
+
+#include "propgui/gimppropgui.h"
+
 #include "gimpcolordisplayeditor.h"
 #include "gimpeditor.h"
 
@@ -355,7 +361,8 @@ gimp_color_display_editor_dispose (GObject *object)
 }
 
 GtkWidget *
-gimp_color_display_editor_new (GimpColorDisplayStack *stack,
+gimp_color_display_editor_new (Gimp                  *gimp,
+                               GimpColorDisplayStack *stack,
                                GimpColorConfig       *config,
                                GimpColorManaged      *managed)
 {
@@ -365,12 +372,14 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack,
   gint                    i;
   GList                  *list;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
 
   editor = g_object_new (GIMP_TYPE_COLOR_DISPLAY_EDITOR, NULL);
 
+  editor->gimp    = gimp;
   editor->stack   = g_object_ref (stack);
   editor->config  = g_object_ref (config);
   editor->managed = g_object_ref (managed);
@@ -572,6 +581,16 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
                                  (gpointer) &editor->selected);
 
       editor->config_widget = gimp_color_display_configure (display);
+
+      if (! editor->config_widget)
+        {
+          editor->config_widget =
+            gimp_prop_gui_new (G_OBJECT (display),
+                               G_TYPE_FROM_INSTANCE (display), 0,
+                               NULL,
+                               gimp_get_user_context (editor->gimp),
+                               NULL, NULL, NULL);
+        }
 
       gtk_frame_set_label (GTK_FRAME (editor->config_frame),
                            GIMP_COLOR_DISPLAY_GET_CLASS (display)->name);
