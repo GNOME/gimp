@@ -125,7 +125,6 @@ static void        cdisplay_colorblind_get_property    (GObject               *o
 static void        cdisplay_colorblind_convert_buffer  (GimpColorDisplay      *display,
                                                         GeglBuffer            *buffer,
                                                         GeglRectangle         *area);
-static GtkWidget * cdisplay_colorblind_configure       (GimpColorDisplay      *display);
 static void        cdisplay_colorblind_changed         (GimpColorDisplay      *display);
 
 static void        cdisplay_colorblind_set_deficiency  (CdisplayColorblind    *colorblind,
@@ -262,7 +261,6 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_COLORBLIND;
 
   display_class->convert_buffer  = cdisplay_colorblind_convert_buffer;
-  display_class->configure       = cdisplay_colorblind_configure;
   display_class->changed         = cdisplay_colorblind_changed;
 }
 
@@ -406,31 +404,6 @@ cdisplay_colorblind_convert_buffer (GimpColorDisplay *display,
           data += 4;
         }
     }
-}
-
-static GtkWidget *
-cdisplay_colorblind_configure (GimpColorDisplay *display)
-{
-  CdisplayColorblind *colorblind = CDISPLAY_COLORBLIND (display);
-  GtkWidget          *hbox;
-  GtkWidget          *label;
-  GtkWidget          *combo;
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-
-  label = gtk_label_new_with_mnemonic (_("Color _deficiency type:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (colorblind),
-                                        "deficiency", 0, 0);
-
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-  return hbox;
 }
 
 static void

@@ -76,7 +76,6 @@ static void        cdisplay_gamma_get_property    (GObject            *object,
 static void        cdisplay_gamma_convert_buffer  (GimpColorDisplay   *display,
                                                    GeglBuffer         *buffer,
                                                    GeglRectangle      *area);
-static GtkWidget * cdisplay_gamma_configure       (GimpColorDisplay   *display);
 static void        cdisplay_gamma_set_gamma       (CdisplayGamma      *gamma,
                                                    gdouble             value);
 
@@ -131,7 +130,6 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_GAMMA;
 
   display_class->convert_buffer  = cdisplay_gamma_convert_buffer;
-  display_class->configure       = cdisplay_gamma_configure;
 }
 
 static void
@@ -211,30 +209,6 @@ cdisplay_gamma_convert_buffer (GimpColorDisplay *display,
           data++;
         }
     }
-}
-
-static GtkWidget *
-cdisplay_gamma_configure (GimpColorDisplay *display)
-{
-  CdisplayGamma *gamma = CDISPLAY_GAMMA (display);
-  GtkWidget     *hbox;
-  GtkWidget     *label;
-  GtkWidget     *spinbutton;
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-
-  label = gtk_label_new_with_mnemonic (_("_Gamma:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (gamma), "gamma",
-                                          0.1, 1.0, 3);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  return hbox;
 }
 
 static void
