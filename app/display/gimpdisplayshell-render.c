@@ -274,13 +274,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       if (gimp_display_shell_has_filter (shell))
         {
+          GeglBuffer *filter_buffer;
+
+          filter_buffer = g_object_new (GEGL_TYPE_BUFFER,
+                                        "source", shell->filter_buffer,
+                                        "shift-x", -scaled_x,
+                                        "shift-y", -scaled_y,
+                                        NULL);
+
           /*  convert the filter_buffer in place
            */
           gimp_color_display_stack_convert_buffer (shell->filter_stack,
-                                                   shell->filter_buffer,
-                                                   GEGL_RECTANGLE (0, 0,
+                                                   filter_buffer,
+                                                   GEGL_RECTANGLE (scaled_x, scaled_y,
                                                                    scaled_width,
                                                                    scaled_height));
+
+          g_object_unref (filter_buffer);
         }
 
       if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
