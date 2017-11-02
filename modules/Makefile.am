@@ -35,6 +35,7 @@ lib_LTLIBRARIES = \
 	libcolor-selector-cmyk.la		\
 	libcolor-selector-water.la		\
 	libcolor-selector-wheel.la		\
+	libdisplay-filter-clip-warning.la	\
 	libdisplay-filter-color-blind.la	\
 	libdisplay-filter-gamma.la		\
 	libdisplay-filter-high-contrast.la	\
@@ -60,6 +61,10 @@ libcolor_selector_water_la_LIBADD = $(color_selector_libadd)
 libcolor_selector_wheel_la_SOURCES = color-selector-wheel.c gimpcolorwheel.c gimpcolorwheel.h
 libcolor_selector_wheel_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcolor_selector_wheel_la_LIBADD = $(color_selector_libadd)
+
+libdisplay_filter_clip_warning_la_SOURCES = display-filter-clip-warning.c
+libdisplay_filter_clip_warning_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libdisplay_filter_clip_warning_la_LIBADD = $(display_filter_libadd)
 
 libdisplay_filter_color_blind_la_SOURCES = display-filter-color-blind.c
 libdisplay_filter_color_blind_la_LDFLAGS = -avoid-version -module $(no_undefined)

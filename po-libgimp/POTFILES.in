@@ -73,6 +73,7 @@ modules/color-selector-wheel.c
 modules/controller-dx-dinput.c
 modules/controller-linux-input.c
 modules/controller-midi.c
+modules/display-filter-clip-warning.c
 modules/display-filter-color-blind.c
 modules/display-filter-gamma.c
 modules/display-filter-high-contrast.c
