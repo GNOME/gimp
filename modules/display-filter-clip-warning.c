@@ -148,12 +148,8 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
-  object_class->get_property = cdisplay_clip_warning_get_property;
-  object_class->set_property = cdisplay_clip_warning_set_property;
-
-  display_class->name        = _("Clip Warning");
-  display_class->help_id     = "gimp-colordisplay-clip-warning";
-  display_class->icon_name   = "gimp-warning";
+  object_class->get_property     = cdisplay_clip_warning_get_property;
+  object_class->set_property     = cdisplay_clip_warning_set_property;
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SHADOWS,
                             "show-shadows",
@@ -228,6 +224,10 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
                             _("Make warning pixels opaque"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  display_class->name            = _("Clip Warning");
+  display_class->help_id         = "gimp-colordisplay-clip-warning";
+  display_class->icon_name       = "gimp-warning";
 
   display_class->convert_buffer  = cdisplay_clip_warning_convert_buffer;
 }
@@ -350,7 +350,6 @@ cdisplay_clip_warning_convert_buffer (GimpColorDisplay *display,
   CdisplayClipWarning *clip_warning = CDISPLAY_CLIP_WARNING (display);
   GeglBufferIterator  *iter;
 
-  g_printerr ("%d x %d\n", area->width, area->height);
   iter = gegl_buffer_iterator_new (buffer, area, 0,
                                    babl_format ("R'G'B'A float"),
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
