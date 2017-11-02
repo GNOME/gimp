@@ -887,13 +887,37 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
 
       if (private->relative_change)
         {
-          if (pointer_x <= monitor_geometry.x)
+          GtkAdjustment *adjustment;
+          gdouble        value;
+          gdouble        lower;
+          gdouble        upper;
+
+          adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
+
+          value = gtk_adjustment_get_value (adjustment);
+          lower = gtk_adjustment_get_lower (adjustment);
+          upper = gtk_adjustment_get_upper (adjustment);
+
+          if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+            {
+              gdouble temp;
+
+              value = -value;
+
+              temp  = lower;
+              lower = -upper;
+              upper = -temp;
+            }
+
+          if (pointer_x <= monitor_geometry.x &&
+              value > lower)
             {
               private->pointer_warp         = TRUE;
               private->pointer_warp_x       = (monitor_geometry.width - 1) + pointer_x - 1;
               private->pointer_warp_start_x = private->start_x + (monitor_geometry.width - 2);
             }
-          else if (pointer_x >= monitor_geometry.x + (monitor_geometry.width - 1))
+          else if (pointer_x >= monitor_geometry.x + (monitor_geometry.width - 1) &&
+                   value < upper)
             {
               private->pointer_warp         = TRUE;
               private->pointer_warp_x       = pointer_x - (monitor_geometry.width - 1) + 1;
