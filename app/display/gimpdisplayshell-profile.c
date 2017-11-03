@@ -87,6 +87,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   GimpImage        *image;
   GimpColorProfile *src_profile;
   const Babl       *src_format;
+  GimpColorProfile *filter_profile;
+  const Babl       *filter_format;
   const Babl       *dest_format;
 
   gimp_display_shell_profile_free (shell);
@@ -103,8 +105,18 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   src_format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 
-  if (gimp_display_shell_has_filter (shell) ||
-      ! gimp_display_shell_profile_can_convert_to_u8 (shell))
+  if (gimp_display_shell_has_filter (shell))
+    {
+      filter_format  = shell->filter_format;
+      filter_profile = gimp_babl_format_get_color_profile (filter_format);
+    }
+  else
+    {
+      filter_format  = src_format;
+      filter_profile = src_profile;
+    }
+
+  if (! gimp_display_shell_profile_can_convert_to_u8 (shell))
     {
       dest_format = shell->filter_format;
     }
@@ -114,22 +126,38 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
     }
 
 #if 0
-  g_printerr ("src_profile: %s\n"
-              "src_format:  %s\n"
-              "dest_format: %s\n",
+  g_printerr ("src_profile:    %s\n"
+              "src_format:     %s\n"
+              "filter_profile: %s\n"
+              "filter_format:  %s\n"
+              "dest_format:    %s\n",
               gimp_color_profile_get_label (src_profile),
               babl_get_name (src_format),
+              gimp_color_profile_get_label (filter_profile),
+              babl_get_name (filter_format),
               babl_get_name (dest_format));
 #endif
+
+  if (! gimp_color_transform_can_gegl_copy (src_profile, filter_profile))
+    {
+      shell->filter_transform =
+        gimp_color_transform_new (src_profile,
+                                  src_format,
+                                  filter_profile,
+                                  filter_format,
+                                  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                  GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION |
+                                  GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE);
+    }
 
   shell->profile_transform =
     gimp_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
                                      gimp_display_shell_get_color_config (shell),
-                                     src_profile,
-                                     src_format,
+                                     filter_profile,
+                                     filter_format,
                                      dest_format);
 
-  if (shell->profile_transform)
+  if (shell->filter_transform || shell->profile_transform)
     {
       gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
       gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
@@ -157,7 +185,14 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
 
   if (image)
     {
-      switch (gimp_image_get_component_type (image))
+      GimpComponentType component_type;
+
+      if (! gimp_display_shell_has_filter (shell))
+        component_type = gimp_image_get_component_type (image);
+      else
+        component_type = gimp_babl_format_get_component_type (shell->filter_format);
+
+      switch (component_type)
         {
         case GIMP_COMPONENT_TYPE_U8:
 #if 0
@@ -184,6 +219,7 @@ static void
 gimp_display_shell_profile_free (GimpDisplayShell *shell)
 {
   g_clear_object (&shell->profile_transform);
+  g_clear_object (&shell->filter_transform);
   g_clear_object (&shell->profile_buffer);
   shell->profile_data   = NULL;
   shell->profile_stride = 0;

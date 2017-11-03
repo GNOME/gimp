@@ -171,7 +171,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       can_convert_to_u8 = gimp_display_shell_profile_can_convert_to_u8 (shell);
 
-      /*  create the filter buffer if we have filters
+      /*  create the filter buffer if we have filters, or can't convert
+       *  to u8 directly
        */
       if ((gimp_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
           ! shell->filter_buffer)
@@ -194,10 +195,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                               shell->filter_data);
         }
 
-      if (shell->profile_transform)
+      if (! gimp_display_shell_has_filter (shell) || shell->filter_transform)
         {
-          /*  if there is a profile transform, load the projection
-           *  pixels into the profile_buffer
+          /*  if there are no filters, or there is a filter transform,
+           *  load the projection pixels into the profile_buffer
            */
 #ifndef USE_NODE_BLIT
           gegl_buffer_get (buffer,
@@ -216,11 +217,96 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                           shell->profile_data, shell->profile_stride,
                           GEGL_BLIT_CACHE);
 #endif
+        }
+      else
+        {
+          /*  otherwise, load the pixels directly into the filter_buffer
+           */
+#ifndef USE_NODE_BLIT
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (scaled_x, scaled_y,
+                                           scaled_width, scaled_height),
+                           buffer_scale,
+                           shell->filter_format,
+                           shell->filter_data, shell->filter_stride,
+                           GEGL_ABYSS_CLAMP);
+#else
+          gegl_node_blit (node,
+                          buffer_scale,
+                          GEGL_RECTANGLE (scaled_x, scaled_y,
+                                          scaled_width, scaled_height),
+                          shell->filter_format,
+                          shell->filter_data, shell->filter_stride,
+                          GEGL_BLIT_CACHE);
+#endif
+        }
 
-          if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
+      /*  if there is a filter transform, convert the pixels from
+       *  the profile_buffer to the filter_buffer
+       */
+      if (shell->filter_transform)
+        {
+          gimp_color_transform_process_buffer (shell->filter_transform,
+                                               shell->profile_buffer,
+                                               GEGL_RECTANGLE (0, 0,
+                                                               scaled_width,
+                                                               scaled_height),
+                                               shell->filter_buffer,
+                                               GEGL_RECTANGLE (0, 0,
+                                                               scaled_width,
+                                                               scaled_height));
+        }
+
+      /*  if there are filters, apply them
+       */
+      if (gimp_display_shell_has_filter (shell))
+        {
+          GeglBuffer *filter_buffer;
+
+          /*  shift the filter_buffer so that the area passed to
+           *  the filters is the real render area, allowing for
+           *  position-dependent filters
+           */
+          filter_buffer = g_object_new (GEGL_TYPE_BUFFER,
+                                        "source", shell->filter_buffer,
+                                        "shift-x", -scaled_x,
+                                        "shift-y", -scaled_y,
+                                        NULL);
+
+          /*  convert the filter_buffer in place
+           */
+          gimp_color_display_stack_convert_buffer (shell->filter_stack,
+                                                   filter_buffer,
+                                                   GEGL_RECTANGLE (scaled_x, scaled_y,
+                                                                   scaled_width,
+                                                                   scaled_height));
+
+          g_object_unref (filter_buffer);
+        }
+
+      /*  if there is a profile transform...
+       */
+      if (shell->profile_transform)
+        {
+          if (gimp_display_shell_has_filter (shell))
             {
-              /*  if there are filters, convert the pixels from the
-               *  profile_buffer to the filter_buffer
+              /*  if we have filters, convert the pixels in the filter_buffer
+               *  in-place
+               */
+              gimp_color_transform_process_buffer (shell->profile_transform,
+                                                   shell->filter_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height),
+                                                   shell->filter_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height));
+            }
+          else if (! can_convert_to_u8)
+            {
+              /*  otherwise, if we can't convert to u8 directly, convert
+               *  the pixels from the profile_buffer to the filter_buffer
                */
               gimp_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
@@ -248,55 +334,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                                    scaled_height));
             }
         }
-      else
-        {
-          /*  otherwise, load the projection pixels directly into the
-           *  filter_buffer
-           */
-#ifndef USE_NODE_BLIT
-          gegl_buffer_get (buffer,
-                           GEGL_RECTANGLE (scaled_x, scaled_y,
-                                           scaled_width, scaled_height),
-                           buffer_scale,
-                           shell->filter_format,
-                           shell->filter_data, shell->filter_stride,
-                           GEGL_ABYSS_CLAMP);
-#else
-          gegl_node_blit (node,
-                          buffer_scale,
-                          GEGL_RECTANGLE (scaled_x, scaled_y,
-                                          scaled_width, scaled_height),
-                          shell->filter_format,
-                          shell->filter_data, shell->filter_stride,
-                          GEGL_BLIT_CACHE);
-#endif
-        }
 
-      if (gimp_display_shell_has_filter (shell))
-        {
-          GeglBuffer *filter_buffer;
-
-          filter_buffer = g_object_new (GEGL_TYPE_BUFFER,
-                                        "source", shell->filter_buffer,
-                                        "shift-x", -scaled_x,
-                                        "shift-y", -scaled_y,
-                                        NULL);
-
-          /*  convert the filter_buffer in place
-           */
-          gimp_color_display_stack_convert_buffer (shell->filter_stack,
-                                                   filter_buffer,
-                                                   GEGL_RECTANGLE (scaled_x, scaled_y,
-                                                                   scaled_width,
-                                                                   scaled_height));
-
-          g_object_unref (filter_buffer);
-        }
-
+      /*  finally, copy the filter buffer to the cairo-ARGB32 buffer,
+       *  if necessary
+       */
       if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
         {
-          /*  finally, copy the filter buffer to the cairo-ARGB32 buffer
-           */
           gegl_buffer_get (shell->filter_buffer,
                            GEGL_RECTANGLE (0, 0,
                                            scaled_width,

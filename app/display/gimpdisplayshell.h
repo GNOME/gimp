@@ -157,13 +157,14 @@ struct _GimpDisplayShell
   guchar             *profile_data;    /*  profile_buffer's pixels            */
   gint                profile_stride;  /*  profile_buffer's stride            */
 
-  GimpColorDisplayStack *filter_stack;   /* color display conversion stuff    */
+  GimpColorDisplayStack *filter_stack; /*  color display conversion stuff     */
   guint                  filter_idle_id;
 
-  const Babl        *filter_format;    /*  filter_buffer's format             */
-  GeglBuffer        *filter_buffer;    /*  buffer for display filters         */
-  guchar            *filter_data;      /*  filter_buffer's pixels             */
-  gint               filter_stride;    /*  filter_buffer's stride             */
+  GimpColorTransform *filter_transform;
+  const Babl         *filter_format;   /*  filter_buffer's format             */
+  GeglBuffer         *filter_buffer;   /*  buffer for display filters         */
+  guchar             *filter_data;     /*  filter_buffer's pixels             */
+  gint                filter_stride;   /*  filter_buffer's stride             */
 
   GimpDisplayXfer   *xfer;             /*  manages image buffer transfers     */
   cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
