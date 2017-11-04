@@ -1389,12 +1389,18 @@ static void
 gimp_text_tool_enter_text (GimpTextTool *text_tool,
                            const gchar  *str)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextBuffer *buffer      = GTK_TEXT_BUFFER (text_tool->buffer);
+  GList         *insert_tags = NULL;
+  GList         *remove_tags = NULL;
   gboolean       had_selection;
 
   had_selection = gtk_text_buffer_get_has_selection (buffer);
 
   gtk_text_buffer_begin_user_action (buffer);
+
+  if (had_selection && text_tool->style_editor)
+    insert_tags = gimp_text_style_editor_list_tags (GIMP_TEXT_STYLE_EDITOR (text_tool->style_editor),
+                                                    &remove_tags);
 
   gimp_text_tool_delete_selection (text_tool);
 
@@ -1408,6 +1414,10 @@ gimp_text_tool_enter_text (GimpTextTool *text_tool,
       if (! gtk_text_iter_ends_line (&cursor))
         gimp_text_tool_delete_from_cursor (text_tool, GTK_DELETE_CHARS, 1);
     }
+
+  if (had_selection && text_tool->style_editor)
+    gimp_text_buffer_set_insert_tags (text_tool->buffer,
+                                      insert_tags, remove_tags);
 
   gimp_text_buffer_insert (text_tool->buffer, str);
 
