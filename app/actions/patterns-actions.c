@@ -140,7 +140,7 @@ patterns_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("patterns-edit",                 pattern && FALSE);
   SET_SENSITIVE ("patterns-open-as-image",        file);
-  SET_SENSITIVE ("patterns-duplicate",            pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("patterns-duplicate",            pattern && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("patterns-copy-location",        file);
   SET_SENSITIVE ("patterns-show-in-file-manager", file);
   SET_SENSITIVE ("patterns-delete",               pattern && gimp_data_is_deletable (data));

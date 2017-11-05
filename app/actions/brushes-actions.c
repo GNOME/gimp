@@ -140,7 +140,7 @@ brushes_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("brushes-edit",                 brush);
   SET_SENSITIVE ("brushes-open-as-image",        file && ! GIMP_IS_BRUSH_GENERATED (brush));
-  SET_SENSITIVE ("brushes-duplicate",            brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("brushes-duplicate",            brush && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("brushes-copy-location",        file);
   SET_SENSITIVE ("brushes-show-in-file-manager", file);
   SET_SENSITIVE ("brushes-delete",               brush && gimp_data_is_deletable (data));

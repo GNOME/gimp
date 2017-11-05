@@ -149,7 +149,7 @@ palettes_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("palettes-edit",                 palette);
-  SET_SENSITIVE ("palettes-duplicate",            palette && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("palettes-duplicate",            palette && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("palettes-merge",                sel_count > 1);
   SET_SENSITIVE ("palettes-copy-location",        file);
   SET_SENSITIVE ("palettes-show-in-file-manager", file);

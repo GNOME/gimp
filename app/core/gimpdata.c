@@ -1112,6 +1112,14 @@ gimp_data_get_mtime (GimpData *data)
   return private->mtime;
 }
 
+gboolean
+gimp_data_is_copyable (GimpData *data)
+{
+  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+
+  return GIMP_DATA_GET_CLASS (data)->copy != NULL;
+}
+
 /**
  * gimp_data_copy:
  * @data:     a #GimpData object
@@ -1134,6 +1142,17 @@ gimp_data_copy (GimpData *data,
     GIMP_DATA_GET_CLASS (data)->copy (data, src_data);
 }
 
+gboolean
+gimp_data_is_duplicatable (GimpData *data)
+{
+  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+
+  if (GIMP_DATA_GET_CLASS (data)->duplicate == gimp_data_real_duplicate)
+    return gimp_data_is_copyable (data);
+  else
+    return GIMP_DATA_GET_CLASS (data)->duplicate != NULL;
+}
+
 /**
  * gimp_data_duplicate:
  * @data: a #GimpData object
@@ -1149,7 +1168,7 @@ gimp_data_duplicate (GimpData *data)
 {
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
-  if (GIMP_DATA_GET_CLASS (data)->duplicate)
+  if (gimp_data_is_duplicatable (data))
     {
       GimpData        *new     = GIMP_DATA_GET_CLASS (data)->duplicate (data);
       GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (new);

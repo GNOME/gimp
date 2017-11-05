@@ -144,7 +144,7 @@ tool_presets_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("tool-presets-edit",                 tool_preset);
-  SET_SENSITIVE ("tool-presets-duplicate",            tool_preset && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("tool-presets-duplicate",            tool_preset && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("tool-presets-copy-location",        file);
   SET_SENSITIVE ("tool-presets-show-in-file-manager", file);
   SET_SENSITIVE ("tool-presets-save",                 tool_preset);

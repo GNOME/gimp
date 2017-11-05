@@ -128,7 +128,7 @@ dynamics_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("dynamics-edit",                 dynamics);
-  SET_SENSITIVE ("dynamics-duplicate",            dynamics && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("dynamics-duplicate",            dynamics && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("dynamics-copy-location",        file);
   SET_SENSITIVE ("dynamics-show-in-file-manager", file);
   SET_SENSITIVE ("dynamics-delete",               dynamics && gimp_data_is_deletable (data));

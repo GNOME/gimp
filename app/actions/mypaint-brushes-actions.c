@@ -133,7 +133,7 @@ mypaint_brushes_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("mypaint-brushes-edit",                 brush && FALSE);
-  SET_SENSITIVE ("mypaint-brushes-duplicate",            brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("mypaint-brushes-duplicate",            brush && gimp_data_is_duplicatable (data));
   SET_SENSITIVE ("mypaint-brushes-copy-location",        file);
   SET_SENSITIVE ("mypaint-brushes-show-in-file-manager", file);
   SET_SENSITIVE ("mypaint-brushes-delete",               brush && gimp_data_is_deletable (data));
