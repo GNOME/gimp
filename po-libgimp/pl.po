@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-15 16:32+0200\n"
-"PO-Revision-Date: 2017-10-15 16:33+0200\n"
+"POT-Creation-Date: 2017-11-05 16:19+0100\n"
+"PO-Revision-Date: 2017-11-05 16:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2671,6 +2671,78 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "Kontroler wprowadzania MIDI programu GIMP"
 
+#: ../modules/display-filter-clip-warning.c:120
+msgid "Clip warning color display filter"
+msgstr "Przycinanie filtru wyświetlania koloru ostrzeżenia"
+
+#: ../modules/display-filter-clip-warning.c:157
+msgid "Show shadows"
+msgstr "Wyświetlanie cieni"
+
+#: ../modules/display-filter-clip-warning.c:158
+msgid "Show warning for pixels with a negative component"
+msgstr "Wyświetlanie ostrzeżenia dla pikseli o ujemnej składowej"
+
+#: ../modules/display-filter-clip-warning.c:164
+msgid "Shadows color"
+msgstr "Kolor cieni"
+
+#: ../modules/display-filter-clip-warning.c:165
+msgid "Shadows warning color"
+msgstr "Kolor ostrzeżenia cieni"
+
+#: ../modules/display-filter-clip-warning.c:177
+msgid "Show highlights"
+msgstr "Wyświetlanie świateł"
+
+#: ../modules/display-filter-clip-warning.c:178
+msgid "Show warning for pixels with a component greater than one"
+msgstr "Wyświetlanie ostrzeżenia dla pikseli o składowej większej niż jeden"
+
+#: ../modules/display-filter-clip-warning.c:184
+msgid "Highlights color"
+msgstr "Kolor świateł"
+
+#: ../modules/display-filter-clip-warning.c:185
+msgid "Highlights warning color"
+msgstr "Kolor ostrzeżenia świateł"
+
+#: ../modules/display-filter-clip-warning.c:197
+msgid "Show NaN"
+msgstr "Wyświetlanie NaN"
+
+#: ../modules/display-filter-clip-warning.c:198
+msgid "Show warning for pixels with a NaN component"
+msgstr "Wyświetlanie ostrzeżenia dla pikseli o składowej NaN"
+
+#: ../modules/display-filter-clip-warning.c:204
+msgid "NaN color"
+msgstr "Kolor NaN"
+
+#: ../modules/display-filter-clip-warning.c:205
+msgid "NaN warning color"
+msgstr "Kolor ostrzeżenia NaN"
+
+#: ../modules/display-filter-clip-warning.c:217
+msgid "Include alpha"
+msgstr "Dołączanie alfy"
+
+#: ../modules/display-filter-clip-warning.c:218
+msgid "Include alpha component in the warning"
+msgstr "Dołączanie składowej alfy w ostrzeżeniu"
+
+#: ../modules/display-filter-clip-warning.c:224
+msgid "Opaque"
+msgstr "Nieprzezroczystość"
+
+#: ../modules/display-filter-clip-warning.c:225
+msgid "Make warning pixels opaque"
+msgstr "Nieprzezroczyste piksele ostrzeżenia"
+
+#: ../modules/display-filter-clip-warning.c:229
+msgid "Clip Warning"
+msgstr "Ostrzeżenie przycinania"
+
 #: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (nierozróżnianie czerwonego)"
@@ -2683,43 +2755,38 @@ msgstr "Deuteranopia (nierozróżnianie zielonego)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (nierozróżnianie niebieskiego)"
 
-#: ../modules/display-filter-color-blind.c:195
+#: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr symulujący ślepotę barw (algorytm Brettela-Vienota-Mollona)"
 
-#: ../modules/display-filter-color-blind.c:254
+#: ../modules/display-filter-color-blind.c:253
 msgid "Deficiency"
 msgstr "Ślepota barw"
 
-#: ../modules/display-filter-color-blind.c:260
+#: ../modules/display-filter-color-blind.c:254
+msgid "Color deficiency type"
+msgstr "Typ ślepoty barw"
+
+#: ../modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
 msgstr "Ślepota barw"
 
-#: ../modules/display-filter-color-blind.c:421
-msgid "Color _deficiency type:"
-msgstr "Typ ślepoty _barw:"
-
-#: ../modules/display-filter-gamma.c:87
+#: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Filtr wyświetlania kolorów z korekcją gamma"
 
-#: ../modules/display-filter-gamma.c:124 ../modules/display-filter-gamma.c:129
+#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:226
-msgid "_Gamma:"
-msgstr "_Gamma:"
-
-#: ../modules/display-filter-high-contrast.c:87
+#: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Filtr wyświetlania kolorów z wysokim kontrastem"
 
-#: ../modules/display-filter-high-contrast.c:124
-#: ../modules/display-filter-high-contrast.c:129
+#: ../modules/display-filter-high-contrast.c:123
+msgid "Contrast cycles"
+msgstr "Cykle kontrastu"
+
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
-
-#: ../modules/display-filter-high-contrast.c:226
-msgid "Contrast c_ycles:"
-msgstr "_Cykle kontrastu:"

@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-29 17:39+0100\n"
-"PO-Revision-Date: 2017-10-29 17:40+0100\n"
+"POT-Creation-Date: 2017-11-05 16:19+0100\n"
+"PO-Revision-Date: 2017-11-05 16:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2304,7 +2304,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
-#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -11361,7 +11361,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "Interpreter poleceń wsadowych „%s” jest niedostępny. Wyłączono tryb wsadowy."
 
-#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:303
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:304
 #: ../app/core/gimptooloptions.c:348 ../app/gui/session.c:494
 #: ../app/menus/menus.c:468 ../app/widgets/gimpdevices.c:207
 #, c-format
@@ -11600,27 +11600,27 @@ msgstr "Nieznany kształt pędzla programu GIMP."
 msgid "In line %d of brush file: "
 msgstr "W %d. wierszu pliku z pędzlami: "
 
-#: ../app/core/gimpbrushgenerated.c:130
+#: ../app/core/gimpbrushgenerated.c:131
 msgid "Brush Shape"
 msgstr "Kształt pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:138
+#: ../app/core/gimpbrushgenerated.c:139
 msgid "Brush Radius"
 msgstr "Promień pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:145
+#: ../app/core/gimpbrushgenerated.c:146
 msgid "Brush Spikes"
 msgstr "Ostrza pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:227
+#: ../app/core/gimpbrushgenerated.c:153 ../app/paint/gimppaintoptions.c:227
 msgid "Brush Hardness"
 msgstr "Twardość pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:206
+#: ../app/core/gimpbrushgenerated.c:161 ../app/paint/gimppaintoptions.c:206
 msgid "Brush Aspect Ratio"
 msgstr "Proporcje pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:213
+#: ../app/core/gimpbrushgenerated.c:168 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Angle"
 msgstr "Nachylenie pędzla"
 
@@ -11880,12 +11880,12 @@ msgstr "Ustawienia narzędzia"
 msgid "Font"
 msgstr "Czcionka"
 
-#: ../app/core/gimpdata.c:581 ../app/core/gimpdata.c:589
+#: ../app/core/gimpdata.c:582 ../app/core/gimpdata.c:590
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimpdata.c:595
+#: ../app/core/gimpdata.c:596
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -14103,7 +14103,7 @@ msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
 
 #: ../app/dialogs/layer-options-dialog.c:411
-#: ../app/widgets/gimpcolordisplayeditor.c:277
+#: ../app/widgets/gimpcolordisplayeditor.c:283
 msgid "Active Filters"
 msgstr "Aktywne filtry"
 
@@ -17924,122 +17924,147 @@ msgstr "Nieprawidłowa, pusta nazwa pędzla"
 msgid "Brush '%s' not found"
 msgstr "Nie odnaleziono pędzla „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:90
+#: ../app/pdb/gimppdb-utils.c:91
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Nie można modyfikować pędzla „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:116
+#: ../app/pdb/gimppdb-utils.c:98
+#, c-format
+msgid "Brush '%s' is not renamable"
+msgstr "Nie można zmienić nazwy pędzla „%s”"
+
+#: ../app/pdb/gimppdb-utils.c:124
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Pędzel „%s” nie jest wygenerowany"
 
-#: ../app/pdb/gimppdb-utils.c:137
+#: ../app/pdb/gimppdb-utils.c:145
 msgid "Invalid empty paint dynamics name"
 msgstr "Nieprawidłowa, pusta nazwa dynamiki rysowania"
 
-#: ../app/pdb/gimppdb-utils.c:146
+#: ../app/pdb/gimppdb-utils.c:154
 #, c-format
 msgid "Paint dynamics '%s' not found"
 msgstr "Nie odnaleziono dynamiki rysowania „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:151
+#: ../app/pdb/gimppdb-utils.c:160
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Nie można modyfikować dynamiki rysowania „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:172
+#: ../app/pdb/gimppdb-utils.c:167
+#, c-format
+msgid "Paint dynamics '%s' is not renamable"
+msgstr "Nie można zmienić nazwy dynamiki rysowania „%s”"
+
+#: ../app/pdb/gimppdb-utils.c:188
 msgid "Invalid empty MyPaint brush name"
 msgstr "Nieprawidłowa, pusta nazwa pędzla programu MyPaint"
 
-#: ../app/pdb/gimppdb-utils.c:181
+#: ../app/pdb/gimppdb-utils.c:197
 #, c-format
 msgid "MyPaint brush '%s' not found"
 msgstr "Nie odnaleziono pędzla programu MyPaint „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:186
+#: ../app/pdb/gimppdb-utils.c:203
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
 msgstr "Nie można modyfikować pędzla programu MyPaint „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:206
+#: ../app/pdb/gimppdb-utils.c:210
+#, c-format
+msgid "MyPaint brush '%s' is not renamable"
+msgstr "Nie można zmienić nazwy pędzla programu MyPaint „%s”"
+
+#: ../app/pdb/gimppdb-utils.c:230
 msgid "Invalid empty pattern name"
 msgstr "Nieprawidłowa, pusta nazwa desenia"
 
-#: ../app/pdb/gimppdb-utils.c:215
+#: ../app/pdb/gimppdb-utils.c:239
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Nie odnaleziono desenia „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:235
+#: ../app/pdb/gimppdb-utils.c:259
 msgid "Invalid empty gradient name"
 msgstr "Nieprawidłowa, pusta nazwa gradientu"
 
-#: ../app/pdb/gimppdb-utils.c:244
+#: ../app/pdb/gimppdb-utils.c:268
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Nie odnaleziono gradientu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:249
+#: ../app/pdb/gimppdb-utils.c:274
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Nie można modyfikować gradientu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:270
+#: ../app/pdb/gimppdb-utils.c:281
+#, c-format
+msgid "Gradient '%s' is not renamable"
+msgstr "Nie można zmienić nazwy gradientu „%s”"
+
+#: ../app/pdb/gimppdb-utils.c:302
 msgid "Invalid empty palette name"
 msgstr "Nieprawidłowa, pusta nazwa palety"
 
-#: ../app/pdb/gimppdb-utils.c:279
+#: ../app/pdb/gimppdb-utils.c:311
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Nie odnaleziono palety „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:284
+#: ../app/pdb/gimppdb-utils.c:317
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Nie można modyfikować palety „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:304
+#: ../app/pdb/gimppdb-utils.c:324
+#, c-format
+msgid "Palette '%s' is not renamable"
+msgstr "Nie można zmienić nazwy palety „%s”"
+
+#: ../app/pdb/gimppdb-utils.c:344
 msgid "Invalid empty font name"
 msgstr "Nieprawidłowa, pusta nazwa czcionki"
 
-#: ../app/pdb/gimppdb-utils.c:314
+#: ../app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Nie odnaleziono czcionki „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:333
+#: ../app/pdb/gimppdb-utils.c:373
 msgid "Invalid empty buffer name"
 msgstr "Nieprawidłowa, pusta nazwa buforu"
 
-#: ../app/pdb/gimppdb-utils.c:343
+#: ../app/pdb/gimppdb-utils.c:383
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Nie odnaleziono buforu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:362
+#: ../app/pdb/gimppdb-utils.c:402
 msgid "Invalid empty paint method name"
 msgstr "Nieprawidłowa, pusta nazwa metody rysowania"
 
-#: ../app/pdb/gimppdb-utils.c:372
+#: ../app/pdb/gimppdb-utils.c:412
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Metoda rysowania „%s” nie istnieje"
 
-#: ../app/pdb/gimppdb-utils.c:391
+#: ../app/pdb/gimppdb-utils.c:431
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie został dodany do obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:401
+#: ../app/pdb/gimppdb-utils.c:441
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ jest dołączony do innego "
 "obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:427
+#: ../app/pdb/gimppdb-utils.c:467
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -18048,7 +18073,7 @@ msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie jest bezpośrednim "
 "potomkiem drzewa elementów"
 
-#: ../app/pdb/gimppdb-utils.c:455
+#: ../app/pdb/gimppdb-utils.c:495
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -18057,29 +18082,29 @@ msgstr ""
 "Elementy „%s” (%d) oraz „%s” (%d)  nie mogą zostać użyte, ponieważ nie "
 "należą do tego samego drzewa elementów"
 
-#: ../app/pdb/gimppdb-utils.c:480
+#: ../app/pdb/gimppdb-utils.c:520
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Element „%s” (%d) nie może zostać przodkiem „%s” (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:504
+#: ../app/pdb/gimppdb-utils.c:544
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Element „%s” (%d) został już dodany do obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:512
+#: ../app/pdb/gimppdb-utils.c:552
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Próbowano dodać element „%s” (%d) do błędnego obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:532
+#: ../app/pdb/gimppdb-utils.c:572
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego zawartość "
 "jest zablokowana"
 
-#: ../app/pdb/gimppdb-utils.c:542
+#: ../app/pdb/gimppdb-utils.c:582
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -18087,37 +18112,37 @@ msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego położenie "
 "i rozmiar są zablokowane"
 
-#: ../app/pdb/gimppdb-utils.c:562
+#: ../app/pdb/gimppdb-utils.c:602
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie jest to element grupy"
 
-#: ../app/pdb/gimppdb-utils.c:582
+#: ../app/pdb/gimppdb-utils.c:622
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jest to grupa "
 "elementów"
 
-#: ../app/pdb/gimppdb-utils.c:603
+#: ../app/pdb/gimppdb-utils.c:643
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "Warstwa „%s” (%d) nie może zostać użyta, ponieważ nie jest warstwą tekstową"
 
-#: ../app/pdb/gimppdb-utils.c:644
+#: ../app/pdb/gimppdb-utils.c:684
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "Obraz „%s” (%d) jest typu „%s”, natomiast spodziewany typ obrazu to „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:667
+#: ../app/pdb/gimppdb-utils.c:707
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Obraz „%s” (%d) nie może być typu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:687
+#: ../app/pdb/gimppdb-utils.c:727
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -18126,22 +18151,22 @@ msgstr ""
 "Obraz „%s” (%d) ma dokładność „%s”, natomiast spodziewana dokładność obrazu "
 "to „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:710
+#: ../app/pdb/gimppdb-utils.c:750
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Obraz „%s” (%d) nie może mieć dokładności „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:734 ../app/pdb/image-guides-cmds.c:179
+#: ../app/pdb/gimppdb-utils.c:774 ../app/pdb/image-guides-cmds.c:179
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Obraz „%s” (%d) nie zawiera prowadnicy o identyfikatorze %d"
 
-#: ../app/pdb/gimppdb-utils.c:757 ../app/pdb/image-sample-points-cmds.c:144
+#: ../app/pdb/gimppdb-utils.c:797 ../app/pdb/image-sample-points-cmds.c:144
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Obraz „%s” (%d) nie zawiera punktu wzorcowego o identyfikatorze %d"
 
-#: ../app/pdb/gimppdb-utils.c:785
+#: ../app/pdb/gimppdb-utils.c:825
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Obiekt wektorowy %d nie zawiera krzywej o identyfikatorze %d"
@@ -19044,11 +19069,11 @@ msgstr "Wybiera z listy często używanych temperatur kolorów"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/propgui/gimppropgui.c:368
+#: ../app/propgui/gimppropgui.c:373
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/propgui/gimppropgui.c:506
+#: ../app/propgui/gimppropgui.c:511
 msgid "This operation has no editable properties"
 msgstr "To działanie nie ma modyfikowalnych właściwości"
 
@@ -22019,33 +22044,33 @@ msgstr "Schowek"
 msgid "Add the current color to the color history"
 msgstr "Dodaje bieżący kolor do historii kolorów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:157
+#: ../app/widgets/gimpcolordisplayeditor.c:163
 msgid "Available Filters"
 msgstr "Dostępne filtry"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:221
+#: ../app/widgets/gimpcolordisplayeditor.c:227
 msgid "Move the selected filter up"
 msgstr "Przesuwa zaznaczony filtr w górę"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:230
+#: ../app/widgets/gimpcolordisplayeditor.c:236
 msgid "Move the selected filter down"
 msgstr "Przesuwa zaznaczony filtr w dół"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:328
+#: ../app/widgets/gimpcolordisplayeditor.c:334
 msgid "Reset the selected filter to default values"
 msgstr "Przywraca domyślne ustawienia zaznaczonego filtru"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:516
+#: ../app/widgets/gimpcolordisplayeditor.c:525
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Dodaje „%s” do listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:553
+#: ../app/widgets/gimpcolordisplayeditor.c:562
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Usuwa „%s” z listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:584
+#: ../app/widgets/gimpcolordisplayeditor.c:603
 msgid "No filter selected"
 msgstr "Nie zaznaczono filtru"
 
