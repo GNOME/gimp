@@ -67,7 +67,8 @@ static GimpTempBuf * gimp_palette_get_new_preview   (GimpViewable         *viewa
 static gchar       * gimp_palette_get_description   (GimpViewable         *viewable,
                                                      gchar               **tooltip);
 static const gchar * gimp_palette_get_extension     (GimpData             *data);
-static GimpData    * gimp_palette_duplicate         (GimpData             *data);
+static void          gimp_palette_copy              (GimpData             *data,
+                                                     GimpData             *src_data);
 
 static void          gimp_palette_entry_free        (GimpPaletteEntry     *entry);
 static gint64        gimp_palette_entry_get_memsize (GimpPaletteEntry     *entry,
@@ -102,7 +103,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
 
   data_class->save                  = gimp_palette_save;
   data_class->get_extension         = gimp_palette_get_extension;
-  data_class->duplicate             = gimp_palette_duplicate;
+  data_class->copy                  = gimp_palette_copy;
 }
 
 static void
@@ -309,25 +310,34 @@ gimp_palette_get_extension (GimpData *data)
   return GIMP_PALETTE_FILE_EXTENSION;
 }
 
-static GimpData *
-gimp_palette_duplicate (GimpData *data)
+static void
+gimp_palette_copy (GimpData *data,
+                   GimpData *src_data)
 {
-  GimpPalette *palette = GIMP_PALETTE (data);
-  GimpPalette *new;
+  GimpPalette *palette     = GIMP_PALETTE (data);
+  GimpPalette *src_palette = GIMP_PALETTE (src_data);
   GList       *list;
 
-  new = g_object_new (GIMP_TYPE_PALETTE, NULL);
+  gimp_data_freeze (data);
 
-  new->n_columns = palette->n_columns;
+  if (palette->colors)
+    {
+      g_list_free_full (palette->colors,
+                        (GDestroyNotify) gimp_palette_entry_free);
+      palette->colors = NULL;
+    }
 
-  for (list = palette->colors; list; list = g_list_next (list))
+  palette->n_colors  = 0;
+  palette->n_columns = src_palette->n_columns;
+
+  for (list = src_palette->colors; list; list = g_list_next (list))
     {
       GimpPaletteEntry *entry = list->data;
 
-      gimp_palette_add_entry (new, -1, entry->name, &entry->color);
+      gimp_palette_add_entry (palette, -1, entry->name, &entry->color);
     }
 
-  return GIMP_DATA (new);
+  gimp_data_thaw (data);
 }
 
 static gchar *

@@ -249,8 +249,6 @@ gimp_gradient_copy (GimpData *data,
   GimpGradient        *src_gradient = GIMP_GRADIENT (src_data);
   GimpGradientSegment *head, *prev, *cur, *orig;
 
-  gimp_data_freeze (GIMP_DATA (gradient));
-
   if (gradient->segments)
     {
       gimp_gradient_segments_free (gradient->segments);
@@ -258,7 +256,7 @@ gimp_gradient_copy (GimpData *data,
     }
 
   prev = NULL;
-  orig = GIMP_GRADIENT (src_gradient)->segments;
+  orig = src_gradient->segments;
   head = NULL;
 
   while (orig)
@@ -281,7 +279,7 @@ gimp_gradient_copy (GimpData *data,
 
   gradient->segments = head;
 
-  gimp_data_thaw (GIMP_DATA (gradient));
+  gimp_data_dirty (GIMP_DATA (gradient));
 }
 
 static gint

@@ -94,7 +94,8 @@ static void
                                                   GParamSpec  **pspecs);
 
 static const gchar * gimp_dynamics_get_extension (GimpData     *data);
-static GimpData *    gimp_dynamics_duplicate     (GimpData     *data);
+static void          gimp_dynamics_copy          (GimpData     *data,
+                                                  GimpData     *src_data);
 
 static GimpDynamicsOutput *
                      gimp_dynamics_create_output (GimpDynamics           *dynamics,
@@ -127,7 +128,7 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;
-  data_class->duplicate                     = gimp_dynamics_duplicate;
+  data_class->copy                          = gimp_dynamics_copy;
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_NAME,
                            "name",
@@ -459,15 +460,16 @@ gimp_dynamics_get_extension (GimpData *data)
   return GIMP_DYNAMICS_FILE_EXTENSION;
 }
 
-static GimpData *
-gimp_dynamics_duplicate (GimpData *data)
+static void
+gimp_dynamics_copy (GimpData *data,
+                    GimpData *src_data)
 {
-  GimpData *dest = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+  gimp_data_freeze (data);
 
-  gimp_config_copy (GIMP_CONFIG (data),
-                    GIMP_CONFIG (dest), 0);
+  gimp_config_copy (GIMP_CONFIG (src_data),
+                    GIMP_CONFIG (data), 0);
 
-  return GIMP_DATA (dest);
+  gimp_data_thaw (data);
 }
 
 

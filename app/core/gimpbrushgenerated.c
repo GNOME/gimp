@@ -64,7 +64,8 @@ static void          gimp_brush_generated_get_property  (GObject      *object,
 
 static void          gimp_brush_generated_dirty         (GimpData     *data);
 static const gchar * gimp_brush_generated_get_extension (GimpData     *data);
-static GimpData    * gimp_brush_generated_duplicate     (GimpData     *data);
+static void          gimp_brush_generated_copy          (GimpData     *data,
+                                                         GimpData     *src_data);
 
 static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
                                                          gdouble       scale,
@@ -120,7 +121,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   data_class->save            = gimp_brush_generated_save;
   data_class->dirty           = gimp_brush_generated_dirty;
   data_class->get_extension   = gimp_brush_generated_get_extension;
-  data_class->duplicate       = gimp_brush_generated_duplicate;
+  data_class->copy            = gimp_brush_generated_copy;
 
   brush_class->transform_size = gimp_brush_generated_transform_size;
   brush_class->transform_mask = gimp_brush_generated_transform_mask;
@@ -275,18 +276,21 @@ gimp_brush_generated_get_extension (GimpData *data)
   return GIMP_BRUSH_GENERATED_FILE_EXTENSION;
 }
 
-static GimpData *
-gimp_brush_generated_duplicate (GimpData *data)
+static void
+gimp_brush_generated_copy (GimpData *data,
+                           GimpData *src_data)
 {
-  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
+  GimpBrushGenerated *brush     = GIMP_BRUSH_GENERATED (data);
+  GimpBrushGenerated *src_brush = GIMP_BRUSH_GENERATED (src_data);
 
-  return gimp_brush_generated_new (gimp_object_get_name (brush),
-                                   brush->shape,
-                                   brush->radius,
-                                   brush->spikes,
-                                   brush->hardness,
-                                   brush->aspect_ratio,
-                                   brush->angle);
+  brush->shape        = src_brush->shape;
+  brush->radius       = src_brush->radius;
+  brush->spikes       = src_brush->spikes;
+  brush->hardness     = src_brush->hardness;
+  brush->aspect_ratio = src_brush->aspect_ratio;
+  brush->angle        = src_brush->angle;
+
+  gimp_data_dirty (data);
 }
 
 static void

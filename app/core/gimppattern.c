@@ -51,7 +51,8 @@ static gchar       * gimp_pattern_get_description   (GimpViewable         *viewa
                                                      gchar               **tooltip);
 
 static const gchar * gimp_pattern_get_extension     (GimpData             *data);
-static GimpData    * gimp_pattern_duplicate         (GimpData             *data);
+static void          gimp_pattern_copy              (GimpData             *data,
+                                                     GimpData             *src_data);
 
 static gchar       * gimp_pattern_get_checksum      (GimpTagged           *tagged);
 
@@ -81,7 +82,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   viewable_class->get_description   = gimp_pattern_get_description;
 
   data_class->get_extension         = gimp_pattern_get_extension;
-  data_class->duplicate             = gimp_pattern_duplicate;
+  data_class->copy                  = gimp_pattern_copy;
 }
 
 static void
@@ -182,14 +183,18 @@ gimp_pattern_get_extension (GimpData *data)
   return GIMP_PATTERN_FILE_EXTENSION;
 }
 
-static GimpData *
-gimp_pattern_duplicate (GimpData *data)
+static void
+gimp_pattern_copy (GimpData *data,
+                   GimpData *src_data)
 {
-  GimpPattern *pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
+  GimpPattern *pattern     = GIMP_PATTERN (data);
+  GimpPattern *src_pattern = GIMP_PATTERN (src_data);
 
-  pattern->mask = gimp_temp_buf_copy (GIMP_PATTERN (data)->mask);
+  gimp_temp_buf_unref (pattern->mask);
 
-  return GIMP_DATA (pattern);
+  pattern->mask = gimp_temp_buf_copy (src_pattern->mask);
+
+  gimp_data_dirty (data);
 }
 
 static gchar *

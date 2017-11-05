@@ -86,7 +86,8 @@ static gchar       * gimp_curve_get_description   (GimpViewable     *viewable,
 
 static void          gimp_curve_dirty             (GimpData         *data);
 static const gchar * gimp_curve_get_extension     (GimpData         *data);
-static GimpData    * gimp_curve_duplicate         (GimpData         *data);
+static void          gimp_curve_data_copy         (GimpData         *data,
+                                                   GimpData         *src_data);
 
 static gboolean      gimp_curve_serialize         (GimpConfig       *config,
                                                    GimpConfigWriter *writer,
@@ -98,7 +99,7 @@ static gboolean      gimp_curve_deserialize       (GimpConfig       *config,
 static gboolean      gimp_curve_equal             (GimpConfig       *a,
                                                    GimpConfig       *b);
 static void          _gimp_curve_reset            (GimpConfig       *config);
-static gboolean      gimp_curve_copy              (GimpConfig       *src,
+static gboolean      gimp_curve_config_copy       (GimpConfig       *src,
                                                    GimpConfig       *dest,
                                                    GParamFlags       flags);
 
@@ -141,7 +142,7 @@ gimp_curve_class_init (GimpCurveClass *klass)
   data_class->dirty                 = gimp_curve_dirty;
   data_class->save                  = gimp_curve_save;
   data_class->get_extension         = gimp_curve_get_extension;
-  data_class->duplicate             = gimp_curve_duplicate;
+  data_class->copy                  = gimp_curve_data_copy;
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURVE_TYPE,
                          "curve-type",
@@ -188,7 +189,7 @@ gimp_curve_config_iface_init (GimpConfigInterface *iface)
   iface->deserialize = gimp_curve_deserialize;
   iface->equal       = gimp_curve_equal;
   iface->reset       = _gimp_curve_reset;
-  iface->copy        = gimp_curve_copy;
+  iface->copy        = gimp_curve_config_copy;
 }
 
 static void
@@ -438,15 +439,16 @@ gimp_curve_get_extension (GimpData *data)
   return GIMP_CURVE_FILE_EXTENSION;
 }
 
-static GimpData *
-gimp_curve_duplicate (GimpData *data)
+static void
+gimp_curve_data_copy (GimpData *data,
+                      GimpData *src_data)
 {
-  GimpCurve *new = g_object_new (GIMP_TYPE_CURVE, NULL);
+  gimp_data_freeze (data);
 
-  gimp_config_copy (GIMP_CONFIG (data),
-                    GIMP_CONFIG (new), 0);
+  gimp_config_copy (GIMP_CONFIG (src_data),
+                    GIMP_CONFIG (data), 0);
 
-  return GIMP_DATA (new);
+  gimp_data_thaw (data);
 }
 
 static gboolean
@@ -498,9 +500,9 @@ _gimp_curve_reset (GimpConfig *config)
 }
 
 static gboolean
-gimp_curve_copy (GimpConfig  *src,
-                 GimpConfig  *dest,
-                 GParamFlags  flags)
+gimp_curve_config_copy (GimpConfig  *src,
+                        GimpConfig  *dest,
+                        GParamFlags  flags)
 {
   GimpCurve *src_curve  = GIMP_CURVE (src);
   GimpCurve *dest_curve = GIMP_CURVE (dest);
