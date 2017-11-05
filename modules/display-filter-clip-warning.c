@@ -36,6 +36,7 @@
 #define DEFAULT_HIGHLIGHTS_COLOR (&(GimpRGB) {1.00, 0.25, 0.25, 1.00})
 #define DEFAULT_NAN_COLOR        (&(GimpRGB) {1.00, 1.00, 0.25, 1.00})
 
+
 #define CDISPLAY_TYPE_CLIP_WARNING            (cdisplay_clip_warning_get_type ())
 #define CDISPLAY_CLIP_WARNING(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CDISPLAY_TYPE_CLIP_WARNING, CdisplayClipWarning))
 #define CDISPLAY_CLIP_WARNING_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CDISPLAY_TYPE_CLIP_WARNING, CdisplayClipWarningClass))
@@ -214,7 +215,7 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_ALPHA,
                             "include-alpha",
                             _("Include alpha"),
-                            _("Include alpha component in the warnings"),
+                            _("Include alpha component in the warning"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -294,43 +295,43 @@ cdisplay_clip_warning_set_property (GObject      *object,
 {
   CdisplayClipWarning *clip_warning = CDISPLAY_CLIP_WARNING (object);
 
-#define SET_PTR_MEMBER(member, value)                                          \
+#define SET_MEMBER_PTR(member, value)                                          \
   cdisplay_clip_warning_set_member (clip_warning,                              \
                                     pspec->name,                               \
                                     &clip_warning->member,                     \
                                     (value),                                   \
                                     sizeof (clip_warning->member))
-#define SET_VAL_MEMBER(member, type, value)                                    \
-  SET_PTR_MEMBER (member, &(type) {value})
+#define SET_MEMBER_VAL(member, type, value)                                    \
+  SET_MEMBER_PTR (member, &(type) {value})
 
   switch (property_id)
     {
     case PROP_SHOW_SHADOWS:
-      SET_VAL_MEMBER (show_shadows, gboolean, g_value_get_boolean (value));
+      SET_MEMBER_VAL (show_shadows, gboolean, g_value_get_boolean (value));
       break;
     case PROP_SHADOWS_COLOR:
-      SET_PTR_MEMBER (shadows_color, g_value_get_boxed (value));
+      SET_MEMBER_PTR (shadows_color, g_value_get_boxed (value));
       break;
 
     case PROP_SHOW_HIGHLIGHTS:
-      SET_VAL_MEMBER (show_highlights, gboolean, g_value_get_boolean (value));
+      SET_MEMBER_VAL (show_highlights, gboolean, g_value_get_boolean (value));
       break;
     case PROP_HIGHLIGHTS_COLOR:
-      SET_PTR_MEMBER (highlights_color, g_value_get_boxed (value));
+      SET_MEMBER_PTR (highlights_color, g_value_get_boxed (value));
       break;
 
     case PROP_SHOW_NAN:
-      SET_VAL_MEMBER (show_nan, gboolean, g_value_get_boolean (value));
+      SET_MEMBER_VAL (show_nan, gboolean, g_value_get_boolean (value));
       break;
     case PROP_NAN_COLOR:
-      SET_PTR_MEMBER (nan_color, g_value_get_boxed (value));
+      SET_MEMBER_PTR (nan_color, g_value_get_boxed (value));
       break;
 
     case PROP_INCLUDE_ALPHA:
-      SET_VAL_MEMBER (include_alpha, gboolean, g_value_get_boolean (value));
+      SET_MEMBER_VAL (include_alpha, gboolean, g_value_get_boolean (value));
       break;
     case PROP_OPAQUE:
-      SET_VAL_MEMBER (opaque, gboolean, g_value_get_boolean (value));
+      SET_MEMBER_VAL (opaque, gboolean, g_value_get_boolean (value));
       break;
 
     default:
@@ -338,8 +339,8 @@ cdisplay_clip_warning_set_property (GObject      *object,
       break;
     }
 
-#undef SET_PTR_MEMBER
-#undef SET_VAL_MEMBER
+#undef SET_MEMBER_PTR
+#undef SET_MEMBER_VAL
 }
 
 static void

@@ -120,7 +120,7 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CONTRAST,
                            "contrast",
-                           _("Contrast"),
+                           _("Contrast cycles"),
                            NULL,
                            0.01, 10.0, DEFAULT_CONTRAST,
                            0);

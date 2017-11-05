@@ -251,7 +251,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEFICIENCY,
                          "deficiency",
                          _("Deficiency"),
-                         NULL,
+                         _("Color deficiency type"),
                          CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
                          DEFAULT_DEFICIENCY,
                          0);
