@@ -283,6 +283,11 @@ gimp_brush_generated_copy (GimpData *data,
   GimpBrushGenerated *brush     = GIMP_BRUSH_GENERATED (data);
   GimpBrushGenerated *src_brush = GIMP_BRUSH_GENERATED (src_data);
 
+  gimp_data_freeze (data);
+
+  gimp_brush_set_spacing (GIMP_BRUSH (brush),
+                          gimp_brush_get_spacing (GIMP_BRUSH (src_brush)));
+
   brush->shape        = src_brush->shape;
   brush->radius       = src_brush->radius;
   brush->spikes       = src_brush->spikes;
@@ -290,7 +295,7 @@ gimp_brush_generated_copy (GimpData *data,
   brush->aspect_ratio = src_brush->aspect_ratio;
   brush->angle        = src_brush->angle;
 
-  gimp_data_dirty (data);
+  gimp_data_thaw (data);
 }
 
 static void
