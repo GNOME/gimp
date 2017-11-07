@@ -4470,7 +4470,7 @@ msgstr "Fotocò_pia..."
 #: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "_Pixelitza..."
+msgstr "_Pixela..."
 
 #: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"

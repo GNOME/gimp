@@ -1251,7 +1251,7 @@ msgstr "Quantitat de vores"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
-msgstr "Pixelitza"
+msgstr "Pixela"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
 msgid "Pixel amount"
