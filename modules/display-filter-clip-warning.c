@@ -34,7 +34,7 @@
 
 #define DEFAULT_SHADOWS_COLOR    (&(GimpRGB) {0.25, 0.25, 1.00, 1.00})
 #define DEFAULT_HIGHLIGHTS_COLOR (&(GimpRGB) {1.00, 0.25, 0.25, 1.00})
-#define DEFAULT_NAN_COLOR        (&(GimpRGB) {1.00, 1.00, 0.25, 1.00})
+#define DEFAULT_BOGUS_COLOR      (&(GimpRGB) {1.00, 1.00, 0.25, 1.00})
 
 
 #define CDISPLAY_TYPE_CLIP_WARNING            (cdisplay_clip_warning_get_type ())
@@ -48,7 +48,7 @@ typedef enum
 {
   WARNING_SHADOW    = 1 << 0,
   WARNING_HIGHLIGHT = 1 << 1,
-  WARNING_NAN       = 1 << 2
+  WARNING_BOGUS     = 1 << 2
 } Warning;
 
 
@@ -63,10 +63,10 @@ struct _CdisplayClipWarning
   GimpRGB           shadows_color;
   gboolean          show_highlights;
   GimpRGB           highlights_color;
-  gboolean          show_nan;
-  GimpRGB           nan_color;
+  gboolean          show_bogus;
+  GimpRGB           bogus_color;
   gboolean          include_alpha;
-  gboolean          opaque;
+  gboolean          include_transparent;
 
   gfloat            colors[8][2][4];
 };
@@ -84,10 +84,10 @@ enum
   PROP_SHADOWS_COLOR,
   PROP_SHOW_HIGHLIGHTS,
   PROP_HIGHLIGHTS_COLOR,
-  PROP_SHOW_NAN,
-  PROP_NAN_COLOR,
+  PROP_SHOW_BOGUS,
+  PROP_BOGUS_COLOR,
   PROP_INCLUDE_ALPHA,
-  PROP_OPAQUE
+  PROP_INCLUDE_TRANSPARENT
 };
 
 
@@ -192,37 +192,37 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
     g_object_class_find_property (G_OBJECT_CLASS (klass), "highlights-color"),
     "sensitive", "show-highlights");
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_NAN,
-                            "show-nan",
-                            _("Show NaN"),
-                            _("Show warning for pixels with a NaN component"),
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_BOGUS,
+                            "show-bogus",
+                            _("Show bogus"),
+                            _("Show warning for pixels with an infinite or NaN component"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_NAN_COLOR,
-                        "nan-color",
-                        _("NaN color"),
-                        _("NaN warning color"),
+  GIMP_CONFIG_PROP_RGB (object_class, PROP_BOGUS_COLOR,
+                        "bogus-color",
+                        _("Bogus color"),
+                        _("Bogus warning color"),
                         FALSE,
-                        DEFAULT_NAN_COLOR,
+                        DEFAULT_BOGUS_COLOR,
                         GIMP_PARAM_STATIC_STRINGS |
                         GIMP_CONFIG_PARAM_DEFAULTS);
 
   gegl_param_spec_set_property_key (
-    g_object_class_find_property (G_OBJECT_CLASS (klass), "nan-color"),
-    "sensitive", "show-nan");
+    g_object_class_find_property (G_OBJECT_CLASS (klass), "bogus-color"),
+    "sensitive", "show-bogus");
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_ALPHA,
                             "include-alpha",
-                            _("Include alpha"),
+                            _("Include alpha component"),
                             _("Include alpha component in the warning"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OPAQUE,
-                            "opaque",
-                            _("Opaque"),
-                            _("Make warning pixels opaque"),
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INCLUDE_TRANSPARENT,
+                            "include-transparent",
+                            _("Include transparent pixels"),
+                            _("Include fully transparent pixels in the warning"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -267,18 +267,18 @@ cdisplay_clip_warning_get_property (GObject    *object,
       g_value_set_boxed (value, &clip_warning->highlights_color);
       break;
 
-    case PROP_SHOW_NAN:
-      g_value_set_boolean (value, clip_warning->show_nan);
+    case PROP_SHOW_BOGUS:
+      g_value_set_boolean (value, clip_warning->show_bogus);
       break;
-    case PROP_NAN_COLOR:
-      g_value_set_boxed (value, &clip_warning->nan_color);
+    case PROP_BOGUS_COLOR:
+      g_value_set_boxed (value, &clip_warning->bogus_color);
       break;
 
     case PROP_INCLUDE_ALPHA:
       g_value_set_boolean (value, clip_warning->include_alpha);
       break;
-    case PROP_OPAQUE:
-      g_value_set_boolean (value, clip_warning->opaque);
+    case PROP_INCLUDE_TRANSPARENT:
+      g_value_set_boolean (value, clip_warning->include_transparent);
       break;
 
     default:
@@ -320,18 +320,18 @@ cdisplay_clip_warning_set_property (GObject      *object,
       SET_MEMBER_PTR (highlights_color, g_value_get_boxed (value));
       break;
 
-    case PROP_SHOW_NAN:
-      SET_MEMBER_VAL (show_nan, gboolean, g_value_get_boolean (value));
+    case PROP_SHOW_BOGUS:
+      SET_MEMBER_VAL (show_bogus, gboolean, g_value_get_boolean (value));
       break;
-    case PROP_NAN_COLOR:
-      SET_MEMBER_PTR (nan_color, g_value_get_boxed (value));
+    case PROP_BOGUS_COLOR:
+      SET_MEMBER_PTR (bogus_color, g_value_get_boxed (value));
       break;
 
     case PROP_INCLUDE_ALPHA:
       SET_MEMBER_VAL (include_alpha, gboolean, g_value_get_boolean (value));
       break;
-    case PROP_OPAQUE:
-      SET_MEMBER_VAL (opaque, gboolean, g_value_get_boolean (value));
+    case PROP_INCLUDE_TRANSPARENT:
+      SET_MEMBER_VAL (include_transparent, gboolean, g_value_get_boolean (value));
       break;
 
     default:
@@ -364,45 +364,35 @@ cdisplay_clip_warning_convert_buffer (GimpColorDisplay *display,
 
       while (count--)
         {
-          gint warning      = 0;
-          gint n_components = clip_warning->opaque ? 4 : 3;
+          gint warning = 0;
 
-          if (clip_warning->show_shadows)
+          if (clip_warning->include_transparent ||
+              ! (data[3] <= 0.0f) /* include nan */)
             {
-              if (clip_warning->include_alpha && data[3] < 0.0f)
+              if (clip_warning->show_bogus                                              &&
+                  (! isfinite (data[0]) || ! isfinite (data[1]) || ! isfinite (data[2]) ||
+                   (clip_warning->include_alpha && ! isfinite (data[3]))))
                 {
-                  warning      |= WARNING_SHADOW;
-                  n_components  = 4;
+                  /* don't combine warning color of pixels with a bogus
+                   * component with other warnings
+                   */
+                  warning = WARNING_BOGUS;
                 }
-              else if (data[0] < 0.0f || data[1] < 0.0f || data[2] < 0.0f)
+              else
                 {
-                  warning      |= WARNING_SHADOW;
-                }
-            }
+                  if (clip_warning->show_shadows                          &&
+                      (data[0] < 0.0f || data[1] < 0.0f || data[2] < 0.0f ||
+                       (clip_warning->include_alpha && data[3] < 0.0f)))
+                    {
+                      warning |= WARNING_SHADOW;
+                    }
 
-          if (clip_warning->show_highlights)
-            {
-              if (clip_warning->include_alpha && data[3] > 1.0f)
-                {
-                  warning      |= WARNING_HIGHLIGHT;
-                  n_components  = 4;
-                }
-              else if (data[0] > 1.0f || data[1] > 1.0f || data[2] > 1.0f)
-                {
-                  warning      |= WARNING_HIGHLIGHT;
-                }
-            }
-
-          if (clip_warning->show_nan)
-            {
-              if (clip_warning->include_alpha && isnan (data[3]))
-                {
-                  warning      |= WARNING_NAN;
-                  n_components  = 4;
-                }
-              else if (isnan (data[0]) || isnan (data[1]) || isnan (data[2]))
-                {
-                  warning      |= WARNING_NAN;
+                  if (clip_warning->show_highlights                       &&
+                      (data[0] > 1.0f || data[1] > 1.0f || data[2] > 1.0f ||
+                       (clip_warning->include_alpha && data[3] > 1.0f)))
+                    {
+                      warning |= WARNING_HIGHLIGHT;
+                    }
                 }
             }
 
@@ -411,7 +401,7 @@ cdisplay_clip_warning_convert_buffer (GimpColorDisplay *display,
               gboolean alt = ((x + y) >> 3) & 1;
 
               memcpy (data, clip_warning->colors[warning][alt],
-                      n_components * sizeof (gfloat));
+                      4 * sizeof (gfloat));
             }
 
           data += 4;
@@ -476,11 +466,11 @@ cdisplay_clip_warning_update_colors (CdisplayClipWarning *clip_warning)
           n++;
         }
 
-      if (i & WARNING_NAN)
+      if (i & WARNING_BOGUS)
         {
-          color[0] += clip_warning->nan_color.r;
-          color[1] += clip_warning->nan_color.g;
-          color[2] += clip_warning->nan_color.b;
+          color[0] += clip_warning->bogus_color.r;
+          color[1] += clip_warning->bogus_color.g;
+          color[2] += clip_warning->bogus_color.b;
 
           n++;
         }
