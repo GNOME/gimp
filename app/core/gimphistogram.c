@@ -237,6 +237,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   const Babl           *format;
   gint                  n_components;
   gint                  n_bins;
+  gfloat                n_bins_1f;
   gint                  temp;
 
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
@@ -325,9 +326,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                               babl_format ("Y float"),
                               GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
-#define VALUE(c,i) (*(temp = SIGNED_ROUND ((i) * (priv->n_bins - 1)),    \
-                      &priv->values[(c) * priv->n_bins +                 \
-                                    CLAMP (temp, 0, priv->n_bins - 1)]))
+  n_bins_1f = priv->n_bins - 1;
+
+#define VALUE(c,i) (*(temp = SIGNED_ROUND (MIN ((i) * n_bins_1f, n_bins_1f)), \
+                      &priv->values[(c) * priv->n_bins + MAX (temp, 0)]))
 
   while (gegl_buffer_iterator_next (iter))
     {
