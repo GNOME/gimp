@@ -29,6 +29,14 @@ Core:
   - The statusbar now blinks on warnings and errors.
   - Highlight upper/lower halves of spinscales while hovering.
 
+Usability:
+
+  - The spinscale widget now highlights vertical parts of the slider
+    section differently to hint that position of cursor above the widget
+    matters. When changing values in the lower step section, the pointer
+    will be wrapped around the screen so that you could continue adjusting
+    the value without interruptions.
+
 Tools:
 
   - Blend tool now features on-canvas gradient editing: adding, shifting,
@@ -38,11 +46,28 @@ Tools:
     start blending) to support the old workflow where you can't edit color
     stops before applying the gradient fill, and 'Modify active gradient'
     which allows changing user-writable gradients directly rather than
-    creating copies of them.
+    creating copies of them. Moreover, custom gradient is now saved
+    and restored across sessions.
+  - Color Picker now reads values under cursor in local windows under
+    Wayland.
+  - All transform tools: it makes no difference now whether a modifier is
+    pressed before of after mouse button press/release.
+
+Painting:
+
+  - When copying a generated brush, GIMP now copies its 'Spacing' property.
 
 Color management:
 
   - Use babl to convert between profiles if possible.
+
+Display filters:
+
+  - New 'Clip Warning' display filter to show underexposed and overexposed
+    values. Target values below 0 and above 1.0, hence it only works on
+    16/32 bit per channel float images (such as EXR and TIFF).
+  - Display filters now operate in unbounded sRGB rather than in monitor
+    color space.
 
 Plug-ins:
 
@@ -88,11 +113,12 @@ Building:
 
 Contributors:
 
-Marco Ciampa, Fran Dieguez, Piotr Drąg, Tobias Ellinghaus, Ell,
-Sveinn í Felli, gogo, Luis Angel Gonzo, Øyvind Kolås, Thomas Manni,
-Jordi Mas, Balázs Meskó, Lionel N, Michael Natterer, Jehan Pagès,
-Juan Palacios, Alexandre Prokoudine, Michael Schumacher,
-Dimitris Spingos, Andika Triwidada.
+Mario Blättermann, Marco Ciampa, Fran Dieguez, Piotr Drąg,
+Tobias Ellinghaus, Ell, Sveinn í Felli, gogo, Luis Angel Gonzo,
+Øyvind Kolås, Thomas Manni, Jordi Mas, Balázs Meskó, Lionel N,
+Michael Natterer, Jehan Pagès, Juan Palacios, Alexandre Prokoudine,
+Christopher Rogers, Michael Schumacher, Dimitris Spingos,
+Tobias Stoeckmann, Andika Triwidada, Massimo Valentini.
 
 Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 =================================================
