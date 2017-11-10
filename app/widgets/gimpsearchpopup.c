@@ -662,10 +662,10 @@ gimp_search_popup_run_selected (GimpSearchPopup *popup)
 
       if (gtk_action_is_sensitive (action))
         {
-          gtk_action_activate (action);
-
           /* Close the search popup on activation. */
           GIMP_POPUP_CLASS (parent_class)->cancel (GIMP_POPUP (popup));
+
+          gtk_action_activate (action);
         }
 
       g_object_unref (action);
