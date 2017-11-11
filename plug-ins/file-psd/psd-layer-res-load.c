@@ -180,19 +180,19 @@ static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        GError               **error);
 
 static gint     load_resource_lrfx    (const PSDlayerres     *res_a,
-				       PSDlayer              *lyr_a,
-				       FILE                  *f,
-				       GError               **error);
+                                       PSDlayer              *lyr_a,
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lyvr    (const PSDlayerres     *res_a,
-				       PSDlayer              *lyr_a,
-				       FILE                  *f,
-				       GError               **error);
+                                       PSDlayer              *lyr_a,
+                                       FILE                  *f,
+                                       GError               **error);
 
 static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
-				       PSDlayer              *lyr_a,
-				       FILE                  *f,
-				       GError               **error);
+                                       PSDlayer              *lyr_a,
+                                       FILE                  *f,
+                                       GError               **error);
 
 /* Public Functions */
 gint
@@ -211,7 +211,7 @@ get_layer_resource_header (PSDlayerres  *res_a,
   res_a->data_start = ftell (f);
 
   IFDBG(2) g_debug ("Sig: %.4s, key: %.4s, start: %d, len: %d",
-		     res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
+                     res_a->sig, res_a->key, res_a->data_start, res_a->data_len);
 
   return 0;
 }
@@ -251,41 +251,41 @@ load_layer_resource (PSDlayerres  *res_a,
           || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
           || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
           || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
-	load_resource_ladj (res_a, lyr_a, f, error);
+        load_resource_ladj (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
-	       || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
-	       || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
-	load_resource_lfil (res_a, lyr_a, f, error);
+               || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
+               || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
+        load_resource_lfil (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
-	       || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
-	load_resource_lfx (res_a, lyr_a, f, error);
+               || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
+        load_resource_lfx (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
-	       || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
-	load_resource_ltyp (res_a, lyr_a, f, error);
+               || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
+        load_resource_ltyp (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
-	load_resource_luni (res_a, lyr_a, f, error);
+        load_resource_luni (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
-	load_resource_lyid (res_a, lyr_a, f, error);
+        load_resource_lyid (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
-	load_resource_lclr (res_a, lyr_a, f, error);
+        load_resource_lclr (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
-	load_resource_lsct (res_a, lyr_a, f, error);
+        load_resource_lsct (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-	load_resource_lrfx (res_a, lyr_a, f, error);
+        load_resource_lrfx (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
-	load_resource_lyvr (res_a, lyr_a, f, error);
+        load_resource_lyvr (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
-	load_resource_lnsr (res_a, lyr_a, f, error);
+        load_resource_lnsr (res_a, lyr_a, f, error);
 
       else
         load_resource_unknown (res_a, lyr_a, f, error);
@@ -625,13 +625,13 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   || fread(&ver, 4, 1, f) < 1
                   || fread(&visible, 1, 1, f) < 1
                   || fread(&unused, 2, 1, f) < 1)
-		{
-		  psd_set_error (feof (f), errno, error);
-		  return -1;
-		}
+                {
+                  psd_set_error (feof (f), errno, error);
+                  return -1;
+                }
             }
           else if (memcmp (effectname, "dsdw", 4) == 0
-		   || memcmp (effectname, "isdw", 4) == 0)
+                   || memcmp (effectname, "isdw", 4) == 0)
             {
               gint32    size;
               gint32    ver;
