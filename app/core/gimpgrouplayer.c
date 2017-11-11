@@ -1312,8 +1312,15 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
       width  != old_width            ||
       height != old_height)
     {
-      /* set the offset first, so the graph is in the right state when
-       * the projection is reallocated, see bug #730550.
+      /* update our offset *before* calling gimp_pickable_flush(), so
+       * that if our graph isn't constructed yet, the offset node picks
+       * up the right coordinates in gimp_group_layer_get_graph().
+       */
+      gimp_item_set_offset (item, x, y);
+
+      /* ... or, if the graph is already constructed, set the offset
+       * node's coordinates first, so the graph is in the right state
+       * when the projection is reallocated, see bug #730550.
        */
       if (private->offset_node)
         gegl_node_set (private->offset_node,
@@ -1351,8 +1358,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
       else
         {
-          gimp_item_set_offset (item, x, y);
-
           /*  invalidate the entire projection since the position of
            *  the children relative to each other might have changed
            *  in a way that happens to leave the group's width and
