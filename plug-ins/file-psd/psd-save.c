@@ -877,6 +877,7 @@ save_layer_and_mask (FILE   *fd,
   gint32        ChanSize;               /* Data length for a channel */
   gchar        *layerName;              /* Layer name */
   gint          mask;                   /* Layer mask */
+  gint          depth;                  /* Layer group nesting depth */
 
   glong         eof_pos;                /* Position: End of file */
   glong         ExtraDataPos;           /* Position: Extra data length */
@@ -907,6 +908,8 @@ save_layer_and_mask (FILE   *fd,
     write_gint16 (fd, -PSDImageData.nLayers, "Layer structure count");
   else
     write_gint16 (fd, PSDImageData.nLayers, "Layer structure count");
+
+  depth = 0;
 
   /* Layer records section */
   /* GIMP layers must be written in reverse order */
@@ -1082,13 +1085,32 @@ save_layer_and_mask (FILE   *fd,
           size = 12;
 
           if (PSDImageData.lLayers[i].type == PSD_LAYER_TYPE_GROUP_START)
-            type = gimp_item_get_expanded (PSDImageData.lLayers[i].id) ? 1 : 2;
+            {
+              type = gimp_item_get_expanded (PSDImageData.lLayers[i].id) ? 1 : 2;
+
+              depth--;
+            }
           else
-            type = 3;
+            {
+              type = 3;
+
+              depth++;
+            }
 
           blendMode = psd_lmode_layer (PSDImageData.lLayers[i].id, TRUE);
 
-          xfwrite (fd, "8BIMlsct", 8, "section divider");
+          if (type < 3 || depth <= 5)
+            {
+              xfwrite (fd, "8BIMlsct", 8, "section divider");
+            }
+          else
+            {
+              /* layer groups whose nesting depth is above 5 are only supported
+               * by Photoshop CS5 and up, and their end markers use the
+               * (undocumented) "lsdk" key, instead of "lsct".
+               */
+              xfwrite (fd, "8BIMlsdk", 8, "nested section divider");
+            }
           write_gint32 (fd, size, "section divider size");
           write_gint32 (fd, type, "section divider type");
           xfwrite (fd, "8BIM", 4, "section divider blend mode signature");

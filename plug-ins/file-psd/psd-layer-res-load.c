@@ -76,6 +76,7 @@
   PSD_LOTH_PATTERN        "Patt"        -       * Patterns (PS6) *
   PSD_LOTH_GRADIENT       "grdm"        -       * Gradient settings (PS6) *
   PSD_LOTH_SECTION        "lsct"     Loaded     * Section divider setting (PS6) (Layer Groups) *
+  PSD_LOTH_SECTION2       "lsdk"     Loaded     * Nested section divider setting (CS5) (Layer Groups) *
   PSD_LOTH_RESTRICT       "brst"        -       * Channel blending restriction setting (PS6) *
   PSD_LOTH_FOREIGN_FX     "ffxi"        -       * Foreign effect ID (PS6) *
   PSD_LOTH_PATT_DATA      "shpa"        -       * Pattern data (PS6) *
@@ -275,7 +276,8 @@ load_layer_resource (PSDlayerres  *res_a,
       else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
         load_resource_lclr (res_a, lyr_a, f, error);
 
-      else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
+      else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0
+               || memcmp (res_a->key, PSD_LOTH_SECTION2, 4) == 0) /* bug #789981 */
         load_resource_lsct (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)

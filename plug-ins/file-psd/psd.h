@@ -105,6 +105,7 @@
 
 /* Other */
 #define PSD_LOTH_SECTION        "lsct"          /* Section divider setting - Layer groups (PS6) */
+#define PSD_LOTH_SECTION2       "lsdk"          /* Nested section divider setting - Layer groups (CS5) */
 #define PSD_LOTH_PATTERN        "Patt"          /* Patterns (PS6) */
 #define PSD_LOTH_PATTERN_2      "Pat2"          /* Patterns 2nd key (PS6) */
 #define PSD_LOTH_PATTERN_3      "Pat3"          /* Patterns 3rd key (PS6) */
