@@ -1434,6 +1434,8 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
 
   gimp_display_shell_unset_cursor (shell);
 
+  gimp_display_shell_filter_set (shell, NULL);
+
   gimp_display_shell_sync_config (shell, shell->display->config);
 
   gimp_display_shell_appearance_update (shell);
