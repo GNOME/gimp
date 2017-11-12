@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-05 16:19+0100\n"
-"PO-Revision-Date: 2017-11-05 16:20+0100\n"
+"POT-Creation-Date: 2017-11-12 19:14+0100\n"
+"PO-Revision-Date: 2017-11-12 19:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2708,36 +2708,38 @@ msgid "Highlights warning color"
 msgstr "Kolor ostrzeżenia świateł"
 
 #: ../modules/display-filter-clip-warning.c:197
-msgid "Show NaN"
-msgstr "Wyświetlanie NaN"
+msgid "Show bogus"
+msgstr "Wyświetlanie fałszywych"
 
 #: ../modules/display-filter-clip-warning.c:198
-msgid "Show warning for pixels with a NaN component"
-msgstr "Wyświetlanie ostrzeżenia dla pikseli o składowej NaN"
+msgid "Show warning for pixels with an infinite or NaN component"
+msgstr ""
+"Wyświetlanie ostrzeżenia dla pikseli o nieskończonej składowej lub składowej "
+"NaN"
 
 #: ../modules/display-filter-clip-warning.c:204
-msgid "NaN color"
-msgstr "Kolor NaN"
+msgid "Bogus color"
+msgstr "Kolor fałszywych"
 
 #: ../modules/display-filter-clip-warning.c:205
-msgid "NaN warning color"
-msgstr "Kolor ostrzeżenia NaN"
+msgid "Bogus warning color"
+msgstr "Kolor ostrzeżenia fałszywych"
 
 #: ../modules/display-filter-clip-warning.c:217
-msgid "Include alpha"
-msgstr "Dołączanie alfy"
+msgid "Include alpha component"
+msgstr "Dołączanie składowej alfy"
 
 #: ../modules/display-filter-clip-warning.c:218
 msgid "Include alpha component in the warning"
 msgstr "Dołączanie składowej alfy w ostrzeżeniu"
 
 #: ../modules/display-filter-clip-warning.c:224
-msgid "Opaque"
-msgstr "Nieprzezroczystość"
+msgid "Include transparent pixels"
+msgstr "Dołączanie przezroczystych pikseli"
 
 #: ../modules/display-filter-clip-warning.c:225
-msgid "Make warning pixels opaque"
-msgstr "Nieprzezroczyste piksele ostrzeżenia"
+msgid "Include fully transparent pixels in the warning"
+msgstr "Dołączanie w pełni przezroczystych pikseli w ostrzeżeniu"
 
 #: ../modules/display-filter-clip-warning.c:229
 msgid "Clip Warning"

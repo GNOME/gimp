@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-05 16:19+0100\n"
-"PO-Revision-Date: 2017-11-05 16:20+0100\n"
+"POT-Creation-Date: 2017-11-12 19:14+0100\n"
+"PO-Revision-Date: 2017-11-12 19:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -644,53 +644,83 @@ msgstr "Menu buforów"
 
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
-msgid "_Paste Buffer"
-msgstr "Wk_lej bufor"
-
-#: ../app/actions/buffers-actions.c:47
-msgctxt "buffers-action"
-msgid "Paste the selected buffer"
-msgstr "Wkleja zaznaczony bufor"
-
-#: ../app/actions/buffers-actions.c:52
-msgctxt "buffers-action"
-msgid "Paste Buffer _Into"
-msgstr "Wklej bufor _do"
-
-#: ../app/actions/buffers-actions.c:53
-msgctxt "buffers-action"
-msgid "Paste the selected buffer into the selection"
-msgstr "Wkleja zaznaczony bufor do zaznaczenia"
-
-#: ../app/actions/buffers-actions.c:58
-msgctxt "buffers-action"
-msgid "Paste Buffer as New _Layer"
-msgstr "Wklej bufor jako nową _warstwę"
-
-#: ../app/actions/buffers-actions.c:59
-msgctxt "buffers-action"
-msgid "Paste the selected buffer as a new layer"
-msgstr "Wkleja zaznaczony bufor jako nową warstwę"
-
-#: ../app/actions/buffers-actions.c:64
-msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
 msgstr "Wklej bufor jako _nowy obraz"
 
-#: ../app/actions/buffers-actions.c:65
+#: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
 msgstr "Wkleja zaznaczony bufor jako nowy obraz"
 
-#: ../app/actions/buffers-actions.c:70
+#: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr "_Usuń bufor"
 
-#: ../app/actions/buffers-actions.c:71
+#: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
 msgstr "Usuwa zaznaczony bufor"
+
+#: ../app/actions/buffers-actions.c:61
+msgctxt "buffers-action"
+msgid "_Paste Buffer"
+msgstr "Wk_lej bufor"
+
+#: ../app/actions/buffers-actions.c:62
+msgctxt "buffers-action"
+msgid "Paste the selected buffer"
+msgstr "Wkleja zaznaczony bufor"
+
+#: ../app/actions/buffers-actions.c:67
+msgctxt "buffers-action"
+msgid "Paste Buffer In Pl_ace"
+msgstr "Wkl_ej bufor w tym samym miejscu"
+
+#: ../app/actions/buffers-actions.c:68
+msgctxt "buffers-action"
+msgid "Paste the selected buffer at its original position"
+msgstr "Wkleja zaznaczony bufor w jego oryginalnym miejscu"
+
+#: ../app/actions/buffers-actions.c:73
+msgctxt "buffers-action"
+msgid "Paste Buffer _Into"
+msgstr "Wklej bufor _do"
+
+#: ../app/actions/buffers-actions.c:74
+msgctxt "buffers-action"
+msgid "Paste the selected buffer into the selection"
+msgstr "Wkleja zaznaczony bufor do zaznaczenia"
+
+#: ../app/actions/buffers-actions.c:79
+msgctxt "buffers-action"
+msgid "Paste Buffer Into In Place"
+msgstr "Wklej bufor w tym samym miejscu do"
+
+#: ../app/actions/buffers-actions.c:81
+msgctxt "buffers-action"
+msgid "Paste the selected buffer into the selection at its original position"
+msgstr "Wkleja zaznaczony bufor do zaznaczenia w jego oryginalnym miejscu"
+
+#: ../app/actions/buffers-actions.c:86
+msgctxt "buffers-action"
+msgid "Paste Buffer as New _Layer"
+msgstr "Wklej bufor jako nową _warstwę"
+
+#: ../app/actions/buffers-actions.c:87
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new layer"
+msgstr "Wkleja zaznaczony bufor jako nową warstwę"
+
+#: ../app/actions/buffers-actions.c:92
+msgctxt "buffers-action"
+msgid "Paste Buffer as New Layer in Place"
+msgstr "Wklej bufor jako nową warstwę w tym samym miejscu"
+
+#: ../app/actions/buffers-actions.c:94
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new layer at its original position"
+msgstr "Wkleja zaznaczony bufor jako nową warstwę w jego oryginalnym miejscu"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -3388,155 +3418,192 @@ msgstr "Kopiuje to, co jest widoczne w zaznaczonym obszarze"
 
 #: ../app/actions/edit-actions.c:130
 msgctxt "edit-action"
-msgid "_Paste"
-msgstr "Wk_lej"
-
-#: ../app/actions/edit-actions.c:131
-msgctxt "edit-action"
-msgid "Paste the content of the clipboard"
-msgstr "Wkleja zawartość schowka"
-
-#: ../app/actions/edit-actions.c:136
-msgctxt "edit-action"
-msgid "Paste _Into"
-msgstr "Wklej _do"
-
-#: ../app/actions/edit-actions.c:138
-msgctxt "edit-action"
-msgid "Paste the content of the clipboard into the current selection"
-msgstr "Wkleja zawartość schowka do bieżącego zaznaczenia"
-
-#: ../app/actions/edit-actions.c:143
-msgctxt "edit-action"
-msgid "New _Layer"
-msgstr "Nowa _warstwa"
-
-#: ../app/actions/edit-actions.c:144
-msgctxt "edit-action"
-msgid "Create a new layer from the content of the clipboard"
-msgstr "Tworzy nową warstwę z zawartości schowka"
-
-#: ../app/actions/edit-actions.c:149
-msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Ze _schowka"
 
-#: ../app/actions/edit-actions.c:150 ../app/actions/edit-actions.c:156
+#: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Tworzy nowy obraz z zawartości schowka"
 
-#: ../app/actions/edit-actions.c:155
+#: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "_Nowy obraz"
 
-#: ../app/actions/edit-actions.c:161
+#: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "_Wytnij nazwany…"
 
-#: ../app/actions/edit-actions.c:162
+#: ../app/actions/edit-actions.c:143
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Przenosi zaznaczone piksele do nazwanego bufora"
 
-#: ../app/actions/edit-actions.c:167
+#: ../app/actions/edit-actions.c:148
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "S_kopiuj nazwany…"
 
-#: ../app/actions/edit-actions.c:168
+#: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Kopiuje zaznaczone piksele do nazwanego bufora"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:173
+#: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Skopiuj w_idoczne nazwane…"
 
-#: ../app/actions/edit-actions.c:175
+#: ../app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr ""
 "Kopiuje to, co jest widoczne w zaznaczonym obszarze do nazwanego bufora"
 
-#: ../app/actions/edit-actions.c:180
+#: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "Wk_lej nazwany…"
 
-#: ../app/actions/edit-actions.c:181
+#: ../app/actions/edit-actions.c:162
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Wkleja zawartość nazwanego bufora"
 
-#: ../app/actions/edit-actions.c:186
+#: ../app/actions/edit-actions.c:167
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "Wy_czyść"
 
-#: ../app/actions/edit-actions.c:187
+#: ../app/actions/edit-actions.c:168
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Czyści zaznaczone piksele"
 
-#: ../app/actions/edit-actions.c:195
+#: ../app/actions/edit-actions.c:176
+msgctxt "edit-action"
+msgid "_Paste"
+msgstr "Wk_lej"
+
+#: ../app/actions/edit-actions.c:177
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard"
+msgstr "Wkleja zawartość schowka"
+
+#: ../app/actions/edit-actions.c:182
+msgctxt "edit-action"
+msgid "Paste In Place"
+msgstr "Wklej w tym samym miejscu"
+
+#: ../app/actions/edit-actions.c:184
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard at its original position"
+msgstr "Wkleja zawartość schowka w jego oryginalnym miejscu"
+
+#: ../app/actions/edit-actions.c:189
+msgctxt "edit-action"
+msgid "Paste _Into Selection"
+msgstr "Wklej _do zaznaczenia"
+
+#: ../app/actions/edit-actions.c:191
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard into the current selection"
+msgstr "Wkleja zawartość schowka do bieżącego zaznaczenia"
+
+#: ../app/actions/edit-actions.c:196
+msgctxt "edit-action"
+msgid "Paste Into Selection In Place"
+msgstr "Wklej do zaznaczenia w tym samym miejscu"
+
+#: ../app/actions/edit-actions.c:198
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard into the current selection at its "
+"original position"
+msgstr ""
+"Wkleja zawartość schowka do bieżącego zaznaczenia w jego oryginalnym miejscu"
+
+#: ../app/actions/edit-actions.c:204
+msgctxt "edit-action"
+msgid "New _Layer"
+msgstr "Nowa _warstwa"
+
+#: ../app/actions/edit-actions.c:205
+msgctxt "edit-action"
+msgid "Create a new layer from the content of the clipboard"
+msgstr "Tworzy nową warstwę z zawartości schowka"
+
+#: ../app/actions/edit-actions.c:210
+msgctxt "edit-action"
+msgid "New Layer In _Place"
+msgstr "Nowa warstwa w tym samym _miejscu"
+
+#: ../app/actions/edit-actions.c:212
+msgctxt "edit-action"
+msgid ""
+"Create a new layer from the content of the clipboard and place it at its "
+"original position"
+msgstr ""
+"Tworzy nową warstwę z zawartości schowka i umieszcza ją w jego oryginalnym "
+"miejscu"
+
+#: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Wypełnij _kolorem pierwszoplanowym"
 
-#: ../app/actions/edit-actions.c:196
+#: ../app/actions/edit-actions.c:222
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Wypełnia zaznaczenie kolorem pierwszoplanowym"
 
-#: ../app/actions/edit-actions.c:201
+#: ../app/actions/edit-actions.c:227
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Wypełnij kolorem _tła"
 
-#: ../app/actions/edit-actions.c:202
+#: ../app/actions/edit-actions.c:228
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Wypełnia zaznaczenie za pomocą koloru tła"
 
-#: ../app/actions/edit-actions.c:207
+#: ../app/actions/edit-actions.c:233
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "_Wypełnij deseniem"
 
-#: ../app/actions/edit-actions.c:208
+#: ../app/actions/edit-actions.c:234
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Wypełnia zaznaczenie aktywnym deseniem"
 
-#: ../app/actions/edit-actions.c:313 ../app/actions/edit-actions.c:315
+#: ../app/actions/edit-actions.c:344 ../app/actions/edit-actions.c:346
 #, c-format
 msgid "_Undo %s"
 msgstr "Cof_nij „%s”"
 
-#: ../app/actions/edit-actions.c:319 ../app/actions/edit-actions.c:321
+#: ../app/actions/edit-actions.c:350 ../app/actions/edit-actions.c:352
 #, c-format
 msgid "_Redo %s"
 msgstr "P_onów „%s”"
 
-#: ../app/actions/edit-actions.c:335
+#: ../app/actions/edit-actions.c:366
 #, c-format
 msgid "_Fade %s..."
 msgstr "_Zanikanie „%s”…"
 
-#: ../app/actions/edit-actions.c:347
+#: ../app/actions/edit-actions.c:378
 msgid "_Undo"
 msgstr "Cof_nij"
 
-#: ../app/actions/edit-actions.c:348
+#: ../app/actions/edit-actions.c:379
 msgid "_Redo"
 msgstr "P_onów"
 
-#: ../app/actions/edit-actions.c:349
+#: ../app/actions/edit-actions.c:380
 msgid "_Fade..."
 msgstr "_Zanikanie…"
 
@@ -10634,689 +10701,689 @@ msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Mierzwienie Levina"
 
-#: ../app/core/core-enums.c:416
+#: ../app/core/core-enums.c:422
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Pierwszy obiekt"
 
-#: ../app/core/core-enums.c:417
+#: ../app/core/core-enums.c:423
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Obraz"
 
-#: ../app/core/core-enums.c:418
+#: ../app/core/core-enums.c:424
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/core/core-enums.c:419
+#: ../app/core/core-enums.c:425
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Aktywna warstwa"
 
-#: ../app/core/core-enums.c:420
+#: ../app/core/core-enums.c:426
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Aktywny kanał"
 
-#: ../app/core/core-enums.c:421
+#: ../app/core/core-enums.c:427
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Aktywna ścieżka"
 
-#: ../app/core/core-enums.c:449
+#: ../app/core/core-enums.c:455
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Pełny kolor"
 
-#: ../app/core/core-enums.c:450
+#: ../app/core/core-enums.c:456
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Deseń"
 
-#: ../app/core/core-enums.c:487
+#: ../app/core/core-enums.c:493
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Dowolnie"
 
-#: ../app/core/core-enums.c:488
+#: ../app/core/core-enums.c:494
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Linia"
 
-#: ../app/core/core-enums.c:489
+#: ../app/core/core-enums.c:495
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Długie kreski"
 
-#: ../app/core/core-enums.c:490
+#: ../app/core/core-enums.c:496
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Średnie kreski"
 
-#: ../app/core/core-enums.c:491
+#: ../app/core/core-enums.c:497
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Krótkie kreski"
 
-#: ../app/core/core-enums.c:492
+#: ../app/core/core-enums.c:498
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Rzadkie punkty"
 
-#: ../app/core/core-enums.c:493
+#: ../app/core/core-enums.c:499
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Zwykłe punkty"
 
-#: ../app/core/core-enums.c:494
+#: ../app/core/core-enums.c:500
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Gęste punkty"
 
-#: ../app/core/core-enums.c:495
+#: ../app/core/core-enums.c:501
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Kropkowania"
 
-#: ../app/core/core-enums.c:496
+#: ../app/core/core-enums.c:502
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Kreska, kropka"
 
-#: ../app/core/core-enums.c:497
+#: ../app/core/core-enums.c:503
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Kreska, kropka, kropka"
 
-#: ../app/core/core-enums.c:528
+#: ../app/core/core-enums.c:534
 msgctxt "item-set"
 msgid "None"
 msgstr "Brak"
 
-#: ../app/core/core-enums.c:529
+#: ../app/core/core-enums.c:535
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Wszystkie warstwy"
 
-#: ../app/core/core-enums.c:530
+#: ../app/core/core-enums.c:536
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Warstwy o wymiarach obrazu"
 
-#: ../app/core/core-enums.c:531
+#: ../app/core/core-enums.c:537
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Wszystkie widoczne warstwy"
 
-#: ../app/core/core-enums.c:532
+#: ../app/core/core-enums.c:538
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Wszystkie dowiązane warstwy"
 
-#: ../app/core/core-enums.c:567
+#: ../app/core/core-enums.c:573
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Drobny"
 
-#: ../app/core/core-enums.c:568
+#: ../app/core/core-enums.c:574
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Bardzo mały"
 
-#: ../app/core/core-enums.c:569
+#: ../app/core/core-enums.c:575
 msgctxt "view-size"
 msgid "Small"
 msgstr "Mały"
 
-#: ../app/core/core-enums.c:570
+#: ../app/core/core-enums.c:576
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Średni"
 
-#: ../app/core/core-enums.c:571
+#: ../app/core/core-enums.c:577
 msgctxt "view-size"
 msgid "Large"
 msgstr "Duży"
 
-#: ../app/core/core-enums.c:572
+#: ../app/core/core-enums.c:578
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Bardzo duży"
 
-#: ../app/core/core-enums.c:573
+#: ../app/core/core-enums.c:579
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Wielki"
 
-#: ../app/core/core-enums.c:574
+#: ../app/core/core-enums.c:580
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Ogromny"
 
-#: ../app/core/core-enums.c:575
+#: ../app/core/core-enums.c:581
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantyczny"
 
-#: ../app/core/core-enums.c:603
+#: ../app/core/core-enums.c:609
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Wyświetlaj jako listę"
 
-#: ../app/core/core-enums.c:604
+#: ../app/core/core-enums.c:610
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Wyświetlaj jako siatkę"
 
-#: ../app/core/core-enums.c:633
+#: ../app/core/core-enums.c:639
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Bez miniatur"
 
-#: ../app/core/core-enums.c:634
+#: ../app/core/core-enums.c:640
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Zwykłe (128×128)"
 
-#: ../app/core/core-enums.c:635
+#: ../app/core/core-enums.c:641
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Duże (256×256)"
 
-#: ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:825
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "«nieprawidłowe»"
 
-#: ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:826
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Przeskalowanie obrazu"
 
-#: ../app/core/core-enums.c:821
+#: ../app/core/core-enums.c:827
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Zmiana wymiarów obrazu"
 
-#: ../app/core/core-enums.c:822
+#: ../app/core/core-enums.c:828
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Odbicie obrazu"
 
-#: ../app/core/core-enums.c:823
+#: ../app/core/core-enums.c:829
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Obrót obrazu"
 
-#: ../app/core/core-enums.c:824
+#: ../app/core/core-enums.c:830
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Kadrowanie obrazu"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:831
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Konwersja obrazu"
 
-#: ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:832
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Usunięcie elementu"
 
-#: ../app/core/core-enums.c:827
+#: ../app/core/core-enums.c:833
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Połączenie warstw"
 
-#: ../app/core/core-enums.c:828
+#: ../app/core/core-enums.c:834
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Połączenie ścieżek"
 
-#: ../app/core/core-enums.c:829
+#: ../app/core/core-enums.c:835
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/core/core-enums.c:830 ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:867
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Siatka"
 
-#: ../app/core/core-enums.c:831 ../app/core/core-enums.c:865
+#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:871
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Prowadnica"
 
-#: ../app/core/core-enums.c:832 ../app/core/core-enums.c:866
+#: ../app/core/core-enums.c:838 ../app/core/core-enums.c:872
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Punkt wzorcowy"
 
-#: ../app/core/core-enums.c:833 ../app/core/core-enums.c:867
+#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:873
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Warstwa/kanał"
 
-#: ../app/core/core-enums.c:834 ../app/core/core-enums.c:868
+#: ../app/core/core-enums.c:840 ../app/core/core-enums.c:874
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Modyfikacja warstwy/kanału"
 
-#: ../app/core/core-enums.c:835 ../app/core/core-enums.c:869
+#: ../app/core/core-enums.c:841 ../app/core/core-enums.c:875
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:842 ../app/core/core-enums.c:879
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Widoczność elementu"
 
-#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:843 ../app/core/core-enums.c:880
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Powiązanie/usunięcie dowiązania elementu"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:844
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Właściwości elementu"
 
-#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:845 ../app/core/core-enums.c:878
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Przesunięcie elementu"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:846
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Przeskalowanie elementu"
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:847
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Zmiana wymiarów elementu"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:848
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/core-enums.c:843 ../app/core/core-enums.c:889
+#: ../app/core/core-enums.c:849 ../app/core/core-enums.c:895
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/core-enums.c:844 ../app/core/core-enums.c:891
+#: ../app/core/core-enums.c:850 ../app/core/core-enums.c:897
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/core-enums.c:845 ../app/core/core-enums.c:899
+#: ../app/core/core-enums.c:851 ../app/core/core-enums.c:905
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:852
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:853
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/core-enums.c:848 ../app/core/gimp-edit.c:440
+#: ../app/core/core-enums.c:854 ../app/core/gimp-edit.c:474
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Wklejenie"
 
-#: ../app/core/core-enums.c:849 ../app/core/gimp-edit.c:719
+#: ../app/core/core-enums.c:855 ../app/core/gimp-edit.c:808
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Wycięcie"
 
-#: ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:856
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:851 ../app/core/core-enums.c:900
+#: ../app/core/core-enums.c:857 ../app/core/core-enums.c:906
 #: ../app/core/gimpdrawable-transform.c:682
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
 
-#: ../app/core/core-enums.c:852 ../app/core/core-enums.c:901
+#: ../app/core/core-enums.c:858 ../app/core/core-enums.c:907
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Rysowanie"
 
-#: ../app/core/core-enums.c:853 ../app/core/core-enums.c:904
+#: ../app/core/core-enums.c:859 ../app/core/core-enums.c:910
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:854 ../app/core/core-enums.c:905
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:911
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Usunięcie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:855
+#: ../app/core/core-enums.c:861
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Import ścieżek"
 
-#: ../app/core/core-enums.c:856
+#: ../app/core/core-enums.c:862
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Wtyczka"
 
-#: ../app/core/core-enums.c:857
+#: ../app/core/core-enums.c:863
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Typ obrazu"
 
-#: ../app/core/core-enums.c:858
+#: ../app/core/core-enums.c:864
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Dokładność obrazu"
 
-#: ../app/core/core-enums.c:859
+#: ../app/core/core-enums.c:865
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Wymiary obrazu"
 
-#: ../app/core/core-enums.c:860
+#: ../app/core/core-enums.c:866
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/core-enums.c:862
+#: ../app/core/core-enums.c:868
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Zmiana metadanych"
 
-#: ../app/core/core-enums.c:863
+#: ../app/core/core-enums.c:869
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Zmiana palety indeksowanej"
 
-#: ../app/core/core-enums.c:864
+#: ../app/core/core-enums.c:870
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Zmiana stanu zarządzania kolorami"
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:876
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Zmiana kolejności elementu"
 
-#: ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:877
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Zmiana nazwy elementu"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:881
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Etykieta koloru elementu"
 
-#: ../app/core/core-enums.c:876
+#: ../app/core/core-enums.c:882
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Zablokowanie/odblokowanie zawartości"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:883
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Zablokowanie/odblokowanie położenia"
 
-#: ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:884
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nowa warstwa"
 
-#: ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:885
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/core-enums.c:880
+#: ../app/core/core-enums.c:886
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ustawienie trybu warstwy"
 
-#: ../app/core/core-enums.c:881
+#: ../app/core/core-enums.c:887
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ustawienie krycia warstwy"
 
-#: ../app/core/core-enums.c:882
+#: ../app/core/core-enums.c:888
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Zablokowanie/odblokowanie kanału alfa"
 
-#: ../app/core/core-enums.c:883
+#: ../app/core/core-enums.c:889
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Wstrzymanie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:884
+#: ../app/core/core-enums.c:890
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Wznowienie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:885
+#: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Konwertowanie grupy warstw"
 
-#: ../app/core/core-enums.c:886
+#: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Warstwa tekstowa"
 
-#: ../app/core/core-enums.c:887
+#: ../app/core/core-enums.c:893
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Zmiana warstwy tekstowej"
 
-#: ../app/core/core-enums.c:888
+#: ../app/core/core-enums.c:894
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Konwertowanie warstwy tekstowej"
 
-#: ../app/core/core-enums.c:890
+#: ../app/core/core-enums.c:896
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/core-enums.c:892
+#: ../app/core/core-enums.c:898
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/core-enums.c:893
+#: ../app/core/core-enums.c:899
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nowy kanał"
 
-#: ../app/core/core-enums.c:894
+#: ../app/core/core-enums.c:900
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/core-enums.c:895
+#: ../app/core/core-enums.c:901
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kolor kanału"
 
-#: ../app/core/core-enums.c:896
+#: ../app/core/core-enums.c:902
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nowa ścieżka"
 
-#: ../app/core/core-enums.c:897
+#: ../app/core/core-enums.c:903
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Usunięcie ścieżki"
 
-#: ../app/core/core-enums.c:898
+#: ../app/core/core-enums.c:904
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modyfikacja ścieżki"
 
-#: ../app/core/core-enums.c:902
+#: ../app/core/core-enums.c:908
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Stalówka"
 
-#: ../app/core/core-enums.c:903
+#: ../app/core/core-enums.c:909
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/core/core-enums.c:906
+#: ../app/core/core-enums.c:912
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nie do cofnięcia"
 
-#: ../app/core/core-enums.c:986
+#: ../app/core/core-enums.c:992
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Stały"
 
-#: ../app/core/core-enums.c:987
+#: ../app/core/core-enums.c:993
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "Kolor pierwszoplanowy"
 
-#: ../app/core/core-enums.c:988
+#: ../app/core/core-enums.c:994
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "Kolor pierwszoplanowy (przezroczysty)"
 
-#: ../app/core/core-enums.c:989
+#: ../app/core/core-enums.c:995
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "Kolor tła"
 
-#: ../app/core/core-enums.c:990
+#: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "Kolor tła (przezroczysty)"
 
-#: ../app/core/core-enums.c:1019
+#: ../app/core/core-enums.c:1025
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Komunikat"
 
-#: ../app/core/core-enums.c:1020
+#: ../app/core/core-enums.c:1026
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: ../app/core/core-enums.c:1021
+#: ../app/core/core-enums.c:1027
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Błąd"
 
-#: ../app/core/core-enums.c:1050
+#: ../app/core/core-enums.c:1056
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Pytanie, co zrobić"
 
-#: ../app/core/core-enums.c:1051
+#: ../app/core/core-enums.c:1057
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Zachowanie osadzonego profilu"
 
-#: ../app/core/core-enums.c:1052
+#: ../app/core/core-enums.c:1058
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Konwertowanie do preferowanego profilu kolorów RGB"
 
-#: ../app/core/core-enums.c:1089
+#: ../app/core/core-enums.c:1095
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Krycie"
 
-#: ../app/core/core-enums.c:1090
+#: ../app/core/core-enums.c:1096
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/core/core-enums.c:1091
+#: ../app/core/core-enums.c:1097
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Kąt"
 
-#: ../app/core/core-enums.c:1092
+#: ../app/core/core-enums.c:1098
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Kolor"
 
-#: ../app/core/core-enums.c:1093
+#: ../app/core/core-enums.c:1099
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Twardość"
 
-#: ../app/core/core-enums.c:1094
+#: ../app/core/core-enums.c:1100
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/core/core-enums.c:1095
+#: ../app/core/core-enums.c:1101
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporcje"
 
-#: ../app/core/core-enums.c:1096
+#: ../app/core/core-enums.c:1102
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/core/core-enums.c:1097
+#: ../app/core/core-enums.c:1103
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Tempo"
 
-#: ../app/core/core-enums.c:1098
+#: ../app/core/core-enums.c:1104
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/core/core-enums.c:1099
+#: ../app/core/core-enums.c:1105
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Drganie"
 
-#: ../app/core/core-enums.c:1127
+#: ../app/core/core-enums.c:1133
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Użycie zaznaczenia jako wejścia"
 
-#: ../app/core/core-enums.c:1128
+#: ../app/core/core-enums.c:1134
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Użycie całej warstwy jako wejścia"
 
-#: ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1163
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Twardy"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1164
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Wygładzony"
 
-#: ../app/core/core-enums.c:1159
+#: ../app/core/core-enums.c:1165
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Zmiękczony"
@@ -11385,21 +11452,21 @@ msgstr "Historia kolorów"
 msgid "Updating tag cache"
 msgstr "Aktualizowanie pamięci podręcznej etykiet"
 
-#: ../app/core/gimp-edit.c:90
+#: ../app/core/gimp-edit.c:97
 msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Wycięta warstwa"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:325
+#: ../app/core/gimp-edit.c:286 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Wklejona warstwa"
 
-#: ../app/core/gimp-edit.c:614
+#: ../app/core/gimp-edit.c:703
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Wyczyść"
 
-#: ../app/core/gimp-edit.c:736
+#: ../app/core/gimp-edit.c:825
 msgid "Global Buffer"
 msgstr "Bufor globalny"
 
@@ -14103,7 +14170,7 @@ msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
 
 #: ../app/dialogs/layer-options-dialog.c:411
-#: ../app/widgets/gimpcolordisplayeditor.c:283
+#: ../app/widgets/gimpcolordisplayeditor.c:285
 msgid "Active Filters"
 msgstr "Aktywne filtry"
 
@@ -16107,7 +16174,7 @@ msgstr "Przełącz szybką maskę"
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1443
+#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1445
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -22031,7 +22098,7 @@ msgstr "Ostrza"
 msgid "Percentage of width of brush"
 msgstr "Procent szerokości pędzla"
 
-#: ../app/widgets/gimpbufferview.c:176 ../app/widgets/gimpbufferview.c:268
+#: ../app/widgets/gimpbufferview.c:177 ../app/widgets/gimpbufferview.c:278
 #: ../app/widgets/gimpeditor.c:758
 msgid "(None)"
 msgstr "(Brak)"
@@ -22044,33 +22111,33 @@ msgstr "Schowek"
 msgid "Add the current color to the color history"
 msgstr "Dodaje bieżący kolor do historii kolorów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:163
+#: ../app/widgets/gimpcolordisplayeditor.c:165
 msgid "Available Filters"
 msgstr "Dostępne filtry"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:227
+#: ../app/widgets/gimpcolordisplayeditor.c:229
 msgid "Move the selected filter up"
 msgstr "Przesuwa zaznaczony filtr w górę"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:236
+#: ../app/widgets/gimpcolordisplayeditor.c:238
 msgid "Move the selected filter down"
 msgstr "Przesuwa zaznaczony filtr w dół"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:334
+#: ../app/widgets/gimpcolordisplayeditor.c:336
 msgid "Reset the selected filter to default values"
 msgstr "Przywraca domyślne ustawienia zaznaczonego filtru"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:525
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Dodaje „%s” do listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:562
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Usuwa „%s” z listy aktywnych filtrów"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:603
+#: ../app/widgets/gimpcolordisplayeditor.c:605
 msgid "No filter selected"
 msgstr "Nie zaznaczono filtru"
 
