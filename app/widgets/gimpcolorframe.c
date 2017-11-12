@@ -396,8 +396,6 @@ gimp_color_frame_set_mode (GimpColorFrame     *frame,
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->menu), mode);
-
-  g_object_notify (G_OBJECT (frame), "mode");
 }
 
 void
@@ -585,6 +583,8 @@ gimp_color_frame_menu_callback (GtkWidget      *widget,
     {
       frame->frame_mode = value;
       gimp_color_frame_update (frame);
+
+      g_object_notify (G_OBJECT (frame), "mode");
     }
 }
 
