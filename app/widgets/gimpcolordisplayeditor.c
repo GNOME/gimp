@@ -153,6 +153,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                     G_TYPE_STRING,
                                     G_TYPE_STRING,
                                     G_TYPE_GTYPE);
+  gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (editor->src),
+                                        SRC_COLUMN_NAME, GTK_SORT_ASCENDING);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->src));
   g_object_unref (editor->src);
 
