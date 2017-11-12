@@ -126,25 +126,6 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_copy_visible_cmd_callback),
     GIMP_HELP_EDIT_COPY_VISIBLE },
 
-  { "edit-paste", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "_Paste"), "<primary>V",
-    NC_("edit-action", "Paste the content of the clipboard"),
-    G_CALLBACK (edit_paste_cmd_callback),
-    GIMP_HELP_EDIT_PASTE },
-
-  { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
-    NC_("edit-action", "Paste _Into"), NULL,
-    NC_("edit-action",
-        "Paste the content of the clipboard into the current selection"),
-    G_CALLBACK (edit_paste_into_cmd_callback),
-    GIMP_HELP_EDIT_PASTE_INTO },
-
-  { "edit-paste-as-new-layer", NULL,
-    NC_("edit-action", "New _Layer"), NULL,
-    NC_("edit-action", "Create a new layer from the content of the clipboard"),
-    G_CALLBACK (edit_paste_as_new_layer_cmd_callback),
-    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
-
   { "edit-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("edit-action", "From _Clipboard"), "<primary><shift>V",
     NC_("edit-action", "Create a new image from the content of the clipboard"),
@@ -189,6 +170,51 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_CLEAR }
 };
 
+static const GimpEnumActionEntry edit_paste_actions[] =
+{
+  { "edit-paste", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "_Paste"), "<primary>V",
+    NC_("edit-action", "Paste the content of the clipboard"),
+    GIMP_PASTE_TYPE_FLOATING, FALSE,
+    GIMP_HELP_EDIT_PASTE },
+
+  { "edit-paste-in-place", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "Paste In Place"), NULL,
+    NC_("edit-action",
+        "Paste the content of the clipboard at its original position"),
+    GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
+    GIMP_HELP_EDIT_PASTE_IN_PLACE },
+
+  { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
+    NC_("edit-action", "Paste _Into Selection"), NULL,
+    NC_("edit-action",
+        "Paste the content of the clipboard into the current selection"),
+    GIMP_PASTE_TYPE_FLOATING_INTO, FALSE,
+    GIMP_HELP_EDIT_PASTE_INTO },
+
+  { "edit-paste-into-in-place", GIMP_ICON_EDIT_PASTE_INTO,
+    NC_("edit-action", "Paste Into Selection In Place"), NULL,
+    NC_("edit-action",
+        "Paste the content of the clipboard into the current selection "
+        "at its original position"),
+    GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE, FALSE,
+    GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE },
+
+  { "edit-paste-as-new-layer", GIMP_ICON_EDIT_PASTE_AS_NEW,
+    NC_("edit-action", "New _Layer"), NULL,
+    NC_("edit-action", "Create a new layer from the content of the clipboard"),
+    GIMP_PASTE_TYPE_NEW_LAYER, FALSE,
+    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
+
+  { "edit-paste-as-new-layer-in-place", GIMP_ICON_EDIT_PASTE_AS_NEW,
+    NC_("edit-action", "New Layer In _Place"), NULL,
+    NC_("edit-action",
+        "Create a new layer from the content of the clipboard"
+        "and place it at its original position"),
+    GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE, FALSE,
+    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER_IN_PLACE }
+};
+
 static const GimpEnumActionEntry edit_fill_actions[] =
 {
   { "edit-fill-fg", GIMP_ICON_TOOL_BUCKET_FILL,
@@ -222,6 +248,11 @@ edit_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group, "edit-action",
                                  edit_actions,
                                  G_N_ELEMENTS (edit_actions));
+
+  gimp_action_group_add_enum_actions (group, "edit-action",
+                                      edit_paste_actions,
+                                      G_N_ELEMENTS (edit_paste_actions),
+                                      G_CALLBACK (edit_paste_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "edit-action",
                                       edit_fill_actions,
@@ -359,12 +390,15 @@ edit_actions_update (GimpActionGroup *group,
   g_free (redo_name);
   g_free (fade_name);
 
-  SET_SENSITIVE ("edit-cut",                writable && !children);
-  SET_SENSITIVE ("edit-copy",               drawable);
-  SET_SENSITIVE ("edit-copy-visible",       image);
+  SET_SENSITIVE ("edit-cut",                         writable && !children);
+  SET_SENSITIVE ("edit-copy",                        drawable);
+  SET_SENSITIVE ("edit-copy-visible",                image);
   /*             "edit-paste" is always active */
-  SET_SENSITIVE ("edit-paste-into",         image);
-  SET_SENSITIVE ("edit-paste-as-new-layer", image);
+  SET_SENSITIVE ("edit-paste-in-place",              image);
+  SET_SENSITIVE ("edit-paste-into",                  image);
+  SET_SENSITIVE ("edit-paste-into-in-place",         image);
+  SET_SENSITIVE ("edit-paste-as-new-layer",          image);
+  SET_SENSITIVE ("edit-paste-as-new-layer-in-place", image);
 
   SET_SENSITIVE ("edit-named-cut",          writable && !children);
   SET_SENSITIVE ("edit-named-copy",         drawable);

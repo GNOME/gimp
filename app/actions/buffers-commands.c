@@ -30,7 +30,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpbufferview.h"
+#include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
 
@@ -43,84 +43,18 @@
 #include "gimp-intl.h"
 
 
-/*  local function prototypes  */
-
-static void   buffers_paste (GimpBufferView *view,
-                             GimpPasteType   paste_type);
-
-
 /*  public functionss */
 
 void
 buffers_paste_cmd_callback (GtkAction *action,
+                            gint       value,
                             gpointer   data)
 {
-  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_FLOATING);
-}
-
-void
-buffers_paste_into_cmd_callback (GtkAction *action,
-                                 gpointer   data)
-{
-  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_FLOATING_INTO);
-}
-
-void
-buffers_paste_as_new_layer_cmd_callback (GtkAction *action,
-                                         gpointer   data)
-{
-  buffers_paste (GIMP_BUFFER_VIEW (data), GIMP_PASTE_TYPE_NEW_LAYER);
-}
-
-void
-buffers_paste_as_new_image_cmd_callback (GtkAction *action,
-                                         gpointer   data)
-{
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
   GimpContext         *context;
   GimpBuffer          *buffer;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      GtkWidget *widget = GTK_WIDGET (editor);
-      GimpImage *new_image;
-
-      new_image = gimp_edit_paste_as_new_image (context->gimp,
-                                                GIMP_OBJECT (buffer));
-      gimp_create_display (context->gimp, new_image,
-                           GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
-      g_object_unref (new_image);
-    }
-}
-
-void
-buffers_delete_cmd_callback (GtkAction *action,
-                             gpointer   data)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-
-  gimp_container_view_remove_active (editor->view);
-}
-
-
-/*  private functions  */
-
-static void
-buffers_paste (GimpBufferView *view,
-               GimpPasteType   paste_type)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
+  GimpPasteType        paste_type = (GimpPasteType) value;
 
   container = gimp_container_view_get_container (editor->view);
   context   = gimp_container_view_get_context (editor->view);
@@ -159,4 +93,42 @@ buffers_paste (GimpBufferView *view,
           gimp_image_flush (image);
         }
     }
+}
+
+void
+buffers_paste_as_new_image_cmd_callback (GtkAction *action,
+                                         gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpBuffer          *buffer;
+
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  buffer = gimp_context_get_buffer (context);
+
+  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
+    {
+      GtkWidget *widget = GTK_WIDGET (editor);
+      GimpImage *new_image;
+
+      new_image = gimp_edit_paste_as_new_image (context->gimp,
+                                                GIMP_OBJECT (buffer));
+      gimp_create_display (context->gimp, new_image,
+                           GIMP_UNIT_PIXEL, 1.0,
+                           G_OBJECT (gtk_widget_get_screen (widget)),
+                           gimp_widget_get_monitor (widget));
+      g_object_unref (new_image);
+    }
+}
+
+void
+buffers_delete_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+
+  gimp_container_view_remove_active (editor->view);
 }

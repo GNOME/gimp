@@ -42,6 +42,7 @@
 #include "gimpview.h"
 #include "gimpviewrendererbuffer.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -186,15 +187,24 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
   buffer_view->paste_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste", NULL);
+                                   "buffers-paste",
+                                   "buffers-paste-in-place",
+                                   gimp_get_extend_selection_mask (),
+                                   NULL);
 
   buffer_view->paste_into_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste-into", NULL);
+                                   "buffers-paste-into",
+                                   "buffers-paste-into-in-place",
+                                   gimp_get_extend_selection_mask (),
+                                   NULL);
 
   buffer_view->paste_as_new_layer_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
-                                   "buffers-paste-as-new-layer", NULL);
+                                   "buffers-paste-as-new-layer",
+                                   "buffers-paste-as-new-layer-in-place",
+                                   gimp_get_extend_selection_mask (),
+                                   NULL);
 
   buffer_view->paste_as_new_image_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",

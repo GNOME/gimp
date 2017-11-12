@@ -41,10 +41,7 @@ void   edit_copy_visible_cmd_callback       (GtkAction *action,
                                              gpointer   data);
 
 void   edit_paste_cmd_callback              (GtkAction *action,
-                                             gpointer   data);
-void   edit_paste_into_cmd_callback         (GtkAction *action,
-                                             gpointer   data);
-void   edit_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                             gint       value,
                                              gpointer   data);
 void   edit_paste_as_new_image_cmd_callback (GtkAction *action,
                                              gpointer   data);

@@ -20,10 +20,7 @@
 
 
 void   buffers_paste_cmd_callback              (GtkAction *action,
-                                                gpointer   data);
-void   buffers_paste_into_cmd_callback         (GtkAction *action,
-                                                gpointer   data);
-void   buffers_paste_as_new_layer_cmd_callback (GtkAction *action,
+                                                gint       value,
                                                 gpointer   data);
 void   buffers_paste_as_new_image_cmd_callback (GtkAction *action,
                                                 gpointer   data);

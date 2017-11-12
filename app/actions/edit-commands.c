@@ -65,7 +65,7 @@
 /*  local function prototypes  */
 
 static void   edit_paste                         (GimpDisplay   *display,
-                                                  GimpPasteType  paste_into,
+                                                  GimpPasteType  paste_type,
                                                   gboolean       try_svg);
 static void   cut_named_buffer_callback          (GtkWidget     *widget,
                                                   const gchar   *name,
@@ -327,38 +327,38 @@ edit_copy_visible_cmd_callback (GtkAction *action,
 
 void
 edit_paste_cmd_callback (GtkAction *action,
+                         gint       value,
                          gpointer   data)
 {
-  GimpDisplay *display = action_data_get_display (data);
+  GimpDisplay   *display    = action_data_get_display (data);
+  GimpPasteType  paste_type = (GimpPasteType) value;
 
-  if (display && gimp_display_get_image (display))
+  if (paste_type == GIMP_PASTE_TYPE_FLOATING)
     {
-      edit_paste (display, GIMP_PASTE_TYPE_FLOATING, TRUE);
+      if (! display || ! gimp_display_get_image (display))
+        {
+          edit_paste_as_new_image_cmd_callback (action, data);
+          return;
+        }
     }
-  else
+
+  if (! display)
+    return;
+
+  switch (paste_type)
     {
-      edit_paste_as_new_image_cmd_callback (action, data);
+    case GIMP_PASTE_TYPE_FLOATING:
+    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+    case GIMP_PASTE_TYPE_FLOATING_INTO:
+    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+      edit_paste (display, paste_type, TRUE);
+      break;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER:
+    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+      edit_paste (display, paste_type, FALSE);
+      break;
     }
-}
-
-void
-edit_paste_into_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  edit_paste (display, GIMP_PASTE_TYPE_FLOATING_INTO, TRUE);
-}
-
-void
-edit_paste_as_new_layer_cmd_callback (GtkAction *action,
-                                      gpointer   data)
-{
-  GimpDisplay *display;
-  return_if_no_display (display, data);
-
-  edit_paste (display, GIMP_PASTE_TYPE_NEW_LAYER, FALSE);
 }
 
 void

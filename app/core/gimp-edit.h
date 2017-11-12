@@ -31,16 +31,6 @@ GimpBuffer  * gimp_edit_copy_visible       (GimpImage       *image,
                                             GimpContext     *context,
                                             GError         **error);
 
-void          gimp_edit_get_paste_offset   (GimpImage       *image,
-                                            GimpDrawable    *drawable,
-                                            GimpObject      *paste,
-                                            gint             viewport_x,
-                                            gint             viewport_y,
-                                            gint             viewport_width,
-                                            gint             viewport_height,
-                                            gint            *offset_x,
-                                            gint            *offset_y);
-
 GimpLayer   * gimp_edit_paste              (GimpImage       *image,
                                             GimpDrawable    *drawable,
                                             GimpObject      *paste,
