@@ -27,7 +27,9 @@ Core:
     is not installed for the GUI language (alongside the possibility to
     read online) and the choice can be edited in preferences.
   - The statusbar now blinks on warnings and errors.
-  - Highlight upper/lower halves of spinscales while hovering.
+  - Paste in Place, available for regular clipboard and named buffers,
+    allows pasting contents of either the clipboard a named buffer at the
+    exact coordinates it was copied from.
 
 Usability:
 
