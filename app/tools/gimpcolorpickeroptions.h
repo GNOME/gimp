@@ -39,6 +39,8 @@ struct _GimpColorPickerOptions
 
   GimpColorPickMode  pick_mode;
   gboolean           use_info_window;
+  GimpColorFrameMode frame1_mode;
+  GimpColorFrameMode frame2_mode;
 };
 
 

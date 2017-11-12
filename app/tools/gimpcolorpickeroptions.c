@@ -37,7 +37,9 @@ enum
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
   PROP_PICK_MODE,
-  PROP_USE_INFO_WINDOW
+  PROP_USE_INFO_WINDOW,
+  PROP_FRAME1_MODE,
+  PROP_FRAME2_MODE,
 };
 
 
@@ -87,6 +89,20 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                               "color values in various color models"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME1_MODE,
+                         "frame1-mode",
+                         "Frame 1 Mode", NULL,
+                         GIMP_TYPE_COLOR_FRAME_MODE,
+                         GIMP_COLOR_FRAME_MODE_PIXEL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME2_MODE,
+                         "frame2-mode",
+                         "Frame 2 Mode", NULL,
+                         GIMP_TYPE_COLOR_FRAME_MODE,
+                         GIMP_COLOR_FRAME_MODE_RGB_PERCENT,
+                         GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -112,6 +128,12 @@ gimp_color_picker_options_set_property (GObject      *object,
       break;
     case PROP_USE_INFO_WINDOW:
       options->use_info_window = g_value_get_boolean (value);
+      break;
+    case PROP_FRAME1_MODE:
+      options->frame1_mode = g_value_get_enum (value);
+      break;
+    case PROP_FRAME2_MODE:
+      options->frame2_mode = g_value_get_enum (value);
       break;
 
     default:
@@ -139,6 +161,12 @@ gimp_color_picker_options_get_property (GObject    *object,
       break;
     case PROP_USE_INFO_WINDOW:
       g_value_set_boolean (value, options->use_info_window);
+      break;
+    case PROP_FRAME1_MODE:
+      g_value_set_enum (value, options->frame1_mode);
+      break;
+    case PROP_FRAME2_MODE:
+      g_value_set_enum (value, options->frame2_mode);
       break;
 
     default:
