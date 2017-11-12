@@ -46,10 +46,10 @@ typedef enum
   COLORBLIND_DEFICIENCY_PROTANOPIA,
   COLORBLIND_DEFICIENCY_DEUTERANOPIA,
   COLORBLIND_DEFICIENCY_TRITANOPIA
-} ColorblindDeficiency;
+} ColorblindDeficiencyType;
 
-#define CDISPLAY_TYPE_COLORBLIND_DEFICIENCY (cdisplay_colorblind_deficiency_type)
-static GType  cdisplay_colorblind_deficiency_register_type (GTypeModule *module);
+#define CDISPLAY_TYPE_COLORBLIND_DEFICIENCY_TYPE (cdisplay_colorblind_deficiency_type_type)
+static GType  cdisplay_colorblind_deficiency_type_register_type (GTypeModule *module);
 
 static const GEnumValue enum_values[] =
 {
@@ -73,8 +73,8 @@ static const GimpEnumDesc enum_descs[] =
     { 0, NULL, NULL }
   };
 
-#define DEFAULT_DEFICIENCY  COLORBLIND_DEFICIENCY_DEUTERANOPIA
-#define COLOR_CACHE_SIZE    1021
+#define DEFAULT_DEFICIENCY_TYPE  COLORBLIND_DEFICIENCY_DEUTERANOPIA
+#define COLOR_CACHE_SIZE         1021
 
 
 #define CDISPLAY_TYPE_COLORBLIND            (cdisplay_colorblind_get_type ())
@@ -89,13 +89,13 @@ typedef struct _CdisplayColorblindClass CdisplayColorblindClass;
 
 struct _CdisplayColorblind
 {
-  GimpColorDisplay      parent_instance;
+  GimpColorDisplay          parent_instance;
 
-  ColorblindDeficiency  deficiency;
+  ColorblindDeficiencyType  type;
 
-  gfloat                a1, b1, c1;
-  gfloat                a2, b2, c2;
-  gfloat                inflection;
+  gfloat                    a1, b1, c1;
+  gfloat                    a2, b2, c2;
+  gfloat                    inflection;
 };
 
 struct _CdisplayColorblindClass
@@ -107,28 +107,28 @@ struct _CdisplayColorblindClass
 enum
 {
   PROP_0,
-  PROP_DEFICIENCY
+  PROP_TYPE
 };
 
 
-static GType       cdisplay_colorblind_get_type        (void);
+static GType       cdisplay_colorblind_get_type       (void);
 
-static void        cdisplay_colorblind_set_property    (GObject               *object,
-                                                        guint                  property_id,
-                                                        const GValue          *value,
-                                                        GParamSpec            *pspec);
-static void        cdisplay_colorblind_get_property    (GObject               *object,
-                                                        guint                  property_id,
-                                                        GValue                *value,
-                                                        GParamSpec            *pspec);
+static void        cdisplay_colorblind_set_property   (GObject                  *object,
+                                                       guint                     property_id,
+                                                       const GValue             *value,
+                                                       GParamSpec               *pspec);
+static void        cdisplay_colorblind_get_property   (GObject                  *object,
+                                                       guint                     property_id,
+                                                       GValue                   *value,
+                                                       GParamSpec               *pspec);
 
-static void        cdisplay_colorblind_convert_buffer  (GimpColorDisplay      *display,
-                                                        GeglBuffer            *buffer,
-                                                        GeglRectangle         *area);
-static void        cdisplay_colorblind_changed         (GimpColorDisplay      *display);
+static void        cdisplay_colorblind_convert_buffer (GimpColorDisplay         *display,
+                                                       GeglBuffer               *buffer,
+                                                       GeglRectangle            *area);
+static void        cdisplay_colorblind_changed        (GimpColorDisplay         *display);
 
-static void        cdisplay_colorblind_set_deficiency  (CdisplayColorblind    *colorblind,
-                                                        ColorblindDeficiency   value);
+static void        cdisplay_colorblind_set_type       (CdisplayColorblind       *colorblind,
+                                                       ColorblindDeficiencyType  value);
 
 
 /* The RGB<->LMS transforms above are computed from the human cone
@@ -203,7 +203,7 @@ static const GimpModuleInfo cdisplay_colorblind_info =
 G_DEFINE_DYNAMIC_TYPE (CdisplayColorblind, cdisplay_colorblind,
                        GIMP_TYPE_COLOR_DISPLAY)
 
-static GType cdisplay_colorblind_deficiency_type = 0;
+static GType cdisplay_colorblind_deficiency_type_type = 0;
 
 
 G_MODULE_EXPORT const GimpModuleInfo *
@@ -216,27 +216,27 @@ G_MODULE_EXPORT gboolean
 gimp_module_register (GTypeModule *module)
 {
   cdisplay_colorblind_register_type (module);
-  cdisplay_colorblind_deficiency_register_type (module);
+  cdisplay_colorblind_deficiency_type_register_type (module);
 
   return TRUE;
 }
 
 static GType
-cdisplay_colorblind_deficiency_register_type (GTypeModule *module)
+cdisplay_colorblind_deficiency_type_register_type (GTypeModule *module)
 {
-  if (! cdisplay_colorblind_deficiency_type)
+  if (! cdisplay_colorblind_deficiency_type_type)
     {
-      cdisplay_colorblind_deficiency_type =
-        g_type_module_register_enum (module, "CDisplayColorblindDeficiency",
+      cdisplay_colorblind_deficiency_type_type =
+        g_type_module_register_enum (module, "CDisplayColorblindDeficiencyType",
                                      enum_values);
 
-      gimp_type_set_translation_domain (cdisplay_colorblind_deficiency_type,
+      gimp_type_set_translation_domain (cdisplay_colorblind_deficiency_type_type,
                                         GETTEXT_PACKAGE "-libgimp");
-      gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type,
+      gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type_type,
                                         enum_descs);
     }
 
-  return cdisplay_colorblind_deficiency_type;
+  return cdisplay_colorblind_deficiency_type_type;
 }
 
 static void
@@ -248,12 +248,12 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   object_class->get_property     = cdisplay_colorblind_get_property;
   object_class->set_property     = cdisplay_colorblind_set_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEFICIENCY,
-                         "deficiency",
-                         _("Deficiency"),
-                         _("Color deficiency type"),
-                         CDISPLAY_TYPE_COLORBLIND_DEFICIENCY,
-                         DEFAULT_DEFICIENCY,
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TYPE,
+                         "type",
+                         _("Type"),
+                         _("Color vision deficiency type"),
+                         CDISPLAY_TYPE_COLORBLIND_DEFICIENCY_TYPE,
+                         DEFAULT_DEFICIENCY_TYPE,
                          0);
 
   display_class->name            = _("Color Deficient Vision");
@@ -284,8 +284,8 @@ cdisplay_colorblind_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DEFICIENCY:
-      g_value_set_enum (value, colorblind->deficiency);
+    case PROP_TYPE:
+      g_value_set_enum (value, colorblind->type);
       break;
 
     default:
@@ -304,9 +304,8 @@ cdisplay_colorblind_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_DEFICIENCY:
-      cdisplay_colorblind_set_deficiency (colorblind,
-                                          g_value_get_enum (value));
+    case PROP_TYPE:
+      cdisplay_colorblind_set_type (colorblind, g_value_get_enum (value));
       break;
 
     default:
@@ -356,7 +355,7 @@ cdisplay_colorblind_convert_buffer (GimpColorDisplay *display,
           green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
           blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
 
-          switch (colorblind->deficiency)
+          switch (colorblind->type)
             {
             case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
               tmp = blue / red;
@@ -438,7 +437,7 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
   anchor_e[1] = rgb2lms[3] + rgb2lms[4] + rgb2lms[5];
   anchor_e[2] = rgb2lms[6] + rgb2lms[7] + rgb2lms[8];
 
-  switch (colorblind->deficiency)
+  switch (colorblind->type)
     {
     case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
       /* find a,b,c for lam=575nm and lam=475 */
@@ -476,21 +475,21 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
 }
 
 static void
-cdisplay_colorblind_set_deficiency (CdisplayColorblind   *colorblind,
-                                    ColorblindDeficiency  value)
+cdisplay_colorblind_set_type (CdisplayColorblind       *colorblind,
+                              ColorblindDeficiencyType  value)
 {
-  if (value != colorblind->deficiency)
+  if (value != colorblind->type)
     {
       GEnumClass *enum_class;
 
-      enum_class = g_type_class_peek (CDISPLAY_TYPE_COLORBLIND_DEFICIENCY);
+      enum_class = g_type_class_peek (CDISPLAY_TYPE_COLORBLIND_DEFICIENCY_TYPE);
 
       if (! g_enum_get_value (enum_class, value))
         return;
 
-      colorblind->deficiency = value;
+      colorblind->type = value;
 
-      g_object_notify (G_OBJECT (colorblind), "deficiency");
+      g_object_notify (G_OBJECT (colorblind), "type");
       gimp_color_display_changed (GIMP_COLOR_DISPLAY (colorblind));
     }
 }
