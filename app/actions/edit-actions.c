@@ -209,7 +209,7 @@ static const GimpEnumActionEntry edit_paste_actions[] =
   { "edit-paste-as-new-layer-in-place", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("edit-action", "New Layer In _Place"), NULL,
     NC_("edit-action",
-        "Create a new layer from the content of the clipboard"
+        "Create a new layer from the content of the clipboard "
         "and place it at its original position"),
     GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE, FALSE,
     GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER_IN_PLACE }
