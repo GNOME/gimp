@@ -140,9 +140,7 @@ error_console_highlight_error_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  g_object_set (console->gimp->config,
-                "error-console-highlight-error", active,
-                NULL);
+  console->highlight[GIMP_MESSAGE_ERROR] = active;
 }
 
 void
@@ -154,9 +152,7 @@ error_console_highlight_warning_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  g_object_set (console->gimp->config,
-                "error-console-highlight-warning", active,
-                NULL);
+  console->highlight[GIMP_MESSAGE_WARNING] = active;
 }
 
 void
@@ -168,9 +164,7 @@ error_console_highlight_info_cmd_callback (GtkAction *action,
 
   active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  g_object_set (console->gimp->config,
-                "error-console-highlight-info", active,
-                NULL);
+  console->highlight[GIMP_MESSAGE_INFO] = active;
 }
 
 

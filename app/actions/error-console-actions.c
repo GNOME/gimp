@@ -24,10 +24,6 @@
 
 #include "actions-types.h"
 
-#include "config/gimpguiconfig.h"
-
-#include "core/gimp.h"
-
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp-ids.h"
@@ -123,7 +119,6 @@ error_console_actions_update (GimpActionGroup *group,
                               gpointer         data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
-  GimpGuiConfig    *config  = GIMP_GUI_CONFIG (console->gimp->config);
   gboolean          selection;
 
   selection = gtk_text_buffer_get_selection_bounds (console->text_buffer,
@@ -142,15 +137,15 @@ error_console_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("error-console-highlight-error", TRUE);
   SET_ACTIVE ("error-console-highlight-error",
-              config->error_console_highlight[GIMP_MESSAGE_ERROR]);
+              console->highlight[GIMP_MESSAGE_ERROR]);
 
   SET_SENSITIVE ("error-console-highlight-warning", TRUE);
   SET_ACTIVE ("error-console-highlight-warning",
-              config->error_console_highlight[GIMP_MESSAGE_WARNING]);
+              console->highlight[GIMP_MESSAGE_WARNING]);
 
   SET_SENSITIVE ("error-console-highlight-info", TRUE);
   SET_ACTIVE ("error-console-highlight-info",
-              config->error_console_highlight[GIMP_MESSAGE_INFO]);
+              console->highlight[GIMP_MESSAGE_INFO]);
 
 #undef SET_ACTIVE
 #undef SET_SENSITIVE

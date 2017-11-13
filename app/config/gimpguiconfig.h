@@ -87,7 +87,6 @@ struct _GimpGuiConfig
   gboolean             single_window_mode;
   GimpPosition         tabs_position;
   gint                 last_tip_shown;
-  gboolean             error_console_highlight[GIMP_MESSAGE_ERROR + 1];
 };
 
 struct _GimpGuiConfigClass

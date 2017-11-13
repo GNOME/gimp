@@ -33,27 +33,47 @@
 
 #include "core/gimp.h"
 
+#include "gimpdocked.h"
 #include "gimperrorconsole.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo-aux.h"
 #include "gimptextbuffer.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
-static void      gimp_error_console_constructed  (GObject          *object);
-static void      gimp_error_console_dispose      (GObject          *object);
-
-static void      gimp_error_console_unmap        (GtkWidget        *widget);
-
-static gboolean  gimp_error_console_button_press (GtkWidget        *widget,
-                                                  GdkEventButton   *event,
-                                                  GimpErrorConsole *console);
+static const gboolean default_highlight[] =
+{
+  [GIMP_MESSAGE_ERROR]   = TRUE,
+  [GIMP_MESSAGE_WARNING] = TRUE,
+  [GIMP_MESSAGE_INFO]    = FALSE
+};
 
 
-G_DEFINE_TYPE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR)
+static void       gimp_error_console_docked_iface_init (GimpDockedInterface *iface);
+
+static void       gimp_error_console_constructed       (GObject          *object);
+static void       gimp_error_console_dispose           (GObject          *object);
+
+static void       gimp_error_console_unmap             (GtkWidget        *widget);
+
+static gboolean   gimp_error_console_button_press      (GtkWidget        *widget,
+                                                        GdkEventButton   *event,
+                                                        GimpErrorConsole *console);
+
+static void       gimp_error_console_set_aux_info      (GimpDocked       *docked,
+                                                        GList            *aux_info);
+static GList    * gimp_error_console_get_aux_info      (GimpDocked       *docked);
+
+
+G_DEFINE_TYPE_WITH_CODE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_error_console_docked_iface_init))
 
 #define parent_class gimp_error_console_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -103,6 +123,20 @@ gimp_error_console_init (GimpErrorConsole *console)
                     console);
 
   console->file_dialog = NULL;
+
+  memcpy (console->highlight, default_highlight, sizeof (default_highlight));
+}
+
+static void
+gimp_error_console_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_aux_info = gimp_error_console_set_aux_info;
+  iface->get_aux_info = gimp_error_console_get_aux_info;
 }
 
 static void
@@ -235,4 +269,58 @@ gimp_error_console_button_press (GtkWidget        *widget,
     }
 
   return FALSE;
+}
+
+static const gchar * const aux_info_highlight[] =
+{
+  [GIMP_MESSAGE_ERROR]   = "highlight-error",
+  [GIMP_MESSAGE_WARNING] = "highlight-warning",
+  [GIMP_MESSAGE_INFO]    = "highlight-info"
+};
+
+static void
+gimp_error_console_set_aux_info (GimpDocked *docked,
+                                 GList      *aux_info)
+{
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (docked);
+  GList            *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+      gint                i;
+
+      for (i = 0; i < G_N_ELEMENTS (aux_info_highlight); i++)
+        {
+          if (! strcmp (aux->name, aux_info_highlight[i]))
+            {
+              console->highlight[i] = ! strcmp (aux->value, "yes");
+              break;
+            }
+        }
+    }
+}
+
+static GList *
+gimp_error_console_get_aux_info (GimpDocked *docked)
+{
+  GimpErrorConsole   *console = GIMP_ERROR_CONSOLE (docked);
+  GList              *aux_info;
+  gint                i;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
+
+  for (i = 0; i < G_N_ELEMENTS (aux_info_highlight); i++)
+    {
+      GimpSessionInfoAux *aux;
+
+      aux = gimp_session_info_aux_new (aux_info_highlight[i],
+                                       console->highlight[i] ? "yes" : "no");
+
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
 }

@@ -49,6 +49,8 @@ struct _GimpErrorConsole
 
   GtkWidget     *file_dialog;
   gboolean       save_selection;
+
+  gboolean       highlight[GIMP_MESSAGE_ERROR + 1];
 };
 
 struct _GimpErrorConsoleClass

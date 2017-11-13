@@ -126,15 +126,6 @@ _("The window type hint that is set on dock windows and the toolbox " \
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
 
-#define ERROR_CONSOLE_HIGHLIGHT_ERROR_BLURB \
-"Highlight error console on errors"
-
-#define ERROR_CONSOLE_HIGHLIGHT_INFO_BLURB \
-"Highlight error console on messages"
-
-#define ERROR_CONSOLE_HIGHLIGHT_WARNING_BLURB \
-"Highlight error console on warnings"
-
 #define FRACTALEXPLORER_PATH_BLURB \
 "Where to search for fractals used by the Fractal Explorer plug-in."
 

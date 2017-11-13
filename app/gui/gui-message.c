@@ -153,17 +153,18 @@ gui_message_error_console (Gimp                *gimp,
                            const gchar         *domain,
                            const gchar         *message)
 {
-  GimpGuiConfig *config   = GIMP_GUI_CONFIG (gimp->config);
-  GtkWidget     *dockable = NULL;
+  GtkWidget *dockable;
+
+  dockable = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                              "gimp-error-console");
 
   /* avoid raising the error console for unhighlighted messages */
-  if (! config->error_console_highlight[severity])
+  if (dockable)
     {
-      GtkWidget *widget =
-        gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                         "gimp-error-console");
-      if (GIMP_IS_DOCKABLE (widget))
-        dockable = widget;
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
+
+      if (GIMP_ERROR_CONSOLE (child)->highlight[severity])
+        dockable = NULL;
     }
 
   if (! dockable)
