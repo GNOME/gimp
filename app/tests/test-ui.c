@@ -64,7 +64,7 @@
 #include "gimp-app-test-utils.h"
 
 
-#define GIMP_UI_WINDOW_POSITION_EPSILON 25
+#define GIMP_UI_WINDOW_POSITION_EPSILON 30
 #define GIMP_UI_POSITION_EPSILON        1
 #define GIMP_UI_ZOOM_EPSILON            0.01
 
