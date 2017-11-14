@@ -89,7 +89,7 @@ case $OS in
 	;;
 esac
 
-echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
+printf "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
 if ($LIBTOOLIZE --version) < /dev/null > /dev/null 2>&1; then
    LIBTOOLIZE=$LIBTOOLIZE
 elif (glibtoolize --version) < /dev/null > /dev/null 2>&1; then
@@ -122,7 +122,7 @@ done
 if test x$enable_gtk_doc = xno; then
   echo "skipping test for gtkdocize"
 else
-  echo -n "checking for gtkdocize ... "
+  printf "checking for gtkdocize ... "
   if (gtkdocize --version) < /dev/null > /dev/null 2>&1; then
       echo "yes"
   else
@@ -138,7 +138,7 @@ else
   fi
 fi
 
-echo -n "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
+printf "checking for autoconf >= $AUTOCONF_REQUIRED_VERSION ... "
 if ($AUTOCONF --version) < /dev/null > /dev/null 2>&1; then
     VER=`$AUTOCONF --version | head -n 1 \
          | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
@@ -153,7 +153,7 @@ else
 fi
 
 
-echo -n "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
+printf "checking for automake >= $AUTOMAKE_REQUIRED_VERSION ... "
 if ($AUTOMAKE --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=$AUTOMAKE
    ACLOCAL=$ACLOCAL
@@ -185,7 +185,7 @@ if test x$AUTOMAKE != x; then
 fi
 
 
-echo -n "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
+printf "checking for intltool >= $INTLTOOL_REQUIRED_VERSION ... "
 if (intltoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`intltoolize --version \
          | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
@@ -200,7 +200,7 @@ else
 fi
 
 
-echo -n "checking for xsltproc ... "
+printf "checking for xsltproc ... "
 if (xsltproc --version) < /dev/null > /dev/null 2>&1; then
     echo "yes"
 else
