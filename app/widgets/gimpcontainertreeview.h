@@ -131,6 +131,11 @@ void        gimp_container_tree_view_connect_name_edited
                                               (GimpContainerTreeView *tree_view,
                                                GCallback              callback,
                                                gpointer               data);
+gboolean    gimp_container_tree_view_name_edited
+                                              (GtkCellRendererText   *cell,
+                                               const gchar           *path_str,
+                                               const gchar           *new_name,
+                                               GimpContainerTreeView *tree_view);
 
 
 #endif  /*  __GIMP_CONTAINER_TREE_VIEW_H__  */

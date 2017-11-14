@@ -33,7 +33,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
@@ -56,10 +55,6 @@ static void   gimp_buffer_view_set_context       (GimpDocked          *docked,
 
 static void   gimp_buffer_view_activate_item     (GimpContainerEditor *editor,
                                                   GimpViewable        *viewable);
-static void   gimp_buffer_view_tree_name_edited  (GtkCellRendererText *cell,
-                                                  const gchar         *path_str,
-                                                  const gchar         *new_name,
-                                                  GimpBufferView      *view);
 
 static void   gimp_buffer_view_clipboard_changed (Gimp                *gimp,
                                                   GimpBufferView      *buffer_view);
@@ -158,8 +153,8 @@ gimp_buffer_view_new (GimpViewType     view_type,
       tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
 
       gimp_container_tree_view_connect_name_edited (tree_view,
-                                                    G_CALLBACK (gimp_buffer_view_tree_name_edited),
-                                                    buffer_view);
+                                                    G_CALLBACK (gimp_container_tree_view_name_edited),
+                                                    tree_view);
     }
 
   frame = gtk_frame_new (NULL);
@@ -272,58 +267,6 @@ gimp_buffer_view_activate_item (GimpContainerEditor *editor,
     {
       gtk_button_clicked (GTK_BUTTON (view->paste_button));
     }
-}
-
-static void
-gimp_buffer_view_tree_name_edited (GtkCellRendererText *cell,
-                                   const gchar         *path_str,
-                                   const gchar         *new_name,
-                                   GimpBufferView      *view)
-{
-  GimpContainerTreeView *tree_view;
-  GtkTreePath           *path;
-  GtkTreeIter            iter;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_EDITOR (view)->view);
-
-  path = gtk_tree_path_new_from_string (path_str);
-
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
-    {
-      GimpViewRenderer *renderer;
-      GimpObject       *object;
-      const gchar      *old_name;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
-
-      object = GIMP_OBJECT (renderer->viewable);
-
-      old_name = gimp_object_get_name (object);
-
-      if (! old_name) old_name = "";
-      if (! new_name) new_name = "";
-
-      if (strcmp (old_name, new_name))
-        {
-          gimp_object_set_name (object, new_name);
-        }
-      else
-        {
-          gchar *name = gimp_viewable_get_description (renderer->viewable,
-                                                       NULL);
-
-          gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
-                              -1);
-          g_free (name);
-        }
-
-      g_object_unref (renderer);
-    }
-
-  gtk_tree_path_free (path);
 }
 
 static void

@@ -576,6 +576,60 @@ gimp_container_tree_view_connect_name_edited (GimpContainerTreeView *tree_view,
                     data);
 }
 
+gboolean
+gimp_container_tree_view_name_edited (GtkCellRendererText   *cell,
+                                      const gchar           *path_str,
+                                      const gchar           *new_name,
+                                      GimpContainerTreeView *tree_view)
+{
+  GtkTreePath *path;
+  GtkTreeIter  iter;
+  gboolean     changed = FALSE;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpViewRenderer *renderer;
+      GimpObject       *object;
+      const gchar      *old_name;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      object = GIMP_OBJECT (renderer->viewable);
+
+      old_name = gimp_object_get_name (object);
+
+      if (! old_name) old_name = "";
+      if (! new_name) new_name = "";
+
+      if (strcmp (old_name, new_name))
+        {
+          gimp_object_set_name (object, new_name);
+
+          changed = TRUE;
+        }
+      else
+        {
+          gchar *name = gimp_viewable_get_description (renderer->viewable,
+                                                       NULL);
+
+          gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
+                              -1);
+          g_free (name);
+        }
+
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
+
+  return changed;
+}
+
 
 /*  GimpContainerView methods  */
 
