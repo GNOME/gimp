@@ -338,11 +338,11 @@ gimp_display_shell_scale_update (GimpDisplayShell *shell)
 /**
  * gimp_display_shell_scale:
  * @shell:     the #GimpDisplayShell
- * @zoom_type: whether to zoom in, our or to a specific scale
+ * @zoom_type: whether to zoom in, out or to a specific scale
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
  * This function figures out the context of the zoom and behaves
- * appropriatley thereafter.
+ * appropriately thereafter.
  *
  **/
 void
