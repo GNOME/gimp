@@ -147,7 +147,7 @@ gimp_scale_combo_box_constructed (GObject *object)
 
   g_object_set (entry,
                 "xalign",             1.0,
-                "width-chars",        7,
+                "width-chars",        5,
                 "truncate-multiline", TRUE,
                 "inner-border",       &border,
                 NULL);
@@ -483,9 +483,11 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
 {
   GtkTreeModel *model;
   GtkListStore *store;
+  GtkWidget    *entry;
   GtkTreeIter   iter;
   gboolean      iter_valid;
   gboolean      persistent;
+  gint          n_digits;
 
   g_return_if_fail (GIMP_IS_SCALE_COMBO_BOX (combo_box));
   g_return_if_fail (scale > 0.0);
@@ -515,7 +517,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
            iter_valid;
            iter_valid = gtk_tree_model_iter_next (model, &sibling))
         {
-          gdouble  this;
+          gdouble this;
 
           gtk_tree_model_get (model, &sibling,
                               COLUMN_SCALE, &this,
@@ -541,6 +543,14 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
       if (gtk_tree_model_iter_n_children (model, NULL) > MAX_ITEMS)
         gimp_scale_combo_box_mru_remove_last (combo_box);
     }
+
+  /* Update entry size appropriately. */
+  entry = gtk_bin_get_child (GTK_BIN (combo_box));
+  n_digits = (gint) floor (log10 (scale) + 1);
+
+  g_object_set (entry,
+                "width-chars", MAX (5, n_digits + 4),
+                NULL);
 }
 
 gdouble
