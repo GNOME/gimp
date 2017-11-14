@@ -150,8 +150,7 @@ GimpCanvasItem * gimp_draw_tool_add_transform_preview(GimpDrawTool     *draw_too
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
-                                                      gdouble           y2,
-                                                      gboolean          perspective);
+                                                      gdouble           y2);
 
 GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_tool,
                                                       GimpHandleType    type,

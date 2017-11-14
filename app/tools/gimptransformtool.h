@@ -63,10 +63,6 @@ struct _GimpTransformTool
   GimpItem       *hidden_item;        /*  the item that was hidden during
                                           the transform                      */
 
-  gboolean        does_perspective;   /*  does the tool do non-affine
-                                       *  transformations
-                                       */
-
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
   GimpCanvasItem *preview;

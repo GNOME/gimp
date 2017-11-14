@@ -57,7 +57,6 @@ enum
   PROP_Y1,
   PROP_X2,
   PROP_Y2,
-  PROP_PERSPECTIVE,
   PROP_OPACITY
 };
 
@@ -70,7 +69,6 @@ struct _GimpCanvasTransformPreviewPrivate
   GimpMatrix3        transform;
   gdouble            x1, y1;
   gdouble            x2, y2;
-  gboolean           perspective;
   gdouble            opacity;
 };
 
@@ -216,12 +214,6 @@ gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass
                                                         0.0,
                                                         GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_PERSPECTIVE,
-                                   g_param_spec_boolean ("perspective",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-
   g_object_class_install_property (object_class, PROP_OPACITY,
                                    g_param_spec_double ("opacity",
                                                         NULL, NULL,
@@ -277,10 +269,6 @@ gimp_canvas_transform_preview_set_property (GObject      *object,
       private->y2 = g_value_get_double (value);
       break;
 
-    case PROP_PERSPECTIVE:
-      private->perspective = g_value_get_boolean (value);
-      break;
-
     case PROP_OPACITY:
       private->opacity = g_value_get_double (value);
       break;
@@ -307,10 +295,6 @@ gimp_canvas_transform_preview_get_property (GObject    *object,
 
     case PROP_TRANSFORM:
       g_value_set_boxed (value, &private->transform);
-      break;
-
-    case PROP_PERSPECTIVE:
-      g_value_set_boolean (value, private->perspective);
       break;
 
     case PROP_X1:
@@ -445,7 +429,7 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem *item,
                             &mask_offx, &mask_offy);
     }
 
-  if (private->perspective)
+  if (! gimp_matrix3_is_affine (&private->transform))
     {
       /* approximate perspective transform by subdivision
        *
@@ -575,8 +559,7 @@ gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
                                    gdouble            x1,
                                    gdouble            y1,
                                    gdouble            x2,
-                                   gdouble            y2,
-                                   gboolean           perspective)
+                                   gdouble            y2)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -590,7 +573,6 @@ gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
                        "y1",          y1,
                        "x2",          x2,
                        "y2",          y2,
-                       "perspective", perspective,
                        NULL);
 }
 

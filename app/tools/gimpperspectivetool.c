@@ -113,8 +113,7 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
-  tr_tool->progress_text    = _("Perspective transformation");
-  tr_tool->does_perspective = TRUE;
+  tr_tool->progress_text = _("Perspective transformation");
 }
 
 static void

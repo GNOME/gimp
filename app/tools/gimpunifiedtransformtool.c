@@ -110,8 +110,7 @@ gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (unified_tool);
 
-  tr_tool->progress_text    = _("Unified transform");
-  tr_tool->does_perspective = TRUE;
+  tr_tool->progress_text = _("Unified transform");
 }
 
 static void

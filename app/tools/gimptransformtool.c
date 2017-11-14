@@ -657,8 +657,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                               tr_tool->x1,
                                               tr_tool->y1,
                                               tr_tool->x2,
-                                              tr_tool->y2,
-                                              tr_tool->does_perspective);
+                                              tr_tool->y2);
       g_object_add_weak_pointer (G_OBJECT (tr_tool->preview),
                                  (gpointer) &tr_tool->preview);
 
