@@ -566,13 +566,13 @@ gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
   g_return_val_if_fail (transform != NULL, NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW,
-                       "shell",       shell,
-                       "drawable",    drawable,
-                       "transform",   transform,
-                       "x1",          x1,
-                       "y1",          y1,
-                       "x2",          x2,
-                       "y2",          y2,
+                       "shell",     shell,
+                       "drawable",  drawable,
+                       "transform", transform,
+                       "x1",        x1,
+                       "y1",        y1,
+                       "x2",        x2,
+                       "y2",        y2,
                        NULL);
 }
 
