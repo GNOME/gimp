@@ -114,9 +114,15 @@ static void     gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
-static gboolean gimp_statusbar_rotate_label_pressed (GtkWidget       *event_box,
-                                                     GdkEvent        *event,
-                                                     GimpStatusbar   *statusbar);
+static gboolean gimp_statusbar_rotate_pressed     (GtkWidget         *event_box,
+                                                   GdkEvent          *event,
+                                                   GimpStatusbar     *statusbar);
+static gboolean gimp_statusbar_horiz_flip_pressed (GtkWidget         *event_box,
+                                                   GdkEvent          *event,
+                                                   GimpStatusbar     *statusbar);
+static gboolean gimp_statusbar_vert_flip_pressed  (GtkWidget         *event_box,
+                                                   GdkEvent          *event,
+                                                   GimpStatusbar     *statusbar);
 static void     gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_shell_rotated      (GimpDisplayShell  *shell,
@@ -249,15 +255,38 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
+  /* Shell transform status */
   widget = gtk_event_box_new ();
   gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
   statusbar->rotate_label = gtk_label_new (NULL);
   g_signal_connect (widget, "button-press-event",
-                    G_CALLBACK (gimp_statusbar_rotate_label_pressed),
+                    G_CALLBACK (gimp_statusbar_rotate_pressed),
                     statusbar);
   gtk_container_add (GTK_CONTAINER (widget), statusbar->rotate_label);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 1);
   gtk_widget_show (statusbar->rotate_label);
+  gtk_widget_show (widget);
+
+  widget = gtk_event_box_new ();
+  statusbar->horizontal_flip_icon = gtk_image_new_from_icon_name ("gimp-flip-horizontal",
+                                                                  GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (widget), statusbar->horizontal_flip_icon);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 1);
+  g_signal_connect (widget, "button-press-event",
+                    G_CALLBACK (gimp_statusbar_horiz_flip_pressed),
+                    statusbar);
+  gtk_widget_show (statusbar->horizontal_flip_icon);
+  gtk_widget_show (widget);
+
+  widget = gtk_event_box_new ();
+  statusbar->vertical_flip_icon = gtk_image_new_from_icon_name ("gimp-flip-vertical",
+                                                                GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (widget), statusbar->vertical_flip_icon);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 1);
+  g_signal_connect (widget, "button-press-event",
+                    G_CALLBACK (gimp_statusbar_vert_flip_pressed),
+                    statusbar);
+  gtk_widget_show (statusbar->vertical_flip_icon);
   gtk_widget_show (widget);
 
   /*  put the label back into the message area  */
@@ -794,6 +823,8 @@ gimp_statusbar_empty (GimpStatusbar *statusbar)
   gtk_widget_hide (statusbar->unit_combo);
   gtk_widget_hide (statusbar->scale_combo);
   gtk_widget_hide (statusbar->rotate_label);
+  gtk_widget_hide (statusbar->horizontal_flip_icon);
+  gtk_widget_hide (statusbar->vertical_flip_icon);
 }
 
 void
@@ -1385,13 +1416,26 @@ static void
 gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
                               GimpStatusbar    *statusbar)
 {
-  gchar *text;
+  gchar *text = NULL;
 
-  /* Degree symbol U+00B0. There are no spaces between the value and the
-   * unit for angular rotation. */
-  text = g_strdup_printf ("%.2f\xC2\xB0", shell->rotate_angle);
+  if (shell->rotate_angle != 0.0)
+    {
+      /* Degree symbol U+00B0. There are no spaces between the value and the
+       * unit for angular rotation. */
+      text = g_strdup_printf ("%.2f\xC2\xB0", shell->rotate_angle);
+    }
   gtk_label_set_text (GTK_LABEL (statusbar->rotate_label), text);
-  g_free (text);
+  if (text)
+    g_free (text);
+
+  if (shell->flip_horizontally)
+    gtk_widget_show (statusbar->horizontal_flip_icon);
+  else
+    gtk_widget_hide (statusbar->horizontal_flip_icon);
+  if (shell->flip_vertically)
+    gtk_widget_show (statusbar->vertical_flip_icon);
+  else
+    gtk_widget_hide (statusbar->vertical_flip_icon);
 }
 
 static void
@@ -1429,14 +1473,40 @@ gimp_statusbar_scale_activated (GimpScaleComboBox *combo,
 }
 
 static gboolean
-gimp_statusbar_rotate_label_pressed (GtkWidget     *event_box,
-                                     GdkEvent      *event,
-                                     GimpStatusbar *statusbar)
+gimp_statusbar_rotate_pressed (GtkWidget     *event_box,
+                               GdkEvent      *event,
+                               GimpStatusbar *statusbar)
 {
   GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
   GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
 
   gimp_ui_manager_activate_action (manager, "view", "view-rotate-other");
+  return FALSE;
+}
+
+static gboolean
+gimp_statusbar_horiz_flip_pressed (GtkWidget     *event_box,
+                                   GdkEvent      *event,
+                                   GimpStatusbar *statusbar)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
+  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+  gimp_ui_manager_activate_action (manager, "view", "view-flip-horizontally");
+
+  return FALSE;
+}
+
+static gboolean
+gimp_statusbar_vert_flip_pressed (GtkWidget     *event_box,
+                                  GdkEvent      *event,
+                                  GimpStatusbar *statusbar)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
+  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+  gimp_ui_manager_activate_action (manager, "view", "view-flip-vertically");
+
   return FALSE;
 }
 

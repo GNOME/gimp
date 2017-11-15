@@ -59,6 +59,8 @@ struct _GimpStatusbar
   GtkWidget           *unit_combo;
   GtkWidget           *scale_combo;
   GtkWidget           *rotate_label;
+  GtkWidget           *horizontal_flip_icon;
+  GtkWidget           *vertical_flip_icon;
   GtkWidget           *label; /* same as GtkStatusbar->label */
 
   GtkWidget           *progressbar;
