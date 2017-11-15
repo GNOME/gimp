@@ -18,8 +18,6 @@ Core:
   - The default brush is now "Hardness 050".
   - Verbose version (command line: gimp -v) now displays C compiler
     information.
-  - No undo steps when single-clicking with a selection tool while there
-    was already no selection.
   - Transform tools don't commit identity transformation anymore.
   - Manual language can now be selected amongst all installed manuals,
     which is particularly interesting when no GIMP manuals are available
@@ -38,6 +36,10 @@ Usability:
     matters. When changing values in the lower step section, the pointer
     will be wrapped around the screen so that you could continue adjusting
     the value without interruptions.
+  - Canvas rotation and flip information is now visible in the status
+    bar (as angle and flip icons). Clicking on these canvas status will
+    respectively raise the "Select Rotation Angle" dialog or unflip the
+    canvas.
 
 Tools:
 
