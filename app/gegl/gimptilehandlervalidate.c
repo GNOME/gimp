@@ -106,6 +106,7 @@ gimp_tile_handler_validate_init (GimpTileHandlerValidate *validate)
 
   source->command = gimp_tile_handler_validate_command;
 
+  g_mutex_init (&validate->mutex);
   validate->dirty_region = cairo_region_create ();
 }
 
@@ -116,6 +117,7 @@ gimp_tile_handler_validate_finalize (GObject *object)
 
   g_clear_object (&validate->graph);
   g_clear_pointer (&validate->dirty_region, cairo_region_destroy);
+  g_mutex_clear (&validate->mutex);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -321,7 +323,13 @@ gimp_tile_handler_validate_command (GeglTileSource  *source,
   retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
 
   if (command == GEGL_TILE_GET && z == 0)
-    retval = gimp_tile_handler_validate_validate (source, retval, x, y);
+    {
+      g_mutex_lock (&validate->mutex);
+
+      retval = gimp_tile_handler_validate_validate (source, retval, x, y);
+
+      g_mutex_unlock (&validate->mutex);
+    }
 
   return retval;
 }
