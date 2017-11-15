@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
@@ -113,7 +114,12 @@ static void     gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
+static gboolean gimp_statusbar_rotate_label_pressed (GtkWidget       *event_box,
+                                                     GdkEvent        *event,
+                                                     GimpStatusbar   *statusbar);
 static void     gimp_statusbar_shell_scaled       (GimpDisplayShell  *shell,
+                                                   GimpStatusbar     *statusbar);
+static void     gimp_statusbar_shell_rotated      (GimpDisplayShell  *shell,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_shell_status_notify(GimpDisplayShell  *shell,
                                                    const GParamSpec  *pspec,
@@ -178,7 +184,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *hbox;
   GtkWidget     *hbox2;
   GtkWidget     *image;
-  GtkWidget     *label;
+  GtkWidget     *widget;
   GimpUnitStore *store;
   GList         *children;
 
@@ -243,6 +249,17 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
+  widget = gtk_event_box_new ();
+  gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
+  statusbar->rotate_label = gtk_label_new (NULL);
+  g_signal_connect (widget, "button-press-event",
+                    G_CALLBACK (gimp_statusbar_rotate_label_pressed),
+                    statusbar);
+  gtk_container_add (GTK_CONTAINER (widget), statusbar->rotate_label);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 1);
+  gtk_widget_show (statusbar->rotate_label);
+  gtk_widget_show (widget);
+
   /*  put the label back into the message area  */
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
 
@@ -281,9 +298,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
   gtk_widget_show (image);
 
-  label = gtk_label_new ("Cancel");
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 2);
-  gtk_widget_show (label);
+  widget = gtk_label_new ("Cancel");
+  gtk_box_pack_start (GTK_BOX (hbox2), widget, FALSE, FALSE, 2);
+  gtk_widget_show (widget);
 
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
@@ -717,7 +734,9 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
       g_signal_handlers_disconnect_by_func (statusbar->shell,
                                             gimp_statusbar_shell_scaled,
                                             statusbar);
-
+      g_signal_handlers_disconnect_by_func (statusbar->shell,
+                                            gimp_statusbar_shell_rotated,
+                                            statusbar);
       g_signal_handlers_disconnect_by_func (statusbar->shell,
                                             gimp_statusbar_shell_status_notify,
                                             statusbar);
@@ -728,10 +747,13 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
   g_signal_connect_object (statusbar->shell, "scaled",
                            G_CALLBACK (gimp_statusbar_shell_scaled),
                            statusbar, 0);
-
+  g_signal_connect_object (statusbar->shell, "rotated",
+                           G_CALLBACK (gimp_statusbar_shell_rotated),
+                           statusbar, 0);
   g_signal_connect_object (statusbar->shell, "notify::status",
                            G_CALLBACK (gimp_statusbar_shell_status_notify),
                            statusbar, 0);
+  gimp_statusbar_shell_rotated (shell, statusbar);
 }
 
 gboolean
@@ -771,6 +793,7 @@ gimp_statusbar_empty (GimpStatusbar *statusbar)
   gtk_widget_hide (statusbar->cursor_label);
   gtk_widget_hide (statusbar->unit_combo);
   gtk_widget_hide (statusbar->scale_combo);
+  gtk_widget_hide (statusbar->rotate_label);
 }
 
 void
@@ -781,6 +804,8 @@ gimp_statusbar_fill (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->cursor_label);
   gtk_widget_show (statusbar->unit_combo);
   gtk_widget_show (statusbar->scale_combo);
+  gtk_widget_show (statusbar->rotate_label);
+  gimp_statusbar_shell_rotated (statusbar->shell, statusbar);
 }
 
 void
@@ -1357,6 +1382,19 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
 }
 
 static void
+gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
+                              GimpStatusbar    *statusbar)
+{
+  gchar *text;
+
+  /* Degree symbol U+00B0. There are no spaces between the value and the
+   * unit for angular rotation. */
+  text = g_strdup_printf ("%.2f\xC2\xB0", shell->rotate_angle);
+  gtk_label_set_text (GTK_LABEL (statusbar->rotate_label), text);
+  g_free (text);
+}
+
+static void
 gimp_statusbar_shell_status_notify (GimpDisplayShell *shell,
                                     const GParamSpec *pspec,
                                     GimpStatusbar    *statusbar)
@@ -1388,6 +1426,18 @@ gimp_statusbar_scale_activated (GimpScaleComboBox *combo,
                                 GimpStatusbar     *statusbar)
 {
   gtk_widget_grab_focus (statusbar->shell->canvas);
+}
+
+static gboolean
+gimp_statusbar_rotate_label_pressed (GtkWidget     *event_box,
+                                     GdkEvent      *event,
+                                     GimpStatusbar *statusbar)
+{
+  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
+  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+  gimp_ui_manager_activate_action (manager, "view", "view-rotate-other");
+  return FALSE;
 }
 
 static guint
