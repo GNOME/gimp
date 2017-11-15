@@ -122,7 +122,7 @@ static const GimpActionEntry view_actions[] =
     GIMP_HELP_VIEW_ZOOM_REVERT },
 
   { "view-rotate-other", NULL,
-    NC_("view-action", "Othe_r..."), NULL,
+    NC_("view-action", "Othe_r rotation angle..."), NULL,
     NC_("view-action", "Set a custom rotation angle"),
     G_CALLBACK (view_rotate_other_cmd_callback),
     GIMP_HELP_VIEW_ROTATE_OTHER },
@@ -448,7 +448,7 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-other", NULL,
-    NC_("view-zoom-action", "Othe_r..."), NULL,
+    NC_("view-zoom-action", "Othe_r zoom factor..."), NULL,
     NC_("view-zoom-action", "Set a custom zoom factor"),
     0,
     GIMP_HELP_VIEW_ZOOM_OTHER }
