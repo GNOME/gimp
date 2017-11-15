@@ -64,8 +64,8 @@ static const GimpActionEntry drawable_actions[] =
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-visible", GIMP_ICON_VISIBLE,
-    NC_("drawable-action", "_Visible"), NULL,
-    NC_("drawable-action", "Toggle visibility"),
+    NC_("drawable-action", "Toggle drawable _visibility"), NULL,
+    NC_("drawable-action", "Toggle drawable visibility"),
     G_CALLBACK (drawable_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },

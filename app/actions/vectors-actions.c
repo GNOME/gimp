@@ -163,7 +163,7 @@ static const GimpActionEntry vectors_actions[] =
 static const GimpToggleActionEntry vectors_toggle_actions[] =
 {
   { "vectors-visible", GIMP_ICON_VISIBLE,
-    NC_("vectors-action", "_Visible"), NULL, NULL,
+    NC_("vectors-action", "Toggle path _visibility"), NULL, NULL,
     G_CALLBACK (vectors_visible_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_VISIBLE },

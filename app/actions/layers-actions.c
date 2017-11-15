@@ -303,7 +303,7 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     GIMP_HELP_LAYER_MASK_DISABLE },
 
   { "layers-visible", GIMP_ICON_VISIBLE,
-    NC_("layers-action", "_Visible"), NULL, NULL,
+    NC_("layers-action", "Toggle layer _visibility"), NULL, NULL,
     G_CALLBACK (layers_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },

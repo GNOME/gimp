@@ -110,7 +110,7 @@ static const GimpActionEntry channels_actions[] =
 static const GimpToggleActionEntry channels_toggle_actions[] =
 {
   { "channels-visible", GIMP_ICON_VISIBLE,
-    NC_("channels-action", "_Visible"), NULL, NULL,
+    NC_("channels-action", "Toggle channel _visibility"), NULL, NULL,
     G_CALLBACK (channels_visible_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_VISIBLE },
