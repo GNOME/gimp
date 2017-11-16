@@ -2383,6 +2383,14 @@ gimp_blend_tool_editor_start_edit (GimpBlendTool *blend_tool)
       info = gimp_blend_tool_editor_blend_info_new (blend_tool);
 
       blend_tool->undo_stack = g_slist_prepend (blend_tool->undo_stack, info);
+
+      /*  update the undo actions / menu items  */
+      if (! blend_tool->flush_idle_id)
+        {
+          blend_tool->flush_idle_id =
+            g_idle_add ((GSourceFunc) gimp_blend_tool_editor_flush_idle,
+                        blend_tool);
+        }
     }
 }
 
