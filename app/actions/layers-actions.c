@@ -439,19 +439,19 @@ static const GimpEnumActionEntry layers_color_tag_actions[] =
 
   { "layers-color-tag-red", NULL,
     NC_("layers-action", "Red"), NULL,
-    NC_("layers-action", "Layer Color Tag: Set to red"),
+    NC_("layers-action", "Layer Color Tag: Set to Red"),
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-violet", NULL,
     NC_("layers-action", "Violet"), NULL,
-    NC_("layers-action", "Layer Color Tag: Set to violet"),
+    NC_("layers-action", "Layer Color Tag: Set to Violet"),
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-gray", NULL,
     NC_("layers-action", "Gray"), NULL,
-    NC_("layers-action", "Layer Color Tag: Set to gray"),
+    NC_("layers-action", "Layer Color Tag: Set to Gray"),
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG }
 };

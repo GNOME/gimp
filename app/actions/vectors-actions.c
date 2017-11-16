@@ -239,7 +239,7 @@ static const GimpEnumActionEntry vectors_color_tag_actions[] =
 
   { "vectors-color-tag-gray", NULL,
     NC_("vectors-action", "Gray"), NULL,
-    NC_("vectors-action", "Path Color Tag: Set to gray"),
+    NC_("vectors-action", "Path Color Tag: Set to Gray"),
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_PATH_COLOR_TAG }
 };

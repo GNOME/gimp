@@ -174,7 +174,7 @@ static const GimpEnumActionEntry channels_color_tag_actions[] =
 
   { "channels-color-tag-red", NULL,
     NC_("channels-action", "Red"), NULL,
-    NC_("channels-action", "Channel Color Tag: Set to  Red"),
+    NC_("channels-action", "Channel Color Tag: Set to Red"),
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
