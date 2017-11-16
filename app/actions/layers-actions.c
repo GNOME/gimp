@@ -755,6 +755,8 @@ layers_actions_update (GimpActionGroup *group,
   GList         *next           = NULL;
   GList         *next_visible   = NULL;
   GList         *prev           = NULL;
+  gboolean       next_mode      = FALSE;
+  gboolean       prev_mode      = FALSE;
 
   if (image)
     {
@@ -767,10 +769,13 @@ layers_actions_update (GimpActionGroup *group,
 
       if (layer)
         {
+          GimpLayerMode *modes;
           GimpLayerMode  mode   = gimp_layer_get_mode (layer);
           const gchar   *action = NULL;
           GList         *layer_list;
           GList         *list;
+          gint           n_modes;
+          gint           i = 0;
 
           switch (gimp_layer_get_blend_space (layer))
             {
@@ -859,6 +864,15 @@ layers_actions_update (GimpActionGroup *group,
                 }
             }
 
+          modes = gimp_layer_mode_get_context_array (mode,
+                                                     GIMP_LAYER_MODE_CONTEXT_LAYER,
+                                                     &n_modes);
+          while (i < (n_modes - 1) && modes[i] != mode)
+            i++;
+          g_free (modes);
+          next_mode = (i < n_modes - 1);
+          prev_mode = (i > 0);
+
           text_layer = gimp_item_is_text_layer (GIMP_ITEM (layer));
         }
     }
@@ -894,6 +908,11 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-new-group",        image && !indexed);
   SET_SENSITIVE ("layers-duplicate",        layer && !fs && !ac);
   SET_SENSITIVE ("layers-delete",           layer && !ac);
+
+  SET_SENSITIVE ("layers-mode-first",       layer && !ac && prev_mode);
+  SET_SENSITIVE ("layers-mode-last",        layer && !ac && next_mode);
+  SET_SENSITIVE ("layers-mode-previous",    layer && !ac && prev_mode);
+  SET_SENSITIVE ("layers-mode-next",        layer && !ac && next_mode);
 
   SET_SENSITIVE ("layers-select-top",       layer && !fs && !ac && prev);
   SET_SENSITIVE ("layers-select-bottom",    layer && !fs && !ac && next);
