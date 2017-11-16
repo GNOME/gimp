@@ -198,6 +198,8 @@ static void                  gimp_blend_tool_editor_blend_info_free             
 static void                  gimp_blend_tool_editor_blend_info_apply              (GimpBlendTool         *blend_tool,
                                                                                    const BlendInfo       *info,
                                                                                    gboolean               set_selection);
+static gboolean              gimp_blend_tool_editor_blend_info_is_trivial         (GimpBlendTool         *blend_tool,
+                                                                                   const BlendInfo       *info);
 
 
 /*  private functions  */
@@ -2033,6 +2035,38 @@ gimp_blend_tool_editor_blend_info_apply (GimpBlendTool   *blend_tool,
   gimp_blend_tool_editor_unblock_handlers (blend_tool);
 }
 
+static gboolean
+gimp_blend_tool_editor_blend_info_is_trivial (GimpBlendTool   *blend_tool,
+                                              const BlendInfo *info)
+{
+  const GimpGradientSegment *seg1;
+  const GimpGradientSegment *seg2;
+
+  if (info->start_x != blend_tool->start_x ||
+      info->start_y != blend_tool->start_y ||
+      info->end_x   != blend_tool->end_x   ||
+      info->end_y   != blend_tool->end_y)
+    {
+      return FALSE;
+    }
+
+  if (info->gradient)
+    {
+      for (seg1 = info->gradient->segments, seg2 = blend_tool->gradient->segments;
+           seg1 && seg2;
+           seg1 = seg1->next, seg2 = seg2->next)
+        {
+          if (memcmp (seg1, seg2, G_STRUCT_OFFSET (GimpGradientSegment, prev)))
+            return FALSE;
+        }
+
+      if (seg1 || seg2)
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
 
 /*  public functions  */
 
@@ -2409,12 +2443,8 @@ gimp_blend_tool_editor_end_edit (GimpBlendTool *blend_tool,
       info->selected_handle =
         gimp_tool_line_get_selection (GIMP_TOOL_LINE (blend_tool->widget));
 
-      if (cancel                                ||
-          (info->start_x == blend_tool->start_x &&
-           info->start_y == blend_tool->start_y &&
-           info->end_x   == blend_tool->end_x   &&
-           info->end_y   == blend_tool->end_y   &&
-           ! info->gradient))
+      if (cancel ||
+          gimp_blend_tool_editor_blend_info_is_trivial (blend_tool, info))
         {
           /* if the edit is canceled, or if nothing changed, undo the last
            * step

@@ -694,7 +694,7 @@ gimp_gradient_segment_new (void)
 {
   GimpGradientSegment *seg;
 
-  seg = g_slice_new (GimpGradientSegment);
+  seg = g_slice_new0 (GimpGradientSegment);
 
   seg->left   = 0.0;
   seg->middle = 0.5;
