@@ -244,23 +244,42 @@ gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine  *line,
 {
   if (remove)
     {
-      GimpGradient        *tentative_gradient;
-      GimpGradientSegment *seg;
-      gint                 i;
+      BlendInfo    *info;
+      GimpGradient *tentative_gradient;
 
-      tentative_gradient =
-        GIMP_GRADIENT (gimp_data_duplicate (GIMP_DATA (blend_tool->gradient)));
+      /* show a tentative gradient, demonstrating the result of actually
+       * removing the slider
+       */
 
-      seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+      info = blend_tool->undo_stack->data;
 
-      i = gimp_gradient_segment_range_get_n_segments (blend_tool->gradient,
-                                                      blend_tool->gradient->segments,
-                                                      seg) - 1;
+      if (info->added_handle == slider)
+        {
+          /* see comment in gimp_blend_tool_editor_delete_stop() */
 
-      seg = gimp_gradient_segment_get_nth (tentative_gradient->segments, i);
+          g_assert (info->gradient != NULL);
 
-      gimp_gradient_segment_range_merge (tentative_gradient,
-                                         seg, seg->next, NULL, NULL);
+          tentative_gradient = g_object_ref (info->gradient);
+        }
+      else
+        {
+          GimpGradientSegment *seg;
+          gint                 i;
+
+          tentative_gradient =
+            GIMP_GRADIENT (gimp_data_duplicate (GIMP_DATA (blend_tool->gradient)));
+
+          seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+
+          i = gimp_gradient_segment_range_get_n_segments (blend_tool->gradient,
+                                                          blend_tool->gradient->segments,
+                                                          seg) - 1;
+
+          seg = gimp_gradient_segment_get_nth (tentative_gradient->segments, i);
+
+          gimp_gradient_segment_range_merge (tentative_gradient,
+                                             seg, seg->next, NULL, NULL);
+        }
 
       gimp_blend_tool_set_tentative_gradient (blend_tool, tentative_gradient);
 
@@ -942,25 +961,47 @@ static void
 gimp_blend_tool_editor_delete_stop (GimpBlendTool *blend_tool,
                                     gint           slider)
 {
-  GimpGradientSegment *seg;
-  BlendInfo           *info;
+  BlendInfo *info;
 
   g_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool, slider));
 
   gimp_blend_tool_editor_start_edit (blend_tool);
   gimp_blend_tool_editor_freeze_gradient (blend_tool);
 
-  seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
-
-  gimp_gradient_segment_range_merge (blend_tool->gradient,
-                                     seg, seg->next, NULL, NULL);
-
   info = blend_tool->undo_stack->data;
 
   if (info->added_handle == slider)
-    info->added_handle = GIMP_TOOL_LINE_HANDLE_NONE;
+    {
+      /* when removing a stop that was added as part of the current action,
+       * restore the original gradient at the beginning of the action, rather
+       * than deleting the stop from the current gradient, so that the affected
+       * midpoint returns to its state at the beginning of the action, instead
+       * of being reset.
+       *
+       * note that this assumes that the gradient hasn't changed in any other
+       * way during the action, which is ugly, but currently always true.
+       */
+
+      g_assert (info->gradient != NULL);
+
+      gimp_data_copy (GIMP_DATA (blend_tool->gradient),
+                      GIMP_DATA (info->gradient));
+
+      g_clear_object (&info->gradient);
+
+      info->added_handle = GIMP_TOOL_LINE_HANDLE_NONE;
+    }
   else
-    info->removed_handle = slider;
+    {
+      GimpGradientSegment *seg;
+
+      seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+
+      gimp_gradient_segment_range_merge (blend_tool->gradient,
+                                         seg, seg->next, NULL, NULL);
+
+      info->removed_handle = slider;
+    }
 
   gimp_blend_tool_editor_thaw_gradient (blend_tool);
   gimp_blend_tool_editor_end_edit (blend_tool, FALSE);
@@ -1972,9 +2013,9 @@ gimp_blend_tool_editor_blend_info_apply (GimpBlendTool   *blend_tool,
         }
       else
         {
-          /* we're undoing an operation in which the same handle was added and
-           * then removed; don't change the selection
-           */
+          /* something went wrong... */
+          g_warn_if_reached ();
+
           set_selection = FALSE;
         }
     }
