@@ -29,6 +29,10 @@ Core:
     allows pasting contents of either the clipboard a named buffer at the
     exact coordinates it was copied from.
 
+Configurability:
+
+  - Keybindings now possible for previous/next/top/bottom channel.
+
 Usability:
 
   - The spinscale widget now highlights vertical parts of the slider
