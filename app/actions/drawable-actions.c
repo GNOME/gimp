@@ -70,14 +70,13 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_VISIBLE },
 
   { "drawable-linked", GIMP_ICON_LINKED,
-    NC_("drawable-action", "_Linked"), NULL,
-    NC_("drawable-action", "Toggle the linked state"),
+    NC_("drawable-action", "Toggle Drawable _Linked State"), NULL, NULL,
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LINKED },
 
   { "drawable-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("drawable-action", "L_ock Pixels"), NULL,
+    NC_("drawable-action", "L_ock Pixels of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the pixels on this drawable from being modified"),
     G_CALLBACK (drawable_lock_content_cmd_callback),

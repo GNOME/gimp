@@ -116,19 +116,19 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
     GIMP_HELP_CHANNEL_VISIBLE },
 
   { "channels-linked", GIMP_ICON_LINKED,
-    NC_("channels-action", "_Linked"), NULL, NULL,
+    NC_("channels-action", "Toggle Channel _Linked State"), NULL, NULL,
     G_CALLBACK (channels_linked_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LINKED },
 
   { "channels-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("channels-action", "L_ock Pixels"), NULL, NULL,
+    NC_("channels-action", "L_ock Pixels of Channel"), NULL, NULL,
     G_CALLBACK (channels_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_PIXELS },
 
   { "channels-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("channels-action", "L_ock Position"), NULL, NULL,
+    NC_("channels-action", "L_ock Position of Channel"), NULL, NULL,
     G_CALLBACK (channels_lock_position_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_POSITION }
@@ -138,55 +138,55 @@ static const GimpEnumActionEntry channels_color_tag_actions[] =
 {
   { "channels-color-tag-none", GIMP_ICON_CLOSE /* abused */,
     NC_("channels-action", "None"), NULL,
-    NC_("channels-action", "Color Tag: Clear"),
+    NC_("channels-action", "Channel Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-blue", NULL,
     NC_("channels-action", "Blue"), NULL,
-    NC_("channels-action", "Color Tag: Set to Blue"),
+    NC_("channels-action", "Channel Color Tag: Set to Blue"),
     GIMP_COLOR_TAG_BLUE, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-green", NULL,
     NC_("channels-action", "Green"), NULL,
-    NC_("channels-action", "Color Tag: Set to Green"),
+    NC_("channels-action", "Channel Color Tag: Set to Green"),
     GIMP_COLOR_TAG_GREEN, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-yellow", NULL,
     NC_("channels-action", "Yellow"), NULL,
-    NC_("channels-action", "Color Tag: Set to Yellow"),
+    NC_("channels-action", "Channel Color Tag: Set to Yellow"),
     GIMP_COLOR_TAG_YELLOW, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-orange", NULL,
     NC_("channels-action", "Orange"), NULL,
-    NC_("channels-action", "Color Tag: Set to Orange"),
+    NC_("channels-action", "Channel Color Tag: Set to Orange"),
     GIMP_COLOR_TAG_ORANGE, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-brown", NULL,
     NC_("channels-action", "Brown"), NULL,
-    NC_("channels-action", "Color Tag: Set to Brown"),
+    NC_("channels-action", "Channel Color Tag: Set to Brown"),
     GIMP_COLOR_TAG_BROWN, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-red", NULL,
     NC_("channels-action", "Red"), NULL,
-    NC_("channels-action", "Color Tag: Set to  Red"),
+    NC_("channels-action", "Channel Color Tag: Set to  Red"),
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-violet", NULL,
     NC_("channels-action", "Violet"), NULL,
-    NC_("channels-action", "Color Tag: Set to Violet"),
+    NC_("channels-action", "Channel Color Tag: Set to Violet"),
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-color-tag-gray", NULL,
     NC_("channels-action", "Gray"), NULL,
-    NC_("channels-action", "Color Tag: Set to Gray"),
+    NC_("channels-action", "Channel Color Tag: Set to Gray"),
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_CHANNEL_COLOR_TAG }
 };

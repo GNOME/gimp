@@ -169,19 +169,19 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     GIMP_HELP_PATH_VISIBLE },
 
   { "vectors-linked", GIMP_ICON_LINKED,
-    NC_("vectors-action", "_Linked"), NULL, NULL,
+    NC_("vectors-action", "Toggle Path _Linked State"), NULL, NULL,
     G_CALLBACK (vectors_linked_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_LINKED },
 
   { "vectors-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("vectors-action", "L_ock Strokes"), NULL, NULL,
+    NC_("vectors-action", "L_ock Strokes of Path"), NULL, NULL,
     G_CALLBACK (vectors_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_LOCK_STROKES },
 
   { "vectors-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("vectors-action", "L_ock Position"), NULL, NULL,
+    NC_("vectors-action", "L_ock Position of Path"), NULL, NULL,
     G_CALLBACK (vectors_lock_position_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_LOCK_POSITION }
@@ -191,55 +191,55 @@ static const GimpEnumActionEntry vectors_color_tag_actions[] =
 {
   { "vectors-color-tag-none", GIMP_ICON_CLOSE /* abused */,
     NC_("vectors-action", "None"), NULL,
-    NC_("vectors-action", "Color Tag: Clear"),
+    NC_("vectors-action", "Path Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-blue", NULL,
     NC_("vectors-action", "Blue"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Blue"),
+    NC_("vectors-action", "Path Color Tag: Set to Blue"),
     GIMP_COLOR_TAG_BLUE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-green", NULL,
     NC_("vectors-action", "Green"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Green"),
+    NC_("vectors-action", "Path Color Tag: Set to Green"),
     GIMP_COLOR_TAG_GREEN, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-yellow", NULL,
     NC_("vectors-action", "Yellow"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Yellow"),
+    NC_("vectors-action", "Path Color Tag: Set to Yellow"),
     GIMP_COLOR_TAG_YELLOW, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-orange", NULL,
     NC_("vectors-action", "Orange"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Orange"),
+    NC_("vectors-action", "Path Color Tag: Set to Orange"),
     GIMP_COLOR_TAG_ORANGE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-brown", NULL,
     NC_("vectors-action", "Brown"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Brown"),
+    NC_("vectors-action", "Path Color Tag: Set to Brown"),
     GIMP_COLOR_TAG_BROWN, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-red", NULL,
     NC_("vectors-action", "Red"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Red"),
+    NC_("vectors-action", "Path Color Tag: Set to Red"),
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-violet", NULL,
     NC_("vectors-action", "Violet"), NULL,
-    NC_("vectors-action", "Color Tag: Set to Violet"),
+    NC_("vectors-action", "Path Color Tag: Set to Violet"),
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-gray", NULL,
     NC_("vectors-action", "Gray"), NULL,
-    NC_("vectors-action", "Color Tag: Set to gray"),
+    NC_("vectors-action", "Path Color Tag: Set to gray"),
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_PATH_COLOR_TAG }
 };
