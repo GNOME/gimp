@@ -71,8 +71,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
    * preview all black. See bug #459518 for details.
    */
   if (rendererimage->channel == -1 ||
-      (gimp_image_get_component_visible (image, rendererimage->channel) &&
-       gimp_image_get_component_visible (image, GIMP_CHANNEL_ALPHA)))
+      (gimp_image_get_component_visible (image, rendererimage->channel)))
     {
       gint         view_width;
       gint         view_height;
