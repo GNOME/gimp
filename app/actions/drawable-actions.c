@@ -86,7 +86,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
   { "drawable-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("drawable-action", "L_ock position of channel"), NULL,
+    NC_("drawable-action", "L_ock position of drawable"), NULL,
     NC_("drawable-action",
         "Keep the position on this drawable from being modified"),
     G_CALLBACK (drawable_lock_position_cmd_callback),
