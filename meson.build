@@ -1156,6 +1156,7 @@ config_defines = [
   '-DISO_CODES_LOCALEDIR='  +'"'+ isocodes_localedir +'"',
 
   '-DHAVE_CONFIG_H',
+  '-DMESON_BUILD',
 ]
 
 add_project_arguments(
