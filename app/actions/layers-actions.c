@@ -86,7 +86,7 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Layer _Mode")   },
 
   { "layers-edit", GIMP_ICON_EDIT,
-    NC_("layers-action", "Default edit action"), NULL,
+    NC_("layers-action", "Default Edit Action"), NULL,
     NC_("layers-action", "Activate the default edit action for this type of layer"),
     G_CALLBACK (layers_edit_cmd_callback),
     GIMP_HELP_LAYER_EDIT },
@@ -303,7 +303,7 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     GIMP_HELP_LAYER_MASK_DISABLE },
 
   { "layers-visible", GIMP_ICON_VISIBLE,
-    NC_("layers-action", "Toggle layer _visibility"), NULL, NULL,
+    NC_("layers-action", "Toggle Layer _Visibility"), NULL, NULL,
     G_CALLBACK (layers_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
@@ -315,13 +315,13 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     GIMP_HELP_LAYER_LINKED },
 
   { "layers-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("layers-action", "L_ock pixels"), NULL, NULL,
+    NC_("layers-action", "L_ock Pixels"), NULL, NULL,
     G_CALLBACK (layers_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
   { "layers-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("layers-action", "L_ock position"), NULL, NULL,
+    NC_("layers-action", "L_ock Position"), NULL, NULL,
     G_CALLBACK (layers_lock_position_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LOCK_POSITION },

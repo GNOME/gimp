@@ -64,8 +64,7 @@ static const GimpActionEntry drawable_actions[] =
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-visible", GIMP_ICON_VISIBLE,
-    NC_("drawable-action", "Toggle drawable _visibility"), NULL,
-    NC_("drawable-action", "Toggle drawable visibility"),
+    NC_("drawable-action", "Toggle Drawable _Visibility"), NULL, NULL,
     G_CALLBACK (drawable_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
@@ -78,7 +77,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_LINKED },
 
   { "drawable-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("drawable-action", "L_ock pixels"), NULL,
+    NC_("drawable-action", "L_ock Pixels"), NULL,
     NC_("drawable-action",
         "Keep the pixels on this drawable from being modified"),
     G_CALLBACK (drawable_lock_content_cmd_callback),
@@ -86,7 +85,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
   { "drawable-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("drawable-action", "L_ock position of drawable"), NULL,
+    NC_("drawable-action", "L_ock Position of Drawable"), NULL,
     NC_("drawable-action",
         "Keep the position on this drawable from being modified"),
     G_CALLBACK (drawable_lock_position_cmd_callback),

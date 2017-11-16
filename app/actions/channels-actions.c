@@ -110,7 +110,7 @@ static const GimpActionEntry channels_actions[] =
 static const GimpToggleActionEntry channels_toggle_actions[] =
 {
   { "channels-visible", GIMP_ICON_VISIBLE,
-    NC_("channels-action", "Toggle channel _visibility"), NULL, NULL,
+    NC_("channels-action", "Toggle Channel _Visibility"), NULL, NULL,
     G_CALLBACK (channels_visible_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_VISIBLE },
@@ -122,13 +122,13 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
     GIMP_HELP_CHANNEL_LINKED },
 
   { "channels-lock-content", NULL /* GIMP_ICON_LOCK */,
-    NC_("channels-action", "L_ock pixels"), NULL, NULL,
+    NC_("channels-action", "L_ock Pixels"), NULL, NULL,
     G_CALLBACK (channels_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_PIXELS },
 
   { "channels-lock-position", GIMP_ICON_TOOL_MOVE,
-    NC_("channels-action", "L_ock position"), NULL, NULL,
+    NC_("channels-action", "L_ock Position"), NULL, NULL,
     G_CALLBACK (channels_lock_position_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_POSITION }
