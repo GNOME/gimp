@@ -56,5 +56,9 @@ void   channels_color_tag_cmd_callback       (GtkAction   *action,
                                               gint         value,
                                               gpointer     data);
 
+void   channels_select_cmd_callback          (GtkAction   *action,
+                                              gint         value,
+                                              gpointer     data);
+
 
 #endif /* __CHANNELS_COMMANDS_H__ */

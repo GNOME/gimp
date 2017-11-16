@@ -218,6 +218,33 @@ static const GimpEnumActionEntry channels_to_selection_actions[] =
     GIMP_HELP_CHANNEL_SELECTION_INTERSECT }
 };
 
+static const GimpEnumActionEntry channels_select_actions[] =
+{
+  { "channels-select-top", NULL,
+    NC_("channels-action", "Select _Top Channel"), NULL,
+    NC_("channels-action", "Select the topmost channel"),
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    GIMP_HELP_CHANNEL_TOP },
+
+  { "channels-select-bottom", NULL,
+    NC_("channels-action", "Select _Bottom Channel"), NULL,
+    NC_("channels-action", "Select the bottommost channel"),
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    GIMP_HELP_CHANNEL_BOTTOM },
+
+  { "channels-select-previous", NULL,
+    NC_("channels-action", "Select _Previous Channel"), NULL,
+    NC_("channels-action", "Select the channel above the current channel"),
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    GIMP_HELP_CHANNEL_PREVIOUS },
+
+  { "channels-select-next", NULL,
+    NC_("channels-action", "Select _Next Channel"), NULL,
+    NC_("channels-action", "Select the channel below the current channel"),
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    GIMP_HELP_CHANNEL_NEXT }
+};
+
 
 void
 channels_actions_setup (GimpActionGroup *group)
@@ -239,6 +266,11 @@ channels_actions_setup (GimpActionGroup *group)
                                       channels_to_selection_actions,
                                       G_N_ELEMENTS (channels_to_selection_actions),
                                       G_CALLBACK (channels_to_selection_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, "channels-action",
+                                      channels_select_actions,
+                                      G_N_ELEMENTS (channels_select_actions),
+                                      G_CALLBACK (channels_select_cmd_callback));
 
   items_actions_setup (group, "channels");
 }
@@ -304,6 +336,11 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-selection-add",       !fs && (channel || component));
   SET_SENSITIVE ("channels-selection-subtract",  !fs && (channel || component));
   SET_SENSITIVE ("channels-selection-intersect", !fs && (channel || component));
+
+  SET_SENSITIVE ("channels-select-top",      !fs && channel && prev);
+  SET_SENSITIVE ("channels-select-bottom",   !fs && channel && next);
+  SET_SENSITIVE ("channels-select-previous", !fs && channel && prev);
+  SET_SENSITIVE ("channels-select-next",     !fs && channel && next);
 
 #undef SET_SENSITIVE
 

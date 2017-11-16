@@ -424,6 +424,28 @@ channels_color_tag_cmd_callback (GtkAction *action,
                                 (GimpColorTag) value);
 }
 
+void
+channels_select_cmd_callback (GtkAction *action,
+                              gint       value,
+                              gpointer   data)
+{
+  GimpImage      *image;
+  GimpChannel    *channel;
+  GimpChannel    *channel2;
+  GimpContainer  *container;
+  return_if_no_channel (image, channel, data);
+
+  container = gimp_image_get_channels (image);
+  channel2 = (GimpChannel *) action_select_object ((GimpActionSelectType) value,
+                                                   container,
+                                                   (GimpObject *) channel);
+
+  if (channel2 && channel2 != channel)
+    {
+      gimp_image_set_active_channel (image, channel2);
+      gimp_image_flush (image);
+    }
+}
 
 /*  private functions  */
 
