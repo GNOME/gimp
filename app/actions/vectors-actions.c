@@ -189,57 +189,57 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
 
 static const GimpEnumActionEntry vectors_color_tag_actions[] =
 {
-  { "vectors-color-tag-none", GIMP_ICON_CLOSE /* abused */,
-    NC_("vectors-action", "None"), NULL,
+  { "vectors-color-tag-none", GIMP_ICON_EDIT_CLEAR,
     NC_("vectors-action", "Path Color Tag: Clear"),
+    NULL, NULL,
     GIMP_COLOR_TAG_NONE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-blue", NULL,
-    NC_("vectors-action", "Blue"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Blue"),
+    NULL, NULL,
     GIMP_COLOR_TAG_BLUE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-green", NULL,
-    NC_("vectors-action", "Green"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Green"),
+    NULL, NULL,
     GIMP_COLOR_TAG_GREEN, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-yellow", NULL,
-    NC_("vectors-action", "Yellow"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Yellow"),
+    NULL, NULL,
     GIMP_COLOR_TAG_YELLOW, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-orange", NULL,
-    NC_("vectors-action", "Orange"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Orange"),
+    NULL, NULL,
     GIMP_COLOR_TAG_ORANGE, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-brown", NULL,
-    NC_("vectors-action", "Brown"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Brown"),
+    NULL, NULL,
     GIMP_COLOR_TAG_BROWN, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-red", NULL,
-    NC_("vectors-action", "Red"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Red"),
+    NULL, NULL,
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-violet", NULL,
-    NC_("vectors-action", "Violet"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Violet"),
+    NULL, NULL,
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-color-tag-gray", NULL,
-    NC_("vectors-action", "Gray"), NULL,
     NC_("vectors-action", "Path Color Tag: Set to Gray"),
+    NULL, NULL,
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_PATH_COLOR_TAG }
 };
