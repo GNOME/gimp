@@ -690,6 +690,7 @@
       <separator />
       <menu action="filters-blur-menu" name="Blur">
       	<menuitem action="filters-gaussian-blur" />
+      	<menuitem action="filters-median-blur" />
       	<menuitem action="filters-pixelize" />
       	<menuitem action="filters-gaussian-blur-selective" />
 	<placeholder name="Motion">

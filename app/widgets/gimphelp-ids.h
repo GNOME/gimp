@@ -392,6 +392,7 @@
 #define GIMP_HELP_FILTER_LENS_FLARE               "gimp-filter-lens-flare"
 #define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-manituk-2006"
 #define GIMP_HELP_FILTER_MAZE                     "gimp-filter-maze"
+#define GIMP_HELP_FILTER_MEDIAN_BLUR              "gimp-filter-median-blur"
 #define GIMP_HELP_FILTER_MONO_MIXER               "gimp-filter-mono-mixer"
 #define GIMP_HELP_FILTER_MOSAIC                   "gimp-filter-mosaic"
 #define GIMP_HELP_FILTER_MOTION_BLUR_CIRCULAR     "gimp-filter-motion-blur-circular"

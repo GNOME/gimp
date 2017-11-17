@@ -658,6 +658,7 @@ sanity_check_gegl_ops (void)
     "gegl:matting-global",
 /*  "gegl:matting-levin",*/ /* XXX: do we want to require this? */
     "gegl:maze",
+    "gegl:median-blur",
     "gegl:mirrors",
     "gegl:mono-mixer",
     "gegl:motion-blur-circular",

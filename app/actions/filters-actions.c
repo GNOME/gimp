@@ -408,6 +408,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:maze",
     GIMP_HELP_FILTER_MAZE },
 
+  { "filters-median-blur", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Median Blur..."), NULL, NULL,
+    "gegl:median-blur",
+    GIMP_HELP_FILTER_MEDIAN_BLUR },
+
   { "filters-mono-mixer", GIMP_ICON_GEGL,
     NC_("filters-action", "_Mono Mixer..."), NULL, NULL,
     "gegl:mono-mixer",
