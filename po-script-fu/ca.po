@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-24 23:33+0000\n"
-"PO-Revision-Date: 2017-10-25 01:59+0200\n"
+"POT-Creation-Date: 2017-10-25 04:50+0000\n"
+"PO-Revision-Date: 2017-10-25 22:41+0200\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -114,16 +114,16 @@ msgstr "Consola de les funcions"
 #: ../plug-ins/script-fu/script-fu-console.c:132
 #: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "_Save"
-msgstr ""
+msgstr "De_sa"
 
 #: ../plug-ins/script-fu/script-fu-console.c:133
 msgid "C_lear"
-msgstr ""
+msgstr "Neteja"
 
 #: ../plug-ins/script-fu/script-fu-console.c:134
 #: ../plug-ins/script-fu/script-fu-console.c:371
 msgid "_Close"
-msgstr ""
+msgstr "Tan_ca"
 
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
@@ -145,7 +145,7 @@ msgstr "Desa la sortida de la consola de funcions"
 #: ../plug-ins/script-fu/script-fu-interface.c:236
 #: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancel·la"
 
 #: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
@@ -158,7 +158,7 @@ msgstr "Gestor de funcions"
 
 #: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplica"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
@@ -182,11 +182,11 @@ msgstr "Funció: %s"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:235
 msgid "_Reset"
-msgstr ""
+msgstr "_Reinicia"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_OK"
-msgstr ""
+msgstr "_D'acord"
 
 #  we add a colon after the label;
 #  some languages want an extra space here
@@ -445,6 +445,8 @@ msgstr "Estergit e_sculpit..."
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
+"Utilitzeu el dibuixable específic com a estergit per a tallar a partir de la "
+"imatge especificada."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
 msgid "Image to carve"
@@ -1270,12 +1272,9 @@ msgid "_Rippling..."
 msgstr "A_rruga..."
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
-#, fuzzy
-#| msgid ""
-#| "Create a multi-layer image by adding a ripple effect to the current image"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr "Crear una imatge multicapa afegint un efecte onada a la imatge actual"
+msgstr "Crea una imatge multicapa afegint un efecte d'ones a la capa actual"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
 msgid "Rippling strength"
