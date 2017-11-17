@@ -1,0 +1,114 @@
+# Maintainer: Iru Cai <mytbk920423@gmail.com>
+# Maintainer: Alexander Hunziker <alex.hunziker@gmail.com>
+# Contributor: Alessio Biancalana <dottorblaster@gmail.com>
+# Contributor: Salamandar <felix@piedallu.me>
+
+_pkgname='gimp'
+pkgname="${_pkgname}-git"
+epoch=1
+pkgver=2.10.0.RC1.26.gf0d3c4a7bd
+pkgrel=1
+pkgdesc='GNU Image Manipulation Program'
+arch=('i686' 'x86_64')
+url='http://www.gimp.org'
+license=('GPL' 'LGPL')
+depends=(
+  'babl>=0.1.44'
+  'dbus-glib'
+  'desktop-file-utils'
+  'gegl-git>=0.3.30'
+  'gtk-doc'
+  'lcms2>=2.2'
+  'libart-lgpl>=2.3.19'
+  'libexif>=0.6.15'
+  'libgexiv2'
+  'libmng'
+  'libmypaint>=1.3.0'
+  'librsvg>=2.16.1'
+  'libwmf>=0.2.8'
+  'openexr>=1.6.1'
+  'pygtk'
+)
+makedepends=(
+  'alsa-lib>=1.0.0'
+  'git'
+  'glib-networking'
+  # 'gnome-python>=2.16.2'
+  'gutenprint>=5.0.0'
+  'libxslt'
+  'poppler>=0.12.4'
+)
+optdepends=(
+  'alsa-lib: for MIDI event controller module'
+  'curl: for URI support'
+  'ghostscript: for postscript support'
+  'gutenprint: for sophisticated printing only as gimp has built-in cups print support'
+  'poppler-glib: for pdf support'
+)
+options=('!libtool')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+
+_gitname='gimp'
+source=(
+  'git://git.gnome.org/gimp#branch=meson'
+  'linux.gpl'
+)
+md5sums=(
+  'SKIP'
+  'bb27bc214261d36484093e857f015f38'
+)
+
+
+pkgver() {
+    cd $_gitname
+    git describe --always | sed -e 's/GIMP_//' -e 's/[_-]/./g'
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+
+  if [[ -f /usr/lib/pkgconfig/libmypaint-1.3.pc ]]; then
+    sed -i 's|libmypaint |libmypaint-1.3 |g' configure.ac
+    sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
+  fi
+}
+
+build() {
+  mesonOptions=(
+    --prefix=/usr
+    --sysconfdir=/etc
+    --buildtype=release
+    --strip
+    -Db_lto=true
+
+    -Dwith-aa=false
+    -Dwith-webkit=false
+    -Dwith-xvfb-run=false
+  )
+
+  meson    "${srcdir}/build" "${srcdir}/${_gitname}" "${mesonOptions[@]}"
+  ninja -C "${srcdir}/build" -j4
+}
+
+package() {
+  DESTDIR="${pkgdir}" ninja -C "${srcdir}/build" install
+
+  # Python compilation (was handled by Autotools, not Meson)
+  "${srcdir}/${_gitname}/plug-ins/pygimp/py-compile" \
+    --basedir "${pkgdir}/usr/lib/gimp/2.0/python" \
+    gimpenums.py  \
+    gimpfu.py     \
+    gimpplugin.py \
+    gimpshelf.py  \
+    gimpui.py
+
+  # Meson does not handle creating empty directories
+  mkdir -p "${pkgdir}/usr/share/gimp/2.0/fonts/"
+
+  install -D -m644 "${srcdir}/linux.gpl" "${pkgdir}/usr/share/gimp/2.0/palettes/Linux.gpl"
+
+  ln -s gimp-2.9          "${pkgdir}/usr/bin/gimp"
+  ln -s gimptool-2.0      "${pkgdir}/usr/bin/gimptool"
+  ln -s gimp-console-2.9  "${pkgdir}/usr/bin/gimp-console"
+}
