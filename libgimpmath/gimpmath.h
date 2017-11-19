@@ -118,6 +118,20 @@ G_BEGIN_DECLS
 #define CLAMP0255(a)  CLAMP(a,0,255)
 
 /**
+ * SAFE_CLAMP:
+ * @x:    the value to be limited.
+ * @low:  the lower limit.
+ * @high: the upper limit.
+ *
+ * Ensures that @x is between the limits set by @low and @high,
+ * even if @x is NaN. If @low is greater than @high, or if either
+ * of them is NaN, the result is undefined.
+ *
+ * Since: 2.10
+ **/
+#define SAFE_CLAMP(x, low, high)  ((x) > (low) ? (x) < (high) ? (x) : (high) : (low))
+
+/**
  * gimp_deg_to_rad:
  * @angle: the angle to be converted.
  *
