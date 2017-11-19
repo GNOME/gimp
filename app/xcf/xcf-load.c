@@ -1783,7 +1783,10 @@ xcf_load_channel (XcfInfo   *info,
   return channel;
 
  error:
-  g_object_unref (channel);
+  /* don't unref the selection of a partially loaded XCF */
+  if (channel != gimp_image_get_mask (image))
+    g_object_unref (channel);
+
   return NULL;
 }
 
