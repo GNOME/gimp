@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-12 19:14+0100\n"
-"PO-Revision-Date: 2017-11-12 19:15+0100\n"
+"POT-Creation-Date: 2017-11-19 20:09+0100\n"
+"PO-Revision-Date: 2017-11-19 20:10+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2762,11 +2762,11 @@ msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr symulujący ślepotę barw (algorytm Brettela-Vienota-Mollona)"
 
 #: ../modules/display-filter-color-blind.c:253
-msgid "Deficiency"
-msgstr "Ślepota barw"
+msgid "Type"
+msgstr "Typ"
 
 #: ../modules/display-filter-color-blind.c:254
-msgid "Color deficiency type"
+msgid "Color vision deficiency type"
 msgstr "Typ ślepoty barw"
 
 #: ../modules/display-filter-color-blind.c:259
