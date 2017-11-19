@@ -233,8 +233,6 @@ file_save (Gimp                *gimp,
            * the export state to clean
            */
           gimp_image_export_clean_all (image);
-
-          gimp_object_name_changed (GIMP_OBJECT (image));
         }
       else if (export_forward)
         {

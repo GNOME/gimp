@@ -3266,6 +3266,8 @@ gimp_image_clean_all (GimpImage *image)
   private->dirty_time = 0;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
+
+  gimp_object_name_changed (GIMP_OBJECT (image));
 }
 
 void
@@ -3280,6 +3282,8 @@ gimp_image_export_clean_all (GimpImage *image)
   private->export_dirty = 0;
 
   g_signal_emit (image, gimp_image_signals[CLEAN], 0, GIMP_DIRTY_ALL);
+
+  gimp_object_name_changed (GIMP_OBJECT (image));
 }
 
 /**
