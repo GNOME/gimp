@@ -189,7 +189,7 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
 
 static const GimpEnumActionEntry vectors_color_tag_actions[] =
 {
-  { "vectors-color-tag-none", GIMP_ICON_CLOSE /* abused */,
+  { "vectors-color-tag-none", GIMP_ICON_EDIT_CLEAR,
     NC_("vectors-action", "None"), NULL,
     NC_("vectors-action", "Path Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,

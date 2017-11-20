@@ -401,7 +401,7 @@ static const GimpRadioActionEntry layers_composite_mode_actions[] =
 
 static const GimpEnumActionEntry layers_color_tag_actions[] =
 {
-  { "layers-color-tag-none", GIMP_ICON_CLOSE /* abused */,
+  { "layers-color-tag-none", GIMP_ICON_EDIT_CLEAR,
     NC_("layers-action", "None"), NULL,
     NC_("layers-action", "Layer Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,

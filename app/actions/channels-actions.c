@@ -136,7 +136,7 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
 
 static const GimpEnumActionEntry channels_color_tag_actions[] =
 {
-  { "channels-color-tag-none", GIMP_ICON_CLOSE /* abused */,
+  { "channels-color-tag-none", GIMP_ICON_EDIT_CLEAR,
     NC_("channels-action", "None"), NULL,
     NC_("channels-action", "Channel Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,
