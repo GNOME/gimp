@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-19 20:19+0100\n"
-"PO-Revision-Date: 2017-11-19 20:20+0100\n"
+"POT-Creation-Date: 2017-11-20 03:24+0100\n"
+"PO-Revision-Date: 2017-11-20 03:25+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -846,45 +846,90 @@ msgstr "Za_blokuj położenie kanału"
 
 #: ../app/actions/channels-actions.c:140
 msgctxt "channels-action"
+msgid "None"
+msgstr "Brak"
+
+#: ../app/actions/channels-actions.c:141
+msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
 msgstr "Etykieta koloru kanału: wyczyść"
 
 #: ../app/actions/channels-actions.c:146
+msgctxt "channels-action"
+msgid "Blue"
+msgstr "Niebieski"
+
+#: ../app/actions/channels-actions.c:147
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Blue"
 msgstr "Etykieta koloru kanału: ustaw na niebieski"
 
 #: ../app/actions/channels-actions.c:152
 msgctxt "channels-action"
+msgid "Green"
+msgstr "Zielony"
+
+#: ../app/actions/channels-actions.c:153
+msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
 msgstr "Etykieta koloru kanału: ustaw na zielony"
 
 #: ../app/actions/channels-actions.c:158
+msgctxt "channels-action"
+msgid "Yellow"
+msgstr "Żółty"
+
+#: ../app/actions/channels-actions.c:159
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Yellow"
 msgstr "Etykieta koloru kanału: ustaw na żółty"
 
 #: ../app/actions/channels-actions.c:164
 msgctxt "channels-action"
+msgid "Orange"
+msgstr "Pomarańczowy"
+
+#: ../app/actions/channels-actions.c:165
+msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
 msgstr "Etykieta koloru kanału: ustaw na pomarańczowy"
 
 #: ../app/actions/channels-actions.c:170
+msgctxt "channels-action"
+msgid "Brown"
+msgstr "Brązowy"
+
+#: ../app/actions/channels-actions.c:171
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
 msgstr "Etykieta koloru kanału: ustaw na brązowy"
 
 #: ../app/actions/channels-actions.c:176
 msgctxt "channels-action"
+msgid "Red"
+msgstr "Czerwony"
+
+#: ../app/actions/channels-actions.c:177
+msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
 msgstr "Etykieta koloru kanału: ustaw na czerwony"
 
 #: ../app/actions/channels-actions.c:182
 msgctxt "channels-action"
+msgid "Violet"
+msgstr "Fioletowy"
+
+#: ../app/actions/channels-actions.c:183
+msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
 msgstr "Etykieta koloru kanału: ustaw na fioletowy"
 
 #: ../app/actions/channels-actions.c:188
+msgctxt "channels-action"
+msgid "Gray"
+msgstr "Szary"
+
+#: ../app/actions/channels-actions.c:189
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
 msgstr "Etykieta koloru kanału: ustaw na szary"
@@ -6277,45 +6322,90 @@ msgstr "Tryb mieszania warstwy: cel na"
 
 #: ../app/actions/layers-actions.c:405
 msgctxt "layers-action"
+msgid "None"
+msgstr "Brak"
+
+#: ../app/actions/layers-actions.c:406
+msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
 msgstr "Etykieta koloru warstwy: wyczyść"
 
 #: ../app/actions/layers-actions.c:411
+msgctxt "layers-action"
+msgid "Blue"
+msgstr "Niebieski"
+
+#: ../app/actions/layers-actions.c:412
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr "Etykieta koloru warstwy: ustaw na niebieski"
 
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
+msgid "Green"
+msgstr "Zielony"
+
+#: ../app/actions/layers-actions.c:418
+msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
 msgstr "Etykieta koloru warstwy: ustaw na zielony"
 
 #: ../app/actions/layers-actions.c:423
+msgctxt "layers-action"
+msgid "Yellow"
+msgstr "Żółty"
+
+#: ../app/actions/layers-actions.c:424
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
 msgstr "Etykieta koloru warstwy: ustaw na żółty"
 
 #: ../app/actions/layers-actions.c:429
 msgctxt "layers-action"
+msgid "Orange"
+msgstr "Pomarańczowy"
+
+#: ../app/actions/layers-actions.c:430
+msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
 msgstr "Etykieta koloru warstwy: ustaw na pomarańczowy"
 
 #: ../app/actions/layers-actions.c:435
+msgctxt "layers-action"
+msgid "Brown"
+msgstr "Brązowy"
+
+#: ../app/actions/layers-actions.c:436
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
 msgstr "Etykieta koloru warstwy: ustaw na brązowy"
 
 #: ../app/actions/layers-actions.c:441
 msgctxt "layers-action"
+msgid "Red"
+msgstr "Czerwony"
+
+#: ../app/actions/layers-actions.c:442
+msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
 msgstr "Etykieta koloru warstwy: ustaw na czerwony"
 
 #: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
+msgid "Violet"
+msgstr "Fioletowy"
+
+#: ../app/actions/layers-actions.c:448
+msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
 msgstr "Etykieta koloru warstwy: ustaw na fioletowy"
 
 #: ../app/actions/layers-actions.c:453
+msgctxt "layers-action"
+msgid "Gray"
+msgstr "Szary"
+
+#: ../app/actions/layers-actions.c:454
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
 msgstr "Etykieta koloru warstwy: ustaw na szary"
@@ -8299,45 +8389,90 @@ msgstr "Za_blokuj położenie ścieżki"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
+msgid "None"
+msgstr "Brak"
+
+#: ../app/actions/vectors-actions.c:194
+msgctxt "vectors-action"
 msgid "Path Color Tag: Clear"
 msgstr "Etykieta koloru ścieżki: wyczyść"
 
 #: ../app/actions/vectors-actions.c:199
+msgctxt "vectors-action"
+msgid "Blue"
+msgstr "Niebieski"
+
+#: ../app/actions/vectors-actions.c:200
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Blue"
 msgstr "Etykieta koloru ścieżki: ustaw na niebieski"
 
 #: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
+msgid "Green"
+msgstr "Zielony"
+
+#: ../app/actions/vectors-actions.c:206
+msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Green"
 msgstr "Etykieta koloru ścieżki: ustaw na zielony"
 
 #: ../app/actions/vectors-actions.c:211
+msgctxt "vectors-action"
+msgid "Yellow"
+msgstr "Żółty"
+
+#: ../app/actions/vectors-actions.c:212
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Yellow"
 msgstr "Etykieta koloru ścieżki: ustaw na żółty"
 
 #: ../app/actions/vectors-actions.c:217
 msgctxt "vectors-action"
+msgid "Orange"
+msgstr "Pomarańczowy"
+
+#: ../app/actions/vectors-actions.c:218
+msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Orange"
 msgstr "Etykieta koloru ścieżki: ustaw na pomarańczowy"
 
 #: ../app/actions/vectors-actions.c:223
+msgctxt "vectors-action"
+msgid "Brown"
+msgstr "Brązowy"
+
+#: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Brown"
 msgstr "Etykieta koloru ścieżki: ustaw na brązowy"
 
 #: ../app/actions/vectors-actions.c:229
 msgctxt "vectors-action"
+msgid "Red"
+msgstr "Czerwony"
+
+#: ../app/actions/vectors-actions.c:230
+msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Red"
 msgstr "Etykieta koloru ścieżki: ustaw na czerwony"
 
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
+msgid "Violet"
+msgstr "Fioletowy"
+
+#: ../app/actions/vectors-actions.c:236
+msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Violet"
 msgstr "Etykieta koloru ścieżki: ustaw na fioletowy"
 
 #: ../app/actions/vectors-actions.c:241
+msgctxt "vectors-action"
+msgid "Gray"
+msgstr "Szary"
+
+#: ../app/actions/vectors-actions.c:242
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Gray"
 msgstr "Etykieta koloru ścieżki: ustaw na szary"
