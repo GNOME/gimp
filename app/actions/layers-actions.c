@@ -401,57 +401,57 @@ static const GimpRadioActionEntry layers_composite_mode_actions[] =
 
 static const GimpEnumActionEntry layers_color_tag_actions[] =
 {
-  { "layers-color-tag-none", GIMP_ICON_EDIT_CLEAR,
+  { "layers-color-tag-none", GIMP_ICON_CLOSE /* abused */,
+    NC_("layers-action", "None"), NULL,
     NC_("layers-action", "Layer Color Tag: Clear"),
-    NULL, NULL,
     GIMP_COLOR_TAG_NONE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-blue", NULL,
+    NC_("layers-action", "Blue"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Blue"),
-    NULL, NULL,
     GIMP_COLOR_TAG_BLUE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-green", NULL,
+    NC_("layers-action", "Green"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Green"),
-    NULL, NULL,
     GIMP_COLOR_TAG_GREEN, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-yellow", NULL,
+    NC_("layers-action", "Yellow"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Yellow"),
-    NULL, NULL,
     GIMP_COLOR_TAG_YELLOW, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-orange", NULL,
+    NC_("layers-action", "Orange"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Orange"),
-    NULL, NULL,
     GIMP_COLOR_TAG_ORANGE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-brown", NULL,
+    NC_("layers-action", "Brown"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Brown"),
-    NULL, NULL,
     GIMP_COLOR_TAG_BROWN, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-red", NULL,
+    NC_("layers-action", "Red"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Red"),
-    NULL, NULL,
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-violet", NULL,
+    NC_("layers-action", "Violet"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Violet"),
-    NULL, NULL,
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-gray", NULL,
+    NC_("layers-action", "Gray"), NULL,
     NC_("layers-action", "Layer Color Tag: Set to Gray"),
-    NULL, NULL,
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG }
 };
