@@ -107,7 +107,11 @@ init (void)
   GError   *error            = NULL;
   gint      i;
 
-  printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
+  /* allow the user to have some insight into why darktable may fail. */
+  gboolean  debug_prints     = g_getenv ("DARKTABLE_DEBUG") != NULL;
+
+  if (debug_prints)
+    printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
 
   if (g_spawn_sync (NULL,
                     argv,
@@ -136,20 +140,22 @@ init (void)
             }
         }
     }
-  else
+  else if (debug_prints)
     printf ("[%s] g_spawn_sync failed\n", __FILE__);
 
-  if (error)
+  if (debug_prints)
     {
-      printf ("[%s] error: %s\n", __FILE__, error->message);
-      g_error_free (error);
+      if (error)
+        printf ("[%s] error: %s\n", __FILE__, error->message);
+      if (darktable_stdout && *darktable_stdout)
+        printf ("[%s] stdout:\n%s\n", __FILE__, darktable_stdout);
+      if (darktable_stderr && *darktable_stderr)
+        printf ("[%s] stderr:\n%s\n", __FILE__, darktable_stderr);
+      printf ("[%s] have_darktable: %d\n", __FILE__, have_darktable);
     }
-  if (darktable_stdout && *darktable_stdout)
-    printf ("[%s] stdout:\n%s\n", __FILE__, darktable_stdout);
-  if (darktable_stderr && *darktable_stderr)
-    printf ("[%s] stderr:\n%s\n", __FILE__, darktable_stderr);
-  printf ("[%s] have_darktable: %d\n", __FILE__, have_darktable);
 
+  if (error)
+    g_error_free (error);
   g_free (darktable_stdout);
   g_free (darktable_stderr);
   g_free (exec_path);
@@ -337,6 +343,9 @@ load_image (const gchar  *filename,
 
   gchar *darktable_stdout    = NULL;
 
+  /* allow the user to have some insight into why darktable may fail. */
+  gboolean  debug_prints     = g_getenv ("DARKTABLE_DEBUG") != NULL;
+
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
@@ -381,7 +390,8 @@ load_image (const gchar  *filename,
         gimp_image_set_filename (image_ID, filename);
     }
 
-  /*if (darktable_stdout) printf ("%s\n", darktable_stdout);*/
+  if (debug_prints && darktable_stdout && *darktable_stdout)
+    printf ("%s\n", darktable_stdout);
   g_free(darktable_stdout);
 
   g_unlink (filename_out);
