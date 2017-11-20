@@ -338,17 +338,20 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
 static const GimpRadioActionEntry layers_blend_space_actions[] =
 {
   { "layers-blend-space-auto", NULL,
-    NC_("layers-action", "Layer Blend Space: Auto"), NULL, NULL,
+    NC_("layers-action", "Auto"), NULL,
+    NC_("layers-action", "Layer Blend Space: Auto"),
     GIMP_LAYER_COLOR_SPACE_AUTO,
     NULL },
 
   { "layers-blend-space-rgb-linear", NULL,
-    NC_("layers-action", "Layer Blend Space: RGB (linear)"), NULL, NULL,
+    NC_("layers-action", "RGB (linear)"), NULL,
+    NC_("layers-action", "Layer Blend Space: RGB (linear)"),
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     NULL },
 
   { "layers-blend-space-rgb-perceptual", NULL,
-    NC_("layers-action", "Layer Blend Space: RGB (perceptual)"), NULL, NULL,
+    NC_("layers-action", "RGB (perceptual)"), NULL,
+    NC_("layers-action", "Layer Blend Space: RGB (perceptual)"),
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
     NULL }
 };
@@ -356,17 +359,20 @@ static const GimpRadioActionEntry layers_blend_space_actions[] =
 static const GimpRadioActionEntry layers_composite_space_actions[] =
 {
   { "layers-composite-space-auto", NULL,
-    NC_("layers-action", "Layer Composite Space: Auto"), NULL, NULL,
+    NC_("layers-action", "Auto"), NULL,
+    NC_("layers-action", "Layer Composite Space: Auto"),
     GIMP_LAYER_COLOR_SPACE_AUTO,
     NULL },
 
   { "layers-composite-space-rgb-linear", NULL,
-    NC_("layers-action", "Layer Composite Space: RGB (linear)"), NULL, NULL,
+    NC_("layers-action", "RGB (linear)"), NULL,
+    NC_("layers-action", "Layer Composite Space: RGB (linear)"),
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     NULL },
 
   { "layers-composite-space-rgb-perceptual", NULL,
-    NC_("layers-action", "Layer Composite Space: RGB (perceptual)"), NULL, NULL,
+    NC_("layers-action", "RGB (perceptual)"), NULL,
+    NC_("layers-action", "Layer Composite Space: RGB (perceptual)"),
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
     NULL }
 };
@@ -374,27 +380,32 @@ static const GimpRadioActionEntry layers_composite_space_actions[] =
 static const GimpRadioActionEntry layers_composite_mode_actions[] =
 {
   { "layers-composite-mode-auto", NULL,
-    NC_("layers-action", "Layer Composite Mode: Auto"), NULL, NULL,
+    NC_("layers-action", "Auto"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Auto"),
     GIMP_LAYER_COMPOSITE_AUTO,
     NULL },
 
   { "layers-composite-mode-src-over", NULL,
-    NC_("layers-action", "Layer Composite Mode: Source Over"), NULL, NULL,
+    NC_("layers-action", "Source Over"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Source Over"),
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     NULL },
 
   { "layers-composite-mode-src-atop", NULL,
-    NC_("layers-action", "Layer Composite Mode: Source Atop"), NULL, NULL,
+    NC_("layers-action", "Source Atop"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Source Atop"),
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
     NULL },
 
   { "layers-composite-mode-src-in", NULL,
-    NC_("layers-action", "Layer Composite Mode: Source In"), NULL, NULL,
+    NC_("layers-action", "Source In"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Source In"),
     GIMP_LAYER_COMPOSITE_SRC_IN,
     NULL },
 
   { "layers-composite-mode-dst-atop", NULL,
-    NC_("layers-action", "Layer Composite Mode: Destination Atop"), NULL, NULL,
+    NC_("layers-action", "Destination Atop"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Destination Atop"),
     GIMP_LAYER_COMPOSITE_DST_ATOP,
     NULL }
 };
