@@ -89,6 +89,20 @@ gimp_pattern_load (GimpContext   *context,
       goto error;
     }
 
+  /*  Validate dimensions  */
+  if ((header.width  == 0) || (header.width  > GIMP_MAX_IMAGE_SIZE) ||
+      (header.height == 0) || (header.height > GIMP_MAX_IMAGE_SIZE) ||
+      (G_MAXSIZE / header.width / header.height / header.bytes < 1))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid header data in '%s': width=%lu, height=%lu, "
+                     "bytes=%lu"), gimp_file_get_utf8_name (file),
+                   (unsigned long int)header.width,
+                   (unsigned long int)header.height,
+                   (unsigned long int)header.bytes);
+      goto error;
+    }
+
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
@@ -131,7 +145,7 @@ gimp_pattern_load (GimpContext   *context,
     }
 
   pattern->mask = gimp_temp_buf_new (header.width, header.height, format);
-  size = header.width * header.height * header.bytes;
+  size = (gsize) header.width * header.height * header.bytes;
 
   if (! g_input_stream_read_all (input,
                                  gimp_temp_buf_get_data (pattern->mask), size,
