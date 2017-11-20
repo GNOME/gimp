@@ -46,7 +46,7 @@ static const GimpActionEntry vectors_actions[] =
     NC_("vectors-action", "Paths Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATH_DIALOG },
 
-  { "vectors-color-tag-menu", GIMP_ICON_CLOSE /* abused */,
+  { "vectors-color-tag-menu", NULL,
     NC_("vectors-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_PATH_COLOR_TAG },
 

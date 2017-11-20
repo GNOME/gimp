@@ -45,7 +45,7 @@ static const GimpActionEntry channels_actions[] =
     NC_("channels-action", "Channels Menu"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_DIALOG },
 
-  { "channels-color-tag-menu", GIMP_ICON_CLOSE /* abused */,
+  { "channels-color-tag-menu", NULL,
     NC_("channels-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 

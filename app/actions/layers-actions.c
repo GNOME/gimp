@@ -64,7 +64,7 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Composite Mode"), NULL, NULL, NULL,
     NULL },
 
-  { "layers-color-tag-menu", GIMP_ICON_CLOSE /* abused */,
+  { "layers-color-tag-menu", NULL,
     NC_("layers-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_COLOR_TAG },
 
