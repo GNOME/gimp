@@ -211,8 +211,8 @@ gimp_operation_histogram_sink_process (GeglOperation        *operation,
       return FALSE;
     }
 
-  input = gegl_operation_context_get_source (context, "input");
-  aux   = gegl_operation_context_get_source (context, "aux");
+  input = (GeglBuffer*) gegl_operation_context_dup_object (context, "input");
+  aux   = (GeglBuffer*) gegl_operation_context_dup_object (context, "aux");
 
   if (! input)
     {
