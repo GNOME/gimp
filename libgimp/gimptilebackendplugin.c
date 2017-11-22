@@ -34,7 +34,6 @@
 
 struct _GimpTileBackendPluginPrivate
 {
-  GMutex        mutex;
   GimpDrawable *drawable;
   gboolean      shadow;
   gint          mul;
@@ -85,6 +84,9 @@ G_DEFINE_TYPE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
 #define parent_class _gimp_tile_backend_plugin_parent_class
 
 
+static GMutex backend_plugin_mutex;
+
+
 static void
 _gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
 {
@@ -107,8 +109,6 @@ _gimp_tile_backend_plugin_init (GimpTileBackendPlugin *backend)
                                                GimpTileBackendPluginPrivate);
 
   source->command = gimp_tile_backend_plugin_command;
-
-  g_mutex_init (&backend->priv->mutex);
 }
 
 static void
@@ -118,8 +118,6 @@ gimp_tile_backend_plugin_finalize (GObject *object)
 
   if (backend->priv->drawable) /* This also causes a flush */
     gimp_drawable_detach (backend->priv->drawable);
-
-  g_mutex_clear (&backend->priv->mutex);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -138,28 +136,28 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
   switch (command)
     {
     case GEGL_TILE_GET:
-      g_mutex_lock (&backend_plugin->priv->mutex);
+      g_mutex_lock (&backend_plugin_mutex);
 
       result = gimp_tile_read_mul (backend_plugin, x, y);
 
-      g_mutex_unlock (&backend_plugin->priv->mutex);
+      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     case GEGL_TILE_SET:
-      g_mutex_lock (&backend_plugin->priv->mutex);
+      g_mutex_lock (&backend_plugin_mutex);
 
       gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
       gegl_tile_mark_as_stored (data);
 
-      g_mutex_unlock (&backend_plugin->priv->mutex);
+      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     case GEGL_TILE_FLUSH:
-      g_mutex_lock (&backend_plugin->priv->mutex);
+      g_mutex_lock (&backend_plugin_mutex);
 
       gimp_drawable_flush (backend_plugin->priv->drawable);
 
-      g_mutex_unlock (&backend_plugin->priv->mutex);
+      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     default:
