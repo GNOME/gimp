@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333332 4.2333335"
+   version="1.1"
+   id="svg9286"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="gimp-display-filter-clip-warning.svg">
+  <title
+     id="title13765">GIMP Clip-Warning Display Filter</title>
+  <defs
+     id="defs9280">
+    <linearGradient
+       gradientTransform="matrix(0.26458333,0,0,0.26458333,158.42384,85.500708)"
+       gradientUnits="userSpaceOnUse"
+       y2="1044.3622"
+       x2="16"
+       y1="1044.3622"
+       x1="0"
+       id="linearGradient7569"
+       xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       gradientTransform="matrix(0.34682586,0,0,0.30620888,-154.35207,-275.32445)"
+       osb:paint="solid"
+       id="linearGradient19282-4">
+      <stop
+         id="stop19284-0"
+         offset="0"
+         style="stop-color:#bebebe;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5140">
+      <stop
+         style="stop-color:#eeeeec;stop-opacity:1;"
+         offset="0"
+         id="stop5142" />
+      <stop
+         style="stop-color:#d4d4cf;stop-opacity:1;"
+         offset="1"
+         id="stop5144" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="44.875"
+     inkscape:cx="1.3147633"
+     inkscape:cy="8"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid13763"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata9283">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Clip-Warning Display Filter</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Ell</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-292.76665)">
+    <g
+       id="gimp-display-filter-clip-warning">
+      <g
+         id="g9752">
+        <g
+           id="g9729">
+          <g
+             id="g9690">
+            <rect
+               y="293.03122"
+               x="0.26458332"
+               height="3.7041667"
+               width="3.7041667"
+               id="rect9668"
+               style="fill:#4040ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+            <path
+               inkscape:connector-curvature="0"
+               id="path9627-3"
+               d="M 0.26458333,293.03123 3.96875,296.7354 v -3.70417 z"
+               style="fill:#ff4040;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          </g>
+          <g
+             id="g22210"
+             transform="translate(0,292.76665)">
+            <g
+               id="g22147">
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22131"
+                 d="M 0.26458333,0.26458333 0.79374999,0.79374999 0.26458333,1.3229166 Z"
+                 style="fill:#3030bf;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22135"
+                 d="m 1.3229166,1.3229166 0.5291667,0.5291667 -1.58749997,1.5875 V 2.38125 Z"
+                 style="fill:#3030bf;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22137"
+                 d="M 2.38125,2.38125 2.9104166,2.9104166 1.8520833,3.96875 H 0.79374999 Z"
+                 style="fill:#3030bf;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22141"
+                 d="M 3.4395833,3.4395833 3.96875,3.96875 H 2.9104166 Z"
+                 style="fill:#3030bf;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+            </g>
+            <g
+               id="g22159">
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22150"
+                 d="M 0.79374999,0.79374999 1.3229166,1.3229166 2.38125,0.26458333 H 1.3229166 Z"
+                 style="fill:#bf3030;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22152"
+                 d="M 1.8520833,1.8520833 2.38125,2.38125 3.96875,0.79374999 V 0.26458333 H 3.4395833 Z"
+                 style="fill:#bf3030;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 inkscape:connector-curvature="0"
+                 id="path22154"
+                 d="M 2.9104166,2.9104166 3.4395833,3.4395833 3.96875,2.9104166 V 1.8520833 Z"
+                 style="fill:#bf3030;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+            </g>
+          </g>
+        </g>
+        <g
+           id="g9733">
+          <rect
+             ry="0.40730754"
+             rx="0.37156296"
+             y="292.89682"
+             x="0.13002977"
+             height="3.9731517"
+             width="3.9732738"
+             id="rect4559"
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#888a85;stroke-width:0.26005954;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate" />
+          <rect
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.238544;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none;enable-background:accumulate"
+             id="rect5148"
+             width="3.4718261"
+             height="3.4669828"
+             x="0.38075334"
+             y="293.1499"
+             rx="0.1692183"
+             ry="0.16644348" />
+        </g>
+      </g>
+      <rect
+         y="292.76666"
+         x="0"
+         height="4.2333331"
+         width="4.2333331"
+         id="rect9754"
+         style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

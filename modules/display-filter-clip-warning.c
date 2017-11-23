@@ -228,7 +228,7 @@ cdisplay_clip_warning_class_init (CdisplayClipWarningClass *klass)
 
   display_class->name            = _("Clip Warning");
   display_class->help_id         = "gimp-colordisplay-clip-warning";
-  display_class->icon_name       = "gimp-warning";
+  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING;
 
   display_class->convert_buffer  = cdisplay_clip_warning_convert_buffer;
 }

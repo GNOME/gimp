@@ -100,6 +100,7 @@ scalable_images = \
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-device-status.svg				\
 	scalable/gimp-display.svg					\
+	scalable/gimp-display-filter-clip-warning.svg		\
 	scalable/gimp-display-filter-colorblind.svg		\
 	scalable/gimp-display-filter-contrast.svg		\
 	scalable/gimp-display-filter-gamma.svg			\
@@ -347,6 +348,7 @@ vector24_images = \
 	24/gimp-device-status.svg				\
 	24/gimp-display.svg						\
 	24/gimp-display-filter.svg				\
+	24/gimp-display-filter-clip-warning.svg			\
 	24/gimp-display-filter-colorblind.svg			\
 	24/gimp-display-filter-contrast.svg			\
 	24/gimp-display-filter-gamma.svg			\
@@ -584,6 +586,7 @@ icons16_images = \
 	16/gimp-curve-smooth.png				\
 	16/gimp-device-status.png				\
 	16/gimp-display.png					\
+	16/gimp-display-filter-clip-warning.png			\
 	16/gimp-display-filter-colorblind.png			\
 	16/gimp-display-filter-contrast.png			\
 	16/gimp-display-filter-gamma.png			\
@@ -852,6 +855,7 @@ icons24_images = \
 	24/gimp-cursor.png					\
 	24/gimp-device-status.png				\
 	24/gimp-display.png					\
+	24/gimp-display-filter-clip-warning.png			\
 	24/gimp-display-filter-colorblind.png			\
 	24/gimp-display-filter-contrast.png			\
 	24/gimp-display-filter-gamma.png			\

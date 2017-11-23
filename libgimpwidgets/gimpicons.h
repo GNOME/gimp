@@ -160,12 +160,13 @@ G_BEGIN_DECLS
 #define GIMP_ICON_DIALOG_UNDO_HISTORY       "gimp-undo-history"
 #define GIMP_ICON_DIALOG_WARNING            "gimp-warning" /* use FDO */
 
-#define GIMP_ICON_DISPLAY_FILTER            "gimp-display-filter"
-#define GIMP_ICON_DISPLAY_FILTER_COLORBLIND "gimp-display-filter-colorblind"
-#define GIMP_ICON_DISPLAY_FILTER_CONTRAST   "gimp-display-filter-contrast"
-#define GIMP_ICON_DISPLAY_FILTER_GAMMA      "gimp-display-filter-gamma"
-#define GIMP_ICON_DISPLAY_FILTER_LCMS       "gimp-display-filter-lcms"
-#define GIMP_ICON_DISPLAY_FILTER_PROOF      "gimp-display-filter-proof"
+#define GIMP_ICON_DISPLAY_FILTER              "gimp-display-filter"
+#define GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING "gimp-display-filter-clip-warning"
+#define GIMP_ICON_DISPLAY_FILTER_COLORBLIND   "gimp-display-filter-colorblind"
+#define GIMP_ICON_DISPLAY_FILTER_CONTRAST     "gimp-display-filter-contrast"
+#define GIMP_ICON_DISPLAY_FILTER_GAMMA        "gimp-display-filter-gamma"
+#define GIMP_ICON_DISPLAY_FILTER_LCMS         "gimp-display-filter-lcms"
+#define GIMP_ICON_DISPLAY_FILTER_PROOF        "gimp-display-filter-proof"
 
 #define GIMP_ICON_DOCUMENT_NEW              "document-new"
 #define GIMP_ICON_DOCUMENT_OPEN             "document-open"
