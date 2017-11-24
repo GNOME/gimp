@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-30 21:23+0000\n"
-"PO-Revision-Date: 2017-11-01 12:34-0300\n"
+"POT-Creation-Date: 2017-11-12 22:40+0000\n"
+"PO-Revision-Date: 2017-11-24 08:22-0300\n"
 "Last-Translator: Luis Ángel Gonzo <luisangelgonzo@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -636,53 +636,97 @@ msgstr "Menú de búferes"
 
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
-msgid "_Paste Buffer"
-msgstr "_Pegar búfer"
-
-#: ../app/actions/buffers-actions.c:47
-msgctxt "buffers-action"
-msgid "Paste the selected buffer"
-msgstr "Pega el búfer seleccionado"
-
-#: ../app/actions/buffers-actions.c:52
-msgctxt "buffers-action"
-msgid "Paste Buffer _Into"
-msgstr "Pegar búfer _en"
-
-#: ../app/actions/buffers-actions.c:53
-msgctxt "buffers-action"
-msgid "Paste the selected buffer into the selection"
-msgstr "Pega el búfer seleccionado en la selección"
-
-#: ../app/actions/buffers-actions.c:58
-msgctxt "buffers-action"
-msgid "Paste Buffer as New _Layer"
-msgstr "Pegar búfer como _nueva capa"
-
-#: ../app/actions/buffers-actions.c:59
-msgctxt "buffers-action"
-msgid "Paste the selected buffer as a new layer"
-msgstr "Pegar el búfer seleccionado como nueva capa"
-
-#: ../app/actions/buffers-actions.c:64
-msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
 msgstr "Pegar búfer como imagen _nueva"
 
-#: ../app/actions/buffers-actions.c:65
+#: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
 msgstr "Pegar el búfer seleccionado como imagen nueva"
 
-#: ../app/actions/buffers-actions.c:70
+#: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr "_Eliminar búfer"
 
-#: ../app/actions/buffers-actions.c:71
+#: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
 msgstr "Borra el búfer seleccionado"
+
+#: ../app/actions/buffers-actions.c:61
+msgctxt "buffers-action"
+msgid "_Paste Buffer"
+msgstr "_Pegar búfer"
+
+#: ../app/actions/buffers-actions.c:62
+msgctxt "buffers-action"
+msgid "Paste the selected buffer"
+msgstr "Pegar el búfer seleccionado"
+
+#: ../app/actions/buffers-actions.c:67
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer _Into"
+msgctxt "buffers-action"
+msgid "Paste Buffer In Pl_ace"
+msgstr "Pegar el búfer en su _lugar"
+
+#: ../app/actions/buffers-actions.c:68
+#| msgctxt "buffers-action"
+#| msgid "Paste the selected buffer into the selection"
+msgctxt "buffers-action"
+msgid "Paste the selected buffer at its original position"
+msgstr "Pega el búfer seleccionado en su posición original"
+
+#: ../app/actions/buffers-actions.c:73
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer _Into"
+msgctxt "buffers-action"
+msgid "Paste Buffer _Into The Selection"
+msgstr "Pegar el búfer _en la selección"
+
+#: ../app/actions/buffers-actions.c:74
+msgctxt "buffers-action"
+msgid "Paste the selected buffer into the selection"
+msgstr "Pega el búfer seleccionado en la selección"
+
+#: ../app/actions/buffers-actions.c:79
+#| msgctxt "buffers-action"
+#| msgid "Paste the selected buffer into the selection"
+msgctxt "buffers-action"
+msgid "Paste Buffer Into The Selection In Place"
+msgstr "Pega el búfer en la selección en su lugar"
+
+#: ../app/actions/buffers-actions.c:81
+#| msgctxt "buffers-action"
+#| msgid "Paste the selected buffer into the selection"
+msgctxt "buffers-action"
+msgid "Paste the selected buffer into the selection at its original position"
+msgstr "Pegue el búfer seleccionado en la selección en su posición original"
+
+#: ../app/actions/buffers-actions.c:86
+msgctxt "buffers-action"
+msgid "Paste Buffer as New _Layer"
+msgstr "Pegar búfer como _nueva capa"
+
+#: ../app/actions/buffers-actions.c:87
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new layer"
+msgstr "Pegar el búfer seleccionado como nueva capa"
+
+#: ../app/actions/buffers-actions.c:92
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer as New _Layer"
+msgctxt "buffers-action"
+msgid "Paste Buffer as New Layer in Place"
+msgstr "Pegar búfer como _nueva capa en su lugar"
+
+#: ../app/actions/buffers-actions.c:94
+#| msgctxt "buffers-action"
+#| msgid "Paste the selected buffer as a new layer"
+msgctxt "buffers-action"
+msgid "Paste the selected buffer as a new layer at its original position"
+msgstr "Pegar el búfer seleccionado como nueva capa en su posición original"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -1583,19 +1627,16 @@ msgid "Background Blue: Increase by 10%"
 msgstr "Fondo azul: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:481
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
 msgstr "Tono de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:485
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
 msgstr "Tono de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:489
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
 msgstr "Tono de primer plano: establecer al máximo"
@@ -1621,61 +1662,51 @@ msgid "Foreground Hue: Increase by 10%"
 msgstr "Tono de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:513
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
 msgstr "Saturación de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:517
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
 msgstr "Saturación de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:521
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
 msgstr "Saturación de primer plano: establecer al máximo"
 
 #: ../app/actions/context-actions.c:525
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
 msgstr "Saturación de primer plano: disminuir un 1%"
 
 #: ../app/actions/context-actions.c:529
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
 msgstr "Saturación de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:533
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
 msgstr "Saturación de primer plano: disminuir un 10%"
 
 #: ../app/actions/context-actions.c:537
-#| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
 msgstr "Saturación de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:545
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Value: Set"
 msgstr "Valor de primer plano: establecer"
 
 #: ../app/actions/context-actions.c:549
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
 msgstr "Valor de primer plano: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:553
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
 msgstr "Valor de primer plano: establecer al máximo"
@@ -1701,19 +1732,16 @@ msgid "Foreground Value: Increase by 10%"
 msgstr "Valor de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:577
-#| msgid "Background"
 msgctxt "context-action"
 msgid "Background Hue: Set"
 msgstr "Tono de fondo: establecer"
 
 #: ../app/actions/context-actions.c:581
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
 msgstr "Tono de fondo: establecer al míninmo"
 
 #: ../app/actions/context-actions.c:585
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
 msgstr "Color de fondo: establecer al máximo"
@@ -1739,7 +1767,6 @@ msgid "Background Hue: Increase by 10%"
 msgstr "Tono de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:609
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Saturation: Set"
 msgstr "Saturación de fondo: establecer"
@@ -1775,19 +1802,16 @@ msgid "Background Saturation: Increase by 10%"
 msgstr "Saturación de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:641
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set"
 msgstr "Valor de fondo: establecer"
 
 #: ../app/actions/context-actions.c:645
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
 msgstr "Valor de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:649
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
 msgstr "Valor de fondo establecer al máximo"
@@ -1813,8 +1837,6 @@ msgid "Background Value: Increase by 10%"
 msgstr "Valor de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:673
-#| msgctxt "undo-type"
-#| msgid "Fill with Transparency"
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
 msgstr "Opacidad de la herramienta: establecer transparencia"
@@ -1850,59 +1872,55 @@ msgid "Tool Opacity: Make 10% More Opaque"
 msgstr "Herramienta de opacidad: hacer un 10% más opaca"
 
 #: ../app/actions/context-actions.c:705
-#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "Modo de pintura: %s"
+msgstr "Modo de pintura de herramienta: seleccionar primera"
 
 #: ../app/actions/context-actions.c:709
-#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "Modo de pintura: %s"
+msgstr "Modo de pintura de herramienta: seleccionar última"
 
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr ""
+msgstr "Modo de pintura de herramienta: seleccionar previa"
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr ""
+msgstr "Modo de pintura de herramienta: seleccionar siguiente"
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
 msgid "Tool Selection: Choose by Index"
-msgstr ""
+msgstr "Selección de herramienta: elegir por índice"
 
 #: ../app/actions/context-actions.c:729
-#, fuzzy
 #| msgctxt "cursor-mode"
 #| msgid "Tool icon with crosshair"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to First"
-msgstr "Icono de herramienta con cruz"
+msgstr "Selección de herramienta: cambiar a la primera"
 
 #: ../app/actions/context-actions.c:733
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
-msgstr "Selección a ruta"
+msgstr "Selección de herramienta: cambiar a la última"
 
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr ""
+msgstr "Selección de herramienta: cambiar a la previa "
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr ""
+msgstr "Selección de herramienta: cambiar a la siguiente"
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
@@ -1915,12 +1933,11 @@ msgid "Brush Selection: Switch to First"
 msgstr "Selección de pincel: cambiar al primero"
 
 #: ../app/actions/context-actions.c:757
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
-msgstr "Selección a ruta"
+msgstr "Selección de pincel: cambiar al último"
 
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
@@ -1935,70 +1952,64 @@ msgstr "Selección de pincel: cambiar al siguiente"
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr ""
+msgstr "Selección de patrones: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr ""
+msgstr "Selección de  patrones: cambiar al primero"
 
 #: ../app/actions/context-actions.c:781
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Selección flotante a capa"
+msgstr "Selección de patrones: cambiar al último"
 
 #: ../app/actions/context-actions.c:785
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Trazar la selección con los últimos valores usados"
+msgstr "Selección de patrones: cambiar al anterior"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr ""
+msgstr "Selección de patrones: cambiar al siguiente"
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
 msgid "Palette Selection: Select by Index"
-msgstr ""
+msgstr "Selección de paleta: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:801
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Replace the selection with the layer mask"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to First"
-msgstr "Sustituir la selección con la máscara de capa"
+msgstr "Selección de paleta: cambiar a la primera"
 
 #: ../app/actions/context-actions.c:805
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Replace selection with path"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
-msgstr "Sustituir la selección con la ruta"
+msgstr "Selección de paleta: cambiar a la última"
 
 #: ../app/actions/context-actions.c:809
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Previous"
-msgstr "Trazar la selección con los últimos valores usados"
+msgstr "Selección de paleta: cambiar a la anterior"
 
 #: ../app/actions/context-actions.c:813
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Replace the selection with this channel"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Next"
-msgstr "Sustituir la selección con este canal"
+msgstr "Selección de paleta: cambiar a la siguiente "
 
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
@@ -2011,12 +2022,11 @@ msgid "Gradient Selection: Switch to First"
 msgstr "Selección de degradado: cambiar al primero"
 
 #: ../app/actions/context-actions.c:829
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Last"
-msgstr "Selección flotante a capa"
+msgstr "Selección de degradado: cambiar al último"
 
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
@@ -2029,44 +2039,39 @@ msgid "Gradient Selection: Switch to Next"
 msgstr "Selección de degradado: cambiar al siguiente"
 
 #: ../app/actions/context-actions.c:845
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
-msgstr "Selección flotante a capa"
+msgstr "Selección de fuente: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:849
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
-msgstr "Selección flotante a capa"
+msgstr "Selección de fuente: cambiar a la primera"
 
 #: ../app/actions/context-actions.c:853
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
-msgstr "Selección flotante a capa"
+msgstr "Selección de fuente: cambiar a la última"
 
 #: ../app/actions/context-actions.c:857
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
-msgstr "Trazar la selección con los últimos valores usados"
+msgstr "Selección de fuente: cambiar a la anterior"
 
 #: ../app/actions/context-actions.c:861
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
-msgstr "Selección flotante a capa"
+msgstr "Selección de fuente: cambiar a la siguiente"
 
 #: ../app/actions/context-actions.c:869
 #, fuzzy
@@ -2389,7 +2394,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
-#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -3496,156 +3501,210 @@ msgstr "Copiar lo que es visible dentro de la región seleccionada"
 
 #: ../app/actions/edit-actions.c:130
 msgctxt "edit-action"
-msgid "_Paste"
-msgstr "_Pegar"
-
-#: ../app/actions/edit-actions.c:131
-msgctxt "edit-action"
-msgid "Paste the content of the clipboard"
-msgstr "Pegar el contenido del portapapeles"
-
-#: ../app/actions/edit-actions.c:136
-msgctxt "edit-action"
-msgid "Paste _Into"
-msgstr "Pegar _en"
-
-#: ../app/actions/edit-actions.c:138
-msgctxt "edit-action"
-msgid "Paste the content of the clipboard into the current selection"
-msgstr "Pegar el contenido del portapapeles dentro de la selección actual"
-
-#: ../app/actions/edit-actions.c:143
-msgctxt "edit-action"
-msgid "New _Layer"
-msgstr "_Capa nueva"
-
-#: ../app/actions/edit-actions.c:144
-msgctxt "edit-action"
-msgid "Create a new layer from the content of the clipboard"
-msgstr "Crear una capa nueva a partir del contenido del portapapeles"
-
-#: ../app/actions/edit-actions.c:149
-msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Desde el por_tapapeles"
 
-#: ../app/actions/edit-actions.c:150 ../app/actions/edit-actions.c:156
+#: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Crear una imagen nueva a partir del contenido del portapapeles"
 
-#: ../app/actions/edit-actions.c:155
+#: ../app/actions/edit-actions.c:136
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "Imagen _nueva"
 
-#: ../app/actions/edit-actions.c:161
+#: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "Cor_tar con nombre…"
 
-#: ../app/actions/edit-actions.c:162
+#: ../app/actions/edit-actions.c:143
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Mover los píxeles seleccionados a un búfer con nombre"
 
-#: ../app/actions/edit-actions.c:167
+#: ../app/actions/edit-actions.c:148
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Copiar con nombre…"
 
-#: ../app/actions/edit-actions.c:168
+#: ../app/actions/edit-actions.c:149
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Copiar los píxeles seleccionados a un búfer con nombre"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:173
+#: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Copiar _visible con nombre…"
 
-#: ../app/actions/edit-actions.c:175
+#: ../app/actions/edit-actions.c:156
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr ""
 "Copiar la parte visible dentro de la región seleccionada a un búfer con "
 "nombre"
 
-#: ../app/actions/edit-actions.c:180
+#: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "_Pegar con nombre…"
 
-#: ../app/actions/edit-actions.c:181
+#: ../app/actions/edit-actions.c:162
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Pegar el contenido de un búfer con nombre"
 
-#: ../app/actions/edit-actions.c:186
+#: ../app/actions/edit-actions.c:167
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "_Limpiar"
 
-#: ../app/actions/edit-actions.c:187
+#: ../app/actions/edit-actions.c:168
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Borrar los píxeles seleccionados"
 
-#: ../app/actions/edit-actions.c:195
+#: ../app/actions/edit-actions.c:176
+msgctxt "edit-action"
+msgid "_Paste"
+msgstr "_Pegar"
+
+#: ../app/actions/edit-actions.c:177
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard"
+msgstr "Pegar el contenido del portapapeles"
+
+#: ../app/actions/edit-actions.c:182
+#, fuzzy
+#| msgctxt "edit-action"
+#| msgid "Paste _Into"
+msgctxt "edit-action"
+msgid "Paste In Place"
+msgstr "Pegar _en"
+
+#: ../app/actions/edit-actions.c:184
+#, fuzzy
+#| msgctxt "edit-action"
+#| msgid "Paste the content of the clipboard into the current selection"
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard at its original position"
+msgstr "Pegar el contenido del portapapeles dentro de la selección actual"
+
+#: ../app/actions/edit-actions.c:189
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Path to Selection"
+msgctxt "edit-action"
+msgid "Paste _Into Selection"
+msgstr "Ruta a selección"
+
+#: ../app/actions/edit-actions.c:191
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard into the current selection"
+msgstr "Pegar el contenido del portapapeles dentro de la selección actual"
+
+#: ../app/actions/edit-actions.c:196
+#, fuzzy
+#| msgctxt "undo-type"
+#| msgid "Path to Selection"
+msgctxt "edit-action"
+msgid "Paste Into Selection In Place"
+msgstr "Ruta a selección"
+
+#: ../app/actions/edit-actions.c:198
+#, fuzzy
+#| msgctxt "edit-action"
+#| msgid "Paste the content of the clipboard into the current selection"
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard into the current selection at its "
+"original position"
+msgstr "Pegar el contenido del portapapeles dentro de la selección actual"
+
+#: ../app/actions/edit-actions.c:204
+msgctxt "edit-action"
+msgid "New _Layer"
+msgstr "_Capa nueva"
+
+#: ../app/actions/edit-actions.c:205
+msgctxt "edit-action"
+msgid "Create a new layer from the content of the clipboard"
+msgstr "Crear una capa nueva a partir del contenido del portapapeles"
+
+#: ../app/actions/edit-actions.c:210
+#, fuzzy
+#| msgid "New Layer"
+msgctxt "edit-action"
+msgid "New Layer In _Place"
+msgstr "Capa nueva"
+
+#: ../app/actions/edit-actions.c:212
+#, fuzzy
+#| msgctxt "edit-action"
+#| msgid "Create a new layer from the content of the clipboard"
+msgctxt "edit-action"
+msgid ""
+"Create a new layer from the content of the clipboard and place it at its "
+"original position"
+msgstr "Crear una capa nueva a partir del contenido del portapapeles"
+
+#: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Rellenar con el color de _frente"
 
-#: ../app/actions/edit-actions.c:196
+#: ../app/actions/edit-actions.c:222
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Rellenar la selección utilizando el color de frente"
 
-#: ../app/actions/edit-actions.c:201
+#: ../app/actions/edit-actions.c:227
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Rellenar con el color de fo_ndo"
 
-#: ../app/actions/edit-actions.c:202
+#: ../app/actions/edit-actions.c:228
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Rellenar la selección con el color del fondo"
 
-#: ../app/actions/edit-actions.c:207
+#: ../app/actions/edit-actions.c:233
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Rellenar con un pa_trón"
 
-#: ../app/actions/edit-actions.c:208
+#: ../app/actions/edit-actions.c:234
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Rellenar la selección utilizando el patrón activo"
 
-#: ../app/actions/edit-actions.c:313 ../app/actions/edit-actions.c:315
+#: ../app/actions/edit-actions.c:344 ../app/actions/edit-actions.c:346
 #, c-format
 msgid "_Undo %s"
 msgstr "De_shacer %s"
 
-#: ../app/actions/edit-actions.c:319 ../app/actions/edit-actions.c:321
+#: ../app/actions/edit-actions.c:350 ../app/actions/edit-actions.c:352
 #, c-format
 msgid "_Redo %s"
 msgstr "_Rehacer %s"
 
-#: ../app/actions/edit-actions.c:335
+#: ../app/actions/edit-actions.c:366
 #, c-format
 msgid "_Fade %s..."
 msgstr "_Desvanecer %s…"
 
-#: ../app/actions/edit-actions.c:347
+#: ../app/actions/edit-actions.c:378
 msgid "_Undo"
 msgstr "Des_hacer"
 
-#: ../app/actions/edit-actions.c:348
+#: ../app/actions/edit-actions.c:379
 msgid "_Redo"
 msgstr "_Rehacer"
 
-#: ../app/actions/edit-actions.c:349
+#: ../app/actions/edit-actions.c:380
 msgid "_Fade..."
 msgstr "_Desvanecer…"
 
@@ -10931,693 +10990,693 @@ msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Matizado levin"
 
-#: ../app/core/core-enums.c:416
+#: ../app/core/core-enums.c:422
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Primer elemento"
 
-#: ../app/core/core-enums.c:417
+#: ../app/core/core-enums.c:423
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Imagen"
 
-#: ../app/core/core-enums.c:418
+#: ../app/core/core-enums.c:424
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Selección"
 
-#: ../app/core/core-enums.c:419
+#: ../app/core/core-enums.c:425
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Capa activa"
 
-#: ../app/core/core-enums.c:420
+#: ../app/core/core-enums.c:426
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Canal activo"
 
-#: ../app/core/core-enums.c:421
+#: ../app/core/core-enums.c:427
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Ruta activa"
 
-#: ../app/core/core-enums.c:449
+#: ../app/core/core-enums.c:455
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Color sólido"
 
-#: ../app/core/core-enums.c:450
+#: ../app/core/core-enums.c:456
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Patrón"
 
-#: ../app/core/core-enums.c:487
+#: ../app/core/core-enums.c:493
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Personalizada"
 
-#: ../app/core/core-enums.c:488
+#: ../app/core/core-enums.c:494
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Línea"
 
-#: ../app/core/core-enums.c:489
+#: ../app/core/core-enums.c:495
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Guiones largos"
 
-#: ../app/core/core-enums.c:490
+#: ../app/core/core-enums.c:496
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Guiones medianos"
 
-#: ../app/core/core-enums.c:491
+#: ../app/core/core-enums.c:497
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Guiones cortos"
 
-#: ../app/core/core-enums.c:492
+#: ../app/core/core-enums.c:498
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Puntos espaciados"
 
-#: ../app/core/core-enums.c:493
+#: ../app/core/core-enums.c:499
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Puntos normales"
 
-#: ../app/core/core-enums.c:494
+#: ../app/core/core-enums.c:500
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Puntos densos"
 
-#: ../app/core/core-enums.c:495
+#: ../app/core/core-enums.c:501
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Punteados"
 
-#: ../app/core/core-enums.c:496
+#: ../app/core/core-enums.c:502
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Raya - punto"
 
-#: ../app/core/core-enums.c:497
+#: ../app/core/core-enums.c:503
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Raya - punto - punto"
 
-#: ../app/core/core-enums.c:528
+#: ../app/core/core-enums.c:534
 msgctxt "item-set"
 msgid "None"
 msgstr "Ninguno"
 
-#: ../app/core/core-enums.c:529
+#: ../app/core/core-enums.c:535
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Todas las capas"
 
-#: ../app/core/core-enums.c:530
+#: ../app/core/core-enums.c:536
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Capas del tamaño de la imagen"
 
-#: ../app/core/core-enums.c:531
+#: ../app/core/core-enums.c:537
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Todas las capas visibles"
 
-#: ../app/core/core-enums.c:532
+#: ../app/core/core-enums.c:538
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Todas las capas enlazadas"
 
-#: ../app/core/core-enums.c:567
+#: ../app/core/core-enums.c:573
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Diminuto"
 
-#: ../app/core/core-enums.c:568
+#: ../app/core/core-enums.c:574
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Muy pequeño"
 
-#: ../app/core/core-enums.c:569
+#: ../app/core/core-enums.c:575
 msgctxt "view-size"
 msgid "Small"
 msgstr "Pequeño"
 
-#: ../app/core/core-enums.c:570
+#: ../app/core/core-enums.c:576
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Mediano"
 
-#: ../app/core/core-enums.c:571
+#: ../app/core/core-enums.c:577
 msgctxt "view-size"
 msgid "Large"
 msgstr "Grande"
 
-#: ../app/core/core-enums.c:572
+#: ../app/core/core-enums.c:578
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Muy grande"
 
-#: ../app/core/core-enums.c:573
+#: ../app/core/core-enums.c:579
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Enorme"
 
-#: ../app/core/core-enums.c:574
+#: ../app/core/core-enums.c:580
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Monumental"
 
-#: ../app/core/core-enums.c:575
+#: ../app/core/core-enums.c:581
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantesco"
 
-#: ../app/core/core-enums.c:603
+#: ../app/core/core-enums.c:609
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Ver como lista"
 
-#: ../app/core/core-enums.c:604
+#: ../app/core/core-enums.c:610
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Ver como rejilla"
 
-#: ../app/core/core-enums.c:633
+#: ../app/core/core-enums.c:639
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Sin miniaturas"
 
-#: ../app/core/core-enums.c:634
+#: ../app/core/core-enums.c:640
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: ../app/core/core-enums.c:635
+#: ../app/core/core-enums.c:641
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Grande (256x256)"
 
-#: ../app/core/core-enums.c:819
+#: ../app/core/core-enums.c:825
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<no válido>>"
 
-#: ../app/core/core-enums.c:820
+#: ../app/core/core-enums.c:826
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Escalar la imagen"
 
-#: ../app/core/core-enums.c:821
+#: ../app/core/core-enums.c:827
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Redimensionar imagen"
 
-#: ../app/core/core-enums.c:822
+#: ../app/core/core-enums.c:828
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Voltear la imagen"
 
-#: ../app/core/core-enums.c:823
+#: ../app/core/core-enums.c:829
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Rotar la imagen"
 
-#: ../app/core/core-enums.c:824
+#: ../app/core/core-enums.c:830
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Recortar la imagen"
 
-#: ../app/core/core-enums.c:825
+#: ../app/core/core-enums.c:831
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Convertir la imagen"
 
-#: ../app/core/core-enums.c:826
+#: ../app/core/core-enums.c:832
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Eliminar el elemento"
 
-#: ../app/core/core-enums.c:827
+#: ../app/core/core-enums.c:833
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Combinar capas"
 
-#: ../app/core/core-enums.c:828
+#: ../app/core/core-enums.c:834
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Combinar rutas"
 
-#: ../app/core/core-enums.c:829
+#: ../app/core/core-enums.c:835
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Máscara rápida"
 
-#: ../app/core/core-enums.c:830 ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:867
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Rejilla"
 
-#: ../app/core/core-enums.c:831 ../app/core/core-enums.c:865
+#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:871
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Guía"
 
-#: ../app/core/core-enums.c:832 ../app/core/core-enums.c:866
+#: ../app/core/core-enums.c:838 ../app/core/core-enums.c:872
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Punto de muestra"
 
-#: ../app/core/core-enums.c:833 ../app/core/core-enums.c:867
+#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:873
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Capa/canal"
 
-#: ../app/core/core-enums.c:834 ../app/core/core-enums.c:868
+#: ../app/core/core-enums.c:840 ../app/core/core-enums.c:874
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Modificación de capa o canal"
 
-#: ../app/core/core-enums.c:835 ../app/core/core-enums.c:869
+#: ../app/core/core-enums.c:841 ../app/core/core-enums.c:875
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Máscara de selección"
 
-#: ../app/core/core-enums.c:836 ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:842 ../app/core/core-enums.c:879
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Visibilidad del elemento"
 
-#: ../app/core/core-enums.c:837 ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:843 ../app/core/core-enums.c:880
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Enlazar o desenlazar elemento"
 
-#: ../app/core/core-enums.c:838
+#: ../app/core/core-enums.c:844
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Propiedades del elemento"
 
-#: ../app/core/core-enums.c:839 ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:845 ../app/core/core-enums.c:878
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Mover el elemento"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:846
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Escalar elemento"
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:847
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Redimensionar elemento"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:848
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Añadir capa"
 
-#: ../app/core/core-enums.c:843 ../app/core/core-enums.c:889
+#: ../app/core/core-enums.c:849 ../app/core/core-enums.c:895
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Añadir máscara de capa"
 
-#: ../app/core/core-enums.c:844 ../app/core/core-enums.c:891
+#: ../app/core/core-enums.c:850 ../app/core/core-enums.c:897
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Aplicar máscara de capa"
 
-#: ../app/core/core-enums.c:845 ../app/core/core-enums.c:899
+#: ../app/core/core-enums.c:851 ../app/core/core-enums.c:905
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Selección flotante a capa"
 
-#: ../app/core/core-enums.c:846
+#: ../app/core/core-enums.c:852
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Selección flotante"
 
-#: ../app/core/core-enums.c:847
+#: ../app/core/core-enums.c:853
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Anclar la selección flotante"
 
-#: ../app/core/core-enums.c:848 ../app/core/gimp-edit.c:440
+#: ../app/core/core-enums.c:854 ../app/core/gimp-edit.c:474
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Pegar"
 
-#: ../app/core/core-enums.c:849 ../app/core/gimp-edit.c:719
+#: ../app/core/core-enums.c:855 ../app/core/gimp-edit.c:808
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
 
-#: ../app/core/core-enums.c:850
+#: ../app/core/core-enums.c:856
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Texto"
 
-#: ../app/core/core-enums.c:851 ../app/core/core-enums.c:900
+#: ../app/core/core-enums.c:857 ../app/core/core-enums.c:906
 #: ../app/core/gimpdrawable-transform.c:682
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformar"
 
-#: ../app/core/core-enums.c:852 ../app/core/core-enums.c:901
+#: ../app/core/core-enums.c:858 ../app/core/core-enums.c:907
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Pintar"
 
-#: ../app/core/core-enums.c:853 ../app/core/core-enums.c:904
+#: ../app/core/core-enums.c:859 ../app/core/core-enums.c:910
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Adjuntar parásito"
 
-#: ../app/core/core-enums.c:854 ../app/core/core-enums.c:905
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:911
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Eliminar parásito"
 
-#: ../app/core/core-enums.c:855
+#: ../app/core/core-enums.c:861
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Importar rutas"
 
-#: ../app/core/core-enums.c:856
+#: ../app/core/core-enums.c:862
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Complemento"
 
-#: ../app/core/core-enums.c:857
+#: ../app/core/core-enums.c:863
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Tipo de imagen"
 
-#: ../app/core/core-enums.c:858
+#: ../app/core/core-enums.c:864
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Precisión de la imagen"
 
-#: ../app/core/core-enums.c:859
+#: ../app/core/core-enums.c:865
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Tamaño de la imagen"
 
-#: ../app/core/core-enums.c:860
+#: ../app/core/core-enums.c:866
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Cambio de resolución de la imagen"
 
-#: ../app/core/core-enums.c:862
+#: ../app/core/core-enums.c:868
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Cambiar metadatos"
 
-#: ../app/core/core-enums.c:863
+#: ../app/core/core-enums.c:869
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Cambiar la paleta indexada"
 
-#: ../app/core/core-enums.c:864
+#: ../app/core/core-enums.c:870
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Cambiar el estado del color gestionado"
 
-#: ../app/core/core-enums.c:870
+#: ../app/core/core-enums.c:876
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Reordenar elemento"
 
-#: ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:877
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Renombrar elemento"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:881
 #, fuzzy
 #| msgid "not color managed"
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "color no gestionado"
 
-#: ../app/core/core-enums.c:876
+#: ../app/core/core-enums.c:882
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Bloquear/desbloquear contenido"
 
-#: ../app/core/core-enums.c:877
+#: ../app/core/core-enums.c:883
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Bloquear/desbloquear posición"
 
-#: ../app/core/core-enums.c:878
+#: ../app/core/core-enums.c:884
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Capa nueva"
 
-#: ../app/core/core-enums.c:879
+#: ../app/core/core-enums.c:885
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Borra la capa"
 
-#: ../app/core/core-enums.c:880
+#: ../app/core/core-enums.c:886
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Definir el modo de la capa"
 
-#: ../app/core/core-enums.c:881
+#: ../app/core/core-enums.c:887
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Definir la opacidad de la capa"
 
-#: ../app/core/core-enums.c:882
+#: ../app/core/core-enums.c:888
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Bloquear o desbloquear el canal Alfa"
 
-#: ../app/core/core-enums.c:883
+#: ../app/core/core-enums.c:889
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Suspender el redimensionamiento del grupo de capas"
 
-#: ../app/core/core-enums.c:884
+#: ../app/core/core-enums.c:890
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Reanudar el redimensionamiento del gurpo de capas"
 
-#: ../app/core/core-enums.c:885
+#: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Convertir el grupo de capas"
 
-#: ../app/core/core-enums.c:886
+#: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Capa de texto"
 
-#: ../app/core/core-enums.c:887
+#: ../app/core/core-enums.c:893
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Modificación de la capa de texto"
 
-#: ../app/core/core-enums.c:888
+#: ../app/core/core-enums.c:894
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Convertir capa de texto"
 
-#: ../app/core/core-enums.c:890
+#: ../app/core/core-enums.c:896
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Eliminar máscara de capa"
 
-#: ../app/core/core-enums.c:892
+#: ../app/core/core-enums.c:898
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Mostrar máscara de capa"
 
-#: ../app/core/core-enums.c:893
+#: ../app/core/core-enums.c:899
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nuevo canal"
 
-#: ../app/core/core-enums.c:894
+#: ../app/core/core-enums.c:900
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Borra el canal"
 
-#: ../app/core/core-enums.c:895
+#: ../app/core/core-enums.c:901
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Color del canal"
 
-#: ../app/core/core-enums.c:896
+#: ../app/core/core-enums.c:902
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nueva ruta"
 
-#: ../app/core/core-enums.c:897
+#: ../app/core/core-enums.c:903
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Eliminar ruta"
 
-#: ../app/core/core-enums.c:898
+#: ../app/core/core-enums.c:904
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modificación de la ruta"
 
-#: ../app/core/core-enums.c:902
+#: ../app/core/core-enums.c:908
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Tinta"
 
-#: ../app/core/core-enums.c:903
+#: ../app/core/core-enums.c:909
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Seleccionar primer plano"
 
-#: ../app/core/core-enums.c:906
+#: ../app/core/core-enums.c:912
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "No se puede deshacer"
 
-#: ../app/core/core-enums.c:986
+#: ../app/core/core-enums.c:992
 #, fuzzy
 #| msgid "Fixed"
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fijo"
 
-#: ../app/core/core-enums.c:987
+#: ../app/core/core-enums.c:993
 msgctxt "gradient-color"
 msgid "FG"
 msgstr ""
 
-#: ../app/core/core-enums.c:988
+#: ../app/core/core-enums.c:994
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr ""
 
-#: ../app/core/core-enums.c:989
+#: ../app/core/core-enums.c:995
 msgctxt "gradient-color"
 msgid "BG"
 msgstr ""
 
-#: ../app/core/core-enums.c:990
+#: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr ""
 
-#: ../app/core/core-enums.c:1019
+#: ../app/core/core-enums.c:1025
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Mensaje"
 
-#: ../app/core/core-enums.c:1020
+#: ../app/core/core-enums.c:1026
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Advertencia"
 
-#: ../app/core/core-enums.c:1021
+#: ../app/core/core-enums.c:1027
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Error"
 
-#: ../app/core/core-enums.c:1050
+#: ../app/core/core-enums.c:1056
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Preguntar qué hacer"
 
-#: ../app/core/core-enums.c:1051
+#: ../app/core/core-enums.c:1057
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Conservar perfil incrustado"
 
-#: ../app/core/core-enums.c:1052
+#: ../app/core/core-enums.c:1058
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Convertir a perfil de color RGB preferido"
 
-#: ../app/core/core-enums.c:1089
+#: ../app/core/core-enums.c:1095
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: ../app/core/core-enums.c:1090
+#: ../app/core/core-enums.c:1096
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../app/core/core-enums.c:1091
+#: ../app/core/core-enums.c:1097
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Ángulo"
 
-#: ../app/core/core-enums.c:1092
+#: ../app/core/core-enums.c:1098
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Color"
 
-#: ../app/core/core-enums.c:1093
+#: ../app/core/core-enums.c:1099
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Dureza"
 
-#: ../app/core/core-enums.c:1094
+#: ../app/core/core-enums.c:1100
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Fuerza"
 
-#: ../app/core/core-enums.c:1095
+#: ../app/core/core-enums.c:1101
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporción de aspecto"
 
-#: ../app/core/core-enums.c:1096
+#: ../app/core/core-enums.c:1102
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Espaciado"
 
-#: ../app/core/core-enums.c:1097
+#: ../app/core/core-enums.c:1103
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Tasa"
 
-#: ../app/core/core-enums.c:1098
+#: ../app/core/core-enums.c:1104
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Flujo"
 
-#: ../app/core/core-enums.c:1099
+#: ../app/core/core-enums.c:1105
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Vibración"
 
-#: ../app/core/core-enums.c:1127
+#: ../app/core/core-enums.c:1133
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Usar la selección como entrada"
 
-#: ../app/core/core-enums.c:1128
+#: ../app/core/core-enums.c:1134
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Usar toda la capa como entrada"
 
-#: ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1163
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Duro"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1164
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Suave"
 
-#: ../app/core/core-enums.c:1159
+#: ../app/core/core-enums.c:1165
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Emplumado"
@@ -11687,23 +11746,23 @@ msgstr "Histórico de color"
 msgid "Updating tag cache"
 msgstr "Actualizar la caché de etiquetas"
 
-#: ../app/core/gimp-edit.c:90
+#: ../app/core/gimp-edit.c:97
 #, fuzzy
 #| msgid "Text Layer"
 msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Capa de texto"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:325
+#: ../app/core/gimp-edit.c:286 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
-#: ../app/core/gimp-edit.c:614
+#: ../app/core/gimp-edit.c:703
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Limpiar"
 
-#: ../app/core/gimp-edit.c:736
+#: ../app/core/gimp-edit.c:825
 msgid "Global Buffer"
 msgstr "Búfer global"
 
@@ -11908,27 +11967,27 @@ msgstr "Forma de pincel GIMP desconocida."
 msgid "In line %d of brush file: "
 msgstr "En la línea %d del archivo del pincel:"
 
-#: ../app/core/gimpbrushgenerated.c:130
+#: ../app/core/gimpbrushgenerated.c:131
 msgid "Brush Shape"
 msgstr "Forma del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:138
+#: ../app/core/gimpbrushgenerated.c:139
 msgid "Brush Radius"
 msgstr "Radio del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:145
+#: ../app/core/gimpbrushgenerated.c:146
 msgid "Brush Spikes"
 msgstr "Puntas del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:152 ../app/paint/gimppaintoptions.c:227
+#: ../app/core/gimpbrushgenerated.c:153 ../app/paint/gimppaintoptions.c:227
 msgid "Brush Hardness"
 msgstr "Dureza del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:160 ../app/paint/gimppaintoptions.c:206
+#: ../app/core/gimpbrushgenerated.c:161 ../app/paint/gimppaintoptions.c:206
 msgid "Brush Aspect Ratio"
 msgstr "Proporción de aspecto del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:167 ../app/paint/gimppaintoptions.c:213
+#: ../app/core/gimpbrushgenerated.c:168 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Angle"
 msgstr "Ángulo del pincel"
 
@@ -14271,7 +14330,7 @@ msgstr "Propiedades de la imagen"
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1808
-#: ../app/tools/gimpcolorpickertool.c:348 ../app/tools/gimpmeasuretool.c:651
+#: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:651
 #: ../app/widgets/gimpcontrollerlist.c:640 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
@@ -14435,7 +14494,7 @@ msgid "_Fill with:"
 msgstr "R_ellenar con:"
 
 #: ../app/dialogs/layer-options-dialog.c:411
-#: ../app/widgets/gimpcolordisplayeditor.c:277
+#: ../app/widgets/gimpcolordisplayeditor.c:285
 msgid "Active Filters"
 msgstr "Filtros activos"
 
@@ -16561,7 +16620,7 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1443
+#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1445
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
@@ -19605,11 +19664,11 @@ msgstr ""
 msgid "New Seed"
 msgstr "Semilla nueva"
 
-#: ../app/propgui/gimppropgui.c:368
+#: ../app/propgui/gimppropgui.c:373
 msgid "Pick color from the image"
 msgstr "Recoger color de la imagen"
 
-#: ../app/propgui/gimppropgui.c:506
+#: ../app/propgui/gimppropgui.c:511
 msgid "This operation has no editable properties"
 msgstr "Esta operación no tiene propiedades editables"
 
@@ -20247,11 +20306,11 @@ msgstr ""
 "Usar el valor acumulado de colores a partir de la combinación de todas las "
 "capas visibles"
 
-#: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:69
+#: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
 msgstr "Muestra ponderada"
 
-#: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:70
+#: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 #, fuzzy
 #| msgid "Use accumulated color value from all composited visible layers"
 msgid "Use averaged color value from nearby pixels"
@@ -20263,20 +20322,20 @@ msgstr ""
 msgid "Color Picker Average Radius"
 msgstr "Radio promedio del recoge-color"
 
-#: ../app/tools/gimpcolorpickeroptions.c:77
+#: ../app/tools/gimpcolorpickeroptions.c:79
 msgid "Pick Mode"
 msgstr "Modo de selección"
 
-#: ../app/tools/gimpcolorpickeroptions.c:78
+#: ../app/tools/gimpcolorpickeroptions.c:80
 msgid "Choose what color picker will do"
 msgstr "Elegir qué color hará el cuentagotas"
 
-#: ../app/tools/gimpcolorpickeroptions.c:85
+#: ../app/tools/gimpcolorpickeroptions.c:87
 #: ../app/tools/gimpmeasureoptions.c:68
 msgid "Use info window"
 msgstr "Usar la ventana de información"
 
-#: ../app/tools/gimpcolorpickeroptions.c:86
+#: ../app/tools/gimpcolorpickeroptions.c:88
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
@@ -20284,13 +20343,13 @@ msgstr ""
 "cuentagotas en distintos modelos de color"
 
 #. the pick FG/BG frame
-#: ../app/tools/gimpcolorpickeroptions.c:167
+#: ../app/tools/gimpcolorpickeroptions.c:195
 #, c-format
 msgid "Pick Mode  (%s)"
 msgstr "Modo de selección  (%s)"
 
 #. the use_info_window toggle button
-#: ../app/tools/gimpcolorpickeroptions.c:176
+#: ../app/tools/gimpcolorpickeroptions.c:204
 #, c-format
 msgid "Use info window  (%s)"
 msgstr "Usar la ventana de información  (%s)"
@@ -20324,7 +20383,7 @@ msgstr "Pulse sobre cualquier imagen para recoger el color de fondo"
 msgid "Click in any image to add the color to the palette"
 msgstr "Pulse sobre cualquier imagen para añadir el color a la paleta"
 
-#: ../app/tools/gimpcolorpickertool.c:342
+#: ../app/tools/gimpcolorpickertool.c:343
 msgid "Color Picker Information"
 msgstr "Información del recoge-color"
 
@@ -22666,7 +22725,7 @@ msgstr "Púas"
 msgid "Percentage of width of brush"
 msgstr "Porcentaje del ancho del pincel"
 
-#: ../app/widgets/gimpbufferview.c:176 ../app/widgets/gimpbufferview.c:268
+#: ../app/widgets/gimpbufferview.c:177 ../app/widgets/gimpbufferview.c:278
 #: ../app/widgets/gimpeditor.c:758
 msgid "(None)"
 msgstr "(Ninguno)"
@@ -22679,33 +22738,33 @@ msgstr "Portapapeles"
 msgid "Add the current color to the color history"
 msgstr "Añadir el color actual al histórico de colores"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:157
+#: ../app/widgets/gimpcolordisplayeditor.c:165
 msgid "Available Filters"
 msgstr "Filtros disponibles"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:221
+#: ../app/widgets/gimpcolordisplayeditor.c:229
 msgid "Move the selected filter up"
 msgstr "Mover el filtro seleccionado hacia arriba"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:230
+#: ../app/widgets/gimpcolordisplayeditor.c:238
 msgid "Move the selected filter down"
 msgstr "Mover el filtro seleccionado hacia abajo"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:328
+#: ../app/widgets/gimpcolordisplayeditor.c:336
 msgid "Reset the selected filter to default values"
 msgstr "Reiniciar el filtro seleccionado con los valores predeterminados"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:516
+#: ../app/widgets/gimpcolordisplayeditor.c:527
 #, c-format
 msgid "Add '%s' to the list of active filters"
 msgstr "Añadir «%s» a la lista de filtros activos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:553
+#: ../app/widgets/gimpcolordisplayeditor.c:564
 #, c-format
 msgid "Remove '%s' from the list of active filters"
 msgstr "Quitar «%s» de la lista de filtros activos"
 
-#: ../app/widgets/gimpcolordisplayeditor.c:584
+#: ../app/widgets/gimpcolordisplayeditor.c:605
 msgid "No filter selected"
 msgstr "No hay ningún filtro seleccionado"
 
