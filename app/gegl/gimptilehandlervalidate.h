@@ -42,7 +42,6 @@ struct _GimpTileHandlerValidate
 {
   GeglTileHandler  parent_instance;
 
-  GMutex           mutex;
   GeglNode        *graph;
   cairo_region_t  *dirty_region;
   const Babl      *format;
