@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-20 03:24+0100\n"
-"PO-Revision-Date: 2017-11-20 03:25+0100\n"
+"POT-Creation-Date: 2017-11-26 18:32+0100\n"
+"PO-Revision-Date: 2017-11-26 18:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -727,7 +727,6 @@ msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "Menu kanałów"
 
-#. abused
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
 msgid "Color Tag"
@@ -5861,7 +5860,6 @@ msgctxt "layers-action"
 msgid "Composite Mode"
 msgstr "Tryb mieszania"
 
-#. abused
 #: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
 msgid "Color Tag"
@@ -5937,7 +5935,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Modyfikuje nazwę warstwy"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:901
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:912
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nowa warstwa…"
@@ -5947,7 +5945,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Tworzy nową warstwę i dodaje ją do obrazu"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:902
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:913
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nowa warstwa"
@@ -6265,332 +6263,368 @@ msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "Nie pozwala na modyfikację przezroczystości"
 
-#: ../app/actions/layers-actions.c:341
+#: ../app/actions/layers-actions.c:341 ../app/actions/layers-actions.c:362
+#: ../app/actions/layers-actions.c:383
+msgctxt "layers-action"
+msgid "Auto"
+msgstr "Autom."
+
+#: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
 msgstr "Przestrzeń gradientu warstwy: automatyczna"
 
-#: ../app/actions/layers-actions.c:346
+#: ../app/actions/layers-actions.c:347 ../app/actions/layers-actions.c:368
+msgctxt "layers-action"
+msgid "RGB (linear)"
+msgstr "RGB (liniowe)"
+
+#: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
 msgstr "Przestrzeń gradientu warstwy: RGB (liniowa)"
 
-#: ../app/actions/layers-actions.c:351
+#: ../app/actions/layers-actions.c:353 ../app/actions/layers-actions.c:374
+msgctxt "layers-action"
+msgid "RGB (perceptual)"
+msgstr "RGB (percepcyjne)"
+
+#: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
 msgstr "Przestrzeń gradientu warstwy: RGB (percepcyjna)"
 
-#: ../app/actions/layers-actions.c:359
+#: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
 msgstr "Przestrzeń mieszania warstwy: automatyczna"
 
-#: ../app/actions/layers-actions.c:364
+#: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
 msgstr "Przestrzeń mieszania warstwy: RGB (liniowa)"
 
-#: ../app/actions/layers-actions.c:369
+#: ../app/actions/layers-actions.c:375
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
 msgstr "Przestrzeń mieszania warstwy: RGB (percepcyjna)"
 
-#: ../app/actions/layers-actions.c:377
+#: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
 msgstr "Tryb mieszania warstwy: automatyczny"
 
-#: ../app/actions/layers-actions.c:382
+#: ../app/actions/layers-actions.c:389
+msgctxt "layers-action"
+msgid "Source Over"
+msgstr "Źródło nad"
+
+#: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source Over"
 msgstr "Tryb mieszania warstwy: źródło nad"
 
-#: ../app/actions/layers-actions.c:387
+#: ../app/actions/layers-actions.c:395
+msgctxt "layers-action"
+msgid "Source Atop"
+msgstr "Źródło na"
+
+#: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source Atop"
 msgstr "Tryb mieszania warstwy: źródło na"
 
-#: ../app/actions/layers-actions.c:392
+#: ../app/actions/layers-actions.c:401
+msgctxt "layers-action"
+msgid "Source In"
+msgstr "Źródło w"
+
+#: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source In"
 msgstr "Tryb mieszania warstwy: źródło w"
 
-#: ../app/actions/layers-actions.c:397
+#: ../app/actions/layers-actions.c:407
+msgctxt "layers-action"
+msgid "Destination Atop"
+msgstr "Cel na"
+
+#: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Destination Atop"
 msgstr "Tryb mieszania warstwy: cel na"
 
-#: ../app/actions/layers-actions.c:405
+#: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
 msgid "None"
 msgstr "Brak"
 
-#: ../app/actions/layers-actions.c:406
+#: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
 msgstr "Etykieta koloru warstwy: wyczyść"
 
-#: ../app/actions/layers-actions.c:411
+#: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "Niebieski"
 
-#: ../app/actions/layers-actions.c:412
+#: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr "Etykieta koloru warstwy: ustaw na niebieski"
 
-#: ../app/actions/layers-actions.c:417
+#: ../app/actions/layers-actions.c:428
 msgctxt "layers-action"
 msgid "Green"
 msgstr "Zielony"
 
-#: ../app/actions/layers-actions.c:418
+#: ../app/actions/layers-actions.c:429
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
 msgstr "Etykieta koloru warstwy: ustaw na zielony"
 
-#: ../app/actions/layers-actions.c:423
+#: ../app/actions/layers-actions.c:434
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "Żółty"
 
-#: ../app/actions/layers-actions.c:424
+#: ../app/actions/layers-actions.c:435
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
 msgstr "Etykieta koloru warstwy: ustaw na żółty"
 
-#: ../app/actions/layers-actions.c:429
+#: ../app/actions/layers-actions.c:440
 msgctxt "layers-action"
 msgid "Orange"
 msgstr "Pomarańczowy"
 
-#: ../app/actions/layers-actions.c:430
+#: ../app/actions/layers-actions.c:441
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
 msgstr "Etykieta koloru warstwy: ustaw na pomarańczowy"
 
-#: ../app/actions/layers-actions.c:435
+#: ../app/actions/layers-actions.c:446
 msgctxt "layers-action"
 msgid "Brown"
 msgstr "Brązowy"
 
-#: ../app/actions/layers-actions.c:436
+#: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
 msgstr "Etykieta koloru warstwy: ustaw na brązowy"
 
-#: ../app/actions/layers-actions.c:441
+#: ../app/actions/layers-actions.c:452
 msgctxt "layers-action"
 msgid "Red"
 msgstr "Czerwony"
 
-#: ../app/actions/layers-actions.c:442
+#: ../app/actions/layers-actions.c:453
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
 msgstr "Etykieta koloru warstwy: ustaw na czerwony"
 
-#: ../app/actions/layers-actions.c:447
+#: ../app/actions/layers-actions.c:458
 msgctxt "layers-action"
 msgid "Violet"
 msgstr "Fioletowy"
 
-#: ../app/actions/layers-actions.c:448
+#: ../app/actions/layers-actions.c:459
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
 msgstr "Etykieta koloru warstwy: ustaw na fioletowy"
 
-#: ../app/actions/layers-actions.c:453
+#: ../app/actions/layers-actions.c:464
 msgctxt "layers-action"
 msgid "Gray"
 msgstr "Szary"
 
-#: ../app/actions/layers-actions.c:454
+#: ../app/actions/layers-actions.c:465
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
 msgstr "Etykieta koloru warstwy: ustaw na szary"
 
-#: ../app/actions/layers-actions.c:462
+#: ../app/actions/layers-actions.c:473
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Zastos_uj maskę warstwy"
 
-#: ../app/actions/layers-actions.c:463
+#: ../app/actions/layers-actions.c:474
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Zastosowuje efekty działania maski warstwy i usuwa ją"
 
-#: ../app/actions/layers-actions.c:468
+#: ../app/actions/layers-actions.c:479
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Usuń mas_kę warstwy"
 
-#: ../app/actions/layers-actions.c:469
+#: ../app/actions/layers-actions.c:480
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Usuwa maskę warstwy i jej efekty"
 
-#: ../app/actions/layers-actions.c:477
+#: ../app/actions/layers-actions.c:488
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "Maska na _zaznaczenie"
 
-#: ../app/actions/layers-actions.c:478
+#: ../app/actions/layers-actions.c:489
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Zamienia zaznaczenie na maskę warstwy"
 
-#: ../app/actions/layers-actions.c:483
+#: ../app/actions/layers-actions.c:494
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Dodaj do zaznaczenia"
 
-#: ../app/actions/layers-actions.c:484
+#: ../app/actions/layers-actions.c:495
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Dodaje maskę warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:489 ../app/actions/layers-actions.c:518
+#: ../app/actions/layers-actions.c:500 ../app/actions/layers-actions.c:529
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "Od_ejmij od zaznaczenia"
 
-#: ../app/actions/layers-actions.c:490
+#: ../app/actions/layers-actions.c:501
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Odejmuje maskę warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:495 ../app/actions/layers-actions.c:525
+#: ../app/actions/layers-actions.c:506 ../app/actions/layers-actions.c:536
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "Prze_tnij z zaznaczeniem"
 
-#: ../app/actions/layers-actions.c:496
+#: ../app/actions/layers-actions.c:507
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Przecina maskę warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:504
+#: ../app/actions/layers-actions.c:515
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Kanał alfa na z_aznaczenie"
 
-#: ../app/actions/layers-actions.c:506
+#: ../app/actions/layers-actions.c:517
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Zamienia zaznaczenie z kanałem alfa warstwy"
 
-#: ../app/actions/layers-actions.c:511
+#: ../app/actions/layers-actions.c:522
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "_Dodaj do zaznaczenia"
 
-#: ../app/actions/layers-actions.c:513
+#: ../app/actions/layers-actions.c:524
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Dodaje kanał alfa warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:520
+#: ../app/actions/layers-actions.c:531
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Odejmuje kanał alfa warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:527
+#: ../app/actions/layers-actions.c:538
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Przycina kanał alfa warstwy do bieżącego zaznaczenia"
 
-#: ../app/actions/layers-actions.c:535
+#: ../app/actions/layers-actions.c:546
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Naj_wyższa warstwa"
 
-#: ../app/actions/layers-actions.c:536
+#: ../app/actions/layers-actions.c:547
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Zaznacza najwyższą warstwę"
 
-#: ../app/actions/layers-actions.c:541
+#: ../app/actions/layers-actions.c:552
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "N_ajniższa warstwa"
 
-#: ../app/actions/layers-actions.c:542
+#: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Zaznacza najniższą warstwę"
 
-#: ../app/actions/layers-actions.c:547
+#: ../app/actions/layers-actions.c:558
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Poprz_ednia warstwa"
 
-#: ../app/actions/layers-actions.c:548
+#: ../app/actions/layers-actions.c:559
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Zaznacza warstwę znajdującą się nad bieżącą warstwą"
 
-#: ../app/actions/layers-actions.c:553
+#: ../app/actions/layers-actions.c:564
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "_Następna warstwa"
 
-#: ../app/actions/layers-actions.c:554
+#: ../app/actions/layers-actions.c:565
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Zaznacza warstwę znajdującą się nad bieżącą warstwą"
 
-#: ../app/actions/layers-actions.c:562
+#: ../app/actions/layers-actions.c:573
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
 msgstr "Krycie warstwy: ustaw"
 
-#: ../app/actions/layers-actions.c:566
+#: ../app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
 msgstr "Krycie warstwy: ustaw całkowitą przezroczystość"
 
-#: ../app/actions/layers-actions.c:570
+#: ../app/actions/layers-actions.c:581
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
 msgstr "Krycie warstwy: ustaw całkowitą nieprzezroczystość"
 
-#: ../app/actions/layers-actions.c:574
+#: ../app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
 msgstr "Krycie warstwy: zwiększ przezroczystość"
 
-#: ../app/actions/layers-actions.c:578
+#: ../app/actions/layers-actions.c:589
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
 msgstr "Krycie warstwy: zwiększ nieprzezroczystość"
 
-#: ../app/actions/layers-actions.c:582
+#: ../app/actions/layers-actions.c:593
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
 msgstr "Krycie warstwy: zwiększ przezroczystość o 10%"
 
-#: ../app/actions/layers-actions.c:586
+#: ../app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
 msgstr "Krycie warstwy: zwiększ nieprzezroczystość o 10%"
 
-#: ../app/actions/layers-actions.c:594
+#: ../app/actions/layers-actions.c:605
 msgctxt "layers-action"
 msgid "Layer Mode: Select First"
 msgstr "Tryb warstwy: wybierz pierwszy"
 
-#: ../app/actions/layers-actions.c:598
+#: ../app/actions/layers-actions.c:609
 msgctxt "layers-action"
 msgid "Layer Mode: Select Last"
 msgstr "Tryb warstwy: wybierz ostatni"
 
-#: ../app/actions/layers-actions.c:602
+#: ../app/actions/layers-actions.c:613
 msgctxt "layers-action"
 msgid "Layer Mode: Select Previous"
 msgstr "Tryb warstwy: wybierz poprzedni"
 
-#: ../app/actions/layers-actions.c:606
+#: ../app/actions/layers-actions.c:617
 msgctxt "layers-action"
 msgid "Layer Mode: Select Next"
 msgstr "Tryb warstwy: wybierz następny"
@@ -6598,18 +6632,18 @@ msgstr "Tryb warstwy: wybierz następny"
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: ../app/actions/layers-actions.c:635
+#: ../app/actions/layers-actions.c:646
 msgid "Shortcut: "
 msgstr "Skrót: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: ../app/actions/layers-actions.c:640
+#: ../app/actions/layers-actions.c:651
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Kliknięcie miniatury w dokowalnym oknie „Warstwy”"
 
-#: ../app/actions/layers-actions.c:896 ../app/actions/layers-actions.c:897
+#: ../app/actions/layers-actions.c:907 ../app/actions/layers-actions.c:908
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
@@ -8195,7 +8229,6 @@ msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "Menu ścieżek"
 
-#. abused
 #: ../app/actions/vectors-actions.c:50
 msgctxt "vectors-action"
 msgid "Color Tag"
@@ -11608,7 +11641,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku z pędzlami „%s”."
 
-#: ../app/core/gimpbrush-load.c:252 ../app/core/gimppattern-load.c:116
+#: ../app/core/gimpbrush-load.c:252 ../app/core/gimppattern-load.c:130
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:554
 msgid "Unnamed"
@@ -13065,16 +13098,22 @@ msgstr ""
 "Desenie programu GIMP muszą być zapisane albo w odcieniach szarości lub "
 "w formacie RGB."
 
-#: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
+#: ../app/core/gimppattern-load.c:98
+#, c-format
+msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgstr ""
+"Nieprawidłowe dane nagłówka w „%s”: szerokość=%lu, wysokość=%lu, bajty=%lu"
+
+#: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
 msgid "File appears truncated."
 msgstr "Plik jest ucięty."
 
-#: ../app/core/gimppattern-load.c:109
+#: ../app/core/gimppattern-load.c:123
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku z deseniami „%s”."
 
-#: ../app/core/gimppattern-load.c:152
+#: ../app/core/gimppattern-load.c:166
 msgid "Fatal parse error in pattern file: "
 msgstr "Krytyczny błąd podczas przetwarzania pliku palety: "
 
