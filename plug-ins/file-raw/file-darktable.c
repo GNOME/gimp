@@ -124,12 +124,31 @@ init (void)
                     NULL,
                     &error))
     {
-      gint major, minor, patch;
+      GRegex     *regex;
+      GMatchInfo *matches;
+      gint        major;
+      gint        minor;
 
-      if (sscanf (darktable_stdout,
-                  "this is darktable %d.%d.%d",
-                  &major, &minor, &patch) == 3)
+      /* A default darktable would apparently output something like
+       * "this is darktable 2.2.5", but this version string is
+       * customizable. In the official Fedora package for instance, I
+       * encountered a "this is darktable darktable-2.2.5-4.fc27".
+       * Therefore make the version recognition a bit more flexible.
+       */
+      regex = g_regex_new ("this is darktable [^0-9]*([0-9]+)\\.([0-9]+)\\.([0-9]+)",
+                           0, 0, NULL);
+      if (g_regex_match (regex, darktable_stdout, 0, &matches))
         {
+          gchar *match;
+
+          match = g_match_info_fetch (matches, 1);
+          major = g_ascii_strtoll (match, NULL, 10);
+          g_free (match);
+
+          match = g_match_info_fetch (matches, 2);
+          minor = g_ascii_strtoll (match, NULL, 10);
+          g_free (match);
+
           if (((major == 1 && minor >= 7) || major >= 2))
             {
               if (g_strstr_len (darktable_stdout, -1,
@@ -139,6 +158,8 @@ init (void)
                 }
             }
         }
+      g_match_info_free (matches);
+      g_regex_unref (regex);
     }
   else if (debug_prints)
     printf ("[%s] g_spawn_sync failed\n", __FILE__);
