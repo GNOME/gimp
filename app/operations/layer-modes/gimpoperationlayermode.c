@@ -152,6 +152,10 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   klass->process                 = gimp_operation_layer_mode_real_process;
   klass->get_affected_region     = NULL;
 
+  /* XXX: temporarily disable multithreaded compositing.  see bug #790810.  */
+  if (! g_getenv ("GIMP_MULTITHREADED_COMPOSITING"))
+    operation_class->threaded = FALSE;
+
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
