@@ -625,7 +625,7 @@ gimp_palette_load_css (GimpContext   *context,
 
               g_free (word);
             }
-
+          g_match_info_free (matches);
           g_free (buf);
         }
     }
