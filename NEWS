@@ -348,7 +348,7 @@ File Formats:
       the palette).
   - Add support for exporting multi-page PDF from image layers, with
     optional reversed order.
-  - Add RLE support for RGB565 to in file-csource.
+  - Add RLE support for RGB565 in file-csource.
 
 Metadata:
 
@@ -788,7 +788,7 @@ Tools:
   - (experimental) Add a seamless clone tool
   - Add a unified transform tool that allows rotating, scaling, perspective
   - Add a warp tool as replacement for the IWarp plug-in
-  - Allow tool dialogs to be embedded on the canvas genrically
+  - Allow tool dialogs to be embedded on the canvas generically
   - Add much more options to painting, like the ability to lock
     tool options to brush defaults, and to zoom the brush with the canvas
   - Make the blend tool work interactively in realtime
