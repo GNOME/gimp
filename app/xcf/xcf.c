@@ -293,7 +293,8 @@ xcf_load_stream (Gimp          *gimp,
     {
       info.file_version = 0;
     }
-  else if (id[9] == 'v')
+  else if (id[9]  == 'v' &&
+           id[13] == '\0')
     {
       info.file_version = atoi (id + 10);
     }
