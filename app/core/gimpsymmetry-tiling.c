@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <math.h>
 #include <string.h>
 
 #include <gegl.h>
@@ -308,12 +309,12 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   GimpTiling *tiling  = GIMP_TILING (sym);
   GList      *strokes = NULL;
   GimpCoords *coords;
-  gint        width;
-  gint        height;
-  gint        startx = origin->x;
-  gint        starty = origin->y;
-  gint        x;
-  gint        y;
+  gdouble     width;
+  gdouble     height;
+  gdouble     startx = origin->x;
+  gdouble     starty = origin->y;
+  gdouble     x;
+  gdouble     y;
   gint        x_count;
   gint        y_count;
 
@@ -323,27 +324,27 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   width  = gimp_item_get_width (GIMP_ITEM (drawable));
   height = gimp_item_get_height (GIMP_ITEM (drawable));
 
-  if (origin->x > 0 && tiling->max_x == 0)
-    startx -= tiling->interval_x * (gint) (origin->x / tiling->interval_x + 1);
+  if (origin->x > 0 && tiling->max_x == 0 && tiling->interval_x >= 1.0)
+    startx = fmod (origin->x, tiling->interval_x) - tiling->interval_x;
 
-  if (origin->y > 0 && tiling->max_y == 0)
+  if (origin->y > 0 && tiling->max_y == 0 && tiling->interval_y >= 1.0)
     {
-      starty -= tiling->interval_y * (gint) (origin->y / tiling->interval_y + 1);
+      starty = fmod (origin->y, tiling->interval_y) - tiling->interval_y;
 
       if (tiling->shift > 0.0)
-        startx -= tiling->shift * (gint) (origin->y / tiling->interval_y + 1);
+        startx -= tiling->shift * floor (origin->y / tiling->interval_y + 1);
     }
 
   for (y_count = 0, y = starty; y < height + tiling->interval_y;
        y_count++, y += tiling->interval_y)
     {
-      if (tiling->max_y && y_count >= (gint) tiling->max_y)
+      if (tiling->max_y && y_count >= tiling->max_y)
         break;
 
       for (x_count = 0, x = startx; x < width + tiling->interval_x;
            x_count++, x += tiling->interval_x)
         {
-          if (tiling->max_x && x_count >= (gint) tiling->max_x)
+          if (tiling->max_x && x_count >= tiling->max_x)
             break;
 
           coords = g_memdup (origin, sizeof (GimpCoords));
