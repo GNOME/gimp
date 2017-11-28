@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-09-25 01:27+0000\n"
-"PO-Revision-Date: 2017-09-25 17:06+0300\n"
+"POT-Creation-Date: 2017-10-29 14:23+0000\n"
+"PO-Revision-Date: 2017-11-23 12:24+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -52,8 +52,8 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-pdf-load.c:694
-#: ../plug-ins/common/file-pdf-load.c:1259
+#: ../plug-ins/common/file-pdf-load.c:707
+#: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
 #: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
@@ -70,7 +70,7 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:271
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -117,7 +117,7 @@ msgstr "Α_κύρωση"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-pdf-load.c:695 ../plug-ins/common/file-svg.c:728
+#: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
 #: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1264
 #: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:595
@@ -130,7 +130,7 @@ msgstr "Α_κύρωση"
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
 #: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
 #: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:272 ../plug-ins/flame/flame.c:650
+#: ../plug-ins/common/wavelet-decompose.c:313 ../plug-ins/flame/flame.c:650
 #: ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -461,7 +461,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1792 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1804 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -577,7 +577,7 @@ msgid "Checkerboard"
 msgstr "Σκακιέρα"
 
 #
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1170
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Μέγεθος:"
@@ -1066,7 +1066,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1561
 #: ../plug-ins/common/file-raw-data.c:975
 #: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1477
+#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1484
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
@@ -2257,7 +2257,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1030
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
@@ -2268,7 +2268,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-raw/file-darktable.c:364
+#: ../plug-ins/file-raw/file-darktable.c:363
 #: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
@@ -3152,82 +3152,92 @@ msgstr "Κάτω περίγραμμα εκτός ορίων (πρέπει να �
 msgid "Writing to file '%s' failed: %s"
 msgstr "Αποτυχία εγγραφής σε αρχείο '%s': %s"
 
-#: ../plug-ins/common/file-pdf-load.c:315
-#: ../plug-ins/common/file-pdf-load.c:334
+#: ../plug-ins/common/file-pdf-load.c:321
+#: ../plug-ins/common/file-pdf-load.c:340
 #: ../plug-ins/common/file-pdf-save.c:338
 #: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/file-pdf-load.c:494
+#. TRANSLATORS: first argument is file name,
+#. * second is out-of-range page number, third is
+#. * number of pages. Specify order as in English if needed.
+#.
+#: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%s' has %d pages. Page %d is out of range."
-msgstr "Το έγγραφο PDF '%s' έχει %d σελίδες. Η σελίδα %d είναι εκτός περιοχής."
+#| msgid "PDF document '%s' has %d pages. Page %d is out of range."
+msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
+msgstr[0] ""
+"Το έγγραφο PDF '%1$s' έχει μια μοναδική σελίδα. Η σελίδα %2$d είναι εκτός "
+"περιοχής."
+msgstr[1] ""
+"Το έγγραφο PDF '%1$s' έχει %3$d σελίδες. Η σελίδα %2$d είναι εκτός περιοχής."
 
-#: ../plug-ins/common/file-pdf-load.c:666
-#: ../plug-ins/common/file-pdf-load.c:736
+#: ../plug-ins/common/file-pdf-load.c:679
+#: ../plug-ins/common/file-pdf-load.c:749
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Αδυναμία φόρτωσης '%s': %s"
 
-#: ../plug-ins/common/file-pdf-load.c:681
+#: ../plug-ins/common/file-pdf-load.c:694
 msgid "PDF is password protected, please input the password:"
 msgstr ""
 "Το PDF προστατεύεται με κωδικό πρόσβασης, παρακαλούμε εισάγετε τον κωδικό "
 "πρόσβασης:"
 
-#: ../plug-ins/common/file-pdf-load.c:691
+#: ../plug-ins/common/file-pdf-load.c:704
 msgid "Encrypted PDF"
 msgstr "Κρυπτογραφημένο PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:719
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Εσφαλμένος κωδικός πρόσβασης! Παρακαλούμε, εισάγετε τον σωστό:"
 
-#: ../plug-ins/common/file-pdf-load.c:1064
+#: ../plug-ins/common/file-pdf-load.c:1077
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1185
 #, c-format
 msgid "%s-pages"
 msgstr "%s-σελίδες"
 
-#: ../plug-ins/common/file-pdf-load.c:1255
+#: ../plug-ins/common/file-pdf-load.c:1268
 msgid "Import from PDF"
 msgstr "Εισαγωγή από PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1260 ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3423
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5619
 msgid "_Import"
 msgstr "Ε_ισαγωγή"
 
-#: ../plug-ins/common/file-pdf-load.c:1293
+#: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Σφάλμα λήψης αριθμού σελίδων από το δεδομένο αρχείο PDF."
 
-#: ../plug-ins/common/file-pdf-load.c:1339
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "_Width (pixels):"
 msgstr "_Πλάτος (σε εικονοστοιχεία):"
 
-#: ../plug-ins/common/file-pdf-load.c:1340
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "_Height (pixels):"
 msgstr "Ύ_ψος (σε εικονοστοιχεία):"
 
-#: ../plug-ins/common/file-pdf-load.c:1342
+#: ../plug-ins/common/file-pdf-load.c:1355
 msgid "_Resolution:"
 msgstr "Ανάλ_υση:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1366
 msgid "Use _Anti-aliasing"
 msgstr "Χρήση εξ_ομάλυνσης"
 
 #
-#: ../plug-ins/common/file-pdf-load.c:1631
-#: ../plug-ins/common/file-pdf-load.c:1632 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-pdf-load.c:1644
+#: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -4132,7 +4142,7 @@ msgid "_Write hot spot values"
 msgstr "Εγ_γραφή τιμών ενεργού σημείου"
 
 #
-#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1075
+#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1082
 msgid "Hot spot _X:"
 msgstr "Ενεργό σημείο _X:"
 
@@ -4156,7 +4166,7 @@ msgid "_Mask file extension:"
 msgstr "Επέκταση αρχείου _μάσκας:"
 
 #: ../plug-ins/common/file-xmc.c:335 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1042
+#: ../plug-ins/common/file-xmc.c:1049
 msgid "X11 Mouse Cursor"
 msgstr "Δρομέας ποντικιού X11"
 
@@ -4184,22 +4194,22 @@ msgstr "Το πλαίσιο %d του '%s' είναι πολύ μεγάλο γι
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Το πλαίσιο %d του '%s' είναι πολύ υψηλό για έναν δρομέα X."
 
-#: ../plug-ins/common/file-xmc.c:894
+#: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "Δεν υπάρχει κομμάτι εικόνας στο \"%s\"."
 
-#: ../plug-ins/common/file-xmc.c:934
+#: ../plug-ins/common/file-xmc.c:941
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "Το '%s' είναι πολύ πλατύ για έναν δρομέα X."
 
-#: ../plug-ins/common/file-xmc.c:942
+#: ../plug-ins/common/file-xmc.c:949
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "Το '%s' είναι πολύ υψηλό για ένα δρομέα X."
 
-#: ../plug-ins/common/file-xmc.c:1005
+#: ../plug-ins/common/file-xmc.c:1012
 #, c-format
 msgid "A read error occurred."
 msgstr "Συνέβη σφάλμα ανάγνωσης."
@@ -4207,27 +4217,27 @@ msgstr "Συνέβη σφάλμα ανάγνωσης."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1048
+#: ../plug-ins/common/file-xmc.c:1055
 msgid "XMC Options"
 msgstr "Επιλογές XMC"
 
-#: ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Εισαγωγή της συντεταγμένης X του ενεργού σημείου. Το αρχικό είναι στην πάνω "
 "αριστερή γωνία."
 
-#: ../plug-ins/common/file-xmc.c:1106
+#: ../plug-ins/common/file-xmc.c:1113
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Εισαγωγή της συντεταγμένης Y του ενεργού σημείου. Το αρχικό είναι στην πάνω "
 "αριστερή γωνία."
 
-#: ../plug-ins/common/file-xmc.c:1115
+#: ../plug-ins/common/file-xmc.c:1122
 msgid "_Auto-Crop all frames."
 msgstr "_Αυτόματη περικοπή όλων των πλαισίων."
 
-#: ../plug-ins/common/file-xmc.c:1128
+#: ../plug-ins/common/file-xmc.c:1135
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4240,7 +4250,7 @@ msgstr ""
 "Αποεπιλογή εάν σχεδιάζετε να επεξεργαστείτε τον εξαγόμενο δρομέα "
 "χρησιμοποιώντας άλλα προγράμματα."
 
-#: ../plug-ins/common/file-xmc.c:1151
+#: ../plug-ins/common/file-xmc.c:1158
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4259,64 +4269,64 @@ msgstr ""
 "σειρά κίνησης και ποια σειρά χρησιμοποιείται βασισμένο στην τιμή του \"gtk-"
 "cursor-theme-size\"."
 
-#: ../plug-ins/common/file-xmc.c:1168
+#: ../plug-ins/common/file-xmc.c:1175
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 "_Χρήση αυτής της τιμής μόνο για πλαίσιο του οποίου το μέγεθος δεν "
 "καθορίζεται."
 
-#: ../plug-ins/common/file-xmc.c:1171
+#: ../plug-ins/common/file-xmc.c:1178
 msgid "_Replace the size of all frames even if it is specified."
 msgstr ""
 "Α_ντικατάσταση του μεγέθους όλων των πλαισίων ακόμα κι αν καθορίζονται."
 
-#: ../plug-ins/common/file-xmc.c:1187
+#: ../plug-ins/common/file-xmc.c:1194
 msgid "_Delay:"
 msgstr "_Καθυστέρηση:"
 
-#: ../plug-ins/common/file-xmc.c:1192
+#: ../plug-ins/common/file-xmc.c:1199
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 "Εισαγωγή χρόνου κάλυψης σε χιλιοστά του δευτερολέπτου στον οποίο κάθε "
 "πλαίσιο αποδίδεται."
 
-#: ../plug-ins/common/file-xmc.c:1220
+#: ../plug-ins/common/file-xmc.c:1227
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 "_Χρήση αυτής της τιμής μόνο για πλαίσιο του οποίου η καθυστέρηση δεν "
 "καθορίζεται."
 
-#: ../plug-ins/common/file-xmc.c:1223
+#: ../plug-ins/common/file-xmc.c:1230
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr ""
 "Α_ντικατάσταση της καθυστέρησης όλων των πλαισίων ακόμα κι αν καθορίζονται."
 
-#: ../plug-ins/common/file-xmc.c:1248
+#: ../plug-ins/common/file-xmc.c:1255
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "Το μέρος της πληροφορίας πνευματικών δικαιωμάτων που ξεπερνά 65535 "
 "χαρακτήρες αφαιρέθηκε."
 
-#: ../plug-ins/common/file-xmc.c:1258
+#: ../plug-ins/common/file-xmc.c:1265
 msgid "Enter copyright information."
 msgstr "Εισαγωγή πληροφορίας πνευματικών δικαιωμάτων."
 
-#: ../plug-ins/common/file-xmc.c:1260
+#: ../plug-ins/common/file-xmc.c:1267
 msgid "_Copyright:"
 msgstr "Πνε_υματικά δικαιώματα:"
 
-#: ../plug-ins/common/file-xmc.c:1276
+#: ../plug-ins/common/file-xmc.c:1283
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "Το μέρος της πληροφορίας άδειας που ξεπερνά 65535 χαρακτήρες αφαιρέθηκε."
 
-#: ../plug-ins/common/file-xmc.c:1286
+#: ../plug-ins/common/file-xmc.c:1293
 msgid "Enter license information."
 msgstr "Εισαγωγή πληροφορίας άδειας."
 
-#: ../plug-ins/common/file-xmc.c:1288
+#: ../plug-ins/common/file-xmc.c:1295
 msgid "_License:"
 msgstr "Ά_δεια:"
 
@@ -4326,47 +4336,47 @@ msgstr "Ά_δεια:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1295
+#: ../plug-ins/common/file-xmc.c:1302
 msgid "_Other:"
 msgstr "Άλλ_ο:"
 
-#: ../plug-ins/common/file-xmc.c:1330
+#: ../plug-ins/common/file-xmc.c:1337
 msgid "Enter other comment if you want."
 msgstr "Εισαγωγή άλλου σχολίου εάν επιθυμείτε."
 
-#: ../plug-ins/common/file-xmc.c:1382
+#: ../plug-ins/common/file-xmc.c:1389
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Το σχόλιο περιορίζεται στους %d χαρακτήρες."
 
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1466
+#: ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/file-webp/file-webp-save.c:173
 #: ../plug-ins/file-webp/file-webp-save.c:506
 #, c-format
 msgid "Saving '%s'"
 msgstr "Αποθήκευση '%s'"
 
-#: ../plug-ins/common/file-xmc.c:1532
+#: ../plug-ins/common/file-xmc.c:1539
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Το πλαίσιο '%s' είναι πολύ πλατύ. Παρακαλώ μειώστε σε όχι περισσότερο από "
 "%dpx."
 
-#: ../plug-ins/common/file-xmc.c:1541
+#: ../plug-ins/common/file-xmc.c:1548
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Το πλαίσιο '%s' είναι πολύ υψηλό. Παρακαλώ μειώστε σε όχι περισσότερο από "
 "%dpx."
 
-#: ../plug-ins/common/file-xmc.c:1550
+#: ../plug-ins/common/file-xmc.c:1557
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Το πλάτος και/ή ύψος του πλαισίου '%s' είναι μηδέν!"
 
-#: ../plug-ins/common/file-xmc.c:1589
+#: ../plug-ins/common/file-xmc.c:1596
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4378,7 +4388,7 @@ msgstr ""
 "Προσπαθήστε να αλλάξετε τη θέση του ενεργού σημείου, τη γεωμετρία στρώσης ή "
 "εξάγετε χωρίς αυτόματη περικοπή."
 
-#: ../plug-ins/common/file-xmc.c:1752
+#: ../plug-ins/common/file-xmc.c:1759
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4389,7 +4399,7 @@ msgstr ""
 "των οποίων το πλάτος ή ύψος είναι περισσότερο από %ipx.\n"
 "Θα διαταραχθεί η οθόνη σε κάποια περιβάλλοντα."
 
-#: ../plug-ins/common/file-xmc.c:1759
+#: ../plug-ins/common/file-xmc.c:1766
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4402,7 +4412,7 @@ msgstr ""
 "των πλαισίων...\" στον διάλογο εξαγωγής, ή ο δρομέας σας ίσως να μην "
 "εμφανιστεί στις ρυθμίσεις GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1996
+#: ../plug-ins/common/file-xmc.c:2003
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4412,7 +4422,7 @@ msgstr ""
 "ταιριάξει."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2199
+#: ../plug-ins/common/file-xmc.c:2206
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6544,25 +6554,51 @@ msgid "Flow step %d"
 msgstr "Βήμα ροής %d"
 
 #
-#: ../plug-ins/common/wavelet-decompose.c:86
-#: ../plug-ins/common/wavelet-decompose.c:267
+#: ../plug-ins/common/wavelet-decompose.c:97
+#: ../plug-ins/common/wavelet-decompose.c:308
 msgid "Wavelet decompose"
 msgstr "Αποσύνθεση κυματίδιου"
 
 #
-#: ../plug-ins/common/wavelet-decompose.c:91
+#: ../plug-ins/common/wavelet-decompose.c:102
 msgid "_Wavelet-decompose..."
 msgstr "Αποσύνθεση _κυματίδιου..."
 
 #
-#: ../plug-ins/common/wavelet-decompose.c:161
+#: ../plug-ins/common/wavelet-decompose.c:175
 msgid "Wavelet-Decompose"
 msgstr "Αποσύνθεση κυματίδιου"
 
+#: ../plug-ins/common/wavelet-decompose.c:182
+#| msgid "Decomposing"
+msgid "Decomposition"
+msgstr "Αποσύνθεση"
+
+#: ../plug-ins/common/wavelet-decompose.c:208
+#, c-format
+#| msgid "Scale X:"
+msgid "Scale %d"
+msgstr "Κλίμακα %d"
+
+#: ../plug-ins/common/wavelet-decompose.c:232
+msgid "Residual"
+msgstr "Υπόλοιπος"
+
 #
-#: ../plug-ins/common/wavelet-decompose.c:296
+#: ../plug-ins/common/wavelet-decompose.c:339
 msgid "Scales:"
 msgstr "Κλίμακες:"
+
+#. create group layer
+#: ../plug-ins/common/wavelet-decompose.c:351
+#| msgid "Image not suitable for this decomposition"
+msgid "Create a layer group to store the decomposition"
+msgstr "Δημιουργία ομάδας στρώσεων για να αποθηκευτεί η αποσύνθεση"
+
+#. create layer masks
+#: ../plug-ins/common/wavelet-decompose.c:363
+msgid "Add a layer mask to each scales layers"
+msgstr "Προσθήκη μάσκας στρώσηςσε κάθε στρώση κλίμακας"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -6965,7 +7001,7 @@ msgstr "Εικονίδιο #%i"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:505
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:442
+#: ../plug-ins/file-raw/file-darktable.c:441
 #: ../plug-ins/file-raw/file-rawtherapee.c:429
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -7224,26 +7260,26 @@ msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος μάσκα�
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος μάσκας στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1314 ../plug-ins/file-psd/psd-load.c:1767
+#: ../plug-ins/file-psd/psd-load.c:1315 ../plug-ins/file-psd/psd-load.c:1779
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Μη υποστηριζόμενη κατάσταση συμπίεσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1863
+#: ../plug-ins/file-psd/psd-load.c:1875
 msgid "Extra"
 msgstr "Πρόσθετο"
 
-#: ../plug-ins/file-psd/psd-load.c:2042
+#: ../plug-ins/file-psd/psd-load.c:2054
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
-#: ../plug-ins/file-psd/psd-load.c:2111
+#: ../plug-ins/file-psd/psd-load.c:2123
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
-#: ../plug-ins/file-psd/psd-save.c:460
+#: ../plug-ins/file-psd/psd-save.c:462
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης GIMP σε κατάσταση PSD"
 
@@ -7373,7 +7409,7 @@ msgstr "Ακατέργαστο Sigma X3F"
 msgid "Raw Arriflex ARI"
 msgstr "Ακατέργαστο Arriflex ARI"
 
-#: ../plug-ins/file-raw/file-raw-placeholder.c:140
+#: ../plug-ins/file-raw/file-raw-placeholder.c:139
 #, c-format
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
@@ -12012,7 +12048,6 @@ msgid "Update preview _live"
 msgstr "Ζ_ωντανή προεπισκόπηση ενημέρωσης"
 
 #: ../plug-ins/metadata/metadata-editor.c:408
-#| msgid "Edit metadata (IPTC, GPS, DICOM)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Επεξεργασία μεταδεδομένων (IPTC, EXIF, XMP)"
 
@@ -12050,8 +12085,17 @@ msgstr "Ορισμός ημερομηνίας"
 msgid "Unrated"
 msgstr "Χωρίς χαρακτηρισμό"
 
+#: ../plug-ins/metadata/metadata-editor.c:5615
+#| msgid "Import metadata"
+msgid "Import Metadata File"
+msgstr "Εισαγωγή αρχείου μεταδεδομένων"
+
+#: ../plug-ins/metadata/metadata-editor.c:5650
+#| msgid "Export metadata"
+msgid "Export Metadata File"
+msgstr "Εξαγωγή αρχείου μεταδεδομένων"
+
 #: ../plug-ins/metadata/metadata-editor.c:5654
-#| msgid "_Import"
 msgid "_Export"
 msgstr "Ε_ξαγωγή"
 
@@ -12072,7 +12116,6 @@ msgid "Digitised from a print on non-transparent medium"
 msgstr "Ψηφιοποιημένο από εκτύπωση σε μη διαφανές μέσο"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#| msgid "Create star"
 msgid "Created by software"
 msgstr "Δημιουργημένο από λογισμικό"
 
@@ -12080,8 +12123,6 @@ msgstr "Δημιουργημένο από λογισμικό"
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
 #: ../plug-ins/metadata/metadata-tags.h:302
-#| msgctxt "align-style"
-#| msgid "None"
 msgid "None"
 msgstr "Κανένα"
 
@@ -12091,7 +12132,6 @@ msgid "Not Applicable"
 msgstr "Μη εφαρμόσιμο"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
-#| msgid "Model Release Status"
 msgid "Unlimited Model Releases"
 msgstr "Απεριόριστες εκδόσεις προτύπου"
 
@@ -12100,7 +12140,6 @@ msgid "Limited or Incomplete Model Releases"
 msgstr "Περιορισμένες ή ατελείς εκδόσεις προτύπου"
 
 #: ../plug-ins/metadata/metadata-tags.h:275
-#| msgid "Property Release Status"
 msgid "Unlimited Property Releases"
 msgstr "Απεριοριστές εκδόσεις ιδιότητας"
 
@@ -12184,13 +12223,11 @@ msgstr "7"
 #: ../plug-ins/metadata/metadata-tags.h:341
 #: ../plug-ins/metadata/metadata-tags.h:347
 #: ../plug-ins/metadata/metadata-tags.h:353
-#| msgid "Unknown error"
 msgid "Unknown"
 msgstr "Άγνωστο"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.h:309
-#| msgid "_Copyright:"
 msgid "Copyrighted"
 msgstr "Με πνευματικά δικαιώματα"
 
@@ -12202,7 +12239,6 @@ msgstr "Δημόσιος τομέας"
 #
 #: ../plug-ins/metadata/metadata-tags.h:316
 #: ../plug-ins/metadata/metadata-tags.h:332
-#| msgid "Select all"
 msgid "Select a value"
 msgstr "Επιλογή τιμής"
 
@@ -12215,7 +12251,6 @@ msgid "Cell"
 msgstr "Κινητό"
 
 #: ../plug-ins/metadata/metadata-tags.h:319
-#| msgid "Fan"
 msgid "Fax"
 msgstr "Φαξ"
 
@@ -12224,7 +12259,6 @@ msgid "Home"
 msgstr "Κατοικία"
 
 #: ../plug-ins/metadata/metadata-tags.h:321
-#| msgid "Pages:"
 msgid "Pager"
 msgstr "Βομβητής"
 
@@ -12238,7 +12272,6 @@ msgstr "Γυναίκα"
 
 #
 #: ../plug-ins/metadata/metadata-tags.h:335
-#| msgid "_Other:"
 msgid "Other"
 msgstr "Άλλο"
 
