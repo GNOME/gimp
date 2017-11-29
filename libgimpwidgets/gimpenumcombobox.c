@@ -56,6 +56,9 @@ static void  gimp_enum_combo_box_get_property (GObject      *object,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
+static GimpIntComboBoxLayout
+        gimp_enum_combo_box_layout_from_store (GimpEnumStore *enum_store);
+
 
 G_DEFINE_TYPE (GimpEnumComboBox, gimp_enum_combo_box,
                GIMP_TYPE_INT_COMBO_BOX)
@@ -126,6 +129,40 @@ gimp_enum_combo_box_get_property (GObject    *object,
     }
 }
 
+static GimpIntComboBoxLayout
+gimp_enum_combo_box_layout_from_store (GimpEnumStore *enum_store)
+{
+  GtkTreeModel *model = GTK_TREE_MODEL (enum_store);
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+  gboolean      has_abbrev = FALSE;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar *abbrev;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_INT_STORE_ABBREV, &abbrev,
+                          -1);
+
+      if (abbrev)
+        {
+          has_abbrev = TRUE;
+
+          g_free (abbrev);
+
+          break;
+        }
+    }
+
+  if (has_abbrev)
+    return GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
+  else
+    return GIMP_INT_COMBO_BOX_LAYOUT_FULL;
+}
+
 
 /**
  * gimp_enum_combo_box_new:
@@ -157,6 +194,8 @@ gimp_enum_combo_box_new (GType enum_type)
 
   combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
                             "model", store,
+                            "layout", gimp_enum_combo_box_layout_from_store (
+                                        GIMP_ENUM_STORE (store)),
                             NULL);
 
   g_object_unref (store);
@@ -181,6 +220,8 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
 
   return g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
                        "model", enum_store,
+                       "layout", gimp_enum_combo_box_layout_from_store (
+                                   enum_store),
                        NULL);
 }
 
