@@ -115,7 +115,7 @@ sub parse_entries {
             if (defined $options) {
                 my %options = parse_trigraph($options);
                 if (!defined $options{"skip"}) {
-                    push @entries, [ $name, $options{nick}, $options{desc}, $options{help} ];
+                    push @entries, [ $name, $options{nick}, $options{desc}, $options{help}, $options{abbrev} ];
                 }
             } else {
                 push @entries, [ $name ];
@@ -175,6 +175,7 @@ sub usage {
     print STDERR "  \@valuenick\@                the-xvalue\n";
     print STDERR "  \@valuedesc\@                descriptions as defined in the header\n";
     print STDERR "  \@valuehelp\@                help texts as defined in the header\n";
+    print STDERR "  \@valueabbrev\@              abbreviations as defined in the header\n";
     print STDERR "  \@type\@                     either enum or flags\n";
     print STDERR "  \@Type\@                     either Enum or Flags\n";
     print STDERR "  \@TYPE\@                     either ENUM or FLAGS\n";
@@ -344,7 +345,7 @@ while (<>) {
         $enumnick =~ tr/_/-/;
 
         for $entry (@entries) {
-            my ($name,$nick,$desc,$help) = @{$entry};
+            my ($name,$nick,$desc,$help,$abbrev) = @{$entry};
             if (!defined $nick) {
                 ($nick = $name) =~ s/^$enum_prefix//;
                 $nick =~ tr/_/-/;
@@ -360,7 +361,12 @@ while (<>) {
             } else {
                 $help = "N_($help)";
             }
-            @{$entry} = ($name, $nick, $desc, $help);
+            if (!defined $abbrev) {
+                $abbrev = "NULL";
+            } else {
+                $abbrev = "NC_(\"$enumnick\", $abbrev)";
+            }
+            @{$entry} = ($name, $nick, $desc, $help, $abbrev);
         }
 
 
@@ -427,13 +433,14 @@ while (<>) {
             $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
             $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
             for (@entries) {
-                my ($name,$nick,$desc,$help) = @{$_};
+                my ($name,$nick,$desc,$help,$abbrev) = @{$_};
                 my $tmp_prod = $prod;
 
                 $tmp_prod =~ s/\@VALUENAME\@/$name/g;
                 $tmp_prod =~ s/\@valuenick\@/$nick/g;
                 $tmp_prod =~ s/\@valuedesc\@/$desc/g;
                 $tmp_prod =~ s/\@valuehelp\@/$help/g;
+                $tmp_prod =~ s/\@valueabbrev\@/$abbrev/g;
                 if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
@@ -482,13 +489,14 @@ while (<>) {
             $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
             $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
             for (@entries) {
-                my ($name,$nick,$desc,$help) = @{$_};
+                my ($name,$nick,$desc,$help,$abbrev) = @{$_};
                 my $tmp_prod = $prod;
 
                 $tmp_prod =~ s/\@VALUENAME\@/$name/g;
                 $tmp_prod =~ s/\@valuenick\@/$nick/g;
                 $tmp_prod =~ s/\@valuedesc\@/$desc/g;
                 $tmp_prod =~ s/\@valuehelp\@/$help/g;
+                $tmp_prod =~ s/\@valueabbrev\@/$abbrev/g;
                 if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
