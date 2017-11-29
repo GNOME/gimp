@@ -150,6 +150,7 @@ gimp_int_store_constructed (GObject *object)
   types[GIMP_INT_STORE_PIXBUF]    = GDK_TYPE_PIXBUF;
   types[GIMP_INT_STORE_USER_DATA] = (priv->user_data_type != G_TYPE_NONE ?
                                      priv->user_data_type : G_TYPE_POINTER);
+  types[GIMP_INT_STORE_ABBREV]    = G_TYPE_STRING;
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    GIMP_INT_STORE_NUM_COLUMNS, types);
