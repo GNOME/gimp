@@ -45,7 +45,8 @@ enum
 {
   PROP_0,
   PROP_ELLIPSIZE,
-  PROP_LABEL
+  PROP_LABEL,
+  PROP_LAYOUT
 };
 
 
@@ -54,9 +55,13 @@ typedef struct
   GtkCellRenderer        *pixbuf_renderer;
   GtkCellRenderer        *text_renderer;
 
+  GtkCellRenderer        *menu_pixbuf_renderer;
+  GtkCellRenderer        *menu_text_renderer;
+
   PangoEllipsizeMode      ellipsize;
   gchar                  *label;
   GtkCellRenderer        *label_renderer;
+  GimpIntComboBoxLayout   layout;
 
   GimpIntSensitivityFunc  sensitivity_func;
   gpointer                sensitivity_data;
@@ -130,6 +135,22 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
 
+  /**
+   * GimpIntComboBox:layout:
+   *
+   * Specifies the combo box layout.
+   *
+   * Since: 2.10
+   */
+  g_object_class_install_property (object_class, PROP_LAYOUT,
+                                   g_param_spec_enum ("layout",
+                                                      "Layout",
+                                                      "Combo box layout",
+                                                      GIMP_TYPE_INT_COMBO_BOX_LAYOUT,
+                                                      GIMP_INT_COMBO_BOX_LAYOUT_FULL,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
 }
 
@@ -179,12 +200,19 @@ gimp_int_combo_box_set_property (GObject      *object,
     {
     case PROP_ELLIPSIZE:
       priv->ellipsize = g_value_get_enum (value);
-      g_object_set_property (G_OBJECT (priv->text_renderer),
-                             pspec->name, value);
+      if (priv->text_renderer)
+        {
+          g_object_set_property (G_OBJECT (priv->text_renderer),
+                                 pspec->name, value);
+        }
       break;
     case PROP_LABEL:
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (object),
                                     g_value_get_string (value));
+      break;
+    case PROP_LAYOUT:
+      gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (object),
+                                     g_value_get_enum (value));
       break;
 
     default:
@@ -208,6 +236,9 @@ gimp_int_combo_box_get_property (GObject    *object,
       break;
     case PROP_LABEL:
       g_value_set_string (value, priv->label);
+      break;
+    case PROP_LAYOUT:
+      g_value_set_enum (value, priv->layout);
       break;
 
     default:
@@ -601,24 +632,9 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
   if (label == priv->label)
     return;
 
-  if (priv->label)
-    {
-      g_free (priv->label);
-      priv->label = NULL;
+  g_free (priv->label);
 
-      g_signal_handlers_disconnect_by_func (combo_box,
-                                            gimp_int_combo_box_create_cells,
-                                            NULL);
-    }
-
-  if (label)
-    {
-      priv->label = g_strdup (label);
-
-      g_signal_connect (combo_box, "notify::popup-shown",
-                        G_CALLBACK (gimp_int_combo_box_create_cells),
-                        NULL);
-    }
+  priv->label = g_strdup (label);
 
   gimp_int_combo_box_create_cells (combo_box);
 
@@ -642,6 +658,53 @@ gimp_int_combo_box_get_label (GimpIntComboBox *combo_box)
   g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), NULL);
 
   return GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box)->label;
+}
+
+/**
+ * gimp_int_combo_box_set_layout:
+ * @combo_box: a #GimpIntComboBox
+ * @layout:    the combo box layout
+ *
+ * Sets the layout of @combo_box to @layout.
+ *
+ * Since: 2.10
+ **/
+void
+gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
+                               GimpIntComboBoxLayout  layout)
+{
+  GimpIntComboBoxPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box));
+
+  priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
+
+  if (layout == priv->layout)
+    return;
+
+  priv->layout = layout;
+
+  gimp_int_combo_box_create_cells (combo_box);
+
+  g_object_notify (G_OBJECT (combo_box), "layout");
+}
+
+/**
+ * gimp_int_combo_box_get_layout:
+ * @combo_box: a #GimpIntComboBox
+ *
+ * Returns the layout of @combo_box
+ *
+ * Return value: the @combo_box's layout.
+ *
+ * Since: 2.10
+ **/
+GimpIntComboBoxLayout
+gimp_int_combo_box_get_layout (GimpIntComboBox *combo_box)
+{
+  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
+
+  return GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box)->layout;
 }
 
 /**
@@ -684,17 +747,7 @@ gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
   priv->sensitivity_data    = data;
   priv->sensitivity_destroy = destroy;
 
-  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
-                                      priv->pixbuf_renderer,
-                                      func ?
-                                      gimp_int_combo_box_data_func : NULL,
-                                      priv, NULL);
-
-  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
-                                      priv->text_renderer,
-                                      func ?
-                                      gimp_int_combo_box_data_func : NULL,
-                                      priv, NULL);
+  gimp_int_combo_box_create_cells (combo_box);
 }
 
 
@@ -726,72 +779,139 @@ static void
 gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 {
   GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box);
-  gboolean                shown;
+  GtkCellLayout          *layout;
 
-  g_object_get (combo_box, "popup-shown", &shown, NULL);
+  /*  menu layout  */
 
-  gtk_cell_layout_clear (GTK_CELL_LAYOUT (combo_box));
+  layout = GTK_CELL_LAYOUT (combo_box);
 
-  priv->pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
-  g_object_set (priv->pixbuf_renderer,
+  gtk_cell_layout_clear (layout);
+
+  priv->menu_pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
+  g_object_set (priv->menu_pixbuf_renderer,
                 "xpad", 2,
                 NULL);
 
-  priv->text_renderer = gtk_cell_renderer_text_new ();
+  priv->menu_text_renderer = gtk_cell_renderer_text_new ();
 
-  if (! shown)
-    g_object_set (priv->text_renderer,
-                  "ellipsize", priv->ellipsize,
-                  NULL);
+  gtk_cell_layout_pack_start (layout,
+                              priv->menu_pixbuf_renderer, FALSE);
+  gtk_cell_layout_pack_start (layout,
+                              priv->menu_text_renderer, TRUE);
 
-  if (priv->label && ! shown)
+  gtk_cell_layout_set_attributes (layout,
+                                  priv->menu_pixbuf_renderer,
+                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
+                                  "pixbuf",    GIMP_INT_STORE_PIXBUF,
+                                  NULL);
+  gtk_cell_layout_set_attributes (layout,
+                                  priv->menu_text_renderer,
+                                  "text", GIMP_INT_STORE_LABEL,
+                                  NULL);
+
+  if (priv->sensitivity_func)
+    {
+      gtk_cell_layout_set_cell_data_func (layout,
+                                          priv->menu_pixbuf_renderer,
+                                          gimp_int_combo_box_data_func,
+                                          priv, NULL);
+
+      gtk_cell_layout_set_cell_data_func (layout,
+                                          priv->menu_text_renderer,
+                                          gimp_int_combo_box_data_func,
+                                          priv, NULL);
+    }
+
+  /*  combo box layout  */
+
+  layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (combo_box)));
+
+  gtk_cell_layout_clear (layout);
+
+  if (priv->layout != GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY)
+    {
+      priv->text_renderer = gtk_cell_renderer_text_new ();
+      g_object_set (priv->text_renderer,
+                    "ellipsize", priv->ellipsize,
+                    NULL);
+    }
+  else
+    {
+      priv->text_renderer = NULL;
+    }
+
+  priv->pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
+
+  if (priv->text_renderer)
+    {
+      g_object_set (priv->pixbuf_renderer,
+                    "xpad", 2,
+                    NULL);
+    }
+
+  if (priv->label)
     {
       priv->label_renderer = gtk_cell_renderer_text_new ();
       g_object_set (priv->label_renderer,
                     "text", priv->label,
                     NULL);
 
-      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box),
+      gtk_cell_layout_pack_start (layout,
                                   priv->label_renderer, FALSE);
 
-      gtk_cell_layout_pack_end (GTK_CELL_LAYOUT (combo_box),
+      gtk_cell_layout_pack_end (layout,
                                 priv->pixbuf_renderer, FALSE);
-      gtk_cell_layout_pack_end (GTK_CELL_LAYOUT (combo_box),
-                                priv->text_renderer, TRUE);
 
-      g_object_set (priv->text_renderer,
-                    "xalign", 1.0,
-                    NULL);
+      if (priv->text_renderer)
+        {
+          gtk_cell_layout_pack_end (layout,
+                                    priv->text_renderer, TRUE);
+
+          g_object_set (priv->text_renderer,
+                        "xalign", 1.0,
+                        NULL);
+        }
     }
   else
     {
-      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box),
+      gtk_cell_layout_pack_start (layout,
                                   priv->pixbuf_renderer, FALSE);
-      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box),
-                                  priv->text_renderer, TRUE);
+
+      if (priv->text_renderer)
+        {
+          gtk_cell_layout_pack_start (layout,
+                                      priv->text_renderer, TRUE);
+        }
     }
 
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box),
+  gtk_cell_layout_set_attributes (layout,
                                   priv->pixbuf_renderer,
                                   "icon-name", GIMP_INT_STORE_ICON_NAME,
-                                  "pixbuf",    GIMP_INT_STORE_PIXBUF,
-                                  NULL);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box),
-                                  priv->text_renderer,
-                                  "text", GIMP_INT_STORE_LABEL,
                                   NULL);
 
-  if (priv->sensitivity_func)
+  if (priv->text_renderer)
     {
-      gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
+      gtk_cell_layout_set_attributes (layout,
+                                      priv->text_renderer,
+                                      "text", GIMP_INT_STORE_LABEL,
+                                      NULL);
+    }
+
+  if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED ||
+      priv->sensitivity_func)
+    {
+      gtk_cell_layout_set_cell_data_func (layout,
                                           priv->pixbuf_renderer,
                                           gimp_int_combo_box_data_func,
                                           priv, NULL);
 
-      gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (combo_box),
-                                          priv->text_renderer,
-                                          gimp_int_combo_box_data_func,
-                                          priv, NULL);
+      if (priv->text_renderer)
+        {
+          gtk_cell_layout_set_cell_data_func (layout,
+                                              priv->text_renderer,
+                                              gimp_int_combo_box_data_func,
+                                              priv, NULL);
+        }
     }
 
   /* HACK: GtkCellView doesn't invalidate itself when stuff is
@@ -820,6 +940,25 @@ gimp_int_combo_box_data_func (GtkCellLayout   *layout,
                               gpointer         data)
 {
   GimpIntComboBoxPrivate *priv = data;
+
+  if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED &&
+      cell == priv->text_renderer)
+    {
+      gchar *abbrev;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_INT_STORE_ABBREV, &abbrev,
+                          -1);
+
+      if (abbrev)
+        {
+          g_object_set (cell,
+                        "text", abbrev,
+                        NULL);
+
+          g_free (abbrev);
+        }
+    }
 
   if (priv->sensitivity_func)
     {

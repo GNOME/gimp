@@ -244,6 +244,38 @@ gimp_zoom_type_get_type (void)
   return type;
 }
 
+GType
+gimp_int_combo_box_layout_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", "icon-only" },
+    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", "abbreviated" },
+    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", "full" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY, "GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY", NULL },
+    { GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED, "GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED", NULL },
+    { GIMP_INT_COMBO_BOX_LAYOUT_FULL, "GIMP_INT_COMBO_BOX_LAYOUT_FULL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpIntComboBoxLayout", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "int-combo-box-layout");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

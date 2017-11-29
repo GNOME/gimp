@@ -188,6 +188,26 @@ typedef enum
 } GimpZoomType;
 
 
+/**
+ * GimpIntComboBoxLayout:
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show abbreviated labels
+ * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show full labels
+ *
+ * Possible layouts for #GimpIntComboBox.
+ **/
+#define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
+
+GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY,
+  GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
+  GIMP_INT_COMBO_BOX_LAYOUT_FULL
+} GimpIntComboBoxLayout;
+
+
 G_END_DECLS
 
 #endif  /* __GIMP_WIDGETS_ENUMS_H__ */

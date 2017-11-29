@@ -101,6 +101,11 @@ void          gimp_int_combo_box_set_label       (GimpIntComboBox *combo_box,
                                                   const gchar     *label);
 const gchar * gimp_int_combo_box_get_label       (GimpIntComboBox *combo_box);
 
+void          gimp_int_combo_box_set_layout      (GimpIntComboBox       *combo_box,
+                                                  GimpIntComboBoxLayout  layout);
+const GimpIntComboBoxLayout
+              gimp_int_combo_box_get_layout      (GimpIntComboBox       *combo_box);
+
 void          gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
                                                   GimpIntSensitivityFunc  func,
                                                   gpointer                data,
