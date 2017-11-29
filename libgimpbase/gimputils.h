@@ -57,6 +57,8 @@ const gchar   * gimp_enum_value_get_desc       (GEnumClass   *enum_class,
                                                 GEnumValue   *enum_value);
 const gchar   * gimp_enum_value_get_help       (GEnumClass   *enum_class,
                                                 GEnumValue   *enum_value);
+const gchar   * gimp_enum_value_get_abbrev     (GEnumClass   *enum_class,
+                                                GEnumValue   *enum_value);
 
 GimpFlagsDesc * gimp_flags_get_first_desc      (GFlagsClass  *flags_class,
                                                 guint         value);
@@ -69,6 +71,8 @@ gboolean        gimp_flags_get_first_value     (GType         flags_type,
 const gchar   * gimp_flags_value_get_desc      (GFlagsClass  *flags_class,
                                                 GFlagsValue  *flags_value);
 const gchar   * gimp_flags_value_get_help      (GFlagsClass  *flags_class,
+                                                GFlagsValue  *flags_value);
+const gchar   * gimp_flags_value_get_abbrev    (GFlagsClass  *flags_class,
                                                 GFlagsValue  *flags_value);
 
 

@@ -835,6 +835,37 @@ gimp_enum_value_get_help (GEnumClass *enum_class,
 }
 
 /**
+ * gimp_enum_value_get_abbrev:
+ * @enum_class: a #GEnumClass
+ * @enum_value: a #GEnumValue from @enum_class
+ *
+ * Retrieves the translated abbreviation for a given @enum_value.
+ *
+ * Return value: the translated abbreviation of the enum value
+ *
+ * Since: 2.10
+ **/
+const gchar *
+gimp_enum_value_get_abbrev (GEnumClass *enum_class,
+                            GEnumValue *enum_value)
+{
+  GType         type = G_TYPE_FROM_CLASS (enum_class);
+  GimpEnumDesc *enum_desc;
+
+  enum_desc = gimp_enum_get_desc (enum_class, enum_value->value);
+
+  if (enum_desc                              &&
+      enum_desc[1].value == enum_desc->value &&
+      enum_desc[1].value_desc)
+    {
+      return dgettext (gimp_type_get_translation_domain (type),
+                       enum_desc[1].value_desc);
+    }
+
+  return NULL;
+}
+
+/**
  * gimp_flags_get_first_desc:
  * @flags_class: a #GFlagsClass
  * @value:       a value from @flags_class
@@ -988,6 +1019,37 @@ gimp_flags_value_get_help (GFlagsClass *flags_class,
   if (flags_desc->value_help)
     return dgettext (gimp_type_get_translation_domain (type),
                      flags_desc->value_help);
+
+  return NULL;
+}
+
+/**
+ * gimp_flags_value_get_abbrev:
+ * @flags_class: a #GFlagsClass
+ * @flags_value: a #GFlagsValue from @flags_class
+ *
+ * Retrieves the translated abbreviation for a given @flags_value.
+ *
+ * Return value: the translated abbreviation of the flags value
+ *
+ * Since: 2.10
+ **/
+const gchar *
+gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
+                             GFlagsValue *flags_value)
+{
+  GType          type = G_TYPE_FROM_CLASS (flags_class);
+  GimpFlagsDesc *flags_desc;
+
+  flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
+
+  if (flags_desc                               &&
+      flags_desc[1].value == flags_desc->value &&
+      flags_desc[1].value_desc)
+    {
+      return dgettext (gimp_type_get_translation_domain (type),
+                       flags_desc[1].value_desc);
+    }
 
   return NULL;
 }
