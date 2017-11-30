@@ -642,7 +642,13 @@ gimp_gradient_segment_color_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_GRADIENT_SEGMENT_RGB, NC_("gradient-segment-color", "RGB"), NULL },
+    { GIMP_GRADIENT_SEGMENT_HSV_CCW, NC_("gradient-segment-color", "HSV (counter-clockwise hue)"), NULL },
+    /* Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+       Keep it short. */
     { GIMP_GRADIENT_SEGMENT_HSV_CCW, NC_("gradient-segment-color", "HSV (ccw)"), NULL },
+    { GIMP_GRADIENT_SEGMENT_HSV_CW, NC_("gradient-segment-color", "HSV (clockwise hue)"), NULL },
+    /* Translators: this is an abbreviated version of "HSV (clockwise hue)".
+       Keep it short. */
     { GIMP_GRADIENT_SEGMENT_HSV_CW, NC_("gradient-segment-color", "HSV (cw)"), NULL },
     { 0, NULL, NULL }
   };
@@ -678,7 +684,13 @@ gimp_gradient_segment_type_get_type (void)
     { GIMP_GRADIENT_SEGMENT_LINEAR, NC_("gradient-segment-type", "Linear"), NULL },
     { GIMP_GRADIENT_SEGMENT_CURVED, NC_("gradient-segment-type", "Curved"), NULL },
     { GIMP_GRADIENT_SEGMENT_SINE, NC_("gradient-segment-type", "Sinusoidal"), NULL },
+    { GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING, NC_("gradient-segment-type", "Spherical (increasing)"), NULL },
+    /* Translators: this is an abbreviated version of "Spherical (increasing)".
+       Keep it short. */
     { GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING, NC_("gradient-segment-type", "Spherical (inc)"), NULL },
+    { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, NC_("gradient-segment-type", "Spherical (decreasing)"), NULL },
+    /* Translators: this is an abbreviated version of "Spherical (decreasing)".
+       Keep it short. */
     { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, NC_("gradient-segment-type", "Spherical (dec)"), NULL },
     { 0, NULL, NULL }
   };

@@ -347,8 +347,8 @@ GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_GRADIENT_SEGMENT_RGB,      /*< desc="RGB"       >*/
-  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /*< desc="HSV (ccw)" >*/
-  GIMP_GRADIENT_SEGMENT_HSV_CW    /*< desc="HSV (cw)"  >*/
+  GIMP_GRADIENT_SEGMENT_HSV_CCW,  /*< desc="HSV (counter-clockwise hue)", abbrev="HSV (ccw)" >*/
+  GIMP_GRADIENT_SEGMENT_HSV_CW    /*< desc="HSV (clockwise hue)",         abbrev="HSV (cw)"  >*/
 } GimpGradientSegmentColor;
 
 
@@ -358,11 +358,11 @@ GType gimp_gradient_segment_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_SEGMENT_LINEAR,             /*< desc="Linear"          >*/
-  GIMP_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"          >*/
-  GIMP_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"      >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (inc)" >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING   /*< desc="Spherical (dec)" >*/
+  GIMP_GRADIENT_SEGMENT_LINEAR,             /*< desc="Linear"                                           >*/
+  GIMP_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"                                           >*/
+  GIMP_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"                                       >*/
+  GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (increasing)", abbrev="Spherical (inc)" >*/
+  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING   /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
 } GimpGradientSegmentType;
 
 

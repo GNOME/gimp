@@ -990,9 +990,21 @@ gimp_gradient_color_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_GRADIENT_COLOR_FIXED, NC_("gradient-color", "Fixed"), NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "Foreground"), NULL },
+    /* Translators: this is an abbreviated version of "Foreground".
+       Keep it short. */
     { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "FG"), NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "Foreground (transarent)"), NULL },
+    /* Translators: this is an abbreviated version of "Foreground (transarent)".
+       Keep it short. */
     { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "FG (t)"), NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "Background"), NULL },
+    /* Translators: this is an abbreviated version of "Background".
+       Keep it short. */
     { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "BG"), NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "Background (transparent)"), NULL },
+    /* Translators: this is an abbreviated version of "Background (transparent)".
+       Keep it short. */
     { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "BG (t)"), NULL },
     { 0, NULL, NULL }
   };
