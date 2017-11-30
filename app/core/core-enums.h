@@ -469,7 +469,7 @@ typedef enum  /*< pdb-skip >*/
 {
   GIMP_GRADIENT_COLOR_FIXED,                  /*< desc="Fixed"                                           >*/
   GIMP_GRADIENT_COLOR_FOREGROUND,             /*< desc="Foreground color",               abbrev="FG"     >*/
-  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, /*< desc="Foreground color (transarent)",  abbrev="FG (t)" >*/
+  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, /*< desc="Foreground color (transparent)",  abbrev="FG (t)" >*/
   GIMP_GRADIENT_COLOR_BACKGROUND,             /*< desc="Background color",               abbrev="BG"     >*/
   GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT  /*< desc="Background color (transparent)", abbrev="BG (t)" >*/
 } GimpGradientColor;

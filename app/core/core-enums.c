@@ -994,8 +994,8 @@ gimp_gradient_color_get_type (void)
     /* Translators: this is an abbreviated version of "Foreground color".
        Keep it short. */
     { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "FG"), NULL },
-    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "Foreground color (transarent)"), NULL },
-    /* Translators: this is an abbreviated version of "Foreground color (transarent)".
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "Foreground color (transparent)"), NULL },
+    /* Translators: this is an abbreviated version of "Foreground color (transparent)".
        Keep it short. */
     { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "FG (t)"), NULL },
     { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "Background color"), NULL },
