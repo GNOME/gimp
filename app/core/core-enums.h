@@ -467,11 +467,11 @@ GType gimp_gradient_color_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_GRADIENT_COLOR_FIXED,                  /*< desc="Fixed"                                     >*/
-  GIMP_GRADIENT_COLOR_FOREGROUND,             /*< desc="Foreground",               abbrev="FG"     >*/
-  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, /*< desc="Foreground (transarent)",  abbrev="FG (t)" >*/
-  GIMP_GRADIENT_COLOR_BACKGROUND,             /*< desc="Background",               abbrev="BG"     >*/
-  GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT  /*< desc="Background (transparent)", abbrev="BG (t)" >*/
+  GIMP_GRADIENT_COLOR_FIXED,                  /*< desc="Fixed"                                           >*/
+  GIMP_GRADIENT_COLOR_FOREGROUND,             /*< desc="Foreground color",               abbrev="FG"     >*/
+  GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, /*< desc="Foreground color (transarent)",  abbrev="FG (t)" >*/
+  GIMP_GRADIENT_COLOR_BACKGROUND,             /*< desc="Background color",               abbrev="BG"     >*/
+  GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT  /*< desc="Background color (transparent)", abbrev="BG (t)" >*/
 } GimpGradientColor;
 
 
