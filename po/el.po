@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-11-26 23:49+0000\n"
-"PO-Revision-Date: 2017-11-28 15:46+0300\n"
+"POT-Creation-Date: 2017-11-30 08:15+0000\n"
+"PO-Revision-Date: 2017-11-30 10:56+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -6333,8 +6333,6 @@ msgid "Layer Blend Space: RGB (linear)"
 msgstr "Χώρος ανάμειξης στρώσης: RGB (γραμμικός)"
 
 #: ../app/actions/layers-actions.c:353 ../app/actions/layers-actions.c:374
-#| msgctxt "layer-color-space"
-#| msgid "RGB (perceptual)"
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
 msgstr "RGB (Διαισθητικό)"
@@ -6366,8 +6364,6 @@ msgstr "Σύνθετη κατάσταση στρώσης: Αυτόματα"
 
 #
 #: ../app/actions/layers-actions.c:389
-#| msgctxt "layers-action"
-#| msgid "Source over"
 msgctxt "layers-action"
 msgid "Source Over"
 msgstr "Προέλευση από πάνω"
@@ -6379,8 +6375,6 @@ msgstr "Κατάσταση σύνθετης στρώσης: Η πηγή από �
 
 #
 #: ../app/actions/layers-actions.c:395
-#| msgctxt "layers-action"
-#| msgid "Source atop"
 msgctxt "layers-action"
 msgid "Source Atop"
 msgstr "Προέλευση στην κορυφή"
@@ -6392,8 +6386,6 @@ msgstr "Κατάσταση σύνθετης στρώσης: Η πηγή στην
 
 #
 #: ../app/actions/layers-actions.c:401
-#| msgctxt "layers-action"
-#| msgid "Source in"
 msgctxt "layers-action"
 msgid "Source In"
 msgstr "Είσοδος προέλευσης"
@@ -6404,8 +6396,6 @@ msgid "Layer Composite Mode: Source In"
 msgstr "Κατάσταση σύνθετης στρώσης: Η πηγή μέσα"
 
 #: ../app/actions/layers-actions.c:407
-#| msgctxt "layers-action"
-#| msgid "Destination atop"
 msgctxt "layers-action"
 msgid "Destination Atop"
 msgstr "Προορισμός στην κορυφή"
@@ -11441,131 +11431,166 @@ msgid "Fixed"
 msgstr "Σταθερό"
 
 #: ../app/core/core-enums.c:993
+#| msgid "Foreground"
 msgctxt "gradient-color"
-msgid "FG"
+msgid "Foreground"
 msgstr "Προσκήνιο"
 
-#: ../app/core/core-enums.c:994
-msgctxt "gradient-color"
-msgid "FG (t)"
-msgstr "Προσκήνιο (διαφανές)"
-
-#: ../app/core/core-enums.c:995
-msgctxt "gradient-color"
-msgid "BG"
-msgstr "Παρασκήνιο"
-
+#. Translators: this is an abbreviated version of "Foreground".
+#. Keep it short.
 #: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
-msgid "BG (t)"
-msgstr "Παρασκήνιο (διαφανές)"
+msgid "FG"
+msgstr "FG"
 
-#: ../app/core/core-enums.c:1025
+#: ../app/core/core-enums.c:997
+#| msgctxt "gradient-editor-color-type"
+#| msgid "Fo_reground Color (Transparent)"
+msgctxt "gradient-color"
+msgid "Foreground (transarent)"
+msgstr "Προσκήνιο (διαφανές)"
+
+#. Translators: this is an abbreviated version of "Foreground (transarent)".
+#. Keep it short.
+#: ../app/core/core-enums.c:1000
+msgctxt "gradient-color"
+msgid "FG (t)"
+msgstr "FG (t)"
+
+#
+#: ../app/core/core-enums.c:1001
+#| msgid "Background"
+msgctxt "gradient-color"
+msgid "Background"
+msgstr "Παρασκήνιο"
+
+#. Translators: this is an abbreviated version of "Background".
+#. Keep it short.
+#: ../app/core/core-enums.c:1004
+msgctxt "gradient-color"
+msgid "BG"
+msgstr "BG"
+
+#: ../app/core/core-enums.c:1005
+#| msgctxt "gradient-editor-color-type"
+#| msgid "B_ackground Color (Transparent)"
+msgctxt "gradient-color"
+msgid "Background (transparent)"
+msgstr "Παρασκίνιο (διαφανές)"
+
+#. Translators: this is an abbreviated version of "Background (transparent)".
+#. Keep it short.
+#: ../app/core/core-enums.c:1008
+msgctxt "gradient-color"
+msgid "BG (t)"
+msgstr "BG (t)"
+
+#: ../app/core/core-enums.c:1037
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Μήνυμα"
 
-#: ../app/core/core-enums.c:1026
+#: ../app/core/core-enums.c:1038
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Προειδοποίηση"
 
-#: ../app/core/core-enums.c:1027
+#: ../app/core/core-enums.c:1039
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: ../app/core/core-enums.c:1056
+#: ../app/core/core-enums.c:1068
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Ερώτηση"
 
-#: ../app/core/core-enums.c:1057
+#: ../app/core/core-enums.c:1069
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Διατήρηση ενσωματωμένης κατατομής"
 
-#: ../app/core/core-enums.c:1058
+#: ../app/core/core-enums.c:1070
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Μετατροπή στην προτιμώμενη χρωματική κατατομή RGB"
 
-#: ../app/core/core-enums.c:1095
+#: ../app/core/core-enums.c:1107
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
-#: ../app/core/core-enums.c:1096
+#: ../app/core/core-enums.c:1108
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: ../app/core/core-enums.c:1097
+#: ../app/core/core-enums.c:1109
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Γωνία"
 
-#: ../app/core/core-enums.c:1098
+#: ../app/core/core-enums.c:1110
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Χρώμα"
 
-#: ../app/core/core-enums.c:1099
+#: ../app/core/core-enums.c:1111
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Σκληρότητα"
 
-#: ../app/core/core-enums.c:1100
+#: ../app/core/core-enums.c:1112
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Αναγκαστικά"
 
-#: ../app/core/core-enums.c:1101
+#: ../app/core/core-enums.c:1113
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Λόγος θέασης"
 
-#: ../app/core/core-enums.c:1102
+#: ../app/core/core-enums.c:1114
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Διάκενο"
 
-#: ../app/core/core-enums.c:1103
+#: ../app/core/core-enums.c:1115
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Ρυθμός"
 
-#: ../app/core/core-enums.c:1104
+#: ../app/core/core-enums.c:1116
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Ροή"
 
-#: ../app/core/core-enums.c:1105
+#: ../app/core/core-enums.c:1117
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Τρέμουλο"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1145
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Χρήση της επιλογής ως εισόδου"
 
-#: ../app/core/core-enums.c:1134
+#: ../app/core/core-enums.c:1146
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Χρήση ολόκληρης της στρώσης ως εισόδου"
 
-#: ../app/core/core-enums.c:1163
+#: ../app/core/core-enums.c:1175
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Σκληρό"
 
-#: ../app/core/core-enums.c:1164
+#: ../app/core/core-enums.c:1176
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Ομαλό"
 
-#: ../app/core/core-enums.c:1165
+#: ../app/core/core-enums.c:1177
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Απαλυμένος"
@@ -13458,47 +13483,47 @@ msgstr "Κάθετη θέση άξονα"
 msgid "Horizontal axis position"
 msgstr "Οριζόντια θέση άξονα"
 
-#: ../app/core/gimpsymmetry-tiling.c:101
+#: ../app/core/gimpsymmetry-tiling.c:102
 msgid "Tiling"
 msgstr "Παράθεση"
 
-#: ../app/core/gimpsymmetry-tiling.c:107
+#: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval X"
 msgstr "Διάστημα Χ"
 
-#: ../app/core/gimpsymmetry-tiling.c:108
+#: ../app/core/gimpsymmetry-tiling.c:109
 msgid "Interval on the X axis (pixels)"
 msgstr "Διάστημα στον άξονα x (εικονοστοιχεία)"
 
-#: ../app/core/gimpsymmetry-tiling.c:119
+#: ../app/core/gimpsymmetry-tiling.c:120
 msgid "Interval Y"
 msgstr "Διάστημα Υ"
 
-#: ../app/core/gimpsymmetry-tiling.c:120
+#: ../app/core/gimpsymmetry-tiling.c:121
 msgid "Interval on the Y axis (pixels)"
 msgstr "Διάστημα στον άξονα Υ (εικονοστοιχεία)"
 
-#: ../app/core/gimpsymmetry-tiling.c:131
+#: ../app/core/gimpsymmetry-tiling.c:132
 msgid "Shift"
 msgstr "Μετατόπιση"
 
-#: ../app/core/gimpsymmetry-tiling.c:132
+#: ../app/core/gimpsymmetry-tiling.c:133
 msgid "X-shift between lines (pixels)"
 msgstr "Μετατόπιση X μεταξύ των γραμμών (εικονοστοιχεία)"
 
-#: ../app/core/gimpsymmetry-tiling.c:143
+#: ../app/core/gimpsymmetry-tiling.c:144
 msgid "Max strokes X"
 msgstr "Μέγιστες πινελιές στον Χ"
 
-#: ../app/core/gimpsymmetry-tiling.c:144
+#: ../app/core/gimpsymmetry-tiling.c:145
 msgid "Maximum number of strokes on the X axis"
 msgstr "Μέγιστος αριθμός πινελιών στον άξονα Χ"
 
-#: ../app/core/gimpsymmetry-tiling.c:151
+#: ../app/core/gimpsymmetry-tiling.c:152
 msgid "Max strokes Y"
 msgstr "Μέγιστες πινελιές στον Υ."
 
-#: ../app/core/gimpsymmetry-tiling.c:152
+#: ../app/core/gimpsymmetry-tiling.c:153
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Μέγιστος αριθμός πινελιών στον άξονα Υ"
 
