@@ -127,8 +127,6 @@ gimp_layer_mode_box_constructed (GObject *object)
   GtkWidget        *mode_combo;
   GtkWidget        *group_combo;
   GtkTreeModel     *group_model;
-  GtkCellLayout    *layout;
-  GtkCellRenderer  *cell;
   gint              i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -151,15 +149,14 @@ gimp_layer_mode_box_constructed (GObject *object)
   box->priv->group_combo = group_combo =
     gimp_prop_enum_combo_box_new (G_OBJECT (mode_combo),
                                   "group", 0, 0);
+  gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (group_combo),
+                                 GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY);
   gtk_box_pack_start (GTK_BOX (box), group_combo, FALSE, FALSE, 0);
   gtk_widget_show (group_combo);
 
   gimp_help_set_help_data (group_combo,
                            _("Switch to another group of modes"),
                            NULL);
-
-  layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (group_combo)));
-  gtk_cell_layout_clear (layout);
 
   group_model = gtk_combo_box_get_model (GTK_COMBO_BOX (group_combo));
 
@@ -178,12 +175,6 @@ gimp_layer_mode_box_constructed (GObject *object)
                             GIMP_INT_STORE_ICON_NAME, icons[i],
                             -1);
     }
-
-  cell = gtk_cell_renderer_pixbuf_new ();
-  gtk_cell_layout_pack_start (layout, cell, FALSE);
-  gtk_cell_layout_set_attributes (layout, cell,
-                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
-                                  NULL);
 }
 
 static void
