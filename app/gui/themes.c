@@ -20,6 +20,9 @@
 #include <stdlib.h>
 
 #include <gegl.h>
+#ifdef GDK_DISABLE_DEPRECATED
+#undef GDK_DISABLE_DEPRECATED
+#endif
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -55,6 +58,61 @@ static void   themes_theme_change_notify (GimpGuiConfig          *config,
 static GHashTable *themes_hash = NULL;
 
 
+static void
+draw_layout (GtkStyle        *style,
+	     GdkWindow       *window,
+	     GtkStateType     state_type,
+	     gboolean         use_text,
+	     GdkRectangle    *area,
+	     GtkWidget       *widget,
+	     const gchar     *detail,
+	     gint             x,
+	     gint             y,
+	     PangoLayout     *layout)
+{
+  GdkGC *gc;
+
+  gc = use_text ? style->text_gc[state_type] : style->fg_gc[state_type];
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, area);
+
+  if (state_type == GTK_STATE_INSENSITIVE)
+    {
+      GdkGCValues orig;
+      GdkColor fore;
+      GdkGC *copy = gdk_gc_new (window);
+      guint16 r, g, b;
+
+      gdk_gc_copy (copy, gc);
+
+      gdk_gc_get_values (gc, &orig);
+
+      r = 0x40 + (((orig.foreground.pixel >> 16) & 0xff) >> 1);
+      g = 0x40 + (((orig.foreground.pixel >>  8) & 0xff) >> 1);
+      b = 0x40 + (((orig.foreground.pixel >>  0) & 0xff) >> 1);
+
+      fore.pixel = (r << 16) | (g << 8) | b;
+      fore.red   = r * 257;
+      fore.green = g * 257;
+      fore.blue  = b * 257;
+
+      gdk_gc_set_foreground (copy, &fore);
+
+      gdk_draw_layout (window, copy, x, y, layout);
+
+      g_object_unref (copy);
+    }
+  else
+    {
+      gdk_draw_layout (window, gc, x, y, layout);
+    }
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, NULL);
+}
+
+
 /*  public functions  */
 
 void
@@ -64,6 +122,8 @@ themes_init (Gimp *gimp)
   gchar         *themerc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  GTK_STYLE_CLASS (g_type_class_ref (g_type_from_name ("PixbufStyle")))->draw_layout = draw_layout;
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
