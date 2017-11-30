@@ -176,6 +176,9 @@ sub usage {
     print STDERR "  \@valuedesc\@                descriptions as defined in the header\n";
     print STDERR "  \@valuehelp\@                help texts as defined in the header\n";
     print STDERR "  \@valueabbrev\@              abbreviations as defined in the header\n";
+    print STDERR "  \@valueudesc\@               untranslated descriptions as defined in the header\n";
+    print STDERR "  \@valueuhelp\@               untranslated help texts as defined in the header\n";
+    print STDERR "  \@valueuabbrev\@             untranslated abbreviations as defined in the header\n";
     print STDERR "  \@type\@                     either enum or flags\n";
     print STDERR "  \@Type\@                     either Enum or Flags\n";
     print STDERR "  \@TYPE\@                     either ENUM or FLAGS\n";
@@ -352,9 +355,19 @@ while (<>) {
                 $nick = lc($nick);
             }
             if (!defined $desc) {
+                $udesc = "\"$name\"";
+            } else {
+                $udesc = $desc;
+            }
+            if (!defined $desc) {
                 $desc = "\"$name\"";
             } else {
                 $desc = "NC_(\"$enumnick\", $desc)";
+            }
+            if (!defined $help) {
+                $uhelp = "NULL";
+            } else {
+                $uhelp = $help;
             }
             if (!defined $help) {
                 $help = "NULL";
@@ -362,11 +375,16 @@ while (<>) {
                 $help = "N_($help)";
             }
             if (!defined $abbrev) {
+                $uabbrev = "NULL";
+            } else {
+                $uabbrev = $abbrev;
+            }
+            if (!defined $abbrev) {
                 $abbrev = "NULL";
             } else {
                 $abbrev = "NC_(\"$enumnick\", $abbrev)";
             }
-            @{$entry} = ($name, $nick, $desc, $help, $abbrev);
+            @{$entry} = ($name, $nick, $desc, $help, $abbrev, $udesc, $uhelp, $uabbrev);
         }
 
 
@@ -433,7 +451,7 @@ while (<>) {
             $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
             $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
             for (@entries) {
-                my ($name,$nick,$desc,$help,$abbrev) = @{$_};
+                my ($name,$nick,$desc,$help,$abbrev,$udesc,$uhelp,$uabbrev) = @{$_};
                 my $tmp_prod = $prod;
 
                 $tmp_prod =~ s/\@VALUENAME\@/$name/g;
@@ -441,6 +459,9 @@ while (<>) {
                 $tmp_prod =~ s/\@valuedesc\@/$desc/g;
                 $tmp_prod =~ s/\@valuehelp\@/$help/g;
                 $tmp_prod =~ s/\@valueabbrev\@/$abbrev/g;
+                $tmp_prod =~ s/\@valueudesc\@/$udesc/g;
+                $tmp_prod =~ s/\@valueuhelp\@/$uhelp/g;
+                $tmp_prod =~ s/\@valueuabbrev\@/$uabbrev/g;
                 if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
@@ -489,7 +510,7 @@ while (<>) {
             $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
             $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
             for (@entries) {
-                my ($name,$nick,$desc,$help,$abbrev) = @{$_};
+                my ($name,$nick,$desc,$help,$abbrev,$udesc,$uhelp,$uabbrev) = @{$_};
                 my $tmp_prod = $prod;
 
                 $tmp_prod =~ s/\@VALUENAME\@/$name/g;
@@ -497,6 +518,9 @@ while (<>) {
                 $tmp_prod =~ s/\@valuedesc\@/$desc/g;
                 $tmp_prod =~ s/\@valuehelp\@/$help/g;
                 $tmp_prod =~ s/\@valueabbrev\@/$abbrev/g;
+                $tmp_prod =~ s/\@valueudesc\@/$udesc/g;
+                $tmp_prod =~ s/\@valueuhelp\@/$uhelp/g;
+                $tmp_prod =~ s/\@valueuabbrev\@/$uabbrev/g;
                 if ($flags) { $tmp_prod =~ s/\@type\@/flags/g; } else { $tmp_prod =~ s/\@type\@/enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@Type\@/Flags/g; } else { $tmp_prod =~ s/\@Type\@/Enum/g; }
                 if ($flags) { $tmp_prod =~ s/\@TYPE\@/FLAGS/g; } else { $tmp_prod =~ s/\@TYPE\@/ENUM/g; }
