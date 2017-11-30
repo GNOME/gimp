@@ -733,12 +733,24 @@ gimp_gradient_type_get_type (void)
     { GIMP_GRADIENT_BILINEAR, NC_("gradient-type", "Bi-linear"), NULL },
     { GIMP_GRADIENT_RADIAL, NC_("gradient-type", "Radial"), NULL },
     { GIMP_GRADIENT_SQUARE, NC_("gradient-type", "Square"), NULL },
+    { GIMP_GRADIENT_CONICAL_SYMMETRIC, NC_("gradient-type", "Conical (symmetric)"), NULL },
+    /* Translators: this is an abbreviated version of "Conical (symmetric)".
+       Keep it short. */
     { GIMP_GRADIENT_CONICAL_SYMMETRIC, NC_("gradient-type", "Conical (sym)"), NULL },
+    { GIMP_GRADIENT_CONICAL_ASYMMETRIC, NC_("gradient-type", "Conical (asymmetric)"), NULL },
+    /* Translators: this is an abbreviated version of "Conical (asymmetric)".
+       Keep it short. */
     { GIMP_GRADIENT_CONICAL_ASYMMETRIC, NC_("gradient-type", "Conical (asym)"), NULL },
     { GIMP_GRADIENT_SHAPEBURST_ANGULAR, NC_("gradient-type", "Shaped (angular)"), NULL },
     { GIMP_GRADIENT_SHAPEBURST_SPHERICAL, NC_("gradient-type", "Shaped (spherical)"), NULL },
     { GIMP_GRADIENT_SHAPEBURST_DIMPLED, NC_("gradient-type", "Shaped (dimpled)"), NULL },
+    { GIMP_GRADIENT_SPIRAL_CLOCKWISE, NC_("gradient-type", "Spiral (clockwise)"), NULL },
+    /* Translators: this is an abbreviated version of "Spiral (clockwise)".
+       Keep it short. */
     { GIMP_GRADIENT_SPIRAL_CLOCKWISE, NC_("gradient-type", "Spiral (cw)"), NULL },
+    { GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE, NC_("gradient-type", "Spiral (counter-clockwise)"), NULL },
+    /* Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+       Keep it short. */
     { GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE, NC_("gradient-type", "Spiral (ccw)"), NULL },
     { 0, NULL, NULL }
   };

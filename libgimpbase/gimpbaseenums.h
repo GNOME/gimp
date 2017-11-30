@@ -346,7 +346,7 @@ GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_SEGMENT_RGB,      /*< desc="RGB"       >*/
+  GIMP_GRADIENT_SEGMENT_RGB,      /*< desc="RGB"                                             >*/
   GIMP_GRADIENT_SEGMENT_HSV_CCW,  /*< desc="HSV (counter-clockwise hue)", abbrev="HSV (ccw)" >*/
   GIMP_GRADIENT_SEGMENT_HSV_CW    /*< desc="HSV (clockwise hue)",         abbrev="HSV (cw)"  >*/
 } GimpGradientSegmentColor;
@@ -372,17 +372,17 @@ GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
-  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"         >*/
-  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
-  GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
-  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (sym)"     >*/
-  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asym)"    >*/
-  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"  >*/
-  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)">*/
-  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"  >*/
-  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (cw)"       >*/
-  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (ccw)"      >*/
+  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"                                              >*/
+  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"                                           >*/
+  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"                                              >*/
+  GIMP_GRADIENT_SQUARE,                /*< desc="Square"                                              >*/
+  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (symmetric)",        abbrev="Conical (sym)"  >*/
+  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asymmetric)",       abbrev="Conical (asym)" >*/
+  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"                                    >*/
+  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)"                                  >*/
+  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"                                    >*/
+  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (clockwise)",         abbrev="Spiral (cw)"    >*/
+  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (counter-clockwise)", abbrev="Spiral (ccw)"   >*/
 } GimpGradientType;
 
 
