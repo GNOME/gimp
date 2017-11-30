@@ -151,28 +151,94 @@ gimp_layer_mode_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_LAYER_MODE_NORMAL_LEGACY, NC_("layer-mode", "Normal (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Normal (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_NORMAL_LEGACY, NC_("layer-mode", "Normal (l)"), NULL },
     { GIMP_LAYER_MODE_DISSOLVE, NC_("layer-mode", "Dissolve"), NULL },
     { GIMP_LAYER_MODE_BEHIND_LEGACY, NC_("layer-mode", "Behind (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Behind (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_BEHIND_LEGACY, NC_("layer-mode", "Behind (l)"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, NC_("layer-mode", "Multiply (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Multiply (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_MULTIPLY_LEGACY, NC_("layer-mode", "Multiply (l)"), NULL },
     { GIMP_LAYER_MODE_SCREEN_LEGACY, NC_("layer-mode", "Screen (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Screen (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_SCREEN_LEGACY, NC_("layer-mode", "Screen (l)"), NULL },
     { GIMP_LAYER_MODE_OVERLAY_LEGACY, NC_("layer-mode", "Old broken Overlay"), NULL },
+    /* Translators: this is an abbreviated version of "Old broken Overlay".
+       Keep it short. */
+    { GIMP_LAYER_MODE_OVERLAY_LEGACY, NC_("layer-mode", "Old Overlay"), NULL },
     { GIMP_LAYER_MODE_DIFFERENCE_LEGACY, NC_("layer-mode", "Difference (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Difference (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_DIFFERENCE_LEGACY, NC_("layer-mode", "Difference (l)"), NULL },
     { GIMP_LAYER_MODE_ADDITION_LEGACY, NC_("layer-mode", "Addition (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Addition (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_ADDITION_LEGACY, NC_("layer-mode", "Addition (l)"), NULL },
     { GIMP_LAYER_MODE_SUBTRACT_LEGACY, NC_("layer-mode", "Subtract (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Subtract (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_SUBTRACT_LEGACY, NC_("layer-mode", "Subtract (l)"), NULL },
     { GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY, NC_("layer-mode", "Darken only (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Darken only (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY, NC_("layer-mode", "Darken only (l)"), NULL },
     { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY, NC_("layer-mode", "Lighten only (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Lighten only (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY, NC_("layer-mode", "Lighten only (l)"), NULL },
     { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "Hue (HSV) (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "Hue (HSV) (l)"), NULL },
     { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "Saturation (HSV) (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "Saturation (HSV) (l)"), NULL },
     { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "Color (HSL) (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "Color (HSL) (l)"), NULL },
     { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "Value (HSV) (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "Value (HSV) (l)"), NULL },
     { GIMP_LAYER_MODE_DIVIDE_LEGACY, NC_("layer-mode", "Divide (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Divide (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_DIVIDE_LEGACY, NC_("layer-mode", "Divide (l)"), NULL },
     { GIMP_LAYER_MODE_DODGE_LEGACY, NC_("layer-mode", "Dodge (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Dodge (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_DODGE_LEGACY, NC_("layer-mode", "Dodge (l)"), NULL },
     { GIMP_LAYER_MODE_BURN_LEGACY, NC_("layer-mode", "Burn (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Burn (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_BURN_LEGACY, NC_("layer-mode", "Burn (l)"), NULL },
     { GIMP_LAYER_MODE_HARDLIGHT_LEGACY, NC_("layer-mode", "Hard light (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Hard light (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_HARDLIGHT_LEGACY, NC_("layer-mode", "Hard light (l)"), NULL },
     { GIMP_LAYER_MODE_SOFTLIGHT_LEGACY, NC_("layer-mode", "Soft light (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Soft light (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_SOFTLIGHT_LEGACY, NC_("layer-mode", "Soft light (l)"), NULL },
     { GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY, NC_("layer-mode", "Grain extract (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Grain extract (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY, NC_("layer-mode", "Grain extract (l)"), NULL },
     { GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY, NC_("layer-mode", "Grain merge (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Grain merge (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY, NC_("layer-mode", "Grain merge (l)"), NULL },
     { GIMP_LAYER_MODE_COLOR_ERASE_LEGACY, NC_("layer-mode", "Color erase (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "Color erase (legacy)".
+       Keep it short. */
+    { GIMP_LAYER_MODE_COLOR_ERASE_LEGACY, NC_("layer-mode", "Color erase (l)"), NULL },
     { GIMP_LAYER_MODE_OVERLAY, NC_("layer-mode", "Overlay"), NULL },
     { GIMP_LAYER_MODE_LCH_HUE, NC_("layer-mode", "Hue (LCH)"), NULL },
     { GIMP_LAYER_MODE_LCH_CHROMA, NC_("layer-mode", "Chroma (LCH)"), NULL },
@@ -205,7 +271,13 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_EXCLUSION, NC_("layer-mode", "Exclusion"), NULL },
     { GIMP_LAYER_MODE_LINEAR_BURN, NC_("layer-mode", "Linear burn"), NULL },
     { GIMP_LAYER_MODE_LUMA_DARKEN_ONLY, NC_("layer-mode", "Luma/Luminance darken only"), NULL },
+    /* Translators: this is an abbreviated version of "Luma/Luminance darken only".
+       Keep it short. */
+    { GIMP_LAYER_MODE_LUMA_DARKEN_ONLY, NC_("layer-mode", "Luma darken only"), NULL },
     { GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY, NC_("layer-mode", "Luma/Luminance lighten only"), NULL },
+    /* Translators: this is an abbreviated version of "Luma/Luminance lighten only".
+       Keep it short. */
+    { GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY, NC_("layer-mode", "Luma lighten only"), NULL },
     { GIMP_LAYER_MODE_LUMINANCE, NC_("layer-mode", "Luminance"), NULL },
     { GIMP_LAYER_MODE_COLOR_ERASE, NC_("layer-mode", "Color erase"), NULL },
     { GIMP_LAYER_MODE_ERASE, NC_("layer-mode", "Erase"), NULL },
