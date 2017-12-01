@@ -65,7 +65,8 @@ static void   themes_draw_layout         (GtkStyle               *style,
 
 /*  private variables  */
 
-static GHashTable *themes_hash = NULL;
+static GHashTable *themes_hash             = NULL;
+static gpointer    pixbuf_style_type_class = NULL;
 
 
 /*  public functions  */
@@ -75,7 +76,6 @@ themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
   gchar         *themerc;
-  gpointer       pixbuf_style_type_class;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -91,7 +91,6 @@ themes_init (Gimp *gimp)
   if (pixbuf_style_type_class)
     {
       GTK_STYLE_CLASS (pixbuf_style_type_class)->draw_layout = themes_draw_layout;
-      g_type_class_unref (pixbuf_style_type_class);
     }
 
   config = GIMP_GUI_CONFIG (gimp->config);
@@ -181,6 +180,11 @@ themes_exit (Gimp *gimp)
 
       g_hash_table_destroy (themes_hash);
       themes_hash = NULL;
+    }
+  if (pixbuf_style_type_class)
+    {
+      g_type_class_unref (pixbuf_style_type_class);
+      pixbuf_style_type_class = NULL;
     }
 }
 
