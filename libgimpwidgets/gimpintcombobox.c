@@ -702,7 +702,8 @@ gimp_int_combo_box_set_layout (GimpIntComboBox       *combo_box,
 GimpIntComboBoxLayout
 gimp_int_combo_box_get_layout (GimpIntComboBox *combo_box)
 {
-  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
+  g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box),
+                        GIMP_INT_COMBO_BOX_LAYOUT_FULL);
 
   return GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box)->layout;
 }
