@@ -191,8 +191,9 @@ typedef enum
 /**
  * GimpIntComboBoxLayout:
  * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
- * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show abbreviated labels
- * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show full labels
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show icons and abbreviated labels,
+ *                                         when available
+ * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show icons and full labels
  *
  * Possible layouts for #GimpIntComboBox.
  **/

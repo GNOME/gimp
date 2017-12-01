@@ -147,9 +147,8 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                       "Layout",
                                                       "Combo box layout",
                                                       GIMP_TYPE_INT_COMBO_BOX_LAYOUT,
-                                                      GIMP_INT_COMBO_BOX_LAYOUT_FULL,
-                                                      GIMP_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+                                                      GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
+                                                      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
 }
@@ -157,15 +156,18 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 static void
 gimp_int_combo_box_init (GimpIntComboBox *combo_box)
 {
-  GtkListStore *store;
+  GimpIntComboBoxPrivate *priv;
+  GtkListStore           *store;
 
-  combo_box->priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
-                                                 GIMP_TYPE_INT_COMBO_BOX,
-                                                 GimpIntComboBoxPrivate);
+  combo_box->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
+                                                        GIMP_TYPE_INT_COMBO_BOX,
+                                                        GimpIntComboBoxPrivate);
 
   store = gimp_int_store_new ();
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
   g_object_unref (store);
+
+  priv->layout = GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
 
   gimp_int_combo_box_create_cells (GIMP_INT_COMBO_BOX (combo_box));
 }
@@ -703,7 +705,7 @@ GimpIntComboBoxLayout
 gimp_int_combo_box_get_layout (GimpIntComboBox *combo_box)
 {
   g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box),
-                        GIMP_INT_COMBO_BOX_LAYOUT_FULL);
+                        GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
 
   return GIMP_INT_COMBO_BOX_GET_PRIVATE (combo_box)->layout;
 }

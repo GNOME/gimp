@@ -147,9 +147,6 @@ gimp_layer_mode_combo_box_constructed (GObject *object)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  combo->priv->layer_mode);
-
-  gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (combo),
-                                 GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED);
 }
 
 static void
