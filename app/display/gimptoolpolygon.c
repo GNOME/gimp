@@ -1038,6 +1038,12 @@ gimp_tool_polygon_button_press (GimpToolWidget      *widget,
     }
   else if (priv->polygon_closed)
     {
+      if (press_type == GIMP_BUTTON_PRESS_DOUBLE &&
+          gimp_canvas_item_hit (priv->polygon, coords->x, coords->y))
+        {
+          gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+        }
+
       return 0;
     }
   else

@@ -166,15 +166,16 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
                                               GIMP_TYPE_FREE_SELECT_TOOL,
                                               GimpFreeSelectToolPrivate);
 
-  gimp_tool_control_set_motion_mode      (tool->control,
-                                          GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_wants_click      (tool->control, TRUE);
-  gimp_tool_control_set_active_modifiers (tool->control,
-                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
-  gimp_tool_control_set_precision        (tool->control,
-                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
-  gimp_tool_control_set_tool_cursor      (tool->control,
-                                          GIMP_TOOL_CURSOR_FREE_SELECT);
+  gimp_tool_control_set_motion_mode        (tool->control,
+                                            GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_wants_click        (tool->control, TRUE);
+  gimp_tool_control_set_wants_double_click (tool->control, TRUE);
+  gimp_tool_control_set_active_modifiers   (tool->control,
+                                            GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  gimp_tool_control_set_precision          (tool->control,
+                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_FREE_SELECT);
 }
 
 static void
@@ -364,7 +365,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       private->grab_widget = private->widget;
     }
 
-  gimp_tool_control_activate (tool->control);
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+    gimp_tool_control_activate (tool->control);
 }
 
 static void

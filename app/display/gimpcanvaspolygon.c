@@ -73,6 +73,9 @@ static void             gimp_canvas_polygon_get_property (GObject        *object
 static void             gimp_canvas_polygon_draw         (GimpCanvasItem *item,
                                                           cairo_t        *cr);
 static cairo_region_t * gimp_canvas_polygon_get_extents  (GimpCanvasItem *item);
+static gboolean         gimp_canvas_polygon_hit          (GimpCanvasItem *item,
+                                                          gdouble         x,
+                                                          gdouble         y);
 
 
 G_DEFINE_TYPE (GimpCanvasPolygon, gimp_canvas_polygon,
@@ -93,6 +96,7 @@ gimp_canvas_polygon_class_init (GimpCanvasPolygonClass *klass)
 
   item_class->draw           = gimp_canvas_polygon_draw;
   item_class->get_extents    = gimp_canvas_polygon_get_extents;
+  item_class->hit            = gimp_canvas_polygon_hit;
 
   g_object_class_install_property (object_class, PROP_POINTS,
                                    gimp_param_spec_array ("points", NULL, NULL,
@@ -338,6 +342,48 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
   rectangle.height = y2 - y1;
 
   return cairo_region_create_rectangle (&rectangle);
+}
+
+static gboolean
+gimp_canvas_polygon_hit (GimpCanvasItem *item,
+                         gdouble         x,
+                         gdouble         y)
+{
+  GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
+  GimpVector2              *points;
+  gdouble                   tx, ty;
+  cairo_surface_t          *surface;
+  cairo_t                  *cr;
+  gboolean                  hit;
+  gint                      i;
+
+  if (! private->points)
+    return FALSE;
+
+  gimp_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
+
+  points = g_new0 (GimpVector2, private->n_points);
+
+  gimp_canvas_polygon_transform (item, points);
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
+  cr = cairo_create (surface);
+  cairo_surface_destroy (surface);
+
+  cairo_move_to (cr, points[0].x, points[0].y);
+
+  for (i = 1; i < private->n_points; i++)
+    {
+      cairo_line_to (cr, points[i].x, points[i].y);
+    }
+
+  g_free (points);
+
+  hit = cairo_in_fill (cr, tx, ty);
+
+  cairo_destroy (cr);
+
+  return hit;
 }
 
 GimpCanvasItem *
