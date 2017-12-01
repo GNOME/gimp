@@ -416,13 +416,12 @@ themes_draw_layout (GtkStyle      *style,
 
   if (state_type == GTK_STATE_INSENSITIVE)
     {
-      GdkGCValues orig;
-      GdkColor fore;
-      GdkGC *copy = gdk_gc_new (window);
-      guint16 r, g, b;
+      GdkGC       *copy = gdk_gc_new (window);
+      GdkGCValues  orig;
+      GdkColor     fore;
+      guint16      r, g, b;
 
       gdk_gc_copy (copy, gc);
-
       gdk_gc_get_values (gc, &orig);
 
       r = 0x40 + (((orig.foreground.pixel >> 16) & 0xff) >> 1);
@@ -435,7 +434,6 @@ themes_draw_layout (GtkStyle      *style,
       fore.blue  = b * 257;
 
       gdk_gc_set_foreground (copy, &fore);
-
       gdk_draw_layout (window, copy, x, y, layout);
 
       g_object_unref (copy);
