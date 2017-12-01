@@ -52,65 +52,20 @@ static void   themes_theme_change_notify (GimpGuiConfig          *config,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
 
+static void   themes_draw_layout         (GtkStyle               *style,
+                                          GdkWindow              *window,
+                                          GtkStateType            state_type,
+                                          gboolean                use_text,
+                                          GdkRectangle           *area,
+                                          GtkWidget              *widget,
+                                          const gchar            *detail,
+                                          gint                    x,
+                                          gint                    y,
+                                          PangoLayout            *layout);
 
 /*  private variables  */
 
 static GHashTable *themes_hash = NULL;
-
-
-static void
-draw_layout (GtkStyle        *style,
-	     GdkWindow       *window,
-	     GtkStateType     state_type,
-	     gboolean         use_text,
-	     GdkRectangle    *area,
-	     GtkWidget       *widget,
-	     const gchar     *detail,
-	     gint             x,
-	     gint             y,
-	     PangoLayout     *layout)
-{
-  GdkGC *gc;
-
-  gc = use_text ? style->text_gc[state_type] : style->fg_gc[state_type];
-
-  if (area)
-    gdk_gc_set_clip_rectangle (gc, area);
-
-  if (state_type == GTK_STATE_INSENSITIVE)
-    {
-      GdkGCValues orig;
-      GdkColor fore;
-      GdkGC *copy = gdk_gc_new (window);
-      guint16 r, g, b;
-
-      gdk_gc_copy (copy, gc);
-
-      gdk_gc_get_values (gc, &orig);
-
-      r = 0x40 + (((orig.foreground.pixel >> 16) & 0xff) >> 1);
-      g = 0x40 + (((orig.foreground.pixel >>  8) & 0xff) >> 1);
-      b = 0x40 + (((orig.foreground.pixel >>  0) & 0xff) >> 1);
-
-      fore.pixel = (r << 16) | (g << 8) | b;
-      fore.red   = r * 257;
-      fore.green = g * 257;
-      fore.blue  = b * 257;
-
-      gdk_gc_set_foreground (copy, &fore);
-
-      gdk_draw_layout (window, copy, x, y, layout);
-
-      g_object_unref (copy);
-    }
-  else
-    {
-      gdk_draw_layout (window, gc, x, y, layout);
-    }
-
-  if (area)
-    gdk_gc_set_clip_rectangle (gc, NULL);
-}
 
 
 /*  public functions  */
@@ -120,10 +75,24 @@ themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
   gchar         *themerc;
+  gpointer       pixbuf_style_type_class;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  GTK_STYLE_CLASS (g_type_class_ref (g_type_from_name ("PixbufStyle")))->draw_layout = draw_layout;
+  /* This is a "quick'n dirty" trick to get appropriate colors for
+   * themes in GTK+2, and in particular dark themes which would display
+   * insensitive items with a barely readable layout.
+   * This piece of code partly duplicates code from GTK+2 (slightly
+   * modified to get readable insensitive items) and will likely have to
+   * be removed for GIMP 3.
+   * See https://bugzilla.gnome.org/show_bug.cgi?id=770424
+   */
+  pixbuf_style_type_class = g_type_class_ref (g_type_from_name ("PixbufStyle"));
+  if (pixbuf_style_type_class)
+    {
+      GTK_STYLE_CLASS (pixbuf_style_type_class)->draw_layout = themes_draw_layout;
+      g_type_class_unref (pixbuf_style_type_class);
+    }
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -424,4 +393,58 @@ themes_theme_change_notify (GimpGuiConfig *config,
   themes_apply_theme (gimp, config->theme);
 
   gtk_rc_reparse_all ();
+}
+
+static void
+themes_draw_layout (GtkStyle      *style,
+                    GdkWindow     *window,
+                    GtkStateType   state_type,
+                    gboolean       use_text,
+                    GdkRectangle  *area,
+                    GtkWidget     *widget,
+                    const gchar   *detail,
+                    gint           x,
+                    gint           y,
+                    PangoLayout   *layout)
+{
+  GdkGC *gc;
+
+  gc = use_text ? style->text_gc[state_type] : style->fg_gc[state_type];
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, area);
+
+  if (state_type == GTK_STATE_INSENSITIVE)
+    {
+      GdkGCValues orig;
+      GdkColor fore;
+      GdkGC *copy = gdk_gc_new (window);
+      guint16 r, g, b;
+
+      gdk_gc_copy (copy, gc);
+
+      gdk_gc_get_values (gc, &orig);
+
+      r = 0x40 + (((orig.foreground.pixel >> 16) & 0xff) >> 1);
+      g = 0x40 + (((orig.foreground.pixel >>  8) & 0xff) >> 1);
+      b = 0x40 + (((orig.foreground.pixel >>  0) & 0xff) >> 1);
+
+      fore.pixel = (r << 16) | (g << 8) | b;
+      fore.red   = r * 257;
+      fore.green = g * 257;
+      fore.blue  = b * 257;
+
+      gdk_gc_set_foreground (copy, &fore);
+
+      gdk_draw_layout (window, copy, x, y, layout);
+
+      g_object_unref (copy);
+    }
+  else
+    {
+      gdk_draw_layout (window, gc, x, y, layout);
+    }
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, NULL);
 }
