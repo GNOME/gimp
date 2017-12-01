@@ -195,7 +195,9 @@ EXPORTS
 	gimp_int_combo_box_get_active
 	gimp_int_combo_box_get_active_user_data
 	gimp_int_combo_box_get_label
+	gimp_int_combo_box_get_layout
 	gimp_int_combo_box_get_type
+	gimp_int_combo_box_layout_get_type
 	gimp_int_combo_box_new
 	gimp_int_combo_box_new_array
 	gimp_int_combo_box_new_valist
@@ -203,6 +205,7 @@ EXPORTS
 	gimp_int_combo_box_set_active
 	gimp_int_combo_box_set_active_by_user_data
 	gimp_int_combo_box_set_label
+	gimp_int_combo_box_set_layout
 	gimp_int_combo_box_set_sensitivity
 	gimp_int_option_menu_new
 	gimp_int_option_menu_set_history

@@ -42,6 +42,7 @@ EXPORTS
 	gimp_enum_get_value
 	gimp_enum_get_value_descriptions
 	gimp_enum_set_value_descriptions
+	gimp_enum_value_get_abbrev
 	gimp_enum_value_get_desc
 	gimp_enum_value_get_help
 	gimp_env_init
@@ -56,6 +57,7 @@ EXPORTS
 	gimp_flags_get_first_value
 	gimp_flags_get_value_descriptions
 	gimp_flags_set_value_descriptions
+	gimp_flags_value_get_abbrev
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
 	gimp_foreground_extract_mode_get_type
