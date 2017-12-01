@@ -170,7 +170,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                             "use-opencl",
                             "Use OpenCL",
                             USE_OPENCL_BLURB,
-                            TRUE,
+                            FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
