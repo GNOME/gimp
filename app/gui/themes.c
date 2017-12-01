@@ -87,10 +87,13 @@ themes_init (Gimp *gimp)
    * be removed for GIMP 3.
    * See https://bugzilla.gnome.org/show_bug.cgi?id=770424
    */
-  pixbuf_style_type_class = g_type_class_ref (g_type_from_name ("PixbufStyle"));
-  if (pixbuf_style_type_class)
+  if (g_type_from_name ("PixbufStyle"))
     {
-      GTK_STYLE_CLASS (pixbuf_style_type_class)->draw_layout = themes_draw_layout;
+      pixbuf_style_type_class = g_type_class_ref (g_type_from_name ("PixbufStyle"));
+      if (pixbuf_style_type_class)
+        {
+          GTK_STYLE_CLASS (pixbuf_style_type_class)->draw_layout = themes_draw_layout;
+        }
     }
 
   config = GIMP_GUI_CONFIG (gimp->config);
