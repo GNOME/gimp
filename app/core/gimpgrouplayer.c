@@ -84,6 +84,7 @@ static void            gimp_group_layer_get_property (GObject         *object,
 static gint64          gimp_group_layer_get_memsize  (GimpObject      *object,
                                                       gint64          *gui_size);
 
+static void        gimp_group_layer_ancestry_changed (GimpViewable    *viewable);
 static gboolean        gimp_group_layer_get_size     (GimpViewable    *viewable,
                                                       gint            *width,
                                                       gint            *height);
@@ -230,6 +231,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   gimp_object_class->get_memsize         = gimp_group_layer_get_memsize;
 
   viewable_class->default_icon_name      = "gimp-group-layer";
+  viewable_class->ancestry_changed       = gimp_group_layer_ancestry_changed;
   viewable_class->get_size               = gimp_group_layer_get_size;
   viewable_class->get_children           = gimp_group_layer_get_children;
   viewable_class->set_expanded           = gimp_group_layer_set_expanded;
@@ -320,6 +322,7 @@ gimp_group_layer_init (GimpGroupLayer *group)
                     group);
 
   private->projection = gimp_projection_new (GIMP_PROJECTABLE (group));
+  gimp_projection_set_priority (private->projection, 1);
 
   g_signal_connect (private->projection, "update",
                     G_CALLBACK (gimp_group_layer_proj_update),
@@ -393,6 +396,17 @@ gimp_group_layer_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static void
+gimp_group_layer_ancestry_changed (GimpViewable *viewable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (viewable);
+
+  gimp_projection_set_priority (private->projection,
+                                gimp_viewable_get_depth (viewable) + 1);
+
+  GIMP_VIEWABLE_CLASS (parent_class)->ancestry_changed (viewable);
 }
 
 static gboolean
