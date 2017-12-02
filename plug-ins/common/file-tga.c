@@ -1172,9 +1172,8 @@ save_image (const gchar  *filename,
             GError      **error)
 {
   GeglBuffer    *buffer;
-  const Babl    *format;
+  const Babl    *format = NULL;
   GimpImageType  dtype;
-  gint           bpp;
   gint           width;
   gint           height;
   FILE          *fp;
@@ -1191,7 +1190,6 @@ save_image (const gchar  *filename,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   dtype = gimp_drawable_type (drawable_ID);
-  bpp   = gimp_drawable_bpp (drawable_ID);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -1327,7 +1325,7 @@ save_image (const gchar  *filename,
       fputc (0, fp);
     }
 
-  pixels = g_new (guchar, width * bpp);
+  pixels = g_new (guchar, width * out_bpp);
   data   = g_new (guchar, width * out_bpp);
 
   for (row = 0; row < height; ++row)
@@ -1349,11 +1347,11 @@ save_image (const gchar  *filename,
 
       if (dtype == GIMP_RGB_IMAGE)
         {
-          bgr2rgb (data, pixels, width, bpp, 0);
+          bgr2rgb (data, pixels, width, out_bpp, 0);
         }
       else if (dtype == GIMP_RGBA_IMAGE)
         {
-          bgr2rgb (data, pixels, width, bpp, 1);
+          bgr2rgb (data, pixels, width, out_bpp, 1);
         }
       else if (dtype == GIMP_INDEXEDA_IMAGE)
         {
@@ -1367,7 +1365,7 @@ save_image (const gchar  *filename,
         }
       else
         {
-          memcpy (data, pixels, width * bpp);
+          memcpy (data, pixels, width * out_bpp);
         }
 
       if (tsvals.rle)
