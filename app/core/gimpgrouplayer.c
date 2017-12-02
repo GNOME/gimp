@@ -184,6 +184,7 @@ static void
     gimp_group_layer_child_excludes_backdrop_changed (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 
+static void            gimp_group_layer_flush        (GimpGroupLayer  *group);
 static void            gimp_group_layer_update       (GimpGroupLayer  *group);
 static void            gimp_group_layer_update_size  (GimpGroupLayer  *group);
 static void      gimp_group_layer_update_source_node (GimpGroupLayer  *group);
@@ -910,7 +911,7 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
                            gimp_babl_format_get_base_type (new_format),
                            gimp_babl_format_get_precision (new_format));
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
-  gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+  gimp_group_layer_flush (group);
 
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
@@ -1259,6 +1260,29 @@ gimp_group_layer_child_excludes_backdrop_changed (GimpLayer      *child,
 }
 
 static void
+gimp_group_layer_flush (GimpGroupLayer *group)
+{
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      /*  flush the projectable, not the pickable, because the source
+       *  node of pass-through groups doesn't use the projection's
+       *  buffer, hence there's no need to invalidate it synchronously.
+       */
+      gimp_projectable_flush (GIMP_PROJECTABLE (group), TRUE);
+    }
+  else
+    {
+      /*  flush the pickable not the projectable because flushing the
+       *  pickable will finish all invalidation on the projection so it
+       *  can be used as source (note that it will still be constructed
+       *  when the actual read happens, so this it not a performance
+       *  problem)
+       */
+      gimp_pickable_flush (GIMP_PICKABLE (GET_PRIVATE (group)->projection));
+    }
+}
+
+static void
 gimp_group_layer_update (GimpGroupLayer *group)
 {
   if (GET_PRIVATE (group)->suspend_resize == 0)
@@ -1336,7 +1360,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                        "y", (gdouble) -y,
                        NULL);
 
-      /* update our offset *before* calling gimp_pickable_flush(), so
+      /* update our offset *before* calling gimp_pickable_get_buffer(), so
        * that if our graph isn't constructed yet, the offset node picks
        * up the right coordinates in gimp_group_layer_get_graph().
        */
@@ -1357,7 +1381,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           private->reallocate_height = height;
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
-          gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+          gimp_group_layer_flush (group);
 
           buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
@@ -1380,8 +1404,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
                                        x, y, width, height);
 
-          /*  see comment in gimp_group_layer_stack_update() below  */
-          gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+          gimp_group_layer_flush (group);
         }
     }
 }
@@ -1452,6 +1475,14 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
               x, y, width, height);
 #endif
 
+  /*  the layer stack's update signal speaks in image coordinates,
+   *  pass to the projection as-is.
+   */
+  gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
+                               x, y, width, height);
+
+  gimp_group_layer_flush (group);
+
   if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
     {
       /*  the layer stack's update signal speaks in image coordinates,
@@ -1462,20 +1493,6 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
                             y - gimp_item_get_offset_y (GIMP_ITEM (group)),
                             width, height);
     }
-
-  /*  the layer stack's update signal speaks in image coordinates,
-   *  pass to the projection as-is.
-   */
-  gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
-                               x, y, width, height);
-
-  /*  flush the pickable not the projectable because flushing the
-   *  pickable will finish all invalidation on the projection so it
-   *  can be used as source (note that it will still be constructed
-   *  when the actual read happens, so this it not a performance
-   *  problem)
-   */
-  gimp_pickable_flush (GIMP_PICKABLE (GET_PRIVATE (group)->projection));
 }
 
 static void
