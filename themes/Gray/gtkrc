@@ -513,6 +513,7 @@ style "sogg-treeview" = "sogg-default-style"
 
 class "GtkTreeView" style "sogg-treeview"
 widget "*GtkTreeView*" style "sogg-treeview"
+widget "*GimpPlugInView*" style "sogg-treeview"
 
 ###########################################################
 
