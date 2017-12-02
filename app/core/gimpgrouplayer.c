@@ -55,6 +55,7 @@ struct _GimpGroupLayerPrivate
   GeglNode       *offset_node;
   gint            suspend_resize;
   gboolean        expanded;
+  gboolean        pass_through;
 
   /*  hackish temp states to make the projection/tiles stuff work  */
   const Babl     *convert_format;
@@ -966,7 +967,23 @@ gimp_group_layer_get_source_node (GimpDrawable *drawable)
 static void
 gimp_group_layer_mode_changed (GimpLayer *layer)
 {
-  GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  gboolean               pass_through;
+
+  pass_through = (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH);
+
+  if (private->pass_through && ! pass_through)
+    {
+      /* when switching from pass-through mode to a non-pass-through mode,
+       * flush the pickable in order to make sure the projection's buffer
+       * gets properly invalidated synchronously, so that it can be used
+       * as a source for the rest of the composition.
+       */
+      gimp_pickable_flush (GIMP_PICKABLE (private->projection));
+    }
+
+  private->pass_through = pass_through;
 
   gimp_group_layer_update_source_node (group);
   gimp_group_layer_update_mode_node (group);
@@ -990,10 +1007,11 @@ gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
 static gboolean
 gimp_group_layer_get_excludes_backdrop (GimpLayer *layer)
 {
-  if (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH)
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+
+  if (private->pass_through)
     {
-      GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
-      GList                 *list;
+      GList *list;
 
       for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
            list;
@@ -1081,11 +1099,8 @@ gimp_group_layer_begin_render (GimpProjectable *projectable)
   if (private->source_node == NULL)
     return;
 
-  if (gimp_layer_get_mode (GIMP_LAYER (projectable)) ==
-      GIMP_LAYER_MODE_PASS_THROUGH)
-    {
-      gegl_node_disconnect (private->graph, "input");
-    }
+  if (private->pass_through)
+    gegl_node_disconnect (private->graph, "input");
 }
 
 static void
@@ -1096,8 +1111,7 @@ gimp_group_layer_end_render (GimpProjectable *projectable)
   if (private->source_node == NULL)
     return;
 
-  if (gimp_layer_get_mode (GIMP_LAYER (projectable)) ==
-      GIMP_LAYER_MODE_PASS_THROUGH)
+  if (private->pass_through)
     {
       GeglNode *input;
 
@@ -1262,7 +1276,9 @@ gimp_group_layer_child_excludes_backdrop_changed (GimpLayer      *child,
 static void
 gimp_group_layer_flush (GimpGroupLayer *group)
 {
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+
+  if (private->pass_through)
     {
       /*  flush the projectable, not the pickable, because the source
        *  node of pass-through groups doesn't use the projection's
@@ -1278,7 +1294,7 @@ gimp_group_layer_flush (GimpGroupLayer *group)
        *  when the actual read happens, so this it not a performance
        *  problem)
        */
-      gimp_pickable_flush (GIMP_PICKABLE (GET_PRIVATE (group)->projection));
+      gimp_pickable_flush (GIMP_PICKABLE (private->projection));
     }
 }
 
@@ -1422,7 +1438,7 @@ gimp_group_layer_update_source_node (GimpGroupLayer *group)
   input  = gegl_node_get_input_proxy  (private->source_node, "input");
   output = gegl_node_get_output_proxy (private->source_node, "output");
 
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+  if (private->pass_through)
     {
       gegl_node_connect_to (input,          "output",
                             private->graph, "input");
@@ -1441,15 +1457,16 @@ gimp_group_layer_update_source_node (GimpGroupLayer *group)
 static void
 gimp_group_layer_update_mode_node (GimpGroupLayer *group)
 {
-  GeglNode *node;
-  GeglNode *input;
-  GeglNode *mode_node;
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+  GeglNode              *node;
+  GeglNode              *input;
+  GeglNode              *mode_node;
 
   node      = gimp_filter_get_node (GIMP_FILTER (group));
   input     = gegl_node_get_input_proxy (node, "input");
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (group));
 
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH &&
+  if (private->pass_through &&
       gimp_layer_get_excludes_backdrop (GIMP_LAYER (group)))
     {
       gegl_node_disconnect (mode_node, "input");
@@ -1469,6 +1486,8 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                gint               height,
                                GimpGroupLayer    *group)
 {
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
               G_STRFUNC, gimp_object_get_name (group),
@@ -1483,7 +1502,7 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
 
   gimp_group_layer_flush (group);
 
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+  if (private->pass_through)
     {
       /*  the layer stack's update signal speaks in image coordinates,
        *  transform to layer coordinates when emitting our own update signal.
@@ -1504,13 +1523,15 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                               gint            height,
                               GimpGroupLayer *group)
 {
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
               G_STRFUNC, gimp_object_get_name (group),
               x, y, width, height);
 #endif
 
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) != GIMP_LAYER_MODE_PASS_THROUGH)
+  if (! private->pass_through)
     {
       /*  the projection speaks in image coordinates, transform to layer
        *  coordinates when emitting our own update signal.
