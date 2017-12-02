@@ -58,6 +58,7 @@ struct _GimpViewableClass
   void            (* invalidate_preview) (GimpViewable  *viewable);
   void            (* size_changed)       (GimpViewable  *viewable);
   void            (* expanded_changed)   (GimpViewable  *viewable);
+  void            (* ancestry_changed)   (GimpViewable  *viewable);
 
   /*  virtual functions  */
   gboolean        (* get_size)           (GimpViewable  *viewable,
@@ -181,6 +182,8 @@ gboolean        gimp_viewable_preview_is_frozen  (GimpViewable  *viewable);
 GimpViewable  * gimp_viewable_get_parent         (GimpViewable  *viewable);
 void            gimp_viewable_set_parent         (GimpViewable  *viewable,
                                                   GimpViewable  *parent);
+
+gint            gimp_viewable_get_depth          (GimpViewable  *viewable);
 
 GimpContainer * gimp_viewable_get_children       (GimpViewable  *viewable);
 

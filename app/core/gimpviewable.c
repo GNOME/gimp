@@ -33,6 +33,7 @@
 #include "core-types.h"
 
 #include "gimp-memsize.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
 #include "gimptempbuf.h"
@@ -55,6 +56,7 @@ enum
   INVALIDATE_PREVIEW,
   SIZE_CHANGED,
   EXPANDED_CHANGED,
+  ANCESTRY_CHANGED,
   LAST_SIGNAL
 };
 
@@ -67,6 +69,7 @@ struct _GimpViewablePrivate
   GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
   GimpViewable *parent;
+  gint          depth;
 
   GimpTempBuf  *preview_temp_buf;
   GdkPixbuf    *preview_pixbuf;
@@ -93,6 +96,7 @@ static gint64  gimp_viewable_get_memsize             (GimpObject    *object,
                                                       gint64        *gui_size);
 
 static void    gimp_viewable_real_invalidate_preview (GimpViewable  *viewable);
+static void    gimp_viewable_real_ancestry_changed   (GimpViewable  *viewable);
 
 static GdkPixbuf * gimp_viewable_real_get_new_pixbuf (GimpViewable  *viewable,
                                                       GimpContext   *context,
@@ -170,6 +174,15 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  viewable_signals[ANCESTRY_CHANGED] =
+    g_signal_new ("ancestry-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpViewableClass, ancestry_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->finalize         = gimp_viewable_finalize;
   object_class->get_property     = gimp_viewable_get_property;
   object_class->set_property     = gimp_viewable_set_property;
@@ -183,6 +196,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;
   klass->expanded_changed        = NULL;
+  klass->ancestry_changed        = gimp_viewable_real_ancestry_changed;
 
   klass->get_size                = NULL;
   klass->get_preview_size        = gimp_viewable_real_get_preview_size;
@@ -335,6 +349,32 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 
   g_clear_pointer (&private->preview_temp_buf, gimp_temp_buf_unref);
   g_clear_object (&private->preview_pixbuf);
+}
+
+static void
+gimp_viewable_real_ancestry_changed_propagate (GimpViewable *viewable,
+                                               GimpViewable *parent)
+{
+  GimpViewablePrivate *private = GET_PRIVATE (viewable);
+
+  private->depth = gimp_viewable_get_depth (parent) + 1;
+
+  g_signal_emit (viewable, viewable_signals[ANCESTRY_CHANGED], 0);
+}
+
+static void
+gimp_viewable_real_ancestry_changed (GimpViewable *viewable)
+{
+  GimpContainer *children;
+
+  children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    {
+      gimp_container_foreach (children,
+                              (GFunc) gimp_viewable_real_ancestry_changed_propagate,
+                              viewable);
+    }
 }
 
 static void
@@ -1286,10 +1326,28 @@ void
 gimp_viewable_set_parent (GimpViewable *viewable,
                           GimpViewable *parent)
 {
+  GimpViewablePrivate *private;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
   g_return_if_fail (parent == NULL || GIMP_IS_VIEWABLE (parent));
 
-  GET_PRIVATE (viewable)->parent = parent;
+  private = GET_PRIVATE (viewable);
+
+  if (parent != private->parent)
+    {
+      private->parent = parent;
+      private->depth  = parent ? gimp_viewable_get_depth (parent) + 1 : 0;
+
+      g_signal_emit (viewable, viewable_signals[ANCESTRY_CHANGED], 0);
+    }
+}
+
+gint
+gimp_viewable_get_depth (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), 0);
+
+  return GET_PRIVATE (viewable)->depth;
 }
 
 GimpContainer *
