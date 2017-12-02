@@ -91,6 +91,8 @@ struct _GimpProjectionPrivate
   GeglBuffer                *buffer;
   GimpTileHandlerValidate   *validate_handler;
 
+  gint                       priority;
+
   cairo_region_t            *update_region;
   GimpProjectionChunkRender  chunk_render;
   cairo_rectangle_int_t      priority_rect;
@@ -504,6 +506,23 @@ gimp_projection_new (GimpProjectable *projectable)
 }
 
 void
+gimp_projection_set_priority (GimpProjection *proj,
+                              gint            priority)
+{
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  proj->priv->priority = priority;
+}
+
+gint
+gimp_projection_get_priority (GimpProjection *proj)
+{
+  g_return_val_if_fail (GIMP_IS_PROJECTION (proj), 0);
+
+  return proj->priv->priority;
+}
+
+void
 gimp_projection_set_priority_rect (GimpProjection *proj,
                                    gint            x,
                                    gint            y,
@@ -726,7 +745,7 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
   g_return_if_fail (proj->priv->chunk_render.idle_id == 0);
 
   proj->priv->chunk_render.idle_id =
-    g_idle_add_full (GIMP_PRIORITY_PROJECTION_IDLE,
+    g_idle_add_full (GIMP_PRIORITY_PROJECTION_IDLE + proj->priv->priority,
                      gimp_projection_chunk_render_callback, proj,
                      NULL);
 }

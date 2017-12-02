@@ -57,6 +57,10 @@ GType            gimp_projection_get_type          (void) G_GNUC_CONST;
 
 GimpProjection * gimp_projection_new               (GimpProjectable   *projectable);
 
+void             gimp_projection_set_priority      (GimpProjection    *projection,
+                                                    gint               priority);
+gint             gimp_projection_get_priority      (GimpProjection    *projection);
+
 void             gimp_projection_set_priority_rect (GimpProjection    *proj,
                                                     gint               x,
                                                     gint               y,
