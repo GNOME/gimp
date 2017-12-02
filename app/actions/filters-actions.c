@@ -854,6 +854,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-mantiuk-2006",            writable);
   SET_SENSITIVE ("filters-maze",                    writable);
+  SET_SENSITIVE ("filters-median-blur",             writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
