@@ -701,8 +701,6 @@ gimp_projection_flush_whenever (GimpProjection *proj,
           gint n_rects = cairo_region_num_rectangles (proj->priv->update_region);
           gint i;
 
-          gimp_projectable_begin_render (proj->priv->projectable);
-
           for (i = 0; i < n_rects; i++)
             {
               cairo_rectangle_int_t rect;
@@ -717,8 +715,6 @@ gimp_projection_flush_whenever (GimpProjection *proj,
                                           rect.width,
                                           rect.height);
             }
-
-          gimp_projectable_end_render (proj->priv->projectable);
         }
       else  /* Asynchronous */
         {
