@@ -75,6 +75,7 @@ m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
+m4_define([perl_required_version], [5.10.0])
 m4_define([python2_required_version], [2.5.0])
 m4_define([webp_required_version], [0.6.0])
 
@@ -160,6 +161,7 @@ POPPLER_REQUIRED_VERSION=poppler_required_version
 POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
 OPENEXR_REQUIRED_VERSION=openexr_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
+PERL_REQUIRED_VERSION=perl_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
@@ -189,6 +191,7 @@ AC_SUBST(POPPLER_REQUIRED_VERSION)
 AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
+AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
@@ -2003,7 +2006,9 @@ fi
 # Check for perl
 ################
 
-AC_PATH_PROGS(PERL,perl5 perl perl5.005 perl5.004,perl)
+AC_PATH_PROGS(PERL,perl5 perl,perl)
+AX_PROG_PERL_VERSION([perl_required_version],,
+                     [add_deps_error([perl >= perl_required_version])])
 
 
 AC_ARG_WITH(pdbgen,

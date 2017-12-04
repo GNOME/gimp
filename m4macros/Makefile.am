@@ -4,8 +4,10 @@ installed_m4 = gimp-2.0.m4
 
 uninstalled_m4 = \
 	alsa.m4				\
+	ax_compare_version.m4		\
 	ax_gcc_func_attribute.m4	\
 	ax_prog_cc_for_build.m4		\
+	ax_prog_perl_version.m4		\
 	binreloc.m4			\
 	detectcflags.m4			\
 	pythondev.m4
