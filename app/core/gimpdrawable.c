@@ -912,7 +912,7 @@ gimp_drawable_real_get_source_node (GimpDrawable *drawable)
 
   drawable->private->buffer_source_node =
     gegl_node_new_child (NULL,
-                         "operation", "gegl:buffer-source",
+                         "operation", "gimp:buffer-source-validate",
                          "buffer",    gimp_drawable_get_buffer (drawable),
                          NULL);
 
