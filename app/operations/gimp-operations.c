@@ -32,6 +32,7 @@
 
 #include "gimpoperationblend.h"
 #include "gimpoperationborder.h"
+#include "gimpoperationbuffersourcevalidate.h"
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationcomposecrop.h"
@@ -125,6 +126,7 @@ gimp_operations_init (Gimp *gimp)
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BLEND);
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BUFFER_SOURCE_VALIDATE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_COMPOSE_CROP);

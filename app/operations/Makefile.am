@@ -44,6 +44,8 @@ libappoperations_a_sources = \
 	gimpoperationblend.h			\
 	gimpoperationborder.c			\
 	gimpoperationborder.h			\
+	gimpoperationbuffersourcevalidate.c	\
+	gimpoperationbuffersourcevalidate.h	\
 	gimpoperationcagecoefcalc.c		\
 	gimpoperationcagecoefcalc.h		\
 	gimpoperationcagetransform.c		\
