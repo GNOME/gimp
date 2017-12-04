@@ -858,8 +858,9 @@ gimp_enum_value_get_abbrev (GEnumClass *enum_class,
       enum_desc[1].value == enum_desc->value &&
       enum_desc[1].value_desc)
     {
-      return dgettext (gimp_type_get_translation_domain (type),
-                       enum_desc[1].value_desc);
+      return g_dpgettext2 (gimp_type_get_translation_domain (type),
+                           gimp_type_get_translation_context (type),
+                           enum_desc[1].value_desc);
     }
 
   return NULL;
@@ -990,8 +991,20 @@ gimp_flags_value_get_desc (GFlagsClass *flags_class,
   flags_desc = gimp_flags_get_first_desc (flags_class, flags_value->value);
 
   if (flags_desc->value_desc)
-    return dgettext (gimp_type_get_translation_domain (type),
-                     flags_desc->value_desc);
+    {
+      const gchar *context;
+
+      context = gimp_type_get_translation_context (type);
+
+      if (context)  /*  the new way, using NC_()    */
+        return g_dpgettext2 (gimp_type_get_translation_domain (type),
+                             context,
+                             flags_desc->value_desc);
+      else          /*  for backward compatibility  */
+        return g_strip_context (flags_desc->value_desc,
+                                dgettext (gimp_type_get_translation_domain (type),
+                                          flags_desc->value_desc));
+    }
 
   return flags_value->value_name;
 }
@@ -1047,8 +1060,9 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
       flags_desc[1].value == flags_desc->value &&
       flags_desc[1].value_desc)
     {
-      return dgettext (gimp_type_get_translation_domain (type),
-                       flags_desc[1].value_desc);
+      return g_dpgettext2 (gimp_type_get_translation_domain (type),
+                           gimp_type_get_translation_context (type),
+                           flags_desc[1].value_desc);
     }
 
   return NULL;
