@@ -487,6 +487,7 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   "\"<Actions>/file/file-export\""              "|" \
   "\"<Actions>/file/file-export-to\""           "|" \
   "\"<Actions>/layers/layers-text-tool\""       "|" \
+  "\"<Actions>/plug-in/plug-in-gauss\""         "|" \
   "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
   "\"<Actions>/vectors/vectors-path-tool\""
 
@@ -526,6 +527,14 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
     {
       g_string_append (new_value, "\"<Actions>/layers/layers-edit\"");
+    }
+  /* plug-in-gauss doesn't exist anymore since commit ff59aebbe88.
+   * The expected replacement would be filters-gaussian-blur which is
+   * gegl:gaussian-blur operation. See also bug 775931.
+   */
+  else if (g_strcmp0 (match, "\"<Actions>/plug-in/plug-in-gauss\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/filters/filters-gaussian-blur\"");
     }
   /* Tools settings renamed more user-friendly.  Actions available
    * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
