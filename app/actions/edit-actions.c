@@ -179,7 +179,7 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     GIMP_HELP_EDIT_PASTE },
 
   { "edit-paste-in-place", GIMP_ICON_EDIT_PASTE,
-    NC_("edit-action", "Paste In Place"), NULL,
+    NC_("edit-action", "Paste In Place"), "<primary><alt>V",
     NC_("edit-action",
         "Paste the content of the clipboard at its original position"),
     GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
