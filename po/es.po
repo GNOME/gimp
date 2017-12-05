@@ -13,23 +13,23 @@
 #
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
-# Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
+# Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-11-30 08:15+0000\n"
-"PO-Revision-Date: 2017-11-30 09:25+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2017-12-02 16:16+0000\n"
+"PO-Revision-Date: 2017-12-05 10:29-0300\n"
+"Last-Translator: Luis Ángel Gonzo <luisangelgonzo@gmail.com>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -2066,11 +2066,10 @@ msgid "Font Selection: Switch to Next"
 msgstr "Selección de fuente: cambiar a la siguiente"
 
 #: ../app/actions/context-actions.c:869
-#, fuzzy
 #| msgid "Brush Spacing"
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "Espaciado del pincel"
+msgstr "Espaciado del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
@@ -2105,28 +2104,26 @@ msgstr "Espaciado del pincel (editor): aumentar 10"
 #: ../app/actions/context-actions.c:901
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Circular"
-msgstr ""
+msgstr "Forma del pincel (editor): usar circular"
 
 #: ../app/actions/context-actions.c:905
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Square"
-msgstr "Menú del editor de pinceles"
+msgstr "Forma del pincel (editor): usar cuadrado"
 
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Diamond"
-msgstr ""
+msgstr "Forma del pincel (editor): usar diamante"
 
 #: ../app/actions/context-actions.c:917
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set"
-msgstr "Menú del editor de pinceles"
+msgstr "Radio del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
@@ -2179,49 +2176,47 @@ msgid "Brush Radius (Editor): Increase Relative"
 msgstr "Radio del pincel (editor): aumento relativo"
 
 #: ../app/actions/context-actions.c:965
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "Menú del editor de pinceles"
+msgstr "Puntas del cepillo (editor): establecer"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Minimum"
-msgstr ""
+msgstr "Puntas del cepillo (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:973
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Maximum"
-msgstr ""
+msgstr "Puntas del cepillo (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:977
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 1"
-msgstr ""
+msgstr "Puntas del cepillo (editor): disminuir en 1"
 
 #: ../app/actions/context-actions.c:981
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 1"
-msgstr ""
+msgstr "Puntas del cepillo (editor): aumentar en 1"
 
 #: ../app/actions/context-actions.c:985
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 4"
-msgstr ""
+msgstr "Puntas del cepillo (editor): disminuir en 4"
 
 #: ../app/actions/context-actions.c:989
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 4"
-msgstr ""
+msgstr "Puntas del cepillo (editor): aumentar en 4"
 
 #: ../app/actions/context-actions.c:997
-#, fuzzy
 #| msgid "Brush Hardness"
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Dureza del pincel"
+msgstr "Dureza del pincel(editor): establecer"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
@@ -2254,63 +2249,59 @@ msgid "Brush Hardness (Editor): Increase by 0.1"
 msgstr "Dureza del pincel (editor): aumentar 0.1"
 
 #: ../app/actions/context-actions.c:1029
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "Proporción de aspecto del pincel"
+msgstr "Proporción de aspecto del pincel (editor): establecer"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Minimum"
-msgstr ""
+msgstr "Proporción de aspecto del pincel (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:1037
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Maximum"
-msgstr ""
+msgstr "Proporción de aspecto del pincel (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:1041
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Proporción de aspecto del pincel (editor): disminuir en 0.1"
 
 #: ../app/actions/context-actions.c:1045
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Proporción de aspecto del pincel (editor): aumentar en 0.1"
 
 #: ../app/actions/context-actions.c:1049
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "Proporción de aspecto del pincel"
+msgstr "Proporción de aspecto del pincel (editor): disminuir en 1"
 
 #: ../app/actions/context-actions.c:1053
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "Proporción de aspecto del pincel"
+msgstr "Proporción de aspecto del pincel (editor): aumentar en 1"
 
 #: ../app/actions/context-actions.c:1061
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Set"
-msgstr "Menú del editor de pinceles"
+msgstr "Ángulo del pincel (editor): establecer "
 
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Horizontal"
-msgstr ""
+msgstr "Ángulo del pincel (editor): hacer horizontal"
 
 #: ../app/actions/context-actions.c:1069
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Vertical"
-msgstr ""
+msgstr "Ángulo del pincel (editor): hacer vertical"
 
 #: ../app/actions/context-actions.c:1073
 msgctxt "context-action"
@@ -2384,8 +2375,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
@@ -3084,8 +3074,7 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:478
 #: ../app/actions/gradient-editor-commands.c:580
-#: ../app/actions/gradients-commands.c:78
-#: ../app/actions/plug-in-commands.c:180
+#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:180
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
 #: ../app/actions/text-tool-commands.c:118
@@ -3124,9 +3113,9 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:307
-#: ../app/tools/gimptexttool.c:1581 ../app/tools/gimptransformtool.c:1175
-#: ../app/widgets/gimpactionview.c:669 ../app/widgets/gimpcolordialog.c:110
+#: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1581
+#: ../app/tools/gimptransformtool.c:1175 ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
@@ -3761,13 +3750,11 @@ msgstr "Copiar (con nombre)"
 msgid "Copy Visible Named "
 msgstr "Copiar visible con nombre"
 
-#: ../app/actions/edit-commands.c:569
-#: ../app/display/gimpdisplayshell-dnd.c:479
+#: ../app/actions/edit-commands.c:569 ../app/display/gimpdisplayshell-dnd.c:479
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 
-#: ../app/actions/edit-commands.c:578
-#: ../app/display/gimpdisplayshell-dnd.c:488
+#: ../app/actions/edit-commands.c:578 ../app/display/gimpdisplayshell-dnd.c:488
 #, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "Pasted as new layer because the target's pixels are locked."
@@ -3885,8 +3872,7 @@ msgid "Save Error Log to File"
 msgstr "Guardar registro de errores en un archivo"
 
 #: ../app/actions/error-console-commands.c:97
-#: ../app/actions/gradients-commands.c:79
-#: ../app/dialogs/file-save-dialog.c:715
+#: ../app/actions/gradients-commands.c:79 ../app/dialogs/file-save-dialog.c:715
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -4882,21 +4868,21 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostrar otra vez el diálogo del último filtro utilizado"
 
-#: ../app/actions/filters-actions.c:1006
+#: ../app/actions/filters-actions.c:1007
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Rep_etir «%s»"
 
-#: ../app/actions/filters-actions.c:1007
+#: ../app/actions/filters-actions.c:1008
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Volver a mostrar «%s»"
 
-#: ../app/actions/filters-actions.c:1045
+#: ../app/actions/filters-actions.c:1046
 msgid "Repeat Last"
 msgstr "Repetir el último"
 
-#: ../app/actions/filters-actions.c:1047
+#: ../app/actions/filters-actions.c:1048
 msgid "Re-Show Last"
 msgstr "Volver a mostrar el último"
 
@@ -5850,15 +5836,13 @@ msgstr "Redimensionando"
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:795
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:795 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:819
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:819 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:129
@@ -7657,8 +7641,7 @@ msgid "Delete Template"
 msgstr "Eliminar la plantilla"
 
 #: ../app/actions/templates-commands.c:245
-#: ../app/dialogs/data-delete-dialog.c:87
-#: ../app/widgets/gimpdeviceeditor.c:509
+#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:509
 msgid "_Delete"
 msgstr "_Eliminar"
 
@@ -10174,7 +10157,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Error al analizar «%%s»: la línea es más larga que %s caracteres."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:325
+#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:361
 #: ../app/tools/gimpfiltertool-settings.c:227
 #, c-format
 msgid "Error writing '%s': %s"
@@ -11684,12 +11667,12 @@ msgstr "Fijo"
 
 #: ../app/core/core-enums.c:993
 #, fuzzy
-#| msgid "Foreground"
+#| msgid "Foreground color"
 msgctxt "gradient-color"
-msgid "Foreground"
-msgstr "Frente"
+msgid "Foreground color"
+msgstr "Color de frente"
 
-#. Translators: this is an abbreviated version of "Foreground".
+#. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
 #: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
@@ -11701,10 +11684,10 @@ msgstr ""
 #| msgctxt "gradient-editor-color-type"
 #| msgid "Fo_reground Color (Transparent)"
 msgctxt "gradient-color"
-msgid "Foreground (transarent)"
+msgid "Foreground color (transparent)"
 msgstr "_Color de frente (transparente)"
 
-#. Translators: this is an abbreviated version of "Foreground (transarent)".
+#. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:1000
 msgctxt "gradient-color"
@@ -11713,12 +11696,12 @@ msgstr ""
 
 #: ../app/core/core-enums.c:1001
 #, fuzzy
-#| msgid "Background"
+#| msgid "Background color"
 msgctxt "gradient-color"
-msgid "Background"
-msgstr "Fondo"
+msgid "Background color"
+msgstr "Color de fondo"
 
-#. Translators: this is an abbreviated version of "Background".
+#. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
 #: ../app/core/core-enums.c:1004
 msgctxt "gradient-color"
@@ -11730,10 +11713,10 @@ msgstr ""
 #| msgctxt "gradient-editor-color-type"
 #| msgid "B_ackground Color (Transparent)"
 msgctxt "gradient-color"
-msgid "Background (transparent)"
+msgid "Background color (transparent)"
 msgstr "Color de f_ondo (transparente)"
 
-#. Translators: this is an abbreviated version of "Background (transparent)".
+#. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:1008
 msgctxt "gradient-color"
@@ -12725,41 +12708,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Unidad de desplazamiento"
 
-#: ../app/core/gimpgrouplayer.c:242
+#: ../app/core/gimpgrouplayer.c:245
 msgid "Layer Group"
 msgstr "Grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:243
+#: ../app/core/gimpgrouplayer.c:246
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Renombrar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:244
+#: ../app/core/gimpgrouplayer.c:247
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Mover el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:245
+#: ../app/core/gimpgrouplayer.c:248
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Escalar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:246
+#: ../app/core/gimpgrouplayer.c:249
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Redimensionar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:247
+#: ../app/core/gimpgrouplayer.c:250
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Voltear el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:248
+#: ../app/core/gimpgrouplayer.c:251
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rotar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:249
+#: ../app/core/gimpgrouplayer.c:252
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar el grupo de capas"
@@ -13692,8 +13675,7 @@ msgstr "Ordenada central"
 msgid "Number of points"
 msgstr "Número de puntos"
 
-#: ../app/core/gimpsymmetry-mandala.c:152
-#: ../app/core/gimpsymmetry-mirror.c:154
+#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Desactivar transformación del pincel"
 
@@ -13830,8 +13812,7 @@ msgid "Precision"
 msgstr "Precisión"
 
 #. gamma
-#: ../app/core/gimptemplate.c:205
-#: ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:112
 #: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:465
 msgid "Gamma"
@@ -14645,13 +14626,11 @@ msgid "Composite mode:"
 msgstr "Compuesto"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252
-#: ../app/tools/gimpmeasuretool.c:726
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:726
 msgid "Width:"
 msgstr "Anchura:"
 
-#: ../app/dialogs/layer-options-dialog.c:258
-#: ../app/tools/gimpmeasuretool.c:754
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:754
 msgid "Height:"
 msgstr "Altura:"
 
@@ -14666,8 +14645,8 @@ msgstr "Desplazamiento X:"
 msgid "Offset Y:"
 msgstr "Desplazamiento Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:396
-#: ../app/dialogs/resize-dialog.c:369 ../app/widgets/gimptemplateeditor.c:450
+#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
+#: ../app/widgets/gimptemplateeditor.c:450
 msgid "_Fill with:"
 msgstr "R_ellenar con:"
 
@@ -15485,8 +15464,7 @@ msgstr "Seleccionar un tema de iconos"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1944
-#: ../app/dialogs/preferences-dialog.c:2682
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2682 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -15940,19 +15918,18 @@ msgstr "Resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2445
-#: ../app/display/gimpcursorview.c:215 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:234
+#: ../app/dialogs/preferences-dialog.c:2445 ../app/display/gimpcursorview.c:215
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "píxeles"
 
-#: ../app/dialogs/preferences-dialog.c:2463
-#: ../app/widgets/gimpgrideditor.c:195 ../app/widgets/gimpgrideditor.c:230
+#: ../app/dialogs/preferences-dialog.c:2463 ../app/widgets/gimpgrideditor.c:195
+#: ../app/widgets/gimpgrideditor.c:230
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../app/dialogs/preferences-dialog.c:2465
-#: ../app/widgets/gimpgrideditor.c:197 ../app/widgets/gimpgrideditor.c:232
+#: ../app/dialogs/preferences-dialog.c:2465 ../app/widgets/gimpgrideditor.c:197
+#: ../app/widgets/gimpgrideditor.c:232
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -16441,8 +16418,7 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
-#: ../app/dialogs/quit-dialog.c:399
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Descartar cambios"
 
@@ -16801,8 +16777,8 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:789
-#: ../app/display/gimpdisplayshell.c:1445 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1445
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -17581,27 +17557,67 @@ msgctxt "layer-mode"
 msgid "Normal (legacy)"
 msgstr "Normal (heredado)"
 
-#: ../app/operations/operations-enums.c:154
+#. Translators: this is an abbreviated version of "Normal (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:156
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Normal (legacy)"
+msgctxt "layer-mode"
+msgid "Normal (l)"
+msgstr "Normal (heredado)"
+
+#: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Disolver"
 
-#: ../app/operations/operations-enums.c:155
+#: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr "Detrás (heredado)"
 
-#: ../app/operations/operations-enums.c:156
+#. Translators: this is an abbreviated version of "Behind (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:161
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Behind (legacy)"
+msgctxt "layer-mode"
+msgid "Behind (l)"
+msgstr "Detrás (heredado)"
+
+#: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "Multiplicar (heredado)"
 
-#: ../app/operations/operations-enums.c:157
+#. Translators: this is an abbreviated version of "Multiply (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:165
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Multiply (legacy)"
+msgctxt "layer-mode"
+msgid "Multiply (l)"
+msgstr "Multiplicar (heredado)"
+
+#: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr "Pantalla (heredado)"
 
-#: ../app/operations/operations-enums.c:158
+#. Translators: this is an abbreviated version of "Screen (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:169
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Screen (legacy)"
+msgctxt "layer-mode"
+msgid "Screen (l)"
+msgstr "Pantalla (heredado)"
+
+#: ../app/operations/operations-enums.c:170
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Old broken Overlay"
@@ -17609,87 +17625,257 @@ msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr "Capa rota vieja"
 
-#: ../app/operations/operations-enums.c:159
+#. Translators: this is an abbreviated version of "Old broken Overlay".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:173
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Overlay"
+msgctxt "layer-mode"
+msgid "Old Overlay"
+msgstr "Solapar"
+
+#: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "Diferencia (heredado)"
 
-#: ../app/operations/operations-enums.c:160
+#. Translators: this is an abbreviated version of "Difference (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:177
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Difference (legacy)"
+msgctxt "layer-mode"
+msgid "Difference (l)"
+msgstr "Diferencia (heredado)"
+
+#: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "Suma (heredado)"
 
-#: ../app/operations/operations-enums.c:161
+#. Translators: this is an abbreviated version of "Addition (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:181
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Addition (legacy)"
+msgctxt "layer-mode"
+msgid "Addition (l)"
+msgstr "Suma (heredado)"
+
+#: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "Sustraer (heredado)"
 
-#: ../app/operations/operations-enums.c:162
+#. Translators: this is an abbreviated version of "Subtract (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:185
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Subtract (legacy)"
+msgctxt "layer-mode"
+msgid "Subtract (l)"
+msgstr "Sustraer (heredado)"
+
+#: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "Oscurecer sólo (heredado)"
 
-#: ../app/operations/operations-enums.c:163
+#. Translators: this is an abbreviated version of "Darken only (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:189
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Darken only (legacy)"
+msgctxt "layer-mode"
+msgid "Darken only (l)"
+msgstr "Oscurecer sólo (heredado)"
+
+#: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "Clarear sólo (heredado)"
 
-#: ../app/operations/operations-enums.c:164
+#. Translators: this is an abbreviated version of "Lighten only (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:193
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Lighten only (legacy)"
+msgctxt "layer-mode"
+msgid "Lighten only (l)"
+msgstr "Clarear sólo (heredado)"
+
+#: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
 msgstr "Tono (HSV) (heredado)"
 
-#: ../app/operations/operations-enums.c:165
+#. Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:197
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Hue (HSV) (legacy)"
+msgctxt "layer-mode"
+msgid "Hue (HSV) (l)"
+msgstr "Tono (HSV) (heredado)"
+
+#: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
 msgstr "Saturación (HSV) (heredado)"
 
-#: ../app/operations/operations-enums.c:166
+#. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:201
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Saturation (HSV) (legacy)"
+msgctxt "layer-mode"
+msgid "Saturation (HSV) (l)"
+msgstr "Saturación (HSV) (heredado)"
+
+#: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "Color (HSL) (legacy)"
 msgstr "Color (HSV) (heredado)"
 
-#: ../app/operations/operations-enums.c:167
+#. Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:205
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Color (HSL) (legacy)"
+msgctxt "layer-mode"
+msgid "Color (HSL) (l)"
+msgstr "Color (HSV) (heredado)"
+
+#: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
 msgstr "Valor (HSV) (heredado)"
 
-#: ../app/operations/operations-enums.c:168
+#. Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:209
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Value (HSV) (legacy)"
+msgctxt "layer-mode"
+msgid "Value (HSV) (l)"
+msgstr "Valor (HSV) (heredado)"
+
+#: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:169
+#. Translators: this is an abbreviated version of "Divide (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:213
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Divide"
+msgctxt "layer-mode"
+msgid "Divide (l)"
+msgstr "Dividir"
+
+#: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:170
+#. Translators: this is an abbreviated version of "Dodge (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:217
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Dodge"
+msgctxt "layer-mode"
+msgid "Dodge (l)"
+msgstr "Blanquear"
+
+#: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:171
+#. Translators: this is an abbreviated version of "Burn (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:221
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Burn"
+msgctxt "layer-mode"
+msgid "Burn (l)"
+msgstr "Ennegrecer"
+
+#: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "Claridad fuerte (heredado)"
 
-#: ../app/operations/operations-enums.c:172
+#. Translators: this is an abbreviated version of "Hard light (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:225
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Hard light (legacy)"
+msgctxt "layer-mode"
+msgid "Hard light (l)"
+msgstr "Claridad fuerte (heredado)"
+
+#: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "Claridad suave (heredado)"
 
-#: ../app/operations/operations-enums.c:173
+#. Translators: this is an abbreviated version of "Soft light (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:229
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Soft light (legacy)"
+msgctxt "layer-mode"
+msgid "Soft light (l)"
+msgstr "Claridad suave (heredado)"
+
+#: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "Extraer granulado (heredado)"
 
-#: ../app/operations/operations-enums.c:174
+#. Translators: this is an abbreviated version of "Grain extract (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:233
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Grain extract (legacy)"
+msgctxt "layer-mode"
+msgid "Grain extract (l)"
+msgstr "Extraer granulado (heredado)"
+
+#: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "Combinar granulado (heredado)"
 
-#: ../app/operations/operations-enums.c:175
+#. Translators: this is an abbreviated version of "Grain merge (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:237
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Grain merge (legacy)"
+msgctxt "layer-mode"
+msgid "Grain merge (l)"
+msgstr "Combinar granulado (heredado)"
+
+#: ../app/operations/operations-enums.c:238
 #, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Color (HSV) (legacy)"
@@ -17697,149 +17883,159 @@ msgctxt "layer-mode"
 msgid "Color erase (legacy)"
 msgstr "Color (HSV) (heredado)"
 
-#: ../app/operations/operations-enums.c:176
+#. Translators: this is an abbreviated version of "Color erase (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:241
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Color (HSV) (legacy)"
+msgctxt "layer-mode"
+msgid "Color erase (l)"
+msgstr "Color (HSV) (heredado)"
+
+#: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Solapar"
 
-#: ../app/operations/operations-enums.c:177
+#: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr "Tono (LCH)"
 
-#: ../app/operations/operations-enums.c:178
+#: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr "Croma (LCH)"
 
-#: ../app/operations/operations-enums.c:179
+#: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "Color (LCH)"
 
-#: ../app/operations/operations-enums.c:180
+#: ../app/operations/operations-enums.c:246
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "Luminosidad (LCH)"
 
-#: ../app/operations/operations-enums.c:181
+#: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "Normal"
 
-#: ../app/operations/operations-enums.c:182
+#: ../app/operations/operations-enums.c:248
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Detrás"
 
-#: ../app/operations/operations-enums.c:183
+#: ../app/operations/operations-enums.c:249
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Multiplicar"
 
-#: ../app/operations/operations-enums.c:184
+#: ../app/operations/operations-enums.c:250
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Pantalla"
 
-#: ../app/operations/operations-enums.c:185
+#: ../app/operations/operations-enums.c:251
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Diferencia"
 
-#: ../app/operations/operations-enums.c:186
+#: ../app/operations/operations-enums.c:252
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Suma"
 
-#: ../app/operations/operations-enums.c:187
+#: ../app/operations/operations-enums.c:253
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Sustraer"
 
-#: ../app/operations/operations-enums.c:188
+#: ../app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Oscurecer sólo"
 
-#: ../app/operations/operations-enums.c:189
+#: ../app/operations/operations-enums.c:255
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Clarear sólo"
 
-#: ../app/operations/operations-enums.c:190
+#: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "Tono (HSV)"
 
-#: ../app/operations/operations-enums.c:191
+#: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "Saturación (HSV)"
 
-#: ../app/operations/operations-enums.c:192
+#: ../app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "Color (HSL)"
 msgstr "Color (HSL)"
 
-#: ../app/operations/operations-enums.c:193
+#: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr "Valor (HSV)"
 
-#: ../app/operations/operations-enums.c:194
+#: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Dividir"
 
-#: ../app/operations/operations-enums.c:195
+#: ../app/operations/operations-enums.c:261
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Blanquear"
 
-#: ../app/operations/operations-enums.c:196
+#: ../app/operations/operations-enums.c:262
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Ennegrecer"
 
-#: ../app/operations/operations-enums.c:197
+#: ../app/operations/operations-enums.c:263
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Claridad fuerte"
 
-#: ../app/operations/operations-enums.c:198
+#: ../app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Claridad suave"
 
-#: ../app/operations/operations-enums.c:199
+#: ../app/operations/operations-enums.c:265
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Extraer granulado"
 
-#: ../app/operations/operations-enums.c:200
+#: ../app/operations/operations-enums.c:266
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Combinar granulado"
 
-#: ../app/operations/operations-enums.c:201
+#: ../app/operations/operations-enums.c:267
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "Claridad fuerte"
 
-#: ../app/operations/operations-enums.c:202
+#: ../app/operations/operations-enums.c:268
 #, fuzzy
 #| msgid "Linear light"
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "Luz lineal"
 
-#: ../app/operations/operations-enums.c:203
+#: ../app/operations/operations-enums.c:269
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Luz lineal"
 
-#: ../app/operations/operations-enums.c:204
+#: ../app/operations/operations-enums.c:270
 #, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Hard light"
@@ -17847,24 +18043,34 @@ msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "Claridad fuerte"
 
-#: ../app/operations/operations-enums.c:205
+#: ../app/operations/operations-enums.c:271
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Exclusión"
 
-#: ../app/operations/operations-enums.c:206
+#: ../app/operations/operations-enums.c:272
 #, fuzzy
 #| msgid "Linear"
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "Lineal"
 
-#: ../app/operations/operations-enums.c:207
+#: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:208
+#. Translators: this is an abbreviated version of "Luma/Luminance darken only".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:276
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Darken only"
+msgctxt "layer-mode"
+msgid "Luma darken only"
+msgstr "Oscurecer sólo"
+
+#: ../app/operations/operations-enums.c:277
 #, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Lighten only"
@@ -17872,52 +18078,62 @@ msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "Clarear sólo"
 
-#: ../app/operations/operations-enums.c:209
+#. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:280
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Lighten only"
+msgctxt "layer-mode"
+msgid "Luma lighten only"
+msgstr "Clarear sólo"
+
+#: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "Luminosidad"
 
-#: ../app/operations/operations-enums.c:210
+#: ../app/operations/operations-enums.c:282
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Borrado de color"
 
-#: ../app/operations/operations-enums.c:211
+#: ../app/operations/operations-enums.c:283
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Borrar"
 
-#: ../app/operations/operations-enums.c:212
+#: ../app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Merge"
 msgstr "Mezclar"
 
-#: ../app/operations/operations-enums.c:213
+#: ../app/operations/operations-enums.c:285
 msgctxt "layer-mode"
 msgid "Split"
 msgstr "Partir"
 
-#: ../app/operations/operations-enums.c:214
+#: ../app/operations/operations-enums.c:286
 msgctxt "layer-mode"
 msgid "Pass through"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:215
+#: ../app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: ../app/operations/operations-enums.c:216
+#: ../app/operations/operations-enums.c:288
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Antiborrado"
 
-#: ../app/operations/operations-enums.c:244
+#: ../app/operations/operations-enums.c:316
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "Predeterminado"
 
-#: ../app/operations/operations-enums.c:245
+#: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr "Obsoletos"
@@ -18324,8 +18540,7 @@ msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:219 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -20096,8 +20311,7 @@ msgstr "Sobremuestreo adaptativo"
 msgid "Max depth"
 msgstr "Profundidad máxima"
 
-#: ../app/tools/gimpblendoptions.c:117
-#: ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpblendoptions.c:117 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:87
 msgid "Threshold"
@@ -20166,9 +20380,8 @@ msgstr "Pulse o arrastre para añadir un punto"
 
 #: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
-#: ../app/tools/gimpforegroundselecttool.c:288
-#: ../app/tools/gimppainttool.c:285 ../app/tools/gimptransformtool.c:1414
-#: ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimptransformtool.c:1414 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
 
@@ -20891,14 +21104,12 @@ msgstr "%s: cambiar original y filtrado"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: cambiar horizontal y vertical"
 
-#: ../app/tools/gimpfiltertool.c:1296
-#: ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1296 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1298
-#: ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1298 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes «%s»"
@@ -21095,7 +21306,7 @@ msgstr ""
 msgid "_Free Select"
 msgstr "Selección _libre"
 
-#: ../app/tools/gimpfreeselecttool.c:492
+#: ../app/tools/gimpfreeselecttool.c:494
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selección libre"
@@ -21375,8 +21586,7 @@ msgid "Resize image window to accommodate new zoom level"
 msgstr ""
 "Redimensionar la ventana de imagen para ajustarse nuevo nivel de ampliación"
 
-#: ../app/tools/gimpmagnifyoptions.c:91
-#: ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:163
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -21967,8 +22177,7 @@ msgstr "Permitir el difuminado de los límites de la selección"
 msgid "Radius of feathering"
 msgstr "Radio del difuminado"
 
-#: ../app/tools/gimpselectionoptions.c:222
-#: ../app/widgets/gimpbrushselect.c:188
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:188
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -24837,6 +25046,32 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#, fuzzy
+#~| msgid "Foreground"
+#~ msgctxt "gradient-color"
+#~ msgid "Foreground"
+#~ msgstr "Frente"
+
+#, fuzzy
+#~| msgctxt "gradient-editor-color-type"
+#~| msgid "Fo_reground Color (Transparent)"
+#~ msgctxt "gradient-color"
+#~ msgid "Foreground (transarent)"
+#~ msgstr "_Color de frente (transparente)"
+
+#, fuzzy
+#~| msgid "Background"
+#~ msgctxt "gradient-color"
+#~ msgid "Background"
+#~ msgstr "Fondo"
+
+#, fuzzy
+#~| msgctxt "gradient-editor-color-type"
+#~| msgid "B_ackground Color (Transparent)"
+#~ msgctxt "gradient-color"
+#~ msgid "Background (transparent)"
+#~ msgstr "Color de f_ondo (transparente)"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Visible"
