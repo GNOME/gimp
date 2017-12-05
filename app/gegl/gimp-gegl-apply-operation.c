@@ -74,11 +74,12 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 {
   GeglNode      *gegl;
   GeglNode      *dest_node;
+  GeglNode      *operation_src_node = NULL;
   GeglRectangle  rect = { 0, };
-  GeglProcessor *processor        = NULL;
-  gboolean       progress_started = FALSE;
+  GeglProcessor *processor          = NULL;
+  gboolean       progress_started   = FALSE;
   gdouble        value;
-  gboolean       cancel           = FALSE;
+  gboolean       cancel             = FALSE;
 
   g_return_val_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
@@ -121,6 +122,8 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                       NULL);
 
       g_object_unref (src_buffer);
+
+      operation_src_node = gegl_node_get_producer (operation, "input", NULL);
 
       gegl_node_connect_to (src_node,  "output",
                             operation, "input");
@@ -256,6 +259,12 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
     g_object_unref (processor);
 
   g_object_unref (gegl);
+
+  if (operation_src_node)
+    {
+      gegl_node_connect_to (operation_src_node, "output",
+                            operation,          "input");
+    }
 
   if (progress_started)
     {
