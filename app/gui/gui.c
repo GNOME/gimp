@@ -157,6 +157,7 @@ static void      gui_check_unique_accelerator   (gpointer            data,
                                                  guint               accel_key,
                                                  GdkModifierType     accel_mods,
                                                  gboolean            changed);
+static gboolean  gui_check_action_exists        (const gchar *accel_path);
 
 
 /*  private variables  */
@@ -936,7 +937,8 @@ gui_check_unique_accelerator (gpointer         data,
                               GdkModifierType  accel_mods,
                               gboolean         changed)
 {
-  if (gtk_accelerator_valid (accel_key, accel_mods))
+  if (gtk_accelerator_valid (accel_key, accel_mods) &&
+      gui_check_action_exists (accel_path))
     {
       accelData accel;
 
@@ -947,4 +949,40 @@ gui_check_unique_accelerator (gpointer         data,
       gtk_accel_map_foreach_unfiltered (&accel,
                                         gui_compare_accelerator);
     }
+}
+
+static gboolean
+gui_check_action_exists (const gchar *accel_path)
+{
+  GimpUIManager *manager;
+  gboolean       action_exists = FALSE;
+  GList         *list;
+
+  manager = gimp_ui_managers_from_name ("<Image>")->data;
+  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+       list;
+       list = g_list_next (list))
+    {
+      GtkActionGroup *group   = list->data;
+      GList          *actions = NULL;
+      GList          *list2;
+
+      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      for (list2 = actions; list2; list2 = g_list_next (list2))
+        {
+          const gchar *path;
+          GtkAction   *action = list2->data;
+
+          path = gtk_action_get_accel_path (action);
+          if (g_strcmp0 (path, accel_path) == 0)
+            {
+              action_exists = TRUE;
+              break;
+            }
+        }
+      g_list_free (actions);
+      if (action_exists)
+        break;
+    }
+  return action_exists;
 }
