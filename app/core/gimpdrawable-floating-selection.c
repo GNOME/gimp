@@ -41,23 +41,27 @@
 
 /*  local function prototypes  */
 
-static void    gimp_drawable_remove_fs_filter   (GimpDrawable      *drawable);
-static void    gimp_drawable_sync_fs_filter     (GimpDrawable      *drawable);
+static void    gimp_drawable_remove_fs_filter             (GimpDrawable      *drawable);
+static void    gimp_drawable_sync_fs_filter               (GimpDrawable      *drawable);
 
-static void    gimp_drawable_fs_notify          (GimpLayer         *fs,
-                                                 const GParamSpec  *pspec,
-                                                 GimpDrawable      *drawable);
-static void    gimp_drawable_fs_affect_changed  (GimpImage         *image,
-                                                 GimpChannelType    channel,
-                                                 GimpDrawable      *drawable);
-static void    gimp_drawable_fs_mask_changed    (GimpImage         *image,
-                                                 GimpDrawable      *drawable);
-static void    gimp_drawable_fs_update          (GimpLayer         *fs,
-                                                 gint               x,
-                                                 gint               y,
-                                                 gint               width,
-                                                 gint               height,
-                                                 GimpDrawable      *drawable);
+static void    gimp_drawable_fs_notify                    (GimpLayer         *fs,
+                                                           const GParamSpec  *pspec,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_affect_changed            (GimpImage         *image,
+                                                           GimpChannelType    channel,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_mask_changed              (GimpImage         *image,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_visibility_changed        (GimpLayer         *fs,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_excludes_backdrop_changed (GimpLayer         *fs,
+                                                           GimpDrawable      *drawable);
+static void    gimp_drawable_fs_update                    (GimpLayer         *fs,
+                                                           gint               x,
+                                                           gint               y,
+                                                           gint               width,
+                                                           gint               height,
+                                                           GimpDrawable      *drawable);
 
 
 /*  public functions  */
@@ -91,8 +95,17 @@ gimp_drawable_attach_floating_sel (GimpDrawable *drawable,
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
 
+  gimp_item_bind_visible_to_active (GIMP_ITEM (fs), FALSE);
+  gimp_filter_set_active (GIMP_FILTER (fs), FALSE);
+
   _gimp_drawable_add_floating_sel_filter (drawable);
 
+  g_signal_connect (fs, "visibility-changed",
+                    G_CALLBACK (gimp_drawable_fs_visibility_changed),
+                    drawable);
+  g_signal_connect (fs, "excludes-backdrop-changed",
+                    G_CALLBACK (gimp_drawable_fs_excludes_backdrop_changed),
+                    drawable);
   g_signal_connect (fs, "update",
                     G_CALLBACK (gimp_drawable_fs_update),
                     drawable);
@@ -121,6 +134,12 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
   gimp_drawable_remove_fs_filter (drawable);
 
   g_signal_handlers_disconnect_by_func (fs,
+                                        gimp_drawable_fs_visibility_changed,
+                                        drawable);
+  g_signal_handlers_disconnect_by_func (fs,
+                                        gimp_drawable_fs_excludes_backdrop_changed,
+                                        drawable);
+  g_signal_handlers_disconnect_by_func (fs,
                                         gimp_drawable_fs_update,
                                         drawable);
 
@@ -129,6 +148,8 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable)
                            gimp_item_get_width  (GIMP_ITEM (fs)),
                            gimp_item_get_height (GIMP_ITEM (fs)),
                            drawable);
+
+  gimp_item_bind_visible_to_active (GIMP_ITEM (fs), TRUE);
 
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fs));
@@ -271,6 +292,9 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
   gint                off_x, off_y;
   gint                fs_off_x, fs_off_y;
 
+  gimp_filter_set_active (private->fs_filter,
+                          gimp_item_get_visible (GIMP_ITEM (fs)));
+
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
   gimp_item_get_offset (GIMP_ITEM (fs), &fs_off_x, &fs_off_y);
 
@@ -314,10 +338,13 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
                          const GParamSpec *pspec,
                          GimpDrawable     *drawable)
 {
-  if (! strcmp (pspec->name, "offset-x") ||
-      ! strcmp (pspec->name, "offset-y") ||
-      ! strcmp (pspec->name, "visible")  ||
-      ! strcmp (pspec->name, "mode")     ||
+  if (! strcmp (pspec->name, "offset-x")        ||
+      ! strcmp (pspec->name, "offset-y")        ||
+      ! strcmp (pspec->name, "visible")         ||
+      ! strcmp (pspec->name, "mode")            ||
+      ! strcmp (pspec->name, "blend-space")     ||
+      ! strcmp (pspec->name, "composite-space") ||
+      ! strcmp (pspec->name, "composite-mode")  ||
       ! strcmp (pspec->name, "opacity"))
     {
       gimp_drawable_sync_fs_filter (drawable);
@@ -345,6 +372,24 @@ gimp_drawable_fs_mask_changed (GimpImage    *image,
   gimp_drawable_sync_fs_filter (drawable);
 
   gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+}
+
+static void
+gimp_drawable_fs_visibility_changed (GimpLayer    *fs,
+                                     GimpDrawable *drawable)
+{
+  if (gimp_layer_get_excludes_backdrop (fs))
+    gimp_drawable_update (drawable, 0, 0, -1, -1);
+  else
+    gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
+}
+
+static void
+gimp_drawable_fs_excludes_backdrop_changed (GimpLayer    *fs,
+                                            GimpDrawable *drawable)
+{
+  if (gimp_item_get_visible (GIMP_ITEM (fs)))
+    gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 static void
