@@ -482,12 +482,12 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
  * the next release
  */
 #define MENURC_OVER20_UPDATE_PATTERN \
-  "\"<Actions>/file/file-export-to\""           "|" \
-  "\"<Actions>/file/file-export\""              "|" \
-  "\"<Actions>/edit/edit-paste-as-new\""        "|" \
   "\"<Actions>/buffers/buffers-paste-as-new\""  "|" \
-  "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
+  "\"<Actions>/edit/edit-paste-as-new\""        "|" \
+  "\"<Actions>/file/file-export\""              "|" \
+  "\"<Actions>/file/file-export-to\""           "|" \
   "\"<Actions>/layers/layers-text-tool\""       "|" \
+  "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
   "\"<Actions>/vectors/vectors-path-tool\""
 
 /**
@@ -502,10 +502,20 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
 {
   gchar *match = g_match_info_fetch (matched_value, 0);
 
+  /* "*-paste-as-new" renamed to "*-paste-as-new-image"
+   */
+  if (g_strcmp0 (match, "\"<Actions>/buffers/buffers-paste-as-new\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/buffers/buffers-paste-as-new-image\"");
+    }
+  else if (g_strcmp0 (match, "\"<Actions>/edit/edit-paste-as-new\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/edit/edit-paste-as-new-image\"");
+    }
   /* file-export-* changes to follow file-save-* patterns.  Actions
    * available since GIMP 2.8, changed for 2.10 in commit 4b14ed2.
    */
-  if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
+  else if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
     {
       g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
     }
@@ -513,15 +523,9 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "\"<Actions>/file/file-export\"");
     }
-  /* "*-paste-as-new" renamed to "*-paste-as-new-image"
-   */
-  else if (g_strcmp0 (match, "\"<Actions>/edit/edit-paste-as-new\"") == 0)
+  else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
     {
-      g_string_append (new_value, "\"<Actions>/edit/edit-paste-as-new-image\"");
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/buffers/buffers-paste-as-new\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/buffers/buffers-paste-as-new-image\"");
+      g_string_append (new_value, "\"<Actions>/layers/layers-edit\"");
     }
   /* Tools settings renamed more user-friendly.  Actions available
    * since GIMP 2.4, changed for 2.10 in commit 0bdb747.
@@ -545,10 +549,6 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "\"<Actions>/tools/tools-angle-");
       g_string_append (new_value, match + 31);
-    }
-  else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
-    {
-      g_string_append (new_value, "\"<Actions>/layers/layers-edit\"");
     }
   else if (g_strcmp0 (match, "\"<Actions>/vectors/vectors-path-tool\"") == 0)
     {
