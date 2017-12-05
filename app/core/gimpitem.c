@@ -53,6 +53,7 @@
 enum
 {
   REMOVED,
+  VISIBILITY_CHANGED,
   LINKED_CHANGED,
   COLOR_TAG_CHANGED,
   LOCK_CONTENT_CHANGED,
@@ -69,6 +70,7 @@ enum
   PROP_HEIGHT,
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
+  PROP_VISIBLE,
   PROP_LINKED,
   PROP_COLOR_TAG,
   PROP_LOCK_CONTENT,
@@ -80,25 +82,28 @@ typedef struct _GimpItemPrivate GimpItemPrivate;
 
 struct _GimpItemPrivate
 {
-  gint              ID;                 /*  provides a unique ID     */
-  guint32           tattoo;             /*  provides a permanent ID  */
+  gint              ID;                          /*  provides a unique ID        */
+  guint32           tattoo;                      /*  provides a permanent ID     */
 
-  GimpImage        *image;              /*  item owner               */
+  GimpImage        *image;                       /*  item owner                  */
 
-  GimpParasiteList *parasites;          /*  Plug-in parasite data    */
+  GimpParasiteList *parasites;                   /*  Plug-in parasite data       */
 
-  gint              width, height;      /*  size in pixels           */
-  gint              offset_x, offset_y; /*  pixel offset in image    */
+  gint              width, height;               /*  size in pixels              */
+  gint              offset_x, offset_y;          /*  pixel offset in image       */
 
-  guint             linked        : 1;  /*  control linkage          */
-  guint             lock_content  : 1;  /*  content editability      */
-  guint             lock_position : 1;  /*  content movability       */
+  guint             visible                : 1;  /*  item visibility             */
+  guint             bind_visible_to_active : 1;  /*  visibility bound to active  */
 
-  guint             removed       : 1;  /*  removed from the image?  */
+  guint             linked                 : 1;  /*  control linkage             */
+  guint             lock_content           : 1;  /*  content editability         */
+  guint             lock_position          : 1;  /*  content movability          */
 
-  GimpColorTag      color_tag;          /*  color tag                */
+  guint             removed                : 1;  /*  removed from the image?     */
 
-  GList            *offset_nodes;       /*  offset nodes to manage   */
+  GimpColorTag      color_tag;                   /*  color tag                   */
+
+  GList            *offset_nodes;                /*  offset nodes to manage      */
 };
 
 #define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
@@ -182,6 +187,15 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_item_signals[VISIBILITY_CHANGED] =
+    g_signal_new ("visibility-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, visibility_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_item_signals[LINKED_CHANGED] =
     g_signal_new ("linked-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -230,6 +244,7 @@ gimp_item_class_init (GimpItemClass *klass)
   viewable_class->get_popup_size   = gimp_item_get_popup_size;
 
   klass->removed                   = NULL;
+  klass->visibility_changed        = NULL;
   klass->linked_changed            = NULL;
   klass->color_tag_changed         = NULL;
   klass->lock_content_changed      = NULL;
@@ -297,6 +312,11 @@ gimp_item_class_init (GimpItemClass *klass)
                                                      GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READABLE));
 
+  g_object_class_install_property (object_class, PROP_VISIBLE,
+                                   g_param_spec_boolean ("visible", NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READABLE));
+
   g_object_class_install_property (object_class, PROP_LINKED,
                                    g_param_spec_boolean ("linked", NULL, NULL,
                                                          FALSE,
@@ -330,7 +350,9 @@ gimp_item_init (GimpItem *item)
 
   g_object_force_floating (G_OBJECT (item));
 
-  private->parasites = gimp_parasite_list_new ();
+  private->parasites              = gimp_parasite_list_new ();
+  private->visible                = TRUE;
+  private->bind_visible_to_active = TRUE;
 }
 
 static void
@@ -414,6 +436,9 @@ gimp_item_get_property (GObject    *object,
       break;
     case PROP_OFFSET_Y:
       g_value_set_int (value, private->offset_y);
+      break;
+    case PROP_VISIBLE:
+      g_value_set_boolean (value, private->visible);
       break;
     case PROP_LINKED:
       g_value_set_boolean (value, private->linked);
@@ -2059,7 +2084,14 @@ gimp_item_set_visible (GimpItem *item,
             gimp_image_undo_push_item_visibility (image, NULL, item);
         }
 
-      gimp_filter_set_visible (GIMP_FILTER (item), visible);
+      GET_PRIVATE (item)->visible = visible;
+
+      if (GET_PRIVATE (item)->bind_visible_to_active)
+        gimp_filter_set_active (GIMP_FILTER (item), visible);
+
+      g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "visible");
     }
 }
 
@@ -2068,7 +2100,7 @@ gimp_item_get_visible (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return gimp_filter_get_visible (GIMP_FILTER (item));
+  return GET_PRIVATE (item)->visible;
 }
 
 gboolean
@@ -2076,7 +2108,31 @@ gimp_item_is_visible (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return gimp_filter_is_visible (GIMP_FILTER (item));
+  if (gimp_item_get_visible (item))
+    {
+      GimpItem *parent;
+
+      parent = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+
+      if (parent)
+        return gimp_item_is_visible (parent);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_item_bind_visible_to_active (GimpItem *item,
+                                  gboolean  bind)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  GET_PRIVATE (item)->bind_visible_to_active = bind;
+
+  if (bind)
+    gimp_filter_set_active (GIMP_FILTER (item), gimp_item_get_visible (item));
 }
 
 void

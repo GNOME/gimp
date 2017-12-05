@@ -55,7 +55,7 @@ static void   gimp_drawable_stack_drawable_update  (GimpItem          *item,
                                                     gint               width,
                                                     gint               height,
                                                     GimpDrawableStack *stack);
-static void   gimp_drawable_stack_drawable_visible (GimpItem          *item,
+static void   gimp_drawable_stack_drawable_active  (GimpItem          *item,
                                                     GimpDrawableStack *stack);
 
 
@@ -110,8 +110,8 @@ gimp_drawable_stack_constructed (GObject *object)
   gimp_container_add_handler (container, "update",
                               G_CALLBACK (gimp_drawable_stack_drawable_update),
                               container);
-  gimp_container_add_handler (container, "visibility-changed",
-                              G_CALLBACK (gimp_drawable_stack_drawable_visible),
+  gimp_container_add_handler (container, "active-changed",
+                              G_CALLBACK (gimp_drawable_stack_drawable_active),
                               container);
 }
 
@@ -123,8 +123,8 @@ gimp_drawable_stack_add (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 
-  if (gimp_item_get_visible (GIMP_ITEM (object)))
-    gimp_drawable_stack_drawable_visible (GIMP_ITEM (object), stack);
+  if (gimp_filter_get_active (GIMP_FILTER (object)))
+    gimp_drawable_stack_drawable_active (GIMP_ITEM (object), stack);
 }
 
 static void
@@ -135,8 +135,8 @@ gimp_drawable_stack_remove (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
 
-  if (gimp_item_get_visible (GIMP_ITEM (object)))
-    gimp_drawable_stack_drawable_visible (GIMP_ITEM (object), stack);
+  if (gimp_filter_get_active (GIMP_FILTER (object)))
+    gimp_drawable_stack_drawable_active (GIMP_ITEM (object), stack);
 }
 
 static void
@@ -148,8 +148,8 @@ gimp_drawable_stack_reorder (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
-  if (gimp_item_get_visible (GIMP_ITEM (object)))
-    gimp_drawable_stack_drawable_visible (GIMP_ITEM (object), stack);
+  if (gimp_filter_get_active (GIMP_FILTER (object)))
+    gimp_drawable_stack_drawable_active (GIMP_ITEM (object), stack);
 }
 
 
@@ -194,7 +194,7 @@ gimp_drawable_stack_drawable_update (GimpItem          *item,
                                      gint               height,
                                      GimpDrawableStack *stack)
 {
-  if (gimp_item_get_visible (item))
+  if (gimp_filter_get_active (GIMP_FILTER (item)))
     {
       gint offset_x;
       gint offset_y;
@@ -208,8 +208,8 @@ gimp_drawable_stack_drawable_update (GimpItem          *item,
 }
 
 static void
-gimp_drawable_stack_drawable_visible (GimpItem          *item,
-                                      GimpDrawableStack *stack)
+gimp_drawable_stack_drawable_active (GimpItem          *item,
+                                     GimpDrawableStack *stack)
 {
   gint offset_x;
   gint offset_y;

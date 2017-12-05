@@ -61,7 +61,7 @@ gimp_drawable_has_filters (GimpDrawable *drawable)
     {
       GimpFilter *filter = list->data;
 
-      if (gimp_filter_is_visible (filter))
+      if (gimp_filter_get_active (filter))
         return TRUE;
     }
 

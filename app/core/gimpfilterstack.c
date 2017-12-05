@@ -48,7 +48,7 @@ static void   gimp_filter_stack_remove_node      (GimpFilterStack *stack,
                                                   GimpFilter      *filter);
 static void   gimp_filter_stack_update_last_node (GimpFilterStack *stack);
 
-static void   gimp_filter_stack_filter_visible   (GimpFilter      *filter,
+static void   gimp_filter_stack_filter_active    (GimpFilter      *filter,
                                                   GimpFilterStack *stack);
 
 
@@ -86,8 +86,8 @@ gimp_filter_stack_constructed (GObject *object)
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_FILTER));
 
-  gimp_container_add_handler (container, "visibility-changed",
-                              G_CALLBACK (gimp_filter_stack_filter_visible),
+  gimp_container_add_handler (container, "active-changed",
+                              G_CALLBACK (gimp_filter_stack_filter_active),
                               container);
 }
 
@@ -110,7 +110,7 @@ gimp_filter_stack_add (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 
-  if (gimp_filter_get_visible (filter))
+  if (gimp_filter_get_active (filter))
     {
       if (stack->graph)
         {
@@ -129,7 +129,7 @@ gimp_filter_stack_remove (GimpContainer *container,
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
 
-  if (stack->graph && gimp_filter_get_visible (filter))
+  if (stack->graph && gimp_filter_get_active (filter))
     {
       gimp_filter_stack_remove_node (stack, filter);
       gegl_node_remove_child (stack->graph, gimp_filter_get_node (filter));
@@ -137,7 +137,7 @@ gimp_filter_stack_remove (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
 
-  if (gimp_filter_get_visible (filter))
+  if (gimp_filter_get_active (filter))
     {
       gimp_filter_set_is_last_node (filter, FALSE);
       gimp_filter_stack_update_last_node (stack);
@@ -152,12 +152,12 @@ gimp_filter_stack_reorder (GimpContainer *container,
   GimpFilterStack *stack  = GIMP_FILTER_STACK (container);
   GimpFilter      *filter = GIMP_FILTER (object);
 
-  if (stack->graph && gimp_filter_get_visible (filter))
+  if (stack->graph && gimp_filter_get_active (filter))
     gimp_filter_stack_remove_node (stack, filter);
 
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
-  if (gimp_filter_get_visible (filter))
+  if (gimp_filter_get_active (filter))
     {
       gimp_filter_stack_update_last_node (stack);
 
@@ -204,7 +204,7 @@ gimp_filter_stack_get_graph (GimpFilterStack *stack)
       GimpFilter *filter = list->data;
       GeglNode   *node;
 
-      if (! gimp_filter_get_visible (filter))
+      if (! gimp_filter_get_active (filter))
         continue;
 
       node = gimp_filter_get_node (filter);
@@ -246,7 +246,7 @@ gimp_filter_stack_add_node (GimpFilterStack *stack,
     {
       GimpFilter *filter_above = iter->data;
 
-      if (gimp_filter_get_visible (filter_above))
+      if (gimp_filter_get_active (filter_above))
         {
           node_above = gimp_filter_get_node (filter_above);
 
@@ -282,7 +282,7 @@ gimp_filter_stack_remove_node (GimpFilterStack *stack,
     {
       GimpFilter *filter_above = iter->data;
 
-      if (gimp_filter_get_visible (filter_above))
+      if (gimp_filter_get_active (filter_above))
         {
           node_above = gimp_filter_get_node (filter_above);
 
@@ -313,7 +313,7 @@ gimp_filter_stack_update_last_node (GimpFilterStack *stack)
     {
       GimpFilter *filter = list->data;
 
-      if (! found_last && gimp_filter_get_visible (filter))
+      if (! found_last && gimp_filter_get_active (filter))
         {
           gimp_filter_set_is_last_node (filter, TRUE);
           found_last = TRUE;
@@ -326,12 +326,12 @@ gimp_filter_stack_update_last_node (GimpFilterStack *stack)
 }
 
 static void
-gimp_filter_stack_filter_visible (GimpFilter      *filter,
-                                  GimpFilterStack *stack)
+gimp_filter_stack_filter_active (GimpFilter      *filter,
+                                 GimpFilterStack *stack)
 {
   if (stack->graph)
     {
-      if (gimp_filter_get_visible (filter))
+      if (gimp_filter_get_active (filter))
         {
           gegl_node_add_child (stack->graph, gimp_filter_get_node (filter));
           gimp_filter_stack_add_node (stack, filter);
@@ -345,6 +345,6 @@ gimp_filter_stack_filter_visible (GimpFilter      *filter,
 
   gimp_filter_stack_update_last_node (stack);
 
-  if (! gimp_filter_get_visible (filter))
+  if (! gimp_filter_get_active (filter))
     gimp_filter_set_is_last_node (filter, FALSE);
 }

@@ -41,14 +41,14 @@ static void   gimp_layer_stack_reorder                 (GimpContainer *container
                                                         GimpObject    *object,
                                                         gint           new_index);
 
-static void   gimp_layer_stack_layer_visible           (GimpLayer      *layer,
+static void   gimp_layer_stack_layer_active            (GimpLayer      *layer,
                                                         GimpLayerStack *stack);
 static void   gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
                                                         GimpLayerStack *stack);
 
 static void   gimp_layer_stack_update_backdrop         (GimpLayerStack *stack,
                                                         GimpLayer      *layer,
-                                                        gboolean        ignore_visible,
+                                                        gboolean        ignore_active,
                                                         gboolean        ignore_excludes_backdrop);
 static void   gimp_layer_stack_update_range            (GimpLayerStack *stack,
                                                         gint            first,
@@ -88,8 +88,8 @@ gimp_layer_stack_constructed (GObject *object)
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_LAYER));
 
-  gimp_container_add_handler (container, "visibility-changed",
-                              G_CALLBACK (gimp_layer_stack_layer_visible),
+  gimp_container_add_handler (container, "active-changed",
+                              G_CALLBACK (gimp_layer_stack_layer_active),
                               container);
   gimp_container_add_handler (container, "excludes-backdrop-changed",
                               G_CALLBACK (gimp_layer_stack_layer_excludes_backdrop),
@@ -115,7 +115,7 @@ gimp_layer_stack_remove (GimpContainer *container,
   gboolean        update_backdrop;
   gint            index;
 
-  update_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
+  update_backdrop = gimp_filter_get_active (GIMP_FILTER (object)) &&
                     gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
 
   if (update_backdrop)
@@ -136,7 +136,7 @@ gimp_layer_stack_reorder (GimpContainer *container,
   gboolean        update_backdrop;
   gint            index;
 
-  update_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
+  update_backdrop = gimp_filter_get_active (GIMP_FILTER (object)) &&
                     gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
 
   if (update_backdrop)
@@ -167,8 +167,8 @@ gimp_layer_stack_new (GType layer_type)
 /*  private functions  */
 
 static void
-gimp_layer_stack_layer_visible (GimpLayer      *layer,
-                                GimpLayerStack *stack)
+gimp_layer_stack_layer_active (GimpLayer      *layer,
+                               GimpLayerStack *stack)
 {
   gimp_layer_stack_update_backdrop (stack, layer, TRUE, FALSE);
 }
@@ -183,10 +183,10 @@ gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
 static void
 gimp_layer_stack_update_backdrop (GimpLayerStack *stack,
                                   GimpLayer      *layer,
-                                  gboolean        ignore_visible,
+                                  gboolean        ignore_active,
                                   gboolean        ignore_excludes_backdrop)
 {
-  if ((ignore_visible           || gimp_item_get_visible (GIMP_ITEM (layer))) &&
+  if ((ignore_active            || gimp_filter_get_active (GIMP_FILTER (layer))) &&
       (ignore_excludes_backdrop || gimp_layer_get_excludes_backdrop (layer)))
     {
       gint index;
@@ -226,7 +226,7 @@ gimp_layer_stack_update_range (GimpLayerStack *stack,
     {
       GimpItem *item = iter->data;
 
-      if (gimp_item_get_visible (item))
+      if (gimp_filter_get_active (GIMP_FILTER (item)))
         {
           gint offset_x;
           gint offset_y;

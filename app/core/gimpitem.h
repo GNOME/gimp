@@ -43,6 +43,7 @@ struct _GimpItemClass
 
   /*  signals  */
   void            (* removed)               (GimpItem            *item);
+  void            (* visibility_changed)    (GimpItem            *item);
   void            (* linked_changed)        (GimpItem            *item);
   void            (* color_tag_changed)     (GimpItem            *item);
   void            (* lock_content_changed)  (GimpItem            *item);
@@ -325,6 +326,9 @@ void            gimp_item_set_visible        (GimpItem           *item,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_visible        (GimpItem           *item);
 gboolean        gimp_item_is_visible         (GimpItem           *item);
+
+void        gimp_item_bind_visible_to_active (GimpItem           *item,
+                                              gboolean            bind);
 
 void            gimp_item_set_linked         (GimpItem           *item,
                                               gboolean            linked,

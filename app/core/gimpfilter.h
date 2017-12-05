@@ -44,10 +44,10 @@ struct _GimpFilterClass
   GimpViewableClass  parent_class;
 
   /*  signals  */
-  void       (* visibility_changed) (GimpFilter *filter);
+  void       (* active_changed) (GimpFilter *filter);
 
   /*  virtual functions  */
-  GeglNode * (* get_node)           (GimpFilter *filter);
+  GeglNode * (* get_node)       (GimpFilter *filter);
 };
 
 
@@ -57,10 +57,10 @@ GimpFilter     * gimp_filter_new              (const gchar    *name);
 GeglNode       * gimp_filter_get_node         (GimpFilter     *filter);
 GeglNode       * gimp_filter_peek_node        (GimpFilter     *filter);
 
-void             gimp_filter_set_visible      (GimpFilter     *filter,
-                                               gboolean        visible);
-gboolean         gimp_filter_get_visible      (GimpFilter     *filter);
-gboolean         gimp_filter_is_visible       (GimpFilter     *filter);
+void             gimp_filter_set_active       (GimpFilter     *filter,
+                                               gboolean        active);
+gboolean         gimp_filter_get_active       (GimpFilter     *filter);
+gboolean         gimp_filter_is_active        (GimpFilter     *filter);
 
 void             gimp_filter_set_is_last_node (GimpFilter     *filter,
                                                gboolean        is_last_node);

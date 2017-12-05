@@ -32,14 +32,14 @@
 
 enum
 {
-  VISIBILITY_CHANGED,
+  ACTIVE_CHANGED,
   LAST_SIGNAL
 };
 
 enum
 {
   PROP_0,
-  PROP_VISIBLE,
+  PROP_ACTIVE,
   PROP_IS_LAST_NODE
 };
 
@@ -50,7 +50,7 @@ struct _GimpFilterPrivate
 {
   GeglNode       *node;
 
-  guint           visible      : 1;
+  guint           active       : 1;
   guint           is_last_node : 1;
 
   GimpApplicator *applicator;
@@ -92,11 +92,11 @@ gimp_filter_class_init (GimpFilterClass *klass)
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
-  gimp_filter_signals[VISIBILITY_CHANGED] =
-    g_signal_new ("visibility-changed",
+  gimp_filter_signals[ACTIVE_CHANGED] =
+    g_signal_new ("active-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFilterClass, visibility_changed),
+                  G_STRUCT_OFFSET (GimpFilterClass, active_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -107,11 +107,11 @@ gimp_filter_class_init (GimpFilterClass *klass)
 
   gimp_object_class->get_memsize = gimp_filter_get_memsize;
 
-  klass->visibility_changed      = NULL;
+  klass->active_changed          = NULL;
   klass->get_node                = gimp_filter_real_get_node;
 
-  g_object_class_install_property (object_class, PROP_VISIBLE,
-                                   g_param_spec_boolean ("visible", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_ACTIVE,
+                                   g_param_spec_boolean ("active", NULL, NULL,
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE));
 
@@ -129,7 +129,7 @@ gimp_filter_init (GimpFilter *filter)
 {
   GimpFilterPrivate *private = GET_PRIVATE (filter);
 
-  private->visible = TRUE;
+  private->active = TRUE;
 }
 
 static void
@@ -152,8 +152,8 @@ gimp_filter_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_VISIBLE:
-      gimp_filter_set_visible (filter, g_value_get_boolean (value));
+    case PROP_ACTIVE:
+      gimp_filter_set_active (filter, g_value_get_boolean (value));
       break;
     case PROP_IS_LAST_NODE:
       gimp_filter_set_is_last_node (filter, g_value_get_boolean (value));
@@ -175,8 +175,8 @@ gimp_filter_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_VISIBLE:
-      g_value_set_boolean (value, private->visible);
+    case PROP_ACTIVE:
+      g_value_set_boolean (value, private->active);
       break;
     case PROP_IS_LAST_NODE:
       g_value_set_boolean (value, private->is_last_node);
@@ -248,49 +248,29 @@ gimp_filter_peek_node (GimpFilter *filter)
 }
 
 void
-gimp_filter_set_visible (GimpFilter *filter,
-                         gboolean    visible)
+gimp_filter_set_active (GimpFilter *filter,
+                        gboolean    active)
 {
   g_return_if_fail (GIMP_IS_FILTER (filter));
 
-  visible = visible ? TRUE : FALSE;
+  active = active ? TRUE : FALSE;
 
-  if (visible != gimp_filter_get_visible (filter))
+  if (active != gimp_filter_get_active (filter))
     {
-      GET_PRIVATE (filter)->visible = visible;
+      GET_PRIVATE (filter)->active = active;
 
-      g_signal_emit (filter, gimp_filter_signals[VISIBILITY_CHANGED], 0);
+      g_signal_emit (filter, gimp_filter_signals[ACTIVE_CHANGED], 0);
 
-      g_object_notify (G_OBJECT (filter), "visible");
+      g_object_notify (G_OBJECT (filter), "active");
     }
 }
 
 gboolean
-gimp_filter_get_visible (GimpFilter *filter)
+gimp_filter_get_active (GimpFilter *filter)
 {
   g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
 
-  return GET_PRIVATE (filter)->visible;
-}
-
-gboolean
-gimp_filter_is_visible (GimpFilter *filter)
-{
-  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
-
-  if (gimp_filter_get_visible (filter))
-    {
-      GimpFilter *parent;
-
-      parent = GIMP_FILTER (gimp_viewable_get_parent (GIMP_VIEWABLE (filter)));
-
-      if (parent)
-        return gimp_filter_is_visible (parent);
-
-      return TRUE;
-    }
-
-  return FALSE;
+  return GET_PRIVATE (filter)->active;
 }
 
 void

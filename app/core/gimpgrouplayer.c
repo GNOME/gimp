@@ -178,8 +178,7 @@ static void            gimp_group_layer_child_move   (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 static void            gimp_group_layer_child_resize (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
-static void
-           gimp_group_layer_child_visibility_changed (GimpLayer       *child,
+static void    gimp_group_layer_child_active_changed (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 static void
     gimp_group_layer_child_excludes_backdrop_changed (GimpLayer       *child,
@@ -312,8 +311,8 @@ gimp_group_layer_init (GimpGroupLayer *group)
   gimp_container_add_handler (private->children, "size-changed",
                               G_CALLBACK (gimp_group_layer_child_resize),
                               group);
-  gimp_container_add_handler (private->children, "visibility-changed",
-                              G_CALLBACK (gimp_group_layer_child_visibility_changed),
+  gimp_container_add_handler (private->children, "active-changed",
+                              G_CALLBACK (gimp_group_layer_child_active_changed),
                               group);
   gimp_container_add_handler (private->children, "excludes-backdrop-changed",
                               G_CALLBACK (gimp_group_layer_child_excludes_backdrop_changed),
@@ -1017,9 +1016,9 @@ gimp_group_layer_get_excludes_backdrop (GimpLayer *layer)
            list;
            list = g_list_next (list))
         {
-          GimpItem *child = list->data;
+          GimpFilter *child = list->data;
 
-          if (gimp_item_get_visible (child) &&
+          if (gimp_filter_get_active (child) &&
               gimp_layer_get_excludes_backdrop (GIMP_LAYER (child)))
             return TRUE;
         }
@@ -1221,7 +1220,7 @@ gimp_group_layer_child_add (GimpContainer  *container,
 {
   gimp_group_layer_update (group);
 
-  if (gimp_item_get_visible (GIMP_ITEM (child)) &&
+  if (gimp_filter_get_active (GIMP_FILTER (child)) &&
       gimp_layer_get_excludes_backdrop (child))
     {
       gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
@@ -1235,7 +1234,7 @@ gimp_group_layer_child_remove (GimpContainer  *container,
 {
   gimp_group_layer_update (group);
 
-  if (gimp_item_get_visible (GIMP_ITEM (child)) &&
+  if (gimp_filter_get_active (GIMP_FILTER (child)) &&
       gimp_layer_get_excludes_backdrop (child))
     {
       gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
@@ -1258,8 +1257,8 @@ gimp_group_layer_child_resize (GimpLayer      *child,
 }
 
 static void
-gimp_group_layer_child_visibility_changed (GimpLayer      *child,
-                                           GimpGroupLayer *group)
+gimp_group_layer_child_active_changed (GimpLayer      *child,
+                                       GimpGroupLayer *group)
 {
   if (gimp_layer_get_excludes_backdrop (child))
     gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
@@ -1269,7 +1268,7 @@ static void
 gimp_group_layer_child_excludes_backdrop_changed (GimpLayer      *child,
                                                   GimpGroupLayer *group)
 {
-  if (gimp_item_get_visible (GIMP_ITEM (child)))
+  if (gimp_filter_get_active (GIMP_FILTER (child)))
     gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
 }
 
