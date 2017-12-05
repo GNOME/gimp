@@ -63,21 +63,20 @@ struct _GimpFilterPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_filter_finalize                (GObject      *object);
-static void       gimp_filter_set_property            (GObject      *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
-static void       gimp_filter_get_property            (GObject      *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
+static void       gimp_filter_finalize      (GObject      *object);
+static void       gimp_filter_set_property  (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void       gimp_filter_get_property  (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
-static gint64     gimp_filter_get_memsize             (GimpObject   *object,
-                                                       gint64       *gui_size);
+static gint64     gimp_filter_get_memsize   (GimpObject   *object,
+                                             gint64       *gui_size);
 
-static void       gimp_filter_real_visibility_changed (GimpFilter   *filter);
-static GeglNode * gimp_filter_real_get_node           (GimpFilter   *filter);
+static GeglNode * gimp_filter_real_get_node (GimpFilter   *filter);
 
 
 G_DEFINE_TYPE (GimpFilter, gimp_filter, GIMP_TYPE_VIEWABLE)
@@ -108,7 +107,7 @@ gimp_filter_class_init (GimpFilterClass *klass)
 
   gimp_object_class->get_memsize = gimp_filter_get_memsize;
 
-  klass->visibility_changed      = gimp_filter_real_visibility_changed;
+  klass->visibility_changed      = NULL;
   klass->get_node                = gimp_filter_real_get_node;
 
   g_object_class_install_property (object_class, PROP_VISIBLE,
@@ -202,47 +201,12 @@ gimp_filter_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
-static void
-gimp_filter_real_visibility_changed (GimpFilter *filter)
-{
-  GeglNode *node = gimp_filter_peek_node (filter);
-
-  if (node)
-    {
-      if (gimp_filter_get_visible (filter))
-        {
-          /* Leave this up to subclasses */
-        }
-      else
-        {
-          GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
-          GeglNode *output = gegl_node_get_output_proxy (node, "output");
-
-          gegl_node_connect_to (input,  "output",
-                                output, "input");
-        }
-    }
-}
-
 static GeglNode *
 gimp_filter_real_get_node (GimpFilter *filter)
 {
   GimpFilterPrivate *private = GET_PRIVATE (filter);
 
   private->node = gegl_node_new ();
-
-  if (gimp_filter_get_visible (filter))
-    {
-      /* Leave this up to subclasses */
-    }
-  else
-    {
-      GeglNode *input  = gegl_node_get_input_proxy  (private->node, "input");
-      GeglNode *output = gegl_node_get_output_proxy (private->node, "output");
-
-      gegl_node_connect_to (input,  "output",
-                            output, "input");
-    }
 
   return private->node;
 }

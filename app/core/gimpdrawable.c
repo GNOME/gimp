@@ -91,7 +91,6 @@ static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
 
-static void       gimp_drawable_visibility_changed (GimpFilter        *filter);
 static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
 
 static void       gimp_drawable_removed            (GimpItem          *item);
@@ -226,42 +225,41 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose              = gimp_drawable_dispose;
-  object_class->finalize             = gimp_drawable_finalize;
-  object_class->set_property         = gimp_drawable_set_property;
-  object_class->get_property         = gimp_drawable_get_property;
+  object_class->dispose           = gimp_drawable_dispose;
+  object_class->finalize          = gimp_drawable_finalize;
+  object_class->set_property      = gimp_drawable_set_property;
+  object_class->get_property      = gimp_drawable_get_property;
 
-  gimp_object_class->get_memsize     = gimp_drawable_get_memsize;
+  gimp_object_class->get_memsize  = gimp_drawable_get_memsize;
 
-  viewable_class->get_size           = gimp_drawable_get_size;
-  viewable_class->get_new_preview    = gimp_drawable_get_new_preview;
-  viewable_class->get_new_pixbuf     = gimp_drawable_get_new_pixbuf;
+  viewable_class->get_size        = gimp_drawable_get_size;
+  viewable_class->get_new_preview = gimp_drawable_get_new_preview;
+  viewable_class->get_new_pixbuf  = gimp_drawable_get_new_pixbuf;
 
-  filter_class->visibility_changed   = gimp_drawable_visibility_changed;
-  filter_class->get_node             = gimp_drawable_get_node;
+  filter_class->get_node          = gimp_drawable_get_node;
 
-  item_class->removed                = gimp_drawable_removed;
-  item_class->duplicate              = gimp_drawable_duplicate;
-  item_class->scale                  = gimp_drawable_scale;
-  item_class->resize                 = gimp_drawable_resize;
-  item_class->flip                   = gimp_drawable_flip;
-  item_class->rotate                 = gimp_drawable_rotate;
-  item_class->transform              = gimp_drawable_transform;
+  item_class->removed             = gimp_drawable_removed;
+  item_class->duplicate           = gimp_drawable_duplicate;
+  item_class->scale               = gimp_drawable_scale;
+  item_class->resize              = gimp_drawable_resize;
+  item_class->flip                = gimp_drawable_flip;
+  item_class->rotate              = gimp_drawable_rotate;
+  item_class->transform           = gimp_drawable_transform;
 
-  klass->update                      = gimp_drawable_real_update;
-  klass->alpha_changed               = NULL;
-  klass->estimate_memsize            = gimp_drawable_real_estimate_memsize;
-  klass->invalidate_boundary         = NULL;
-  klass->get_active_components       = NULL;
-  klass->get_active_mask             = NULL;
-  klass->convert_type                = gimp_drawable_real_convert_type;
-  klass->apply_buffer                = gimp_drawable_real_apply_buffer;
-  klass->replace_buffer              = gimp_drawable_real_replace_buffer;
-  klass->get_buffer                  = gimp_drawable_real_get_buffer;
-  klass->set_buffer                  = gimp_drawable_real_set_buffer;
-  klass->push_undo                   = gimp_drawable_real_push_undo;
-  klass->swap_pixels                 = gimp_drawable_real_swap_pixels;
-  klass->get_source_node             = gimp_drawable_real_get_source_node;
+  klass->update                   = gimp_drawable_real_update;
+  klass->alpha_changed            = NULL;
+  klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
+  klass->invalidate_boundary      = NULL;
+  klass->get_active_components    = NULL;
+  klass->get_active_mask          = NULL;
+  klass->convert_type             = gimp_drawable_real_convert_type;
+  klass->apply_buffer             = gimp_drawable_real_apply_buffer;
+  klass->replace_buffer           = gimp_drawable_real_replace_buffer;
+  klass->get_buffer               = gimp_drawable_real_get_buffer;
+  klass->set_buffer               = gimp_drawable_real_set_buffer;
+  klass->push_undo                = gimp_drawable_real_push_undo;
+  klass->swap_pixels              = gimp_drawable_real_swap_pixels;
+  klass->get_source_node          = gimp_drawable_real_get_source_node;
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
@@ -387,35 +385,6 @@ gimp_drawable_get_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static void
-gimp_drawable_visibility_changed (GimpFilter *filter)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (filter);
-  GeglNode     *node;
-
-  /*  don't use gimp_filter_get_node() because that would create
-   *  the node.
-   */
-  node = gimp_filter_peek_node (filter);
-
-  if (node)
-    {
-      GeglNode *output = gegl_node_get_output_proxy (node, "output");
-
-      if (gimp_filter_get_visible (filter))
-        {
-          gegl_node_connect_to (drawable->private->mode_node, "output",
-                                output,                       "input");
-        }
-      else
-        {
-          /* Handled by GimpFilter */
-        }
-    }
-
-  GIMP_FILTER_CLASS (parent_class)->visibility_changed (filter);
-}
-
 static GeglNode *
 gimp_drawable_get_node (GimpFilter *filter)
 {
@@ -438,16 +407,8 @@ gimp_drawable_get_node (GimpFilter *filter)
 
   gegl_node_connect_to (input,                        "output",
                         drawable->private->mode_node, "input");
-
-  if (gimp_filter_get_visible (filter))
-    {
-      gegl_node_connect_to (drawable->private->mode_node, "output",
-                            output,                       "input");
-    }
-  else
-    {
-      /* Handled by GimpFilter */
-    }
+  gegl_node_connect_to (drawable->private->mode_node, "output",
+                        output,                       "input");
 
   return node;
 }
