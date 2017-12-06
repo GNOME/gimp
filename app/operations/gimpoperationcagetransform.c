@@ -383,19 +383,19 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
   GeglRectangle rect = { 0, 0, 1, 1 };
   gint          xmin, xmax, ymin, ymax;
 
-  if (p1_d.x > roi->x + roi->width) return;
-  if (p2_d.x > roi->x + roi->width) return;
-  if (p3_d.x > roi->x + roi->width) return;
-  if (p1_d.y > roi->y + roi->height) return;
-  if (p2_d.y > roi->y + roi->height) return;
-  if (p3_d.y > roi->y + roi->height) return;
+  if (p1_d.x >= roi->x + roi->width &&
+      p2_d.x >= roi->x + roi->width &&
+      p3_d.x >= roi->x + roi->width) return;
+  if (p1_d.y >= roi->y + roi->height &&
+      p2_d.y >= roi->y + roi->height &&
+      p3_d.y >= roi->y + roi->height) return;
 
-  if (p1_d.x <= roi->x) return;
-  if (p2_d.x <= roi->x) return;
-  if (p3_d.x <= roi->x) return;
-  if (p1_d.y <= roi->y) return;
-  if (p2_d.y <= roi->y) return;
-  if (p3_d.y <= roi->y) return;
+  if (p1_d.x < roi->x &&
+      p2_d.x < roi->x &&
+      p3_d.x < roi->x) return;
+  if (p1_d.y < roi->y &&
+      p2_d.y < roi->y &&
+      p3_d.y < roi->y) return;
 
   xmin = xmax = p1_d.x;
   ymin = ymax = p1_d.y;
