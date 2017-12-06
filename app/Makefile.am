@@ -273,7 +273,7 @@ dist-hook: dist-check-gimp-console dist-dump-gimprc
 # already exists because then we are probably working with a tarball
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
-	@if test -d "$(top_srcdir)/.git"; then \
+	@if test -e "$(top_srcdir)/.git"; then \
 	  git_version="`git --git-dir=$(top_srcdir)/.git describe --always`"; \
 	  git_version_abbrev="`git --git-dir=$(top_srcdir)/.git rev-parse --short HEAD`"; \
 	  git_last_commit_year="`git --git-dir=$(top_srcdir)/.git log -n1 --reverse --pretty=%ci | cut -b 1-4`"; \
