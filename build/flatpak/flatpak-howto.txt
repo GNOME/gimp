@@ -5,6 +5,8 @@ Stable build
 ~~~~~~~~~~~~
 
 The stable manifest is maintained at flathub: https://github.com/flathub/org.gimp.GIMP
+This repository is pulled in GIMP repository as a submodule so that we
+can share as much code as possible with the other builds.
 
 Development and nightly builds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,6 +18,14 @@ stable too.
 
 Building and maintaining
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Init the submodule if this is the first time:
+
+> git submodule init
+
+* Update it:
+
+> git submodule update
 
 * Install flatpak and flatpak-builder. There are packages for most
   distributions. Check: http://flatpak.org/getting.html
