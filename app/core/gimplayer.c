@@ -64,6 +64,7 @@ enum
   BLEND_SPACE_CHANGED,
   COMPOSITE_SPACE_CHANGED,
   COMPOSITE_MODE_CHANGED,
+  EFFECTIVE_MODE_CHANGED,
   EXCLUDES_BACKDROP_CHANGED,
   LOCK_ALPHA_CHANGED,
   MASK_CHANGED,
@@ -253,6 +254,11 @@ static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
                                                  GeglDitherMethod    mask_dither_type,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
+static void  gimp_layer_real_get_effective_mode (GimpLayer          *layer,
+                                                 GimpLayerMode          *mode,
+                                                 GimpLayerColorSpace    *blend_space,
+                                                 GimpLayerColorSpace    *composite_space,
+                                                 GimpLayerCompositeMode *composite_mode);
 static gboolean
           gimp_layer_real_get_excludes_backdrop (GimpLayer          *layer);
 
@@ -326,6 +332,15 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, composite_mode_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  layer_signals[EFFECTIVE_MODE_CHANGED] =
+    g_signal_new ("effective-mode-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerClass, effective_mode_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -456,6 +471,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->rotate                       = gimp_layer_real_rotate;
   klass->transform                    = gimp_layer_real_transform;
   klass->convert_type                 = gimp_layer_real_convert_type;
+  klass->get_effective_mode           = gimp_layer_real_get_effective_mode;
   klass->get_excludes_backdrop        = gimp_layer_real_get_excludes_backdrop;
 
   g_object_class_install_property (object_class, PROP_OPACITY,
@@ -520,13 +536,17 @@ gimp_layer_class_init (GimpLayerClass *klass)
 static void
 gimp_layer_init (GimpLayer *layer)
 {
-  layer->opacity           = GIMP_OPACITY_OPAQUE;
-  layer->mode              = GIMP_LAYER_MODE_NORMAL;
-  layer->blend_space       = GIMP_LAYER_COLOR_SPACE_AUTO;
-  layer->composite_space   = GIMP_LAYER_COLOR_SPACE_AUTO;
-  layer->composite_mode    = GIMP_LAYER_COMPOSITE_AUTO;
-  layer->excludes_backdrop = FALSE;
-  layer->lock_alpha        = FALSE;
+  layer->opacity                   = GIMP_OPACITY_OPAQUE;
+  layer->mode                      = GIMP_LAYER_MODE_NORMAL;
+  layer->blend_space               = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_space           = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_mode            = GIMP_LAYER_COMPOSITE_AUTO;
+  layer->effective_mode            = layer->mode;
+  layer->effective_blend_space     = gimp_layer_get_real_blend_space (layer);
+  layer->effective_composite_space = gimp_layer_get_real_composite_space (layer);
+  layer->effective_composite_mode  = gimp_layer_get_real_composite_mode (layer);
+  layer->excludes_backdrop         = FALSE;
+  layer->lock_alpha                = FALSE;
 
   layer->mask       = NULL;
   layer->apply_mask = TRUE;
@@ -675,10 +695,10 @@ gimp_layer_update_mode_node (GimpLayer *layer)
     }
   else
     {
-      visible_mode            = layer->mode;
-      visible_blend_space     = layer->blend_space;
-      visible_composite_space = layer->composite_space;
-      visible_composite_mode  = layer->composite_mode;
+      visible_mode            = layer->effective_mode;
+      visible_blend_space     = layer->effective_blend_space;
+      visible_composite_space = layer->effective_composite_space;
+      visible_composite_mode  = layer->effective_composite_mode;
     }
 
   gimp_gegl_mode_node_set_mode (mode_node,
@@ -1546,13 +1566,26 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
   g_object_unref (dest_buffer);
 }
 
+static void
+gimp_layer_real_get_effective_mode (GimpLayer              *layer,
+                                    GimpLayerMode          *mode,
+                                    GimpLayerColorSpace    *blend_space,
+                                    GimpLayerColorSpace    *composite_space,
+                                    GimpLayerCompositeMode *composite_mode)
+{
+  *mode            = gimp_layer_get_mode (layer);
+  *blend_space     = gimp_layer_get_real_blend_space (layer);
+  *composite_space = gimp_layer_get_real_composite_space (layer);
+  *composite_mode  = gimp_layer_get_real_composite_mode (layer);
+}
+
 static gboolean
 gimp_layer_real_get_excludes_backdrop (GimpLayer *layer)
 {
   GimpLayerCompositeRegion included_region;
 
   included_region = gimp_layer_mode_get_included_region (layer->mode,
-                                                         layer->composite_mode);
+                                                         layer->effective_composite_mode);
 
   return ! (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION);
 }
@@ -2383,11 +2416,7 @@ gimp_layer_set_mode (GimpLayer     *layer,
 
       g_object_thaw_notify (G_OBJECT (layer));
 
-      if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-        gimp_layer_update_mode_node (layer);
-
-      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
-
+      gimp_layer_update_effective_mode (layer);
       gimp_layer_update_excludes_backdrop (layer);
     }
 }
@@ -2412,10 +2441,6 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
 
   if (layer->blend_space != blend_space)
     {
-      GimpLayerColorSpace prev_real_blend_space;
-
-      prev_real_blend_space = gimp_layer_get_real_blend_space (layer);
-
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -2428,13 +2453,7 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
       g_signal_emit (layer, layer_signals[BLEND_SPACE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "blend-space");
 
-      if (gimp_layer_get_real_blend_space (layer) != prev_real_blend_space)
-        {
-          if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-            gimp_layer_update_mode_node (layer);
-
-          gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
-        }
+      gimp_layer_update_effective_mode (layer);
     }
 }
 
@@ -2469,10 +2488,6 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
 
   if (layer->composite_space != composite_space)
     {
-      GimpLayerColorSpace prev_real_composite_space;
-
-      prev_real_composite_space = gimp_layer_get_real_composite_space (layer);
-
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -2485,13 +2500,7 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
       g_signal_emit (layer, layer_signals[COMPOSITE_SPACE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "composite-space");
 
-      if (gimp_layer_get_real_composite_space (layer) != prev_real_composite_space)
-        {
-          if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-            gimp_layer_update_mode_node (layer);
-
-          gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
-        }
+      gimp_layer_update_effective_mode (layer);
     }
 }
 
@@ -2526,10 +2535,6 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
 
   if (layer->composite_mode != composite_mode)
     {
-      GimpLayerCompositeMode prev_real_composite_mode;
-
-      prev_real_composite_mode = gimp_layer_get_real_composite_mode (layer);
-
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
@@ -2542,15 +2547,8 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
       g_signal_emit (layer, layer_signals[COMPOSITE_MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "composite-mode");
 
-      if (gimp_layer_get_real_composite_mode (layer) != prev_real_composite_mode)
-        {
-          if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-            gimp_layer_update_mode_node (layer);
-
-          gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
-
-          gimp_layer_update_excludes_backdrop (layer);
-        }
+      gimp_layer_update_effective_mode (layer);
+      gimp_layer_update_excludes_backdrop (layer);
     }
 }
 
@@ -2571,6 +2569,21 @@ gimp_layer_get_real_composite_mode (GimpLayer *layer)
     return gimp_layer_mode_get_composite_mode (layer->mode);
   else
     return layer->composite_mode;
+}
+
+void
+gimp_layer_get_effective_mode (GimpLayer              *layer,
+                               GimpLayerMode          *mode,
+                               GimpLayerColorSpace    *blend_space,
+                               GimpLayerColorSpace    *composite_space,
+                               GimpLayerCompositeMode *composite_mode)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (mode)            *mode            = layer->effective_mode;
+  if (blend_space)     *blend_space     = layer->effective_blend_space;
+  if (composite_space) *composite_space = layer->effective_composite_space;
+  if (composite_mode)  *composite_mode  = layer->effective_composite_mode;
 }
 
 gboolean
@@ -2628,6 +2641,41 @@ gimp_layer_can_lock_alpha (GimpLayer *layer)
 
 
 /*  protected functions  */
+
+void
+gimp_layer_update_effective_mode (GimpLayer *layer)
+{
+  GimpLayerMode          mode;
+  GimpLayerColorSpace    blend_space;
+  GimpLayerColorSpace    composite_space;
+  GimpLayerCompositeMode composite_mode;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  GIMP_LAYER_GET_CLASS (layer)->get_effective_mode (layer,
+                                                    &mode,
+                                                    &blend_space,
+                                                    &composite_space,
+                                                    &composite_mode);
+
+  if (mode            != layer->effective_mode            ||
+      blend_space     != layer->effective_blend_space     ||
+      composite_space != layer->effective_composite_space ||
+      composite_mode  != layer->effective_composite_mode)
+    {
+      layer->effective_mode            = mode;
+      layer->effective_blend_space     = blend_space;
+      layer->effective_composite_space = composite_space;
+      layer->effective_composite_mode  = composite_mode;
+
+      g_signal_emit (layer, layer_signals[EFFECTIVE_MODE_CHANGED], 0);
+
+      if (gimp_filter_peek_node (GIMP_FILTER (layer)))
+        gimp_layer_update_mode_node (layer);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+    }
+}
 
 void
 gimp_layer_update_excludes_backdrop (GimpLayer *layer)
