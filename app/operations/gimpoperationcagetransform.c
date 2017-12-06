@@ -111,8 +111,8 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   operation_class->get_cached_region       = gimp_operation_cage_transform_get_cached_region;
   operation_class->no_cache                = FALSE;
   operation_class->get_bounding_box        = gimp_operation_cage_transform_get_bounding_box;
-  /* XXX Temporarily disable multi-threading on this operation until it
-   * is fixed. See bug 787663.
+  /* XXX Temporarily disable multi-threading on this operation because
+   * it is much faster when single-threaded. See bug 787663.
    */
   operation_class->threaded                = FALSE;
 
@@ -383,6 +383,9 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
   GeglRectangle rect = { 0, 0, 1, 1 };
   gint          xmin, xmax, ymin, ymax;
 
+  /* Stop recursion if all 3 vertices of the triangle are outside the
+   * ROI (left/right or above/below).
+   */
   if (p1_d.x >= roi->x + roi->width &&
       p2_d.x >= roi->x + roi->width &&
       p3_d.x >= roi->x + roi->width) return;
