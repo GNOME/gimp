@@ -60,7 +60,6 @@ GeglNode       * gimp_filter_peek_node        (GimpFilter     *filter);
 void             gimp_filter_set_active       (GimpFilter     *filter,
                                                gboolean        active);
 gboolean         gimp_filter_get_active       (GimpFilter     *filter);
-gboolean         gimp_filter_is_active        (GimpFilter     *filter);
 
 void             gimp_filter_set_is_last_node (GimpFilter     *filter,
                                                gboolean        is_last_node);
