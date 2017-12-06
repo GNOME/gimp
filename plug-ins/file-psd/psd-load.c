@@ -1473,13 +1473,6 @@ add_layers (gint32     image_id,
                     }
                 }
 
-              /* Insert the layer */
-              if (lyr_a[lidx]->group_type == 0 || /* normal layer */
-                  lyr_a[lidx]->group_type == 3    /* group layer end marker */)
-                {
-                  gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
-                }
-
               /* Remember the active layer ID */
               if (lidx == img_a->layer_state)
                 {
@@ -1626,6 +1619,13 @@ add_layers (gint32     image_id,
                       g_free (pixels);
                     }
                 }
+
+                /* Insert the layer */
+                if (lyr_a[lidx]->group_type == 0 || /* normal layer */
+                    lyr_a[lidx]->group_type == 3    /* group layer end marker */)
+                  {
+                    gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                  }
             }
 
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
