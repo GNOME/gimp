@@ -151,9 +151,16 @@ static void            gimp_group_layer_convert_type (GimpLayer         *layer,
                                                       GimpProgress      *progress);
 static GeglNode   * gimp_group_layer_get_source_node (GimpDrawable      *drawable);
 
-static void            gimp_group_layer_mode_changed (GimpLayer         *layer);
+static void         gimp_group_layer_opacity_changed (GimpLayer         *layer);
+static void  gimp_group_layer_effective_mode_changed (GimpLayer         *layer);
 static void
           gimp_group_layer_excludes_backdrop_changed (GimpLayer         *layer);
+static void            gimp_group_layer_mask_changed (GimpLayer         *layer);
+static void      gimp_group_layer_get_effective_mode (GimpLayer         *layer,
+                                                      GimpLayerMode          *mode,
+                                                      GimpLayerColorSpace    *blend_space,
+                                                      GimpLayerColorSpace    *composite_space,
+                                                      GimpLayerCompositeMode *composite_mode);
 static gboolean
               gimp_group_layer_get_excludes_backdrop (GimpLayer         *layer);
 
@@ -179,6 +186,9 @@ static void            gimp_group_layer_child_move   (GimpLayer       *child,
 static void            gimp_group_layer_child_resize (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 static void    gimp_group_layer_child_active_changed (GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
+static void
+       gimp_group_layer_child_effective_mode_changed (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 static void
     gimp_group_layer_child_excludes_backdrop_changed (GimpLayer       *child,
@@ -213,6 +223,12 @@ G_DEFINE_TYPE_WITH_CODE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER,
 
 
 #define parent_class gimp_group_layer_parent_class
+
+
+/* disable pass-through groups strength-reduction to normal groups.
+ * see gimp_group_layer_get_effective_mode().
+ */
+static gboolean no_pass_through_strength_reduction = FALSE;
 
 
 static void
@@ -254,8 +270,10 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   drawable_class->estimate_memsize       = gimp_group_layer_estimate_memsize;
   drawable_class->get_source_node        = gimp_group_layer_get_source_node;
 
-  layer_class->mode_changed              = gimp_group_layer_mode_changed;
+  layer_class->opacity_changed           = gimp_group_layer_opacity_changed;
+  layer_class->effective_mode_changed    = gimp_group_layer_effective_mode_changed;
   layer_class->excludes_backdrop_changed = gimp_group_layer_excludes_backdrop_changed;
+  layer_class->mask_changed              = gimp_group_layer_mask_changed;
   layer_class->translate                 = gimp_group_layer_translate;
   layer_class->scale                     = gimp_group_layer_scale;
   layer_class->resize                    = gimp_group_layer_resize;
@@ -263,9 +281,13 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   layer_class->rotate                    = gimp_group_layer_rotate;
   layer_class->transform                 = gimp_group_layer_transform;
   layer_class->convert_type              = gimp_group_layer_convert_type;
+  layer_class->get_effective_mode        = gimp_group_layer_get_effective_mode;
   layer_class->get_excludes_backdrop     = gimp_group_layer_get_excludes_backdrop;
 
   g_type_class_add_private (klass, sizeof (GimpGroupLayerPrivate));
+
+  if (g_getenv ("GIMP_NO_PASS_THROUGH_STRENGTH_REDUCTION"))
+    no_pass_through_strength_reduction = TRUE;
 }
 
 static void
@@ -313,6 +335,9 @@ gimp_group_layer_init (GimpGroupLayer *group)
                               group);
   gimp_container_add_handler (private->children, "active-changed",
                               G_CALLBACK (gimp_group_layer_child_active_changed),
+                              group);
+  gimp_container_add_handler (private->children, "effective-mode-changed",
+                              G_CALLBACK (gimp_group_layer_child_effective_mode_changed),
                               group);
   gimp_container_add_handler (private->children, "excludes-backdrop-changed",
                               G_CALLBACK (gimp_group_layer_child_excludes_backdrop_changed),
@@ -964,13 +989,25 @@ gimp_group_layer_get_source_node (GimpDrawable *drawable)
 }
 
 static void
-gimp_group_layer_mode_changed (GimpLayer *layer)
+gimp_group_layer_opacity_changed (GimpLayer *layer)
+{
+  gimp_layer_update_effective_mode (layer);
+
+  if (GIMP_LAYER_CLASS (parent_class)->opacity_changed)
+    GIMP_LAYER_CLASS (parent_class)->opacity_changed (layer);
+}
+
+static void
+gimp_group_layer_effective_mode_changed (GimpLayer *layer)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  GimpLayerMode          mode;
   gboolean               pass_through;
 
-  pass_through = (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH);
+  gimp_layer_get_effective_mode (layer, &mode, NULL, NULL, NULL);
+
+  pass_through = (mode == GIMP_LAYER_MODE_PASS_THROUGH);
 
   if (private->pass_through && ! pass_through)
     {
@@ -987,8 +1024,8 @@ gimp_group_layer_mode_changed (GimpLayer *layer)
   gimp_group_layer_update_source_node (group);
   gimp_group_layer_update_mode_node (group);
 
-  if (GIMP_LAYER_CLASS (parent_class)->mode_changed)
-    GIMP_LAYER_CLASS (parent_class)->mode_changed (layer);
+  if (GIMP_LAYER_CLASS (parent_class)->effective_mode_changed)
+    GIMP_LAYER_CLASS (parent_class)->effective_mode_changed (layer);
 }
 
 static void
@@ -1001,6 +1038,138 @@ gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
 
   if (GIMP_LAYER_CLASS (parent_class)->excludes_backdrop_changed)
     GIMP_LAYER_CLASS (parent_class)->excludes_backdrop_changed (layer);
+}
+
+static void
+gimp_group_layer_mask_changed (GimpLayer *layer)
+{
+  gimp_layer_update_effective_mode (layer);
+
+  if (GIMP_LAYER_CLASS (parent_class)->mask_changed)
+    GIMP_LAYER_CLASS (parent_class)->mask_changed (layer);
+}
+
+static void
+gimp_group_layer_get_effective_mode (GimpLayer              *layer,
+                                     GimpLayerMode          *mode,
+                                     GimpLayerColorSpace    *blend_space,
+                                     GimpLayerColorSpace    *composite_space,
+                                     GimpLayerCompositeMode *composite_mode)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+
+  /* try to strength-reduce pass-through groups to normal groups, which are
+   * cheaper.
+   */
+  if (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH &&
+      ! no_pass_through_strength_reduction)
+    {
+      /* we perform the strength-reduction if:
+       *
+       *   - the group has no active children;
+       *
+       *   or,
+       *
+       *     - the group has a single active child; or,
+       *
+       *     - the effective mode of all the active children is normal, their
+       *       effective composite mode is src-over, and their effective
+       *       blend and composite spaces are equal;
+       *
+       *   - and,
+       *
+       *     - the group's opacity is 100%, and it has no mask; or,
+       *
+       *     - the group's composite space equals the active children's
+       *       composite space.
+       */
+
+      GList    *list;
+      gboolean  reduce = TRUE;
+      gboolean  first  = TRUE;
+
+      *mode            = GIMP_LAYER_MODE_NORMAL;
+      *blend_space     = gimp_layer_get_real_blend_space (layer);
+      *composite_space = gimp_layer_get_real_composite_space (layer);
+      *composite_mode  = gimp_layer_get_real_composite_mode (layer);
+
+      for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+           list;
+           list = g_list_next (list))
+        {
+          GimpLayer *child = list->data;
+
+          if (! gimp_filter_get_active (GIMP_FILTER (child)))
+            continue;
+
+          if (first)
+            {
+              gimp_layer_get_effective_mode (child,
+                                             mode,
+                                             blend_space,
+                                             composite_space,
+                                             composite_mode);
+
+              if (*mode == GIMP_LAYER_MODE_NORMAL_LEGACY)
+                *mode = GIMP_LAYER_MODE_NORMAL;
+
+              first = FALSE;
+            }
+          else
+            {
+              GimpLayerMode          other_mode;
+              GimpLayerColorSpace    other_blend_space;
+              GimpLayerColorSpace    other_composite_space;
+              GimpLayerCompositeMode other_composite_mode;
+
+              if (*mode           != GIMP_LAYER_MODE_NORMAL ||
+                  *composite_mode != GIMP_LAYER_COMPOSITE_SRC_OVER)
+                {
+                  reduce = FALSE;
+
+                  break;
+                }
+
+              gimp_layer_get_effective_mode (child,
+                                             &other_mode,
+                                             &other_blend_space,
+                                             &other_composite_space,
+                                             &other_composite_mode);
+
+              if (other_mode == GIMP_LAYER_MODE_NORMAL_LEGACY)
+                other_mode = GIMP_LAYER_MODE_NORMAL;
+
+              if (other_mode            != *mode            ||
+                  other_blend_space     != *blend_space     ||
+                  other_composite_space != *composite_space ||
+                  other_composite_mode  != *composite_mode)
+                {
+                  reduce = FALSE;
+
+                  break;
+                }
+            }
+        }
+
+      if (reduce)
+        {
+          if (first                                                  ||
+              (gimp_layer_get_opacity (layer) == GIMP_OPACITY_OPAQUE &&
+               ! gimp_layer_get_mask (layer))                        ||
+              *composite_space == gimp_layer_get_real_composite_space (layer))
+            {
+              /* strength reduction succeeded! */
+              return;
+            }
+        }
+    }
+
+  /* strength-reduction failed.  chain up. */
+  GIMP_LAYER_CLASS (parent_class)->get_effective_mode (layer,
+                                                       mode,
+                                                       blend_space,
+                                                       composite_space,
+                                                       composite_mode);
 }
 
 static gboolean
@@ -1220,10 +1389,12 @@ gimp_group_layer_child_add (GimpContainer  *container,
 {
   gimp_group_layer_update (group);
 
-  if (gimp_filter_get_active (GIMP_FILTER (child)) &&
-      gimp_layer_get_excludes_backdrop (child))
+  if (gimp_filter_get_active (GIMP_FILTER (child)))
     {
-      gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+      gimp_layer_update_effective_mode (GIMP_LAYER (group));
+
+      if (gimp_layer_get_excludes_backdrop (child))
+        gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
     }
 }
 
@@ -1234,10 +1405,12 @@ gimp_group_layer_child_remove (GimpContainer  *container,
 {
   gimp_group_layer_update (group);
 
-  if (gimp_filter_get_active (GIMP_FILTER (child)) &&
-      gimp_layer_get_excludes_backdrop (child))
+  if (gimp_filter_get_active (GIMP_FILTER (child)))
     {
-      gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+      gimp_layer_update_effective_mode (GIMP_LAYER (group));
+
+      if (gimp_layer_get_excludes_backdrop (child))
+        gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
     }
 }
 
@@ -1260,8 +1433,18 @@ static void
 gimp_group_layer_child_active_changed (GimpLayer      *child,
                                        GimpGroupLayer *group)
 {
+  gimp_layer_update_effective_mode (GIMP_LAYER (group));
+
   if (gimp_layer_get_excludes_backdrop (child))
     gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+}
+
+static void
+gimp_group_layer_child_effective_mode_changed (GimpLayer      *child,
+                                               GimpGroupLayer *group)
+{
+  if (gimp_filter_get_active (GIMP_FILTER (child)))
+    gimp_layer_update_effective_mode (GIMP_LAYER (group));
 }
 
 static void
