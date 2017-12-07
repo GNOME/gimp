@@ -403,7 +403,7 @@ gimp_foreground_select_tool_button_press (GimpTool            *tool,
 
       g_array_append_val (fg_select->stroke, point);
 
-      if (!gimp_draw_tool_is_active (draw_tool))
+      if (! gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_start (draw_tool, display);
 
       gimp_draw_tool_resume (draw_tool);
@@ -424,6 +424,14 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
     {
       GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                       release_type, display);
+
+      /*  see comment in gimp_foreground_select_tool_select()  */
+      if (fg_select->in_double_click)
+        {
+          gimp_foreground_select_tool_set_trimap (fg_select);
+
+          fg_select->in_double_click = FALSE;
+        }
     }
   else
     {
@@ -899,7 +907,20 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                       0, 0, 0.5);
       gimp_scan_convert_free (scan_convert);
 
-      gimp_foreground_select_tool_set_trimap (fg_select);
+      if (! gimp_tool_control_is_active (GIMP_TOOL (fg_select)->control))
+        {
+          gimp_foreground_select_tool_set_trimap (fg_select);
+        }
+      else
+        {
+          /*  if the tool is active we got here by double click
+           *  detected in the parent class. We can't switch to trimap
+           *  mode in the middle of a click. Set a flag and let
+           *  button_release() forward the release to the parent class
+           *  so it can conclude its operation
+           */
+          fg_select->in_double_click = TRUE;
+        }
     }
 }
 
@@ -1154,7 +1175,7 @@ gimp_foreground_select_tool_response (GimpToolGui              *gui,
     {
     case GTK_RESPONSE_APPLY:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
-      /* fallthru */
+      break;
 
     default:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);

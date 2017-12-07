@@ -48,6 +48,7 @@ struct _GimpForegroundSelectTool
   GimpFreeSelectTool  parent_instance;
 
   MattingState        state;
+  gboolean            in_double_click;
 
   GimpCoords          last_coords;
   GArray             *stroke;
