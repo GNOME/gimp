@@ -41,9 +41,9 @@ Usability:
     will be wrapped around the screen so that you could continue adjusting
     the value without interruptions.
   - Canvas rotation and flip information is now visible in the status
-    bar (as angle and flip icons). Clicking on these canvas status will
-    respectively raise the "Select Rotation Angle" dialog or unflip the
-    canvas.
+    bar (as angle value and flip icon). Clicking on these canvas status
+    will respectively raise the "Select Rotation Angle" dialog or unflip
+    the canvas.
 
 Tools:
 
