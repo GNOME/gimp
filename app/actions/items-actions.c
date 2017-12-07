@@ -60,7 +60,7 @@ items_actions_setup (GimpActionGroup *group,
           gimp_action_group_set_action_context (group, action,
                                                 gimp_get_user_context (group->gimp));
 
-          gimp_get_color_tag_color (value->value, &color);
+          gimp_get_color_tag_color (value->value, &color, FALSE);
           gimp_action_group_set_action_color (group, action, &color, FALSE);
         }
     }
@@ -95,7 +95,7 @@ items_actions_update (GimpActionGroup *group,
       can_lock_pos = gimp_item_can_lock_position (item);
 
       has_color_tag = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
-                                                &tag_color);
+                                                &tag_color, FALSE);
     }
 
 #define SET_SENSITIVE(action,condition) \

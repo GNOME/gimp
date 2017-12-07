@@ -228,7 +228,7 @@ item_options_dialog_new (GimpImage               *image,
           color_tag = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (radio),
                                                           "gimp-item-data"));
 
-          if (gimp_get_color_tag_color (color_tag, &color))
+          if (gimp_get_color_tag_color (color_tag, &color, FALSE))
             {
               GtkSettings *settings = gtk_widget_get_settings (dialog);
               gint         w, h;

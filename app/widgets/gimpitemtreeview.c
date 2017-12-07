@@ -990,8 +990,10 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
 
   item_view->priv->inserting_item = FALSE;
 
-  has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
-                                        &color);
+  has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
+                                        &color,
+                                        gimp_item_get_color_tag (item) ==
+                                        GIMP_COLOR_TAG_NONE);
   if (has_color)
     gimp_rgb_get_gdk_color (&color, &gdk_color);
 
@@ -1406,12 +1408,15 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
 
   if (iter)
     {
-      GimpRGB  color;
-      GdkColor gdk_color;
-      gboolean has_color;
+      GimpContainer *children;
+      GimpRGB        color;
+      GdkColor       gdk_color;
+      gboolean       has_color;
 
-      has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
-                                            &color);
+      has_color = gimp_get_color_tag_color (gimp_item_get_merged_color_tag (item),
+                                            &color,
+                                            gimp_item_get_color_tag (item) ==
+                                            GIMP_COLOR_TAG_NONE);
       if (has_color)
         gimp_rgb_get_gdk_color (&color, &gdk_color);
 
@@ -1419,6 +1424,13 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
                           view->priv->model_column_color_tag,
                           has_color ? &gdk_color : NULL,
                           -1);
+
+      children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        gimp_container_foreach (children,
+                                (GFunc) gimp_item_tree_view_color_tag_changed,
+                                view);
     }
 }
 

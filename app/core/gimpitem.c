@@ -2203,6 +2203,24 @@ gimp_item_get_color_tag (GimpItem *item)
   return GET_PRIVATE (item)->color_tag;
 }
 
+GimpColorTag
+gimp_item_get_merged_color_tag (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), GIMP_COLOR_TAG_NONE);
+
+  if (gimp_item_get_color_tag (item) == GIMP_COLOR_TAG_NONE)
+    {
+      GimpItem *parent;
+
+      parent = GIMP_ITEM (gimp_viewable_get_parent (GIMP_VIEWABLE (item)));
+
+      if (parent)
+        return gimp_item_get_merged_color_tag (parent);
+    }
+
+  return gimp_item_get_color_tag (item);
+}
+
 void
 gimp_item_set_lock_content (GimpItem *item,
                             gboolean  lock_content,

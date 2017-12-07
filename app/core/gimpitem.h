@@ -339,6 +339,7 @@ void            gimp_item_set_color_tag      (GimpItem           *item,
                                               GimpColorTag        color_tag,
                                               gboolean            push_undo);
 GimpColorTag    gimp_item_get_color_tag      (GimpItem           *item);
+GimpColorTag  gimp_item_get_merged_color_tag (GimpItem           *item);
 
 void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            lock_content,

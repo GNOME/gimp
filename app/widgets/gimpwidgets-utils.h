@@ -87,7 +87,8 @@ void              gimp_widget_set_accel_help       (GtkWidget            *widget
 
 const gchar     * gimp_get_message_icon_name       (GimpMessageSeverity   severity);
 gboolean          gimp_get_color_tag_color         (GimpColorTag          color_tag,
-                                                    GimpRGB              *color);
+                                                    GimpRGB              *color,
+                                                    gboolean              inherited);
 
 void              gimp_pango_layout_set_scale      (PangoLayout          *layout,
                                                     double                scale);

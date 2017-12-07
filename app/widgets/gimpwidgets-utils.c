@@ -1161,7 +1161,8 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
 
 gboolean
 gimp_get_color_tag_color (GimpColorTag  color_tag,
-                          GimpRGB      *color)
+                          GimpRGB      *color,
+                          gboolean      inherited)
 {
   static const struct
   {
@@ -1183,6 +1184,7 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
   };
 
   g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (color_tag < G_N_ELEMENTS (colors), FALSE);
 
   if (color_tag > GIMP_COLOR_TAG_NONE)
     {
@@ -1191,6 +1193,12 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
                            colors[color_tag].g,
                            colors[color_tag].b,
                            255);
+
+      if (inherited)
+        {
+          gimp_rgb_composite (color, &(GimpRGB) {1.0, 1.0, 1.0, 0.2},
+                              GIMP_RGB_COMPOSITE_NORMAL);
+        }
 
       return TRUE;
     }
