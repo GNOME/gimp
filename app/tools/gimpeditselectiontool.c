@@ -764,12 +764,15 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      gimp_draw_tool_add_boundary (draw_tool,
-                                   edit_select->segs_in,
-                                   edit_select->num_segs_in,
-                                   NULL,
-                                   edit_select->cuml_x,
-                                   edit_select->cuml_y);
+      if (edit_select->segs_in)
+        {
+          gimp_draw_tool_add_boundary (draw_tool,
+                                       edit_select->segs_in,
+                                       edit_select->num_segs_in,
+                                       NULL,
+                                       edit_select->cuml_x,
+                                       edit_select->cuml_y);
+        }
       break;
     }
 
