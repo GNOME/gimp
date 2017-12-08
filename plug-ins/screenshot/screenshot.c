@@ -29,6 +29,7 @@
 #include "screenshot.h"
 #include "screenshot-gnome-shell.h"
 #include "screenshot-icon.h"
+#include "screenshot-kwin.h"
 #include "screenshot-osx.h"
 #include "screenshot-x11.h"
 #include "screenshot-win32.h"
@@ -202,6 +203,11 @@ run (const gchar      *name,
       backend      = SCREENSHOT_BACKEND_GNOME_SHELL;
       capabilities = screenshot_gnome_shell_get_capabilities ();
     }
+  else if (! backend && screenshot_kwin_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_KWIN;
+      capabilities = screenshot_kwin_get_capabilities ();
+    }
 
 #ifdef GDK_WINDOWING_X11
   if (! backend && screenshot_x11_available ())
@@ -357,6 +363,8 @@ shoot (GdkScreen  *screen,
 
   if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
     return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
+  else if (backend == SCREENSHOT_BACKEND_KWIN)
+    return screenshot_kwin_shoot (&shootvals, screen, image_ID, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
