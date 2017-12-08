@@ -742,13 +742,18 @@ gimp_container_tree_view_insert_item (GimpContainerView *view,
                                       gpointer           parent_insert_data,
                                       gint               index)
 {
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpContainerTreeView *tree_view   = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeIter           *parent_iter = parent_insert_data;
   GtkTreeIter           *iter;
 
   iter = gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (tree_view->model),
                                                 viewable,
-                                                parent_insert_data,
+                                                parent_iter,
                                                 index);
+
+  if (parent_iter)
+    gimp_container_tree_view_expand_item (view, viewable, parent_iter);
+
   return iter;
 }
 
@@ -776,6 +781,7 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   GtkTreeIter           *iter      = (GtkTreeIter *) insert_data;
+  GtkTreeIter            parent_iter;
   gboolean               selected  = FALSE;
 
   if (iter)
@@ -807,6 +813,9 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
 
   if (selected)
     gimp_container_view_select_item (view, viewable);
+
+  if (gtk_tree_model_iter_parent (tree_view->model, &parent_iter, iter))
+    gimp_container_tree_view_expand_item (view, viewable, &parent_iter);
 }
 
 static void
