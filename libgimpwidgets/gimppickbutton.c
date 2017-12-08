@@ -50,13 +50,15 @@ enum
   LAST_SIGNAL
 };
 
-/* entry points to gimppickbutton-{default,quartz}.c */
-void              _gimp_pick_button_default_pick (GimpPickButton *button);
-void              _gimp_pick_button_quartz_pick  (GimpPickButton *button);
+/* entry points to gimppickbutton-{default,kwin,quartz}.c */
+void              _gimp_pick_button_default_pick   (GimpPickButton *button);
+gboolean          _gimp_pick_button_kwin_available (void);
+void              _gimp_pick_button_kwin_pick      (GimpPickButton *button);
+void              _gimp_pick_button_quartz_pick    (GimpPickButton *button);
 
-static void       gimp_pick_button_dispose       (GObject        *object);
+static void       gimp_pick_button_dispose         (GObject        *object);
 
-static void       gimp_pick_button_clicked       (GtkButton      *button);
+static void       gimp_pick_button_clicked         (GtkButton      *button);
 
 
 G_DEFINE_TYPE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
@@ -138,7 +140,10 @@ gimp_pick_button_clicked (GtkButton *button)
 #ifdef GDK_WINDOWING_QUARTZ
   _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
 #else
-  _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+  if (_gimp_pick_button_kwin_available ())
+    _gimp_pick_button_kwin_pick (GIMP_PICK_BUTTON (button));
+  else
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
 #endif
 }
 
