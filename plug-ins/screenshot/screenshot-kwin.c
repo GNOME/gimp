@@ -80,9 +80,9 @@ screenshot_kwin_get_capabilities (void)
 
 GimpPDBStatusType
 screenshot_kwin_shoot (ScreenshotValues  *shootvals,
-                              GdkScreen         *screen,
-                              gint32            *image_ID,
-                              GError           **error)
+                       GdkScreen         *screen,
+                       gint32            *image_ID,
+                       GError           **error)
 {
   gchar       *filename;
   const gchar *method = NULL;
