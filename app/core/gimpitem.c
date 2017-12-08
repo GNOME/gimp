@@ -558,6 +558,9 @@ gimp_item_real_duplicate (GimpItem *item,
 
   g_free (new_name);
 
+  gimp_viewable_set_expanded (GIMP_VIEWABLE (new_item),
+                              gimp_viewable_get_expanded (GIMP_VIEWABLE (item)));
+
   g_object_unref (GET_PRIVATE (new_item)->parasites);
   GET_PRIVATE (new_item)->parasites = gimp_parasite_list_copy (private->parasites);
 
