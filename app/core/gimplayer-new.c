@@ -67,8 +67,6 @@ gimp_layer_new (GimpImage     *image,
                                          0, 0, width, height,
                                          format));
 
-  opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
-
   gimp_layer_set_opacity (layer, opacity, FALSE);
   gimp_layer_set_mode (layer, mode, FALSE);
 
