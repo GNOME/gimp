@@ -24,6 +24,7 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-quartz.h"
 
 #include "cursors/gimp-color-picker-cursors.c"
 
@@ -32,9 +33,6 @@
 #include <Carbon/Carbon.h>  /* For virtual key codes ... */
 #include <ApplicationServices/ApplicationServices.h>
 #endif
-
-
-void   _gimp_pick_button_quartz_pick (GimpPickButton *button);
 
 
 @interface GimpPickWindowController : NSObject

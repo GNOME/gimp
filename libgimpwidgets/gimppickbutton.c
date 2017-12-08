@@ -30,6 +30,12 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-default.h"
+#include "gimppickbutton-kwin.h"
+
+#ifdef GDK_WINDOWING_QUARTZ
+#include "gimppickbutton-quartz.h"
+#endif
 
 #include "libgimp/libgimp-intl.h"
 
@@ -49,12 +55,6 @@ enum
   COLOR_PICKED,
   LAST_SIGNAL
 };
-
-/* entry points to gimppickbutton-{default,kwin,quartz}.c */
-void              _gimp_pick_button_default_pick   (GimpPickButton *button);
-gboolean          _gimp_pick_button_kwin_available (void);
-void              _gimp_pick_button_kwin_pick      (GimpPickButton *button);
-void              _gimp_pick_button_quartz_pick    (GimpPickButton *button);
 
 static void       gimp_pick_button_dispose         (GObject        *object);
 

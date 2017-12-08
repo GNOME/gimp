@@ -23,13 +23,10 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-default.h"
+#include "gimppickbutton-kwin.h"
 
 #include "libgimp/libgimp-intl.h"
-
-void     _gimp_pick_button_default_pick (GimpPickButton *button);
-
-gboolean _gimp_pick_button_kwin_available (void);
-void     _gimp_pick_button_kwin_pick (GimpPickButton *button);
 
 gboolean
 _gimp_pick_button_kwin_available (void)

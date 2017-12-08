@@ -35,6 +35,7 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-default.h"
 #include "gimpwidgetsutils.h"
 
 #include "cursors/gimp-color-picker-cursors.c"
@@ -59,8 +60,6 @@ static void       gimp_pick_button_pick          (GdkScreen      *screen,
                                                   gint            x_root,
                                                   gint            y_root,
                                                   GimpPickButton *button);
-
-void              _gimp_pick_button_default_pick (GimpPickButton *button);
 
 
 static GdkCursor *
