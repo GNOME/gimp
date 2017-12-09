@@ -71,7 +71,11 @@ typedef enum
   RAW_GRAY_4BPP,
   RAW_GRAY_8BPP,
   RAW_INDEXED,      /* Indexed image */
-  RAW_INDEXEDA      /* Indexed image with an Alpha channel */
+  RAW_INDEXEDA,     /* Indexed image with an Alpha channel */
+  RAW_GRAY_16BPP_BE,
+  RAW_GRAY_16BPP_LE,
+  RAW_GRAY_16BPP_SBE,
+  RAW_GRAY_16BPP_SLE,
 } RawType;
 
 typedef enum
@@ -257,7 +261,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_load_handler (LOAD_PROC, "data", "");
+  gimp_register_load_handler (LOAD_PROC, "data,hgt", "");
 
   gimp_install_procedure (SAVE_PROC,
                           "Dump images to disk in raw format",
@@ -364,6 +368,12 @@ run (const gchar      *name,
           gimp_get_data (LOAD_PROC, runtime);
 
           preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
+          if (g_strcmp0 (strchr (param[1].data.d_string, '.'), ".hgt") == 0)
+            {
+              runtime->image_width    = 1201;
+              runtime->image_height   = 1201;
+              runtime->image_type     = RAW_GRAY_16BPP_SBE;
+            }
 
           if (preview_fd < 0)
             {
@@ -627,6 +637,59 @@ raw_load_standard (RawGimpData *data,
                    NULL, row, GEGL_AUTO_ROWSTRIDE);
 
   g_free (row);
+
+  return TRUE;
+}
+
+static gboolean
+raw_load_gray16 (RawGimpData *data,
+                 RawType      type)
+{
+  guint16 *in_raw = NULL;
+  guint16 *out_raw = NULL;
+  gsize    in_size;
+  gsize    out_size;
+  gsize    i;
+
+  in_size  = runtime->image_width * runtime->image_height;
+  out_size = runtime->image_width * runtime->image_height * 3 * sizeof * out_raw;
+
+  in_raw = g_try_malloc (in_size * sizeof * in_raw);
+  if (! in_raw)
+    return FALSE;
+
+  out_raw = g_try_malloc0 (out_size);
+  if (! out_raw)
+    return FALSE;
+
+  raw_read_row (data->fp, (guchar*)in_raw, runtime->file_offset,
+                in_size * sizeof * in_raw);
+
+  for (i = 0; i < in_size; i++)
+    {
+      gint pixel_val;
+
+      if (type == RAW_GRAY_16BPP_BE)
+        pixel_val = GUINT16_FROM_BE (in_raw[i]);
+      else if (type == RAW_GRAY_16BPP_LE)
+        pixel_val = GUINT16_FROM_LE (in_raw[i]);
+      else if (type == RAW_GRAY_16BPP_SBE)
+        pixel_val = GINT16_FROM_BE (in_raw[i]) - G_MININT16;
+      else/* if (type == RAW_GRAY_16BPP_SLE)*/
+        pixel_val = GINT16_FROM_LE (in_raw[i]) - G_MININT16;
+
+      out_raw[3 * i + 0] = pixel_val;
+      out_raw[3 * i + 1] = pixel_val;
+      out_raw[3 * i + 2] = pixel_val;
+    }
+
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
+                                                 runtime->image_width,
+                                                 runtime->image_height), 0,
+                   NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
+
+  g_free (in_raw);
+  g_free (out_raw);
 
   return TRUE;
 }
@@ -1147,15 +1210,30 @@ load_image (const gchar  *filename,
       ltype = GIMP_INDEXEDA_IMAGE;
       itype = GIMP_INDEXED;
       break;
+
+    case RAW_GRAY_16BPP_BE:
+    case RAW_GRAY_16BPP_LE:
+    case RAW_GRAY_16BPP_SBE:
+    case RAW_GRAY_16BPP_SLE:
+      bpp   = 2;
+      ltype = GIMP_RGB_IMAGE;
+      itype = GIMP_RGB;
+      break;
     }
 
   /* make sure we don't load image bigger than file size */
   if (runtime->image_height > (size / runtime->image_width / bpp * 8 / bitspp))
     runtime->image_height = size / runtime->image_width / bpp * 8 / bitspp;
 
-  data->image_id = gimp_image_new (runtime->image_width,
-                                   runtime->image_height,
-                                   itype);
+  if (runtime->image_type >= RAW_GRAY_16BPP_BE)
+    data->image_id = gimp_image_new_with_precision (runtime->image_width,
+                                                    runtime->image_height,
+                                                    itype,
+                                                    GIMP_PRECISION_U16_GAMMA);
+  else
+    data->image_id = gimp_image_new (runtime->image_width,
+                                     runtime->image_height,
+                                     itype);
   gimp_image_set_filename(data->image_id, filename);
   layer_id = gimp_layer_new (data->image_id, _("Background"),
                              runtime->image_width, runtime->image_height,
@@ -1201,6 +1279,13 @@ load_image (const gchar  *filename,
     case RAW_INDEXEDA:
       raw_load_palette (data, palfile);
       raw_load_standard (data, bpp);
+      break;
+
+    case RAW_GRAY_16BPP_BE:
+    case RAW_GRAY_16BPP_LE:
+    case RAW_GRAY_16BPP_SBE:
+    case RAW_GRAY_16BPP_SLE:
+      raw_load_gray16 (data, runtime->image_type);
       break;
     }
 
@@ -1515,6 +1600,46 @@ preview_update (GimpPreviewArea *preview)
         g_free (index);
       }
       break;
+
+    case RAW_GRAY_16BPP_BE:
+    case RAW_GRAY_16BPP_LE:
+    case RAW_GRAY_16BPP_SBE:
+    case RAW_GRAY_16BPP_SLE:
+        {
+        guint16 *r_row = g_new (guint16, width);
+        guchar  *row   = g_malloc (width);
+
+        for (y = 0; y < height; y++)
+          {
+            gint j;
+
+            pos = (runtime->file_offset + (y * runtime->image_width * 2));
+            mmap_read (preview_fd, (guchar*) r_row, 2 * width, pos, width);
+
+            for (j = 0; j < width; j++)
+              {
+                gint pixel_val;
+
+                if (runtime->image_type == RAW_GRAY_16BPP_BE)
+                  pixel_val = GUINT16_FROM_BE (r_row[j]);
+                else if (runtime->image_type == RAW_GRAY_16BPP_LE)
+                  pixel_val = GUINT16_FROM_LE (r_row[j]);
+                else if (runtime->image_type == RAW_GRAY_16BPP_SBE)
+                  pixel_val = GINT16_FROM_BE (r_row[j]) - G_MININT16;
+                else/* if (runtime->image_type == RAW_GRAY_16BPP_SLE)*/
+                  pixel_val = GINT16_FROM_LE (r_row[j]) - G_MININT16;
+
+                row[j] = pixel_val / 257;
+              }
+
+            gimp_preview_area_draw (preview, 0, y, width, 1,
+                                    GIMP_GRAY_IMAGE, row, width * 3);
+          }
+
+        g_free (r_row);
+        g_free (row);
+        }
+      break;
     }
 }
 
@@ -1611,6 +1736,10 @@ load_dialog (const gchar *filename)
                                   _("Gray 8 bit"),           RAW_GRAY_8BPP,
                                   _("Indexed"),              RAW_INDEXED,
                                   _("Indexed Alpha"),        RAW_INDEXEDA,
+                                  _("Gray unsigned 16 bit Big Endian"),    RAW_GRAY_16BPP_BE,
+                                  _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
+                                  _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
+                                  _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  runtime->image_type);
