@@ -572,9 +572,6 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   if (screen == NULL)
     screen = gdk_screen_get_default ();
 
-  if (shootvals->select_delay > 0)
-    screenshot_delay (shootvals->select_delay);
-
   if (shootvals->shoot_type != SHOOT_ROOT && ! shootvals->window_id)
     {
       shootvals->window_id = select_window (shootvals, screen);
@@ -582,6 +579,9 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
       if (! shootvals->window_id)
         return GIMP_PDB_CANCEL;
     }
+
+  if (shootvals->select_delay > 0)
+    screenshot_delay (shootvals->select_delay);
 
   display = gdk_screen_get_display (screen);
 
