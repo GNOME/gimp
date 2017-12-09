@@ -93,6 +93,8 @@ File formats:
     - Improve layer opacity loading/saving.
     - Fix active layer selection upon loading.
     - Load and save layer group expanded state.
+  - HGT: Digital Elevation Model data from NASA/NIMA loading support
+    added, both SRTM-1 (1 arc-second) and SRTM-3 (3 arc-seconds).
 
 Filters:
 
