@@ -27,7 +27,7 @@
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 #include <libgimp/gimp.h>
