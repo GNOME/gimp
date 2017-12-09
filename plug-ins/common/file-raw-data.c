@@ -368,11 +368,12 @@ run (const gchar      *name,
           gimp_get_data (LOAD_PROC, runtime);
 
           preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
-          if (g_strcmp0 (strchr (param[1].data.d_string, '.'), ".hgt") == 0)
+          if (strrchr (param[1].data.d_string, '.') &&
+              g_ascii_strcasecmp (strrchr (param[1].data.d_string, '.'), ".hgt") == 0)
             {
-              runtime->image_width    = 1201;
-              runtime->image_height   = 1201;
-              runtime->image_type     = RAW_GRAY_16BPP_SBE;
+              runtime->image_width  = 1201;
+              runtime->image_height = 1201;
+              runtime->image_type   = RAW_GRAY_16BPP_SBE;
             }
 
           if (preview_fd < 0)
@@ -652,18 +653,21 @@ raw_load_gray16 (RawGimpData *data,
   gsize    i;
 
   in_size  = runtime->image_width * runtime->image_height;
-  out_size = runtime->image_width * runtime->image_height * 3 * sizeof * out_raw;
+  out_size = runtime->image_width * runtime->image_height * 3 * sizeof (*out_raw);
 
-  in_raw = g_try_malloc (in_size * sizeof * in_raw);
+  in_raw = g_try_malloc (in_size * sizeof (*in_raw));
   if (! in_raw)
     return FALSE;
 
   out_raw = g_try_malloc0 (out_size);
   if (! out_raw)
-    return FALSE;
+    {
+      g_free (in_raw);
+      return FALSE;
+    }
 
-  raw_read_row (data->fp, (guchar*)in_raw, runtime->file_offset,
-                in_size * sizeof * in_raw);
+  raw_read_row (data->fp, (guchar*) in_raw, runtime->file_offset,
+                in_size * sizeof (*in_raw));
 
   for (i = 0; i < in_size; i++)
     {
@@ -675,7 +679,7 @@ raw_load_gray16 (RawGimpData *data,
         pixel_val = GUINT16_FROM_LE (in_raw[i]);
       else if (type == RAW_GRAY_16BPP_SBE)
         pixel_val = GINT16_FROM_BE (in_raw[i]) - G_MININT16;
-      else/* if (type == RAW_GRAY_16BPP_SLE)*/
+      else /* if (type == RAW_GRAY_16BPP_SLE)*/
         pixel_val = GINT16_FROM_LE (in_raw[i]) - G_MININT16;
 
       out_raw[3 * i + 0] = pixel_val;
@@ -1626,7 +1630,7 @@ preview_update (GimpPreviewArea *preview)
                   pixel_val = GUINT16_FROM_LE (r_row[j]);
                 else if (runtime->image_type == RAW_GRAY_16BPP_SBE)
                   pixel_val = GINT16_FROM_BE (r_row[j]) - G_MININT16;
-                else/* if (runtime->image_type == RAW_GRAY_16BPP_SLE)*/
+                else /* if (runtime->image_type == RAW_GRAY_16BPP_SLE)*/
                   pixel_val = GINT16_FROM_LE (r_row[j]) - G_MININT16;
 
                 row[j] = pixel_val / 257;
