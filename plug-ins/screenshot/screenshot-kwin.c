@@ -71,7 +71,8 @@ ScreenshotCapabilities
 screenshot_kwin_get_capabilities (void)
 {
   return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
-          SCREENSHOT_CAN_SHOOT_POINTER);
+          SCREENSHOT_CAN_SHOOT_POINTER     |
+          SCREENSHOT_CAN_PICK_WINDOW);
   /* TODO: SCREENSHOT_CAN_SHOOT_REGION.
    * The KDE API has "screenshotArea" method but no method to get
    * coordinates could be found. See below.
@@ -97,6 +98,9 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
   switch (shootvals->shoot_type)
     {
     case SHOOT_ROOT:
+      if (shootvals->screenshot_delay > 0)
+        screenshot_delay (shootvals->screenshot_delay);
+
       method = "screenshotFullscreen";
       args   = g_variant_new ("(b)", shootvals->show_cursor);
 
@@ -125,6 +129,9 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
       break;
 
     case SHOOT_WINDOW:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       /* XXX I expected "screenshotWindowUnderCursor" method to be the
        * right one, but it returns nothing, nor is there a file
        * descriptor in argument. So I don't understand how to grab the

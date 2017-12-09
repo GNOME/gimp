@@ -543,7 +543,8 @@ screenshot_x11_get_capabilities (void)
   capabilities |= SCREENSHOT_CAN_SHOOT_POINTER;
 #endif
 
-  capabilities |= SCREENSHOT_CAN_SHOOT_REGION;
+  capabilities |= SCREENSHOT_CAN_SHOOT_REGION |
+                  SCREENSHOT_CAN_PICK_WINDOW;
 
   return capabilities;
 }
@@ -574,14 +575,17 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
 
   if (shootvals->shoot_type != SHOOT_ROOT && ! shootvals->window_id)
     {
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       shootvals->window_id = select_window (shootvals, screen);
 
       if (! shootvals->window_id)
         return GIMP_PDB_CANCEL;
     }
 
-  if (shootvals->select_delay > 0)
-    screenshot_delay (shootvals->select_delay);
+  if (shootvals->screenshot_delay > 0)
+    screenshot_delay (shootvals->screenshot_delay);
 
   display = gdk_screen_get_display (screen);
 

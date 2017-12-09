@@ -34,7 +34,8 @@ typedef enum
   SCREENSHOT_CAN_SHOOT_DECORATIONS     = 0x1 << 0,
   SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
   SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2,
-  SCREENSHOT_CAN_SHOOT_REGION          = 0x1 << 3
+  SCREENSHOT_CAN_SHOOT_REGION          = 0x1 << 3,
+  SCREENSHOT_CAN_PICK_WINDOW           = 0x1 << 4
 } ScreenshotCapabilities;
 
 typedef enum
@@ -57,6 +58,7 @@ typedef struct
   guint                   window_id;
   gint                    monitor;
   guint                   select_delay;
+  guint                   screenshot_delay;
   gint                    x1;
   gint                    y1;
   gint                    x2;

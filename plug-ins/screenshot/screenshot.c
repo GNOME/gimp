@@ -70,16 +70,18 @@ static gboolean            shoot_delay_timeout (gpointer          data);
 
 /* Global Variables */
 
-static ScreenshotBackend      backend      = SCREENSHOT_BACKEND_NONE;
-static ScreenshotCapabilities capabilities = 0;
+static ScreenshotBackend       backend            = SCREENSHOT_BACKEND_NONE;
+static ScreenshotCapabilities  capabilities       = 0;
+static GtkWidget              *select_delay_table = NULL;
 
 static ScreenshotValues shootvals =
 {
-  SHOOT_WINDOW, /* root window  */
+  SHOOT_WINDOW, /* root window            */
   TRUE,         /* include WM decorations */
-  0,            /* window ID    */
-  0,            /* monitor      */
-  0,            /* select delay */
+  0,            /* window ID              */
+  0,            /* monitor                */
+  0,            /* select delay           */
+  0,            /* screenshot delay       */
   0,            /* coords of region dragged out by pointer */
   0,
   0,
@@ -405,6 +407,19 @@ shoot_radio_button_toggled (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, &shootvals.shoot_type);
 
+  if (select_delay_table)
+    {
+      if (shootvals.shoot_type == SHOOT_ROOT ||
+          (shootvals.shoot_type == SHOOT_WINDOW &&
+           ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW)))
+        {
+          gtk_widget_hide (select_delay_table);
+        }
+      else
+        {
+          gtk_widget_show (select_delay_table);
+        }
+    }
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 }
 
@@ -413,7 +428,8 @@ shoot_dialog (GdkScreen **screen)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
-  GtkWidget     *notebook;
+  GtkWidget     *notebook1;
+  GtkWidget     *notebook2;
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
@@ -421,6 +437,7 @@ shoot_dialog (GdkScreen **screen)
   GtkWidget     *button;
   GtkWidget     *toggle;
   GtkWidget     *spinner;
+  GtkWidget     *table;
   GSList        *radio_group = NULL;
   GtkAdjustment *adj;
   gboolean       run;
@@ -449,12 +466,15 @@ shoot_dialog (GdkScreen **screen)
   gtk_widget_show (main_vbox);
 
 
-  /*  Create delay hints notebook early  */
-  notebook = g_object_new (GTK_TYPE_NOTEBOOK,
-                           "show-border", FALSE,
-                           "show-tabs",   FALSE,
-                           NULL);
-
+  /*  Create delay hints notebooks early  */
+  notebook1 = g_object_new (GTK_TYPE_NOTEBOOK,
+                            "show-border", FALSE,
+                            "show-tabs",   FALSE,
+                            NULL);
+  notebook2 = g_object_new (GTK_TYPE_NOTEBOOK,
+                            "show-border", FALSE,
+                            "show-tabs",   FALSE,
+                            NULL);
 
   /*  Area  */
   frame = gimp_frame_new (_("Area"));
@@ -478,7 +498,10 @@ shoot_dialog (GdkScreen **screen)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (shoot_radio_button_toggled),
-                    notebook);
+                    notebook1);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (shoot_radio_button_toggled),
+                    notebook2);
 
   /*  Window decorations  */
   if (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
@@ -540,7 +563,10 @@ shoot_dialog (GdkScreen **screen)
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (shoot_radio_button_toggled),
-                    notebook);
+                    notebook1);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (shoot_radio_button_toggled),
+                    notebook2);
 
   /*  Mouse pointer  */
   if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
@@ -589,28 +615,44 @@ shoot_dialog (GdkScreen **screen)
 
       g_signal_connect (button, "toggled",
                         G_CALLBACK (shoot_radio_button_toggled),
-                        notebook);
+                        notebook1);
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (shoot_radio_button_toggled),
+                        notebook2);
     }
 
-  /*  Delay  */
   frame = gimp_frame_new (_("Delay"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  /* Selection delay  */
+  table = gtk_table_new (2, 3, FALSE);
+  select_delay_table = table;
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  /* Check if this delay must be hidden from start. */
+  if (shootvals.shoot_type == SHOOT_REGION ||
+      (shootvals.shoot_type == SHOOT_WINDOW &&
+       capabilities & SCREENSHOT_CAN_PICK_WINDOW))
+    {
+      gtk_widget_show (select_delay_table);
+    }
+
+  label = gtk_label_new (_("Selection delay: "));
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
 
   adj = (GtkAdjustment *)
     gtk_adjustment_new (shootvals.select_delay,
                         0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
-  gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
@@ -619,27 +661,91 @@ shoot_dialog (GdkScreen **screen)
 
   /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
   gtk_widget_show (label);
 
-  /*  Delay hints  */
-  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
+  /*  Selection delay hints  */
+  gtk_table_attach (GTK_TABLE (table), notebook1, 0, 3, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (notebook1);
 
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_ROOT,
-                         _("After the delay, the screenshot is taken."));
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_REGION,
+  /* No selection delay for full-screen. */
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook1), SHOOT_ROOT, "");
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook1), SHOOT_REGION,
                          _("After the delay, drag your mouse to select "
                            "the region for the screenshot."));
 #ifdef G_OS_WIN32
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook1), SHOOT_WINDOW,
                          _("Click in a window to snap it after delay."));
 #else
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
-                         _("At the end of the delay, click in a window "
-                           "to snap it."));
+  if (capabilities & SCREENSHOT_CAN_PICK_WINDOW)
+    {
+      shoot_dialog_add_hint (GTK_NOTEBOOK (notebook1), SHOOT_WINDOW,
+                             _("At the end of the delay, click in a window "
+                               "to snap it."));
+    }
+  else
+    {
+      shoot_dialog_add_hint (GTK_NOTEBOOK (notebook1), SHOOT_WINDOW, "");
+    }
 #endif
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook1), shootvals.shoot_type);
+
+  /* Screenshot delay  */
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label = gtk_label_new (_("Screenshot delay: "));
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  adj = (GtkAdjustment *)
+    gtk_adjustment_new (shootvals.screenshot_delay,
+                        0.0, 100.0, 1.0, 5.0, 0.0);
+  spinner = gtk_spin_button_new (adj, 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
+  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (spinner);
+
+  g_signal_connect (adj, "value-changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &shootvals.screenshot_delay);
+
+  /*  translators: this is the unit label of a spinbutton  */
+  label = gtk_label_new (_("seconds"));
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
+  gtk_widget_show (label);
+
+  /*  Screenshot delay hints  */
+  gtk_table_attach (GTK_TABLE (table), notebook2, 0, 3, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (notebook2);
+
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_ROOT,
+                         _("After the delay, the screenshot is taken."));
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_REGION,
+                         _("Once the region is selected, it will be "
+                           "captured after this delay."));
+  if (capabilities & SCREENSHOT_CAN_PICK_WINDOW)
+    {
+      shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_WINDOW,
+                             _("Once the window is selected, it will be "
+                               "captured after this delay."));
+    }
+  else
+    {
+      shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_WINDOW,
+                             _("After the delay, the active window "
+                               "will be captured."));
+    }
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook2), shootvals.shoot_type);
 
   /*  Color profile  */
   frame = gimp_int_radio_group_new (TRUE,

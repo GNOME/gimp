@@ -92,8 +92,8 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
   switch (shootvals->shoot_type)
     {
     case SHOOT_ROOT:
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
+      if (shootvals->screenshot_delay > 0)
+        screenshot_delay (shootvals->screenshot_delay);
 
       method = "Screenshot";
       args   = g_variant_new ("(bbs)",
@@ -105,6 +105,9 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
       break;
 
     case SHOOT_REGION:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       retval = g_dbus_proxy_call_sync (proxy, "SelectArea", NULL,
                                        G_DBUS_CALL_FLAGS_NONE,
                                        -1, NULL, error);
@@ -134,14 +137,14 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
         gdk_screen_get_monitor_at_point (screen,
                                          (shootvals->x1 + shootvals->x2) / 2,
                                          (shootvals->y1 + shootvals->y2) / 2);
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
 
+      if (shootvals->screenshot_delay > 0)
+        screenshot_delay (shootvals->screenshot_delay);
       break;
 
     case SHOOT_WINDOW:
-      if (shootvals->select_delay > 0)
-        screenshot_delay (shootvals->select_delay);
+      if (shootvals->screenshot_delay > 0)
+        screenshot_delay (shootvals->screenshot_delay);
 
       method = "ScreenshotWindow";
       args   = g_variant_new ("(bbbs)",
