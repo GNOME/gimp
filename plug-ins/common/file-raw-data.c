@@ -165,7 +165,8 @@ static gboolean          save_image                (const gchar      *filename,
 static void              preview_update_size       (GimpPreviewArea  *preview);
 static void              preview_update            (GimpPreviewArea  *preview);
 static void              palette_update            (GimpPreviewArea  *preview);
-static gboolean          load_dialog               (const gchar      *filename);
+static gboolean          load_dialog               (const gchar      *filename,
+                                                    gboolean          is_hgt);
 static gboolean          save_dialog               (gint32            image_id);
 static void              save_dialog_response      (GtkWidget        *widget,
                                                     gint              response_id,
@@ -365,6 +366,8 @@ run (const gchar      *name,
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
+          gboolean is_hgt = FALSE;
+
           gimp_get_data (LOAD_PROC, runtime);
 
           preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
@@ -374,6 +377,7 @@ run (const gchar      *name,
               runtime->image_width  = 1201;
               runtime->image_height = 1201;
               runtime->image_type   = RAW_GRAY_16BPP_SBE;
+              is_hgt = TRUE;
             }
 
           if (preview_fd < 0)
@@ -388,7 +392,7 @@ run (const gchar      *name,
             }
           else
             {
-              if (! load_dialog (param[1].data.d_string))
+              if (! load_dialog (param[1].data.d_string, is_hgt))
                 status = GIMP_PDB_CANCEL;
 
               close (preview_fd);
@@ -1656,7 +1660,8 @@ palette_update (GimpPreviewArea *preview)
 }
 
 static gboolean
-load_dialog (const gchar *filename)
+load_dialog (const gchar *filename,
+             gboolean     is_hgt)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -1717,7 +1722,14 @@ load_dialog (const gchar *filename)
                           G_CALLBACK (preview_update),
                           NULL);
 
-  frame = gimp_frame_new (_("Image"));
+  if (is_hgt)
+    {
+      frame = gimp_frame_new (_("Digital Elevation Model data"));
+    }
+  else
+    {
+      frame = gimp_frame_new (_("Image"));
+    }
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1727,33 +1739,65 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  combo = gimp_int_combo_box_new (_("RGB"),                  RAW_RGB,
-                                  _("RGB Alpha"),            RAW_RGBA,
-                                  _("RGB565 Big Endian"),    RAW_RGB565_BE,
-                                  _("RGB565 Little Endian"), RAW_RGB565_LE,
-                                  _("BGR565 Big Endian"),    RAW_BGR565_BE,
-                                  _("BGR565 Little Endian"), RAW_BGR565_LE,
-                                  _("Planar RGB"),           RAW_PLANAR,
-                                  _("B&W 1 bit"),            RAW_GRAY_1BPP,
-                                  _("Gray 2 bit"),           RAW_GRAY_2BPP,
-                                  _("Gray 4 bit"),           RAW_GRAY_4BPP,
-                                  _("Gray 8 bit"),           RAW_GRAY_8BPP,
-                                  _("Indexed"),              RAW_INDEXED,
-                                  _("Indexed Alpha"),        RAW_INDEXEDA,
-                                  _("Gray unsigned 16 bit Big Endian"),    RAW_GRAY_16BPP_BE,
-                                  _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
-                                  _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
-                                  _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
-                                  NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 runtime->image_type);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Image _Type:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  if (is_hgt)
+    {
+      /* 2 types of HGT files are possible: SRTM-1 and SRTM-3.
+       * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
+       * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
+       *  each file contains 3601 lines and 3601 samples.
+       * [...]
+       * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
+       * 1201 samples with similar overlapping rows and columns."
+       */
+      combo = gimp_int_combo_box_new (_("SRTM-1 (1 arc-second)"),  3601,
+                                      _("SRTM-3 (3 arc-seconds)"), 1201,
+                                      NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("_Sample Spacing:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &runtime->image_type);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &runtime->image_width);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &runtime->image_height);
+      /* By default, SRTM-3 is active. */
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 1201);
+    }
+  else
+    {
+      /* Generic case for any data. Let's leave choice to select the
+       * right type of data.
+       */
+      combo = gimp_int_combo_box_new (_("RGB"),                  RAW_RGB,
+                                      _("RGB Alpha"),            RAW_RGBA,
+                                      _("RGB565 Big Endian"),    RAW_RGB565_BE,
+                                      _("RGB565 Little Endian"), RAW_RGB565_LE,
+                                      _("BGR565 Big Endian"),    RAW_BGR565_BE,
+                                      _("BGR565 Little Endian"), RAW_BGR565_LE,
+                                      _("Planar RGB"),           RAW_PLANAR,
+                                      _("B&W 1 bit"),            RAW_GRAY_1BPP,
+                                      _("Gray 2 bit"),           RAW_GRAY_2BPP,
+                                      _("Gray 4 bit"),           RAW_GRAY_4BPP,
+                                      _("Gray 8 bit"),           RAW_GRAY_8BPP,
+                                      _("Indexed"),              RAW_INDEXED,
+                                      _("Indexed Alpha"),        RAW_INDEXEDA,
+                                      _("Gray unsigned 16 bit Big Endian"),    RAW_GRAY_16BPP_BE,
+                                      _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
+                                      _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
+                                      _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
+                                      NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     runtime->image_type);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("Image _Type:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
+
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &runtime->image_type);
+    }
   g_signal_connect_swapped (combo, "changed",
                             G_CALLBACK (preview_update),
                             preview);
@@ -1771,37 +1815,40 @@ load_dialog (const gchar *filename)
                             G_CALLBACK (preview_update),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                              _("_Width:"), -1, 9,
-                              runtime->image_width, 1, file_size, 1, 10, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  if (! is_hgt)
+    {
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+                                  _("_Width:"), -1, 9,
+                                  runtime->image_width, 1, file_size, 1, 10, 0,
+                                  TRUE, 0.0, 0.0,
+                                  NULL, NULL);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &runtime->image_width);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (preview_update_size),
-                            preview);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (preview_update),
-                            preview);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &runtime->image_width);
+      g_signal_connect_swapped (adj, "value-changed",
+                                G_CALLBACK (preview_update_size),
+                                preview);
+      g_signal_connect_swapped (adj, "value-changed",
+                                G_CALLBACK (preview_update),
+                                preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                              _("_Height:"), -1, 9,
-                              runtime->image_height, 1, file_size, 1, 10, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+                                  _("_Height:"), -1, 9,
+                                  runtime->image_height, 1, file_size, 1, 10, 0,
+                                  TRUE, 0.0, 0.0,
+                                  NULL, NULL);
 
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &runtime->image_height);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (preview_update_size),
-                            preview);
-  g_signal_connect_swapped (adj, "value-changed",
-                            G_CALLBACK (preview_update),
-                            preview);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &runtime->image_height);
+      g_signal_connect_swapped (adj, "value-changed",
+                                G_CALLBACK (preview_update_size),
+                                preview);
+      g_signal_connect_swapped (adj, "value-changed",
+                                G_CALLBACK (preview_update),
+                                preview);
+    }
 
 
   frame = gimp_frame_new (_("Palette"));
