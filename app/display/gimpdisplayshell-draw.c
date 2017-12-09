@@ -42,6 +42,9 @@
 #include "gimpdisplayxfer.h"
 
 
+/* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
+
+
 /*  public functions  */
 
 void
@@ -137,77 +140,107 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
                                gint              w,
                                gint              h)
 {
-  gint x1, y1, x2, y2;
-  gint i, j;
-  gint chunk_width;
-  gint chunk_height;
+  gdouble chunk_width;
+  gdouble chunk_height;
+  gdouble scale = 1.0;
+  gint    n_rows;
+  gint    n_cols;
+  gint    r, c;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
   g_return_if_fail (cr != NULL);
 
-  if (shell->rotate_untransform)
-    {
-      gdouble tx1, ty1;
-      gdouble tx2, ty2;
-      gint    image_width;
-      gint    image_height;
-
-      gimp_display_shell_unrotate_bounds (shell,
-                                          x, y, x + w, y + h,
-                                          &tx1, &ty1, &tx2, &ty2);
-
-      x1 = floor (tx1 - 0.5);
-      y1 = floor (ty1 - 0.5);
-      x2 = ceil (tx2 + 0.5);
-      y2 = ceil (ty2 + 0.5);
-
-      gimp_display_shell_scale_get_image_size (shell,
-                                               &image_width, &image_height);
-
-      x1 = CLAMP (x1, -shell->offset_x, -shell->offset_x + image_width);
-      y1 = CLAMP (y1, -shell->offset_y, -shell->offset_y + image_height);
-      x2 = CLAMP (x2, -shell->offset_x, -shell->offset_x + image_width);
-      y2 = CLAMP (y2, -shell->offset_y, -shell->offset_y + image_height);
-
-      if (!(x2 > x1) || !(y2 > y1))
-        return;
-    }
-  else
-    {
-      x1 = x;
-      y1 = y;
-      x2 = x + w;
-      y2 = y + h;
-    }
-
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
-   *  sized chunks
+   *  maximally-sized image-space chunks.  adjust the screen-space
+   *  chunk size as necessary, to accommodate for the display
+   *  transform and window scale factor.
    */
   chunk_width  = GIMP_DISPLAY_RENDER_BUF_WIDTH;
   chunk_height = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
 
-  if ((shell->scale_x / shell->scale_y) > 2.0)
+#ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
+  /* if we had this future API, things would look pretty on hires (retina) */
+  scale *=
+    gdk_window_get_scale_factor (
+      gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
+#endif
+
+  scale = MIN (scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
+
+  scale        *= MAX (shell->scale_x, shell->scale_y);
+  chunk_width  *= shell->scale_x / scale;
+  chunk_height *= shell->scale_y / scale;
+
+  if (shell->rotate_untransform)
     {
-      while ((chunk_width / chunk_height) < (shell->scale_x / shell->scale_y))
-        chunk_height /= 2;
-    }
-  else if ((shell->scale_y / shell->scale_x) > 2.0)
-    {
-      while ((chunk_height / chunk_width) < (shell->scale_y / shell->scale_x))
-        chunk_width /= 2;
+      gdouble a = shell->rotate_angle * G_PI / 180.0;
+
+      chunk_width = chunk_height = MIN (chunk_width, chunk_height)   /
+                                   (fabs (sin (a)) + fabs (cos (a)));
     }
 
-  for (i = y1; i < y2; i += chunk_height)
+  /* divide the painted area to evenly-sized chunks */
+  n_rows = ceil (h / chunk_height);
+  n_cols = ceil (w / chunk_width);
+
+  for (r = 0; r < n_rows; r++)
     {
-      for (j = x1; j < x2; j += chunk_width)
+      gint y1 = y + (2 *  r      * h + n_rows) / (2 * n_rows);
+      gint y2 = y + (2 * (r + 1) * h + n_rows) / (2 * n_rows);
+
+      for (c = 0; c < n_cols; c++)
         {
-          gint dx, dy;
+          gint    x1 = x + (2 *  c      * w + n_cols) / (2 * n_cols);
+          gint    x2 = x + (2 * (c + 1) * w + n_cols) / (2 * n_cols);
+          gdouble ix1, iy1;
+          gdouble ix2, iy2;
+          gint    ix, iy;
+          gint    iw, ih;
 
-          dx = MIN (x2 - j, chunk_width);
-          dy = MIN (y2 - i, chunk_height);
+          /* map chunk from screen space to image space */
+          gimp_display_shell_untransform_bounds (shell,
+                                                 x1,   y1,   x2,   y2,
+                                                 &ix1, &iy1, &ix2, &iy2);
 
-          gimp_display_shell_render (shell, cr, j, i, dx, dy);
+          ix = floor (ix1 * scale);
+          iy = floor (iy1 * scale);
+          iw = ceil  (ix2 * scale) - ix;
+          ih = ceil  (iy2 * scale) - iy;
+
+          cairo_save (cr);
+
+          /* clip to chunk bounds, in screen space */
+          cairo_rectangle (cr, x1, y1, x2 - x1, y2 - y1);
+          cairo_clip (cr);
+
+          /* transform to image space, and apply uneven scaling */
+          if (shell->rotate_transform)
+            cairo_transform (cr, shell->rotate_transform);
+          cairo_translate (cr, -shell->offset_x, -shell->offset_y);
+          cairo_scale (cr, shell->scale_x / scale, shell->scale_y / scale);
+
+          /* render image */
+          gimp_display_shell_render (shell, cr, ix, iy, iw, ih, scale);
+
+          cairo_restore (cr);
+
+          /* if the GIMP_BRICK_WALL environment variable is defined,
+           * show chunk bounds
+           */
+          {
+            static gint brick_wall = -1;
+
+            if (brick_wall < 0)
+              brick_wall = (g_getenv ("GIMP_BRICK_WALL") != NULL);
+
+            if (brick_wall)
+              {
+                cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+                cairo_rectangle (cr, x1, y1, x2 - x1, y2 - y1);
+                cairo_stroke (cr);
+              }
+          }
         }
     }
 }

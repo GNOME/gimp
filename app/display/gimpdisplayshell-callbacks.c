@@ -418,6 +418,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 {
   cairo_rectangle_list_t *clip_rectangles;
   cairo_rectangle_int_t   image_rect;
+  cairo_matrix_t          matrix;
 
   image_rect.x = - shell->offset_x;
   image_rect.y = - shell->offset_y;
@@ -456,6 +457,7 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
 
   cairo_save (cr);
   clip_rectangles = cairo_copy_clip_rectangle_list (cr);
+  cairo_get_matrix (cr, &matrix);
 
   if (shell->rotate_transform)
     cairo_transform (cr, shell->rotate_transform);
@@ -474,6 +476,8 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
       cairo_save (cr);
       gimp_display_shell_draw_checkerboard (shell, cr);
       cairo_restore (cr);
+
+      cairo_set_matrix (cr, &matrix);
 
       for (i = 0; i < clip_rectangles->num_rectangles; i++)
         {

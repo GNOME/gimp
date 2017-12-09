@@ -23,6 +23,7 @@ void  gimp_display_shell_render (GimpDisplayShell *shell,
                                  gint              x,
                                  gint              y,
                                  gint              w,
-                                 gint              h);
+                                 gint              h,
+                                 gdouble           scale);
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
