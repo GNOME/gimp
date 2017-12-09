@@ -333,6 +333,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_set_source_surface (cr, xfer,
                             x - xfer_src_x,
                             y - xfer_src_y);
+  cairo_pattern_set_filter (cairo_get_source (cr), CAIRO_FILTER_FAST);
   cairo_paint (cr);
 
   if (shell->mask)
