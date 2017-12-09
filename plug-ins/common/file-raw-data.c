@@ -1724,6 +1724,10 @@ load_dialog (const gchar *filename,
 
   if (is_hgt)
     {
+      /* Translators: Digital Elevation Model (DEM) is a technical term
+       * used for 3D surface modeling or relief map; so it must be
+       * translated by the proper technical term in your language.
+       */
       frame = gimp_frame_new (_("Digital Elevation Model data"));
     }
   else
