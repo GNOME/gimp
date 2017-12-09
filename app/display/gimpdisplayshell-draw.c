@@ -181,8 +181,8 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
     }
 
   /* divide the painted area to evenly-sized chunks */
-  n_rows = ceil (h / chunk_height);
-  n_cols = ceil (w / chunk_width);
+  n_rows = ceil (h / floor (chunk_height));
+  n_cols = ceil (w / floor (chunk_width));
 
   for (r = 0; r < n_rows; r++)
     {
