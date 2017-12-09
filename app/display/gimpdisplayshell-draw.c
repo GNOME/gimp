@@ -176,7 +176,7 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
     {
       gdouble a = shell->rotate_angle * G_PI / 180.0;
 
-      chunk_width = chunk_height = MIN (chunk_width, chunk_height)   /
+      chunk_width = chunk_height = (MIN (chunk_width, chunk_height) - 1.0) /
                                    (fabs (sin (a)) + fabs (cos (a)));
     }
 
