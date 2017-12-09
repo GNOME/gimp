@@ -87,14 +87,14 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
   gint         monitor = shootvals->monitor;
   gboolean     success;
 
-  if (shootvals->select_delay > 0)
-    screenshot_delay (shootvals->select_delay);
-
   filename = gimp_temp_name ("png");
 
   switch (shootvals->shoot_type)
     {
     case SHOOT_ROOT:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       method = "Screenshot";
       args   = g_variant_new ("(bbs)",
                               shootvals->show_cursor,
@@ -134,9 +134,15 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
         gdk_screen_get_monitor_at_point (screen,
                                          (shootvals->x1 + shootvals->x2) / 2,
                                          (shootvals->y1 + shootvals->y2) / 2);
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       break;
 
     case SHOOT_WINDOW:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       method = "ScreenshotWindow";
       args   = g_variant_new ("(bbbs)",
                               shootvals->decorate,
