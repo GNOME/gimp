@@ -232,8 +232,9 @@ query (void)
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"            },
     { GIMP_PDB_STRING, "raw-filename", "The name entered"                        },
     { GIMP_PDB_INT32,  "samplespacing", "The sample spacing of the data. "
-                                         "Only supported values are 1 and 3 "
-                                         "(respectively SRTM-1 and SRTM-3 data)" },
+                                         "Only supported values are 0, 1 and 3 "
+                                         "(respectively auto-detect, SRTM-1 "
+                                         "and SRTM-3 data)"                      },
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -410,9 +411,51 @@ run (const gchar      *name,
       runtime->palette_type   = RAW_PALETTE_RGB;
       if (is_hgt)
         {
-          runtime->image_width  = 1201;
-          runtime->image_height = 1201;
+          FILE  *fp;
+          glong  pos;
+          gint   hgt_size;
+
           runtime->image_type   = RAW_GRAY_16BPP_SBE;
+
+          fp = g_fopen (param[1].data.d_string, "rb");
+          if (! fp)
+            {
+              g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                           _("Could not open '%s' for size verification: %s"),
+                           gimp_filename_to_utf8 (param[1].data.d_string),
+                           g_strerror (errno));
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+          else
+            {
+              fseek (fp, 0, SEEK_END);
+              pos = ftell (fp);
+
+              /* HGT files have always the same size, either 1201*1201
+               * or 3601*3601 of 16-bit values.
+               */
+              if (pos == 1201*1201*2)
+                {
+                  hgt_size = 1201;
+                }
+              else if (pos == 3601*3601*2)
+                {
+                  hgt_size = 3601;
+                }
+              else
+                {
+                  /* As a special exception, if the file looks like an HGT
+                   * format from extension, yet it doesn't have the right
+                   * size, we will degrade a bit the experience by
+                   * adding sample spacing choice.
+                   */
+                  hgt_size = 0;
+                }
+              runtime->image_width  = hgt_size;
+              runtime->image_height = hgt_size;
+
+              fclose (fp);
+            }
         }
       else
         {
@@ -449,19 +492,39 @@ run (const gchar      *name,
         {
           gint32 sample_spacing = param[3].data.d_int32;
 
-          if (sample_spacing != 1 &&
+          if (sample_spacing != 0 &&
+              sample_spacing != 1 &&
               sample_spacing != 3)
             {
               status = GIMP_PDB_CALLING_ERROR;
               g_set_error (&error,
                            GIMP_PLUGIN_HGT_LOAD_ERROR, GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
-                           _("%d is not a valid sample spacing. Valid values are: 1, 3."),
+                           _("%d is not a valid sample spacing. "
+                             "Valid values are: 0 (auto-detect), 1 and 3."),
                            sample_spacing);
             }
           else
             {
               switch (sample_spacing)
                 {
+                case 0:
+                  /* Auto-detection already occured. Let's just check if
+                   *it was successful.
+                   */
+                  if (runtime->image_width != 1201 &&
+                      runtime->image_width != 3601)
+                    {
+                      status = GIMP_PDB_CALLING_ERROR;
+                      g_set_error (&error,
+                                   G_FILE_ERROR, G_FILE_ERROR_INVAL,
+                                   _("Auto-detection of sample spacing failed. "
+                                     "\"%s\" does not appear to be a valid HGT file "
+                                     "or its variant is not supported yet. "
+                                     "Supported HGT files are: SRTM-1 and SRTM-3. "
+                                     "If you know the variant, run with argument 1 or 3."),
+                                   gimp_filename_to_utf8 (param[1].data.d_string));
+                    }
+                  break;
                 case 1:
                   runtime->image_width  = 3601;
                   runtime->image_height = 3601;
@@ -1807,11 +1870,16 @@ load_dialog (const gchar *filename,
 
   if (is_hgt)
     {
-      /* Translators: Digital Elevation Model (DEM) is a technical term
-       * used for 3D surface modeling or relief map; so it must be
-       * translated by the proper technical term in your language.
-       */
-      frame = gimp_frame_new (_("Digital Elevation Model data"));
+      if (runtime->image_width == 1201)
+        /* Translators: Digital Elevation Model (DEM) is a technical term
+         * used for 3D surface modeling or relief maps; so it must be
+         * translated by the proper technical term in your language.
+         */
+        frame = gimp_frame_new (_("Digital Elevation Model data (1 arc-second)"));
+      else if (runtime->image_width == 3601)
+        frame = gimp_frame_new (_("Digital Elevation Model data (3 arc-seconds)"));
+      else
+        frame = gimp_frame_new (_("Digital Elevation Model data"));
     }
   else
     {
@@ -1826,8 +1894,17 @@ load_dialog (const gchar *filename,
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  if (is_hgt)
+  combo = NULL;
+  if (is_hgt                       &&
+      runtime->image_width != 1201 &&
+      runtime->image_width != 3601)
     {
+      /* When auto-detection of the HGT variant failed, let's just
+       * default to SRTM-3 and show a dropdown list.
+       */
+      runtime->image_width  = 1201;
+      runtime->image_height = 1201;
+
       /* 2 types of HGT files are possible: SRTM-1 and SRTM-3.
        * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
        * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
@@ -1852,10 +1929,10 @@ load_dialog (const gchar *filename,
       /* By default, SRTM-3 is active. */
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 1201);
     }
-  else
+  else if (! is_hgt)
     {
       /* Generic case for any data. Let's leave choice to select the
-       * right type of data.
+       * right type of raw data.
        */
       combo = gimp_int_combo_box_new (_("RGB"),                  RAW_RGB,
                                       _("RGB Alpha"),            RAW_RGBA,
@@ -1885,9 +1962,10 @@ load_dialog (const gchar *filename,
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &runtime->image_type);
     }
-  g_signal_connect_swapped (combo, "changed",
-                            G_CALLBACK (preview_update),
-                            preview);
+  if (combo)
+    g_signal_connect_swapped (combo, "changed",
+                              G_CALLBACK (preview_update),
+                              preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("O_ffset:"), -1, 9,
