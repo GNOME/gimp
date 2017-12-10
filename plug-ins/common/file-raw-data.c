@@ -188,9 +188,9 @@ static void              save_dialog_response      (GtkWidget        *widget,
 static void              palette_callback          (GtkFileChooser   *button,
                                                     GimpPreviewArea  *preview);
 
-static void      load_defaults                     (void);
-static void      save_defaults                     (void);
-static void      load_gui_defaults                 (RawSaveGui        *rg);
+static void              load_defaults             (void);
+static void              save_defaults             (void);
+static void              load_gui_defaults         (RawSaveGui        *rg);
 
 static RawConfig *runtime             = NULL;
 static gchar     *palfile             = NULL;
@@ -289,7 +289,14 @@ query (void)
 
   gimp_install_procedure (LOAD_HGT_PROC,
                           "Load HGT data as images",
-                          "Load Digital Elevation Data in HGT format as images",
+                          "Load Digital Elevation Model data in HGT format "
+                          "from the Shuttle Radar Topography Mission as "
+                          "images. Though the output image will be RGB, all "
+                          "colors are grayscale by default and the contrast "
+                          "will be quite low on most earth relief. Therefore "
+                          "You will likely want to remap elevation to colors "
+                          "as a second step, for instance with the \"Gradient "
+                          "Map\" plug-in.",
                           "",
                           "",
                           "2017-12-09",
@@ -1318,7 +1325,7 @@ load_image (const gchar  *filename,
     data->image_id = gimp_image_new (runtime->image_width,
                                      runtime->image_height,
                                      itype);
-  gimp_image_set_filename(data->image_id, filename);
+  gimp_image_set_filename (data->image_id, filename);
   layer_id = gimp_layer_new (data->image_id, _("Background"),
                              runtime->image_width, runtime->image_height,
                              ltype,
