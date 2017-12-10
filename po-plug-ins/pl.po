@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-01 14:04+0200\n"
-"PO-Revision-Date: 2017-10-01 14:05+0200\n"
+"POT-Creation-Date: 2017-12-10 16:00+0100\n"
+"PO-Revision-Date: 2017-12-10 16:01+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -54,7 +54,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
-#: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
+#: ../plug-ins/common/file-raw-data.c:1763 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:594
@@ -69,7 +69,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:350
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -102,7 +102,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/metadata/metadata-editor.c:764
 #: ../plug-ins/metadata/metadata-editor.c:5618
 #: ../plug-ins/metadata/metadata-editor.c:5653
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:427
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:466
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -129,7 +129,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
 #: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
 #: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:313 ../plug-ins/flame/flame.c:650
+#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
 #: ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -447,7 +447,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1160
+#: ../plug-ins/common/file-raw-data.c:1322
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
@@ -455,12 +455,12 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1792 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1804 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:257 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:263 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Tło"
 
@@ -565,7 +565,7 @@ msgstr "Dodawanie szachownicy"
 msgid "Checkerboard"
 msgstr "Szachownica"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1170
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Rozmiar:"
@@ -823,7 +823,7 @@ msgstr "Losowe ziarno"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
-#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/file-raw-data.c:1764 ../plug-ins/common/qbist.c:724
 #: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:871 ../plug-ins/flame/flame.c:475
@@ -1038,13 +1038,13 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1561
-#: ../plug-ins/common/file-raw-data.c:975
-#: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1477
+#: ../plug-ins/common/file-raw-data.c:1122
+#: ../plug-ins/common/file-raw-data.c:1150 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-tga.c:1203 ../plug-ins/common/file-xmc.c:1484
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1559
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1581
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1070,8 +1070,8 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3371
-#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:372
-#: ../plug-ins/common/file-raw-data.c:1084 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:427
+#: ../plug-ins/common/file-raw-data.c:1231 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:711
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:842
@@ -1350,8 +1350,11 @@ msgstr "_Błękit cb709:"
 msgid "_Redness cr709:"
 msgstr "_Czerwień cr709:"
 
+#. Generic case for any data. Let's leave choice to select the
+#. * right type of data.
+#.
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1601
+#: ../plug-ins/common/file-raw-data.c:1853
 msgid "RGB"
 msgstr "RGB"
 
@@ -1957,7 +1960,7 @@ msgstr "2. źródło:"
 msgid "O_verlap:"
 msgstr "_Nakładanie:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1629
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1886
 msgid "O_ffset:"
 msgstr "Prz_esunięcie:"
 
@@ -2026,7 +2029,7 @@ msgstr "Usunięcie pasków"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3497 ../plug-ins/common/file-ps.c:3702
-#: ../plug-ins/common/file-raw-data.c:1642
+#: ../plug-ins/common/file-raw-data.c:1901
 #: ../plug-ins/common/smooth-palette.c:454 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2194,7 +2197,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2202,7 +2205,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-raw/file-darktable.c:364
+#: ../plug-ins/file-raw/file-darktable.c:393
 #: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
@@ -2284,11 +2287,11 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
 #: ../plug-ins/common/file-png.c:1554 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1199 ../plug-ins/common/file-xbm.c:1033
+#: ../plug-ins/common/file-tga.c:1197 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1530
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1552
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2749,7 +2752,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Szerokość każdej komórki. Liczba lub procent."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3510
-#: ../plug-ins/common/file-ps.c:3714 ../plug-ins/common/file-raw-data.c:1658
+#: ../plug-ins/common/file-ps.c:3714 ../plug-ins/common/file-raw-data.c:1917
 #: ../plug-ins/common/film.c:1007 ../plug-ins/common/smooth-palette.c:459
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -3306,13 +3309,13 @@ msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1784
+#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:2044
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:1785
+#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:2045
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Nieznany błąd"
@@ -3603,104 +3606,154 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw-data.c:253
-#: ../plug-ins/common/file-raw-data.c:269
-#: ../plug-ins/common/file-raw-data.c:281
+#: ../plug-ins/common/file-raw-data.c:282
+#: ../plug-ins/common/file-raw-data.c:311
+#: ../plug-ins/common/file-raw-data.c:323
 msgid "Raw image data"
 msgstr "Dane obrazu Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1549
+#. Translators: Digital Elevation Model (DEM) is a technical term
+#. * used for 3D surface modeling or relief map; so it must be
+#. * translated by the proper technical term in your language.
+#.
+#: ../plug-ins/common/file-raw-data.c:296
+#: ../plug-ins/common/file-raw-data.c:1807
+msgid "Digital Elevation Model data"
+msgstr "Dane cyfrowego modelu wysokościowego"
+
+#: ../plug-ins/common/file-raw-data.c:451
+#, c-format
+msgid "%d is not a valid sample spacing. Valid values are: 1, 3."
+msgstr "%d nie jest prawidłowym odstępem próbek. Prawidłowe wartości: 1, 3."
+
+#: ../plug-ins/common/file-raw-data.c:1759
 msgid "Load Image from Raw Data"
 msgstr "Wczytanie obrazu z danych Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1591
+#: ../plug-ins/common/file-raw-data.c:1811
 msgid "Image"
 msgstr "Obraz"
 
-#: ../plug-ins/common/file-raw-data.c:1602
+#. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
+#. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
+#. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
+#. *  each file contains 3601 lines and 3601 samples.
+#. * [...]
+#. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
+#. * 1201 samples with similar overlapping rows and columns."
+#.
+#: ../plug-ins/common/file-raw-data.c:1832
+msgid "SRTM-1 (1 arc-second)"
+msgstr "SRTM-1 (1 sekunda kątowa)"
+
+#: ../plug-ins/common/file-raw-data.c:1833
+msgid "SRTM-3 (3 arc-seconds)"
+msgstr "SRTM-3 (3 sekundy kątowe)"
+
+#: ../plug-ins/common/file-raw-data.c:1836
+msgid "_Sample Spacing:"
+msgstr "_Odstęp próbek:"
+
+#: ../plug-ins/common/file-raw-data.c:1854
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1603
+#: ../plug-ins/common/file-raw-data.c:1855
 msgid "RGB565 Big Endian"
 msgstr "RGB565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1604
+#: ../plug-ins/common/file-raw-data.c:1856
 msgid "RGB565 Little Endian"
 msgstr "RGB565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1605
+#: ../plug-ins/common/file-raw-data.c:1857
 msgid "BGR565 Big Endian"
 msgstr "BGR565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1606
+#: ../plug-ins/common/file-raw-data.c:1858
 msgid "BGR565 Little Endian"
 msgstr "BGR565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1607
+#: ../plug-ins/common/file-raw-data.c:1859
 msgid "Planar RGB"
 msgstr "Płaski RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1608
+#: ../plug-ins/common/file-raw-data.c:1860
 msgid "B&W 1 bit"
 msgstr "Czarno-biały (1-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1609
+#: ../plug-ins/common/file-raw-data.c:1861
 msgid "Gray 2 bit"
 msgstr "Szary (2-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1610
+#: ../plug-ins/common/file-raw-data.c:1862
 msgid "Gray 4 bit"
 msgstr "Szary (4-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1611
+#: ../plug-ins/common/file-raw-data.c:1863
 msgid "Gray 8 bit"
 msgstr "Szary (8-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1612
+#: ../plug-ins/common/file-raw-data.c:1864
 msgid "Indexed"
 msgstr "Zindeksowany"
 
-#: ../plug-ins/common/file-raw-data.c:1613
+#: ../plug-ins/common/file-raw-data.c:1865
 msgid "Indexed Alpha"
 msgstr "Zindeksowana alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1618
+#: ../plug-ins/common/file-raw-data.c:1866
+msgid "Gray unsigned 16 bit Big Endian"
+msgstr "Szary 16-bitowy bez znaku (Big Endian)"
+
+#: ../plug-ins/common/file-raw-data.c:1867
+msgid "Gray unsigned 16 bit Little Endian"
+msgstr "Szary 16-bitowy bez znaku (Little Endian)"
+
+#: ../plug-ins/common/file-raw-data.c:1868
+msgid "Gray 16 bit Big Endian"
+msgstr "Szary 16-bitowy (Big Endian)"
+
+#: ../plug-ins/common/file-raw-data.c:1869
+msgid "Gray 16 bit Little Endian"
+msgstr "Szary 16-bitowy (Little Endian)"
+
+#: ../plug-ins/common/file-raw-data.c:1874
 msgid "Image _Type:"
 msgstr "_Typ obrazu:"
 
-#: ../plug-ins/common/file-raw-data.c:1674
+#: ../plug-ins/common/file-raw-data.c:1934
 msgid "Palette"
 msgstr "Deseń"
 
-#: ../plug-ins/common/file-raw-data.c:1684
+#: ../plug-ins/common/file-raw-data.c:1944
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (zwykły)"
 
-#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/common/file-raw-data.c:1945
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (format BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1690
+#: ../plug-ins/common/file-raw-data.c:1950
 msgid "_Palette Type:"
 msgstr "Typ _desenia:"
 
-#: ../plug-ins/common/file-raw-data.c:1701
+#: ../plug-ins/common/file-raw-data.c:1961
 msgid "Off_set:"
 msgstr "Prze_sunięcie:"
 
-#: ../plug-ins/common/file-raw-data.c:1713
+#: ../plug-ins/common/file-raw-data.c:1973
 msgid "Select Palette File"
 msgstr "Wybór pliku desenia"
 
-#: ../plug-ins/common/file-raw-data.c:1719
+#: ../plug-ins/common/file-raw-data.c:1979
 msgid "Pal_ette File:"
 msgstr "Plik d_esenia:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:1768
+#: ../plug-ins/common/file-raw-data.c:2028
 msgid "Raw Image"
 msgstr "Obraz Raw"
 
@@ -3897,24 +3950,24 @@ msgstr "Nie można odczytać rozszerzenia z pliku „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nie można odczytać nagłówka z pliku „%s”"
 
-#: ../plug-ins/common/file-tga.c:1414
+#: ../plug-ins/common/file-tga.c:1412
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1423
+#: ../plug-ins/common/file-tga.c:1421
 msgid "_RLE compression"
 msgstr "Kompresja _RLE"
 
-#: ../plug-ins/common/file-tga.c:1437
+#: ../plug-ins/common/file-tga.c:1435
 msgid "Or_igin:"
 msgstr "_Oryginał:"
 
-#: ../plug-ins/common/file-tga.c:1441
+#: ../plug-ins/common/file-tga.c:1439
 msgid "Bottom left"
 msgstr "Dolny lewy"
 
-#: ../plug-ins/common/file-tga.c:1442
+#: ../plug-ins/common/file-tga.c:1440
 msgid "Top left"
 msgstr "Górny lewy"
 
@@ -4013,7 +4066,7 @@ msgstr "Komentarz:"
 msgid "_Write hot spot values"
 msgstr "_Zapisywanie wartości gorącego punktu"
 
-#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1075
+#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1082
 msgid "Hot spot _X:"
 msgstr "_Poziomy gorący punkt:"
 
@@ -4035,7 +4088,7 @@ msgid "_Mask file extension:"
 msgstr "Rozszerzenie pliku _maski:"
 
 #: ../plug-ins/common/file-xmc.c:335 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1042
+#: ../plug-ins/common/file-xmc.c:1049
 msgid "X11 Mouse Cursor"
 msgstr "Kursor myszy systemu X11"
 
@@ -4063,22 +4116,22 @@ msgstr "Klatka %d z „%s” jest za szeroka dla kursora X."
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Klatka %d z „%s” jest za wysoka dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:894
+#: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "brak fragmentu obrazu w „%s”."
 
-#: ../plug-ins/common/file-xmc.c:934
+#: ../plug-ins/common/file-xmc.c:941
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "„%s” jest za szerokie dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:942
+#: ../plug-ins/common/file-xmc.c:949
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "„%s” jest za wysokie dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:1005
+#: ../plug-ins/common/file-xmc.c:1012
 #, c-format
 msgid "A read error occurred."
 msgstr "Wystąpił błąd odczytu."
@@ -4086,27 +4139,27 @@ msgstr "Wystąpił błąd odczytu."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1048
+#: ../plug-ins/common/file-xmc.c:1055
 msgid "XMC Options"
 msgstr "Opcje XMC"
 
-#: ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Proszę podać współrzędną X gorącego punktu. Punktem odniesienia jest górny "
 "lewy róg."
 
-#: ../plug-ins/common/file-xmc.c:1106
+#: ../plug-ins/common/file-xmc.c:1113
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Proszę podać współrzędną Y gorącego punktu. Punktem odniesienia jest górny "
 "lewy róg."
 
-#: ../plug-ins/common/file-xmc.c:1115
+#: ../plug-ins/common/file-xmc.c:1122
 msgid "_Auto-Crop all frames."
 msgstr "_Automatyczne przycinanie wszystkich klatek."
 
-#: ../plug-ins/common/file-xmc.c:1128
+#: ../plug-ins/common/file-xmc.c:1135
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4119,7 +4172,7 @@ msgstr ""
 "Należy odznaczyć, jeśli planowane jest modyfikowanie wyeksportowanego "
 "kursora za pomocą innych programów."
 
-#: ../plug-ins/common/file-xmc.c:1151
+#: ../plug-ins/common/file-xmc.c:1158
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4138,56 +4191,56 @@ msgstr ""
 "animacji, oraz która sekwencja jest używana na podstawie wartości „gtk-"
 "cursor-theme-size”."
 
-#: ../plug-ins/common/file-xmc.c:1168
+#: ../plug-ins/common/file-xmc.c:1175
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_Użycie tej wartości tylko dla klatek bez podanego rozmiaru."
 
-#: ../plug-ins/common/file-xmc.c:1171
+#: ../plug-ins/common/file-xmc.c:1178
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Zastąpienie rozmiaru wszystkich klatek, nawet jeśli go podano."
 
-#: ../plug-ins/common/file-xmc.c:1187
+#: ../plug-ins/common/file-xmc.c:1194
 msgid "_Delay:"
 msgstr "_Opóźnienie:"
 
-#: ../plug-ins/common/file-xmc.c:1192
+#: ../plug-ins/common/file-xmc.c:1199
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Proszę wprowadzić czas renderowania każdej klatki w milisekundach."
 
-#: ../plug-ins/common/file-xmc.c:1220
+#: ../plug-ins/common/file-xmc.c:1227
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_Użycie tej wartości tylko dla klatek bez podanego opóźnienia."
 
-#: ../plug-ins/common/file-xmc.c:1223
+#: ../plug-ins/common/file-xmc.c:1230
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Zastąpienie opóźnienia wszystkich klatek, nawet jeśli go podano."
 
-#: ../plug-ins/common/file-xmc.c:1248
+#: ../plug-ins/common/file-xmc.c:1255
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "Część informacji o prawach autorskich przekraczającą 65535 znaków została "
 "usunięta."
 
-#: ../plug-ins/common/file-xmc.c:1258
+#: ../plug-ins/common/file-xmc.c:1265
 msgid "Enter copyright information."
 msgstr "Proszę wprowadzić informacje o prawach autorskich."
 
-#: ../plug-ins/common/file-xmc.c:1260
+#: ../plug-ins/common/file-xmc.c:1267
 msgid "_Copyright:"
 msgstr "_Prawa autorskie:"
 
-#: ../plug-ins/common/file-xmc.c:1276
+#: ../plug-ins/common/file-xmc.c:1283
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "Część informacji o licencji przekraczającą 65535 znaków została usunięta."
 
-#: ../plug-ins/common/file-xmc.c:1286
+#: ../plug-ins/common/file-xmc.c:1293
 msgid "Enter license information."
 msgstr "Proszę wprowadzić informacje o licencji."
 
-#: ../plug-ins/common/file-xmc.c:1288
+#: ../plug-ins/common/file-xmc.c:1295
 msgid "_License:"
 msgstr "_Licencja:"
 
@@ -4196,46 +4249,46 @@ msgstr "_Licencja:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1295
+#: ../plug-ins/common/file-xmc.c:1302
 msgid "_Other:"
 msgstr "_Inne:"
 
-#: ../plug-ins/common/file-xmc.c:1330
+#: ../plug-ins/common/file-xmc.c:1337
 msgid "Enter other comment if you want."
 msgstr "Proszę wprowadzić inne komentarze, jeśli są potrzebne."
 
-#: ../plug-ins/common/file-xmc.c:1382
+#: ../plug-ins/common/file-xmc.c:1389
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Komentarz jest ograniczony do %d znaków."
 
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1466
+#: ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/file-webp/file-webp-save.c:173
 #: ../plug-ins/file-webp/file-webp-save.c:506
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
 
-#: ../plug-ins/common/file-xmc.c:1532
+#: ../plug-ins/common/file-xmc.c:1539
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Klatka „%s” jest za szeroka. Proszę ją zmniejszyć nie więcej niż o %d "
 "pikseli."
 
-#: ../plug-ins/common/file-xmc.c:1541
+#: ../plug-ins/common/file-xmc.c:1548
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Klatka „%s” jest za wysoka. Proszę ją zmniejszyć nie więcej niż o %d pikseli."
 
-#: ../plug-ins/common/file-xmc.c:1550
+#: ../plug-ins/common/file-xmc.c:1557
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Szerokość lub wysokość klatki „%s” wynosi zero."
 
-#: ../plug-ins/common/file-xmc.c:1589
+#: ../plug-ins/common/file-xmc.c:1596
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4247,7 +4300,7 @@ msgstr ""
 "Proszę spróbować zmienić położenie gorącego punktu, geometrię warstw lub "
 "wyeksportować bez automatycznego przycinania."
 
-#: ../plug-ins/common/file-xmc.c:1752
+#: ../plug-ins/common/file-xmc.c:1759
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4258,7 +4311,7 @@ msgstr ""
 "o szerokości lub wysokości większej niż %i pikseli.\n"
 "Spowoduje to zaśmiecenie ekranu w niektórych środowiskach."
 
-#: ../plug-ins/common/file-xmc.c:1759
+#: ../plug-ins/common/file-xmc.c:1766
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4271,7 +4324,7 @@ msgstr ""
 "klatek…” w oknie eksportowania. W innym przypadku kursor nie pojawi się "
 "w ustawieniach środowiska GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1996
+#: ../plug-ins/common/file-xmc.c:2003
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4281,7 +4334,7 @@ msgstr ""
 "Zostały skrócone, aby pasowały."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2199
+#: ../plug-ins/common/file-xmc.c:2206
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6344,7 +6397,7 @@ msgid "Flow step %d"
 msgstr "%d. płynący krok"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
-#: ../plug-ins/common/wavelet-decompose.c:308
+#: ../plug-ins/common/wavelet-decompose.c:346
 msgid "Wavelet decompose"
 msgstr "Rozkład falki"
 
@@ -6352,34 +6405,34 @@ msgstr "Rozkład falki"
 msgid "_Wavelet-decompose..."
 msgstr "_Rozkład falki…"
 
-#: ../plug-ins/common/wavelet-decompose.c:175
+#: ../plug-ins/common/wavelet-decompose.c:177
 msgid "Wavelet-Decompose"
 msgstr "Rozkład falki"
 
-#: ../plug-ins/common/wavelet-decompose.c:182
+#: ../plug-ins/common/wavelet-decompose.c:184
 msgid "Decomposition"
 msgstr "Rozkład"
 
-#: ../plug-ins/common/wavelet-decompose.c:208
+#: ../plug-ins/common/wavelet-decompose.c:246
 #, c-format
 msgid "Scale %d"
 msgstr "Waga %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:232
+#: ../plug-ins/common/wavelet-decompose.c:270
 msgid "Residual"
 msgstr "Pozostałe"
 
-#: ../plug-ins/common/wavelet-decompose.c:339
+#: ../plug-ins/common/wavelet-decompose.c:377
 msgid "Scales:"
 msgstr "Waga:"
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/common/wavelet-decompose.c:389
 msgid "Create a layer group to store the decomposition"
 msgstr "Utworzenie grupy warstw do przechowania rozkładu"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:363
+#: ../plug-ins/common/wavelet-decompose.c:401
 msgid "Add a layer mask to each scales layers"
 msgstr "Dodanie maski warstwy do każdej warstwy wagi"
 
@@ -6779,7 +6832,7 @@ msgstr "%i. ikona"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:505
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:442
+#: ../plug-ins/file-raw/file-darktable.c:472
 #: ../plug-ins/file-raw/file-rawtherapee.c:429
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -7029,32 +7082,32 @@ msgstr "Nieobsługiwana lub nieprawidłowa szerokość maski warstwy: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary maski warstwy: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1314 ../plug-ins/file-psd/psd-load.c:1767
+#: ../plug-ins/file-psd/psd-load.c:1315 ../plug-ins/file-psd/psd-load.c:1779
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nieobsługiwany tryb kompresji: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1863
+#: ../plug-ins/file-psd/psd-load.c:1875
 msgid "Extra"
 msgstr "Dodatkowe"
 
-#: ../plug-ins/file-psd/psd-load.c:2042
+#: ../plug-ins/file-psd/psd-load.c:2054
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary kanału"
 
-#: ../plug-ins/file-psd/psd-load.c:2111
+#: ../plug-ins/file-psd/psd-load.c:2123
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Dekompresja danych się nie powiodła"
 
-#: ../plug-ins/file-psd/psd-save.c:460
+#: ../plug-ins/file-psd/psd-save.c:462
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1523
+#: ../plug-ins/file-psd/psd-save.c:1545
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7063,7 +7116,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1544
+#: ../plug-ins/file-psd/psd-save.c:1566
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7180,7 +7233,7 @@ msgstr "Obraz Raw X3F firmy Sigma"
 msgid "Raw Arriflex ARI"
 msgstr "Obraz Raw ARI firmy Arriflex"
 
-#: ../plug-ins/file-raw/file-raw-placeholder.c:140
+#: ../plug-ins/file-raw/file-raw-placeholder.c:139
 #, c-format
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
@@ -12043,90 +12096,110 @@ msgstr "Wystąpił błąd podczas próby wydrukowania:"
 msgid "Printing"
 msgstr "Drukowanie"
 
-#: ../plug-ins/screenshot/screenshot.c:123
+#: ../plug-ins/screenshot/screenshot.c:127
 msgid "Create an image from an area of the screen"
 msgstr "Tworzy obraz z obszaru ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:144
+#: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
 msgstr "_Zrzut ekranu…"
 
-#: ../plug-ins/screenshot/screenshot.c:423
+#: ../plug-ins/screenshot/screenshot.c:462
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:428
+#: ../plug-ins/screenshot/screenshot.c:467
 msgid "S_nap"
 msgstr "_Przechwyć"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:452
+#: ../plug-ins/screenshot/screenshot.c:494
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:462
+#: ../plug-ins/screenshot/screenshot.c:504
 msgid "Take a screenshot of a single _window"
 msgstr "Wykonanie zrzutu ekranu pojedynczego o_kna"
 
-#: ../plug-ins/screenshot/screenshot.c:482
+#: ../plug-ins/screenshot/screenshot.c:527
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:503
-#: ../plug-ins/screenshot/screenshot.c:544
+#: ../plug-ins/screenshot/screenshot.c:548
+#: ../plug-ins/screenshot/screenshot.c:592
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:524
+#: ../plug-ins/screenshot/screenshot.c:569
 msgid "Take a screenshot of the entire _screen"
 msgstr "Wykonanie zrzutu całego _ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:572
+#: ../plug-ins/screenshot/screenshot.c:620
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
-#. Delay
-#: ../plug-ins/screenshot/screenshot.c:588
+#: ../plug-ins/screenshot/screenshot.c:638
 msgid "Delay"
 msgstr "Opóźnienie"
 
+#: ../plug-ins/screenshot/screenshot.c:658
+msgid "Selection delay: "
+msgstr "Opóźnienie zaznaczenia: "
+
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:677
+#: ../plug-ins/screenshot/screenshot.c:740
 msgid "seconds"
 msgstr "s"
 
-#: ../plug-ins/screenshot/screenshot.c:622
-msgid "After the delay, the screenshot is taken."
-msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
-
-#: ../plug-ins/screenshot/screenshot.c:624
+#: ../plug-ins/screenshot/screenshot.c:691
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:695
 msgid "Click in a window to snap it after delay."
 msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:631
+#: ../plug-ins/screenshot/screenshot.c:700
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
-#: ../plug-ins/screenshot/screenshot.c:638
+#: ../plug-ins/screenshot/screenshot.c:721
+msgid "Screenshot delay: "
+msgstr "Opóźnienie zrzutu ekranu: "
+
+#: ../plug-ins/screenshot/screenshot.c:752
+msgid "After the delay, the screenshot is taken."
+msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
+
+#: ../plug-ins/screenshot/screenshot.c:754
+msgid "Once the region is selected, it will be captured after this delay."
+msgstr "Po zaznaczeniu obszaru zostanie wykonany jego zrzut po tym czasie."
+
+#: ../plug-ins/screenshot/screenshot.c:759
+msgid "Once the window is selected, it will be captured after this delay."
+msgstr "Po wybraniu okna zostanie wykonany jego zrzut po tym czasie."
+
+#: ../plug-ins/screenshot/screenshot.c:765
+msgid "After the delay, the active window will be captured."
+msgstr "Po podanym czasie zostanie wykonany zrzut aktywnego okna."
+
+#: ../plug-ins/screenshot/screenshot.c:772
 msgid "Color Profile"
 msgstr "Profil kolorów"
 
-#: ../plug-ins/screenshot/screenshot.c:643
+#: ../plug-ins/screenshot/screenshot.c:777
 msgid "Tag image with _monitor profile"
 msgstr "O_znaczenie obrazu profilem monitora"
 
-#: ../plug-ins/screenshot/screenshot.c:647
+#: ../plug-ins/screenshot/screenshot.c:781
 msgid "Convert image to sR_GB"
 msgstr "Konwersja obrazu do sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:244
+#: ../plug-ins/screenshot/screenshot-win32.c:250
 msgid "No data captured"
 msgstr "Nie pobrano danych"
 
@@ -12142,7 +12215,7 @@ msgstr "Importowanie zrzutu ekranu"
 msgid "Mouse Pointer"
 msgstr "Kursor myszy"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:622
+#: ../plug-ins/screenshot/screenshot-x11.c:627
 msgid "Specified window not found"
 msgstr "Nie odnaleziono podanego okna"
 
