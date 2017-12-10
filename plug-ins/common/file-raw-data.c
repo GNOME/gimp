@@ -47,6 +47,7 @@
 
 
 #define LOAD_PROC         "file-raw-load"
+#define LOAD_HGT_PROC     "file-hgt-load"
 #define SAVE_PROC         "file-raw-save"
 #define SAVE_PROC2        "file-raw-save2"
 #define GET_DEFAULTS_PROC "file-raw-get-defaults"
@@ -212,6 +213,16 @@ query (void)
     { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
   };
 
+  static const GimpParamDef load_hgt_args[] =
+  {
+    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0) }"    },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"            },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"                        },
+    { GIMP_PDB_INT32,  "samplespacing", "The sample spacing of the data. "
+                                         "Only supported values are 1 and 3 "
+                                         "(respectively SRTM-1 and SRTM-3 data)" },
+  };
+
   static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE, "image", "Output image" }
@@ -261,8 +272,21 @@ query (void)
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+  gimp_register_load_handler (LOAD_PROC, "data", "");
 
-  gimp_register_load_handler (LOAD_PROC, "data,hgt", "");
+  gimp_install_procedure (LOAD_HGT_PROC,
+                          "Load HGT data as images",
+                          "Load Digital Elevation Data in HGT format as images",
+                          "",
+                          "",
+                          "2017-12-09",
+                          N_("Digital Elevation Model data"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_hgt_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_hgt_args, load_return_vals);
+  gimp_register_load_handler (LOAD_HGT_PROC, "hgt", "");
 
   gimp_install_procedure (SAVE_PROC,
                           "Dump images to disk in raw format",
@@ -351,35 +375,38 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  if (strcmp (name, LOAD_PROC) == 0 ||
+      strcmp (name, LOAD_HGT_PROC) == 0)
     {
+      gboolean is_hgt = (strcmp (name, LOAD_HGT_PROC) == 0);
+
       run_mode = param[0].data.d_int32;
 
       /* allocate config structure and fill with defaults */
       runtime = g_new0 (RawConfig, 1);
 
       runtime->file_offset    = 0;
-      runtime->image_width    = PREVIEW_SIZE;
-      runtime->image_height   = PREVIEW_SIZE;
       runtime->palette_offset = 0;
       runtime->palette_type   = RAW_PALETTE_RGB;
+      if (is_hgt)
+        {
+          runtime->image_width  = 1201;
+          runtime->image_height = 1201;
+          runtime->image_type   = RAW_GRAY_16BPP_SBE;
+        }
+      else
+        {
+          runtime->image_width  = PREVIEW_SIZE;
+          runtime->image_height = PREVIEW_SIZE;
+          runtime->image_type   = RAW_RGB;
+        }
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          gboolean is_hgt = FALSE;
-
-          gimp_get_data (LOAD_PROC, runtime);
+          if (! is_hgt)
+            gimp_get_data (LOAD_PROC, runtime);
 
           preview_fd = g_open (param[1].data.d_string, O_RDONLY, 0);
-          if (strrchr (param[1].data.d_string, '.') &&
-              g_ascii_strcasecmp (strrchr (param[1].data.d_string, '.'), ".hgt") == 0)
-            {
-              runtime->image_width  = 1201;
-              runtime->image_height = 1201;
-              runtime->image_type   = RAW_GRAY_16BPP_SBE;
-              is_hgt = TRUE;
-            }
-
           if (preview_fd < 0)
             {
               g_set_error (&error,
@@ -398,6 +425,33 @@ run (const gchar      *name,
               close (preview_fd);
             }
         }
+      else if (is_hgt) /* HGT file in non-interactive mode. */
+        {
+          gint32 sample_spacing = param[3].data.d_int32;
+
+          if (sample_spacing != 1 &&
+              sample_spacing != 3)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+              g_warning ("%d is not a valid sample spacing. Valid values are: 1, 3.",
+                         sample_spacing);
+            }
+          else
+            {
+              switch (sample_spacing)
+                {
+                case 1:
+                  runtime->image_width  = 3601;
+                  runtime->image_height = 3601;
+                  break;
+                default: /* 3 */
+                  runtime->image_width  = 1201;
+                  runtime->image_height = 1201;
+                  break;
+                }
+              status = GIMP_PDB_SUCCESS;
+            }
+        }
       else
         {
           /* we only run interactively due to the nature of this plugin.
@@ -414,7 +468,8 @@ run (const gchar      *name,
 
           if (image_id != -1)
             {
-              gimp_set_data (LOAD_PROC, runtime, sizeof (RawConfig));
+              if (! is_hgt)
+                gimp_set_data (LOAD_PROC, runtime, sizeof (RawConfig));
 
               *nreturn_vals = 2;
               values[1].type         = GIMP_PDB_IMAGE;
@@ -1682,8 +1737,8 @@ load_dialog (const gchar *filename,
 
   dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
-
+                            gimp_standard_help_func,
+                            is_hgt ? LOAD_HGT_PROC : LOAD_PROC,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_Open"),   GTK_RESPONSE_OK,
 
