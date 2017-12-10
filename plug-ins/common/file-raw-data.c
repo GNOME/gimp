@@ -58,6 +58,19 @@
 
 #define RAW_DEFAULTS_PARASITE  "raw-save-defaults"
 
+#define GIMP_PLUGIN_HGT_LOAD_ERROR gimp_plugin_hgt_load_error_quark ()
+
+typedef enum
+{
+  GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR
+} GimpPluginHGTError;
+
+static GQuark
+gimp_plugin_hgt_load_error_quark (void)
+{
+  return g_quark_from_static_string ("gimp-plugin-hgt-load-error-quark");
+}
+
 typedef enum
 {
   RAW_RGB,          /* RGB Image */
@@ -433,8 +446,10 @@ run (const gchar      *name,
               sample_spacing != 3)
             {
               status = GIMP_PDB_CALLING_ERROR;
-              g_warning ("%d is not a valid sample spacing. Valid values are: 1, 3.",
-                         sample_spacing);
+              g_set_error (&error,
+                           GIMP_PLUGIN_HGT_LOAD_ERROR, GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
+                           _("%d is not a valid sample spacing. Valid values are: 1, 3."),
+                           sample_spacing);
             }
           else
             {
@@ -479,6 +494,12 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+        }
+      if (status != GIMP_PDB_SUCCESS && error)
+        {
+          g_warning ("Loading \"%s\" failed with error: %s",
+                     param[1].data.d_string,
+                     error->message);
         }
 
       g_free (runtime);
