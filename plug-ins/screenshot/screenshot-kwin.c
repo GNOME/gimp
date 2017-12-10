@@ -97,6 +97,15 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
     case SHOOT_ROOT:
       if (shootvals->screenshot_delay > 0)
         screenshot_delay (shootvals->screenshot_delay);
+      else
+        {
+          /* As an exception, I force a delay of at least 0.5 seconds
+           * for KWin. Because of windows effect slowly fading out, the
+           * screenshot plug-in GUI was constantly visible (with
+           * transparency as it is fading out) in 0s-delay screenshots.
+           */
+          g_usleep (500000);
+        }
 
       method = "screenshotFullscreen";
       args   = g_variant_new ("(b)", shootvals->show_cursor);
