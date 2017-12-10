@@ -35,7 +35,11 @@ typedef enum
   SCREENSHOT_CAN_SHOOT_POINTER         = 0x1 << 1,
   SCREENSHOT_CAN_PICK_NONINTERACTIVELY = 0x1 << 2,
   SCREENSHOT_CAN_SHOOT_REGION          = 0x1 << 3,
-  SCREENSHOT_CAN_PICK_WINDOW           = 0x1 << 4
+  /* SHOOT_WINDOW mode only: it window selection requires active click. */
+  SCREENSHOT_CAN_PICK_WINDOW           = 0x1 << 4,
+  /* SHOOT_WINDOW + SCREENSHOT_CAN_PICK_WINDOW only: if a delay can be
+   * inserted in-between selection click and actual snapshot. */
+  SCREENSHOT_CAN_DELAY_WINDOW_SHOT     = 0x1 << 5
 } ScreenshotCapabilities;
 
 typedef enum

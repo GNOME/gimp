@@ -73,6 +73,7 @@ static gboolean            shoot_delay_timeout (gpointer          data);
 static ScreenshotBackend       backend            = SCREENSHOT_BACKEND_NONE;
 static ScreenshotCapabilities  capabilities       = 0;
 static GtkWidget              *select_delay_table = NULL;
+static GtkWidget              *shot_delay_table   = NULL;
 
 static ScreenshotValues shootvals =
 {
@@ -420,6 +421,19 @@ shoot_radio_button_toggled (GtkWidget *widget,
           gtk_widget_show (select_delay_table);
         }
     }
+  if (shot_delay_table)
+    {
+      if (shootvals.shoot_type == SHOOT_WINDOW        &&
+          (capabilities & SCREENSHOT_CAN_PICK_WINDOW) &&
+          ! (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
+        {
+          gtk_widget_hide (shot_delay_table);
+        }
+      else
+        {
+          gtk_widget_show (shot_delay_table);
+        }
+    }
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 }
 
@@ -695,8 +709,14 @@ shoot_dialog (GdkScreen **screen)
 
   /* Screenshot delay  */
   table = gtk_table_new (2, 3, FALSE);
+  shot_delay_table = table;
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  if (shootvals.shoot_type != SHOOT_WINDOW          ||
+      ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW) ||
+      (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
+    {
+      gtk_widget_show (table);
+    }
 
   label = gtk_label_new (_("Screenshot delay: "));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
