@@ -28,6 +28,10 @@ Core:
   - Paste in Place, available for regular clipboard and named buffers,
     allows pasting contents of either the clipboard a named buffer at the
     exact coordinates it was copied from.
+  - Color Picker should now work on KDE/Wayland.
+  - Color Picker now reads values under cursor in local windows making
+    it work at least inside GIMP Windows on Wayland platforms with no
+    color-picking capabilities (for instance GNOME/Wayland) yet.
 
 Configurability:
 
@@ -56,8 +60,6 @@ Tools:
     which allows changing user-writable gradients directly rather than
     creating copies of them. Moreover, custom gradient is now saved
     and restored across sessions.
-  - Color Picker now reads values under cursor in local windows under
-    Wayland.
   - All transform tools: it makes no difference now whether a modifier is
     pressed before of after mouse button press/release.
 
@@ -81,6 +83,12 @@ Plug-ins:
 
   - Password-protected PDF files can now be imported.
   - Fix finding raw loaders on Windows/macOS.
+  - Screenshot for KDE/Wayland has been implemented (full-screen and
+    window screenshots only; rectangular area screenshots need
+    implementation on KDE side).
+  - Screenshot can now add a delay between window pick/rectangular
+    area selection and the actual shot, but only in platforms supporting
+    the feature.
 
 File formats:
 
