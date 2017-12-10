@@ -135,7 +135,7 @@
 typedef enum
 {
   GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED
-} GimpPluginPrintError;
+} GimpPluginPDFError;
 
 GQuark gimp_plugin_pdf_save_error_quark (void);
 
