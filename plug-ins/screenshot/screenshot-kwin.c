@@ -92,9 +92,6 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
   gint         monitor = shootvals->monitor;
   gint32       mask;
 
-  if (shootvals->select_delay > 0)
-    screenshot_delay (shootvals->select_delay);
-
   switch (shootvals->shoot_type)
     {
     case SHOOT_ROOT:
