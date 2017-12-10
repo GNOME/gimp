@@ -144,7 +144,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
 
   image_id = image_ID;
 
-  winsnapvals.delay = shootvals->select_delay;
+  winsnapvals.delay = shootvals->screenshot_delay;
 
   if (shootvals->shoot_type == SHOOT_ROOT)
     {
