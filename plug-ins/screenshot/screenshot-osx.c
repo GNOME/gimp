@@ -67,7 +67,9 @@ screenshot_osx_get_capabilities (void)
 {
   return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
           SCREENSHOT_CAN_SHOOT_POINTER     |
-          SCREENSHOT_CAN_SHOOT_REGION);
+          SCREENSHOT_CAN_SHOOT_REGION      |
+          SCREENSHOT_CAN_PICK_WINDOW       |
+          SCREENSHOT_CAN_DELAY_WINDOW_SHOT);
 }
 
 GimpPDBStatusType
@@ -86,10 +88,16 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
   switch (shootvals->shoot_type)
     {
     case SHOOT_REGION:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       mode = "-is";
       break;
 
     case SHOOT_WINDOW:
+      if (shootvals->select_delay > 0)
+        screenshot_delay (shootvals->select_delay);
+
       if (shootvals->decorate)
         mode = "-iwo";
       else
@@ -109,7 +117,7 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
       break;
     }
 
-  delay = g_strdup_printf ("-T %i", shootvals->select_delay);
+  delay = g_strdup_printf ("-T %i", shootvals->screenshot_delay);
 
   filename = gimp_temp_name ("png");
   quoted   = g_shell_quote (filename);
