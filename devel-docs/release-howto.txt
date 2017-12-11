@@ -5,7 +5,7 @@
 
  ( ) Announce a string freeze on the GIMP Developer mailing list.
 
-     Mention that a release is planned, what brach will be frozen, and
+     Mention that a release is planned, what branch will be frozen, and
      how long the string freeze is going to last. Plan for a couple of
      weeks at least. No translatable strings must be touched during
      this time. An example announcement message is:
