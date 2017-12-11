@@ -32,6 +32,15 @@ Core:
   - Color Picker now reads values under cursor in local windows making
     it work at least inside GIMP Windows on Wayland platforms with no
     color-picking capabilities (for instance GNOME/Wayland) yet.
+  - OpenCL is now disabled by default. Depending on graphics cards and
+    drivers, OpenCL acceleration is often slower than multi-threaded
+    implementation, and can also sometimes be "glitchy".
+  - Now possible to open a locally-installed manual different from the
+    GUI localization. The manual language choice can be customized
+    through preferences when several manuals are installed. If no manual
+    language has been selected already and no manual for current GUI
+    localization is available, choice of help language will be proposed
+    at first call to the manual.
 
 Configurability:
 
@@ -48,6 +57,9 @@ Usability:
     bar (as angle value and flip icon). Clicking on these canvas status
     will respectively raise the "Select Rotation Angle" dialog or unflip
     the canvas.
+  - Use abbreviated versions for long layer mode names. In particular,
+    replace the "(legacy)" suffixes with "(l)" in the abbreviated
+    versions, still showing the unabbreviated names in the full list.
 
 Tools:
 
@@ -62,10 +74,21 @@ Tools:
     and restored across sessions.
   - All transform tools: it makes no difference now whether a modifier is
     pressed before of after mouse button press/release.
+  - Free Select tool selection can now be committed with double click as
+    well (only through Enter key before). This allows smoother workflows
+    on some setups, and in particular when no keyboard is available
+    (e.g. tablet-like computers).
+  - Layer group children now inherit the color tags of the parent by
+    default, unless specific color tags are assigned. Inherited color
+    tags show in a less saturated color than assigned ones.
 
 Painting:
 
   - When copying a generated brush, GIMP now copies its 'Spacing' property.
+  - Rename "Wheel" dynamics labels as "Wheel/Rotation". It turns out
+    that graphics pens with barrel rotation feature use the same axis as
+    the wheel feature. Therefore they already work in GIMP. Unhide the
+    feature with more obvious labels.
 
 Color management:
 
