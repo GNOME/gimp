@@ -162,7 +162,7 @@ gimp_dynamics_editor_constructed (GObject *object)
   input_labels[1] = gtk_label_new (_("Velocity"));
   input_labels[2] = gtk_label_new (_("Direction"));
   input_labels[3] = gtk_label_new (_("Tilt"));
-  input_labels[4] = gtk_label_new (_("Wheel"));
+  input_labels[4] = gtk_label_new (_("Wheel/Rotation"));
   input_labels[5] = gtk_label_new (_("Random"));
   input_labels[6] = gtk_label_new (_("Fade"));
 

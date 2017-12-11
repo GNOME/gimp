@@ -141,8 +141,11 @@ static const gchar *const axis_use_strings[] =
   N_("Pressure"),
   N_("X tilt"),
   N_("Y tilt"),
-  /* Wheel as in mouse or input device wheel */
-  N_("Wheel")
+  /* Wheel as in mouse or input device wheel.
+   * Some pens use the same axis for their rotation feature.
+   * See bug 791455.
+   */
+  N_("Wheel/Rotation")
 };
 
 
