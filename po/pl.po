@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-03 19:14+0100\n"
-"PO-Revision-Date: 2017-12-03 19:15+0100\n"
+"POT-Creation-Date: 2017-12-11 23:52+0100\n"
+"PO-Revision-Date: 2017-12-11 23:53+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -509,7 +509,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:308
-#: ../app/gui/gui.c:498
+#: ../app/gui/gui.c:499
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -9506,7 +9506,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:192
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
 #: ../app/tools/gimpfiltertool.c:322 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
@@ -9811,7 +9811,7 @@ msgstr ""
 "Wystąpił błąd podczas przetwarzania pliku „%s”. Zostaną użyte wartości "
 "domyślne. Utworzono kopię zapasową konfiguracji w pliku „%s”."
 
-#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:416
+#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:431
 msgid "Layer"
 msgstr "Warstwa"
 
@@ -11806,7 +11806,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Zmiękczone zaznaczenie prostokątne"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:424
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:439
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Zaznaczenie z kanału alfa"
@@ -12063,11 +12063,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:539 ../app/core/gimpdatafactory.c:542
-#: ../app/core/gimpitem.c:513 ../app/core/gimpitem.c:516
+#: ../app/core/gimpitem.c:538 ../app/core/gimpitem.c:541
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpitem.c:524
+#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpitem.c:549
 #, c-format
 msgid "%s copy"
 msgstr "%s. kopia"
@@ -12125,7 +12125,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:508
+#: ../app/core/gimpdrawable.c:469
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -12149,7 +12149,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Zrównanie"
 
-#: ../app/core/gimpdrawable-floating-selection.c:170
+#: ../app/core/gimpdrawable-floating-selection.c:191
 msgid "Floating Selection"
 msgstr "Oderwane zaznaczenie"
 
@@ -12192,7 +12192,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:423
+#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
@@ -12345,41 +12345,41 @@ msgstr "Pionowe przesunięcie pierwszej linii siatki. Może być liczbą ujemną
 msgid "Offset unit"
 msgstr "Jednostka przesunięcia"
 
-#: ../app/core/gimpgrouplayer.c:246
+#: ../app/core/gimpgrouplayer.c:261
 msgid "Layer Group"
 msgstr "Grupa warstw"
 
-#: ../app/core/gimpgrouplayer.c:247
+#: ../app/core/gimpgrouplayer.c:262
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Zmiana nazwy grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:248
+#: ../app/core/gimpgrouplayer.c:263
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Przesunięcie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:249
+#: ../app/core/gimpgrouplayer.c:264
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skalowanie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:250
+#: ../app/core/gimpgrouplayer.c:265
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Zmiana wymiarów grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:251
+#: ../app/core/gimpgrouplayer.c:266
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Odbicie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:252
+#: ../app/core/gimpgrouplayer.c:267
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Obrót grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:253
+#: ../app/core/gimpgrouplayer.c:268
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
@@ -12820,17 +12820,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:1927
+#: ../app/core/gimpitem.c:1955
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1937
+#: ../app/core/gimpitem.c:1965
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1988 ../app/core/gimpitem.c:1995
+#: ../app/core/gimpitem.c:2016 ../app/core/gimpitem.c:2023
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -12848,7 +12848,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1008
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1028
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12861,76 +12861,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/gimplayer.c:417
+#: ../app/core/gimplayer.c:432
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Zmiana nazwy warstwy"
 
-#: ../app/core/gimplayer.c:418
+#: ../app/core/gimplayer.c:433
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Przesunięcie warstwy"
 
-#: ../app/core/gimplayer.c:419
+#: ../app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/core/gimplayer.c:420
+#: ../app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Zmiana wymiarów warstwy"
 
-#: ../app/core/gimplayer.c:421
+#: ../app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Odbicie warstwy"
 
-#: ../app/core/gimplayer.c:422
+#: ../app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Obrót warstwy"
 
-#: ../app/core/gimplayer.c:425
+#: ../app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Zmiana pozycji warstwy"
 
-#: ../app/core/gimplayer.c:426
+#: ../app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Podniesienie warstwy"
 
-#: ../app/core/gimplayer.c:427
+#: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Podniesienie warstwy na wierzch"
 
-#: ../app/core/gimplayer.c:428
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Obniżenie warstwy"
 
-#: ../app/core/gimplayer.c:429
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Obniżenie warstwy na dno"
 
-#: ../app/core/gimplayer.c:430
+#: ../app/core/gimplayer.c:445
 msgid "Layer cannot be raised higher."
 msgstr "Nie można bardziej podnieść warstwy."
 
-#: ../app/core/gimplayer.c:431
+#: ../app/core/gimplayer.c:446
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:715 ../app/core/gimplayer.c:1711
+#: ../app/core/gimplayer.c:735 ../app/core/gimplayer.c:1744
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: ../app/core/gimplayer.c:754
+#: ../app/core/gimplayer.c:774
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12939,60 +12939,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1617
+#: ../app/core/gimplayer.c:1650
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1628
+#: ../app/core/gimplayer.c:1661
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1634
+#: ../app/core/gimplayer.c:1667
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1762
+#: ../app/core/gimplayer.c:1795
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:1914
+#: ../app/core/gimplayer.c:1947
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1915
+#: ../app/core/gimplayer.c:1948
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:2017
+#: ../app/core/gimplayer.c:2050
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2018
+#: ../app/core/gimplayer.c:2051
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2094
+#: ../app/core/gimplayer.c:2127
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2167
+#: ../app/core/gimplayer.c:2200
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2202
+#: ../app/core/gimplayer.c:2235
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2223
+#: ../app/core/gimplayer.c:2256
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -13857,7 +13857,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:189
+#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:190
 #: ../app/gui/gui-message.c:215
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -13936,7 +13936,7 @@ msgid "_Fade"
 msgstr "_Zanikanie"
 
 #: ../app/dialogs/fade-dialog.c:158 ../app/dialogs/layer-options-dialog.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:346
+#: ../app/widgets/gimpdeviceinfoeditor.c:349
 msgid "_Mode:"
 msgstr "_Tryb:"
 
@@ -14492,7 +14492,7 @@ msgstr "Ok_res:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:360
-#: ../app/tools/gimpforegroundselecttool.c:1193
+#: ../app/tools/gimpforegroundselecttool.c:1214
 msgid "Preview"
 msgstr "Podgląd"
 
@@ -16278,7 +16278,7 @@ msgstr "Kontroluje wyświetlanie obrazu"
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:536
+#: ../app/display/gimpdisplayshell-callbacks.c:540
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -17638,11 +17638,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:127
+#: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/operations/gimpoperationcagetransform.c:128
+#: ../app/operations/gimpoperationcagetransform.c:132
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
@@ -17710,14 +17710,14 @@ msgstr ""
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:235
+#: ../app/gui/gui.c:236
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:542
+#: ../app/gui/gui.c:543
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -18173,7 +18173,7 @@ msgstr "Progowanie"
 msgid "Plug-in"
 msgstr "Wtyczka"
 
-#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:966
+#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:987
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
@@ -20230,7 +20230,7 @@ msgstr "Ka_nał:"
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
-#: ../app/tools/gimpcurvestool.c:521 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:521 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
@@ -20293,8 +20293,8 @@ msgstr "Typ  (%s)"
 msgid "Move: "
 msgstr "Przesunięcie: "
 
-#: ../app/tools/gimpeditselectiontool.c:865
-#: ../app/tools/gimpeditselectiontool.c:1124
+#: ../app/tools/gimpeditselectiontool.c:868
+#: ../app/tools/gimpeditselectiontool.c:1127
 msgid "Move Floating Selection"
 msgstr "Przesunięcie oderwanego zaznaczenia"
 
@@ -20549,33 +20549,33 @@ msgstr "_Podgląd maski"
 msgid "Select foreground pixels"
 msgstr "Zaznacza piksele pierwszego planu"
 
-#: ../app/tools/gimpforegroundselecttool.c:598
+#: ../app/tools/gimpforegroundselecttool.c:606
 msgid "Roughly outline the object to extract"
 msgstr "Nierówno obrysowuje obiekt do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:619
+#: ../app/tools/gimpforegroundselecttool.c:627
 msgid "Selecting foreground,"
 msgstr "Zaznaczenie pierwszego planu,"
 
-#: ../app/tools/gimpforegroundselecttool.c:621
+#: ../app/tools/gimpforegroundselecttool.c:629
 msgid "Selecting background,"
 msgstr "Zaznaczenie tła,"
 
-#: ../app/tools/gimpforegroundselecttool.c:623
+#: ../app/tools/gimpforegroundselecttool.c:631
 msgid "Selecting unknown,"
 msgstr "Zaznaczenie nieznanego,"
 
-#: ../app/tools/gimpforegroundselecttool.c:626
+#: ../app/tools/gimpforegroundselecttool.c:634
 msgid "press Enter to preview."
 msgstr "naciśnięcie klawisza Enter wyświetli podgląd."
 
-#: ../app/tools/gimpforegroundselecttool.c:628
+#: ../app/tools/gimpforegroundselecttool.c:636
 msgid "press Escape to exit preview or Enter to apply."
 msgstr ""
 "naciśnięcie klawisza Escape wyłączy podgląd, a naciśnięcie klawisza Enter "
 "zastosuje."
 
-#: ../app/tools/gimpforegroundselecttool.c:1189
+#: ../app/tools/gimpforegroundselecttool.c:1210
 msgid "Paint mask"
 msgstr "Maska rysowania"
 
@@ -22889,42 +22889,44 @@ msgstr "Poziome nachylenie"
 msgid "Y tilt"
 msgstr "Pionowe nachylenie"
 
-#. Wheel as in mouse or input device wheel
-#: ../app/widgets/gimpdeviceinfoeditor.c:145
+#. Wheel as in mouse or input device wheel.
+#. * Some pens use the same axis for their rotation feature.
+#. * See bug 791455.
+#.
+#: ../app/widgets/gimpdeviceinfoeditor.c:148
 #: ../app/widgets/gimpdynamicseditor.c:165
-#: ../app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel"
-msgstr "Kółko myszy"
+msgid "Wheel/Rotation"
+msgstr "Kółko/obrót"
 
 #. the axes
 #. The axes of an input device
-#: ../app/widgets/gimpdeviceinfoeditor.c:196
+#: ../app/widgets/gimpdeviceinfoeditor.c:199
 msgid "Axes"
 msgstr "Osie"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:270
+#: ../app/widgets/gimpdeviceinfoeditor.c:273
 msgid "Keys"
 msgstr "Klawisze"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:366
-#: ../app/widgets/gimpdeviceinfoeditor.c:581
+#: ../app/widgets/gimpdeviceinfoeditor.c:369
+#: ../app/widgets/gimpdeviceinfoeditor.c:584
 #, c-format
 msgid "none"
 msgstr "brak"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:415
+#: ../app/widgets/gimpdeviceinfoeditor.c:418
 #, c-format
 msgid "%s Curve"
 msgstr "Krzywa %s"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:474
+#: ../app/widgets/gimpdeviceinfoeditor.c:477
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "_Przywróć krzywą"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:487
+#: ../app/widgets/gimpdeviceinfoeditor.c:490
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "Oś „%s” nie ma krzywej"
@@ -23032,6 +23034,10 @@ msgstr "Macierz odwzorowania"
 #: ../app/widgets/gimptoolpreseteditor.c:149
 msgid "Icon:"
 msgstr "Ikona:"
+
+#: ../app/widgets/gimpdynamicsoutputeditor.c:74
+msgid "Wheel / Rotation"
+msgstr "Kółko/obrót"
 
 #: ../app/widgets/gimperrordialog.c:169
 msgid "Too many error messages!"
@@ -23954,22 +23960,22 @@ msgstr "%s (%s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (%s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1646
+#: ../app/widgets/gimpwidgets-utils.c:1654
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Wbudowany profil odcieni szarości (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1653
+#: ../app/widgets/gimpwidgets-utils.c:1661
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Wbudowany profil RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1670
+#: ../app/widgets/gimpwidgets-utils.c:1678
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferowany profil odcieni szarości (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1677
+#: ../app/widgets/gimpwidgets-utils.c:1685
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferowany profil RGB (%s)"
