@@ -86,9 +86,9 @@ Painting:
 
   - When copying a generated brush, GIMP now copies its 'Spacing' property.
   - Rename "Wheel" dynamics labels as "Wheel/Rotation". It turns out
-    that graphics pens with barrel rotation feature use the same axis as
-    the wheel feature. Therefore they already work in GIMP. Unhide the
-    feature with more obvious labels.
+    that Wacom Art Pen and Airbrush pen use the same axis for barrel rotation
+    and wheel scrolling respectively. Therefore they already work in GIMP.
+    "Unhide" the feature with more obvious labels.
 
 Color management:
 
@@ -104,11 +104,10 @@ Display filters:
 
 Plug-ins:
 
-  - Password-protected PDF files can now be imported.
   - Fix finding raw loaders on Windows/macOS.
   - Screenshot for KDE/Wayland has been implemented (full-screen and
     window screenshots only; rectangular area screenshots need
-    implementation on KDE side).
+    implementation on the KDE side).
   - Screenshot can now add a delay between window pick/rectangular
     area selection and the actual shot, but only in platforms supporting
     the feature.
@@ -116,30 +115,30 @@ Plug-ins:
 File formats:
 
   - PSD:
-
     - Fix mask position when opening/exporting.
     - Fix active layer selection during loading.
     - Fix potential group-layer naming conflict during loading.
     - Fix missing some attributes loading empty layers.
-    - Improve layer opacity loading/saving.
-    - Fix active layer selection upon loading.
+    - Fix reading files with deeply nested layer groups.
     - Load and save layer group expanded state.
-  - HGT: Digital Elevation Model data from NASA/NIMA loading support
-    added, both SRTM-1 (1 arc-second) and SRTM-3 (3 arc-seconds).
+    - Improve layer opacity loading/saving.
+  - PDF: password-protected files can now be imported.
+  - HGT: Digital Elevation Model data from NASA/NIMA can now be loaded,
+    both SRTM-1 (1 arc-second) and SRTM-3 (3 arc-seconds).
 
 Filters:
 
   - Update GEGL-based filter Wavelet Decompose:
-    * Add an option to keep the decomposition in a layer group.
-    * Add an option to add layer mask to each scales layers.
-    * Do not use 'new from visible' because it produces unexpected
+    - Add an option to keep the decomposition in a layer group.
+    - Add an option to add layer mask to each scales layers.
+    - Do not use 'New from visible' because it produces unexpected
       results; replaced by succession of layer copy and merge down.
 
 PDB:
 
   - Add file-pdf-load2 API to load password-protected and/or multi-page
     PDF files.
-  - Add file-hgt-load to load HGT files, with argument to select between
+  - Add file-hgt-load to load HGT files, with aan rgument to select between
     SRTM-1 and SRTM-3 types.
 
 Translations:
