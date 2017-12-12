@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 4026412k)
+# (tile-cache-size 6118478k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1006603k)
+# (undo-size 1566330368)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -729,7 +729,7 @@
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.
 # 
-# (help-browser web-browser)
+# (help-browser gimp)
 
 # When enabled, a search of actions will also return inactive actions. 
 # Possible values are yes and no.

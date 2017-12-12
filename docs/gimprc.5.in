@@ -60,7 +60,7 @@ Sets how many threads GIMP should use for operations that support it.  This is
 an integer value.
 
 .TP
-(tile-cache-size 4026412k)
+(tile-cache-size 6118478k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1006603k)
+(undo-size 1566330368)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -921,7 +921,7 @@ empty, the language is taken from the user's locale setting.  This is a string
 value.
 
 .TP
-(help-browser web-browser)
+(help-browser gimp)
 
 Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
