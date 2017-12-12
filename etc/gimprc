@@ -42,12 +42,12 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6118728k)
+# (tile-cache-size 4026412k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
 # 
-# (use-opencl yes)
+# (use-opencl no)
 
 # Specifies the language to use for the user interface.  This is a string
 # value.
@@ -158,7 +158,7 @@
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
-# (default-brush "Round Fuzzy")
+# (default-brush "2. Hardness 050")
 
 # Specify a default dynamics.  The dynamics is searched for in the specified
 # dynamics path.  This is a string value.
@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1529682k)
+# (undo-size 1006603k)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -729,7 +729,7 @@
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.
 # 
-# (help-browser gimp)
+# (help-browser web-browser)
 
 # When enabled, a search of actions will also return inactive actions. 
 # Possible values are yes and no.

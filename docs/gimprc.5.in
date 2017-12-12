@@ -60,7 +60,7 @@ Sets how many threads GIMP should use for operations that support it.  This is
 an integer value.
 
 .TP
-(tile-cache-size 6118728k)
+(tile-cache-size 4026412k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -71,7 +71,7 @@ in bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 size defaults to being specified in kilobytes.
 
 .TP
-(use-opencl yes)
+(use-opencl no)
 
 When enabled, uses OpenCL for some operations.  Possible values are yes and
 no.
@@ -203,7 +203,7 @@ Where to look for fonts in addition to the system-wide installed fonts.  This
 is a colon-separated list of folders to search.
 
 .TP
-(default-brush "Round Fuzzy")
+(default-brush "2. Hardness 050")
 
 Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1529682k)
+(undo-size 1006603k)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -921,7 +921,7 @@ empty, the language is taken from the user's locale setting.  This is a string
 value.
 
 .TP
-(help-browser gimp)
+(help-browser web-browser)
 
 Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
