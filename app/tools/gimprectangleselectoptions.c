@@ -80,6 +80,14 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_DOUBLE (object_class,
+                           GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
+                           "highlight-opacity",
+                           _("Highlight opacity"),
+                           _("How much to dim everything outside selection"),
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ROUND_CORNERS,
                             "round-corners",
                             _("Rounded corners"),

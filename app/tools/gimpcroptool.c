@@ -335,6 +335,7 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
   static const gchar *properties[] =
   {
     "highlight",
+    "highlight-opacity",
     "guide",
     "x",
     "y",
@@ -474,7 +475,7 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
 
-      gimp_display_shell_set_highlight (shell, NULL);
+      gimp_display_shell_set_highlight (shell, NULL, 0.0);
 
       gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
                                          G_CALLBACK (gimp_crop_tool_auto_shrink),

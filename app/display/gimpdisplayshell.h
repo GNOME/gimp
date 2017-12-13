@@ -294,7 +294,8 @@ void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
 void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
-                                                    const GdkRectangle *highlight);
+                                                    const GdkRectangle *highlight,
+                                                    double              opacity);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GeglBuffer         *mask,
                                                     gint                offset_x,

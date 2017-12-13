@@ -80,6 +80,14 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_DOUBLE (object_class,
+                           GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
+                           "highlight-opacity",
+                           _("Highlight opacity"),
+                           _("How much to dim everything outside selection"),
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                             "layer-only",
                             _("Current layer only"),

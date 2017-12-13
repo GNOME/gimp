@@ -1881,6 +1881,7 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
  * gimp_display_shell_set_highlight:
  * @shell:     a #GimpDisplayShell
  * @highlight: a rectangle in image coordinates that should be brought out
+ * @opacity:   how much to hide the unselected area
  *
  * This function sets an area of the image that should be
  * accentuated. The actual implementation is to dim all pixels outside
@@ -1888,7 +1889,8 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
  **/
 void
 gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
-                                  const GdkRectangle *highlight)
+                                  const GdkRectangle *highlight,
+                                  gdouble             opacity)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1901,6 +1903,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                  highlight->y,
                                  highlight->width,
                                  highlight->height);
+      g_object_set (shell->passe_partout, "opacity", opacity, NULL);
 
       gimp_canvas_item_set_visible (shell->passe_partout, TRUE);
 

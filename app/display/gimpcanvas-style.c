@@ -83,7 +83,7 @@ static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
 static const GimpRGB outline_bg          = { 1.0, 1.0, 1.0, 0.6 };
 static const GimpRGB outline_fg          = { 0.0, 0.0, 0.0, 0.8 };
 
-static const GimpRGB passe_partout       = { 0.0, 0.0, 0.0, 0.5 };
+static const GimpRGB passe_partout       = { 0.0, 0.0, 0.0, 1.0 };
 
 static const GimpRGB tool_bg             = { 0.0, 0.0, 0.0, 0.4 };
 static const GimpRGB tool_fg             = { 1.0, 1.0, 1.0, 0.8 };

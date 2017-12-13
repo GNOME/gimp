@@ -82,6 +82,7 @@ enum
   PROP_STATUS_TITLE,
 
   PROP_HIGHLIGHT,
+  PROP_HIGHLIGHT_OPACITY,
   PROP_GUIDE,
   PROP_X,
   PROP_Y,
@@ -239,6 +240,7 @@ struct _GimpToolRectanglePrivate
   /* The following values are externally synced with GimpRectangleOptions */
 
   gboolean                highlight;
+  gdouble                 highlight_opacity;
   GimpGuidesType          guide;
 
   gdouble                 x;
@@ -561,6 +563,13 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_HIGHLIGHT_OPACITY,
+                                   g_param_spec_double ("highlight-opacity",
+                                                        NULL, NULL,
+                                                        0.0, 1.0, 0.5,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_GUIDE,
                                    g_param_spec_enum ("guide",
                                                       NULL, NULL,
@@ -869,6 +878,9 @@ gimp_tool_rectangle_set_property (GObject      *object,
     case PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
       break;
+    case PROP_HIGHLIGHT_OPACITY:
+      private->highlight_opacity = g_value_get_double (value);
+      break;
     case PROP_GUIDE:
       private->guide = g_value_get_enum (value);
       break;
@@ -974,6 +986,9 @@ gimp_tool_rectangle_get_property (GObject    *object,
 
     case PROP_HIGHLIGHT:
       g_value_set_boolean (value, private->highlight);
+      break;
+    case PROP_HIGHLIGHT_OPACITY:
+      g_value_set_double (value, private->highlight_opacity);
       break;
     case PROP_GUIDE:
       g_value_set_enum (value, private->guide);
@@ -1367,11 +1382,11 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
       rect.width  = x2 - x1;
       rect.height = y2 - y1;
 
-      gimp_display_shell_set_highlight (shell, &rect);
+      gimp_display_shell_set_highlight (shell, &rect, private->highlight_opacity);
     }
   else
     {
-      gimp_display_shell_set_highlight (shell, NULL);
+      gimp_display_shell_set_highlight (shell, NULL, 0.0);
     }
 }
 

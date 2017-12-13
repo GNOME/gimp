@@ -688,6 +688,7 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
   static const gchar *properties[] =
   {
     "highlight",
+    "highlight-opacity",
     "guide",
     "round-corners",
     "corner-radius",
@@ -878,7 +879,7 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
 
-      gimp_display_shell_set_highlight (shell, NULL);
+      gimp_display_shell_set_highlight (shell, NULL, 0.0);
 
       gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
                                          G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),

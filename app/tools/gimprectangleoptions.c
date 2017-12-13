@@ -491,6 +491,9 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
       break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
+      private->highlight_opacity = g_value_get_double (value);
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
       private->guide = g_value_get_enum (value);
       break;
@@ -594,6 +597,9 @@ gimp_rectangle_options_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       g_value_set_boolean (value, private->highlight);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
+      g_value_set_double (value, private->highlight_opacity);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
       g_value_set_enum (value, private->guide);
@@ -1036,10 +1042,18 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  Highlight  */
-  button = gimp_prop_check_button_new (config, "highlight", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  /*  the Highlight frame  */
+  {
+    GtkWidget *scale;
+
+    scale = gimp_prop_spin_scale_new (config, "highlight-opacity", NULL,
+                                      0.01, 0.1, 2);
+
+    frame = gimp_prop_expanding_frame_new (config, "highlight", NULL,
+                                           scale, NULL);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
+  }
 
   /*  Guide  */
   combo = gimp_prop_enum_combo_box_new (config, "guide",

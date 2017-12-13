@@ -26,6 +26,7 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
   GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
   GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+  GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
   GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
 
   GIMP_RECTANGLE_OPTIONS_PROP_X,
@@ -80,6 +81,7 @@ struct _GimpRectangleOptionsPrivate
   gboolean                shrink_merged;
 
   gboolean                highlight;
+  gdouble                 highlight_opacity;
   GimpGuidesType          guide;
 
   gdouble                 x;
