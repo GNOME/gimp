@@ -138,7 +138,7 @@ PDB:
 
   - Add file-pdf-load2 API to load password-protected and/or multi-page
     PDF files.
-  - Add file-hgt-load to load HGT files, with aan rgument to select between
+  - Add file-hgt-load to load HGT files, with an argument to select between
     SRTM-1 and SRTM-3 types.
 
 Translations:
