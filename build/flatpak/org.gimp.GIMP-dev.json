@@ -62,7 +62,7 @@
                     "type": "git",
                     "url": "git://git.gnome.org/gimp",
                     "branch": "GIMP_2_9_8",
-                    "commit": "5afea2f6d3ce5160362df930883d62fb9e0728c6"
+                    "commit": "18794a6ba2915ed58b82337edaba794d69f767b7"
                 }
             ],
 	    "post-install": [
