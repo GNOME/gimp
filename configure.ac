@@ -1734,8 +1734,12 @@ PKG_CHECK_MODULES(POPPLER, [poppler-glib >= poppler_required_version],
                                     [add_deps_error([poppler-data])]),
                   [add_deps_error([poppler-glib >= poppler_required_version])])
 
-have_poppler=yes
 AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
+
+# MIME_TYPES is for the formats we can open as used for instance in the
+# desktop file. Even if cairo-pdf (used for PDF export) is not
+# installed, the mime-type list should contain application/pdf.
+MIME_TYPES="$MIME_TYPES;application/pdf"
 
 #####################
 # Check for cairo-pdf
@@ -1753,11 +1757,6 @@ else
 fi
 
 AC_SUBST(FILE_PDF_SAVE)
-
-## If both poppler and cairo-pdf are enabled then we have complete PDF support
-if test "x$have_cairo_pdf" = xyes && test "x$have_poppler" = xyes; then
-  MIME_TYPES="$MIME_TYPES;application/pdf"
-fi
 
 
 ###################
