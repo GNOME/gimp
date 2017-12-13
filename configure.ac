@@ -1734,8 +1734,6 @@ PKG_CHECK_MODULES(POPPLER, [poppler-glib >= poppler_required_version],
                                     [add_deps_error([poppler-data])]),
                   [add_deps_error([poppler-glib >= poppler_required_version])])
 
-AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
-
 # MIME_TYPES is for the formats we can open as used for instance in the
 # desktop file. Even if cairo-pdf (used for PDF export) is not
 # installed, the mime-type list should contain application/pdf.

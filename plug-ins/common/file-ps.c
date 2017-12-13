@@ -96,7 +96,6 @@ static const gchar dversio[] = "v1.17  19-Sep-2004";
 
 #define LOAD_PS_PROC         "file-ps-load"
 #define LOAD_EPS_PROC        "file-eps-load"
-#define LOAD_PDF_PROC        "file-pdf-load"
 #define LOAD_PS_SETARGS_PROC "file-ps-load-setargs"
 #define LOAD_PS_THUMB_PROC   "file-ps-load-thumb"
 #define SAVE_PS_PROC         "file-ps-save"
@@ -271,8 +270,7 @@ static void      dither_grey      (const guchar      *grey,
 /* Dialog-handling */
 
 static gint32    count_ps_pages             (const gchar *filename);
-static gboolean  load_dialog                (const gchar *filename,
-                                             gboolean     loadPDF);
+static gboolean  load_dialog                (const gchar *filename);
 static void      load_pages_entry_callback  (GtkWidget   *widget,
                                              gpointer     data);
 
@@ -683,27 +681,6 @@ query (void)
                                     "",
                                     "0,string,%!,0,long,0xc5d0d3c6");
 
-#ifndef HAVE_POPPLER
-  gimp_install_procedure (LOAD_PDF_PROC,
-                          "load PDF documents",
-                          "load PDF documents",
-                          "Peter Kirchgessner <peter@kirchgessner.net>",
-                          "Peter Kirchgessner",
-                          dversio,
-                          N_("PDF document"),
-                          NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
-
-  gimp_register_file_handler_mime (LOAD_PDF_PROC, "application/pdf");
-  gimp_register_magic_load_handler (LOAD_PDF_PROC,
-                                    "pdf",
-                                    "",
-                                    "0,string,%PDF");
-#endif
-
   gimp_install_procedure (LOAD_PS_SETARGS_PROC,
                           "set additional parameters for procedure file-ps-load",
                           "set additional parameters for procedure file-ps-load",
@@ -731,10 +708,6 @@ query (void)
 
   gimp_register_thumbnail_loader (LOAD_PS_PROC,  LOAD_PS_THUMB_PROC);
   gimp_register_thumbnail_loader (LOAD_EPS_PROC, LOAD_PS_THUMB_PROC);
-
-#ifndef HAVE_POPPLER
-  gimp_register_thumbnail_loader (LOAD_PDF_PROC, LOAD_PS_THUMB_PROC);
-#endif
 
   gimp_install_procedure (SAVE_PS_PROC,
                           "export image as PostScript document",
@@ -838,9 +811,8 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PS_PROC)  == 0  ||
-      strcmp (name, LOAD_EPS_PROC) == 0  ||
-      strcmp (name, LOAD_PDF_PROC) == 0)
+  if (strcmp (name, LOAD_PS_PROC)  == 0 ||
+      strcmp (name, LOAD_EPS_PROC) == 0)
     {
       switch (run_mode)
         {
@@ -848,8 +820,7 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (LOAD_PS_PROC, &plvals);
 
-          if (! load_dialog (param[1].data.d_string,
-                             strcmp (name, LOAD_PDF_PROC) == 0))
+          if (! load_dialog (param[1].data.d_string))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -3392,8 +3363,7 @@ count_ps_pages (const gchar *filename)
 }
 
 static gboolean
-load_dialog (const gchar *filename,
-             gboolean     loadPDF)
+load_dialog (const gchar *filename)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -3514,7 +3484,7 @@ load_dialog (const gchar *filename,
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
 
-  if (loadPDF || page_count == 0)
+  if (page_count == 0)
     {
       entry = gtk_entry_new ();
       gtk_widget_set_size_request (entry, 80, -1);
@@ -3616,7 +3586,7 @@ load_dialog (const gchar *filename,
 
       ps_pagemode = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
     }
-  else if (loadPDF || page_count == 0)
+  else if (page_count == 0)
     {
       ps_pagemode = gtk_combo_box_get_active (GTK_COMBO_BOX (target));
     }
