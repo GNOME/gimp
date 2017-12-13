@@ -92,7 +92,7 @@ libexec_PROGRAMS = \
 	$(FILE_MNG) \
 	file-pat \
 	file-pcx \
-	$(FILE_PDF_LOAD) \
+	file-pdf-load \
 	$(FILE_PDF_SAVE) \
 	file-pix \
 	file-png \

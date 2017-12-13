@@ -1724,29 +1724,18 @@ AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" = xyes)
 # Check for libpoppler
 ######################
 
-AC_ARG_WITH(poppler,[  --without-poppler       build without poppler support])
+# We don't check against a poppler-data version, which basically means
+# at least 0.4.7 since it has a pkg-config file since 0.4.7, thus we
+# can't verify presence of older versions. Anyway all modern
+# distributions have at least this version and CJK/Cyrillic support
+# should not be considered as "second-zone citizen".
+PKG_CHECK_MODULES(POPPLER, [poppler-glib >= poppler_required_version],
+                  PKG_CHECK_MODULES(POPPLER_DATA, poppler-data,,
+                                    [add_deps_error([poppler-data])]),
+                  [add_deps_error([poppler-glib >= poppler_required_version])])
 
-have_poppler=no
-if test "x$with_poppler" != xno; then
-  PKG_CHECK_MODULES(POPPLER,
-    poppler-glib >= poppler_required_version,
-    [ FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
-      AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
-      # We don't check against a poppler-data version, because old
-      # versions may work as well. Yet the pkg-config file has only been
-      # added in 0.4.7, thus we can't verify presence of older versions.
-      PKG_CHECK_MODULES(POPPLER_DATA, poppler-data,
-        [have_poppler="yes (Cyrillic and CJK support: yes)"],
-        [have_poppler='yes (Cyrillic and CJK support: no or poppler-data < poppler_data_required_version)']
-      )
-    ],
-    have_poppler="Using PostScript plug-in (libpoppler-glib not found)")
-else
-  have_poppler="Using PostScript plug-in (libpoppler support disabled)"
-fi
-
-AC_SUBST(FILE_PDF_LOAD)
-
+have_poppler=yes
+AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
 
 #####################
 # Check for cairo-pdf
@@ -2709,7 +2698,6 @@ Optional Plug-Ins:
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
   WebP:                $have_webp
-  PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
   Python 2:            $enable_python
