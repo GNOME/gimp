@@ -129,13 +129,14 @@ header files installed.
      HarfBuzz         @HARFBUZZ_REQUIRED_VERSION@
      libbzip2
      libjpeg
-     libpng           @LIBPNG_REQUIRED_VERSION@
      liblzma          @LIBLZMA_REQUIRED_VERSION@
      libmypaint       @LIBMYPAINT_REQUIRED_VERSION@
+     libpng           @LIBPNG_REQUIRED_VERSION@
+     libpoppler-glib  @POPPLER_REQUIRED_VERSION@
+     librsvg          @RSVG_REQUIRED_VERSION@
      libtiff
      Little CMS       @LCMS_REQUIRED_VERSION@
      pangocairo       @PANGOCAIRO_REQUIRED_VERSION@
-     libpoppler-glib  @POPPLER_REQUIRED_VERSION@
      poppler-data     @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
@@ -143,24 +144,24 @@ header files installed.
 
      Package Name	Version		Feature
 
-     libaa		-		ASCII art
+     cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
+     ExcHndl		-		Crash logs on Windows with Dr. MinGW
      gs			-		ghostscript
-     webkit		@WEBKIT_REQUIRED_VERSION@		Help browser & webpage
+     libaa		-		ASCII art
      libjasper		-		JPEG 2000
      libmng		-		MNG
-     openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
-     cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
-     python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
-     librsvg		@RSVG_REQUIRED_VERSION@		SVG
+     libwebp		@WEBP_REQUIRED_VERSION@		WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
-     ExcHndl		-		Crash logs on Windows with Dr. MinGW
-     libwebp		@WEBP_REQUIRED_VERSION@		WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
+     openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
+     python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
+     webkit		@WEBKIT_REQUIRED_VERSION@		Help browser & webpage
 
  19. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
+     RawTherapee >= 5.2 for raw loading
      xdg-email for sending emails
      sendmail for sending emails if --with-sendmail enabled
 
