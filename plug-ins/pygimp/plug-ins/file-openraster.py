@@ -204,16 +204,22 @@ def save_ora(img, drawable, filename, raw_filename):
         else:
             add_layer(parent, x, y, opac, lay, path_name, lay.visible)
 
+    # save mergedimage
+    thumb = pdb['gimp-image-duplicate'](img)
+    thumb_layer = thumb.merge_visible_layers (CLIP_TO_IMAGE)
+    store_layer (thumb, thumb_layer, 'mergedimage.png')
+
     # save thumbnail
     w, h = img.width, img.height
-    # should be at most 256x256, without changing aspect ratio
-    if w > h:
-        w, h = 256, max(h*256/w, 1)
-    else:
-        w, h = max(w*256/h, 1), 256
-    thumb = pdb['gimp-image-duplicate'](img)
-    thumb_layer = thumb.flatten()
-    thumb_layer.scale(w, h)
+    if max (w, h) > 256:
+        # should be at most 256x256, without changing aspect ratio
+        if w > h:
+            w, h = 256, max(h*256/w, 1)
+        else:
+            w, h = max(w*256/h, 1), 256
+        thumb_layer.scale(w, h)
+    if thumb.precision != PRECISION_U8_GAMMA:
+        pdb.gimp_image_convert_precision (thumb, PRECISION_U8_GAMMA)
     store_layer(thumb, thumb_layer, 'Thumbnails/thumbnail.png')
     gimp.delete(thumb)
 
