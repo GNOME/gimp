@@ -13,6 +13,13 @@ in NEWS.
 Overview of Changes from GIMP 2.9.6 to GIMP 2.10 RC1
 ====================================================
 
+Plug-ins:
+
+  - Screenshot with the generic Freedesktop API has been implemented. It
+    is meant to replace all desktop environment specific APIs but needs
+    to get reasonable features first. Therefore currently GNOME/KDE and
+    X11 implementations still have priority.
+
 Building:
 
   - poppler and poppler-data now hard dependencies. PDF import is
