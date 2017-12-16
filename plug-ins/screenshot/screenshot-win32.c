@@ -127,7 +127,8 @@ screenshot_win32_available (void)
 ScreenshotCapabilities
 screenshot_win32_get_capabilities (void)
 {
-  return (SCREENSHOT_CAN_SHOOT_DECORATIONS);
+  return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
+          SCREENSHOT_CAN_SHOOT_WINDOW);
 }
 
 GimpPDBStatusType

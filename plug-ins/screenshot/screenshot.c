@@ -234,6 +234,18 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &shootvals);
       shootvals.window_id = 0;
 
+      if ((shootvals.shoot_type == SHOOT_WINDOW &&
+           ! (capabilities & SCREENSHOT_CAN_SHOOT_WINDOW)) ||
+          (shootvals.shoot_type == SHOOT_REGION &&
+           ! (capabilities & SCREENSHOT_CAN_SHOOT_REGION)))
+        {
+          /* Shoot root is the only type of shoot which is definitely
+           * shared by all screenshot backends (basically just snap the
+           * whole display setup).
+           */
+          shootvals.shoot_type = SHOOT_ROOT;
+        }
+
       /* Get information from the dialog */
       if (! shoot_dialog (&screen))
         status = GIMP_PDB_CANCEL;
@@ -508,69 +520,72 @@ shoot_dialog (GdkScreen **screen)
   gtk_widget_show (vbox);
 
   /*  Single window  */
-  button = gtk_radio_button_new_with_mnemonic (radio_group,
-                                               _("Take a screenshot of "
-                                                 "a single _window"));
-  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                     GINT_TO_POINTER (SHOOT_WINDOW));
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (shoot_radio_button_toggled),
-                    notebook1);
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (shoot_radio_button_toggled),
-                    notebook2);
-
-  /*  Window decorations  */
-  if (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
+  if (capabilities & SCREENSHOT_CAN_SHOOT_WINDOW)
     {
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+      button = gtk_radio_button_new_with_mnemonic (radio_group,
+                                                   _("Take a screenshot of "
+                                                     "a single _window"));
+      radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-      toggle = gtk_check_button_new_with_mnemonic (_("Include window _decoration"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    shootvals.decorate);
-      gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
-      gtk_widget_show (toggle);
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                         GINT_TO_POINTER (SHOOT_WINDOW));
 
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &shootvals.decorate);
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (shoot_radio_button_toggled),
+                        notebook1);
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (shoot_radio_button_toggled),
+                        notebook2);
 
-      g_object_bind_property (button, "active",
-                              toggle, "sensitive",
-                              G_BINDING_SYNC_CREATE);
+      /*  Window decorations  */
+      if (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
+        {
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_show (hbox);
+
+          toggle = gtk_check_button_new_with_mnemonic (_("Include window _decoration"));
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                        shootvals.decorate);
+          gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 24);
+          gtk_widget_show (toggle);
+
+          g_signal_connect (toggle, "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &shootvals.decorate);
+
+          g_object_bind_property (button, "active",
+                                  toggle, "sensitive",
+                                  G_BINDING_SYNC_CREATE);
+        }
+      /*  Mouse pointer  */
+      if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
+        {
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_show (hbox);
+
+          cursor_toggle = gtk_check_button_new_with_mnemonic (_("Include _mouse pointer"));
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cursor_toggle),
+                                        shootvals.show_cursor);
+          gtk_box_pack_start (GTK_BOX (hbox), cursor_toggle, TRUE, TRUE, 24);
+          gtk_widget_show (cursor_toggle);
+
+          g_signal_connect (cursor_toggle, "toggled",
+                            G_CALLBACK (gimp_toggle_button_update),
+                            &shootvals.show_cursor);
+
+          g_object_bind_property (button, "active",
+                                  cursor_toggle, "sensitive",
+                                  G_BINDING_SYNC_CREATE);
+        }
+
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    shootvals.shoot_type == SHOOT_WINDOW);
     }
-  /*  Mouse pointer  */
-  if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
-    {
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      cursor_toggle = gtk_check_button_new_with_mnemonic (_("Include _mouse pointer"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cursor_toggle),
-                                    shootvals.show_cursor);
-      gtk_box_pack_start (GTK_BOX (hbox), cursor_toggle, TRUE, TRUE, 24);
-      gtk_widget_show (cursor_toggle);
-
-      g_signal_connect (cursor_toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &shootvals.show_cursor);
-
-      g_object_bind_property (button, "active",
-                              cursor_toggle, "sensitive",
-                              G_BINDING_SYNC_CREATE);
-    }
-
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                shootvals.shoot_type == SHOOT_WINDOW);
 
   /*  Whole screen  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,

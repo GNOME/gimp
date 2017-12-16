@@ -544,6 +544,7 @@ screenshot_x11_get_capabilities (void)
 #endif
 
   capabilities |= SCREENSHOT_CAN_SHOOT_REGION |
+                  SCREENSHOT_CAN_SHOOT_WINDOW |
                   SCREENSHOT_CAN_PICK_WINDOW  |
                   SCREENSHOT_CAN_DELAY_WINDOW_SHOT;
 

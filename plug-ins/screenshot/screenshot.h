@@ -40,7 +40,8 @@ typedef enum
   SCREENSHOT_CAN_PICK_WINDOW           = 0x1 << 4,
   /* SHOOT_WINDOW + SCREENSHOT_CAN_PICK_WINDOW only: if a delay can be
    * inserted in-between selection click and actual snapshot. */
-  SCREENSHOT_CAN_DELAY_WINDOW_SHOT     = 0x1 << 5
+  SCREENSHOT_CAN_DELAY_WINDOW_SHOT     = 0x1 << 5,
+  SCREENSHOT_CAN_SHOOT_WINDOW          = 0x1 << 6
 } ScreenshotCapabilities;
 
 typedef enum
