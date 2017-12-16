@@ -27,6 +27,7 @@
 #include <libgimp/gimpui.h>
 
 #include "screenshot.h"
+#include "screenshot-freedesktop.h"
 #include "screenshot-gnome-shell.h"
 #include "screenshot-icon.h"
 #include "screenshot-kwin.h"
@@ -219,6 +220,11 @@ run (const gchar      *name,
       capabilities = screenshot_x11_get_capabilities ();
     }
 #endif
+  else if (! backend && screenshot_freedesktop_available ())
+    {
+      backend      = SCREENSHOT_BACKEND_FREEDESKTOP;
+      capabilities = screenshot_freedesktop_get_capabilities ();
+    }
 
   /* how are we running today? */
   switch (run_mode)
@@ -364,7 +370,9 @@ shoot (GdkScreen  *screen,
     return screenshot_win32_shoot (&shootvals, screen, image_ID, error);
 #endif
 
-  if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
+  if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
+    return screenshot_freedesktop_shoot (&shootvals, screen, image_ID, error);
+  else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
     return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
     return screenshot_kwin_shoot (&shootvals, screen, image_ID, error);

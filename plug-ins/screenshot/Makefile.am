@@ -46,6 +46,8 @@ EXTRA_PROGRAMS = screenshot
 screenshot_SOURCES = \
 	screenshot.c			\
 	screenshot.h			\
+	screenshot-freedesktop.c	\
+	screenshot-freedesktop.h	\
 	screenshot-gnome-shell.c	\
 	screenshot-gnome-shell.h	\
 	screenshot-icon.h		\
