@@ -89,7 +89,7 @@ $evalcode = <<'CODE';
     foreach (@groupvars) { eval "undef $_" }
 
     # Load the file in and get the group info
-    &$safeeval("require '$main::srcdir/groups/$file.pdb'");
+    &$safeeval("require '$main::srcdir/pdb/$file.pdb'");
 
     # Save these for later
     &$copyvars(\$grp{$file}, @groupvars);
@@ -120,7 +120,7 @@ CODE
 
 # Slurp in the PDB defs
 foreach $file (@groups) {
-    print "Processing $srcdir/groups/$file.pdb...\n";
+    print "Processing $srcdir/pdb/$file.pdb...\n";
     eval "package Gimp::CodeGen::Safe::$file; $evalcode;";
     die $@ if $@;
 }
