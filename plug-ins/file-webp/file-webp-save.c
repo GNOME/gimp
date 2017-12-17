@@ -178,8 +178,9 @@ save_layer (const gchar    *filename,
         {
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
-                       _("Unable to open '%s' for writing"),
-                       gimp_filename_to_utf8 (filename));
+                       _("Unable to open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       g_strerror (errno));
           break;
         }
 
@@ -511,8 +512,9 @@ save_animation (const gchar    *filename,
         {
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
-                       _("Unable to open '%s' for writing"),
-                       gimp_filename_to_utf8 (filename));
+                       _("Unable to open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       g_strerror (errno));
           status = FALSE;
           break;
         }
