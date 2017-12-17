@@ -2,6 +2,10 @@
 
 ACLOCAL_AMFLAGS = -I m4macros ${ACLOCAL_FLAGS}
 
+if WITH_PDBGEN
+PDB = pdb
+endif
+
 SUBDIRS = \
 	m4macros	\
 	cursors		\
@@ -17,6 +21,7 @@ SUBDIRS = \
 	menus		\
 	libgimpbase	\
 	tools		\
+	$(PDB)		\
 	icons		\
 	libgimpcolor	\
 	libgimpmath	\

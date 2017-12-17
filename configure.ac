@@ -2480,7 +2480,7 @@ _______EOF
 AC_CONFIG_FILES([
 INSTALL
 tools/Makefile
-tools/pdbgen/Makefile
+pdb/Makefile
 libgimp/Makefile
 libgimpbase/Makefile
 libgimpconfig/Makefile
