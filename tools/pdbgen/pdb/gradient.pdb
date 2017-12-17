@@ -1,0 +1,1466 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+sub gradient_new {
+    $blurb = 'Creates a new gradient';
+    $help  = 'This procedure creates a new, uninitialized gradient';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The requested name of the new gradient' }
+    );
+
+    @outargs = (
+	{ name => 'actual_name', type => 'string',
+	  desc => 'The actual new gradient name' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory,
+                                               context, name);
+
+  if (data)
+    actual_name = g_strdup (gimp_object_get_name (data));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_duplicate {
+    $blurb = 'Duplicates a gradient';
+    $help  = 'This procedure creates an identical gradient by a different name';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' }
+    );
+
+    @outargs = (
+	{ name => 'copy_name', type => 'string',
+	  desc => "The name of the gradient's copy" }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient)
+    {
+      GimpGradient *gradient_copy = (GimpGradient *)
+        gimp_data_factory_data_duplicate (gimp->gradient_factory,
+                                          GIMP_DATA (gradient));
+
+      if (gradient_copy)
+        copy_name = g_strdup (gimp_object_get_name (gradient_copy));
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_is_editable {
+    $blurb = 'Tests if gradient can be edited';
+    $help  = 'Returns TRUE if you have permission to change the gradient';
+
+    &bill_pdb_misc('2004', '2.4');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' }
+    );
+
+    @outargs = (
+	{ name => 'editable', type => 'boolean',
+	  desc => 'TRUE if the gradient can be edited' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient)
+    editable = gimp_data_is_writable (GIMP_DATA (gradient));
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_rename {
+    $blurb = 'Rename a gradient';
+    $help  = 'This procedure renames a gradient';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'new_name', type => 'string', non_empty => 1,
+          desc => 'The new name of the gradient' }
+    );
+
+    @outargs = (
+	{ name => 'actual_name', type => 'string',
+	  desc => 'The actual new name of the gradient' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+
+  if (gradient)
+    {
+      gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+      actual_name = g_strdup (gimp_object_get_name (gradient));
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_delete {
+    $blurb = 'Deletes a gradient';
+    $help  = 'This procedure deletes a gradient';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient && gimp_data_is_deletable (GIMP_DATA (gradient)))
+    success = gimp_data_factory_data_delete (gimp->gradient_factory,
+                                             GIMP_DATA (gradient),
+                                             TRUE, error);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_get_number_of_segments {
+    $blurb = 'Returns the number of segments of the specified gradient';
+
+    $help = <<'HELP';
+This procedure returns the number of segments of the specified gradient.
+HELP
+
+    $author    = 'Lars-Peter Clausen <lars@metafoo.de>';
+    $copyright = 'Lars-Peter Clausen';
+    $date      = '2008';
+    $since     = '2.6';
+
+
+    @inargs = (
+        { name => 'name', type => 'string', non_empty => 1,
+          desc => 'The gradient name' }
+    );
+
+    @outargs = (
+        { name => 'num_segments', type => 'int32',
+          init => 0, desc => 'Number of segments' }
+    );
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient)
+    {
+      for (seg = gradient->segments; seg; seg = seg->next)
+        num_segments++;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_get_uniform_samples {
+    $blurb = 'Sample the specified in uniform parts.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient in the
+specified number of uniform parts. It returns a list of floating-point values
+which correspond to the RGBA values for each sample. The minimum number of
+samples to take is 2, in which case the returned colors will correspond to the
+{ 0.0, 1.0 } positions in the gradient. For example, if the number of samples
+is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
+HELP
+
+    &federico_pdb_misc('1997', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+	{ name => 'num_samples', type => '2 <= int32',
+	  desc => 'The number of samples to take' },
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient' }
+    );
+
+    @outargs = (
+        { name => 'color_samples', type => 'floatarray', void_ret => 1,
+	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
+	  array => { desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient)
+    {
+      GimpGradientSegment *seg   = NULL;
+      gdouble              pos   = 0.0;
+      gdouble              delta = 1.0 / (num_samples - 1);
+      gdouble             *sample;
+
+      num_color_samples = num_samples * 4;
+
+      sample = color_samples = g_new (gdouble, num_color_samples);
+
+      while (num_samples--)
+        {
+          GimpRGB color;
+
+	  seg = gimp_gradient_get_color_at (gradient, context, seg,
+                                            pos, reverse, &color);
+
+          *sample++ = color.r;
+          *sample++ = color.g;
+          *sample++ = color.b;
+          *sample++ = color.a;
+
+          pos += delta;
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_get_custom_samples {
+    $blurb = 'Sample the specified gradient in custom positions.';
+
+    $help = <<'HELP';
+This procedure samples the active gradient in the specified number of
+points. The procedure will sample the gradient in the specified
+positions from the list. The left endpoint of the gradient corresponds
+to position 0.0, and the right endpoint corresponds to 1.0. The
+procedure returns a list of floating-point values which correspond to
+the RGBA values for each sample.
+HELP
+
+    &federico_pdb_misc('1997', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+	{ name  => 'positions', type  => 'floatarray',
+	  desc  => 'The list of positions to sample along the gradient',
+	  array => { name => 'num_samples', type => '1 <= int32',
+		     desc => 'The number of samples to take' } },
+	{ name => 'reverse', type => 'boolean',
+	  desc => 'Use the reverse gradient' }
+    );
+
+    @outargs = (
+        { name => 'color_samples', type => 'floatarray', void_ret => 1,
+	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
+	  array => { desc => 'Length of the color_samples array (4 *
+			      num_samples)' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+
+  if (gradient)
+    {
+      GimpGradientSegment *seg = NULL;
+      gdouble             *sample;
+
+      num_color_samples = num_samples * 4;
+
+      sample = color_samples = g_new (gdouble, num_color_samples);
+
+      while (num_samples--)
+        {
+          GimpRGB color;
+
+          seg = gimp_gradient_get_color_at (gradient, context,
+                                            seg, *positions,
+                                            reverse, &color);
+
+          *sample++ = color.r;
+          *sample++ = color.g;
+          *sample++ = color.b;
+          *sample++ = color.a;
+
+          positions++;
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_left_color {
+    $blurb = 'Retrieves the left endpoint color of the specified segment';
+
+    $help = <<'HELP';
+This procedure retrieves the left endpoint color of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'color', type => 'color', void_ret => 1,
+          desc => 'The return color' },
+        { name => 'opacity', type => 'float',
+          desc => 'The opacity of the endpoint' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      gimp_gradient_segment_get_left_color (gradient, seg, &color);
+      opacity = color.a * 100.0;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_right_color {
+    $blurb = 'Retrieves the right endpoint color of the specified segment';
+
+    $help = <<'HELP';
+This procedure retrieves the right endpoint color of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'color', type => 'color', void_ret => 1,
+          desc => 'The return color' },
+        { name => 'opacity', type => 'float',
+          desc => 'The opacity of the endpoint' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      gimp_gradient_segment_get_right_color (gradient, seg, &color);
+      opacity = color.a * 100.0;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_set_left_color {
+    $blurb = 'Sets the left endpoint color of the specified segment';
+
+    $help = <<'HELP';
+This procedure sets the left endpoint color of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
+        { name => 'color', type => 'color',
+          desc => 'The color to set' },
+        { name => 'opacity', type => '0 <= float <= 100.0',
+          desc => 'The opacity to set for the endpoint' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+
+  if (seg)
+    {
+      color.a = opacity / 100.0;
+      gimp_gradient_segment_set_left_color (gradient, seg, &color);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_set_right_color {
+    $blurb = 'Sets the right endpoint color of the specified segment';
+
+    $help = <<'HELP';
+This procedure sets the right endpoint color of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
+        { name => 'color', type => 'color',
+          desc => 'The color to set' },
+        { name => 'opacity', type => '0 <= float <= 100.0',
+          desc => 'The opacity to set for the endpoint' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+
+  if (seg)
+    {
+      color.a = opacity / 100.0;
+      gimp_gradient_segment_set_right_color (gradient, seg, &color);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_left_pos {
+    $blurb = 'Retrieves the left endpoint position of the specified segment';
+
+    $help = <<'HELP';
+This procedure retrieves the left endpoint position of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      pos = gimp_gradient_segment_get_left_pos (gradient, seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_right_pos {
+    $blurb = 'Retrieves the right endpoint position of the specified segment';
+
+    $help = <<'HELP';
+This procedure retrieves the right endpoint position of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      pos = gimp_gradient_segment_get_right_pos (gradient, seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_middle_pos {
+    $blurb = 'Retrieves the middle point position of the specified segment';
+
+    $help = <<'HELP';
+This procedure retrieves the middle point position of the specified segment of
+the specified gradient.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      pos = gimp_gradient_segment_get_middle_pos (gradient, seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_set_left_pos {
+    $blurb = 'Sets the left endpoint position of the specified segment';
+
+    $help = <<'HELP';
+This procedure sets the left endpoint position of the specified
+segment of the specified gradient. The final position will be between
+the position of the middle point to the left to the middle point of
+the current segment.
+
+This procedure returns the final position.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
+        { name => 'pos', type => '0.0 <= float <= 1.0',
+          desc => 'The position to set the guidepoint to' }
+    );
+
+    @outargs = (
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+
+  if (seg)
+    {
+      final_pos = gimp_gradient_segment_set_left_pos (gradient, seg, pos);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_set_right_pos {
+    $blurb = 'Sets the right endpoint position of the specified segment';
+
+    $help = <<'HELP';
+This procedure sets the right endpoint position of the specified
+segment of the specified gradient. The final position will be between
+the position of the middle point of the current segment and the middle
+point of the segment to the right.
+
+This procedure returns the final position.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
+        { name => 'pos', type => '0.0 <= float <= 1.0',
+          desc => 'The position to set the guidepoint to' }
+    );
+
+    @outargs = (
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+
+  if (seg)
+    {
+      final_pos =
+        gimp_gradient_segment_set_right_pos (gradient, seg, pos);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_set_middle_pos {
+    $blurb = 'Sets the middle point position of the specified segment';
+
+    $help = <<'HELP';
+This procedure sets the middle point position of the specified segment
+of the specified gradient. The final position will be between the two
+endpoints of the segment.
+
+This procedure returns the final position.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' },
+        { name => 'pos', type => '0.0 <= float <= 1.0',
+          desc => 'The position to set the guidepoint to' }
+    );
+
+    @outargs = (
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+
+  if (seg)
+    {
+      final_pos =
+        gimp_gradient_segment_set_middle_pos (gradient, seg, pos);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_blending_function {
+    $blurb = "Retrieves the gradient segment's blending function";
+
+    $help = <<'HELP';
+This procedure retrieves the blending function of the segment at the
+specified gradient name and segment index.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'blend_func', type => 'enum GimpGradientSegmentType',
+          void_ret => 1,
+	  desc => 'The blending function of the segment' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      blend_func = gimp_gradient_segment_get_blending_function (gradient, seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_get_coloring_type {
+    $blurb = "Retrieves the gradient segment's coloring type";
+
+    $help = <<'HELP';
+This procedure retrieves the coloring type of the segment at the
+specified gradient name and segment index.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'segment', type => '0 <= int32',
+          desc => 'The index of the segment within the gradient' }
+    );
+
+    @outargs = (
+        { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
+          void_ret => 1,
+	  desc => 'The coloring type of the segment' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *seg;
+
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+
+  if (seg)
+    {
+      coloring_type = gimp_gradient_segment_get_coloring_type (gradient, seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_set_blending_function {
+    $blurb = 'Change the blending function of a segments range';
+
+    $help = <<'HELP';
+This function changes the blending function of a segment range to the
+specified blending function.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' },
+        { name => 'blending_function', type => 'enum GimpGradientSegmentType',
+          desc => 'The blending function' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_set_blending_function (gradient,
+                                                         start_seg, end_seg,
+                                                         blending_function);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_set_coloring_type {
+    $blurb = 'Change the coloring type of a segments range';
+
+    $help = <<'HELP';
+This function changes the coloring type of a segment range to the
+specified coloring type.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' },
+        { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
+          desc => 'The coloring type' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_set_coloring_type (gradient,
+                                                     start_seg, end_seg,
+                                                     coloring_type);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_flip {
+    $blurb = 'Flip the segment range';
+    $help  = 'This function flips a segment range.';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_flip (gradient,
+                                        start_seg, end_seg,
+                                        NULL, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_replicate {
+    $blurb = 'Replicate the segment range';
+
+    $help = <<'HELP';
+This function replicates a segment range a given number of times. Instead
+of the original segment range, several smaller scaled copies of it
+will appear in equal widths.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' },
+        { name => 'replicate_times', type => '2 <= int32 <= 20',
+          desc => 'The number of times to replicate' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg && gimp_data_is_writable (GIMP_DATA (gradient)))
+    {
+      gimp_gradient_segment_range_replicate (gradient,
+                                             start_seg, end_seg,
+                                             replicate_times,
+                                             NULL, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_split_midpoint {
+    $blurb = 'Splits each segment in the segment range at midpoint';
+
+    $help = <<'HELP';
+This function splits each segment in the segment range at its midpoint.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_split_midpoint (gradient, context,
+                                                  start_seg, end_seg,
+                                                  NULL, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_split_uniform {
+    $blurb = 'Splits each segment in the segment range uniformly';
+
+    $help = <<'HELP';
+This function splits each segment in the segment range uniformly according
+to the number of times specified by the parameter.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' },
+        { name => 'split_parts', type => '2 <= int32 <= 1024',
+          desc => 'The number of uniform divisions to split each segment to' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_split_uniform (gradient, context,
+                                                 start_seg, end_seg,
+                                                 split_parts,
+                                                 NULL, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_delete {
+    $blurb = 'Delete the segment range';
+    $help  = 'This function deletes a segment range.';
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_delete (gradient,
+                                          start_seg, end_seg,
+                                          NULL, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_redistribute_handles {
+    $blurb = "Uniformly redistribute the segment range's handles";
+
+    $help = <<'HELP';
+This function redistributes the handles of the specified segment range of the
+specified gradient, so they'll be evenly spaced.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      gimp_gradient_segment_range_redistribute_handles (gradient,
+                                                        start_seg, end_seg);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_blend_colors {
+    $blurb = 'Blend the colors of the segment range.';
+
+    $help = <<'HELP';
+This function blends the colors (but not the opacity) of the segments'
+range of the gradient. Using it, the colors' transition will be uniform
+across the range.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      if (!end_seg)
+        end_seg = gimp_gradient_segment_get_last (start_seg);
+
+      gimp_gradient_segment_range_blend (gradient,
+                                         start_seg, end_seg,
+                                         &start_seg->left_color,
+                                         &end_seg->right_color,
+                                         TRUE, FALSE);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_blend_opacity {
+    $blurb = 'Blend the opacity of the segment range.';
+
+    $help = <<'HELP';
+This function blends the opacity (but not the colors) of the segments'
+range of the gradient. Using it, the opacity's transition will be uniform
+across the range.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      if (!end_seg)
+        end_seg = gimp_gradient_segment_get_last (start_seg);
+
+      gimp_gradient_segment_range_blend (gradient,
+                                         start_seg, end_seg,
+                                         &start_seg->left_color,
+                                         &end_seg->right_color,
+                                         FALSE, TRUE);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gradient_segment_range_move {
+    $blurb = 'Move the position of an entire segment range by a delta.';
+
+    $help = <<'HELP';
+This function moves the position of an entire segment range by a delta. The
+actual delta (which is returned) will be limited by the control points of the
+neighboring segments.
+HELP
+
+    &shlomi_pdb_misc('2003', '2.2');
+
+    @inargs = (
+	{ name => 'name', type => 'string', non_empty => 1,
+	  desc => 'The gradient name' },
+        { name => 'start_segment', type => '0 <= int32',
+          desc => 'The index of the first segment to operate on' },
+        { name => 'end_segment', type => 'int32',
+          desc => 'The index of the last segment to operate on. If negative,
+                   the selection will extend to the end of the string.' },
+        { name => 'delta', type => '-1.0 <= float <= 1.0',
+          desc => 'The delta to move the segment range' },
+        { name => 'control_compress', type => 'boolean',
+          desc => 'Whether or not to compress the neighboring segments' }
+    );
+
+    @outargs = (
+        { name => 'final_delta', type => 'float',
+          desc => 'The final delta by which the range moved' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpGradient        *gradient;
+  GimpGradientSegment *start_seg;
+  GimpGradientSegment *end_seg;
+
+  gradient = gradient_get_range (gimp, name, start_segment, end_segment,
+                                 &start_seg, &end_seg, error);
+
+  if (start_seg)
+    {
+      final_delta = gimp_gradient_segment_range_move (gradient,
+                                                      start_seg, end_seg,
+                                                      delta,
+                                                      control_compress);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+$extra{app}->{code} = <<'CODE';
+static GimpGradient *
+gradient_get (Gimp                 *gimp,
+              const gchar          *name,
+              GimpPDBDataAccess     access,
+              gint                  segment,
+              GimpGradientSegment **seg,
+              GError              **error)
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, access, error);
+
+  *seg = NULL;
+
+  if (gradient)
+    *seg = gimp_gradient_segment_get_nth (gradient->segments, segment);
+
+  return gradient;
+}
+
+static GimpGradient *
+gradient_get_range (Gimp                 *gimp,
+                    const gchar          *name,
+                    gint                  start_segment,
+                    gint                  end_segment,
+                    GimpGradientSegment **start_seg,
+                    GimpGradientSegment **end_seg,
+                    GError              **error)
+{
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
+
+  *start_seg = NULL;
+  *end_seg   = NULL;
+
+  if (end_segment >= 0 && end_segment < start_segment)
+    return NULL;
+
+  if (gradient)
+    {
+      *start_seg = gimp_gradient_segment_get_nth (gradient->segments,
+                                                  start_segment);
+
+      if (*start_seg && end_segment >= 0)
+        *end_seg = gimp_gradient_segment_get_nth (*start_seg,
+                                                  end_segment -
+                                                  start_segment);
+    }
+
+  return gradient;
+}
+CODE
+
+
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpcontext.h"
+              "core/gimpgradient.h"
+              "core/gimpdatafactory.h"
+              "gimppdb-utils.h");
+
+@procs = qw(gradient_new
+            gradient_duplicate
+            gradient_is_editable
+            gradient_rename
+            gradient_delete
+            gradient_get_number_of_segments
+            gradient_get_uniform_samples gradient_get_custom_samples
+            gradient_segment_get_left_color gradient_segment_set_left_color
+            gradient_segment_get_right_color gradient_segment_set_right_color
+            gradient_segment_get_left_pos gradient_segment_set_left_pos
+            gradient_segment_get_middle_pos gradient_segment_set_middle_pos
+            gradient_segment_get_right_pos gradient_segment_set_right_pos
+            gradient_segment_get_blending_function
+            gradient_segment_get_coloring_type
+            gradient_segment_range_set_blending_function 
+            gradient_segment_range_set_coloring_type
+            gradient_segment_range_flip
+            gradient_segment_range_replicate
+            gradient_segment_range_split_midpoint
+            gradient_segment_range_split_uniform
+            gradient_segment_range_delete
+            gradient_segment_range_redistribute_handles
+            gradient_segment_range_blend_colors
+            gradient_segment_range_blend_opacity
+            gradient_segment_range_move);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Gradient';
+$doc_title = 'gimpgradient';
+$doc_short_desc = 'Functions operating on a single gradient.';
+$doc_long_desc = 'Functions operating on a single gradient.';
+
+1;

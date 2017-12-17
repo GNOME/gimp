@@ -1,0 +1,321 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub progress_init {
+    $blurb = 'Initializes the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Initializes the progress bar for the current plug-in. It is only valid to call
+this procedure from a plug-in.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'message', type => 'string', null_ok => 1, wrap => 1,
+	  desc => 'Message to use in the progress dialog' },
+	{ name => 'gdisplay', type => 'display', none_ok => 1,
+	  desc => 'GimpDisplay to update progressbar in, or -1 for a separate
+		   window' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      if (! gimp->no_interface)
+        gimp_plug_in_progress_start (plug_in, message, gdisplay);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_update {
+    $blurb = 'Updates the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Updates the progress bar for the current plug-in. It is only valid to call this
+procedure from a plug-in.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'percentage', type => 'float', wrap => 1,
+	  desc => 'Percentage of progress completed which must
+                   be between 0.0 and 1.0' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      if (! gimp->no_interface)
+	gimp_plug_in_progress_set_value (plug_in, percentage);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_pulse {
+    $blurb = 'Pulses the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Updates the progress bar for the current plug-in. It is only valid to
+call this procedure from a plug-in. Use this function instead of
+gimp_progress_update() if you cannot tell how much progress has been
+made. This usually causes the the progress bar to enter "activity
+mode", where a block bounces back and forth.
+HELP
+
+    &neo_pdb_misc('2005', '2.4');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      if (! gimp->no_interface)
+        gimp_plug_in_progress_pulse (plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_set_text {
+    $blurb = 'Changes the text in the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+This function changes the text in the progress bar for the current
+plug-in. Unlike gimp_progress_init() it does not change the displayed
+value.
+HELP
+
+    &neo_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	{ name => 'message', type => 'string', null_ok => 1,
+	  desc => 'Message to use in the progress dialog' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      if (! gimp->no_interface)
+        gimp_plug_in_progress_set_text (plug_in, message);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_end {
+    $blurb = 'Ends the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Ends the progress display for the current plug-in. Most plug-ins don't need to call this, they just exit when the work is done. It is only valid to call this
+procedure from a plug-in.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      GimpPlugInProcFrame *proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+      gimp_plug_in_progress_end (plug_in, proc_frame);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_get_window_handle {
+    $blurb = 'Returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.';
+
+    $help = <<'HELP';
+This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @outargs = (
+	{ name => 'window', type => 'int32',
+	  desc => 'The progress bar\'s toplevel window' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      if (! gimp->no_interface)
+        window = gimp_plug_in_progress_get_window_id (plug_in);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_install {
+    $blurb = 'Installs a progress callback for the current plug-in.';
+
+    $help = <<'HELP';
+This function installs a temporary PDB procedure which will handle all
+progress calls made by this plug-in and any procedure it calls. Calling
+this function multiple times simply replaces the old progress callbacks.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
+	  desc => 'The callback PDB proc to call',
+          wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_progress_install (plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_uninstall {
+    $blurb = 'Uninstalls the progress callback for the current plug-in.';
+
+    $help = <<'HELP';
+This function uninstalls any progress callback installed with
+gimp_progress_install() before.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
+	  desc => 'The name of the callback registered for this progress',
+          wrap => 1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub progress_cancel {
+    $blurb = 'Cancels a running progress.';
+
+    $help = <<'HELP';
+This function cancels the currently running progress.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
+	  desc => 'The name of the callback registered for this progress' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimp.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-progress.h"
+              "plug-in/gimppluginmanager.h");
+
+@procs = qw(progress_init
+            progress_update
+            progress_pulse
+            progress_set_text
+            progress_end
+            progress_get_window_handle
+            progress_install
+            progress_uninstall
+            progress_cancel);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Progress';
+$doc_title = 'gimpprogress';
+$doc_short_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
+$doc_long_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
+
+1;

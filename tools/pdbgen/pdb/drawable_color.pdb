@@ -1,0 +1,838 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub drawable_brightness_contrast {
+    $blurb = 'Modify brightness/contrast in the specified drawable.';
+
+    $help = <<'HELP';
+This procedures allows the brightness and contrast of the specified drawable to
+be modified.  Both 'brightness' and 'contrast' parameters are defined between
+-0.5 and 0.5.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'brightness', type => '-0.5 <= float <= 0.5',
+	  desc => 'Brightness adjustment' },
+	{ name => 'contrast', type => '-0.5 <= float <= 0.5',
+	  desc => 'Contrast adjustment' }
+    );
+
+    %invoke = (
+        headers => [ qw("operations/gimpbrightnesscontrastconfig.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
+                                      "brightness", brightness,
+                                      "contrast",   contrast,
+                                      NULL);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Brightness-Contrast"),
+                                             "gimp:brightness-contrast",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_color_balance {
+    $blurb = 'Modify the color balance of the specified drawable.';
+
+    $help = <<'HELP';
+Modify the color balance of the specified drawable. There are three axis which
+can be modified: cyan-red, magenta-green, and yellow-blue. Negative values
+increase the amount of the former, positive values increase the amount of the
+latter. Color balance can be controlled with the 'transfer_mode' setting, which
+allows shadows, mid-tones, and highlights in an image to be affected
+differently. The 'preserve-lum' parameter, if TRUE, ensures that the
+luminosity of each pixel remains fixed.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'transfer_mode', type => 'enum GimpTransferMode',
+	  desc => 'Transfer mode' },
+	{ name => 'preserve_lum', type => 'boolean',
+	  desc => 'Preserve luminosity values at each pixel' },
+	{ name => 'cyan_red', type => '-100 <= float <= 100',
+	  desc => 'Cyan-Red color balance' },
+	{ name => 'magenta_green', type => '-100 <= float <= 100',
+	  desc => 'Magenta-Green color balance' },
+	{ name => 'yellow_blue', type => '-100 <= float <= 100',
+	  desc => 'Yellow-Blue color balance' }
+    );
+
+    %invoke = (
+	headers => [ qw("operations/gimpcolorbalanceconfig.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error)  &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_COLOR_BALANCE_CONFIG,
+                                      "range",               transfer_mode,
+                                      "preserve-luminosity", preserve_lum,
+                                      NULL);
+
+      g_object_set (config,
+                    "cyan-red",      cyan_red      / 100.0,
+                    "magenta-green", magenta_green / 100.0,
+                    "yellow-blue",   yellow_blue   / 100.0,
+                    NULL);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Color Balance"),
+                                             "gimp:color-balance",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_colorize_hsl {
+    $blurb = 'Render the drawable as a grayscale image seen through a colored glass.';
+
+    $help = <<'HELP';
+Desaturates the drawable, then tints it with the specified color. This tool is
+only valid on RGB color images. It will not operate on grayscale drawables.
+HELP
+
+    &neo_pdb_misc('2004', '2.10');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'hue', type => '0 <= float <= 360',
+	  desc => 'Hue in degrees' },
+	{ name => 'saturation', type => '0 <= float <= 100',
+	  desc => 'Saturation in percent' },
+	{ name => 'lightness', type => '-100 <= float <= 100',
+	  desc => 'Lightness in percent' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      ! gimp_drawable_is_gray (drawable))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gimp:colorize",
+                             "hue",        hue        / 360.0,
+                             "saturation", saturation / 100.0,
+                             "lightness",  lightness  / 100.0,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Colorize"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_curves_explicit {
+    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
+
+    $help = <<'HELP';
+Modifies the intensity mapping for one channel in the specified
+drawable. The channel can be either an intensity component, or the
+value. The 'values' parameter is an array of doubles which explicitly
+defines how each pixel value in the drawable will be modified.  Use
+the gimp_curves_spline() function to modify intensity levels with
+Catmull Rom splines.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify' },
+	{ name => 'values', type => 'floatarray',
+	  desc => 'The explicit curve',
+	  array => { name => 'num_values', type => '256 <= int32 <= 2096',
+		     desc => 'The number of values in the new curve' } }
+    );
+
+    %invoke = (
+	headers => [ qw("operations/gimpcurvesconfig.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      (num_values >= 256) &&
+      (num_values <= 4096) &&
+      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+      (! gimp_drawable_is_gray (drawable) ||
+       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+      channel != GIMP_HISTOGRAM_LUMINANCE)
+    {
+      GObject *config = gimp_curves_config_new_explicit (channel,
+                                                         values,
+                                                         num_values);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Curves"),
+                                             "gimp:curves",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_curves_spline {
+    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
+
+    $help = <<'HELP';
+Modifies the intensity mapping for one channel in the specified
+drawable. The channel can be either an intensity component, or the
+value. The 'points' parameter is an array of doubles which define a
+set of control points which describe a Catmull Rom spline which yields
+the final intensity curve. Use the gimp_curves_explicit() function to
+explicitly modify intensity levels.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify' },
+	{ name => 'points', type => 'floatarray',
+	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
+		   ... }',
+	  array => { name => 'num_points', type => '4 <= int32 <= 2048',
+		     desc => 'The number of values in the control point array' }
+       }
+    );
+
+    %invoke = (
+	headers => [ qw("operations/gimpcurvesconfig.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      ! (num_points & 1) &&
+      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+      (! gimp_drawable_is_gray (drawable) ||
+       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+      channel != GIMP_HISTOGRAM_LUMINANCE)
+    {
+      GObject *config = gimp_curves_config_new_spline (channel,
+                                                       points,
+                                                       num_points / 2);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Curves"),
+                                             "gimp:curves",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_desaturate {
+    $blurb = <<'BLURB';
+Desaturate the contents of the specified drawable, with the specified formula.
+BLURB
+
+    $help = <<'HELP';
+This procedure desaturates the contents of the specified drawable,
+with the specified formula. This procedure only works on drawables of
+type RGB color.
+HELP
+
+    $author = $copyright = 'Karine Delvare';
+    $date = '2005';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'desaturate_mode', type => 'enum GimpDesaturateMode',
+	  desc => 'The formula to use to desaturate' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_drawable_is_rgb (drawable))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gimp:desaturate",
+                             "mode",      desaturate_mode,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Desaturate"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_equalize {
+    $blurb = 'Equalize the contents of the specified drawable.';
+
+    $help = <<'HELP';
+This procedure equalizes the contents of the specified drawable. Each
+intensity channel is equalized independently. The equalized intensity
+is given as inten' = (255 - inten). The 'mask_only' option specifies
+whether to adjust only the area of the image within the selection
+bounds, or the entire image based on the histogram of the selected
+area. If there is no selection, the entire image is adjusted based on
+the histogram for the entire image.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'mask_only', type => 'boolean',
+	  desc => 'Equalization option' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-equalize.h") ],
+	code => <<'CODE'
+{
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                   GIMP_PDB_ITEM_CONTENT, error) ||
+      ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    success = FALSE;
+
+  if (success)
+    gimp_drawable_equalize (drawable, mask_only);
+}
+CODE
+    );
+}
+
+sub drawable_histogram {
+    $blurb = <<'BLURB';
+Returns information on the intensity histogram for the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+
+This tool makes it possible to gather information about the intensity
+histogram of a drawable. A channel to examine is first specified. This
+can be either value, red, green, or blue, depending on whether the
+drawable is of type color or grayscale. Second, a range of intensities
+are specified. The gimp_drawable_histogram() function returns
+statistics based on the pixels in the drawable that fall under this
+range of values. Mean, standard deviation, median, number of pixels,
+and percentile are all returned.  Additionally, the total count of
+pixels in the image is returned. Counts of pixels are weighted by any
+associated alpha values and by the current selection mask. That is,
+pixels that lie outside an active selection mask will not be
+counted. Similarly, pixels with transparent alpha values will not be
+counted. The returned mean, std_dev and median are in the range
+(0..255) for 8-bit images or if the plug-in is not precision-aware,
+and in the range (0.0..1.0) otherwise.
+
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to query' },
+	{ name => 'start_range', type => '0.0 <= float <= 1.0',
+	  desc => 'Start of the intensity measurement range' },
+	{ name => 'end_range', type => '0.0 <= float <= 1.0',
+	  desc => 'End of the intensity measurement range' }
+    );
+
+    @outargs = (
+	{ name => 'mean', type => 'float', void_ret => 1,
+	  desc => 'Mean intensity value' },
+	{ name => 'std_dev',  type => 'float',
+	  desc => 'Standard deviation of intensity values' },
+	{ name => 'median',  type => 'float',
+	  desc => 'Median intensity value' },
+	{ name => 'pixels',  type => 'float',
+	  desc => 'Alpha-weighted pixel count for entire image' },
+	{ name => 'count',  type => 'float',
+	  desc => 'Alpha-weighted pixel count for range' },
+	{ name => 'percentile',  type => 'float',
+	  desc => 'Percentile that range falls under' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpdrawable-histogram.h"
+                        "core/gimphistogram.h") ],
+	code => <<'CODE'
+{
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error) ||
+      (! gimp_drawable_has_alpha (drawable) &&
+       channel == GIMP_HISTOGRAM_ALPHA) ||
+      (gimp_drawable_is_gray (drawable) &&
+       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
+    success = FALSE;
+
+  if (success)
+    {
+      GimpHistogram *histogram;
+      gint           n_bins;
+      gint           start;
+      gboolean       precision_enabled;
+      gboolean       linear;
+      gint           end;
+
+      precision_enabled =
+        gimp->plug_in_manager->current_plug_in &&
+        gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in);
+
+      if (precision_enabled)
+        linear = gimp_drawable_get_linear (drawable);
+      else
+        linear = FALSE;
+
+      histogram = gimp_histogram_new (linear);
+      gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+
+      n_bins = gimp_histogram_n_bins (histogram);
+
+      start = ROUND (start_range * (n_bins - 1));
+      end   = ROUND (end_range   * (n_bins - 1));
+
+      mean       = gimp_histogram_get_mean (histogram, channel,
+		 			    start, end);
+      std_dev    = gimp_histogram_get_std_dev (histogram, channel,
+					       start, end);
+      median     = gimp_histogram_get_median (histogram, channel,
+					      start, end);
+      pixels     = gimp_histogram_get_count (histogram, channel, 0, n_bins - 1);
+      count      = gimp_histogram_get_count (histogram, channel,
+                                             start, end);
+      percentile = count / pixels;
+
+      g_object_unref (histogram);
+
+      if (n_bins == 256 || ! precision_enabled)
+        {
+          mean    *= 255;
+          std_dev *= 255;
+          median  *= 255;
+        }
+    }
+}
+CODE
+    );
+}
+
+sub drawable_hue_saturation {
+    $blurb = <<'BLURB';
+Modify hue, lightness, and saturation in the specified drawable.
+BLURB
+
+    $help = <<'HELP';
+This procedure allows the hue, lightness, and saturation in the specified
+drawable to be modified. The 'hue-range' parameter provides the capability to
+limit range of affected hues. The 'overlap' parameter provides blending into
+neighboring hue channels when rendering.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+        { name => 'drawable', type => 'drawable',
+          desc => 'The drawable' },
+        { name => 'hue_range', type => 'enum GimpHueRange',
+          desc => 'Range of affected hues' },
+        { name => 'hue_offset', type => '-180 <= float <= 180',
+          desc => 'Hue offset in degrees' },
+        { name => 'lightness', type => '-100 <= float <= 100',
+          desc => 'Lightness modification' },
+        { name => 'saturation', type => '-100 <= float <= 100',
+          desc => 'Saturation modification' },
+        { name => 'overlap', type => '0 <= float <= 100',
+          desc => 'Overlap other hue channels' }
+    );
+
+    %invoke = (
+        headers => [ qw("operations/gimphuesaturationconfig.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GObject *config = g_object_new (GIMP_TYPE_HUE_SATURATION_CONFIG,
+                                      "range", hue_range,
+                                      NULL);
+
+       g_object_set (config,
+                     "hue",        hue_offset / 180.0,
+                     "saturation", saturation / 100.0,
+                     "lightness",  lightness  / 100.0,
+                     "overlap",    overlap / 100.0,
+                     NULL);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Hue-Saturation"),
+                                             "gimp:hue-saturation",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_invert {
+    $blurb = 'Invert the contents of the specified drawable.';
+
+    $help = <<'HELP';
+This procedure inverts the contents of the specified drawable. Each
+intensity channel is inverted independently. The inverted intensity is
+given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is
+inverted in linear space.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'linear', type => 'boolean',
+	  desc => 'Whether to invert in linear space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Invert"),
+                                             linear ?
+                                             "gegl:invert-linear" :
+                                             "gegl:invert-gamma",
+                                             NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_levels {
+    $blurb = 'Modifies intensity levels in the specified drawable.';
+
+    $help = <<'HELP';
+This tool allows intensity levels in the specified drawable to be remapped
+according to a set of parameters. The low/high input levels specify an initial
+mapping from the source intensities. The gamma value determines how intensities
+between the low and high input intensities are interpolated. A gamma value of
+1.0 results in a linear interpolation. Higher gamma values result in more
+high-level intensities. Lower gamma values result in more low-level
+intensities. The low/high output levels constrain the final intensity
+mapping--that is, no final intensity will be lower than the low output level
+and no final intensity will be higher than the high output level. This tool is
+only valid on RGB color and grayscale images.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to modify' },
+	{ name => 'low_input', type => '0.0 <= float <= 1.0',
+	  desc => "Intensity of lowest input" },
+	{ name => 'high_input', type => '0.0 <= float <= 1.0',
+	  desc => "Intensity of highest input" },
+	{ name => 'gamma', type => '0.1 <= float <= 10',
+	  desc => 'Gamma adjustment factor' },
+	{ name => 'low_output', type => '0.0 <= float <= 1.0',
+	  desc => "Intensity of lowest output" },
+	{ name => 'high_output', type => '0.0 <= float <= 1.0',
+	  desc => "Intensity of highest output" }
+    );
+
+    %invoke = (
+	headers => [ qw("operations/gimplevelsconfig.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
+      (! gimp_drawable_is_gray (drawable) ||
+       channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA) &&
+      channel != GIMP_HISTOGRAM_LUMINANCE)
+    {
+      GObject *config = g_object_new (GIMP_TYPE_LEVELS_CONFIG,
+                                      "channel", channel,
+                                      NULL);
+
+      g_object_set (config,
+                    "low-input",   low_input,
+                    "high-input",  high_input,
+                    "gamma",       gamma,
+                    "low-output",  low_output,
+                    "high-output", high_output,
+                    NULL);
+
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Levels"),
+                                             "gimp:levels",
+                                             config);
+      g_object_unref (config);
+    }
+  else
+    success = TRUE;
+}
+CODE
+    );
+}
+
+sub drawable_levels_stretch {
+    $blurb = 'Automatically modifies intensity levels in the specified drawable.';
+
+    $help = <<'HELP';
+This procedure allows intensity levels in the specified drawable to be
+remapped according to a set of guessed parameters. It is equivalent to
+clicking the "Auto" button in the Levels tool.
+HELP
+
+    $author = $copyright = 'Joao S.O. Bueno, Shawn Willden';
+    $date = '2003';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpdrawable-levels.h") ],
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      gimp_drawable_levels_stretch (drawable, progress);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_posterize {
+    $blurb = 'Posterize the specified drawable.';
+
+    $help = <<'HELP';
+This procedures reduces the number of shades allows in each intensity channel
+to the specified 'levels' parameter.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'levels', type => '2 <= int32 <= 255',
+	  desc => 'Levels of posterization' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gimp:posterize",
+                             "levels",    levels,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Posterize"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_threshold {
+    $blurb = 'Threshold the specified drawable.';
+
+    $help = <<'HELP';
+This procedures generates a threshold map of the specified
+drawable. All pixels between the values of 'low_threshold' and
+'high_threshold', on the scale of 'channel' are replaced with white,
+and all other pixels with black.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to base the threshold on' },
+	{ name => 'low_threshold', type => '0.0 <= float <= 1.0',
+	  desc => 'The low threshold value' },
+	{ name => 'high_threshold', type => '0.0 <= float <= 1.0',
+	  desc => 'The high threshold value' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gimp:threshold",
+                             "channel",   channel,
+                             "low",       low_threshold,
+                             "high",      high_threshold,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Threshold"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw("libgimpmath/gimpmath.h"
+              "core/gimp.h"
+              "core/gimpdrawable.h"
+              "core/gimpdrawable-operation.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimppluginmanager.h"
+              "gimppdb-utils.h"
+              "gimp-intl.h");
+
+@procs = qw(drawable_brightness_contrast
+            drawable_color_balance
+            drawable_colorize_hsl
+            drawable_curves_explicit
+            drawable_curves_spline
+            drawable_desaturate
+            drawable_equalize
+            drawable_histogram
+            drawable_hue_saturation
+            drawable_invert
+            drawable_levels
+            drawable_levels_stretch
+            drawable_posterize
+            drawable_threshold);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Color';
+$doc_title = 'gimpdrawablecolor';
+$doc_short_desc = "Functions for manipulating a drawable's color.";
+$doc_long_desc = "Functions for manipulating a drawable's color, including curves and histograms.";
+
+1;

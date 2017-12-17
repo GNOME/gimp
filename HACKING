@@ -116,7 +116,7 @@ sources. All those files have a short notice about being generated
 somewhere at the top. Among them are the files ending in pdb.[ch] in
 the libgimp directory and the files ending in cmds.c in the app/pdb
 subdirectory. Those are generated from the respective .pdb files in
-pdb/groups.
+tools/pdbgen/pdb.
 
 
 Hackordnung

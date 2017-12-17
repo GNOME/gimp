@@ -1,0 +1,86 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub fonts_refresh {
+    $blurb = 'Refresh current fonts. This function always succeeds.';
+
+    $help = <<'HELP';
+This procedure retrieves all fonts currently in the user's font path
+and updates the font dialogs accordingly. Depending on the amount
+of fonts on the system, this can take considerable time.
+HELP
+
+    &neo_pdb_misc('2003');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_fonts_load (gimp, NULL);
+}
+CODE
+    );
+}
+
+sub fonts_get_list {
+    $blurb = 'Retrieve the list of loaded fonts.';
+
+    $help = <<'HELP';
+This procedure returns a list of the fonts that are currently available.
+HELP
+
+    &neo_pdb_misc('2003');
+
+    @inargs = (
+	{ name => 'filter', type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
+    @outargs = (
+	{ name => 'font_list', type => 'stringarray',
+	  desc => 'The list of font names',
+	  array => { name => 'num_fonts',
+		     desc => 'The number of available fonts' } }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code => <<'CODE'
+{
+  font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+                                                      filter, &num_fonts);
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimp.h"
+              "core/gimpcontainer.h"
+              "text/gimp-fonts.h");
+
+@procs = qw(fonts_refresh
+            fonts_get_list);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Fonts';
+$doc_title = 'gimpfonts';
+$doc_short_desc = 'Operations related to fonts.';
+$doc_long_desc = 'Operations related to fonts.';
+
+1;

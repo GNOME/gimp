@@ -1,0 +1,284 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub gimprc_query {
+    $blurb = <<'BLURB';
+Queries the gimprc file parser for information on a specified token.
+BLURB
+
+    $help = <<'HELP';
+This procedure is used to locate additional information contained in the gimprc
+file considered extraneous to the operation of GIMP. Plug-ins that need
+configuration information can expect it will be stored in the user gimprc
+file and can use this procedure to retrieve it. This query procedure will
+return the value associated with the specified token. This corresponds _only_
+to entries with the format: (<token> <value>). The value must be a string.
+Entries not corresponding to this format will cause warnings to be issued on
+gimprc parsing and will not be queryable.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'token', type => 'string',
+	  desc => 'The token to query for' }
+    );
+
+    @outargs = (
+	{ name => 'value', type => 'string',
+	  desc => 'The value associated with the queried token' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (strlen (token))
+    {
+      /*  use edit_config because unknown tokens are set there  */
+      value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+
+      if (! value)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub gimprc_set {
+    $blurb = 'Sets a gimprc token to a value and saves it in the gimprc.';
+
+    $help = <<'HELP';
+This procedure is used to add or change additional information in the gimprc
+file that is considered extraneous to the operation of GIMP. Plug-ins that
+need configuration information can use this function to store it, and
+gimp_gimprc_query() to retrieve it.  This will accept _only_ string values in
+UTF-8 encoding.
+HELP
+
+    &seth_pdb_misc('1999');
+	
+    @inargs = (
+	{ name => 'token', type => 'string',
+	  desc => 'The token to add or modify' },
+	{ name => 'value', type => 'string',
+	  desc => 'The value to set the token to' }
+    );
+
+    %invoke = ( 
+	code => <<'CODE'
+{
+  if (strlen (token))
+    {
+      /*  use edit_config because that's the one that gets saved  */
+      gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub get_monitor_resolution {
+    $blurb = 'Get the monitor resolution as specified in the Preferences.';
+
+    $help = <<'HELP';
+Returns the resolution of the monitor in pixels/inch. This value
+is taken from the Preferences (or the windowing system if this is set in
+the Preferences) and there's no guarantee for the value to be reasonable.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{  name => 'xres', type => 'float', void_ret => 1,
+	   desc => 'X resolution' },
+	{  name => 'yres', type => 'float',
+	   desc => 'Y resolution' },	   
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
+  yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
+}
+CODE
+    );
+}
+
+sub get_default_comment {
+    $blurb = 'Get the default image comment as specified in the Preferences.';
+    $help  = 'Returns a copy of the default image comment.';
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{  name => 'comment', type => 'string',
+	   desc => 'Default image comment' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimptemplate.h") ],
+	code => <<'CODE'
+{
+  comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
+}
+CODE
+    );
+}
+
+sub get_default_unit {
+    $blurb = 'Get the default unit (taken from the user\'s locale).';
+    $help  = 'Returns the default unit\'s integer ID.';
+
+    &std_pdb_misc;
+    $since = '2.4';
+
+    @outargs = (
+	{  name => 'unit_id', type => 'unit',
+	   desc => 'Default unit' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpbase/gimpbase.h"
+                        "core/gimp-utils.h") ],
+	code => <<'CODE'
+{
+  unit_id = gimp_get_default_unit ();
+}
+CODE
+    );
+}
+
+sub get_theme_dir {
+    $blurb = 'Get the directory of the current GUI theme.';
+    $help  = 'Returns a copy of the current GUI theme dir.';
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{  name => 'theme_dir', type => 'string',
+	   desc => 'The GUI theme dir' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GFile *file = gimp_get_theme_dir (gimp);
+
+  if (file)
+    theme_dir = g_file_get_path (file);
+}
+CODE
+    );
+}
+
+sub get_icon_theme_dir {
+    $blurb = 'Get the directory of the current icon theme.';
+    $help  = 'Returns a copy of the current icon theme dir.';
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+	{  name => 'icon_theme_dir', type => 'string',
+	   desc => 'The icon theme dir' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GFile *file = gimp_get_icon_theme_dir (gimp);
+
+  if (file)
+    icon_theme_dir = g_file_get_path (file);
+}
+CODE
+    );
+}
+
+sub get_color_configuration {
+    $blurb = 'Get a serialized version of the color management configuration.';
+    $help = 'Returns a string that can be deserialized into a GimpColorConfig object representing the current color management configuration.';
+
+    &neo_pdb_misc('2005', '2.4');
+
+    @outargs = (
+	{  name => 'config', type => 'string',
+	   desc => 'Serialized color management configuration',
+	   wrap => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpconfig/gimpconfig.h") ],
+	code => <<'CODE'
+{
+  config = gimp_config_serialize_to_string (GIMP_CONFIG (gimp->config->color_management), NULL);
+}
+CODE
+    );
+}
+
+sub get_module_load_inhibit {
+    $blurb = 'Get the list of modules which should not be loaded.';
+    $help  = 'Returns a copy of the list of modules which should not be loaded.';
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{  name => 'load_inhibit', type => 'string',
+	   desc => 'The list of modules' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpmodule/gimpmodule.h") ],
+	code => <<'CODE'
+{
+  load_inhibit = g_strdup (gimp_module_db_get_load_inhibit (gimp->module_db));
+}
+CODE
+    );
+}
+
+
+@headers = qw(<string.h>
+              "config/gimprc.h"
+              "core/gimp.h");
+
+@procs = qw(gimprc_query
+            gimprc_set 
+            get_default_comment
+            get_default_unit
+            get_monitor_resolution
+            get_theme_dir
+            get_icon_theme_dir
+            get_color_configuration
+            get_module_load_inhibit);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Gimprc procedures';
+$doc_title = 'gimpgimprc';
+$doc_short_desc = 'Interactions with settings from gimprc.';
+$doc_long_desc = 'Interactions with settings from gimprc.';
+
+1;

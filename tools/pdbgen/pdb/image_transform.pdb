@@ -1,0 +1,276 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_resize {
+    $blurb = 'Resize the image to the specified extents.';
+
+    $help = <<'HELP';
+This procedure resizes the image so that it's new width and height are
+equal to the supplied parameters. Offsets are also provided which
+describe the position of the previous image's content. All channels
+within the image are resized according to the specified parameters;
+this includes the image selection mask. All layers within the image
+are repositioned according to the specified offsets.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image width' },
+        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image height' },
+        { name => 'offx', type => 'int32',
+          desc => 'x offset between upper left corner of old and
+                   new images: (new - old)' },
+        { name => 'offy', type => 'int32',
+          desc => 'y offset between upper left corner of old and
+                   new images: (new - old)' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-resize.h") ],
+        code => <<'CODE'
+{
+  gimp_image_resize (image, context,
+                     new_width, new_height, offx, offy, NULL);
+}
+CODE
+    );
+}
+
+sub image_resize_to_layers {
+    $blurb = 'Resize the image to fit all layers.';
+
+    $help = <<'HELP';
+This procedure resizes the image to the bounding box of all layers of
+the image. All channels within the image are resized to the new size;
+this includes the image selection mask. All layers within the image
+are repositioned to the new image area.
+HELP
+
+    &simon_pdb_misc('2004', '2.2');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-resize.h") ],
+        code => <<'CODE'
+{
+  gimp_image_resize_to_layers (image, context, NULL);
+}
+CODE
+    );
+}
+
+sub image_scale {
+    $blurb = 'Scale the image using the default interpolation method.';
+
+    $help = <<'HELP';
+
+This procedure scales the image so that its new width and height are
+equal to the supplied parameters. All layers and channels within the
+image are scaled according to the specified parameters; this includes
+the image selection mask. The interpolation method used can be set
+with gimp_context_set_interpolation().
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image width' },
+        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image height' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-scale.h") ],
+        code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  if (progress)
+    gimp_progress_start (progress, FALSE, _("Scaling"));
+
+  gimp_image_scale (image, new_width, new_height,
+                    pdb_context->interpolation,
+                    progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+}
+CODE
+    );
+}
+
+sub image_scale_full {
+    &std_pdb_deprecated('gimp-image-scale');
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image width' },
+        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image height' },
+        { name => 'interpolation', type => 'enum GimpInterpolationType',
+          desc => 'Type of interpolation' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-scale.h") ],
+        code => <<'CODE'
+{
+  if (progress)
+    gimp_progress_start (progress, FALSE, _("Scaling"));
+
+  gimp_image_scale (image, new_width, new_height, interpolation, progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+}
+CODE
+    );
+}
+
+sub image_crop {
+    $blurb = 'Crop the image to the specified extents.';
+
+    $help = <<'HELP';
+This procedure crops the image so that it's new width and height are
+equal to the supplied parameters. Offsets are also provided which
+describe the position of the previous image's content. All channels
+and layers within the image are cropped to the new image extents; this
+includes the image selection mask. If any parameters are out of range,
+an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image width: (0 < new_width <= width)' },
+        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+          desc => 'New image height: (0 < new_height <= height)' },
+        { name => 'offx', type => '0 <= int32',
+          desc => 'X offset: (0 <= offx <= (width - new_width))' },
+        { name => 'offy', type => '0 <= int32',
+          desc => 'Y offset: (0 <= offy <= (height - new_height))' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-crop.h") ],
+        code => <<'CODE'
+{
+  if (new_width  >  gimp_image_get_width  (image)              ||
+      new_height >  gimp_image_get_height (image)              ||
+      offx       > (gimp_image_get_width  (image) - new_width) ||
+      offy       > (gimp_image_get_height (image) - new_height))
+    success = FALSE;
+  else
+    gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+                     offx, offy, new_width, new_height,
+                     TRUE);
+}
+CODE
+    );
+}
+
+sub image_flip {
+    $blurb = 'Flips the image horizontally or vertically.';
+
+    $help = <<'HELP';
+This procedure flips (mirrors) the image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'flip_type',
+          type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+          desc => 'Type of flip' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-flip.h") ],
+        code => <<'CODE'
+{
+  gimp_image_flip (image, context, flip_type, NULL);
+}
+CODE
+    );
+}
+
+sub image_rotate {
+    $blurb = 'Rotates the image by the specified degrees.';
+    $help = 'This procedure rotates the image.';
+
+    &mitch_pdb_misc('2003');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'rotate_type', type => 'enum GimpRotationType',
+          desc => 'Angle of rotation' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-rotate.h") ],
+        code => <<'CODE'
+{
+  if (progress)
+    gimp_progress_start (progress, FALSE, _("Rotating"));
+
+  gimp_image_rotate (image, context, rotate_type, progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimpprogress.h"
+              "gimppdbcontext.h"
+              "gimp-intl.h");
+
+@procs = qw(image_resize image_resize_to_layers
+            image_scale image_scale_full
+            image_crop image_flip image_rotate);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Image Transform';
+$doc_title = 'gimpimagetransform';
+$doc_short_desc = 'Transformations on images.';
+$doc_long_desc = 'Operations to scale, resize, crop, flip and rotate images.';
+
+1;

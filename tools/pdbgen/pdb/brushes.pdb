@@ -1,0 +1,227 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub brushes_refresh {
+    $blurb = 'Refresh current brushes. This function always succeeds.';
+
+    $help = <<'HELP';
+This procedure retrieves all brushes currently in the user's brush path
+and updates the brush dialogs accordingly.
+HELP
+
+    &seth_pdb_misc('1997');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_data_factory_data_refresh (gimp->brush_factory, context);
+}
+CODE
+    );
+}
+
+sub brushes_get_list {
+    $blurb = 'Retrieve a complete listing of the available brushes.';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available GIMP
+brushes. Each name returned can be used as input to the
+gimp_context_set_brush() procedure.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'filter', type => 'string', null_ok => 1,
+          desc => 'An optional regular expression used to filter the list' }
+    );
+
+    @outargs = (
+	{ name => 'brush_list', type => 'stringarray',
+	  desc => 'The list of brush names',
+	  array => { name => 'num_brushes',
+		     desc => 'The number of brushes in the brush list' } }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpcontainer-filter.h") ],
+	code    => <<'CODE'
+{
+  brush_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->brush_factory),
+                                                       filter, &num_brushes);
+}
+CODE
+    );
+}
+
+sub brushes_get_brush {
+    &std_pdb_deprecated ('gimp-context-get-brush');
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The brush name' },
+	{ name => 'width', type => 'int32',
+	  desc => 'The brush width' },
+	{ name => 'height', type => 'int32',
+	  desc => 'The brush height' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      name    = g_strdup (gimp_object_get_name (brush));
+      width   = gimp_brush_get_width  (brush);
+      height  = gimp_brush_get_height (brush);
+      spacing = gimp_brush_get_spacing (brush);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brushes_get_spacing {
+    &std_pdb_deprecated ('gimp-brush-get-spacing');
+
+    @outargs = (
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing' }
+    );
+
+    %invoke = (
+	code =><<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    spacing = gimp_brush_get_spacing (brush);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub brushes_set_spacing {
+    &std_pdb_deprecated ('gimp-brush-set-spacing');
+
+    @inargs = (
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);
+}
+CODE
+    );
+}
+
+sub brushes_get_brush_data {
+    &std_pdb_deprecated ('gimp-brush-get-pixels');
+
+    @inargs = (
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The brush name ("" means current active brush)' }
+    );
+
+    @outargs = (
+	{ name => 'actual_name', type => 'string',
+	  desc => 'The brush name' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The brush opacity' },
+	{ name => 'spacing', type => '0 <= int32 <= 1000',
+	  desc => 'The brush spacing' },
+	{ name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The paint mode' },
+	{ name => 'width', type => 'int32',
+	  desc => 'The brush width' },
+	{ name => 'height', type => 'int32',
+	  desc => 'The brush height' },
+	{ name => 'mask_data', type => 'int8array',
+	  desc => 'The brush mask data',
+	  array => { name => 'length',
+		     desc => 'Length of brush mask data' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush;
+
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+
+  if (name && strlen (name))
+    brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
+  else
+    brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GimpTempBuf *mask = gimp_brush_get_mask (brush);
+
+      actual_name = g_strdup (gimp_object_get_name (brush));
+      opacity     = 1.0;
+      spacing     = gimp_brush_get_spacing (brush);
+      paint_mode  = 0;
+      width       = gimp_brush_get_width  (brush);
+      height      = gimp_brush_get_height (brush);
+      length      = gimp_temp_buf_get_data_size (mask);
+      mask_data   = g_memdup (gimp_temp_buf_get_data (mask), length);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "core/gimpbrush.h"
+              "core/gimpcontext.h"
+              "core/gimpdatafactory.h"
+              "core/gimptempbuf.h"
+              "gimppdb-utils.h");
+
+@procs = qw(brushes_refresh
+            brushes_get_list
+            brushes_get_brush
+            brushes_get_spacing brushes_set_spacing
+            brushes_get_brush_data);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Brushes';
+$doc_title = 'gimpbrushes';
+$doc_short_desc = 'Functions for manipulating brushes.';
+$doc_long_desc = 'Functions related to getting and setting brushes.';
+
+1;

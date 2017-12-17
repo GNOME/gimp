@@ -1,0 +1,1406 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub layer_new {
+    $blurb = 'Create a new layer.';
+
+    $help = <<'HELP';
+This procedure creates a new layer with the specified width, height,
+and type.  Name, opacity, and mode are also supplied parameters. The
+new layer still needs to be added to the image, as this is not
+automatic. Add the new layer with the gimp_image_insert_layer()
+command. Other attributes such as layer mask modes, and offsets should
+be set with explicit procedure calls.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the layer' },
+	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'The layer width' },
+	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'The layer height' },
+	{ name => 'type', type => 'enum GimpImageType',
+	  desc => 'The layer type' },
+	{ name => 'name', type => 'string',
+	  desc => 'The layer name', null_ok => 1 },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The layer opacity' },
+	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The layer combination mode' }
+    );
+
+    @outargs = (
+	{ name => 'layer', type => 'layer', wrap => 1,
+	  desc => 'The newly created layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpImageBaseType  base_type = GIMP_RGB;
+  gboolean           has_alpha = FALSE;
+  const Babl        *format;
+
+  if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+    mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+
+  switch (type)
+    {
+    case GIMP_RGB_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      base_type = GIMP_RGB;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      base_type = GIMP_GRAY;
+      has_alpha = TRUE;
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = FALSE;
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      base_type = GIMP_INDEXED;
+      has_alpha = TRUE;
+      break;
+    }
+
+  /* do not use gimp_image_get_layer_format() because it might
+   * be the floating selection of a channel or mask
+   */
+  format = gimp_image_get_format (image, base_type,
+                                  gimp_image_get_precision (image),
+                                  has_alpha);
+
+  layer = gimp_layer_new (image, width, height,
+                          format, name, opacity / 100.0, mode);
+
+  if (! layer)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_new_from_visible {
+    $blurb = 'Create a new layer from what is visible in an image.';
+
+    $help = <<'HELP';
+This procedure creates a new layer from what is visible in the given
+image.  The new layer still needs to be added to the destination
+image, as this is not automatic. Add the new layer with the
+gimp_image_insert_layer() command.  Other attributes such as layer
+mask modes, and offsets should be set with explicit procedure calls.
+HELP
+
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The source image from where the content is copied' },
+	{ name => 'dest_image', type => 'image',
+	  desc => 'The destination image to which to add the layer' },
+	{ name => 'name', type => 'string',
+	  desc => 'The layer name', null_ok => 1 }
+     );
+
+    @outargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The newly created layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPickable     *pickable = GIMP_PICKABLE (image);
+  GimpColorProfile *profile;
+
+  gimp_pickable_flush (pickable);
+
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+                                           dest_image,
+                                           gimp_image_get_layer_format (dest_image,
+                                                                        TRUE),
+                                           name,
+                                           GIMP_OPACITY_OPAQUE,
+                                           gimp_image_get_default_new_layer_mode (dest_image),
+                                           profile);
+}
+CODE
+    );
+}
+
+sub layer_new_from_drawable {
+    $blurb = 'Create a new layer by copying an existing drawable.';
+
+    $help = <<'HELP';
+This procedure creates a new layer as a copy of the specified
+drawable.  The new layer still needs to be added to the image, as this
+is not automatic.  Add the new layer with the
+gimp_image_insert_layer() command. Other attributes such as layer mask
+modes, and offsets should be set with explicit procedure calls.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The source drawable from where the new layer is copied' },
+	{ name => 'dest_image', type => 'image',
+	  desc => 'The destination image to which to add the layer' }
+     );
+
+    @outargs = (
+	{ name => 'layer_copy', type => 'layer',
+	  desc => 'The newly copied layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GType     new_type;
+  GimpItem *new_item;
+
+  if (GIMP_IS_LAYER (drawable))
+    new_type = G_TYPE_FROM_INSTANCE (drawable);
+  else
+    new_type = GIMP_TYPE_LAYER;
+
+  new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
+
+  if (new_item)
+    layer_copy = GIMP_LAYER (new_item);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_group_new {
+    $blurb = 'Create a new layer group.';
+
+    $help = <<'HELP';
+This procedure creates a new layer group. Attributes such as layer mode
+and opacity should be set with explicit procedure calls. Add the new
+layer group (which is a kind of layer) with the
+gimp_image_insert_layer() command.
+
+Other procedures useful with layer groups: gimp_image_reorder_item(),
+gimp_item_get_parent(), gimp_item_get_children(), gimp_item_is_group().
+HELP
+
+    &barak_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the layer group' }
+    );
+
+    @outargs = (
+	{ name => 'layer_group', type => 'layer',
+	  desc => 'The newly created layer group' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_group = gimp_group_layer_new (image);
+
+  if (! layer_group)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_copy {
+    $blurb = 'Copy a layer.';
+
+    $help = <<'HELP';
+This procedure copies the specified layer and returns the copy. The newly
+copied layer is for use within the original layer's image. It should not be
+subsequently added to any other image. The copied layer can optionally have an
+added alpha channel. This is useful if the background layer in an image is
+being copied and added to the same image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to copy' },
+	{ name => 'add_alpha', type => 'boolean',
+	  desc => 'Add an alpha channel to the copied layer' }
+    );
+
+    @outargs = (
+	{ name => 'layer_copy', type => 'layer', wrap => 1,
+	  desc => 'The newly copied layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+                                                G_TYPE_FROM_INSTANCE (layer)));
+  if (layer_copy)
+    {
+      if (add_alpha)
+        gimp_layer_add_alpha (layer_copy);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub layer_create_mask {
+    $blurb = 'Create a layer mask for the specified layer.';
+
+    $help = <<'HELP';
+This procedure creates a layer mask for the specified layer.
+
+Layer masks serve as an additional alpha channel for a layer. Different
+types of masks are allowed for initialisation:
+
+- white mask (leaves the layer fully visible);
+
+- black mask (gives the layer complete transparency);
+
+- the layer's alpha channel (either a copy, or a transfer, which leaves
+the layer fully visible, but which may be more useful than a white mask);
+
+- the current selection;
+
+- a grayscale copy of the layer;
+
+- or a copy of the active channel.
+
+
+The layer mask still needs to be added to the layer. This can be done
+with a call to gimp_layer_add_mask().
+
+
+gimp_layer_create_mask() will fail if there are no active channels on
+the image, when called with 'ADD-CHANNEL-MASK'. It will return a black
+mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on
+a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there
+is no selection on the image.
+HELP
+
+    &std_pdb_misc();
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to which to add the mask' },
+ 	{ name => 'mask_type', type => 'enum GimpAddMaskType',
+	  desc => 'The type of mask' }
+    );
+
+    @outargs = (
+	{ name => 'mask', type => 'layer_mask',
+	  desc => 'The newly created mask' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpChannel *channel = NULL;
+
+  if (mask_type == GIMP_ADD_MASK_CHANNEL)
+    {
+      channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
+
+      if (! channel)
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      mask = gimp_layer_create_mask (layer, mask_type, channel);
+
+      if (! mask)
+        success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub layer_add_mask {
+    $blurb = 'Add a layer mask to the specified layer.';
+
+    $help = <<'HELP';
+This procedure adds a layer mask to the specified layer. Layer masks serve as
+an additional alpha channel for a layer. This procedure will fail if a number
+of prerequisites aren't met. The layer cannot already have a layer mask. The
+specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'gimp-layer-create-mask'.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to receive the mask' },
+	{ name => 'mask', type => 'layer_mask',
+	  desc => 'The mask to add to the layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
+                                 gimp_item_get_image (GIMP_ITEM (layer)),
+                                 error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+    success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_remove_mask {
+    $blurb = 'Remove the specified layer mask from the layer.';
+
+    $help = <<'HELP';
+This procedure removes the specified layer mask from the layer. If the mask
+doesn't exist, an error is returned.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer from which to remove mask' },
+	{ name => 'mode', type => 'enum GimpMaskApplyMode',
+	  desc => 'Removal mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPDBItemModify modify = 0;
+
+  if (mode == GIMP_MASK_APPLY)
+    modify |= GIMP_PDB_ITEM_CONTENT;
+
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error) &&
+      gimp_layer_get_mask (layer))
+    gimp_layer_apply_mask (layer, mode, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_scale {
+    $blurb = 'Scale the layer using the default interpolation method.';
+
+    $help = <<'HELP';
+This procedure scales the layer so that its new width and height are
+equal to the supplied parameters. The 'local-origin' parameter
+specifies whether to scale from the center of the layer, or from the
+image origin. This operation only works if the layer has been added to
+an image. The interpolation method used can be set with
+gimp_context_set_interpolation().
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer height' },
+	{ name => 'local_origin', type => 'boolean',
+	  desc => 'Use a local origin (as opposed to the image origin)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
+                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+                                 error))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      if (progress)
+        gimp_progress_start (progress, FALSE, _("Scaling"));
+
+      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                 pdb_context->interpolation, progress,
+                                 local_origin);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub layer_scale_full {
+    &std_pdb_deprecated('gimp-layer-scale');
+    &neo_pdb_misc('2008', '2.6');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer height' },
+	{ name => 'local_origin', type => 'boolean',
+	  desc => 'Use a local origin (as opposed to the image origin)' },
+	{ name => 'interpolation', type => 'enum GimpInterpolationType',
+	  desc => 'Type of interpolation' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
+                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+                                 error))
+    {
+      if (progress)
+        gimp_progress_start (progress, FALSE, _("Scaling"));
+
+      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+                                 interpolation, progress,
+                                 local_origin);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub layer_resize {
+    $blurb = 'Resize the layer to the specified extents.';
+
+    $help = <<'HELP';
+This procedure resizes the layer so that its new width and height are
+equal to the supplied parameters. Offsets are also provided which
+describe the position of the previous layer's content. This operation
+only works if the layer has been added to an image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer width' },
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'New layer height' },
+	{ name => 'offx', type => 'int32',
+	  desc => 'x offset between upper left corner of old and
+		   new layers: (old - new)' },
+	{ name => 'offy', type => 'int32',
+	  desc => 'y offset between upper left corner of old and
+		   new layers: (old - new)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
+                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+                                 error))
+    gimp_item_resize (GIMP_ITEM (layer), context, GIMP_FILL_TRANSPARENT,
+                      new_width, new_height, offx, offy);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_resize_to_image_size {
+    $blurb = 'Resize a layer to the image size.';
+
+    $help = <<'HELP';
+This procedure resizes the layer so that it's new width and height are equal to
+the width and height of its image container.
+HELP
+
+    &yosh_pdb_misc('2003');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer to resize' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
+                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+                                 error))
+    gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_translate {
+    $blurb = 'Translate the layer by the specified offsets.';
+
+    $help = <<'HELP';
+This procedure translates the layer by the amounts specified in the x and y
+arguments. These can be negative, and are considered offsets from the current
+position. This command only works if the layer has been added to an image. All
+additional layers contained in the image which have the linked flag set to TRUE
+w ill also be translated by the specified offsets.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'offx', type => 'int32',
+	  desc => "Offset in x direction" },
+	{ name => 'offy', type => 'int32',
+	  desc => "Offset in y direction" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+                                   GIMP_PDB_ITEM_POSITION, error))
+    {
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_add_alpha {
+    $blurb = <<'BLURB';
+Add an alpha channel to the layer if it doesn't already have one.
+BLURB
+
+    $help = <<'HELP';
+This procedure adds an additional component to the specified layer if
+it does not already possess an alpha channel. An alpha channel makes
+it possible to clear and erase to transparency, instead of the
+background color. This transforms layers of type RGB to RGBA, GRAY to
+GRAYA, and INDEXED to INDEXEDA.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+                                   GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+    {
+      gimp_layer_add_alpha (layer);
+    }
+  else
+   success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_flatten {
+    $blurb = <<'BLURB';
+Remove the alpha channel from the layer if it has one.
+BLURB
+
+    $help = <<'HELP';
+This procedure removes the alpha channel from a layer, blending all
+(partially) transparent pixels in the layer against the background
+color. This transforms layers of type RGBA to RGB, GRAYA to
+GRAY, and INDEXEDA to INDEXED.
+HELP
+
+    &mitch_pdb_misc('2007', '2.4');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+                                   GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+    {
+      gimp_layer_remove_alpha (layer, context);
+    }
+  else
+   success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_set_offsets {
+    $blurb = 'Set the layer offsets.';
+
+    $help = <<'HELP';
+This procedure sets the offsets for the specified layer. The offsets are
+relative to the image origin and can be any values. This operation is valid
+only on layers which have been added to an image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'offx', type => 'int32',
+	  desc => "Offset in x direction" },
+	{ name => 'offy', type => 'int32',
+	  desc => "Offset in y direction" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+                                   GIMP_PDB_ITEM_POSITION, error))
+    {
+      gint offset_x;
+      gint offset_y;
+
+      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+      offx -= offset_x;
+      offy -= offset_y;
+
+      if (gimp_item_get_linked (GIMP_ITEM (layer)))
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_get_mask {
+    $blurb = "Get the specified layer's mask if it exists.";
+
+    $help = <<'HELP';
+This procedure returns the specified layer's mask, or -1 if none exists.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'mask', type => 'layer_mask',
+	  desc => 'The layer mask',
+	  return_fail => -1 }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mask = gimp_layer_get_mask (layer);
+}
+CODE
+    );
+}
+
+sub layer_from_mask {
+    $blurb = "Get the specified mask's layer.";
+
+    $help = <<'HELP';
+This procedure returns the specified mask's layer , or -1 if none exists.
+HELP
+
+    $author = $copyright = 'Geert Jordaens';
+    $date = '2004';
+    $since = '2.2';
+
+    @inargs = (
+        { name => 'mask', type => 'layer_mask',
+          desc => 'Mask for which to return the layer' }
+    );
+
+    @outargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The mask\'s layer',
+	  return_fail => -1 }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  layer = gimp_layer_mask_get_layer (mask);
+}
+CODE
+    );
+}
+
+sub layer_is_floating_sel {
+    $blurb = 'Is the specified layer a floating selection?';
+
+    $help = <<'HELP';
+This procedure returns whether the layer is a floating selection. Floating
+selections are special cases of layers which are attached to a specific
+drawable.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'is_floating_sel', type => 'boolean',
+	  desc => 'TRUE if the layer is a floating selection' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  is_floating_sel = gimp_layer_is_floating_sel (layer);
+}
+CODE
+    );
+}
+
+sub layer_get_lock_alpha {
+    $blurb = 'Get the lock alpha channel setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure returns the specified layer's lock alpha channel setting.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'lock_alpha', type => 'boolean',
+	  desc => 'The layer\'s lock alpha channel setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  lock_alpha = gimp_layer_get_lock_alpha (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_lock_alpha {
+    $blurb = 'Set the lock alpha channel setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure sets the specified layer's lock alpha channel setting.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'lock_alpha', type => 'boolean',
+	  desc => 'The new layer\'s lock alpha channel setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_layer_can_lock_alpha (layer))
+    gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_get_apply_mask {
+    $blurb = 'Get the apply mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure returns the specified layer's apply mask setting. If
+the value is TRUE, then the layer mask for this layer is currently
+being composited with the layer's alpha channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'apply_mask', type => 'boolean',
+	  desc => 'The layer\'s apply mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    apply_mask = gimp_layer_get_apply_mask (layer);
+  else
+    apply_mask = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_set_apply_mask {
+    $blurb = 'Set the apply mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure sets the specified layer's apply mask setting. This
+controls whether the layer's mask is currently affecting the alpha
+channel. If there is no layer mask, this function will return an
+error.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'apply_mask', type => 'boolean',
+	  desc => 'The new layer\'s apply mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    gimp_layer_set_apply_mask (layer, apply_mask, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_get_show_mask {
+    $blurb = 'Get the show mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure returns the specified layer's show mask setting. This
+controls whether the layer or its mask is visible. TRUE indicates
+that the mask should be visible. If the layer has no mask,
+then this function returns an error.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'show_mask', type => 'boolean',
+	  desc => 'The layer\'s show mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    show_mask = gimp_layer_get_show_mask (layer);
+  else
+    show_mask = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_set_show_mask {
+    $blurb = 'Set the show mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure sets the specified layer's show mask setting. This
+controls whether the layer or its mask is visible. TRUE indicates that
+the mask should be visible. If there is no layer mask, this function
+will return an error.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'show_mask', type => 'boolean',
+	  desc => 'The new layer\'s show mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    gimp_layer_set_show_mask (layer, show_mask, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_get_edit_mask {
+    $blurb = 'Get the edit mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure returns the specified layer's edit mask setting. If
+the value is TRUE, then the layer mask for this layer is currently
+active, and not the layer.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'edit_mask', type => 'boolean',
+	  desc => 'The layer\'s edit mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    edit_mask = gimp_layer_get_edit_mask (layer);
+  else
+    edit_mask = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_set_edit_mask {
+    $blurb = 'Set the edit mask setting of the specified layer.';
+
+    $help = <<'HELP';
+This procedure sets the specified layer's edit mask setting. This
+controls whether the layer or it's mask is currently active for
+editing.  If the specified layer has no layer mask, then this
+procedure will return an error.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'edit_mask', type => 'boolean',
+	  desc => 'The new layer\'s edit mask setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (layer->mask)
+    gimp_layer_set_edit_mask (layer, edit_mask);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_get_opacity {
+    $blurb = 'Get the opacity of the specified layer.';
+    $help  = "This procedure returns the specified layer's opacity.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The layer opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  opacity = gimp_layer_get_opacity (layer) * 100.0;
+}
+CODE
+    );
+}
+
+sub layer_set_opacity {
+    $blurb = 'Set the opacity of the specified layer.';
+    $help  = "This procedure sets the specified layer's opacity.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The new layer opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+}
+CODE
+    );
+}
+
+sub layer_get_mode {
+    $blurb = 'Get the combination mode of the specified layer.';
+    $help  = "This procedure returns the specified layer's combination mode.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The layer combination mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mode = gimp_layer_get_mode (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_mode {
+    $blurb = 'Set the combination mode of the specified layer.';
+    $help  = "This procedure sets the specified layer's combination mode.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The new layer combination mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+    mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+    {
+      if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_LAYER))
+        success = FALSE;
+    }
+  else
+    {
+      if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_GROUP))
+        success = FALSE;
+    }
+
+  if (success)
+    gimp_layer_set_mode (layer, mode, TRUE);
+}
+CODE
+    );
+}
+
+sub layer_get_blend_space {
+    $blurb = 'Get the blend space of the specified layer.';
+    $help  = "This procedure returns the specified layer's blend space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The layer blend space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  blend_space = gimp_layer_get_blend_space (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_blend_space {
+    $blurb = 'Set the blend space of the specified layer.';
+    $help  = "This procedure sets the specified layer's blend space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The new layer blend space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_blend_space (layer, blend_space, TRUE);
+}
+CODE
+    );
+}
+
+sub layer_get_composite_space {
+    $blurb = 'Get the composite space of the specified layer.';
+    $help  = "This procedure returns the specified layer's composite space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The layer composite space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  composite_space = gimp_layer_get_composite_space (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_composite_space {
+    $blurb = 'Set the composite space of the specified layer.';
+    $help  = "This procedure sets the specified layer's composite space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The new layer composite space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_composite_space (layer, composite_space, TRUE);
+}
+CODE
+    );
+}
+
+sub layer_get_composite_mode {
+    $blurb = 'Get the composite mode of the specified layer.';
+    $help  = "This procedure returns the specified layer's composite mode.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	  desc => 'The layer composite mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  composite_mode = gimp_layer_get_composite_mode (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_composite_mode {
+    $blurb = 'Set the composite mode of the specified layer.';
+    $help  = "This procedure sets the specified layer's composite mode.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	  desc => 'The new layer composite mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_composite_mode (layer, composite_mode, TRUE);
+}
+CODE
+    );
+}
+
+@headers = qw(<cairo.h>
+              "libgimpbase/gimpbase.h"
+              "libgimpcolor/gimpcolor.h"
+              "core/gimp.h"
+              "core/gimpimage-color-profile.h"
+              "core/gimpimage-undo.h"
+              "core/gimpitem-linked.h"
+              "core/gimpgrouplayer.h"
+              "core/gimplayer-new.h"
+              "core/gimppickable.h"
+              "core/gimpprogress.h"
+              "operations/layer-modes/gimp-layer-modes.h"
+              "gimppdbcontext.h"
+              "gimppdb-utils.h"
+              "gimp-intl.h");
+
+@procs = qw(layer_new
+            layer_new_from_visible
+            layer_new_from_drawable
+            layer_group_new
+            layer_copy
+            layer_add_alpha
+            layer_flatten
+            layer_scale layer_scale_full
+            layer_resize layer_resize_to_image_size
+	    layer_translate
+            layer_set_offsets
+            layer_create_mask
+            layer_get_mask
+            layer_from_mask
+            layer_add_mask layer_remove_mask
+	    layer_is_floating_sel
+            layer_get_lock_alpha layer_set_lock_alpha
+            layer_get_apply_mask layer_set_apply_mask
+            layer_get_show_mask layer_set_show_mask
+            layer_get_edit_mask layer_set_edit_mask
+            layer_get_opacity layer_set_opacity
+            layer_get_mode layer_set_mode
+            layer_get_blend_space layer_set_blend_space
+            layer_get_composite_space layer_set_composite_space
+            layer_get_composite_mode layer_set_composite_mode);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Layer';
+$doc_title = 'gimplayer';
+$doc_short_desc = 'Operations on a single layer.';
+$doc_long_desc = 'Operations on a single layer.';
+
+1;

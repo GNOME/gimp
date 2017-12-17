@@ -2,6 +2,12 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
+if WITH_PDBGEN
+PDBGEN = pdbgen
+endif
+
+SUBDIRS = $(PDBGEN)
+
 if OS_WIN32
 
 bin_PROGRAMS = \
@@ -88,3 +94,4 @@ EXTRA_DIST = \
 	gimp-mkenums	\
 	gimppath2svg.py	\
 	invert-svg.c
+
