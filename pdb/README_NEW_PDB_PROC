@@ -63,7 +63,7 @@ http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb[tools/pdbgen/pdb].
 You can see many files with the .pdb suffix - these are special template
 files which include the actual source of the PDB functions. Let's take a
 quick look at one of these - text_layer_get_text in
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb/text_layer.pdb[tools/pdbgen/pdb/text_layer.pdb].
+http://git.gnome.org/browse/gimp/tree/pdb/groups/text_layer.pdb[pdb/groups/text_layer.pdb].
 
 [source,perl]
 ----
@@ -337,7 +337,7 @@ this can be done automatically for you if the desired enum is one of the
 enums which are already used by GIMP.
 
 To make it clearer, let's take a look at +layer_get_mode+ in
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb/layer.pdb[tools/pdbgen/pdb/layer.pdb]:
+http://git.gnome.org/browse/gimp/tree/pdb/groups/layer.pdb[pdb/groups/layer.pdb]:
 
 [source,perl]
 ----
@@ -388,7 +388,7 @@ function, and by that we can make sure it won't be called with values
 out of range (GIMP will make sure the values are inside the specified
 range before it calls our function). To see an example, let's take look
 at the procedure image_new from
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb/image.pdb[tools/pdbgen/pdb/image.pdb]:
+http://git.gnome.org/browse/gimp/tree/pdb/groups/image.pdb[pdb/groups/image.pdb]:
 
 [source,perl]
 ----
@@ -435,7 +435,7 @@ function which receives an array. Array arguments are specified in a
 special way which is a bit different than the other arguments. To see
 how array arguments are specified, let's take a look at the +@outargs+
 of +vectors_stroke_get_points+ from
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb/vectors.pdb[tools/pdbgen/pdb/vectors.pdb]:
+http://git.gnome.org/browse/gimp/tree/pdb/groups/vectors.pdb[pdb/groups/vectors.pdb]:
 
 [source,perl]
 ----
