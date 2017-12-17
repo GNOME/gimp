@@ -118,7 +118,7 @@ app_libs_init (GOptionContext *context,
     }
 #endif
 
-  /*  keep compat enum code in sync with tools/pdbgen/enumcode.pl  */
+  /*  keep compat enum code in sync with pdb/enumcode.pl  */
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
