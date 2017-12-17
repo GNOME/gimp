@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-use lib '../../tools/pdbgen';
+use lib '../../pdb';
 
 require 'util.pl';
 
