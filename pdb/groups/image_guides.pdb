@@ -1,0 +1,270 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_add_hguide {
+    $blurb = 'Add a horizontal guide to an image.';
+
+    $help = <<HELP;
+This procedure adds a horizontal guide to an image. It takes the input
+image and the y-position of the new guide as parameters. It returns
+the guide ID of the new guide.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'yposition', type => '0 <= int32',
+	  desc => "The guide's y-offset from top of image" }
+    );
+
+    @outargs = (
+	{ name => 'guide', type => 'guide',
+	  desc => 'The new guide' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (yposition <= gimp_image_get_height (image))
+    {
+      GimpGuide *g;
+
+      g = gimp_image_add_hguide (image, yposition, TRUE);
+      guide = gimp_guide_get_ID (g);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_add_vguide {
+    $blurb = 'Add a vertical guide to an image.';
+
+    $help = <<HELP;
+This procedure adds a vertical guide to an image. It takes the input
+image and the x-position of the new guide as parameters. It returns
+the guide ID of the new guide.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'xposition', type => '0 <= int32',
+	  desc => "The guide's x-offset from left of image" }
+    );
+
+    @outargs = (
+	{ name => 'guide', type => 'guide',
+	  desc => 'The new guide' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (xposition <= gimp_image_get_width (image))
+    {
+      GimpGuide *g;
+
+      g = gimp_image_add_vguide (image, xposition, TRUE);
+      guide = gimp_guide_get_ID (g);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_delete_guide {
+    $blurb = 'Deletes a guide from an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and removes the specified
+guide from the specified image.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'guide', type => 'guide',
+	  desc => 'The ID of the guide to be removed' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+
+  if (g)
+    gimp_image_remove_guide (image, g, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_find_next_guide {
+    $blurb = 'Find next guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and finds the guide ID of
+the successor of the given guide ID in the image's guide list. If the supplied
+guide ID is 0, the procedure will return the first Guide. The procedure will
+return 0 if given the final guide ID as an argument or the image has no guides.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'guide', type => 'guide', no_validate => 1,
+	  desc => 'The ID of the current guide (0 if first invocation)' }
+    );
+
+    @outargs = (
+	{ name => 'next_guide', type => 'guide',
+	  desc => "The next guide's ID" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
+
+  if (g)
+    next_guide = gimp_guide_get_ID (g);
+
+  if (! success)
+    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                 _("Image '%s' (%d) does not contain guide with ID %d"),
+                 gimp_image_get_display_name (image),
+                 gimp_image_get_ID (image),
+                 guide);
+}
+CODE
+    );
+}
+
+sub image_get_guide_orientation {
+    $blurb = 'Get orientation of a guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and returns the
+orientations of the guide.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'guide', type => 'guide',
+	  desc => 'The guide' }
+    );
+
+    @outargs = (
+	{ name => 'orientation',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+	  desc => "The guide's orientation",
+	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+
+  if (g)
+    orientation = gimp_guide_get_orientation (g);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_guide_position {
+    $blurb = 'Get position of a guide on an image.';
+
+    $help = <<'HELP';
+This procedure takes an image and a guide ID as input and returns the position
+of the guide relative to the top or left of the image.
+HELP
+
+    &adam_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'guide', type => 'guide',
+	  desc => 'The guide' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+          libdef => 'G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */',
+	  desc => "The guide's position relative to top or left of image" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+
+  if (g)
+    position = gimp_guide_get_position (g);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw("cairo.h"
+              "core/gimpguide.h"
+              "core/gimpimage-guides.h"
+              "core/gimpimage-undo-push.h"
+              "gimppdb-utils.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
+
+@procs = qw(image_add_hguide image_add_vguide
+            image_delete_guide
+            image_find_next_guide
+            image_get_guide_orientation
+	    image_get_guide_position);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Image Guide procedures';
+$doc_title = 'gimpimageguides';
+$doc_short_desc = 'Functions for manipulating an image\'s guides.';
+$doc_long_desc = 'Functions for manipulating an image\'s guides.';
+
+1;

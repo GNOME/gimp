@@ -1,0 +1,382 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub channel_new {
+    $blurb = 'Create a new channel.';
+
+    $help = <<'HELP';
+This procedure creates a new channel with the specified width, height,
+name, opacity and color.
+
+The new channel still needs to be added to the image, as this is not
+automatic. Add the new channel with gimp_image_insert_channel(). Other
+attributes, such as channel visibility, should be set with explicit
+procedure calls.
+
+The channel's contents are undefined initially.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the channel' },
+	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'The channel width' },
+	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	  desc => 'The channel height' },
+	{ name => 'name', type => 'string',
+	  desc => 'The channel name' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The channel opacity' },
+	{ name => 'color', type => 'color',
+	  desc => 'The channel compositing color'
+	}
+    );
+
+    @outargs = (
+	{ name => 'channel', type => 'channel', wrap => 1,
+	  desc => 'The newly created channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpRGB rgb_color = color;
+
+  rgb_color.a = opacity / 100.0;
+  channel = gimp_channel_new (image, width, height, name, &rgb_color);
+
+  if (! channel)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub channel_copy {
+    $blurb = 'Copy a channel.';
+
+    $help = <<'HELP';
+This procedure copies the specified channel and returns the copy.
+
+The new channel still needs to be added to the image, as this is not
+automatic. Add the new channel with gimp_image_insert_channel().
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to copy' }
+    );
+
+    @outargs = (
+	{ name => 'channel_copy', type => 'channel',
+	  desc => 'The newly copied channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpImage *image  = gimp_item_get_image (GIMP_ITEM (channel));
+  gint       width  = gimp_image_get_width  (image);
+  gint       height = gimp_image_get_height (image);
+
+  if (gimp_item_get_width  (GIMP_ITEM (channel)) == width &&
+      gimp_item_get_height (GIMP_ITEM (channel)) == height)
+    {
+      channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
+                                                        GIMP_TYPE_CHANNEL));
+
+      if (! channel_copy)
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub channel_combine_masks {
+    $blurb = 'Combine two channel masks.';
+
+    $help = <<'HELP';
+This procedure combines two channel masks.  The result is stored
+in the first channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel1', type => 'channel',
+	  desc => 'The channel1' },
+	{ name => 'channel2', type => 'channel',
+	  desc => 'The channel2' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+	{ name => 'offx', type => 'int32',
+	  desc => 'x offset between upper left corner of
+                   channels: (second - first)' },
+	{ name => 'offy', type => 'int32',
+	  desc => 'y offset between upper left corner of
+                   channels: (second - first)' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpchannel-combine.h" "gimp-intl.h") ],
+        code => <<'CODE'
+{
+  gimp_channel_push_undo (channel1, _("Combine Masks"));
+  gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
+}
+CODE
+    );
+}
+
+sub channel_new_from_component {
+    $blurb = 'Create a new channel from a color component';
+
+    $help = <<'HELP';
+This procedure creates a new channel from a color component.
+
+The new channel still needs to be added to the image, as this is not
+automatic. Add the new channel with gimp_image_insert_channel(). Other
+attributes, such as channel visibility, should be set with explicit
+procedure calls.
+HELP
+
+    &shlomi_pdb_misc('2005', '2.4');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the channel' },
+	{ name => 'component', type => 'enum GimpChannelType',
+	  desc => 'The image component' },
+	{ name => 'name', type => 'string',
+	  desc => 'The channel name' },
+    );
+
+    @outargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The newly created channel' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_image_get_component_format (image, component) != NULL)
+    channel = gimp_channel_new_from_component (image,
+                                               component, name, NULL);
+
+  if (channel)
+    gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub channel_get_show_masked {
+    $blurb = "Get the composite method of the specified channel.";
+
+    $help = <<'HELP';
+This procedure returns the specified channel's composite method. If
+it is TRUE, then the channel is composited with the image so that
+masked regions are shown. Otherwise, selected regions are shown.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    @outargs = (
+	{ name => 'show_masked', type => 'boolean',
+	  desc => 'The channel composite method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  show_masked = gimp_channel_get_show_masked (channel);
+}
+CODE
+    );
+}
+
+sub channel_set_show_masked {
+    $blurb = "Set the composite method of the specified channel.";
+
+    $help = <<'HELP';
+This procedure sets the specified channel's composite method. If
+it is TRUE, then the channel is composited with the image so that
+masked regions are shown. Otherwise, selected regions are shown.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'show_masked', type => 'boolean',
+	  desc => 'The new channel composite method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_set_show_masked (channel, show_masked);
+}
+CODE
+    );
+}
+
+sub channel_get_opacity {
+    $blurb = "Get the opacity of the specified channel.";
+
+    $help = <<'HELP';
+This procedure returns the specified channel's opacity.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    @outargs = (
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The channel opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  opacity = gimp_channel_get_opacity (channel) * 100;
+}
+CODE
+    );
+}
+
+sub channel_set_opacity {
+    $blurb = "Set the opacity of the specified channel.";
+
+    $help = <<'HELP';
+This procedure sets the specified channel's opacity.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The new channel opacity' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
+}
+CODE
+    );
+}
+
+sub channel_get_color {
+    $blurb = "Get the compositing color of the specified channel.";
+
+    $help = <<'HELP';
+This procedure returns the specified channel's compositing color.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' }
+    );
+
+    @outargs = (
+	{ name => 'color', type => 'color', void_ret => 1,
+	  desc => 'The channel compositing color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_channel_get_color (channel, &color);
+  gimp_rgb_set_alpha (&color, 1.0);
+}
+CODE
+    );
+}
+
+sub channel_set_color {
+    $blurb = "Set the compositing color of the specified channel.";
+
+    $help = <<'HELP';
+This procedure sets the specified channel's compositing color.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'color', type => 'color',
+	  desc => 'The new channel compositing color' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpRGB rgb_color = color;
+
+  rgb_color.a = channel->color.a;
+  gimp_channel_set_color (channel, &rgb_color, TRUE);
+}
+CODE
+    );
+}
+
+
+@headers = qw("libgimpbase/gimpbase.h");
+
+@procs = qw(channel_new
+            channel_new_from_component
+            channel_copy
+            channel_combine_masks
+            channel_get_show_masked channel_set_show_masked
+            channel_get_opacity channel_set_opacity
+            channel_get_color channel_set_color);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Channel';
+$doc_title = 'gimpchannel';
+$doc_short_desc = 'Functions for manipulating channels.';
+$doc_long_desc = 'Functions for manipulating channels.';
+
+1;

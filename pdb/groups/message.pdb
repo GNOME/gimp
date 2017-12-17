@@ -1,0 +1,116 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1998-1999 Manish Singh
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub message {
+    $blurb = 'Displays a dialog box with a message.';
+
+    $help = <<'HELP';
+Displays a dialog box with a message. Useful for status or error reporting.
+The message must be in UTF-8 encoding.
+HELP
+
+    &yosh_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'message', type => 'string',
+	  desc => 'Message to display in the dialog' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  const gchar *domain = NULL;
+
+  if (gimp->plug_in_manager->current_plug_in)
+    domain = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+  gimp_show_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+                     domain, message);
+}
+CODE
+    );
+}
+
+sub message_get_handler {
+    $blurb = <<'BLURB';
+Returns the current state of where warning messages are displayed.
+BLURB
+
+    $help = <<'HELP';
+This procedure returns the way g_message warnings are displayed. They can be
+shown in a dialog box or printed on the console where gimp was started.
+HELP
+
+    &yosh_pdb_misc('1998');
+
+    @outargs = (
+	{ name => 'handler', type => 'enum GimpMessageHandlerType',
+	  desc => 'The current handler type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  handler = gimp->message_handler;
+}
+CODE
+    );
+}
+
+sub message_set_handler {
+    $blurb = 'Controls where warning messages are displayed.';
+
+    $help = <<'HELP';
+This procedure controls how g_message warnings are displayed. They can be shown
+in a dialog box or printed on the console where gimp was started.
+HELP
+
+    &yosh_pdb_misc('1998');
+
+    @inargs = (
+	{ name => 'handler', type => 'enum GimpMessageHandlerType',
+	  desc => 'The new handler type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp->message_handler = handler;
+}
+CODE
+    );
+}
+
+
+@headers = qw(<string.h>
+              "core/gimp.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimppluginmanager.h"
+              "gimp-intl.h");
+
+@procs = qw(message
+            message_get_handler
+            message_set_handler);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Message procedures';
+$doc_title = 'gimpmessage';
+$doc_short_desc = 'Display a dialog box with a message.';
+$doc_long_desc = 'Display a dialog box with a message.';
+
+1;

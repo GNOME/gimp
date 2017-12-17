@@ -1,0 +1,286 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_convert_rgb {
+    $blurb = 'Convert specified image to RGB color';
+
+    $help = <<'HELP';
+This procedure converts the specified image to RGB color. This process
+requires an image in Grayscale or Indexed color mode. No image content is
+lost in this process aside from the colormap for an indexed image.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
+    {
+      success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub image_convert_grayscale {
+    $blurb = 'Convert specified image to grayscale';
+
+    $help = <<'HELP';
+This procedure converts the specified image to grayscale. This process
+requires an image in RGB or Indexed color mode.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub image_convert_indexed {
+    $blurb = 'Convert specified image to and Indexed image';
+
+    $help = <<'HELP';
+This procedure converts the specified image to 'indexed' color. This
+process requires an image in RGB or Grayscale mode. The 'palette_type'
+specifies what kind of palette to use, A type of '0' means to use an
+optimal palette of 'num_cols' generated from the colors in the
+image. A type of '1' means to re-use the previous palette (not
+currently implemented). A type of '2' means to use the so-called
+WWW-optimized palette. Type '3' means to use only black and white
+colors. A type of '4' means to use a palette from the gimp palettes
+directories.  The 'dither type' specifies what kind of dithering to
+use.  '0' means no dithering, '1' means standard Floyd-Steinberg error
+diffusion, '2' means Floyd-Steinberg error diffusion with reduced
+bleeding, '3' means dithering based on pixel location ('Fixed'
+dithering).
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
+	  desc => 'The dither type to use' },
+	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
+	  desc => 'The type of palette to use' },
+	{ name => 'num_cols', type => 'int32',
+	  desc => 'The number of colors to quantize to, ignored unless
+		   (palette_type == GIMP_CONVERT_PALETTE_GENERATE)' },
+	{ name => 'alpha_dither', type => 'boolean',
+	  desc => 'Dither transparency to fake partial opacity' },
+	{ name => 'remove_unused', type => 'boolean',
+	  desc => 'Remove unused or duplicate color entries from final
+		   palette, ignored if (palette_type ==
+		   GIMP_CONVERT_PALETTE_GENERATE)' },
+	{ name => 'palette', type => 'string',
+	  desc => 'The name of the custom palette to use, ignored unless
+		   (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPalette *pal = NULL;
+
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8_GAMMA, error) &&
+      gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
+    {
+      switch (palette_type)
+	{
+	case GIMP_CONVERT_PALETTE_GENERATE:
+	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+	    success = FALSE;
+	  break;
+
+	case GIMP_CONVERT_PALETTE_CUSTOM:
+          pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
+	  if (! pal)
+            {
+              success = FALSE;
+            }
+          else if (pal->n_colors > MAXNUMCOLORS)
+            {
+              g_set_error_literal (error,
+	                           GIMP_PDB_ERROR,
+                                   GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                                   _("Cannot convert to a palette "
+                                     "with more than 256 colors."));
+              success = FALSE;
+            }
+          break;
+
+	default:
+          break;
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  if (success)
+    success = gimp_image_convert_indexed (image,
+                                          palette_type, num_cols, remove_unused,
+                                          dither_type, alpha_dither, FALSE,
+                                          pal,
+                                          NULL, error);
+}
+CODE
+    );
+}
+
+sub image_convert_set_dither_matrix {
+    $blurb = 'Set dither matrix for conversion to indexed';
+
+    $help = <<'HELP';
+This procedure sets the dither matrix used when converting images to INDEXED mode with 
+positional dithering. 
+HELP
+
+    &david_pdb_misc('2006', '2.4');
+
+    @inargs = (
+	{ name => 'width', type => 'int32',
+	  desc => 'Width of the matrix (0 to reset to default matrix)' },
+	{ name => 'height', type => 'int32',
+	  desc => 'Height of the matrix (0 to reset to default matrix)' },
+	{ name => 'matrix', type => 'int8array',
+	  desc => 'The matrix -- all values must be >= 1',
+	  array => { name => 'matrix_length', type => '1 <= int32 <= 1024',
+                     desc => "The length of 'matrix'" }
+	  },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (width == 0 || height == 0 || matrix_length == width * height)
+    {
+      gimp_image_convert_indexed_set_dither_matrix (matrix, width, height);
+    }
+  else
+    {
+      g_set_error_literal (error, GIMP_PDB_ERROR,
+                           GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                           "Dither matrix length must be width * height");
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+sub image_convert_precision {
+    $blurb = 'Convert the image to the specified precision';
+
+    $help = <<'HELP';
+This procedure converts the image to the specified precision. Note
+that indexed images cannot be converted and are always in
+GIMP_PRECISION_U8.
+HELP
+
+    &mitch_pdb_misc('2012', '2.10');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'precision', type => 'enum GimpPrecision',
+	  desc => 'The new precision' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp->plug_in_manager->current_plug_in)
+    gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
+
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      gimp_pdb_image_is_not_precision (image, precision, error))
+    {
+      gimp_image_convert_precision (image, precision,
+                                    GEGL_DITHER_NONE,
+                                    GEGL_DITHER_NONE,
+                                    GEGL_DITHER_NONE,
+                                    progress);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimp.h"
+              "core/gimpimage.h"
+              "core/gimpimage-convert-indexed.h"
+              "core/gimpimage-convert-precision.h"
+              "core/gimpimage-convert-type.h"
+              "core/gimpitemstack.h"
+              "core/gimppalette.h"
+              "plug-in/gimpplugin.h"
+              "plug-in/gimppluginmanager.h"
+              "gimppdberror.h"
+              "gimppdb-utils.h"
+              "gimp-intl.h");
+
+@procs = qw(image_convert_rgb
+            image_convert_grayscale
+            image_convert_indexed
+            image_convert_set_dither_matrix
+            image_convert_precision);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Image Convert';
+$doc_title = 'gimpimageconvert';
+$doc_short_desc = 'Conversions between RGB, indexed, and grayscale modes.';
+$doc_long_desc = 'Conversions between RGB, indexed, and grayscale modes.';
+
+1;
