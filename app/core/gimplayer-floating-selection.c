@@ -267,7 +267,7 @@ floating_sel_boundary (GimpLayer *layer,
                                                babl_format ("A float"),
                                                GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                0, 0, width, height,
-                                               GIMP_BOUNDARY_HALF_WAY,
+                                               GIMP_BOUNDARY_HALF_WAY_LINEAR,
                                                &layer->fs.num_segs);
 
           /*  offset the segments  */
