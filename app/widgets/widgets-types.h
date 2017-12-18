@@ -202,6 +202,7 @@ typedef struct _GimpLanguageStore            GimpLanguageStore;
 typedef struct _GimpLayerModeBox             GimpLayerModeBox;
 typedef struct _GimpLayerModeComboBox        GimpLayerModeComboBox;
 typedef struct _GimpMessageBox               GimpMessageBox;
+typedef struct _GimpMeter                    GimpMeter;
 typedef struct _GimpOverlayBox               GimpOverlayBox;
 typedef struct _GimpPickableButton           GimpPickableButton;
 typedef struct _GimpPickablePopup            GimpPickablePopup;

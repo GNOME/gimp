@@ -1,0 +1,1120 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpmeter.c
+ * Copyright (C) 2017 Ell
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpmath/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "gimpmeter.h"
+
+
+#define BORDER_WIDTH 1.0
+#define REV          (2.0 * G_PI)
+
+#define SAMPLE(i)    (meter->priv->samples + (i) * meter->priv->n_values)
+#define SAMPLE_SIZE  (meter->priv->n_values * sizeof (gdouble))
+#define VALUE(i, j)  ((SAFE_CLAMP (SAMPLE (i)[j],                              \
+                                   meter->priv->range_min,                     \
+                                   meter->priv->range_max) -                   \
+                        meter->priv->range_min) /                              \
+                       (meter->priv->range_max - meter->priv->range_min))
+
+
+enum
+{
+  PROP_0,
+  PROP_SIZE,
+  PROP_REFRESH_RATE,
+  PROP_RANGE_MIN,
+  PROP_RANGE_MAX,
+  PROP_N_VALUES,
+  PROP_HISTORY_VISIBLE,
+  PROP_HISTORY_DURATION,
+  PROP_HISTORY_RESOLUTION,
+  PROP_LED_VISIBLE,
+  PROP_LED_COLOR
+};
+
+
+struct _GimpMeterPrivate
+{
+  GMutex   mutex;
+
+  gint      size;
+  gdouble   refresh_rate;
+  gdouble   range_min;
+  gdouble   range_max;
+  gint      n_values;
+  GimpRGB  *colors;
+  gboolean  history_visible;
+  gdouble   history_duration;
+  gdouble   history_resolution;
+  gboolean  led_visible;
+  GimpRGB   led_color;
+
+  gdouble  *samples;
+  gint      n_samples;
+  gint      sample_duration;
+  gint64    last_sample_time;
+  gint64    current_time;
+  gdouble  *uniform_sample;
+  gint      timeout_id;
+};
+
+
+static void       gimp_meter_dispose                (GObject        *object);
+static void       gimp_meter_finalize               (GObject        *object);
+static void       gimp_meter_set_property           (GObject        *object,
+                                                     guint           property_id,
+                                                     const GValue   *value,
+                                                     GParamSpec     *pspec);
+static void       gimp_meter_get_property           (GObject        *object,
+                                                     guint           property_id,
+                                                     GValue         *value,
+                                                     GParamSpec     *pspec);
+
+static void       gimp_meter_map                    (GtkWidget      *widget);
+static void       gimp_meter_unmap                  (GtkWidget      *widget);
+static void       gimp_meter_size_request           (GtkWidget      *widget,
+                                                     GtkRequisition *requisition);
+static gboolean   gimp_meter_expose_event           (GtkWidget      *widget,
+                                                     GdkEventExpose *event);
+
+static gboolean   gimp_meter_timeout                (GimpMeter      *meter);
+
+static void       gimp_meter_clear_history_unlocked (GimpMeter      *meter);
+static void       gimp_meter_update_samples         (GimpMeter      *meter);
+static void       gimp_meter_shift_samples          (GimpMeter      *meter);
+
+
+G_DEFINE_TYPE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
+
+#define parent_class gimp_meter_parent_class
+
+
+/*  private functions  */
+
+
+static void
+gimp_meter_class_init (GimpMeterClass *klass)
+{
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->dispose      = gimp_meter_dispose;
+  object_class->finalize     = gimp_meter_finalize;
+  object_class->get_property = gimp_meter_get_property;
+  object_class->set_property = gimp_meter_set_property;
+
+  widget_class->map          = gimp_meter_map;
+  widget_class->unmap        = gimp_meter_unmap;
+  widget_class->size_request = gimp_meter_size_request;
+  widget_class->expose_event = gimp_meter_expose_event;
+
+  g_object_class_install_property (object_class, PROP_SIZE,
+                                   g_param_spec_int ("size",
+                                                     NULL, NULL,
+                                                     32, 1024, 48,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_REFRESH_RATE,
+                                   g_param_spec_double ("refresh-rate",
+                                                        NULL, NULL,
+                                                        0.001, 1000.0, 8.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_RANGE_MIN,
+                                   g_param_spec_double ("range-min",
+                                                        NULL, NULL,
+                                                        0.0, G_MAXDOUBLE, 0.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_RANGE_MAX,
+                                   g_param_spec_double ("range-max",
+                                                        NULL, NULL,
+                                                        0.0, G_MAXDOUBLE, 1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_N_VALUES,
+                                   g_param_spec_int ("n-values",
+                                                     NULL, NULL,
+                                                     0, 32, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HISTORY_VISIBLE,
+                                   g_param_spec_boolean ("history-visible",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HISTORY_DURATION,
+                                   g_param_spec_double ("history-duration",
+                                                        NULL, NULL,
+                                                        0.0, 3600.0, 60.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_HISTORY_RESOLUTION,
+                                   g_param_spec_double ("history-resolution",
+                                                        NULL, NULL,
+                                                        0.1, 3600.0, 1.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+
+  g_object_class_install_property (object_class, PROP_LED_VISIBLE,
+                                   g_param_spec_boolean ("led-visible",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_LED_COLOR,
+                                   gimp_param_spec_rgb ("led-color",
+                                                        NULL, NULL,
+                                                        TRUE, &(GimpRGB) {},
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_type_class_add_private (klass, sizeof (GimpMeterPrivate));
+}
+
+static void
+gimp_meter_init (GimpMeter *meter)
+{
+  meter->priv = G_TYPE_INSTANCE_GET_PRIVATE (meter,
+                                             GIMP_TYPE_METER,
+                                             GimpMeterPrivate);
+
+  g_mutex_init (&meter->priv->mutex);
+
+  gtk_widget_set_has_window (GTK_WIDGET (meter), FALSE);
+
+  meter->priv->range_min          = 0.0;
+  meter->priv->range_max          = 1.0;
+  meter->priv->n_values           = 0;
+  meter->priv->history_duration   = 60.0;
+  meter->priv->history_resolution = 1.0;
+
+  gimp_meter_update_samples (meter);
+}
+
+static void
+gimp_meter_dispose (GObject *object)
+{
+  GimpMeter *meter = GIMP_METER (object);
+
+  g_clear_pointer (&meter->priv->colors, g_free);
+  g_clear_pointer (&meter->priv->samples, g_free);
+  g_clear_pointer (&meter->priv->uniform_sample, g_free);
+
+  if (meter->priv->timeout_id)
+    {
+      g_source_remove (meter->priv->timeout_id);
+      meter->priv->timeout_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_meter_finalize (GObject *object)
+{
+  GimpMeter *meter = GIMP_METER (object);
+
+  g_mutex_clear (&meter->priv->mutex);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_meter_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpMeter *meter = GIMP_METER (object);
+
+  switch (property_id)
+    {
+    case PROP_SIZE:
+      gimp_meter_set_size (meter, g_value_get_int (value));
+      break;
+
+    case PROP_REFRESH_RATE:
+      gimp_meter_set_refresh_rate (meter, g_value_get_double (value));
+      break;
+
+    case PROP_RANGE_MIN:
+      gimp_meter_set_range (meter,
+                            g_value_get_double (value),
+                            gimp_meter_get_range_max (meter));
+      break;
+
+    case PROP_RANGE_MAX:
+      gimp_meter_set_range (meter,
+                            gimp_meter_get_range_min (meter),
+                            g_value_get_double (value));
+      break;
+
+    case PROP_N_VALUES:
+      gimp_meter_set_n_values (meter, g_value_get_int (value));
+      break;
+
+    case PROP_HISTORY_VISIBLE:
+      gimp_meter_set_history_visible (meter, g_value_get_boolean (value));
+      break;
+
+    case PROP_HISTORY_DURATION:
+      gimp_meter_set_history_duration (meter, g_value_get_double (value));
+      break;
+
+    case PROP_HISTORY_RESOLUTION:
+      gimp_meter_set_history_resolution (meter, g_value_get_double (value));
+      break;
+
+    case PROP_LED_VISIBLE:
+      gimp_meter_set_led_visible (meter, g_value_get_boolean (value));
+      break;
+
+    case PROP_LED_COLOR:
+      gimp_meter_set_led_color (meter, g_value_get_boxed (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_meter_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpMeter *meter = GIMP_METER (object);
+
+  switch (property_id)
+    {
+    case PROP_SIZE:
+      g_value_set_int (value, gimp_meter_get_size (meter));
+      break;
+
+    case PROP_REFRESH_RATE:
+      g_value_set_double (value, gimp_meter_get_refresh_rate (meter));
+      break;
+
+    case PROP_RANGE_MIN:
+      g_value_set_double (value, gimp_meter_get_range_min (meter));
+      break;
+
+    case PROP_RANGE_MAX:
+      g_value_set_double (value, gimp_meter_get_range_max (meter));
+      break;
+
+    case PROP_N_VALUES:
+      g_value_set_int (value, gimp_meter_get_n_values (meter));
+      break;
+
+    case PROP_HISTORY_VISIBLE:
+      g_value_set_boolean (value, gimp_meter_get_history_visible (meter));
+      break;
+
+    case PROP_HISTORY_DURATION:
+      g_value_set_int (value, gimp_meter_get_history_duration (meter));
+      break;
+
+    case PROP_HISTORY_RESOLUTION:
+      g_value_set_int (value, gimp_meter_get_history_resolution (meter));
+      break;
+
+    case PROP_LED_VISIBLE:
+      g_value_set_boolean (value, gimp_meter_get_led_visible (meter));
+      break;
+
+    case PROP_LED_COLOR:
+      g_value_set_boxed (value, gimp_meter_get_led_color (meter));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_meter_map (GtkWidget *widget)
+{
+  GimpMeter *meter = GIMP_METER (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+
+  if (! meter->priv->timeout_id)
+    {
+      gint interval = ROUND (1000.0 / meter->priv->refresh_rate);
+
+      meter->priv->timeout_id = g_timeout_add (interval,
+                                               (GSourceFunc) gimp_meter_timeout,
+                                               meter);
+    }
+}
+
+static void
+gimp_meter_unmap (GtkWidget *widget)
+{
+  GimpMeter *meter = GIMP_METER (widget);
+
+  if (meter->priv->timeout_id)
+    {
+      g_source_remove (meter->priv->timeout_id);
+      meter->priv->timeout_id = 0;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
+
+static void
+gimp_meter_size_request (GtkWidget      *widget,
+                         GtkRequisition *requisition)
+{
+  gint hsize;
+  gint vsize;
+
+  GimpMeter *meter = GIMP_METER (widget);
+
+  hsize = meter->priv->size;
+  vsize = meter->priv->size;
+
+  if (meter->priv->history_visible)
+    hsize *= 3;
+
+  requisition->width  = ceil (            hsize + 2.0 * BORDER_WIDTH);
+  requisition->height = ceil (3.0 / 4.0 * vsize + 4.0 * BORDER_WIDTH);
+}
+
+static gboolean
+gimp_meter_expose_event (GtkWidget      *widget,
+                          GdkEventExpose *event)
+{
+  GimpMeter *meter = GIMP_METER (widget);
+
+  if (gtk_widget_is_drawable (widget))
+    {
+      GtkAllocation  allocation;
+      gint           size  = meter->priv->size;
+      GtkStyle      *style = gtk_widget_get_style (widget);
+      GtkStateType   state = gtk_widget_get_state (widget);
+      cairo_t       *cr;
+      gint           i;
+      gint           j;
+      gint           k;
+
+      g_mutex_lock (&meter->priv->mutex);
+
+      cr = gdk_cairo_create (event->window);
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
+
+      gtk_widget_get_allocation (widget, &allocation);
+
+      /* translate to allocation top-left */
+      cairo_translate (cr, allocation.x, allocation.y);
+
+      cairo_save (cr);
+
+      /* translate to gauge center */
+      cairo_translate (cr,
+                       0.5 * BORDER_WIDTH +       0.5 * size,
+                       1.5 * BORDER_WIDTH + 2.0 / 3.0 * (allocation.height - 4.0 * BORDER_WIDTH));
+
+      cairo_save (cr);
+
+      /* paint led */
+      if (meter->priv->led_visible)
+        {
+          cairo_arc (cr,
+                     0.0, 0.0,
+                     0.06 * size,
+                     0.0 * REV, 1.0 * REV);
+
+          gimp_cairo_set_source_rgba (cr, &meter->priv->led_color);
+          cairo_fill (cr);
+        }
+
+      /* clip to gauge interior */
+      cairo_arc          (cr,
+                          0.0, 0.0,
+                          0.5 * size,
+                          5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
+      cairo_arc_negative (cr,
+                          0.0, 0.0,
+                          0.1 * size,
+                          1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
+      cairo_close_path (cr);
+      cairo_clip (cr);
+
+      /* paint gauge background */
+      gdk_cairo_set_source_color (cr, &style->light[state]);
+      cairo_paint (cr);
+
+      /* paint values of last sample */
+      if (meter->priv->range_min < meter->priv->range_max)
+        {
+          for (i = 0; i < meter->priv->n_values; i++)
+            {
+              gdouble v = VALUE (0, i);
+
+              gimp_cairo_set_source_rgba (cr, &meter->priv->colors[i]);
+              cairo_move_to (cr, 0.0, 0.0);
+              cairo_arc (cr,
+                         0.0, 0.0,
+
+                         0.5 * size,
+                         5.0 / 12.0 * REV, (5.0 / 12.0 + 2.0 / 3.0 * v) * REV);
+              cairo_line_to (cr, 0.0, 0.0);
+              cairo_close_path (cr);
+              cairo_fill (cr);
+            }
+        }
+
+      cairo_restore (cr);
+
+      /* paint gauge border */
+      gdk_cairo_set_source_color (cr, &style->fg[state]);
+      cairo_set_line_width (cr, BORDER_WIDTH);
+      cairo_arc          (cr,
+                          0.0, 0.0,
+                          0.5 * size,
+                          5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
+      cairo_arc_negative (cr,
+                          0.0, 0.0,
+                          0.1 * size,
+                          1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
+      cairo_close_path (cr);
+      cairo_stroke (cr);
+
+      /* history */
+      if (meter->priv->history_visible)
+        {
+          gdouble a1, a2;
+          gdouble history_x1, history_y1;
+          gdouble history_x2, history_y2;
+
+          cairo_save (cr);
+
+          a1 = +asin (0.25 / 0.6);
+          a2 = -asin (0.50 / 0.6);
+
+          /* clip to history interior */
+          cairo_arc_negative (cr, 0.0, 0.0, 0.6 * size, a1, a2);
+          cairo_line_to (cr,
+                         allocation.width - BORDER_WIDTH - 0.5 * size,
+                         -0.50 * size);
+          cairo_line_to (cr,
+                         allocation.width - BORDER_WIDTH - 0.5 * size,
+                         0.25 * size);
+          cairo_close_path (cr);
+          cairo_clip (cr);
+
+          cairo_clip_extents (cr,
+                              &history_x1, &history_y1,
+                              &history_x2, &history_y2);
+
+          history_x1 = floor (history_x1);
+          history_y1 = floor (history_y1);
+          history_x2 = ceil  (history_x2);
+          history_y2 = ceil  (history_y2);
+
+          /* paint history background */
+          gdk_cairo_set_source_color (cr, &style->light[state]);
+          cairo_paint (cr);
+
+          /* history graph */
+          if (meter->priv->range_min < meter->priv->range_max)
+            {
+              gdouble sample_width = (history_x2 - history_x1) /
+                                     (meter->priv->n_samples - 4);
+              gdouble dx           = 1.0 / sample_width;
+
+              cairo_save (cr);
+
+              /* translate to history bottom-right, and scale so that the
+               * x-axis points left, and has a length of one sample, and the
+               * y-axis points up, and has a length of the history window.
+               */
+              cairo_translate (cr, history_x2, history_y2);
+              cairo_scale (cr, -sample_width, -(history_y2 - history_y1));
+              cairo_translate (cr,
+                               (gdouble) (meter->priv->current_time     -
+                                          meter->priv->last_sample_time *
+                                          meter->priv->sample_duration) /
+                               meter->priv->sample_duration             -
+                               2.0,
+                               0.0);
+
+              /* paint history graph for each value, with cubic interpolation */
+              for (i = 0; i < meter->priv->n_values; i++)
+                {
+                  gdouble y[4];
+                  gdouble t[2];
+                  gdouble c[4];
+                  gdouble x;
+
+                  gimp_cairo_set_source_rgba (cr, &meter->priv->colors[i]);
+                  cairo_move_to (cr, 0.0, 0.0);
+
+                  for (j = 1; j < meter->priv->n_samples - 2; j++)
+                    {
+                      for (k = 0; k < 4; k++)
+                        y[k] = VALUE (j + k - 1, i);
+
+                      for (k = 0; k < 2; k++)
+                        {
+                          t[k] = (y[k + 2] - y[k]) / 2.0;
+                          t[k] = CLAMP (t[k], y[k + 1] - 1.0, y[k + 1]);
+                          t[k] = CLAMP (t[k], -y[k + 1], 1.0 - y[k + 1]);
+                        }
+
+                      c[0] = y[1];
+                      c[1] = t[0];
+                      c[2] = 3 * (y[2] - y[1]) - 2 * t[0] - t[1];
+                      c[3] = t[0] + t[1] - 2 * (y[2] - y[1]);
+
+                      for (x = 0.0; x < 1.0; x += dx)
+                        {
+                          gdouble y = ((c[3] * x + c[2]) * x + c[1]) * x + c[0];
+
+                          cairo_line_to (cr, j + x, y);
+                        }
+                    }
+
+                  y[1] = VALUE (j, i);
+
+                  cairo_line_to (cr, meter->priv->n_samples - 2, y[1]);
+                  cairo_line_to (cr, meter->priv->n_samples - 2, 0.0);
+                  cairo_close_path (cr);
+                  cairo_fill (cr);
+                }
+
+              cairo_restore (cr);
+            }
+
+          /* paint history grid */
+          cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
+          cairo_set_source_rgba (cr,
+                                 (gdouble) style->fg[state].red   / 0xffff,
+                                 (gdouble) style->fg[state].green / 0xffff,
+                                 (gdouble) style->fg[state].blue  / 0xffff,
+                                 0.3);
+
+          for (i = 1; i < 4; i++)
+            {
+              cairo_move_to (cr,
+                             history_x1,
+                             history_y1 + i / 4.0 * (history_y2 - history_y1));
+              cairo_rel_line_to (cr, history_x2 - history_x1, 0.0);
+              cairo_stroke (cr);
+            }
+
+          for (i = 1; i < 6; i++)
+            {
+              cairo_move_to (cr,
+                             history_x1 + i / 6.0 * (history_x2 - history_x1),
+                             history_y1);
+              cairo_rel_line_to (cr, 0.0, history_y2 - history_y1);
+              cairo_stroke (cr);
+            }
+
+          cairo_restore (cr);
+
+          /* paint history border */
+          cairo_arc_negative (cr, 0.0, 0.0, 0.6 * size, a1, a2);
+          cairo_line_to (cr,
+                         allocation.width - BORDER_WIDTH - 0.5 * size,
+                         -0.50 * size);
+          cairo_line_to (cr,
+                         allocation.width - BORDER_WIDTH - 0.5 * size,
+                         0.25 * size);
+          cairo_close_path (cr);
+          cairo_stroke (cr);
+        }
+
+      cairo_restore (cr);
+
+      cairo_destroy (cr);
+
+      g_mutex_unlock (&meter->priv->mutex);
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_meter_timeout (GimpMeter *meter)
+{
+  gboolean uniform;
+  gboolean redraw;
+
+  g_mutex_lock (&meter->priv->mutex);
+
+  gimp_meter_shift_samples (meter);
+
+  if (meter->priv->history_visible)
+    {
+      uniform = ! memcmp (SAMPLE (0), SAMPLE (1),
+                          (meter->priv->n_samples - 1) * SAMPLE_SIZE);
+    }
+  else
+    {
+      uniform = TRUE;
+    }
+
+  if (uniform && meter->priv->uniform_sample)
+    redraw = memcmp (SAMPLE (0), meter->priv->uniform_sample, SAMPLE_SIZE);
+  else
+    redraw = TRUE;
+
+  if (uniform)
+    {
+      if (! meter->priv->uniform_sample)
+        meter->priv->uniform_sample = g_malloc (SAMPLE_SIZE);
+
+      memcpy (meter->priv->uniform_sample, SAMPLE (0), SAMPLE_SIZE);
+    }
+  else
+    {
+      g_clear_pointer (&meter->priv->uniform_sample, g_free);
+    }
+
+  g_mutex_unlock (&meter->priv->mutex);
+
+  if (redraw)
+    gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+  return G_SOURCE_CONTINUE;
+}
+
+static void
+gimp_meter_clear_history_unlocked (GimpMeter *meter)
+{
+  meter->priv->current_time     = g_get_monotonic_time ();
+  meter->priv->last_sample_time = meter->priv->current_time /
+                                  meter->priv->sample_duration;
+
+  memset (meter->priv->samples, 0, meter->priv->n_samples * SAMPLE_SIZE);
+
+  g_clear_pointer (&meter->priv->uniform_sample, g_free);
+}
+
+static void
+gimp_meter_update_samples (GimpMeter *meter)
+{
+  meter->priv->n_samples = ceil (meter->priv->history_duration /
+                                 meter->priv->history_resolution) + 4;
+
+  meter->priv->samples = g_renew (gdouble, meter->priv->samples,
+                                  meter->priv->n_samples *
+                                  meter->priv->n_values);
+
+  meter->priv->sample_duration = ROUND (meter->priv->history_resolution *
+                                        G_TIME_SPAN_SECOND);
+
+  gimp_meter_clear_history_unlocked (meter);
+}
+
+static void
+gimp_meter_shift_samples (GimpMeter *meter)
+{
+  gint64 time;
+  gint   n_new_samples;
+
+  meter->priv->current_time = g_get_monotonic_time ();
+
+  time = meter->priv->current_time / meter->priv->sample_duration;
+
+  n_new_samples = MIN (time - meter->priv->last_sample_time,
+                       meter->priv->n_samples - 1);
+
+  memmove (SAMPLE (n_new_samples), SAMPLE (0),
+           (meter->priv->n_samples - n_new_samples) * SAMPLE_SIZE);
+  gegl_memset_pattern (SAMPLE (0), SAMPLE (n_new_samples), SAMPLE_SIZE,
+                       n_new_samples);
+
+  meter->priv->last_sample_time = time;
+}
+
+
+/*  public functions  */
+
+
+GtkWidget *
+gimp_meter_new (gint n_values)
+{
+  return g_object_new (GIMP_TYPE_METER,
+                       "n-values", n_values,
+                       NULL);
+}
+
+void
+gimp_meter_set_size (GimpMeter *meter,
+                     gint       size)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (size > 0);
+
+  if (size != meter->priv->size)
+    {
+      meter->priv->size = size;
+
+      gtk_widget_queue_resize (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "size");
+    }
+}
+
+gint
+gimp_meter_get_size (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+
+  return meter->priv->size;
+}
+
+void
+gimp_meter_set_refresh_rate (GimpMeter *meter,
+                             gdouble    rate)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (rate > 0.0);
+
+  if (rate != meter->priv->refresh_rate)
+    {
+      meter->priv->refresh_rate = rate;
+
+      if (meter->priv->timeout_id)
+        {
+          gint interval = ROUND (1000.0 / meter->priv->refresh_rate);
+
+          g_source_remove (meter->priv->timeout_id);
+
+          meter->priv->timeout_id = g_timeout_add (interval,
+                                                   (GSourceFunc) gimp_meter_timeout,
+                                                   meter);
+        }
+
+      g_object_notify (G_OBJECT (meter), "refresh-rate");
+    }
+}
+
+gdouble
+gimp_meter_get_refresh_rate (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+
+  return meter->priv->refresh_rate;
+}
+
+void
+gimp_meter_set_range (GimpMeter *meter,
+                      gdouble    min,
+                      gdouble    max)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (min <= max);
+
+  if (min != meter->priv->range_min)
+    {
+      g_mutex_lock (&meter->priv->mutex);
+
+      meter->priv->range_min = min;
+
+      g_mutex_unlock (&meter->priv->mutex);
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "range-min");
+    }
+
+  if (max != meter->priv->range_max)
+    {
+      g_mutex_lock (&meter->priv->mutex);
+
+      meter->priv->range_max = max;
+
+      g_mutex_unlock (&meter->priv->mutex);
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "range-max");
+    }
+}
+
+gdouble
+gimp_meter_get_range_min (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+
+  return meter->priv->range_min;
+}
+
+gdouble
+gimp_meter_get_range_max (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+
+  return meter->priv->range_max;
+}
+
+void
+gimp_meter_set_n_values (GimpMeter *meter,
+                         gint       n_values)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (n_values >= 0);
+
+  if (n_values != meter->priv->n_values)
+    {
+      g_mutex_lock (&meter->priv->mutex);
+
+      meter->priv->colors = g_renew (GimpRGB, meter->priv->colors, n_values);
+
+      if (n_values > meter->priv->n_values)
+        {
+          memset (meter->priv->colors,
+                  0, (n_values - meter->priv->n_values) * sizeof (GimpRGB));
+        }
+
+      meter->priv->n_values = n_values;
+
+      gimp_meter_update_samples (meter);
+
+      g_mutex_unlock (&meter->priv->mutex);
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "n-values");
+    }
+}
+
+gint
+gimp_meter_get_n_values (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+
+  return meter->priv->n_values;
+}
+
+void
+gimp_meter_set_color (GimpMeter     *meter,
+                      gint           i,
+                      const GimpRGB *color)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (i >= 0 && i < meter->priv->n_values);
+  g_return_if_fail (color != NULL);
+
+  meter->priv->colors[i] = *color;
+
+  gtk_widget_queue_draw (GTK_WIDGET (meter));
+}
+
+const GimpRGB *
+gimp_meter_get_color (GimpMeter *meter,
+                      gint       i)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), NULL);
+  g_return_val_if_fail (i >= 0 && i < meter->priv->n_values, NULL);
+
+  return &meter->priv->colors[i];
+}
+
+void
+gimp_meter_set_history_visible (GimpMeter *meter,
+                                gboolean   visible)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+
+  if (visible != meter->priv->history_visible)
+    {
+      meter->priv->history_visible = visible;
+
+      gtk_widget_queue_resize (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "history-visible");
+    }
+}
+
+gboolean
+gimp_meter_get_history_visible (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+
+  return meter->priv->history_visible;
+}
+
+void
+gimp_meter_set_history_duration (GimpMeter *meter,
+                                 gdouble    duration)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (duration >= 0.0);
+
+  if (duration != meter->priv->history_duration)
+    {
+      g_mutex_lock (&meter->priv->mutex);
+
+      meter->priv->history_duration = duration;
+
+      gimp_meter_update_samples (meter);
+
+      g_mutex_unlock (&meter->priv->mutex);
+
+      g_object_notify (G_OBJECT (meter), "history-duration");
+    }
+}
+
+gdouble
+gimp_meter_get_history_duration (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+
+  return meter->priv->history_duration;
+}
+
+void
+gimp_meter_set_history_resolution (GimpMeter *meter,
+                                   gdouble    resolution)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (resolution > 0.0);
+
+  if (resolution != meter->priv->history_resolution)
+    {
+      g_mutex_lock (&meter->priv->mutex);
+
+      meter->priv->history_resolution = resolution;
+
+      gimp_meter_update_samples (meter);
+
+      g_mutex_unlock (&meter->priv->mutex);
+
+      g_object_notify (G_OBJECT (meter), "history-resolution");
+    }
+}
+
+gdouble
+gimp_meter_get_history_resolution (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+
+  return meter->priv->history_resolution;
+}
+
+void
+gimp_meter_clear_history (GimpMeter *meter)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+
+  g_mutex_lock (&meter->priv->mutex);
+
+  gimp_meter_clear_history_unlocked (meter);
+
+  g_mutex_unlock (&meter->priv->mutex);
+
+  gtk_widget_queue_draw (GTK_WIDGET (meter));
+}
+
+void
+gimp_meter_add_sample (GimpMeter     *meter,
+                       const gdouble *sample)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (sample != NULL || meter->priv->n_values == 0);
+
+  g_mutex_lock (&meter->priv->mutex);
+
+  gimp_meter_shift_samples (meter);
+
+  memcpy (SAMPLE (0), sample, SAMPLE_SIZE);
+
+  g_mutex_unlock (&meter->priv->mutex);
+}
+
+void
+gimp_meter_set_led_visible (GimpMeter *meter,
+                            gboolean   visible)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+
+  if (visible != meter->priv->led_visible)
+    {
+      meter->priv->led_visible = visible;
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+      g_object_notify (G_OBJECT (meter), "led-visible");
+    }
+}
+
+gboolean
+gimp_meter_get_led_visible (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+
+  return meter->priv->led_visible;
+}
+
+void
+gimp_meter_set_led_color (GimpMeter     *meter,
+                          const GimpRGB *color)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (color != NULL);
+
+  meter->priv->led_color = *color;
+
+  gtk_widget_queue_draw (GTK_WIDGET (meter));
+
+  g_object_notify (G_OBJECT (meter), "led-color");
+}
+
+const GimpRGB *
+gimp_meter_get_led_color (GimpMeter *meter)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), NULL);
+
+  return &meter->priv->led_color;
+}
