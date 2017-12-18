@@ -387,6 +387,14 @@ menus_init (Gimp              *gimp,
                                       "sample-points-menu.xml",
                                       NULL,
                                       NULL);
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<Dashboard>",
+                                      "dashboard",
+                                      NULL,
+                                      "/dashboard-popup",
+                                      "dashboard-menu.xml",
+                                       NULL,
+                                       NULL);
 }
 
 void

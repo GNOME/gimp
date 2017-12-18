@@ -16,6 +16,7 @@ menudata_DATA = \
 	channels-menu.xml		\
 	colormap-menu.xml		\
 	cursor-info-menu.xml		\
+	dashboard-menu.xml		\
 	documents-menu.xml		\
 	dynamics-editor-menu.xml	\
 	dynamics-menu.xml		\

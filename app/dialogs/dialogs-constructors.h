@@ -125,6 +125,10 @@ GtkWidget * dialogs_cursor_view_new             (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);
+GtkWidget * dialogs_dashboard_new               (GimpDialogFactory *factory,
+                                                 GimpContext       *context,
+                                                 GimpUIManager     *ui_manager,
+                                                 gint               view_size);
 
 GtkWidget * dialogs_image_list_view_new         (GimpDialogFactory *factory,
                                                  GimpContext       *context,

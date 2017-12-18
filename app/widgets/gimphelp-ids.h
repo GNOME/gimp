@@ -662,6 +662,11 @@
 #define GIMP_HELP_SAMPLE_POINT_DIALOG             "gimp-sample-point-dialog"
 #define GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED      "gimp-sample-point-sample-merged"
 
+#define GIMP_HELP_DASHBOARD_DIALOG                "gimp-dashboard-dialog"
+#define GIMP_HELP_DASHBOARD_UPDATE_INTERVAL       "gimp-dashboard-update-interval"
+#define GIMP_HELP_DASHBOARD_HISTORY_DURATION      "gimp-dashboard-history-duration"
+#define GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING "gimp-dashboard-low-swap-space-warning"
+
 #define GIMP_HELP_DOCK                            "gimp-dock"
 #define GIMP_HELP_DOCK_CLOSE                      "gimp-dock-close"
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"

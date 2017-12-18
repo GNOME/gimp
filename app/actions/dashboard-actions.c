@@ -1,0 +1,193 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "actions-types.h"
+
+#include "widgets/gimpactiongroup.h"
+#include "widgets/gimpdashboard.h"
+#include "widgets/gimphelp-ids.h"
+
+#include "dashboard-actions.h"
+#include "dashboard-commands.h"
+
+#include "gimp-intl.h"
+
+
+static const GimpActionEntry dashboard_actions[] =
+{
+  { "dashboard-popup", GIMP_ICON_DIALOG_DASHBOARD,
+    NC_("dashboard-action", "Dashboard Menu"), NULL, NULL, NULL,
+    GIMP_HELP_DASHBOARD_DIALOG },
+
+  { "dashboard-update-interval", NULL,
+    NC_("dashboard-action", "Update Interval") },
+  { "dashboard-history-duration", NULL,
+    NC_("dashboard-action", "History Duration") }
+};
+
+static const GimpToggleActionEntry dashboard_toggle_actions[] =
+{
+  { "dashboard-low-swap-space-warning", NULL,
+    NC_("dashboard-action", "Low Swap Space Warning"), NULL,
+    N_("Raise the dashboard when the swap size approaches its limit"),
+    G_CALLBACK (dashboard_low_swap_space_warning_cmd_callback),
+    FALSE,
+    GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING }
+};
+
+static const GimpRadioActionEntry dashboard_update_interval_actions[] =
+{
+  { "dashboard-update-interval-0-25-sec", NULL,
+    NC_("dashboard-update-interval", "0.25 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC,
+    GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
+
+  { "dashboard-update-interval-0-5-sec", NULL,
+    NC_("dashboard-update-interval", "0.5 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_UPDATE_INTERVAL_0_5_SEC,
+    GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
+
+  { "dashboard-update-interval-1-sec", NULL,
+    NC_("dashboard-update-interval", "1 Second"), NULL, NULL,
+    GIMP_DASHBOARD_UPDATE_INTERVAL_1_SEC,
+    GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
+
+  { "dashboard-update-interval-2-sec", NULL,
+    NC_("dashboard-update-interval", "2 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_UPDATE_INTERVAL_2_SEC,
+    GIMP_HELP_DASHBOARD_UPDATE_INTERVAL },
+
+  { "dashboard-update-interval-4-sec", NULL,
+    NC_("dashboard-update-interval", "4 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_UPDATE_INTERVAL_4_SEC,
+    GIMP_HELP_DASHBOARD_UPDATE_INTERVAL }
+};
+
+static const GimpRadioActionEntry dashboard_history_duration_actions[] =
+{
+  { "dashboard-history-duration-15-sec", NULL,
+    NC_("dashboard-history-duration", "15 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_HISTORY_DURATION_15_SEC,
+    GIMP_HELP_DASHBOARD_HISTORY_DURATION },
+
+  { "dashboard-history-duration-30-sec", NULL,
+    NC_("dashboard-history-duration", "30 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_HISTORY_DURATION_30_SEC,
+    GIMP_HELP_DASHBOARD_HISTORY_DURATION },
+
+  { "dashboard-history-duration-60-sec", NULL,
+    NC_("dashboard-history-duration", "60 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_HISTORY_DURATION_60_SEC,
+    GIMP_HELP_DASHBOARD_HISTORY_DURATION },
+
+  { "dashboard-history-duration-120-sec", NULL,
+    NC_("dashboard-history-duration", "120 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_HISTORY_DURATION_120_SEC,
+    GIMP_HELP_DASHBOARD_HISTORY_DURATION },
+
+  { "dashboard-history-duration-240-sec", NULL,
+    NC_("dashboard-history-duration", "240 Seconds"), NULL, NULL,
+    GIMP_DASHBOARD_HISTORY_DURATION_240_SEC,
+    GIMP_HELP_DASHBOARD_HISTORY_DURATION }
+};
+
+
+void
+dashboard_actions_setup (GimpActionGroup *group)
+{
+  gimp_action_group_add_actions (group, "dashboard-action",
+                                 dashboard_actions,
+                                 G_N_ELEMENTS (dashboard_actions));
+
+  gimp_action_group_add_toggle_actions (group, "dashboard-action",
+                                        dashboard_toggle_actions,
+                                        G_N_ELEMENTS (dashboard_toggle_actions));
+
+  gimp_action_group_add_radio_actions (group, "dashboard-update-interval",
+                                       dashboard_update_interval_actions,
+                                       G_N_ELEMENTS (dashboard_update_interval_actions),
+                                       NULL,
+                                       0,
+                                       G_CALLBACK (dashboard_update_interval_cmd_callback));
+
+  gimp_action_group_add_radio_actions (group, "dashboard-history-duration",
+                                       dashboard_history_duration_actions,
+                                       G_N_ELEMENTS (dashboard_history_duration_actions),
+                                       NULL,
+                                       0,
+                                       G_CALLBACK (dashboard_history_duration_cmd_callback));
+}
+
+void
+dashboard_actions_update (GimpActionGroup *group,
+                          gpointer         data)
+{
+  GimpDashboard *dashboard = GIMP_DASHBOARD (data);
+
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+
+  switch (dashboard->update_interval)
+    {
+    case GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC:
+      SET_ACTIVE ("dashboard-update-interval-0-25-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_UPDATE_INTERVAL_0_5_SEC:
+      SET_ACTIVE ("dashboard-update-interval-0-5-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_UPDATE_INTERVAL_1_SEC:
+      SET_ACTIVE ("dashboard-update-interval-1-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_UPDATE_INTERVAL_2_SEC:
+      SET_ACTIVE ("dashboard-update-interval-2-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_UPDATE_INTERVAL_4_SEC:
+      SET_ACTIVE ("dashboard-update-interval-4-sec", TRUE);
+      break;
+    }
+
+  switch (dashboard->history_duration)
+    {
+    case GIMP_DASHBOARD_HISTORY_DURATION_15_SEC:
+      SET_ACTIVE ("dashboard-history-duration-15-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_HISTORY_DURATION_30_SEC:
+      SET_ACTIVE ("dashboard-history-duration-30-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_HISTORY_DURATION_60_SEC:
+      SET_ACTIVE ("dashboard-history-duration-60-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_HISTORY_DURATION_120_SEC:
+      SET_ACTIVE ("dashboard-history-duration-120-sec", TRUE);
+      break;
+    case GIMP_DASHBOARD_HISTORY_DURATION_240_SEC:
+      SET_ACTIVE ("dashboard-history-duration-240-sec", TRUE);
+      break;
+    }
+
+  SET_ACTIVE ("dashboard-low-swap-space-warning",
+              dashboard->low_swap_space_warning);
+
+#undef SET_ACTIVE
+}

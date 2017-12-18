@@ -44,6 +44,10 @@ libappactions_a_SOURCES = \
 	cursor-info-actions.h		\
 	cursor-info-commands.c		\
 	cursor-info-commands.h		\
+	dashboard-actions.c		\
+	dashboard-actions.h		\
+	dashboard-commands.c		\
+	dashboard-commands.h		\
 	data-commands.c			\
 	data-commands.h			\
 	data-editor-commands.c		\

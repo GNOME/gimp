@@ -233,6 +233,12 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     NC_("dialogs-action", "Error Co_nsole"), NULL,
     NC_("dialogs-action", "Open the error console"),
     "gimp-error-console",
+    GIMP_HELP_ERRORS_DIALOG },
+
+  { "dialogs-dashboard", GIMP_ICON_DIALOG_DASHBOARD,
+    NC_("dialogs-action", "_Dashboard"), NULL,
+    NC_("dialogs-action", "Open the dashboard"),
+    "gimp-dashboard",
     GIMP_HELP_ERRORS_DIALOG }
 };
 

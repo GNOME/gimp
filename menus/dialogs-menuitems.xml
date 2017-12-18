@@ -31,4 +31,5 @@
   <menuitem action="dialogs-document-history" />
   <menuitem action="dialogs-templates" />
   <menuitem action="dialogs-error-console" />
+  <menuitem action="dialogs-dashboard" />
 </menuitems>

@@ -120,6 +120,8 @@ libappwidgets_a_sources = \
 	gimpcursor.h			\
 	gimpcurveview.c			\
 	gimpcurveview.h			\
+	gimpdashboard.c			\
+	gimpdashboard.h			\
 	gimpdasheditor.c		\
 	gimpdasheditor.h		\
 	gimpdataeditor.c		\

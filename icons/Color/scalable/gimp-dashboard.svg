@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333332 4.2333335"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="gimp-dashboard.svg">
+  <title
+     id="title4405">GIMP Dashboard</title>
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1484">
+      <stop
+         style="stop-color:#119911;stop-opacity:1"
+         offset="0"
+         id="stop1480" />
+      <stop
+         id="stop1488"
+         offset="0.50094193"
+         style="stop-color:#eaea38;stop-opacity:1" />
+      <stop
+         style="stop-color:#bc1b1b;stop-opacity:1"
+         offset="1"
+         id="stop1482" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1484"
+       id="linearGradient1486"
+       x1="0.29556136"
+       y1="293.64385"
+       x2="3.9377716"
+       y2="293.64385"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="38.5625"
+     inkscape:cx="5.0696921"
+     inkscape:cy="8"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Dashboard</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Ell</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-292.76665)">
+    <g
+       id="gimp-dashboard">
+      <g
+         id="g2910"
+         transform="translate(0,0.26636769)">
+        <path
+           style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.39687499;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+           d="m 2.1171834,293.03123 c -0.7036231,0 -1.3718978,0.31263 -1.82417803,0.85163 l 0.60719808,0.50953 c 0.30179595,-0.35967 0.74746885,-0.56793 1.21697995,-0.56793 0.1161413,0 0.2308877,0.0125 0.342098,0.0372 -0.2890398,0.45136 -0.6480014,0.88459 -0.9027816,1.3478 -0.112182,0.30823 0.047317,0.65159 0.3555339,0.76378 0.3082197,0.11223 0.6515993,-0.0494 0.7637777,-0.3576 0.016812,-0.0462 0.028085,-0.0937 0.033073,-0.14263 v -0.002 -0.008 l 0.00206,-0.0103 0.1400432,-1.44539 c 0.1814891,0.0953 0.3460284,0.22401 0.4811075,0.38499 l 0.6092684,-0.50953 c -0.3097918,-0.30804 -0.6683875,-0.57637 -1.0097449,-0.709 -0.2768298,-0.0596 -0.5608524,-0.13853 -0.8144352,-0.14255 z m -0.0062,2.11667 c 0.032755,-6.6e-4 0.065347,0.005 0.096118,0.016 0.1372458,0.05 0.2080275,0.20172 0.1581299,0.33899 -0.04998,0.13725 -0.2017216,0.20803 -0.3389974,0.15813 -0.1372458,-0.05 -0.2080276,-0.20172 -0.15813,-0.33899 0.037284,-0.1026 0.1337466,-0.17176 0.2428794,-0.17415 z"
+           id="path817-3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccscccccccccccccccccccc" />
+        <g
+           id="g2902">
+          <g
+             id="g2896">
+            <path
+               style="opacity:1;fill:#66dd11;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+               d="m 2.1171834,293.03123 c -0.7036231,0 -1.37189781,0.31263 -1.82417802,0.85163 l 0.60719809,0.50953 c 0.30179593,-0.35967 0.74746893,-0.56793 1.21697993,-0.56793 0.1161414,0 0.2308878,0.0125 0.342098,0.0372 l 0.3260784,-0.47491 0.1441773,-0.21032 c -0.2577537,-0.0938 -0.5319466,-0.1452 -0.8123537,-0.1452 z"
+               id="path2875"
+               inkscape:connector-curvature="0" />
+            <path
+               style="opacity:1;fill:#dd3322;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+               d="m 2.9310971,293.17744 -0.080098,0.82992 c 0.1814891,0.0953 0.3460284,0.22401 0.4811075,0.38499 l 0.6092548,-0.50949 C 3.669724,293.55914 3.3194255,293.31918 2.9310873,293.17747 Z"
+               id="path2871"
+               inkscape:connector-curvature="0" />
+          </g>
+          <path
+             id="path817"
+             d="m 2.9316039,293.17386 -0.1462442,0.21291 -1.1601359,1.6893 v 0.002 c -0.00132,0.002 -0.00283,0.004 -0.00413,0.006 l -0.042892,0.0625 0.00982,0.004 c -0.0099,0.0198 -0.023863,0.0381 -0.031523,0.0589 -0.112182,0.30823 0.047317,0.65159 0.3555339,0.76378 0.3082198,0.11223 0.6515992,-0.0494 0.7637776,-0.3576 0.016812,-0.0462 0.028085,-0.0937 0.033073,-0.14263 v -0.002 -0.008 l 0.00206,-0.0103 z m -0.8206217,1.97404 a 0.26458332,0.26458332 0 0 1 0.096118,0.016 0.26458332,0.26458332 0 0 1 0.1581299,0.339 0.26458332,0.26458332 0 0 1 -0.3389974,0.15813 0.26458332,0.26458332 0 0 1 -0.1581299,-0.339 0.26458332,0.26458332 0 0 1 0.2428792,-0.17415 z"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+             inkscape:connector-curvature="0" />
+        </g>
+      </g>
+      <rect
+         y="292.76666"
+         x="0"
+         height="4.2333331"
+         width="4.2333331"
+         id="rect2978"
+         style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

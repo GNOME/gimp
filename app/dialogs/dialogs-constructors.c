@@ -35,6 +35,7 @@
 #include "widgets/gimpchanneltreeview.h"
 #include "widgets/gimpcoloreditor.h"
 #include "widgets/gimpcolormapeditor.h"
+#include "widgets/gimpdashboard.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockwindow.h"
@@ -342,6 +343,16 @@ dialogs_cursor_view_new (GimpDialogFactory *factory,
                          gint               view_size)
 {
   return gimp_cursor_view_new (gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_dashboard_new (GimpDialogFactory *factory,
+                       GimpContext       *context,
+                       GimpUIManager     *ui_manager,
+                       gint               view_size)
+{
+  return gimp_dashboard_new (context->gimp,
+                             gimp_dialog_factory_get_menu_factory (factory));
 }
 
 

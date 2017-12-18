@@ -57,6 +57,7 @@ typedef struct _GimpDeviceStatus             GimpDeviceStatus;
 typedef struct _GimpEditor                   GimpEditor;
 typedef struct _GimpErrorConsole             GimpErrorConsole;
 typedef struct _GimpToolOptionsEditor        GimpToolOptionsEditor;
+typedef struct _GimpDashboard                GimpDashboard;
 
 
 /*  GimpDataEditor widgets  */

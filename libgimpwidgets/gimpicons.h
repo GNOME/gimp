@@ -146,6 +146,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_CURVE_SMOOTH              "gimp-curve-smooth"
 
 #define GIMP_ICON_DIALOG_CHANNELS           "gimp-channels"
+#define GIMP_ICON_DIALOG_DASHBOARD          "gimp-dashboard"
 #define GIMP_ICON_DIALOG_DEVICE_STATUS      "gimp-device-status"
 #define GIMP_ICON_DIALOG_ERROR              "gimp-error" /* use FDO */
 #define GIMP_ICON_DIALOG_IMAGES             "gimp-images"

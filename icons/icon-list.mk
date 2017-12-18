@@ -97,6 +97,7 @@ scalable_images = \
 	scalable/gimp-cursor.svg				\
 	scalable/gimp-curve-free.svg				\
 	scalable/gimp-curve-smooth.svg				\
+	scalable/gimp-dashboard.svg				\
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-device-status.svg				\
 	scalable/gimp-display.svg					\
@@ -584,6 +585,7 @@ icons16_images = \
 	16/gimp-cursor.png					\
 	16/gimp-curve-free.png					\
 	16/gimp-curve-smooth.png				\
+	16/gimp-dashboard.png					\
 	16/gimp-device-status.png				\
 	16/gimp-display.png					\
 	16/gimp-display-filter-clip-warning.png			\
@@ -853,6 +855,7 @@ icons24_images = \
 	24/gimp-controller-wheel.png				\
 	24/gimp-controller.png					\
 	24/gimp-cursor.png					\
+	24/gimp-dashboard.png					\
 	24/gimp-device-status.png				\
 	24/gimp-display.png					\
 	24/gimp-display-filter-clip-warning.png			\

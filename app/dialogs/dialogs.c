@@ -320,6 +320,10 @@ static const GimpDialogFactoryEntry entries[] =
             N_("Pointer"), N_("Pointer Information"), GIMP_ICON_CURSOR,
             GIMP_HELP_POINTER_INFO_DIALOG,
             dialogs_cursor_view_new, 0, TRUE),
+  DOCKABLE ("gimp-dashboard",
+            N_("Dashboard"), N_("Dashboard"), GIMP_ICON_DIALOG_DASHBOARD,
+            GIMP_HELP_ERRORS_DIALOG,
+            dialogs_dashboard_new, 0, TRUE),
 
   /*  list & grid views  */
   LISTGRID (image, image,

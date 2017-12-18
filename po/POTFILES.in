@@ -24,6 +24,7 @@ app/actions/colormap-commands.c
 app/actions/context-actions.c
 app/actions/context-commands.c
 app/actions/cursor-info-actions.c
+app/actions/dashboard-actions.c
 app/actions/data-commands.c
 app/actions/debug-actions.c
 app/actions/dialogs-actions.c
@@ -512,6 +513,7 @@ app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
+app/widgets/gimpdashboard.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdeviceeditor.c
 app/widgets/gimpdeviceinfo.c

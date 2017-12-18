@@ -57,6 +57,7 @@
 #include "colormap-actions.h"
 #include "context-actions.h"
 #include "cursor-info-actions.h"
+#include "dashboard-actions.h"
 #include "debug-actions.h"
 #include "dialogs-actions.h"
 #include "dock-actions.h"
@@ -128,6 +129,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "cursor-info", N_("Pointer Information"), NULL,
     cursor_info_actions_setup,
     cursor_info_actions_update },
+  { "dashboard", N_("Dashboard"), GIMP_ICON_DIALOG_DASHBOARD,
+    dashboard_actions_setup,
+    dashboard_actions_update },
   { "debug", N_("Debug"), NULL,
     debug_actions_setup,
     debug_actions_update },
