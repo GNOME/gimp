@@ -129,7 +129,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
    * frequently.  unfortunately, this means that the dashboard's background
    * color may be a bit off for some themes.
    */
-  box = dashboard->box = gtk_event_box_new ();
+  box = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (dashboard), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 

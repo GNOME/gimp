@@ -41,8 +41,6 @@ struct _GimpDashboard
 
   Gimp                         *gimp;
 
-  GtkWidget                    *box;
-
   GtkWidget                    *cache_meter;
   GtkWidget                    *cache_occupied_label;
   GtkWidget                    *cache_limit_label;
