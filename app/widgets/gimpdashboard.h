@@ -45,14 +45,11 @@ struct _GimpDashboard
 
   GtkWidget                    *cache_meter;
   GtkWidget                    *cache_occupied_label;
-  GtkWidget                    *cache_occupied_pct_label;
   GtkWidget                    *cache_limit_label;
 
   GtkWidget                    *swap_meter;
   GtkWidget                    *swap_occupied_label;
-  GtkWidget                    *swap_occupied_pct_label;
   GtkWidget                    *swap_size_label;
-  GtkWidget                    *swap_size_pct_label;
   GtkWidget                    *swap_limit_label;
 
   gint                          timeout_id;
