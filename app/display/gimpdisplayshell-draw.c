@@ -166,11 +166,13 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
       gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
 #endif
 
-  scale = MIN (scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
+  scale  = MIN (scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
+  scale *= MAX (shell->scale_x, shell->scale_y);
 
-  scale        *= MAX (shell->scale_x, shell->scale_y);
-  chunk_width  *= shell->scale_x / scale;
-  chunk_height *= shell->scale_y / scale;
+  if (scale != shell->scale_x)
+    chunk_width  = (chunk_width  - 1.0) * (shell->scale_x / scale);
+  if (scale != shell->scale_y)
+    chunk_height = (chunk_height - 1.0) * (shell->scale_y / scale);
 
   if (shell->rotate_untransform)
     {
@@ -198,15 +200,16 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
           gint    ix, iy;
           gint    iw, ih;
 
-          /* map chunk from screen space to image space */
-          gimp_display_shell_untransform_bounds (shell,
-                                                 x1,   y1,   x2,   y2,
-                                                 &ix1, &iy1, &ix2, &iy2);
+          /* map chunk from screen space to scaled image space */
+          gimp_display_shell_untransform_bounds_with_scale (
+            shell, scale,
+            x1,   y1,   x2,   y2,
+            &ix1, &iy1, &ix2, &iy2);
 
-          ix = floor (ix1 * scale);
-          iy = floor (iy1 * scale);
-          iw = ceil  (ix2 * scale) - ix;
-          ih = ceil  (iy2 * scale) - iy;
+          ix = floor (ix1);
+          iy = floor (iy1);
+          iw = ceil  (ix2) - ix;
+          ih = ceil  (iy2) - iy;
 
           cairo_save (cr);
 
@@ -214,7 +217,7 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
           cairo_rectangle (cr, x1, y1, x2 - x1, y2 - y1);
           cairo_clip (cr);
 
-          /* transform to image space, and apply uneven scaling */
+          /* transform to scaled image space, and apply uneven scaling */
           if (shell->rotate_transform)
             cairo_transform (cr, shell->rotate_transform);
           cairo_translate (cr, -shell->offset_x, -shell->offset_y);

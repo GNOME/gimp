@@ -863,6 +863,92 @@ gimp_display_shell_untransform_bounds (GimpDisplayShell *shell,
     }
 }
 
+/* transforms a bounding box from image-space, uniformly scaled by a factor of
+ * 'scale', to display-space.  this is equivalent to, but more accurate than,
+ * dividing the input by 'scale', and using
+ * gimp_display_shell_transform_bounds(), in particular, in that if 'scale'
+ * equals 'shell->scale_x' or 'shell->scale_y', there is no loss in accuracy
+ * in the corresponding dimension due to scaling (although there might be loss
+ * of accuracy due to rotation or translation.)
+ */
+void
+gimp_display_shell_transform_bounds_with_scale (GimpDisplayShell *shell,
+                                                gdouble           scale,
+                                                gdouble           x1,
+                                                gdouble           y1,
+                                                gdouble           x2,
+                                                gdouble           y2,
+                                                gdouble          *nx1,
+                                                gdouble          *ny1,
+                                                gdouble          *nx2,
+                                                gdouble          *ny2)
+{
+  gdouble factor_x;
+  gdouble factor_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (scale > 0.0);
+  g_return_if_fail (nx1 != NULL);
+  g_return_if_fail (ny1 != NULL);
+  g_return_if_fail (nx2 != NULL);
+  g_return_if_fail (ny2 != NULL);
+
+  factor_x = shell->scale_x / scale;
+  factor_y = shell->scale_y / scale;
+
+  x1 = x1 * factor_x - shell->offset_x;
+  y1 = y1 * factor_y - shell->offset_y;
+  x2 = x2 * factor_x - shell->offset_x;
+  y2 = y2 * factor_y - shell->offset_y;
+
+  gimp_display_shell_rotate_bounds (shell,
+                                    x1,  y1,  x2,  y2,
+                                    nx1, ny1, nx2, ny2);
+}
+
+/* transforms a bounding box from display-space to image-space, uniformly
+ * scaled by a factor of 'scale'.  this is equivalent to, but more accurate
+ * than, using gimp_display_shell_untransform_bounds(), and multiplying the
+ * output by 'scale', in particular, in that if 'scale' equals 'shell->scale_x'
+ * or 'shell->scale_y', there is no loss in accuracy in the corresponding
+ * dimension due to scaling (although there might be loss of accuracy due to
+ * rotation or translation.)
+ */
+void
+gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell *shell,
+                                                  gdouble           scale,
+                                                  gdouble           x1,
+                                                  gdouble           y1,
+                                                  gdouble           x2,
+                                                  gdouble           y2,
+                                                  gdouble          *nx1,
+                                                  gdouble          *ny1,
+                                                  gdouble          *nx2,
+                                                  gdouble          *ny2)
+{
+  gdouble factor_x;
+  gdouble factor_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (scale > 0.0);
+  g_return_if_fail (nx1 != NULL);
+  g_return_if_fail (ny1 != NULL);
+  g_return_if_fail (nx2 != NULL);
+  g_return_if_fail (ny2 != NULL);
+
+  factor_x = scale / shell->scale_x;
+  factor_y = scale / shell->scale_y;
+
+  gimp_display_shell_unrotate_bounds (shell,
+                                      x1,  y1,  x2,  y2,
+                                      nx1, ny1, nx2, ny2);
+
+  *nx1 = (*nx1 + shell->offset_x) * factor_x;
+  *ny1 = (*ny1 + shell->offset_y) * factor_y;
+  *nx2 = (*nx2 + shell->offset_x) * factor_x;
+  *ny2 = (*ny2 + shell->offset_y) * factor_y;
+}
+
 /**
  * gimp_display_shell_untransform_viewport:
  * @shell:  a #GimpDisplayShell
