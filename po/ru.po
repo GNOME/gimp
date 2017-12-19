@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 21:54+0300\n"
-"PO-Revision-Date: 2017-12-20 00:54+0300\n"
+"POT-Creation-Date: 2017-12-20 01:00+0300\n"
+"PO-Revision-Date: 2017-12-20 01:04+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -2376,57 +2376,58 @@ msgid "Low Swap Space Warning"
 msgstr "Предупреждать о нехватке ресурсов"
 
 #: ../app/actions/dashboard-actions.c:53
+msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
 "Открыть панель монитора ресурсов, когда выделенное для подкачки пространство "
 "начинает заканчиваться"
 
-#: ../app/actions/dashboard-actions.c:62
+#: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
 msgstr "0,25 секунды"
 
-#: ../app/actions/dashboard-actions.c:67
+#: ../app/actions/dashboard-actions.c:68
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
 msgstr "0,5 секунды"
 
-#: ../app/actions/dashboard-actions.c:72
+#: ../app/actions/dashboard-actions.c:73
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
 msgstr "1 секунда"
 
-#: ../app/actions/dashboard-actions.c:77
+#: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
 msgstr "2 секунды"
 
-#: ../app/actions/dashboard-actions.c:82
+#: ../app/actions/dashboard-actions.c:83
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
 msgstr "4 секунды"
 
-#: ../app/actions/dashboard-actions.c:90
+#: ../app/actions/dashboard-actions.c:91
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
 msgstr "15 секунд"
 
-#: ../app/actions/dashboard-actions.c:95
+#: ../app/actions/dashboard-actions.c:96
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
 msgstr "30 секунд"
 
-#: ../app/actions/dashboard-actions.c:100
+#: ../app/actions/dashboard-actions.c:101
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
 msgstr "60 секунд"
 
-#: ../app/actions/dashboard-actions.c:105
+#: ../app/actions/dashboard-actions.c:106
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
 msgstr "120 секунд"
 
-#: ../app/actions/dashboard-actions.c:110
+#: ../app/actions/dashboard-actions.c:111
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 секунд"
@@ -6389,7 +6390,6 @@ msgid "Layer Blend Space: RGB (linear)"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:353 ../app/actions/layers-actions.c:374
-#, fuzzy
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
 msgstr "RGB (нелинейно)"
