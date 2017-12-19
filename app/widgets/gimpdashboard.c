@@ -48,12 +48,13 @@
 #define DEFAULT_HISTORY_DURATION       GIMP_DASHBOARD_HISTORY_DURATION_60_SEC
 #define DEFAULT_LOW_SWAP_SPACE_WARNING TRUE
 
-#define LOW_SWAP_SPACE_WARNING_ON      /* swap occupied is above */ 0.90 /* times swap limit */
-#define LOW_SWAP_SPACE_WARNING_OFF     /* swap occupied is below */ 0.85 /* times swap limit */
+#define LOW_SWAP_SPACE_WARNING_ON      /* swap occupied is above */ 0.90 /* of swap limit */
+#define LOW_SWAP_SPACE_WARNING_OFF     /* swap occupied is below */ 0.85 /* of swap limit */
 
 #define CACHE_OCCUPIED_COLOR           {0.3, 0.6, 0.3, 1.0}
 #define SWAP_OCCUPIED_COLOR            {0.8, 0.2, 0.2, 1.0}
 #define SWAP_SIZE_COLOR                {0.8, 0.6, 0.4, 1.0}
+#define SWAP_LED_COLOR                 {0.8, 0.4, 0.4, 1.0}
 
 
 static void       gimp_dashboard_docked_iface_init (GimpDockedInterface *iface);
@@ -241,7 +242,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   gimp_meter_set_history_duration (GIMP_METER (meter),
                                    dashboard->history_duration / 1000.0);
   gimp_meter_set_led_color (GIMP_METER (meter),
-                            &(GimpRGB) {0.8, 0.4, 0.4, 1.0});
+                            &(GimpRGB) SWAP_LED_COLOR);
   gtk_table_attach (GTK_TABLE (table), meter, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, 0, 1, 0);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2 * content_spacing);
@@ -534,6 +535,8 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
         screen, monitor,
         "gimp-dashboard");
 
+      gimp_dashboard_update (dashboard);
+
       g_mutex_lock (&dashboard->mutex);
 
       dashboard->low_swap_space_idle_id = 0;
@@ -592,30 +595,33 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
               {
                 guint64 swap_limit = gimp_dashboard_get_swap_limit (swap_size);
 
-                if (! seen_low_swap_space &&
-                    swap_occupied >= LOW_SWAP_SPACE_WARNING_ON * swap_limit)
+                if (swap_limit)
                   {
-                    if (! dashboard->low_swap_space_idle_id)
+                    if (! seen_low_swap_space &&
+                        swap_occupied >= LOW_SWAP_SPACE_WARNING_ON * swap_limit)
                       {
-                        dashboard->low_swap_space_idle_id =
-                          g_idle_add_full (G_PRIORITY_HIGH,
-                                           (GSourceFunc) gimp_dashboard_low_swap_space,
-                                           dashboard, NULL);
-                      }
+                        if (! dashboard->low_swap_space_idle_id)
+                          {
+                            dashboard->low_swap_space_idle_id =
+                              g_idle_add_full (G_PRIORITY_HIGH,
+                                               (GSourceFunc) gimp_dashboard_low_swap_space,
+                                               dashboard, NULL);
+                          }
 
-                    seen_low_swap_space = TRUE;
-                  }
-                else if (seen_low_swap_space &&
-                         swap_occupied <= LOW_SWAP_SPACE_WARNING_OFF * swap_limit)
-                  {
-                    if (dashboard->low_swap_space_idle_id)
+                        seen_low_swap_space = TRUE;
+                      }
+                    else if (seen_low_swap_space &&
+                             swap_occupied <= LOW_SWAP_SPACE_WARNING_OFF * swap_limit)
                       {
-                        g_source_remove (dashboard->low_swap_space_idle_id);
+                        if (dashboard->low_swap_space_idle_id)
+                          {
+                            g_source_remove (dashboard->low_swap_space_idle_id);
 
-                        dashboard->low_swap_space_idle_id = 0;
+                            dashboard->low_swap_space_idle_id = 0;
+                          }
+
+                        seen_low_swap_space = FALSE;
                       }
-
-                    seen_low_swap_space = FALSE;
                   }
               }
           }
@@ -623,7 +629,8 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
           end_time = g_get_monotonic_time () +
                      update_interval * G_TIME_SPAN_SECOND / 1000;
         }
-      else if (dashboard->update_interval != update_interval)
+
+      if (dashboard->update_interval != update_interval)
         {
           update_interval = dashboard->update_interval;
           end_time        = g_get_monotonic_time () +
