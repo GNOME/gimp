@@ -50,7 +50,8 @@ static const GimpToggleActionEntry dashboard_toggle_actions[] =
 {
   { "dashboard-low-swap-space-warning", NULL,
     NC_("dashboard-action", "Low Swap Space Warning"), NULL,
-    N_("Raise the dashboard when the swap size approaches its limit"),
+    NC_("dashboard-action", "Raise the dashboard when "
+                            "the swap size approaches its limit"),
     G_CALLBACK (dashboard_low_swap_space_warning_cmd_callback),
     FALSE,
     GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING }
