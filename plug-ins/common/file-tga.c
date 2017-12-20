@@ -568,7 +568,8 @@ load_image (const gchar  *filename,
              info.bpp != 24 && info.bpp != 32)      ||
             ((info.bpp == 15 || info.bpp == 24) &&
              info.alphaBits != 0)                   ||
-            (info.bpp == 16 && info.alphaBits != 1) ||
+            (info.bpp == 16 && info.alphaBits != 1 &&
+             info.alphaBits != 0)                   ||
             (info.bpp == 32 && info.alphaBits != 8))
           {
             g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u, alpha = %u)",
