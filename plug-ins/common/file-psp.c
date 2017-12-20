@@ -1792,6 +1792,15 @@ load_image (const gchar  *filename,
     {
       block_start = ftell (f);
 
+      if (block_start + block_total_len > st.st_size)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Could not open '%s' for reading: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       _("invalid block size"));
+          goto error;
+        }
+
       if (id == PSP_IMAGE_BLOCK)
         {
           if (block_number != 0)
