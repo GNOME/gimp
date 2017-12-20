@@ -413,7 +413,7 @@ load_image (const gchar  *filename,
 
   if (debug_prints && darktable_stdout && *darktable_stdout)
     printf ("%s\n", darktable_stdout);
-  g_free(darktable_stdout);
+  g_free (darktable_stdout);
 
   g_unlink (filename_out);
   g_free (lua_cmd);

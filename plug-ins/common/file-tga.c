@@ -955,7 +955,7 @@ read_line (FILE         *fp,
     }
   else if (info->imageType == TGA_TYPE_MAPPED)
     {
-      g_assert(bpp == 1);
+      g_assert (bpp == 1);
 
       apply_index (row, buf, info->width, info->colorMapIndex);
     }
