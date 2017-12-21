@@ -1751,13 +1751,15 @@ load_image (const gchar  *filename,
       || fread (&psp_ver_major, 2, 1, f) < 1
       || fread (&psp_ver_minor, 2, 1, f) < 1)
     {
-      g_message ("Error reading file header");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading file header."));
       goto error;
     }
 
   if (memcmp (buf, "Paint Shop Pro Image File\n\032\0\0\0\0\0", 32) != 0)
     {
-      g_message ("Incorrect file signature");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Incorrect file signature."));
       goto error;
     }
 
@@ -1769,22 +1771,14 @@ load_image (const gchar  *filename,
    * Earlier versions probably don't have all the fields I expect
    * so don't accept those.
    */
-  if (psp_ver_major < 3)
+  if (psp_ver_major != 3 &&
+      psp_ver_major != 4 &&
+      psp_ver_major != 5 &&
+      psp_ver_major != 6)
     {
-      g_message ("Unsupported PSP file format version "
-                 "%d.%d, only knows 3.0 (and later?)",
-                 psp_ver_major, psp_ver_minor);
-      goto error;
-    }
-  else if ((psp_ver_major == 3)
-        || (psp_ver_major == 4)
-        || (psp_ver_major == 5)
-        || (psp_ver_major == 6))
-    ; /* OK */
-  else
-    {
-      g_message ("Unsupported PSP file format version %d.%d",
-                 psp_ver_major, psp_ver_minor);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported PSP file format version %d.%d."),
+                   psp_ver_major, psp_ver_minor);
       goto error;
     }
 
@@ -1811,7 +1805,8 @@ load_image (const gchar  *filename,
         {
           if (block_number != 0)
             {
-              g_message ("Duplicate General Image Attributes block");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Duplicate General Image Attributes block."));
               goto error;
             }
           if (read_general_image_attribute_block (f, block_init_len,
@@ -1840,7 +1835,8 @@ load_image (const gchar  *filename,
         {
           if (block_number == 0)
             {
-              g_message ("Missing General Image Attributes block");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Missing General Image Attributes block."));
               goto error;
             }
 
@@ -1928,7 +1924,8 @@ save_image (const gchar  *filename,
             gint32        drawable_ID,
             GError      **error)
 {
-  g_message ("Exporting not implemented yet");
+  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+               _("Exporting not implemented yet."));
 
   return FALSE;
 }
