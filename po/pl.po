@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 23:52+0100\n"
-"PO-Revision-Date: 2017-12-11 23:53+0100\n"
+"POT-Creation-Date: 2017-12-21 22:01+0100\n"
+"PO-Revision-Date: 2017-12-21 22:02+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -325,219 +325,223 @@ msgstr "Używa %s w wersji %s (skompilowano z wersją %s)"
 msgid "%s version %s"
 msgstr "%s w wersji %s"
 
-#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:414
+#: ../app/actions/actions.c:111 ../app/dialogs/dialogs.c:418
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:113 ../app/core/gimp-data-factories.c:317
-#: ../app/dialogs/dialogs.c:329 ../app/dialogs/preferences-dialog.c:2975
+#: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:317
+#: ../app/dialogs/dialogs.c:333 ../app/dialogs/preferences-dialog.c:2975
 msgid "Brushes"
 msgstr "Pędzle"
 
-#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:350
+#: ../app/actions/actions.c:117 ../app/dialogs/dialogs.c:354
 msgid "Buffers"
 msgstr "Bufory"
 
-#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:368
+#: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:372
 #: ../app/widgets/gimppickablepopup.c:249
 msgid "Channels"
 msgstr "Kanały"
 
-#: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:174
-#: ../app/dialogs/dialogs.c:376
+#: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:174
+#: ../app/dialogs/dialogs.c:380
 msgid "Colormap"
 msgstr "Paleta kolorów"
 
-#: ../app/actions/actions.c:125
+#: ../app/actions/actions.c:126
 msgid "Context"
 msgstr "Kontekst"
 
-#: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:320
+#: ../app/actions/actions.c:129 ../app/dialogs/dialogs.c:320
 msgid "Pointer Information"
 msgstr "Informacje o kursorze"
 
-#: ../app/actions/actions.c:131
+#: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:324
+msgid "Dashboard"
+msgstr "Panel wydajności"
+
+#: ../app/actions/actions.c:135
 msgid "Debug"
 msgstr "Debugowanie"
 
-#: ../app/actions/actions.c:134
+#: ../app/actions/actions.c:138
 msgid "Dialogs"
 msgstr "Okna dialogowe"
 
-#: ../app/actions/actions.c:137
+#: ../app/actions/actions.c:141
 msgid "Dock"
 msgstr "Dok"
 
-#: ../app/actions/actions.c:140
+#: ../app/actions/actions.c:144
 msgid "Dockable"
 msgstr "Element dokowalny"
 
 #. Document History
-#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:356
+#: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:360
 #: ../app/dialogs/preferences-dialog.c:1196
 msgid "Document History"
 msgstr "Historia dokumentów"
 
-#: ../app/actions/actions.c:146
+#: ../app/actions/actions.c:150
 msgid "Drawable"
 msgstr "Obszar rysowania"
 
-#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:332
+#: ../app/actions/actions.c:153 ../app/dialogs/dialogs.c:336
 msgid "Paint Dynamics"
 msgstr "Dynamika pędzla"
 
-#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:418
+#: ../app/actions/actions.c:156 ../app/dialogs/dialogs.c:422
 #: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Edytor dynamiki pędzla"
 
-#: ../app/actions/actions.c:155
+#: ../app/actions/actions.c:159
 msgid "Edit"
 msgstr "Edycja"
 
-#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:316
+#: ../app/actions/actions.c:162 ../app/dialogs/dialogs.c:316
 msgid "Error Console"
 msgstr "Konsola błędów"
 
-#: ../app/actions/actions.c:161
+#: ../app/actions/actions.c:165
 msgid "File"
 msgstr "Plik"
 
-#: ../app/actions/actions.c:164
+#: ../app/actions/actions.c:168
 msgid "Filters"
 msgstr "Filtry"
 
-#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:347
+#: ../app/actions/actions.c:171 ../app/dialogs/dialogs.c:351
 #: ../app/dialogs/preferences-dialog.c:2995
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:422
+#: ../app/actions/actions.c:174 ../app/dialogs/dialogs.c:426
 #: ../app/widgets/gimpgradienteditor.c:271
 msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:173 ../app/core/gimp-data-factories.c:342
-#: ../app/dialogs/dialogs.c:341 ../app/dialogs/preferences-dialog.c:2991
+#: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:342
+#: ../app/dialogs/dialogs.c:345 ../app/dialogs/preferences-dialog.c:2991
 msgid "Gradients"
 msgstr "Gradienty"
 
-#: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:353
-#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:2999
+#: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:353
+#: ../app/dialogs/dialogs.c:357 ../app/dialogs/preferences-dialog.c:2999
 msgid "Tool Presets"
 msgstr "Ustawienia narzędzia"
 
-#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:430
+#: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:434
 #: ../app/widgets/gimptoolpreseteditor.c:94
 msgid "Tool Preset Editor"
 msgstr "Edytor ustawień narzędzia"
 
-#: ../app/actions/actions.c:182
+#: ../app/actions/actions.c:186
 msgid "Help"
 msgstr "Pomoc"
 
-#: ../app/actions/actions.c:185
+#: ../app/actions/actions.c:189
 msgid "Image"
 msgstr "Obraz"
 
-#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:326
+#: ../app/actions/actions.c:192 ../app/dialogs/dialogs.c:330
 #: ../app/widgets/gimppickablepopup.c:179
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:364
+#: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:368
 #: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:230
 msgid "Layers"
 msgstr "Warstwy"
 
 #. initialize the list of mypaint brushes
-#: ../app/actions/actions.c:194 ../app/core/gimp-data-factories.c:327
-#: ../app/dialogs/dialogs.c:335 ../app/dialogs/preferences-dialog.c:3003
+#: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:327
+#: ../app/dialogs/dialogs.c:339 ../app/dialogs/preferences-dialog.c:3003
 msgid "MyPaint Brushes"
 msgstr "Pędzle programu MyPaint"
 
-#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:426
+#: ../app/actions/actions.c:201 ../app/dialogs/dialogs.c:430
 #: ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:337
-#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:2987
+#: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:337
+#: ../app/dialogs/dialogs.c:348 ../app/dialogs/preferences-dialog.c:2987
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:332
-#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:2983
+#: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:332
+#: ../app/dialogs/dialogs.c:342 ../app/dialogs/preferences-dialog.c:2983
 msgid "Patterns"
 msgstr "Desenie"
 
-#: ../app/actions/actions.c:206 ../app/dialogs/preferences-dialog.c:3007
+#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3007
 msgid "Plug-ins"
 msgstr "Wtyczki"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:408
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:408
 #: ../app/dialogs/preferences-dialog.c:1597
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:396
+#: ../app/actions/actions.c:216 ../app/dialogs/dialogs.c:400
 msgid "Sample Points"
 msgstr "Punkty wzorcowe"
 
-#: ../app/actions/actions.c:215
+#: ../app/actions/actions.c:219
 msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:218 ../app/core/gimp.c:795
-#: ../app/dialogs/dialogs.c:359
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:795
+#: ../app/dialogs/dialogs.c:363
 msgid "Templates"
 msgstr "Szablony"
 
-#: ../app/actions/actions.c:221
+#: ../app/actions/actions.c:225
 msgid "Text Tool"
 msgstr "Narzędzie tekstowe"
 
-#: ../app/actions/actions.c:224
+#: ../app/actions/actions.c:228
 msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
-#: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:308
+#: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:308
 #: ../app/gui/gui.c:499
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
-#: ../app/actions/actions.c:230 ../app/widgets/gimptoolpalette.c:329
+#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:329
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:372
+#: ../app/actions/actions.c:237 ../app/dialogs/dialogs.c:376
 #: ../app/tools/gimpvectortool.c:163
 msgid "Paths"
 msgstr "Ścieżki"
 
-#: ../app/actions/actions.c:236
+#: ../app/actions/actions.c:240
 msgid "View"
 msgstr "Widok"
 
-#: ../app/actions/actions.c:239
+#: ../app/actions/actions.c:243
 msgid "Windows"
 msgstr "Okna"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:589
+#: ../app/actions/actions.c:593
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:615
+#: ../app/actions/actions.c:619
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -2352,6 +2356,83 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 
+#: ../app/actions/dashboard-actions.c:40
+msgctxt "dashboard-action"
+msgid "Dashboard Menu"
+msgstr "Menu panelu wydajności"
+
+#: ../app/actions/dashboard-actions.c:44
+msgctxt "dashboard-action"
+msgid "Update Interval"
+msgstr "Czas między aktualizacjami"
+
+#: ../app/actions/dashboard-actions.c:46
+msgctxt "dashboard-action"
+msgid "History Duration"
+msgstr "Czas trwania historii"
+
+#: ../app/actions/dashboard-actions.c:52
+msgctxt "dashboard-action"
+msgid "Low Swap Space Warning"
+msgstr "Ostrzeżenie o małej ilości miejsca w pamięci wymiany"
+
+#: ../app/actions/dashboard-actions.c:53
+msgctxt "dashboard-action"
+msgid "Raise the dashboard when the swap size approaches its limit"
+msgstr ""
+"Podnosi panel wydajności, kiedy rozmiar pamięci wymiany zbliża się do "
+"ograniczenia"
+
+#: ../app/actions/dashboard-actions.c:63
+msgctxt "dashboard-update-interval"
+msgid "0.25 Seconds"
+msgstr "0,25 sekundy"
+
+#: ../app/actions/dashboard-actions.c:68
+msgctxt "dashboard-update-interval"
+msgid "0.5 Seconds"
+msgstr "0,5 sekundy"
+
+#: ../app/actions/dashboard-actions.c:73
+msgctxt "dashboard-update-interval"
+msgid "1 Second"
+msgstr "1 sekunda"
+
+#: ../app/actions/dashboard-actions.c:78
+msgctxt "dashboard-update-interval"
+msgid "2 Seconds"
+msgstr "2 sekundy"
+
+#: ../app/actions/dashboard-actions.c:83
+msgctxt "dashboard-update-interval"
+msgid "4 Seconds"
+msgstr "4 sekundy"
+
+#: ../app/actions/dashboard-actions.c:91
+msgctxt "dashboard-history-duration"
+msgid "15 Seconds"
+msgstr "15 sekund"
+
+#: ../app/actions/dashboard-actions.c:96
+msgctxt "dashboard-history-duration"
+msgid "30 Seconds"
+msgstr "30 sekund"
+
+#: ../app/actions/dashboard-actions.c:101
+msgctxt "dashboard-history-duration"
+msgid "60 Seconds"
+msgstr "60 sekund"
+
+#: ../app/actions/dashboard-actions.c:106
+msgctxt "dashboard-history-duration"
+msgid "120 Seconds"
+msgstr "120 sekund"
+
+#: ../app/actions/dashboard-actions.c:111
+msgctxt "dashboard-history-duration"
+msgid "240 Seconds"
+msgstr "240 sekund"
+
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
 #: ../app/dialogs/file-open-dialog.c:253
@@ -2699,96 +2780,106 @@ msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Otwiera konsolę błędów"
 
-#: ../app/actions/dialogs-actions.c:244
+#: ../app/actions/dialogs-actions.c:239
+msgctxt "dialogs-action"
+msgid "_Dashboard"
+msgstr "_Panel wydajności"
+
+#: ../app/actions/dialogs-actions.c:240
+msgctxt "dialogs-action"
+msgid "Open the dashboard"
+msgstr "Otwiera panel wydajności"
+
+#: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "P_referencje"
 
-#: ../app/actions/dialogs-actions.c:245
+#: ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Otwiera okno preferencji"
 
-#: ../app/actions/dialogs-actions.c:250
+#: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Urządzen_ia wejściowe"
 
-#: ../app/actions/dialogs-actions.c:251
+#: ../app/actions/dialogs-actions.c:257
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Otwiera edytor urządzeń wejściowych"
 
-#: ../app/actions/dialogs-actions.c:256
+#: ../app/actions/dialogs-actions.c:262
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "Skróty _klawiszowe"
 
-#: ../app/actions/dialogs-actions.c:257
+#: ../app/actions/dialogs-actions.c:263
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Otwiera edytor skrótów klawiszowych"
 
-#: ../app/actions/dialogs-actions.c:262
+#: ../app/actions/dialogs-actions.c:268
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Moduły"
 
-#: ../app/actions/dialogs-actions.c:263
+#: ../app/actions/dialogs-actions.c:269
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Otwiera okno menedżera modułów"
 
-#: ../app/actions/dialogs-actions.c:268
+#: ../app/actions/dialogs-actions.c:274
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Porada dnia"
 
-#: ../app/actions/dialogs-actions.c:269
+#: ../app/actions/dialogs-actions.c:275
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Wyświetla porady przydatne podczas używania programu GIMP"
 
-#: ../app/actions/dialogs-actions.c:275 ../app/actions/dialogs-actions.c:282
+#: ../app/actions/dialogs-actions.c:281 ../app/actions/dialogs-actions.c:288
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "O programie GIMP"
 
-#: ../app/actions/dialogs-actions.c:277
+#: ../app/actions/dialogs-actions.c:283
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "O programie"
 
-#: ../app/actions/dialogs-actions.c:279
+#: ../app/actions/dialogs-actions.c:285
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_O programie"
 
-#: ../app/actions/dialogs-actions.c:287
+#: ../app/actions/dialogs-actions.c:293
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
 msgstr "_Znajdź i wykonaj polecenie"
 
-#: ../app/actions/dialogs-actions.c:288
+#: ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
 msgstr "Wyszukuje polecenia według słów kluczowych, i je wykonuje"
 
-#: ../app/actions/dialogs-actions.c:351
+#: ../app/actions/dialogs-actions.c:357
 #: ../app/dialogs/preferences-dialog.c:1935
 #: ../app/dialogs/preferences-dialog.c:1936 ../app/widgets/gimptoolbox.c:529
 msgid "Toolbox"
 msgstr "Przybornik"
 
-#: ../app/actions/dialogs-actions.c:352
+#: ../app/actions/dialogs-actions.c:358
 msgid "Raise the toolbox"
 msgstr "Podnosi przybornik"
 
-#: ../app/actions/dialogs-actions.c:356
+#: ../app/actions/dialogs-actions.c:362
 msgid "New Toolbox"
 msgstr "Nowy przybornik"
 
-#: ../app/actions/dialogs-actions.c:357
+#: ../app/actions/dialogs-actions.c:363
 msgid "Create a new toolbox"
 msgstr "Tworzy nowy przybornik"
 
@@ -11523,7 +11614,7 @@ msgstr ""
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:304
 #: ../app/core/gimptooloptions.c:348 ../app/gui/session.c:428
-#: ../app/menus/menus.c:468 ../app/widgets/gimpdevices.c:207
+#: ../app/menus/menus.c:476 ../app/widgets/gimpdevices.c:207
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Usunięcie „%s” się nie powiodło: %s"
@@ -11663,19 +11754,24 @@ msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nieznana wersja %d."
 
-#: ../app/core/gimpbrush-load.c:245 ../app/core/gimpbrushgenerated-load.c:125
+#: ../app/core/gimpbrush-load.c:232
+#, c-format
+msgid "Unsupported brush format"
+msgstr "Nieobsługiwany format pędzla"
+
+#: ../app/core/gimpbrush-load.c:252 ../app/core/gimpbrushgenerated-load.c:125
 #: ../app/core/gimpbrushpipe-load.c:75
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku z pędzlami „%s”."
 
-#: ../app/core/gimpbrush-load.c:252 ../app/core/gimppattern-load.c:130
+#: ../app/core/gimpbrush-load.c:259 ../app/core/gimppattern-load.c:130
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:554
 msgid "Unnamed"
 msgstr "Bez nazwy"
 
-#: ../app/core/gimpbrush-load.c:323
+#: ../app/core/gimpbrush-load.c:330
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -11691,7 +11787,7 @@ msgstr ""
 "Może to być przestarzały plik z pędzlami programu GIMP, proszę spróbować "
 "wczytać go jako obraz i zapisać ponownie."
 
-#: ../app/core/gimpbrush-load.c:370
+#: ../app/core/gimpbrush-load.c:377
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -11703,24 +11799,24 @@ msgstr ""
 "Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub "
 "w formacie RGBA."
 
-#: ../app/core/gimpbrush-load.c:446
+#: ../app/core/gimpbrush-load.c:453
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Nie można dekodować wersji formatu abr %d."
 
-#: ../app/core/gimpbrush-load.c:644
+#: ../app/core/gimpbrush-load.c:651
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: duże pędzle nie są "
 "obsługiwane."
 
-#: ../app/core/gimpbrush-load.c:785
+#: ../app/core/gimpbrush-load.c:792
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: plik jest ucięty: "
 
-#: ../app/core/gimpbrush-load.c:931
+#: ../app/core/gimpbrush-load.c:938
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -13857,7 +13953,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:190
+#: ../app/dialogs/dialogs-constructors.c:215 ../app/gui/gui.c:190
 #: ../app/gui/gui-message.c:215
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -13878,51 +13974,51 @@ msgstr "Błędy"
 msgid "Pointer"
 msgstr "Kursor"
 
-#: ../app/dialogs/dialogs.c:356
+#: ../app/dialogs/dialogs.c:360
 msgid "History"
 msgstr "Historia"
 
-#: ../app/dialogs/dialogs.c:359
+#: ../app/dialogs/dialogs.c:363
 msgid "Image Templates"
 msgstr "Szablony obrazów"
 
-#: ../app/dialogs/dialogs.c:380
+#: ../app/dialogs/dialogs.c:384
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../app/dialogs/dialogs.c:384
+#: ../app/dialogs/dialogs.c:388
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/dialogs/dialogs.c:384
+#: ../app/dialogs/dialogs.c:388
 msgid "Selection Editor"
 msgstr "Edytor zaznaczenia"
 
-#: ../app/dialogs/dialogs.c:388
+#: ../app/dialogs/dialogs.c:392
 msgid "Symmetry Painting"
 msgstr "Malowanie symetryczne"
 
-#: ../app/dialogs/dialogs.c:392
+#: ../app/dialogs/dialogs.c:396
 msgid "Undo"
 msgstr "Cofnięcie"
 
-#: ../app/dialogs/dialogs.c:392
+#: ../app/dialogs/dialogs.c:396
 msgid "Undo History"
 msgstr "Historia działań"
 
-#: ../app/dialogs/dialogs.c:402
+#: ../app/dialogs/dialogs.c:406
 msgid "Navigation"
 msgstr "Nawigacja"
 
-#: ../app/dialogs/dialogs.c:402
+#: ../app/dialogs/dialogs.c:406
 msgid "Display Navigation"
 msgstr "Nawigacja obrazem"
 
-#: ../app/dialogs/dialogs.c:408
+#: ../app/dialogs/dialogs.c:412
 msgid "FG/BG"
 msgstr "Kolory"
 
-#: ../app/dialogs/dialogs.c:408
+#: ../app/dialogs/dialogs.c:412
 msgid "FG/BG Color"
 msgstr "Kolor pierwszoplanowy/tła"
 
@@ -21274,7 +21370,9 @@ msgstr "Bieżący"
 msgid "Fixed"
 msgstr "Stałe"
 
+#. swap size field
 #: ../app/tools/gimprectangleoptions.c:1034 ../app/tools/gimptextoptions.c:545
+#: ../app/widgets/gimpdashboard.c:265
 msgid "Size:"
 msgstr "Rozmiar:"
 
@@ -22844,6 +22942,32 @@ msgstr "Kółko myszy"
 #: ../app/widgets/gimpcontrollerwheel.c:229
 msgid "Mouse Wheel Events"
 msgstr "Zdarzenia kółka myszy"
+
+#: ../app/widgets/gimpdashboard.c:153
+msgid "Cache"
+msgstr "Pamięć podręczna"
+
+#. cache occupied field
+#. swap occupied field
+#: ../app/widgets/gimpdashboard.c:182 ../app/widgets/gimpdashboard.c:252
+msgid "Occupied:"
+msgstr "Zajęte:"
+
+#: ../app/widgets/gimpdashboard.c:188 ../app/widgets/gimpdashboard.c:201
+#: ../app/widgets/gimpdashboard.c:258 ../app/widgets/gimpdashboard.c:271
+#: ../app/widgets/gimpdashboard.c:284 ../app/widgets/gimpdashboard.c:514
+msgid "N/A"
+msgstr "Nie dotyczy"
+
+#. cache limit field
+#. swap limit field
+#: ../app/widgets/gimpdashboard.c:195 ../app/widgets/gimpdashboard.c:278
+msgid "Limit:"
+msgstr "Ograniczenie:"
+
+#: ../app/widgets/gimpdashboard.c:219
+msgid "Swap"
+msgstr "Pamięć wymiany"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
