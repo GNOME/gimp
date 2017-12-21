@@ -415,7 +415,8 @@ load_image (const gchar  *filename,
       bh.header_size += 8;
       if (bh.header_size < sizeof (BrushHeader))
         {
-          g_message (_("Unsupported brush format"));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported brush format"));
           g_object_unref (input);
           return -1;
         }
