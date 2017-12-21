@@ -228,7 +228,8 @@ gimp_brush_load_brush (GimpContext   *context,
 
   if (header.header_size < sizeof (BrushHeader))
     {
-      g_message (_("Unsupported brush format"));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unsupported brush format"));
       return NULL;
     }
 
