@@ -463,8 +463,7 @@ load_image (GFile   *file,
 
       if (! g_input_stream_read_all (input, temp, size,
                                      &bytes_read, NULL, error) ||
-          bytes_read != size                                   ||
-          temp[size - 1] != '\0')
+          bytes_read != size)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error in GIMP brush file '%s'"),
