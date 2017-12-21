@@ -707,9 +707,10 @@ block_name (gint id)
  * reading has a valid header. Fills the variables init_len and total_len
  */
 static gint
-read_block_header (FILE    *f,
-                   guint32 *init_len,
-                   guint32 *total_len)
+read_block_header (FILE     *f,
+                   guint32  *init_len,
+                   guint32  *total_len,
+                   GError  **error)
 {
   guchar buf[4];
   guint16 id;
@@ -723,15 +724,18 @@ read_block_header (FILE    *f,
       || fread (&len, 4, 1, f) < 1
       || (psp_ver_major < 4 && fread (total_len, 4, 1, f) < 1))
     {
-      g_message ("Error reading block header");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading block header"));
       return -1;
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
     {
       IFDBG(3)
-        g_message ("Invalid block header at %ld", header_start);
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Invalid block header at %ld"), header_start);
       else
-        g_message ("Invalid block header");
+        g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                     _("Invalid block header"));
       return -1;
     }
 
@@ -826,13 +830,15 @@ read_general_image_attribute_block (FILE     *f,
 }
 
 static gint
-try_fseek (FILE  *f,
-           glong  pos,
-           gint   whence)
+try_fseek (FILE    *f,
+           glong    pos,
+           gint     whence,
+           GError **error)
 {
   if (fseek (f, pos, whence) < 0)
     {
-      g_message ("Seek error: %s", g_strerror (errno));
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Seek error: %s"), g_strerror (errno));
       fclose (f);
       return -1;
     }
@@ -842,10 +848,11 @@ try_fseek (FILE  *f,
 
 
 static gint
-read_creator_block (FILE     *f,
-                    gint      image_ID,
-                    guint     total_len,
-                    PSPimage *ia)
+read_creator_block (FILE      *f,
+                    gint       image_ID,
+                    guint      total_len,
+                    PSPimage  *ia,
+                    GError   **error)
 {
   long          data_start;
   guchar        buf[4];
@@ -870,12 +877,14 @@ read_creator_block (FILE     *f,
           || fread (&keyword, 2, 1, f) < 1
           || fread (&length, 4, 1, f) < 1)
         {
-          g_message ("Error reading creator keyword chunk");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error reading creator keyword chunk"));
           return -1;
         }
       if (memcmp (buf, "~FL\0", 4) != 0)
         {
-          g_message ("Invalid keyword chunk header");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid keyword chunk header"));
           return -1;
         }
       keyword = GUINT16_FROM_LE (keyword);
@@ -889,13 +898,15 @@ read_creator_block (FILE     *f,
           string = g_malloc (length + 1);
           if (fread (string, length, 1, f) < 1)
             {
-              g_message ("Error reading creator keyword data");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading creator keyword data"));
               g_free (string);
               return -1;
             }
           if (string[length - 1] != '\0')
             {
-              g_message ("Creator keyword data not nul-terminated");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Creator keyword data not nul-terminated"));
               g_free (string);
               return -1;
             }
@@ -919,7 +930,8 @@ read_creator_block (FILE     *f,
         case PSP_CRTR_FLD_APP_VER:
           if (fread (&dword, 4, 1, f) < 1)
             {
-              g_message ("Error reading creator keyword data");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading creator keyword data"));
               return -1;
             }
           switch (keyword)
@@ -935,7 +947,7 @@ read_creator_block (FILE     *f,
             }
           break;
         default:
-          if (try_fseek (f, length, SEEK_CUR) < 0)
+          if (try_fseek (f, length, SEEK_CUR, error) < 0)
             {
               return -1;
             }
@@ -1167,7 +1179,8 @@ read_channel_data (FILE        *f,
                    guint        bytespp,
                    guint        offset,
                    GeglBuffer  *buffer,
-                   guint32      compressed_len)
+                   guint32      compressed_len,
+                   GError     **error)
 {
   gint i, y;
   gint width = gegl_buffer_get_width (buffer);
@@ -1268,7 +1281,8 @@ read_channel_data (FILE        *f,
       zstream.opaque = f;
       if (inflateInit (&zstream) != Z_OK)
         {
-          g_message ("zlib error");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("zlib error"));
           return -1;
         }
       if (bytespp == 1)
@@ -1281,7 +1295,8 @@ read_channel_data (FILE        *f,
       zstream.avail_out = npixels;
       if (inflate (&zstream, Z_FINISH) != Z_STREAM_END)
         {
-          g_message ("zlib error");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("zlib error"));
           inflateEnd (&zstream);
           return -1;
         }
@@ -1308,10 +1323,11 @@ read_channel_data (FILE        *f,
 }
 
 static gint
-read_layer_block (FILE     *f,
-                  gint      image_ID,
-                  guint     total_len,
-                  PSPimage *ia)
+read_layer_block (FILE      *f,
+                  gint       image_ID,
+                  guint      total_len,
+                  PSPimage  *ia,
+                  GError   **error)
 {
   gint i;
   long block_start, sub_block_start, channel_start;
@@ -1339,14 +1355,15 @@ read_layer_block (FILE     *f,
   while (ftell (f) < block_start + total_len)
     {
       /* Read the layer sub-block header */
-      sub_id = read_block_header (f, &sub_init_len, &sub_total_len);
+      sub_id = read_block_header (f, &sub_init_len, &sub_total_len, error);
       if (sub_id == -1)
         return -1;
 
       if (sub_id != PSP_LAYER_BLOCK)
         {
-          g_message ("Invalid layer sub-block %s, should be LAYER",
-                     block_name (sub_id));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid layer sub-block %s, should be LAYER"),
+                       block_name (sub_id));
           return -1;
         }
 
@@ -1376,7 +1393,8 @@ read_layer_block (FILE     *f,
               || fread (&bitmap_count, 2, 1, f) < 1
               || fread (&channel_count, 2, 1, f) < 1)
             {
-              g_message ("Error reading layer information chunk");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading layer information chunk"));
               g_free (name);
               return -1;
             }
@@ -1406,7 +1424,8 @@ read_layer_block (FILE     *f,
               || fread (&bitmap_count, 2, 1, f) < 1
               || fread (&channel_count, 2, 1, f) < 1)
             {
-              g_message ("Error reading layer information chunk");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading layer information chunk"));
               g_free (name);
               return -1;
             }
@@ -1439,7 +1458,9 @@ read_layer_block (FILE     *f,
           || (height < 0) || (height > GIMP_MAX_IMAGE_SIZE)  /* h <= 2^18 */
           || ((width / 256) * (height / 256) >= 8192))       /* w * h < 2^29 */
         {
-          g_message ("Invalid layer dimensions: %dx%d", width, height);
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid layer dimensions: %dx%d"),
+                       width, height);
           return -1;
         }
 
@@ -1490,7 +1511,8 @@ read_layer_block (FILE     *f,
                                  layer_mode);
       if (layer_ID == -1)
         {
-          g_message ("Error creating layer");
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Error creating layer"));
           return -1;
         }
 
@@ -1508,7 +1530,7 @@ read_layer_block (FILE     *f,
       gimp_layer_set_lock_alpha (layer_ID, transparency_protected);
 
       if (psp_ver_major < 4)
-        if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)
+        if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET, error) < 0)
           {
             return -1;
           }
@@ -1531,7 +1553,7 @@ read_layer_block (FILE     *f,
       while (ftell (f) < sub_block_start + sub_total_len)
         {
           sub_id = read_block_header (f, &channel_init_len,
-                                      &channel_total_len);
+                                      &channel_total_len, error);
           if (sub_id == -1)
             {
               gimp_image_delete (image_ID);
@@ -1540,8 +1562,9 @@ read_layer_block (FILE     *f,
 
           if (sub_id != PSP_CHANNEL_BLOCK)
             {
-              g_message ("Invalid layer sub-block %s, should be CHANNEL",
-                         block_name (sub_id));
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Invalid layer sub-block %s, should be CHANNEL"),
+                           block_name (sub_id));
               return -1;
             }
 
@@ -1555,7 +1578,8 @@ read_layer_block (FILE     *f,
               || fread (&bitmap_type, 2, 1, f) < 1
               || fread (&channel_type, 2, 1, f) < 1)
             {
-              g_message ("Error reading channel information chunk");
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Error reading channel information chunk"));
               return -1;
             }
 
@@ -1566,15 +1590,17 @@ read_layer_block (FILE     *f,
 
           if (bitmap_type > PSP_DIB_USER_MASK)
             {
-              g_message ("Invalid bitmap type %d in channel information chunk",
-                         bitmap_type);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Invalid bitmap type %d in channel information chunk"),
+                           bitmap_type);
               return -1;
             }
 
           if (channel_type > PSP_CHANNEL_BLUE)
             {
-              g_message ("Invalid channel type %d in channel information chunk",
-                         channel_type);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Invalid channel type %d in channel information chunk"),
+                           channel_type);
               return -1;
             }
 
@@ -1590,19 +1616,19 @@ read_layer_block (FILE     *f,
             offset = channel_type - PSP_CHANNEL_RED;
 
           if (psp_ver_major < 4)
-            if (try_fseek (f, channel_start + channel_init_len, SEEK_SET) < 0)
+            if (try_fseek (f, channel_start + channel_init_len, SEEK_SET, error) < 0)
               {
                 return -1;
               }
 
           if (!null_layer)
-            if (read_channel_data (f, ia, pixels, bytespp,
-                                   offset, buffer, compressed_len) == -1)
+            if (read_channel_data (f, ia, pixels, bytespp, offset,
+                                   buffer, compressed_len, error) == -1)
               {
                 return -1;
               }
 
-          if (try_fseek (f, channel_start + channel_total_len, SEEK_SET) < 0)
+          if (try_fseek (f, channel_start + channel_total_len, SEEK_SET, error) < 0)
             {
               return -1;
             }
@@ -1617,7 +1643,7 @@ read_layer_block (FILE     *f,
       g_free (pixel);
     }
 
-  if (try_fseek (f, block_start + total_len, SEEK_SET) < 0)
+  if (try_fseek (f, block_start + total_len, SEEK_SET, error) < 0)
     {
       return -1;
     }
@@ -1626,10 +1652,11 @@ read_layer_block (FILE     *f,
 }
 
 static gint
-read_tube_block (FILE     *f,
-                 gint      image_ID,
-                 guint     total_len,
-                 PSPimage *ia)
+read_tube_block (FILE      *f,
+                 gint       image_ID,
+                 guint      total_len,
+                 PSPimage  *ia,
+                 GError   **error)
 {
   guint16            version;
   guchar             name[514];
@@ -1651,7 +1678,8 @@ read_tube_block (FILE     *f,
       || fread (&placement_mode, 4, 1, f) < 1
       || fread (&selection_mode, 4, 1, f) < 1)
     {
-      g_message ("Error reading tube data chunk");
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error reading tube data chunk"));
       return -1;
     }
 
@@ -1788,7 +1816,7 @@ load_image (const gchar  *filename,
   IFDBG(3) g_message ("size = %d", (int)st.st_size);
   while (ftell (f) != st.st_size
          && (id = read_block_header (f, &block_init_len,
-                                     &block_total_len)) != -1)
+                                     &block_total_len, error)) != -1)
     {
       block_start = ftell (f);
 
@@ -1843,7 +1871,7 @@ load_image (const gchar  *filename,
           switch (id)
             {
             case PSP_CREATOR_BLOCK:
-              if (read_creator_block (f, image_ID, block_total_len, &ia) == -1)
+              if (read_creator_block (f, image_ID, block_total_len, &ia, error) == -1)
                 goto error;
               break;
 
@@ -1851,7 +1879,7 @@ load_image (const gchar  *filename,
               break;            /* Not yet implemented */
 
             case PSP_LAYER_START_BLOCK:
-              if (read_layer_block (f, image_ID, block_total_len, &ia) == -1)
+              if (read_layer_block (f, image_ID, block_total_len, &ia, error) == -1)
                 goto error;
               break;
 
@@ -1868,7 +1896,7 @@ load_image (const gchar  *filename,
               break;            /* Not yet implemented */
 
             case PSP_TUBE_BLOCK:
-              if (read_tube_block (f, image_ID, block_total_len, &ia) == -1)
+              if (read_tube_block (f, image_ID, block_total_len, &ia, error) == -1)
                 goto error;
               break;
 
@@ -1898,7 +1926,7 @@ load_image (const gchar  *filename,
       if (block_start + block_total_len >= st.st_size)
         break;
 
-      if (try_fseek (f, block_start + block_total_len, SEEK_SET) < 0)
+      if (try_fseek (f, block_start + block_total_len, SEEK_SET, error) < 0)
         goto error;
 
       block_number++;
