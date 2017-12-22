@@ -249,8 +249,10 @@ struct _GimpCoords
   gdouble  wheel;
   gdouble  velocity;
   gdouble  direction;
-  gdouble  xscale; /* the view scale */
+  gdouble  xscale;  /* the view scale                */
   gdouble  yscale;
+  gdouble  angle;   /* the view rotation angle       */
+  gboolean reflect; /* whether the view is reflected */
   gboolean extended;
 };
 

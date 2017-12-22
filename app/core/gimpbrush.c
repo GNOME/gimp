@@ -582,9 +582,9 @@ gimp_brush_transform_size (GimpBrush     *brush,
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
-  if (scale        == 1.0 &&
-      aspect_ratio == 0.0 &&
-      ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
+  if (scale             == 1.0 &&
+      aspect_ratio      == 0.0 &&
+      fmod (angle, 0.5) == 0.0)
     {
       *width  = gimp_temp_buf_get_width  (brush->priv->mask);
       *height = gimp_temp_buf_get_height (brush->priv->mask);

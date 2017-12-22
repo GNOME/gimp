@@ -613,9 +613,13 @@ gimp_display_shell_untransform_coords (GimpDisplayShell *shell,
   image_coords->x /= shell->scale_x;
   image_coords->y /= shell->scale_y;
 
-  image_coords->xscale = shell->scale_x;
-  image_coords->yscale = shell->scale_y;
+  image_coords->xscale  = shell->scale_x;
+  image_coords->yscale  = shell->scale_y;
+  image_coords->angle   = shell->rotate_angle / 360.0;
+  image_coords->reflect = shell->flip_horizontally ^ shell->flip_vertically;
 
+  if (shell->flip_vertically)
+    image_coords->angle += 0.5;
 }
 
 /**

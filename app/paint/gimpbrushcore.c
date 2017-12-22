@@ -326,7 +326,7 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
                                                       paint_options,
                                                       fade_point);
 
-              if (paint_options->brush_zoom &&
+              if (paint_options->brush_lock_to_view &&
                   MAX (current_coords.xscale, current_coords.yscale) > 0)
                 {
                   scale /= MAX (current_coords.xscale, current_coords.yscale);
@@ -740,6 +740,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       current_coords.direction = temp_direction;
       current_coords.xscale    = last_coords.xscale;
       current_coords.yscale    = last_coords.yscale;
+      current_coords.angle     = last_coords.angle;
+      current_coords.reflect   = last_coords.reflect;
 
       if (core->jitter > 0.0)
         {
@@ -790,6 +792,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   current_coords.velocity = last_coords.velocity + delta_velocity;
   current_coords.xscale   = last_coords.xscale;
   current_coords.yscale   = last_coords.yscale;
+  current_coords.angle    = last_coords.angle;
+  current_coords.reflect  = last_coords.reflect;
 
   gimp_paint_core_set_current_coords (paint_core, &current_coords);
   gimp_paint_core_set_last_coords (paint_core, &current_coords);
@@ -1500,7 +1504,8 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
 
       core->scale = paint_options->brush_size / max_side;
 
-      if (paint_options->brush_zoom && MAX (coords->xscale, coords->yscale) > 0)
+      if (paint_options->brush_lock_to_view &&
+          MAX (coords->xscale, coords->yscale) > 0)
         {
           core->scale /= MAX (coords->xscale, coords->yscale);
 
@@ -1518,6 +1523,12 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
   core->angle        = paint_options->brush_angle;
   core->reflect      = FALSE;
   core->hardness     = paint_options->brush_hardness;
+
+  if (paint_options->brush_lock_to_view)
+    {
+      core->angle   += coords->angle;
+      core->reflect  = coords->reflect;
+    }
 
   if (! GIMP_IS_DYNAMICS (core->dynamics))
     return;

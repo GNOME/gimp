@@ -40,14 +40,19 @@
 
 
 #define DEFAULT_BRUSH_SIZE              20.0
-#define DEFAULT_BRUSH_ZOOM              FALSE
-
 #define DEFAULT_BRUSH_ASPECT_RATIO      0.0
 #define DEFAULT_BRUSH_ANGLE             0.0
 #define DEFAULT_BRUSH_SPACING           0.1
-
 #define DEFAULT_BRUSH_HARDNESS          1.0 /* Generated brushes have their own */
 #define DEFAULT_BRUSH_FORCE             0.5
+
+#define DEFAULT_BRUSH_LINK_SIZE         TRUE
+#define DEFAULT_BRUSH_LINK_ASPECT_RATIO TRUE
+#define DEFAULT_BRUSH_LINK_ANGLE        TRUE
+#define DEFAULT_BRUSH_LINK_SPACING      TRUE
+#define DEFAULT_BRUSH_LINK_HARDNESS     TRUE
+
+#define DEFAULT_BRUSH_LOCK_TO_VIEW      FALSE
 
 #define DEFAULT_APPLICATION_MODE        GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                    FALSE
@@ -73,12 +78,6 @@
 #define DEFAULT_SMOOTHING_QUALITY       20
 #define DEFAULT_SMOOTHING_FACTOR        50
 
-#define DEFAULT_BRUSH_LINK_SIZE         TRUE
-#define DEFAULT_BRUSH_LINK_ASPECT_RATIO TRUE
-#define DEFAULT_BRUSH_LINK_ANGLE        TRUE
-#define DEFAULT_BRUSH_LINK_SPACING      TRUE
-#define DEFAULT_BRUSH_LINK_HARDNESS     TRUE
-
 enum
 {
   PROP_0,
@@ -88,12 +87,19 @@ enum
   PROP_USE_APPLICATOR, /* temp debug */
 
   PROP_BRUSH_SIZE,
-  PROP_BRUSH_ZOOM,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
   PROP_BRUSH_SPACING,
   PROP_BRUSH_HARDNESS,
   PROP_BRUSH_FORCE,
+
+  PROP_BRUSH_LINK_SIZE,
+  PROP_BRUSH_LINK_ASPECT_RATIO,
+  PROP_BRUSH_LINK_ANGLE,
+  PROP_BRUSH_LINK_SPACING,
+  PROP_BRUSH_LINK_HARDNESS,
+
+  PROP_BRUSH_LOCK_TO_VIEW,
 
   PROP_APPLICATION_MODE,
   PROP_HARD,
@@ -121,13 +127,7 @@ enum
 
   PROP_USE_SMOOTHING,
   PROP_SMOOTHING_QUALITY,
-  PROP_SMOOTHING_FACTOR,
-
-  PROP_BRUSH_LINK_SIZE,
-  PROP_BRUSH_LINK_ASPECT_RATIO,
-  PROP_BRUSH_LINK_ANGLE,
-  PROP_BRUSH_LINK_SPACING,
-  PROP_BRUSH_LINK_HARDNESS
+  PROP_SMOOTHING_FACTOR
 };
 
 
@@ -192,13 +192,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                            _("Brush Size"),
                            1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
                            GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_ZOOM,
-                            "brush-zoom",
-                            _("Brush Zoom"),
-                            _("Link brush size with canvas zoom"),
-                            DEFAULT_BRUSH_ZOOM,
-                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                            "brush-aspect-ratio",
@@ -268,6 +261,13 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             _("Link Hardness"),
                             _("Link brush hardness to brush native"),
                             DEFAULT_BRUSH_LINK_HARDNESS,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LOCK_TO_VIEW,
+                            "brush-lock-to-view",
+                            _("Lock brush to view"),
+                            _("Keep brush appearance fixed realtive to the view"),
+                            DEFAULT_BRUSH_LOCK_TO_VIEW,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
@@ -493,10 +493,6 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_size = g_value_get_double (value);
       break;
 
-    case PROP_BRUSH_ZOOM:
-      options->brush_zoom = g_value_get_boolean (value);
-      break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       options->brush_aspect_ratio = g_value_get_double (value);
       break;
@@ -535,6 +531,10 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_BRUSH_LINK_HARDNESS:
       options->brush_link_hardness = g_value_get_boolean (value);
+      break;
+
+    case PROP_BRUSH_LOCK_TO_VIEW:
+      options->brush_lock_to_view = g_value_get_boolean (value);
       break;
 
     case PROP_APPLICATION_MODE:
@@ -653,10 +653,6 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, options->brush_size);
       break;
 
-    case PROP_BRUSH_ZOOM:
-      g_value_set_boolean (value, options->brush_zoom);
-      break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       g_value_set_double (value, options->brush_aspect_ratio);
       break;
@@ -695,6 +691,10 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_BRUSH_LINK_HARDNESS:
       g_value_set_boolean (value, options->brush_link_hardness);
+      break;
+
+    case PROP_BRUSH_LOCK_TO_VIEW:
+      g_value_set_boolean (value, options->brush_lock_to_view);
       break;
 
     case PROP_APPLICATION_MODE:
@@ -1110,7 +1110,6 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                                      GimpPaintOptions *dest)
 {
   gdouble  brush_size;
-  gboolean brush_zoom;
   gdouble  brush_angle;
   gdouble  brush_aspect_ratio;
   gdouble  brush_spacing;
@@ -1123,12 +1122,13 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gboolean brush_link_spacing;
   gboolean brush_link_hardness;
 
+  gboolean brush_lock_to_view;
+
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
   g_object_get (src,
                 "brush-size",              &brush_size,
-                "brush-zoom",              &brush_zoom,
                 "brush-angle",             &brush_angle,
                 "brush-aspect-ratio",      &brush_aspect_ratio,
                 "brush-spacing",           &brush_spacing,
@@ -1139,11 +1139,11 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-link-aspect-ratio", &brush_link_aspect_ratio,
                 "brush-link-spacing",      &brush_link_spacing,
                 "brush-link-hardness",     &brush_link_hardness,
+                "brush-lock-to-view",      &brush_lock_to_view,
                 NULL);
 
   g_object_set (dest,
                 "brush-size",              brush_size,
-                "brush-zoom",              brush_zoom,
                 "brush-angle",             brush_angle,
                 "brush-aspect-ratio",      brush_aspect_ratio,
                 "brush-spacing",           brush_spacing,
@@ -1154,6 +1154,7 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-link-aspect-ratio", brush_link_aspect_ratio,
                 "brush-link-spacing",      brush_link_spacing,
                 "brush-link-hardness",     brush_link_hardness,
+                "brush-lock-to-view",      brush_lock_to_view,
                 NULL);
 }
 

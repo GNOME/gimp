@@ -85,7 +85,6 @@ struct _GimpPaintOptions
   GimpBrush                *brush; /* weak-refed storage for the GUI */
 
   gdouble                   brush_size;
-  gboolean                  brush_zoom;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
   gdouble                   brush_spacing;
@@ -97,6 +96,8 @@ struct _GimpPaintOptions
   gboolean                  brush_link_angle;
   gboolean                  brush_link_spacing;
   gboolean                  brush_link_hardness;
+
+  gboolean                  brush_lock_to_view;
 
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;

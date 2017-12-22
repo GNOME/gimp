@@ -553,8 +553,19 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 
   if (private->use_direction)
     {
-      total += gimp_curve_map_value (private->direction_curve,
-                                     coords->direction);
+      gdouble angle = gimp_curve_map_value (private->direction_curve,
+                                            coords->direction);
+
+      if (options->brush_lock_to_view)
+        {
+          if (coords->reflect)
+            angle = 0.5 - angle;
+
+          angle -= coords->angle;
+          angle  = fmod (fmod (angle, 1.0) + 1.0, 1.0);
+        }
+
+      total += angle;
       factors++;
     }
 
