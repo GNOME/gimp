@@ -71,12 +71,14 @@ static void          gimp_brush_generated_transform_size(GimpBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
                                                          gdouble       angle,
+                                                         gboolean      reflect,
                                                          gint         *width,
                                                          gint         *height);
 static GimpTempBuf * gimp_brush_generated_transform_mask(GimpBrush    *gbrush,
                                                          gdouble       scale,
                                                          gdouble       aspect_ratio,
                                                          gdouble       angle,
+                                                         gboolean      reflect,
                                                          gdouble       hardness);
 
 static GimpTempBuf * gimp_brush_generated_calc          (GimpBrushGenerated      *brush,
@@ -86,6 +88,7 @@ static GimpTempBuf * gimp_brush_generated_calc          (GimpBrushGenerated     
                                                          gfloat                   hardness,
                                                          gfloat                   aspect_ratio,
                                                          gfloat                   angle,
+                                                         gboolean                 reflect,
                                                          GimpVector2             *xaxis,
                                                          GimpVector2             *yaxis);
 static void          gimp_brush_generated_get_size      (GimpBrushGenerated      *gbrush,
@@ -95,6 +98,7 @@ static void          gimp_brush_generated_get_size      (GimpBrushGenerated     
                                                          gfloat                   hardness,
                                                          gfloat                   aspect_ratio,
                                                          gdouble                  angle_in_degrees,
+                                                         gboolean                 reflect,
                                                          gint                    *width,
                                                          gint                    *height,
                                                          gdouble                 *_s,
@@ -264,6 +268,7 @@ gimp_brush_generated_dirty (GimpData *data)
                                                   brush->hardness,
                                                   brush->aspect_ratio,
                                                   brush->angle,
+                                                  FALSE,
                                                   &gbrush->priv->x_axis,
                                                   &gbrush->priv->y_axis);
 
@@ -303,6 +308,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
+                                     gboolean   reflect,
                                      gint      *width,
                                      gint      *height)
 {
@@ -329,6 +335,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                  brush->hardness,
                                  ratio,
                                  angle,
+                                 reflect,
                                  width, height,
                                  NULL, NULL, NULL, NULL);
 }
@@ -338,6 +345,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
+                                     gboolean   reflect,
                                      gdouble    hardness)
 {
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
@@ -359,6 +367,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
   if (scale    == 1.0                 &&
       ratio    == brush->aspect_ratio &&
       angle    == brush->angle        &&
+      reflect  == FALSE               &&
       hardness == brush->hardness)
     {
       return gimp_temp_buf_copy (gimp_brush_get_mask (gbrush));
@@ -371,6 +380,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     hardness,
                                     ratio,
                                     angle,
+                                    reflect,
                                     NULL, NULL);
 }
 
@@ -458,6 +468,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                            gfloat                   hardness,
                            gfloat                   aspect_ratio,
                            gfloat                   angle,
+                           gboolean                 reflect,
                            GimpVector2             *xaxis,
                            GimpVector2             *yaxis)
 {
@@ -481,6 +492,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
                                  hardness,
                                  aspect_ratio,
                                  angle,
+                                 reflect,
                                  &width, &height,
                                  &s, &c, &x_axis, &y_axis);
 
@@ -573,6 +585,7 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
                                gfloat                   hardness,
                                gfloat                   aspect_ratio,
                                gdouble                  angle_in_degrees,
+                               gboolean                 reflect,
                                gint                    *width,
                                gint                    *height,
                                gdouble                 *_s,
@@ -601,6 +614,9 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
 
   s = sin (gimp_deg_to_rad (angle_in_degrees));
   c = cos (gimp_deg_to_rad (angle_in_degrees));
+
+  if (reflect)
+    c = -c;
 
   short_radius = radius / aspect_ratio;
 

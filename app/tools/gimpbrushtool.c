@@ -284,6 +284,7 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                               brush_core->scale,
                                               brush_core->aspect_ratio,
                                               brush_core->angle,
+                                              brush_core->reflect,
                                               brush_core->hardness,
                                               &width,
                                               &height);

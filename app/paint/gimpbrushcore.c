@@ -816,7 +816,8 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   gint           brush_width, brush_height;
 
   gimp_brush_transform_size (core->brush,
-                             core->scale, core->aspect_ratio, core->angle,
+                             core->scale, core->aspect_ratio,
+                             core->angle, core->reflect,
                              &brush_width, &brush_height);
 
   if (paint_width)
@@ -1402,6 +1403,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
                                     core->scale,
                                     core->aspect_ratio,
                                     core->angle,
+                                    core->reflect,
                                     core->hardness);
 
   if (mask == core->transform_brush)
@@ -1429,6 +1431,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
                                         core->scale,
                                         core->aspect_ratio,
                                         core->angle,
+                                        core->reflect,
                                         core->hardness);
 
   if (pixmap == core->transform_pixmap)
@@ -1511,8 +1514,9 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
   else
     core->scale = -1;
 
-  core->angle        = paint_options->brush_angle;
   core->aspect_ratio = paint_options->brush_aspect_ratio;
+  core->angle        = paint_options->brush_angle;
+  core->reflect      = FALSE;
   core->hardness     = paint_options->brush_hardness;
 
   if (! GIMP_IS_DYNAMICS (core->dynamics))

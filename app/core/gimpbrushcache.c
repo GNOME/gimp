@@ -51,6 +51,7 @@ struct _GimpBrushCacheUnit
   gdouble   scale;
   gdouble   aspect_ratio;
   gdouble   angle;
+  gboolean  reflect;
   gdouble   hardness;
   GeglNode *op;
 };
@@ -206,6 +207,7 @@ gimp_brush_cache_get (GimpBrushCache *cache,
                       gdouble         scale,
                       gdouble         aspect_ratio,
                       gdouble         angle,
+                      gboolean        reflect,
                       gdouble         hardness)
 {
   GList *iter;
@@ -222,6 +224,7 @@ gimp_brush_cache_get (GimpBrushCache *cache,
           unit->scale        == scale        &&
           unit->aspect_ratio == aspect_ratio &&
           unit->angle        == angle        &&
+          unit->reflect      == reflect      &&
           unit->hardness     == hardness     &&
           unit->op           == op)
         {
@@ -254,6 +257,7 @@ gimp_brush_cache_add (GimpBrushCache *cache,
                       gdouble         scale,
                       gdouble         aspect_ratio,
                       gdouble         angle,
+                      gboolean        reflect,
                       gdouble         hardness)
 {
   GList              *iter;
@@ -292,6 +296,7 @@ gimp_brush_cache_add (GimpBrushCache *cache,
   unit->scale        = scale;
   unit->aspect_ratio = aspect_ratio;
   unit->angle        = angle;
+  unit->reflect      = reflect;
   unit->hardness     = hardness;
   unit->op           = op;
 

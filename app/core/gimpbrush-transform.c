@@ -62,6 +62,7 @@ gimp_brush_real_transform_size (GimpBrush *brush,
                                 gdouble    scale,
                                 gdouble    aspect_ratio,
                                 gdouble    angle,
+                                gboolean   reflect,
                                 gint      *width,
                                 gint      *height)
 {
@@ -70,7 +71,7 @@ gimp_brush_real_transform_size (GimpBrush *brush,
 
   gimp_brush_transform_matrix (gimp_brush_get_width  (brush),
                                gimp_brush_get_height (brush),
-                               scale, aspect_ratio, angle, &matrix);
+                               scale, aspect_ratio, angle, reflect, &matrix);
 
   gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
@@ -106,6 +107,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
                                 gdouble    scale,
                                 gdouble    aspect_ratio,
                                 gdouble    angle,
+                                gboolean   reflect,
                                 gdouble    hardness)
 {
   GimpTempBuf  *result;
@@ -180,7 +182,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
-                               scale, aspect_ratio, angle, &matrix);
+                               scale, aspect_ratio, angle, reflect, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
@@ -202,7 +204,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       gint        unrotated_dest_height;
 
       gimp_brush_transform_matrix (src_width, src_height,
-                                   scale, aspect_ratio, 1.0, &unrotated_matrix);
+                                   scale, aspect_ratio, 0.0, FALSE,
+                                   &unrotated_matrix);
 
       gimp_brush_transform_bounding_box (brush, &unrotated_matrix,
                                          &unrotated_x, &unrotated_y,
@@ -397,6 +400,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
                                   gdouble    scale,
                                   gdouble    aspect_ratio,
                                   gdouble    angle,
+                                  gboolean   reflect,
                                   gdouble    hardness)
 {
   GimpTempBuf  *result;
@@ -471,7 +475,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
-                               scale, aspect_ratio, angle, &matrix);
+                               scale, aspect_ratio, angle, reflect, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
@@ -494,7 +498,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       gint        unrotated_dest_height;
 
       gimp_brush_transform_matrix (src_width, src_height,
-                                   scale, aspect_ratio, 1.0, &unrotated_matrix);
+                                   scale, aspect_ratio, 0.0, FALSE,
+                                   &unrotated_matrix);
 
       gimp_brush_transform_bounding_box (brush, &unrotated_matrix,
                                          &unrotated_x, &unrotated_y,
@@ -665,6 +670,7 @@ gimp_brush_transform_matrix (gdouble      width,
                              gdouble      scale,
                              gdouble      aspect_ratio,
                              gdouble      angle,
+                             gboolean     reflect,
                              GimpMatrix3 *matrix)
 {
   const gdouble center_x = width  / 2;
@@ -687,6 +693,8 @@ gimp_brush_transform_matrix (gdouble      width,
   gimp_matrix3_scale (matrix, scale_x, scale_y);
   gimp_matrix3_translate (matrix, - center_x * scale_x, - center_y * scale_y);
   gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
+  if (reflect)
+    gimp_matrix3_scale (matrix, -1.0, 1.0);
   gimp_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
 }
 

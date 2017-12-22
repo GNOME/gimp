@@ -68,6 +68,7 @@ gconstpointer    gimp_brush_cache_get      (GimpBrushCache *cache,
                                             gdouble         scale,
                                             gdouble         aspect_ratio,
                                             gdouble         angle,
+                                            gboolean        reflect,
                                             gdouble         hardness);
 void             gimp_brush_cache_add      (GimpBrushCache *cache,
                                             gpointer        data,
@@ -77,6 +78,7 @@ void             gimp_brush_cache_add      (GimpBrushCache *cache,
                                             gdouble         scale,
                                             gdouble         aspect_ratio,
                                             gdouble         angle,
+                                            gboolean        reflect,
                                             gdouble         hardness);
 
 

@@ -298,11 +298,12 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
                mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
                                                      (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
                                                      gimp_brush_generated_get_angle (gen_brush) / 360.0,
+                                                     FALSE,
                                                      gimp_brush_generated_get_hardness (gen_brush));
             }
           else
             mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
-                                                  0.0, 0.0, 1.0);
+                                                  0.0, 0.0, FALSE, 1.0);
 
           if (! mask_buf)
             {
@@ -316,7 +317,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
           if (pixmap_buf)
             pixmap_buf = gimp_brush_transform_pixmap (brush, NULL, scale,
-                                                      0.0, 0.0, 1.0);
+                                                      0.0, 0.0, FALSE, 1.0);
 
           mask_width  = gimp_temp_buf_get_width  (mask_buf);
           mask_height = gimp_temp_buf_get_height (mask_buf);
@@ -572,6 +573,7 @@ gimp_brush_transform_size (GimpBrush     *brush,
                            gdouble        scale,
                            gdouble        aspect_ratio,
                            gdouble        angle,
+                           gboolean       reflect,
                            gint          *width,
                            gint          *height)
 {
@@ -591,7 +593,7 @@ gimp_brush_transform_size (GimpBrush     *brush,
     }
 
   GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush,
-                                                scale, aspect_ratio, angle,
+                                                scale, aspect_ratio, angle, reflect,
                                                 width, height);
 }
 
@@ -601,6 +603,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
                            gdouble    scale,
                            gdouble    aspect_ratio,
                            gdouble    angle,
+                           gboolean   reflect,
                            gdouble    hardness)
 {
   const GimpTempBuf *mask;
@@ -612,12 +615,12 @@ gimp_brush_transform_mask (GimpBrush *brush,
   g_return_val_if_fail (scale > 0.0, NULL);
 
   gimp_brush_transform_size (brush,
-                             scale, aspect_ratio, angle,
+                             scale, aspect_ratio, reflect, angle,
                              &width, &height);
 
   mask = gimp_brush_cache_get (brush->priv->mask_cache,
                                op, width, height,
-                               scale, aspect_ratio, angle, hardness);
+                               scale, aspect_ratio, angle, reflect, hardness);
 
   if (! mask)
     {
@@ -635,6 +638,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
                                                              1.0,
                                                              0.0,
                                                              0.0,
+                                                             FALSE,
                                                              hardness);
            brush->priv->blur_hardness = hardness;
         }
@@ -649,6 +653,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
                                                            scale,
                                                            aspect_ratio,
                                                            angle,
+                                                           reflect,
                                                            effective_hardness);
 
       if (op)
@@ -682,7 +687,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
       gimp_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
                             op, width, height,
-                            scale, aspect_ratio, angle, effective_hardness);
+                            scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
   return mask;
@@ -694,6 +699,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                              gdouble    scale,
                              gdouble    aspect_ratio,
                              gdouble    angle,
+                             gboolean   reflect,
                              gdouble    hardness)
 {
   const GimpTempBuf *pixmap;
@@ -706,12 +712,12 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
   g_return_val_if_fail (scale > 0.0, NULL);
 
   gimp_brush_transform_size (brush,
-                             scale, aspect_ratio, angle,
+                             scale, aspect_ratio, angle, reflect,
                              &width, &height);
 
   pixmap = gimp_brush_cache_get (brush->priv->pixmap_cache,
                                  op, width, height,
-                                 scale, aspect_ratio, angle, hardness);
+                                 scale, aspect_ratio, angle, reflect, hardness);
 
   if (! pixmap)
     {
@@ -725,6 +731,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                                                   1.0,
                                                                   0.0,
                                                                   0.0,
+                                                                  FALSE,
                                                                   hardness);
          brush->priv->blur_hardness = hardness;
        }
@@ -738,6 +745,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                                                scale,
                                                                aspect_ratio,
                                                                angle,
+                                                               reflect,
                                                                effective_hardness);
 
       if (op)
@@ -770,7 +778,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
       gimp_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
                             op, width, height,
-                            scale, aspect_ratio, angle, effective_hardness);
+                            scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
   return pixmap;
@@ -781,6 +789,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                                gdouble    scale,
                                gdouble    aspect_ratio,
                                gdouble    angle,
+                               gboolean   reflect,
                                gdouble    hardness,
                                gint      *width,
                                gint      *height)
@@ -793,12 +802,12 @@ gimp_brush_transform_boundary (GimpBrush *brush,
   g_return_val_if_fail (height != NULL, NULL);
 
   gimp_brush_transform_size (brush,
-                             scale, aspect_ratio, angle,
+                             scale, aspect_ratio, angle, reflect,
                              width, height);
 
   boundary = gimp_brush_cache_get (brush->priv->boundary_cache,
                                    NULL, *width, *height,
-                                   scale, aspect_ratio, angle, hardness);
+                                   scale, aspect_ratio, angle, reflect, hardness);
 
   if (! boundary)
     {
@@ -806,6 +815,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                                                                    scale,
                                                                    aspect_ratio,
                                                                    angle,
+                                                                   reflect,
                                                                    hardness,
                                                                    width,
                                                                    height);
@@ -820,7 +830,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
         gimp_brush_cache_add (brush->priv->boundary_cache,
                               (gpointer) boundary,
                               NULL, *width, *height,
-                              scale, aspect_ratio, angle, hardness);
+                              scale, aspect_ratio, angle, reflect, hardness);
     }
 
   return boundary;

@@ -46,9 +46,10 @@ struct _GimpBrushCore
   GimpDynamics      *dynamics;
   gdouble            spacing;
   gdouble            scale;
-  gdouble            angle;
-  gdouble            hardness;
   gdouble            aspect_ratio;
+  gdouble            angle;
+  gboolean           reflect;
+  gdouble            hardness;
 
   /*  brush buffers  */
   GimpTempBuf       *pressure_brush;

@@ -35,12 +35,14 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
+                                     gboolean   reflect,
                                      gdouble    hardness)
 {
   const GimpTempBuf *mask;
 
   mask = gimp_brush_transform_mask (brush, NULL,
-                                    scale, aspect_ratio, angle, hardness);
+                                    scale, aspect_ratio,
+                                    angle, reflect, hardness);
 
   if (mask)
     {
@@ -94,11 +96,12 @@ gimp_brush_transform_boundary_approx (GimpBrush *brush,
                                       gdouble    scale,
                                       gdouble    aspect_ratio,
                                       gdouble    angle,
+                                      gboolean   reflect,
                                       gdouble    hardness)
 {
   return gimp_brush_transform_boundary_exact (brush,
                                               scale, aspect_ratio,
-                                              angle, hardness);
+                                              angle, reflect, hardness);
 }
 
 GimpBezierDesc *
@@ -106,21 +109,22 @@ gimp_brush_real_transform_boundary (GimpBrush *brush,
                                     gdouble    scale,
                                     gdouble    aspect_ratio,
                                     gdouble    angle,
+                                    gboolean   reflect,
                                     gdouble    hardness,
                                     gint      *width,
                                     gint      *height)
 {
-  gimp_brush_transform_size (brush, scale, aspect_ratio, angle,
+  gimp_brush_transform_size (brush, scale, aspect_ratio, reflect, angle,
                              width, height);
 
   if (*width < 256 && *height < 256)
     {
       return gimp_brush_transform_boundary_exact (brush,
                                                   scale, aspect_ratio,
-                                                  angle, hardness);
+                                                  angle, reflect, hardness);
     }
 
   return gimp_brush_transform_boundary_approx (brush,
                                                scale, aspect_ratio,
-                                               angle, hardness);
+                                               angle, reflect, hardness);
 }
