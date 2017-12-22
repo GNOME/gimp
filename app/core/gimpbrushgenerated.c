@@ -319,12 +319,8 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
   if (aspect_ratio < 0.0)
     angle = angle + 0.25;
 
+  angle  = fmod (fmod (angle, 1.0) + 1.0, 1.0);
   angle *= 360;
-
-  if (angle < 0.0)
-    angle = -1.0 * fmod (angle, 180.0);
-  else if (angle > 180.0)
-    angle = fmod (angle, 180.0);
 
   gimp_brush_generated_get_size (brush,
                                  brush->shape,
@@ -357,12 +353,8 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
   if (aspect_ratio < 0.0)
     angle = angle + 0.25;
 
+  angle  = fmod (fmod (angle, 1.0) + 1.0, 1.0);
   angle *= 360;
-
-  if (angle < 0.0)
-    angle = -1.0 * fmod (angle, 180.0);
-  else if (angle > 180.0)
-    angle = fmod (angle, 180.0);
 
   if (scale    == 1.0                 &&
       ratio    == brush->aspect_ratio &&
@@ -605,7 +597,7 @@ gimp_brush_generated_get_size (GimpBrushGenerated      *gbrush,
    * allows for any angle to turn up.
    **/
 
-  angle_in_degrees = ROUND (angle_in_degrees * 1000.0) / 1000.0;
+  angle_in_degrees = RINT (angle_in_degrees * 1000.0) / 1000.0;
 
   s = sin (gimp_deg_to_rad (angle_in_degrees));
   c = cos (gimp_deg_to_rad (angle_in_degrees));
