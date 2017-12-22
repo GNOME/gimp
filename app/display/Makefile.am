@@ -144,6 +144,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-tool-events.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
+	gimpdisplayshell-utils.c		\
+	gimpdisplayshell-utils.h		\
 	gimpdisplayxfer.c			\
 	gimpdisplayxfer.h			\
 	gimpimagewindow.c			\

@@ -44,6 +44,7 @@
 #include "gimpcanvasline.h"
 #include "gimpcanvaspolygon.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-utils.h"
 #include "gimptoolpolygon.h"
 
 #include "gimp-intl.h"
@@ -812,11 +813,13 @@ gimp_tool_polygon_update_motion (GimpToolPolygon *polygon,
                                                &start_point_y,
                                                segment_index);
 
-          gimp_constrain_line (start_point_x,
-                               start_point_y,
-                               &new_x,
-                               &new_y,
-                               GIMP_CONSTRAIN_LINE_15_DEGREES);
+          gimp_display_shell_constrain_line (
+            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (polygon)),
+            start_point_x,
+            start_point_y,
+            &new_x,
+            &new_y,
+            GIMP_CONSTRAIN_LINE_15_DEGREES);
         }
 
       gimp_tool_polygon_move_segment_vertex_to (polygon,
@@ -1262,10 +1265,12 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
                                                    &start_point_y,
                                                    priv->n_segment_indices - 1);
 
-              gimp_constrain_line (start_point_x, start_point_y,
-                                   &priv->pending_point.x,
-                                   &priv->pending_point.y,
-                                   GIMP_CONSTRAIN_LINE_15_DEGREES);
+              gimp_display_shell_constrain_line (
+                gimp_tool_widget_get_shell (widget),
+                start_point_x, start_point_y,
+                &priv->pending_point.x,
+                &priv->pending_point.y,
+                GIMP_CONSTRAIN_LINE_15_DEGREES);
             }
         }
     }

@@ -687,7 +687,8 @@ gimp_paint_core_get_last_coords (GimpPaintCore *core,
 void
 gimp_paint_core_round_line (GimpPaintCore    *core,
                             GimpPaintOptions *paint_options,
-                            gboolean          constrain_15_degrees)
+                            gboolean          constrain_15_degrees,
+                            gdouble           constrain_offset_angle)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
@@ -703,7 +704,8 @@ gimp_paint_core_round_line (GimpPaintCore    *core,
   if (constrain_15_degrees)
     gimp_constrain_line (core->last_coords.x, core->last_coords.y,
                          &core->cur_coords.x, &core->cur_coords.y,
-                         GIMP_CONSTRAIN_LINE_15_DEGREES);
+                         GIMP_CONSTRAIN_LINE_15_DEGREES,
+                         constrain_offset_angle);
 }
 
 

@@ -521,7 +521,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
     {
       gimp_constrain_line (edit_select->start_x, edit_select->start_y,
                            &new_x, &new_y,
-                           GIMP_CONSTRAIN_LINE_45_DEGREES);
+                           GIMP_CONSTRAIN_LINE_45_DEGREES, 0.0);
     }
 
   gimp_edit_selection_tool_calc_coords (edit_select, image,

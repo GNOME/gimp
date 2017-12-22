@@ -71,7 +71,8 @@ void         gimp_constrain_line                   (gdouble          start_x,
                                                     gdouble          start_y,
                                                     gdouble         *end_x,
                                                     gdouble         *end_y,
-                                                    gint             n_snap_lines);
+                                                    gint             n_snap_lines,
+                                                    gdouble          offset_angle);
 
 gint         gimp_file_compare                     (GFile           *file1,
                                                     GFile           *file2);

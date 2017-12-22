@@ -610,6 +610,7 @@ gimp_utils_point_to_line_distance (const GimpVector2 *point,
  * @end_x:
  * @end_y:
  * @n_snap_lines: Number evenly disributed lines to snap to.
+ * @offset_angle: The angle by which to offset the lines, in degrees.
  *
  * Projects a line onto the specified subset of evenly radially
  * distributed lines. @n_lines of 2 makes the line snap horizontally
@@ -621,7 +622,8 @@ gimp_constrain_line (gdouble  start_x,
                      gdouble  start_y,
                      gdouble *end_x,
                      gdouble *end_y,
-                     gint     n_snap_lines)
+                     gint     n_snap_lines,
+                     gdouble  offset_angle)
 {
   GimpVector2 line_point          = {  start_x,  start_y };
   GimpVector2 point               = { *end_x,   *end_y   };
@@ -634,7 +636,8 @@ gimp_constrain_line (gdouble  start_x,
 
   for (i = 0; i < n_snap_lines; i++)
     {
-      angle = i * G_PI / n_snap_lines;
+      angle  = i * G_PI / n_snap_lines;
+      angle += offset_angle * G_PI / 180.0;
 
       gimp_vector2_set (&line_dir,
                         cos (angle),

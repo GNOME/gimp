@@ -42,6 +42,7 @@
 #include "gimpcanvasline.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
+#include "gimpdisplayshell-utils.h"
 #include "gimptoolline.h"
 
 #include "gimp-intl.h"
@@ -1201,9 +1202,13 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 
     case GIMP_TOOL_LINE_HANDLE_START:
       if (constrain)
-        gimp_constrain_line (private->x2, private->y2,
-                             &x, &y,
-                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+        {
+          gimp_display_shell_constrain_line (
+            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line)),
+            private->x2, private->y2,
+            &x, &y,
+            GIMP_CONSTRAIN_LINE_15_DEGREES);
+        }
 
       g_object_set (line,
                     "x1", x,
@@ -1213,9 +1218,13 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 
     case GIMP_TOOL_LINE_HANDLE_END:
       if (constrain)
-        gimp_constrain_line (private->x1, private->y1,
-                             &x, &y,
-                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+        {
+          gimp_display_shell_constrain_line (
+            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line)),
+            private->x1, private->y1,
+            &x, &y,
+            GIMP_CONSTRAIN_LINE_15_DEGREES);
+        }
 
       g_object_set (line,
                     "x2", x,

@@ -45,6 +45,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-selection.h"
+#include "display/gimpdisplayshell-utils.h"
 
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
@@ -337,7 +338,10 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
-      gimp_paint_core_round_line (core, paint_options, constrain);
+      gimp_paint_core_round_line (
+        core, paint_options,
+        constrain,
+        gimp_display_shell_get_constrained_line_offset_angle (shell));
     }
 
   tool->display  = display;
@@ -646,8 +650,10 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           gdouble  yres;
           gdouble  angle;
 
-          gimp_paint_core_round_line (core, paint_options,
-                                      (state & constrain_mask) != 0);
+          gimp_paint_core_round_line (
+            core, paint_options,
+            (state & constrain_mask) != 0,
+            gimp_display_shell_get_constrained_line_offset_angle (shell));
 
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;

@@ -42,6 +42,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-utils.h"
 #include "gimptoolcompass.h"
 
 #include "gimp-intl.h"
@@ -736,9 +737,10 @@ gimp_tool_compass_motion (GimpToolWidget   *widget,
           gdouble  x = new_x[private->point];
           gdouble  y = new_y[private->point];
 
-          gimp_constrain_line (new_x[0], new_y[0],
-                               &x, &y,
-                               GIMP_CONSTRAIN_LINE_15_DEGREES);
+          gimp_display_shell_constrain_line (gimp_tool_widget_get_shell (widget),
+                                             new_x[0], new_y[0],
+                                             &x, &y,
+                                             GIMP_CONSTRAIN_LINE_15_DEGREES);
 
           new_x[private->point] = ROUND (x);
           new_y[private->point] = ROUND (y);
@@ -909,9 +911,12 @@ gimp_tool_compass_motion_modifier (GimpToolWidget  *widget,
       new_y[2] = private->y[2];
 
       if (press)
-        gimp_constrain_line (private->x[0], private->y[0],
-                             &x, &y,
-                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+        {
+          gimp_display_shell_constrain_line (gimp_tool_widget_get_shell (widget),
+                                             private->x[0], private->y[0],
+                                             &x, &y,
+                                             GIMP_CONSTRAIN_LINE_15_DEGREES);
+        }
 
       new_x[private->point] = ROUND (x);
       new_y[private->point] = ROUND (y);
