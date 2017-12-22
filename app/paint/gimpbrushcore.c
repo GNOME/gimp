@@ -326,12 +326,13 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
                                                       paint_options,
                                                       fade_point);
 
-              if (paint_options->brush_zoom)
+              if (paint_options->brush_zoom &&
+                  MAX (current_coords.xscale, current_coords.yscale) > 0)
                 {
-                  scale = scale / MAX (current_coords.xscale, current_coords.xscale);
+                  scale /= MAX (current_coords.xscale, current_coords.yscale);
 
-                  /*Cap transform result for brushes or OOM can occur*/
-                  if ((MAX (width, height)) > GIMP_BRUSH_MAX_SIZE)
+                  /* Cap transform result for brushes or OOM can occur */
+                  if ((scale * MAX (width, height)) > GIMP_BRUSH_MAX_SIZE)
                     {
                       scale = GIMP_BRUSH_MAX_SIZE / MAX (width, height);
                     }
