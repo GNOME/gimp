@@ -1463,10 +1463,14 @@ gimp_tool_line_update_status (GimpToolLine    *line,
 
   if (proximity)
     {
-      gint             handle;
-      const gchar     *message                = NULL;
-      const gchar     *toggle_behavior_format = NULL;
-      gchar           *status;
+      GimpDisplayShell *shell;
+      const gchar      *toggle_behavior_format = NULL;
+      const gchar      *message                = NULL;
+      gchar            *line_status            = NULL;
+      gchar            *status;
+      gint              handle;
+
+      shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
 
       if (private->grab == GRAB_SELECTION)
         handle = private->selection;
@@ -1476,7 +1480,13 @@ gimp_tool_line_update_status (GimpToolLine    *line,
       if (handle == GIMP_TOOL_LINE_HANDLE_START ||
           handle == GIMP_TOOL_LINE_HANDLE_END)
         {
-          message                = _("Click-Drag to move the endpoint");
+          line_status = gimp_display_shell_get_line_status (shell,
+                                                            _("Click-Drag to move the endpoint"),
+                                                            ". ",
+                                                            private->x1,
+                                                            private->y1,
+                                                            private->x2,
+                                                            private->y2);
           toggle_behavior_format = _("%s for constrained angles");
         }
       else if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (handle) ||
@@ -1544,7 +1554,7 @@ gimp_tool_line_update_status (GimpToolLine    *line,
         }
 
       status =
-        gimp_suggest_modifiers (message ? message : "",
+        gimp_suggest_modifiers (message ? message : (line_status ? line_status : ""),
                                 ((toggle_behavior_format ?
                                    gimp_get_constrain_behavior_mask () : 0) |
                                  (private->grab == GRAB_NONE ?
@@ -1554,33 +1564,30 @@ gimp_tool_line_update_status (GimpToolLine    *line,
                                 toggle_behavior_format,
                                 _("%s to move the whole line"));
 
-      if (message)
+      if (message || line_status)
         {
           gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (line), status);
         }
       else
         {
-          GimpDisplayShell *shell;
-          gchar            *enhanced_title;
-
-          shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
-          enhanced_title = gimp_display_shell_get_line_status (shell,
-                                                               private->status_title,
-                                                               ". ",
-                                                               private->x1,
-                                                               private->y1,
-                                                               private->x2,
-                                                               private->y2);
+          line_status = gimp_display_shell_get_line_status (shell,
+                                                            private->status_title,
+                                                            ". ",
+                                                            private->x1,
+                                                            private->y1,
+                                                            private->x2,
+                                                            private->y2);
           gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
-                                              enhanced_title,
+                                              line_status,
                                               private->x2 - private->x1,
                                               ", ",
                                               private->y2 - private->y1,
                                               status);
-          g_free (enhanced_title);
         }
 
       g_free (status);
+      if (line_status)
+        g_free (line_status);
     }
   else
     {
