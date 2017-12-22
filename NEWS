@@ -13,18 +13,30 @@ in NEWS.
 Overview of Changes from GIMP 2.9.6 to GIMP 2.10 RC1
 ====================================================
 
+Core:
+
+  - New dashboard dockable: shows the current GEGL cache and swap sizes
+    and their recent history. It has options to control the update rate
+    and history duration of the data, and an option to warn (by
+    raising/blinking the dialog) when the swap size approaches its
+    limit.
+  - Make the selection boundary detection the same as 2.8.
+
 Plug-ins:
 
   - Screenshot with the generic Freedesktop API has been implemented. It
     is meant to replace all desktop environment specific APIs but needs
     to get reasonable features first. Therefore currently GNOME/KDE and
     X11 implementations still have priority.
+  - Fix various vulnerabilities in file plug-ins: GBR (CVE-2017-17784),
+    PSP (CVE-2017-17787 and CVE-2017-17789), TGA (CVE-2017-17786).
 
 Building:
 
   - poppler and poppler-data now hard dependencies. PDF import is
     considered a granted feature nowadays and fallbacking to the
     Postscript plug-in was bad experience.
+  - move PDB generation and sources to toplevel/pdb.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
