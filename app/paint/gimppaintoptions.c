@@ -266,7 +266,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LOCK_TO_VIEW,
                             "brush-lock-to-view",
                             _("Lock brush to view"),
-                            _("Keep brush appearance fixed realtive to the view"),
+                            _("Keep brush appearance fixed relative to the view"),
                             DEFAULT_BRUSH_LOCK_TO_VIEW,
                             GIMP_PARAM_STATIC_STRINGS);
 
