@@ -158,57 +158,57 @@ query (void)
    * Load/export procedures
    */
   gimp_install_procedure (LOAD_PROC,
-			  "load FLI-movies",
-			  "This is an experimantal plug-in to handle FLI movies",
-			  "Jens Ch. Restemeier",
-			  "Jens Ch. Restemeier",
-			  "1997",
-			  N_("AutoDesk FLIC animation"),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (load_args) - 2,
+                          "load FLI-movies",
+                          "This is an experimantal plug-in to handle FLI movies",
+                          "Jens Ch. Restemeier",
+                          "Jens Ch. Restemeier",
+                          "1997",
+                          N_("AutoDesk FLIC animation"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args) - 2,
                           G_N_ELEMENTS (load_return_vals),
-			  load_args,
+                          load_args,
                           load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-flic");
   gimp_register_magic_load_handler (LOAD_PROC,
-				    "fli,flc",
-				    "",
-				    "");
+                                    "fli,flc",
+                                    "",
+                                    "");
 
   gimp_install_procedure (SAVE_PROC,
-			  "export FLI-movies",
-			  "This is an experimantal plug-in to handle FLI movies",
-			  "Jens Ch. Restemeier",
-			  "Jens Ch. Restemeier",
-			  "1997",
-			  N_("AutoDesk FLIC animation"),
-			  "INDEXED,GRAY",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args), 0,
-			  save_args, NULL);
+                          "export FLI-movies",
+                          "This is an experimantal plug-in to handle FLI movies",
+                          "Jens Ch. Restemeier",
+                          "Jens Ch. Restemeier",
+                          "1997",
+                          N_("AutoDesk FLIC animation"),
+                          "INDEXED,GRAY",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-flic");
   gimp_register_save_handler (SAVE_PROC,
-			      "fli,flc",
-			      "");
+                              "fli,flc",
+                              "");
 
   /*
    * Utility functions:
    */
   gimp_install_procedure (INFO_PROC,
-			  "Get information about a Fli movie",
-			  "This is a experimantal plug-in to handle FLI movies",
-			  "Jens Ch. Restemeier",
-			  "Jens Ch. Restemeier",
-			  "1997",
-			  NULL,
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (info_args),
+                          "Get information about a Fli movie",
+                          "This is a experimantal plug-in to handle FLI movies",
+                          "Jens Ch. Restemeier",
+                          "Jens Ch. Restemeier",
+                          "1997",
+                          NULL,
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (info_args),
                           G_N_ELEMENTS (info_return_vals),
-			  info_args,
+                          info_args,
                           info_return_vals);
 }
 
@@ -243,82 +243,82 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       switch (run_mode)
-	{
-	case GIMP_RUN_NONINTERACTIVE:
-	  /*
-	   * check for valid parameters:
-	   * (Or can I trust GIMP ?)
-	   */
-	  if ((nparams < G_N_ELEMENTS (load_args) - 2) ||
+        {
+        case GIMP_RUN_NONINTERACTIVE:
+          /*
+           * check for valid parameters:
+           * (Or can I trust GIMP ?)
+           */
+          if ((nparams < G_N_ELEMENTS (load_args) - 2) ||
               (G_N_ELEMENTS (load_args) < nparams))
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	      break;
-	    }
-	  for (pc = 0; pc < G_N_ELEMENTS (load_args) - 2; pc++)
-	    {
-	      if (load_args[pc].type != param[pc].type)
-		{
-		  status = GIMP_PDB_CALLING_ERROR;
-		  break;
-		}
-	    }
-	  for (pc = G_N_ELEMENTS (load_args) - 2; pc < nparams; pc++)
-	    {
-	      if (load_args[pc].type != param[pc].type)
-		{
-		  status = GIMP_PDB_CALLING_ERROR;
-		  break;
-		}
-	    }
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+              break;
+            }
+          for (pc = 0; pc < G_N_ELEMENTS (load_args) - 2; pc++)
+            {
+              if (load_args[pc].type != param[pc].type)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                  break;
+                }
+            }
+          for (pc = G_N_ELEMENTS (load_args) - 2; pc < nparams; pc++)
+            {
+              if (load_args[pc].type != param[pc].type)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                  break;
+                }
+            }
 
-	  to_frame   = ((nparams < G_N_ELEMENTS (load_args) - 1) ?
+          to_frame   = ((nparams < G_N_ELEMENTS (load_args) - 1) ?
                         1 : param[3].data.d_int32);
-	  from_frame = ((nparams < G_N_ELEMENTS (load_args)) ?
+          from_frame = ((nparams < G_N_ELEMENTS (load_args)) ?
                         -1 : param[4].data.d_int32);
 
           image_ID = load_image (param[1].data.d_string,
                                  from_frame, to_frame, &error);
 
-	  if (image_ID != -1)
-	    {
-	      *nreturn_vals = 2;
-	      values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image_ID;
-	    }
-	  else
+          if (image_ID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
-	  break;
+          break;
 
-	case GIMP_RUN_INTERACTIVE:
-	  if (load_dialog (param[1].data.d_string))
-	    {
-	      image_ID = load_image (param[1].data.d_string,
+        case GIMP_RUN_INTERACTIVE:
+          if (load_dialog (param[1].data.d_string))
+            {
+              image_ID = load_image (param[1].data.d_string,
                                      from_frame, to_frame, &error);
 
-	      if (image_ID != -1)
-		{
-		  *nreturn_vals = 2;
-		  values[1].type         = GIMP_PDB_IMAGE;
-		  values[1].data.d_image = image_ID;
-		}
-	      else
+              if (image_ID != -1)
+                {
+                  *nreturn_vals = 2;
+                  values[1].type         = GIMP_PDB_IMAGE;
+                  values[1].data.d_image = image_ID;
+                }
+              else
                 {
                   status = GIMP_PDB_EXECUTION_ERROR;
                 }
             }
-	  else
+          else
             {
               status = GIMP_PDB_CANCEL;
             }
-	  break;
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        case GIMP_RUN_WITH_LAST_VALS:
+          status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
@@ -326,62 +326,62 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
 
       switch (run_mode)
-	{
-	case GIMP_RUN_NONINTERACTIVE:
-	  if (nparams != G_N_ELEMENTS (save_args))
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	      break;
-	    }
-	  for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
-	    {
-	      if (save_args[pc].type!=param[pc].type)
-		{
-		  status = GIMP_PDB_CALLING_ERROR;
-		  break;
-		}
-	    }
-	  if (! save_image (param[3].data.d_string, image_ID,
-			    param[5].data.d_int32,
-			    param[6].data.d_int32, &error))
+        {
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != G_N_ELEMENTS (save_args))
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+              break;
+            }
+          for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
+            {
+              if (save_args[pc].type!=param[pc].type)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                  break;
+                }
+            }
+          if (! save_image (param[3].data.d_string, image_ID,
+                            param[5].data.d_int32,
+                            param[6].data.d_int32, &error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
-	  break;
+          break;
 
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI",
-				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+          export = gimp_export_image (&image_ID, &drawable_ID, "FLI",
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                       GIMP_EXPORT_CAN_HANDLE_LAYERS);
 
-	  if (export == GIMP_EXPORT_CANCEL)
-	    {
-	      values[0].data.d_status = GIMP_PDB_CANCEL;
-	      return;
-	    }
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
 
-	  if (save_dialog (param[1].data.d_image))
-	    {
-	      if (! save_image (param[3].data.d_string,
+          if (save_dialog (param[1].data.d_image))
+            {
+              if (! save_image (param[3].data.d_string,
                                 image_ID, from_frame, to_frame, &error))
                 {
                   status = GIMP_PDB_EXECUTION_ERROR;
                 }
             }
-	  else
+          else
             {
               status = GIMP_PDB_CANCEL;
             }
-	  break;
-	}
+          break;
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
-	gimp_image_delete (image_ID);
+        gimp_image_delete (image_ID);
     }
   else if (strcmp (name, INFO_PROC) == 0)
     {
@@ -391,34 +391,34 @@ run (const gchar      *name,
        * check for valid parameters;
        */
       if (nparams != G_N_ELEMENTS (info_args))
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
-	    {
-	      if (info_args[pc].type != param[pc].type)
-		{
-		  status = GIMP_PDB_CALLING_ERROR;
-		  break;
-		}
-	    }
-	}
+        {
+          for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
+            {
+              if (info_args[pc].type != param[pc].type)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                  break;
+                }
+            }
+        }
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  if (get_info (param[0].data.d_string,
+        {
+          if (get_info (param[0].data.d_string,
                         &width, &height, &frames, &error))
-	    {
-	      *nreturn_vals = 4;
-	      values[1].type = GIMP_PDB_INT32;
-	      values[1].data.d_int32 = width;
-	      values[2].type = GIMP_PDB_INT32;
-	      values[2].data.d_int32 = height;
-	      values[3].type = GIMP_PDB_INT32;
-	      values[3].data.d_int32 = frames;
-	    }
-	  else
+            {
+              *nreturn_vals = 4;
+              values[1].type = GIMP_PDB_INT32;
+              values[1].data.d_int32 = width;
+              values[2].type = GIMP_PDB_INT32;
+              values[2].data.d_int32 = height;
+              values[3].type = GIMP_PDB_INT32;
+              values[3].data.d_int32 = frames;
+            }
+          else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -444,9 +444,9 @@ run (const gchar      *name,
  */
 static gboolean
 get_info (const gchar  *filename,
-	  gint32       *width,
-	  gint32       *height,
-	  gint32       *frames,
+          gint32       *width,
+          gint32       *height,
+          gint32       *frames,
           GError      **error)
 {
   FILE *file;
@@ -479,8 +479,8 @@ get_info (const gchar  *filename,
  */
 static gint32
 load_image (const gchar  *filename,
-	    gint32        from_frame,
-	    gint32        to_frame,
+            gint32        from_frame,
+            gint32        to_frame,
             GError      **error)
 {
   FILE         *file;
@@ -563,8 +563,8 @@ load_image (const gchar  *filename,
       gchar *name_buf = g_strdup_printf (_("Frame (%i)"), cnt);
 
       layer_ID = gimp_layer_new (image_id, name_buf,
-				 fli_header.width, fli_header.height,
-				 GIMP_INDEXED_IMAGE,
+                                 fli_header.width, fli_header.height,
+                                 GIMP_INDEXED_IMAGE,
                                  100,
                                  gimp_image_get_default_new_layer_mode (image_id));
       g_free (name_buf);
@@ -581,15 +581,15 @@ load_image (const gchar  *filename,
       g_object_unref (buffer);
 
       if (cnt > 0)
-	gimp_layer_add_alpha (layer_ID);
+        gimp_layer_add_alpha (layer_ID);
 
       gimp_image_insert_layer (image_id, layer_ID, -1, 0);
 
       if (cnt < to_frame)
-	{
-	  memcpy (ocm, cm, 768);
-	  fb_x = fb; fb = ofb; ofb = fb_x;
-	}
+        {
+          memcpy (ocm, cm, 768);
+          fb_x = fb; fb = ofb; ofb = fb_x;
+        }
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
@@ -615,9 +615,9 @@ load_image (const gchar  *filename,
  */
 static gboolean
 save_image (const gchar  *filename,
-	    gint32        image_id,
-	    gint32        from_frame,
-	    gint32        to_frame,
+            gint32        image_id,
+            gint32        from_frame,
+            gint32        to_frame,
             GError      **error)
 {
   FILE         *file;
@@ -675,9 +675,9 @@ save_image (const gchar  *filename,
     case GIMP_GRAY:
       /* build grayscale palette */
       for (i = 0; i < 256; i++)
-	{
-	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
-	}
+        {
+          cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
+        }
       bg = GIMP_RGB_LUMINANCE (red, green, blue) + 0.5;
       break;
 
@@ -686,28 +686,28 @@ save_image (const gchar  *filename,
       bg = 0;
       cmap = gimp_image_get_colormap (image_id, &colors);
       for (i = 0; i < MIN (colors, 256); i++)
-	{
-	  cm[i*3+0] = cmap[i*3+0];
-	  cm[i*3+1] = cmap[i*3+1];
-	  cm[i*3+2] = cmap[i*3+2];
+        {
+          cm[i*3+0] = cmap[i*3+0];
+          cm[i*3+1] = cmap[i*3+1];
+          cm[i*3+2] = cmap[i*3+2];
 
-	  diff = red - cm[i*3+0];
-	  sum = SQR (diff);
-	  diff = green - cm[i*3+1];
-	  sum +=  SQR (diff);
-	  diff = blue - cm[i*3+2];
-	  sum += SQR (diff);
+          diff = red - cm[i*3+0];
+          sum = SQR (diff);
+          diff = green - cm[i*3+1];
+          sum +=  SQR (diff);
+          diff = blue - cm[i*3+2];
+          sum += SQR (diff);
 
-	  if (sum < max)
-	    {
-	      bg = i;
-	      max = sum;
-	    }
-	}
+          if (sum < max)
+            {
+              bg = i;
+              max = sum;
+            }
+        }
       for (i = colors; i < 256; i++)
-	{
-	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
-	}
+        {
+          cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
+        }
       break;
 
     default:
@@ -721,8 +721,8 @@ save_image (const gchar  *filename,
   /*
    * First build the fli header.
    */
-  fli_header.filesize = 0;	/* will be fixed when writing the header */
-  fli_header.frames   = 0; 	/* will be fixed during the write */
+  fli_header.filesize = 0;  /* will be fixed when writing the header */
+  fli_header.frames   = 0;  /* will be fixed during the write */
   fli_header.width    = gimp_image_width (image_id);
   fli_header.height   = gimp_image_height (image_id);
 
@@ -792,38 +792,38 @@ save_image (const gchar  *filename,
 
       /* now paste it into the framebuffer, with the necessary offset */
       for (yc = 0, yy = offset_y; yc < rows; yc++, yy++)
-	{
-	  if (yy >= 0 && yy < fli_header.height)
-	    {
+        {
+          if (yy >= 0 && yy < fli_header.height)
+            {
               gegl_buffer_get (buffer, GEGL_RECTANGLE (0, yc, cols, 1), 1.0,
                                format, src_row,
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-	      for (xc = 0, xx = offset_x; xc < cols; xc++, xx++)
-		{
-		  if (xx >= 0 && xx < fli_header.width)
-		    fb[yy * fli_header.width + xx] = src_row[xc * bytes];
-		}
-	    }
-	}
+              for (xc = 0, xx = offset_x; xc < cols; xc++, xx++)
+                {
+                  if (xx >= 0 && xx < fli_header.width)
+                    fb[yy * fli_header.width + xx] = src_row[xc * bytes];
+                }
+            }
+        }
 
       g_free (src_row);
       g_object_unref (buffer);
 
       /* save the frame */
       if (cnt > from_frame)
-	{
-	  /* save frame, allow all codecs */
-	  fli_write_frame (file, &fli_header, ofb, cm, fb, cm, W_ALL);
-	}
+        {
+          /* save frame, allow all codecs */
+          fli_write_frame (file, &fli_header, ofb, cm, fb, cm, W_ALL);
+        }
       else
-	{
-	  /* save first frame, no delta information, allow all codecs */
-	  fli_write_frame (file, &fli_header, NULL, NULL, fb, cm, W_ALL);
-	}
+        {
+          /* save first frame, no delta information, allow all codecs */
+          fli_write_frame (file, &fli_header, NULL, NULL, fb, cm, W_ALL);
+        }
 
       if (cnt < to_frame)
-	memcpy (ofb, fb, fli_header.width * fli_header.height);
+        memcpy (ofb, fb, fli_header.width * fli_header.height);
 
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
@@ -865,12 +865,12 @@ load_dialog (const gchar *filename)
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), PLUG_IN_ROLE,
                             NULL, 0,
-			    gimp_standard_help_func, LOAD_PROC,
+                            gimp_standard_help_func, LOAD_PROC,
 
-			    _("_Cancel"), GTK_RESPONSE_CANCEL,
-			    _("_Open"),   GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Open"),   GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -893,8 +893,8 @@ load_dialog (const gchar *filename)
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     C_("frame-range", "From:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             C_("frame-range", "From:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
@@ -903,8 +903,8 @@ load_dialog (const gchar *filename)
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     C_("frame-range", "To:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             C_("frame-range", "To:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
@@ -951,8 +951,8 @@ save_dialog (gint32 image_id)
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     C_("frame-range", "From:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             C_("frame-range", "From:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
@@ -961,8 +961,8 @@ save_dialog (gint32 image_id)
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     C_("frame-range", "To:"), 0.0, 0.5,
-			     spinbutton, 1, TRUE);
+                             C_("frame-range", "To:"), 0.0, 0.5,
+                             spinbutton, 1, TRUE);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
