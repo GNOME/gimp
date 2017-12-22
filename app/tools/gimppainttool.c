@@ -628,8 +628,9 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
   if (drawable && proximity)
     {
-      gboolean constrain_mask = gimp_get_constrain_behavior_mask ();
-      gint     off_x, off_y;
+      gchar    *status;
+      gboolean  constrain_mask = gimp_get_constrain_behavior_mask ();
+      gint      off_x, off_y;
 
       core->cur_coords = *coords;
 
@@ -643,20 +644,12 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           /*  If shift is down and this is not the first paint stroke,
            *  draw a line.
            */
-
           gchar   *status_help;
-          gdouble  dx, dy, pixel_dist;
-          gdouble  xres;
-          gdouble  yres;
-          gdouble  angle;
 
           gimp_paint_core_round_line (
             core, paint_options,
             (state & constrain_mask) != 0,
             gimp_display_shell_get_constrained_line_offset_angle (shell));
-
-          dx = core->cur_coords.x - core->last_coords.x;
-          dy = core->cur_coords.y - core->last_coords.y;
 
           status_help = gimp_suggest_modifiers (paint_tool->status_line,
                                                 constrain_mask & ~state,
@@ -664,73 +657,17 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                                                 _("%s for constrained angles"),
                                                 NULL);
 
-          pixel_dist = sqrt (SQR (dx) + SQR (dy));
-
-          if (shell->unit == GIMP_UNIT_PIXEL)
-            xres = yres = 1.0;
-          else
-            gimp_image_get_resolution (image, &xres, &yres);
-
-          if (dx)
-            {
-              angle = gimp_rad_to_deg (atan ((dy/yres) / (dx/xres)));
-              if (dx > 0)
-                {
-                  if (dy > 0)
-                    angle = 360.0 - angle;
-                  else if (dy < 0)
-                    angle = -angle;
-                }
-              else
-                {
-                  angle = 180.0 - angle;
-                }
-            }
-          else if (dy)
-            {
-              angle = dy > 0 ? 270.0 : 90.0;
-            }
-          else
-            {
-              angle = 0.0;
-            }
-
-          /*  show distance and angle in statusbar  */
-          if (shell->unit == GIMP_UNIT_PIXEL)
-            {
-              gimp_tool_push_status (tool, display, "%.1f %s, %.2f\302\260. %s",
-                                     pixel_dist, _("pixels"), angle, status_help);
-            }
-          else
-            {
-              gdouble inch_dist;
-              gdouble unit_dist;
-              gint    digits = 0;
-              gchar   format_str[64];
-
-              /* The distance in unit. */
-              inch_dist = sqrt (SQR (dx / xres) + SQR (dy / yres));
-              unit_dist = gimp_unit_get_factor (shell->unit) * inch_dist;
-
-              /* The ideal digit precision for unit in current resolution. */
-              if (inch_dist)
-                digits = gimp_unit_get_scaled_digits (shell->unit,
-                                                      pixel_dist / inch_dist);
-
-              g_snprintf (format_str, sizeof (format_str), "%%.%df %s, %%.2f\302\260. %%s",
-                          digits, gimp_unit_get_symbol (shell->unit));
-
-              gimp_tool_push_status (tool, display, format_str,
-                                     unit_dist, angle, status_help);
-            }
-
+          status = gimp_display_shell_get_line_status (shell, status_help,
+                                                       ". ",
+                                                       core->cur_coords.x,
+                                                       core->cur_coords.y,
+                                                       core->last_coords.x,
+                                                       core->last_coords.y);
           g_free (status_help);
-
           paint_tool->draw_line = TRUE;
         }
       else
         {
-          gchar           *status;
           GdkModifierType  modifiers = 0;
 
           /* HACK: A paint tool may set status_ctrl to NULL to indicate that
@@ -751,11 +688,10 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                                            _("%s for a straight line"),
                                            paint_tool->status_ctrl,
                                            NULL);
-          gimp_tool_push_status (tool, display, "%s", status);
-          g_free (status);
-
           paint_tool->draw_line = FALSE;
         }
+      gimp_tool_push_status (tool, display, "%s", status);
+      g_free (status);
 
       if (! gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_start (draw_tool, display);
