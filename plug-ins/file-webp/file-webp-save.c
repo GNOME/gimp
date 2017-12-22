@@ -174,7 +174,7 @@ save_layer (const gchar    *filename,
                                  gimp_filename_to_utf8(filename));
 
       /* Attempt to open the output file */
-      if ((outfile = g_fopen (filename, "wb+")) == NULL)
+      if ((outfile = g_fopen (filename, "w+b")) == NULL)
         {
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
