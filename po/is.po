@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-08-23 09:21+0000\n"
-"PO-Revision-Date: 2017-08-23 09:24+0000\n"
+"POT-Creation-Date: 2017-12-21 11:55+0000\n"
+"PO-Revision-Date: 2017-12-22 14:25+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -284,7 +284,7 @@ msgstr "Litrásir"
 #: ../app/actions/actions.c:121 ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:354
 msgid "Colormap"
-msgstr "Litakort"
+msgstr "Litavörpun"
 
 #: ../app/actions/actions.c:124
 msgid "Configuration"
@@ -322,7 +322,7 @@ msgstr "Saga skjala"
 
 #: ../app/actions/actions.c:148
 msgid "Drawable"
-msgstr "Teiknanlegt"
+msgstr "Myndhluti"
 
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:335
@@ -419,7 +419,7 @@ msgstr "Flýtihula"
 
 #: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:370
 msgid "Sample Points"
-msgstr "Sýnishorn"
+msgstr "Sýnatökupunktar"
 
 #: ../app/actions/actions.c:211
 msgid "Select"
@@ -784,7 +784,7 @@ msgstr "Afritun %s litrásar"
 #: ../app/actions/colormap-actions.c:44
 msgctxt "colormap-action"
 msgid "Colormap Menu"
-msgstr "Valmynd fyrir litakort"
+msgstr "Valmynd fyrir litavörpun"
 
 #: ../app/actions/colormap-actions.c:48
 msgctxt "colormap-action"
@@ -819,11 +819,11 @@ msgstr "Bæta við núverandi bakgrunnslit"
 #: ../app/actions/colormap-commands.c:73
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Breyta litaspjaldsfærslu #%d"
+msgstr "Breyta litavörpunarfærslu #%d"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
-msgstr "Breyta litaspjaldsfærslu"
+msgstr "Breyta litavörpunarfærslu"
 
 #: ../app/actions/config-actions.c:38
 msgctxt "config-action"
@@ -1053,12 +1053,12 @@ msgstr "Opna valmynd fyrir ferla"
 #: ../app/actions/dialogs-actions.c:85
 msgctxt "dialogs-action"
 msgid "Color_map"
-msgstr "Lita_kort"
+msgstr "Litavör_pun"
 
 #: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Opna valmynd fyrir litakort"
+msgstr "Opna valmynd fyrir litavörpun"
 
 #: ../app/actions/dialogs-actions.c:91
 msgctxt "dialogs-action"
@@ -4179,7 +4179,7 @@ msgstr "Endurstilla öll hjálparforrit á sjálfgefnar stillingar þeirra"
 #: ../app/actions/plug-in-actions.c:133
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
-msgstr "E_ndurtaka síðasta"
+msgstr "Endurta_ka síðasta"
 
 #: ../app/actions/plug-in-actions.c:135
 msgctxt "plug-in-action"
@@ -4970,7 +4970,7 @@ msgstr "Setja þennan feril neðst"
 #: ../app/actions/vectors-actions.c:112
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
-msgstr "_Mála eftir ferli.."
+msgstr "_Mála stroku eftir ferli.."
 
 #: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
@@ -4980,7 +4980,7 @@ msgstr "Mála eftir ferlinum"
 #: ../app/actions/vectors-actions.c:118
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
-msgstr "_Mála eftir ferli"
+msgstr "_Mála stroku eftir ferli"
 
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
@@ -7925,7 +7925,7 @@ msgstr "Litatíðnidreifing"
 #: ../app/core/gimpdrawable-offset.c:316
 msgctxt "undo-type"
 msgid "Offset Drawable"
-msgstr "Hliðra teiknanlegu"
+msgstr "Hliðra myndhluta"
 
 #: ../app/core/gimpdrawable-posterize.c:69
 #: ../app/core/gimpdrawable-posterize.c:79 ../app/tools/gimpposterizetool.c:84
@@ -9102,7 +9102,7 @@ msgstr "Fara í útflutningsglugga"
 
 #: ../app/dialogs/file-save-dialog.c:615 ../app/dialogs/file-save-dialog.c:690
 msgid "Extension Mismatch"
-msgstr "Ósamræmi viðskeytis"
+msgstr "Ósamræmi skráarendingar"
 
 #: ../app/dialogs/file-save-dialog.c:674
 msgid ""
@@ -9755,8 +9755,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
-"GIMP hjálparvafrann virðist vanta í uppsetninguna hjá þér. "
-"Nota venjulegan netvafra til að lesa hjálparsíðurnar."
+"GIMP hjálparvafrann virðist vanta í uppsetninguna hjá þér. Nota venjulegan "
+"netvafra til að lesa hjálparsíðurnar."
 
 #: ../app/dialogs/preferences-dialog.c:1913
 msgid "_Save tool options on exit"
@@ -10622,7 +10622,7 @@ msgstr "H"
 
 #: ../app/display/gimpcursorview.c:330
 msgid "_Sample Merged"
-msgstr "_Sýna samruna"
+msgstr "_Sameinað sýni"
 
 #: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
@@ -13831,7 +13831,7 @@ msgstr ""
 "Þú betur breytt laginu eða búið til nýtt textalag út frá textaeiginleikum "
 "þessa lags."
 
-#: ../app/tools/gimptexttool-editor.c:1236
+#: ../app/tools/gimptexttool-editor.c:1228
 msgid "GIMP Text Editor"
 msgstr "GIMP textaritill"
 
@@ -15078,7 +15078,7 @@ msgstr "Skráartegund"
 
 #: ../app/widgets/gimpfileprocview.c:197
 msgid "Extensions"
-msgstr "Viðbætur"
+msgstr "Skráaendingar"
 
 #: ../app/widgets/gimpfilleditor.c:124
 msgid "Fill Color"
@@ -15223,10 +15223,6 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "Gat ekki ræst viðbótina fyrir GIMP hjálparvafrann."
 
 #: ../app/widgets/gimphelp.c:354
-#| msgid ""
-#| "The GIMP help browser plug-in appears to be missing from your "
-#| "installation. You may instead use the web browser for reading the help "
-#| "pages."
 msgid "You may instead use the web browser for reading the help pages."
 msgstr "Þú getur í staðinn notað netvafrann til að lesa hjálparsíðurnar."
 
@@ -15980,8 +15976,8 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF-aðvörun: útgáfa 0 af XCF skráarsniðinu\n"
-"vistaði litaskrá ekki rétt.\n"
-"Skipti yfir í grátónaskrá."
+"vistaði litnúmeraskrá ekki rétt.\n"
+"Skipti yfir í grátónavörpun."
 
 #: ../app/xcf/xcf-read.c:174
 msgid "Invalid UTF-8 string in XCF file"
@@ -16073,6 +16069,11 @@ msgstr "Myndvinnsluforrit"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Búa til myndir og breyta ljósmyndum"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr "GIMP;mynd;hönnun;myndskreyting;málun;myndvinnsla;"
 
 #~ msgid "Move Layer"
 #~ msgstr "Flytja lag"
