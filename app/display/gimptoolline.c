@@ -1560,12 +1560,24 @@ gimp_tool_line_update_status (GimpToolLine    *line,
         }
       else
         {
+          GimpDisplayShell *shell;
+          gchar            *enhanced_title;
+
+          shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
+          enhanced_title = gimp_display_shell_get_line_status (shell,
+                                                               private->status_title,
+                                                               ". ",
+                                                               private->x1,
+                                                               private->y1,
+                                                               private->x2,
+                                                               private->y2);
           gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
-                                              private->status_title,
+                                              enhanced_title,
                                               private->x2 - private->x1,
                                               ", ",
                                               private->y2 - private->y1,
                                               status);
+          g_free (enhanced_title);
         }
 
       g_free (status);
