@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-08-09 15:00+0000\n"
-"PO-Revision-Date: 2017-08-23 09:18+0000\n"
+"POT-Creation-Date: 2017-12-21 11:57+0000\n"
+"PO-Revision-Date: 2017-12-23 20:09+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -613,7 +613,7 @@ msgstr "Lóð_rétt"
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
 #: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
-#: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
+#: ../plug-ins/common/file-tga.c:1100 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:700 ../plug-ins/file-faxg3/faxg3.c:474
@@ -1025,13 +1025,13 @@ msgstr "Hlaða inn stillingum litrásablandara"
 #: ../plug-ins/common/file-pat.c:339 ../plug-ins/common/file-pcx.c:362
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
-#: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
-#: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
-#: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
-#: ../plug-ins/common/file-xmc.c:842 ../plug-ins/common/file-xwd.c:437
-#: ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1723
+#: ../plug-ins/common/file-psp.c:1783 ../plug-ins/common/file-raw.c:257
+#: ../plug-ins/common/file-raw.c:728 ../plug-ins/common/file-sunras.c:393
+#: ../plug-ins/common/file-svg.c:333 ../plug-ins/common/file-svg.c:713
+#: ../plug-ins/common/file-tga.c:443 ../plug-ins/common/file-xbm.c:738
+#: ../plug-ins/common/file-xmc.c:657 ../plug-ins/common/file-xmc.c:842
+#: ../plug-ins/common/file-xwd.c:437 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
 #: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
@@ -1057,7 +1057,7 @@ msgstr "Vista stillingar litrásablandara"
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:409
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
+#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:666
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
@@ -1065,9 +1065,9 @@ msgstr "Vista stillingar litrásablandara"
 #: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
-#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1207
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
-#: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
+#: ../plug-ins/common/file-xmc.c:1456 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
 #: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
@@ -1104,7 +1104,7 @@ msgstr "Bæti við reitum"
 msgid "Checkerboard"
 msgstr "Reitir"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1156
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Stærð:"
@@ -2403,7 +2403,7 @@ msgstr "Ljósleiki"
 
 #: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
 msgid "cyan"
-msgstr "blágrænn (cyan)"
+msgstr "blágrænt (cyan)"
 
 #: ../plug-ins/common/decompose.c:203 ../plug-ins/common/decompose.c:207
 msgid "magenta"
@@ -2411,7 +2411,7 @@ msgstr "blárautt (magenta)"
 
 #: ../plug-ins/common/decompose.c:204 ../plug-ins/common/decompose.c:208
 msgid "yellow"
-msgstr "gulur"
+msgstr "gult"
 
 #: ../plug-ins/common/decompose.c:206
 msgid "Cyan"
@@ -2427,7 +2427,7 @@ msgstr "Gulur"
 
 #: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
 msgid "cyan-k"
-msgstr "blágrænn-k"
+msgstr "blágrænt-k"
 
 #: ../plug-ins/common/decompose.c:212 ../plug-ins/common/decompose.c:217
 msgid "magenta-k"
@@ -2846,11 +2846,11 @@ msgstr "_Neon..."
 
 #: ../plug-ins/common/edge-neon.c:211
 msgid "Neon"
-msgstr "Neonlýsing"
+msgstr "Neon"
 
 #: ../plug-ins/common/edge-neon.c:697
 msgid "Neon Detection"
-msgstr ""
+msgstr "Greining á neon"
 
 #: ../plug-ins/common/edge-neon.c:750 ../plug-ins/common/unsharp-mask.c:885
 msgid "_Amount:"
@@ -3097,14 +3097,14 @@ msgstr ""
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:671
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
 #: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
-#: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
-#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-tga.c:1212 ../plug-ins/common/file-tiff-save.c:713
+#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1461
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
 #: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
@@ -3124,7 +3124,7 @@ msgstr "C-frumkóði"
 
 #: ../plug-ins/common/file-csource.c:723
 msgid "_Prefixed name:"
-msgstr ""
+msgstr "_Heiti með forskeyti:"
 
 #: ../plug-ins/common/file-csource.c:732
 msgid "Co_mment:"
@@ -3210,36 +3210,36 @@ msgstr "Ógild gögn í haus í '%s': breidd=%lu, hæð=%lu, bæti=%lu"
 msgid "Unsupported brush format"
 msgstr "Óstutt pensilsnið"
 
-#: ../plug-ins/common/file-gbr.c:449
+#: ../plug-ins/common/file-gbr.c:450
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Villa í GIMP-pensilskránni '%s'"
 
-#: ../plug-ins/common/file-gbr.c:457
+#: ../plug-ins/common/file-gbr.c:458
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ógildur UTF-8-strengur í pensilskrá '%s'."
 
-#: ../plug-ins/common/file-gbr.c:463 ../plug-ins/common/file-gih.c:489
+#: ../plug-ins/common/file-gbr.c:464 ../plug-ins/common/file-gih.c:489
 #: ../plug-ins/common/file-gih.c:1139
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
-msgstr "ónefnd"
+msgstr "ónefnt"
 
-#: ../plug-ins/common/file-gbr.c:655
+#: ../plug-ins/common/file-gbr.c:656
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP penslar eru annaðhvort GRÁTÓNA eða RGBA"
 
-#: ../plug-ins/common/file-gbr.c:772
+#: ../plug-ins/common/file-gbr.c:773
 msgid "Brush"
 msgstr "Pensill"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:787 ../plug-ins/common/grid.c:792
+#: ../plug-ins/common/file-gbr.c:788 ../plug-ins/common/grid.c:792
 msgid "Spacing:"
 msgstr "Millibil:"
 
-#: ../plug-ins/common/file-gbr.c:799 ../plug-ins/common/file-gih.c:890
+#: ../plug-ins/common/file-gbr.c:800 ../plug-ins/common/file-gih.c:890
 #: ../plug-ins/common/file-pat.c:570 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Lýsing:"
@@ -3670,7 +3670,7 @@ msgstr "Allt JNG"
 
 #: ../plug-ins/common/file-mng.c:1430
 msgid "Default chunks type:"
-msgstr ""
+msgstr "Sjálfgefin gerð búta (chunks):"
 
 #: ../plug-ins/common/file-mng.c:1433
 msgid "Combine"
@@ -3682,7 +3682,7 @@ msgstr "Skipta út"
 
 #: ../plug-ins/common/file-mng.c:1445
 msgid "Default frame disposal:"
-msgstr ""
+msgstr "Sjálfgefin ráðstöfun ramma:"
 
 #: ../plug-ins/common/file-mng.c:1457
 msgid "PNG compression level:"
@@ -3690,7 +3690,7 @@ msgstr "PNG þjöppunarstig:"
 
 #: ../plug-ins/common/file-mng.c:1465 ../plug-ins/ui/plug-in-file-png.ui.h:10
 msgid "Choose a high compression level for small file size"
-msgstr ""
+msgstr "Velja hátt þjöppunarstig til að gefa smáar skráastærðir"
 
 #: ../plug-ins/common/file-mng.c:1479
 msgid "JPEG compression quality:"
@@ -3710,7 +3710,7 @@ msgstr "Endurtaka"
 
 #: ../plug-ins/common/file-mng.c:1526
 msgid "Default frame delay:"
-msgstr "Sjálfgefin rammatöf:"
+msgstr "Sjálfgefin töf ramma:"
 
 #: ../plug-ins/common/file-mng.c:1542 ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
@@ -3733,7 +3733,7 @@ msgstr "GIMP mynstur"
 #: ../plug-ins/common/file-pat.c:380
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "ógildur UTF-8-strengur í mynsturskrá '%s'."
+msgstr "Ógildur UTF-8-strengur í mynsturskrá '%s'."
 
 #: ../plug-ins/common/file-pat.c:555
 msgid "Pattern"
@@ -3812,7 +3812,7 @@ msgstr "PDF-snið"
 #: ../plug-ins/common/file-pdf-load.c:567
 #, c-format
 msgid "Could not load '%s': %s"
-msgstr "Gat ekki hlaðið '%s': %s"
+msgstr "Gat ekki hlaðið inn '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:895
 #, c-format
@@ -4057,7 +4057,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
-msgstr ""
+msgstr "Hámarksgildi ekki stutt."
 
 #: ../plug-ins/common/file-pnm.c:816
 msgid "Error reading file."
@@ -4151,7 +4151,7 @@ msgstr "Opna sem"
 
 #: ../plug-ins/common/file-ps.c:3083
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "Prófa með umgjörð"
 
 #. Colouring
 #: ../plug-ins/common/file-ps.c:3096
@@ -4278,9 +4278,13 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
+#: ../plug-ins/common/file-psp.c:1785
+msgid "invalid block size"
+msgstr "ógild stærð blokkar"
+
 #: ../plug-ins/common/file-raw.c:187 ../plug-ins/common/file-raw.c:202
 msgid "Raw image data"
-msgstr "RAW myndgögn"
+msgstr "RAW-myndgögn"
 
 #: ../plug-ins/common/file-raw.c:1073
 msgid "Load Image from Raw Data"
@@ -4292,7 +4296,7 @@ msgstr "Mynd"
 
 #: ../plug-ins/common/file-raw.c:1118
 msgid "RGB Alpha"
-msgstr "RGB alfa"
+msgstr "RGB-alfa"
 
 #: ../plug-ins/common/file-raw.c:1119
 msgid "RGB565"
@@ -4300,15 +4304,15 @@ msgstr "RGB565"
 
 #: ../plug-ins/common/file-raw.c:1120
 msgid "Planar RGB"
-msgstr "Planar RGB"
+msgstr "Flatt (planar) RGB"
 
 #: ../plug-ins/common/file-raw.c:1121
 msgid "Indexed"
-msgstr "Skráð"
+msgstr "Litnúmerað"
 
 #: ../plug-ins/common/file-raw.c:1122
 msgid "Indexed Alpha"
-msgstr "Litnúmerað alfa"
+msgstr "Litnúmerað alfa-gegnsæi"
 
 #: ../plug-ins/common/file-raw.c:1127
 msgid "Image _Type:"
@@ -4348,7 +4352,7 @@ msgstr "Raw mynd"
 
 #: ../plug-ins/common/file-raw.c:1258
 msgid "RGB Save Type"
-msgstr ""
+msgstr "RGB vistunartegund"
 
 #: ../plug-ins/common/file-raw.c:1262
 msgid "Standard (R,G,B)"
@@ -4539,24 +4543,24 @@ msgstr ""
 msgid "Cannot read header from '%s'"
 msgstr ""
 
-#: ../plug-ins/common/file-tga.c:1403
+#: ../plug-ins/common/file-tga.c:1408
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1412
+#: ../plug-ins/common/file-tga.c:1417
 msgid "_RLE compression"
 msgstr "_RLE þjöppun"
 
-#: ../plug-ins/common/file-tga.c:1426
+#: ../plug-ins/common/file-tga.c:1431
 msgid "Or_igin:"
 msgstr "_Upphaf:"
 
-#: ../plug-ins/common/file-tga.c:1430
+#: ../plug-ins/common/file-tga.c:1435
 msgid "Bottom left"
 msgstr "Neðst til vinstri"
 
-#: ../plug-ins/common/file-tga.c:1431
+#: ../plug-ins/common/file-tga.c:1436
 msgid "Top left"
 msgstr "Efst til vinstri"
 
@@ -4734,7 +4738,7 @@ msgstr ""
 msgid "_Write hot spot values"
 msgstr ""
 
-#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1090
 msgid "Hot spot _X:"
 msgstr ""
 
@@ -4756,9 +4760,9 @@ msgid "_Mask file extension:"
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
-#: ../plug-ins/common/file-xmc.c:1046
+#: ../plug-ins/common/file-xmc.c:1053
 msgid "X11 Mouse Cursor"
-msgstr ""
+msgstr "X11 músarbendill"
 
 #: ../plug-ins/common/file-xmc.c:473
 #, c-format
@@ -4782,46 +4786,46 @@ msgstr ""
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:890
+#: ../plug-ins/common/file-xmc.c:897
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:932
+#: ../plug-ins/common/file-xmc.c:939
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:939
+#: ../plug-ins/common/file-xmc.c:946
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1009
+#: ../plug-ins/common/file-xmc.c:1016
 #, c-format
 msgid "A read error occurred."
-msgstr ""
+msgstr "Lesvilla kom upp."
 
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1051
+#: ../plug-ins/common/file-xmc.c:1058
 msgid "XMC Options"
 msgstr "XMC valkostir"
 
-#: ../plug-ins/common/file-xmc.c:1079
+#: ../plug-ins/common/file-xmc.c:1086
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1097
+#: ../plug-ins/common/file-xmc.c:1104
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1108
+#: ../plug-ins/common/file-xmc.c:1115
 msgid "_Auto-Crop all frames."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1121
+#: ../plug-ins/common/file-xmc.c:1128
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4829,7 +4833,7 @@ msgid ""
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1144
+#: ../plug-ins/common/file-xmc.c:1151
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4840,53 +4844,53 @@ msgid ""
 "theme-size\"."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1161
+#: ../plug-ins/common/file-xmc.c:1168
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1164
+#: ../plug-ins/common/file-xmc.c:1171
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "S_kipta út stærð allra ramma jafnvel þótt hún sé tilgreind."
 
-#: ../plug-ins/common/file-xmc.c:1198
+#: ../plug-ins/common/file-xmc.c:1205
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1201
+#: ../plug-ins/common/file-xmc.c:1208
 msgid "_Delay:"
 msgstr "Tö_f:"
 
-#: ../plug-ins/common/file-xmc.c:1206
+#: ../plug-ins/common/file-xmc.c:1213
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1209
+#: ../plug-ins/common/file-xmc.c:1216
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "S_kipta út töf allra ramma jafnvel þótt hún sé tilgreind."
 
-#: ../plug-ins/common/file-xmc.c:1234
+#: ../plug-ins/common/file-xmc.c:1241
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1251
 msgid "Enter copyright information."
 msgstr "Upplýsingar um höfundarétt."
 
-#: ../plug-ins/common/file-xmc.c:1246
+#: ../plug-ins/common/file-xmc.c:1253
 msgid "_Copyright:"
 msgstr "_Höfundarréttur:"
 
-#: ../plug-ins/common/file-xmc.c:1262
+#: ../plug-ins/common/file-xmc.c:1269
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1279
 msgid "Enter license information."
 msgstr "Settu inn upplýsingar um notkunarleyfi."
 
-#: ../plug-ins/common/file-xmc.c:1274
+#: ../plug-ins/common/file-xmc.c:1281
 msgid "_License:"
 msgstr "_Notkunarleyfi:"
 
@@ -4895,40 +4899,40 @@ msgstr "_Notkunarleyfi:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1281
+#: ../plug-ins/common/file-xmc.c:1288
 msgid "_Other:"
 msgstr "_Annað:"
 
-#: ../plug-ins/common/file-xmc.c:1315
+#: ../plug-ins/common/file-xmc.c:1322
 msgid "Enter other comment if you want."
 msgstr "Sláðu inn aðra athugasemd ef þú vilt."
 
-#: ../plug-ins/common/file-xmc.c:1365
+#: ../plug-ins/common/file-xmc.c:1372
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Athugasemd er takmörkuð við %d stafi."
 
-#: ../plug-ins/common/file-xmc.c:1483
+#: ../plug-ins/common/file-xmc.c:1490
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1501
+#: ../plug-ins/common/file-xmc.c:1508
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1508
+#: ../plug-ins/common/file-xmc.c:1515
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1515
+#: ../plug-ins/common/file-xmc.c:1522
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Breidd og/eða hæð rammans '%s' er núll"
 
-#: ../plug-ins/common/file-xmc.c:1555
+#: ../plug-ins/common/file-xmc.c:1562
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -4936,7 +4940,7 @@ msgid ""
 "crop."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1712
+#: ../plug-ins/common/file-xmc.c:1719
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -4944,7 +4948,7 @@ msgid ""
 "It will clutter the screen in some environments."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1719
+#: ../plug-ins/common/file-xmc.c:1726
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -4952,7 +4956,7 @@ msgid ""
 "save dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1956
+#: ../plug-ins/common/file-xmc.c:1963
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4960,7 +4964,7 @@ msgid ""
 msgstr ""
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2159
+#: ../plug-ins/common/file-xmc.c:2166
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5195,7 +5199,7 @@ msgstr "Mettaðra:"
 
 #: ../plug-ins/common/filter-pack.c:231
 msgid "Less Sat:"
-msgstr "Minna mett:"
+msgstr "Minna mettað:"
 
 #: ../plug-ins/common/filter-pack.c:233 ../plug-ins/common/filter-pack.c:532
 msgid "Current:"
@@ -5446,7 +5450,7 @@ msgstr "Lóðréttur litur"
 
 #: ../plug-ins/common/grid.c:934
 msgid "Intersection Color"
-msgstr ""
+msgstr "Litur skurðflatar"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "Slice the image into subimages using guides"
@@ -6192,7 +6196,7 @@ msgstr "St_yrkur:"
 
 #: ../plug-ins/common/newsprint.c:1395
 msgid "_Lock channels"
-msgstr ""
+msgstr "_Læsa litrásum"
 
 #: ../plug-ins/common/newsprint.c:1408
 msgid "_Factory Defaults"
@@ -6205,7 +6209,7 @@ msgstr "Afstöllun"
 
 #: ../plug-ins/common/newsprint.c:1442
 msgid "O_versample:"
-msgstr ""
+msgstr "_Yfirsöfnun:"
 
 #: ../plug-ins/common/nl-filter.c:119
 msgid "Nonlinear swiss army knife filter"
@@ -7652,7 +7656,7 @@ msgstr ""
 #. Set the tile cache size
 #: ../plug-ins/common/tile-small.c:328 ../plug-ins/common/tile.c:185
 msgid "Tiling"
-msgstr ""
+msgstr "Flísalagning"
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:371
@@ -8143,7 +8147,7 @@ msgstr "Endurtekning:"
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
-msgstr ""
+msgstr "Tilfærsluvörpun:"
 
 #. =======================================================================
 #. Displacement Type
@@ -8608,7 +8612,6 @@ msgstr "Engin vitræn skráarending, vista sem þjappað XFC."
 
 #: ../plug-ins/file-compressor/file-compressor.c:416
 #, c-format
-#| msgid "Compression"
 msgid "Compressing '%s'"
 msgstr "Þjappa '%s'"
 
@@ -8740,14 +8743,13 @@ msgstr "Þjappað (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not read '%lu' bytes"
 msgstr "Gat ekki lesið '%lu' bæti"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr ""
+msgstr "Táknmyndin #%d er með hæð eða breidd sem núll"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:636
@@ -9387,7 +9389,7 @@ msgstr "Vifta"
 
 #: ../plug-ins/flame/flame.c:770
 msgid "Eyefish"
-msgstr "Augnfisk"
+msgstr "Augnfiskur"
 
 #: ../plug-ins/flame/flame.c:771
 msgid "Bubble"
@@ -9486,7 +9488,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:648
 msgid "R_edraw preview"
-msgstr ""
+msgstr "_Endurteikna forskoðun"
 
 #. Zoom Options
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:656
@@ -12032,7 +12034,7 @@ msgstr "Sýna _haldföng svæðis"
 
 #: ../plug-ins/imagemap/imap_preferences.c:389
 msgid "_Keep NCSA circles true"
-msgstr ""
+msgstr "_Halda NCSA-hringjum réttum"
 
 #: ../plug-ins/imagemap/imap_preferences.c:391
 msgid "Show area URL _tip"
@@ -12108,7 +12110,7 @@ msgstr "ALT texti"
 
 #: ../plug-ins/imagemap/imap_selection.c:388
 msgid "Target"
-msgstr "Útkoma"
+msgstr "Markmið"
 
 #: ../plug-ins/imagemap/imap_settings.c:89
 msgid "Settings for this Mapfile"
