@@ -241,8 +241,8 @@
     (fill-type background-fill))
 (GimpTemplate "1280×720 (HD 720p)"
     (icon-name "gimp-video")
-    (width 640)
-    (height 400)
+    (width 1280)
+    (height 720)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
