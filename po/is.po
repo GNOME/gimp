@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 20:56+0000\n"
-"PO-Revision-Date: 2017-12-23 07:41+0000\n"
+"PO-Revision-Date: 2017-12-23 08:44+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -344,7 +344,7 @@ msgstr "Bendilsupplýsingar"
 
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:324
 msgid "Dashboard"
-msgstr ""
+msgstr "Stjórnborð"
 
 #: ../app/actions/actions.c:135
 msgid "Debug"
@@ -366,7 +366,7 @@ msgstr "Tengjanlegt"
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:360
 #: ../app/dialogs/preferences-dialog.c:1196
 msgid "Document History"
-msgstr "Saga skjala"
+msgstr "Ferill skjals"
 
 #: ../app/actions/actions.c:150
 msgid "Drawable"
@@ -661,28 +661,25 @@ msgid "Paste the selected buffer"
 msgstr "Líma valið biðminni"
 
 #: ../app/actions/buffers-actions.c:67
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer _Into"
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "Líma úr biðminni _inn í"
+msgstr "Líma úr biðminni á st_aðnum"
 
 #: ../app/actions/buffers-actions.c:68
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "Líma valið biðminni inn í valið svæði"
+msgstr "Líma valið biðminni inn á upprunalega staðsetningu"
 
 #: ../app/actions/buffers-actions.c:73
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer _Into"
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "Líma úr biðminni _inn í"
+msgstr "Líma úr biðminni _inn í myndval"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
@@ -690,20 +687,18 @@ msgid "Paste the selected buffer into the selection"
 msgstr "Líma valið biðminni inn í valið svæði"
 
 #: ../app/actions/buffers-actions.c:79
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "Líma valið biðminni inn í valið svæði"
+msgstr "Líma valið biðminni inn í myndval á staðnum"
 
 #: ../app/actions/buffers-actions.c:81
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "Líma valið biðminni inn í valið svæði"
+msgstr "Líma valið biðminni inn í myndval á upprunalegri staðsetningu"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
@@ -716,20 +711,18 @@ msgid "Paste the selected buffer as a new layer"
 msgstr "Líma valda biðminnið sem nýtt lag"
 
 #: ../app/actions/buffers-actions.c:92
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer as New _Layer"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Líma biðminni sem _nýtt lag"
+msgstr "Líma biðminni sem nýtt lag á staðnum"
 
 #: ../app/actions/buffers-actions.c:94
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer as a new layer"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "Líma valda biðminnið sem nýtt lag"
+msgstr "Líma valið biðminni sem nýtt lag inn á upprunalegri staðsetningu"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -832,12 +825,11 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr "Lækka þessa litrás neðst í litrásastaflann"
 
 #: ../app/actions/channels-actions.c:113
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "Víxla sýnileika"
+msgstr "_Víxla sýnileika litrásar"
 
 #: ../app/actions/channels-actions.c:119
 #, fuzzy
@@ -1537,22 +1529,22 @@ msgstr "Forgrunnur rautt: Setja á hámark"
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr ""
+msgstr "Forgrunns-rautt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:305
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr ""
+msgstr "Forgrunns-rautt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:309
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr ""
+msgstr "Forgrunns-rautt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:313
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr ""
+msgstr "Forgrunns-rautt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:321
 msgctxt "context-action"
@@ -1572,22 +1564,22 @@ msgstr "Forgrunnur grænt: Setja á hámark"
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr ""
+msgstr "Forgrunns-grænt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:337
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr ""
+msgstr "Forgrunns-grænt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:341
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr ""
+msgstr "Forgrunns-grænt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:345
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr ""
+msgstr "Forgrunns-grænt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:353
 msgctxt "context-action"
@@ -1607,22 +1599,22 @@ msgstr "Forgrunnur blátt: Setja á hámark"
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr ""
+msgstr "Forgrunns-blátt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:369
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr ""
+msgstr "Forgrunns-blátt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr ""
+msgstr "Forgrunns-blátt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr ""
+msgstr "Forgrunns-blátt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:385
 msgctxt "context-action"
@@ -1642,22 +1634,22 @@ msgstr "Bakgrunnur rautt: Setja á hámark"
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunns-rautt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:401
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunns-rautt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:405
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunns-rautt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:409
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunns-rautt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:417
 msgctxt "context-action"
@@ -1677,22 +1669,22 @@ msgstr "Bakgrunnur grænt: Setja á hámark"
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunns-grænt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:433
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunns-grænt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:437
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunns-grænt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:441
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunns-grænt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:449
 msgctxt "context-action"
@@ -1712,22 +1704,22 @@ msgstr "Bakgrunnur blátt: Setja á hámark"
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunns-blátt: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:465
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunns-blátt: Auka um 1%"
 
 #: ../app/actions/context-actions.c:469
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunns-blátt: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:473
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunns-blátt: Auka um 10%"
 
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
@@ -1817,22 +1809,22 @@ msgstr "Forgrunnur litgildi: Setja á hámark"
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr ""
+msgstr "Forgrunnslitgildi: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr ""
+msgstr "Forgrunnslitgildi: Auka um 1%"
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr ""
+msgstr "Forgrunnslitgildi: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr ""
+msgstr "Forgrunnslitgildi: Auka um 10%"
 
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
@@ -1877,32 +1869,32 @@ msgstr "Bakgrunnur litmettun: Stilla"
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Stilla á lágmark"
 
 #: ../app/actions/context-actions.c:617
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Stilla á hámark"
 
 #: ../app/actions/context-actions.c:621
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:625
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Auka um 1%"
 
 #: ../app/actions/context-actions.c:629
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:633
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunnur litmettun: Auka um 10%"
 
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
@@ -2199,37 +2191,37 @@ msgstr "Millibil pensils"
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Minimum"
-msgstr ""
+msgstr "Millibil pensils (ritill): Setja á lágmark"
 
 #: ../app/actions/context-actions.c:877
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Maximum"
-msgstr ""
+msgstr "Millibil pensils (ritill): Setja á hámark"
 
 #: ../app/actions/context-actions.c:881
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 1"
-msgstr ""
+msgstr "Millibil pensils (ritill): Minnka um 1"
 
 #: ../app/actions/context-actions.c:885
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 1"
-msgstr ""
+msgstr "Millibil pensils (ritill): Auka um 1"
 
 #: ../app/actions/context-actions.c:889
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 10"
-msgstr ""
+msgstr "Millibil pensils (ritill): Minnka um 10"
 
 #: ../app/actions/context-actions.c:893
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 10"
-msgstr ""
+msgstr "Millibil pensils (ritill): Auka um 10"
 
 #: ../app/actions/context-actions.c:901
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Circular"
-msgstr ""
+msgstr "Lögun pensils (ritill): Nota hringlaga"
 
 #: ../app/actions/context-actions.c:905
 #, fuzzy
@@ -2242,7 +2234,7 @@ msgstr "Valmynd penslaritils"
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Diamond"
-msgstr ""
+msgstr "Lögun pensils (ritill): Nota tígullaga"
 
 #: ../app/actions/context-actions.c:917
 #, fuzzy
@@ -2255,52 +2247,52 @@ msgstr "Valmynd penslaritils"
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Minimum"
-msgstr ""
+msgstr "Radíus pensils (ritill): Setja á lágmark"
 
 #: ../app/actions/context-actions.c:925
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Maximum"
-msgstr ""
+msgstr "Radíus pensils (ritill): Setja á hámark"
 
 #: ../app/actions/context-actions.c:929
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Radíus pensils (ritill): Minnka um 0.1"
 
 #: ../app/actions/context-actions.c:933
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Radíus pensils (ritill): Auka um 0.1"
 
 #: ../app/actions/context-actions.c:937
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 1"
-msgstr ""
+msgstr "Radíus pensils (ritill): Minnka um 1"
 
 #: ../app/actions/context-actions.c:941
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 1"
-msgstr ""
+msgstr "Radíus pensils (ritill): Auka um 1"
 
 #: ../app/actions/context-actions.c:945
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 10"
-msgstr ""
+msgstr "Radíus pensils (ritill): Minnka um 10"
 
 #: ../app/actions/context-actions.c:949
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 10"
-msgstr ""
+msgstr "Radíus pensils (ritill): Auka um 10"
 
 #: ../app/actions/context-actions.c:953
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease Relative"
-msgstr ""
+msgstr "Radíus pensils (ritill): Minnka hlutfallslega"
 
 #: ../app/actions/context-actions.c:957
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase Relative"
-msgstr ""
+msgstr "Radíus pensils (ritill): Auka hlutfallslega"
 
 #: ../app/actions/context-actions.c:965
 #, fuzzy
@@ -2313,32 +2305,32 @@ msgstr "Valmynd penslaritils"
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Minimum"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Setja á lágmark"
 
 #: ../app/actions/context-actions.c:973
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Maximum"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Setja á hámark"
 
 #: ../app/actions/context-actions.c:977
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 1"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Minnka um 1"
 
 #: ../app/actions/context-actions.c:981
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 1"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Auka um 1"
 
 #: ../app/actions/context-actions.c:985
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 4"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Minnka um 4"
 
 #: ../app/actions/context-actions.c:989
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 4"
-msgstr ""
+msgstr "Pensiltoppar (ritill): Auka um 4"
 
 #: ../app/actions/context-actions.c:997
 #, fuzzy
@@ -2350,32 +2342,32 @@ msgstr "Harka pensils"
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Minimum"
-msgstr ""
+msgstr "Harka pensils (ritill): Setja á lágmark"
 
 #: ../app/actions/context-actions.c:1005
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Maximum"
-msgstr ""
+msgstr "Harka pensils (ritill): Setja á hámark"
 
 #: ../app/actions/context-actions.c:1009
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.01"
-msgstr ""
+msgstr "Harka pensils (ritill): Minnka um 0.01"
 
 #: ../app/actions/context-actions.c:1013
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.01"
-msgstr ""
+msgstr "Harka pensils (ritill): Auka um 0.01"
 
 #: ../app/actions/context-actions.c:1017
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Harka pensils (ritill): Minnka um 0.1"
 
 #: ../app/actions/context-actions.c:1021
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Harka pensils (ritill): Auka um 0.1"
 
 #: ../app/actions/context-actions.c:1029
 #, fuzzy
@@ -2387,22 +2379,22 @@ msgstr "Stærðarhlutföll pensils:"
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Minimum"
-msgstr ""
+msgstr "Stærðarhlutföll pensils (ritill): Setja á lágmark"
 
 #: ../app/actions/context-actions.c:1037
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Maximum"
-msgstr ""
+msgstr "Stærðarhlutföll pensils (ritill): Setja á hámark"
 
 #: ../app/actions/context-actions.c:1041
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Stærðarhlutföll pensils (ritill): Minnka um 0.1"
 
 #: ../app/actions/context-actions.c:1045
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Stærðarhlutföll pensils (ritill): Auka um 0.1"
 
 #: ../app/actions/context-actions.c:1049
 #, fuzzy
@@ -2429,32 +2421,32 @@ msgstr "Valmynd penslaritils"
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Horizontal"
-msgstr ""
+msgstr "Horn pensils (ritill): Gera lárétt"
 
 #: ../app/actions/context-actions.c:1069
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Vertical"
-msgstr ""
+msgstr "Horn pensils (ritill): Gera lóðrétt"
 
 #: ../app/actions/context-actions.c:1073
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 1°"
-msgstr ""
+msgstr "Horn pensils (ritill): Snúa réttsælis um 1°"
 
 #: ../app/actions/context-actions.c:1077
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 1°"
-msgstr ""
+msgstr "Horn pensils (ritill): Snúa rangsælis um 1°"
 
 #: ../app/actions/context-actions.c:1081
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 15°"
-msgstr ""
+msgstr "Horn pensils (ritill): Snúa réttsælis um 15°"
 
 #: ../app/actions/context-actions.c:1085
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
-msgstr ""
+msgstr "Horn pensils (ritill): Snúa rangsælis um 15°"
 
 #: ../app/actions/context-commands.c:411
 #, c-format
@@ -2492,12 +2484,11 @@ msgid "Use the composite color of all visible layers"
 msgstr "Nota samsettan lit úr öllum sýnilegum lögum"
 
 #: ../app/actions/dashboard-actions.c:40
-#, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "Dialogs Menu"
 msgctxt "dashboard-action"
 msgid "Dashboard Menu"
-msgstr "Valmynd samskiptaglugga"
+msgstr "Valmynd stjórnborðs"
 
 #: ../app/actions/dashboard-actions.c:44
 #, fuzzy
@@ -2507,16 +2498,15 @@ msgid "Update Interval"
 msgstr "Millibil X"
 
 #: ../app/actions/dashboard-actions.c:46
-#, fuzzy
 #| msgid "History Color"
 msgctxt "dashboard-action"
 msgid "History Duration"
-msgstr "Ferill lita"
+msgstr "Tímalengd atvikaferils"
 
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Low Swap Space Warning"
-msgstr ""
+msgstr "Aðvörun vegna lítils diskminnis (swap)"
 
 #: ../app/actions/dashboard-actions.c:53
 msgctxt "dashboard-action"
@@ -2526,52 +2516,52 @@ msgstr ""
 #: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
-msgstr ""
+msgstr "0.25 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:68
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
-msgstr ""
+msgstr "0.5 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:73
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
-msgstr ""
+msgstr "1 sekúnda"
 
 #: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
-msgstr ""
+msgstr "2 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:83
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
-msgstr ""
+msgstr "4 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:91
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
-msgstr ""
+msgstr "15 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:96
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
-msgstr ""
+msgstr "30 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:101
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
-msgstr ""
+msgstr "60 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:106
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
-msgstr ""
+msgstr "120 sekúndur"
 
 #: ../app/actions/dashboard-actions.c:111
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
-msgstr ""
+msgstr "240 sekúndur"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -2922,7 +2912,7 @@ msgstr "Opna stjórnskjá fyrir villuboð"
 #: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "_Dashboard"
-msgstr ""
+msgstr "Stjórn_borð"
 
 #: ../app/actions/dialogs-actions.c:240
 #, fuzzy
@@ -3258,7 +3248,7 @@ msgstr "_Hreinsa feril afturkallana"
 #: ../app/actions/documents-actions.c:83
 msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Hreinsa út allan feril afturkallana"
+msgstr "Hreinsa út alla ferilskráningu skjala"
 
 #: ../app/actions/documents-actions.c:88
 msgctxt "documents-action"
@@ -3292,7 +3282,7 @@ msgstr "Fjarlægja færslur þar sem tilheyrandi skrá er ekki tiltæk"
 
 #: ../app/actions/documents-commands.c:223
 msgid "Clear Document History"
-msgstr "Hreinsa sögu skjala"
+msgstr "Hreinsa ferilskráningu skjala"
 
 #: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:160
 #: ../app/actions/error-console-commands.c:96
@@ -4025,11 +4015,10 @@ msgid "Select all error messages"
 msgstr "Velja öll villuboð"
 
 #: ../app/actions/error-console-actions.c:56
-#, fuzzy
 #| msgid "Highlight"
 msgctxt "error-console-action"
 msgid "_Highlight"
-msgstr "Upplýsa"
+msgstr "_Upplýst"
 
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
@@ -4052,11 +4041,10 @@ msgid "Write the selected error messages to a file"
 msgstr "Vista valin villuboð í skrá"
 
 #: ../app/actions/error-console-actions.c:78
-#, fuzzy
 #| msgid "Errors"
 msgctxt "error-console-action"
 msgid "_Errors"
-msgstr "Villur"
+msgstr "_Villur"
 
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
@@ -4064,12 +4052,11 @@ msgid "Highlight error console on errors"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:85
-#, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Warning"
 msgctxt "error-console-action"
 msgid "_Warnings"
-msgstr "Aðvörun"
+msgstr "_Aðvaranir"
 
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
@@ -4077,12 +4064,11 @@ msgid "Highlight error console on warnings"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:92
-#, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Message"
 msgctxt "error-console-action"
 msgid "_Messages"
-msgstr "Skilaboð"
+msgstr "_Skilaboð"
 
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
@@ -4775,12 +4761,11 @@ msgid "_Maze..."
 msgstr "_Völundarhús..."
 
 #: ../app/actions/filters-actions.c:412
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Gaussian Blur..."
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "_Gaussísk afskerping..."
+msgstr "_Miðgildis-afskerping..."
 
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
@@ -6209,7 +6194,6 @@ msgid "Layer _Mode"
 msgstr "Lagha_mur"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Default edit action"
 msgctxt "layers-action"
@@ -6562,20 +6546,18 @@ msgstr "Víxla tengdri stöðu"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "L_ock pixels"
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
-msgstr "Læsa m_ynddílum"
+msgstr "Læsa m_ynddílum lagsins"
 
 #: ../app/actions/layers-actions.c:324
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
-msgstr "Læs_a staðsetningu litrásar"
+msgstr "Læs_a staðsetningu lags"
 
 #: ../app/actions/layers-actions.c:330
 msgctxt "layers-action"
@@ -6600,7 +6582,6 @@ msgid "Layer Blend Space: Auto"
 msgstr "Litrýmd blöndunar laga: sjálfvirkt"
 
 #: ../app/actions/layers-actions.c:347 ../app/actions/layers-actions.c:368
-#, fuzzy
 #| msgctxt "layer-color-space"
 #| msgid "RGB (linear)"
 msgctxt "layers-action"
@@ -6613,7 +6594,6 @@ msgid "Layer Blend Space: RGB (linear)"
 msgstr "Litrýmd blöndunar laga: RGB (línulegt)"
 
 #: ../app/actions/layers-actions.c:353 ../app/actions/layers-actions.c:374
-#, fuzzy
 #| msgctxt "layer-color-space"
 #| msgid "RGB (perceptual)"
 msgctxt "layers-action"
@@ -6646,11 +6626,10 @@ msgid "Layer Composite Mode: Auto"
 msgstr "Hamur samsetningar laga: sjálfvirkt"
 
 #: ../app/actions/layers-actions.c:389
-#, fuzzy
 #| msgid "Source"
 msgctxt "layers-action"
 msgid "Source Over"
-msgstr "Uppruni"
+msgstr "Uppruni yfir"
 
 #: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
@@ -6658,11 +6637,10 @@ msgid "Layer Composite Mode: Source Over"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:395
-#, fuzzy
 #| msgid "Source"
 msgctxt "layers-action"
 msgid "Source Atop"
-msgstr "Uppruni"
+msgstr "Uppruni ofaná"
 
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
@@ -6670,11 +6648,10 @@ msgid "Layer Composite Mode: Source Atop"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:401
-#, fuzzy
 #| msgid "Source"
 msgctxt "layers-action"
 msgid "Source In"
-msgstr "Uppruni"
+msgstr "Uppruni í"
 
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
@@ -6682,11 +6659,10 @@ msgid "Layer Composite Mode: Source In"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:407
-#, fuzzy
 #| msgid "Destination Range"
 msgctxt "layers-action"
 msgid "Destination Atop"
-msgstr "Úttakssvið"
+msgstr "Áfangastaður ofaná"
 
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
@@ -8201,32 +8177,32 @@ msgstr "Sprauta"
 #: ../app/actions/tools-actions.c:155
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
-msgstr ""
+msgstr "Magn sprautunar: Setja á lágmark"
 
 #: ../app/actions/tools-actions.c:159
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
-msgstr ""
+msgstr "Magn sprautunar: Setja á hámark"
 
 #: ../app/actions/tools-actions.c:163
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
-msgstr ""
+msgstr "Magn sprautunar: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:167
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr ""
+msgstr "Magn sprautunar: Auka um 1"
 
 #: ../app/actions/tools-actions.c:171
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
-msgstr ""
+msgstr "Magn sprautunar: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:175
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr ""
+msgstr "Magn sprautunar: Auka um 10"
 
 #: ../app/actions/tools-actions.c:183
 #, fuzzy
@@ -8238,32 +8214,32 @@ msgstr "Sprauta"
 #: ../app/actions/tools-actions.c:187
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
-msgstr ""
+msgstr "Flæði sprautu: Setja á lágmark"
 
 #: ../app/actions/tools-actions.c:191
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
-msgstr ""
+msgstr "Flæði sprautu: Setja á hámark"
 
 #: ../app/actions/tools-actions.c:195
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
-msgstr ""
+msgstr "Flæði sprautu: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:199
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr ""
+msgstr "Flæði sprautu: Auka um 1"
 
 #: ../app/actions/tools-actions.c:203
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
-msgstr ""
+msgstr "Flæði sprautu: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:207
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr ""
+msgstr "Flæði sprautu: Auka um 10"
 
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
@@ -9202,12 +9178,11 @@ msgid "Restore the previous zoom level"
 msgstr "Endurgera síðasta aðdráttarstig"
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Set a custom rotation angle"
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "Stilla sérsniðið snúningshorn"
+msgstr "Annað snúningsho_rn..."
 
 #: ../app/actions/view-actions.c:126
 msgctxt "view-action"
@@ -9474,12 +9449,11 @@ msgid "Toggle fullscreen view"
 msgstr "Víxla heilskjásham"
 
 #: ../app/actions/view-actions.c:315
-#, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set zoom factor"
-msgstr "Stilla sérsniðinn aðdrátt"
+msgstr "Stilla aðdráttarhlutfall"
 
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
@@ -9622,12 +9596,11 @@ msgid "Zoom 1:16"
 msgstr "Aðdráttur 1:16"
 
 #: ../app/actions/view-actions.c:451
-#, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Stilla sérsniðinn aðdrátt"
+msgstr "Annað aðd_ráttarhlutfall..."
 
 #: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
@@ -10153,36 +10126,32 @@ msgid "Theme-set size"
 msgstr "Stærð skilyrt af þema"
 
 #: ../app/config/config-enums.c:180
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Image size"
 msgctxt "icon-size"
 msgid "Small size"
-msgstr "Stærð myndar"
+msgstr "Lítið"
 
 #: ../app/config/config-enums.c:181
-#, fuzzy
 #| msgctxt "dash-preset"
 #| msgid "Medium dashes"
 msgctxt "icon-size"
 msgid "Medium size"
-msgstr "Miðlungs strik"
+msgstr "Miðlungsstærð"
 
 #: ../app/config/config-enums.c:182
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Image size"
 msgctxt "icon-size"
 msgid "Large size"
-msgstr "Stærð myndar"
+msgstr "Stórt"
 
 #: ../app/config/config-enums.c:183
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Image size"
 msgctxt "icon-size"
 msgid "Huge size"
-msgstr "Stærð myndar"
+msgstr "Flennistórt"
 
 #: ../app/config/config-enums.c:213
 msgctxt "position"
@@ -10797,6 +10766,8 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu svartgildismótvægis (BPC) í glugganum 'Umbreyta í "
+"litasnið'."
 
 #: ../app/config/gimprc-blurbs.h:456
 msgid ""
@@ -11723,22 +11694,21 @@ msgstr "Forgrunnslitur"
 #: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
 msgid "FG"
-msgstr ""
+msgstr "FG"
 
 #: ../app/core/core-enums.c:997
-#, fuzzy
 #| msgctxt "gradient-editor-color-type"
 #| msgid "Fo_reground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
-msgstr "Fo_rgrunnslitur (gegnsær)"
+msgstr "Forgrunnslitur (gegnsær)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:1000
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr ""
+msgstr "FG (t)"
 
 #: ../app/core/core-enums.c:1001
 #| msgid "Background color"
@@ -11751,22 +11721,21 @@ msgstr "Bakgrunnslitur"
 #: ../app/core/core-enums.c:1004
 msgctxt "gradient-color"
 msgid "BG"
-msgstr ""
+msgstr "BG"
 
 #: ../app/core/core-enums.c:1005
-#, fuzzy
 #| msgctxt "gradient-editor-color-type"
 #| msgid "B_ackground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
-msgstr "B_akgrunnslitur (gegnsær)"
+msgstr "Bakgrunnslitur (gegnsær)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:1008
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr ""
+msgstr "BG (t)"
 
 #: ../app/core/core-enums.c:1037
 msgctxt "message-severity"
@@ -11854,7 +11823,6 @@ msgid "Jitter"
 msgstr "Flökt"
 
 #: ../app/core/core-enums.c:1145
-#, fuzzy
 #| msgctxt "image-map-region"
 #| msgid "Use the selection as input"
 msgctxt "filter-region"
@@ -11862,7 +11830,6 @@ msgid "Use the selection as input"
 msgstr "Nota myndval sem inntak"
 
 #: ../app/core/core-enums.c:1146
-#, fuzzy
 #| msgctxt "image-map-region"
 #| msgid "Use the entire layer as input"
 msgctxt "filter-region"
@@ -12065,7 +12032,7 @@ msgstr "Banvæn þáttunarvilla í pensilskrá: Óþekkt útgáfa %d."
 #: ../app/core/gimpbrush-load.c:232
 #, c-format
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "Óstutt pensilsnið"
 
 #: ../app/core/gimpbrush-load.c:252 ../app/core/gimpbrushgenerated-load.c:125
 #: ../app/core/gimpbrushpipe-load.c:75
@@ -12353,10 +12320,9 @@ msgid "Flood Channel"
 msgstr "Flæða litrás"
 
 #: ../app/core/gimpchannel.c:845
-#, fuzzy
 #| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
-msgstr "Get ekki strokið í tómri litrás."
+msgstr "Get ekki fyllt í tómri litrás."
 
 #: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
@@ -14104,7 +14070,7 @@ msgstr "Myndge_rðarmarkmið:"
 #: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
 msgid "_Black Point Compensation"
-msgstr "_BPC svartgildisjöfnun"
+msgstr "_BPC svartgildismótvægi"
 
 #: ../app/dialogs/color-profile-dialog.c:386
 msgid "Select Destination Profile"
@@ -15207,11 +15173,10 @@ msgid "Filter Dialogs"
 msgstr "Valmyn_d til að opna skrár"
 
 #: ../app/dialogs/preferences-dialog.c:1385
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Advanced options"
 msgid "Show advanced color options"
-msgstr "Ítarlegir valkostir"
+msgstr "Birta ítarlegri valkosti lita"
 
 #: ../app/dialogs/preferences-dialog.c:1399
 msgid "Image Import & Export"
@@ -15229,25 +15194,22 @@ msgid "Import Policies"
 msgstr "Aðgangskröfur"
 
 #: ../app/dialogs/preferences-dialog.c:1410
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit floating point"
 msgid "Promote imported images to _floating point precision"
-msgstr "Umbreyta myndinni í 16 bita fleytitölu"
+msgstr "Umbreyta innfluttum myndium í _fleytitölunákvæmni"
 
 #: ../app/dialogs/preferences-dialog.c:1416
-#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to 16 bit floating point"
 msgid "Dither images when promoting to floating point"
-msgstr "Umbreyta myndinni í 16 bita fleytitölu"
+msgstr "Punktdreifa myndum við umbreytingu í fleytitölu"
 
 #: ../app/dialogs/preferences-dialog.c:1421
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Add the layer's alpha channel to the current selection"
 msgid "Add an alpha channel to imported images"
-msgstr "Bæta alfa-gegnsæislitrás lagsins við núverandi myndval"
+msgstr "Bæta alfa-gegnsæislitrás við innfluttar myndir"
 
 #: ../app/dialogs/preferences-dialog.c:1426
 #: ../app/dialogs/preferences-dialog.c:2003
@@ -15502,10 +15464,9 @@ msgid "Rendering intent:"
 msgstr "Myndgerðarmarkmið:"
 
 #: ../app/dialogs/preferences-dialog.c:2016
-#, fuzzy
 #| msgid "_Black Point Compensation"
 msgid "Black point compensation"
-msgstr "_BPC svartgildisjöfnun"
+msgstr "BPC svartgildismótvægi"
 
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:2020
@@ -15515,23 +15476,20 @@ msgid "Precision Conversion Dialog"
 msgstr "Nákvæm umbreyting"
 
 #: ../app/dialogs/preferences-dialog.c:2027
-#, fuzzy
 #| msgid "Drop layers"
 msgid "Dither layers:"
-msgstr "Sleppa lögum"
+msgstr "Punktdreifa lögum:"
 
 #: ../app/dialogs/preferences-dialog.c:2032
-#, fuzzy
 #| msgid "Resize _text layers"
 msgid "Dither text layers:"
-msgstr "Breyta stærð _textalaga"
+msgstr "Punktdreifa textalögum:"
 
 #: ../app/dialogs/preferences-dialog.c:2037
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Delete channel"
 msgid "Dither channels/masks:"
-msgstr "Eyða litrás"
+msgstr "Punktdreifa litrásum/hulum:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2041
@@ -15574,10 +15532,9 @@ msgid "Fill with:"
 msgstr "Fylla með:"
 
 #: ../app/dialogs/preferences-dialog.c:2078
-#, fuzzy
 #| msgid "Resize _layers:"
 msgid "Resize layers:"
-msgstr "Breyta stærð _laga:"
+msgstr "Breyta stærð laga:"
 
 #: ../app/dialogs/preferences-dialog.c:2082
 #, fuzzy
@@ -15617,10 +15574,9 @@ msgid "Add Layer Mask Dialog"
 msgstr "Bæta inn laghulu"
 
 #: ../app/dialogs/preferences-dialog.c:2113
-#, fuzzy
 #| msgid "Layer Fill Type"
 msgid "Layer mask type:"
-msgstr "Fyllitegund lags"
+msgstr "Gerð laghulu:"
 
 #: ../app/dialogs/preferences-dialog.c:2117
 #| msgid "In_vert mask"
@@ -15635,23 +15591,20 @@ msgid "Merge Layers Dialog"
 msgstr "Sameina lög"
 
 #: ../app/dialogs/preferences-dialog.c:2128
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Merge layers"
 msgid "Merged layer size:"
-msgstr "Sameina lög"
+msgstr "Stærð á sameinuðu lagi:"
 
 #: ../app/dialogs/preferences-dialog.c:2132
-#, fuzzy
 #| msgid "Merge within active _group only"
 msgid "Merge within active group only"
-msgstr "Sameina _einungis innan virks hóps"
+msgstr "Sameina einungis innan virks hóps"
 
 #: ../app/dialogs/preferences-dialog.c:2135
-#, fuzzy
 #| msgid "_Discard invisible layers"
 msgid "Discard invisible layers"
-msgstr "_Henda ósýnilegum lögum"
+msgstr "Henda ósýnilegum lögum"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2139
@@ -15871,7 +15824,7 @@ msgstr "Sýna aðgerðir sem _ekki eru tiltækar"
 
 #: ../app/dialogs/preferences-dialog.c:2403
 msgid "Maximum History Size:"
-msgstr "Hámarksstærð aðgerðaferils:"
+msgstr "Hámarksstærð ferilskráningar:"
 
 #: ../app/dialogs/preferences-dialog.c:2407
 msgid "Clear Action History"
@@ -18132,7 +18085,7 @@ msgstr "Kljúfa"
 #: ../app/operations/operations-enums.c:286
 msgctxt "layer-mode"
 msgid "Pass through"
-msgstr ""
+msgstr "Gegnumstreymi"
 
 #: ../app/operations/operations-enums.c:287
 #| msgctxt "layer-mode-effects"
@@ -23581,29 +23534,29 @@ msgstr "Hegðun músarhjóls"
 
 #: ../app/widgets/gimpdashboard.c:153
 msgid "Cache"
-msgstr ""
+msgstr "Skyndiminni"
 
 #. cache occupied field
 #. swap occupied field
 #: ../app/widgets/gimpdashboard.c:182 ../app/widgets/gimpdashboard.c:252
 msgid "Occupied:"
-msgstr ""
+msgstr "Notað:"
 
 #: ../app/widgets/gimpdashboard.c:188 ../app/widgets/gimpdashboard.c:201
 #: ../app/widgets/gimpdashboard.c:258 ../app/widgets/gimpdashboard.c:271
 #: ../app/widgets/gimpdashboard.c:284 ../app/widgets/gimpdashboard.c:514
 msgid "N/A"
-msgstr ""
+msgstr "Ekki tiltækt"
 
 #. cache limit field
 #. swap limit field
 #: ../app/widgets/gimpdashboard.c:195 ../app/widgets/gimpdashboard.c:278
 msgid "Limit:"
-msgstr ""
+msgstr "Takmörk:"
 
 #: ../app/widgets/gimpdashboard.c:219
 msgid "Swap"
-msgstr ""
+msgstr "Diskminni"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -23800,7 +23753,7 @@ msgstr "Táknmynd:"
 
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
 msgid "Wheel / Rotation"
-msgstr ""
+msgstr "Hjól / Snúningur"
 
 #: ../app/widgets/gimperrordialog.c:169
 msgid "Too many error messages!"
@@ -24904,7 +24857,7 @@ msgstr "GIMP XCF mynd"
 
 #: ../app/xcf/xcf.c:271 ../app/xcf/xcf.c:359
 msgid "Memory Stream"
-msgstr ""
+msgstr "Streymi í minni"
 
 #: ../app/xcf/xcf.c:282
 #, c-format
@@ -24998,6 +24951,7 @@ msgstr "Villa við ritun XCF: "
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr ""
+"Villa við ritun XCF: óstutt svartgildismótvægi (BPC) við ritun mynddíls: %d"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
