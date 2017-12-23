@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 20:56+0000\n"
-"PO-Revision-Date: 2017-12-22 14:25+0000\n"
+"PO-Revision-Date: 2017-12-23 07:41+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -7595,12 +7595,12 @@ msgstr "Víkka valið"
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "Jaða_r..."
+msgstr "Útjaða_r..."
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
-msgstr "Setja jaðar valsins í stað myndvalsins"
+msgstr "Setja útjaðar valsins í stað myndvalsins"
 
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
@@ -7697,7 +7697,7 @@ msgstr "Víkka val um"
 
 #: ../app/actions/select-commands.c:329
 msgid "Border Selection"
-msgstr "Ramma myndval"
+msgstr "Val útjaðars"
 
 #: ../app/actions/select-commands.c:333
 msgid "Border selection by"
@@ -10967,20 +10967,24 @@ msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
+"Setur sjálfgefið gildi á 'Valin svæði halda áfram út fyrir myndina' fyrir "
+"'Minnka myndval' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid "Sets the default border radius for the 'Border Selection' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn radíus fyrir 'Val útjaðars' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
+"Setur sjálfgefið gildi á 'Valin svæði halda áfram út fyrir myndina' fyrir "
+"'Val útjaðars' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:575
 msgid "Sets the default border style for the 'Border Selection' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn stíl útjaðars fyrir 'Val útjaðars' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:584
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -12331,7 +12335,7 @@ msgstr "Umhverfa litrás"
 #: ../app/core/gimpchannel.c:336
 msgctxt "undo-type"
 msgid "Border Channel"
-msgstr "Ramma inn litrás"
+msgstr "Litrás útjaðars"
 
 #: ../app/core/gimpchannel.c:337
 msgctxt "undo-type"
@@ -13570,7 +13574,7 @@ msgstr "Umhverfa myndvali"
 #: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Border Selection"
-msgstr "Ramma myndval"
+msgstr "Val útjaðars"
 
 #: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
@@ -15565,10 +15569,9 @@ msgstr "Stærð myndflatar"
 
 #: ../app/dialogs/preferences-dialog.c:2075
 #: ../app/dialogs/preferences-dialog.c:2104
-#, fuzzy
 #| msgid "_Fill with:"
 msgid "Fill with:"
-msgstr "_Fylla með:"
+msgstr "Fylla með:"
 
 #: ../app/dialogs/preferences-dialog.c:2078
 #, fuzzy
@@ -15590,16 +15593,14 @@ msgid "New Layer Dialog"
 msgstr "Nýtt lag"
 
 #: ../app/dialogs/preferences-dialog.c:2091
-#, fuzzy
 #| msgid "Layer _name:"
 msgid "Layer name:"
-msgstr "_Heiti lags:"
+msgstr "Heiti lags:"
 
 #: ../app/dialogs/preferences-dialog.c:2095
-#, fuzzy
 #| msgid "Fill type"
 msgid "Fill type:"
-msgstr "Tegund fyllingar"
+msgstr "Tegund fyllingar:"
 
 #. Layer Boundary Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2099
@@ -15622,10 +15623,9 @@ msgid "Layer mask type:"
 msgstr "Fyllitegund lags"
 
 #: ../app/dialogs/preferences-dialog.c:2117
-#, fuzzy
 #| msgid "In_vert mask"
 msgid "Invert mask"
-msgstr "_Umhverfa hulu"
+msgstr "Umhverfa hulu"
 
 #. Merge Layers Dialog
 #: ../app/dialogs/preferences-dialog.c:2121
@@ -15655,29 +15655,25 @@ msgstr "_Henda ósýnilegum lögum"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2139
-#, fuzzy
 #| msgid "New Channel Color"
 msgid "New Channel Dialog"
-msgstr "Litur á nýja litrás"
+msgstr "Gluggi fyrir nýja litrás"
 
 #: ../app/dialogs/preferences-dialog.c:2144
-#, fuzzy
 #| msgid "Channel _name:"
 msgid "Channel name:"
-msgstr "_Nafn litrásar:"
+msgstr "Heiti litrásar:"
 
 #: ../app/dialogs/preferences-dialog.c:2148
-#, fuzzy
 #| msgid "Color Managed Display"
 msgid "Color and opacity:"
-msgstr "Litstýrður skjár"
+msgstr "Litur og ógegnsæi:"
 
 #: ../app/dialogs/preferences-dialog.c:2149
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Edit the channel's name, color and opacity"
 msgid "Default New Channel Color and Opacity"
-msgstr "Breyta nafni litrásar, lit og gegnsæi"
+msgstr "Sjálfgefinn litur og ógegnsæi nýrrar litrásar"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2154
@@ -15698,10 +15694,9 @@ msgid "Export Paths Dialog"
 msgstr "Flytja feril út í SVG"
 
 #: ../app/dialogs/preferences-dialog.c:2168
-#, fuzzy
 #| msgid "Temporary folder:"
 msgid "Export folder:"
-msgstr "Bráðabirgðamappa:"
+msgstr "Útflutningsmappa:"
 
 #: ../app/dialogs/preferences-dialog.c:2169
 #, fuzzy
@@ -15710,10 +15705,9 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "Velja möppu fyrir bráðabirgðaskrár"
 
 #: ../app/dialogs/preferences-dialog.c:2173
-#, fuzzy
 #| msgid "Export the active path"
 msgid "Export the active path only"
-msgstr "Flytja út virkan feril"
+msgstr "Einungis flytja út virkan feril"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2177
@@ -15723,10 +15717,9 @@ msgid "Import Paths Dialog"
 msgstr "Flytja inn ferla"
 
 #: ../app/dialogs/preferences-dialog.c:2182
-#, fuzzy
 #| msgid "Temporary folder:"
 msgid "Import folder:"
-msgstr "Bráðabirgðamappa:"
+msgstr "Innflutningsmappa:"
 
 #: ../app/dialogs/preferences-dialog.c:2183
 #, fuzzy
@@ -15735,16 +15728,14 @@ msgid "Select Default Folder for Importing Paths"
 msgstr "Velja möppu fyrir bráðabirgðaskrár"
 
 #: ../app/dialogs/preferences-dialog.c:2187
-#, fuzzy
 #| msgid "_Merge imported paths"
 msgid "Merge imported paths"
-msgstr "Sa_meina innflutta ferla"
+msgstr "Sameina innflutta ferla"
 
 #: ../app/dialogs/preferences-dialog.c:2190
-#, fuzzy
 #| msgid "_Merge imported paths"
 msgid "Scale imported paths"
-msgstr "Sa_meina innflutta ferla"
+msgstr "Kvarða innflutta ferla"
 
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2194
@@ -15754,10 +15745,9 @@ msgid "Feather Selection Dialog"
 msgstr "Fjaðra val"
 
 #: ../app/dialogs/preferences-dialog.c:2199
-#, fuzzy
 #| msgid "Feather radius X"
 msgid "Feather radius:"
-msgstr "Radíus fjöðrunar X"
+msgstr "Radíus fjöðrunar:"
 
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2203
@@ -15767,11 +15757,10 @@ msgid "Grow Selection Dialog"
 msgstr "Víkka val"
 
 #: ../app/dialogs/preferences-dialog.c:2208
-#, fuzzy
 #| msgctxt "warp-behavior"
 #| msgid "Grow area"
 msgid "Grow radius:"
-msgstr "Stækka flöt"
+msgstr "Stækka radíus:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2212
@@ -15781,44 +15770,38 @@ msgid "Shrink Selection Dialog"
 msgstr "Minnka val"
 
 #: ../app/dialogs/preferences-dialog.c:2217
-#, fuzzy
 #| msgctxt "warp-behavior"
 #| msgid "Shrink area"
 msgid "Shrink radius:"
-msgstr "Minnka flöt"
+msgstr "Minnka radíus:"
 
 #: ../app/dialogs/preferences-dialog.c:2221
 #: ../app/dialogs/preferences-dialog.c:2238
-#, fuzzy
 #| msgid "_Selected areas continue outside the image"
 msgid "Selected areas continue outside the image"
-msgstr "Valin _svæði halda áfram utan myndar"
+msgstr "Valin svæði halda áfram út fyrir myndina"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2225
-#, fuzzy
 #| msgid "Border Selection"
 msgid "Border Selection Dialog"
-msgstr "Ramma myndval"
+msgstr "Gluggi fyrir val útjaðars"
 
 #: ../app/dialogs/preferences-dialog.c:2230
-#, fuzzy
 #| msgid "Border style"
 msgid "Border radius:"
-msgstr "Stíll jaðars"
+msgstr "Radíus útjaðars:"
 
 #: ../app/dialogs/preferences-dialog.c:2234
-#, fuzzy
 #| msgid "Border style"
 msgid "Border style:"
-msgstr "Stíll jaðars"
+msgstr "Stíll útjaðars:"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2242
-#, fuzzy
 #| msgid "Fill Selection Outline"
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr "Fylla út í útlínur myndvals"
+msgstr "Gluggar fyrir fyllingu útlína myndvals og fyllingu ferla"
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2251
@@ -15853,10 +15836,9 @@ msgid "User manual:"
 msgstr "Notandahandbók:"
 
 #: ../app/dialogs/preferences-dialog.c:2307
-#, fuzzy
 #| msgid "User Interface"
 msgid "User interface language"
-msgstr "Notandaviðmót"
+msgstr "Tungumál notandaviðmóts"
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -16140,10 +16122,9 @@ msgid "Extended Input Devices"
 msgstr "Auka-inntakstæki"
 
 #: ../app/dialogs/preferences-dialog.c:2867
-#, fuzzy
 #| msgid "Save the tool options when GIMP exits."
 msgid "S_hare tool and tool options between input devices"
-msgstr "Vista _stillingar verkfæra við lokun GIMP."
+msgstr "Deila verkfærum og stillingum verkfæra á milli inntakstækja"
 
 #: ../app/dialogs/preferences-dialog.c:2871
 msgid "Configure E_xtended Input Devices..."
@@ -16435,10 +16416,9 @@ msgid "Save this image"
 msgstr "Vista þessa mynd"
 
 #: ../app/dialogs/quit-dialog.c:591
-#, fuzzy
 #| msgid "Save"
 msgid "Save as"
-msgstr "Vista"
+msgstr "Vista sem"
 
 #: ../app/dialogs/resize-dialog.c:143
 msgid "Canvas Size"
@@ -16449,22 +16429,19 @@ msgid "Layer Size"
 msgstr "Stærð lags"
 
 #: ../app/dialogs/resize-dialog.c:156
-#, fuzzy
 #| msgid "_Fill with:"
 msgid "Fill With"
-msgstr "_Fylla með:"
+msgstr "Fylla með"
 
 #: ../app/dialogs/resize-dialog.c:185
-#, fuzzy
 #| msgid "Pre_sets:"
 msgid "Re_set"
-msgstr "For_stillingar:"
+msgstr "F_rumstilla"
 
 #: ../app/dialogs/resize-dialog.c:187
-#, fuzzy
 #| msgid "Resizing"
 msgid "_Resize"
-msgstr "Breyti stærð"
+msgstr "_Breyta stærð"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -16475,10 +16452,9 @@ msgid "Resize _text layers"
 msgstr "Breyta stærð _textalaga"
 
 #: ../app/dialogs/resize-dialog.c:390
-#, fuzzy
 #| msgid "Dithering text layers will make them uneditable"
 msgid "Resizing text layers will make them uneditable"
-msgstr "Punktdreifing í textalögum gerir þau óritanleg"
+msgstr "Stærðarbreyting textalaga gerir þau óritanleg"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
@@ -16619,10 +16595,9 @@ msgid "_Scale imported paths to fit image"
 msgstr "_Kvarða innflutta ferla þannig að passi við stærð myndar"
 
 #: ../app/dialogs/vectors-options-dialog.c:106
-#, fuzzy
 #| msgid "Path name:"
 msgid "Path _name:"
-msgstr "Heiti ferils:"
+msgstr "_Heiti ferils:"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 #| msgid "Lock path strokes"
@@ -16630,10 +16605,9 @@ msgid "Lock path _strokes"
 msgstr "Læsa feril_strokum"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
-#, fuzzy
 #| msgid "Lock path position"
 msgid "Lock path _position"
-msgstr "Læsa staðsetningu ferils"
+msgstr "Læsa staðsetningu _ferils"
 
 #: ../app/display/display-enums.c:124
 msgctxt "guides-type"
@@ -16822,11 +16796,10 @@ msgid "Close %s"
 msgstr "Loka %s"
 
 #: ../app/display/gimpdisplayshell-close.c:178
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Save _As..."
 msgid "Save _As"
-msgstr "Vist_a sem..."
+msgstr "Vist_a sem"
 
 #: ../app/display/gimpdisplayshell-close.c:214
 #, c-format
@@ -17034,60 +17007,51 @@ msgstr "Smella-Draga til að færa alla punkta"
 
 #: ../app/display/gimptoolhandlegrid.c:849
 #: ../app/display/gimptooltransformgrid.c:1720
-#, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "Smelltu-Dragðu til að færa"
 
 #: ../app/display/gimptoolhandlegrid.c:852
-#, fuzzy
 #| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to rotate and scale"
-msgstr "Smella-Draga til að búa til nýtt myndval"
+msgstr "Smella-Draga til að snúa og kvarða"
 
 #: ../app/display/gimptoolhandlegrid.c:855
-#, fuzzy
 #| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to shear and scale"
-msgstr "Smella-Draga til að búa til nýtt myndval"
+msgstr "Smella-Draga til að skekkja og kvarða"
 
 #: ../app/display/gimptoolhandlegrid.c:858
 #: ../app/display/gimptooltransformgrid.c:1708
-#, fuzzy
 #| msgid "Click-Drag to change the shape of the curve"
 msgid "Click-Drag to change perspective"
-msgstr "Smelltu-Dragðu til að breyta lögun kúrvunnar"
+msgstr "Smelltu-Dragðu til að breyta fjarvídd (sjónarhorni)"
 
 #: ../app/display/gimptoolhandlegrid.c:869
-#, fuzzy
 #| msgid "Click to heal"
 msgid "Click to add a handle"
-msgstr "Smella til að gera við"
+msgstr "Smella til að bæta við haldfangi"
 
 #: ../app/display/gimptoolhandlegrid.c:875
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to move this handle"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu til að færa þetta haldfang"
 
 #: ../app/display/gimptoolhandlegrid.c:880
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to remove this handle"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu til að fjarlægja þetta haldfang"
 
 #: ../app/display/gimptoolline.c:334 ../app/display/gimptoolline.c:497
-#, fuzzy
 #| msgctxt "dash-preset"
 #| msgid "Line"
 msgid "Line: "
-msgstr "Lína"
+msgstr "Lína: "
 
 #: ../app/display/gimptoolline.c:1470
-#, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the endpoint"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "Smelltu-Dragðu til að færa endapunktinn"
 
 #: ../app/display/gimptoolline.c:1471 ../app/tools/gimppainttool.c:658
 #, c-format
@@ -17095,58 +17059,51 @@ msgid "%s for constrained angles"
 msgstr "%s fyrir þrepaskipt horn"
 
 #: ../app/display/gimptoolline.c:1478
-#, fuzzy
 #| msgid "Click to dodge the line"
 msgid "Release to remove the slider"
-msgstr "Smella til að upplita línu"
+msgstr "Sleppa til að fjarlægja sleðann"
 
 #: ../app/display/gimptoolline.c:1482
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s for constrained angles"
 msgid "%s for constrained values"
-msgstr "%s fyrir þrepaskipt horn"
+msgstr "%s fyrir þrepaskipt gildi"
 
 #: ../app/display/gimptoolline.c:1492
-#, fuzzy
 #| msgid "Click-Drag to move the selection mask"
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "Smella-Draga til að færa hulu myndvalsins"
+msgstr ""
+"Smella-Draga til að færa sleðann; draga í burt til að fjarlægja sleðann"
 
 #: ../app/display/gimptoolline.c:1497
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to move or remove the slider"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu til að færa eða fjarlægja sleðann"
 
 #: ../app/display/gimptoolline.c:1502
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to move the slider"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu til að færa sleðann"
 
 #: ../app/display/gimptoolline.c:1513
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag away to remove the slider"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu í burt til að fjarlægja sleðann"
 
 #: ../app/display/gimptoolline.c:1517
-#, fuzzy
 #| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to remove the slider"
-msgstr "Smelltu-Dragðu til að færa haldfangið"
+msgstr "Smelltu-Dragðu til að fjarlægja sleðann"
 
 #: ../app/display/gimptoolline.c:1528
-#, fuzzy
 #| msgid "Click or Click-Drag to add a point"
 msgid "Click or Click-Drag to add a new slider"
-msgstr "Smella-Draga til að bæta við punkti"
+msgstr "Smelltu eða Smelltu-Dragðu til að bæta við nýjum sleða"
 
 #: ../app/display/gimptoolline.c:1534
-#, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the line"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "Smelltu-Dragðu til að færa línuna"
 
 #: ../app/display/gimptoolline.c:1546
 #, c-format
@@ -17292,27 +17249,25 @@ msgstr "Smelltu til að gera þennan hnút hyrndan"
 
 #: ../app/display/gimptoolpath.c:1546
 msgid "Clicking here does nothing, try clicking on path elements."
-msgstr ""
+msgstr "Smellur hér gerir ekkert, prófaðu að smella á einingar ferilsins."
 
 #: ../app/display/gimptoolpath.c:1754
 msgid "Delete Anchors"
 msgstr "Eyða festingum"
 
 #: ../app/display/gimptoolpolygon.c:863
-#, fuzzy
 #| msgid "Click to sharpen"
 msgid "Click to close shape"
-msgstr "Smella til að skerpa"
+msgstr "Smella til að loka lögun"
 
 #: ../app/display/gimptoolpolygon.c:867
 msgid "Click-Drag to move segment vertex"
 msgstr "Smella-Draga færir punkt línuhluta"
 
 #: ../app/display/gimptoolpolygon.c:872
-#, fuzzy
 #| msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
-msgstr "Enter staðfestir, Escape afboðar, Backspace fjarlægir síðasta hlutann"
+msgstr "Enter staðfestir, Escape afboðar, Backspace opnar lögunina aftur"
 
 #: ../app/display/gimptoolpolygon.c:876
 msgid "Return commits, Escape cancels, Backspace removes last segment"
@@ -17330,35 +17285,30 @@ msgid "Rectangle: "
 msgstr "Rétthyrningur "
 
 #: ../app/display/gimptoolrectangle.c:2136
-#, fuzzy
 #| msgid "Position:"
 msgid "Position: "
-msgstr "Staðsetning:"
+msgstr "Staðsetning: "
 
 #: ../app/display/gimptooltransformgrid.c:1713
 #: ../app/display/gimptooltransformgrid.c:1718
-#, fuzzy
 #| msgid "Click to clone"
 msgid "Click-Drag to scale"
-msgstr "Smella til að klóna"
+msgstr "Smella-Draga til að kvarða"
 
 #: ../app/display/gimptooltransformgrid.c:1722
-#, fuzzy
 #| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the pivot point"
-msgstr "Smelltu-Dragðu til að færa þennan punkt"
+msgstr "Smelltu-Dragðu til að færa veltipunktinn"
 
 #: ../app/display/gimptooltransformgrid.c:1727
-#, fuzzy
 #| msgid "Click to heal"
 msgid "Click-Drag to shear"
-msgstr "Smella til að gera við"
+msgstr "Smella-Draga til að skekkja"
 
 #: ../app/display/gimptooltransformgrid.c:1729
-#, fuzzy
 #| msgid "Click to erase"
 msgid "Click-Drag to rotate"
-msgstr "Smella til að stroka út"
+msgstr "Smella-Draga til að snúa"
 
 #: ../app/file/file-open.c:116 ../app/file/file-save.c:114
 msgid "Not a regular file"
@@ -17548,47 +17498,42 @@ msgid "Auto"
 msgstr "Sjálfvirkt"
 
 #: ../app/operations/operations-enums.c:60
-#, fuzzy
 #| msgid "Source"
 msgctxt "layer-composite-mode"
 msgid "Source over"
-msgstr "Uppruni"
+msgstr "Uppruni yfir"
 
 #: ../app/operations/operations-enums.c:61
-#, fuzzy
 #| msgid "Source"
 msgctxt "layer-composite-mode"
 msgid "Source atop"
-msgstr "Uppruni"
+msgstr "Uppruni ofaná"
 
 #: ../app/operations/operations-enums.c:62
-#, fuzzy
 #| msgid "Destination Range"
 msgctxt "layer-composite-mode"
 msgid "Destination atop"
-msgstr "Úttakssvið"
+msgstr "Úttak ofaná"
 
 #: ../app/operations/operations-enums.c:63
-#, fuzzy
 #| msgid "Source"
 msgctxt "layer-composite-mode"
 msgid "Source in"
-msgstr "Uppruni"
+msgstr "Uppruni í"
 
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr "Venjulegt (gamalt)"
+msgstr "Venjulegt (eldra)"
 
 #. Translators: this is an abbreviated version of "Normal (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:156
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Normal (legacy)"
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "Venjulegt (gamalt)"
+msgstr "Venjulegt (I)"
 
 #: ../app/operations/operations-enums.c:157
 #| msgctxt "layer-mode-effects"
@@ -17600,50 +17545,46 @@ msgstr "Uppleysing"
 #: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
-msgstr "Aftan við (gamalt)"
+msgstr "Aftan við (eldra)"
 
 #. Translators: this is an abbreviated version of "Behind (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:161
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Behind (legacy)"
 msgctxt "layer-mode"
 msgid "Behind (l)"
-msgstr "Aftan við (gamalt)"
+msgstr "Aftan við (I)"
 
 #: ../app/operations/operations-enums.c:162
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Multiply"
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
-msgstr "Margföldun"
+msgstr "Margföldun (eldra)"
 
 #. Translators: this is an abbreviated version of "Multiply (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:165
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Multiply"
 msgctxt "layer-mode"
 msgid "Multiply (l)"
-msgstr "Margföldun"
+msgstr "Margföldun (I)"
 
 #: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "Skjár (gamalt)"
+msgstr "Skjár (eldra)"
 
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:169
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Screen (legacy)"
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "Skjár (gamalt)"
+msgstr "Skjár (I)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
@@ -17653,306 +17594,275 @@ msgstr "Gamalt bilað yfirlag"
 #. Translators: this is an abbreviated version of "Old broken Overlay".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:173
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Overlay"
 msgctxt "layer-mode"
 msgid "Old Overlay"
-msgstr "Yfirprentun"
+msgstr "Gamalt yfirlag"
 
 #: ../app/operations/operations-enums.c:174
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Difference"
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
-msgstr "Mismunur"
+msgstr "Mismunur (eldra)"
 
 #. Translators: this is an abbreviated version of "Difference (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:177
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Difference"
 msgctxt "layer-mode"
 msgid "Difference (l)"
-msgstr "Mismunur"
+msgstr "Mismunur (I)"
 
 #: ../app/operations/operations-enums.c:178
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Addition"
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
-msgstr "Samlagning"
+msgstr "Samlagning (eldra)"
 
 #. Translators: this is an abbreviated version of "Addition (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:181
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Addition"
 msgctxt "layer-mode"
 msgid "Addition (l)"
-msgstr "Samlagning"
+msgstr "Samlagning (I)"
 
 #: ../app/operations/operations-enums.c:182
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Subtract"
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
-msgstr "Frádráttur"
+msgstr "Frádráttur (eldra)"
 
 #. Translators: this is an abbreviated version of "Subtract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:185
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Subtract"
 msgctxt "layer-mode"
 msgid "Subtract (l)"
-msgstr "Frádráttur"
+msgstr "Frádráttur (I)"
 
 #: ../app/operations/operations-enums.c:186
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "Einungis dekkja"
+msgstr "Einungis dekkja (eldra)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:189
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "Einungis dekkja"
+msgstr "Einungis dekkja (I)"
 
 #: ../app/operations/operations-enums.c:190
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
-msgstr "Einungis lýsa"
+msgstr "Einungis lýsa (eldra)"
 
 #. Translators: this is an abbreviated version of "Lighten only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:193
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "Einungis lýsa"
+msgstr "Einungis lýsa (I)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
-msgstr "Litblær (HSV)  (gamalt)"
+msgstr "Litblær (HSV) (eldra)"
 
 #. Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:197
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Hue (HSV) (legacy)"
 msgctxt "layer-mode"
 msgid "Hue (HSV) (l)"
-msgstr "Litblær (HSV)  (gamalt)"
+msgstr "Litblær (HSV) (I)"
 
 #: ../app/operations/operations-enums.c:198
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Saturation (HSV)"
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
-msgstr "Litmettun (HSV)"
+msgstr "Litmettun (HSV) (eldra)"
 
 #. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:201
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Saturation (HSV)"
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (l)"
-msgstr "Litmettun (HSV)"
+msgstr "Litmettun (HSV) (I)"
 
 #: ../app/operations/operations-enums.c:202
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color (HSV)"
 msgctxt "layer-mode"
 msgid "Color (HSL) (legacy)"
-msgstr "Litur (HSV)"
+msgstr "Litur (HSV) (eldra)"
 
 #. Translators: this is an abbreviated version of "Color (HSL) (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:205
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color (HSV)"
 msgctxt "layer-mode"
 msgid "Color (HSL) (l)"
-msgstr "Litur (HSV)"
+msgstr "Litur (HSV) (I)"
 
 #: ../app/operations/operations-enums.c:206
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Value (HSV)"
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
-msgstr "Litgildi (HSV)"
+msgstr "Litgildi (HSV) (eldra)"
 
 #. Translators: this is an abbreviated version of "Value (HSV) (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:209
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Value (HSV)"
 msgctxt "layer-mode"
 msgid "Value (HSV) (l)"
-msgstr "Litgildi (HSV)"
+msgstr "Litgildi (HSV) (I)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
-msgstr "Deila (gamalt)"
+msgstr "Deila (eldra)"
 
 #. Translators: this is an abbreviated version of "Divide (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:213
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Divide (legacy)"
 msgctxt "layer-mode"
 msgid "Divide (l)"
-msgstr "Deila (gamalt)"
+msgstr "Deila (I)"
 
 #: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr "Upplita (gamalt)"
+msgstr "Upplita (eldra)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:217
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Dodge (legacy)"
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "Upplita (gamalt)"
+msgstr "Upplita (I)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
-msgstr "Brenna (gamalt)"
+msgstr "Brenna (eldra)"
 
 #. Translators: this is an abbreviated version of "Burn (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:221
-#, fuzzy
 #| msgctxt "layer-mode"
 #| msgid "Burn (legacy)"
 msgctxt "layer-mode"
 msgid "Burn (l)"
-msgstr "Brenna (gamalt)"
+msgstr "Brenna (I)"
 
 #: ../app/operations/operations-enums.c:222
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
-msgstr "Hörð lýsing"
+msgstr "Hörð lýsing (eldra)"
 
 #. Translators: this is an abbreviated version of "Hard light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:225
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "Hörð lýsing"
+msgstr "Hörð lýsing (I)"
 
 #: ../app/operations/operations-enums.c:226
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Soft light"
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
-msgstr "Mjúk lýsing"
+msgstr "Mjúk lýsing (eldra)"
 
 #. Translators: this is an abbreviated version of "Soft light (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:229
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Soft light"
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "Mjúk lýsing"
+msgstr "Mjúk lýsing (I)"
 
 #: ../app/operations/operations-enums.c:230
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "Kornasíun"
+msgstr "Kornasíun (eldra)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:233
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain extract"
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "Kornasíun"
+msgstr "Kornasíun (I)"
 
 #: ../app/operations/operations-enums.c:234
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "Kornablöndun"
+msgstr "Kornablöndun (eldra)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:237
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain merge"
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "Kornablöndun"
+msgstr "Kornablöndun (I)"
 
 #: ../app/operations/operations-enums.c:238
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color erase"
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "Liteyðing"
+msgstr "Liteyðing (eldra)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:241
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color erase"
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "Liteyðing"
+msgstr "Liteyðing (l)"
 
 #: ../app/operations/operations-enums.c:242
 #| msgctxt "layer-mode-effects"
@@ -17972,7 +17882,6 @@ msgid "Chroma (LCH)"
 msgstr "Litróf (LCH)"
 
 #: ../app/operations/operations-enums.c:245
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color (LCH)"
 msgctxt "layer-mode"
@@ -17980,7 +17889,6 @@ msgid "Color (LCH)"
 msgstr "Litur (LCH)"
 
 #: ../app/operations/operations-enums.c:246
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Lightness (LCH)"
 msgctxt "layer-mode"
@@ -18056,7 +17964,6 @@ msgid "Hue (HSV)"
 msgstr "Litblær (HSV)"
 
 #: ../app/operations/operations-enums.c:257
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Saturation (HSV)"
 msgctxt "layer-mode"
@@ -18064,15 +17971,13 @@ msgid "Saturation (HSV)"
 msgstr "Litmettun (HSV)"
 
 #: ../app/operations/operations-enums.c:258
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color (HSV)"
 msgctxt "layer-mode"
 msgid "Color (HSL)"
-msgstr "Litur (HSV)"
+msgstr "Litur (HSL)"
 
 #: ../app/operations/operations-enums.c:259
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Value (HSV)"
 msgctxt "layer-mode"
@@ -18125,12 +18030,11 @@ msgid "Grain merge"
 msgstr "Kornablöndun"
 
 #: ../app/operations/operations-enums.c:267
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Vivid light"
-msgstr "Hörð lýsing"
+msgstr "Skær lýsing"
 
 #: ../app/operations/operations-enums.c:268
 #, fuzzy
@@ -18140,27 +18044,24 @@ msgid "Pin light"
 msgstr "Línuleg lýsing"
 
 #: ../app/operations/operations-enums.c:269
-#, fuzzy
 #| msgid "Linear light"
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Línuleg lýsing"
 
 #: ../app/operations/operations-enums.c:270
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hard light"
 msgctxt "layer-mode"
 msgid "Hard mix"
-msgstr "Hörð lýsing"
+msgstr "Hörð blöndun"
 
 #: ../app/operations/operations-enums.c:271
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Illusion"
 msgctxt "layer-mode"
 msgid "Exclusion"
-msgstr "Sjónblekking"
+msgstr "Útilokun"
 
 #: ../app/operations/operations-enums.c:272
 msgctxt "layer-mode"
@@ -18170,35 +18071,32 @@ msgstr "Línuleg brennsla"
 #: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
-msgstr ""
+msgstr "Einungis dekkja ljómastigul/ljóma"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:276
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Darken only"
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Einungis dekkja"
+msgstr "Einungis dekkja ljómastigul (luma)"
 
 #: ../app/operations/operations-enums.c:277
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "Einungis lýsa"
+msgstr "Einungis lýsa ljómastigul/ljóma"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:280
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Lighten only"
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "Einungis lýsa"
+msgstr "Einungis lýsa ljómastigul (luma)"
 
 #: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
@@ -18220,11 +18118,10 @@ msgid "Erase"
 msgstr "Eyðing"
 
 #: ../app/operations/operations-enums.c:284
-#, fuzzy
 #| msgid "_Merge"
 msgctxt "layer-mode"
 msgid "Merge"
-msgstr "_Sameina"
+msgstr "Sameina"
 
 #: ../app/operations/operations-enums.c:285
 #| msgid "Split"
@@ -18251,11 +18148,10 @@ msgid "Anti erase"
 msgstr "Móteyðing"
 
 #: ../app/operations/operations-enums.c:316
-#, fuzzy
 #| msgid "Default Grid"
 msgctxt "layer-mode-group"
 msgid "Default"
-msgstr "Sjálfgefinn möskvi"
+msgstr "Sjálfgefið"
 
 #: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
@@ -19023,10 +18919,10 @@ msgid "Brush '%s' is not editable"
 msgstr "Pensillinn '%s' er ekki breytanlegur"
 
 #: ../app/pdb/gimppdb-utils.c:98
-#, fuzzy, c-format
+#, c-format
 #| msgid "Brush '%s' is not editable"
 msgid "Brush '%s' is not renamable"
-msgstr "Pensillinn '%s' er ekki breytanlegur"
+msgstr "Ekki er hægt að breyta nafninu á '%s' penslinum"
 
 #: ../app/pdb/gimppdb-utils.c:124
 #, c-format
@@ -19048,10 +18944,10 @@ msgid "Paint dynamics '%s' is not editable"
 msgstr "Pensilhreyfingin '%s' er ekki breytanleg"
 
 #: ../app/pdb/gimppdb-utils.c:167
-#, fuzzy, c-format
+#, c-format
 #| msgid "Paint dynamics '%s' is not editable"
 msgid "Paint dynamics '%s' is not renamable"
-msgstr "Pensilhreyfingin '%s' er ekki breytanleg"
+msgstr "Ekki er hægt að breyta nafninu á '%s' pensilhreyfingunni"
 
 #: ../app/pdb/gimppdb-utils.c:188
 msgid "Invalid empty MyPaint brush name"
@@ -19068,10 +18964,10 @@ msgid "MyPaint brush '%s' is not editable"
 msgstr "MyPaint-pensillinn '%s' er ekki breytanlegur"
 
 #: ../app/pdb/gimppdb-utils.c:210
-#, fuzzy, c-format
+#, c-format
 #| msgid "MyPaint brush '%s' is not editable"
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "MyPaint-pensillinn '%s' er ekki breytanlegur"
+msgstr "Ekki er hægt að breyta nafninu á '%s' MyPaint-penslinum"
 
 #: ../app/pdb/gimppdb-utils.c:230
 msgid "Invalid empty pattern name"
@@ -19097,10 +18993,10 @@ msgid "Gradient '%s' is not editable"
 msgstr "Litstigullinn '%s' er ekki breytanlegur"
 
 #: ../app/pdb/gimppdb-utils.c:281
-#, fuzzy, c-format
+#, c-format
 #| msgid "Gradient '%s' is not editable"
 msgid "Gradient '%s' is not renamable"
-msgstr "Litstigullinn '%s' er ekki breytanlegur"
+msgstr "Ekki er hægt að breyta nafninu á '%s' litstiglinum"
 
 #: ../app/pdb/gimppdb-utils.c:302
 msgid "Invalid empty palette name"
@@ -19117,10 +19013,10 @@ msgid "Palette '%s' is not editable"
 msgstr "Litaspjaldið '%s' er ekki breytanlegt"
 
 #: ../app/pdb/gimppdb-utils.c:324
-#, fuzzy, c-format
+#, c-format
 #| msgid "Palette '%s' is not editable"
 msgid "Palette '%s' is not renamable"
-msgstr "Litaspjaldið '%s' er ekki breytanlegt"
+msgstr "Ekki er hægt að breyta nafninu á '%s' litaspjaldinu"
 
 #: ../app/pdb/gimppdb-utils.c:344
 msgid "Invalid empty font name"
@@ -20960,7 +20856,7 @@ msgstr "Fylla með"
 
 #: ../app/tools/gimpcropoptions.c:101
 msgid "How to fill new areas created by 'Allow growing'"
-msgstr ""
+msgstr "Hvernig á að fylla ný svæði sem verða til við 'Leyfa þenslu'"
 
 #: ../app/tools/gimpcroptool.c:115
 msgid "Crop"
@@ -22622,6 +22518,7 @@ msgstr ""
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
+"Skorða haldföng fjarvíddar við hreyfingar meðfram jöðrum og skálínum (%s)"
 
 #: ../app/tools/gimptransformoptions.c:528
 #, c-format
