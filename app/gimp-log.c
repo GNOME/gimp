@@ -66,9 +66,14 @@ gimp_log_init (void)
   if (env_log_val)
     {
       /*  g_parse_debug_string() has special treatment of the string 'help',
-       *  but we want to use it for the GIMP_LOG_HELP domain
+       *  but we want to use it for the GIMP_LOG_HELP domain. "list-all"
+       *  is a replacement for "help" in GIMP.
        */
-      if (g_ascii_strcasecmp (env_log_val, "help") == 0)
+      if (g_ascii_strcasecmp (env_log_val, "list-all") == 0)
+        gimp_log_flags = g_parse_debug_string ("help",
+                                               log_keys,
+                                               G_N_ELEMENTS (log_keys));
+      else if (g_ascii_strcasecmp (env_log_val, "help") == 0)
         gimp_log_flags = GIMP_LOG_HELP;
       else
         gimp_log_flags = g_parse_debug_string (env_log_val,
@@ -76,7 +81,19 @@ gimp_log_init (void)
                                                G_N_ELEMENTS (log_keys));
 
       if (gimp_log_flags & GIMP_LOG_INSTANCES)
-        gimp_debug_enable_instances ();
+        {
+          gimp_debug_enable_instances ();
+        }
+      else if (! gimp_log_flags)
+        {
+          /* If the environment variable was set but no log flags are
+           * set as a result, let's assume one is not sure how to use
+           * the log flags and output the list of keys as a helper.
+           */
+          gimp_log_flags = g_parse_debug_string ("help",
+                                                 log_keys,
+                                                 G_N_ELEMENTS (log_keys));
+        }
     }
 }
 
