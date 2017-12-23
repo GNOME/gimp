@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 20:56+0000\n"
-"PO-Revision-Date: 2017-12-23 08:44+0000\n"
+"PO-Revision-Date: 2017-12-23 09:12+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -1849,7 +1849,7 @@ msgstr "Bakgrunnur litblær: Minnka um 1%"
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr "Bakgrunnur litblær: Aukaa um 1%"
+msgstr "Bakgrunnur litblær: Auka um 1%"
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
@@ -1859,7 +1859,7 @@ msgstr "Bakgrunnur litblær: Minnka um 10%"
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr "Bakgrunnur litblær: Aukaa um 10%"
+msgstr "Bakgrunnur litblær: Auka um 10%"
 
 #: ../app/actions/context-actions.c:609
 msgctxt "context-action"
@@ -1914,22 +1914,22 @@ msgstr "Bakgrunnur litgildi: Setja á hámark"
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunnur litgildi: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:657
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunnur litgildi: Auka um 1%"
 
 #: ../app/actions/context-actions.c:661
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunnur litgildi: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:665
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunnur litgildi: Auka um 10%"
 
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
@@ -1939,32 +1939,32 @@ msgstr "Ógegnsæi verkfæris: Stilla gegnsæi"
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera alveg gegnsætt"
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera alveg ógegnsætt"
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera 1% meira gegnsætt"
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera 1% meira ógegnsætt"
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera 10% meira gegnsætt"
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr ""
+msgstr "Gegnsæi verkfæris: Gera 10% meira ógegnsætt"
 
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
@@ -1979,17 +1979,17 @@ msgstr "Málunarhamur: Velja síðasta"
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr ""
+msgstr "Málunarhamur: Velja fyrra"
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr ""
+msgstr "Málunarhamur: Velja næsta"
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
 msgid "Tool Selection: Choose by Index"
-msgstr ""
+msgstr "Val á verkfæri: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:729
 #, fuzzy
@@ -2010,22 +2010,22 @@ msgstr "Val að ferli"
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr ""
+msgstr "Val á verkfæri: Skipta á fyrri"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr ""
+msgstr "Val á verkfæri: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
 msgid "Brush Selection: Select by Index"
-msgstr ""
+msgstr "Penslaval: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:753
 msgctxt "context-action"
 msgid "Brush Selection: Switch to First"
-msgstr ""
+msgstr "Penslaval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:757
 #, fuzzy
@@ -2038,22 +2038,22 @@ msgstr "Val að ferli"
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr ""
+msgstr "Penslaval: Skipta á fyrri"
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Next"
-msgstr ""
+msgstr "Penslaval: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr ""
+msgstr "Mynsturval: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr ""
+msgstr "Mynsturval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:781
 #, fuzzy
@@ -2074,12 +2074,12 @@ msgstr "Strjúka eftir myndvali með síðustu stillingum"
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr ""
+msgstr "Mynsturval: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
 msgid "Palette Selection: Select by Index"
-msgstr ""
+msgstr "Litaspjaldsval: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:801
 #, fuzzy
@@ -2116,12 +2116,12 @@ msgstr "Setja þessa litrás í stað myndvalsins"
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
 msgid "Gradient Selection: Select by Index"
-msgstr ""
+msgstr "Litstigilsval: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:825
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to First"
-msgstr ""
+msgstr "Litstigilsval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:829
 #, fuzzy
@@ -2134,12 +2134,12 @@ msgstr "Fljótandi val á lag"
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr ""
+msgstr "Litstigilsval: Skipta á fyrri"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Next"
-msgstr ""
+msgstr "Litstigilsval: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:845
 #, fuzzy
@@ -8244,7 +8244,7 @@ msgstr "Flæði sprautu: Auka um 10"
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:268
 #, fuzzy
@@ -8256,47 +8256,47 @@ msgstr "Endu_rstilla verkfæri með sjálfgefnum gildum"
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:276
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:280
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:284
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:288
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:292
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Auka um 10"
 
 #: ../app/actions/tools-actions.c:296
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:300
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr ""
+msgstr "Ógegnsæi verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:308
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
-msgstr ""
+msgstr "Stærð verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:312
 #, fuzzy
@@ -8309,42 +8309,42 @@ msgstr "Frumstilla í sjálfgefin gildi"
 #: ../app/actions/tools-actions.c:316
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
-msgstr ""
+msgstr "Stærð verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:320
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
-msgstr ""
+msgstr "Stærð verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:324
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
-msgstr ""
+msgstr "Stærð verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:328
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
-msgstr ""
+msgstr "Stærð verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:332
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
-msgstr ""
+msgstr "Stærð verkfæris: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:336
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
-msgstr ""
+msgstr "Stærð verkfæris: Auka um 10"
 
 #: ../app/actions/tools-actions.c:340
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
-msgstr ""
+msgstr "Stærð verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:344
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
-msgstr ""
+msgstr "Stærð verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:352
 #, fuzzy
@@ -8363,42 +8363,42 @@ msgstr "Endu_rstilla verkfæri með sjálfgefnum gildum"
 #: ../app/actions/tools-actions.c:360
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:364
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:368
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Minnka um 0.1"
 
 #: ../app/actions/tools-actions.c:372
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Auka um 0.1"
 
 #: ../app/actions/tools-actions.c:376
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:380
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:384
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:388
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
-msgstr ""
+msgstr "Stærðarhlutföll verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:396
 msgctxt "tools-action"
