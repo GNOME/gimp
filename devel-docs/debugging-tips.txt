@@ -1,0 +1,68 @@
+There are a few environment variables, options or other more-or-less
+known tricks to debug GIMP. Let's try to add them here for reminder and
+newcomers.
+
+## Basics ##
+
+The basic thing is to build babl, GEGL and GIMP with `--enable-debug`.
+
+Note that if you also built glib from source with `--enable-debug`,
+every GObject destroyed are apparently overwritten with values invalid
+as pointers, so dereferencing one after destruction usually leads to a
+crash, which is a good way to find some more vicious bugs.
+
+## Debug logs ##
+
+You can see various GIMP_LOG() calls in the code. These will only be
+outputted when you set GIMP_DEBUG environment variable to a
+comma-separated list of domain.
+For instance, for `GIMP_LOG (XCF, "some string")` to be outputted,
+run GIMP like this:
+
+> GIMP_DEBUG=xcf gimp-2.9
+
+Special flags are:
+- "all" to output all domain logs;
+- "list-all" to get a list of available domains.
+
+## Debugging a warning ##
+
+If you encounter a CRITICAL or WARNING message on console, you can make
+so that GIMP crashes on it, which will make it very easy to be tracked
+down in a debugger (for instance GDB), by running GIMP with:
+
+> gimp-2.9 --g-fatal-warnings
+
+## Debugging GEGL code ##
+
+You may encounter this kind of warning upon exiting GIMP:
+
+> EEEEeEeek! 2 GeglBuffers leaked
+
+To debug GeglBuffer leaks, set the environment variable GEGL_DEBUG to
+"buffer-alloc".
+
+## Debugging babl ##
+
+Profile conversion is done with babl by default when possible, which is
+much faster.
+Setting GIMP_COLOR_TRANSFORM_DISABLE_BABL environment variable switch
+back to the old lcms implementation, which can be useful for comparison.
+
+## Debugging X Window System error ##
+
+Make X calls synchronous so that your crashs happen immediately with:
+
+> gimp-2.9 --sync
+
+You can also break on `gdk_x_error()`.
+
+## Debugging icons ##
+
+See file `devel-docs/icons.txt` to learn more about our icons, and in
+particular the environment variable GIMP_ICONS_LIKE_A_BOSS.
+
+## Debugging plug-ins ##
+
+See file `devel-docs/debug-plug-ins.txt` for usage of environment
+variable GIMP_PLUGIN_DEBUG.
