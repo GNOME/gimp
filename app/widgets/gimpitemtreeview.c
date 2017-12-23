@@ -76,6 +76,7 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *multi_selection_label;
   GtkWidget       *lock_content_toggle;
   GtkWidget       *lock_position_toggle;
+  GtkWidget       *lock_visibility_toggle;
 
   GtkWidget       *new_button;
   GtkWidget       *raise_button;
@@ -95,6 +96,7 @@ struct _GimpItemTreeViewPrivate
   GimpTreeHandler *color_tag_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
   GimpTreeHandler *lock_position_changed_handler;
+  GimpTreeHandler *lock_visibility_changed_handler;
 
   gboolean         inserting_item; /* EEK */
 };
@@ -169,16 +171,18 @@ static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
                                                      const gchar       *new_name,
                                                      GimpItemTreeView  *view);
 
-static void   gimp_item_tree_view_visible_changed      (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_linked_changed       (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_color_tag_changed    (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lock_content_changed (GimpItem          *item,
-                                                        GimpItemTreeView  *view);
-static void   gimp_item_tree_view_lock_position_changed(GimpItem          *item,
-                                                        GimpItemTreeView  *view);
+static void   gimp_item_tree_view_visible_changed         (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
+static void   gimp_item_tree_view_linked_changed          (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
+static void   gimp_item_tree_view_color_tag_changed       (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_content_changed    (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_position_changed   (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_visibility_changed (GimpItem          *item,
+                                                           GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_eye_clicked       (GtkCellRendererToggle *toggle,
                                                      gchar             *path,
@@ -192,6 +196,9 @@ static void   gimp_item_tree_view_lock_content_toggled
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_lock_position_toggled
+                                                    (GtkWidget         *widget,
+                                                     GimpItemTreeView  *view);
+static void   gimp_item_tree_view_lock_visibility_toggled
                                                     (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
 static void   gimp_item_tree_view_update_options    (GimpItemTreeView  *view,
@@ -290,6 +297,10 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lock_position_icon_name  = NULL;
   klass->lock_position_tooltip    = NULL;
   klass->lock_position_help_id    = NULL;
+
+  klass->lock_visibility_icon_name = NULL;
+  klass->lock_visibility_tooltip   = NULL;
+  klass->lock_visibility_help_id   = NULL;
 }
 
 static void
@@ -531,6 +542,28 @@ gimp_item_tree_view_constructed (GObject *object)
   image = gtk_image_new_from_icon_name (item_view_class->lock_position_icon_name,
                                         icon_size);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_position_toggle),
+                     image);
+  gtk_widget_show (image);
+
+  /*  Lock visibility toggle  */
+  item_view->priv->lock_visibility_toggle = gtk_toggle_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), item_view->priv->lock_visibility_toggle,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (hbox),
+                         item_view->priv->lock_visibility_toggle, 2);
+  gtk_widget_show (item_view->priv->lock_visibility_toggle);
+
+  g_signal_connect (item_view->priv->lock_visibility_toggle, "toggled",
+                    G_CALLBACK (gimp_item_tree_view_lock_visibility_toggled),
+                    item_view);
+
+  gimp_help_set_help_data (item_view->priv->lock_visibility_toggle,
+                           item_view_class->lock_visibility_tooltip,
+                           item_view_class->lock_visibility_help_id);
+
+  image = gtk_image_new_from_icon_name (item_view_class->lock_visibility_icon_name,
+                                        icon_size);
+  gtk_container_add (GTK_CONTAINER (item_view->priv->lock_visibility_toggle),
                      image);
   gtk_widget_show (image);
 }
@@ -931,6 +964,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 
       gimp_tree_handler_disconnect (item_view->priv->lock_position_changed_handler);
       item_view->priv->lock_position_changed_handler = NULL;
+
+      gimp_tree_handler_disconnect (item_view->priv->lock_visibility_changed_handler);
+      item_view->priv->lock_visibility_changed_handler = NULL;
     }
 
   parent_view_iface->set_container (view, container);
@@ -960,6 +996,11 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       item_view->priv->lock_position_changed_handler =
         gimp_tree_handler_connect (container, "lock-position-changed",
                                    G_CALLBACK (gimp_item_tree_view_lock_position_changed),
+                                   view);
+
+      item_view->priv->lock_visibility_changed_handler =
+        gimp_tree_handler_connect (container, "lock-visibility-changed",
+                                   G_CALLBACK (gimp_item_tree_view_lock_visibility_changed),
                                    view);
     }
 }
@@ -1772,6 +1813,60 @@ gimp_item_tree_view_lock_position_toggled (GtkWidget         *widget,
   gimp_image_undo_group_end (image);
 }
 
+static void
+gimp_item_tree_view_lock_visibility_changed (GimpItem         *item,
+                                             GimpItemTreeView *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *active_item;
+
+  active_item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (active_item == item)
+    gimp_item_tree_view_update_options (view, item);
+}
+
+static void
+gimp_item_tree_view_lock_visibility_toggled (GtkWidget        *widget,
+                                             GimpItemTreeView *view)
+{
+  GimpImage *image = view->priv->image;
+  GimpItem  *item;
+
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+
+  if (item)
+    {
+      gboolean lock_visibility;
+
+      lock_visibility = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+      if (gimp_item_get_lock_visibility (item) != lock_visibility)
+        {
+          GimpUndo *undo;
+          gboolean  push_undo = TRUE;
+
+          /*  compress lock visibilities undos  */
+          undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                               GIMP_UNDO_ITEM_LOCK_VISIBILITY);
+
+          if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+            push_undo = FALSE;
+
+          g_signal_handlers_block_by_func (item,
+                                           gimp_item_tree_view_lock_visibility_changed,
+                                           view);
+
+          gimp_item_set_lock_visibility (item, lock_visibility, push_undo);
+
+          g_signal_handlers_unblock_by_func (item,
+                                             gimp_item_tree_view_lock_visibility_changed,
+                                             view);
+          gimp_image_flush (image);
+        }
+    }
+}
+
 static gboolean
 gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
                                       const gchar              *path_str,
@@ -1842,8 +1937,11 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
   gboolean  some_can_lock_content      = FALSE;
   gboolean  all_have_lock_position     = TRUE;
   gboolean  some_can_lock_position     = FALSE;
+  gboolean  all_have_lock_visibility   = TRUE;
+  gboolean  some_can_lock_visibility   = FALSE;
   gboolean  inconsistent_lock_content  = FALSE;
   gboolean  inconsistent_lock_position = FALSE;
+  gboolean  inconsistent_lock_visibility = FALSE;
 
   for (iter = items; iter; iter = iter->next)
     {
@@ -1862,9 +1960,18 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
 
       if (gimp_item_can_lock_position (iter->data))
         some_can_lock_position = TRUE;
+
+      if (! gimp_item_get_lock_visibility (iter->data))
+        all_have_lock_visibility = FALSE;
+      else
+        inconsistent_lock_visibility = TRUE;
+
+      if (gimp_item_can_lock_visibility (iter->data))
+        some_can_lock_visibility = TRUE;
     }
   inconsistent_lock_content  = (! all_have_lock_content && inconsistent_lock_content);
   inconsistent_lock_position = (! all_have_lock_position && inconsistent_lock_position);
+  inconsistent_lock_visibility = (! all_have_lock_visibility && inconsistent_lock_visibility);
 
   if (all_have_lock_content !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_content_toggle)))
@@ -1900,8 +2007,26 @@ gimp_item_tree_view_update_options (GimpItemTreeView *view,
   gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_position_toggle),
                                       inconsistent_lock_position);
 
+  if (all_have_lock_visibility !=
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_visibility_toggle)))
+    {
+      g_signal_handlers_block_by_func (view->priv->lock_visibility_toggle,
+                                       gimp_item_tree_view_lock_visibility_toggled,
+                                       view);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (view->priv->lock_visibility_toggle),
+                                    all_have_lock_visibility);
+
+      g_signal_handlers_unblock_by_func (view->priv->lock_visibility_toggle,
+                                         gimp_item_tree_view_lock_visibility_toggled,
+                                         view);
+    }
+  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (view->priv->lock_visibility_toggle),
+                                      inconsistent_lock_visibility);
+
   gtk_widget_set_sensitive (view->priv->lock_content_toggle, some_can_lock_content);
   gtk_widget_set_sensitive (view->priv->lock_position_toggle, some_can_lock_position);
+  gtk_widget_set_sensitive (view->priv->lock_position_toggle, some_can_lock_visibility);
 }
 
 

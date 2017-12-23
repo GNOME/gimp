@@ -139,6 +139,10 @@ gimp_item_prop_undo_constructed (GObject *object)
       item_prop_undo->lock_position = gimp_item_get_lock_position (item);
       break;
 
+    case GIMP_UNDO_ITEM_LOCK_VISIBILITY:
+      item_prop_undo->lock_visibility = gimp_item_get_lock_visibility (item);
+      break;
+
     case GIMP_UNDO_PARASITE_ATTACH:
     case GIMP_UNDO_PARASITE_REMOVE:
       gimp_assert (item_prop_undo->parasite_name != NULL);
@@ -316,6 +320,16 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         lock_position = gimp_item_get_lock_position (item);
         gimp_item_set_lock_position (item, item_prop_undo->lock_position, FALSE);
         item_prop_undo->lock_position = lock_position;
+      }
+      break;
+
+    case GIMP_UNDO_ITEM_LOCK_VISIBILITY:
+      {
+        gboolean lock_visibility;
+
+        lock_visibility = gimp_item_get_lock_visibility (item);
+        gimp_item_set_lock_visibility (item, item_prop_undo->lock_visibility, FALSE);
+        item_prop_undo->lock_visibility = lock_visibility;
       }
       break;
 

@@ -58,6 +58,7 @@ enum
   COLOR_TAG_CHANGED,
   LOCK_CONTENT_CHANGED,
   LOCK_POSITION_CHANGED,
+  LOCK_VISIBILITY_CHANGED,
   LAST_SIGNAL
 };
 
@@ -75,6 +76,7 @@ enum
   PROP_COLOR_TAG,
   PROP_LOCK_CONTENT,
   PROP_LOCK_POSITION,
+  PROP_LOCK_VISIBILITY,
   N_PROPS
 };
 
@@ -99,6 +101,7 @@ struct _GimpItemPrivate
   guint             linked                 : 1;  /*  control linkage             */
   guint             lock_content           : 1;  /*  content editability         */
   guint             lock_position          : 1;  /*  content movability          */
+  guint             lock_visibility        : 1;  /*  automatic visibility change */
 
   guint             removed                : 1;  /*  removed from the image?     */
 
@@ -128,6 +131,7 @@ static gint64     gimp_item_get_memsize             (GimpObject     *object,
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item);
 static gboolean   gimp_item_real_is_position_locked (GimpItem       *item);
+static gboolean   gimp_item_real_is_visibility_locked (GimpItem       *item);
 static gboolean   gimp_item_real_bounds             (GimpItem       *item,
                                                      gdouble        *x,
                                                      gdouble        *y,
@@ -233,6 +237,14 @@ gimp_item_class_init (GimpItemClass *klass)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
+  gimp_item_signals[LOCK_VISIBILITY_CHANGED] =
+    g_signal_new ("lock-visibility-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, lock_visibility_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
   object_class->constructed        = gimp_item_constructed;
   object_class->finalize           = gimp_item_finalize;
   object_class->set_property       = gimp_item_set_property;
@@ -250,11 +262,13 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->color_tag_changed         = NULL;
   klass->lock_content_changed      = NULL;
   klass->lock_position_changed     = NULL;
+  klass->lock_visibility_changed   = NULL;
 
   klass->unset_removed             = NULL;
   klass->is_attached               = NULL;
   klass->is_content_locked         = gimp_item_real_is_content_locked;
   klass->is_position_locked        = gimp_item_real_is_position_locked;
+  klass->is_visibility_locked      = gimp_item_real_is_visibility_locked;
   klass->get_tree                  = NULL;
   klass->bounds                    = gimp_item_real_bounds;
   klass->duplicate                 = gimp_item_real_duplicate;
@@ -334,6 +348,11 @@ gimp_item_class_init (GimpItemClass *klass)
                                                               NULL, NULL,
                                                               FALSE,
                                                               GIMP_PARAM_READABLE);
+
+  gimp_item_props[PROP_LOCK_VISIBILITY] = g_param_spec_boolean ("lock-visibility",
+                                                                NULL, NULL,
+                                                                FALSE,
+                                                                GIMP_PARAM_READABLE);
 
   g_object_class_install_properties (object_class, N_PROPS, gimp_item_props);
 }
@@ -447,6 +466,9 @@ gimp_item_get_property (GObject    *object,
     case PROP_LOCK_POSITION:
       g_value_set_boolean (value, private->lock_position);
       break;
+    case PROP_LOCK_VISIBILITY:
+      g_value_set_boolean (value, private->lock_visibility);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -487,6 +509,18 @@ gimp_item_real_is_position_locked (GimpItem *item)
       return TRUE;
 
   return GET_PRIVATE (item)->lock_position;
+}
+
+static gboolean
+gimp_item_real_is_visibility_locked (GimpItem *item)
+{
+  GimpItem *parent = gimp_item_get_parent (item);
+
+  /* Locking visibility of a group item locks all child items. */
+  if (parent && gimp_item_is_visibility_locked (parent))
+    return TRUE;
+
+  return GET_PRIVATE (item)->lock_visibility;
 }
 
 static gboolean
@@ -570,6 +604,10 @@ gimp_item_real_duplicate (GimpItem *item,
   if (gimp_item_can_lock_position (new_item))
     gimp_item_set_lock_position (new_item, gimp_item_get_lock_position (item),
                                  FALSE);
+
+  if (gimp_item_can_lock_visibility (new_item))
+    gimp_item_set_lock_visibility (new_item, gimp_item_get_lock_visibility (item),
+                                   FALSE);
 
   return new_item;
 }
@@ -2068,6 +2106,7 @@ gimp_item_replace_item (GimpItem *item,
   gimp_item_set_color_tag     (item, gimp_item_get_color_tag (replace), FALSE);
   gimp_item_set_lock_content  (item, gimp_item_get_lock_content (replace), FALSE);
   gimp_item_set_lock_position (item, gimp_item_get_lock_position (replace), FALSE);
+  gimp_item_set_lock_visibility (item, gimp_item_get_lock_visibility (replace), FALSE);
 }
 
 /**
@@ -2280,7 +2319,8 @@ gimp_item_set_visible (GimpItem *item,
 
   visible = visible ? TRUE : FALSE;
 
-  if (gimp_item_get_visible (item) != visible)
+  if (gimp_item_get_visible (item) != visible &&
+      ! gimp_item_is_visibility_locked (item))
     {
       if (push_undo && gimp_item_is_attached (item))
         {
@@ -2537,6 +2577,57 @@ gimp_item_is_position_locked (GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   return GIMP_ITEM_GET_CLASS (item)->is_position_locked (item);
+}
+
+void
+gimp_item_set_lock_visibility (GimpItem *item,
+                               gboolean  lock_visibility,
+                               gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_can_lock_visibility (item));
+
+  lock_visibility = lock_visibility ? TRUE : FALSE;
+
+  if (gimp_item_get_lock_visibility (item) != lock_visibility)
+    {
+      if (push_undo && gimp_item_is_attached (item))
+        {
+          GimpImage *image = gimp_item_get_image (item);
+
+          gimp_image_undo_push_item_lock_visibility (image, NULL, item);
+        }
+
+      GET_PRIVATE (item)->lock_visibility = lock_visibility;
+
+      g_signal_emit (item, gimp_item_signals[LOCK_VISIBILITY_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "lock-visibility");
+    }
+}
+
+gboolean
+gimp_item_get_lock_visibility (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GET_PRIVATE (item)->lock_visibility;
+}
+
+gboolean
+gimp_item_can_lock_visibility (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return TRUE;
+}
+
+gboolean
+gimp_item_is_visibility_locked (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return GIMP_ITEM_GET_CLASS (item)->is_visibility_locked (item);
 }
 
 gboolean

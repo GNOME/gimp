@@ -483,6 +483,22 @@ gimp_image_undo_push_item_lock_position (GimpImage   *image,
 }
 
 GimpUndo *
+gimp_image_undo_push_item_lock_visibility (GimpImage   *image,
+                                           const gchar *undo_desc,
+                                           GimpItem    *item)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                               GIMP_UNDO_ITEM_LOCK_VISIBILITY, undo_desc,
+                               GIMP_DIRTY_ITEM_META,
+                               "item", item,
+                               NULL);
+}
+
+GimpUndo *
 gimp_image_undo_push_item_parasite (GimpImage          *image,
                                     const gchar        *undo_desc,
                                     GimpItem           *item,

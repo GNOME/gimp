@@ -253,22 +253,21 @@ gimp_item_exclusive_get_lists (GimpItem     *item,
     {
       GimpItem *other = list->data;
 
-      if (other != item)
+      if (other != item                            &&
+          /* Don't include item with visibility locks. */
+          ! gimp_item_is_visibility_locked (other) &&
+          /* We are only interested in same level items. */
+          gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
+          gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
         {
-          /* we are only interested in same level items.
-           */
-          if (gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
-              gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
-            {
-              gboolean value;
+          gboolean value;
 
-              g_object_get (other, property, &value, NULL);
+          g_object_get (other, property, &value, NULL);
 
-              if (value)
-                *on = g_list_prepend (*on, other);
-              else
-                *off = g_list_prepend (*off, other);
-            }
+          if (value)
+            *on = g_list_prepend (*on, other);
+          else
+            *off = g_list_prepend (*off, other);
         }
     }
 
