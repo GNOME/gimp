@@ -42,10 +42,11 @@ struct _GimpItemPropUndo
   gchar        *name;
   gint          offset_x;
   gint          offset_y;
-  guint         visible       : 1;
-  guint         linked        : 1;
-  guint         lock_content  : 1;
-  guint         lock_position : 1;
+  guint         visible         : 1;
+  guint         linked          : 1;
+  guint         lock_content    : 1;
+  guint         lock_position   : 1;
+  guint         lock_visibility : 1;
   GimpColorTag  color_tag;
   gchar        *parasite_name;
   GimpParasite *parasite;

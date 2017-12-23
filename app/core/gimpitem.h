@@ -48,12 +48,14 @@ struct _GimpItemClass
   void            (* color_tag_changed)     (GimpItem            *item);
   void            (* lock_content_changed)  (GimpItem            *item);
   void            (* lock_position_changed) (GimpItem            *item);
+  void            (* lock_visibility_changed) (GimpItem            *item);
 
   /*  virtual functions  */
   void            (* unset_removed)      (GimpItem               *item);
   gboolean        (* is_attached)        (GimpItem               *item);
   gboolean        (* is_content_locked)  (GimpItem               *item);
   gboolean        (* is_position_locked) (GimpItem               *item);
+  gboolean        (* is_visibility_locked) (GimpItem               *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
   gboolean        (* bounds)             (GimpItem               *item,
                                           gdouble                *x,
@@ -386,6 +388,13 @@ void            gimp_item_set_lock_position  (GimpItem          *item,
 gboolean        gimp_item_get_lock_position  (GimpItem          *item);
 gboolean        gimp_item_can_lock_position  (GimpItem          *item);
 gboolean        gimp_item_is_position_locked (GimpItem          *item);
+
+void            gimp_item_set_lock_visibility  (GimpItem        *item,
+                                                gboolean         lock_visibility,
+                                                gboolean         push_undo);
+gboolean        gimp_item_get_lock_visibility  (GimpItem        *item);
+gboolean        gimp_item_can_lock_visibility  (GimpItem        *item);
+gboolean        gimp_item_is_visibility_locked (GimpItem        *item);
 
 gboolean        gimp_item_mask_bounds        (GimpItem           *item,
                                               gint               *x1,

@@ -104,6 +104,11 @@ struct _GimpItemTreeViewClass
   const gchar          *lock_position_icon_name;
   const gchar          *lock_position_tooltip;
   const gchar          *lock_position_help_id;
+
+  /* lock visibility button appearance */
+  const gchar          *lock_visibility_icon_name;
+  const gchar          *lock_visibility_tooltip;
+  const gchar          *lock_visibility_help_id;
 };
 
 

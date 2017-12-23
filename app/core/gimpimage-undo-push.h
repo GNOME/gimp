@@ -113,6 +113,9 @@ GimpUndo * gimp_image_undo_push_item_lock_content   (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_item_lock_position  (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
+GimpUndo * gimp_image_undo_push_item_lock_visibility (GimpImage    *image,
+                                                      const gchar  *undo_desc,
+                                                      GimpItem     *item);
 GimpUndo * gimp_image_undo_push_item_parasite       (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item,
