@@ -253,6 +253,10 @@ do_zcrop (gint32  drawable_id,
       (livingcols == width && livingrows == height))
     {
       g_message (_("Nothing to crop."));
+
+      g_object_unref (shadow_buffer);
+      g_object_unref (drawable_buffer);
+
       g_free (linear_buf);
       g_free (killrows);
       g_free (killcols);
