@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 11:55+0000\n"
-"PO-Revision-Date: 2017-12-22 14:25+0000\n"
+"PO-Revision-Date: 2017-12-23 08:16+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -318,7 +318,7 @@ msgstr "Tengjanlegt"
 #: ../app/actions/actions.c:145 ../app/dialogs/dialogs.c:329
 #: ../app/dialogs/preferences-dialog.c:1612
 msgid "Document History"
-msgstr "Saga skjala"
+msgstr "Ferill skjals"
 
 #: ../app/actions/actions.c:148
 msgid "Drawable"
@@ -1595,7 +1595,7 @@ msgstr "_Hreinsa feril afturkallana"
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
 msgid "Clear the entire document history"
-msgstr "Hreinsa út allan feril afturkallana"
+msgstr "Hreinsa út alla ferilskráningu skjala"
 
 #: ../app/actions/documents-actions.c:81
 msgctxt "documents-action"
@@ -1629,7 +1629,7 @@ msgstr "Fjarlægja færslur þar sem tilheyrandi skrá er ekki tiltæk"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
-msgstr "Hreinsa sögu skjala"
+msgstr "Hreinsa ferilskráningu skjala"
 
 #: ../app/actions/documents-commands.c:215
 msgid "Clear the Recent Documents list?"
@@ -4376,12 +4376,12 @@ msgstr "Víkka valið"
 #: ../app/actions/select-actions.c:99
 msgctxt "select-action"
 msgid "Bo_rder..."
-msgstr "Jaða_r..."
+msgstr "Útjaða_r..."
 
 #: ../app/actions/select-actions.c:100
 msgctxt "select-action"
 msgid "Replace the selection by its border"
-msgstr "Setja jaðar valsins í stað myndvalsins"
+msgstr "Setja útjaðar valsins í stað myndvalsins"
 
 #: ../app/actions/select-actions.c:105
 msgctxt "select-action"
@@ -4443,7 +4443,7 @@ msgstr "Víkka val um"
 
 #: ../app/actions/select-commands.c:267
 msgid "Border Selection"
-msgstr "Ramma myndval"
+msgstr "Val útjaðars"
 
 #: ../app/actions/select-commands.c:271
 msgid "Border selection by"
@@ -7747,7 +7747,7 @@ msgstr "Umhverfa litrás"
 #: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Border Channel"
-msgstr "Ramma inn litrás"
+msgstr "Litrás útjaðars"
 
 #: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
@@ -8745,7 +8745,7 @@ msgstr "Umhverfa myndvali"
 #: ../app/core/gimpselection.c:177
 msgctxt "undo-type"
 msgid "Border Selection"
-msgstr "Ramma myndval"
+msgstr "Val útjaðars"
 
 #: ../app/core/gimpselection.c:178
 msgctxt "undo-type"
