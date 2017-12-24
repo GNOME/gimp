@@ -1,0 +1,6 @@
+# Files from the Gimp distribution which have already been
+# marked to allow runtime translation of messages
+
+[encoding: UTF-8]
+
+build/windows/installer/lang/setup.isl.desktop.in

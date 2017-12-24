@@ -1,3 +1,6 @@
+SUBDIRS = \
+	installer
+
 EXTRA_DIST = \
 	gimprc.rule		\
 	gimprc-plug-ins.rule	\

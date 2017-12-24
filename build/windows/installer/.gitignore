@@ -1,4 +1,6 @@
-Preprocessed.iss
-compile.log
-_Output/
-_Uninst/
+/Makefile
+/Makefile.in
+/Preprocessed.iss
+/compile.log
+/_Output/
+/_Uninst/

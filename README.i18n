@@ -19,12 +19,13 @@ GIMP is different
  not one catalog but many. For a full translation of GIMP's UI, you
  will have to add translations for the following catalogs:
 
-   po/gimp20.po                       --  the core
-   po-libgimp/gimp20-libgimp.pot      --  the libgimp library
-   po-plugins/gimp20-std-plugins.pot  --  the C plug-ins
-   po-python/gimp20-python.pot        --  the pygimp plug-ins
-   po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
-   po-tips/gimp20-tips.pot            --  the startup tips
+   po/gimp20.po                                       --  the core
+   po-libgimp/gimp20-libgimp.pot                      --  the libgimp library
+   po-plugins/gimp20-std-plugins.pot                  --  the C plug-ins
+   po-python/gimp20-python.pot                        --  the pygimp plug-ins
+   po-script-fu/gimp20-script-fu.pot                  --  the script-fu scripts
+   po-tips/gimp20-tips.pot                            --  the startup tips
+   po-windows-installer/gimp20-windows-installer.pot  --  the windows installer
 
  If you are looking for the translations of gimp-perl, please note that
  gimp-perl has been moved into it's own git module called

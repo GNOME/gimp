@@ -2526,6 +2526,8 @@ build/Makefile
 build/windows/Makefile
 build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
+build/windows/installer/Makefile
+build/windows/installer/lang/Makefile
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
 plug-ins/file-exr/Makefile
@@ -2656,6 +2658,7 @@ po-plug-ins/Makefile.in
 po-python/Makefile.in
 po-script-fu/Makefile.in
 po-tips/Makefile.in
+po-windows-installer/Makefile.in
 gimp-zip
 Makefile
 ])
@@ -2675,7 +2678,8 @@ AC_CONFIG_COMMANDS([sed-po-makefiles],
 sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile && touch po-python/stamp-it
 sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile && touch po-plug-ins/stamp-it
 sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile && touch po-script-fu/stamp-it
-sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it])
+sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it
+sed -e "/POTFILES =/r po-windows-installer/POTFILES" po-windows-installer/Makefile.in > po-windows-installer/Makefile && touch po-windows-installer/stamp-it])
 
 # Print a summary of features enabled/disabled:
 optional_deps="
