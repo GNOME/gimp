@@ -1,4 +1,5 @@
 app/widgets/gtkscalebutton.c
+build/windows/installer/lang/setup.isl.desktop.in
 data/tags/gimp-tags-default.xml.in
 data/tips/gimp-tips.xml.in
 desktop/gimp.desktop.in

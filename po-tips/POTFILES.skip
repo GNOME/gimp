@@ -1,4 +1,5 @@
 app
+build/windows/installer/lang/setup.isl.desktop.in
 data/tags
 desktop
 desktop/gimp.desktop.in
