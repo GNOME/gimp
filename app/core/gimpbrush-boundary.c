@@ -114,7 +114,7 @@ gimp_brush_real_transform_boundary (GimpBrush *brush,
                                     gint      *width,
                                     gint      *height)
 {
-  gimp_brush_transform_size (brush, scale, aspect_ratio, reflect, angle,
+  gimp_brush_transform_size (brush, scale, aspect_ratio, angle, reflect,
                              width, height);
 
   if (*width < 256 && *height < 256)

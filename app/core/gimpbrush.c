@@ -615,7 +615,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
   g_return_val_if_fail (scale > 0.0, NULL);
 
   gimp_brush_transform_size (brush,
-                             scale, aspect_ratio, reflect, angle,
+                             scale, aspect_ratio, angle, reflect,
                              &width, &height);
 
   mask = gimp_brush_cache_get (brush->priv->mask_cache,
