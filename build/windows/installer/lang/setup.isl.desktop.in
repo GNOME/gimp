@@ -3,7 +3,7 @@
 [Messages]
 ;InfoBefore page is used instead of license page because the GPL only concerns distribution, not use, and as such doesn't have to be accepted
 _WizardInfoBefore=License Agreement
-_AboutSetupNote=Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening page of Setup by Alexia_Death%nImage on closing page of Setup by Jakub Steiner
+_AboutSetupNote=Setup built by Jernej Simonèiè, jernej-gimp@ena.si
 _WinVersionTooLowError=This version of GIMP requires Windows XP with Service Pack 3, or a newer version of Windows.
 
 [CustomMessages]
@@ -45,6 +45,8 @@ _ComponentsTranslations=Translations
 _ComponentsTranslationsDescription=Translations
 _ComponentsPython=Python scripting
 _ComponentsPythonDescription=Allows you to use GIMP plugins written in Python scripting language.
+_ComponentsMyPaint=MyPaint brushes
+_ComponentsMyPaintDescription=Install the default set of MyPaint brushes
 _ComponentsGhostscript=PostScript support
 _ComponentsGhostscriptDescription=Allow GIMP to load PostScript files
 ;only when installing on x64 Windows
@@ -62,6 +64,7 @@ _RemoveOldGIMP=Remove previous GIMP version
 _ErrorChangingEnviron=There was a problem updating GIMP's environment in %1. If you get any errors loading the plug-ins, try uninstalling and re-installing GIMP.
 _ErrorExtractingTemp=Error extracting temporary data.
 _ErrorUpdatingPython=Error updating Python interpreter info.
+_ErrorUpdatingMyPaint=Error updating MyPaint brushes info.
 _ErrorReadingGimpRC=There was an error updating %1.
 _ErrorUpdatingGimpRC=There was an error updating GIMP's configuration file %1.
 
@@ -99,6 +102,7 @@ _Billboard2=for free updates.
 
 _SettingUpAssociations=Setting up file associations...
 _SettingUpPyGimp=Setting up environment for GIMP Python extension...
+_SettingUpMyPaint=Setting up MyPaint brushes...
 _SettingUpEnvironment=Setting up GIMP environment...
 _SettingUpGimpRC=Setting up GIMP configuration for 32-bit plug-in support...
 
