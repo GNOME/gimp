@@ -1,6 +1,6 @@
 isl_in_files = \
-	setup.isl.in
-isl_files = $(isl_in_files:.isl.in=.isl)
+	setup.isl.desktop.in
+isl_files = $(isl_in_files:.isl.desktop.in=.isl)
 
 stamp_files = \
 	stamp-isl
