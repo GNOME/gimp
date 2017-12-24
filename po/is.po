@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 20:56+0000\n"
-"PO-Revision-Date: 2017-12-23 09:12+0000\n"
+"PO-Revision-Date: 2017-12-24 15:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -8168,11 +8168,10 @@ msgid "Rotate by an arbitrary angle"
 msgstr "Snúa eftir frjálsu horni"
 
 #: ../app/actions/tools-actions.c:151
-#, fuzzy
 #| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
-msgstr "Sprauta"
+msgstr "Magn sprautunar: Stilla"
 
 #: ../app/actions/tools-actions.c:155
 msgctxt "tools-action"
@@ -8205,11 +8204,10 @@ msgid "Airbrush Rate: Increase by 10"
 msgstr "Magn sprautunar: Auka um 10"
 
 #: ../app/actions/tools-actions.c:183
-#, fuzzy
 #| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
-msgstr "Sprauta"
+msgstr "Flæði sprautu: Stilla"
 
 #: ../app/actions/tools-actions.c:187
 msgctxt "tools-action"
@@ -8247,11 +8245,10 @@ msgid "Tool's Opacity: Set"
 msgstr "Ógegnsæi verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:268
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "Endu_rstilla verkfæri með sjálfgefnum gildum"
+msgstr "Ógegnsæi verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
@@ -8299,12 +8296,11 @@ msgid "Tool's Size: Set"
 msgstr "Stærð verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:312
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Stærð verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:316
 msgctxt "tools-action"
@@ -8347,18 +8343,16 @@ msgid "Tool's Size: Increase Relative"
 msgstr "Stærð verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:352
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
-msgstr "Stærðarhlutföll pensils:"
+msgstr "Stærðarhlutföll verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:356
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
-msgstr "Endu_rstilla verkfæri með sjálfgefnum gildum"
+msgstr "Stærðarhlutföll verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:360
 msgctxt "tools-action"
@@ -8456,106 +8450,103 @@ msgid "Tool's Spacing: Set"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:444
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
-msgstr "Endu_rstilla verkfæri með sjálfgefnum gildum"
+msgstr "Millibil verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:448
 msgctxt "tools-action"
 msgid "Tool's Spacing: Minimize"
-msgstr ""
+msgstr "Millibil verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:452
 msgctxt "tools-action"
 msgid "Tool's Spacing: Maximize"
-msgstr ""
+msgstr "Millibil verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:456
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 1"
-msgstr ""
+msgstr "Millibil verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:460
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
-msgstr ""
+msgstr "Millibil verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:464
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 10"
-msgstr ""
+msgstr "Millibil verkfæris: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:468
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
-msgstr ""
+msgstr "Millibil verkfæris: Auka um 10"
 
 #: ../app/actions/tools-actions.c:472
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease Relative"
-msgstr ""
+msgstr "Millibil verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:476
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
-msgstr ""
+msgstr "Millibil verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:484
-#, fuzzy
 #| msgid "Tool Presets"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
-msgstr "Forstillingar verkfæra"
+msgstr "Harka verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:488
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Harka verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:492
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
-msgstr ""
+msgstr "Harka verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:496
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
-msgstr ""
+msgstr "Harka verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:500
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
-msgstr ""
+msgstr "Harka verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:504
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
-msgstr ""
+msgstr "Harka verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:508
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
-msgstr ""
+msgstr "Harka verkfæris: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:512
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
-msgstr ""
+msgstr "Harka verkfæris: Auka um 10"
 
 #: ../app/actions/tools-actions.c:516
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
-msgstr ""
+msgstr "Harka verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:520
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
-msgstr ""
+msgstr "Harka verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:528
 #, fuzzy
@@ -8575,42 +8566,42 @@ msgstr "Frumstilla í sjálfgefin gildi"
 #: ../app/actions/tools-actions.c:536
 msgctxt "tools-action"
 msgid "Tool's Force: Minimize"
-msgstr ""
+msgstr "Kraftur verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:540
 msgctxt "tools-action"
 msgid "Tool's Force: Maximize"
-msgstr ""
+msgstr "Kraftur verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:544
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 1"
-msgstr ""
+msgstr "Kraftur verkfæris: Minnka um 1"
 
 #: ../app/actions/tools-actions.c:548
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
-msgstr ""
+msgstr "Kraftur verkfæris: Auka um 1"
 
 #: ../app/actions/tools-actions.c:552
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 10"
-msgstr ""
+msgstr "Kraftur verkfæris: Minnka um 10"
 
 #: ../app/actions/tools-actions.c:556
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
-msgstr ""
+msgstr "Kraftur verkfæris: Auka um 10"
 
 #: ../app/actions/tools-actions.c:560
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease Relative"
-msgstr ""
+msgstr "Kraftur verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:564
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
-msgstr ""
+msgstr "Kraftur verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
