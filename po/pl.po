@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-21 22:01+0100\n"
-"PO-Revision-Date: 2017-12-21 22:02+0100\n"
+"POT-Creation-Date: 2017-12-24 17:04+0100\n"
+"PO-Revision-Date: 2017-12-24 17:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -11824,7 +11824,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nie można dekodować "
 "wersji formatu abr %d."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:220
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
@@ -11856,27 +11856,27 @@ msgstr "Nieznany kształt pędzla programu GIMP."
 msgid "In line %d of brush file: "
 msgstr "W %d. wierszu pliku z pędzlami: "
 
-#: ../app/core/gimpbrushgenerated.c:131
+#: ../app/core/gimpbrushgenerated.c:135
 msgid "Brush Shape"
 msgstr "Kształt pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:139
+#: ../app/core/gimpbrushgenerated.c:143
 msgid "Brush Radius"
 msgstr "Promień pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:146
+#: ../app/core/gimpbrushgenerated.c:150
 msgid "Brush Spikes"
 msgstr "Ostrza pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:153 ../app/paint/gimppaintoptions.c:227
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:220
 msgid "Brush Hardness"
 msgstr "Twardość pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:161 ../app/paint/gimppaintoptions.c:206
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:199
 msgid "Brush Aspect Ratio"
 msgstr "Proporcje pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:168 ../app/paint/gimppaintoptions.c:213
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:206
 msgid "Brush Angle"
 msgstr "Nachylenie pędzla"
 
@@ -12118,7 +12118,7 @@ msgid "Pattern"
 msgstr "Deseń"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:266 ../app/tools/gimppaintoptions-gui.c:375
+#: ../app/tools/gimpblendoptions.c:266 ../app/tools/gimppaintoptions-gui.c:374
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -14212,7 +14212,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1851
-#: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:651
+#: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:650
 #: ../app/widgets/gimpcontrollerlist.c:640 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
@@ -14340,11 +14340,11 @@ msgid "Composite mode:"
 msgstr "Tryb mieszania:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:726
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:725
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:754
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:753
 msgid "Height:"
 msgstr "Wysokość:"
 
@@ -16483,7 +16483,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:250
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:442 ../app/tools/gimpfiltertool.c:275
-#: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
+#: ../app/tools/gimppainttool.c:279 ../app/tools/gimpselectiontool.c:432
 #: ../app/tools/gimptransformtool.c:1406 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
@@ -16544,7 +16544,7 @@ msgid "Select Rotation Angle"
 msgstr "Wybór kąta obrotu"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:698
+#: ../app/tools/gimpmeasuretool.c:697
 msgid "Angle:"
 msgstr "Kąt:"
 
@@ -16588,32 +16588,38 @@ msgstr "(brak)"
 msgid "not color managed"
 msgstr "bez zarządzania kolorami"
 
+#: ../app/display/gimpdisplayshell-utils.c:149
+#: ../app/tools/gimpmeasuretool.c:680 ../app/tools/gimpmeasuretool.c:736
+#: ../app/tools/gimpmeasuretool.c:764
+msgid "pixels"
+msgstr "piksele"
+
 #: ../app/display/gimpstatusbar.c:456
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Anuluj <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:809
+#: ../app/display/gimptoolcompass.c:811
 msgid "Click to place vertical and horizontal guides"
 msgstr "Kliknięcie doda poziome lub pionowe prowadnice"
 
-#: ../app/display/gimptoolcompass.c:817
+#: ../app/display/gimptoolcompass.c:819
 msgid "Click to place a horizontal guide"
 msgstr "Kliknięcie doda poziome prowadnice"
 
-#: ../app/display/gimptoolcompass.c:830
+#: ../app/display/gimptoolcompass.c:832
 msgid "Click to place a vertical guide"
 msgstr "Kliknięcie doda pionowe prowadnice"
 
-#: ../app/display/gimptoolcompass.c:842
+#: ../app/display/gimptoolcompass.c:844
 msgid "Click-Drag to add a new point"
 msgstr "Kliknięcie i przeciągnięcie doda nowy punkt"
 
-#: ../app/display/gimptoolcompass.c:852 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:854 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
 
-#: ../app/display/gimptoolcompass.c:871
+#: ../app/display/gimptoolcompass.c:873
 msgid "Click-Drag to move all points"
 msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
@@ -16647,57 +16653,57 @@ msgstr "Kliknięcie i przeciągnięcie przemieści ten uchwyt"
 msgid "Click-Drag to remove this handle"
 msgstr "Kliknięcie i przeciągnięcie usunie ten uchwyt"
 
-#: ../app/display/gimptoolline.c:334 ../app/display/gimptoolline.c:497
+#: ../app/display/gimptoolline.c:335 ../app/display/gimptoolline.c:498
 msgid "Line: "
 msgstr "Linia: "
 
-#: ../app/display/gimptoolline.c:1470
+#: ../app/display/gimptoolline.c:1484
 msgid "Click-Drag to move the endpoint"
 msgstr "Kliknięcie i przeciągnięcie przemieści punkt końcowy"
 
-#: ../app/display/gimptoolline.c:1471 ../app/tools/gimppainttool.c:658
+#: ../app/display/gimptoolline.c:1490 ../app/tools/gimppainttool.c:657
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/display/gimptoolline.c:1478
+#: ../app/display/gimptoolline.c:1497
 msgid "Release to remove the slider"
 msgstr "Zwolnienie usunie suwak"
 
-#: ../app/display/gimptoolline.c:1482
+#: ../app/display/gimptoolline.c:1501
 #, c-format
 msgid "%s for constrained values"
 msgstr "%s dla wymuszonych wartości"
 
-#: ../app/display/gimptoolline.c:1492
+#: ../app/display/gimptoolline.c:1511
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr "Kliknięcie i przeciągnięcie przemieści suwak, odciągnięcie go usunie"
 
-#: ../app/display/gimptoolline.c:1497
+#: ../app/display/gimptoolline.c:1516
 msgid "Click-Drag to move or remove the slider"
 msgstr "Kliknięcie i przeciągnięcie przemieści lub usunie suwak"
 
-#: ../app/display/gimptoolline.c:1502
+#: ../app/display/gimptoolline.c:1521
 msgid "Click-Drag to move the slider"
 msgstr "Kliknięcie i przeciągnięcie przemieści suwak"
 
-#: ../app/display/gimptoolline.c:1513
+#: ../app/display/gimptoolline.c:1532
 msgid "Click-Drag away to remove the slider"
 msgstr "Kliknięcie i odciągnięcie usunie suwak"
 
-#: ../app/display/gimptoolline.c:1517
+#: ../app/display/gimptoolline.c:1536
 msgid "Click-Drag to remove the slider"
 msgstr "Kliknięcie i przeciągnięcie usunie suwak"
 
-#: ../app/display/gimptoolline.c:1528
+#: ../app/display/gimptoolline.c:1547
 msgid "Click or Click-Drag to add a new slider"
 msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda nowy suwak"
 
-#: ../app/display/gimptoolline.c:1534
+#: ../app/display/gimptoolline.c:1553
 msgid "Click-Drag to move the line"
 msgstr "Kliknięcie i przeciągnięcie przemieści linię"
 
-#: ../app/display/gimptoolline.c:1546
+#: ../app/display/gimptoolline.c:1565
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesuwa całą linię"
@@ -16847,25 +16853,25 @@ msgstr "Kliknięcie tutaj nic nie zrobi, należy klikać elementy ścieżki."
 msgid "Delete Anchors"
 msgstr "Usunięcie zaczepów"
 
-#: ../app/display/gimptoolpolygon.c:863
+#: ../app/display/gimptoolpolygon.c:866
 msgid "Click to close shape"
 msgstr "Kliknięcie zamknie kształt"
 
-#: ../app/display/gimptoolpolygon.c:867
+#: ../app/display/gimptoolpolygon.c:870
 msgid "Click-Drag to move segment vertex"
 msgstr "Kliknięcie i przeciągnięcie przemieści segment wierzchołka"
 
-#: ../app/display/gimptoolpolygon.c:872
+#: ../app/display/gimptoolpolygon.c:875
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr ""
 "Klawisz Enter potwierdzi, Escape anuluje, Backspace ponownie otworzy kształt"
 
-#: ../app/display/gimptoolpolygon.c:876
+#: ../app/display/gimptoolpolygon.c:879
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Klawisz Enter potwierdzi, Escape anuluje, Backspace usunie ostatni segment"
 
-#: ../app/display/gimptoolpolygon.c:880
+#: ../app/display/gimptoolpolygon.c:883
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Kliknięcie i przeciągnięcie doda odręczny segment, kliknięcie doda segment "
@@ -17838,11 +17844,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:393
+#: ../app/paint/gimpbrushcore.c:394
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:400
+#: ../app/paint/gimpbrushcore.c:401
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
@@ -17913,7 +17919,7 @@ msgid "Ink Blob Size"
 msgstr "Rozmiar kropli tuszu"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:212 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:205 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Kąt"
 
@@ -17958,7 +17964,7 @@ msgstr "Promień"
 msgid "Base Opacity"
 msgstr "Krycie bazowe"
 
-#: ../app/paint/gimpmybrushoptions.c:99 ../app/paint/gimppaintoptions.c:226
+#: ../app/paint/gimpmybrushoptions.c:99 ../app/paint/gimppaintoptions.c:219
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Twardość"
@@ -17980,70 +17986,70 @@ msgid "Brush Size"
 msgstr "Rozmiar pędzla"
 
 #: ../app/paint/gimppaintoptions.c:198
-msgid "Brush Zoom"
-msgstr "Powiększanie pędzla"
-
-#: ../app/paint/gimppaintoptions.c:199
-msgid "Link brush size with canvas zoom"
-msgstr "Wiąże rozmiar pędzla z powiększeniem płótna"
-
-#: ../app/paint/gimppaintoptions.c:205
 msgid "Aspect Ratio"
 msgstr "Proporcje"
 
-#: ../app/paint/gimppaintoptions.c:219 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:212 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/paint/gimppaintoptions.c:233
+#: ../app/paint/gimppaintoptions.c:226
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/paint/gimppaintoptions.c:234
+#: ../app/paint/gimppaintoptions.c:227
 msgid "Brush Force"
 msgstr "Siła pędzla"
 
-#: ../app/paint/gimppaintoptions.c:240
+#: ../app/paint/gimppaintoptions.c:233
 msgid "Link Size"
 msgstr "Dowiązanie rozmiaru"
 
-#: ../app/paint/gimppaintoptions.c:241
+#: ../app/paint/gimppaintoptions.c:234
 msgid "Link brush size to brush native"
 msgstr "Dowiązuje rozmiar do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:247
+#: ../app/paint/gimppaintoptions.c:240
 msgid "Link Aspect Ratio"
 msgstr "Dowiązanie proporcji"
 
-#: ../app/paint/gimppaintoptions.c:248
+#: ../app/paint/gimppaintoptions.c:241
 msgid "Link brush aspect ratio to brush native"
 msgstr "Dowiązuje proporcje do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:254
+#: ../app/paint/gimppaintoptions.c:247
 msgid "Link Angle"
 msgstr "Dowiązanie kąta"
 
-#: ../app/paint/gimppaintoptions.c:255
+#: ../app/paint/gimppaintoptions.c:248
 msgid "Link brush angle to brush native"
 msgstr "Dowiązuje kąt do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:261
+#: ../app/paint/gimppaintoptions.c:254
 msgid "Link Spacing"
 msgstr "Dowiązanie odstępu"
 
-#: ../app/paint/gimppaintoptions.c:262
+#: ../app/paint/gimppaintoptions.c:255
 msgid "Link brush spacing to brush native"
 msgstr "Dowiązuje odstęp do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:261
 msgid "Link Hardness"
 msgstr "Dowiązanie twardości"
 
-#: ../app/paint/gimppaintoptions.c:269
+#: ../app/paint/gimppaintoptions.c:262
 msgid "Link brush hardness to brush native"
 msgstr "Dowiązuje twardość do natywnej wartości pędzla"
+
+#: ../app/paint/gimppaintoptions.c:268
+msgid "Lock brush to view"
+msgstr "Zablokowanie pędzla do widoku"
+
+#: ../app/paint/gimppaintoptions.c:269
+msgid "Keep brush appearance fixed relative to the view"
+msgstr "Utrzymuje stały wygląd pędzla względnie do widoku"
 
 #: ../app/paint/gimppaintoptions.c:275
 msgid "Incremental"
@@ -18098,7 +18104,7 @@ msgid "Reverse direction of fading"
 msgstr "Odwrócony kierunek zanikania"
 
 #: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:97
-#: ../app/tools/gimpblendoptions.c:286 ../app/tools/gimppaintoptions-gui.c:357
+#: ../app/tools/gimpblendoptions.c:286 ../app/tools/gimppaintoptions-gui.c:356
 msgid "Repeat"
 msgstr "Okresowość"
 
@@ -19771,7 +19777,7 @@ msgstr "Modyfikuj aktywny gradient"
 msgid "Modify the active gradient in-place"
 msgstr "Modyfikuje aktywny gradient na płótnie"
 
-#: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:380
+#: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:379
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
@@ -19807,7 +19813,7 @@ msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 
 #: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
-#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimptransformtool.c:1414 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
@@ -20154,11 +20160,11 @@ msgstr "Po_branie koloru"
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie w dowolnym obrazie wyświetli jego kolor"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:496
+#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:500
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:502
+#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:506
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
@@ -20989,37 +20995,31 @@ msgstr "_Powiększenie"
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Otwiera oddzielne okno wyświetlające informacje o pomiarach"
 
-#: ../app/tools/gimpmeasuretool.c:121
+#: ../app/tools/gimpmeasuretool.c:122
 msgid "Measure"
 msgstr "Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:122
+#: ../app/tools/gimpmeasuretool.c:123
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Miarka: umożliwia mierzenie odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:124
 msgid "_Measure"
 msgstr "_Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:156
+#: ../app/tools/gimpmeasuretool.c:157
 msgid "Click-Drag to create a line"
 msgstr "Kliknięcie i przeciągnięcie utworzy linię"
 
-#: ../app/tools/gimpmeasuretool.c:334
+#: ../app/tools/gimpmeasuretool.c:335
 msgid "Add Guides"
 msgstr "Dodanie prowadnic"
 
-#: ../app/tools/gimpmeasuretool.c:528 ../app/tools/gimpmeasuretool.c:681
-#: ../app/tools/gimpmeasuretool.c:737 ../app/tools/gimpmeasuretool.c:765
-#: ../app/tools/gimppainttool.c:696
-msgid "pixels"
-msgstr "piksele"
-
-#: ../app/tools/gimpmeasuretool.c:645
+#: ../app/tools/gimpmeasuretool.c:644
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:670
+#: ../app/tools/gimpmeasuretool.c:669
 msgid "Distance:"
 msgstr "Odległość:"
 
@@ -21213,40 +21213,36 @@ msgstr "Przywraca domyślną siłę"
 msgid "Edit this dynamics"
 msgstr "Modyfikuje tę dynamikę"
 
-#: ../app/tools/gimppaintoptions-gui.c:262
-msgid "Lock brush size to zoom"
-msgstr "Blokuje rozmiar pędzla do powiększenia"
-
-#: ../app/tools/gimppaintoptions-gui.c:326
+#: ../app/tools/gimppaintoptions-gui.c:325
 msgid "Fade Options"
 msgstr "Opcje zanikania"
 
-#: ../app/tools/gimppaintoptions-gui.c:370
+#: ../app/tools/gimppaintoptions-gui.c:369
 msgid "Color Options"
 msgstr "Opcje kolorów"
 
-#: ../app/tools/gimppaintoptions-gui.c:622
+#: ../app/tools/gimppaintoptions-gui.c:621
 msgid "Link to brush default"
 msgstr "Wiąże z domyślną wartością pędzla"
 
-#: ../app/tools/gimppainttool.c:156
+#: ../app/tools/gimppainttool.c:157
 msgid "Click to paint"
 msgstr "Kliknięcie rysuje"
 
-#: ../app/tools/gimppainttool.c:157
+#: ../app/tools/gimppainttool.c:158
 msgid "Click to draw the line"
 msgstr "Kliknięcie rysuje linię"
 
-#: ../app/tools/gimppainttool.c:158
+#: ../app/tools/gimppainttool.c:159
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s wybiera kolor"
 
-#: ../app/tools/gimppainttool.c:271
+#: ../app/tools/gimppainttool.c:272
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:745
+#: ../app/tools/gimppainttool.c:688
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
