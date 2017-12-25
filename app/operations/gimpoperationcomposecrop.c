@@ -38,23 +38,26 @@ enum
 };
 
 
-static void       gimp_operation_compose_crop_get_property (GObject             *object,
-                                                            guint                property_id,
-                                                            GValue              *value,
-                                                            GParamSpec          *pspec);
-static void       gimp_operation_compose_crop_set_property (GObject             *object,
-                                                            guint                property_id,
-                                                            const GValue        *value,
-                                                            GParamSpec          *pspec);
+static void            gimp_operation_compose_crop_get_property            (GObject             *object,
+                                                                            guint                property_id,
+                                                                            GValue              *value,
+                                                                            GParamSpec          *pspec);
+static void            gimp_operation_compose_crop_set_property            (GObject             *object,
+                                                                            guint                property_id,
+                                                                            const GValue        *value,
+                                                                            GParamSpec          *pspec);
 
-static void       gimp_operation_compose_crop_prepare      (GeglOperation       *operation);
-static gboolean   gimp_operation_compose_crop_process      (GeglOperation       *operation,
-                                                            void                *in_buf,
-                                                            void                *aux_buf,
-                                                            void                *out_buf,
-                                                            glong                samples,
-                                                            const GeglRectangle *roi,
-                                                            gint                 level);
+static void            gimp_operation_compose_crop_prepare                 (GeglOperation       *operation);
+static GeglRectangle   gimp_operation_compose_crop_get_required_for_output (GeglOperation       *operation,
+                                                                            const gchar         *input_pad,
+                                                                            const GeglRectangle *output_roi);
+static gboolean        gimp_operation_compose_crop_process                 (GeglOperation       *operation,
+                                                                            void                *in_buf,
+                                                                            void                *aux_buf,
+                                                                            void                *out_buf,
+                                                                            glong                samples,
+                                                                            const GeglRectangle *roi,
+                                                                            gint                 level);
 
 
 G_DEFINE_TYPE (GimpOperationComposeCrop, gimp_operation_compose_crop,
@@ -79,8 +82,9 @@ gimp_operation_compose_crop_class_init (GimpOperationComposeCropClass *klass)
                                  "description", "Selectively pick components from src or aux",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_compose_crop_prepare;
-  point_class->process     = gimp_operation_compose_crop_process;
+  operation_class->prepare                 = gimp_operation_compose_crop_prepare;
+  operation_class->get_required_for_output = gimp_operation_compose_crop_get_required_for_output;
+  point_class->process                     = gimp_operation_compose_crop_process;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x",
@@ -197,6 +201,36 @@ gimp_operation_compose_crop_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
   gegl_operation_set_format (operation, "output", format);
+}
+
+static GeglRectangle
+gimp_operation_compose_crop_get_required_for_output (GeglOperation       *operation,
+                                                     const gchar         *input_pad,
+                                                     const GeglRectangle *output_roi)
+{
+  GimpOperationComposeCrop *self = GIMP_OPERATION_COMPOSE_CROP (operation);
+  GeglRectangle             result;
+
+  if (! strcmp (input_pad, "input"))
+    {
+      gegl_rectangle_intersect (&result,
+                                output_roi,
+                                GEGL_RECTANGLE (self->x, self->y,
+                                                self->w, self->h));
+    }
+  else if (! strcmp (input_pad, "aux"))
+    {
+      gegl_rectangle_subtract_bounding_box (&result,
+                                            output_roi,
+                                            GEGL_RECTANGLE (self->x, self->y,
+                                                            self->w, self->h));
+    }
+  else
+    {
+      g_return_val_if_reached (*output_roi);
+    }
+
+  return result;
 }
 
 static gboolean
