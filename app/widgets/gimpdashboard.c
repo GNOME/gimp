@@ -59,6 +59,7 @@
 
 static void       gimp_dashboard_docked_iface_init (GimpDockedInterface *iface);
 
+static void       gimp_dashboard_dispose           (GObject             *object);
 static void       gimp_dashboard_finalize          (GObject             *object);
 
 static void       gimp_dashboard_map               (GtkWidget           *widget);
@@ -99,6 +100,7 @@ gimp_dashboard_class_init (GimpDashboardClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose  = gimp_dashboard_dispose;
   object_class->finalize = gimp_dashboard_finalize;
 
   widget_class->map      = gimp_dashboard_map;
@@ -313,9 +315,21 @@ gimp_dashboard_docked_iface_init (GimpDockedInterface *iface)
 }
 
 static void
-gimp_dashboard_finalize (GObject *object)
+gimp_dashboard_dispose (GObject *object)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (object);
+
+  if (dashboard->thread)
+    {
+      g_mutex_lock (&dashboard->mutex);
+
+      dashboard->quit = TRUE;
+      g_cond_signal (&dashboard->cond);
+
+      g_mutex_unlock (&dashboard->mutex);
+
+      g_clear_pointer (&dashboard->thread, g_thread_join);
+    }
 
   if (dashboard->timeout_id)
     {
@@ -329,17 +343,13 @@ gimp_dashboard_finalize (GObject *object)
       dashboard->low_swap_space_idle_id = 0;
     }
 
-  if (dashboard->thread)
-    {
-      g_mutex_lock (&dashboard->mutex);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
 
-      dashboard->quit = TRUE;
-      g_cond_signal (&dashboard->cond);
-
-      g_mutex_unlock (&dashboard->mutex);
-
-      g_clear_pointer (&dashboard->thread, g_thread_join);
-    }
+static void
+gimp_dashboard_finalize (GObject *object)
+{
+  GimpDashboard *dashboard = GIMP_DASHBOARD (object);
 
   g_mutex_clear (&dashboard->mutex);
   g_cond_clear (&dashboard->cond);
