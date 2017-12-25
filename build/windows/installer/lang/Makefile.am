@@ -12,6 +12,7 @@ languages = \
 	da:[da]:WINDOWS-1252		\
 	de:[de]:WINDOWS-1252		\
 	en::WINDOWS-1252		\
+	eo:[eo]:ISO-8859-3		\
 	es:[es]:WINDOWS-1252		\
 	fr:[fr]:WINDOWS-1252		\
 	hu:[hu]:WINDOWS-1250		\
