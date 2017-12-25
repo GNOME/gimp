@@ -1,6 +1,6 @@
 isl_in_files = \
-	setup.isl.desktop.in
-isl_files = $(isl_in_files:.isl.desktop.in=.isl)
+	setup.isl.in
+isl_files = $(isl_in_files:.isl.in=.isl)
 
 stamp_files = \
 	stamp-isl
@@ -35,7 +35,16 @@ stamp-isl: setup.isl Makefile.am
 	done &&										\
 	echo timestamp > stamp-isl
 
-setup.isl: setup.isl.desktop.in $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
+setup.isl: setup.isl.in $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
 	$(AM_V_GEN) $(INTLTOOL_MERGE) $(top_srcdir)/po-windows-installer $< $(@) -d -u -c $(top_builddir)/po-windows-installer/.intltool-merge-cache
 
 all-local: $(stamp_files)
+
+clean-local:
+	@						\
+	for lang in $(languages); do			\
+		code=`echo $$lang | cut -d: -f1`;	\
+		isl="$(srcdir)/$$code.setup.isl";	\
+		echo "  RM       $$isl";		\
+		rm -f "$$isl";				\
+	done

@@ -2270,6 +2270,28 @@ AC_ARG_ENABLE(gtk-doc-app, [  --enable-gtk-doc-app    build developer documentat
 AM_CONDITIONAL(ENABLE_GTK_DOC_APP, test "x$enable_gtk_doc_app" = xyes)
 
 
+#############################
+# Check for Windows installer
+#############################
+
+AC_MSG_CHECKING([if building the Windows installer])
+AC_ARG_ENABLE(windows-installer,
+              [  --enable-windows-installer
+                          generate files needed for the Windows installer
+                          (default=no)],,
+              enable_windows_installer=no)
+
+if test "x$enable_windows_installer" != xno; then
+  if test ! -e "$srcdir/build/windows/installer/lang/setup.isl.in"; then
+    AC_MSG_RESULT([no (not building from git)])
+    AC_MSG_ERROR([Building the Windows installer is only supported when building from git.])
+  fi
+fi
+
+AC_MSG_RESULT([$enable_windows_installer])
+AM_CONDITIONAL(BUILD_WINDOWS_INSTALLER, test "x$enable_windows_installer" != xno)
+
+
 #########################################
 # Allow to configure the GIMP environment
 #########################################
