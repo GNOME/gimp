@@ -77,7 +77,7 @@ query (void)
                           "Martin Weber",
                           "Martin Weber",
                           "1997",
-                          N_("_Color Enhance"),
+                          N_("_Color Enhance (legacy)"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

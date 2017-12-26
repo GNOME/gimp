@@ -167,7 +167,7 @@
 )
 
 (script-fu-register "script-fu-drop-shadow"
-  _"_Drop Shadow..."
+  _"_Drop Shadow (legacy)..."
   _"Add a drop shadow to the selected region (or alpha)"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"

@@ -139,7 +139,7 @@ query (void)
                           "Spencer Kimball, Peter Mattis, Sven Neumann, William Skaggs",
                           "Spencer Kimball, Peter Mattis, Sven Neumann, William Skaggs",
                           "1995-2004",
-                          N_("_Difference of Gaussians..."),
+                          N_("_Difference of Gaussians (legacy)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

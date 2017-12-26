@@ -155,7 +155,7 @@ query (void)
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",
                           "2001",
-                          N_("_Photocopy..."),
+                          N_("_Photocopy (legacy)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

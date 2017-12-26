@@ -122,7 +122,7 @@ query (void)
                           "Torsten Martinsen",
                           "Torsten Martinsen",
                           "1996",
-                          N_("Oili_fy..."),
+                          N_("Oili_fy (legacy)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

@@ -144,7 +144,7 @@ query (void)
                           "Spencer Kimball",
                           "Bit Specialists, Inc.",
                           "2001",
-                          N_("Ca_rtoon..."),
+                          N_("Ca_rtoon (legacy)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

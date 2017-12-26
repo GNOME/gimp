@@ -118,7 +118,7 @@ query (void)
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
                           "Copyright (C) 1997 Hirotsuna Mizuno",
                           PLUG_IN_VERSION,
-                          N_("_Fractal Trace..."),
+                          N_("_Fractal Trace (legacy)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

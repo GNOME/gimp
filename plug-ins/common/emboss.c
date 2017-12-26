@@ -128,7 +128,7 @@ query (void)
                           "Eric L. Hernes, John Schlag",
                           "Eric L. Hernes",
                           "1997",
-                          N_("_Emboss..."),
+                          N_("_Emboss (legacy)..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
