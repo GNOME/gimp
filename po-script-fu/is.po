@@ -3,14 +3,14 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 15:30+0000\n"
-"PO-Revision-Date: 2015-12-07 15:16+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-12-21 17:45+0000\n"
+"PO-Revision-Date: 2017-12-26 15:36+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -105,6 +105,20 @@ msgstr ""
 msgid "Script-Fu Console"
 msgstr "Script-Fu Skipanalína"
 
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "_Save"
+msgstr "Vi_sta"
+
+#: ../plug-ins/script-fu/script-fu-console.c:133
+msgid "C_lear"
+msgstr "_Hreinsa"
+
+#: ../plug-ins/script-fu/script-fu-console.c:134
+#: ../plug-ins/script-fu/script-fu-console.c:371
+msgid "_Close"
+msgstr "_Loka"
+
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
 msgstr "Þér er velkomið að nota TinyScheme"
@@ -121,74 +135,92 @@ msgstr "_Flakka..."
 msgid "Save Script-Fu Console Output"
 msgstr "Vista Script-Fu úttak frá skipanalínu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:335
+#: ../plug-ins/script-fu/script-fu-console.c:292
+#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "_Hætta við"
+
+#: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Gat ekki opnað '%s' fyrir ritun: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:364
+#: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu þjónustustillingar"
+
+#: ../plug-ins/script-fu/script-fu-console.c:370
+msgid "_Apply"
+msgstr "Virkj_a"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Prufuhamur Script-Fu er einungis tiltækur með ógagnvirkri kvaðningu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu getur ekki keyrt tvær skriftur á sama tíma."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Þú ert þegar að keyra \"%s\" skriftuna."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "F_rumstilla"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "Í _lagi"
+
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:341
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu litaval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu skráaval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu möppuval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:473
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu leturval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu litaspjaldsval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:490
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mynsturval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu litstigulsval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:508
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu pensilval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:857
+#: ../plug-ins/script-fu/script-fu-interface.c:877
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Villa við að keyra %s:"
@@ -202,27 +234,27 @@ msgstr "Of fáar breytur sendar til 'script-fu-register'"
 msgid "Error while loading %s:"
 msgstr "Villa við lestur %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Valkostir Script-Fu miðlara"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "Ræ_sa miðlara"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Hlusta eftir IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Gátt miðlara:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Annáll miðlara:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -280,7 +312,6 @@ msgid "Border Y size"
 msgstr "Y stærð ramma"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
-#| msgid "Solid Color"
 msgid "Border color"
 msgstr "Litur ramma"
 
@@ -342,7 +373,7 @@ msgstr "Litur geislunar"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
 msgid "Fadeout"
-msgstr ""
+msgstr "Dofna út"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
 msgid "Fadeout width"
@@ -362,7 +393,7 @@ msgstr "Bæta við geislun"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Undirbúa fyrir GIF"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Speed (pixels/frame)"
@@ -382,7 +413,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:171
 msgid "Cast Shadow"
-msgstr ""
+msgstr "Varpa skugga"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:172
 msgid "Inset"
@@ -540,11 +571,11 @@ msgstr "Dýpt"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:36
 msgid "Stain"
-msgstr ""
+msgstr "Blettur"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:81
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "_Kaffiblettur..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:82
 msgid "Add realistic looking coffee stains to the image"
@@ -552,17 +583,17 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:89
 msgid "Stains"
-msgstr ""
+msgstr "Blettir"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Darken only"
 msgstr "Einungis dekkja"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "Difference Clouds..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
@@ -591,7 +622,6 @@ msgid "Smooth"
 msgstr "Mýking"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Horizontal"
 msgid "Smooth horizontally"
 msgstr "Mýkja lárétt"
 
@@ -625,7 +655,6 @@ msgstr "Radíus afskerpingar"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
-#| msgid "Solid Color"
 msgid "Color"
 msgstr "Litur"
 
@@ -648,7 +677,6 @@ msgid "Erase every other row or column"
 msgstr "Eyða öðrum hverjum dálki eða röð"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-#| msgid "Rows"
 msgid "Rows/cols"
 msgstr "Raðir/dálkar"
 
@@ -661,7 +689,6 @@ msgid "Columns"
 msgstr "Dálkar"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-#| msgid "Even"
 msgid "Even/odd"
 msgstr "Jafnar/odda"
 
@@ -674,7 +701,6 @@ msgid "Odd"
 msgstr "Odda"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-#| msgid "Erase"
 msgid "Erase/fill"
 msgstr "Eyða/fylla"
 
@@ -823,7 +849,6 @@ msgid "_Developer Web Site"
 msgstr "Ve_fsvæði hönnuða"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#| msgid "_User Manual"
 msgid "_User Manual Web Site"
 msgstr "Vefsvæði með _handbók notanda"
 
@@ -852,7 +877,6 @@ msgstr "Breidd"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:139
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:195
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:264
-#| msgid "Right"
 msgid "Height"
 msgstr "Hæð"
 
@@ -1134,7 +1158,6 @@ msgid "File name"
 msgstr "Skráarheiti"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-#| msgid "_Patterns"
 msgid "New _Pattern..."
 msgstr "_Nýtt mynstur..."
 
@@ -1144,7 +1167,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "_Patterns"
 msgid "Pattern name"
 msgstr "Heiti mynsturs"
 
@@ -1308,7 +1330,6 @@ msgid "Convert a selection to an image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
-#| msgid "_Patterns"
 msgid "To _Pattern..."
 msgstr "Í m_ynstur..."
 
@@ -1369,10 +1390,9 @@ msgid "Rendering Spyro"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-#, fuzzy
 #| msgid "Spyrograph"
 msgid "_Spyrogimp..."
-msgstr "Spírógraf"
+msgstr "_Spírógimp..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid ""
@@ -1408,7 +1428,6 @@ msgid "Triangle"
 msgstr "Þríhyrningur"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
-#| msgid "Squares"
 msgid "Square"
 msgstr "Ferningur"
 
@@ -1490,7 +1509,6 @@ msgid "Gradient: Loop Triangle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-#| msgid "_Browse..."
 msgid "_Sphere..."
 msgstr "_Kúla..."
 
@@ -1511,7 +1529,6 @@ msgid "Blur vertically"
 msgstr "Móða lóðrétt"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
-#| msgid "Horizontal"
 msgid "Blur horizontally"
 msgstr "Móða lárétt"
 
