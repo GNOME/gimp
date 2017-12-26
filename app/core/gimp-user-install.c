@@ -664,6 +664,10 @@ user_install_dir_copy (GimpUserInstall *install,
               goto error;
             }
         }
+      else
+        {
+          user_install_dir_copy (install, name, dirname);
+        }
 
       g_free (name);
     }
