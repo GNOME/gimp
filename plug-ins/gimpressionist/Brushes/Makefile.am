@@ -32,7 +32,6 @@ brushdata_DATA = \
 	grad03.pgm		\
 	heart.ppm		\
 	leaf01.pgm		\
-	paintbrush.pgm		\
 	paintbrush01.pgm	\
 	paintbrush02.pgm	\
 	paintbrush03.pgm	\
