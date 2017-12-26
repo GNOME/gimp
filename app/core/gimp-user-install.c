@@ -570,6 +570,7 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
    */
   else
     {
+      g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
       g_string_append (new_value, match);
     }
 
@@ -636,6 +637,7 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
     }
   else
     {
+      g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
       g_string_append (new_value, match);
     }
 
