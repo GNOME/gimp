@@ -138,7 +138,9 @@ static gboolean  user_install_file_copy          (GimpUserInstall    *install,
                                                   GRegexEvalCallback  update_callback);
 static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
                                                   const gchar        *source,
-                                                  const gchar        *base);
+                                                  const gchar        *base,
+                                                  const gchar        *update_pattern,
+                                                  GRegexEvalCallback  update_callback);
 
 static gboolean  user_install_create_files       (GimpUserInstall    *install);
 static gboolean  user_install_migrate_files      (GimpUserInstall    *install);
@@ -617,10 +619,36 @@ user_update_gimprc (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define GIMPRESSIONIST_UPDATE_PATTERN \
+  "selectedbrush=Brushes/paintbrush.pgm"
+
 static gboolean
-user_install_dir_copy (GimpUserInstall *install,
-                       const gchar     *source,
-                       const gchar     *base)
+user_update_gimpressionist (const GMatchInfo *matched_value,
+                            GString          *new_value,
+                            gpointer          data)
+{
+  gchar *match = g_match_info_fetch (matched_value, 0);
+
+  /* See bug 791934: both brushes are identical. */
+  if (g_strcmp0 (match, "selectedbrush=Brushes/paintbrush.pgm") == 0)
+    {
+      g_string_append (new_value, "selectedbrush=Brushes/paintbrush01.pgm");
+    }
+  else
+    {
+      g_string_append (new_value, match);
+    }
+
+  g_free (match);
+  return FALSE;
+}
+
+static gboolean
+user_install_dir_copy (GimpUserInstall    *install,
+                       const gchar        *source,
+                       const gchar        *base,
+                       const gchar        *update_pattern,
+                       GRegexEvalCallback  update_callback)
 {
   GDir        *source_dir = NULL;
   GDir        *dest_dir   = NULL;
@@ -658,7 +686,9 @@ user_install_dir_copy (GimpUserInstall *install,
           g_snprintf (dest, sizeof (dest), "%s%c%s",
                       dirname, G_DIR_SEPARATOR, basename);
 
-          if (! user_install_file_copy (install, name, dest, NULL, NULL))
+          if (! user_install_file_copy (install, name, dest,
+                                        update_pattern,
+                                        update_callback))
             {
               g_free (name);
               goto error;
@@ -666,7 +696,8 @@ user_install_dir_copy (GimpUserInstall *install,
         }
       else
         {
-          user_install_dir_copy (install, name, dirname);
+          user_install_dir_copy (install, name, dirname,
+                                 update_pattern, update_callback);
         }
 
       g_free (name);
@@ -805,6 +836,9 @@ user_install_migrate_files (GimpUserInstall *install)
         }
       else if (g_file_test (source, G_FILE_TEST_IS_DIR))
         {
+          const gchar        *update_pattern = NULL;
+          GRegexEvalCallback  update_callback = NULL;
+
           /*  skip these directories for all old versions  */
           if (strcmp (basename, "tmp") == 0          ||
               strcmp (basename, "tool-options") == 0 ||
@@ -813,7 +847,13 @@ user_install_migrate_files (GimpUserInstall *install)
               goto next_file;
             }
 
-          user_install_dir_copy (install, source, gimp_directory ());
+          if (strcmp (basename, "gimpressionist") == 0)
+            {
+              update_pattern  = GIMPRESSIONIST_UPDATE_PATTERN;
+              update_callback = user_update_gimpressionist;
+            }
+          user_install_dir_copy (install, source, gimp_directory (),
+                                 update_pattern, update_callback);
         }
 
     next_file:
