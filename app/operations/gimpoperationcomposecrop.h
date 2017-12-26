@@ -40,7 +40,7 @@ struct _GimpOperationComposeCrop
 {
   GeglOperationPointComposer  parent_instance;
 
-  gint x, y, w, h;
+  GeglRectangle               rect;
 };
 
 struct _GimpOperationComposeCropClass
