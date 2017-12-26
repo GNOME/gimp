@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 11:57+0000\n"
-"PO-Revision-Date: 2017-12-23 20:09+0000\n"
+"PO-Revision-Date: 2017-12-26 15:19+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -79,7 +79,7 @@ msgstr "Til:"
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:418
 #: ../plug-ins/common/file-ps.c:3101 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
-msgstr "Grátóna"
+msgstr "Grátt"
 
 #. Gray: Circle: Spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:466
@@ -625,7 +625,7 @@ msgstr "Lóð_rétt"
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
-msgstr "Bakgrunnslitur"
+msgstr "Bakgrunnur"
 
 #: ../plug-ins/common/blinds.c:283 ../plug-ins/common/fractal-trace.c:739
 #: ../plug-ins/common/tile-paper.c:385
@@ -696,12 +696,12 @@ msgstr "Radíus afskerpingar"
 #: ../plug-ins/common/blur-gauss.c:523 ../plug-ins/common/jigsaw.c:2435
 #: ../plug-ins/common/noise-spread.c:385
 msgid "_Horizontal:"
-msgstr "Lárétt:"
+msgstr "_Lárétt:"
 
 #: ../plug-ins/common/blur-gauss.c:527 ../plug-ins/common/jigsaw.c:2452
 #: ../plug-ins/common/noise-spread.c:389
 msgid "_Vertical:"
-msgstr "Lóðrétt:"
+msgstr "Lóð_rétt:"
 
 #: ../plug-ins/common/blur-gauss.c:550
 msgid "Blur Method"
@@ -793,7 +793,7 @@ msgstr "Einföld afskerping, hraðvirk en ekki mjög sterk"
 
 #: ../plug-ins/common/blur.c:133
 msgid "_Blur"
-msgstr "_Má út"
+msgstr "_Afskerping"
 
 #: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:589
 msgid "Blurring"
@@ -1311,7 +1311,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientation.c:179
 #: ../plug-ins/gimpressionist/size.c:182
 msgid "Hue"
-msgstr "Litagildi"
+msgstr "Litblær"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:189
@@ -1433,7 +1433,7 @@ msgstr "Afrita breytur"
 
 #: ../plug-ins/common/cml-explorer.c:1472
 msgid "Selective Load Settings"
-msgstr ""
+msgstr "Valkvæðar hleðslustillingar"
 
 #: ../plug-ins/common/cml-explorer.c:1492
 msgid "Source channel in file:"
@@ -1477,7 +1477,7 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1652
 msgid "P(ower factor):"
-msgstr ""
+msgstr "P (veldisstuðull):"
 
 #: ../plug-ins/common/cml-explorer.c:1661
 msgid "Parameter k:"
@@ -2415,15 +2415,15 @@ msgstr "gult"
 
 #: ../plug-ins/common/decompose.c:206
 msgid "Cyan"
-msgstr "Blágrænn"
+msgstr "Blágrænt (Cyan)"
 
 #: ../plug-ins/common/decompose.c:207
 msgid "Magenta"
-msgstr "Fjólublár"
+msgstr "Blárautt (Magenta)"
 
 #: ../plug-ins/common/decompose.c:208
 msgid "Yellow"
-msgstr "Gulur"
+msgstr "Gult"
 
 #: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
 msgid "cyan-k"
@@ -2455,7 +2455,7 @@ msgstr "Gult_K"
 
 #: ../plug-ins/common/decompose.c:221
 msgid "Alpha"
-msgstr "Alfa"
+msgstr "Alfa gegnsæi"
 
 #: ../plug-ins/common/decompose.c:229
 msgid "luma-y470"
@@ -3077,7 +3077,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr ""
+msgstr "'%s': er ekki KCF-litaspjaldsskrá"
 
 #: ../plug-ins/common/file-cel.c:663
 #, c-format
@@ -3087,7 +3087,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr ""
+msgstr "'%s': óleyfilegur fjöldi lita: %u"
 
 #: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
 #: ../plug-ins/common/file-cel.c:724
@@ -3218,13 +3218,13 @@ msgstr "Villa í GIMP-pensilskránni '%s'"
 #: ../plug-ins/common/file-gbr.c:458
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ógildur UTF-8-strengur í pensilskrá '%s'."
+msgstr "Ógildur UTF-8-strengur í pensilskránni '%s'."
 
 #: ../plug-ins/common/file-gbr.c:464 ../plug-ins/common/file-gih.c:489
 #: ../plug-ins/common/file-gih.c:1139
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
-msgstr "ónefnt"
+msgstr "Ónefnt"
 
 #: ../plug-ins/common/file-gbr.c:656
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
@@ -3447,6 +3447,9 @@ msgid ""
 "HTML file which will most likely\n"
 "crash your browser."
 msgstr ""
+"Þú ert að fara að búa til risastóra \n"
+"HTML-skrá sem að öllum líkindum\n"
+"mun láta vafrann þinn hrynja."
 
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:444
@@ -3994,7 +3997,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1352
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr ""
+msgstr "Villa við að vista '%s'. Gat ekki vistað myndina."
 
 #: ../plug-ins/common/file-png.c:1980
 #, c-format
@@ -4041,19 +4044,19 @@ msgstr "Ekki stuðningur við skráarsniðið."
 
 #: ../plug-ins/common/file-pnm.c:555
 msgid "Invalid X resolution."
-msgstr ""
+msgstr "Ógild X-upplausn."
 
 #: ../plug-ins/common/file-pnm.c:557
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "Breidd myndarinnar er meiri en GIMP getur meðhöndlað."
 
 #: ../plug-ins/common/file-pnm.c:564
 msgid "Invalid Y resolution."
-msgstr ""
+msgstr "Ógild Y-upplausn."
 
 #: ../plug-ins/common/file-pnm.c:566
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "Hæð myndarinnar er meiri en GIMP getur meðhöndlað."
 
 #: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
@@ -4095,12 +4098,14 @@ msgstr "PDF skjal"
 #: ../plug-ins/common/file-ps.c:1032
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
-msgstr ""
+msgstr "Gat ekki túlkað PostScript-skrána '%s'"
 
 #: ../plug-ins/common/file-ps.c:1174
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
+"PostScript vistun getur ekki meðhöndlað myndir sem eru með "
+"alfa-gegnsæislitrásum"
 
 #: ../plug-ins/common/file-ps.c:1809 ../plug-ins/common/file-tiff-load.c:1013
 #, c-format
@@ -4373,7 +4378,7 @@ msgstr "Sun Raster mynd"
 #: ../plug-ins/common/file-sunras.c:404
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr ""
+msgstr "Gat ekki opnað '%s' sem SUN-rastaskrá"
 
 #: ../plug-ins/common/file-sunras.c:414
 msgid "The type of this SUN-rasterfile is not supported"
@@ -4382,7 +4387,7 @@ msgstr ""
 #: ../plug-ins/common/file-sunras.c:443
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr ""
+msgstr "Gat ekki lesið litafærslur úr '%s'"
 
 #: ../plug-ins/common/file-sunras.c:452
 msgid "Type of colormap not supported"
@@ -4422,16 +4427,18 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:522
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "Þessi litadýpt mynda er ekki studd"
 
 #: ../plug-ins/common/file-sunras.c:546
 #, c-format
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr ""
+"SUNRAS-vistun getur ekki meðhöndlað myndir sem eru með "
+"alfa-gegnsæislitrásum"
 
 #: ../plug-ins/common/file-sunras.c:557
 msgid "Can't operate on unknown image types"
-msgstr ""
+msgstr "Get ekki unnið með óþekktar tegundir mynda"
 
 #: ../plug-ins/common/file-sunras.c:1086 ../plug-ins/common/file-sunras.c:1177
 #: ../plug-ins/common/file-sunras.c:1258 ../plug-ins/common/file-sunras.c:1353
@@ -4651,7 +4658,7 @@ msgstr "CCITT Group _4 fax"
 
 #: ../plug-ins/common/file-tiff-save.c:1155
 msgid "Save _color values from transparent pixels"
-msgstr ""
+msgstr "Vista lit_gildi úr gegnsæjum mynddílum"
 
 #: ../plug-ins/common/file-tiff-save.c:1171 ../plug-ins/common/file-xbm.c:1236
 msgid "Comment:"
@@ -4823,7 +4830,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1115
 msgid "_Auto-Crop all frames."
-msgstr ""
+msgstr "Sker_a sjálfvirkt utan af öllum römmum."
 
 #: ../plug-ins/common/file-xmc.c:1128
 msgid ""
@@ -5058,7 +5065,7 @@ msgstr "Setja saman myndir"
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
 #: ../plug-ins/help-browser/dialog.c:1132
 msgid "Untitled"
-msgstr "ónefnt"
+msgstr "Ónefnt"
 
 #: ../plug-ins/common/film.c:878
 msgid "Available images:"
@@ -5175,7 +5182,7 @@ msgstr "Blátt:"
 
 #: ../plug-ins/common/filter-pack.c:223
 msgid "Cyan:"
-msgstr "Blágrænt:"
+msgstr "Blágrænt (Cyan):"
 
 #: ../plug-ins/common/filter-pack.c:224
 msgid "Yellow:"
@@ -5183,7 +5190,7 @@ msgstr "Gult:"
 
 #: ../plug-ins/common/filter-pack.c:225
 msgid "Magenta:"
-msgstr "Blárautt:"
+msgstr "Blárautt (Magenta):"
 
 #: ../plug-ins/common/filter-pack.c:227
 msgid "Darker:"
@@ -5211,19 +5218,19 @@ msgstr "Breyta litum myndar gagnvirkt"
 
 #: ../plug-ins/common/filter-pack.c:322
 msgid "_Filter Pack..."
-msgstr "Litasíu_Pakki..."
+msgstr "Síu_pakki..."
 
 #: ../plug-ins/common/filter-pack.c:372
 msgid "FP can only be used on RGB images."
-msgstr "LitasíuPakka er einvörðungu hægt að nota á RGB-myndir."
+msgstr "Síupakka er einvörðungu hægt að nota á RGB-myndir."
 
 #: ../plug-ins/common/filter-pack.c:382
 msgid "FP can only be run interactively."
-msgstr "LitasíuPakka er einvörðungu hægt að nota gagnvirkt."
+msgstr "Síupakka er einvörðungu hægt að nota gagnvirkt."
 
 #: ../plug-ins/common/filter-pack.c:400
 msgid "Applying filter pack"
-msgstr "Beita LitasíuPakka"
+msgstr "Beita síupakka"
 
 #: ../plug-ins/common/filter-pack.c:524
 msgid "Original:"
@@ -5378,7 +5385,7 @@ msgstr ""
 
 #: ../plug-ins/common/gradient-map.c:97
 msgid "_Gradient Map"
-msgstr ""
+msgstr "Litsti_gulsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -5386,15 +5393,15 @@ msgstr ""
 
 #: ../plug-ins/common/gradient-map.c:119
 msgid "_Palette Map"
-msgstr ""
+msgstr "Litas_pjaldsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:162
 msgid "Gradient Map"
-msgstr ""
+msgstr "Litstigulsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:167
 msgid "Palette Map"
-msgstr ""
+msgstr "Litaspjaldsvörpun"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
@@ -5411,7 +5418,7 @@ msgstr "Teikna hnitanet"
 #: ../plug-ins/common/grid.c:636 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Grid"
-msgstr "Rúður"
+msgstr "Hnitanet"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:719
@@ -6249,11 +6256,11 @@ msgstr ""
 
 #: ../plug-ins/common/noise-hsv.c:108
 msgid "HSV Noise..."
-msgstr ""
+msgstr "HSV suð..."
 
 #: ../plug-ins/common/noise-hsv.c:215 ../plug-ins/common/noise-hsv.c:364
 msgid "HSV Noise"
-msgstr ""
+msgstr "HSV suð"
 
 #: ../plug-ins/common/noise-hsv.c:401
 msgid "_Holdness:"
@@ -6265,7 +6272,7 @@ msgstr "Lit_blær:"
 
 #: ../plug-ins/common/noise-randomize.c:102
 msgid "Random Hurl"
-msgstr ""
+msgstr "Slembið kast"
 
 #: ../plug-ins/common/noise-randomize.c:103
 msgid "Random Pick"
@@ -6289,7 +6296,7 @@ msgstr ""
 
 #: ../plug-ins/common/noise-randomize.c:233
 msgid "_Hurl..."
-msgstr ""
+msgstr "_Kasta..."
 
 #: ../plug-ins/common/noise-randomize.c:245
 msgid "_Pick..."
@@ -6326,15 +6333,15 @@ msgstr ""
 
 #: ../plug-ins/common/noise-rgb.c:155
 msgid "_RGB Noise..."
-msgstr ""
+msgstr "_RGB suð..."
 
 #: ../plug-ins/common/noise-rgb.c:283
 msgid "Adding noise"
-msgstr ""
+msgstr "Bæti við suði"
 
 #: ../plug-ins/common/noise-rgb.c:450
 msgid "RGB Noise"
-msgstr ""
+msgstr "RGB suð"
 
 #: ../plug-ins/common/noise-rgb.c:484
 msgid "Co_rrelated noise"
@@ -6351,7 +6358,7 @@ msgstr "Grátt"
 #: ../plug-ins/common/noise-rgb.c:553
 #, c-format
 msgid "Channel #%d:"
-msgstr ""
+msgstr "Litrás #%d:"
 
 #: ../plug-ins/common/noise-solid.c:176
 msgid "Create a random cloud-like texture"
@@ -6368,12 +6375,12 @@ msgstr ""
 
 #: ../plug-ins/common/noise-solid.c:616
 msgid "_Detail:"
-msgstr ""
+msgstr "_Nánar:"
 
 #. Turbulent
 #: ../plug-ins/common/noise-solid.c:626
 msgid "T_urbulent"
-msgstr ""
+msgstr "_Hrært"
 
 #. Tilable
 #: ../plug-ins/common/noise-solid.c:640
@@ -6410,27 +6417,27 @@ msgstr ""
 
 #: ../plug-ins/common/nova.c:163
 msgid "Add a starburst to the image"
-msgstr ""
+msgstr "Bæta stjörnusprengingu á myndina"
 
 #: ../plug-ins/common/nova.c:172
 msgid "Super_nova..."
-msgstr ""
+msgstr "Sprengistjar_na..."
 
 #: ../plug-ins/common/nova.c:256
 msgid "Rendering supernova"
-msgstr ""
+msgstr "Myndgeri sprengistjörnu"
 
 #: ../plug-ins/common/nova.c:299
 msgid "Supernova"
-msgstr ""
+msgstr "Sprengistjarna"
 
 #: ../plug-ins/common/nova.c:345
 msgid "Supernova Color Picker"
-msgstr ""
+msgstr "Litaplokkari sprengistjörnu"
 
 #: ../plug-ins/common/nova.c:374
 msgid "_Spokes:"
-msgstr ""
+msgstr "Ar_mar:"
 
 #: ../plug-ins/common/nova.c:389
 msgid "R_andom hue:"
@@ -6438,7 +6445,7 @@ msgstr "Slembinn litblær"
 
 #: ../plug-ins/common/nova.c:437
 msgid "Center of Nova"
-msgstr ""
+msgstr "Miðja sprengistjörnu"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
@@ -6594,7 +6601,7 @@ msgstr "Skoða hjálparforrit"
 
 #: ../plug-ins/common/plugin-browser.c:589
 msgid "Name"
-msgstr "Nafn"
+msgstr "Heiti"
 
 #: ../plug-ins/common/plugin-browser.c:597
 #: ../plug-ins/common/plugin-browser.c:660
@@ -6932,12 +6939,13 @@ msgstr "Eftir seinkunina er skjámyndin tekin"
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
-"Eftir seinkunina dragðu músarbendilinn til að velja svæðið sem skjámyndin "
+"Eftir töfina, dragðu músarbendilinn til að velja svæðið sem skjámyndin verður "
 "tekin eftir."
 
 #: ../plug-ins/common/screenshot.c:1248
 msgid "At the end of the delay, click in a window to snap it."
-msgstr "Við enda seinkunar, smelltu inn í glugga til að taka mynd af honum."
+msgstr ""
+"Við lok tafarinnar, smelltu inn í glugga til að taka skjámynd af honum."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1254
@@ -7081,7 +7089,7 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:764
 msgid "_Ideal"
-msgstr ""
+msgstr "_Bestað"
 
 #: ../plug-ins/common/sinus.c:765
 msgid "_Distorted"
@@ -8011,7 +8019,7 @@ msgstr "_Afleiða"
 
 #: ../plug-ins/common/van-gogh-lic.c:689
 msgid "_Gradient"
-msgstr "Stigull"
+msgstr "_Litstigull"
 
 #: ../plug-ins/common/van-gogh-lic.c:695
 msgid "Convolve"
@@ -8023,7 +8031,7 @@ msgstr ""
 
 #: ../plug-ins/common/van-gogh-lic.c:701
 msgid "W_ith source image"
-msgstr ""
+msgstr "Með u_pprunamynd"
 
 #: ../plug-ins/common/van-gogh-lic.c:720
 msgid "_Effect image:"
@@ -8043,11 +8051,11 @@ msgstr ""
 
 #: ../plug-ins/common/van-gogh-lic.c:758
 msgid "_Minimum value:"
-msgstr "_Minnsta gildi:"
+msgstr "Læ_gsta gildi:"
 
 #: ../plug-ins/common/van-gogh-lic.c:767
 msgid "M_aximum value:"
-msgstr ""
+msgstr "Hæst_a gildi:"
 
 #: ../plug-ins/common/van-gogh-lic.c:813
 msgid "Special effects that nobody understands"
@@ -8180,7 +8188,7 @@ msgstr "Nánari stillingar"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
-msgstr ""
+msgstr "Stærð punktadreifingar:"
 
 #: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
@@ -8188,7 +8196,7 @@ msgstr "Snúningshorn:"
 
 #: ../plug-ins/common/warp.c:579
 msgid "Substeps:"
-msgstr ""
+msgstr "Undirþrep:"
 
 #. Magnitude map menu
 #: ../plug-ins/common/warp.c:588
@@ -8229,11 +8237,11 @@ msgstr ""
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1178
 msgid "Smoothing X gradient"
-msgstr ""
+msgstr "Mýking X-litstiguls"
 
 #: ../plug-ins/common/warp.c:1181
 msgid "Smoothing Y gradient"
-msgstr ""
+msgstr "Mýking Y-litstiguls"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1228
@@ -8328,7 +8336,7 @@ msgstr ""
 
 #: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
-msgstr ""
+msgstr "Upp kom villa við samnýtingu."
 
 #: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
@@ -8508,7 +8516,7 @@ msgstr ""
 
 #: ../plug-ins/file-bmp/bmp-read.c:138
 msgid "Bad colormap"
-msgstr "Vond litavörpun"
+msgstr "Röng litavörpun"
 
 #: ../plug-ins/file-bmp/bmp-read.c:222 ../plug-ins/file-bmp/bmp-read.c:232
 #: ../plug-ins/file-bmp/bmp-read.c:239 ../plug-ins/file-bmp/bmp-read.c:248
@@ -9433,7 +9441,7 @@ msgstr "_Birtuskil:"
 
 #: ../plug-ins/flame/flame.c:1108
 msgid "_Gamma:"
-msgstr "_Litróf:"
+msgstr "Litróf (_gamma):"
 
 #: ../plug-ins/flame/flame.c:1122
 msgid "Sample _density:"
@@ -9484,7 +9492,7 @@ msgstr "Rauntíma forskoðun"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 msgid "If enabled the preview will be redrawn automatically"
-msgstr ""
+msgstr "Ef virkt mun forskoðun endurteiknast sjálfkrafa"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:648
 msgid "R_edraw preview"
@@ -9876,7 +9884,7 @@ msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:684
 msgid "Save Gfig Drawing"
-msgstr ""
+msgstr "Vista Gfig-teikningu"
 
 #: ../plug-ins/gfig/gfig-dialog.c:848
 msgid "First Gfig"
@@ -10001,7 +10009,7 @@ msgstr "Gegnsætt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1322
 msgid "Foreground"
-msgstr "Forgrunnslitur"
+msgstr "Forgrunnur"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
@@ -10150,7 +10158,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:243
 msgid "Can only save drawables!"
-msgstr ""
+msgstr "Einvörðungu hægt að vista myndhluta!"
 
 #: ../plug-ins/gimpressionist/brush.c:248
 msgid "Save Brush"
@@ -10482,15 +10490,15 @@ msgstr "_Venjulegt"
 
 #: ../plug-ins/gimpressionist/orientmap.c:645
 msgid "Vorte_x"
-msgstr ""
+msgstr "_Hringiða"
 
 #: ../plug-ins/gimpressionist/orientmap.c:646
 msgid "Vortex_2"
-msgstr ""
+msgstr "Hringiða_2"
 
 #: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_3"
-msgstr ""
+msgstr "Hringiða_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
 #: ../plug-ins/gimpressionist/sizemap.c:541
@@ -10586,7 +10594,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/placement.c:119
 msgid "Stroke _density:"
-msgstr ""
+msgstr "Þéttleiki stro_ku:"
 
 #: ../plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
@@ -10615,7 +10623,7 @@ msgstr "For_stillingar:"
 
 #: ../plug-ins/gimpressionist/presets.c:1030
 msgid "Save Current..."
-msgstr ""
+msgstr "Vista núverandi..."
 
 #: ../plug-ins/gimpressionist/presets.c:1038
 msgid "Save the current settings to the specified file"
@@ -10844,11 +10852,11 @@ msgstr "Vist_a sjálfgefin gildi"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
-msgstr "Bæta við"
+msgstr "Viðbót"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Overlay"
-msgstr "Leggja yfir"
+msgstr "Yfirlag"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
@@ -10896,7 +10904,7 @@ msgstr ""
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2413
 msgid "A_uto update preview"
-msgstr ""
+msgstr "_Uppfæra forskoðun sjálfvirkt"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
 msgid "`Default' is created."
@@ -10925,15 +10933,15 @@ msgstr "Snúningur:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2782
 msgid "_Hue rotation:"
-msgstr ""
+msgstr "Snúningur lit_blæs:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2794
 msgid "Vector _angle:"
-msgstr ""
+msgstr "H_orn vigurs:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2806
 msgid "Vector _length:"
-msgstr ""
+msgstr "_Lengd vigurs:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2827
 msgid "A_daptive supersampling"
@@ -11331,7 +11339,7 @@ msgstr "Afstæð líkindi:"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1056
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
-msgstr "Velja _Allt"
+msgstr "Velja _allt"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1060
 msgid "Re_center"
@@ -11862,7 +11870,7 @@ msgstr "Vist_a sem..."
 
 #: ../plug-ins/imagemap/imap_menu.c:155
 msgid "_Edit"
-msgstr "_Sýsla"
+msgstr "Br_eyta"
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 msgid "Undo"
@@ -11886,7 +11894,7 @@ msgstr "Breyta upplýsingum um valið svæði"
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Preferences"
-msgstr "Stillingar"
+msgstr "Kjörstillingar"
 
 #: ../plug-ins/imagemap/imap_menu.c:169
 msgid "Move Area to Front"
@@ -11902,7 +11910,7 @@ msgstr "Eyða svæði"
 
 #: ../plug-ins/imagemap/imap_menu.c:180
 msgid "_View"
-msgstr "_Skoða"
+msgstr "S_koða"
 
 #: ../plug-ins/imagemap/imap_menu.c:181
 msgid "Source..."
@@ -12322,7 +12330,7 @@ msgstr "Z stefna ljósgjafa í XYZ-rúmi"
 
 #: ../plug-ins/lighting/lighting-ui.c:568
 msgid "I_solate"
-msgstr ""
+msgstr "E_inangra"
 
 #: ../plug-ins/lighting/lighting-ui.c:577
 msgid "Lighting preset:"
@@ -12512,7 +12520,7 @@ msgstr "Hvolf"
 
 #: ../plug-ins/map-object/map-object-ui.c:430
 msgid "Box"
-msgstr "Kassi"
+msgstr "Reitur"
 
 #: ../plug-ins/map-object/map-object-ui.c:441
 msgid "Type of object to map to"
@@ -13013,7 +13021,7 @@ msgstr "_Vinstri:"
 
 #: ../plug-ins/print/print-page-layout.c:417
 msgid "_Right:"
-msgstr "_Hægri:"
+msgstr "Hæg_ri:"
 
 #: ../plug-ins/print/print-page-layout.c:471
 msgid "C_enter:"
@@ -13126,4 +13134,5 @@ msgstr "_Skjámynd..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Engin gögn náðust"
+
 
