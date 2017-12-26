@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-12-21 20:56+0000\n"
-"PO-Revision-Date: 2017-12-24 15:00+0000\n"
+"PO-Revision-Date: 2017-12-26 13:20+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -832,24 +832,21 @@ msgid "Toggle Channel _Visibility"
 msgstr "_Víxla sýnileika litrásar"
 
 #: ../app/actions/channels-actions.c:119
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle the linked state"
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
-msgstr "Víxla tengdri stöðu"
+msgstr "Víx_la tengdri stöðu lags"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "channels-action"
 msgid "L_ock Pixels of Channel"
-msgstr "Læs_a staðsetningu litrásar"
+msgstr "Læs_a mynddílum litrásar"
 
 #: ../app/actions/channels-actions.c:131
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "channels-action"
@@ -862,12 +859,11 @@ msgid "None"
 msgstr "Ekkert"
 
 #: ../app/actions/channels-actions.c:141
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Clear"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
-msgstr "Litamerki: Hreint"
+msgstr "Litamerki litrásar: Hreint"
 
 #: ../app/actions/channels-actions.c:146
 msgctxt "channels-action"
@@ -875,12 +871,11 @@ msgid "Blue"
 msgstr "Blátt"
 
 #: ../app/actions/channels-actions.c:147
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Blue"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Blue"
-msgstr "Litamerki: Setja sem blátt"
+msgstr "Litamerki litrásar: Setja sem blátt"
 
 #: ../app/actions/channels-actions.c:152
 msgctxt "channels-action"
@@ -888,12 +883,11 @@ msgid "Green"
 msgstr "Grænt"
 
 #: ../app/actions/channels-actions.c:153
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Green"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
-msgstr "Litamerki: Setja sem grænt"
+msgstr "Litamerki litrásar: Setja sem grænt"
 
 #: ../app/actions/channels-actions.c:158
 msgctxt "channels-action"
@@ -901,12 +895,11 @@ msgid "Yellow"
 msgstr "Gult"
 
 #: ../app/actions/channels-actions.c:159
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Yellow"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Yellow"
-msgstr "Litamerki: Setja sem gult"
+msgstr "Litamerki litrásar: Setja sem gult"
 
 #: ../app/actions/channels-actions.c:164
 msgctxt "channels-action"
@@ -914,12 +907,11 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/channels-actions.c:165
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Orange"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
-msgstr "Litamerki: Setja sem appelsínugult"
+msgstr "Litamerki litrásar: Setja sem appelsínugult"
 
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
@@ -927,12 +919,11 @@ msgid "Brown"
 msgstr "Brúnt"
 
 #: ../app/actions/channels-actions.c:171
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Brown"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
-msgstr "Litamerki: Setja sem brúnt"
+msgstr "Litamerki litrásar: Setja sem brúnt"
 
 #: ../app/actions/channels-actions.c:176
 msgctxt "channels-action"
@@ -940,12 +931,11 @@ msgid "Red"
 msgstr "Rautt"
 
 #: ../app/actions/channels-actions.c:177
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Red"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
-msgstr "Litamerki: Setja sem rautt"
+msgstr "Litamerki litrásar: Setja sem rautt"
 
 #: ../app/actions/channels-actions.c:182
 msgctxt "channels-action"
@@ -953,12 +943,11 @@ msgid "Violet"
 msgstr "Fjólublátt"
 
 #: ../app/actions/channels-actions.c:183
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Violet"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
-msgstr "Litamerki: Setja sem fjólublátt"
+msgstr "Litamerki litrásar: Setja sem fjólublátt"
 
 #: ../app/actions/channels-actions.c:188
 msgctxt "channels-action"
@@ -966,12 +955,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/channels-actions.c:189
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Gray"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
-msgstr "Litamerki: Setja sem grátt"
+msgstr "Litamerki litrásar: Setja sem grátt"
 
 #: ../app/actions/channels-actions.c:197
 msgctxt "channels-action"
@@ -1014,7 +1002,6 @@ msgid "Intersect this channel with the current selection"
 msgstr "Skara þessa litrás við núverandi val"
 
 #: ../app/actions/channels-actions.c:224
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
 msgctxt "channels-action"
@@ -1022,7 +1009,6 @@ msgid "Select _Top Channel"
 msgstr "Velja efs_ta lag"
 
 #: ../app/actions/channels-actions.c:225
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
 msgctxt "channels-action"
@@ -1030,7 +1016,6 @@ msgid "Select the topmost channel"
 msgstr "Velja efsta lagið"
 
 #: ../app/actions/channels-actions.c:230
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgctxt "channels-action"
@@ -1038,7 +1023,6 @@ msgid "Select _Bottom Channel"
 msgstr "Velja _neðsta lag"
 
 #: ../app/actions/channels-actions.c:231
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
 msgctxt "channels-action"
@@ -1046,7 +1030,6 @@ msgid "Select the bottommost channel"
 msgstr "Velja neðsta lagið"
 
 #: ../app/actions/channels-actions.c:236
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
 msgctxt "channels-action"
@@ -1054,7 +1037,6 @@ msgid "Select _Previous Channel"
 msgstr "Velja _fyrra lag"
 
 #: ../app/actions/channels-actions.c:237
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
 msgctxt "channels-action"
@@ -1062,7 +1044,6 @@ msgid "Select the channel above the current channel"
 msgstr "Velja lagið sem er fyrir ofan lagið sem þú ert að vinna á núna"
 
 #: ../app/actions/channels-actions.c:242
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
 msgctxt "channels-action"
@@ -1070,7 +1051,6 @@ msgid "Select _Next Channel"
 msgstr "Velja _næsta lag"
 
 #: ../app/actions/channels-actions.c:243
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
 msgctxt "channels-action"
@@ -1992,25 +1972,23 @@ msgid "Tool Selection: Choose by Index"
 msgstr "Val á verkfæri: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:729
-#, fuzzy
 #| msgctxt "cursor-mode"
 #| msgid "Tool icon with crosshair"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to First"
-msgstr "Táknmynd verkfæris með krossmiði"
+msgstr "Val á verkfæri: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:733
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
-msgstr "Val að ferli"
+msgstr "Val á verkfæri: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "Val á verkfæri: Skipta á fyrri"
+msgstr "Val á verkfæri: Skipta á fyrra"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
@@ -2028,12 +2006,11 @@ msgid "Brush Selection: Switch to First"
 msgstr "Penslaval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:757
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
-msgstr "Val að ferli"
+msgstr "Penslaval: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
@@ -2056,20 +2033,18 @@ msgid "Pattern Selection: Switch to First"
 msgstr "Mynsturval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:781
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Fljótandi val á lag"
+msgstr "Mynsturval: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:785
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Strjúka eftir myndvali með síðustu stillingum"
+msgstr "Mynsturval: Skipta á fyrra"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
@@ -2082,36 +2057,32 @@ msgid "Palette Selection: Select by Index"
 msgstr "Litaspjaldsval: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:801
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Replace the selection with the layer mask"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to First"
-msgstr "Setja laghuluna í stað myndvalsins"
+msgstr "Val litaspjalds: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:805
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Replace selection with path"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
-msgstr "Skipta myndvali út fyrir feril"
+msgstr "Val litaspjalds: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:809
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Previous"
-msgstr "Strjúka eftir myndvali með síðustu stillingum"
+msgstr "Val litaspjalds: Skipta á fyrra"
 
 #: ../app/actions/context-actions.c:813
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Replace the selection with this channel"
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Next"
-msgstr "Setja þessa litrás í stað myndvalsins"
+msgstr "Val litaspjalds: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
@@ -2124,12 +2095,11 @@ msgid "Gradient Selection: Switch to First"
 msgstr "Litstigilsval: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:829
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Last"
-msgstr "Fljótandi val á lag"
+msgstr "Litstigilsval: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
@@ -2142,51 +2112,45 @@ msgid "Gradient Selection: Switch to Next"
 msgstr "Litstigilsval: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:845
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
-msgstr "Fljótandi val á lag"
+msgstr "Val letri: Velja eftir númeri"
 
 #: ../app/actions/context-actions.c:849
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
-msgstr "Fljótandi val á lag"
+msgstr "Val letri: Skipta á fyrsta"
 
 #: ../app/actions/context-actions.c:853
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
-msgstr "Fljótandi val á lag"
+msgstr "Val letri: Skipta á síðasta"
 
 #: ../app/actions/context-actions.c:857
-#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
-msgstr "Strjúka eftir myndvali með síðustu stillingum"
+msgstr "Val letri: Skipta á fyrra"
 
 #: ../app/actions/context-actions.c:861
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
-msgstr "Fljótandi val á lag"
+msgstr "Val letri: Skipta á næsta"
 
 #: ../app/actions/context-actions.c:869
-#, fuzzy
 #| msgid "Brush Spacing"
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "Millibil pensils"
+msgstr "Millibil pensils (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
@@ -2224,12 +2188,11 @@ msgid "Brush Shape (Editor): Use Circular"
 msgstr "Lögun pensils (ritill): Nota hringlaga"
 
 #: ../app/actions/context-actions.c:905
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Square"
-msgstr "Valmynd penslaritils"
+msgstr "Lögun pensils (ritill): Nota ferningslaga"
 
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
@@ -2237,12 +2200,11 @@ msgid "Brush Shape (Editor): Use Diamond"
 msgstr "Lögun pensils (ritill): Nota tígullaga"
 
 #: ../app/actions/context-actions.c:917
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set"
-msgstr "Valmynd penslaritils"
+msgstr "Radíus pensils (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
@@ -2295,12 +2257,11 @@ msgid "Brush Radius (Editor): Increase Relative"
 msgstr "Radíus pensils (ritill): Auka hlutfallslega"
 
 #: ../app/actions/context-actions.c:965
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "Valmynd penslaritils"
+msgstr "Pensiltoppar (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
@@ -2333,11 +2294,10 @@ msgid "Brush Spikes (Editor): Increase by 4"
 msgstr "Pensiltoppar (ritill): Auka um 4"
 
 #: ../app/actions/context-actions.c:997
-#, fuzzy
 #| msgid "Brush Hardness"
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Harka pensils"
+msgstr "Harka pensils (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
@@ -2370,11 +2330,10 @@ msgid "Brush Hardness (Editor): Increase by 0.1"
 msgstr "Harka pensils (ritill): Auka um 0.1"
 
 #: ../app/actions/context-actions.c:1029
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "Stærðarhlutföll pensils:"
+msgstr "Stærðarhlutföll pensils (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
@@ -2397,26 +2356,23 @@ msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
 msgstr "Stærðarhlutföll pensils (ritill): Auka um 0.1"
 
 #: ../app/actions/context-actions.c:1049
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "Stærðarhlutföll pensils:"
+msgstr "Stærðarhlutföll pensils (ritill): Minnka um 1"
 
 #: ../app/actions/context-actions.c:1053
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "Stærðarhlutföll pensils:"
+msgstr "Stærðarhlutföll pensils (ritill): Auka um 1"
 
 #: ../app/actions/context-actions.c:1061
-#, fuzzy
 #| msgctxt "brush-editor-action"
 #| msgid "Brush Editor Menu"
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Set"
-msgstr "Valmynd penslaritils"
+msgstr "Horn pensils (ritill): Stilla"
 
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
@@ -2491,11 +2447,10 @@ msgid "Dashboard Menu"
 msgstr "Valmynd stjórnborðs"
 
 #: ../app/actions/dashboard-actions.c:44
-#, fuzzy
 #| msgid "Interval X"
 msgctxt "dashboard-action"
 msgid "Update Interval"
-msgstr "Millibil X"
+msgstr "Uppfærslutíðni"
 
 #: ../app/actions/dashboard-actions.c:46
 #| msgid "History Color"
@@ -2915,12 +2870,11 @@ msgid "_Dashboard"
 msgstr "Stjórn_borð"
 
 #: ../app/actions/dialogs-actions.c:240
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the brush editor"
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
-msgstr "Opna penslaritilinn"
+msgstr "Opna stjórnborðið"
 
 #: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
@@ -3388,29 +3342,26 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Hliðra mynddílum, jafnvel flétta þá á jöðrum"
 
 #: ../app/actions/drawable-actions.c:67
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "Víxla sýnileika"
+msgstr "_Víxla sýnileika myndhluta"
 
 #: ../app/actions/drawable-actions.c:73
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle the linked state"
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "Víxla tengdri stöðu"
+msgstr "Víx_la tengdri stöðu myndhluta"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:79
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock pixels"
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr "Læsa m_ynddílum"
+msgstr "Læsa m_ynddílum myndhlutans"
 
 #: ../app/actions/drawable-actions.c:81
 msgctxt "drawable-action"
@@ -3418,12 +3369,11 @@ msgid "Keep the pixels on this drawable from being modified"
 msgstr "Koma í veg fyrir að mynddílum sé breytt á þessum myndhluta"
 
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawable"
-msgstr "Læs_a staðsetningu litrásar"
+msgstr "Læs_a staðsetningu myndhlutans"
 
 #: ../app/actions/drawable-actions.c:89
 msgctxt "drawable-action"
@@ -3436,12 +3386,11 @@ msgid "Flip _Horizontally"
 msgstr "Fletta _lárétt"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image horizontally"
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "Spegla mynd lárétt"
+msgstr "Fletta myndhluta lárétt"
 
 #: ../app/actions/drawable-actions.c:104
 msgctxt "drawable-action"
@@ -3449,12 +3398,11 @@ msgid "Flip _Vertically"
 msgstr "Fletta lóð_rétt"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image vertically"
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "Spegla mynd lóðrétt"
+msgstr "Fletta myndhluta lóðrétt"
 
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
@@ -3462,12 +3410,11 @@ msgid "Rotate 90° _clockwise"
 msgstr "Snúa 90° _réttsælis"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the right"
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr "Snúa myndinni 90 gráður til hægri"
+msgstr "Snúa myndhluta 90 gráður til hægri"
 
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
@@ -3475,12 +3422,11 @@ msgid "Rotate _180°"
 msgstr "Snúa _180°"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Turn upside-down"
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
-msgstr "Snúa myndinni á hvolf"
+msgstr "Snúa myndhluta á hvolf"
 
 #: ../app/actions/drawable-actions.c:125
 msgctxt "drawable-action"
@@ -3488,12 +3434,11 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Snúa 90° ran_gsælis"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the left"
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr "Snúa myndinni 90 gráður til vinstri"
+msgstr "Snúa myndhluta 90 gráður til vinstri"
 
 #: ../app/actions/drawable-commands.c:89
 msgid "White Balance operates only on RGB color layers."
@@ -3570,12 +3515,11 @@ msgid "_Edit Dynamics..."
 msgstr "Br_eyta hreyfingu..."
 
 #: ../app/actions/dynamics-actions.c:87
-#, fuzzy
 #| msgctxt "dynamics-action"
 #| msgid "Edit dynamics"
 msgctxt "dynamics-action"
 msgid "Edit this dynamics"
-msgstr "Breyta hreyfingu"
+msgstr "Breyta þessari hreyfingu"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
@@ -3777,28 +3721,25 @@ msgid "Paste the content of the clipboard"
 msgstr "Líma inn innihald klippispjaldsins"
 
 #: ../app/actions/edit-actions.c:182
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into"
 msgctxt "edit-action"
 msgid "Paste In Place"
-msgstr "Líma _inn í"
+msgstr "Líma á staðnum"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard into the current selection"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
-msgstr "Líma innihald klippispjaldsins inn í núverandi myndval"
+msgstr "Líma innihald klippispjaldsins inn á upphaflegri staðsetningu þess"
 
 #: ../app/actions/edit-actions.c:189
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Path to Selection"
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
-msgstr "Ferill í myndval"
+msgstr "Líma _inn í myndval"
 
 #: ../app/actions/edit-actions.c:191
 msgctxt "edit-action"
@@ -3806,22 +3747,22 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "Líma innihald klippispjaldsins inn í núverandi myndval"
 
 #: ../app/actions/edit-actions.c:196
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Path to Selection"
 msgctxt "edit-action"
 msgid "Paste Into Selection In Place"
-msgstr "Ferill í myndval"
+msgstr "Líma inn í myndval á staðnum"
 
 #: ../app/actions/edit-actions.c:198
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard into the current selection"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
-msgstr "Líma innihald klippispjaldsins inn í núverandi myndval"
+msgstr ""
+"Líma innihald klippispjaldsins inn í núverandi myndval á upphaflegri "
+"staðsetningu þess"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
@@ -3834,21 +3775,20 @@ msgid "Create a new layer from the content of the clipboard"
 msgstr "Búa til nýtt lag úr innihaldi klippispjaldsins"
 
 #: ../app/actions/edit-actions.c:210
-#, fuzzy
 #| msgid "New Layer"
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr "Nýtt lag"
+msgstr "Nýtt lag á staðnum"
 
 #: ../app/actions/edit-actions.c:212
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Create a new layer from the content of the clipboard"
 msgctxt "edit-action"
 msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
-msgstr "Búa til nýtt lag úr innihaldi klippispjaldsins"
+msgstr ""
+"Búa til nýtt lag úr innihaldi klippispjaldsins á upphaflegri staðsetningu þess"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -3921,28 +3861,24 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Hreinsun afturköllunarferils þessarar myndar mun losa um %s af minni."
 
 #: ../app/actions/edit-commands.c:248
-#, fuzzy
 #| msgid "Cut pixels to the clipboard"
 msgid "Cut layer to the clipboard."
-msgstr "Klippti mynddíla á klippispjaldið"
+msgstr "Klippti lag yfir á klippispjaldið."
 
 #: ../app/actions/edit-commands.c:249
-#, fuzzy
 #| msgid "Cut pixels to the clipboard"
 msgid "Cut pixels to the clipboard."
-msgstr "Klippti mynddíla á klippispjaldið"
+msgstr "Klippti mynddíla yfir á klippispjaldið."
 
 #: ../app/actions/edit-commands.c:284
-#, fuzzy
 #| msgid "Copied pixels to the clipboard"
 msgid "Copied layer to the clipboard."
-msgstr "Afritaði mynddíla á klippispjaldið"
+msgstr "Afritaði lag yfir á klippispjaldið."
 
 #: ../app/actions/edit-commands.c:285 ../app/actions/edit-commands.c:314
-#, fuzzy
 #| msgid "Copied pixels to the clipboard"
 msgid "Copied pixels to the clipboard."
-msgstr "Afritaði mynddíla á klippispjaldið"
+msgstr "Afritaði mynddíla á klippispjaldið."
 
 #: ../app/actions/edit-commands.c:393 ../app/actions/edit-commands.c:599
 #: ../app/tools/gimpseamlessclonetool.c:295
@@ -4283,7 +4219,7 @@ msgstr "Flytja myndina út á ýmsum skráasniðum eins og PNG eða JPEG"
 #: ../app/actions/file-actions.c:314
 msgctxt "file-action"
 msgid "_Save..."
-msgstr "_Vista..."
+msgstr "Vi_sta..."
 
 #: ../app/actions/file-actions.c:319
 #, c-format
@@ -6529,20 +6465,18 @@ msgid "Dismiss the effect of the layer mask"
 msgstr "Gera áhrif laghulunar óvirk"
 
 #: ../app/actions/layers-actions.c:306
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
-msgstr "Víxla sýnileika"
+msgstr "_Víxla sýnileika lags"
 
 #: ../app/actions/layers-actions.c:312
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle the linked state"
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr "Víxla tengdri stöðu"
+msgstr "Víx_la tengdri stöðu lags"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
@@ -6634,7 +6568,7 @@ msgstr "Uppruni yfir"
 #: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source Over"
-msgstr ""
+msgstr "Hamur samsetningar laga: Upprunalegt yfir"
 
 #: ../app/actions/layers-actions.c:395
 #| msgid "Source"
@@ -6645,7 +6579,7 @@ msgstr "Uppruni ofaná"
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source Atop"
-msgstr ""
+msgstr "Hamur samsetningar laga: Upprunalegt efst"
 
 #: ../app/actions/layers-actions.c:401
 #| msgid "Source"
@@ -6656,7 +6590,7 @@ msgstr "Uppruni í"
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source In"
-msgstr ""
+msgstr "Hamur samsetningar laga: Upprunalegt inn í"
 
 #: ../app/actions/layers-actions.c:407
 #| msgid "Destination Range"
@@ -6667,7 +6601,7 @@ msgstr "Áfangastaður ofaná"
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Destination Atop"
-msgstr ""
+msgstr "Hamur samsetningar laga: Móttökulag efst"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -6675,12 +6609,11 @@ msgid "None"
 msgstr "Ekkert"
 
 #: ../app/actions/layers-actions.c:417
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Clear"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
-msgstr "Litamerki: Hreint"
+msgstr "Litamerki lags: Hreint"
 
 #: ../app/actions/layers-actions.c:422
 msgctxt "layers-action"
@@ -6688,12 +6621,11 @@ msgid "Blue"
 msgstr "Blátt"
 
 #: ../app/actions/layers-actions.c:423
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Set to Blue"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
-msgstr "Litamerki: Setja sem blátt"
+msgstr "Litamerki lags: Setja sem blátt"
 
 #: ../app/actions/layers-actions.c:428
 msgctxt "layers-action"
@@ -6701,12 +6633,11 @@ msgid "Green"
 msgstr "Grænt"
 
 #: ../app/actions/layers-actions.c:429
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Set to Green"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
-msgstr "Litamerki: Setja sem grænt"
+msgstr "Litamerki lags: Setja sem grænt"
 
 #: ../app/actions/layers-actions.c:434
 msgctxt "layers-action"
@@ -6714,12 +6645,11 @@ msgid "Yellow"
 msgstr "Gult"
 
 #: ../app/actions/layers-actions.c:435
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Set to Yellow"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
-msgstr "Litamerki: Setja sem gult"
+msgstr "Litamerki lags: Setja sem gult"
 
 #: ../app/actions/layers-actions.c:440
 msgctxt "layers-action"
@@ -6727,12 +6657,11 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/layers-actions.c:441
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Set to Orange"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
-msgstr "Litamerki: Setja sem appelsínugult"
+msgstr "Litamerki lags: Setja sem appelsínugult"
 
 #: ../app/actions/layers-actions.c:446
 msgctxt "layers-action"
@@ -6740,12 +6669,11 @@ msgid "Brown"
 msgstr "Brúnt"
 
 #: ../app/actions/layers-actions.c:447
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Color Tag: Set to Brown"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
-msgstr "Litamerki: Setja sem brúnt"
+msgstr "Litamerki lags: Setja sem brúnt"
 
 #: ../app/actions/layers-actions.c:452
 msgctxt "layers-action"
@@ -6753,12 +6681,11 @@ msgid "Red"
 msgstr "Rautt"
 
 #: ../app/actions/layers-actions.c:453
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Red"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
-msgstr "Litamerki: Setja sem rautt"
+msgstr "Litamerki lags: Setja sem rautt"
 
 #: ../app/actions/layers-actions.c:458
 msgctxt "layers-action"
@@ -6766,12 +6693,11 @@ msgid "Violet"
 msgstr "Fjólublátt"
 
 #: ../app/actions/layers-actions.c:459
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Violet"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
-msgstr "Litamerki: Setja sem fjólublátt"
+msgstr "Litamerki lags: Setja sem fjólublátt"
 
 #: ../app/actions/layers-actions.c:464
 msgctxt "layers-action"
@@ -6779,12 +6705,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/layers-actions.c:465
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Gray"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
-msgstr "Litamerki: Setja sem grátt"
+msgstr "Litamerki lags: Setja sem grátt"
 
 #: ../app/actions/layers-actions.c:473
 msgctxt "layers-action"
@@ -6917,71 +6842,66 @@ msgid "Select the layer below the current layer"
 msgstr "Velja lagið sem er fyrir neðan lagið sem þú ert að vinna á núna"
 
 #: ../app/actions/layers-actions.c:573
-#, fuzzy
 #| msgid "Base Opacity"
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
-msgstr "Grunn-ógegnsæi"
+msgstr "Ógegnsæi lags: Stilla"
 
 #: ../app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
-msgstr ""
+msgstr "Gegnsæi lags: Gera alveg gegnsætt"
 
 #: ../app/actions/layers-actions.c:581
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
-msgstr ""
+msgstr "Gegnsæi lags: Gera alveg ógegnsætt"
 
 #: ../app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
-msgstr ""
+msgstr "Gegnsæi lags: Gera meira gegnsætt"
 
 #: ../app/actions/layers-actions.c:589
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
-msgstr ""
+msgstr "Gegnsæi lags: Gera meira ógegnsætt"
 
 #: ../app/actions/layers-actions.c:593
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
-msgstr ""
+msgstr "Gegnsæi lags: Gera 10% meira gegnsætt"
 
 #: ../app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
-msgstr ""
+msgstr "Gegnsæi lags: Gera 10% meira ógegnsætt"
 
 #: ../app/actions/layers-actions.c:605
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Layer Mask to Selection"
 msgctxt "layers-action"
 msgid "Layer Mode: Select First"
-msgstr "Bæta laghulu við myndval"
+msgstr "Laghamur: Velja fyrsta"
 
 #: ../app/actions/layers-actions.c:609
-#, fuzzy
 #| msgid "Layer Select"
 msgctxt "layers-action"
 msgid "Layer Mode: Select Last"
-msgstr "Velja lag"
+msgstr "Laghamur: Velja síðasta"
 
 #: ../app/actions/layers-actions.c:613
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Layer Mask to Selection"
 msgctxt "layers-action"
 msgid "Layer Mode: Select Previous"
-msgstr "Bæta laghulu við myndval"
+msgstr "Laghamur: Velja fyrra"
 
 #: ../app/actions/layers-actions.c:617
-#, fuzzy
 #| msgid "Layer Select"
 msgctxt "layers-action"
 msgid "Layer Mode: Select Next"
-msgstr "Velja lag"
+msgstr "Laghamur: Velja næsta"
 
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
@@ -7299,7 +7219,7 @@ msgstr "Settu nafn fyrir samtvinnaða litaspjaldið"
 
 #: ../app/actions/palettes-commands.c:123
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "Það verður að velja a.m.k. tvö litaspjöld til að sameina."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -7984,18 +7904,16 @@ msgid "Tool Preset Editor Menu"
 msgstr "Valmynd verkfærastillingaritils"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
-#, fuzzy
 #| msgid "_Save tool options on exit"
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
-msgstr "Vista _stillingar verkfæra við lokun"
+msgstr "Vi_sta stillingar verkfæris í forstillingu"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
-#, fuzzy
 #| msgid "Save the tool options when GIMP exits."
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "Vista _stillingar verkfæra við lokun GIMP."
+msgstr "Vista stillingar virka verkfærisins í þessa forstillingu"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 #| msgctxt "tool-options-action"
@@ -8005,7 +7923,6 @@ msgid "_Restore Tool Preset"
 msgstr "Endu_rheimta forstillingu verkfæris"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
-#, fuzzy
 #| msgctxt "tool-presets-action"
 #| msgid "Restore this tool preset"
 msgctxt "tool-preset-editor-action"
@@ -8022,6 +7939,8 @@ msgstr "Breyta forstillingum virks verkfæris"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
+"Get ekki vistað stillingar '%s' verkfæris í fyrirliggjandi forstillinguna '%"
+"s'."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -8069,18 +7988,16 @@ msgid "Show tool preset file location in the file manager"
 msgstr "Birta staðsetningu forstillingaskrár í skráarstjóra"
 
 #: ../app/actions/tool-presets-actions.c:74
-#, fuzzy
 #| msgid "_Save tool options on exit"
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr "Vista _stillingar verkfæra við lokun"
+msgstr "Vi_sta stillingar verkfæris í forstillingu"
 
 #: ../app/actions/tool-presets-actions.c:75
-#, fuzzy
 #| msgid "Save the tool options when GIMP exits."
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "Vista _stillingar verkfæra við lokun GIMP."
+msgstr "Vista stillingar virka verkfærisins í þessa forstillingu"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
@@ -8397,57 +8314,57 @@ msgstr "Stærðarhlutföll verkfæris: Auka hlutfallslega"
 #: ../app/actions/tools-actions.c:396
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
-msgstr ""
+msgstr "Horn verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:400
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
-msgstr ""
+msgstr "Horn verkfæris: Stilla halla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:404
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
-msgstr ""
+msgstr "Horn verkfæris: Lágmarka"
 
 #: ../app/actions/tools-actions.c:408
 msgctxt "tools-action"
 msgid "Tool's Angle: Maximize"
-msgstr ""
+msgstr "Horn verkfæris: Hámarka"
 
 #: ../app/actions/tools-actions.c:412
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 1°"
-msgstr ""
+msgstr "Horn verkfæris: Minnka um 1°"
 
 #: ../app/actions/tools-actions.c:416
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
-msgstr ""
+msgstr "Horn verkfæris: Auka um 1°"
 
 #: ../app/actions/tools-actions.c:420
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 15°"
-msgstr ""
+msgstr "Horn verkfæris: Minnka um 15°"
 
 #: ../app/actions/tools-actions.c:424
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
-msgstr ""
+msgstr "Horn verkfæris: Auka um 15°"
 
 #: ../app/actions/tools-actions.c:428
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
-msgstr ""
+msgstr "Horn verkfæris: Minnka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:432
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
-msgstr ""
+msgstr "Horn verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:440
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set"
-msgstr ""
+msgstr "Millibil verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:444
 #| msgid "_Reset Saved Tool Options to Default Values"
@@ -8549,19 +8466,17 @@ msgid "Tool's Hardness: Increase Relative"
 msgstr "Harka verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/tools-actions.c:528
-#, fuzzy
 #| msgid "Tool Presets"
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
-msgstr "Forstillingar verkfæra"
+msgstr "Kraftur verkfæris: Stilla"
 
 #: ../app/actions/tools-actions.c:532
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Kraftur verkfæris: Stilla á sjálfgefin gildi"
 
 #: ../app/actions/tools-actions.c:536
 msgctxt "tools-action"
@@ -8779,20 +8694,18 @@ msgid "I_mport Path..."
 msgstr "Flytja i_nn feril..."
 
 #: ../app/actions/vectors-actions.c:166
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "vectors-action"
 msgid "Toggle Path _Visibility"
-msgstr "Víxla sýnileika"
+msgstr "_Víxla sýnileika ferils"
 
 #: ../app/actions/vectors-actions.c:172
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle the linked state"
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr "Víxla tengdri stöðu"
+msgstr "Víx_la tengdri stöðu ferils"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
@@ -8803,12 +8716,11 @@ msgid "L_ock Strokes of Path"
 msgstr "Læsa str_okum á ferli"
 
 #: ../app/actions/vectors-actions.c:184
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "vectors-action"
 msgid "L_ock Position of Path"
-msgstr "Læs_a staðsetningu litrásar"
+msgstr "Læs_a staðsetningu ferils"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
@@ -8816,12 +8728,11 @@ msgid "None"
 msgstr "Ekkert"
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Clear"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Clear"
-msgstr "Litamerki: Hreint"
+msgstr "Litamerki ferils: Hreint"
 
 #: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
@@ -8829,12 +8740,11 @@ msgid "Blue"
 msgstr "Blátt"
 
 #: ../app/actions/vectors-actions.c:200
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Blue"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Blue"
-msgstr "Litamerki: Setja sem blátt"
+msgstr "Litamerki ferils: Setja sem blátt"
 
 #: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
@@ -8842,12 +8752,11 @@ msgid "Green"
 msgstr "Grænt"
 
 #: ../app/actions/vectors-actions.c:206
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Green"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Green"
-msgstr "Litamerki: Setja sem grænt"
+msgstr "Litamerki ferils: Setja sem grænt"
 
 #: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
@@ -8855,12 +8764,11 @@ msgid "Yellow"
 msgstr "Gult"
 
 #: ../app/actions/vectors-actions.c:212
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Yellow"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Yellow"
-msgstr "Litamerki: Setja sem gult"
+msgstr "Litamerki ferils: Setja sem gult"
 
 #: ../app/actions/vectors-actions.c:217
 msgctxt "vectors-action"
@@ -8868,12 +8776,11 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/vectors-actions.c:218
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Orange"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Orange"
-msgstr "Litamerki: Setja sem appelsínugult"
+msgstr "Litamerki ferils: Setja sem appelsínugult"
 
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
@@ -8881,12 +8788,11 @@ msgid "Brown"
 msgstr "Brúnt"
 
 #: ../app/actions/vectors-actions.c:224
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Brown"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Brown"
-msgstr "Litamerki: Setja sem brúnt"
+msgstr "Litamerki ferils: Setja sem brúnt"
 
 #: ../app/actions/vectors-actions.c:229
 msgctxt "vectors-action"
@@ -8894,12 +8800,11 @@ msgid "Red"
 msgstr "Rautt"
 
 #: ../app/actions/vectors-actions.c:230
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Red"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Red"
-msgstr "Litamerki: Setja sem rautt"
+msgstr "Litamerki ferils: Setja sem rautt"
 
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
@@ -8907,12 +8812,11 @@ msgid "Violet"
 msgstr "Fjólublátt"
 
 #: ../app/actions/vectors-actions.c:236
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Violet"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Violet"
-msgstr "Litamerki: Setja sem fjólublátt"
+msgstr "Litamerki ferils: Setja sem fjólublátt"
 
 #: ../app/actions/vectors-actions.c:241
 msgctxt "vectors-action"
@@ -8920,12 +8824,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/vectors-actions.c:242
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Gray"
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Gray"
-msgstr "Litamerki: Setja sem grátt"
+msgstr "Litamerki ferils: Setja sem grátt"
 
 #: ../app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
@@ -10367,10 +10270,9 @@ msgid "Sets the browser used by the help system."
 msgstr "Stillir vafrann sem hjálparkerfið notar."
 
 #: ../app/config/gimprc-blurbs.h:176
-#, fuzzy
 #| msgid "How many recently opened image filenames to keep on the File menu."
 msgid "How many recent settings to keep around in filter tools."
-msgstr "Hversu mörg fyrri skráarnöfn á að sýna á skráarvalmynd."
+msgstr "Hversu margar nýlegar stillingar eigi að halda uppá í síuverkfærum."
 
 #: ../app/config/gimprc-blurbs.h:179
 msgid "Show advanced color options in filter tools."
@@ -10398,7 +10300,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:196
 msgid "Add an alpha channel to all layers of imported images."
-msgstr ""
+msgstr "Bæta alfa-gegnsæislitrás við öll lög innfluttra mynda."
 
 #: ../app/config/gimprc-blurbs.h:199
 msgid "Which plug-in to use for importing raw digital camera files."
@@ -13466,7 +13368,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:98
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr ""
+msgstr "Ógild gögn í haus í '%s': breidd=%lu, hæð=%lu, bæti=%lu"
 
 #: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
 msgid "File appears truncated."
@@ -13475,7 +13377,7 @@ msgstr "Það virðist vanta enda á skrána."
 #: ../app/core/gimppattern-load.c:123
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "ógildur UTF-8-strengur í mynsturskrá '%s'."
+msgstr "Ógildur UTF-8-strengur í mynsturskrá '%s'."
 
 #: ../app/core/gimppattern-load.c:166
 msgid "Fatal parse error in pattern file: "
@@ -13613,11 +13515,10 @@ msgstr ""
 "sinnum línubreidd frá raunverulegum samskeytapunkti."
 
 #: ../app/core/gimpstrokeoptions.c:202
-#, fuzzy
 #| msgctxt "dash-preset"
 #| msgid "Dash, dot"
 msgid "Dash offset"
-msgstr "Strik, punktur"
+msgstr "Hliðrun striks"
 
 #: ../app/core/gimpstrokeoptions.c:224
 msgid "Emulate brush dynamics"
@@ -13692,10 +13593,9 @@ msgid "Invert the initial stroke through a point"
 msgstr "Umhverfa upphaflegri stroku í gegnum punkt"
 
 #: ../app/core/gimpsymmetry-mirror.c:155
-#, fuzzy
 #| msgid "Disable brush transform"
 msgid "Disable brush reflection"
-msgstr "Gera ummyndun pensils óvirka"
+msgstr "Gera endurkast pensils óvirka"
 
 #: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
@@ -14278,7 +14178,7 @@ msgstr "_Hamur:"
 
 #: ../app/dialogs/fade-dialog.c:164 ../app/dialogs/layer-options-dialog.c:239
 msgid "_Opacity:"
-msgstr "Ó_gegnsæi"
+msgstr "Ó_gegnsæi:"
 
 #: ../app/dialogs/file-open-dialog.c:244
 msgid "Open layers"
@@ -15157,11 +15057,10 @@ msgstr "Hegðun við að opna skrár:"
 
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1381
-#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "File Open _Dialog"
 msgid "Filter Dialogs"
-msgstr "Valmyn_d til að opna skrár"
+msgstr "Valmyndir sía"
 
 #: ../app/dialogs/preferences-dialog.c:1385
 #| msgctxt "vectors-action"
@@ -15179,10 +15078,9 @@ msgstr "Innflutningur mynda"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1406
-#, fuzzy
 #| msgid "Policies"
 msgid "Import Policies"
-msgstr "Aðgangskröfur"
+msgstr "Stefnur varðandi Innflutning"
 
 #: ../app/dialogs/preferences-dialog.c:1410
 #| msgctxt "image-convert-action"
@@ -15204,17 +15102,15 @@ msgstr "Bæta alfa-gegnsæislitrás við innfluttar myndir"
 
 #: ../app/dialogs/preferences-dialog.c:1426
 #: ../app/dialogs/preferences-dialog.c:2003
-#, fuzzy
 #| msgid "Color _profile:"
 msgid "Color profile policy:"
-msgstr "_Litasnið:"
+msgstr "Stefna varðandi notkun litasniða:"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1430
-#, fuzzy
 #| msgid "Image Templates"
 msgid "Raw Image Importer"
-msgstr "Sniðmát mynda"
+msgstr "Innflutningur RAW-mynda"
 
 #: ../app/dialogs/preferences-dialog.c:1463
 msgid "Experimental Playground"
@@ -15528,17 +15424,15 @@ msgid "Resize layers:"
 msgstr "Breyta stærð laga:"
 
 #: ../app/dialogs/preferences-dialog.c:2082
-#, fuzzy
 #| msgid "Resize _text layers"
 msgid "Resize text layers"
-msgstr "Breyta stærð _textalaga"
+msgstr "Breyta stærð textalaga"
 
 #. New Layer Dialog
 #: ../app/dialogs/preferences-dialog.c:2086
-#, fuzzy
 #| msgid "New Layer"
 msgid "New Layer Dialog"
-msgstr "Nýtt lag"
+msgstr "Gluggi fyrir nýtt lag"
 
 #: ../app/dialogs/preferences-dialog.c:2091
 #| msgid "Layer _name:"
@@ -15643,10 +15537,9 @@ msgid "Export folder:"
 msgstr "Útflutningsmappa:"
 
 #: ../app/dialogs/preferences-dialog.c:2169
-#, fuzzy
 #| msgid "Select Folder for Temporary Files"
 msgid "Select Default Folder for Exporting Paths"
-msgstr "Velja möppu fyrir bráðabirgðaskrár"
+msgstr "Veldu sjálfgefna möppu fyrir útflutning ferla"
 
 #: ../app/dialogs/preferences-dialog.c:2173
 #| msgid "Export the active path"
@@ -15666,10 +15559,9 @@ msgid "Import folder:"
 msgstr "Innflutningsmappa:"
 
 #: ../app/dialogs/preferences-dialog.c:2183
-#, fuzzy
 #| msgid "Select Folder for Temporary Files"
 msgid "Select Default Folder for Importing Paths"
-msgstr "Velja möppu fyrir bráðabirgðaskrár"
+msgstr "Veldu sjálfgefna möppu fyrir innflutning ferla"
 
 #: ../app/dialogs/preferences-dialog.c:2187
 #| msgid "_Merge imported paths"
@@ -17813,7 +17705,7 @@ msgstr "Liteyðing (l)"
 #| msgid "Overlay"
 msgctxt "layer-mode"
 msgid "Overlay"
-msgstr "Yfirprentun"
+msgstr "Yfirlag"
 
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
@@ -17879,7 +17771,7 @@ msgstr "Mismunur"
 #| msgid "Addition"
 msgctxt "layer-mode"
 msgid "Addition"
-msgstr "Samlagning"
+msgstr "Viðbót"
 
 #: ../app/operations/operations-enums.c:253
 #| msgctxt "layer-mode-effects"
@@ -18380,7 +18272,7 @@ msgstr "Upplita/Brenna"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
-msgstr "Tegund"
+msgstr "Gerð"
 
 #: ../app/paint/gimpdodgeburnoptions.c:86
 msgid "Exposure"
@@ -22255,7 +22147,7 @@ msgstr "Breyta stafabili"
 
 #: ../app/tools/gimptextoptions.c:198
 msgid "Box"
-msgstr "Textareitur"
+msgstr "Reitur"
 
 #: ../app/tools/gimptextoptions.c:199
 msgid ""
