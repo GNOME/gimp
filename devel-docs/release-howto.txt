@@ -17,6 +17,15 @@
      on, and how many changes to expect. An example message is:
      https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
 
+ ( ) If this is a stable release, make sure we have a <release> tag
+     inside desktop/gimp.appdata.xml.in for this upcoming version. Some
+     installers may feature more prominently software with recent
+     releases if the appropriate tag was set (e.g. GNOME Software has a
+     "Recent Releases" category).
+     If a description is added, it may be featured in installers and
+     will be translatable (use <_p> or <_li> tags to make the strings
+     localizable).
+
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
 
