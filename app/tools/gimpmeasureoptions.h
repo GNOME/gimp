@@ -38,6 +38,7 @@ struct _GimpMeasureOptions
   GimpToolOptions  parent_instance;
 
   gboolean         use_info_window;
+  GtkWidget       *auto_straighten;
 };
 
 
