@@ -25,8 +25,13 @@ Core:
     display available debug domains. Non-recognized flags will also
     trigger the debug flag list output.
   - Improve migration from 2.8 to 2.10 by recursively migrating
-    configuration files.
+    configuration files (up to 5 levels, to protect from recursive
+    symbolic links).
   - Mark legacy plug-ins and scripts in menus.
+
+GUI and Usability:
+
+  - New Color Temperature Tool icons: "gimp-tool-color-temperature".
 
 Tools:
   - "Link brush size with canvas zoom" paint option becomes "Lock brush
@@ -56,10 +61,16 @@ Building:
     considered a granted feature nowadays and fallbacking to the
     Postscript plug-in was bad experience.
   - move PDB generation and sources to toplevel/pdb.
-  - Windows installer now localized with gettext.
   - New configure option `--enable-windows-installer` to generate the
     necessary files for the installer translations during the build.
   - Improve POTFILES generation for po-*/ directories.
+
+Translations:
+
+  - Windows installer now localized with gettext.
+  - String freeze has started and GIMP received updates from: Chinese
+    (Taiwan), Danish, Esperanto, Icelandic, Polish, Russian, Serbian,
+    Turkish.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
