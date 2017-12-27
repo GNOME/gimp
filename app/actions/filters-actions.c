@@ -120,7 +120,7 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:invert-gamma",
     GIMP_HELP_FILTER_INVERT_PERCEPTUAL },
 
-  { "filters-invert-value", GIMP_ICON_GEGL,
+  { "filters-invert-value", GIMP_ICON_INVERT,
     NC_("filters-action", "_Value Invert"), NULL, NULL,
     "gegl:value-invert",
     GIMP_HELP_FILTER_INVERT_VALUE },
