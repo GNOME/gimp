@@ -62,4 +62,18 @@
   </kudos>
   <project_group>GNOME</project_group>
   <translation type="gettext">gimp20</translation>
+  <releases>
+    <release version="2.8.22" date="2017-05-11"/>
+    <release version="2.8.20" date="2017-02-01"/>
+    <release version="2.8.18" date="2016-07-14"/>
+    <release version="2.8.16" date="2015-11-22"/>
+    <release version="2.8.14" date="2014-08-26"/>
+    <release version="2.8.12" date="2014-08-25"/>
+    <release version="2.8.10" date="2013-11-28"/>
+    <release version="2.8.8"  date="2013-11-03" />
+    <release version="2.8.6"  date="2013-06-21"/>
+    <release version="2.8.4"  date="2013-02-05"/>
+    <release version="2.8.2"  date="2012-08-24"/>
+    <release version="2.8.0"  date="2012-05-03"/>
+  </releases>
 </component>
