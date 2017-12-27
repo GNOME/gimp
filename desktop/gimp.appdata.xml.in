@@ -63,6 +63,50 @@
   <project_group>GNOME</project_group>
   <translation type="gettext">gimp20</translation>
   <releases>
+  <!--
+    <release version="2.10.0" date="TODO">
+      <description>
+        <_p>
+          First release of the 2.10 series which prominently features
+          the port to a new image processing engine, GEGL.
+          The most outstanding changes are:
+        </_p>
+        <ul>
+          <_li>
+            Up to 32-bit per color channel
+          </_li>
+          <_li>
+            On-canvas effect previews
+          </_li>
+          <_li>
+            Multi-threaded and hardware-accelerated rendering and
+            processing
+          </_li>
+          <_li>
+            Many new and improved tools
+          </_li>
+          <_li>
+            Color-management improvements
+          </_li>
+          <_li>
+            Many file format improvements and new formats support:
+            OpenEXR, WebP, HGT…
+          </_li>
+          <_li>
+            Metadata viewing and editing
+          </_li>
+          <_li>
+            Improved digital painting: canvas rotation and
+            flipping, symmetry painting, MyPaint brush support…
+          </_li>
+            Better HiDPI support.
+          <_li>
+            And much, much more…
+          </_li>
+        </ul>
+      </description>
+    </release>
+    -->
     <release version="2.8.22" date="2017-05-11"/>
     <release version="2.8.20" date="2017-02-01"/>
     <release version="2.8.18" date="2016-07-14"/>
