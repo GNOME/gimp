@@ -2713,7 +2713,8 @@ m4_define([generate_po_makefile], [
         "$srcdir/$1/POTFILES.in" | sed '$!s/$/ \\/' >"$1/POTFILES" && \
     sed -e "/^# This comment gets stripped out/ {"  \
         -e 'r $1/POTFILES'                          \
-        -e "d }" "$1/Makefile.in" >"$1/Makefile" && \
+        -e "d" -e "}"                               \
+        "$1/Makefile.in" >"$1/Makefile" && \
     touch "$1/stamp-it"
     ])
 ])
