@@ -11,9 +11,9 @@ msgstr ""
 "Project-Id-Version: gimp 2.9.5\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-11-23 20:06+0000\n"
-"PO-Revision-Date: 2017-12-14 13:53+0800\n"
-"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"POT-Creation-Date: 2017-12-16 02:32+0000\n"
+"PO-Revision-Date: 2017-12-20 18:11+0800\n"
+"Last-Translator: taijuin <taijuin@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -141,7 +141,7 @@ msgstr "啟動新的 GIMP 實體"
 
 #: ../app/main.c:180
 msgid "Open images as new"
-msgstr "開啟為新圖片"
+msgstr "開啟為新圖像"
 
 #: ../app/main.c:185
 msgid "Run without a user interface"
@@ -471,7 +471,7 @@ msgid "Text Editor"
 msgstr "文字編輯器"
 
 #: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:308
-#: ../app/gui/gui.c:498
+#: ../app/gui/gui.c:499
 msgid "Tool Options"
 msgstr "工具選項"
 
@@ -806,30 +806,22 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr "讓這個色版移到色版堆疊的最下層"
 
 #: ../app/actions/channels-actions.c:113
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
 msgstr "切換色版能見度(_V)"
 
 #: ../app/actions/channels-actions.c:119
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "channels-action"
 msgid "Toggle Channel _Linked State"
 msgstr "切換色版已連結狀態(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/channels-actions.c:125
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "channels-action"
 msgid "L_ock Pixels of Channel"
 msgstr "鎖定色版的像素(_O)"
 
 #: ../app/actions/channels-actions.c:131
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "channels-action"
 msgid "L_ock Position of Channel"
 msgstr "鎖定色版的位置(_O)"
@@ -840,8 +832,6 @@ msgid "None"
 msgstr "無"
 
 #: ../app/actions/channels-actions.c:141
-#| msgctxt "undo-type"
-#| msgid "Change Colormap entry"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
 msgstr "色版顏色標籤：清除"
@@ -852,8 +842,6 @@ msgid "Blue"
 msgstr "藍色"
 
 #: ../app/actions/channels-actions.c:147
-#| msgctxt "channels-action"
-#| msgid "Set color tag to blue"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Blue"
 msgstr "色版顏色標籤：設為藍色"
@@ -864,8 +852,6 @@ msgid "Green"
 msgstr "綠色"
 
 #: ../app/actions/channels-actions.c:153
-#| msgctxt "channels-action"
-#| msgid "Set color tag to green"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
 msgstr "色版顏色標籤：設為綠色"
@@ -876,8 +862,6 @@ msgid "Yellow"
 msgstr "黃色"
 
 #: ../app/actions/channels-actions.c:159
-#| msgctxt "channels-action"
-#| msgid "Set color tag to yellow"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Yellow"
 msgstr "色版顏色標籤：設為黃色"
@@ -888,8 +872,6 @@ msgid "Orange"
 msgstr "橙色"
 
 #: ../app/actions/channels-actions.c:165
-#| msgctxt "channels-action"
-#| msgid "Set color tag to orange"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
 msgstr "色版顏色標籤：設為橙色"
@@ -900,8 +882,6 @@ msgid "Brown"
 msgstr "棕色"
 
 #: ../app/actions/channels-actions.c:171
-#| msgctxt "channels-action"
-#| msgid "Set color tag to brown"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
 msgstr "色版顏色標籤：設為棕色"
@@ -912,8 +892,6 @@ msgid "Red"
 msgstr "紅色"
 
 #: ../app/actions/channels-actions.c:177
-#| msgctxt "undo-type"
-#| msgid "Change color managed state"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
 msgstr "色版顏色標籤：設為紅色"
@@ -924,8 +902,6 @@ msgid "Violet"
 msgstr "紫色"
 
 #: ../app/actions/channels-actions.c:183
-#| msgctxt "channels-action"
-#| msgid "Set color tag to violet"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
 msgstr "色版顏色標籤：設為紫色"
@@ -936,8 +912,6 @@ msgid "Gray"
 msgstr "灰色"
 
 #: ../app/actions/channels-actions.c:189
-#| msgctxt "undo-type"
-#| msgid "Change Colormap entry"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
 msgstr "色版顏色標籤：設為灰色"
@@ -1262,7 +1236,7 @@ msgstr "硬度(_H)"
 #: ../app/actions/context-actions.c:76
 msgctxt "context-action"
 msgid "_Aspect Ratio"
-msgstr "長寬比(_A)"
+msgstr "寬高比(_A)"
 
 #: ../app/actions/context-actions.c:78
 msgctxt "context-action"
@@ -1314,7 +1288,7 @@ msgstr "前景色(_F)"
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr ""
+msgstr "前景：使用先前的調色盤顏色"
 
 #: ../app/actions/context-actions.c:113
 #, fuzzy
@@ -1334,7 +1308,7 @@ msgstr "前景色"
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr ""
+msgstr "前景：跳過前面的調色盤顏色"
 
 #: ../app/actions/context-actions.c:129
 #, fuzzy
@@ -1361,7 +1335,7 @@ msgstr "背景色(_B)"
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr ""
+msgstr "背景：使用先前的調色盤顏色"
 
 #: ../app/actions/context-actions.c:145
 #, fuzzy
@@ -1381,7 +1355,7 @@ msgstr "背景色"
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr ""
+msgstr "背景：跳過前面的調色盤顏色"
 
 #: ../app/actions/context-actions.c:161
 #, fuzzy
@@ -1394,32 +1368,32 @@ msgstr "加入顏色至顏色對應表"
 #: ../app/actions/context-actions.c:165
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr ""
+msgstr "前景：使用顏色對應表中的第一個顏色"
 
 #: ../app/actions/context-actions.c:169
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr ""
+msgstr "前景：使用顏色對應表中的最後一個顏色"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr ""
+msgstr "前景：使用顏色對應表中的上一個顏色"
 
 #: ../app/actions/context-actions.c:177
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr ""
+msgstr "前景：使用顏色對應表中的下一個顏色"
 
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr ""
+msgstr "前景：從顏色對應表跳回顏色"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "前景：從顏色對應表中向前跳過顏色"
 
 #: ../app/actions/context-actions.c:193
 #, fuzzy
@@ -1432,32 +1406,32 @@ msgstr "加入顏色至顏色對應表"
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr ""
+msgstr "背景：使用顏色對應表中的第一個顏色"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr ""
+msgstr "背景：使用顏色對應表中的最後的顏色"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr ""
+msgstr "背景：使用顏色對應表中的上一個顏色"
 
 #: ../app/actions/context-actions.c:209
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr ""
+msgstr "背景：使用顏色對應表中的下一個顏色"
 
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr ""
+msgstr "背景：從顏色對應表跳回顏色"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "背景：從顏色對應表中向前跳過顏色"
 
 #: ../app/actions/context-actions.c:225
 #, fuzzy
@@ -2479,11 +2453,10 @@ msgid "Brush Hardness (Editor): Increase by 0.1"
 msgstr "筆刷硬度（編輯）：增加 0.1"
 
 #: ../app/actions/context-actions.c:1029
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "筆刷長寬比"
+msgstr "筆刷寬高比（編輯器）：設置"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
@@ -2506,18 +2479,16 @@ msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
 msgstr "筆刷寬高筆（編輯器）：增加 0.1"
 
 #: ../app/actions/context-actions.c:1049
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "筆刷長寬比"
+msgstr "筆刷寬高比（編輯器）：減少 1"
 
 #: ../app/actions/context-actions.c:1053
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "筆刷長寬比"
+msgstr "筆刷寬高比（編輯器）：增加 1"
 
 #: ../app/actions/context-actions.c:1061
 #, fuzzy
@@ -2733,12 +2704,12 @@ msgstr "開啟導覽對話框"
 #: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Undo _History"
-msgstr "復原記錄(_H)"
+msgstr "步驟記錄(_H)"
 
 #: ../app/actions/dialogs-actions.c:114
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "開啟復原記錄對話框"
+msgstr "開啟步驟記錄對話框"
 
 #: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
@@ -2903,7 +2874,7 @@ msgstr "開啟命名的緩衝區對話框"
 #: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "_Images"
-msgstr "圖片(_I)"
+msgstr "影像(_I)"
 
 #: ../app/actions/dialogs-actions.c:216
 msgctxt "dialogs-action"
@@ -3604,7 +3575,7 @@ msgstr "緩衝區(_B)"
 #: ../app/actions/edit-actions.c:70
 msgctxt "edit-action"
 msgid "Undo History Menu"
-msgstr "「復原記錄」選單"
+msgstr "「步驟記錄」選單"
 
 #: ../app/actions/edit-actions.c:74
 msgctxt "edit-action"
@@ -3649,12 +3620,12 @@ msgstr "重新進行被還原的上一個操作，略過看得見的改變"
 #: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
 msgid "_Clear Undo History"
-msgstr "清除復原記錄(_C)"
+msgstr "清除步驟記錄(_C)"
 
 #: ../app/actions/edit-actions.c:100
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr "移除復原記錄中的所有操作程序"
+msgstr "移除步驟記錄中的所有操作"
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -3774,28 +3745,25 @@ msgid "Paste the content of the clipboard"
 msgstr "貼上剪貼簿的內容"
 
 #: ../app/actions/edit-actions.c:182
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into"
 msgctxt "edit-action"
 msgid "Paste In Place"
-msgstr "貼至(_I)"
+msgstr "貼在位置"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard into the current selection"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
-msgstr "將剪貼簿的內容貼到目前的選取範圍"
+msgstr "將剪貼簿的內容貼在它的原始位置"
 
 #: ../app/actions/edit-actions.c:189
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Path to Selection"
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
-msgstr "路徑轉為選取範圍"
+msgstr "貼到選取範圍(_I)"
 
 #: ../app/actions/edit-actions.c:191
 msgctxt "edit-action"
@@ -3803,22 +3771,20 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "將剪貼簿的內容貼到目前的選取範圍"
 
 #: ../app/actions/edit-actions.c:196
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Path to Selection"
 msgctxt "edit-action"
 msgid "Paste Into Selection In Place"
-msgstr "路徑轉為選取範圍"
+msgstr "貼到選取範圍在位置"
 
 #: ../app/actions/edit-actions.c:198
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of the clipboard into the current selection"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
-msgstr "將剪貼簿的內容貼到目前的選取範圍"
+msgstr "將剪貼簿的內容貼到目前的選取範圍在它的原始位置"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
@@ -3906,16 +3872,16 @@ msgstr "淡化(_F)..."
 
 #: ../app/actions/edit-commands.c:152
 msgid "Clear Undo History"
-msgstr "清除復原記錄"
+msgstr "清除步驟記錄"
 
 #: ../app/actions/edit-commands.c:179
 msgid "Really clear image's undo history?"
-msgstr "真的要清除圖片的復原記錄嗎？"
+msgstr "真的要清除圖片的步驟記錄嗎？"
 
 #: ../app/actions/edit-commands.c:192
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr "清除這個圖片的復原記錄可獲得 %s 記憶體。"
+msgstr "清除這個圖片的步驟記錄可獲得 %s 記憶體。"
 
 #: ../app/actions/edit-commands.c:248
 msgid "Cut layer to the clipboard."
@@ -4031,7 +3997,6 @@ msgid "Write the selected error messages to a file"
 msgstr "將所選錯誤訊息寫入一個檔案"
 
 #: ../app/actions/error-console-actions.c:78
-#| msgid "Errors"
 msgctxt "error-console-action"
 msgid "_Errors"
 msgstr "錯誤(_E)"
@@ -4042,8 +4007,6 @@ msgid "Highlight error console on errors"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:85
-#| msgctxt "message-severity"
-#| msgid "Warning"
 msgctxt "error-console-action"
 msgid "_Warnings"
 msgstr "警告(_W)"
@@ -4054,8 +4017,6 @@ msgid "Highlight error console on warnings"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:92
-#| msgctxt "message-severity"
-#| msgid "Message"
 msgctxt "error-console-action"
 msgid "_Messages"
 msgstr "訊息(_M)"
@@ -4458,50 +4419,36 @@ msgid "An_imation"
 msgstr "動畫(_I)"
 
 #: ../app/actions/filters-actions.c:104
-#| msgctxt "undo-type"
-#| msgid "Antialias"
 msgctxt "filters-action"
 msgid "_Antialias"
 msgstr "反鋸齒(_A)"
 
 #: ../app/actions/filters-actions.c:109
-#| msgctxt "filters-action"
-#| msgid "_Color Enhance..."
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "色彩增強(_C)"
 
 #: ../app/actions/filters-actions.c:114
-#| msgctxt "drawable-action"
-#| msgid "_Linear Invert"
 msgctxt "filters-action"
 msgid "_Linear Invert"
 msgstr "線性反轉(_L)"
 
 #: ../app/actions/filters-actions.c:119
-#| msgctxt "drawable-action"
-#| msgid "In_vert"
 msgctxt "filters-action"
 msgid "In_vert"
 msgstr "反轉(_V)"
 
 #: ../app/actions/filters-actions.c:124
-#| msgctxt "drawable-action"
-#| msgid "_Value Invert"
 msgctxt "filters-action"
 msgid "_Value Invert"
 msgstr "明度反轉(_V)"
 
 #: ../app/actions/filters-actions.c:129
-#| msgctxt "undo-type"
-#| msgid "Stretch Contrast HSV"
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "拉大對比 HSV(_S)"
 
 #: ../app/actions/filters-actions.c:137
-#| msgctxt "drawable-action"
-#| msgid "_Dilate"
 msgctxt "filters-action"
 msgid "_Dilate"
 msgstr "擴大(_D)"
@@ -4512,7 +4459,6 @@ msgid "Grow lighter areas of the image"
 msgstr "增大圖像較亮區域"
 
 #: ../app/actions/filters-actions.c:153
-#| msgid "Erode"
 msgctxt "filters-action"
 msgid "_Erode"
 msgstr "侵蝕(_E)"
@@ -4563,7 +4509,6 @@ msgid "_Checkerboard..."
 msgstr "棋盤(_C)..."
 
 #: ../app/actions/filters-actions.c:212
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "色彩平衡(_B)…"
@@ -4574,7 +4519,6 @@ msgid "_Color Exchange..."
 msgstr "顏色交換(_C)..."
 
 #: ../app/actions/filters-actions.c:222
-#| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "著色(_Z)…"
@@ -4592,7 +4536,7 @@ msgstr "旋轉顏色(_R)..."
 #: ../app/actions/filters-actions.c:237
 msgctxt "filters-action"
 msgid "Color T_emperature..."
-msgstr "色溫(_E)..."
+msgstr "色溫(_E)…"
 
 #: ../app/actions/filters-actions.c:242
 msgctxt "filters-action"
@@ -4727,18 +4671,16 @@ msgid "_High Pass..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:367
-#, fuzzy
 #| msgid "Hue-_Saturation..."
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "色相及飽和度(_S)..."
+msgstr "色相及彩度(_C)…"
 
 #: ../app/actions/filters-actions.c:372
-#, fuzzy
 #| msgid "Hue-_Saturation..."
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "色相及飽和度(_S)..."
+msgstr "色相及飽和度(_S)…"
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
@@ -5130,21 +5072,21 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "再次顯示前次使用的外掛程式對話框"
 
-#: ../app/actions/filters-actions.c:1006
+#: ../app/actions/filters-actions.c:1007
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "重複“%s”(_P)"
 
-#: ../app/actions/filters-actions.c:1007
+#: ../app/actions/filters-actions.c:1008
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "重新顯示“%s”(_E)"
 
-#: ../app/actions/filters-actions.c:1045
+#: ../app/actions/filters-actions.c:1046
 msgid "Repeat Last"
 msgstr "重複上一步"
 
-#: ../app/actions/filters-actions.c:1047
+#: ../app/actions/filters-actions.c:1048
 msgid "Re-Show Last"
 msgstr "重新顯示上一步"
 
@@ -5656,7 +5598,7 @@ msgstr "「圖片」選單"
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Image"
-msgstr "圖片(_I)"
+msgstr "影像(_I)"
 
 #: ../app/actions/image-actions.c:59
 msgctxt "image-action"
@@ -5686,7 +5628,7 @@ msgstr "參考線(_G)"
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
 msgid "Meta_data"
-msgstr ""
+msgstr "詮釋資料(_D)"
 
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
@@ -5915,6 +5857,8 @@ msgid ""
 "to assigning a built-in sRGB color profile. Better leave color management "
 "enabled."
 msgstr ""
+"圖像是否是被色彩管理。停用色彩管理相當於分配給一個內建的 sRGB 色彩描述檔。最"
+"好讓色彩管理啟用。"
 
 #: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:444
 msgctxt "image-convert-action"
@@ -6012,22 +5956,16 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "感知伽瑪（sRGB）"
 
 #: ../app/actions/image-actions.c:252
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to grayscale"
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "將圖像轉換到感知的 (sRGB) gamma"
 
 #: ../app/actions/image-actions.c:256
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "線性光源"
 
 #: ../app/actions/image-actions.c:258
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "將圖像轉換到線性光源"
@@ -6083,15 +6021,11 @@ msgid "Rotate the image 90 degrees to the left"
 msgstr "向左旋轉 90 度該圖片"
 
 #: ../app/actions/image-actions.c:437
-#| msgctxt "image-convert-action"
-#| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB…"
 
 #: ../app/actions/image-actions.c:439
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "灰階(_G)…"
@@ -6247,7 +6181,6 @@ msgid "Delete this image"
 msgstr "刪除這個圖片"
 
 #: ../app/actions/items-commands.c:208 ../app/actions/items-commands.c:253
-#| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill."
 msgstr "沒有使用中的圖層或色版可以填充。"
 
@@ -6261,14 +6194,11 @@ msgid "Layers Menu"
 msgstr "「圖層」選單"
 
 #: ../app/actions/layers-actions.c:56
-#| msgid "Blend: "
 msgctxt "layers-action"
 msgid "Blend Space"
 msgstr "混合空間"
 
 #: ../app/actions/layers-actions.c:60
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Space"
 msgstr "合成空間"
@@ -6279,8 +6209,6 @@ msgid "Composite Mode"
 msgstr "混合模式"
 
 #: ../app/actions/layers-actions.c:68
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layers-action"
 msgid "Color Tag"
 msgstr "顏色標籤"
@@ -6326,7 +6254,6 @@ msgid "Layer _Mode"
 msgstr "圖層模式(_M)"
 
 #: ../app/actions/layers-actions.c:89
-#| msgid "Default _interpolation:"
 msgctxt "layers-action"
 msgid "Default Edit Action"
 msgstr "預設編輯動作"
@@ -6370,7 +6297,7 @@ msgstr "新增圖層(_N)..."
 #: ../app/actions/layers-actions.c:108
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
-msgstr "建立新的圖層並將它加入圖片"
+msgstr "建立新的圖層並將它加入到圖像"
 
 #: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:913
 msgctxt "layers-action"
@@ -6668,30 +6595,22 @@ msgid "Dismiss the effect of the layer mask"
 msgstr "取消圖層遮罩的效果"
 
 #: ../app/actions/layers-actions.c:306
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
 msgstr "切換圖層可見性(_V)"
 
 #: ../app/actions/layers-actions.c:312
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
 msgstr "切換已連結狀態(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
-#| msgctxt "drawable-action"
-#| msgid "L_ock pixels"
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
 msgstr "鎖定圖層的像素(_O)"
 
 #: ../app/actions/layers-actions.c:324
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
 msgstr "鎖定圖層的位置(_O)"
@@ -6708,13 +6627,11 @@ msgstr "保護這個圖層的透明度資訊不被修改"
 
 #: ../app/actions/layers-actions.c:341 ../app/actions/layers-actions.c:362
 #: ../app/actions/layers-actions.c:383
-#| msgid "Auto"
 msgctxt "layers-action"
 msgid "Auto"
 msgstr "自動"
 
 #: ../app/actions/layers-actions.c:342
-#| msgid "Blend: "
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
 msgstr "圖層混合空間：自動"
@@ -6740,15 +6657,11 @@ msgid "Layer Blend Space: RGB (perceptual)"
 msgstr "圖層混合空間：RGB（感知）"
 
 #: ../app/actions/layers-actions.c:363
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
 msgstr "圖層合成空間：自動"
 
 #: ../app/actions/layers-actions.c:369
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
 msgstr "圖層合成空間：RGB（線性）"
@@ -6759,8 +6672,6 @@ msgid "Layer Composite Space: RGB (perceptual)"
 msgstr "圖層合成空間：RGB（感知）"
 
 #: ../app/actions/layers-actions.c:384
-#| msgctxt "layers-action"
-#| msgid "Composite Mode"
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
 msgstr "圖層合成模式：自動"
@@ -6817,7 +6728,6 @@ msgid "Layer Composite Mode: Destination Atop"
 msgstr "圖層合成模式：目的地 Atop"
 
 #: ../app/actions/layers-actions.c:416
-#| msgid "None"
 msgctxt "layers-action"
 msgid "None"
 msgstr "無"
@@ -6828,52 +6738,41 @@ msgid "Layer Color Tag: Clear"
 msgstr "圖層顏色標籤：清除"
 
 #: ../app/actions/layers-actions.c:422
-#| msgid "Blue"
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "藍色"
 
 #: ../app/actions/layers-actions.c:423
-#| msgid "Save Error Log to File"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr "圖層顏色標籤：設為藍色"
 
 #: ../app/actions/layers-actions.c:428
-#| msgid "Green"
 msgctxt "layers-action"
 msgid "Green"
 msgstr "綠色"
 
 #: ../app/actions/layers-actions.c:429
-#| msgctxt "channels-action"
-#| msgid "Set color tag to green"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
 msgstr "圖層顏色標籤：設為藍色"
 
 #: ../app/actions/layers-actions.c:434
-#| msgid "Yellow"
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "黃色"
 
 #: ../app/actions/layers-actions.c:435
-#| msgctxt "channels-action"
-#| msgid "Set color tag to yellow"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
 msgstr "圖層顏色標籤：設為黃色"
 
 #: ../app/actions/layers-actions.c:440
-#| msgid "Range"
 msgctxt "layers-action"
 msgid "Orange"
 msgstr "橙色"
 
 #: ../app/actions/layers-actions.c:441
-#| msgctxt "channels-action"
-#| msgid "Set color tag to orange"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
 msgstr "圖層顏色標籤：設為橙色"
@@ -6884,21 +6783,16 @@ msgid "Brown"
 msgstr "棕色"
 
 #: ../app/actions/layers-actions.c:447
-#| msgctxt "channels-action"
-#| msgid "Set color tag to brown"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
 msgstr "圖層顏色標籤：設為棕色"
 
 #: ../app/actions/layers-actions.c:452
-#| msgid "Red"
 msgctxt "layers-action"
 msgid "Red"
 msgstr "紅色"
 
 #: ../app/actions/layers-actions.c:453
-#| msgctxt "channels-action"
-#| msgid "Set color tag to red"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
 msgstr "圖層顏色標籤：設為紅色"
@@ -6909,7 +6803,6 @@ msgid "Violet"
 msgstr "紫色"
 
 #: ../app/actions/layers-actions.c:459
-#| msgid "Save Error Log to File"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
 msgstr "圖層顏色標籤：設為紫色"
@@ -6920,8 +6813,6 @@ msgid "Gray"
 msgstr "灰色"
 
 #: ../app/actions/layers-actions.c:465
-#| msgctxt "channels-action"
-#| msgid "Set color tag to gray"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
 msgstr "圖層顏色標籤：設為灰色"
@@ -8350,7 +8241,6 @@ msgid "Rotate by an arbitrary angle"
 msgstr "以任意角度旋轉"
 
 #: ../app/actions/tools-actions.c:151
-#| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
 msgstr "噴槍速率：設定"
@@ -8386,7 +8276,6 @@ msgid "Airbrush Rate: Increase by 10"
 msgstr "噴槍速率：增加 10"
 
 #: ../app/actions/tools-actions.c:183
-#| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
 msgstr "噴槍流量：設定"
@@ -8427,7 +8316,6 @@ msgid "Tool's Opacity: Set"
 msgstr "工具的不透明度：設定"
 
 #: ../app/actions/tools-actions.c:268
-#| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "工具的不透明度：設定為預設值"
@@ -8478,8 +8366,6 @@ msgid "Tool's Size: Set"
 msgstr "工具的大小：設定"
 
 #: ../app/actions/tools-actions.c:312
-#| msgctxt "tool-options-action"
-#| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "工具的大小：設定為預設值"
@@ -8525,56 +8411,54 @@ msgid "Tool's Size: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:352
-#| msgid "Brush Aspect Ratio"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
-msgstr "工具的長寬比：設定"
+msgstr "工具的寬高比：設定"
 
 #: ../app/actions/tools-actions.c:356
-#| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
-msgstr "工具的長寬比：設定為預設值"
+msgstr "工具的寬高比：設定為預設值"
 
 #: ../app/actions/tools-actions.c:360
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
-msgstr "工具的長寬比：最小化"
+msgstr "工具的寬高比：最小化"
 
 #: ../app/actions/tools-actions.c:364
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
-msgstr "工具的長寬比：最大化"
+msgstr "工具的寬高比：最大化"
 
 #: ../app/actions/tools-actions.c:368
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
-msgstr ""
+msgstr "工具的寬高比：減少 0.1"
 
 #: ../app/actions/tools-actions.c:372
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
-msgstr ""
+msgstr "工具的寬高比：增加 0.1"
 
 #: ../app/actions/tools-actions.c:376
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
-msgstr ""
+msgstr "工具的寬高比：減少 1"
 
 #: ../app/actions/tools-actions.c:380
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
-msgstr ""
+msgstr "工具的寬高比：增加 1"
 
 #: ../app/actions/tools-actions.c:384
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
-msgstr ""
+msgstr "工具的寬高比：相對減少"
 
 #: ../app/actions/tools-actions.c:388
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
-msgstr ""
+msgstr "工具的寬高比：相對增加"
 
 #: ../app/actions/tools-actions.c:396
 msgctxt "tools-action"
@@ -9410,15 +9294,11 @@ msgid "Restore the previous zoom level"
 msgstr "恢復先前的縮放程度"
 
 #: ../app/actions/view-actions.c:125
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
 msgstr "其他旋轉角度(_R)..."
 
 #: ../app/actions/view-actions.c:126
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "設置自訂旋轉角度"
@@ -9681,8 +9561,6 @@ msgid "Toggle fullscreen view"
 msgstr "切換全螢幕檢視"
 
 #: ../app/actions/view-actions.c:315
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "設置縮放倍率"
@@ -9728,13 +9606,11 @@ msgid "Zoom In"
 msgstr "拉近"
 
 #: ../app/actions/view-actions.c:354
-#| msgid "Zoom out"
 msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "縮小很多"
 
 #: ../app/actions/view-actions.c:359
-#| msgid "Zoom in"
 msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "放大很多"
@@ -9830,8 +9706,6 @@ msgid "Zoom 1:16"
 msgstr "縮放為 1:16"
 
 #: ../app/actions/view-actions.c:451
-#| msgctxt "view-zoom-action"
-#| msgid "Othe_r..."
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "其他縮放倍率(_R)…"
@@ -10037,37 +9911,31 @@ msgid "Set horizontal scroll offset"
 msgstr "設定水平滾動偏移"
 
 #: ../app/actions/view-actions.c:618
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "滾動到左邊框"
 
 #: ../app/actions/view-actions.c:623
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "滾動到右邊框"
 
 #: ../app/actions/view-actions.c:628
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "向左滾動"
 
 #: ../app/actions/view-actions.c:633
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "向右滾動"
 
 #: ../app/actions/view-actions.c:638
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "向左滾動頁面"
 
 #: ../app/actions/view-actions.c:643
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "向右滾動頁面"
@@ -10078,38 +9946,31 @@ msgid "Set vertical scroll offset"
 msgstr "設定垂直滾動偏移"
 
 #: ../app/actions/view-actions.c:656
-#| msgctxt "channels-action"
-#| msgid "Set color tag to orange"
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "滾動到頂端邊框"
 
 #: ../app/actions/view-actions.c:661
-#| msgid "Clipped to bottom layer"
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "滾動到底部邊框"
 
 #: ../app/actions/view-actions.c:666
-#| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "向上滾動"
 
 #: ../app/actions/view-actions.c:671
-#| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "向下滾動"
 
 #: ../app/actions/view-actions.c:676
-#| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "向上滾動頁面"
 
 #: ../app/actions/view-actions.c:681
-#| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "向下滾動頁面"
@@ -10181,7 +10042,7 @@ msgstr "將這個視窗移動至另一個螢幕 %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:192
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
 #: ../app/tools/gimpfiltertool.c:322 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
@@ -10366,35 +10227,26 @@ msgid "Guess ideal size"
 msgstr ""
 
 #: ../app/config/config-enums.c:179
-#| msgid "Themes"
 msgctxt "icon-size"
 msgid "Theme-set size"
 msgstr "主題設定大小"
 
 #: ../app/config/config-enums.c:180
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Small size"
 msgstr "小尺寸"
 
 #: ../app/config/config-enums.c:181
-#| msgctxt "dash-preset"
-#| msgid "Medium dashes"
 msgctxt "icon-size"
 msgid "Medium size"
 msgstr "中尺寸"
 
 #: ../app/config/config-enums.c:182
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Large size"
 msgstr "大尺寸"
 
 #: ../app/config/config-enums.c:183
-#| msgctxt "undo-type"
-#| msgid "Image size"
 msgctxt "icon-size"
 msgid "Huge size"
 msgstr "巨大尺寸"
@@ -10470,7 +10322,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr ""
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:325
+#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:361
 #: ../app/tools/gimpfiltertool-settings.c:227
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10492,7 +10344,7 @@ msgstr ""
 "分析‘%s’檔案的內容時出現錯誤，會改為使用預設的組態。您的組態檔案已被備份"
 "為‘%s’。"
 
-#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:416
+#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:431
 msgid "Layer"
 msgstr "圖層"
 
@@ -10546,7 +10398,7 @@ msgstr "指定 GIMP 以哪種方式顯示滑鼠指標。"
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the handedness for cursor positioning."
-msgstr ""
+msgstr "設定指標定位的指向性。"
 
 #: ../app/config/gimprc-blurbs.h:52
 msgid ""
@@ -10629,7 +10481,7 @@ msgstr "指定圖片視窗標題中顯示的文字。"
 msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
-msgstr ""
+msgstr "將匯入的圖像升級到浮點精準度。不適用於索引圖像。"
 
 #: ../app/config/gimprc-blurbs.h:192
 msgid ""
@@ -10713,10 +10565,9 @@ msgid ""
 msgstr "設定圖片視窗右下角的導覽圖尺寸。"
 
 #: ../app/config/gimprc-blurbs.h:256
-#, fuzzy
 #| msgid "Sets how many processors GIMP should try to use simultaneously."
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr "設定 GIMP 應嘗試同時使用幾個處理器。"
+msgstr "設定 GIMP 應該使用多少個執行緒來支援它的操作。"
 
 #: ../app/config/gimprc-blurbs.h:278
 msgid ""
@@ -10763,6 +10614,8 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
+"啟用後，GIMP 將嘗試恢復視窗在之前開啟的螢幕上。若不勾選，視窗將顯示在目前使用"
+"的螢幕上。"
 
 #: ../app/config/gimprc-blurbs.h:308
 msgid ""
@@ -10986,27 +10839,27 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:462
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
-msgstr ""
+msgstr "設定「轉換精密度」對話框的預設色版抖動方法。"
 
 #: ../app/config/gimprc-blurbs.h:465
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "設定「轉換為索引」對話框的預設調色盤類型。"
 
 #: ../app/config/gimprc-blurbs.h:468
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
-msgstr ""
+msgstr "設定「轉換為索引」對話框的預設最大顏色數。"
 
 #: ../app/config/gimprc-blurbs.h:471
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
-msgstr ""
+msgstr "設定「轉換為索引」對話框的預設「刪除重複的顏色」狀態。"
 
 #: ../app/config/gimprc-blurbs.h:474
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "設定「轉換為索引」對話框的預設抖動類型。"
 
 #: ../app/config/gimprc-blurbs.h:477
 msgid ""
@@ -11223,17 +11076,16 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:628
 msgid "Sets the size of the previews in the Undo History."
-msgstr "設置復原記錄中預覽圖的尺寸。"
+msgstr "設置步驟記錄中預覽圖的尺寸。"
 
 #: ../app/config/gimprc-blurbs.h:631
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "如啟用本選項，按 F1 會顯示說明文件瀏覽器。"
 
 #: ../app/config/gimprc-blurbs.h:634
-#, fuzzy
 #| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "如啟用本選項，可令選單脫離視窗。"
+msgstr "啟用後，使用 OpenCL 進行某些操作。"
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:293
@@ -11701,8 +11553,6 @@ msgid "Import paths"
 msgstr "匯入路徑"
 
 #: ../app/core/core-enums.c:862
-#| msgctxt "undo-type"
-#| msgid "Plug-in"
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "外掛程式"
@@ -11730,7 +11580,7 @@ msgstr "圖片解析度改變"
 #: ../app/core/core-enums.c:868
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "更改元資料"
+msgstr "變更詮釋資料"
 
 #: ../app/core/core-enums.c:869
 msgctxt "undo-type"
@@ -11888,111 +11738,145 @@ msgid "Fixed"
 msgstr "固定的"
 
 #: ../app/core/core-enums.c:993
+#| msgid "Foreground color"
 msgctxt "gradient-color"
-msgid "FG"
-msgstr ""
+msgid "Foreground color"
+msgstr "前景色"
 
-#: ../app/core/core-enums.c:994
-msgctxt "gradient-color"
-msgid "FG (t)"
-msgstr ""
-
-#: ../app/core/core-enums.c:995
-msgctxt "gradient-color"
-msgid "BG"
-msgstr ""
-
+#. Translators: this is an abbreviated version of "Foreground color".
+#. Keep it short.
 #: ../app/core/core-enums.c:996
 msgctxt "gradient-color"
-msgid "BG (t)"
-msgstr ""
+msgid "FG"
+msgstr "前景色"
 
-#: ../app/core/core-enums.c:1025
+#: ../app/core/core-enums.c:997
+#| msgctxt "gradient-editor-color-type"
+#| msgid "Fo_reground Color (Transparent)"
+msgctxt "gradient-color"
+msgid "Foreground color (transparent)"
+msgstr "前景色（透明）"
+
+#. Translators: this is an abbreviated version of "Foreground color (transparent)".
+#. Keep it short.
+#: ../app/core/core-enums.c:1000
+msgctxt "gradient-color"
+msgid "FG (t)"
+msgstr "前景色（透明）"
+
+#: ../app/core/core-enums.c:1001
+#| msgid "Background color"
+msgctxt "gradient-color"
+msgid "Background color"
+msgstr "背景色"
+
+#. Translators: this is an abbreviated version of "Background color".
+#. Keep it short.
+#: ../app/core/core-enums.c:1004
+msgctxt "gradient-color"
+msgid "BG"
+msgstr "背景色"
+
+#: ../app/core/core-enums.c:1005
+#| msgctxt "gradient-editor-color-type"
+#| msgid "B_ackground Color (Transparent)"
+msgctxt "gradient-color"
+msgid "Background color (transparent)"
+msgstr "背景色（透明）"
+
+#. Translators: this is an abbreviated version of "Background color (transparent)".
+#. Keep it short.
+#: ../app/core/core-enums.c:1008
+msgctxt "gradient-color"
+msgid "BG (t)"
+msgstr "背景色（透明）"
+
+#: ../app/core/core-enums.c:1037
 msgctxt "message-severity"
 msgid "Message"
 msgstr "訊息"
 
-#: ../app/core/core-enums.c:1026
+#: ../app/core/core-enums.c:1038
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "警告"
 
-#: ../app/core/core-enums.c:1027
+#: ../app/core/core-enums.c:1039
 msgctxt "message-severity"
 msgid "Error"
 msgstr "錯誤"
 
-#: ../app/core/core-enums.c:1056
+#: ../app/core/core-enums.c:1068
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "詢問要做什麼"
 
-#: ../app/core/core-enums.c:1057
+#: ../app/core/core-enums.c:1069
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "保留嵌入的配置檔"
 
-#: ../app/core/core-enums.c:1058
+#: ../app/core/core-enums.c:1070
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "轉換到偏好的 RGB 色彩描述檔"
 
-#: ../app/core/core-enums.c:1095
+#: ../app/core/core-enums.c:1107
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../app/core/core-enums.c:1096
+#: ../app/core/core-enums.c:1108
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "大小"
 
-#: ../app/core/core-enums.c:1097
+#: ../app/core/core-enums.c:1109
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "角度"
 
-#: ../app/core/core-enums.c:1098
+#: ../app/core/core-enums.c:1110
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "顏色"
 
-#: ../app/core/core-enums.c:1099
+#: ../app/core/core-enums.c:1111
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "硬度"
 
-#: ../app/core/core-enums.c:1100
+#: ../app/core/core-enums.c:1112
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "力量"
 
-#: ../app/core/core-enums.c:1101
+#: ../app/core/core-enums.c:1113
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
-msgstr "長寬比"
+msgstr "寬高比"
 
-#: ../app/core/core-enums.c:1102
+#: ../app/core/core-enums.c:1114
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "間隔"
 
-#: ../app/core/core-enums.c:1103
+#: ../app/core/core-enums.c:1115
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "速率"
 
-#: ../app/core/core-enums.c:1104
+#: ../app/core/core-enums.c:1116
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "流量"
 
-#: ../app/core/core-enums.c:1105
+#: ../app/core/core-enums.c:1117
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "抖動"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1145
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the selection editor"
@@ -12000,24 +11884,24 @@ msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "開啟選取範圍編輯器"
 
-#: ../app/core/core-enums.c:1134
+#: ../app/core/core-enums.c:1146
 #, fuzzy
 #| msgid "Use the online version"
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "使用線上的版本"
 
-#: ../app/core/core-enums.c:1163
+#: ../app/core/core-enums.c:1175
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "堅硬"
 
-#: ../app/core/core-enums.c:1164
+#: ../app/core/core-enums.c:1176
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "平滑"
 
-#: ../app/core/core-enums.c:1165
+#: ../app/core/core-enums.c:1177
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "羽化的"
@@ -12105,8 +11989,6 @@ msgid "Global Buffer"
 msgstr "全域緩衝區"
 
 #: ../app/core/gimp-gradients.c:64
-#| msgctxt "dash-preset"
-#| msgid "Custom"
 msgid "Custom"
 msgstr "自訂"
 
@@ -12281,12 +12163,10 @@ msgid "Brush Spacing"
 msgstr "筆刷間隔"
 
 #: ../app/core/gimpbrushclipboard.c:190
-#| msgid "Clipboard"
 msgid "Clipboard Mask"
 msgstr "剪貼簿遮罩"
 
 #: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
-#| msgid "Clipboard"
 msgid "Clipboard Image"
 msgstr "剪貼簿圖像"
 
@@ -12328,7 +12208,7 @@ msgstr "筆刷硬度"
 
 #: ../app/core/gimpbrushgenerated.c:161 ../app/paint/gimppaintoptions.c:206
 msgid "Brush Aspect Ratio"
-msgstr "筆刷長寬比"
+msgstr "筆刷寬高比"
 
 #: ../app/core/gimpbrushgenerated.c:168 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Angle"
@@ -12354,7 +12234,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "圓角矩形選取"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:424
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:439
 #, fuzzy
 msgctxt "undo-type"
 msgid "Alpha to Selection"
@@ -12573,8 +12453,6 @@ msgid "MyPaint Brush"
 msgstr "MyPaint 筆刷"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
-#| msgctxt "fill-type"
-#| msgid "Pattern"
 msgid "Pattern"
 msgstr "圖樣"
 
@@ -12589,7 +12467,6 @@ msgid "Palette"
 msgstr "調色盤"
 
 #: ../app/core/gimpcontext.c:746 ../app/core/gimpcontext.c:747
-#| msgid "Tool Presets"
 msgid "Tool Preset"
 msgstr "工具預設"
 
@@ -12623,11 +12500,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:539 ../app/core/gimpdatafactory.c:542
-#: ../app/core/gimpitem.c:513 ../app/core/gimpitem.c:516
+#: ../app/core/gimpitem.c:538 ../app/core/gimpitem.c:541
 msgid "copy"
 msgstr "複本"
 
-#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpitem.c:524
+#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpitem.c:549
 #, c-format
 msgid "%s copy"
 msgstr "%s 複本"
@@ -12673,7 +12550,7 @@ msgstr "讀取“%s”時發生錯誤：%s"
 msgid "Error loading '%s'"
 msgstr "讀取“%s”時發生錯誤：%s"
 
-#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:437
+#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:438
 #, fuzzy, c-format
 #| msgid "Could not open '%s' for reading: %s"
 msgid "Could not open '%s' for reading: "
@@ -12690,7 +12567,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:508
+#: ../app/core/gimpdrawable.c:469
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "縮放"
@@ -12715,7 +12592,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "亮度等化"
 
-#: ../app/core/gimpdrawable-floating-selection.c:170
+#: ../app/core/gimpdrawable-floating-selection.c:191
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float Selection"
@@ -12764,7 +12641,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "旋轉"
 
-#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:423
+#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "變換圖層"
@@ -12778,8 +12655,6 @@ msgid "Output type"
 msgstr "輸出類型"
 
 #: ../app/core/gimpfilloptions.c:103
-#| msgctxt "dockable-action"
-#| msgid "_Tab Style"
 msgid "Style"
 msgstr "樣式"
 
@@ -12884,7 +12759,6 @@ msgid ""
 msgstr "格線的背景色；本設定只會在雙重虛線中使用。"
 
 #: ../app/core/gimpgrid.c:109
-#| msgid "Spacing"
 msgid "Spacing X"
 msgstr "間隔 X"
 
@@ -12893,7 +12767,6 @@ msgid "Horizontal spacing of grid lines."
 msgstr "每兩條格線之間的水平間距。"
 
 #: ../app/core/gimpgrid.c:116
-#| msgid "Spacing"
 msgid "Spacing Y"
 msgstr "間隔 Y"
 
@@ -12902,12 +12775,10 @@ msgid "Vertical spacing of grid lines."
 msgstr "每兩條格線之間的垂直間距。"
 
 #: ../app/core/gimpgrid.c:123
-#| msgid "Spacing"
 msgid "Spacing unit"
 msgstr "間隔單位"
 
 #: ../app/core/gimpgrid.c:130
-#| msgid "Offset"
 msgid "Offset X"
 msgstr "偏移 X"
 
@@ -12917,7 +12788,6 @@ msgid ""
 msgstr "第一條水平格線的位置，可以是負數。"
 
 #: ../app/core/gimpgrid.c:139
-#| msgid "Offset"
 msgid "Offset Y"
 msgstr "偏移 Y"
 
@@ -12926,45 +12796,44 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "第一條垂直格線的位置，可以是負數。"
 
 #: ../app/core/gimpgrid.c:148
-#| msgid "Offset"
 msgid "Offset unit"
 msgstr "偏移單位"
 
-#: ../app/core/gimpgrouplayer.c:242
+#: ../app/core/gimpgrouplayer.c:261
 msgid "Layer Group"
 msgstr "圖層群組"
 
-#: ../app/core/gimpgrouplayer.c:243
+#: ../app/core/gimpgrouplayer.c:262
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "更改圖層群組名稱"
 
-#: ../app/core/gimpgrouplayer.c:244
+#: ../app/core/gimpgrouplayer.c:263
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "移動圖層群組"
 
-#: ../app/core/gimpgrouplayer.c:245
+#: ../app/core/gimpgrouplayer.c:264
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "縮放圖層群組"
 
-#: ../app/core/gimpgrouplayer.c:246
+#: ../app/core/gimpgrouplayer.c:265
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "調整圖層群組大小"
 
-#: ../app/core/gimpgrouplayer.c:247
+#: ../app/core/gimpgrouplayer.c:266
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "翻轉圖層群組"
 
-#: ../app/core/gimpgrouplayer.c:248
+#: ../app/core/gimpgrouplayer.c:267
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "旋轉圖層群組"
 
-#: ../app/core/gimpgrouplayer.c:249
+#: ../app/core/gimpgrouplayer.c:268
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "變換圖層群組"
@@ -13080,7 +12949,6 @@ msgstr ""
 
 #: ../app/core/gimpimage-color-profile.c:397
 #, c-format
-#| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
 msgstr "從「%s」轉換到「%s」"
 
@@ -13096,14 +12964,12 @@ msgstr ""
 #: ../app/core/gimpimage-colormap.c:193
 msgctxt "undo-type"
 msgid "Set Colormap"
-msgstr "設置顏色對應表"
+msgstr "設定顏色對應表"
 
 #: ../app/core/gimpimage-colormap.c:241
-#| msgctxt "undo-type"
-#| msgid "Set Colormap"
 msgctxt "undo-type"
 msgid "Unset Colormap"
-msgstr "取消設定色彩映射"
+msgstr "取消設定顏色對應表"
 
 #: ../app/core/gimpimage-colormap.c:294
 msgctxt "undo-type"
@@ -13407,19 +13273,19 @@ msgstr[1] "%d 個圖層"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "無法開啟縮圖‘%s’：%s"
 
-#: ../app/core/gimpitem.c:1927
+#: ../app/core/gimpitem.c:1955
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "附加視窗元件"
 
-#: ../app/core/gimpitem.c:1937
+#: ../app/core/gimpitem.c:1965
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "尋找加入至“%s”的項目(_I):"
 
-#: ../app/core/gimpitem.c:1988 ../app/core/gimpitem.c:1995
+#: ../app/core/gimpitem.c:2016 ../app/core/gimpitem.c:2023
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
@@ -13438,7 +13304,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "固定浮動的選取範圍"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1008
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1028
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13449,76 +13315,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "浮動選取範圍轉換為圖層"
 
-#: ../app/core/gimplayer.c:417
+#: ../app/core/gimplayer.c:432
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "更改圖層名稱"
 
-#: ../app/core/gimplayer.c:418
+#: ../app/core/gimplayer.c:433
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "移動圖層"
 
-#: ../app/core/gimplayer.c:419
+#: ../app/core/gimplayer.c:434
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "縮放圖層"
 
-#: ../app/core/gimplayer.c:420
+#: ../app/core/gimplayer.c:435
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "調整圖層大小"
 
-#: ../app/core/gimplayer.c:421
+#: ../app/core/gimplayer.c:436
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "翻轉圖層"
 
-#: ../app/core/gimplayer.c:422
+#: ../app/core/gimplayer.c:437
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "旋轉圖層"
 
-#: ../app/core/gimplayer.c:425
+#: ../app/core/gimplayer.c:440
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "重新編排圖層次序"
 
-#: ../app/core/gimplayer.c:426
+#: ../app/core/gimplayer.c:441
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "提升圖層"
 
-#: ../app/core/gimplayer.c:427
+#: ../app/core/gimplayer.c:442
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "提升圖層至頂層"
 
-#: ../app/core/gimplayer.c:428
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "降低圖層"
 
-#: ../app/core/gimplayer.c:429
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "降低圖層至底層"
 
-#: ../app/core/gimplayer.c:430
+#: ../app/core/gimplayer.c:445
 msgid "Layer cannot be raised higher."
 msgstr "圖層無法再向上移。"
 
-#: ../app/core/gimplayer.c:431
+#: ../app/core/gimplayer.c:446
 msgid "Layer cannot be lowered more."
 msgstr "圖層無法再向下移。"
 
-#: ../app/core/gimplayer.c:715 ../app/core/gimplayer.c:1711
+#: ../app/core/gimplayer.c:735 ../app/core/gimplayer.c:1744
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "%s 遮罩"
 
-#: ../app/core/gimplayer.c:754
+#: ../app/core/gimplayer.c:774
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -13527,63 +13393,63 @@ msgstr ""
 "浮動選取範圍\n"
 " (%s)"
 
-#: ../app/core/gimplayer.c:1617
+#: ../app/core/gimplayer.c:1650
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "無法新增圖層遮罩，因為該圖層已經有一個遮罩了。"
 
-#: ../app/core/gimplayer.c:1628
+#: ../app/core/gimplayer.c:1661
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "無法加入圖層遮罩，因為遮罩的尺寸和指定圖層的尺寸不同。"
 
-#: ../app/core/gimplayer.c:1634
+#: ../app/core/gimplayer.c:1667
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "加入圖層遮罩"
 
-#: ../app/core/gimplayer.c:1762
+#: ../app/core/gimplayer.c:1795
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "在 GdkPixmap 上使用的遮罩點陣圖"
 
-#: ../app/core/gimplayer.c:1914
+#: ../app/core/gimplayer.c:1947
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "套用圖層遮罩"
 
-#: ../app/core/gimplayer.c:1915
+#: ../app/core/gimplayer.c:1948
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "刪除圖層遮罩"
 
-#: ../app/core/gimplayer.c:2017
+#: ../app/core/gimplayer.c:2050
 #, fuzzy
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "停用圖層遮罩(_D)"
 
-#: ../app/core/gimplayer.c:2018
+#: ../app/core/gimplayer.c:2051
 #, fuzzy
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "停用圖層遮罩(_D)"
 
-#: ../app/core/gimplayer.c:2094
+#: ../app/core/gimplayer.c:2127
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "顯示圖層遮罩"
 
-#: ../app/core/gimplayer.c:2167
+#: ../app/core/gimplayer.c:2200
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "加入透明色版"
 
-#: ../app/core/gimplayer.c:2202
+#: ../app/core/gimplayer.c:2235
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "移除透明色版"
 
-#: ../app/core/gimplayer.c:2223
+#: ../app/core/gimplayer.c:2256
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "圖層符合圖片尺寸"
@@ -13812,7 +13678,6 @@ msgid "Remove Holes"
 msgstr "移除項目"
 
 #: ../app/core/gimpselection.c:304
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to fill."
 msgstr "沒有選取範圍可填充。"
 
@@ -13854,7 +13719,6 @@ msgstr "線條寬度:"
 
 #: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:151
 #: ../app/tools/gimptextoptions.c:121
-#| msgid "Units"
 msgid "Unit"
 msgstr "單位"
 
@@ -13950,7 +13814,6 @@ msgid "Mirror"
 msgstr "錯誤"
 
 #: ../app/core/gimpsymmetry-mirror.c:130
-#| msgid "Horizontal"
 msgid "Horizontal Symmetry"
 msgstr "水平對稱"
 
@@ -13959,7 +13822,6 @@ msgid "Reflect the initial stroke across a horizontal axis"
 msgstr ""
 
 #: ../app/core/gimpsymmetry-mirror.c:138
-#| msgid "Vertical"
 msgid "Vertical Symmetry"
 msgstr "垂直對稱"
 
@@ -13977,13 +13839,10 @@ msgid "Invert the initial stroke through a point"
 msgstr "將圖片轉換到索引色模式"
 
 #: ../app/core/gimpsymmetry-mirror.c:155
-#| msgctxt "select-action"
-#| msgid "Dismiss the selection"
 msgid "Disable brush reflection"
 msgstr "停用筆刷反射"
 
 #: ../app/core/gimpsymmetry-mirror.c:162
-#| msgid "Vertical spacing of grid lines."
 msgid "Vertical axis position"
 msgstr "垂直軸位置"
 
@@ -13991,55 +13850,53 @@ msgstr "垂直軸位置"
 msgid "Horizontal axis position"
 msgstr "水平軸位置"
 
-#: ../app/core/gimpsymmetry-tiling.c:101
+#: ../app/core/gimpsymmetry-tiling.c:102
 #, fuzzy
 #| msgid "Scaling"
 msgid "Tiling"
 msgstr "縮放"
 
-#: ../app/core/gimpsymmetry-tiling.c:107
-#| msgid "I_nterval:"
+#: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval X"
 msgstr "間隔 X"
 
-#: ../app/core/gimpsymmetry-tiling.c:108
+#: ../app/core/gimpsymmetry-tiling.c:109
 msgid "Interval on the X axis (pixels)"
 msgstr "X 軸上的間隔（像素）"
 
-#: ../app/core/gimpsymmetry-tiling.c:119
-#| msgid "I_nterval:"
+#: ../app/core/gimpsymmetry-tiling.c:120
 msgid "Interval Y"
 msgstr "間隔 Y"
 
-#: ../app/core/gimpsymmetry-tiling.c:120
+#: ../app/core/gimpsymmetry-tiling.c:121
 msgid "Interval on the Y axis (pixels)"
 msgstr "Y 軸上的間隔（像素）"
 
-#: ../app/core/gimpsymmetry-tiling.c:131
+#: ../app/core/gimpsymmetry-tiling.c:132
 msgid "Shift"
 msgstr ""
 
-#: ../app/core/gimpsymmetry-tiling.c:132
+#: ../app/core/gimpsymmetry-tiling.c:133
 msgid "X-shift between lines (pixels)"
 msgstr ""
 
-#: ../app/core/gimpsymmetry-tiling.c:143
+#: ../app/core/gimpsymmetry-tiling.c:144
 #, fuzzy
 msgid "Max strokes X"
 msgstr "中日韓筆畫部件"
 
-#: ../app/core/gimpsymmetry-tiling.c:144
+#: ../app/core/gimpsymmetry-tiling.c:145
 #, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "Maximum number of strokes on the X axis"
 msgstr "顏色數目上限(_M):"
 
-#: ../app/core/gimpsymmetry-tiling.c:151
+#: ../app/core/gimpsymmetry-tiling.c:152
 #, fuzzy
 msgid "Max strokes Y"
 msgstr "中日韓筆畫部件"
 
-#: ../app/core/gimpsymmetry-tiling.c:152
+#: ../app/core/gimpsymmetry-tiling.c:153
 #, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "Maximum number of strokes on the Y axis"
@@ -14085,8 +13942,6 @@ msgstr "解析度:"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:182
-#| msgctxt "undo-type"
-#| msgid "Image type"
 msgid "Image type"
 msgstr "圖像類型"
 
@@ -14103,7 +13958,6 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: ../app/core/gimptemplate.c:213
-#| msgid "Color Management"
 msgid "Color managed"
 msgstr "色彩管理"
 
@@ -14114,12 +13968,10 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimptemplate.c:223
-#| msgid "Color Profile"
 msgid "Color profile"
 msgstr "色彩描述檔"
 
 #: ../app/core/gimptemplate.c:230 ../app/tools/gimpbucketfilloptions.c:94
-#| msgid "Fill by:"
 msgid "Fill type"
 msgstr "填充類型"
 
@@ -14128,7 +13980,6 @@ msgid "Comment"
 msgstr "備註"
 
 #: ../app/core/gimptemplate.c:244
-#| msgid "File Name:"
 msgid "Filename"
 msgstr "檔案名稱"
 
@@ -14145,7 +13996,6 @@ msgid "Apply stored dynamics"
 msgstr "套用儲存的動態"
 
 #: ../app/core/gimptoolpreset.c:168
-#| msgid "Apply stored brush"
 msgid "Apply stored MyPaint brush"
 msgstr "套用儲存的 MyPaint 筆刷"
 
@@ -14262,7 +14112,6 @@ msgid ""
 msgstr "這是不穩定的發展釋出版本。"
 
 #: ../app/dialogs/action-search-dialog.c:67
-#| msgid "Selection"
 msgid "Search Actions"
 msgstr "搜尋操作"
 
@@ -14272,7 +14121,6 @@ msgstr "色版名稱(_N):"
 
 #: ../app/dialogs/channel-options-dialog.c:128
 #: ../app/dialogs/layer-options-dialog.c:168
-#| msgid "Lock pixels"
 msgid "Lock _pixels"
 msgstr "鎖定像素(_P)"
 
@@ -14315,8 +14163,6 @@ msgid "Convert to ICC Color Profile"
 msgstr "轉換為 ICC 色彩描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:149
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to a color profile"
 msgstr "將圖像轉換為一色彩描述檔"
 
@@ -14332,7 +14178,6 @@ msgstr "轉換(_O)"
 #: ../app/dialogs/color-profile-dialog.c:158
 #: ../app/dialogs/color-profile-dialog.c:176
 #: ../app/dialogs/color-profile-dialog.c:194
-#| msgid "C_onvert"
 msgid "Convert to"
 msgstr "轉換為"
 
@@ -14341,8 +14186,6 @@ msgid "RGB Conversion"
 msgstr "RGB 轉換"
 
 #: ../app/dialogs/color-profile-dialog.c:167
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
 msgid "Convert Image to RGB"
 msgstr "將圖像轉換為 RGB 模式"
 
@@ -14351,8 +14194,6 @@ msgid "Grayscale Conversion"
 msgstr "灰階轉換"
 
 #: ../app/dialogs/color-profile-dialog.c:185
-#| msgctxt "undo-type"
-#| msgid "Convert Image to Grayscale"
 msgid "Convert Image to Grayscale"
 msgstr "將圖像轉換為灰階"
 
@@ -14361,7 +14202,6 @@ msgid "Soft-Proof Profile"
 msgstr "軟校樣描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:203
-#| msgid "Select Monitor Color Profile"
 msgid "Select Soft-Proof Profile"
 msgstr "選擇軟校樣描述檔"
 
@@ -14374,12 +14214,10 @@ msgid "_Select"
 msgstr "選取(_S)"
 
 #: ../app/dialogs/color-profile-dialog.c:212
-#| msgid "Color Profile"
 msgid "New Color Profile"
 msgstr "新增色彩描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:241
-#| msgid "Color Profile"
 msgid "Current Color Profile"
 msgstr "目前的色彩描述檔"
 
@@ -14389,7 +14227,6 @@ msgstr "描述檔細節(_D)"
 
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
-#| msgid "_Display rendering intent:"
 msgid "_Rendering Intent:"
 msgstr "顯示色彩對應方式(_R)："
 
@@ -14399,14 +14236,12 @@ msgid "_Black Point Compensation"
 msgstr "黑點補償(_B)"
 
 #: ../app/dialogs/color-profile-dialog.c:386
-#| msgid "Select Printer Color Profile"
 msgid "Select Destination Profile"
 msgstr "選擇目的描述檔"
 
 #: ../app/dialogs/color-profile-dialog.c:481
 #: ../app/widgets/gimpwidgets-constructors.c:86
 #: ../app/widgets/gimpwidgets-constructors.c:97
-#| msgid "None"
 msgctxt "profile"
 msgid "None"
 msgstr "無"
@@ -14468,13 +14303,12 @@ msgstr "將圖片色系更改為索引色"
 
 #: ../app/dialogs/convert-indexed-dialog.c:190
 msgid "_Maximum number of colors:"
-msgstr "顏色數目上限(_M):"
+msgstr "顏色數目上限(_M)："
 
 #: ../app/dialogs/convert-indexed-dialog.c:219
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "從顏色對應表中移除未使用的顏色(_R)"
+msgstr "從顏色對應表中移除未使用和重複的顏色(_R)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:248
 msgid "Color _dithering:"
@@ -14519,24 +14353,18 @@ msgstr "感知伽瑪（sRGB）"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
 #: ../app/widgets/gimptemplateeditor.c:424
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgid "Linear light"
 msgstr "線性光源"
 
 #: ../app/dialogs/convert-precision-dialog.c:237
-#| msgctxt "dialogs-action"
-#| msgid "_Layers"
 msgid "_Layers:"
 msgstr "圖層(_L)："
 
 #: ../app/dialogs/convert-precision-dialog.c:259
-#| msgid "Text Layer"
 msgid "_Text Layers:"
 msgstr "文字圖層(_T)："
 
 #: ../app/dialogs/convert-precision-dialog.c:286
-#| msgid "Channel _name:"
 msgid "_Channels and Masks:"
 msgstr "色版和遮罩(_C)："
 
@@ -14555,7 +14383,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "是否確定要同時在清單及磁碟裡刪除“%s”？"
 
-#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:189
+#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:190
 #: ../app/gui/gui-message.c:215
 msgid "GIMP Message"
 msgstr "GIMP 訊息"
@@ -14606,7 +14434,7 @@ msgstr "復原"
 
 #: ../app/dialogs/dialogs.c:392
 msgid "Undo History"
-msgstr "復原記錄"
+msgstr "步驟記錄"
 
 #: ../app/dialogs/dialogs.c:402
 msgid "Navigation"
@@ -14634,7 +14462,7 @@ msgid "_Fade"
 msgstr "淡化(_F)"
 
 #: ../app/dialogs/fade-dialog.c:158 ../app/dialogs/layer-options-dialog.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:346
+#: ../app/widgets/gimpdeviceinfoeditor.c:349
 msgid "_Mode:"
 msgstr "模式(_M)："
 
@@ -14664,7 +14492,6 @@ msgstr ""
 "全不使用延伸檔名。"
 
 #: ../app/dialogs/file-save-dialog.c:618
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for exporting"
 msgstr "給定的檔名不能用於匯出"
 
@@ -14677,13 +14504,10 @@ msgstr ""
 "請使用[檔案]>[儲存]替代。 "
 
 #: ../app/dialogs/file-save-dialog.c:622
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
 msgstr "帶我到「儲存」對話框"
 
 #: ../app/dialogs/file-save-dialog.c:626
-#| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for saving"
 msgstr "給定的檔名不能用於儲存"
 
@@ -14696,8 +14520,6 @@ msgstr ""
 "式。"
 
 #: ../app/dialogs/file-save-dialog.c:629
-#| msgctxt "dialogs-action"
-#| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
 msgstr "帶我到「匯出」對話框"
 
@@ -15114,10 +14936,9 @@ msgid "Edge Behavior"
 msgstr "邊緣行為"
 
 #: ../app/dialogs/offset-dialog.c:254
-#, fuzzy
 #| msgid "_Wrap around"
 msgid "W_rap around"
-msgstr "環繞(_W)"
+msgstr "環繞(_R)"
 
 #: ../app/dialogs/offset-dialog.c:257
 msgid "Fill with _background color"
@@ -15193,7 +15014,7 @@ msgstr "間隔(_N):"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:360
-#: ../app/tools/gimpforegroundselecttool.c:1193
+#: ../app/tools/gimpforegroundselecttool.c:1214
 msgid "Preview"
 msgstr "預覽"
 
@@ -15202,7 +15023,6 @@ msgid "The selected source contains no colors."
 msgstr "選取的來源沒有包含顏色。"
 
 #: ../app/dialogs/palette-import-dialog.c:466
-#| msgid "There is no path to transform."
 msgid "There is no palette to import."
 msgstr "沒有調色盤可匯入。"
 
@@ -15350,10 +15170,9 @@ msgid "Maximum _new image size:"
 msgstr "新的圖片的佔用記憶上限(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1157
-#, fuzzy
 #| msgid "Number of _processors to use:"
 msgid "Number of _threads to use:"
-msgstr "會使用的 C_PU 數目:"
+msgstr "使用的執行緒數量(_T)："
 
 #: ../app/dialogs/preferences-dialog.c:1162
 msgid ""
@@ -15361,6 +15180,9 @@ msgid ""
 "Setting this to greater than one might\n"
 "result in image errors or crashes."
 msgstr ""
+"執行緒支援尚不穩定。\n"
+"將其設定為大於一，可能\n"
+"導致圖像錯誤或崩潰。"
 
 #. Hardware Acceleration
 #: ../app/dialogs/preferences-dialog.c:1172
@@ -15419,7 +15241,6 @@ msgid "_Try to use the system monitor profile"
 msgstr "嘗試使用系統螢幕配置檔(_T)"
 
 #: ../app/dialogs/preferences-dialog.c:1269
-#| msgid "_Display rendering intent:"
 msgid "_Rendering intent:"
 msgstr "色彩對應方式(_R)："
 
@@ -15438,8 +15259,6 @@ msgid "Precision / Color Fidelity"
 msgstr "精度/色彩保真度"
 
 #: ../app/dialogs/preferences-dialog.c:1284
-#| msgctxt "documents-action"
-#| msgid "Open image dialog"
 msgid "_Optimize image display for:"
 msgstr "最佳化圖像顯示(_O)："
 
@@ -15449,17 +15268,14 @@ msgid "Soft-Proofing"
 msgstr "軟校樣"
 
 #: ../app/dialogs/preferences-dialog.c:1298
-#| msgid "Select Printer Color Profile"
 msgid "Select Soft-Proofing Color Profile"
 msgstr "選擇軟校樣色彩描述檔"
 
 #: ../app/dialogs/preferences-dialog.c:1299
-#| msgid "_Softproof rendering intent:"
 msgid "_Soft-proofing profile:"
 msgstr "軟校樣的描述檔(_S)："
 
 #: ../app/dialogs/preferences-dialog.c:1304
-#| msgid "_Display rendering intent:"
 msgid "Re_ndering intent:"
 msgstr "色彩對應方式(_N)："
 
@@ -15481,12 +15297,10 @@ msgstr "選擇警告顏色"
 
 #. Preferred profiles
 #: ../app/dialogs/preferences-dialog.c:1344
-#| msgid "Preferences"
 msgid "Preferred Profiles"
 msgstr "偏好的描述檔"
 
 #: ../app/dialogs/preferences-dialog.c:1353
-#| msgid "Select RGB Color Profile"
 msgid "Select Preferred RGB Color Profile"
 msgstr "選擇偏好的 RGB 色彩描述檔"
 
@@ -15495,13 +15309,10 @@ msgid "_RGB profile:"
 msgstr "_RGB 配置檔："
 
 #: ../app/dialogs/preferences-dialog.c:1360
-#| msgid "Select Printer Color Profile"
 msgid "Select Preferred Grayscale Color Profile"
 msgstr "選擇偏好的灰階色彩描述檔"
 
 #: ../app/dialogs/preferences-dialog.c:1361
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgid "_Grayscale profile:"
 msgstr "灰階描述檔(_G)："
 
@@ -15524,13 +15335,10 @@ msgstr "檔案開啟行為:"
 
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1381
-#| msgctxt "documents-action"
-#| msgid "File Open _Dialog"
 msgid "Filter Dialogs"
 msgstr "濾鏡對話框"
 
 #: ../app/dialogs/preferences-dialog.c:1385
-#| msgid "Advanced Color Options"
 msgid "Show advanced color options"
 msgstr "顯示進階顏色選項"
 
@@ -15539,13 +15347,11 @@ msgid "Image Import & Export"
 msgstr "圖像匯入與匯出"
 
 #: ../app/dialogs/preferences-dialog.c:1400
-#| msgid "Image Editor"
 msgid "Image Import"
 msgstr "圖像匯入"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1406
-#| msgid "Import Paths"
 msgid "Import Policies"
 msgstr "匯入規則"
 
@@ -15707,7 +15513,7 @@ msgstr "預設圖層及色版的預覽圖尺寸(_D)："
 
 #: ../app/dialogs/preferences-dialog.c:1660
 msgid "_Undo preview size:"
-msgstr ""
+msgstr "步驟記錄的預覽圖尺寸(_U)："
 
 #: ../app/dialogs/preferences-dialog.c:1663
 msgid "Na_vigation preview size:"
@@ -15836,34 +15642,29 @@ msgstr "抖動色版/遮罩："
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2041
-#, fuzzy
 #| msgid "Indexed Color Conversion"
 msgid "Indexed Conversion Dialog"
-msgstr "索引色轉換"
+msgstr "索引轉換對話框"
 
 #: ../app/dialogs/preferences-dialog.c:2046
-#, fuzzy
 #| msgid "Colormap"
 msgid "Colormap:"
-msgstr "顏色對應表"
+msgstr "顏色對應表："
 
 #: ../app/dialogs/preferences-dialog.c:2049
-#, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "Maximum number of colors:"
-msgstr "顏色數目上限(_M):"
+msgstr "顏色數目上限："
 
 #: ../app/dialogs/preferences-dialog.c:2053
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "從顏色對應表中移除未使用的顏色(_R)"
+msgstr "從顏色對應表中移除未使用的和重複的顏色"
 
 #: ../app/dialogs/preferences-dialog.c:2059
-#, fuzzy
 #| msgid "Color _dithering:"
 msgid "Color dithering:"
-msgstr "擬色方式(_D):"
+msgstr "顏色抖動："
 
 #: ../app/dialogs/preferences-dialog.c:2063
 #, fuzzy
@@ -15978,10 +15779,9 @@ msgid "Export Paths Dialog"
 msgstr "將路徑匯出為 SVG"
 
 #: ../app/dialogs/preferences-dialog.c:2168
-#, fuzzy
 #| msgid "Temporary folder:"
 msgid "Export folder:"
-msgstr "暫存資料夾:"
+msgstr "匯出資料夾："
 
 #: ../app/dialogs/preferences-dialog.c:2169
 #, fuzzy
@@ -15997,12 +15797,10 @@ msgstr "匯出目前的路徑"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2177
-#| msgid "Import Paths"
 msgid "Import Paths Dialog"
 msgstr "匯入路徑對話框"
 
 #: ../app/dialogs/preferences-dialog.c:2182
-#| msgid "Temporary folder:"
 msgid "Import folder:"
 msgstr "匯入資料夾："
 
@@ -16066,12 +15864,10 @@ msgid "Border Selection Dialog"
 msgstr "選取範圍框線化"
 
 #: ../app/dialogs/preferences-dialog.c:2230
-#| msgid "Brush Radius"
 msgid "Border radius:"
 msgstr "邊框半徑："
 
 #: ../app/dialogs/preferences-dialog.c:2234
-#| msgid "_Join style:"
 msgid "Border style:"
 msgstr "邊框樣式："
 
@@ -16139,23 +15935,19 @@ msgstr ""
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2396
-#, fuzzy
 #| msgid "Action"
 msgid "Action Search"
-msgstr "動作"
+msgstr "動作搜尋"
 
 #: ../app/dialogs/preferences-dialog.c:2400
-#| msgid "Show s_election"
 msgid "Show _unavailable actions"
 msgstr "顯示不可用的操作(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:2403
-#| msgid "Maximum _new image size:"
 msgid "Maximum History Size:"
 msgstr "步驟記錄佔用記憶體的上限(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:2407
-#| msgid "Clear Undo History"
 msgid "Clear Action History"
 msgstr "清除步驟記錄"
 
@@ -16248,7 +16040,7 @@ msgstr "結束程式時儲存視窗位置(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2576
 msgid "Open windows on the same _monitor they were open before"
-msgstr ""
+msgstr "開啟視窗在之前開啟的螢幕上(_M)"
 
 #: ../app/dialogs/preferences-dialog.c:2580
 msgid "Save Window Positions _Now"
@@ -16285,10 +16077,9 @@ msgid "Resize window on image _size change"
 msgstr "圖片尺寸更改時調整視窗尺寸(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2637
-#, fuzzy
 #| msgid "Show active _image"
 msgid "Show entire image"
-msgstr "顯示使用中的圖片(_I)"
+msgstr "顯示整個圖像"
 
 #: ../app/dialogs/preferences-dialog.c:2639
 msgid "Initial zoom _ratio:"
@@ -16321,9 +16112,8 @@ msgid "Pointer _mode:"
 msgstr "滑鼠指標模式(_M):"
 
 #: ../app/dialogs/preferences-dialog.c:2669
-#, fuzzy
 msgid "Pointer _handedness:"
-msgstr "指標繪製(_N):"
+msgstr "指標慣用性(_H)："
 
 #: ../app/dialogs/preferences-dialog.c:2681
 msgid "Image Window Appearance"
@@ -16366,10 +16156,9 @@ msgid "Show image size"
 msgstr "顯示圖片尺寸"
 
 #: ../app/dialogs/preferences-dialog.c:2727
-#, fuzzy
 #| msgid "Show image size"
 msgid "Show drawable size"
-msgstr "顯示圖片尺寸"
+msgstr "顯示可畫對象尺寸"
 
 #: ../app/dialogs/preferences-dialog.c:2740
 msgid "Image Title Format"
@@ -16410,7 +16199,6 @@ msgid "Extended Input Devices"
 msgstr "額外輸入裝置"
 
 #: ../app/dialogs/preferences-dialog.c:2867
-#| msgid "Save the tool options when GIMP exits."
 msgid "S_hare tool and tool options between input devices"
 msgstr "在輸入裝置之間共享工具和工具選項(_H)"
 
@@ -16516,22 +16304,18 @@ msgid "Select Tool Preset Folders"
 msgstr "選取工具預設資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3003
-#| msgid "Brush Folders"
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint 筆刷資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3005
-#| msgid "Select Brush Folders"
 msgid "Select MyPaint Brush Folders"
 msgstr "選取 MyPaint 筆刷資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3007
-#| msgid "Plug-In Folders"
 msgid "Plug-in Folders"
 msgstr "外掛程式資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3009
-#| msgid "Select Plug-In Folders"
 msgid "Select plug-in Folders"
 msgstr "選取外掛程式資料夾"
 
@@ -16592,17 +16376,14 @@ msgid "Select Theme Folders"
 msgstr "選取佈景主題資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3031
-#| msgid "Themes"
 msgid "Icon Themes"
 msgstr "圖示主題"
 
 #: ../app/dialogs/preferences-dialog.c:3031
-#| msgid "Theme Folders"
 msgid "Icon Theme Folders"
 msgstr "圖示主題資料夾"
 
 #: ../app/dialogs/preferences-dialog.c:3033
-#| msgid "Select Theme Folders"
 msgid "Select Icon Theme Folders"
 msgstr "選取圖示主題資料夾"
 
@@ -16675,8 +16456,6 @@ msgid "Press %s to close all images."
 msgstr "按 %s 以關閉所有圖像。"
 
 #: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
-#| msgctxt "file-action"
-#| msgid "_Quit"
 msgid "_Quit"
 msgstr "結束(_Q)"
 
@@ -16706,14 +16485,12 @@ msgid "Exported to %s"
 msgstr "匯出到 %s"
 
 #: ../app/dialogs/quit-dialog.c:589
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Save this image"
 msgid "Save this image"
-msgstr "儲存這個圖片"
+msgstr "儲存這個圖像"
 
 #: ../app/dialogs/quit-dialog.c:591
-#| msgid "Save"
 msgid "Save as"
 msgstr "另存為"
 
@@ -16726,17 +16503,14 @@ msgid "Layer Size"
 msgstr "圖層尺寸"
 
 #: ../app/dialogs/resize-dialog.c:156
-#| msgid "_Fill with:"
 msgid "Fill With"
 msgstr "填上"
 
 #: ../app/dialogs/resize-dialog.c:185
-#| msgid "Pre_sets:"
 msgid "Re_set"
 msgstr "重置(_S)"
 
 #: ../app/dialogs/resize-dialog.c:187
-#| msgid "Resizing"
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
@@ -16745,7 +16519,6 @@ msgid "Resize _layers:"
 msgstr "重設圖層大小(_L):"
 
 #: ../app/dialogs/resize-dialog.c:379
-#| msgid "Resize Text Layer"
 msgid "Resize _text layers"
 msgstr "調整文字圖層尺寸(_T)"
 
@@ -16892,10 +16665,9 @@ msgid "_Scale imported paths to fit image"
 msgstr "縮放匯入的路徑以符合圖片(_S)"
 
 #: ../app/dialogs/vectors-options-dialog.c:106
-#, fuzzy
 #| msgid "Path name:"
 msgid "Path _name:"
-msgstr "路徑名稱:"
+msgstr "路徑名稱(_N)："
 
 #: ../app/dialogs/vectors-options-dialog.c:108
 #, fuzzy
@@ -16950,25 +16722,21 @@ msgid "Line spacing"
 msgstr "格線間距"
 
 #: ../app/display/display-enums.c:313
-#| msgid "Aspect ratio"
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
-msgstr "長寬比"
+msgstr "寬高比"
 
 #: ../app/display/display-enums.c:314
-#| msgid "Width"
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "寬度"
 
 #: ../app/display/display-enums.c:315
-#| msgid "Height"
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "高度"
 
 #: ../app/display/display-enums.c:316
-#| msgid "Size"
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "大小"
@@ -16982,15 +16750,11 @@ msgid "Add / Transform"
 msgstr "變換"
 
 #: ../app/display/display-enums.c:410
-#| msgctxt "tool"
-#| msgid "Move"
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "移動"
 
 #: ../app/display/display-enums.c:411
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "移除"
@@ -17079,7 +16843,7 @@ msgstr "導覽至圖片顯示"
 msgid "Drop image files here to open them"
 msgstr "將圖片檔案拖放至此以開啟它們"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:536
+#: ../app/display/gimpdisplayshell-callbacks.c:540
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -17145,7 +16909,6 @@ msgstr[1] "如果現在不儲存圖片，將會失去最後 %d 分鐘所修改�
 
 #: ../app/display/gimpdisplayshell-close.c:348
 #, c-format
-#| msgid "Image exported to '%s'"
 msgid "The image has been exported to '%s'."
 msgstr "圖像已被匯出到「%s」"
 
@@ -17223,8 +16986,6 @@ msgid "Layer Select"
 msgstr "圖層選擇"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
-#| msgctxt "undo-type"
-#| msgid "Rotate image"
 msgid "Rotate View"
 msgstr "旋轉檢視"
 
@@ -17274,7 +17035,6 @@ msgid "(none)"
 msgstr "(無)"
 
 #: ../app/display/gimpdisplayshell-title.c:473
-#| msgid "Color Management"
 msgid "not color managed"
 msgstr "沒有色彩管理"
 
@@ -17309,38 +17069,31 @@ msgstr "按下後拖曳可以移動所有的點"
 
 #: ../app/display/gimptoolhandlegrid.c:849
 #: ../app/display/gimptooltransformgrid.c:1720
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move"
 msgstr "點擊並拖曳以移動"
 
 #: ../app/display/gimptoolhandlegrid.c:852
-#| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to rotate and scale"
 msgstr "點擊並拖曳以旋轉和縮放"
 
 #: ../app/display/gimptoolhandlegrid.c:855
-#| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to shear and scale"
 msgstr "點擊並拖曳以切變和縮放"
 
 #: ../app/display/gimptoolhandlegrid.c:858
 #: ../app/display/gimptooltransformgrid.c:1708
-#| msgid "Click-Drag to change the shape of the curve"
 msgid "Click-Drag to change perspective"
 msgstr "點擊並拖曳以改變視角"
 
 #: ../app/display/gimptoolhandlegrid.c:869
-#| msgid "Click to heal"
 msgid "Click to add a handle"
 msgstr "點選以加入一個控制柄"
 
 #: ../app/display/gimptoolhandlegrid.c:875
-#| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to move this handle"
 msgstr "點擊並拖曳以移動控制柄"
 
 #: ../app/display/gimptoolhandlegrid.c:880
-#| msgid "Click-Drag to move the handle around"
 msgid "Click-Drag to remove this handle"
 msgstr "點擊並拖曳以移除這個控制柄"
 
@@ -17349,7 +17102,6 @@ msgid "Line: "
 msgstr "行："
 
 #: ../app/display/gimptoolline.c:1470
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the endpoint"
 msgstr "點擊並拖曳以移動端點"
 
@@ -17359,48 +17111,39 @@ msgid "%s for constrained angles"
 msgstr "%s 為限制的角度 "
 
 #: ../app/display/gimptoolline.c:1478
-#| msgid "Click to dodge the line"
 msgid "Release to remove the slider"
 msgstr "釋放以移除滑塊"
 
 #: ../app/display/gimptoolline.c:1482
 #, c-format
-#| msgid "%s for constrained angles"
 msgid "%s for constrained values"
 msgstr "%s 為限制值"
 
 #: ../app/display/gimptoolline.c:1492
-#| msgid "Click-Drag to move the selection mask"
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr "點擊並拖曳以移動滑塊；拖走即可移除滑塊"
 
 #: ../app/display/gimptoolline.c:1497
-#| msgid "Click-Drag to move segment vertex"
 msgid "Click-Drag to move or remove the slider"
 msgstr "點擊並拖曳以移動或刪除滑塊"
 
 #: ../app/display/gimptoolline.c:1502
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Click-Drag to move the slider"
 msgstr "點擊並拖曳以移動滑塊"
 
 #: ../app/display/gimptoolline.c:1513
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Click-Drag away to remove the slider"
 msgstr "點擊並拖走以移除滑塊"
 
 #: ../app/display/gimptoolline.c:1517
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Click-Drag to remove the slider"
 msgstr "點擊並拖曳以移除滑塊"
 
 #: ../app/display/gimptoolline.c:1528
-#| msgid "Click or Click-Drag to add a point"
 msgid "Click or Click-Drag to add a new slider"
 msgstr "點擊或點擊並拖曳以加入一個新的滑塊"
 
 #: ../app/display/gimptoolline.c:1534
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the line"
 msgstr "點擊並拖曳以移動線"
 
@@ -17585,7 +17328,6 @@ msgid "Rectangle: "
 msgstr "矩形: "
 
 #: ../app/display/gimptoolrectangle.c:2136
-#| msgid "Position:"
 msgid "Position: "
 msgstr "位置："
 
@@ -17646,8 +17388,6 @@ msgid "Mounting remote volume"
 msgstr ""
 
 #: ../app/file/file-remote.c:289
-#| msgctxt "file-action"
-#| msgid "Open an image file"
 msgid "Opening remote file"
 msgstr "開啟遠端檔案"
 
@@ -17768,15 +17508,15 @@ msgid "Create or adjust the cage"
 msgstr "建立或調整籠子"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
 "to deform the image"
-msgstr "調整圖層為圖片的大小"
+msgstr ""
+"變形籠子以\n"
+"使圖像變形"
 
 #: ../app/operations/operations-enums.c:25
-#| msgid "Auto"
 msgctxt "layer-color-space"
 msgid "Auto"
 msgstr "自動"
@@ -17797,7 +17537,6 @@ msgid "LAB"
 msgstr ""
 
 #: ../app/operations/operations-enums.c:59
-#| msgid "Auto"
 msgctxt "layer-composite-mode"
 msgid "Auto"
 msgstr "自動"
@@ -17833,118 +17572,289 @@ msgctxt "layer-mode"
 msgid "Normal (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:154
+#. Translators: this is an abbreviated version of "Normal (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:156
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Normal"
+msgctxt "layer-mode"
+msgid "Normal (l)"
+msgstr "正常"
+
+#: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "溶解"
 
-#: ../app/operations/operations-enums.c:155
+#: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:156
-#| msgctxt "layer-mode-effects"
-#| msgid "Multiply"
+#. Translators: this is an abbreviated version of "Behind (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:161
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Behind"
+msgctxt "layer-mode"
+msgid "Behind (l)"
+msgstr "背後"
+
+#: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "色彩增值"
 
-#: ../app/operations/operations-enums.c:157
+#. Translators: this is an abbreviated version of "Multiply (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:165
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Multiply (legacy)"
+msgctxt "layer-mode"
+msgid "Multiply (l)"
+msgstr "色彩增值"
+
+#: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:158
+#. Translators: this is an abbreviated version of "Screen (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:169
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Screen"
+msgctxt "layer-mode"
+msgid "Screen (l)"
+msgstr "濾色"
+
+#: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:159
-#| msgctxt "layer-mode-effects"
-#| msgid "Difference"
+#. Translators: this is an abbreviated version of "Old broken Overlay".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:173
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Overlay"
+msgctxt "layer-mode"
+msgid "Old Overlay"
+msgstr "覆蓋"
+
+#: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "差異化"
 
-#: ../app/operations/operations-enums.c:160
-#| msgctxt "layer-mode-effects"
-#| msgid "Addition"
+#. Translators: this is an abbreviated version of "Difference (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:177
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Difference (legacy)"
+msgctxt "layer-mode"
+msgid "Difference (l)"
+msgstr "差異化"
+
+#: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "相加"
 
-#: ../app/operations/operations-enums.c:161
-#| msgctxt "layer-mode-effects"
-#| msgid "Subtract"
+#. Translators: this is an abbreviated version of "Addition (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:181
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Addition (legacy)"
+msgctxt "layer-mode"
+msgid "Addition (l)"
+msgstr "相加"
+
+#: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "減去"
 
-#: ../app/operations/operations-enums.c:162
-#| msgctxt "layer-mode-effects"
-#| msgid "Darken only"
+#. Translators: this is an abbreviated version of "Subtract (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:185
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Subtract (legacy)"
+msgctxt "layer-mode"
+msgid "Subtract (l)"
+msgstr "減去"
+
+#: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "僅變暗"
 
-#: ../app/operations/operations-enums.c:163
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
+#. Translators: this is an abbreviated version of "Darken only (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:189
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Darken only (legacy)"
+msgctxt "layer-mode"
+msgid "Darken only (l)"
+msgstr "僅變暗"
+
+#: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "僅變亮"
 
-#: ../app/operations/operations-enums.c:164
+#. Translators: this is an abbreviated version of "Lighten only (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:193
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Lighten only (legacy)"
+msgctxt "layer-mode"
+msgid "Lighten only (l)"
+msgstr "僅變亮"
+
+#: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:165
+#. Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:197
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Hue (HSV)"
+msgctxt "layer-mode"
+msgid "Hue (HSV) (l)"
+msgstr "色相 (HSV)"
+
+#: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:166
+#. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:201
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Saturation (HSV)"
+msgctxt "layer-mode"
+msgid "Saturation (HSV) (l)"
+msgstr "飽和度 (HSV)"
+
+#: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "Color (HSL) (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:167
+#. Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:205
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Color (HSL)"
+msgctxt "layer-mode"
+msgid "Color (HSL) (l)"
+msgstr "顏色 (HSL)"
+
+#: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:168
+#. Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:209
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Hue (HSV)"
+msgctxt "layer-mode"
+msgid "Value (HSV) (l)"
+msgstr "色相 (HSV)"
+
+#: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:169
+#. Translators: this is an abbreviated version of "Divide (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:213
+msgctxt "layer-mode"
+msgid "Divide (l)"
+msgstr ""
+
+#: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:170
+#. Translators: this is an abbreviated version of "Dodge (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:217
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Dodge"
+msgctxt "layer-mode"
+msgid "Dodge (l)"
+msgstr "加亮顏色"
+
+#: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:171
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
+#. Translators: this is an abbreviated version of "Burn (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:221
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Burn"
+msgctxt "layer-mode"
+msgid "Burn (l)"
+msgstr "加深顏色"
+
+#: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "強光"
 
-#: ../app/operations/operations-enums.c:172
-#| msgctxt "layer-mode-effects"
-#| msgid "Soft light"
+#. Translators: this is an abbreviated version of "Hard light (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:225
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Hard light (legacy)"
+msgctxt "layer-mode"
+msgid "Hard light (l)"
+msgstr "強光"
+
+#: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "柔光"
 
-#: ../app/operations/operations-enums.c:173
+#. Translators: this is an abbreviated version of "Soft light (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:229
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Soft light (legacy)"
+msgctxt "layer-mode"
+msgid "Soft light (l)"
+msgstr "柔光"
+
+#: ../app/operations/operations-enums.c:230
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain extract"
@@ -17952,7 +17862,17 @@ msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "增益提取"
 
-#: ../app/operations/operations-enums.c:174
+#. Translators: this is an abbreviated version of "Grain extract (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:233
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Grain extract"
+msgctxt "layer-mode"
+msgid "Grain extract (l)"
+msgstr "增益提取"
+
+#: ../app/operations/operations-enums.c:234
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Grain merge"
@@ -17960,7 +17880,17 @@ msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "增益合併"
 
-#: ../app/operations/operations-enums.c:175
+#. Translators: this is an abbreviated version of "Grain merge (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:237
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Grain merge"
+msgctxt "layer-mode"
+msgid "Grain merge (l)"
+msgstr "增益合併"
+
+#: ../app/operations/operations-enums.c:238
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color erase"
@@ -17968,221 +17898,249 @@ msgctxt "layer-mode"
 msgid "Color erase (legacy)"
 msgstr "顏色消除"
 
-#: ../app/operations/operations-enums.c:176
+#. Translators: this is an abbreviated version of "Color erase (legacy)".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:241
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Color erase"
+msgctxt "layer-mode"
+msgid "Color erase (l)"
+msgstr "顏色消除"
+
+#: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "覆蓋"
 
-#: ../app/operations/operations-enums.c:177
+#: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:178
+#: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:179
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
+#: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "顏色"
 
-#: ../app/operations/operations-enums.c:180
+#: ../app/operations/operations-enums.c:246
 #, fuzzy
 #| msgid "_Lightness:"
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "亮度(_L):"
 
-#: ../app/operations/operations-enums.c:181
+#: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "正常"
 
-#: ../app/operations/operations-enums.c:182
+#: ../app/operations/operations-enums.c:248
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "背後"
 
-#: ../app/operations/operations-enums.c:183
+#: ../app/operations/operations-enums.c:249
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "色彩增值"
 
-#: ../app/operations/operations-enums.c:184
+#: ../app/operations/operations-enums.c:250
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "濾色"
 
-#: ../app/operations/operations-enums.c:185
+#: ../app/operations/operations-enums.c:251
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "差異化"
 
-#: ../app/operations/operations-enums.c:186
+#: ../app/operations/operations-enums.c:252
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "相加"
 
-#: ../app/operations/operations-enums.c:187
+#: ../app/operations/operations-enums.c:253
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "減去"
 
-#: ../app/operations/operations-enums.c:188
+#: ../app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "僅變暗"
 
-#: ../app/operations/operations-enums.c:189
+#: ../app/operations/operations-enums.c:255
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "僅變亮"
 
-#: ../app/operations/operations-enums.c:190
+#: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "色相 (HSV)"
 
-#: ../app/operations/operations-enums.c:191
+#: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "飽和度 (HSV)"
 
-#: ../app/operations/operations-enums.c:192
+#: ../app/operations/operations-enums.c:258
 msgctxt "layer-mode"
 msgid "Color (HSL)"
 msgstr "顏色 (HSL)"
 
-#: ../app/operations/operations-enums.c:193
+#: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:194
+#: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:195
+#: ../app/operations/operations-enums.c:261
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "加亮顏色"
 
-#: ../app/operations/operations-enums.c:196
+#: ../app/operations/operations-enums.c:262
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "加深顏色"
 
-#: ../app/operations/operations-enums.c:197
+#: ../app/operations/operations-enums.c:263
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "強光"
 
-#: ../app/operations/operations-enums.c:198
+#: ../app/operations/operations-enums.c:264
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "柔光"
 
-#: ../app/operations/operations-enums.c:199
+#: ../app/operations/operations-enums.c:265
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:200
+#: ../app/operations/operations-enums.c:266
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:201
+#: ../app/operations/operations-enums.c:267
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "強烈光源"
 
-#: ../app/operations/operations-enums.c:202
+#: ../app/operations/operations-enums.c:268
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "小光源"
 
-#: ../app/operations/operations-enums.c:203
+#: ../app/operations/operations-enums.c:269
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "線性光源"
 
-#: ../app/operations/operations-enums.c:204
+#: ../app/operations/operations-enums.c:270
 msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "實色疊印混合"
 
-#: ../app/operations/operations-enums.c:205
+#: ../app/operations/operations-enums.c:271
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "排除"
 
-#: ../app/operations/operations-enums.c:206
+#: ../app/operations/operations-enums.c:272
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "線性加深"
 
-#: ../app/operations/operations-enums.c:207
+#: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr "亮度只會更暗"
 
-#: ../app/operations/operations-enums.c:208
+#. Translators: this is an abbreviated version of "Luma/Luminance darken only".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:276
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Luma/Luminance darken only"
+msgctxt "layer-mode"
+msgid "Luma darken only"
+msgstr "亮度只會更暗"
+
+#: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "亮度只會更亮"
 
-#: ../app/operations/operations-enums.c:209
+#. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
+#. Keep it short.
+#: ../app/operations/operations-enums.c:280
+#, fuzzy
+#| msgctxt "layer-mode"
+#| msgid "Lighten only"
+msgctxt "layer-mode"
+msgid "Luma lighten only"
+msgstr "僅變亮"
+
+#: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "明度"
 
-#: ../app/operations/operations-enums.c:210
+#: ../app/operations/operations-enums.c:282
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "顏色擦除"
 
-#: ../app/operations/operations-enums.c:211
+#: ../app/operations/operations-enums.c:283
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "擦除"
 
-#: ../app/operations/operations-enums.c:212
+#: ../app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Merge"
 msgstr "合併"
 
-#: ../app/operations/operations-enums.c:213
+#: ../app/operations/operations-enums.c:285
 msgctxt "layer-mode"
 msgid "Split"
 msgstr "分割"
 
-#: ../app/operations/operations-enums.c:214
+#: ../app/operations/operations-enums.c:286
 msgctxt "layer-mode"
 msgid "Pass through"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:215
+#: ../app/operations/operations-enums.c:287
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "取代"
 
-#: ../app/operations/operations-enums.c:216
+#: ../app/operations/operations-enums.c:288
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "防擦除"
 
-#: ../app/operations/operations-enums.c:244
+#: ../app/operations/operations-enums.c:316
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "預設"
 
-#: ../app/operations/operations-enums.c:245
+#: ../app/operations/operations-enums.c:317
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr ""
@@ -18318,28 +18276,24 @@ msgid ""
 "tool"
 msgstr "將一組係數緩衝區轉換為GIMP籠式工具的坐標緩衝區"
 
-#: ../app/operations/gimpoperationcagetransform.c:127
+#: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill with plain color"
 msgstr "用純色填充"
 
-#: ../app/operations/gimpoperationcagetransform.c:128
+#: ../app/operations/gimpoperationcagetransform.c:132
 msgid "Fill the original position of the cage with a plain color"
 msgstr "用純色填充籠子的原始位置"
 
 #: ../app/operations/gimpoperationcolorbalance.c:65
-#| msgid "Color Balance Tool: Adjust color distribution"
 msgid "Adjust color distribution"
 msgstr "調整色彩分布"
 
 #: ../app/operations/gimpoperationcolorize.c:85
-#| msgid "Colorize the Image"
 msgid "Colorize the image"
 msgstr "將圖像著色"
 
 #: ../app/operations/gimpoperationcolorize.c:114
 #: ../app/operations/gimpoperationcolorize.c:115
-#| msgctxt "dynamics-output-type"
-#| msgid "Color"
 msgid "Color"
 msgstr "顏色"
 
@@ -18358,7 +18312,6 @@ msgid "Choose shade of gray based on"
 msgstr "選擇灰色陰影基於："
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#| msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "調整色相、飽和度和亮度"
 
@@ -18367,7 +18320,6 @@ msgid "Reduce to a limited set of colors"
 msgstr "降低到有限的一組顏色"
 
 #: ../app/operations/gimpoperationposterize.c:87
-#| msgid "Posterize _levels:"
 msgid "Posterize levels"
 msgstr "色調分離程度"
 
@@ -18394,14 +18346,14 @@ msgstr ""
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:235
+#: ../app/gui/gui.c:236
 msgid "default:LTR"
 msgstr ""
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:542
+#: ../app/gui/gui.c:543
 msgid "Documents"
 msgstr "文件"
 
@@ -18518,23 +18470,21 @@ msgstr "形狀"
 
 #: ../app/paint/gimpinkoptions.c:113 ../app/widgets/gimpbrusheditor.c:189
 msgid "Aspect ratio"
-msgstr "長寬比"
+msgstr "寬高比"
 
 #: ../app/paint/gimpinkoptions.c:114
 msgid "Ink Blob Aspect Ratio"
-msgstr "墨水斑點長寬比"
+msgstr "墨水斑點寬高比"
 
 #: ../app/paint/gimpinkoptions.c:120
 msgid "Ink Blob Angle"
 msgstr "墨水斑點角度"
 
 #: ../app/paint/gimpmybrushcore.c:103
-#| msgid "Airbrush"
 msgid "Mybrush"
 msgstr "Mybrush"
 
 #: ../app/paint/gimpmybrushcore.c:160
-#| msgid "No brushes available for use with this tool."
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "沒有 MyPaint 筆刷可用於此工具。"
 
@@ -18545,7 +18495,6 @@ msgid "Radius"
 msgstr "半徑"
 
 #: ../app/paint/gimpmybrushoptions.c:92
-#| msgid "Opacity"
 msgid "Base Opacity"
 msgstr "基本不透明度"
 
@@ -18580,7 +18529,7 @@ msgstr "鎖定筆刷大小與畫布縮放"
 
 #: ../app/paint/gimppaintoptions.c:205
 msgid "Aspect Ratio"
-msgstr "長寬比"
+msgstr "寬高比"
 
 #: ../app/paint/gimppaintoptions.c:219 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
@@ -18607,11 +18556,11 @@ msgstr "鎖定筆刷為原始大小"
 
 #: ../app/paint/gimppaintoptions.c:247
 msgid "Link Aspect Ratio"
-msgstr "鎖定長寬比"
+msgstr "鎖定寬高比"
 
 #: ../app/paint/gimppaintoptions.c:248
 msgid "Link brush aspect ratio to brush native"
-msgstr "鎖定筆刷為原始長寬比"
+msgstr "鎖定筆刷為原始寬高比"
 
 #: ../app/paint/gimppaintoptions.c:254
 msgid "Link Angle"
@@ -18643,7 +18592,7 @@ msgstr "遞增"
 
 #: ../app/paint/gimppaintoptions.c:276
 msgid "Every stamp has its own opacity"
-msgstr ""
+msgstr "每個圖章都有自己的不透明度"
 
 #: ../app/paint/gimppaintoptions.c:283
 msgid "Hard edge"
@@ -18861,7 +18810,7 @@ msgstr "臨界值"
 msgid "Plug-in"
 msgstr "外掛程式"
 
-#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:966
+#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:987
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景選取"
@@ -18949,7 +18898,6 @@ msgstr "筆刷“%s”不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:98
 #, c-format
-#| msgid "Brush '%s' is not editable"
 msgid "Brush '%s' is not renamable"
 msgstr "筆刷「 %s 」不可更名"
 
@@ -18974,7 +18922,6 @@ msgstr "繪圖動態「%s」不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:167
 #, c-format
-#| msgid "Paint dynamics '%s' is not editable"
 msgid "Paint dynamics '%s' is not renamable"
 msgstr "筆刷動態「 %s 」不可更名"
 
@@ -18994,7 +18941,6 @@ msgstr "MyPaint 筆刷「%s」不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:210
 #, c-format
-#| msgid "MyPaint brush '%s' is not editable"
 msgid "MyPaint brush '%s' is not renamable"
 msgstr "MyPaint 筆刷「 %s 」不可更名"
 
@@ -19023,7 +18969,6 @@ msgstr "漸層「%s」不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:281
 #, c-format
-#| msgid "Gradient '%s' is not editable"
 msgid "Gradient '%s' is not renamable"
 msgstr "漸層「 %s 」不可更名"
 
@@ -19043,7 +18988,6 @@ msgstr "調色盤「%s」不可編輯"
 
 #: ../app/pdb/gimppdb-utils.c:324
 #, c-format
-#| msgid "Palette '%s' is not editable"
 msgid "Palette '%s' is not renamable"
 msgstr "調色盤「 %s 」不可更名"
 
@@ -19543,7 +19487,7 @@ msgstr "選擇性高斯模糊"
 #: ../app/pdb/plug-in-compat-cmds.c:3560
 msgctxt "undo-type"
 msgid "Semi-Flatten"
-msgstr ""
+msgstr "影像平面化"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3603
 msgctxt "undo-type"
@@ -19805,20 +19749,14 @@ msgid "invalid value '%ld' for icon type"
 msgstr "指定圖示類型的值 ‘%ld’ 無效"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:63
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Red channel"
 msgstr "紅色色版"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:87
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Green channel"
 msgstr "綠色色版"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:111
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Blue channel"
 msgstr "藍色色版"
 
@@ -19874,24 +19812,18 @@ msgid "Clockwise"
 msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:130
-#| msgctxt "undo-type"
-#| msgid "Invert Channel"
 msgid "Invert Range"
 msgstr "反轉範圍"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:134
-#| msgctxt "undo-type"
-#| msgid "Select All"
 msgid "Select All"
 msgstr "全選"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:214
-#| msgid "Source"
 msgid "Source Range"
 msgstr "來源範圍"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:225
-#| msgid "R_eset Range"
 msgid "Destination Range"
 msgstr "目標範圍"
 
@@ -19902,7 +19834,6 @@ msgid "Gray Handling"
 msgstr "拖曳控制柄"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:179
-#| msgid "Replace partial transparency with a color"
 msgid "Pick farthest full-transparency color"
 msgstr "選擇最遠的全透明顏色"
 
@@ -19911,26 +19842,18 @@ msgid "Pick nearest full-opacity color"
 msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:202
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° counter-clock_wise"
 msgid "Rotate matrix 90° counter-clockwise"
 msgstr "逆時針旋轉矩陣 90°"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:208
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90° _clockwise"
 msgid "Rotate matrix 90° clockwise"
 msgstr "順時針旋轉矩陣 90°"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:214
-#| msgctxt "image-action"
-#| msgid "Flip image horizontally"
 msgid "Flip matrix horizontally"
 msgstr "水平翻轉矩陣"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:220
-#| msgctxt "image-action"
-#| msgid "Flip image vertically"
 msgid "Flip matrix vertically"
 msgstr "垂直翻轉矩陣"
 
@@ -19939,7 +19862,6 @@ msgid "Frequencies"
 msgstr ""
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:79
-#| msgid "Contiguous"
 msgid "Contours"
 msgstr "輪廓"
 
@@ -20023,8 +19945,6 @@ msgid "Spiral: "
 msgstr ""
 
 #: ../app/propgui/gimppropgui-supernova.c:125
-#| msgctxt "undo-type"
-#| msgid "Supernova"
 msgid "Supernova: "
 msgstr "超新星："
 
@@ -20098,7 +20018,7 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-utils.c:101
 msgid "Choose from a list of common color temperatures"
-msgstr ""
+msgstr "從常見色溫列表中進行選擇"
 
 #: ../app/propgui/gimppropgui-utils.c:152
 #, fuzzy
@@ -20354,7 +20274,6 @@ msgid "Threshold"
 msgstr "臨界值"
 
 #: ../app/tools/gimpblendoptions.c:131
-#| msgid "Instant update"
 msgid "Instant mode"
 msgstr "即時模式"
 
@@ -20383,7 +20302,6 @@ msgstr "編輯此漸層"
 #. the instant toggle
 #: ../app/tools/gimpblendoptions.c:326
 #, c-format
-#| msgid "Instant update"
 msgid "Instant mode  (%s)"
 msgstr "即時模式  (%s)"
 
@@ -20406,7 +20324,6 @@ msgid "Blen_d"
 msgstr "混色(_D)"
 
 #: ../app/tools/gimpblendtool.c:213
-#| msgid "Click-Drag to add a new point"
 msgid "Click-Drag to draw a gradient"
 msgstr "點擊並拖曳來繪製漸層"
 
@@ -20428,12 +20345,10 @@ msgstr "混色："
 
 #. the position labels
 #: ../app/tools/gimpblendtool-editor.c:1280
-#| msgid "_X:"
 msgid "X:"
 msgstr "X："
 
 #: ../app/tools/gimpblendtool-editor.c:1286
-#| msgid "_Y:"
 msgid "Y:"
 msgstr "Y："
 
@@ -20443,7 +20358,6 @@ msgid "Color:"
 msgstr "顏色:"
 
 #: ../app/tools/gimpblendtool-editor.c:1347
-#| msgid "Left Endpoint Color"
 msgid "Change Endpoint Color"
 msgstr "更改端點顏色"
 
@@ -20456,14 +20370,10 @@ msgstr "位置:"
 
 #. the color labels
 #: ../app/tools/gimpblendtool-editor.c:1410
-#| msgctxt "gradient-editor-action"
-#| msgid "Left Color Type"
 msgid "Left color:"
 msgstr "左邊顏色："
 
 #: ../app/tools/gimpblendtool-editor.c:1416
-#| msgctxt "gradient-editor-action"
-#| msgid "Right Color Type"
 msgid "Right color:"
 msgstr "右邊顏色："
 
@@ -20483,13 +20393,11 @@ msgstr "刪除路徑"
 
 #. the type label
 #: ../app/tools/gimpblendtool-editor.c:1530
-#| msgid "Blending"
 msgid "Blending:"
 msgstr "混合："
 
 #. the color label
 #: ../app/tools/gimpblendtool-editor.c:1552
-#| msgid "Color:"
 msgid "Coloring:"
 msgstr "著色："
 
@@ -20502,14 +20410,10 @@ msgid "Center midpoint"
 msgstr "中心中點"
 
 #: ../app/tools/gimpblendtool-editor.c:1657
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
 msgid "Start Endpoint"
 msgstr "開始端點"
 
 #: ../app/tools/gimpblendtool-editor.c:1665
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
 msgid "End Endpoint"
 msgstr "結束端點"
 
@@ -20520,14 +20424,11 @@ msgstr ""
 
 #: ../app/tools/gimpblendtool-editor.c:1786
 #, c-format
-#| msgctxt "unit-singular"
-#| msgid "point"
 msgid "Midpoint %d"
 msgstr "中點 %d"
 
 #: ../app/tools/gimpblendtool-editor.c:2364
 #: ../app/tools/gimpblendtool-editor.c:2373
-#| msgid "Blend: "
 msgid "Blend Step"
 msgstr "混合步驟"
 
@@ -20662,6 +20563,8 @@ msgid ""
 "Fill the original position\n"
 "of the cage with a color"
 msgstr ""
+"用一顏色填充籠子\n"
+"的原始位置"
 
 #: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1223
 msgid "Cage Transform"
@@ -20697,17 +20600,17 @@ msgstr "仿製(_C)"
 
 #: ../app/tools/gimpclonetool.c:81 ../app/tools/gimpclonetool.c:84
 msgid "Click to clone"
-msgstr "點選以仿製"
+msgstr "點擊以仿製"
 
 #: ../app/tools/gimpclonetool.c:82 ../app/tools/gimpclonetool.c:87
 #, c-format
 msgid "%s to set a new clone source"
-msgstr "%s 可以設定新的複製來源"
+msgstr "%s 以設定新的仿製來源"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimpclonetool.c:86
 msgid "Click to set a new clone source"
-msgstr "按下這裡可以設定新的複製來源"
+msgstr "點擊以設定新的仿製來源"
 
 #: ../app/tools/gimpcoloroptions.c:70
 msgid "Use merged color value from all composited visible layers"
@@ -20878,18 +20781,15 @@ msgid "_Crop"
 msgstr "剪裁(_C)"
 
 #: ../app/tools/gimpcroptool.c:154
-#, fuzzy
 #| msgid "Click-Drag to create a new selection"
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "按下後拖曳以建立新的選取範圍"
+msgstr "點擊並拖曳以選取一個矩形範圍來剪裁"
 
 #: ../app/tools/gimpcroptool.c:263
 msgid "Click or press Enter to crop"
-msgstr "點選或按 Enter 進行剪裁"
+msgstr "點擊選取範圍或按下 Enter 鍵進行剪裁"
 
 #: ../app/tools/gimpcroptool.c:365
-#| msgctxt "image-action"
-#| msgid "Crop to C_ontent"
 msgid "Crop to: "
 msgstr "裁剪到："
 
@@ -20925,13 +20825,11 @@ msgstr "請按這裡以關閉曲線"
 
 #: ../app/tools/gimpcurvestool.c:329
 #, c-format
-#| msgid "Click to add a control point"
 msgid "%s: add control point"
 msgstr "%s：加入控制點"
 
 #: ../app/tools/gimpcurvestool.c:330
 #, c-format
-#| msgid "Click to add control points to all channels"
 msgid "%s: add control points to all channels"
 msgstr "%s：加入控制點到所有色版"
 
@@ -20948,7 +20846,7 @@ msgstr "色版(_N):"
 msgid "R_eset Channel"
 msgstr "重設色版(_E)"
 
-#: ../app/tools/gimpcurvestool.c:521 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:521 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
 msgstr "曲線類型(_T):"
 
@@ -21011,8 +20909,8 @@ msgstr "類型  (%s)"
 msgid "Move: "
 msgstr "移動："
 
-#: ../app/tools/gimpeditselectiontool.c:865
-#: ../app/tools/gimpeditselectiontool.c:1124
+#: ../app/tools/gimpeditselectiontool.c:868
+#: ../app/tools/gimpeditselectiontool.c:1127
 msgid "Move Floating Selection"
 msgstr "移動浮動選取範圍"
 
@@ -21085,12 +20983,10 @@ msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 
 #: ../app/tools/gimpfiltertool.c:626
-#| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
 msgstr "點擊以切換原來的和過濾的一面"
 
 #: ../app/tools/gimpfiltertool.c:630
-#| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
 msgstr "點擊以切換垂直和水平"
 
@@ -21113,14 +21009,12 @@ msgstr ""
 #: ../app/tools/gimpfiltertool.c:1296
 #: ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
-#| msgid "Import Threshold Settings"
 msgid "Import '%s' Settings"
 msgstr "匯入「 %s 」設定"
 
 #: ../app/tools/gimpfiltertool.c:1298
 #: ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
-#| msgid "Export Threshold Settings"
 msgid "Export '%s' Settings"
 msgstr "匯出「 %s 」設定"
 
@@ -21212,7 +21106,7 @@ msgstr "預覽顏色"
 
 #: ../app/tools/gimpforegroundselectoptions.c:101
 msgid "Color of selection preview mask"
-msgstr ""
+msgstr "選取範圍預覽遮罩的顏色"
 
 #: ../app/tools/gimpforegroundselectoptions.c:108
 #: ../app/tools/gimpforegroundselectoptions.c:316
@@ -21224,7 +21118,6 @@ msgid "Matting engine to use"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
-#| msgid "Number of _processors to use:"
 msgid "Number of downsampled levels to use"
 msgstr "使用的下採樣級數"
 
@@ -21237,12 +21130,10 @@ msgid "Number of levels to perform solving"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:130
-#| msgid "Interpolation:"
 msgid "Iterations"
 msgstr "迭代"
 
 #: ../app/tools/gimpforegroundselectoptions.c:131
-#| msgid "Number of _processors to use:"
 msgid "Number of iterations to perform"
 msgstr "要執行的迭代次數"
 
@@ -21274,31 +21165,31 @@ msgstr "預覽遮罩(_P)"
 msgid "Select foreground pixels"
 msgstr "選擇前景像素"
 
-#: ../app/tools/gimpforegroundselecttool.c:598
+#: ../app/tools/gimpforegroundselecttool.c:606
 msgid "Roughly outline the object to extract"
 msgstr "粗略地描畫物件的輪廓以提取"
 
-#: ../app/tools/gimpforegroundselecttool.c:619
+#: ../app/tools/gimpforegroundselecttool.c:627
 msgid "Selecting foreground,"
 msgstr "選取前景，"
 
-#: ../app/tools/gimpforegroundselecttool.c:621
+#: ../app/tools/gimpforegroundselecttool.c:629
 msgid "Selecting background,"
 msgstr "選取背景，"
 
-#: ../app/tools/gimpforegroundselecttool.c:623
+#: ../app/tools/gimpforegroundselecttool.c:631
 msgid "Selecting unknown,"
 msgstr "選取未知，"
 
-#: ../app/tools/gimpforegroundselecttool.c:626
+#: ../app/tools/gimpforegroundselecttool.c:634
 msgid "press Enter to preview."
 msgstr "按下 Enter 進行預覽。"
 
-#: ../app/tools/gimpforegroundselecttool.c:628
+#: ../app/tools/gimpforegroundselecttool.c:636
 msgid "press Escape to exit preview or Enter to apply."
 msgstr "按 Esc 鍵退出預覽，或 Enter 鍵以套用。"
 
-#: ../app/tools/gimpforegroundselecttool.c:1189
+#: ../app/tools/gimpforegroundselecttool.c:1210
 msgid "Paint mask"
 msgstr "繪畫遮罩"
 
@@ -21311,7 +21202,7 @@ msgstr "自由選取工具：以手繪方式選取任意和多邊形片段的區
 msgid "_Free Select"
 msgstr "自由選取(_F)"
 
-#: ../app/tools/gimpfreeselecttool.c:492
+#: ../app/tools/gimpfreeselecttool.c:494
 msgctxt "command"
 msgid "Free Select"
 msgstr "智慧型選取"
@@ -21744,12 +21635,10 @@ msgid "The active channel's position is locked."
 msgstr "使用中路徑是鎖住的。"
 
 #: ../app/tools/gimpmybrushtool.c:74
-#| msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
 msgstr "MyPaint  筆刷工具：在 GIMP 中使用 MyPaint 筆刷"
 
 #: ../app/tools/gimpmybrushtool.c:75
-#| msgid "_Paintbrush"
 msgid "M_yPaint Brush"
 msgstr "M_yPaint 筆刷"
 
@@ -21940,7 +21829,7 @@ msgstr "透視法仿製(_P)"
 
 #: ../app/tools/gimpperspectiveclonetool.c:556
 msgid "Ctrl-Click to set a clone source"
-msgstr "請按 Ctrl 並點選以設定複製來源"
+msgstr "按 Ctrl 並點擊以設定仿製來源"
 
 #: ../app/tools/gimpperspectivetool.c:86
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
@@ -22003,7 +21892,7 @@ msgstr "路徑轉為選取範圍"
 
 #: ../app/tools/gimprectangleoptions.c:192
 msgid "Enable lock of aspect ratio, width, height or size"
-msgstr ""
+msgstr "啟用寬高比、寬度、高度或尺寸的鎖定"
 
 #: ../app/tools/gimprectangleoptions.c:201
 msgid "Choose what has to be locked"
@@ -22184,15 +22073,15 @@ msgstr ""
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:751
 msgid "Seamless Clone"
-msgstr ""
+msgstr "無縫仿製"
 
 #: ../app/tools/gimpseamlessclonetool.c:191
 msgid "Seamless Clone: Seamlessly paste one image into another"
-msgstr ""
+msgstr "無縫仿製：將一個圖像無縫貼到另一個圖像"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 msgid "_Seamless Clone"
-msgstr ""
+msgstr "無縫仿製(_S)"
 
 #: ../app/tools/gimpseamlessclonetool.c:789
 msgid "Cloning the foreground object"
@@ -22444,8 +22333,6 @@ msgid "Create _New Layer"
 msgstr "建立一個新的圖層(_N)"
 
 #: ../app/tools/gimptexttool.c:1582
-#| msgctxt "edit-action"
-#| msgid "_Edit"
 msgid "_Edit"
 msgstr "編輯(_E)"
 
@@ -22544,11 +22431,10 @@ msgstr "保持長寬比(%s)"
 
 #: ../app/tools/gimptransformoptions.c:497
 msgid "Keep the original aspect ratio"
-msgstr "保持原始長寬比"
+msgstr "保持原始寬高比"
 
 #: ../app/tools/gimptransformoptions.c:515
 #, c-format
-#| msgid "Anti erase  (%s)"
 msgid "Constrain (%s)"
 msgstr "限制  (%s)"
 
@@ -22653,7 +22539,6 @@ msgid "The active layer's position and size are locked."
 msgstr "使用中的圖層像素被鎖定。"
 
 #: ../app/tools/gimptransformtool.c:1421
-#| msgid "There is no selection to stroke."
 msgid "There is no selection to transform."
 msgstr "沒有選取範圍可變換。"
 
@@ -22676,7 +22561,6 @@ msgid "Unified Transform"
 msgstr "統一變換"
 
 #: ../app/tools/gimpunifiedtransformtool.c:87
-#| msgid "Shear Tool: Shear the layer, selection or path"
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "統一變換工具：變換圖層、選取範圍或路徑"
 
@@ -22689,7 +22573,6 @@ msgid "Unified transform"
 msgstr "統一變換"
 
 #: ../app/tools/gimpunifiedtransformtool.c:124
-#| msgid "Transformation Matrix"
 msgid "Transform Matrix"
 msgstr "變換矩陣"
 
@@ -22725,7 +22608,6 @@ msgid "Pat_hs"
 msgstr "路徑(_H)"
 
 #: ../app/tools/gimpvectortool.c:733
-#| msgid "There is no active layer or channel to cut from."
 msgid "There is no active layer or channel to fill"
 msgstr "沒有使用中的圖層或色版可填充"
 
@@ -22786,7 +22668,6 @@ msgid "Apply effect during motion"
 msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:149
-#| msgid "Vertical"
 msgid "Periodically"
 msgstr "週期性地"
 
@@ -22805,12 +22686,11 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:163
 msgid "Frames"
-msgstr ""
+msgstr "影格"
 
 #: ../app/tools/gimpwarpoptions.c:164
-#, fuzzy
 msgid "Number of animation frames"
-msgstr "格線數"
+msgstr "動畫影格數"
 
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:339
@@ -22821,15 +22701,12 @@ msgstr "加入筆劃"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:361
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "An_imation"
 msgid "Animate"
-msgstr "動畫(_I)"
+msgstr "繪製"
 
 #: ../app/tools/gimpwarpoptions.c:375
-#| msgctxt "plug-in-action"
-#| msgid "An_imation"
 msgid "Create Animation"
 msgstr "創建動畫"
 
@@ -22850,7 +22727,6 @@ msgid "Warp Tool Stroke"
 msgstr ""
 
 #: ../app/tools/gimpwarptool.c:618
-#| msgid "Cannot paint on layer groups."
 msgid "Cannot warp layer groups."
 msgstr "無法扭曲圖層群組。"
 
@@ -22895,7 +22771,7 @@ msgstr "固定尺寸"
 #: ../app/tools/tools-enums.c:27
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
-msgstr "固定長寬比"
+msgstr "固定寬高比"
 
 #: ../app/tools/tools-enums.c:56
 msgctxt "transform-type"
@@ -22913,54 +22789,41 @@ msgid "Path"
 msgstr "路徑"
 
 #: ../app/tools/tools-enums.c:151
-#| msgid "Mark foreground"
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "繪製前景"
 
 #: ../app/tools/tools-enums.c:152
-#| msgid "Mark background"
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "繪製背景"
 
 #: ../app/tools/tools-enums.c:153
-#| msgctxt "orientation-type"
-#| msgid "Unknown"
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
 msgstr "繪製未知"
 
 #: ../app/tools/tools-enums.c:186
-#| msgid "Lock pixels"
 msgctxt "warp-behavior"
 msgid "Move pixels"
 msgstr "移動像素"
 
 #: ../app/tools/tools-enums.c:187
-#| msgctxt "undo-type"
-#| msgid "Grow Channel"
 msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "擴大範圍"
 
 #: ../app/tools/tools-enums.c:188
-#| msgctxt "view-action"
-#| msgid "Shrink _Wrap"
 msgctxt "warp-behavior"
 msgid "Shrink area"
 msgstr "縮小範圍"
 
 #: ../app/tools/tools-enums.c:189
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (clockwise _hue)"
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
 msgstr "順時針旋轉"
 
 #: ../app/tools/tools-enums.c:190
-#| msgctxt "gradient-editor-coloring"
-#| msgid "HSV (_counter-clockwise hue)"
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
 msgstr "逆時針旋轉"
@@ -23015,8 +22878,6 @@ msgid "Transform Path"
 msgstr "變換路徑"
 
 #: ../app/vectors/gimpvectors.c:231
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "填充路徑"
@@ -23366,13 +23227,10 @@ msgid "Select the next event arriving from the controller"
 msgstr "選擇下一個送達此控制器的事件"
 
 #: ../app/widgets/gimpcontrollereditor.c:374
-#| msgctxt "gradients-action"
-#| msgid "Edit gradient"
 msgid "_Edit event"
 msgstr "編輯事件(_E)"
 
 #: ../app/widgets/gimpcontrollereditor.c:382
-#| msgid "_Grab event"
 msgid "_Clear event"
 msgstr "清除事件(_C)"
 
@@ -23527,12 +23385,10 @@ msgid "Remove Controller?"
 msgstr "是否移除控制器？"
 
 #: ../app/widgets/gimpcontrollerlist.c:563
-#| msgid "Disable Controller"
 msgid "_Disable Controller"
 msgstr "停用控制器(_D)"
 
 #: ../app/widgets/gimpcontrollerlist.c:565
-#| msgid "Remove Controller"
 msgid "_Remove Controller"
 msgstr "移除控制器(_R)"
 
@@ -23699,7 +23555,6 @@ msgstr ""
 "下次這個裝置插入時，預設的設定將被使用。"
 
 #: ../app/widgets/gimpdeviceinfo.c:163
-#| msgid "Pressure"
 msgid "Pressure curve"
 msgstr "壓力曲線"
 
@@ -23717,42 +23572,46 @@ msgstr "X 傾斜"
 msgid "Y tilt"
 msgstr "Y 傾斜"
 
-#. Wheel as in mouse or input device wheel
-#: ../app/widgets/gimpdeviceinfoeditor.c:145
+#. Wheel as in mouse or input device wheel.
+#. * Some pens use the same axis for their rotation feature.
+#. * See bug 791455.
+#.
+#: ../app/widgets/gimpdeviceinfoeditor.c:148
 #: ../app/widgets/gimpdynamicseditor.c:165
-#: ../app/widgets/gimpdynamicsoutputeditor.c:74
-msgid "Wheel"
-msgstr "打轉"
+#, fuzzy
+#| msgid "Rotating"
+msgid "Wheel/Rotation"
+msgstr "旋轉中"
 
 #. the axes
 #. The axes of an input device
-#: ../app/widgets/gimpdeviceinfoeditor.c:196
+#: ../app/widgets/gimpdeviceinfoeditor.c:199
 msgid "Axes"
 msgstr "軸"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:270
+#: ../app/widgets/gimpdeviceinfoeditor.c:273
 msgid "Keys"
 msgstr "鍵"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:366
-#: ../app/widgets/gimpdeviceinfoeditor.c:581
+#: ../app/widgets/gimpdeviceinfoeditor.c:369
+#: ../app/widgets/gimpdeviceinfoeditor.c:584
 #, c-format
 msgid "none"
 msgstr "無"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:415
+#: ../app/widgets/gimpdeviceinfoeditor.c:418
 #, c-format
 msgid "%s Curve"
 msgstr "%s 曲線"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:474
+#: ../app/widgets/gimpdeviceinfoeditor.c:477
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
 msgstr "重設曲線(_R)"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:487
+#: ../app/widgets/gimpdeviceinfoeditor.c:490
 #, fuzzy, c-format
 msgid "The axis '%s' has no curve"
 msgstr "沒有應用程式取得焦點。"
@@ -23866,6 +23725,10 @@ msgstr "映射矩陣"
 msgid "Icon:"
 msgstr "圖示(_I)："
 
+#: ../app/widgets/gimpdynamicsoutputeditor.c:74
+msgid "Wheel / Rotation"
+msgstr ""
+
 #: ../app/widgets/gimperrordialog.c:169
 msgid "Too many error messages!"
 msgstr "錯誤訊息太多！"
@@ -23896,13 +23759,10 @@ msgid "By Extension"
 msgstr "依延伸檔名"
 
 #: ../app/widgets/gimpexportdialog.c:80
-#| msgid "All images"
 msgid "All export images"
 msgstr "所有匯出的圖像"
 
 #: ../app/widgets/gimpfiledialog.c:350
-#| msgctxt "help-action"
-#| msgid "_Help"
 msgid "_Help"
 msgstr "幫助(_H)"
 
@@ -24081,17 +23941,14 @@ msgid "GIMP user manual is missing"
 msgstr "GIMP 使用者手冊不見了"
 
 #: ../app/widgets/gimphelp.c:809
-#| msgid "The GIMP user manual is not installed on your computer."
 msgid "The GIMP user manual is not installed in your language."
 msgstr "GIMP 使用者手冊並未以您的語言安裝。"
 
 #: ../app/widgets/gimphelp.c:820
-#| msgid "System Language"
 msgid "Read Selected _Language"
 msgstr "讀取所選語言(_L)"
 
 #: ../app/widgets/gimphelp.c:824
-#| msgid "Available Filters"
 msgid "Available manuals..."
 msgstr "可用的手冊…"
 
@@ -24112,13 +23969,10 @@ msgid ""
 msgstr "您可以安裝額外的說明檔套件或改變偏好設定來使用線上版本。"
 
 #: ../app/widgets/gimphelp.c:847
-#| msgid "_Read Online"
 msgid "Read _Online"
 msgstr "線上閱讀(_O)"
 
 #: ../app/widgets/gimphistogrameditor.c:109
-#| msgctxt "gradient-editor-blending"
-#| msgid "_Linear"
 msgid "Linear"
 msgstr "線性"
 
@@ -24164,8 +24018,6 @@ msgid "From Named Icons..."
 msgstr "複製並且命名(_C)..."
 
 #: ../app/widgets/gimpiconpicker.c:263
-#| msgctxt "documents-action"
-#| msgid "Copy image location to clipboard"
 msgid "Copy Icon to Clipboard"
 msgstr "複製圖示到剪貼簿"
 
@@ -24181,18 +24033,15 @@ msgid "Load Icon Image"
 msgstr ""
 
 #: ../app/widgets/gimpiconsizescale.c:126
-#, fuzzy
 #| msgid "The horizontal image resolution."
 msgid "Guess icon size from resolution"
-msgstr "圖片水平解析度。"
+msgstr "從解析度猜測圖示大小"
 
 #: ../app/widgets/gimpiconsizescale.c:127
 msgid "Use icon size from the theme"
-msgstr ""
+msgstr "使用主題中的圖示大小"
 
 #: ../app/widgets/gimpiconsizescale.c:128
-#| msgctxt "canvas-padding-mode"
-#| msgid "Custom color"
 msgid "Custom icon size"
 msgstr "自訂圖示大小"
 
@@ -24335,7 +24184,6 @@ msgid "Select an image in the left pane"
 msgstr "請在以下的清單中選取項目。"
 
 #: ../app/widgets/gimppluginview.c:149
-#| msgid "Plug-in"
 msgid "Plug-In"
 msgstr "外掛程式"
 
@@ -24344,7 +24192,6 @@ msgid "Progress"
 msgstr "進度"
 
 #: ../app/widgets/gimpsavedialog.c:151
-#| msgid "All images"
 msgid "All XCF images"
 msgstr "所有 XCF 圖像"
 
@@ -24363,7 +24210,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:276
 msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr ""
+msgstr "在 GIMP 2.10 版本以前的，詮釋資料將不可見。"
 
 #: ../app/widgets/gimpsavedialog.c:329
 msgid "Save this XCF file with better but slower compression"
@@ -24403,27 +24250,22 @@ msgid "Manage presets"
 msgstr "管理已儲存的設定值"
 
 #: ../app/widgets/gimpsettingsbox.c:360
-#| msgid "_Import Settings from File..."
 msgid "_Import Current Settings from File..."
 msgstr "由檔案匯入目前的設定(_I)…"
 
 #: ../app/widgets/gimpsettingsbox.c:366
-#| msgid "_Export Settings to File..."
 msgid "_Export Current Settings to File..."
 msgstr "匯出目前設定到檔案(_E)…"
 
 #: ../app/widgets/gimpsettingsbox.c:373
-#| msgid "Manage Saved Settings"
 msgid "_Manage Saved Presets..."
 msgstr "管理已儲存的預設值(_M)…"
 
 #: ../app/widgets/gimpsettingsbox.c:613
-#| msgid "Saved Settings"
 msgid "Save Settings as Named Preset"
 msgstr "將設定另存為命名的預設"
 
 #: ../app/widgets/gimpsettingsbox.c:616
-#| msgid "Enter a name for the settings"
 msgid "Enter a name for the preset"
 msgstr "請輸入預設值的名稱"
 
@@ -24432,22 +24274,18 @@ msgid "Saved Settings"
 msgstr "已儲存的設定值"
 
 #: ../app/widgets/gimpsettingsbox.c:658
-#| msgid "Manage Saved Settings"
 msgid "Manage Saved Presets"
 msgstr "管理已儲存的預設值"
 
 #: ../app/widgets/gimpsettingseditor.c:195
-#| msgid "Import settings from a file"
 msgid "Import presets from a file"
 msgstr "由檔案匯入預設值"
 
 #: ../app/widgets/gimpsettingseditor.c:204
-#| msgid "Export the selected settings to a file"
 msgid "Export the selected presets to a file"
 msgstr "匯出所選的預設值到一檔案"
 
 #: ../app/widgets/gimpsettingseditor.c:213
-#| msgid "Delete the selected settings"
 msgid "Delete the selected preset"
 msgstr "刪除所選的預設"
 
@@ -24524,12 +24362,10 @@ msgid "_Precision:"
 msgstr "精確度(_P)："
 
 #: ../app/widgets/gimptemplateeditor.c:427
-#| msgid "Gamma"
 msgid "_Gamma:"
 msgstr "_Gamma："
 
 #: ../app/widgets/gimptemplateeditor.c:432
-#| msgid "Colorize the Image"
 msgid "Color _manage this image"
 msgstr "色彩管理這個圖像(_M)"
 
@@ -24789,7 +24625,6 @@ msgid "Lock path strokes"
 msgstr "鎖住路徑描邊"
 
 #: ../app/widgets/gimpvectorstreeview.c:114
-#| msgid "Lock path strokes"
 msgid "Lock path position"
 msgstr "鎖定路徑位置"
 
@@ -24802,7 +24637,6 @@ msgid "Open the dynamics selection dialog"
 msgstr "開啟動態選擇對話框"
 
 #: ../app/widgets/gimpviewablebox.c:226
-#| msgid "Open the brush selection dialog"
 msgid "Open the MyPaint brush selection dialog"
 msgstr "開啟 MyPaint 筆刷選擇對話框"
 
@@ -24842,23 +24676,22 @@ msgstr "%s (嘗試 %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (嘗試 %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1646
+#: ../app/widgets/gimpwidgets-utils.c:1654
 #, c-format
-#| msgid "Anti erase  (%s)"
 msgid "Built-in grayscale (%s)"
 msgstr "內建灰階  (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1653
+#: ../app/widgets/gimpwidgets-utils.c:1661
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "內建 RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1670
+#: ../app/widgets/gimpwidgets-utils.c:1678
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr ""
 
-#: ../app/widgets/gimpwidgets-utils.c:1677
+#: ../app/widgets/gimpwidgets-utils.c:1685
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr ""
@@ -24997,7 +24830,7 @@ msgstr "未定義"
 msgid "GIMP XCF image"
 msgstr "GIMP XCF 圖片"
 
-#: ../app/xcf/xcf.c:271 ../app/xcf/xcf.c:358
+#: ../app/xcf/xcf.c:271 ../app/xcf/xcf.c:359
 msgid "Memory Stream"
 msgstr "記憶體資料流"
 
@@ -25006,27 +24839,27 @@ msgstr "記憶體資料流"
 msgid "Opening '%s'"
 msgstr "正在開啟「%s」"
 
-#: ../app/xcf/xcf.c:323
+#: ../app/xcf/xcf.c:324
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 錯誤：不支援 XCF 檔案版本 %d"
 
-#: ../app/xcf/xcf.c:381
+#: ../app/xcf/xcf.c:382
 #, c-format
 msgid "Saving '%s'"
 msgstr "正在儲存「%s」"
 
-#: ../app/xcf/xcf.c:388
+#: ../app/xcf/xcf.c:389
 #, c-format
 msgid "Closing '%s'"
 msgstr "正在關閉「%s」"
 
-#: ../app/xcf/xcf.c:395
+#: ../app/xcf/xcf.c:396
 #, c-format
 msgid "Error writing '%s': "
 msgstr "寫入「%s」時發生錯誤："
 
-#: ../app/xcf/xcf.c:489
+#: ../app/xcf/xcf.c:490
 #, c-format
 msgid "Error creating '%s': "
 msgstr "讀取「%s」時發生錯誤："
@@ -25097,6 +24930,9 @@ msgstr "圓角"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "模糊"
+
+#~ msgid "Wheel"
+#~ msgstr "打轉"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Visible"
