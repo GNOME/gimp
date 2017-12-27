@@ -247,11 +247,11 @@ msgstr ""
 
 #: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select &All"
-msgstr "&Tümünü Seç"
+msgstr "&Tümünü Seç"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid "Unselect &All"
-msgstr "_Tümünün Seçimini Kaldır"
+msgstr "&Tümünün Seçimini Kaldır"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &Unused"
