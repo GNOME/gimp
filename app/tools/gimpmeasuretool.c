@@ -30,10 +30,17 @@
 
 #include "tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-resize.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -103,6 +110,8 @@ static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measur
 static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
                                                    GimpDisplay           *display);
 
+static void          rotate_active_layer          (GtkWidget             *button,
+                                                   GimpMeasureTool       *measure);
 
 G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -271,6 +280,7 @@ static void
 gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                                    GimpMeasureTool *measure)
 {
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   g_object_get (widget,
                 "n-points", &measure->n_points,
                 "x1",       &measure->x[0],
@@ -281,6 +291,7 @@ gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                 "y3",       &measure->y[2],
                 NULL);
 
+  gtk_widget_set_sensitive (options->auto_straighten, measure->n_points >= 2);
   gimp_measure_tool_dialog_update (measure, GIMP_TOOL (measure)->display);
 }
 
@@ -353,6 +364,7 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
 {
   GimpTool         *tool  = GIMP_TOOL (measure);
   GimpDisplayShell *shell = gimp_display_get_shell (display);
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
 
   measure->n_points = 1;
   measure->x[0]     = coords->x;
@@ -385,6 +397,9 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   g_signal_connect (measure->widget, "create-guides",
                     G_CALLBACK (gimp_measure_tool_compass_create_guides),
                     measure);
+  g_signal_connect (options->auto_straighten, "clicked",
+                    G_CALLBACK (rotate_active_layer),
+                    measure);
 
   tool->display = display;
 
@@ -394,13 +409,20 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
 static void
 gimp_measure_tool_halt (GimpMeasureTool *measure)
 {
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpTool *tool = GIMP_TOOL (measure);
+
+  gtk_widget_set_sensitive (options->auto_straighten, FALSE);
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
+
+  g_signal_handlers_disconnect_by_func (options->auto_straighten,
+                                        G_CALLBACK (rotate_active_layer),
+                                        measure);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&measure->widget);
@@ -779,4 +801,44 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   return gui;
+}
+
+static void
+rotate_active_layer (GtkWidget       *button,
+                     GimpMeasureTool *measure)
+{
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
+  GimpDisplay        *display = GIMP_TOOL (measure)->display;
+  GimpImage          *image   = gimp_display_get_image (display);
+  GimpContext        *context = GIMP_CONTEXT (options);
+  gdouble             ax      = measure->x[1] - measure->x[0];
+  gdouble             ay      = measure->y[1] - measure->y[0];
+  GimpLayer          *item    = gimp_image_get_active_layer (image);
+  gdouble             angle   = atan2 (ay, ax);
+  GimpMatrix3         matrix;
+
+
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_rotate_center (&matrix, measure->x[0], measure->y[0], angle);
+
+  /* Start a transform undo group */
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_TRANSFORM,
+                               C_("undo-type", "Transform"));
+
+  gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                  context,
+                                  &matrix,
+                                  GIMP_TRANSFORM_BACKWARD,
+                                  display->gimp->config->interpolation_type,
+                                  GIMP_TRANSFORM_RESIZE_ADJUST,
+                                  NULL);
+
+  gimp_image_resize_to_layers (image, context, NULL);
+
+  /*  push the undo group end  */
+  gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+  gimp_tool_control (GIMP_TOOL (measure), GIMP_TOOL_ACTION_HALT, display);
 }

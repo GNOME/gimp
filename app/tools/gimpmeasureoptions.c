@@ -127,5 +127,12 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  button = gtk_button_new_with_label (_("Auto straighten"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+//  gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_STROKE);
+  gtk_widget_show (button);
+
+  GIMP_MEASURE_OPTIONS (tool_options)->auto_straighten = button;
   return vbox;
 }
