@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-29 14:23+0000\n"
-"PO-Revision-Date: 2017-12-14 18:18+0800\n"
-"Last-Translator: tomoe_musashi <hkg.musashi@gmail.com>\n"
+"POT-Creation-Date: 2017-12-16 02:34+0000\n"
+"PO-Revision-Date: 2017-12-20 17:31+0800\n"
+"Last-Translator: taijuin <taijuin@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -53,8 +53,8 @@ msgstr "對齊可見圖層"
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
-#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
-#: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
+#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
+#: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
 #: ../plug-ins/common/filter-pack.c:1206
 #: ../plug-ins/common/fractal-trace.c:711 ../plug-ins/common/grid.c:646
@@ -70,7 +70,7 @@ msgstr "對齊可見圖層"
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:350
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -103,9 +103,8 @@ msgstr "對齊可見圖層"
 #: ../plug-ins/metadata/metadata-editor.c:764
 #: ../plug-ins/metadata/metadata-editor.c:5618
 #: ../plug-ins/metadata/metadata-editor.c:5653
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:427
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:474
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
-#| msgid "_Advanced"
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -132,7 +131,7 @@ msgstr "取消(_C)"
 #: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
 #: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
-#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:313
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:351
 #: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -152,7 +151,6 @@ msgid "_OK"
 msgstr "確定(_O)"
 
 #: ../plug-ins/common/align-layers.c:650 ../plug-ins/common/align-layers.c:681
-#| msgid "None"
 msgctxt "align-style"
 msgid "None"
 msgstr "無"
@@ -463,7 +461,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1160
+#: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
@@ -477,7 +475,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:257 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:263 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "背景"
 
@@ -851,7 +849,7 @@ msgstr "隨機數種子"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
-#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:724
 #: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:871 ../plug-ins/flame/flame.c:475
@@ -864,7 +862,6 @@ msgstr "隨機數種子"
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:600
 #: ../plug-ins/lighting/lighting-ui.c:1307
-#| msgid "Open"
 msgid "_Open"
 msgstr "開啟(_O)"
 
@@ -883,7 +880,6 @@ msgstr "開啟(_O)"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2531
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
 #: ../plug-ins/lighting/lighting-ui.c:1163
-#| msgid "Save"
 msgid "_Save"
 msgstr "儲存(_S)"
 
@@ -1061,7 +1057,6 @@ msgstr "目前設定的圖形"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/metadata/metadata-viewer.c:227
-#| msgid "Closed"
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -1077,14 +1072,14 @@ msgstr "儲存 CML 瀏覽器參數"
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1561
-#: ../plug-ins/common/file-raw-data.c:975
-#: ../plug-ins/common/file-raw-data.c:1003
-#: ../plug-ins/common/file-sunras.c:610 ../plug-ins/common/file-tga.c:1205
+#: ../plug-ins/common/file-raw-data.c:1192
+#: ../plug-ins/common/file-raw-data.c:1220
+#: ../plug-ins/common/file-sunras.c:610 ../plug-ins/common/file-tga.c:1203
 #: ../plug-ins/common/file-xmc.c:1484
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1559
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1581
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1109,9 +1104,9 @@ msgstr "載入 CML 瀏覽器參數"
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
-#: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3371
-#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:372
-#: ../plug-ins/common/file-raw-data.c:1084
+#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
+#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:477
+#: ../plug-ins/common/file-raw-data.c:1301
 #: ../plug-ins/common/file-sunras.c:436 ../plug-ins/common/file-svg.c:329
 #: ../plug-ins/common/file-svg.c:711 ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-xbm.c:747 ../plug-ins/common/file-xmc.c:659
@@ -1288,7 +1283,6 @@ msgstr "修改色票項目 #%d"
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
-#| msgid "_Presets"
 msgid "_Reset"
 msgstr "重設(_R)"
 
@@ -1415,8 +1409,11 @@ msgstr "Blueness_cb709:"
 msgid "_Redness cr709:"
 msgstr "Redness_cr709:"
 
+#. Generic case for any data. Let's leave choice to select the
+#. * right type of raw data.
+#.
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1601
+#: ../plug-ins/common/file-raw-data.c:1937
 msgid "RGB"
 msgstr "RGB"
 
@@ -2040,7 +2037,7 @@ msgid "O_verlap:"
 msgstr "重叠部份(_V):"
 
 #: ../plug-ins/common/depth-merge.c:775
-#: ../plug-ins/common/file-raw-data.c:1629
+#: ../plug-ins/common/file-raw-data.c:1971
 msgid "O_ffset:"
 msgstr "偏移(_F)："
 
@@ -2108,8 +2105,8 @@ msgid "Destripe"
 msgstr "去條紋"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
-#: ../plug-ins/common/file-ps.c:3497 ../plug-ins/common/file-ps.c:3702
-#: ../plug-ins/common/file-raw-data.c:1642
+#: ../plug-ins/common/file-ps.c:3467 ../plug-ins/common/file-ps.c:3672
+#: ../plug-ins/common/file-raw-data.c:1986
 #: ../plug-ins/common/smooth-palette.c:454 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2277,8 +2274,8 @@ msgstr "讀取影片 DVD 時發生錯誤 (%s)"
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:1077
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
+#: ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
 #: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:649 ../plug-ins/common/file-xpm.c:354
@@ -2286,7 +2283,7 @@ msgstr "讀取影片 DVD 時發生錯誤 (%s)"
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-raw/file-darktable.c:363
+#: ../plug-ins/file-raw/file-darktable.c:393
 #: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, fuzzy, c-format
@@ -2368,12 +2365,12 @@ msgstr ""
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
 #: ../plug-ins/common/file-png.c:1554 ../plug-ins/common/file-pnm.c:1246
-#: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1199 ../plug-ins/common/file-xbm.c:1033
+#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
+#: ../plug-ins/common/file-tga.c:1197 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1530
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1552
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, fuzzy, c-format
 msgid "Exporting '%s'"
@@ -2488,7 +2485,7 @@ msgstr "‘%s’不是 DICOM 格式檔案。"
 msgid "Cannot save images with alpha channel."
 msgstr "無法儲存有透明色版的圖片。"
 
-#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1260
+#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1231
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2848,8 +2845,8 @@ msgstr "表格邊框的寬度(像素)。"
 msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "表格格子的寬度。可以是數字或是百分比。"
 
-#: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3510
-#: ../plug-ins/common/file-ps.c:3714 ../plug-ins/common/file-raw-data.c:1658
+#: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3480
+#: ../plug-ins/common/file-ps.c:3684 ../plug-ins/common/file-raw-data.c:2002
 #: ../plug-ins/common/film.c:1007 ../plug-ins/common/smooth-palette.c:459
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2948,7 +2945,7 @@ msgstr ""
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2264
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "儲存時無法不損失任何透明度資訊，因此改用不透明的方式儲存。"
+msgstr "不能無損保存透明度，因此改用不透明度代替。"
 
 #: ../plug-ins/common/file-mng.c:1337
 #, fuzzy
@@ -3202,7 +3199,7 @@ msgstr ""
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1156
 #, fuzzy, c-format
 msgid "%s-pages"
 msgstr " 頁"
@@ -3211,7 +3208,7 @@ msgstr " 頁"
 msgid "Import from PDF"
 msgstr "從 PDF 檔匯入"
 
-#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5619
 msgid "_Import"
@@ -3235,7 +3232,6 @@ msgstr "解析度(_R)："
 
 #. Antialiasing
 #: ../plug-ins/common/file-pdf-load.c:1366
-#| msgid "_Antialiasing"
 msgid "Use _Anti-aliasing"
 msgstr "使用反鋸齒(_A)"
 
@@ -3323,7 +3319,7 @@ msgstr "機器人圖案佈景"
 
 #: ../plug-ins/common/file-pdf-save.c:1159
 #: ../plug-ins/common/file-pdf-save.c:1227
-#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1886
 #: ../plug-ins/file-tiff/file-tiff-load.c:926
 #, c-format
 msgid "Page %d"
@@ -3412,13 +3408,13 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "儲存‘%s’時發生錯誤，無法儲存圖片。"
 
-#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1784
+#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, fuzzy, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "載入 UI 檔案時發生錯誤"
 
-#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:1785
+#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 #, fuzzy
 #| msgid "Unknown reason"
@@ -3523,184 +3519,180 @@ msgstr "原生"
 msgid "ASCII"
 msgstr "ASCII DEL"
 
-#: ../plug-ins/common/file-ps.c:654 ../plug-ins/common/file-ps.c:746
+#: ../plug-ins/common/file-ps.c:652 ../plug-ins/common/file-ps.c:719
 msgid "PostScript document"
 msgstr "PostScript 文件"
 
-#: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:763
+#: ../plug-ins/common/file-ps.c:671 ../plug-ins/common/file-ps.c:736
 msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript 圖片"
 
-#: ../plug-ins/common/file-ps.c:693
-msgid "PDF document"
-msgstr "PDF 文件"
-
-#: ../plug-ins/common/file-ps.c:1110
+#: ../plug-ins/common/file-ps.c:1081
 #, fuzzy, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "找不到 pixmap 檔‘%s’\n"
 
-#: ../plug-ins/common/file-ps.c:1247
+#: ../plug-ins/common/file-ps.c:1218
 #, fuzzy, c-format
 #| msgid "PostScript save cannot handle images with alpha channels"
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "PostScript 儲存程序無法處理有透明色版的圖片"
 
-#: ../plug-ins/common/file-ps.c:3418
+#: ../plug-ins/common/file-ps.c:3388
 #, fuzzy
 msgid "Import from PostScript"
 msgstr "由檔案匯入"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3462
+#: ../plug-ins/common/file-ps.c:3432
 msgid "Rendering"
 msgstr "描繪"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3481 ../plug-ins/common/file-svg.c:910
+#: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
 #: ../plug-ins/common/file-wmf.c:694
 msgid "Resolution:"
 msgstr "解析度："
 
-#: ../plug-ins/common/file-ps.c:3523
+#: ../plug-ins/common/file-ps.c:3493
 #, fuzzy
 msgid "Pages:"
 msgstr " 頁"
 
-#: ../plug-ins/common/file-ps.c:3530
+#: ../plug-ins/common/file-ps.c:3500
 #, fuzzy
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "無法載入遊戲"
 
-#: ../plug-ins/common/file-ps.c:3535 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3505 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "圖層"
 
-#: ../plug-ins/common/file-ps.c:3538
+#: ../plug-ins/common/file-ps.c:3508
 msgid "Images"
 msgstr "圖片"
 
-#: ../plug-ins/common/file-ps.c:3541
+#: ../plug-ins/common/file-ps.c:3511
 msgid "Open as"
 msgstr "開啟為"
 
-#: ../plug-ins/common/file-ps.c:3545
+#: ../plug-ins/common/file-ps.c:3515
 #, fuzzy
 msgid "Try Bounding Box"
 msgstr "下載此綁定方塊"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3558
+#: ../plug-ins/common/file-ps.c:3528
 msgid "Coloring"
 msgstr "著色方式"
 
-#: ../plug-ins/common/file-ps.c:3562
+#: ../plug-ins/common/file-ps.c:3532
 msgid "B/W"
 msgstr "黑白"
 
-#: ../plug-ins/common/file-ps.c:3563 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3533 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "灰"
 
-#: ../plug-ins/common/file-ps.c:3564 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "色彩"
 
-#: ../plug-ins/common/file-ps.c:3565 ../plug-ins/file-fits/fits.c:1186
+#: ../plug-ins/common/file-ps.c:3535 ../plug-ins/file-fits/fits.c:1186
 msgid "Automatic"
 msgstr "自動"
 
-#: ../plug-ins/common/file-ps.c:3576
+#: ../plug-ins/common/file-ps.c:3546
 msgid "Text antialiasing"
 msgstr "文字反鋸齒"
 
-#: ../plug-ins/common/file-ps.c:3580 ../plug-ins/common/file-ps.c:3592
+#: ../plug-ins/common/file-ps.c:3550 ../plug-ins/common/file-ps.c:3562
 #, fuzzy
 #| msgid "None"
 msgctxt "antialiasing"
 msgid "None"
 msgstr "無"
 
-#: ../plug-ins/common/file-ps.c:3581 ../plug-ins/common/file-ps.c:3593
+#: ../plug-ins/common/file-ps.c:3551 ../plug-ins/common/file-ps.c:3563
 msgid "Weak"
 msgstr "輕微"
 
-#: ../plug-ins/common/file-ps.c:3582 ../plug-ins/common/file-ps.c:3594
+#: ../plug-ins/common/file-ps.c:3552 ../plug-ins/common/file-ps.c:3564
 msgid "Strong"
 msgstr "完整"
 
-#: ../plug-ins/common/file-ps.c:3588
+#: ../plug-ins/common/file-ps.c:3558
 msgid "Graphic antialiasing"
 msgstr "圖形反鋸齒"
 
-#: ../plug-ins/common/file-ps.c:3666
+#: ../plug-ins/common/file-ps.c:3636
 #, fuzzy
 msgid "PostScript"
 msgstr "Postscript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3683
+#: ../plug-ins/common/file-ps.c:3653
 msgid "Image Size"
 msgstr "圖片尺寸"
 
-#: ../plug-ins/common/file-ps.c:3726
+#: ../plug-ins/common/file-ps.c:3696
 msgid "_X offset:"
 msgstr "X 偏移量(_X):"
 
-#: ../plug-ins/common/file-ps.c:3738
+#: ../plug-ins/common/file-ps.c:3708
 msgid "_Y offset:"
 msgstr "Y 偏移量(_Y):"
 
-#: ../plug-ins/common/file-ps.c:3744
+#: ../plug-ins/common/file-ps.c:3714
 msgid "_Keep aspect ratio"
 msgstr "保持長寬比(_K)"
 
-#: ../plug-ins/common/file-ps.c:3750
+#: ../plug-ins/common/file-ps.c:3720
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr "如果不選用本選項，最終的圖片會完全縮放至指定的尺寸，不理會長寬比例。"
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3760
+#: ../plug-ins/common/file-ps.c:3730
 msgid "Unit"
 msgstr "單位"
 
-#: ../plug-ins/common/file-ps.c:3764
+#: ../plug-ins/common/file-ps.c:3734
 msgid "_Inch"
 msgstr "英吋(_I)"
 
-#: ../plug-ins/common/file-ps.c:3765
+#: ../plug-ins/common/file-ps.c:3735
 msgid "_Millimeter"
 msgstr "毫米(_M)"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3776
+#: ../plug-ins/common/file-ps.c:3746
 #: ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "旋轉"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3791
+#: ../plug-ins/common/file-ps.c:3761
 msgid "Output"
 msgstr "輸出"
 
-#: ../plug-ins/common/file-ps.c:3797
+#: ../plug-ins/common/file-ps.c:3767
 msgid "_PostScript level 2"
 msgstr "_PostScript Level 2"
 
-#: ../plug-ins/common/file-ps.c:3806
+#: ../plug-ins/common/file-ps.c:3776
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
-#: ../plug-ins/common/file-ps.c:3815
+#: ../plug-ins/common/file-ps.c:3785
 msgid "P_review"
 msgstr "預覽(_R)"
 
-#: ../plug-ins/common/file-ps.c:3839
+#: ../plug-ins/common/file-ps.c:3809
 msgid "Preview _size:"
 msgstr "預覽圖尺寸(_S)："
 
@@ -3732,115 +3724,190 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw-data.c:253
-#: ../plug-ins/common/file-raw-data.c:269
-#: ../plug-ins/common/file-raw-data.c:281
+#: ../plug-ins/common/file-raw-data.c:283
+#: ../plug-ins/common/file-raw-data.c:319
+#: ../plug-ins/common/file-raw-data.c:331
 #, fuzzy
 msgid "Raw image data"
 msgstr "原始 GPS 資料"
 
-#: ../plug-ins/common/file-raw-data.c:1549
+#: ../plug-ins/common/file-raw-data.c:304
+#: ../plug-ins/common/file-raw-data.c:1882
+msgid "Digital Elevation Model data"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:424
+#, fuzzy, c-format
+#| msgid "Could not open '%s' for writing: %s"
+msgid "Could not open '%s' for size verification: %s"
+msgstr "無法開啟‘%s’來寫入資料：%s"
+
+#: ../plug-ins/common/file-raw-data.c:502
+#, c-format
+msgid ""
+"%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:520
+#, c-format
+msgid ""
+"Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
+"valid HGT file or its variant is not supported yet. Supported HGT files are: "
+"SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1829
 #, fuzzy
 msgid "Load Image from Raw Data"
 msgstr "載入 Imagemap"
 
-#: ../plug-ins/common/file-raw-data.c:1591
+#. Translators: Digital Elevation Model (DEM) is a technical term
+#. * used for 3D surface modeling or relief maps; so it must be
+#. * translated by the proper technical term in your language.
+#.
+#: ../plug-ins/common/file-raw-data.c:1878
+msgid "Digital Elevation Model data (1 arc-second)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1880
+msgid "Digital Elevation Model data (3 arc-seconds)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1886
 msgid "Image"
 msgstr "圖片"
 
-#: ../plug-ins/common/file-raw-data.c:1602
+#. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
+#. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
+#. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
+#. *  each file contains 3601 lines and 3601 samples.
+#. * [...]
+#. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
+#. * 1201 samples with similar overlapping rows and columns."
+#.
+#: ../plug-ins/common/file-raw-data.c:1916
+msgid "SRTM-1 (1 arc-second)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1917
+msgid "SRTM-3 (3 arc-seconds)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1920
+#, fuzzy
+#| msgid "Spacing:"
+msgid "_Sample Spacing:"
+msgstr "間隔："
+
+#: ../plug-ins/common/file-raw-data.c:1938
 #, fuzzy
 msgid "RGB Alpha"
 msgstr "含有透明度"
 
-#: ../plug-ins/common/file-raw-data.c:1603
+#: ../plug-ins/common/file-raw-data.c:1939
 msgid "RGB565 Big Endian"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1604
+#: ../plug-ins/common/file-raw-data.c:1940
 msgid "RGB565 Little Endian"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1605
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "BGR565 Big Endian"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1606
+#: ../plug-ins/common/file-raw-data.c:1942
 msgid "BGR565 Little Endian"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1607
+#: ../plug-ins/common/file-raw-data.c:1943
 #, fuzzy
 msgid "Planar RGB"
 msgstr "RGB 色彩空間："
 
-#: ../plug-ins/common/file-raw-data.c:1608
+#: ../plug-ins/common/file-raw-data.c:1944
 #, fuzzy
 #| msgid "16 bits"
 msgid "B&W 1 bit"
 msgstr "16位元"
 
-#: ../plug-ins/common/file-raw-data.c:1609
+#: ../plug-ins/common/file-raw-data.c:1945
 msgid "Gray 2 bit"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1610
+#: ../plug-ins/common/file-raw-data.c:1946
 msgid "Gray 4 bit"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1611
+#: ../plug-ins/common/file-raw-data.c:1947
 msgid "Gray 8 bit"
 msgstr ""
 
-#: ../plug-ins/common/file-raw-data.c:1612
+#: ../plug-ins/common/file-raw-data.c:1948
 #, fuzzy
 msgid "Indexed"
 msgstr "已索引欄位"
 
-#: ../plug-ins/common/file-raw-data.c:1613
+#: ../plug-ins/common/file-raw-data.c:1949
 #, fuzzy
 msgid "Indexed Alpha"
 msgstr "含有透明度"
 
-#: ../plug-ins/common/file-raw-data.c:1618
+#: ../plug-ins/common/file-raw-data.c:1950
+msgid "Gray unsigned 16 bit Big Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1951
+msgid "Gray unsigned 16 bit Little Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1952
+msgid "Gray 16 bit Big Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1953
+msgid "Gray 16 bit Little Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1958
 #, fuzzy
 msgid "Image _Type:"
 msgstr "圖片類型："
 
-#: ../plug-ins/common/file-raw-data.c:1674
+#: ../plug-ins/common/file-raw-data.c:2019
 msgid "Palette"
 msgstr "調色盤"
 
-#: ../plug-ins/common/file-raw-data.c:1684
+#: ../plug-ins/common/file-raw-data.c:2029
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 #, fuzzy
 msgid "R, G, B (normal)"
 msgstr "一般"
 
-#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/common/file-raw-data.c:2030
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 #, fuzzy
 msgid "B, G, R, X (BMP style)"
 msgstr "紙牌樣式(_C)"
 
-#: ../plug-ins/common/file-raw-data.c:1690
+#: ../plug-ins/common/file-raw-data.c:2035
 msgid "_Palette Type:"
 msgstr "調色盤類型(_P):"
 
-#: ../plug-ins/common/file-raw-data.c:1701
+#: ../plug-ins/common/file-raw-data.c:2046
 msgid "Off_set:"
 msgstr "偏移(_S)："
 
-#: ../plug-ins/common/file-raw-data.c:1713
+#: ../plug-ins/common/file-raw-data.c:2058
 msgid "Select Palette File"
 msgstr "選取調色盤檔案"
 
-#: ../plug-ins/common/file-raw-data.c:1719
+#: ../plug-ins/common/file-raw-data.c:2064
 msgid "Pal_ette File:"
 msgstr "調色盤檔案(_E):"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:1768
+#: ../plug-ins/common/file-raw-data.c:2113
 #, fuzzy
 msgid "Raw Image"
 msgstr "圖案佈景(_I)："
@@ -4038,25 +4105,25 @@ msgstr "無法從‘%s’讀取延伸部份"
 msgid "Cannot read header from '%s'"
 msgstr "無法從“%s”讀取標頭：%s"
 
-#: ../plug-ins/common/file-tga.c:1414
+#: ../plug-ins/common/file-tga.c:1412
 msgid "TGA"
 msgstr ""
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1423
+#: ../plug-ins/common/file-tga.c:1421
 msgid "_RLE compression"
 msgstr "_RLE 壓縮"
 
-#: ../plug-ins/common/file-tga.c:1437
+#: ../plug-ins/common/file-tga.c:1435
 #, fuzzy
 msgid "Or_igin:"
 msgstr "方向(_I):"
 
-#: ../plug-ins/common/file-tga.c:1441
+#: ../plug-ins/common/file-tga.c:1439
 msgid "Bottom left"
 msgstr "左下角"
 
-#: ../plug-ins/common/file-tga.c:1442
+#: ../plug-ins/common/file-tga.c:1440
 msgid "Top left"
 msgstr "左上方"
 
@@ -5368,7 +5435,6 @@ msgid "Display information about plug-ins"
 msgstr "顯示關於外掛程式的資訊"
 
 #: ../plug-ins/common/plugin-browser.c:144
-#| msgid "_Plug-In Browser"
 msgid "_Plug-in Browser"
 msgstr "外掛程式瀏覽器(_P)"
 
@@ -5439,14 +5505,12 @@ msgid "List available procedures in the PDB"
 msgstr "在 $HOME 目錄中可用的 modmap 檔案清單。"
 
 #: ../plug-ins/common/procedure-browser.c:88
-#, fuzzy
 msgid "Procedure _Browser"
-msgstr "預設瀏覽器"
+msgstr "程式瀏覽器(_B)"
 
 #: ../plug-ins/common/procedure-browser.c:126
-#, fuzzy
 msgid "Procedure Browser"
-msgstr "預設瀏覽器"
+msgstr "程式瀏覽器"
 
 #: ../plug-ins/common/qbist.c:408
 msgid "Generate a huge variety of abstract patterns"
@@ -5916,7 +5980,6 @@ msgstr ""
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
-#| msgid "Delete"
 msgid "_Delete"
 msgstr "刪除(_D)"
 
@@ -6471,7 +6534,7 @@ msgid "Flow step %d"
 msgstr "逐步增加"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
-#: ../plug-ins/common/wavelet-decompose.c:308
+#: ../plug-ins/common/wavelet-decompose.c:346
 #, fuzzy
 #| msgid "Decompose"
 msgid "Wavelet decompose"
@@ -6483,40 +6546,39 @@ msgstr "分解"
 msgid "_Wavelet-decompose..."
 msgstr "分解(_D)..."
 
-#: ../plug-ins/common/wavelet-decompose.c:175
+#: ../plug-ins/common/wavelet-decompose.c:177
 #, fuzzy
 #| msgid "Decompose"
 msgid "Wavelet-Decompose"
 msgstr "分解"
 
-#: ../plug-ins/common/wavelet-decompose.c:182
-#| msgid "Decomposing"
+#: ../plug-ins/common/wavelet-decompose.c:184
 msgid "Decomposition"
 msgstr "分解"
 
-#: ../plug-ins/common/wavelet-decompose.c:208
+#: ../plug-ins/common/wavelet-decompose.c:246
 #, fuzzy, c-format
 #| msgid "Scale X:"
 msgid "Scale %d"
 msgstr "比例 X："
 
-#: ../plug-ins/common/wavelet-decompose.c:232
+#: ../plug-ins/common/wavelet-decompose.c:270
 msgid "Residual"
 msgstr ""
 
-#: ../plug-ins/common/wavelet-decompose.c:339
+#: ../plug-ins/common/wavelet-decompose.c:377
 #, fuzzy
 #| msgid "Scale:"
 msgid "Scales:"
 msgstr "比例："
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/common/wavelet-decompose.c:389
 msgid "Create a layer group to store the decomposition"
-msgstr "創建一個圖層群組來儲存分解"
+msgstr "建立一個圖層群組來儲存分解"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:363
+#: ../plug-ins/common/wavelet-decompose.c:401
 msgid "Add a layer mask to each scales layers"
 msgstr ""
 
@@ -6612,44 +6674,40 @@ msgstr "建立矩形"
 
 #: ../plug-ins/common/web-page.c:235
 msgid "Cre_ate"
-msgstr ""
+msgstr "建立(_A)"
 
 #: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
-msgstr ""
+msgstr "輸入位置（URI）："
 
 #: ../plug-ins/common/web-page.c:287
 msgid "Width (pixels):"
 msgstr "寬度(像素)："
 
 #: ../plug-ins/common/web-page.c:308
-#, fuzzy
 #| msgid "Step size:"
 msgid "Font size:"
-msgstr "步進量："
+msgstr "字型大小："
 
 #: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr ""
 
 #: ../plug-ins/common/web-page.c:316
-#, fuzzy
 #| msgid "Target"
 msgid "Large"
-msgstr "目標"
+msgstr "大"
 
 #: ../plug-ins/common/web-page.c:317
-#, fuzzy
 #| msgid "Default"
 msgctxt "web-page"
 msgid "Default"
 msgstr "預設"
 
 #: ../plug-ins/common/web-page.c:318
-#, fuzzy
 #| msgid "Small Tiles"
 msgid "Small"
-msgstr "小磚塊"
+msgstr "小"
 
 #: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
@@ -6666,9 +6724,9 @@ msgstr ""
 "未指定圖片寬度"
 
 #: ../plug-ins/common/web-page.c:510
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading webpage '%s'"
-msgstr "正在下載圖片拼貼..."
+msgstr "正在下載網頁「%s」"
 
 #: ../plug-ins/common/web-page.c:527
 #, c-format
@@ -6967,7 +7025,7 @@ msgstr "Icon #%i"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:505
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:441
+#: ../plug-ins/file-raw/file-darktable.c:472
 #: ../plug-ins/file-raw/file-rawtherapee.c:429
 #, fuzzy, c-format
 msgid "Opening thumbnail for '%s'"
@@ -7047,26 +7105,24 @@ msgstr "漸進式(_P)"
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
 #: ../plug-ins/file-webp/file-webp-dialog.c:383
-#, fuzzy
 #| msgid "Save _EXIF data"
 msgid "Save _Exif data"
-msgstr "儲存 _EXIF 資料"
+msgstr "保存 _Exif 數據"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:980
 msgid "Save _thumbnail"
-msgstr "儲存縮圖(_T)"
+msgstr "保存縮圖(_T)"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
 #: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 _XMP 數據"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1016
-#, fuzzy
 #| msgid "Save _XMP data"
 msgid "Save _IPTC data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 _IPTC 數據"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1035
 msgid "_Use quality settings from original image"
@@ -7243,7 +7299,7 @@ msgstr "無法開啟 ‘%s’：%s\n"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "錯誤：不能將 GIMP 基本圖片類型轉換為 PSD 模式"
 
-#: ../plug-ins/file-psd/psd-save.c:1523
+#: ../plug-ins/file-psd/psd-save.c:1545
 #, fuzzy, c-format
 #| msgid ""
 #| "Unable to save '%s'.  The PSD file format does not support images that "
@@ -7253,7 +7309,7 @@ msgid ""
 "more than 30,000 pixels wide or tall."
 msgstr "無法儲存「%s」。該 PSD 檔案格式不支援寬或高超過 30,000 個像素的圖片。"
 
-#: ../plug-ins/file-psd/psd-save.c:1544
+#: ../plug-ins/file-psd/psd-save.c:1566
 #, fuzzy, c-format
 #| msgid ""
 #| "Unable to save '%s'.  The PSD file format does not support images that "
@@ -7529,10 +7585,9 @@ msgid "CCITT Group _4 fax"
 msgstr "傳真設定管理"
 
 #: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
-#, fuzzy
 #| msgid "PNG image"
 msgid "WebP image"
-msgstr "PNG 圖片"
+msgstr "WebP 圖像"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:70
 msgid "(no keyframes)"
@@ -7545,53 +7600,47 @@ msgstr ""
 #. Create the dialog
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
-msgstr ""
+msgstr "WebP"
 
 #. Create the lossless checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
-msgstr ""
+msgstr "無損"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
-#, fuzzy
 #| msgid "Image _height:"
 msgid "Image quality:"
-msgstr "圖片高度(_H)："
+msgstr "圖像品質："
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:148
-#, fuzzy
 #| msgid "Image Size"
 msgid "Image quality"
-msgstr "圖片尺寸"
+msgstr "圖像品質"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:159
-#, fuzzy
 #| msgid "Quality:"
 msgid "Alpha quality:"
-msgstr "品質："
+msgstr "Alpha 品質："
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:167
-#, fuzzy
 #| msgid "Alpha Channels"
 msgid "Alpha channel quality"
-msgstr "透明色版"
+msgstr "Alpha 色版品質"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:192
-#, fuzzy
 #| msgid "Source 1:"
 msgid "Source type:"
-msgstr "來源 1："
+msgstr "來源類型："
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
-msgstr ""
+msgstr "WebP 編碼器「preset」"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:227
-#, fuzzy
 #| msgid "MNG animation"
 msgid "As A_nimation"
-msgstr "MNG 動畫"
+msgstr "作為動畫(_N)"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:256
@@ -7619,15 +7668,15 @@ msgid "Use delay entered above for all frames"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-load.c:106
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid WebP file '%s'"
-msgstr "無效的 XBM 檔"
+msgstr "無效的 WebP 檔案「%s」"
 
 #: ../plug-ins/file-webp/file-webp-load.c:184
-#, fuzzy, c-format
+#, c-format
 #| msgid "Failed to save PPM file '%s': %s"
 msgid "Failed to decode animated WebP file '%s'"
-msgstr "無法儲存 PPM 檔‘%s’：%s"
+msgstr "無法解碼動畫的 WebP 檔案「%s」"
 
 #: ../plug-ins/file-webp/file-webp-load.c:192
 #, c-format
@@ -7695,10 +7744,9 @@ msgid "list terminator"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
-#, fuzzy
 #| msgid "Unknown reason"
 msgid "unknown error"
-msgstr "原因不詳"
+msgstr "未知錯誤"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
 #: ../plug-ins/file-webp/file-webp-save.c:514
@@ -7708,14 +7756,12 @@ msgid "Unable to open '%s' for writing"
 msgstr "無法開啟‘%s’來寫入資料。"
 
 #: ../plug-ins/file-webp/file-webp-save.c:253
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Parse error in '%s':\n"
 #| "%s"
 msgid "WebP error: '%s'"
-msgstr ""
-"分析‘%s’檔案內容時發生錯誤：\n"
-"%s"
+msgstr "WebP 錯誤：「%s」"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -7994,12 +8040,10 @@ msgid "R_edraw preview"
 msgstr "遊戲預覽"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
-#| msgid "Zoom in"
 msgid "Zoom _In"
 msgstr "拉近(_I)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
-#| msgid "Zoom out"
 msgid "Zoom _Out"
 msgstr "拉遠(_O)"
 
@@ -8427,7 +8471,6 @@ msgid "_Grid"
 msgstr "格線(_G)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:898
-#| msgid "Preferences"
 msgid "_Preferences..."
 msgstr "偏好設定(_P)…"
 
@@ -8754,7 +8797,6 @@ msgid "Select:"
 msgstr "選取："
 
 #: ../plug-ins/gimpressionist/brush.c:586
-#| msgid "Save _As..."
 msgid "Save _as"
 msgstr "另存新檔(_A)"
 
@@ -9472,41 +9514,35 @@ msgid "S_ave Defaults"
 msgstr "儲存為預設值(_V)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#, fuzzy
 #| msgid "Save _EXIF data"
 msgid "Save Exif data"
-msgstr "儲存 _EXIF 資料"
+msgstr "保存 Exif 數據"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#, fuzzy
 #| msgid "Save _XMP data"
 msgid "Save XMP data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 XMP 數據"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#, fuzzy
 #| msgid "Save _XMP data"
 msgid "Save IPTC data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 IPTC 數據"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#, fuzzy
 #| msgid "Save _thumbnail"
 msgid "Save thumbnail"
-msgstr "儲存縮圖(_T)"
+msgstr "保存縮圖"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
-#, fuzzy
 #| msgid "_Advanced"
 msgid "Advanced"
-msgstr "進階(_A)"
+msgstr "進階"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:17
-#, fuzzy
 #| msgid "PNG compression level:"
 msgid "Co_mpression level:"
-msgstr "PNG 壓縮程度："
+msgstr "壓縮程度(_M)："
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
 #, fuzzy
@@ -9575,34 +9611,29 @@ msgid "<b>Comment</b>"
 msgstr "備註"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
-#, fuzzy
 #| msgid "Save _EXIF data"
 msgid "save Exif data"
-msgstr "儲存 _EXIF 資料"
+msgstr "保存 Exif 數據"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
-#, fuzzy
 #| msgid "Save _XMP data"
 msgid "save XMP data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 XMP 數據"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
-#, fuzzy
 #| msgid "Save _XMP data"
 msgid "save IPTC data"
-msgstr "儲存 _XMP 資料"
+msgstr "保存 IPTC 數據"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
-#, fuzzy
 #| msgid "Save _thumbnail"
 msgid "save thumbnail"
-msgstr "儲存縮圖(_T)"
+msgstr "保存縮圖"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
-#, fuzzy
 #| msgid "PDF document"
 msgid "Document Title"
-msgstr "PDF 文件"
+msgstr "文件標題"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
@@ -9613,16 +9644,14 @@ msgid "Author Title"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
-#, fuzzy
 #| msgid "Description:"
 msgid "Description"
-msgstr "描述："
+msgstr "描述"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#, fuzzy
 #| msgid "Description:"
 msgid "Description Writer\t"
-msgstr "描述："
+msgstr "說明作家\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
 #, fuzzy
@@ -9738,7 +9767,6 @@ msgid "Credit Line"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
-#, fuzzy
 msgid "Source"
 msgstr "來源"
 
@@ -9830,10 +9858,9 @@ msgid "Date Created"
 msgstr "建立"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
-#, fuzzy
 #| msgid "Create"
 msgid "Creator"
-msgstr "建立"
+msgstr "建立者"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
 msgid "Source Inventory ID"
@@ -10466,7 +10493,6 @@ msgid "_Next"
 msgstr "下一首(_N)"
 
 #: ../plug-ins/help-browser/dialog.c:1188
-#| msgid "Closed"
 msgctxt "search"
 msgid "_Close"
 msgstr "關閉(_C)"
@@ -12058,34 +12084,30 @@ msgid "Update preview _live"
 msgstr "重新計算預覽圖片"
 
 #: ../plug-ins/metadata/metadata-editor.c:408
-#, fuzzy
 #| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
-msgstr "察看和編輯詮釋資料(metadata) (EXIF, IPTC, XMP)"
+msgstr "編輯詮釋資料(metadata) (IPTC, EXIF, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
-#, fuzzy
 msgid "Edit Metadata"
-msgstr "原始 GPS 資料"
+msgstr "編輯詮釋資料"
 
 #: ../plug-ins/metadata/metadata-editor.c:539
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "詮釋資料編輯器：%s"
 
 #: ../plug-ins/metadata/metadata-editor.c:548
-#, fuzzy
 msgid "Write Metadata"
-msgstr "原始 GPS 資料"
+msgstr "寫詮釋資料"
 
 #: ../plug-ins/metadata/metadata-editor.c:572
-#, fuzzy
 msgid "Import metadata"
-msgstr "原始 GPS 資料"
+msgstr "匯入詮釋資料"
 
 #: ../plug-ins/metadata/metadata-editor.c:574
 msgid "Export metadata"
-msgstr ""
+msgstr "匯出詮釋資料"
 
 #: ../plug-ins/metadata/metadata-editor.c:761
 msgid "Calendar Date:"
@@ -12100,16 +12122,14 @@ msgid "Unrated"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-editor.c:5615
-#, fuzzy
 msgid "Import Metadata File"
-msgstr "原始 GPS 資料"
+msgstr "匯入詮釋資料檔"
 
 #: ../plug-ins/metadata/metadata-editor.c:5650
 msgid "Export Metadata File"
-msgstr ""
+msgstr "匯出詮釋資料檔"
 
 #: ../plug-ins/metadata/metadata-editor.c:5654
-#| msgid "_Import"
 msgid "_Export"
 msgstr "匯出(_E)"
 
@@ -12130,15 +12150,13 @@ msgid "Digitised from a print on non-transparent medium"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#, fuzzy
 #| msgid "Create star"
 msgid "Created by software"
-msgstr "建立星形"
+msgstr "由軟體創建"
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
 #: ../plug-ins/metadata/metadata-tags.h:302
-#| msgid "None"
 msgid "None"
 msgstr "無"
 
@@ -12239,7 +12257,6 @@ msgstr ""
 #: ../plug-ins/metadata/metadata-tags.h:341
 #: ../plug-ins/metadata/metadata-tags.h:347
 #: ../plug-ins/metadata/metadata-tags.h:353
-#| msgid "Unknown reason"
 msgid "Unknown"
 msgstr "未知"
 
@@ -12292,7 +12309,6 @@ msgid "Female"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:335
-#| msgid "_Other:"
 msgid "Other"
 msgstr "其它"
 
@@ -12321,20 +12337,18 @@ msgid "West"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-viewer.c:120
-#, fuzzy
 #| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
-msgstr "察看和編輯詮釋資料(metadata) (EXIF, IPTC, XMP)"
+msgstr "檢視詮釋資料(metadata) (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
-#, fuzzy
 msgid "View Metadata"
-msgstr "原始 GPS 資料"
+msgstr "檢視詮釋資料"
 
 #: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
 msgid "Metadata Viewer: %s"
-msgstr ""
+msgstr "詮釋資料檢視器：%s"
 
 #: ../plug-ins/metadata/metadata-viewer.c:360
 #, c-format
@@ -12489,91 +12503,112 @@ msgstr "當試圖列印時出現錯誤："
 msgid "Printing"
 msgstr "正在列印"
 
-#: ../plug-ins/screenshot/screenshot.c:123
+#: ../plug-ins/screenshot/screenshot.c:128
 msgid "Create an image from an area of the screen"
-msgstr "從螢幕的一個區域建立圖片"
+msgstr "從螢幕的某個範圍建立圖像"
 
-#: ../plug-ins/screenshot/screenshot.c:144
+#: ../plug-ins/screenshot/screenshot.c:149
 msgid "_Screenshot..."
-msgstr "從螢幕畫面擷取(_S)..."
+msgstr "從螢幕畫面擷取(_S)…"
 
-#: ../plug-ins/screenshot/screenshot.c:423
+#: ../plug-ins/screenshot/screenshot.c:470
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "螢幕畫面擷取"
 
-#: ../plug-ins/screenshot/screenshot.c:428
+#: ../plug-ins/screenshot/screenshot.c:475
 msgid "S_nap"
-msgstr "拍照(_N)"
+msgstr "擷取(_N)"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:452
+#: ../plug-ins/screenshot/screenshot.c:502
 msgid "Area"
-msgstr "擷取範圍"
+msgstr ""
 
-#: ../plug-ins/screenshot/screenshot.c:462
+#: ../plug-ins/screenshot/screenshot.c:512
 msgid "Take a screenshot of a single _window"
-msgstr "拍下單一視窗的螢幕快照(_W)"
+msgstr "單一視窗(_W)"
 
-#: ../plug-ins/screenshot/screenshot.c:482
+#: ../plug-ins/screenshot/screenshot.c:535
 msgid "Include window _decoration"
 msgstr "包含視窗邊框(_D)"
 
-#: ../plug-ins/screenshot/screenshot.c:503
-#: ../plug-ins/screenshot/screenshot.c:544
+#: ../plug-ins/screenshot/screenshot.c:556
+#: ../plug-ins/screenshot/screenshot.c:600
 msgid "Include _mouse pointer"
 msgstr "包含滑鼠指標(_M)"
 
-#: ../plug-ins/screenshot/screenshot.c:524
+#: ../plug-ins/screenshot/screenshot.c:577
 msgid "Take a screenshot of the entire _screen"
-msgstr "拍下全螢幕的快照(_S)"
+msgstr "全螢幕(_S)"
 
-#: ../plug-ins/screenshot/screenshot.c:572
+#: ../plug-ins/screenshot/screenshot.c:628
 msgid "Select a _region to grab"
-msgstr "選擇一區域擷取(_R)"
+msgstr "部份區域(_R)"
 
-#. Delay
-#: ../plug-ins/screenshot/screenshot.c:588
+#: ../plug-ins/screenshot/screenshot.c:646
 msgid "Delay"
 msgstr "延遲"
 
+#: ../plug-ins/screenshot/screenshot.c:666
+#| msgid "Se_lection only"
+msgid "Selection delay: "
+msgstr "選取延遲："
+
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:685
+#: ../plug-ins/screenshot/screenshot.c:748
 msgid "seconds"
 msgstr "秒"
 
-#: ../plug-ins/screenshot/screenshot.c:622
-msgid "After the delay, the screenshot is taken."
-msgstr "在延遲的時間後，拍下螢幕的快照。"
-
-#: ../plug-ins/screenshot/screenshot.c:624
+#: ../plug-ins/screenshot/screenshot.c:699
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
-msgstr "在延遲的時間之後，拖曳滑鼠以選取螢幕拍攝的區域。"
+msgstr "在延遲的時間之後，拖曳滑鼠以選取螢幕擷取的範圍。"
 
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:703
 msgid "Click in a window to snap it after delay."
-msgstr ""
+msgstr "點擊一個視窗，在延遲的時間之後擷取它。"
 
-#: ../plug-ins/screenshot/screenshot.c:631
+#: ../plug-ins/screenshot/screenshot.c:708
 msgid "At the end of the delay, click in a window to snap it."
-msgstr "在延遲時間到時，點擊一個視窗以拍攝它。"
+msgstr "在延遲時間到時，點擊一個視窗以擷取它。"
 
-#: ../plug-ins/screenshot/screenshot.c:638
-#| msgid "Color fill"
+#: ../plug-ins/screenshot/screenshot.c:729
+#| msgid "Screenshot"
+msgid "Screenshot delay: "
+msgstr "擷取延遲："
+
+#: ../plug-ins/screenshot/screenshot.c:760
+msgid "After the delay, the screenshot is taken."
+msgstr "在延遲的時間後，擷取全螢幕畫面。"
+
+#: ../plug-ins/screenshot/screenshot.c:762
+msgid "Once the region is selected, it will be captured after this delay."
+msgstr "一旦選定好範圍，它將在這個延遲的時間之後被擷取。"
+
+#: ../plug-ins/screenshot/screenshot.c:767
+msgid "Once the window is selected, it will be captured after this delay."
+msgstr "一旦選定好視窗，它將在這個延遲的時間之後被擷取。"
+
+#: ../plug-ins/screenshot/screenshot.c:773
+#| msgid "After the delay, the screenshot is taken."
+msgid "After the delay, the active window will be captured."
+msgstr "在延遲的時間後，擷取使用中的視窗。"
+
+#: ../plug-ins/screenshot/screenshot.c:780
 msgid "Color Profile"
 msgstr "色彩描述檔"
 
-#: ../plug-ins/screenshot/screenshot.c:643
+#: ../plug-ins/screenshot/screenshot.c:785
 msgid "Tag image with _monitor profile"
 msgstr "用螢幕描述檔標記圖像(_M)"
 
-#: ../plug-ins/screenshot/screenshot.c:647
-#| msgid "Environment image to use"
+#: ../plug-ins/screenshot/screenshot.c:789
 msgid "Convert image to sR_GB"
 msgstr "將圖像轉換為 sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:244
+#: ../plug-ins/screenshot/screenshot-win32.c:250
 msgid "No data captured"
 msgstr "沒有抓到任何資料"
 
@@ -12589,7 +12624,7 @@ msgstr "匯入螢幕快照"
 msgid "Mouse Pointer"
 msgstr "滑鼠指標"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:622
+#: ../plug-ins/screenshot/screenshot-x11.c:627
 msgid "Specified window not found"
 msgstr "找不到指定的視窗"
 
@@ -12850,6 +12885,9 @@ msgstr "掃描器/相機(_S)..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "從掃描器/相機傳輸資料"
+
+#~ msgid "PDF document"
+#~ msgstr "PDF 文件"
 
 #~ msgid "Blur neighboring pixels, but only in low-contrast areas"
 #~ msgstr "模糊附近像素，但僅限低對比區域"
