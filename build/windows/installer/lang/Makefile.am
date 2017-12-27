@@ -21,7 +21,8 @@ languages = \
 	pl:[pl]:WINDOWS-1250		\
 	pt_BR:[pt_BR]:WINDOWS-1252	\
 	ru:[ru]:WINDOWS-1251		\
-	sl:[sl]:WINDOWS-1250
+	sl:[sl]:WINDOWS-1250		\
+	tr:[tr]:WINDOWS-1254
 
 stamp-isl: setup.isl Makefile.am
 	@										\
