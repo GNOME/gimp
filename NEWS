@@ -21,6 +21,12 @@ Core:
     raising/blinking the dialog) when the swap size approaches its
     limit.
   - Make the selection boundary detection the same as 2.8.
+  - The environment variable GIMP_DEBUG can now be set to "list-all" to
+    display available debug domains. Non-recognized flags will also
+    trigger the debug flag list output.
+  - Improve migration from 2.8 to 2.10 by recursively migrating
+    configuration files.
+  - Mark legacy plug-ins and scripts in menus.
 
 Tools:
   - "Link brush size with canvas zoom" paint option becomes "Lock brush
@@ -50,6 +56,10 @@ Building:
     considered a granted feature nowadays and fallbacking to the
     Postscript plug-in was bad experience.
   - move PDB generation and sources to toplevel/pdb.
+  - Windows installer now localized with gettext.
+  - New configure option `--enable-windows-installer` to generate the
+    necessary files for the installer translations during the build.
+  - Improve POTFILES generation for po-*/ directories.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
