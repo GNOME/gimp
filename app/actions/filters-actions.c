@@ -233,7 +233,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:color-rotate",
     GIMP_HELP_FILTER_COLOR_ROTATE },
 
-  { "filters-color-temperature", GIMP_ICON_GEGL,
+  { "filters-color-temperature", GIMP_STOCK_TOOL_COLOR_TEMPERATURE,
     NC_("filters-action", "Color T_emperature..."), NULL, NULL,
     "gegl:color-temperature",
     GIMP_HELP_FILTER_COLOR_TEMPERATURE },

@@ -461,6 +461,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_CLONE               "gimp-tool-clone"
 #define GIMP_STOCK_TOOL_COLOR_BALANCE       "gimp-tool-color-balance"
 #define GIMP_STOCK_TOOL_COLOR_PICKER        "gimp-tool-color-picker"
+#define GIMP_STOCK_TOOL_COLOR_TEMPERATURE   "gimp-tool-color-temperature"
 #define GIMP_STOCK_TOOL_COLORIZE            "gimp-tool-colorize"
 #define GIMP_STOCK_TOOL_CROP                "gimp-tool-crop"
 #define GIMP_STOCK_TOOL_CURVES              "gimp-tool-curves"

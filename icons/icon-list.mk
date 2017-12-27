@@ -84,6 +84,7 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg			\
 	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-cmyk.svg				\
+	scalable/gimp-color-temperature.svg			\
 	scalable/gimp-color-triangle.svg			\
 	scalable/gimp-color-water.svg				\
 	scalable/gimp-controller-keyboard.svg			\
@@ -571,6 +572,7 @@ icons16_images = \
 	16/gimp-close-all.png					\
 	16/gimp-color-pick-from-screen.png			\
 	16/gimp-color-cmyk.png					\
+	16/gimp-color-temperature.png			\
 	16/gimp-color-triangle.png				\
 	16/gimp-color-water.png					\
 	16/gimp-colormap.png					\
@@ -849,6 +851,7 @@ icons24_images = \
 	24/gimp-channel.png					\
 	24/gimp-channels.png					\
 	24/gimp-colormap.png					\
+	24/gimp-color-temperature.png			\
 	24/gimp-controller-keyboard.png				\
 	24/gimp-controller-linux-input.png			\
 	24/gimp-controller-midi.png				\
