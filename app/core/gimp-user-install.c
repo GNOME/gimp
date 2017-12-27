@@ -658,8 +658,9 @@ user_install_dir_copy (GimpUserInstall    *install,
   GDir        *dest_dir   = NULL;
   gchar        dest[1024];
   const gchar *basename;
-  gchar       *dirname;
-  GError      *error = NULL;
+  gchar       *dirname = NULL;
+  gchar       *name;
+  GError      *error   = NULL;
   gboolean     success = FALSE;
 
   if (level >= 5)
@@ -675,12 +676,9 @@ user_install_dir_copy (GimpUserInstall    *install,
       goto error;
     }
 
-  {
-    gchar *basename = g_path_get_basename (source);
-
-    dirname = g_build_filename (base, basename, NULL);
-    g_free (basename);
-  }
+  name = g_path_get_basename (source);
+  dirname = g_build_filename (base, name, NULL);
+  g_free (name);
 
   success = user_install_mkdir (install, dirname);
   if (! success)
@@ -696,16 +694,17 @@ user_install_dir_copy (GimpUserInstall    *install,
 
   while ((basename = g_dir_read_name (source_dir)) != NULL)
     {
-      gchar *name = g_build_filename (source, basename, NULL);
+      name = g_build_filename (source, basename, NULL);
 
       if (g_file_test (name, G_FILE_TEST_IS_REGULAR))
         {
           g_snprintf (dest, sizeof (dest), "%s%c%s",
                       dirname, G_DIR_SEPARATOR, basename);
 
-          if (! user_install_file_copy (install, name, dest,
-                                        update_pattern,
-                                        update_callback))
+          success = user_install_file_copy (install, name, dest,
+                                            update_pattern,
+                                            update_callback);
+          if (! success)
             {
               g_free (name);
               goto error;
@@ -729,7 +728,8 @@ user_install_dir_copy (GimpUserInstall    *install,
   if (dest_dir)
     g_dir_close (dest_dir);
 
-  g_free (dirname);
+  if (dirname)
+    g_free (dirname);
 
   return success;
 }
