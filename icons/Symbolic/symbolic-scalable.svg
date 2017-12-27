@@ -49,9 +49,9 @@
      inkscape:window-height="1147"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="1"
-     inkscape:cx="305.11605"
-     inkscape:cy="59.665886"
+     inkscape:zoom="8"
+     inkscape:cx="437.13962"
+     inkscape:cy="-25.520782"
      inkscape:window-x="-1"
      inkscape:window-y="-1"
      inkscape:window-maximized="1"
@@ -39091,12 +39091,6 @@
     <g
        transform="matrix(3.7762226,0,0,3.7795275,-709.71743,-468.94731)"
        id="gimp-color-temperature-24">
-      <path
-         inkscape:connector-curvature="0"
-         id="path12977"
-         d="m 128.96751,163.64998 c -0.0974,0 -0.17622,0.0782 -0.17622,0.1757 v 0.35347 c 0,0.0974 0.0787,0.1757 0.17622,0.1757 0.0974,0 0.1757,-0.0782 0.1757,-0.1757 v -0.35347 c 0,-0.0974 -0.0782,-0.1757 -0.1757,-0.1757 z m 1.22679,0.50126 c -0.045,0 -0.0896,0.0172 -0.12402,0.0517 l -0.25011,0.25012 c -0.0689,0.0689 -0.0689,0.17962 0,0.24856 0.0689,0.0689 0.18016,0.0689 0.24908,0 l 0.2496,-0.2496 c 0.0689,-0.0689 0.0689,-0.18014 0,-0.24908 -0.0344,-0.0344 -0.0796,-0.0517 -0.12455,-0.0517 z m -1.22886,0.60462 c -0.19242,0 -0.35768,0.0759 -0.49144,0.19275 -0.0607,0.053 -0.0538,0.14757 0.006,0.20154 l 0.0207,0.0186 c 0.0537,0.0483 0.13331,0.0401 0.19017,-0.004 0.0761,-0.0593 0.1677,-0.0966 0.2744,-0.0966 0.27404,0 0.49299,0.21843 0.49299,0.49247 0,0.27404 -0.21895,0.49299 -0.49299,0.49299 -0.10643,0 -0.19795,-0.037 -0.27388,-0.0961 -0.0574,-0.0446 -0.13762,-0.0529 -0.19172,-0.004 l -0.015,0.014 c -0.0621,0.056 -0.0694,0.15411 -0.006,0.20877 0.13292,0.11499 0.29635,0.18965 0.48679,0.18965 0.44267,0 0.80512,-0.36245 0.80512,-0.80512 0,-0.44267 -0.36245,-0.8046 -0.80512,-0.8046 z m 1.38338,0.62477 c -0.0974,0 -0.17622,0.0782 -0.17622,0.1757 0,0.0974 0.0787,0.17621 0.17622,0.17621 h 0.35347 c 0.0974,0 0.1757,-0.0787 0.1757,-0.17621 0,-0.0974 -0.0782,-0.1757 -0.1757,-0.1757 z m -0.40411,0.98495 c -0.045,0 -0.0901,0.0172 -0.12454,0.0517 -0.0689,0.0689 -0.0689,0.18018 0,0.24908 l 0.25011,0.24959 c 0.0689,0.069 0.17965,0.0689 0.24857,0 0.0689,-0.0689 0.0689,-0.17966 0,-0.24856 l -0.2496,-0.25011 c -0.0345,-0.0345 -0.0796,-0.0517 -0.12454,-0.0517 z m -0.9772,0.40049 c -0.0974,0 -0.17622,0.0787 -0.17622,0.17622 v 0.35347 c 0,0.0974 0.0787,0.17569 0.17622,0.17569 0.0974,0 0.1757,-0.0782 0.1757,-0.17569 v -0.35347 c 0,-0.0974 -0.0782,-0.17622 -0.1757,-0.17622 z"
-         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.312031;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-         transform="translate(0,20.500017)" />
       <path
          inkscape:connector-curvature="0"
          id="rect13227"
