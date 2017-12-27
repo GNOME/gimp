@@ -137,6 +137,7 @@ static gboolean  user_install_file_copy          (GimpUserInstall    *install,
                                                   const gchar        *old_options_regexp,
                                                   GRegexEvalCallback  update_callback);
 static gboolean  user_install_dir_copy           (GimpUserInstall    *install,
+                                                  gint                level,
                                                   const gchar        *source,
                                                   const gchar        *base,
                                                   const gchar        *update_pattern,
@@ -647,6 +648,7 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
 
 static gboolean
 user_install_dir_copy (GimpUserInstall    *install,
+                       gint                level,
                        const gchar        *source,
                        const gchar        *base,
                        const gchar        *update_pattern,
@@ -657,8 +659,21 @@ user_install_dir_copy (GimpUserInstall    *install,
   gchar        dest[1024];
   const gchar *basename;
   gchar       *dirname;
-  gboolean     success;
   GError      *error = NULL;
+  gboolean     success = FALSE;
+
+  if (level >= 5)
+    {
+      /* Config migration is recursive, but we can't go on forever,
+       * since we may fall into recursive symlinks in particular (which
+       * is a security risk to fill a disk, and would also block GIMP
+       * forever at migration stage).
+       * Let's just break the recursivity at 5 levels, which is just an
+       * arbitrary value (but I don't think there should be any data
+       * deeper than this).
+       */
+      goto error;
+    }
 
   {
     gchar *basename = g_path_get_basename (source);
@@ -698,7 +713,7 @@ user_install_dir_copy (GimpUserInstall    *install,
         }
       else
         {
-          user_install_dir_copy (install, name, dirname,
+          user_install_dir_copy (install, level + 1, name, dirname,
                                  update_pattern, update_callback);
         }
 
@@ -854,7 +869,7 @@ user_install_migrate_files (GimpUserInstall *install)
               update_pattern  = GIMPRESSIONIST_UPDATE_PATTERN;
               update_callback = user_update_gimpressionist;
             }
-          user_install_dir_copy (install, source, gimp_directory (),
+          user_install_dir_copy (install, 0, source, gimp_directory (),
                                  update_pattern, update_callback);
         }
 
