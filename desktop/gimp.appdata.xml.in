@@ -36,9 +36,9 @@
     </_p>
   </description>
   <url type="bugtracker">https://bugzilla.gnome.org/page.cgi?id=browse.html&amp;product=GIMP</url>
-  <url type="donation">http://www.gimp.org/donating/</url>
-  <url type="help">http://www.gimp.org/docs/</url>
-  <url type="homepage">http://www.gimp.org/</url>
+  <url type="donation">https://www.gimp.org/donating/</url>
+  <url type="help">https://www.gimp.org/docs/</url>
+  <url type="homepage">https://www.gimp.org/</url>
   <screenshots>
     <screenshot type="default">
       <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-painting.jpg</image>
