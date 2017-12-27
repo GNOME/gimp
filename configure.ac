@@ -2695,13 +2695,35 @@ gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
 )
 
-AC_CONFIG_COMMANDS([sed-po-makefiles],
-[sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile && touch po-libgimp/stamp-it
-sed -e "/POTFILES =/r po-python/POTFILES" po-python/Makefile.in > po-python/Makefile && touch po-python/stamp-it
-sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile && touch po-plug-ins/stamp-it
-sed -e "/POTFILES =/r po-script-fu/POTFILES" po-script-fu/Makefile.in > po-script-fu/Makefile && touch po-script-fu/stamp-it
-sed -e "/POTFILES =/r po-tips/POTFILES" po-tips/Makefile.in > po-tips/Makefile && touch po-tips/stamp-it
-sed -e "/POTFILES =/r po-windows-installer/POTFILES" po-windows-installer/Makefile.in > po-windows-installer/Makefile && touch po-windows-installer/stamp-it])
+# By default, autoconf will create only po/Makefile.
+# This code is used to create the POTFILES and Makefile for all
+# additional gettext catalogs.
+m4_define([generate_po_makefile], [
+  AC_MSG_NOTICE([Generating POTFILES and Makefile for $1])
+
+  AC_CONFIG_COMMANDS([$1/stamp-it],
+  [
+    if  ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" > /dev/null ; then
+       as_fn_error $? "$1/Makefile.in.in was not created by intltoolize." "$LINENO" 5
+    fi
+    rm -f "$1/stamp-it" "$1/POTFILES"
+    sed -e '/^#/d' -e 's/^[[].*] *//' \
+        -e '/^[ 	]*$/d'        \
+        -e "s|^|	$ac_top_srcdir/|" \
+        "$srcdir/$1/POTFILES.in" | sed '$!s/$/ \\/' >"$1/POTFILES" && \
+    sed -e "/^# This comment gets stripped out/ {"  \
+        -e 'r $1/POTFILES'                          \
+        -e "d }" "$1/Makefile.in" >"$1/Makefile" && \
+    touch "$1/stamp-it"
+    ])
+])
+
+generate_po_makefile([po-libgimp])
+generate_po_makefile([po-python])
+generate_po_makefile([po-plug-ins])
+generate_po_makefile([po-script-fu])
+generate_po_makefile([po-tips])
+generate_po_makefile([po-windows-installer])
 
 # Print a summary of features enabled/disabled:
 optional_deps="
