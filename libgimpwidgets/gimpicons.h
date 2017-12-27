@@ -325,6 +325,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_TOOL_COLORIZE             "gimp-tool-colorize"
 #define GIMP_ICON_TOOL_COLOR_BALANCE        "gimp-tool-color-balance"
 #define GIMP_ICON_TOOL_COLOR_PICKER         "gimp-tool-color-picker"
+#define GIMP_ICON_TOOL_COLOR_TEMPERATURE    "gimp-tool-color-temperature"
 #define GIMP_ICON_TOOL_CROP                 "gimp-tool-crop"
 #define GIMP_ICON_TOOL_CURVES               "gimp-tool-curves"
 #define GIMP_ICON_TOOL_DESATURATE           "gimp-tool-desaturate"
