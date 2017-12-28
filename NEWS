@@ -31,7 +31,7 @@ Core:
 
 GUI and Usability:
 
-  - New Color Temperature Tool icons: "gimp-tool-color-temperature".
+  - New icons: "gimp-tool-color-temperature" and "gimp-tool-exposure".
 
 Tools:
   - "Link brush size with canvas zoom" paint option becomes "Lock brush
