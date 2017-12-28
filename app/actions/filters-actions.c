@@ -323,7 +323,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:engrave",
     GIMP_HELP_FILTER_ENGRAVE },
 
-  { "filters-exposure", GIMP_ICON_GEGL,
+  { "filters-exposure", GIMP_ICON_TOOL_EXPOSURE,
     NC_("filters-action", "E_xposure..."), NULL, NULL,
     "gegl:exposure",
     GIMP_HELP_FILTER_EXPOSURE },

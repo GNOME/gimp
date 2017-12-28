@@ -84,7 +84,6 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg			\
 	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-cmyk.svg				\
-	scalable/gimp-tool-color-temperature.svg			\
 	scalable/gimp-color-triangle.svg			\
 	scalable/gimp-color-water.svg				\
 	scalable/gimp-controller-keyboard.svg			\
@@ -265,12 +264,14 @@ scalable_images = \
 	scalable/gimp-tool-color-balance.svg			\
 	scalable/gimp-tool-colorize.svg				\
 	scalable/gimp-tool-color-picker.svg			\
+	scalable/gimp-tool-color-temperature.svg			\
 	scalable/gimp-tool-crop.svg				\
 	scalable/gimp-tool-curves.svg				\
 	scalable/gimp-tool-desaturate.svg			\
 	scalable/gimp-tool-dodge.svg				\
 	scalable/gimp-tool-ellipse-select.svg			\
 	scalable/gimp-tool-eraser.svg				\
+	scalable/gimp-tool-exposure.svg			\
 	scalable/gimp-tool-flip.svg				\
 	scalable/gimp-tool-foreground-select.svg		\
 	scalable/gimp-tool-free-select.svg			\
@@ -443,6 +444,7 @@ vector24_images = \
 	24/gimp-tool-dodge.svg					\
 	24/gimp-tool-eraser.svg					\
 	24/gimp-tool-ellipse-select.svg				\
+	24/gimp-tool-exposure.svg				\
 	24/gimp-tool-flip.svg					\
 	24/gimp-tool-foreground-select.svg			\
 	24/gimp-tool-free-select.svg				\
@@ -721,6 +723,7 @@ icons16_images = \
 	16/gimp-tool-dodge.png					\
 	16/gimp-tool-ellipse-select.png				\
 	16/gimp-tool-eraser.png					\
+	16/gimp-tool-exposure.png				\
 	16/gimp-tool-flip.png					\
 	16/gimp-tool-foreground-select.png			\
 	16/gimp-tool-free-select.png				\
@@ -922,6 +925,7 @@ icons24_images = \
 	24/gimp-tool-dodge.png					\
 	24/gimp-tool-ellipse-select.png				\
 	24/gimp-tool-eraser.png					\
+	24/gimp-tool-exposure.png				\
 	24/gimp-tool-flip.png					\
 	24/gimp-tool-foreground-select.png			\
 	24/gimp-tool-free-select.png				\
