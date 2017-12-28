@@ -2702,7 +2702,7 @@ m4_define([generate_po_makefile], [
   AC_MSG_NOTICE([Generating POTFILES and Makefile for $1])
 
   AC_CONFIG_COMMANDS([$1/stamp-it],
-  [
+  [[
     if  ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" > /dev/null ; then
        as_fn_error $? "$1/Makefile.in.in was not created by intltoolize." "$LINENO" 5
     fi
@@ -2716,7 +2716,7 @@ m4_define([generate_po_makefile], [
         -e "d" -e "}"                               \
         "$1/Makefile.in" >"$1/Makefile" && \
     touch "$1/stamp-it"
-    ])
+  ]])
 ])
 
 generate_po_makefile([po-libgimp])
