@@ -111,6 +111,9 @@ static void        gimp_operation_tool_aux_input_detach(AuxInput          *input
 static void        gimp_operation_tool_aux_input_clear (AuxInput          *input);
 static void        gimp_operation_tool_aux_input_free  (AuxInput          *input);
 
+static void        gimp_operation_tool_unlink_chains   (GimpOperationTool *op_tool);
+static void        gimp_operation_tool_relink_chains   (GimpOperationTool *op_tool);
+
 
 G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
                GIMP_TYPE_FILTER_TOOL)
@@ -304,10 +307,14 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
 
+  gimp_operation_tool_unlink_chains (op_tool);
+
   GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
   if (filter_tool->config && GIMP_TOOL (op_tool)->drawable)
     gimp_operation_tool_sync_op (op_tool, TRUE);
+
+  gimp_operation_tool_relink_chains (op_tool);
 }
 
 static void
@@ -316,10 +323,14 @@ gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
 
+  gimp_operation_tool_unlink_chains (op_tool);
+
   GIMP_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
 
   if (filter_tool->config && GIMP_TOOL (op_tool)->drawable)
     gimp_operation_tool_sync_op (op_tool, FALSE);
+
+  gimp_operation_tool_relink_chains (op_tool);
 }
 
 static void
@@ -683,6 +694,92 @@ gimp_operation_tool_aux_input_free (AuxInput *input)
   g_object_unref (input->box);
 
   g_slice_free (AuxInput, input);
+}
+
+static void
+gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
+{
+  GObject *options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
+  GList   *chains;
+
+  g_return_if_fail (options_gui != NULL);
+
+  chains = g_object_get_data (options_gui, "chains");
+
+  while (chains)
+    {
+      GimpChainButton *chain = chains->data;
+      gboolean         active;
+
+      active = gimp_chain_button_get_active (chain);
+
+      g_object_set_data (G_OBJECT (chain), "was-active",
+                         GINT_TO_POINTER (active));
+
+      if (active)
+        {
+          gimp_chain_button_set_active (chain, FALSE);
+
+          g_signal_emit_by_name (chain, "toggled");
+        }
+
+      chains = chains->next;
+    }
+
+  g_object_unref (options_gui);
+}
+
+static void
+gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
+{
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (op_tool);
+  GObject        *options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
+  GList          *chains;
+
+  g_return_if_fail (options_gui != NULL);
+
+  chains = g_object_get_data (options_gui, "chains");
+
+  while (chains)
+    {
+      GimpChainButton *chain = chains->data;
+
+      if (g_object_get_data (G_OBJECT (chain), "was-active"))
+        {
+          const gchar *name_x    = g_object_get_data (chains->data, "x-property");
+          const gchar *name_y    = g_object_get_data (chains->data, "y-property");
+          const gchar *names[2]  = { name_x, name_y };
+          GValue       values[2] = { G_VALUE_INIT, G_VALUE_INIT };
+          GValue       double_x  = G_VALUE_INIT;
+          GValue       double_y  = G_VALUE_INIT;
+
+          g_object_getv (filter_tool->config, 2, names, values);
+
+          g_value_init (&double_x, G_TYPE_DOUBLE);
+          g_value_init (&double_y, G_TYPE_DOUBLE);
+
+          if (g_value_transform (&values[0], &double_x) &&
+              g_value_transform (&values[1], &double_y) &&
+              g_value_get_double (&double_x) ==
+              g_value_get_double (&double_y))
+            {
+              gimp_chain_button_set_active (chain, TRUE);
+
+              g_signal_emit_by_name (chain, "toggled");
+            }
+
+          g_value_unset (&double_x);
+          g_value_unset (&double_y);
+          g_value_unset (&values[0]);
+          g_value_unset (&values[1]);
+
+          g_object_set_data (G_OBJECT (chain), "was-active", NULL);
+        }
+
+      chains = chains->next;
+    }
+
+  g_object_unref (options_gui);
 }
 
 
