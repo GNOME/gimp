@@ -428,13 +428,14 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[10];
-  GimpRunMode       run_mode;
+  GimpRunMode       run_mode = GIMP_RUN_NONINTERACTIVE;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
   gint32            drawable_ID;
   GError           *error  = NULL;
 
-  run_mode = param[0].data.d_int32;
+  if (nparams)
+    run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
