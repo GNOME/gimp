@@ -26,6 +26,9 @@ void   dashboard_history_duration_cmd_callback       (GtkAction *action,
                                                       GtkAction *current,
                                                       gpointer   data);
 
+void   dashboard_reset_cmd_callback                  (GtkAction *action,
+                                                      gpointer   data);
+
 void   dashboard_low_swap_space_warning_cmd_callback (GtkAction *action,
                                                       gpointer   data);
 

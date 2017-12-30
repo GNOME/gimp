@@ -43,7 +43,13 @@ static const GimpActionEntry dashboard_actions[] =
   { "dashboard-update-interval", NULL,
     NC_("dashboard-action", "Update Interval") },
   { "dashboard-history-duration", NULL,
-    NC_("dashboard-action", "History Duration") }
+    NC_("dashboard-action", "History Duration") },
+
+  { "dashboard-reset", GIMP_ICON_RESET,
+    NC_("dashboard-action", "Reset"), NULL,
+    NC_("dashboard-action", "Reset cumulative data"),
+    G_CALLBACK (dashboard_reset_cmd_callback),
+    GIMP_HELP_DASHBOARD_RESET },
 };
 
 static const GimpToggleActionEntry dashboard_toggle_actions[] =
@@ -149,7 +155,7 @@ dashboard_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  switch (dashboard->update_interval)
+  switch (gimp_dashboard_get_update_interval (dashboard))
     {
     case GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC:
       SET_ACTIVE ("dashboard-update-interval-0-25-sec", TRUE);
@@ -168,7 +174,7 @@ dashboard_actions_update (GimpActionGroup *group,
       break;
     }
 
-  switch (dashboard->history_duration)
+  switch (gimp_dashboard_get_history_duration (dashboard))
     {
     case GIMP_DASHBOARD_HISTORY_DURATION_15_SEC:
       SET_ACTIVE ("dashboard-history-duration-15-sec", TRUE);
@@ -188,7 +194,7 @@ dashboard_actions_update (GimpActionGroup *group,
     }
 
   SET_ACTIVE ("dashboard-low-swap-space-warning",
-              dashboard->low_swap_space_warning);
+              gimp_dashboard_get_low_swap_space_warning (dashboard));
 
 #undef SET_ACTIVE
 }

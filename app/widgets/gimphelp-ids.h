@@ -665,6 +665,7 @@
 #define GIMP_HELP_DASHBOARD_DIALOG                "gimp-dashboard-dialog"
 #define GIMP_HELP_DASHBOARD_UPDATE_INTERVAL       "gimp-dashboard-update-interval"
 #define GIMP_HELP_DASHBOARD_HISTORY_DURATION      "gimp-dashboard-history-duration"
+#define GIMP_HELP_DASHBOARD_RESET                 "gimp-dashboard-reset"
 #define GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING "gimp-dashboard-low-swap-space-warning"
 
 #define GIMP_HELP_DOCK                            "gimp-dock"

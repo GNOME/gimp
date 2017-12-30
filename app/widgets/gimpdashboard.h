@@ -33,34 +33,14 @@
 #define GIMP_DASHBOARD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DASHBOARD, GimpDashboardClass))
 
 
-typedef struct _GimpDashboardClass GimpDashboardClass;
+typedef struct _GimpDashboardPrivate GimpDashboardPrivate;
+typedef struct _GimpDashboardClass   GimpDashboardClass;
 
 struct _GimpDashboard
 {
-  GimpEditor                    parent_instance;
+  GimpEditor            parent_instance;
 
-  Gimp                         *gimp;
-
-  GtkWidget                    *cache_meter;
-  GtkWidget                    *cache_occupied_label;
-  GtkWidget                    *cache_limit_label;
-
-  GtkWidget                    *swap_meter;
-  GtkWidget                    *swap_occupied_label;
-  GtkWidget                    *swap_size_label;
-  GtkWidget                    *swap_limit_label;
-
-  gint                          timeout_id;
-  gint                          low_swap_space_idle_id;
-
-  GThread                      *thread;
-  GMutex                        mutex;
-  GCond                         cond;
-  gboolean                      quit;
-
-  GimpDashboardUpdateInteval    update_interval;
-  GimpDashboardHistoryDuration  history_duration;
-  gboolean                      low_swap_space_warning;
+  GimpDashboardPrivate *priv;
 };
 
 struct _GimpDashboardClass
@@ -69,17 +49,24 @@ struct _GimpDashboardClass
 };
 
 
-GType       gimp_dashboard_get_type                   (void) G_GNUC_CONST;
+GType                          gimp_dashboard_get_type                   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dashboard_new                        (Gimp                         *gimp,
-                                                       GimpMenuFactory              *menu_factory);
+GtkWidget                    * gimp_dashboard_new                        (Gimp                         *gimp,
+                                                                          GimpMenuFactory              *menu_factory);
 
-void        gimp_dashboard_set_update_interval        (GimpDashboard                *dashboard,
-                                                       GimpDashboardUpdateInteval    update_interval);
-void        gimp_dashboard_set_history_duration       (GimpDashboard                *dashboard,
-                                                       GimpDashboardHistoryDuration  history_duration);
-void        gimp_dashboard_set_low_swap_space_warning (GimpDashboard                *dashboard,
-                                                       gboolean                      low_swap_space_warning);
+void                           gimp_dashboard_reset                      (GimpDashboard                *dashboard);
+
+void                           gimp_dashboard_set_update_interval        (GimpDashboard                *dashboard,
+                                                                          GimpDashboardUpdateInteval    update_interval);
+GimpDashboardUpdateInteval     gimp_dashboard_get_update_interval        (GimpDashboard                *dashboard);
+
+void                           gimp_dashboard_set_history_duration       (GimpDashboard                *dashboard,
+                                                                          GimpDashboardHistoryDuration  history_duration);
+GimpDashboardHistoryDuration   gimp_dashboard_get_history_duration       (GimpDashboard                *dashboard);
+
+void                           gimp_dashboard_set_low_swap_space_warning (GimpDashboard                *dashboard,
+                                                                          gboolean                      low_swap_space_warning);
+gboolean                       gimp_dashboard_get_low_swap_space_warning (GimpDashboard                *dashboard);
 
 
 #endif  /*  __GIMP_DASHBOARD_H__  */

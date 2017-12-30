@@ -17,6 +17,7 @@
       <menuitem action="dashboard-history-duration-120-sec" />
       <menuitem action="dashboard-history-duration-240-sec" />
     </menu>
+    <menuitem action="dashboard-reset" />
     <separator />
     <menuitem action="dashboard-low-swap-space-warning" />
   </popup>

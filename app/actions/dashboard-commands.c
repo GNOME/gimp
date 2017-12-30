@@ -62,6 +62,15 @@ dashboard_history_duration_cmd_callback (GtkAction *action,
 }
 
 void
+dashboard_reset_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpDashboard *dashboard = GIMP_DASHBOARD (data);
+
+  gimp_dashboard_reset (dashboard);
+}
+
+void
 dashboard_low_swap_space_warning_cmd_callback (GtkAction *action,
                                                gpointer   data)
 {
