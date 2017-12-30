@@ -239,13 +239,6 @@ gimp_image_merge_down (GimpImage      *image,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (gimp_layer_is_floating_sel (current_layer))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot merge down a floating selection."));
-      return NULL;
-    }
-
   for (list = gimp_item_get_container_iter (GIMP_ITEM (current_layer));
        list;
        list = g_list_next (list))
@@ -298,9 +291,22 @@ gimp_image_merge_down (GimpImage      *image,
                                GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                C_("undo-type", "Merge Down"));
 
-  layer = gimp_image_merge_layers (image,
-                                   gimp_item_get_container (GIMP_ITEM (current_layer)),
-                                   merge_list, context, merge_type);
+  if (gimp_layer_is_floating_sel (current_layer))
+    {
+      /* Merging down a floating selection is basically equivalent to
+       * anchoring it.
+       */
+      floating_sel_anchor (current_layer);
+      /* layer is already set to the right layer below the floating
+       * selection, on which we anchored. This will be the return value.
+       */
+    }
+  else
+    {
+      layer = gimp_image_merge_layers (image,
+                                       gimp_item_get_container (GIMP_ITEM (current_layer)),
+                                       merge_list, context, merge_type);
+    }
   g_slist_free (merge_list);
 
   gimp_image_undo_group_end (image);
