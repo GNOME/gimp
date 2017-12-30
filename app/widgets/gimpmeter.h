@@ -68,11 +68,17 @@ void            gimp_meter_set_n_values           (GimpMeter     *meter,
                                                    gint           n_values);
 gint            gimp_meter_get_n_values           (GimpMeter     *meter);
 
-void            gimp_meter_set_color              (GimpMeter     *meter,
-                                                   gint           i,
+void            gimp_meter_set_value_active       (GimpMeter     *meter,
+                                                   gint           value,
+                                                   gboolean       active);
+gboolean        gimp_meter_get_value_active       (GimpMeter     *meter,
+                                                   gint           value);
+
+void            gimp_meter_set_value_color        (GimpMeter     *meter,
+                                                   gint           value,
                                                    const GimpRGB *color);
-const GimpRGB * gimp_meter_get_color              (GimpMeter     *meter,
-                                                   gint           i);
+const GimpRGB * gimp_meter_get_value_color        (GimpMeter     *meter,
+                                                   gint           value);
 
 void            gimp_meter_set_history_visible    (GimpMeter     *meter,
                                                    gboolean       visible);
@@ -91,9 +97,9 @@ void            gimp_meter_clear_history          (GimpMeter     *meter);
 void            gimp_meter_add_sample             (GimpMeter     *meter,
                                                    const gdouble *sample);
 
-void            gimp_meter_set_led_visible        (GimpMeter     *meter,
-                                                   gboolean       visible);
-gboolean        gimp_meter_get_led_visible        (GimpMeter     *meter);
+void            gimp_meter_set_led_active         (GimpMeter     *meter,
+                                                   gboolean       active);
+gboolean        gimp_meter_get_led_active         (GimpMeter     *meter);
 
 void            gimp_meter_set_led_color          (GimpMeter     *meter,
                                                    const GimpRGB *color);

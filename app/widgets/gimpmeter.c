@@ -57,10 +57,16 @@ enum
   PROP_HISTORY_VISIBLE,
   PROP_HISTORY_DURATION,
   PROP_HISTORY_RESOLUTION,
-  PROP_LED_VISIBLE,
+  PROP_LED_ACTIVE,
   PROP_LED_COLOR
 };
 
+
+typedef struct
+{
+  gboolean active;
+  GimpRGB  color;
+} Value;
 
 struct _GimpMeterPrivate
 {
@@ -71,11 +77,11 @@ struct _GimpMeterPrivate
   gdouble   range_min;
   gdouble   range_max;
   gint      n_values;
-  GimpRGB  *colors;
+  Value    *values;
   gboolean  history_visible;
   gdouble   history_duration;
   gdouble   history_resolution;
-  gboolean  led_visible;
+  gboolean  led_active;
   GimpRGB   led_color;
 
   gdouble  *samples;
@@ -87,6 +93,8 @@ struct _GimpMeterPrivate
   gint      timeout_id;
 };
 
+
+/*  local function prototypes  */
 
 static void       gimp_meter_dispose                (GObject        *object);
 static void       gimp_meter_finalize               (GObject        *object);
@@ -194,8 +202,8 @@ gimp_meter_class_init (GimpMeterClass *klass)
                                                         G_PARAM_CONSTRUCT));
 
 
-  g_object_class_install_property (object_class, PROP_LED_VISIBLE,
-                                   g_param_spec_boolean ("led-visible",
+  g_object_class_install_property (object_class, PROP_LED_ACTIVE,
+                                   g_param_spec_boolean ("led-active",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
@@ -236,7 +244,7 @@ gimp_meter_dispose (GObject *object)
 {
   GimpMeter *meter = GIMP_METER (object);
 
-  g_clear_pointer (&meter->priv->colors, g_free);
+  g_clear_pointer (&meter->priv->values, g_free);
   g_clear_pointer (&meter->priv->samples, g_free);
   g_clear_pointer (&meter->priv->uniform_sample, g_free);
 
@@ -305,8 +313,8 @@ gimp_meter_set_property (GObject      *object,
       gimp_meter_set_history_resolution (meter, g_value_get_double (value));
       break;
 
-    case PROP_LED_VISIBLE:
-      gimp_meter_set_led_visible (meter, g_value_get_boolean (value));
+    case PROP_LED_ACTIVE:
+      gimp_meter_set_led_active (meter, g_value_get_boolean (value));
       break;
 
     case PROP_LED_COLOR:
@@ -361,8 +369,8 @@ gimp_meter_get_property (GObject    *object,
       g_value_set_int (value, gimp_meter_get_history_resolution (meter));
       break;
 
-    case PROP_LED_VISIBLE:
-      g_value_set_boolean (value, gimp_meter_get_led_visible (meter));
+    case PROP_LED_ACTIVE:
+      g_value_set_boolean (value, gimp_meter_get_led_active (meter));
       break;
 
     case PROP_LED_COLOR:
@@ -463,7 +471,7 @@ gimp_meter_expose_event (GtkWidget      *widget,
       cairo_save (cr);
 
       /* paint led */
-      if (meter->priv->led_visible)
+      if (meter->priv->led_active)
         {
           cairo_arc (cr,
                      0.0, 0.0,
@@ -497,7 +505,10 @@ gimp_meter_expose_event (GtkWidget      *widget,
             {
               gdouble v = VALUE (0, i);
 
-              gimp_cairo_set_source_rgba (cr, &meter->priv->colors[i]);
+              if (! meter->priv->values[i].active)
+                continue;
+
+              gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
               cairo_move_to (cr, 0.0, 0.0);
               cairo_arc (cr,
                          0.0, 0.0,
@@ -539,7 +550,10 @@ gimp_meter_expose_event (GtkWidget      *widget,
           a2 = -asin (0.50 / 0.6);
 
           /* clip to history interior */
-          cairo_arc_negative (cr, 0.0, 0.0, 0.6 * size, a1, a2);
+          cairo_arc_negative (cr,
+                              0.0, 0.0,
+                              0.6 * size,
+                              a1, a2);
           cairo_line_to (cr,
                          allocation.width - BORDER_WIDTH - 0.5 * size,
                          -0.50 * size);
@@ -593,7 +607,10 @@ gimp_meter_expose_event (GtkWidget      *widget,
                   gdouble c[4];
                   gdouble x;
 
-                  gimp_cairo_set_source_rgba (cr, &meter->priv->colors[i]);
+                  if (! meter->priv->values[i].active)
+                    continue;
+
+                  gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
                   cairo_move_to (cr, 0.0, 0.0);
 
                   for (j = 1; j < meter->priv->n_samples - 2; j++)
@@ -661,7 +678,10 @@ gimp_meter_expose_event (GtkWidget      *widget,
           cairo_restore (cr);
 
           /* paint history border */
-          cairo_arc_negative (cr, 0.0, 0.0, 0.6 * size, a1, a2);
+          cairo_arc_negative (cr,
+                              0.0, 0.0,
+                              0.6 * size,
+                              a1, a2);
           cairo_line_to (cr,
                          allocation.width - BORDER_WIDTH - 0.5 * size,
                          -0.50 * size);
@@ -909,12 +929,13 @@ gimp_meter_set_n_values (GimpMeter *meter,
     {
       g_mutex_lock (&meter->priv->mutex);
 
-      meter->priv->colors = g_renew (GimpRGB, meter->priv->colors, n_values);
+      meter->priv->values = g_renew (Value, meter->priv->values, n_values);
 
       if (n_values > meter->priv->n_values)
         {
-          memset (meter->priv->colors,
-                  0, (n_values - meter->priv->n_values) * sizeof (GimpRGB));
+          gegl_memset_pattern (meter->priv->values,
+                               &(Value) { .active = TRUE }, sizeof (Value),
+                               n_values - meter->priv->n_values);
         }
 
       meter->priv->n_values = n_values;
@@ -938,27 +959,57 @@ gimp_meter_get_n_values (GimpMeter *meter)
 }
 
 void
-gimp_meter_set_color (GimpMeter     *meter,
-                      gint           i,
-                      const GimpRGB *color)
+gimp_meter_set_value_active (GimpMeter *meter,
+                             gint       value,
+                             gboolean   active)
 {
   g_return_if_fail (GIMP_IS_METER (meter));
-  g_return_if_fail (i >= 0 && i < meter->priv->n_values);
+  g_return_if_fail (value >= 0 && value < meter->priv->n_values);
+
+  if (active != meter->priv->values[value].active)
+    {
+      meter->priv->values[value].active = active;
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+    }
+}
+
+gboolean
+gimp_meter_get_value_active (GimpMeter *meter,
+                             gint       value)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
+
+  return meter->priv->values[value].active;
+}
+
+
+void
+gimp_meter_set_value_color (GimpMeter     *meter,
+                            gint           value,
+                            const GimpRGB *color)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (value >= 0 && value < meter->priv->n_values);
   g_return_if_fail (color != NULL);
 
-  meter->priv->colors[i] = *color;
+  if (memcmp (color, &meter->priv->values[value].color, sizeof (GimpRGB)))
+    {
+      meter->priv->values[value].color = *color;
 
-  gtk_widget_queue_draw (GTK_WIDGET (meter));
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+    }
 }
 
 const GimpRGB *
-gimp_meter_get_color (GimpMeter *meter,
-                      gint       i)
+gimp_meter_get_value_color (GimpMeter *meter,
+                            gint       value)
 {
   g_return_val_if_fail (GIMP_IS_METER (meter), NULL);
-  g_return_val_if_fail (i >= 0 && i < meter->priv->n_values, NULL);
+  g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, NULL);
 
-  return &meter->priv->colors[i];
+  return &meter->priv->values[value].color;
 }
 
 void
@@ -1074,27 +1125,27 @@ gimp_meter_add_sample (GimpMeter     *meter,
 }
 
 void
-gimp_meter_set_led_visible (GimpMeter *meter,
-                            gboolean   visible)
+gimp_meter_set_led_active (GimpMeter *meter,
+                           gboolean   active)
 {
   g_return_if_fail (GIMP_IS_METER (meter));
 
-  if (visible != meter->priv->led_visible)
+  if (active != meter->priv->led_active)
     {
-      meter->priv->led_visible = visible;
+      meter->priv->led_active = active;
 
       gtk_widget_queue_draw (GTK_WIDGET (meter));
 
-      g_object_notify (G_OBJECT (meter), "led-visible");
+      g_object_notify (G_OBJECT (meter), "led-active");
     }
 }
 
 gboolean
-gimp_meter_get_led_visible (GimpMeter *meter)
+gimp_meter_get_led_active (GimpMeter *meter)
 {
   g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
 
-  return meter->priv->led_visible;
+  return meter->priv->led_active;
 }
 
 void
@@ -1104,11 +1155,14 @@ gimp_meter_set_led_color (GimpMeter     *meter,
   g_return_if_fail (GIMP_IS_METER (meter));
   g_return_if_fail (color != NULL);
 
-  meter->priv->led_color = *color;
+  if (memcmp (color, &meter->priv->led_color, sizeof (GimpRGB)))
+    {
+      meter->priv->led_color = *color;
 
-  gtk_widget_queue_draw (GTK_WIDGET (meter));
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
 
-  g_object_notify (G_OBJECT (meter), "led-color");
+      g_object_notify (G_OBJECT (meter), "led-color");
+    }
 }
 
 const GimpRGB *
