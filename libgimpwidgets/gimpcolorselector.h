@@ -127,23 +127,35 @@ GtkWidget * gimp_color_selector_new              (GType              selector_ty
                                                   const GimpHSV     *hsv,
                                                   GimpColorSelectorChannel  channel);
 
-void   gimp_color_selector_set_toggles_visible   (GimpColorSelector *selector,
-                                                  gboolean           visible);
-void   gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
-                                                  gboolean           sensitive);
-void   gimp_color_selector_set_show_alpha        (GimpColorSelector *selector,
-                                                  gboolean           show_alpha);
-void   gimp_color_selector_set_color             (GimpColorSelector *selector,
-                                                  const GimpRGB     *rgb,
-                                                  const GimpHSV     *hsv);
-void   gimp_color_selector_set_channel           (GimpColorSelector *selector,
-                                                  GimpColorSelectorChannel  channel);
+void     gimp_color_selector_set_toggles_visible   (GimpColorSelector *selector,
+                                                    gboolean           visible);
+gboolean gimp_color_selector_get_toggles_visible   (GimpColorSelector *selector);
 
-void   gimp_color_selector_color_changed         (GimpColorSelector *selector);
-void   gimp_color_selector_channel_changed       (GimpColorSelector *selector);
+void     gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
+                                                    gboolean           sensitive);
+gboolean gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector);
 
-void   gimp_color_selector_set_config            (GimpColorSelector *selector,
-                                                  GimpColorConfig   *config);
+void     gimp_color_selector_set_show_alpha        (GimpColorSelector *selector,
+                                                    gboolean           show_alpha);
+gboolean gimp_color_selector_get_show_alpha        (GimpColorSelector *selector);
+
+void     gimp_color_selector_set_color             (GimpColorSelector *selector,
+                                                    const GimpRGB     *rgb,
+                                                    const GimpHSV     *hsv);
+void     gimp_color_selector_get_color             (GimpColorSelector *selector,
+                                                    GimpRGB           *rgb,
+                                                    GimpHSV           *hsv);
+
+void     gimp_color_selector_set_channel           (GimpColorSelector *selector,
+                                                    GimpColorSelectorChannel  channel);
+GimpColorSelectorChannel
+         gimp_color_selector_get_channel           (GimpColorSelector *selector);
+
+void     gimp_color_selector_color_changed         (GimpColorSelector *selector);
+void     gimp_color_selector_channel_changed       (GimpColorSelector *selector);
+
+void     gimp_color_selector_set_config            (GimpColorSelector *selector,
+                                                    GimpColorConfig   *config);
 
 
 G_END_DECLS

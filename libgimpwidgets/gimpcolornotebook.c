@@ -377,6 +377,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   GtkWidget              *menu_widget;
   GtkWidget              *image;
   GtkWidget              *label;
+  gboolean                show_alpha;
 
   page = gimp_color_selector_new (page_type,
                                   &selector->rgb,
@@ -388,8 +389,8 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
 
   selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (page);
 
-  gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (page),
-                                      GIMP_COLOR_SELECTOR (notebook)->show_alpha);
+  show_alpha = gimp_color_selector_get_show_alpha (GIMP_COLOR_SELECTOR (notebook));
+  gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (page), show_alpha);
 
   menu_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 

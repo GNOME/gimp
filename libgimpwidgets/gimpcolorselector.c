@@ -133,6 +133,25 @@ gimp_color_selector_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
+
+/*  public functions  */
+
+/**
+ * gimp_color_selector_new:
+ * @selector_type: The #GType of the selector to create.
+ * @rgb:           The inital color to be edited.
+ * @hsv:           The same color in HSV.
+ * @channel:       The selector's initial channel.
+ *
+ * Creates a new #GimpColorSelector widget of type @selector_type.
+ *
+ * Note that this is mostly internal API to be used by other widgets.
+ *
+ * Please use gimp_color_selection_new() for the "GIMP-typical" color
+ * selection widget. Also see gimp_color_button_new().
+ *
+ * Retunn value: the new #GimpColorSelector widget.
+ **/
 GtkWidget *
 gimp_color_selector_new (GType                     selector_type,
                          const GimpRGB            *rgb,
@@ -154,6 +173,16 @@ gimp_color_selector_new (GType                     selector_type,
   return GTK_WIDGET (selector);
 }
 
+/**
+ * gimp_color_selector_set_toggles_visible:
+ * @selector: A #GimpColorSelector widget.
+ * @visible:  The new @visible setting.
+ *
+ * Sets the @visible property of the @selector's toggles.
+ *
+ * This function has no effect if this @selector instance has no
+ * toggles to switch channels.
+ **/
 void
 gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
                                          gboolean           visible)
@@ -173,6 +202,34 @@ gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
     }
 }
 
+/**
+ * gimp_color_selector_get_toggles_visible:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Returns the @visible property of the @selector's toggles.
+ *
+ * Return value: #TRUE if the #GimpColorSelector's toggles are visible.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_selector_get_toggles_visible (GimpColorSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+
+  return selector->toggles_visible;
+}
+
+/**
+ * gimp_color_selector_set_toggles_sensitive:
+ * @selector:  A #GimpColorSelector widget.
+ * @sensitive: The new @sensitive setting.
+ *
+ * Sets the @sensitive property of the @selector's toggles.
+ *
+ * This function has no effect if this @selector instance has no
+ * toggles to switch channels.
+ **/
 void
 gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
                                            gboolean           sensitive)
@@ -192,6 +249,31 @@ gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
     }
 }
 
+/**
+ * gimp_color_selector_get_toggles_sensitive:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Returns the @sensitive property of the @selector's toggles.
+ *
+ * Return value: #TRUE if the #GimpColorSelector's toggles are sensitive.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+
+  return selector->toggles_sensitive;
+}
+
+/**
+ * gimp_color_selector_set_show_alpha:
+ * @selector:   A #GimpColorSelector widget.
+ * @show_alpha: The new @show_alpha setting.
+ *
+ * Sets the @show_alpha property of the @selector widget.
+ **/
 void
 gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
                                     gboolean           show_alpha)
@@ -211,6 +293,32 @@ gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
     }
 }
 
+/**
+ * gimp_color_selector_get_show_alpha:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Returns the @selector's @show_alpha property.
+ *
+ * Return value: #TRUE if the #GimpColorSelector has alpha controls.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_color_selector_get_show_alpha (GimpColorSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+
+  return selector->show_alpha;
+}
+
+/**
+ * gimp_color_selector_set_color:
+ * @selector: A #GimpColorSelector widget.
+ * @rgb:      The new color.
+ * @hsv:      The same color in HSV.
+ *
+ * Sets the color shown in the @selector widget.
+ **/
 void
 gimp_color_selector_set_color (GimpColorSelector *selector,
                                const GimpRGB     *rgb,
@@ -233,6 +341,39 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
   gimp_color_selector_color_changed (selector);
 }
 
+/**
+ * gimp_color_selector_get_color:
+ * @selector: A #GimpColorSelector widget.
+ * @rgb:      Return location for the color.
+ * @hsv:      Return location for the same same color in HSV.
+ *
+ * Retrieves the color shown in the @selector widget.
+ *
+ * Since: 2.10
+ **/
+void
+gimp_color_selector_get_color (GimpColorSelector *selector,
+                               GimpRGB           *rgb,
+                               GimpHSV           *hsv)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (hsv != NULL);
+
+  *rgb = selector->rgb;
+  *hsv = selector->hsv;
+}
+
+/**
+ * gimp_color_selector_set_channel:
+ * @selector: A #GimpColorSelector widget.
+ * @channel:  The new @channel setting.
+ *
+ * Sets the @channel property of the @selector widget.
+ *
+ * Changes between displayed channels if this @selector instance has
+ * the ability to show different channels.
+ **/
 void
 gimp_color_selector_set_channel (GimpColorSelector        *selector,
                                  GimpColorSelectorChannel  channel)
@@ -254,6 +395,32 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
     }
 }
 
+/**
+ * gimp_color_selector_get_channel:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Returns the @selector's current channel.
+ *
+ * Return value: The #GimpColorSelectorChannel currently shown by the
+ * @selector.
+ *
+ * Since: 2.10
+ **/
+GimpColorSelectorChannel
+gimp_color_selector_get_channel (GimpColorSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
+                        GIMP_COLOR_SELECTOR_HUE);
+
+  return selector->channel;
+}
+
+/**
+ * gimp_color_selector_color_changed:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Emits the "color-changed" signal.
+ **/
 void
 gimp_color_selector_color_changed (GimpColorSelector *selector)
 {
@@ -263,6 +430,12 @@ gimp_color_selector_color_changed (GimpColorSelector *selector)
                  &selector->rgb, &selector->hsv);
 }
 
+/**
+ * gimp_color_selector_channel_changed:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Emits the "channel-changed" signal.
+ **/
 void
 gimp_color_selector_channel_changed (GimpColorSelector *selector)
 {
