@@ -300,8 +300,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                      mask_src_y * cairo_stride + mask_src_x;
 
       gegl_buffer_get (shell->mask,
-                       GEGL_RECTANGLE (x - shell->mask_offset_x,
-                                       y - shell->mask_offset_y,
+                       GEGL_RECTANGLE (x - floor (shell->mask_offset_x * scale),
+                                       y - floor (shell->mask_offset_y * scale),
                                        w, h),
                        scale,
                        babl_format ("Y u8"),
