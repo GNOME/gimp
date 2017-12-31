@@ -126,7 +126,7 @@ struct _FieldInfo
 {
   Variable variable;
   gboolean default_active;
-  gboolean meter_value;
+  gint     meter_value;
 };
 
 struct _GroupInfo
@@ -164,7 +164,7 @@ struct _VariableData
 
 struct _FieldData
 {
-  gboolean   active;
+  gboolean          active;
 
   GtkCheckMenuItem *menu_item;
   GtkLabel         *value_label;
@@ -1000,11 +1000,11 @@ gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
   allocation.x -= expander_allocation.x;
   allocation.y -= expander_allocation.y;
 
-  if (bevent->button == 1                         &&
-      bevent->x >= allocation.x                   &&
-      bevent->x < allocation.x + allocation.width &&
-      bevent->y >= allocation.y                   &&
-      bevent->y < allocation.y + allocation.height)
+  if (bevent->button == 1                          &&
+      bevent->x >= allocation.x                    &&
+      bevent->x <  allocation.x + allocation.width &&
+      bevent->y >= allocation.y                    &&
+      bevent->y <  allocation.y + allocation.height)
     {
       gtk_menu_popup (group_data->menu,
                       NULL, NULL,
@@ -1109,6 +1109,16 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
           if (varaibles_changed)
             {
+              /* enqueue update source */
+              if (! priv->update_idle_id &&
+                  gtk_widget_get_mapped (GTK_WIDGET (dashboard)))
+                {
+                  priv->update_idle_id = g_idle_add_full (
+                    G_PRIORITY_DEFAULT,
+                    (GSourceFunc) gimp_dashboard_update,
+                    dashboard, NULL);
+                }
+
               /* check for low swap space */
               if (priv->low_swap_space_warning                      &&
                   priv->variables[VARIABLE_SWAP_OCCUPIED].available &&
@@ -1145,16 +1155,6 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
                       seen_low_swap_space = FALSE;
                     }
-                }
-
-              /* enqueue update source */
-              if (! priv->update_idle_id &&
-                  gtk_widget_get_mapped (GTK_WIDGET (dashboard)))
-                {
-                  priv->update_idle_id = g_idle_add_full (
-                    G_PRIORITY_DEFAULT,
-                    (GSourceFunc) gimp_dashboard_update,
-                    dashboard, NULL);
                 }
             }
 
