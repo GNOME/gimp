@@ -175,6 +175,7 @@ Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
+Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
