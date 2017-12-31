@@ -259,14 +259,14 @@ gimp_image_merge_down (GimpImage      *image,
         {
           if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
             {
-              g_set_error_literal (error, 0, 0,
+              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                    _("Cannot merge down to a layer group."));
               return NULL;
             }
 
           if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
             {
-              g_set_error_literal (error, 0, 0,
+              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                    _("The layer to merge down to is locked."));
               return NULL;
             }
@@ -278,7 +278,7 @@ gimp_image_merge_down (GimpImage      *image,
 
   if (! merge_list)
     {
-      g_set_error_literal (error, 0, 0,
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("There is no visible layer to merge down to."));
       return NULL;
     }
