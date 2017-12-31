@@ -41,10 +41,13 @@ G_BEGIN_DECLS
 
 /*  random states/things that don't fit in any category  */
 
+#define GIMP_ICON_BUSINESS_CARD             "gimp-business-card"
 #define GIMP_ICON_CHAR_PICKER               "gimp-char-picker"
 #define GIMP_ICON_CURSOR                    "gimp-cursor"
+#define GIMP_ICON_DISPLAY                   "gimp-display"
 #define GIMP_ICON_GEGL                      "gimp-gegl"
 #define GIMP_ICON_LINKED                    "gimp-linked"
+#define GIMP_ICON_SMARTPHONE                "gimp-smartphone"
 #define GIMP_ICON_TRANSPARENCY              "gimp-transparency"
 #define GIMP_ICON_VIDEO                     "gimp-video"
 #define GIMP_ICON_VISIBLE                   "gimp-visible"
@@ -592,10 +595,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PORTRAIT                 "gimp-portrait"
 #define GIMP_STOCK_LANDSCAPE                "gimp-landscape"
 
-#define GIMP_STOCK_BUSINESS_CARD            "gimp-business-card"
-#define GIMP_STOCK_DISPLAY                  "gimp-display"
 #define GIMP_STOCK_GEGL                     "gimp-gegl"
-#define GIMP_STOCK_SMARTPHONE               "gimp-smartphone"
 #define GIMP_STOCK_VIDEO                    "gimp-video"
 #define GIMP_STOCK_WEB                      "gimp-web"
 
