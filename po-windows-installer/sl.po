@@ -1,16 +1,24 @@
+#'gimp/po-windows-installer
 # Slovenian translation for gimp-windows-installer.
 # Copyright (C) 2017 the gimp authors.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the GIMP package.
+#
+# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 02:30+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-12-27 01:59+0000\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -18,7 +26,7 @@ msgstr "Licenčna pogodba"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr ""
+msgstr "Namestitveni paketi zgradil Jernej Simončič, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
@@ -158,15 +166,15 @@ msgstr "Podpora za Python"
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
-"Omogoča izvajanje vtičnikov za GIMP, napisanih v programskem jeziku Python"
+"Omogoča izvajanje vtičnikov za GIMP, napisanih v programskem jeziku Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "MyPaint brushes"
-msgstr ""
+msgstr "Čopiči MyPaint"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Install the default set of MyPaint brushes"
-msgstr ""
+msgstr "Namesti privzeti nabor čopičev MyPaint"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "PostScript support"
@@ -186,7 +194,7 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"Omogoča uporabo 32-bitnih vtičnikov.%nPotrebno za uporabo podpore za Python"
+"Omogoča uporabo 32-bitnih vtičnikov.%nPotrebno za uporabo podpore za Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:38
 msgid "Additional icons:"
@@ -223,9 +231,8 @@ msgid "Error updating Python interpreter info."
 msgstr "Prišlo je do napake pri nastavljanju podpore za Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
-#, fuzzy
 msgid "Error updating MyPaint brushes info."
-msgstr "Prišlo je do napake pri nastavljanju podpore za Python."
+msgstr "Prišlo je do napake pri posodabljanju podatkov za čopiče MyPaint."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 #, no-c-format
@@ -259,7 +266,7 @@ msgid ""
 "Explorer."
 msgstr ""
 "Tu lahko izberete vrste datotek, ki se bodo odprle v GIMP-u, ko jih "
-"dvokliknete v Raziskovalcu"
+"dvokliknete v Raziskovalcu."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select &All"
@@ -347,9 +354,8 @@ msgid "Setting up environment for GIMP Python extension..."
 msgstr "Pripravljam okolje za GIMP Python..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
-#, fuzzy
 msgid "Setting up MyPaint brushes..."
-msgstr "Pripravljam okolje za GIMP..."
+msgstr "Nastavljanje čopičev MyPaint ..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up GIMP environment..."
@@ -377,12 +383,3 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr "GIMP očitno ni nameščen v izbrani mapi. Želite kljub temu nadaljevati?"
-
-#~ msgid ""
-#~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "
-#~ "page of Setup by Alexia_Death%nImage on closing page of Setup by Jakub "
-#~ "Steiner"
-#~ msgstr ""
-#~ "Namestitveni program je pripravil Jernej Simončič, jernej-gimp@ena.si%n"
-#~ "%nSlika na prvi strani namestitvenega programa: Alexia_Death%nSlika na "
-#~ "zadnji strani namestitvenega programa: Jakub Steiner"
