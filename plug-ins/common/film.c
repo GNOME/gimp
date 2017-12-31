@@ -946,20 +946,21 @@ static void
 create_selection_tab (GtkWidget *notebook,
                       gint32     image_ID)
 {
-  GtkSizeGroup  *group;
-  GtkWidget     *vbox;
-  GtkWidget     *vbox2;
-  GtkWidget     *hbox;
-  GtkWidget     *table;
-  GtkWidget     *label;
-  GtkWidget     *frame;
-  GtkWidget     *toggle;
-  GtkWidget     *spinbutton;
-  GtkAdjustment *adj;
-  GtkWidget     *button;
-  GtkWidget     *font_button;
-  gint32        *image_id_list;
-  gint           nimages, j;
+  GimpColorConfig *config;
+  GtkSizeGroup    *group;
+  GtkWidget       *vbox;
+  GtkWidget       *vbox2;
+  GtkWidget       *hbox;
+  GtkWidget       *table;
+  GtkWidget       *label;
+  GtkWidget       *frame;
+  GtkWidget       *toggle;
+  GtkWidget       *spinbutton;
+  GtkAdjustment   *adj;
+  GtkWidget       *button;
+  GtkWidget       *font_button;
+  gint32          *image_id_list;
+  gint             nimages, j;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -1038,6 +1039,9 @@ create_selection_tab (GtkWidget *notebook,
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.film_color);
 
+  config = gimp_get_color_configuration ();
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), config);
+
   /* Film numbering: Startindex/Font/color */
   frame = gimp_frame_new (_("Numbering"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
@@ -1090,6 +1094,9 @@ create_selection_tab (GtkWidget *notebook,
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &filmvals.number_color);
+
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button), config);
+  g_object_unref (config);
 
   for (j = 0; j < 2; j++)
     {

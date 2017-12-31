@@ -618,22 +618,23 @@ static gint
 dialog (gint32        image_ID,
         GimpDrawable *drawable)
 {
-  GtkWidget    *dlg;
-  GtkWidget    *main_vbox;
-  GtkWidget    *vbox;
-  GtkSizeGroup *group;
-  GtkWidget    *label;
-  GtkWidget    *preview;
-  GtkWidget    *button;
-  GtkWidget    *width;
-  GtkWidget    *space;
-  GtkWidget    *offset;
-  GtkWidget    *chain_button;
-  GtkWidget    *table;
-  GimpUnit      unit;
-  gdouble       xres;
-  gdouble       yres;
-  gboolean      run;
+  GimpColorConfig *config;
+  GtkWidget       *dlg;
+  GtkWidget       *main_vbox;
+  GtkWidget       *vbox;
+  GtkSizeGroup    *group;
+  GtkWidget       *label;
+  GtkWidget       *preview;
+  GtkWidget       *button;
+  GtkWidget      *width;
+  GtkWidget      *space;
+  GtkWidget      *offset;
+  GtkWidget      *chain_button;
+  GtkWidget      *table;
+  GimpUnit        unit;
+  gdouble         xres;
+  gdouble         yres;
+  gboolean        run;
 
   g_return_val_if_fail (main_dialog == NULL, FALSE);
 
@@ -909,6 +910,10 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), hcolor_button, 0, 1, 1, 2);
   gtk_widget_show (hcolor_button);
 
+  config = gimp_get_color_configuration ();
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (hcolor_button),
+                                      config);
+
   g_signal_connect (hcolor_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.hcolor);
@@ -927,6 +932,9 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), vcolor_button, 1, 2, 1, 2);
   gtk_widget_show (vcolor_button);
 
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (vcolor_button),
+                                      config);
+
   g_signal_connect (vcolor_button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.vcolor);
@@ -944,6 +952,10 @@ dialog (gint32        image_ID,
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, 1, 2);
   gtk_widget_show (button);
+
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button),
+                                      config);
+  g_object_unref (config);
 
   g_signal_connect (button, "color-changed",
                     G_CALLBACK (gimp_color_button_get_color),
