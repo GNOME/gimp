@@ -482,6 +482,7 @@ GIMP_INT_STORE_GET_CLASS
 <FILE>gimpintcombobox</FILE>
 <TITLE>GimpIntComboBox</TITLE>
 GimpIntComboBox
+GimpIntComboBoxLayout
 GimpIntSensitivityFunc
 gimp_int_combo_box_new
 gimp_int_combo_box_new_valist
@@ -494,6 +495,8 @@ gimp_int_combo_box_set_active_by_user_data
 gimp_int_combo_box_get_active_user_data
 gimp_int_combo_box_set_label
 gimp_int_combo_box_get_label
+gimp_int_combo_box_set_layout
+gimp_int_combo_box_get_layout
 gimp_int_combo_box_connect
 gimp_int_combo_box_set_sensitivity
 <SUBSECTION Standard>
@@ -505,6 +508,8 @@ gimp_int_combo_box_get_type
 GIMP_INT_COMBO_BOX_CLASS
 GIMP_IS_INT_COMBO_BOX_CLASS
 GIMP_INT_COMBO_BOX_GET_CLASS
+GIMP_TYPE_INT_COMBO_BOX_LAYOUT
+gimp_int_combo_box_layout_get_type
 </SECTION>
 
 <SECTION>
@@ -785,10 +790,13 @@ GIMP_ICON_DETACH
 GIMP_ICON_INVERT
 GIMP_ICON_RESET
 GIMP_ICON_SHRED
+GIMP_ICON_BUSINESS_CARD
 GIMP_ICON_CHAR_PICKER
 GIMP_ICON_CURSOR
+GIMP_ICON_DISPLAY
 GIMP_ICON_GEGL
 GIMP_ICON_LINKED
+GIMP_ICON_SMARTPHONE
 GIMP_ICON_TRANSPARENCY
 GIMP_ICON_VIDEO
 GIMP_ICON_VISIBLE
@@ -856,6 +864,7 @@ GIMP_ICON_CONVERT_PRECISION
 GIMP_ICON_CURVE_FREE
 GIMP_ICON_CURVE_SMOOTH
 GIMP_ICON_DIALOG_CHANNELS
+GIMP_ICON_DIALOG_DASHBOARD
 GIMP_ICON_DIALOG_DEVICE_STATUS
 GIMP_ICON_DIALOG_ERROR
 GIMP_ICON_DIALOG_IMAGES
@@ -870,6 +879,7 @@ GIMP_ICON_DIALOG_TOOL_OPTIONS
 GIMP_ICON_DIALOG_UNDO_HISTORY
 GIMP_ICON_DIALOG_WARNING
 GIMP_ICON_DISPLAY_FILTER
+GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING
 GIMP_ICON_DISPLAY_FILTER_COLORBLIND
 GIMP_ICON_DISPLAY_FILTER_CONTRAST
 GIMP_ICON_DISPLAY_FILTER_GAMMA
@@ -1005,6 +1015,7 @@ GIMP_ICON_TOOL_BUCKET_FILL
 GIMP_ICON_TOOL_BY_COLOR_SELECT
 GIMP_ICON_TOOL_CAGE
 GIMP_ICON_TOOL_CLONE
+GIMP_ICON_TOOL_COLOR_TEMPERATURE
 GIMP_ICON_TOOL_COLORIZE
 GIMP_ICON_TOOL_COLOR_BALANCE
 GIMP_ICON_TOOL_COLOR_PICKER
@@ -1014,6 +1025,7 @@ GIMP_ICON_TOOL_DESATURATE
 GIMP_ICON_TOOL_DODGE
 GIMP_ICON_TOOL_ELLIPSE_SELECT
 GIMP_ICON_TOOL_ERASER
+GIMP_ICON_TOOL_EXPOSURE
 GIMP_ICON_TOOL_FLIP
 GIMP_ICON_TOOL_FOREGROUND_SELECT
 GIMP_ICON_TOOL_FREE_SELECT
@@ -1420,10 +1432,15 @@ GIMP_COLOR_SELECTOR_BAR_SIZE
 GimpColorSelectorChannel
 gimp_color_selector_new
 gimp_color_selector_set_toggles_visible
+gimp_color_selector_get_toggles_visible
 gimp_color_selector_set_toggles_sensitive
+gimp_color_selector_get_toggles_sensitive
 gimp_color_selector_set_show_alpha
+gimp_color_selector_get_show_alpha
 gimp_color_selector_set_color
+gimp_color_selector_get_color
 gimp_color_selector_set_channel
+gimp_color_selector_get_channel
 gimp_color_selector_color_changed
 gimp_color_selector_channel_changed
 gimp_color_selector_set_config
