@@ -278,6 +278,10 @@ create_group (GimpColorScales           *scales,
           *radio_group =
             gtk_radio_button_get_group (GTK_RADIO_BUTTON (scales->toggles[i]));
 
+          if (enum_value == gimp_color_selector_get_channel (selector))
+            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scales->toggles[i]),
+                                          TRUE);
+
           if (is_u8)
             {
               /*  bind the RGB U8 toggles to the RGB percent toggles  */
@@ -298,7 +302,7 @@ create_group (GimpColorScales           *scales,
                         0, 1, row, row + 1,
                         GTK_SHRINK, GTK_EXPAND, 0, 0);
 
-      if (selector->toggles_visible)
+      if (gimp_color_selector_get_toggles_visible (selector))
         gtk_widget_show (scales->toggles[i]);
 
       gimp_help_set_help_data (scales->toggles[i],
@@ -382,20 +386,6 @@ gimp_color_scales_init (GimpColorScales *scales)
   size_group1 = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   size_group2 = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  scales->lch_group =
-    table = create_group (scales, &group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
-                          GIMP_COLOR_SELECTOR_LCH_HUE);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
-
-  scales->hsv_group =
-    table = create_group (scales, &group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_HUE,
-                          GIMP_COLOR_SELECTOR_VALUE);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
-
   scales->rgb_percent_group =
     table = create_group (scales, &group,
                           size_group0, size_group1, size_group2,
@@ -408,6 +398,20 @@ gimp_color_scales_init (GimpColorScales *scales)
                           size_group0, size_group1, size_group2,
                           GIMP_COLOR_SELECTOR_RED_U8,
                           GIMP_COLOR_SELECTOR_BLUE_U8);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+  scales->lch_group =
+    table = create_group (scales, &group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
+                          GIMP_COLOR_SELECTOR_LCH_HUE);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+  scales->hsv_group =
+    table = create_group (scales, &group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_HUE,
+                          GIMP_COLOR_SELECTOR_VALUE);
   gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
 
   scales->alpha_percent_group =
@@ -432,9 +436,9 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   group = NULL;
 
-  radio1 = gtk_radio_button_new_with_label (NULL,  _("LCH"));
+  radio1 = gtk_radio_button_new_with_label (NULL,  _("0..100"));
   group  = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1));
-  radio2 = gtk_radio_button_new_with_label (group, _("HSV"));
+  radio2 = gtk_radio_button_new_with_label (group, _("0..255"));
 
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio1), FALSE);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio2), FALSE);
@@ -445,19 +449,19 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_widget_show (radio1);
   gtk_widget_show (radio2);
 
-  if (scales->show_hsv)
+  if (scales->show_rgb_u8)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
 
   g_object_bind_property (G_OBJECT (radio2), "active",
-                          G_OBJECT (scales), "show-hsv",
+                          G_OBJECT (scales), "show-rgb-u8",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
 
   group = NULL;
 
-  radio1 = gtk_radio_button_new_with_label (NULL,  _("0..100"));
+  radio1 = gtk_radio_button_new_with_label (NULL,  _("LCH"));
   group  = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1));
-  radio2 = gtk_radio_button_new_with_label (group, _("0..255"));
+  radio2 = gtk_radio_button_new_with_label (group, _("HSV"));
 
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio1), FALSE);
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio2), FALSE);
@@ -468,11 +472,11 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_widget_show (radio1);
   gtk_widget_show (radio2);
 
-  if (scales->show_rgb_u8)
+  if (scales->show_hsv)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
 
   g_object_bind_property (G_OBJECT (radio2), "active",
-                          G_OBJECT (scales), "show-rgb-u8",
+                          G_OBJECT (scales), "show-hsv",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
 }
@@ -690,6 +694,9 @@ static void
 gimp_color_scales_update_visible (GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  gboolean           show_alpha;
+
+  show_alpha = gimp_color_selector_get_show_alpha (selector);
 
   gtk_widget_set_visible (scales->lch_group, ! scales->show_hsv);
   gtk_widget_set_visible (scales->hsv_group,   scales->show_hsv);
@@ -698,9 +705,9 @@ gimp_color_scales_update_visible (GimpColorScales *scales)
   gtk_widget_set_visible (scales->rgb_u8_group,        scales->show_rgb_u8);
 
   gtk_widget_set_visible (scales->alpha_percent_group,
-                          selector->show_alpha && ! scales->show_rgb_u8);
+                          show_alpha && ! scales->show_rgb_u8);
   gtk_widget_set_visible (scales->alpha_u8_group,
-                          selector->show_alpha &&   scales->show_rgb_u8);
+                          show_alpha &&   scales->show_rgb_u8);
 }
 
 static void
@@ -766,7 +773,7 @@ gimp_color_scales_toggle_changed (GtkWidget       *widget,
         {
           if (widget == scales->toggles[i])
             {
-              selector->channel = (GimpColorSelectorChannel) i;
+              gimp_color_selector_set_channel (selector, i);
 
               if (i < GIMP_COLOR_SELECTOR_RED ||
                   i > GIMP_COLOR_SELECTOR_BLUE)
@@ -778,8 +785,6 @@ gimp_color_scales_toggle_changed (GtkWidget       *widget,
               break;
             }
         }
-
-      gimp_color_selector_channel_changed (selector);
     }
 }
 

@@ -441,7 +441,7 @@ gimp_color_select_init (GimpColorSelect *select)
         g_object_set_data (G_OBJECT (button), "channel",
                            GINT_TO_POINTER (channel));
 
-        if (channel == selector->channel)
+        if (channel == gimp_color_selector_get_channel (selector))
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
         gimp_help_set_help_data (button, gettext (enum_desc->value_help), NULL);
@@ -608,10 +608,7 @@ gimp_color_select_channel_toggled (GtkWidget       *widget,
       channel = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                     "channel"));
 
-      selector->channel = channel;
-      gimp_color_select_set_channel (selector, channel);
-
-      gimp_color_selector_channel_changed (selector);
+      gimp_color_selector_set_channel (selector, channel);
     }
 }
 

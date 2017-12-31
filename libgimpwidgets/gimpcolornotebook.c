@@ -331,7 +331,7 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
                                  &selector->rgb,
                                  &selector->hsv);
   gimp_color_selector_set_channel (notebook->cur_page,
-                                   selector->channel);
+                                   gimp_color_selector_get_channel (selector));
 
   g_signal_handlers_unblock_by_func (notebook->cur_page,
                                      gimp_color_notebook_color_changed,
@@ -362,9 +362,7 @@ gimp_color_notebook_channel_changed (GimpColorSelector        *page,
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (notebook);
 
-  selector->channel = channel;
-
-  gimp_color_selector_channel_changed (selector);
+  gimp_color_selector_set_channel (selector, channel);
 }
 
 static GtkWidget *
@@ -382,7 +380,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   page = gimp_color_selector_new (page_type,
                                   &selector->rgb,
                                   &selector->hsv,
-                                  selector->channel);
+                                  gimp_color_selector_get_channel (selector));
 
   if (! page)
     return NULL;

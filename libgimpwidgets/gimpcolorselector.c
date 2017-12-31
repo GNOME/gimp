@@ -122,7 +122,7 @@ gimp_color_selector_init (GimpColorSelector *selector)
   gimp_rgba_set (&selector->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  selector->channel = GIMP_COLOR_SELECTOR_HUE;
+  selector->channel = GIMP_COLOR_SELECTOR_RED;
 }
 
 static void
@@ -410,7 +410,7 @@ GimpColorSelectorChannel
 gimp_color_selector_get_channel (GimpColorSelector *selector)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
-                        GIMP_COLOR_SELECTOR_HUE);
+                        GIMP_COLOR_SELECTOR_RED);
 
   return selector->channel;
 }

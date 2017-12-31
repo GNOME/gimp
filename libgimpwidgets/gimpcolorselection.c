@@ -169,7 +169,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gimp_rgba_set (&selection->rgb, 0.0, 0.0, 0.0, 1.0);
   gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
 
-  selection->channel = GIMP_COLOR_SELECTOR_HUE;
+  selection->channel = GIMP_COLOR_SELECTOR_RED;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selection), main_hbox, TRUE, TRUE, 0);
