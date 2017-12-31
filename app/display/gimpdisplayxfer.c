@@ -236,8 +236,8 @@ gimp_display_xfer_realize (GtkWidget *widget)
   if (xfer == NULL)
     {
       cairo_t *cr;
-      gint     w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
-      gint     h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
+      gint     w = GIMP_DISPLAY_RENDER_BUF_WIDTH;
+      gint     h = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
       int      n;
 
       xfer = g_new (GimpDisplayXfer, 1);
@@ -271,8 +271,8 @@ gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
 {
   RTreeNode *node;
 
-  g_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH * GIMP_DISPLAY_RENDER_MAX_SCALE &&
-            h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE);
+  g_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH &&
+            h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
   node = rtree_insert (&xfer->rtree, w, h);
   if (node == NULL)

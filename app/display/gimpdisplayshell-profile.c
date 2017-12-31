@@ -159,8 +159,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   if (shell->filter_transform || shell->profile_transform)
     {
-      gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
-      gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
+      gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH;
+      gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
 
       shell->profile_data =
         gegl_malloc (w * h * babl_format_get_bytes_per_pixel (src_format));
