@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 17:04+0100\n"
-"PO-Revision-Date: 2017-12-24 17:05+0100\n"
+"POT-Creation-Date: 2017-12-31 23:49+0100\n"
+"PO-Revision-Date: 2017-12-31 23:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2371,64 +2371,74 @@ msgctxt "dashboard-action"
 msgid "History Duration"
 msgstr "Czas trwania historii"
 
-#: ../app/actions/dashboard-actions.c:52
+#: ../app/actions/dashboard-actions.c:49
+msgctxt "dashboard-action"
+msgid "Reset"
+msgstr "Przywróć"
+
+#: ../app/actions/dashboard-actions.c:50
+msgctxt "dashboard-action"
+msgid "Reset cumulative data"
+msgstr "Przywraca narastające dane"
+
+#: ../app/actions/dashboard-actions.c:58
 msgctxt "dashboard-action"
 msgid "Low Swap Space Warning"
 msgstr "Ostrzeżenie o małej ilości miejsca w pamięci wymiany"
 
-#: ../app/actions/dashboard-actions.c:53
+#: ../app/actions/dashboard-actions.c:59
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
 "Podnosi panel wydajności, kiedy rozmiar pamięci wymiany zbliża się do "
 "ograniczenia"
 
-#: ../app/actions/dashboard-actions.c:63
+#: ../app/actions/dashboard-actions.c:69
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
 msgstr "0,25 sekundy"
 
-#: ../app/actions/dashboard-actions.c:68
+#: ../app/actions/dashboard-actions.c:74
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
 msgstr "0,5 sekundy"
 
-#: ../app/actions/dashboard-actions.c:73
+#: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
 msgstr "1 sekunda"
 
-#: ../app/actions/dashboard-actions.c:78
+#: ../app/actions/dashboard-actions.c:84
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
 msgstr "2 sekundy"
 
-#: ../app/actions/dashboard-actions.c:83
+#: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
 msgstr "4 sekundy"
 
-#: ../app/actions/dashboard-actions.c:91
+#: ../app/actions/dashboard-actions.c:97
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
 msgstr "15 sekund"
 
-#: ../app/actions/dashboard-actions.c:96
+#: ../app/actions/dashboard-actions.c:102
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
 msgstr "30 sekund"
 
-#: ../app/actions/dashboard-actions.c:101
+#: ../app/actions/dashboard-actions.c:107
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
 msgstr "60 sekund"
 
-#: ../app/actions/dashboard-actions.c:106
+#: ../app/actions/dashboard-actions.c:112
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
 msgstr "120 sekund"
 
-#: ../app/actions/dashboard-actions.c:111
+#: ../app/actions/dashboard-actions.c:117
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 sekund"
@@ -11688,7 +11698,7 @@ msgstr "Kolor pierwszoplanowy na przezroczystość"
 msgid "tags-locale:C"
 msgstr "tags-locale:pl"
 
-#: ../app/core/gimp-user-install.c:213
+#: ../app/core/gimp-user-install.c:216
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -11697,7 +11707,7 @@ msgstr ""
 "Prawdopodobnie używano wcześniej programu GIMP %s. Rozpocznie się teraz "
 "migracja ustawień użytkownika do wersji „%s”."
 
-#: ../app/core/gimp-user-install.c:218
+#: ../app/core/gimp-user-install.c:221
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -11706,17 +11716,17 @@ msgstr ""
 "Uruchomiono program GIMP po raz pierwszy. Nastąpi teraz utworzenie katalogu "
 "„%s” i zostaną do niego skopiowane pliki."
 
-#: ../app/core/gimp-user-install.c:417
+#: ../app/core/gimp-user-install.c:420
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Kopiowanie pliku „%s” z „%s”…"
 
-#: ../app/core/gimp-user-install.c:432 ../app/core/gimp-user-install.c:458
+#: ../app/core/gimp-user-install.c:435 ../app/core/gimp-user-install.c:461
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Tworzenie katalogu „%s”…"
 
-#: ../app/core/gimp-user-install.c:443 ../app/core/gimp-user-install.c:469
+#: ../app/core/gimp-user-install.c:446 ../app/core/gimp-user-install.c:472
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
@@ -12792,34 +12802,38 @@ msgstr "Spłaszczenie obrazu"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:263
+#: ../app/core/gimpimage-merge.c:245
+msgid "Cannot merge down a floating selection."
+msgstr "Nie można połączyć w dół oderwanego zaznaczenia."
+
+#: ../app/core/gimpimage-merge.c:270
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:270
+#: ../app/core/gimpimage-merge.c:277
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:282
+#: ../app/core/gimpimage-merge.c:289
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:292
+#: ../app/core/gimpimage-merge.c:299
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:320
+#: ../app/core/gimpimage-merge.c:327
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:373
+#: ../app/core/gimpimage-merge.c:380
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:409
+#: ../app/core/gimpimage-merge.c:416
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
@@ -21366,9 +21380,7 @@ msgstr "Bieżący"
 msgid "Fixed"
 msgstr "Stałe"
 
-#. swap size field
 #: ../app/tools/gimprectangleoptions.c:1034 ../app/tools/gimptextoptions.c:545
-#: ../app/widgets/gimpdashboard.c:265
 msgid "Size:"
 msgstr "Rozmiar:"
 
@@ -22939,31 +22951,114 @@ msgstr "Kółko myszy"
 msgid "Mouse Wheel Events"
 msgstr "Zdarzenia kółka myszy"
 
-#: ../app/widgets/gimpdashboard.c:153
+#: ../app/widgets/gimpdashboard.c:281 ../app/widgets/gimpdashboard.c:333
+msgctxt "dashboard-variable"
+msgid "Occupied"
+msgstr "Zajęte"
+
+#: ../app/widgets/gimpdashboard.c:282
+msgid "Tile cache occupied size"
+msgstr "Rozmiar zajętej pamięci podręcznej kafli"
+
+#: ../app/widgets/gimpdashboard.c:291
+msgctxt "dashboard-variable"
+msgid "Maximum"
+msgstr "Maksymalnie"
+
+#: ../app/widgets/gimpdashboard.c:292
+msgid "Maximal tile cache occupied size"
+msgstr "Maksymalny rozmiar zajętej pamięci podręcznej kafli"
+
+#: ../app/widgets/gimpdashboard.c:301 ../app/widgets/gimpdashboard.c:353
+msgctxt "dashboard-variable"
+msgid "Limit"
+msgstr "Ograniczenie"
+
+#: ../app/widgets/gimpdashboard.c:302
+msgid "Tile cache size limit"
+msgstr "Ograniczenie rozmiaru pamięci podręcznej kafli"
+
+#: ../app/widgets/gimpdashboard.c:310
+msgctxt "dashboard-variable"
+msgid "Compression"
+msgstr "Kompresja"
+
+#: ../app/widgets/gimpdashboard.c:311
+msgid "Tile cache compression ratio"
+msgstr "Współczynnik kompresji pamięci podręcznej kafli"
+
+#: ../app/widgets/gimpdashboard.c:320
+msgctxt "dashboard-variable"
+msgid "Hit/Miss"
+msgstr "Trafienia/pudła"
+
+#: ../app/widgets/gimpdashboard.c:321
+msgid "Tile cache hit/miss ratio"
+msgstr "Proporcja trafień do pudeł pamięci podręcznej kafli"
+
+#: ../app/widgets/gimpdashboard.c:334
+msgid "Swap file occupied size"
+msgstr "Rozmiar zajętego pliku wymiany"
+
+#: ../app/widgets/gimpdashboard.c:343
+msgctxt "dashboard-variable"
+msgid "Size"
+msgstr "Rozmiar"
+
+#: ../app/widgets/gimpdashboard.c:344
+msgid "Swap file size"
+msgstr "Rozmiar pliku wymiany"
+
+#: ../app/widgets/gimpdashboard.c:354
+msgid "Swap file size limit"
+msgstr "Ograniczenie rozmiaru pliku wymiany"
+
+#: ../app/widgets/gimpdashboard.c:361
+msgctxt "dashboard-variable"
+msgid "Busy"
+msgstr "Zajęte"
+
+#: ../app/widgets/gimpdashboard.c:362
+msgid "Whether there is work queued for the swap file"
+msgstr "Czy coś jest w kolejce pliku wymiany"
+
+#: ../app/widgets/gimpdashboard.c:375
+msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#. cache occupied field
-#. swap occupied field
-#: ../app/widgets/gimpdashboard.c:182 ../app/widgets/gimpdashboard.c:252
-msgid "Occupied:"
-msgstr "Zajęte:"
+#: ../app/widgets/gimpdashboard.c:376
+msgid "In-memory tile cache"
+msgstr "Pamięć podręczna kafli w pamięci"
 
-#: ../app/widgets/gimpdashboard.c:188 ../app/widgets/gimpdashboard.c:201
-#: ../app/widgets/gimpdashboard.c:258 ../app/widgets/gimpdashboard.c:271
-#: ../app/widgets/gimpdashboard.c:284 ../app/widgets/gimpdashboard.c:514
-msgid "N/A"
-msgstr "Nie dotyczy"
-
-#. cache limit field
-#. swap limit field
-#: ../app/widgets/gimpdashboard.c:195 ../app/widgets/gimpdashboard.c:278
-msgid "Limit:"
-msgstr "Ograniczenie:"
-
-#: ../app/widgets/gimpdashboard.c:219
+#: ../app/widgets/gimpdashboard.c:410
+msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Pamięć wymiany"
+
+#: ../app/widgets/gimpdashboard.c:411
+msgid "On-disk tile swap"
+msgstr "Pamięć wymiany kafli na dysku"
+
+#: ../app/widgets/gimpdashboard.c:570
+msgid "Select fields"
+msgstr "Zaznacz pola"
+
+#. Tranlators: "N/A" is an abbreviation for "not available"
+#: ../app/widgets/gimpdashboard.c:1652
+msgctxt "dashboard-value"
+msgid "N/A"
+msgstr "Niedostępne"
+
+#: ../app/widgets/gimpdashboard.c:1660
+msgctxt "dashboard-value"
+msgid "Yes"
+msgstr "Tak"
+
+#: ../app/widgets/gimpdashboard.c:1661
+msgctxt "dashboard-value"
+msgid "No"
+msgstr "Nie"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format

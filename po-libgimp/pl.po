@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-03 19:14+0100\n"
-"PO-Revision-Date: 2017-12-03 19:15+0100\n"
+"POT-Creation-Date: 2017-12-31 23:49+0100\n"
+"PO-Revision-Date: 2017-12-31 23:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -256,7 +256,7 @@ msgstr "Obrócić %s?"
 msgid "_Keep Original"
 msgstr "_Zachowaj oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:274
+#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "O_bróć"
 
@@ -1915,9 +1915,25 @@ msgstr "Producent: "
 msgid "Copyright: "
 msgstr "Prawa autorskie: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:122
+#: ../libgimpwidgets/gimpcolorscales.c:201
 msgid "Scales"
 msgstr "Skale"
+
+#: ../libgimpwidgets/gimpcolorscales.c:439
+msgid "0..100"
+msgstr "0..100"
+
+#: ../libgimpwidgets/gimpcolorscales.c:441
+msgid "0..255"
+msgstr "0..255"
+
+#: ../libgimpwidgets/gimpcolorscales.c:462
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpcolorscales.c:464
+msgid "HSV"
+msgstr "HSV"
 
 #: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
@@ -2024,23 +2040,23 @@ msgstr "Odstępy między_wierszowe"
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:275
+#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:250
+#: ../libgimpwidgets/gimpicons.c:247
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:258
+#: ../libgimpwidgets/gimpicons.c:255
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:270
+#: ../libgimpwidgets/gimpicons.c:267
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:276
+#: ../libgimpwidgets/gimpicons.c:273
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -2113,7 +2129,7 @@ msgstr "Usuwa zaznaczony katalog z listy"
 msgid "Writable"
 msgstr "Zapisywalny"
 
-#: ../libgimpwidgets/gimppickbutton.c:110
+#: ../libgimpwidgets/gimppickbutton.c:112
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
