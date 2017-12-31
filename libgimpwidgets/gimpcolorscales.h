@@ -37,7 +37,15 @@ G_BEGIN_DECLS
 #define GIMP_IS_COLOR_SCALES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SCALES))
 
 
-GType   gimp_color_scales_get_type (void) G_GNUC_CONST;
+GType      gimp_color_scales_get_type        (void) G_GNUC_CONST;
+
+void       gimp_color_scales_set_show_hsv    (GimpColorScales *scales,
+                                              gboolean         show_hsv);
+gboolean   gimp_color_scales_get_show_hsv    (GimpColorScales *scales);
+
+void       gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
+                                              gboolean         show_rgb_u8);
+gboolean   gimp_color_scales_get_show_rgb_u8 (GimpColorScales *scales);
 
 
 G_END_DECLS
