@@ -261,20 +261,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
-#if 0
-  /* FIXME these are useful dirs, disabled until we figure how to
-   * properly generate a default gimprc
-   */
-  dir1 = g_build_filename (DATADIR, "mypaint", "brushes", NULL);
-  dir2 = g_build_filename (g_get_user_data_dir (), "mypaint", "brushes", NULL);
-#endif
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
-                       "/usr/share/mypaint/brushes",
-                       "/usr/local/share/mypaint/brushes",
-#if 0
-                       dir1,
-                       dir2,
-#endif
+                       MYPAINT_BRUSHES_DIR,
                        "~/.mypaint/brushes",
                        NULL);
   GIMP_CONFIG_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH,
@@ -285,15 +273,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
-#if 0
-  g_free (dir1);
-#endif
 
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
-#if 0
-  /* FIXME see above */
-                       dir2,
-#endif
                        "~/.mypaint/brushes",
                        NULL);
   GIMP_CONFIG_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
@@ -304,9 +285,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
-#if 0
-  g_free (dir2);
-#endif
 
   path = gimp_config_build_data_path ("patterns");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_PATTERN_PATH,

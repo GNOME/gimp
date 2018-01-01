@@ -25,6 +25,7 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)						\
 	$(CAIRO_CFLAGS)						\
 	$(GDK_PIXBUF_CFLAGS)					\
+	$(MYPAINT_BRUSHES_CFLAGS)				\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappconfig.a

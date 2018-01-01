@@ -1672,6 +1672,8 @@ AM_CONDITIONAL(HAVE_WEBP, test "x$have_webp" = xyes)
 PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
                   [add_deps_error([libmypaint >= libmypaint_required_version])])
 
+PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
+                  [add_deps_error([mypaint-brushes-1.0])])
 
 ##################
 # Check for webkit
