@@ -236,37 +236,42 @@ gimp_get_default_unit (void)
   return GIMP_UNIT_MM;
 }
 
-GParameter *
-gimp_parameters_append (GType       object_type,
-                        GParameter *params,
-                        gint       *n_params,
+gchar **
+gimp_properties_append (GType    object_type,
+                        gint    *n_properties,
+                        gchar  **names,
+                        GValue **values,
                         ...)
 {
   va_list args;
 
   g_return_val_if_fail (g_type_is_a (object_type, G_TYPE_OBJECT), NULL);
-  g_return_val_if_fail (n_params != NULL, NULL);
-  g_return_val_if_fail (params != NULL || *n_params == 0, NULL);
+  g_return_val_if_fail (n_properties != NULL, NULL);
+  g_return_val_if_fail (names != NULL || *n_properties == 0, NULL);
+  g_return_val_if_fail (values != NULL || *n_properties == 0, NULL);
 
-  va_start (args, n_params);
-  params = gimp_parameters_append_valist (object_type, params, n_params, args);
+  va_start (args, values);
+  names = gimp_properties_append_valist (object_type, n_properties,
+                                         names, values, args);
   va_end (args);
 
-  return params;
+  return names;
 }
 
-GParameter *
-gimp_parameters_append_valist (GType       object_type,
-                               GParameter *params,
-                               gint       *n_params,
-                               va_list     args)
+gchar **
+gimp_properties_append_valist (GType     object_type,
+                               gint      *n_properties,
+                               gchar   **names,
+                               GValue  **values,
+                               va_list   args)
 {
   GObjectClass *object_class;
   gchar        *param_name;
 
   g_return_val_if_fail (g_type_is_a (object_type, G_TYPE_OBJECT), NULL);
-  g_return_val_if_fail (n_params != NULL, NULL);
-  g_return_val_if_fail (params != NULL || *n_params == 0, NULL);
+  g_return_val_if_fail (n_properties != NULL, NULL);
+  g_return_val_if_fail (names != NULL || *n_properties == 0, NULL);
+  g_return_val_if_fail (values != NULL || *n_properties == 0, NULL);
 
   object_class = g_type_class_ref (object_type);
 
@@ -274,6 +279,7 @@ gimp_parameters_append_valist (GType       object_type,
 
   while (param_name)
     {
+      GValue     *value;
       gchar      *error = NULL;
       GParamSpec *pspec = g_object_class_find_property (object_class,
                                                         param_name);
@@ -285,47 +291,57 @@ gimp_parameters_append_valist (GType       object_type,
           break;
         }
 
-      params = g_renew (GParameter, params, *n_params + 1);
+      names   = g_renew (gchar *, names,   *n_properties + 1);
+      *values = g_renew (GValue,  *values, *n_properties + 1);
 
-      params[*n_params].name         = param_name;
-      params[*n_params].value.g_type = 0;
+      value = &((*values)[*n_properties]);
 
-      g_value_init (&params[*n_params].value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+      names[*n_properties] = g_strdup (param_name);
+      value->g_type = 0;
 
-      G_VALUE_COLLECT (&params[*n_params].value, args, 0, &error);
+      g_value_init (value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+
+      G_VALUE_COLLECT (value, args, 0, &error);
 
       if (error)
         {
           g_warning ("%s: %s", G_STRFUNC, error);
           g_free (error);
-          g_value_unset (&params[*n_params].value);
+          g_free (names[*n_properties]);
+          g_value_unset (value);
           break;
         }
 
-      *n_params = *n_params + 1;
+      *n_properties = *n_properties + 1;
 
       param_name = va_arg (args, gchar *);
     }
 
   g_type_class_unref (object_class);
 
-  return params;
+  return names;
 }
 
 void
-gimp_parameters_free (GParameter *params,
-                      gint        n_params)
+gimp_properties_free (gint     n_properties,
+                      gchar  **names,
+                      GValue  *values)
 {
-  g_return_if_fail (params != NULL || n_params == 0);
+  g_return_if_fail (names  != NULL || n_properties == 0);
+  g_return_if_fail (values != NULL || n_properties == 0);
 
-  if (params)
+  if (names && values)
     {
       gint i;
 
-      for (i = 0; i < n_params; i++)
-        g_value_unset (&params[i].value);
+      for (i = 0; i < n_properties; i++)
+        {
+          g_free (names[i]);
+          g_value_unset (&values[i]);
+        }
 
-      g_free (params);
+      g_free (names);
+      g_free (values);
     }
 }
 

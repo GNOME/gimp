@@ -519,31 +519,37 @@ gui_pdb_dialog_new (Gimp          *gimp,
 
       if (object)
         {
-          GParameter *params   = NULL;
-          gint        n_params = 0;
+          gint        n_properties = 0;
+          gchar     **names        = NULL;
+          GValue     *values       = NULL;
           GtkWidget  *dialog;
           GtkWidget  *view;
 
-          params = gimp_parameters_append (dialog_type, params, &n_params,
-                                           "title",          title,
-                                           "role",           dialog_role,
-                                           "help-func",      gimp_standard_help_func,
-                                           "help-id",        help_id,
-                                           "pdb",            gimp->pdb,
-                                           "context",        context,
-                                           "select-type",    gimp_container_get_children_type (container),
-                                           "initial-object", object,
-                                           "callback-name",  callback_name,
-                                           "menu-factory",   global_menu_factory,
-                                           NULL);
+          names = gimp_properties_append (dialog_type,
+                                          &n_properties, names, &values,
+                                          "title",          title,
+                                          "role",           dialog_role,
+                                          "help-func",      gimp_standard_help_func,
+                                          "help-id",        help_id,
+                                          "pdb",            gimp->pdb,
+                                          "context",        context,
+                                          "select-type",    gimp_container_get_children_type (container),
+                                          "initial-object", object,
+                                          "callback-name",  callback_name,
+                                          "menu-factory",   global_menu_factory,
+                                          NULL);
 
-          params = gimp_parameters_append_valist (dialog_type,
-                                                  params, &n_params,
-                                                  args);
+          names = gimp_properties_append_valist (dialog_type,
+                                                 &n_properties, names, &values,
+                                                 args);
 
-          dialog = g_object_newv (dialog_type, n_params, params);
+          dialog = (GtkWidget *)
+            g_object_new_with_properties (dialog_type,
+                                          n_properties,
+                                          (const gchar **) names,
+                                          (const GValue *) values);
 
-          gimp_parameters_free (params, n_params);
+          gimp_properties_free (n_properties, names, values);
 
           view = GIMP_PDB_DIALOG (dialog)->view;
           if (view)

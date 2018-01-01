@@ -360,11 +360,12 @@ gimp_image_undo_push (GimpImage     *image,
                       GimpDirtyMask  dirty_mask,
                       ...)
 {
-  GimpImagePrivate *private;
-  GParameter       *params   = NULL;
-  gint              n_params = 0;
-  va_list           args;
-  GimpUndo         *undo;
+  GimpImagePrivate  *private;
+  gint               n_properties = 0;
+  gchar            **names        = NULL;
+  GValue            *values       = NULL;
+  va_list            args;
+  GimpUndo          *undo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (object_type, GIMP_TYPE_UNDO), NULL);
@@ -384,20 +385,26 @@ gimp_image_undo_push (GimpImage     *image,
   if (! name)
     name = gimp_undo_type_to_name (undo_type);
 
-  params = gimp_parameters_append (object_type, params, &n_params,
-                                   "name",       name,
-                                   "image",      image,
-                                   "undo-type",  undo_type,
-                                   "dirty-mask", dirty_mask,
-                                   NULL);
+  names = gimp_properties_append (object_type,
+                                  &n_properties, names, &values,
+                                  "name",       name,
+                                  "image",      image,
+                                  "undo-type",  undo_type,
+                                  "dirty-mask", dirty_mask,
+                                  NULL);
 
   va_start (args, dirty_mask);
-  params = gimp_parameters_append_valist (object_type, params, &n_params, args);
+  names = gimp_properties_append_valist (object_type,
+                                         &n_properties, names, &values,
+                                         args);
   va_end (args);
 
-  undo = g_object_newv (object_type, n_params, params);
+  undo = (GimpUndo *) g_object_new_with_properties (object_type,
+                                                    n_properties,
+                                                    (const gchar **) names,
+                                                    (const GValue *) values);
 
-  gimp_parameters_free (params, n_params);
+  gimp_properties_free (n_properties, names, values);
 
   /*  nuke the redo stack  */
   gimp_image_undo_free_redo (image);

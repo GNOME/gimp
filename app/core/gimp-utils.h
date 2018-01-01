@@ -38,16 +38,19 @@ gchar      * gimp_get_backtrace                    (void);
 gchar      * gimp_get_default_language             (const gchar     *category);
 GimpUnit     gimp_get_default_unit                 (void);
 
-GParameter * gimp_parameters_append                (GType            object_type,
-                                                    GParameter      *params,
-                                                    gint            *n_params,
+gchar     ** gimp_properties_append                (GType            object_type,
+                                                    gint            *n_properties,
+                                                    gchar          **names,
+                                                    GValue         **values,
                                                     ...) G_GNUC_NULL_TERMINATED;
-GParameter * gimp_parameters_append_valist         (GType            object_type,
-                                                    GParameter      *params,
-                                                    gint            *n_params,
+gchar     ** gimp_properties_append_valist         (GType            object_type,
+                                                    gint            *n_properties,
+                                                    gchar          **names,
+                                                    GValue         **values,
                                                     va_list          args);
-void         gimp_parameters_free                  (GParameter      *params,
-                                                    gint             n_params);
+void         gimp_properties_free                  (gint             n_properties,
+                                                    gchar          **names,
+                                                    GValue          *values);
 
 gchar      * gimp_markup_extract_text              (const gchar     *markup);
 
