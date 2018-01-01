@@ -181,7 +181,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "save-device-status",
                             "Save device status",
                             SAVE_DEVICE_STATUS_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEVICES_SHARE_TOOL,
@@ -216,7 +216,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "save-tool-options",
                             "Save tool options",
                             SAVE_TOOL_OPTIONS_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TOOLTIPS,
