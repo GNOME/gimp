@@ -75,8 +75,7 @@ load_image (const gchar  *filename,
   GeglBuffer      *buffer = NULL;
   const Babl      *format;
   gint             tile_height;
-  gint             scanlines;
-  gint             i, start, end;
+  gint             i;
   cmsHTRANSFORM    cmyk_transform = NULL;
 
   /* We set up the normal JPEG error routines. */
@@ -352,11 +351,25 @@ load_image (const gchar  *filename,
 
   while (cinfo.output_scanline < cinfo.output_height)
     {
+      gint     start, end;
+      gint     scanlines;
+      gboolean image_truncated = FALSE;
+
       start = cinfo.output_scanline;
       end   = cinfo.output_scanline + tile_height;
       end   = MIN (end, cinfo.output_height);
 
       scanlines = end - start;
+
+      /*  in case of error we now jump here, so pertially loaded imaged
+       *  don't get discarded
+       */
+      if (setjmp (jerr.setjmp_buffer))
+        {
+          image_truncated = TRUE;
+
+          goto set_buffer;
+        }
 
       for (i = 0; i < scanlines; i++)
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
@@ -365,12 +378,19 @@ load_image (const gchar  *filename,
         jpeg_load_cmyk_to_rgb (buf, cinfo.output_width * scanlines,
                                cmyk_transform);
 
+    set_buffer:
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, start, cinfo.output_width, scanlines),
                        0,
                        format,
                        buf,
                        GEGL_AUTO_ROWSTRIDE);
+
+      if (image_truncated)
+        /*  jumping to finish skips jpeg_finish_decompress(), its state
+         *  might be broken by whatever caused the loading failure
+         */
+        goto finish;
 
       if (! preview && (cinfo.output_scanline % 32) == 0)
         gimp_progress_update ((gdouble) cinfo.output_scanline /
@@ -383,6 +403,8 @@ load_image (const gchar  *filename,
   /* We can ignore the return value since suspension is not possible
    * with the stdio data source.
    */
+
+ finish:
 
   if (cmyk_transform)
     cmsDeleteTransform (cmyk_transform);
