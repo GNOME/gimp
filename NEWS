@@ -28,6 +28,8 @@ Core:
     configuration files (up to 5 levels, to protect from recursive
     symbolic links).
   - Mark legacy plug-ins and scripts in menus.
+  - Enable "save-tool-options" and "save-device-status" by default,
+    it's the expected behavior these days.
 
 GUI and Usability:
 
@@ -64,6 +66,9 @@ Building:
   - New configure option `--enable-windows-installer` to generate the
     necessary files for the installer translations during the build.
   - Improve POTFILES generation for po-*/ directories.
+  - Require glib >= 2.54.2.
+  - New dependency to mypaint-brushes-1.0 for stable MyPaint brushes
+    available at installation.
 
 Translations:
 
