@@ -177,7 +177,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                          "Cursor mode",
                          CURSOR_MODE_BLURB,
                          GIMP_TYPE_CURSOR_MODE,
-                         GIMP_CURSOR_MODE_TOOL_ICON,
+                         GIMP_CURSOR_MODE_TOOL_CROSSHAIR,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CURSOR_UPDATING,
