@@ -89,6 +89,10 @@ header files installed.
 
         https://github.com/Jehan/mypaint-brushes
 
+     If installing from repository, install from branch "v1.3.x" or the
+     particular tag "v1.3.0". In particular do not install from master
+     which installs brushes incompatible with GIMP.
+
  11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: libjasper,
