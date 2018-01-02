@@ -10,7 +10,7 @@ _WinVersionTooLowError=This version of GIMP requires Windows XP with Service Pac
 [CustomMessages]
 ;shown before the wizard starts on development versions of GIMP
 _DevelopmentWarningTitle=Development version
-_DevelopmentWarning=This is a development version of GIMP installer. It hasn't been tested as much as the stable installer, which can result in GIMP not working properly. Please report any problems you encounter in the GIMP bugzilla (Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to continue with installation anyway?
+_DevelopmentWarning=This is a development version of GIMP where some features may not be finished, or it may be unstable.%nThis version of GIMP is not intended for day-to-day work as it may be unstable, and you could lose your work.%nIf you encounter any problems, first verify that they haven't already been fixed in GIT before you contact the developers or report it in GIMP bugzilla:%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to continue with installation anyway?
 _DevelopmentButtonContinue=&Continue
 _DevelopmentButtonExit=Exit
 
