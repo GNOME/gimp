@@ -122,7 +122,7 @@ header files installed.
 
  17. Summary of required packages and what version you need:
 
-     Package Name	  Version
+     Package Name         Version
 
      ATK                  @ATK_REQUIRED_VERSION@
      babl                 @BABL_REQUIRED_VERSION@
@@ -152,21 +152,21 @@ header files installed.
 
  18. Summary of optional packages:
 
-     Package Name	Version		Feature
+     Package Name        Version        Feature
 
-     cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
-     ExcHndl		-		Crash logs on Windows with Dr. MinGW
-     gs			-		ghostscript
-     libaa		-		ASCII art
-     libjasper		-		JPEG 2000
-     libmng		-		MNG
-     libwebp		@WEBP_REQUIRED_VERSION@		WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
-     libwmf		@WMF_REQUIRED_VERSION@		WMF
-     libXcursor		-		X11 Mouse Cursor
-     libxpm		-		XPM
-     openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
-     python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
-     webkit		@WEBKIT_REQUIRED_VERSION@		Help browser & webpage
+     cairo-pdf           @CAIRO_PDF_REQUIRED_VERSION@         PDF export
+     ExcHndl             -              Crash logs on Windows with Dr. MinGW
+     gs                  -              ghostscript
+     libaa               -              ASCII art
+     libjasper           -              JPEG 2000
+     libmng              -              MNG
+     libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
+     libwmf              @WMF_REQUIRED_VERSION@          WMF
+     libXcursor          -              X11 Mouse Cursor
+     libxpm              -              XPM
+     openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
+     python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
+     webkit              @WEBKIT_REQUIRED_VERSION@          Help browser & webpage
 
  19. Summary of optional runtime dependencies:
 
