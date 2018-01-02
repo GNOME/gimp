@@ -29,6 +29,17 @@
                 "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
         {
+            "name": "mypaint-brushes",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Jehan/mypaint-brushes.git",
+                    "branch": "v1.3.0",
+                    "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
+                }
+            ]
+        },
+        {
             "name": "lcms2",
             "config-opts": [ "--disable-static" ],
             "cleanup": [ "/bin", "/share" ],
