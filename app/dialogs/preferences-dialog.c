@@ -1253,7 +1253,8 @@ prefs_dialog_new (Gimp       *gimp,
                                  store,
                                  _("Select Monitor Color Profile"),
                                  _("_Monitor profile:"),
-                                 GTK_TABLE (table), row++, size_group);
+                                 GTK_TABLE (table), row++, size_group,
+                                 object, "color-profile-path");
 
     button = gimp_prop_check_button_new (color_config,
                                          "display-profile-from-gdk",
@@ -1297,7 +1298,8 @@ prefs_dialog_new (Gimp       *gimp,
                                  store,
                                  _("Select Soft-Proofing Color Profile"),
                                  _("_Soft-proofing profile:"),
-                                 GTK_TABLE (table), row++, size_group);
+                                 GTK_TABLE (table), row++, size_group,
+                                 object, "color-profile-path");
 
     prefs_enum_combo_box_add (color_config,
                               "simulation-rendering-intent", 0, 0,
@@ -1352,21 +1354,24 @@ prefs_dialog_new (Gimp       *gimp,
                                  store,
                                  _("Select Preferred RGB Color Profile"),
                                  _("_RGB profile:"),
-                                 GTK_TABLE (table), row++, size_group);
+                                 GTK_TABLE (table), row++, size_group,
+                                 object, "color-profile-path");
 
     prefs_profile_combo_box_add (color_config,
                                  "gray-profile",
                                  store,
                                  _("Select Preferred Grayscale Color Profile"),
                                  _("_Grayscale profile:"),
-                                 GTK_TABLE (table), row++, size_group);
+                                 GTK_TABLE (table), row++, size_group,
+                                 object, "color-profile-path");
 
     prefs_profile_combo_box_add (color_config,
                                  "cmyk-profile",
                                  store,
                                  _("Select CMYK Color Profile"),
                                  _("_CMYK profile:"),
-                                 GTK_TABLE (table), row++, size_group);
+                                 GTK_TABLE (table), row++, size_group,
+                                 object, "color-profile-path");
 
     /*  Policies  */
     vbox2 = prefs_frame_new (_("Policies"), GTK_CONTAINER (vbox),
@@ -2002,6 +2007,16 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                      _("Color profile policy:"),
                                      GTK_TABLE (table), 0, size_group);
+
+  /*  All color profile chooser dialogs  */
+  vbox2 = prefs_frame_new (_("Color Profile File Dialogs"), GTK_CONTAINER (vbox),
+                           FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_file_chooser_button_add (object, "color-profile-path",
+                                 _("Profile folder:"),
+                                 _("Select Default Folder for Color Profiles"),
+                                 GTK_TABLE (table), 0, size_group);
 
   /*  Convert to Color Profile Dialog  */
   vbox2 = prefs_frame_new (_("Convert to Color Profile Dialog"),

@@ -121,5 +121,10 @@ gboolean          gimp_color_profile_store_add_defaults
                                                     GimpPrecision          precision,
                                                     GError               **error);
 
+void              gimp_color_profile_chooser_dialog_connect_path
+                                                   (GtkWidget             *dialog,
+                                                    GObject               *config,
+                                                    const gchar           *property_name);
+
 
 #endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

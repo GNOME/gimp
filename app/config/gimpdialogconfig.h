@@ -46,6 +46,8 @@ struct _GimpDialogConfig
 
   GimpColorProfilePolicy    color_profile_policy;
 
+  gchar                    *color_profile_path;
+
   GimpColorRenderingIntent  image_convert_profile_intent;
   gboolean                  image_convert_profile_bpc;
 

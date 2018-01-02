@@ -48,6 +48,8 @@ enum
 
   PROP_COLOR_PROFILE_POLICY,
 
+  PROP_COLOR_PROFILE_PATH,
+
   PROP_IMAGE_CONVERT_PROFILE_INTENT,
   PROP_IMAGE_CONVERT_PROFILE_BPC,
 
@@ -172,6 +174,14 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          COLOR_PROFILE_POLICY_BLURB,
                          GIMP_TYPE_COLOR_PROFILE_POLICY,
                          GIMP_COLOR_PROFILE_POLICY_ASK,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_COLOR_PROFILE_PATH,
+                         "color-profile-path",
+                         "Default color profile folder path",
+                         COLOR_PROFILE_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         NULL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
@@ -558,9 +568,12 @@ gimp_dialog_config_finalize (GObject *object)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
 
-  g_clear_pointer (&config->layer_new_name,   g_free);
-  g_clear_pointer (&config->channel_new_name, g_free);
-  g_clear_pointer (&config->vectors_new_name, g_free);
+  g_clear_pointer (&config->color_profile_path,  g_free);
+  g_clear_pointer (&config->layer_new_name,      g_free);
+  g_clear_pointer (&config->channel_new_name,    g_free);
+  g_clear_pointer (&config->vectors_new_name,    g_free);
+  g_clear_pointer (&config->vectors_export_path, g_free);
+  g_clear_pointer (&config->vectors_import_path, g_free);
 
   g_clear_object (&config->fill_options);
   g_clear_object (&config->stroke_options);
@@ -585,6 +598,12 @@ gimp_dialog_config_set_property (GObject      *object,
 
     case PROP_COLOR_PROFILE_POLICY:
       config->color_profile_policy = g_value_get_enum (value);
+      break;
+
+    case PROP_COLOR_PROFILE_PATH:
+      if (config->color_profile_path)
+        g_free (config->color_profile_path);
+      config->color_profile_path = g_value_dup_string (value);
       break;
 
     case PROP_IMAGE_CONVERT_PROFILE_INTENT:
@@ -776,6 +795,10 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_COLOR_PROFILE_POLICY:
       g_value_set_enum (value, config->color_profile_policy);
+      break;
+
+    case PROP_COLOR_PROFILE_PATH:
+      g_value_set_string (value, config->color_profile_path);
       break;
 
     case PROP_IMAGE_CONVERT_PROFILE_INTENT:

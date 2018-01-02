@@ -42,6 +42,9 @@ _("Specifies how the area around the image should be drawn.")
 #define COLOR_PROFILE_POLICY_BLURB \
 _("How to handle embedded color profiles when opening a file.")
 
+#define COLOR_PROFILE_PATH_BLURB \
+_("Sets the default folder path for all color profile file dialogs.")
+
 #define CURSOR_MODE_BLURB \
 _("Sets the type of mouse pointers to use.")
 

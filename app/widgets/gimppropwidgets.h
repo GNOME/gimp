@@ -111,7 +111,9 @@ GtkWidget * gimp_prop_language_entry_new     (GObject      *config,
 GtkWidget * gimp_prop_profile_combo_box_new  (GObject      *config,
                                               const gchar  *property_name,
                                               GtkListStore *profile_store,
-                                              const gchar  *dialog_title);
+                                              const gchar  *dialog_title,
+                                              GObject      *profile_path_config,
+                                              const gchar  *profile_path_property_name);
 
 GtkWidget * gimp_prop_icon_picker_new        (GimpViewable *viewable,
                                               Gimp         *gimp);

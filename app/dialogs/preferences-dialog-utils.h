@@ -120,7 +120,9 @@ GtkWidget * prefs_profile_combo_box_add      (GObject      *config,
                                               const gchar  *label,
                                               GtkTable     *table,
                                               gint          table_row,
-                                              GtkSizeGroup *group);
+                                              GtkSizeGroup *group,
+                                              GObject      *profile_path_config,
+                                              const gchar  *profile_path_property_name);
 
 
 #endif /* __PREFERENCES_DIALOG_H__ */

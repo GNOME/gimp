@@ -599,6 +599,10 @@ image_color_profile_save_cmd_callback (GtkAction *action,
                                                toplevel,
                                                GTK_FILE_CHOOSER_ACTION_SAVE);
 
+      gimp_color_profile_chooser_dialog_connect_path (dialog,
+                                                      G_OBJECT (image->gimp->config),
+                                                      "color-profile-path");
+
       basename = g_strconcat (gimp_color_profile_get_label (profile),
                               ".icc", NULL);
       gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);

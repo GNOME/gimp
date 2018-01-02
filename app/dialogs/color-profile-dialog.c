@@ -387,6 +387,10 @@ color_profile_combo_box_new (ProfileDialog *private)
                                            NULL,
                                            GTK_FILE_CHOOSER_ACTION_OPEN);
 
+  gimp_color_profile_chooser_dialog_connect_path (chooser,
+                                                  G_OBJECT (private->image->gimp->config),
+                                                  "color-profile-path");
+
   combo = gimp_color_profile_combo_box_new_with_model (chooser,
                                                        GTK_TREE_MODEL (store));
   g_object_unref (store);

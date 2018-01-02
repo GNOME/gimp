@@ -367,12 +367,16 @@ prefs_profile_combo_box_add (GObject      *config,
                              const gchar  *label,
                              GtkTable     *table,
                              gint          table_row,
-                             GtkSizeGroup *group)
+                             GtkSizeGroup *group,
+                             GObject      *profile_path_config,
+                             const gchar  *profile_path_property_name)
 {
   GtkWidget *combo = gimp_prop_profile_combo_box_new (config,
                                                       property_name,
                                                       profile_store,
-                                                      dialog_title);
+                                                      dialog_title,
+                                                      profile_path_config,
+                                                      profile_path_property_name);
 
   if (combo)
     prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);

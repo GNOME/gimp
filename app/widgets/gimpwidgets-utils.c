@@ -1704,3 +1704,105 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
   return TRUE;
 }
+
+static void
+connect_path_show (GimpColorProfileChooserDialog *dialog)
+{
+  GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+  GFile          *file    = gtk_file_chooser_get_file (chooser);
+
+  if (file)
+    {
+      /*  if something is already selected in this dialog,
+       *  leave it alone
+       */
+      g_object_unref (file);
+    }
+  else
+    {
+      GObject     *config;
+      const gchar *property;
+      gchar       *path = NULL;
+
+      config   = g_object_get_data (G_OBJECT (dialog), "profile-path-config");
+      property = g_object_get_data (G_OBJECT (dialog), "profile-path-property");
+
+      g_object_get (config, property, &path, NULL);
+
+      if (path)
+        {
+          GFile *folder = gimp_file_new_for_config_path (path, NULL);
+
+          if (folder)
+            {
+              gtk_file_chooser_set_current_folder_file (chooser, folder, NULL);
+              g_object_unref (folder);
+            }
+
+          g_free (path);
+        }
+    }
+}
+
+static void
+connect_path_response (GimpColorProfileChooserDialog *dialog,
+                       gint                           response)
+{
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+      GFile          *file    = gtk_file_chooser_get_file (chooser);
+
+      if (file)
+        {
+          GFile *folder = gtk_file_chooser_get_current_folder_file (chooser);
+
+          if (folder)
+            {
+              GObject     *config;
+              const gchar *property;
+              gchar       *path = NULL;
+
+              config   = g_object_get_data (G_OBJECT (dialog),
+                                            "profile-path-config");
+              property = g_object_get_data (G_OBJECT (dialog),
+                                            "profile-path-property");
+
+              path = gimp_file_get_config_path (folder, NULL);
+
+              g_object_set (config, property, path, NULL);
+
+              if (path)
+                g_free (path);
+
+              g_object_unref (folder);
+            }
+
+          g_object_unref (file);
+        }
+    }
+}
+
+void
+gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
+                                                GObject     *config,
+                                                const gchar *property_name)
+{
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (dialog));
+  g_return_if_fail (G_IS_OBJECT (config));
+  g_return_if_fail (property_name != NULL);
+
+  g_object_set_data_full (G_OBJECT (dialog), "profile-path-config",
+                          g_object_ref (config),
+                          (GDestroyNotify) g_object_unref);
+  g_object_set_data_full (G_OBJECT (dialog), "profile-path-property",
+                          g_strdup (property_name),
+                          (GDestroyNotify) g_free);
+
+  g_signal_connect (dialog, "show",
+                    G_CALLBACK (connect_path_show),
+                    NULL);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (connect_path_response),
+                    NULL);
+}

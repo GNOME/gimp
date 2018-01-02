@@ -1536,7 +1536,9 @@ GtkWidget *
 gimp_prop_profile_combo_box_new (GObject      *config,
                                  const gchar  *property_name,
                                  GtkListStore *profile_store,
-                                 const gchar  *dialog_title)
+                                 const gchar  *dialog_title,
+                                 GObject      *profile_path_config,
+                                 const gchar  *profile_path_property_name)
 {
   GParamSpec *param_spec;
   GtkWidget  *dialog;
@@ -1563,6 +1565,11 @@ gimp_prop_profile_combo_box_new (GObject      *config,
 
   dialog = gimp_color_profile_chooser_dialog_new (dialog_title, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
+
+  if (profile_path_config && profile_path_property_name)
+    gimp_color_profile_chooser_dialog_connect_path (dialog,
+                                                    profile_path_config,
+                                                    profile_path_property_name);
 
   if (G_IS_PARAM_SPEC_STRING (param_spec))
     {

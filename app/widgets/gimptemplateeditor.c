@@ -438,7 +438,9 @@ gimp_template_editor_constructed (GObject *object)
     gimp_prop_profile_combo_box_new (G_OBJECT (template),
                                      "color-profile",
                                      NULL,
-                                     _("Choose A Color Profile"));
+                                     _("Choose A Color Profile"),
+                                     G_OBJECT (private->gimp->config),
+                                     "color-profile-path");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Co_lor profile:"), 0.0, 0.5,
                              private->profile_combo, 1, FALSE);
