@@ -103,6 +103,7 @@ static gboolean    abr_reach_8bim_section        (GDataInputStream  *input,
                                                   GError           **error);
 static gboolean    abr_rle_decode                (GDataInputStream  *input,
                                                   gchar             *buffer,
+                                                  gsize              buffer_size,
                                                   gint32             height,
                                                   GError           **error);
 
@@ -726,7 +727,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
           }
         else
           {
-            if (! abr_rle_decode (input, (gchar *) mask, height, error))
+            if (! abr_rle_decode (input, (gchar *) mask, size, height, error))
               {
                 g_object_unref (brush);
                 brush = NULL;
@@ -812,9 +813,35 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
   depth    = abr_read_short (input, error); if (error && *error) return NULL;
   compress = abr_read_char  (input, error); if (error && *error) return NULL;
 
+  depth = depth >> 3;
+
   width  = right - left;
   height = bottom - top;
-  size   = width * (depth >> 3) * height;
+  size   = width * depth * height;
+
+#if 0
+  g_printerr ("width %i  height %i  depth %i  compress %i\n",
+              width, height, depth, compress);
+#endif
+
+  if (width  < 1 || width  > 10000 ||
+      height < 1 || height > 10000 ||
+      depth  < 1 || depth  > 1     ||
+      G_MAXSIZE / width / height / depth < 1)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: "
+                     "Brush dimensions out of range."));
+      return NULL;
+    }
+
+  if (compress < 0 || compress > 1)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: "
+                     "Unknown compression method."));
+      return NULL;
+    }
 
   tmp = g_path_get_basename (gimp_file_get_utf8_name (file));
   name = g_strdup_printf ("%s-%03d", tmp, index);
@@ -855,7 +882,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
     }
   else
     {
-      if (! abr_rle_decode (input, (gchar *) mask, height, error))
+      if (! abr_rle_decode (input, (gchar *) mask, size, height, error))
         {
           g_object_unref (brush);
           return NULL;
@@ -1007,6 +1034,7 @@ abr_reach_8bim_section (GDataInputStream  *input,
 static gboolean
 abr_rle_decode (GDataInputStream  *input,
                 gchar             *buffer,
+                gsize              buffer_size,
                 gint32             height,
                 GError           **error)
 {
@@ -1061,7 +1089,18 @@ abr_rle_decode (GDataInputStream  *input,
               j++;
 
               for (c = 0; c < n; c++, data++)
-                *data = ch;
+                {
+                  if (data > buffer + buffer_size)
+                    {
+                      g_free (cscanline_len);
+                      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                                   _("Fatal parse error in brush file: "
+                                     "RLE compressed brush data corrupt."));
+                      return FALSE;
+                    }
+
+                  *data = ch;
+                }
             }
           else
             {
