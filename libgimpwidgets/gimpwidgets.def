@@ -103,7 +103,11 @@ EXPORTS
 	gimp_color_scale_set_channel
 	gimp_color_scale_set_color
 	gimp_color_scale_set_color_config
+	gimp_color_scales_get_show_hsv
+	gimp_color_scales_get_show_rgb_u8
 	gimp_color_scales_get_type
+	gimp_color_scales_set_show_hsv
+	gimp_color_scales_set_show_rgb_u8
 	gimp_color_select_get_type
 	gimp_color_selection_color_changed
 	gimp_color_selection_get_color
