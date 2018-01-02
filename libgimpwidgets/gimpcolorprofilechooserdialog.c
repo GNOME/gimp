@@ -46,9 +46,13 @@ struct _GimpColorProfileChooserDialogPrivate
 };
 
 
-static void   gimp_color_profile_chooser_dialog_constructed    (GObject                       *object);
-static void   gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfileChooserDialog *dialog);
-static void   gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
+static void     gimp_color_profile_chooser_dialog_constructed    (GObject                       *object);
+
+static gboolean gimp_color_profile_chooser_dialog_delete_event   (GtkWidget                     *widget,
+                                                                  GdkEventAny                   *event);
+
+static void     gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfileChooserDialog *dialog);
+static void     gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
 
 
 G_DEFINE_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog,
@@ -60,9 +64,12 @@ G_DEFINE_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog,
 static void
 gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed = gimp_color_profile_chooser_dialog_constructed;
+  object_class->constructed  = gimp_color_profile_chooser_dialog_constructed;
+
+  widget_class->delete_event = gimp_color_profile_chooser_dialog_delete_event;
 
   g_type_class_add_private (klass, sizeof (GimpColorProfileChooserDialogPrivate));
 }
@@ -125,6 +132,13 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_color_profile_chooser_dialog_update_preview),
                     NULL);
+}
+
+static gboolean
+gimp_color_profile_chooser_dialog_delete_event (GtkWidget   *widget,
+                                                GdkEventAny *event)
+{
+  return TRUE;
 }
 
 GtkWidget *
