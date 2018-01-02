@@ -140,14 +140,16 @@ gimp_config_iface_duplicate (GimpConfig *config)
   GObjectClass  *klass  = G_OBJECT_GET_CLASS (object);
   GParamSpec   **property_specs;
   guint          n_property_specs;
-  GParameter    *construct_params   = NULL;
-  gint           n_construct_params = 0;
+  gint           n_construct_properties = 0;
+  const gchar  **construct_names        = NULL;
+  GValue        *construct_values       = NULL;
   guint          i;
   GObject       *dup;
 
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
-  construct_params = g_new0 (GParameter, n_property_specs);
+  construct_names  = g_new0 (const gchar *, n_property_specs);
+  construct_values = g_new0 (GValue,        n_property_specs);
 
   for (i = 0; i < n_property_specs; i++)
     {
@@ -157,27 +159,29 @@ gimp_config_iface_duplicate (GimpConfig *config)
           (prop_spec->flags & G_PARAM_WRITABLE) &&
           (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
         {
-          GParameter *construct_param;
+          construct_names[n_construct_properties] = prop_spec->name;
 
-          construct_param = &construct_params[n_construct_params++];
+          g_value_init (&construct_values[n_construct_properties],
+                        prop_spec->value_type);
+          g_object_get_property (object, prop_spec->name,
+                                 &construct_values[n_construct_properties]);
 
-          construct_param->name = prop_spec->name;
-
-          g_value_init (&construct_param->value, prop_spec->value_type);
-          g_object_get_property (object,
-                                 prop_spec->name, &construct_param->value);
+          n_construct_properties++;
         }
     }
 
   g_free (property_specs);
 
-  dup = g_object_newv (G_TYPE_FROM_INSTANCE (object),
-                       n_construct_params, construct_params);
+  dup = g_object_new_with_properties (G_TYPE_FROM_INSTANCE (object),
+                                      n_construct_properties,
+                                      (const gchar **) construct_names,
+                                      (const GValue *) construct_values);
 
-  for (i = 0; i < n_construct_params; i++)
-    g_value_unset (&construct_params[i].value);
+  for (i = 0; i < n_construct_properties; i++)
+    g_value_unset (&construct_values[i]);
 
-  g_free (construct_params);
+  g_free (construct_names);
+  g_free (construct_values);
 
   gimp_config_copy (config, GIMP_CONFIG (dup), 0);
 
