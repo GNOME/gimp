@@ -566,6 +566,14 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
   if (error && *error)
     return NULL;
 
+  if (abr_brush_hdr.size < 0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: "
+                     "Brush size value currupt."));
+      return NULL;
+    }
+
   /*  g_print(" + BRUSH\n | << type: %i  block size: %i bytes\n",
    *          abr_brush_hdr.type, abr_brush_hdr.size);
    */
@@ -777,6 +785,14 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
   if (error && *error)
     return NULL;
 
+  if (brush_size < 0)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: "
+                     "Brush size value currupt."));
+      return NULL;
+    }
+
   brush_end = brush_size;
 
   /* complement to 4 */
@@ -889,8 +905,9 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
         }
     }
 
-  g_seekable_seek (G_SEEKABLE (input), next_brush, G_SEEK_SET,
-                   NULL, NULL);
+  if (g_seekable_tell (G_SEEKABLE (input)) <= next_brush)
+    g_seekable_seek (G_SEEKABLE (input), next_brush, G_SEEK_SET,
+                     NULL, NULL);
 
   return brush;
 }
@@ -1090,7 +1107,7 @@ abr_rle_decode (GDataInputStream  *input,
 
               for (c = 0; c < n; c++, data++)
                 {
-                  if (data > buffer + buffer_size)
+                  if (data >= buffer + buffer_size)
                     {
                       g_free (cscanline_len);
                       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -1108,6 +1125,15 @@ abr_rle_decode (GDataInputStream  *input,
 
               for (c = 0; c < n + 1; c++, j++, data++)
                 {
+                  if (data >= buffer + buffer_size)
+                    {
+                      g_free (cscanline_len);
+                      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                                   _("Fatal parse error in brush file: "
+                                     "RLE compressed brush data corrupt."));
+                      return FALSE;
+                    }
+
                   *data = abr_read_char (input, error);
                   if (error && *error)
                     {
