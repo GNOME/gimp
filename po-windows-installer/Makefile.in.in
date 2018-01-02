@@ -151,12 +151,14 @@ uninstall:
 	  rm -f $(DESTDIR)$(itlocaledir)/$$lang/LC_MESSAGES/$(GETTEXT_PACKAGE).mo.m; \
 	done
 
-check: all $(GETTEXT_PACKAGE).pot
+check: check-$(USE_NLS)
+check-yes: all $(GETTEXT_PACKAGE).pot
 	rm -f missing notexist
 	srcdir=$(srcdir) $(INTLTOOL_UPDATE) -m
 	if [ -r missing -o -r notexist ]; then \
 	  exit 1; \
 	fi
+check-no: all
 
 mostlyclean:
 	rm -f *.pox $(GETTEXT_PACKAGE).pot *.old.po cat-id-tbl.tmp
