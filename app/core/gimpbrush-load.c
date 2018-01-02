@@ -639,7 +639,18 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
                   abr_sampled_brush_hdr.bounds_long[1]); /* right - left */
         bytes  = abr_sampled_brush_hdr.depth >> 3;
 
-        /* g_print("width %i  height %i\n", width, height); */
+        /* g_print ("width %i  height %i  bytes %i\n", width, height, bytes); */
+
+        if (width  < 1 || width  > 10000 ||
+            height < 1 || height > 10000 ||
+            bytes  < 1 || bytes  > 1     ||
+            G_MAXSIZE / width / height / bytes < 1)
+          {
+            g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                         _("Fatal parse error in brush file: "
+                           "Brush dimensions out of range."));
+            break;
+          }
 
         abr_sampled_brush_hdr.wide = height > 16384;
 
@@ -956,10 +967,10 @@ abr_reach_8bim_section (GDataInputStream  *input,
 {
   while (TRUE)
     {
-      gchar  tag[4];
-      gchar  tagname[5];
-      gint32 section_size;
-      gsize  bytes_read;
+      gchar   tag[4];
+      gchar   tagname[5];
+      guint32 section_size;
+      gsize   bytes_read;
 
       if (! g_input_stream_read_all (G_INPUT_STREAM (input),
                                      tag, 4,
