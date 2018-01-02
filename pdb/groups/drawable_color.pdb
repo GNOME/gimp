@@ -627,12 +627,16 @@ HELP
 	  desc => "Intensity of lowest input" },
 	{ name => 'high_input', type => '0.0 <= float <= 1.0',
 	  desc => "Intensity of highest input" },
+	{ name => 'clamp_input', type => 'boolean',
+	  desc => 'Clamp input values before applying output levels' },
 	{ name => 'gamma', type => '0.1 <= float <= 10',
 	  desc => 'Gamma adjustment factor' },
 	{ name => 'low_output', type => '0.0 <= float <= 1.0',
 	  desc => "Intensity of lowest output" },
 	{ name => 'high_output', type => '0.0 <= float <= 1.0',
-	  desc => "Intensity of highest output" }
+	  desc => "Intensity of highest output" },
+	{ name => 'clamp_output', type => 'boolean',
+	  desc => 'Clamp final output values' },
     );
 
     %invoke = (
@@ -652,11 +656,13 @@ HELP
                                       NULL);
 
       g_object_set (config,
-                    "low-input",   low_input,
-                    "high-input",  high_input,
-                    "gamma",       gamma,
-                    "low-output",  low_output,
-                    "high-output", high_output,
+                    "low-input",    low_input,
+                    "high-input",   high_input,
+                    "clamp-input",  clamp_input,
+                    "gamma",        gamma,
+                    "low-output",   low_output,
+                    "high-output",  high_output,
+                    "clamp-output", clamp_output,
                     NULL);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,

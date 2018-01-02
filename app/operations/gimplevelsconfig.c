@@ -47,11 +47,13 @@ enum
 {
   PROP_0,
   PROP_CHANNEL,
-  PROP_GAMMA,
   PROP_LOW_INPUT,
   PROP_HIGH_INPUT,
+  PROP_CLAMP_INPUT,
+  PROP_GAMMA,
   PROP_LOW_OUTPUT,
-  PROP_HIGH_OUTPUT
+  PROP_HIGH_OUTPUT,
+  PROP_CLAMP_OUTPUT
 };
 
 
@@ -107,12 +109,6 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
                          GIMP_TYPE_HISTOGRAM_CHANNEL,
                          GIMP_HISTOGRAM_VALUE, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAMMA,
-                           "gamma",
-                           _("Gamma"),
-                           _("Gamma"),
-                           0.1, 10.0, 1.0, 0);
-
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW_INPUT,
                            "low-input",
                            _("Low Input"),
@@ -125,6 +121,18 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
                            _("High Input"),
                            0.0, 1.0, 1.0, 0);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CLAMP_INPUT,
+                           "clamp-input",
+                           _("Clamp Input"),
+                           _("Clamp input values before applying output mapping."),
+                            FALSE, 0);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_GAMMA,
+                           "gamma",
+                           _("Gamma"),
+                           _("Gamma"),
+                           0.1, 10.0, 1.0, 0);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW_OUTPUT,
                            "low-output",
                            _("Low Output"),
@@ -136,6 +144,12 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
                            _("High Output"),
                            _("High Output"),
                            0.0, 1.0, 1.0, 0);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CLAMP_OUTPUT,
+                           "clamp-output",
+                           _("Clamp Output"),
+                           _("Clamp final output values."),
+                            FALSE, 0);
 }
 
 static void
@@ -168,10 +182,6 @@ gimp_levels_config_get_property (GObject    *object,
       g_value_set_enum (value, self->channel);
       break;
 
-    case PROP_GAMMA:
-      g_value_set_double (value, self->gamma[self->channel]);
-      break;
-
     case PROP_LOW_INPUT:
       g_value_set_double (value, self->low_input[self->channel]);
       break;
@@ -180,12 +190,24 @@ gimp_levels_config_get_property (GObject    *object,
       g_value_set_double (value, self->high_input[self->channel]);
       break;
 
+    case PROP_CLAMP_INPUT:
+      g_value_set_boolean (value, self->clamp_input);
+      break;
+
+    case PROP_GAMMA:
+      g_value_set_double (value, self->gamma[self->channel]);
+      break;
+
     case PROP_LOW_OUTPUT:
       g_value_set_double (value, self->low_output[self->channel]);
       break;
 
     case PROP_HIGH_OUTPUT:
       g_value_set_double (value, self->high_output[self->channel]);
+      break;
+
+    case PROP_CLAMP_OUTPUT:
+      g_value_set_boolean (value, self->clamp_output);
       break;
 
     default:
@@ -206,15 +228,11 @@ gimp_levels_config_set_property (GObject      *object,
     {
     case PROP_CHANNEL:
       self->channel = g_value_get_enum (value);
-      g_object_notify (object, "gamma");
       g_object_notify (object, "low-input");
       g_object_notify (object, "high-input");
+      g_object_notify (object, "gamma");
       g_object_notify (object, "low-output");
       g_object_notify (object, "high-output");
-      break;
-
-    case PROP_GAMMA:
-      self->gamma[self->channel] = g_value_get_double (value);
       break;
 
     case PROP_LOW_INPUT:
@@ -225,12 +243,24 @@ gimp_levels_config_set_property (GObject      *object,
       self->high_input[self->channel] = g_value_get_double (value);
       break;
 
+    case PROP_CLAMP_INPUT:
+      self->clamp_input = g_value_get_boolean (value);
+      break;
+
+    case PROP_GAMMA:
+      self->gamma[self->channel] = g_value_get_double (value);
+      break;
+
     case PROP_LOW_OUTPUT:
       self->low_output[self->channel] = g_value_get_double (value);
       break;
 
     case PROP_HIGH_OUTPUT:
       self->high_output[self->channel] = g_value_get_double (value);
+      break;
+
+    case PROP_CLAMP_OUTPUT:
+      self->clamp_output = g_value_get_boolean (value);
       break;
 
    default:
@@ -249,7 +279,9 @@ gimp_levels_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+  if (! gimp_config_serialize_property_by_name (config, "time",         writer) ||
+      ! gimp_config_serialize_property_by_name (config, "clamp-input",  writer) ||
+      ! gimp_config_serialize_property_by_name (config, "clamp-output", writer))
     return FALSE;
 
   old_channel = l_config->channel;
@@ -267,9 +299,9 @@ gimp_levels_config_serialize (GimpConfig       *config,
        */
       success =
         (gimp_config_serialize_property_by_name (config, "channel",     writer) &&
-         gimp_config_serialize_property_by_name (config, "gamma",       writer) &&
          gimp_config_serialize_property_by_name (config, "low-input",   writer) &&
          gimp_config_serialize_property_by_name (config, "high-input",  writer) &&
+         gimp_config_serialize_property_by_name (config, "gamma",       writer) &&
          gimp_config_serialize_property_by_name (config, "low-output",  writer) &&
          gimp_config_serialize_property_by_name (config, "high-output", writer));
 
@@ -309,6 +341,10 @@ gimp_levels_config_equal (GimpConfig *a,
   GimpLevelsConfig     *config_b = GIMP_LEVELS_CONFIG (b);
   GimpHistogramChannel  channel;
 
+  if (config_a->clamp_input  != config_b->clamp_input ||
+      config_a->clamp_output != config_b->clamp_output)
+    return FALSE;
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
@@ -341,6 +377,8 @@ gimp_levels_config_reset (GimpConfig *config)
     }
 
   gimp_config_reset_property (G_OBJECT (config), "channel");
+  gimp_config_reset_property (G_OBJECT (config), "clamp-input");
+  gimp_config_reset_property (G_OBJECT (config), "clamp_output");
 }
 
 static gboolean
@@ -369,9 +407,13 @@ gimp_levels_config_copy (GimpConfig  *src,
   g_object_notify (G_OBJECT (dest), "low-output");
   g_object_notify (G_OBJECT (dest), "high-output");
 
-  dest_config->channel = src_config->channel;
+  dest_config->channel      = src_config->channel;
+  dest_config->clamp_input  = src_config->clamp_input;
+  dest_config->clamp_output = src_config->clamp_output;
 
   g_object_notify (G_OBJECT (dest), "channel");
+  g_object_notify (G_OBJECT (dest), "clamp-input");
+  g_object_notify (G_OBJECT (dest), "clamp-output");
 
   return TRUE;
 }
@@ -824,16 +866,21 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
     {
       config->low_input[i]   = low_input[i]   / 255.0;
       config->high_input[i]  = high_input[i]  / 255.0;
+      config->gamma[i]       = gamma[i];
       config->low_output[i]  = low_output[i]  / 255.0;
       config->high_output[i] = high_output[i] / 255.0;
-      config->gamma[i]       = gamma[i];
     }
 
-  g_object_notify (G_OBJECT (config), "gamma");
+  config->clamp_input  = TRUE;
+  config->clamp_output = TRUE;
+
   g_object_notify (G_OBJECT (config), "low-input");
   g_object_notify (G_OBJECT (config), "high-input");
+  g_object_notify (G_OBJECT (config), "clamp-input");
+  g_object_notify (G_OBJECT (config), "gamma");
   g_object_notify (G_OBJECT (config), "low-output");
   g_object_notify (G_OBJECT (config), "high-output");
+  g_object_notify (G_OBJECT (config), "clamp-output");
 
   g_object_thaw_notify (G_OBJECT (config));
 

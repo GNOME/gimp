@@ -91,11 +91,13 @@ sub levels {
                                       NULL);
 
       g_object_set (config,
-                    "low-input",   low_input   / 255.0,
-                    "high-input",  high_input  / 255.0,
-                    "gamma",       gamma,
-                    "low-output",  low_output  / 255.0,
-                    "high-output", high_output / 255.0,
+                    "low-input",    low_input   / 255.0,
+                    "high-input",   high_input  / 255.0,
+                    "clamp-input",  TRUE,
+                    "gamma",        gamma,
+                    "low-output",   low_output  / 255.0,
+                    "high-output",  high_output / 255.0,
+                    "clamp-input",  TRUE,
                     NULL);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,

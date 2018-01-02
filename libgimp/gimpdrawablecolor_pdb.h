@@ -79,9 +79,11 @@ gboolean gimp_drawable_levels              (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
                                             gdouble               low_input,
                                             gdouble               high_input,
+                                            gboolean              clamp_input,
                                             gdouble               gamma,
                                             gdouble               low_output,
-                                            gdouble               high_output);
+                                            gdouble               high_output,
+                                            gboolean              clamp_output);
 gboolean gimp_drawable_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_drawable_posterize           (gint32                drawable_ID,
                                             gint                  levels);

@@ -41,13 +41,17 @@ struct _GimpLevelsConfig
 
   GimpHistogramChannel  channel;
 
-  gdouble               gamma[5];
-
   gdouble               low_input[5];
   gdouble               high_input[5];
 
+  gboolean              clamp_input;
+
+  gdouble               gamma[5];
+
   gdouble               low_output[5];
   gdouble               high_output[5];
+
+  gboolean              clamp_output;
 };
 
 struct _GimpLevelsConfigClass

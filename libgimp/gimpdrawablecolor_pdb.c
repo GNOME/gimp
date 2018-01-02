@@ -514,9 +514,11 @@ gimp_drawable_invert (gint32   drawable_ID,
  * @channel: The channel to modify.
  * @low_input: Intensity of lowest input.
  * @high_input: Intensity of highest input.
+ * @clamp_input: Clamp input values before applying output levels.
  * @gamma: Gamma adjustment factor.
  * @low_output: Intensity of lowest output.
  * @high_output: Intensity of highest output.
+ * @clamp_output: Clamp final output values.
  *
  * Modifies intensity levels in the specified drawable.
  *
@@ -542,9 +544,11 @@ gimp_drawable_levels (gint32               drawable_ID,
                       GimpHistogramChannel channel,
                       gdouble              low_input,
                       gdouble              high_input,
+                      gboolean             clamp_input,
                       gdouble              gamma,
                       gdouble              low_output,
-                      gdouble              high_output)
+                      gdouble              high_output,
+                      gboolean             clamp_output)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -556,9 +560,11 @@ gimp_drawable_levels (gint32               drawable_ID,
                                     GIMP_PDB_INT32, channel,
                                     GIMP_PDB_FLOAT, low_input,
                                     GIMP_PDB_FLOAT, high_input,
+                                    GIMP_PDB_INT32, clamp_input,
                                     GIMP_PDB_FLOAT, gamma,
                                     GIMP_PDB_FLOAT, low_output,
                                     GIMP_PDB_FLOAT, high_output,
+                                    GIMP_PDB_INT32, clamp_output,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

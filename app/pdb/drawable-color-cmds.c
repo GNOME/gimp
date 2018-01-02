@@ -566,17 +566,21 @@ drawable_levels_invoker (GimpProcedure         *procedure,
   gint32 channel;
   gdouble low_input;
   gdouble high_input;
+  gboolean clamp_input;
   gdouble gamma;
   gdouble low_output;
   gdouble high_output;
+  gboolean clamp_output;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   low_input = g_value_get_double (gimp_value_array_index (args, 2));
   high_input = g_value_get_double (gimp_value_array_index (args, 3));
-  gamma = g_value_get_double (gimp_value_array_index (args, 4));
-  low_output = g_value_get_double (gimp_value_array_index (args, 5));
-  high_output = g_value_get_double (gimp_value_array_index (args, 6));
+  clamp_input = g_value_get_boolean (gimp_value_array_index (args, 4));
+  gamma = g_value_get_double (gimp_value_array_index (args, 5));
+  low_output = g_value_get_double (gimp_value_array_index (args, 6));
+  high_output = g_value_get_double (gimp_value_array_index (args, 7));
+  clamp_output = g_value_get_boolean (gimp_value_array_index (args, 8));
 
   if (success)
     {
@@ -593,11 +597,13 @@ drawable_levels_invoker (GimpProcedure         *procedure,
                                           NULL);
 
           g_object_set (config,
-                        "low-input",   low_input,
-                        "high-input",  high_input,
-                        "gamma",       gamma,
-                        "low-output",  low_output,
-                        "high-output", high_output,
+                        "low-input",    low_input,
+                        "high-input",   high_input,
+                        "clamp-input",  clamp_input,
+                        "gamma",        gamma,
+                        "low-output",   low_output,
+                        "high-output",  high_output,
+                        "clamp-output", clamp_output,
                         NULL);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
@@ -1206,6 +1212,12 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("clamp-input",
+                                                     "clamp input",
+                                                     "Clamp input values before applying output levels",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("gamma",
                                                     "gamma",
                                                     "Gamma adjustment factor",
@@ -1223,6 +1235,12 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                     "Intensity of highest output",
                                                     0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("clamp-output",
+                                                     "clamp output",
+                                                     "Clamp final output values",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

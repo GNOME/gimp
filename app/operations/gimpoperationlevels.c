@@ -80,18 +80,23 @@ gimp_operation_levels_init (GimpOperationLevels *self)
 }
 
 static inline gdouble
-gimp_operation_levels_map (gdouble value,
-                           gdouble inv_gamma,
-                           gdouble low_input,
-                           gdouble high_input,
-                           gdouble low_output,
-                           gdouble high_output)
+gimp_operation_levels_map (gdouble  value,
+                           gdouble  low_input,
+                           gdouble  high_input,
+                           gboolean clamp_input,
+                           gdouble  inv_gamma,
+                           gdouble  low_output,
+                           gdouble  high_output,
+                           gboolean clamp_output)
 {
   /*  determine input intensity  */
   if (high_input != low_input)
     value = (value - low_input) / (high_input - low_input);
   else
     value = (value - low_input);
+
+  if (clamp_input)
+    value = CLAMP (value, 0.0, 1.0);
 
   if (inv_gamma != 1.0 && value > 0)
     value =  pow (value, inv_gamma);
@@ -101,6 +106,9 @@ gimp_operation_levels_map (gdouble value,
     value = value * (high_output - low_output) + low_output;
   else if (high_output < low_output)
     value = low_output - value * (low_output - high_output);
+
+  if (clamp_output)
+    value = CLAMP (value, 0.0, 1.0);
 
   return value;
 }
@@ -137,20 +145,24 @@ gimp_operation_levels_process (GeglOperation       *operation,
           gdouble value;
 
           value = gimp_operation_levels_map (src[channel],
-                                             inv_gamma[channel + 1],
                                              config->low_input[channel + 1],
                                              config->high_input[channel + 1],
+                                             config->clamp_input,
+                                             inv_gamma[channel + 1],
                                              config->low_output[channel + 1],
-                                             config->high_output[channel + 1]);
+                                             config->high_output[channel + 1],
+                                             config->clamp_output);
 
           /* don't apply the overall curve to the alpha channel */
           if (channel != ALPHA)
             value = gimp_operation_levels_map (value,
-                                               inv_gamma[0],
                                                config->low_input[0],
                                                config->high_input[0],
+                                               config->clamp_input,
+                                               inv_gamma[0],
                                                config->low_output[0],
-                                               config->high_output[0]);
+                                               config->high_output[0],
+                                               config->clamp_output);
 
           dest[channel] = value;
         }
