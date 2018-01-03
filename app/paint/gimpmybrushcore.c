@@ -218,7 +218,8 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
                                   gimp_drawable_get_active_mask (drawable),
                                   paint_core->mask_buffer,
                                   paint_core->mask_x_offset,
-                                  paint_core->mask_y_offset);
+                                  paint_core->mask_y_offset,
+                                  GIMP_MYBRUSH_OPTIONS (paint_options));
 
       gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
 

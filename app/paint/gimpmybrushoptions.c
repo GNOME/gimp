@@ -40,7 +40,8 @@ enum
   PROP_RADIUS,
   PROP_OPAQUE,
   PROP_HARDNESS,
-  PROP_ERASER
+  PROP_ERASER,
+  PROP_NO_ERASING
 };
 
 
@@ -107,6 +108,13 @@ gimp_mybrush_options_class_init (GimpMybrushOptionsClass *klass)
                             NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING,
+                            "no-erasing",
+                            _("No erasing effect"),
+                            _("Never decrease alpha of existing pixels"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -144,6 +152,9 @@ gimp_mybrush_options_set_property (GObject      *object,
     case PROP_ERASER:
       options->eraser = g_value_get_boolean (value);
       break;
+    case PROP_NO_ERASING:
+      options->no_erasing = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -172,6 +183,9 @@ gimp_mybrush_options_get_property (GObject    *object,
       break;
     case PROP_ERASER:
       g_value_set_boolean (value, options->eraser);
+      break;
+    case PROP_NO_ERASING:
+      g_value_set_boolean (value, options->no_erasing);
       break;
 
     default:

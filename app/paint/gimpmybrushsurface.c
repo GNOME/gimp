@@ -29,6 +29,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "libgimpcolor/gimpcolor.h"
 
+#include "gimpmybrushoptions.h"
 #include "gimpmybrushsurface.h"
 
 
@@ -41,6 +42,7 @@ struct _GimpMybrushSurface
   gint        paint_mask_y;
   GeglRectangle dirty;
   GimpComponentMask component_mask;
+  GimpMybrushOptions *options;
 };
 
 /* --- Taken from mypaint-tiled-surface.c --- */
@@ -468,6 +470,9 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                     }
                 }
 
+              if (surface->options->no_erasing)
+                a = MAX (a, pixel[ALPHA]);
+
               if (component_mask != GIMP_COMPONENT_MASK_ALL)
                 {
                   if (component_mask & GIMP_COMPONENT_MASK_RED)
@@ -526,11 +531,12 @@ gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
 }
 
 GimpMybrushSurface *
-gimp_mypaint_surface_new (GeglBuffer        *buffer,
-                          GimpComponentMask  component_mask,
-                          GeglBuffer        *paint_mask,
-                          gint               paint_mask_x,
-                          gint               paint_mask_y)
+gimp_mypaint_surface_new (GeglBuffer         *buffer,
+                          GimpComponentMask   component_mask,
+                          GeglBuffer         *paint_mask,
+                          gint                paint_mask_x,
+                          gint                paint_mask_y,
+                          GimpMybrushOptions *options)
 {
   GimpMybrushSurface *surface = g_malloc0 (sizeof (GimpMybrushSurface));
 
@@ -542,6 +548,7 @@ gimp_mypaint_surface_new (GeglBuffer        *buffer,
   surface->surface.end_atomic   = gimp_mypaint_surface_end_atomic;
   surface->surface.destroy      = gimp_mypaint_surface_destroy;
   surface->component_mask       = component_mask;
+  surface->options              = options;
   surface->buffer               = g_object_ref (buffer);
   if (paint_mask)
     surface->paint_mask         = g_object_ref (paint_mask);

@@ -40,6 +40,7 @@ struct _GimpMybrushOptions
   gdouble           opaque;
   gdouble           hardness;
   gboolean          eraser;
+  gboolean          no_erasing;
 };
 
 struct _GimpMybrushOptionsClass
