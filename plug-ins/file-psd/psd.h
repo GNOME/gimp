@@ -307,6 +307,7 @@ typedef enum {
 
 /* Channel ID */
 typedef enum {
+  PSD_CHANNEL_EXTRA_MASK= -3,           /* User supplied extra layer mask */
   PSD_CHANNEL_MASK      = -2,           /* User supplied layer mask */
   PSD_CHANNEL_ALPHA     = -1,           /* Transparency mask */
   PSD_CHANNEL_RED       =  0,           /* Red channel data */

@@ -690,18 +690,18 @@ read_layer_info (PSDimage  *img_a,
                 lyr_a[lidx]->layer_mask.flags & 4 ? TRUE : FALSE;
               break;
             case 36: /* If we have a 36 byte mask record assume second data set is correct */
-              if (fread (&lyr_a[lidx]->layer_mask_extra.top, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.left, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.bottom, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask_extra.right, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.def_color, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.flags, 1, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.top, 4, 1, f) < 1
+              if (fread (&lyr_a[lidx]->layer_mask.top, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.left, 4, 1, f) < 1
                   || fread (&lyr_a[lidx]->layer_mask.bottom, 4, 1, f) < 1
-                  || fread (&lyr_a[lidx]->layer_mask.right, 4, 1, f) < 1)
+                  || fread (&lyr_a[lidx]->layer_mask.right, 4, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask.def_color, 1, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask.flags, 1, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask.extra_def_color, 1, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask.extra_flags, 1, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask_extra.top, 4, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask_extra.left, 4, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask_extra.bottom, 4, 1, f) < 1
+                  || fread (&lyr_a[lidx]->layer_mask_extra.right, 4, 1, f) < 1)
                 {
                   psd_set_error (feof (f), errno, error);
                   return NULL;
@@ -1215,8 +1215,19 @@ add_layers (gint32     image_id,
               lyr_chn[cidx]->id = lyr_a[lidx]->chn_info[cidx].channel_id;
               lyr_chn[cidx]->rows = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
               lyr_chn[cidx]->columns = lyr_a[lidx]->right - lyr_a[lidx]->left;
+              lyr_chn[cidx]->data = NULL;
 
-              if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK)
+              if (lyr_chn[cidx]->id == PSD_CHANNEL_EXTRA_MASK)
+                {
+                  if (fseek (f, lyr_a[lidx]->chn_info[cidx].data_len, SEEK_CUR) != 0)
+                    {
+                      psd_set_error (feof (f), errno, error);
+                      return -1;
+                    }
+
+                  continue;
+                }
+              else if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK)
                 {
                   /* Works around a bug in panotools psd files where the layer mask
                      size is given as 0 but data exists. Set mask size to layer size.
@@ -1349,12 +1360,13 @@ add_layers (gint32     image_id,
                   alpha = TRUE;
                   alpha_chn = cidx;
                 }
-              else
+              else if (lyr_chn[cidx]->data)
                 {
                   channel_idx[layer_channels] = cidx;   /* Assumes in sane order */
                   layer_channels++;                     /* RGB, Lab, CMYK etc.   */
                 }
             }
+
           if (alpha)
             {
               channel_idx[layer_channels] = alpha_chn;
