@@ -93,6 +93,12 @@ header files installed.
      particular tag "v1.3.0". In particular do not install from master
      which installs brushes incompatible with GIMP.
 
+     Also this is a data packages and therefore it will install the
+     pkg-config file inside `$PREFIX/share/pkgconfig/`. If you install
+     mypaint-brushes from repository in a non-standard prefix, you will
+     have to make sure your $PKG_CONFIG_PATH environment variable also
+     lists `$PREFIX/share/pkgconfig/`.
+
  11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: libjasper,
