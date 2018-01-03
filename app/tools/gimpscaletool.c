@@ -89,7 +89,7 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-scale-tool",
                 _("Scale"),
                 _("Scale Tool: Scale the layer, selection or path"),
-                N_("_Scale"), "<shift>T",
+                N_("_Scale"), "<shift>S",
                 NULL, GIMP_HELP_TOOL_SCALE,
                 GIMP_ICON_TOOL_SCALE,
                 data);
