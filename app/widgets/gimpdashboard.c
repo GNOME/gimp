@@ -126,6 +126,7 @@ struct _FieldInfo
 {
   Variable variable;
   gboolean default_active;
+  gboolean show_in_header;
   gint     meter_value;
 };
 
@@ -175,7 +176,10 @@ struct _GroupData
   gint         n_fields;
   gint         n_meter_values;
 
+  gdouble      limit;
+
   GtkExpander *expander;
+  GtkLabel    *header_values_label;
   GtkButton   *menu_button;
   GtkMenu     *menu;
   GimpMeter   *meter;
@@ -268,6 +272,14 @@ static gboolean   gimp_dashboard_variable_to_boolean         (GimpDashboard     
                                                               Variable             variable);
 static gdouble    gimp_dashboard_variable_to_double          (GimpDashboard       *dashboard,
                                                               Variable             variable);
+
+static gchar    * gimp_dashboard_field_to_string             (GimpDashboard       *dashboard,
+                                                              Group                group,
+                                                              gint                 field,
+                                                              gboolean             full);
+
+static void       gimp_dashboard_label_set_text              (GtkLabel            *label,
+                                                              const gchar         *text);
 
 
 /*  static variables  */
@@ -381,6 +393,7 @@ static const GroupInfo groups[] =
                         {
                           { .variable       = VARIABLE_CACHE_OCCUPIED,
                             .default_active = TRUE,
+                            .show_in_header = TRUE,
                             .meter_value    = 2
                           },
                           { .variable       = VARIABLE_CACHE_MAXIMUM,
@@ -417,6 +430,7 @@ static const GroupInfo groups[] =
                         {
                           { .variable       = VARIABLE_SWAP_OCCUPIED,
                             .default_active = TRUE,
+                            .show_in_header = TRUE,
                             .meter_value    = 2
                           },
                           { .variable       = VARIABLE_SWAP_SIZE,
@@ -561,8 +575,19 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  -1);
-      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
+
+      /* group expander values label */
+      label = gtk_label_new (NULL);
+      group_data->header_values_label = GTK_LABEL (label);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 4);
+
+      g_object_bind_property (expander, "expanded",
+                              label,    "visible",
+                              G_BINDING_SYNC_CREATE |
+                              G_BINDING_INVERT_BOOLEAN);
 
       /* group expander menu button */
       button = gtk_button_new ();
@@ -1595,6 +1620,7 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
   const GroupInfo      *group_info = &groups[group];
   GroupData            *group_data = &priv->groups[group];
   gdouble               limit      = 0.0;
+  GString              *header_values;
   gint                  field;
 
   if (group_info->has_meter)
@@ -1639,6 +1665,10 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
         }
     }
 
+  group_data->limit = limit;
+
+  header_values = g_string_new (NULL);
+
   for (field = 0; field < group_data->n_fields; field++)
     {
       const FieldInfo *field_info = &group_info->fields[field];
@@ -1646,107 +1676,40 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
 
       if (field_data->active)
         {
-          const VariableInfo *variable_info = &variables[field_info->variable];
-          const VariableData *variable_data = &priv->variables[field_info->variable];
-          /* Tranlators: "N/A" is an abbreviation for "not available" */
-          const gchar        *str           = C_("dashboard-value", "N/A");
-          gboolean            free_str      = FALSE;
+          gchar *text;
 
-          if (variable_data->available)
+          text = gimp_dashboard_field_to_string (dashboard,
+                                                 group, field, TRUE);
+
+          gimp_dashboard_label_set_text (field_data->value_label, text);
+
+          g_free (text);
+
+          if (field_info->show_in_header)
             {
-              switch (variable_info->type)
-                {
-                case VARIABLE_TYPE_BOOLEAN:
-                  str = variable_data->value.boolean ? C_("dashboard-value", "Yes") :
-                                                       C_("dashboard-value", "No");
-                  break;
+              text = gimp_dashboard_field_to_string (dashboard,
+                                                     group, field, FALSE);
 
-                case VARIABLE_TYPE_SIZE:
-                  str      = g_format_size_full (variable_data->value.size,
-                                                 G_FORMAT_SIZE_IEC_UNITS);
-                  free_str = TRUE;
-                  break;
+              if (header_values->len > 0)
+                g_string_append (header_values, ", ");
 
-                case VARIABLE_TYPE_SIZE_RATIO:
-                  {
-                    if (variable_data->value.size_ratio.consequent)
-                      {
-                        gdouble value;
+              g_string_append (header_values, text);
 
-                        value = 100.0 * variable_data->value.size_ratio.antecedent /
-                                        variable_data->value.size_ratio.consequent;
-
-                        str      = g_strdup_printf ("%d%%", SIGNED_ROUND (value));
-                        free_str = TRUE;
-                      }
-                  }
-                  break;
-
-                case VARIABLE_TYPE_INT_RATIO:
-                  {
-                    gdouble  min;
-                    gdouble  max;
-                    gdouble  antecedent;
-                    gdouble  consequent;
-
-                    antecedent = variable_data->value.int_ratio.antecedent;
-                    consequent = variable_data->value.int_ratio.consequent;
-
-                    min = MIN (ABS (antecedent), ABS (consequent));
-                    max = MAX (ABS (antecedent), ABS (consequent));
-
-                    if (min)
-                      {
-                        antecedent /= min;
-                        consequent /= min;
-                      }
-                    else if (max)
-                      {
-                        antecedent /= max;
-                        consequent /= max;
-                      }
-
-                    if (max)
-                      {
-                        str      = g_strdup_printf ("%g:%g",
-                                                    RINT (100.0 * antecedent) / 100.0,
-                                                    RINT (100.0 * consequent) / 100.0);
-                        free_str = TRUE;
-                      }
-                  }
-                  break;
-                }
-
-              if (field_info->meter_value && limit)
-                {
-                  gdouble  value;
-                  gchar   *tmp;
-
-                  value = gimp_dashboard_variable_to_double (dashboard,
-                                                             field_info->variable);
-
-                  tmp = g_strdup_printf ("%s (%d%%)",
-                                         str,
-                                         SIGNED_ROUND (100.0 * value / limit));
-
-                  if (free_str)
-                    g_free ((gpointer) str);
-
-                  str      = tmp;
-                  free_str = TRUE;
-                }
+              g_free (text);
             }
-
-          /* the strcmp() reduces the overhead of gtk_label_set_text() when the
-           * text hasn't changed
-           */
-          if (strcmp (gtk_label_get_text (field_data->value_label), str))
-            gtk_label_set_text (field_data->value_label, str);
-
-          if (free_str)
-            g_free ((gpointer) str);
         }
     }
+
+  if (header_values->len > 0)
+    {
+      g_string_prepend (header_values, "(");
+      g_string_append  (header_values, ")");
+    }
+
+  gimp_dashboard_label_set_text (group_data->header_values_label,
+                                 header_values->str);
+
+  g_string_free (header_values, TRUE);
 }
 
 static void
@@ -1843,6 +1806,134 @@ gimp_dashboard_variable_to_double (GimpDashboard *dashboard,
     }
 
   return 0.0;
+}
+
+static gchar *
+gimp_dashboard_field_to_string (GimpDashboard *dashboard,
+                                Group          group,
+                                gint           field,
+                                gboolean       full)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  const GroupInfo      *group_info    = &groups[group];
+  const GroupData      *group_data    = &priv->groups[group];
+  const FieldInfo      *field_info    = &group_info->fields[field];
+  const VariableInfo   *variable_info = &variables[field_info->variable];
+  const VariableData   *variable_data = &priv->variables[field_info->variable];
+  /* Tranlators: "N/A" is an abbreviation for "not available" */
+  const gchar          *str           = C_("dashboard-value", "N/A");
+  gboolean              static_str    = TRUE;
+
+  if (variable_data->available)
+    {
+      switch (variable_info->type)
+        {
+        case VARIABLE_TYPE_BOOLEAN:
+          str = variable_data->value.boolean ? C_("dashboard-value", "Yes") :
+                                               C_("dashboard-value", "No");
+          break;
+
+        case VARIABLE_TYPE_SIZE:
+          str        = g_format_size_full (variable_data->value.size,
+                                           G_FORMAT_SIZE_IEC_UNITS);
+          static_str = FALSE;
+          break;
+
+        case VARIABLE_TYPE_SIZE_RATIO:
+          {
+            if (variable_data->value.size_ratio.consequent)
+              {
+                gdouble value;
+
+                value = 100.0 * variable_data->value.size_ratio.antecedent /
+                                variable_data->value.size_ratio.consequent;
+
+                str        = g_strdup_printf ("%d%%", SIGNED_ROUND (value));
+                static_str = FALSE;
+              }
+          }
+          break;
+
+        case VARIABLE_TYPE_INT_RATIO:
+          {
+            gdouble  min;
+            gdouble  max;
+            gdouble  antecedent;
+            gdouble  consequent;
+
+            antecedent = variable_data->value.int_ratio.antecedent;
+            consequent = variable_data->value.int_ratio.consequent;
+
+            min = MIN (ABS (antecedent), ABS (consequent));
+            max = MAX (ABS (antecedent), ABS (consequent));
+
+            if (min)
+              {
+                antecedent /= min;
+                consequent /= min;
+              }
+            else if (max)
+              {
+                antecedent /= max;
+                consequent /= max;
+              }
+
+            if (max)
+              {
+                str        = g_strdup_printf ("%g:%g",
+                                              RINT (100.0 * antecedent) / 100.0,
+                                              RINT (100.0 * consequent) / 100.0);
+                static_str = FALSE;
+              }
+          }
+          break;
+        }
+
+      if (field_info->meter_value && group_data->limit)
+        {
+          gdouble  value;
+          gchar   *tmp;
+
+          value = gimp_dashboard_variable_to_double (dashboard,
+                                                     field_info->variable);
+
+          if (full)
+            {
+              tmp = g_strdup_printf ("%s (%d%%)",
+                                     str,
+                                     SIGNED_ROUND (100.0 * value /
+                                                   group_data->limit));
+            }
+          else
+            {
+              tmp = g_strdup_printf ("%d%%",
+                                     SIGNED_ROUND (100.0 * value /
+                                                   group_data->limit));
+            }
+
+          if (! static_str)
+            g_free ((gpointer) str);
+
+          str        = tmp;
+          static_str = FALSE;
+        }
+    }
+
+  if (static_str)
+    return g_strdup (str);
+  else
+    return (gpointer) str;
+}
+
+static void
+gimp_dashboard_label_set_text (GtkLabel    *label,
+                               const gchar *text)
+{
+  /* the strcmp() reduces the overhead of gtk_label_set_text() when the
+   * text hasn't changed
+   */
+  if (g_strcmp0 (gtk_label_get_text (label), text))
+    gtk_label_set_text (label, text);
 }
 
 
