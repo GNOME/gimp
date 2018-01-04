@@ -586,6 +586,11 @@ gimp_tools_register (GType                   tool_type,
   visible = (! g_type_is_a (tool_type, GIMP_TYPE_FILTER_TOOL));
 
   g_object_set (tool_info, "visible", visible, NULL);
+
+  /* hack to make the operation tools always invisible */
+  if (tool_type == GIMP_TYPE_OPERATION_TOOL)
+    tool_info->hidden = TRUE;
+
   g_object_set_data (G_OBJECT (tool_info), "gimp-tool-default-visible",
                      GINT_TO_POINTER (visible));
 

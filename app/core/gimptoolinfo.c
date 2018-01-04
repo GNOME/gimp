@@ -151,7 +151,7 @@ gimp_tool_info_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_VISIBLE:
-      tool_info->visible = g_value_get_boolean (value);
+      tool_info->visible = (g_value_get_boolean (value) && ! tool_info->hidden);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

@@ -51,6 +51,7 @@ struct _GimpToolInfo
   gchar               *help_domain;
   gchar               *help_id;
 
+  gboolean             hidden; /* can't be made visible */
   gboolean             visible;
   GimpToolOptions     *tool_options;
   GimpPaintInfo       *paint_info;
