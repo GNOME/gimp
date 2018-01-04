@@ -71,62 +71,68 @@
 
 /*  local function prototypes  */
 
+static gboolean   gimp_display_shell_canvas_tool_events_internal (GtkWidget          *canvas,
+                                                                  GdkEvent           *event,
+                                                                  GimpDisplayShell   *shell,
+                                                                  GdkEvent          **next_event);
+
 static GdkModifierType
-                  gimp_display_shell_key_to_state             (gint               key);
+                  gimp_display_shell_key_to_state                (gint                key);
 static GdkModifierType
-                  gimp_display_shell_button_to_state          (gint               button);
+                  gimp_display_shell_button_to_state             (gint                button);
 
-static void       gimp_display_shell_proximity_in             (GimpDisplayShell  *shell);
-static void       gimp_display_shell_proximity_out            (GimpDisplayShell  *shell);
+static void       gimp_display_shell_proximity_in                (GimpDisplayShell   *shell);
+static void       gimp_display_shell_proximity_out               (GimpDisplayShell   *shell);
 
-static void       gimp_display_shell_check_device_cursor      (GimpDisplayShell  *shell);
+static void       gimp_display_shell_check_device_cursor         (GimpDisplayShell   *shell);
 
-static void       gimp_display_shell_start_scrolling          (GimpDisplayShell  *shell,
-                                                               const GdkEvent    *event,
-                                                               GdkModifierType    state,
-                                                               gint               x,
-                                                               gint               y);
-static void       gimp_display_shell_stop_scrolling           (GimpDisplayShell  *shell,
-                                                               const GdkEvent    *event);
-static void       gimp_display_shell_handle_scrolling         (GimpDisplayShell  *shell,
-                                                               GdkModifierType    state,
-                                                               gint               x,
-                                                               gint               y);
+static void       gimp_display_shell_start_scrolling             (GimpDisplayShell   *shell,
+                                                                  const GdkEvent     *event,
+                                                                  GdkModifierType     state,
+                                                                  gint                x,
+                                                                  gint                y);
+static void       gimp_display_shell_stop_scrolling              (GimpDisplayShell   *shell,
+                                                                  const GdkEvent     *event);
+static void       gimp_display_shell_handle_scrolling            (GimpDisplayShell   *shell,
+                                                                  GdkModifierType     state,
+                                                                  gint                x,
+                                                                  gint                y);
 
-static void       gimp_display_shell_space_pressed            (GimpDisplayShell  *shell,
-                                                               const GdkEvent    *event);
-static void       gimp_display_shell_space_released           (GimpDisplayShell  *shell,
-                                                               const GdkEvent    *event,
-                                                               const GimpCoords  *image_coords);
+static void       gimp_display_shell_space_pressed               (GimpDisplayShell   *shell,
+                                                                  const GdkEvent     *event);
+static void       gimp_display_shell_space_released              (GimpDisplayShell   *shell,
+                                                                  const GdkEvent     *event,
+                                                                  const GimpCoords   *image_coords);
 
-static gboolean   gimp_display_shell_tab_pressed              (GimpDisplayShell  *shell,
-                                                               const GdkEventKey *event);
+static gboolean   gimp_display_shell_tab_pressed                 (GimpDisplayShell   *shell,
+                                                                  const GdkEventKey  *event);
 
-static void       gimp_display_shell_update_focus             (GimpDisplayShell  *shell,
-                                                               gboolean           focus_in,
-                                                               const GimpCoords  *image_coords,
-                                                               GdkModifierType    state);
-static void       gimp_display_shell_update_cursor            (GimpDisplayShell  *shell,
-                                                               const GimpCoords  *display_coords,
-                                                               const GimpCoords  *image_coords,
-                                                               GdkModifierType    state,
-                                                               gboolean           update_software_cursor);
+static void       gimp_display_shell_update_focus                (GimpDisplayShell   *shell,
+                                                                  gboolean            focus_in,
+                                                                  const GimpCoords   *image_coords,
+                                                                  GdkModifierType     state);
+static void       gimp_display_shell_update_cursor               (GimpDisplayShell   *shell,
+                                                                  const GimpCoords   *display_coords,
+                                                                  const GimpCoords   *image_coords,
+                                                                  GdkModifierType     state,
+                                                                  gboolean            update_software_cursor);
 
-static gboolean   gimp_display_shell_initialize_tool          (GimpDisplayShell  *shell,
-                                                               const GimpCoords  *image_coords,
-                                                               GdkModifierType    state);
+static gboolean   gimp_display_shell_initialize_tool             (GimpDisplayShell   *shell,
+                                                                  const GimpCoords   *image_coords,
+                                                                  GdkModifierType     state);
 
-static void       gimp_display_shell_get_event_coords         (GimpDisplayShell  *shell,
-                                                               const GdkEvent    *event,
-                                                               GimpCoords        *display_coords,
-                                                               GdkModifierType   *state,
-                                                               guint32           *time);
-static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell  *shell,
-                                                               const GimpCoords  *display_coords,
-                                                               GimpCoords        *image_coords,
-                                                               gboolean          *update_software_cursor);
+static void       gimp_display_shell_get_event_coords            (GimpDisplayShell   *shell,
+                                                                  const GdkEvent     *event,
+                                                                  GimpCoords         *display_coords,
+                                                                  GdkModifierType    *state,
+                                                                  guint32            *time);
+static void       gimp_display_shell_untransform_event_coords    (GimpDisplayShell   *shell,
+                                                                  const GimpCoords   *display_coords,
+                                                                  GimpCoords         *image_coords,
+                                                                  gboolean           *update_software_cursor);
 
-static GdkEvent * gimp_display_shell_compress_motion          (GdkEvent          *initial_event);
+static GdkEvent * gimp_display_shell_compress_motion             (GdkEvent           *initial_event,
+                                                                  GdkEvent          **next_event);
 
 
 /*  public functions  */
@@ -307,6 +313,184 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
 {
+  GdkEvent *next_event = NULL;
+  gboolean  return_val;
+
+  g_return_val_if_fail (gtk_widget_get_realized (canvas), FALSE);
+
+  return_val = gimp_display_shell_canvas_tool_events_internal (canvas,
+                                                               event, shell,
+                                                               &next_event);
+
+  if (next_event)
+    {
+      gtk_main_do_event (next_event);
+
+      gdk_event_free (next_event);
+    }
+
+  return return_val;
+}
+
+void
+gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
+                                       gboolean          was_grabbed,
+                                       GimpDisplayShell *shell)
+{
+  GimpDisplay *display;
+  GimpImage   *image;
+  Gimp        *gimp;
+
+  /*  are we in destruction?  */
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return;
+
+  display = shell->display;
+  gimp    = gimp_display_get_gimp (display);
+  image   = gimp_display_get_image (display);
+
+  if (! image)
+    return;
+
+  GIMP_LOG (TOOL_EVENTS, "grab_notify (display %p): was_grabbed = %s",
+            display, was_grabbed ? "TRUE" : "FALSE");
+
+  if (! was_grabbed)
+    {
+      if (! gimp_image_is_empty (image))
+        {
+          GimpTool *active_tool = tool_manager_get_active (gimp);
+
+          if (active_tool && active_tool->focus_display == display)
+            {
+              tool_manager_modifier_state_active (gimp, 0, display);
+            }
+        }
+    }
+}
+
+void
+gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
+                                  const GimpCoords *coords,
+                                  guint32           time,
+                                  GdkModifierType   state,
+                                  GimpDisplayShell *shell)
+{
+  GimpDisplay *display = shell->display;
+  Gimp        *gimp    = gimp_display_get_gimp (display);
+  GimpTool    *active_tool;
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool &&
+      gimp_tool_control_is_active (active_tool->control))
+    {
+      tool_manager_motion_active (gimp,
+                                  coords, time, state,
+                                  display);
+    }
+}
+
+void
+gimp_display_shell_buffer_hover (GimpMotionBuffer *buffer,
+                                 const GimpCoords *coords,
+                                 GdkModifierType   state,
+                                 gboolean          proximity,
+                                 GimpDisplayShell *shell)
+{
+  GimpDisplay *display = shell->display;
+  Gimp        *gimp    = gimp_display_get_gimp (display);
+  GimpTool    *active_tool;
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool &&
+      ! gimp_tool_control_is_active (active_tool->control))
+    {
+      tool_manager_oper_update_active (gimp,
+                                       coords, state, proximity,
+                                       display);
+    }
+}
+
+static gboolean
+gimp_display_shell_ruler_button_press (GtkWidget           *widget,
+                                       GdkEventButton      *event,
+                                       GimpDisplayShell    *shell,
+                                       GimpOrientationType  orientation)
+{
+  GimpDisplay *display = shell->display;
+
+  if (display->gimp->busy)
+    return TRUE;
+
+  if (! gimp_display_get_image (display))
+    return TRUE;
+
+  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
+    {
+      GimpTool *active_tool = tool_manager_get_active (display->gimp);
+
+      if (active_tool)
+        {
+          gimp_display_shell_update_focus (shell, TRUE,
+                                           NULL, event->state);
+
+          if (gimp_display_shell_pointer_grab (shell, NULL, 0))
+            {
+              if (gimp_display_shell_keyboard_grab (shell,
+                                                    (GdkEvent *) event))
+                {
+                  if (event->state & gimp_get_toggle_behavior_mask ())
+                    {
+                      gimp_sample_point_tool_start_new (active_tool, display);
+                    }
+                  else
+                    {
+                      gimp_guide_tool_start_new (active_tool, display,
+                                                 orientation);
+                    }
+
+                  return TRUE;
+                }
+              else
+                {
+                  gimp_display_shell_pointer_ungrab (shell, NULL);
+                }
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_display_shell_hruler_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
+{
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_HORIZONTAL);
+}
+
+gboolean
+gimp_display_shell_vruler_button_press (GtkWidget        *widget,
+                                        GdkEventButton   *event,
+                                        GimpDisplayShell *shell)
+{
+  return gimp_display_shell_ruler_button_press (widget, event, shell,
+                                                GIMP_ORIENTATION_VERTICAL);
+}
+
+
+/*  private functions  */
+
+static gboolean
+gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
+                                                GdkEvent          *event,
+                                                GimpDisplayShell  *shell,
+                                                GdkEvent         **next_event)
+{
   GimpDisplay     *display;
   GimpImage       *image;
   Gimp            *gimp;
@@ -318,7 +502,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gboolean         return_val       = FALSE;
   gboolean         update_sw_cursor = FALSE;
 
-  g_return_val_if_fail (gtk_widget_get_realized (canvas), FALSE);
+  *next_event = NULL;
 
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
@@ -851,7 +1035,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (shell->scrolling ||
             motion_mode == GIMP_MOTION_MODE_COMPRESS)
           {
-            compressed_motion = gimp_display_shell_compress_motion (event);
+            compressed_motion = gimp_display_shell_compress_motion (event,
+                                                                    next_event);
 
             if (compressed_motion && ! shell->scrolling)
               {
@@ -1239,159 +1424,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   return return_val;
 }
-
-void
-gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
-                                       gboolean          was_grabbed,
-                                       GimpDisplayShell *shell)
-{
-  GimpDisplay *display;
-  GimpImage   *image;
-  Gimp        *gimp;
-
-  /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
-    return;
-
-  display = shell->display;
-  gimp    = gimp_display_get_gimp (display);
-  image   = gimp_display_get_image (display);
-
-  if (! image)
-    return;
-
-  GIMP_LOG (TOOL_EVENTS, "grab_notify (display %p): was_grabbed = %s",
-            display, was_grabbed ? "TRUE" : "FALSE");
-
-  if (! was_grabbed)
-    {
-      if (! gimp_image_is_empty (image))
-        {
-          GimpTool *active_tool = tool_manager_get_active (gimp);
-
-          if (active_tool && active_tool->focus_display == display)
-            {
-              tool_manager_modifier_state_active (gimp, 0, display);
-            }
-        }
-    }
-}
-
-void
-gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
-                                  const GimpCoords *coords,
-                                  guint32           time,
-                                  GdkModifierType   state,
-                                  GimpDisplayShell *shell)
-{
-  GimpDisplay *display = shell->display;
-  Gimp        *gimp    = gimp_display_get_gimp (display);
-  GimpTool    *active_tool;
-
-  active_tool = tool_manager_get_active (gimp);
-
-  if (active_tool &&
-      gimp_tool_control_is_active (active_tool->control))
-    {
-      tool_manager_motion_active (gimp,
-                                  coords, time, state,
-                                  display);
-    }
-}
-
-void
-gimp_display_shell_buffer_hover (GimpMotionBuffer *buffer,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 gboolean          proximity,
-                                 GimpDisplayShell *shell)
-{
-  GimpDisplay *display = shell->display;
-  Gimp        *gimp    = gimp_display_get_gimp (display);
-  GimpTool    *active_tool;
-
-  active_tool = tool_manager_get_active (gimp);
-
-  if (active_tool &&
-      ! gimp_tool_control_is_active (active_tool->control))
-    {
-      tool_manager_oper_update_active (gimp,
-                                       coords, state, proximity,
-                                       display);
-    }
-}
-
-static gboolean
-gimp_display_shell_ruler_button_press (GtkWidget           *widget,
-                                       GdkEventButton      *event,
-                                       GimpDisplayShell    *shell,
-                                       GimpOrientationType  orientation)
-{
-  GimpDisplay *display = shell->display;
-
-  if (display->gimp->busy)
-    return TRUE;
-
-  if (! gimp_display_get_image (display))
-    return TRUE;
-
-  if (event->type == GDK_BUTTON_PRESS && event->button == 1)
-    {
-      GimpTool *active_tool = tool_manager_get_active (display->gimp);
-
-      if (active_tool)
-        {
-          gimp_display_shell_update_focus (shell, TRUE,
-                                           NULL, event->state);
-
-          if (gimp_display_shell_pointer_grab (shell, NULL, 0))
-            {
-              if (gimp_display_shell_keyboard_grab (shell,
-                                                    (GdkEvent *) event))
-                {
-                  if (event->state & gimp_get_toggle_behavior_mask ())
-                    {
-                      gimp_sample_point_tool_start_new (active_tool, display);
-                    }
-                  else
-                    {
-                      gimp_guide_tool_start_new (active_tool, display,
-                                                 orientation);
-                    }
-
-                  return TRUE;
-                }
-              else
-                {
-                  gimp_display_shell_pointer_ungrab (shell, NULL);
-                }
-            }
-        }
-    }
-
-  return FALSE;
-}
-
-gboolean
-gimp_display_shell_hruler_button_press (GtkWidget        *widget,
-                                        GdkEventButton   *event,
-                                        GimpDisplayShell *shell)
-{
-  return gimp_display_shell_ruler_button_press (widget, event, shell,
-                                                GIMP_ORIENTATION_HORIZONTAL);
-}
-
-gboolean
-gimp_display_shell_vruler_button_press (GtkWidget        *widget,
-                                        GdkEventButton   *event,
-                                        GimpDisplayShell *shell)
-{
-  return gimp_display_shell_ruler_button_press (widget, event, shell,
-                                                GIMP_ORIENTATION_VERTICAL);
-}
-
-
-/*  private functions  */
 
 static GdkModifierType
 gimp_display_shell_key_to_state (gint key)
@@ -1952,14 +1984,20 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
  * remove them from the queue, and return the most recent motion event.
  * Otherwise it will return NULL.
  *
+ * If `next_event` is non-NULL upon return, the caller must dispatch and
+ * free this event after handling the motion event.
+ *
  * The gimp_display_shell_compress_motion function source may be re-used under
  * the XFree86-style license. <adam@gimp.org>
  */
 static GdkEvent *
-gimp_display_shell_compress_motion (GdkEvent *initial_event)
+gimp_display_shell_compress_motion (GdkEvent  *initial_event,
+                                    GdkEvent **next_event)
 {
   GdkEvent  *last_motion = NULL;
   GtkWidget *widget;
+
+  *next_event = NULL;
 
   if (initial_event->any.type != GDK_MOTION_NOTIFY)
     return NULL;
@@ -1973,12 +2011,15 @@ gimp_display_shell_compress_motion (GdkEvent *initial_event)
       if (!event)
         {
           /* Do nothing */
+          break;
         }
       else if ((gtk_get_event_widget (event) == widget)               &&
                (event->any.type      == GDK_MOTION_NOTIFY)            &&
+               (event->any.window    == initial_event->any.window)    &&
                (event->motion.state  == initial_event->motion.state)  &&
                (event->motion.device == initial_event->motion.device))
         {
+          /* Discard previous motion event */
           if (last_motion)
             gdk_event_free (last_motion);
 
@@ -1986,27 +2027,8 @@ gimp_display_shell_compress_motion (GdkEvent *initial_event)
         }
       else
         {
-          GSList *remaining_events = NULL;
-
-          /* Put the event back at the front of the queue... the hard way :P */
-          remaining_events = g_slist_prepend (remaining_events, event);
-
-          while (gdk_events_pending ())
-            if ((event = gdk_event_get ()))
-              remaining_events = g_slist_prepend (remaining_events, event);
-
-          remaining_events = g_slist_reverse (remaining_events);
-
-          while (remaining_events)
-            {
-              event = remaining_events->data;
-
-              gdk_event_put (event);
-              gdk_event_free (event);
-
-              remaining_events = g_slist_delete_link (remaining_events,
-                                                      remaining_events);
-            }
+          /* Let the caller dispatch the event */
+          *next_event = event;
 
           break;
         }
