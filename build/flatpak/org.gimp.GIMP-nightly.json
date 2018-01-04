@@ -26,8 +26,27 @@
     "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig",
                 "/share/aclocal", "/man", "/share/man", "/share/gtk-doc",
                 "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
-                "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
+                "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0",
+
+                "/share/glib-2.0/codegen", "/bin/gdbus-codegen", "/bin/glib-*",
+                "/bin/gobject-query", "/bin/gresource", "/bin/gtester*"],
     "modules": [
+        {
+            "name" : "glib2",
+            "config-opts" : [
+                "--with-pcre=system"
+            ],
+            "ensure-writable" : [
+                "/share/glib-2.0/codegen/*.pyc"
+            ],
+            "sources" : [
+                {
+                    "url": "https://download.gnome.org/sources/glib/2.54/glib-2.54.2.tar.xz",
+                    "sha256": "bb89e5c5aad33169a8c7f28b45671c7899c12f74caf707737f784d7102758e6c",
+                    "type": "archive"
+                }
+            ]
+        },
         {
             "name": "mypaint-brushes",
             "sources": [
