@@ -583,7 +583,9 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
-        if (shell->inferior_ignore_mode)
+        if (shell->inferior_ignore_mode &&
+            cevent->subwindow == NULL   &&
+            cevent->mode      == GDK_CROSSING_NORMAL)
           {
             shell->inferior_ignore_mode = FALSE;
             gtk_widget_set_extension_events (shell->canvas,
@@ -611,7 +613,10 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
-        if (cevent->detail == GDK_NOTIFY_INFERIOR)
+        if (! shell->inferior_ignore_mode            &&
+            cevent->subwindow == NULL                &&
+            cevent->mode      == GDK_CROSSING_NORMAL &&
+            cevent->detail    == GDK_NOTIFY_INFERIOR)
           {
             shell->inferior_ignore_mode = TRUE;
             gtk_widget_set_extension_events (shell->canvas,
