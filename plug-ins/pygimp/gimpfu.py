@@ -216,7 +216,7 @@ def register(proc_name, blurb, help, author, copyright, date, label,
         allowed = _string.letters + _string.digits + "_" + "-"
         for ch in str:
             if not ch in allowed:
-		return 0
+                return 0
         else:
             return 1
 
