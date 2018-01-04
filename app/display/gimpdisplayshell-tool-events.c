@@ -1989,7 +1989,7 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
  * remove them from the queue, and return the most recent motion event.
  * Otherwise it will return NULL.
  *
- * If `next_event` is non-NULL upon return, the caller must dispatch and
+ * If `*next_event` is non-NULL upon return, the caller must dispatch and
  * free this event after handling the motion event.
  *
  * The gimp_display_shell_compress_motion function source may be re-used under
@@ -2016,7 +2016,6 @@ gimp_display_shell_compress_motion (GdkEvent  *initial_event,
       if (!event)
         {
           /* Do nothing */
-          break;
         }
       else if ((gtk_get_event_widget (event) == widget)               &&
                (event->any.type      == GDK_MOTION_NOTIFY)            &&
