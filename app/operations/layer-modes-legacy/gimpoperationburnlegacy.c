@@ -86,7 +86,7 @@ gimp_operation_burn_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
@@ -95,13 +95,13 @@ gimp_operation_burn_legacy_process (GeglOperation       *op,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = 1.0 - (1.0 - in[b]) / layer[b];
+              gfloat comp = 1.0f - (1.0f - in[b]) / layer[b];
               /* The CLAMP macro is deliberately inlined and
                * written to map comp == NAN (0 / 0) -> 1
                */
-              comp = comp < 0 ? 0.0 : comp < 1.0 ? comp : 1.0;
+              comp = comp < 0.0f ? 0.0f : comp < 1.0f ? comp : 1.0f;
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = comp * ratio + in[b] * (1.0f - ratio);
             }
         }
       else

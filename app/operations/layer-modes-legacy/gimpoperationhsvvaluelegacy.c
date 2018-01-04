@@ -93,7 +93,7 @@ gimp_operation_hsv_value_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
@@ -113,7 +113,7 @@ gimp_operation_hsv_value_legacy_process (GeglOperation       *op,
 
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = out_tmp[b] * ratio + in[b] * (1.0 - ratio);
+              out[b] = out_tmp[b] * ratio + in[b] * (1.0f - ratio);
             }
         }
       else

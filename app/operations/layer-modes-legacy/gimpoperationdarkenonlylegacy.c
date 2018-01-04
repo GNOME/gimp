@@ -86,7 +86,7 @@ gimp_operation_darken_only_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (new_alpha && comp_alpha)
         {
@@ -97,7 +97,7 @@ gimp_operation_darken_only_legacy_process (GeglOperation       *op,
             {
               gfloat comp = MIN (in[b], layer[b]);
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = comp * ratio + in[b] * (1.0f - ratio);
             }
         }
       else

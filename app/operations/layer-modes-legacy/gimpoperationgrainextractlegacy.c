@@ -86,7 +86,7 @@ gimp_operation_grain_extract_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
@@ -95,10 +95,10 @@ gimp_operation_grain_extract_legacy_process (GeglOperation       *op,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = in[b] - layer[b] + 128.0 / 255.0;
+              gfloat comp = in[b] - layer[b] + 128.0f / 255.0f;
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
-              out[b] = CLAMP (out[b], 0.0, 1.0);
+              out[b] = comp * ratio + in[b] * (1.0f - ratio);
+              out[b] = CLAMP (out[b], 0.0f, 1.0f);
             }
         }
       else

@@ -105,7 +105,7 @@ gimp_operation_softlight_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
@@ -123,14 +123,14 @@ gimp_operation_softlight_legacy_process (GeglOperation       *op,
                * the multiply, screen, comp math used below.
                * See bug #673501.
                */
-              gfloat comp = in[b] * (in[b] + (2.0 * layer[b]) * (1.0 - in[b]));
+              gfloat comp = in[b] * (in[b] + (2.0f * layer[b]) * (1.0f - in[b]));
 #endif
 
               gfloat multiply = in[b] * layer[b];
-              gfloat screen   = 1.0 - (1.0 - in[b]) * (1.0 - layer[b]);
-              gfloat comp     = (1.0 - in[b]) * multiply + in[b] * screen;
+              gfloat screen   = 1.0f - (1.0f - in[b]) * (1.0f - layer[b]);
+              gfloat comp     = (1.0f - in[b]) * multiply + in[b] * screen;
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = comp * ratio + in[b] * (1.0f - ratio);
             }
         }
       else

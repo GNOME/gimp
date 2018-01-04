@@ -86,7 +86,7 @@ gimp_operation_hardlight_legacy_process (GeglOperation       *op,
       if (mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
+      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
 
       if (comp_alpha && new_alpha)
         {
@@ -97,18 +97,18 @@ gimp_operation_hardlight_legacy_process (GeglOperation       *op,
             {
               gfloat comp;
 
-              if (layer[b] > 128.0 / 255.0)
+              if (layer[b] > 128.0f / 255.0f)
                 {
-                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 128.0 / 255.0) * 2.0);
-                  comp = MIN (1 - comp, 1);
+                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 128.0f / 255.0f) * 2.0f);
+                  comp = MIN (1.0f - comp, 1.0f);
                 }
               else
                 {
-                  comp = in[b] * (layer[b] * 2.0);
-                  comp = MIN (comp, 1.0);
+                  comp = in[b] * (layer[b] * 2.0f);
+                  comp = MIN (comp, 1.0f);
                 }
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = comp * ratio + in[b] * (1.0f - ratio);
             }
         }
       else
