@@ -96,8 +96,9 @@ gimp_operation_subtract_legacy_process (GeglOperation       *op,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] - layer[b];
+              comp = CLAMP (comp, 0.0f, 1.0f);
+
               out[b] = comp * ratio + in[b] * (1.0f - ratio);
-              out[b] = CLAMP(out[b], 0.0f, 1.0f);
             }
         }
       else

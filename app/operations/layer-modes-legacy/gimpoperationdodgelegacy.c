@@ -23,6 +23,8 @@
 
 #include <gegl-plugin.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "../operations-types.h"
 
 #include "gimpoperationdodgelegacy.h"
@@ -96,7 +98,7 @@ gimp_operation_dodge_legacy_process (GeglOperation       *op,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] / (1.0f - layer[b]);
-              comp = MIN (comp, 1.0f);
+              comp = SAFE_CLAMP (comp, 0.0f, 1.0f);
 
               out[b] = comp * ratio + in[b] * (1.0f - ratio);
             }

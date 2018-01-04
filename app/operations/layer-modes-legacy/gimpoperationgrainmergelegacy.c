@@ -96,9 +96,9 @@ gimp_operation_grain_merge_legacy_process (GeglOperation       *op,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] + layer[b] - 128.0f / 255.0f;
+              comp = CLAMP (comp, 0.0f, 1.0f);
 
               out[b] = comp * ratio + in[b] * (1.0f - ratio);
-              out[b] = CLAMP (out[b], 0.0f, 1.0f);
             }
         }
       else

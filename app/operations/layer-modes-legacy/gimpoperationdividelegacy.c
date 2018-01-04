@@ -23,6 +23,8 @@
 
 #include <gegl-plugin.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "../operations-types.h"
 
 #include "gimpoperationdividelegacy.h"
@@ -96,17 +98,9 @@ gimp_operation_divide_legacy_process (GeglOperation       *op,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] / layer[b];
-
-              /* make infinities(or NaN) correspond to a high number,
-               * to get more predictable math, ideally higher than 5.0
-               * but it seems like some babl conversions might be
-               * acting up then
-               */
-              if (!(comp > -42949672.0f && comp < 5.0f))
-                comp = 1.0f;
+              comp = SAFE_CLAMP (comp, 0.0f, 1.0f);
 
               out[b] = comp * ratio + in[b] * (1.0f - ratio);
-              out[b] = CLAMP (out[b], 0.0f, 1.0f);
             }
         }
       else
