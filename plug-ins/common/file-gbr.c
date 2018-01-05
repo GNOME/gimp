@@ -450,8 +450,7 @@ load_image (const gchar  *filename,
     {
       gchar *temp = g_new (gchar, bn_size);
 
-      if ((read (fd, temp, bn_size)) < bn_size ||
-          temp[bn_size - 1] != '\0')
+      if ((read (fd, temp, bn_size)) < bn_size)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Error in GIMP brush file '%s'"),
