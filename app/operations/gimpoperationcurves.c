@@ -68,6 +68,14 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
   point_class->process = gimp_operation_curves_process;
 
   g_object_class_install_property (object_class,
+                                   GIMP_OPERATION_POINT_FILTER_PROP_LINEAR,
+                                   g_param_spec_boolean ("linear",
+                                                         "Linear",
+                                                         "Whether to operate on linear RGB",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",

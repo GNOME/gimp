@@ -160,7 +160,6 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
-  tool->histogram = gimp_histogram_new (FALSE);
 }
 
 static void
@@ -178,9 +177,11 @@ gimp_levels_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpLevelsTool   *l_tool   = GIMP_LEVELS_TOOL (tool);
-  GimpImage        *image    = gimp_display_get_image (display);
-  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpLevelsTool   *l_tool      = GIMP_LEVELS_TOOL (tool);
+  GimpImage        *image       = gimp_display_get_image (display);
+  GimpDrawable     *drawable    = gimp_image_get_active_drawable (image);
+  GimpLevelsConfig *config;
   gdouble           scale_factor;
   gdouble           step_increment;
   gdouble           page_increment;
@@ -190,6 +191,15 @@ gimp_levels_tool_initialize (GimpTool     *tool,
     {
       return FALSE;
     }
+
+  config = GIMP_LEVELS_CONFIG (filter_tool->config);
+
+  gegl_node_set (filter_tool->operation,
+                 "linear", config->linear,
+                 NULL);
+
+  g_clear_object (&l_tool->histogram);
+  l_tool->histogram = gimp_histogram_new (config->linear);
 
   gimp_drawable_calculate_histogram (drawable, l_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
@@ -375,6 +385,11 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                                        0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
+
+  button = gimp_prop_check_button_new (G_OBJECT (config), "linear", NULL);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
@@ -654,7 +669,21 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
   if (! levels_tool->channel_menu)
     return;
 
-  if (! strcmp (pspec->name, "channel"))
+  if (! strcmp (pspec->name, "linear"))
+    {
+      gegl_node_set (filter_tool->operation,
+                     "linear", levels_config->linear,
+                     NULL);
+
+      g_clear_object (&levels_tool->histogram);
+      levels_tool->histogram = gimp_histogram_new (levels_config->linear);
+
+      gimp_drawable_calculate_histogram (GIMP_TOOL (filter_tool)->drawable,
+                                         levels_tool->histogram, FALSE);
+      gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
+                                         levels_tool->histogram);
+    }
+  else if (! strcmp (pspec->name, "channel"))
     {
       gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
                                        levels_config->channel);
@@ -763,7 +792,13 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
 {
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpLevelsConfig *config      = GIMP_LEVELS_CONFIG (filter_tool->config);
+  GimpRGB           rgb         = *color;
   guint             value       = GPOINTER_TO_UINT (identifier);
+
+  if (config->linear)
+    babl_process (babl_fish (babl_format ("R'G'B'A double"),
+                             babl_format ("RGBA double")),
+                  &rgb, &rgb, 1);
 
   if (value & PICK_ALL_CHANNELS &&
       gimp_babl_format_get_base_type (sample_format) == GIMP_RGB)
@@ -791,12 +826,12 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
         {
-          levels_input_adjust_by_color (config, value, channel, color);
+          levels_input_adjust_by_color (config, value, channel, &rgb);
         }
     }
   else
     {
-      levels_input_adjust_by_color (config, value, config->channel, color);
+      levels_input_adjust_by_color (config, value, config->channel, &rgb);
     }
 }
 

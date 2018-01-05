@@ -39,6 +39,8 @@ struct _GimpCurvesConfig
 {
   GimpSettings          parent_instance;
 
+  gboolean              linear;
+
   GimpHistogramChannel  channel;
 
   GimpCurve            *curve[5];

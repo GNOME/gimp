@@ -46,6 +46,7 @@
 enum
 {
   PROP_0,
+  PROP_LINEAR,
   PROP_CHANNEL,
   PROP_LOW_INPUT,
   PROP_HIGH_INPUT,
@@ -101,6 +102,12 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
   object_class->get_property        = gimp_levels_config_get_property;
 
   viewable_class->default_icon_name = "gimp-tool-levels";
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
+                            "linear",
+                            _("Linear"),
+                            _("Work on linear RGB"),
+                            FALSE, 0);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
@@ -178,6 +185,10 @@ gimp_levels_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_LINEAR:
+      g_value_set_boolean (value, self->linear);
+      break;
+
     case PROP_CHANNEL:
       g_value_set_enum (value, self->channel);
       break;
@@ -226,6 +237,10 @@ gimp_levels_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_LINEAR:
+      self->linear = g_value_get_boolean (value);
+      break;
+
     case PROP_CHANNEL:
       self->channel = g_value_get_enum (value);
       g_object_notify (object, "low-input");
@@ -280,6 +295,7 @@ gimp_levels_config_serialize (GimpConfig       *config,
   gboolean              success = TRUE;
 
   if (! gimp_config_serialize_property_by_name (config, "time",         writer) ||
+      ! gimp_config_serialize_property_by_name (config, "linear",       writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-input",  writer) ||
       ! gimp_config_serialize_property_by_name (config, "clamp-output", writer))
     return FALSE;
@@ -341,7 +357,8 @@ gimp_levels_config_equal (GimpConfig *a,
   GimpLevelsConfig     *config_b = GIMP_LEVELS_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->clamp_input  != config_b->clamp_input ||
+  if (config_a->linear       != config_b->linear      ||
+      config_a->clamp_input  != config_b->clamp_input ||
       config_a->clamp_output != config_b->clamp_output)
     return FALSE;
 
@@ -376,6 +393,7 @@ gimp_levels_config_reset (GimpConfig *config)
       gimp_levels_config_reset_channel (l_config);
     }
 
+  gimp_config_reset_property (G_OBJECT (config), "linear");
   gimp_config_reset_property (G_OBJECT (config), "channel");
   gimp_config_reset_property (G_OBJECT (config), "clamp-input");
   gimp_config_reset_property (G_OBJECT (config), "clamp_output");
@@ -407,10 +425,12 @@ gimp_levels_config_copy (GimpConfig  *src,
   g_object_notify (G_OBJECT (dest), "low-output");
   g_object_notify (G_OBJECT (dest), "high-output");
 
+  dest_config->linear       = src_config->linear;
   dest_config->channel      = src_config->channel;
   dest_config->clamp_input  = src_config->clamp_input;
   dest_config->clamp_output = src_config->clamp_output;
 
+  g_object_notify (G_OBJECT (dest), "linear");
   g_object_notify (G_OBJECT (dest), "channel");
   g_object_notify (G_OBJECT (dest), "clamp-input");
   g_object_notify (G_OBJECT (dest), "clamp-output");
@@ -668,13 +688,15 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
 
   curves = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
+  curves->linear = config->linear;
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
       GimpCurve  *curve    = curves->curve[channel];
       const gint  n_points = gimp_curve_get_n_points (curve);
-      static const gint n  = 4;
+      static const gint n  = 8;
       gint        point    = -1;
       gdouble     gamma    = config->gamma[channel];
       gdouble     delta_in;
@@ -871,9 +893,11 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
       config->high_output[i] = high_output[i] / 255.0;
     }
 
+  config->linear       = FALSE;
   config->clamp_input  = TRUE;
   config->clamp_output = TRUE;
 
+  g_object_notify (G_OBJECT (config), "linear");
   g_object_notify (G_OBJECT (config), "low-input");
   g_object_notify (G_OBJECT (config), "high-input");
   g_object_notify (G_OBJECT (config), "clamp-input");

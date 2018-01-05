@@ -44,6 +44,7 @@
 enum
 {
   PROP_0,
+  PROP_LINEAR,
   PROP_CHANNEL,
   PROP_CURVE
 };
@@ -98,6 +99,12 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
   object_class->get_property        = gimp_curves_config_get_property;
 
   viewable_class->default_icon_name = "gimp-tool-curves";
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
+                            "linear",
+                            _("Linear"),
+                            _("Work on linear RGB"),
+                            FALSE, 0);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
                          "channel",
@@ -170,6 +177,10 @@ gimp_curves_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_LINEAR:
+      g_value_set_boolean (value, self->linear);
+      break;
+
     case PROP_CHANNEL:
       g_value_set_enum (value, self->channel);
       break;
@@ -194,6 +205,10 @@ gimp_curves_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_LINEAR:
+      self->linear = g_value_get_boolean (value);
+      break;
+
     case PROP_CHANNEL:
       self->channel = g_value_get_enum (value);
       g_object_notify (object, "curve");
@@ -228,7 +243,8 @@ gimp_curves_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time", writer))
+  if (! gimp_config_serialize_property_by_name (config, "time",   writer) ||
+      ! gimp_config_serialize_property_by_name (config, "linear", writer))
     return FALSE;
 
   old_channel = c_config->channel;
@@ -284,6 +300,9 @@ gimp_curves_config_equal (GimpConfig *a,
   GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
   GimpHistogramChannel  channel;
 
+  if (config_a->linear != config_b->linear)
+    return FALSE;
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
@@ -322,6 +341,7 @@ gimp_curves_config_reset (GimpConfig *config)
       gimp_curves_config_reset_channel (c_config);
     }
 
+  gimp_config_reset_property (G_OBJECT (config), "linear");
   gimp_config_reset_property (G_OBJECT (config), "channel");
 }
 
@@ -343,8 +363,10 @@ gimp_curves_config_copy (GimpConfig  *src,
                         flags);
     }
 
+  dest_config->linear  = src_config->linear;
   dest_config->channel = src_config->channel;
 
+  g_object_notify (G_OBJECT (dest), "linear");
   g_object_notify (G_OBJECT (dest), "channel");
 
   return TRUE;
@@ -593,6 +615,10 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
       gimp_data_thaw (GIMP_DATA (curve));
     }
+
+  config->linear = FALSE;
+
+  g_object_notify (G_OBJECT (config), "linear");
 
   g_object_thaw_notify (G_OBJECT (config));
 

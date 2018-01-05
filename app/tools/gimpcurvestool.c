@@ -183,18 +183,25 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpCurvesTool *c_tool      = GIMP_CURVES_TOOL (tool);
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
-  GimpImage      *image       = gimp_display_get_image (display);
-  GimpDrawable   *drawable    = gimp_image_get_active_drawable (image);
-  GimpHistogram  *histogram;
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpCurvesTool   *c_tool      = GIMP_CURVES_TOOL (tool);
+  GimpImage        *image       = gimp_display_get_image (display);
+  GimpDrawable     *drawable    = gimp_image_get_active_drawable (image);
+  GimpCurvesConfig *config;
+  GimpHistogram    *histogram;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
 
-  histogram = gimp_histogram_new (FALSE);
+  config = GIMP_CURVES_CONFIG (filter_tool->config);
+
+  gegl_node_set (filter_tool->operation,
+                 "linear", config->linear,
+                 NULL);
+
+  histogram = gimp_histogram_new (config->linear);
   gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);
@@ -436,6 +443,11 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
+  button = gimp_prop_check_button_new (G_OBJECT (config), "linear", NULL);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
   gtk_widget_show (frame_vbox);
@@ -545,6 +557,13 @@ gimp_curves_tool_reset (GimpFilterTool *filter_tool)
 
   default_config = GIMP_CURVES_CONFIG (filter_tool->default_config);
 
+  g_object_freeze_notify (G_OBJECT (config));
+
+  if (default_config)
+    g_object_set (config, "linear", default_config->linear, NULL);
+  else
+    gimp_config_reset_property (G_OBJECT (config), "linear");
+
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
@@ -570,6 +589,8 @@ gimp_curves_tool_reset (GimpFilterTool *filter_tool)
           gimp_curve_reset (config->curve[channel], FALSE);
         }
     }
+
+  g_object_thaw_notify (G_OBJECT (config));
 }
 
 static void
@@ -587,7 +608,22 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   if (! curves_tool->channel_menu)
     return;
 
-  if (! strcmp (pspec->name, "channel"))
+  if (! strcmp (pspec->name, "linear"))
+    {
+      GimpHistogram *histogram;
+
+      gegl_node_set (filter_tool->operation,
+                     "linear", curves_config->linear,
+                     NULL);
+
+      histogram = gimp_histogram_new (curves_config->linear);
+      gimp_drawable_calculate_histogram (GIMP_TOOL (filter_tool)->drawable,
+                                         histogram, FALSE);
+      gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (curves_tool->graph),
+                                          histogram);
+      g_object_unref (histogram);
+    }
+  else if (! strcmp (pspec->name, "channel"))
     {
       gimp_curves_tool_update_channel (GIMP_CURVES_TOOL (filter_tool));
     }
@@ -652,18 +688,23 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
   GimpCurvesTool   *tool     = GIMP_CURVES_TOOL (filter_tool);
   GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
   GimpDrawable     *drawable = GIMP_TOOL (tool)->drawable;
+  GimpRGB           rgb      = *color;
 
-  tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
-  tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
-  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = color->b;
+  if (config->linear)
+    babl_process (babl_fish (babl_format ("R'G'B'A double"),
+                             babl_format ("RGBA double")),
+                  &rgb, &rgb, 1);
+
+  tool->picked_color[GIMP_HISTOGRAM_RED]   = rgb.r;
+  tool->picked_color[GIMP_HISTOGRAM_GREEN] = rgb.g;
+  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = rgb.b;
 
   if (gimp_drawable_has_alpha (drawable))
-    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = rgb.a;
   else
     tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
 
-  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
-                                                  color->b);
+  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (rgb.r, rgb.g), rgb.b);
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
                             tool->picked_color[config->channel]);

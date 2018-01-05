@@ -39,6 +39,8 @@ struct _GimpLevelsConfig
 {
   GimpSettings          parent_instance;
 
+  gboolean              linear;
+
   GimpHistogramChannel  channel;
 
   gdouble               low_input[5];

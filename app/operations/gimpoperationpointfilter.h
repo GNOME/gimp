@@ -29,6 +29,7 @@
 enum
 {
   GIMP_OPERATION_POINT_FILTER_PROP_0,
+  GIMP_OPERATION_POINT_FILTER_PROP_LINEAR,
   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG
 };
 
@@ -47,6 +48,7 @@ struct _GimpOperationPointFilter
 {
   GeglOperationPointFilter  parent_instance;
 
+  gboolean                  linear;
   GObject                  *config;
 };
 

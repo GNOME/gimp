@@ -73,6 +73,10 @@ gimp_operation_point_filter_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case GIMP_OPERATION_POINT_FILTER_PROP_LINEAR:
+      g_value_set_boolean (value, self->linear);
+      break;
+
     case GIMP_OPERATION_POINT_FILTER_PROP_CONFIG:
       g_value_set_object (value, self->config);
       break;
@@ -93,6 +97,10 @@ gimp_operation_point_filter_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case GIMP_OPERATION_POINT_FILTER_PROP_LINEAR:
+      self->linear = g_value_get_boolean (value);
+      break;
+
     case GIMP_OPERATION_POINT_FILTER_PROP_CONFIG:
       if (self->config)
         g_object_unref (self->config);
@@ -108,7 +116,13 @@ gimp_operation_point_filter_set_property (GObject      *object,
 static void
 gimp_operation_point_filter_prepare (GeglOperation *operation)
 {
-  const Babl *format = babl_format ("R'G'B'A float");
+  GimpOperationPointFilter *self = GIMP_OPERATION_POINT_FILTER (operation);
+  const Babl               *format;
+
+  if (self->linear)
+    format = babl_format ("RGBA float");
+  else
+    format = babl_format ("R'G'B'A float");
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
