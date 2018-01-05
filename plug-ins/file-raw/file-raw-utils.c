@@ -55,7 +55,7 @@ file_raw_get_executable_path (const gchar *main_executable,
    * We assume that just appending the suffix to that value will work.
    * That means that on Windows there should be no ".exe"!
    */
-  const gchar *dt_env = env_variable? g_getenv (env_variable) : NULL;
+  const gchar *dt_env = env_variable ? g_getenv (env_variable) : NULL;
 
   if (dt_env)
     return g_strconcat (dt_env, suffix, NULL);
@@ -96,8 +96,8 @@ file_raw_get_executable_path (const gchar *main_executable,
                */
               len = CFStringGetLength (path);
               ret = g_malloc0 (len * 2 * sizeof (gchar));
-              if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
-                                       kCFStringEncodingUTF8))
+              if (! CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
+                                        kCFStringEncodingUTF8))
                 ret = NULL;
 
               CFRelease (path);
@@ -108,10 +108,12 @@ file_raw_get_executable_path (const gchar *main_executable,
               if (ret)
                 return ret;
             }
+
           CFRelease (bundle_id);
         }
       /* else, app bundle was not found, try path search as last resort. */
     }
+
 #elif defined (GDK_WINDOWING_WIN32)
   if (win32_registry_key_base)
     {
@@ -125,6 +127,7 @@ file_raw_get_executable_path (const gchar *main_executable,
         registry_key = g_strconcat (win32_registry_key_base, suffix, ".exe", NULL);
       else
         registry_key = g_strconcat (win32_registry_key_base, ".exe", NULL);
+
       status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
                             NULL, (PVOID)&path, &buffer_size);
 
@@ -137,7 +140,9 @@ file_raw_get_executable_path (const gchar *main_executable,
 
   /* Finally, the last resort. */
   *search_path = TRUE;
+
   if (suffix)
     return g_strconcat (main_executable, suffix, NULL);
+
   return g_strdup (main_executable);
 }

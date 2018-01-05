@@ -22,9 +22,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <errno.h>
-
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
@@ -116,7 +113,8 @@ init (void)
                     NULL,
                     NULL))
     {
-      int rtmajor = 0, rtminor = 0;
+      gint rtmajor = 0;
+      gint rtminor = 0;
 
       if (sscanf (rawtherapee_stdout,
                   "RawTherapee, version %d.%d",
@@ -128,6 +126,7 @@ init (void)
 
       g_free (rawtherapee_stdout);
     }
+
   g_free (exec_path);
 
   if (! have_rawtherapee)
@@ -419,12 +418,14 @@ load_thumbnail_image (const gchar   *filename,
       NULL
     };
 
-  if (thumb_pp3_f) {
-    if (fprintf (thumb_pp3_f, pp3_content, thumb_size, thumb_size) < 0) {
-      fclose (thumb_pp3_f);
-      thumb_pp3_f = NULL;
+  if (thumb_pp3_f)
+    {
+      if (fprintf (thumb_pp3_f, pp3_content, thumb_size, thumb_size) < 0)
+        {
+          fclose (thumb_pp3_f);
+          thumb_pp3_f = NULL;
+        }
     }
-  }
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -456,9 +457,9 @@ load_thumbnail_image (const gchar   *filename,
 
   gimp_progress_update (1.0);
 
-  if (thumb_pp3_f) {
+  if (thumb_pp3_f)
     fclose (thumb_pp3_f);
-  }
+
   g_unlink (thumb_pp3);
   g_free (filename_out);
   g_free (thumb_pp3);

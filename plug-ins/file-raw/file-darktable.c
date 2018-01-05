@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <errno.h>
-
 #include <glib/gstdio.h>
 
 #include <libgimp/gimp.h>
@@ -34,8 +31,9 @@
 #include "file-raw-utils.h"
 
 
-#define LOAD_THUMB_PROC "file-darktable-load-thumb"
+#define LOAD_THUMB_PROC   "file-darktable-load-thumb"
 #define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\darktable"
+
 
 static void     init                 (void);
 static void     query                (void);
@@ -53,6 +51,7 @@ static gint32   load_thumbnail_image (const gchar      *filename,
                                       gint             *width,
                                       gint             *height,
                                       GError          **error);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -111,7 +110,7 @@ init (void)
   gboolean  debug_prints     = g_getenv ("DARKTABLE_DEBUG") != NULL;
 
   if (debug_prints)
-    printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
+    g_printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
 
   if (g_spawn_sync (NULL,
                     argv,
@@ -158,25 +157,31 @@ init (void)
                 }
             }
         }
+
       g_match_info_free (matches);
       g_regex_unref (regex);
     }
   else if (debug_prints)
-    printf ("[%s] g_spawn_sync failed\n", __FILE__);
+    {
+      g_printf ("[%s] g_spawn_sync failed\n", __FILE__);
+    }
 
   if (debug_prints)
     {
       if (error)
-        printf ("[%s] error: %s\n", __FILE__, error->message);
+        g_printf ("[%s] error: %s\n", __FILE__, error->message);
+
       if (darktable_stdout && *darktable_stdout)
-        printf ("[%s] stdout:\n%s\n", __FILE__, darktable_stdout);
+        g_printf ("[%s] stdout:\n%s\n", __FILE__, darktable_stdout);
+
       if (darktable_stderr && *darktable_stderr)
-        printf ("[%s] stderr:\n%s\n", __FILE__, darktable_stderr);
-      printf ("[%s] have_darktable: %d\n", __FILE__, have_darktable);
+        g_printf ("[%s] stderr:\n%s\n", __FILE__, darktable_stderr);
+
+      g_printf ("[%s] have_darktable: %d\n", __FILE__, have_darktable);
     }
 
-  if (error)
-    g_error_free (error);
+  g_clear_error (&error);
+
   g_free (darktable_stdout);
   g_free (darktable_stderr);
   g_free (exec_path);
@@ -423,10 +428,12 @@ load_image (const gchar  *filename,
   if (debug_prints)
     {
       if (darktable_stdout && *darktable_stdout)
-        printf ("%s\n", darktable_stdout);
+        g_printf ("%s\n", darktable_stdout);
+
       if (darktable_stderr && *darktable_stderr)
-        printf ("%s\n", darktable_stderr);
+        g_printf ("%s\n", darktable_stderr);
     }
+
   g_free (darktable_stdout);
   g_free (darktable_stderr);
 
