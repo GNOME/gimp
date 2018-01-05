@@ -46,6 +46,11 @@ Tools:
     mode, etc.) will now do so relatively to the display, allowing you
     to rotate the canvas in order to constrain to any arbitrary angle.
 
+Filters:
+
+  - New GEGL-based Shadows-Highlights filter now available in the Colors
+    menu. The implementation is based on the code from darktable.
+
 Plug-ins:
 
   - Screenshot with the generic Freedesktop API has been implemented. It
@@ -73,9 +78,9 @@ Building:
 Translations:
 
   - Windows installer now localized with gettext.
-  - String freeze has started and GIMP received updates from: Chinese
-    (Taiwan), Danish, Esperanto, Icelandic, Polish, Russian, Serbian,
-    Turkish.
+  - String freeze has started and GIMP received updates from: 
+    Brazilian Portuguese, Chinese (Taiwan), Danish, Esperanto,
+    Icelandic, Polish, Russian, Serbian, Turkish.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
