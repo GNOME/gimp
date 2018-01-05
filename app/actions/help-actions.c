@@ -37,13 +37,13 @@ static const GimpActionEntry help_actions[] =
 {
   { "help-menu", NULL, NC_("help-action", "_Help") },
 
-  { "help-help", "help-browser",
+  { "help-help", "gimp-prefs-help-system",
     NC_("help-action", "_Help"), "F1",
     NC_("help-action", "Open the GIMP user manual"),
     G_CALLBACK (help_help_cmd_callback),
     GIMP_HELP_HELP },
 
-  { "help-context-help", "help-browser",
+  { "help-context-help", "gimp-prefs-help-system",
     NC_("help-action", "_Context Help"), "<shift>F1",
     NC_("help-action", "Show the help for a specific user interface item"),
     G_CALLBACK (help_context_help_cmd_callback),
