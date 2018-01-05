@@ -298,6 +298,7 @@ scalable_images = \
 	scalable/gimp-tool-rotate.svg				\
 	scalable/gimp-tool-scale.svg				\
 	scalable/gimp-tool-seamless-clone.svg			\
+	scalable/gimp-tool-shadows-highlights.svg		\
 	scalable/gimp-tool-shear.svg				\
 	scalable/gimp-tool-smudge.svg				\
 	scalable/gimp-tools.svg					\
@@ -471,6 +472,7 @@ vector24_images = \
 	24/gimp-tools.svg					\
 	24/gimp-tool-scale.svg					\
 	24/gimp-tool-seamless-clone.svg				\
+	24/gimp-tool-shadows-highlights.svg			\
 	24/gimp-tool-shear.svg					\
 	24/gimp-tool-smudge.svg					\
 	24/gimp-tool-threshold.svg				\
@@ -750,6 +752,7 @@ icons16_images = \
 	16/gimp-tool-rotate.png					\
 	16/gimp-tool-scale.png					\
 	16/gimp-tool-seamless-clone.png				\
+	16/gimp-tool-shadows-highlights.png			\
 	16/gimp-tool-shear.png					\
 	16/gimp-tool-smudge.png					\
 	16/gimp-tool-text.png					\
@@ -951,6 +954,7 @@ icons24_images = \
 	24/gimp-tool-rotate.png					\
 	24/gimp-tool-scale.png					\
 	24/gimp-tool-seamless-clone.png				\
+	24/gimp-tool-shadows-highlights.png			\
 	24/gimp-tool-shear.png					\
 	24/gimp-tool-smudge.png					\
 	24/gimp-tool-text.png					\

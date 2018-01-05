@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333335"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="gimp-tool-shadows-highlights.svg"
+   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2018-01-05/icons/Color/16/gimp-tool-shadows-highlights.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313709"
+     inkscape:cx="12.533348"
+     inkscape:cy="3.9136037"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1136"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:snap-page="true"
+     inkscape:snap-global="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:bbox-nodes="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:snap-bbox-midpoints="true"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-center="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:snap-grids="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2087" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-292.76666)">
+    <g
+       id="gimp-tool-shadows-highlights"
+       transform="matrix(0.66666436,0,0,0.66666436,1.9397808e-6,99.000683)"
+       style="stroke-width:1.50000525">
+      <circle
+         r="2.3812582"
+         cy="293.82498"
+         cx="3.1750078"
+         id="path2159"
+         style="color:#000000;overflow:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.79375279;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal" />
+      <circle
+         style="color:#000000;overflow:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.39687639;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+         id="circle2161"
+         cx="3.1750078"
+         cy="293.82498"
+         r="2.3812582" />
+      <path
+         style="color:#000000;overflow:visible;opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+         d="M 6 2 L 3.3339844 3.3339844 L 1.3378906 7.8984375 L 3.3339844 12.666016 L 6 14 L 6 12.492188 C 6 12.152347 6.2888714 12 6.484375 12 L 8 12 L 9 12 C 9.5539734 12 10 11.553973 10 11 C 10 10.446027 9.5539734 10 9 10 L 6.6660156 10 L 6.6660156 9 L 9 9 C 9.5539986 9 10 8.5539653 10 8 C 10 7.4459969 9.5539986 7 9 7 L 6.6660156 7 L 6.6660156 6 L 9.0039062 6 C 9.5579027 6 10.003906 5.5539963 10.003906 5 C 10.003906 4.4460037 9.5579027 4 9.0039062 4 L 7 4 C 6.3905883 4 6 3.5078156 6 3 L 6 2 z "
+         transform="matrix(0.39687638,0,0,0.39687638,-2.9096813e-6,290.64997)"
+         id="rect2163" />
+      <rect
+         style="color:#000000;overflow:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.79375279;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+         id="rect2177"
+         width="1.58751"
+         height="0.39688632"
+         x="2.3812509"
+         y="293.03122"
+         rx="0.19843818"
+         ry="0.19843818" />
+      <rect
+         ry="0.19862366"
+         rx="0.19862366"
+         y="294.2215"
+         x="2.3812509"
+         height="0.39724731"
+         width="1.1935087"
+         id="rect2179"
+         style="color:#000000;overflow:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.79375279;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal" />
+    </g>
+  </g>
+</svg>

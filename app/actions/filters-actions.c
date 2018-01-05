@@ -568,7 +568,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:sepia",
     GIMP_HELP_FILTER_SEPIA },
 
-  { "filters-shadows-highlights", GIMP_ICON_GEGL,
+  { "filters-shadows-highlights", GIMP_ICON_TOOL_SHADOWS_HIGHLIGHTS,
     NC_("filters-action", "S_hadows-Highlights..."), NULL, NULL,
     "gegl:shadows-highlights",
     GIMP_HELP_FILTER_SHADOWS_HIGHLIGHTS },

@@ -360,6 +360,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_TOOL_ROTATE               "gimp-tool-rotate"
 #define GIMP_ICON_TOOL_SCALE                "gimp-tool-scale"
 #define GIMP_ICON_TOOL_SEAMLESS_CLONE       "gimp-tool-seamless-clone"
+#define GIMP_ICON_TOOL_SHADOWS_HIGHLIGHTS   "gimp-tool-shadows-highlights"
 #define GIMP_ICON_TOOL_SHEAR                "gimp-tool-shear"
 #define GIMP_ICON_TOOL_SMUDGE               "gimp-tool-smudge"
 #define GIMP_ICON_TOOL_TEXT                 "gimp-tool-text"
