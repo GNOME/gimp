@@ -417,7 +417,7 @@ load_image (const gchar  *filename,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported brush format"));
-          g_object_unref (input);
+          close (fd);
           return -1;
         }
       break;
