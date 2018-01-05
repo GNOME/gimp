@@ -54,6 +54,7 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-shadows-highlights.h"
 #include "gimppropgui-spiral.h"
 #include "gimppropgui-supernova.h"
 #include "gimppropgui-utils.h"
@@ -449,6 +450,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-shadows-highlights-config",
+    _gimp_prop_gui_new_shadows_highlights },
   { "GimpGegl-gegl-spiral-config",
     _gimp_prop_gui_new_spiral },
   { "GimpGegl-gegl-supernova-config",

@@ -568,6 +568,7 @@
       <menuitem action="filters-hue-saturation" />
       <menuitem action="filters-saturation" />
       <menuitem action="filters-exposure" />
+      <menuitem action="filters-shadows-highlights" />
       <menuitem action="tools-brightness-contrast" />
       <menuitem action="tools-levels" />
       <menuitem action="tools-curves" />
