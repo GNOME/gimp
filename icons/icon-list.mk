@@ -84,6 +84,8 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg			\
 	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-cmyk.svg				\
+	scalable/gimp-color-space-linear.svg		\
+	scalable/gimp-color-space-perceptual.svg	\
 	scalable/gimp-color-triangle.svg			\
 	scalable/gimp-color-water.svg				\
 	scalable/gimp-controller-keyboard.svg			\
@@ -343,6 +345,8 @@ vector24_images = \
 	24/gimp-channels.svg					\
 	24/gimp-char-picker.svg					\
 	24/gimp-colormap.svg					\
+	24/gimp-color-space-linear.svg			\
+	24/gimp-color-space-perceptual.svg		\
 	24/gimp-controller.svg					\
 	24/gimp-controller-keyboard.svg				\
 	24/gimp-controller-linux-input.svg			\
@@ -580,6 +584,8 @@ icons16_images = \
 	16/gimp-color-triangle.png				\
 	16/gimp-color-water.png					\
 	16/gimp-colormap.png					\
+	16/gimp-color-space-linear.png			\
+	16/gimp-color-space-perceptual.png		\
 	16/gimp-controller-keyboard.png				\
 	16/gimp-controller-linux-input.png			\
 	16/gimp-controller-midi.png				\
@@ -857,6 +863,8 @@ icons24_images = \
 	24/gimp-channel.png					\
 	24/gimp-channels.png					\
 	24/gimp-colormap.png					\
+	24/gimp-color-space-linear.png			\
+	24/gimp-color-space-perceptual.png		\
 	24/gimp-tool-color-temperature.png			\
 	24/gimp-controller-keyboard.png				\
 	24/gimp-controller-linux-input.png			\
