@@ -48,6 +48,19 @@
             ]
         },
         {
+            "name" : "glib-networking",
+            "config-opts" : [
+                "--disable-static"
+            ],
+            "sources" : [
+                {
+                    "url": "http://ftp.gnome.org/pub/gnome/sources/glib-networking/2.54/glib-networking-2.54.1.tar.xz",
+                    "sha256": "eaa787b653015a0de31c928e9a17eb57b4ce23c8cf6f277afaec0d685335012f",
+                    "type": "archive"
+                }
+            ]
+        },
+        {
             "name": "mypaint-brushes",
             "sources": [
                 {
