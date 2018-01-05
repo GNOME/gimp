@@ -689,6 +689,7 @@ sanity_check_gegl_ops (void)
     "gegl:scale-ratio",
     "gegl:seamless-clone",
     "gegl:sepia",
+    "gegl:shadows-highlights",
     "gegl:shift",
     "gegl:simplex-noise",
     "gegl:shift",

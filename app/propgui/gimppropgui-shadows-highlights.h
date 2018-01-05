@@ -23,13 +23,13 @@
 
 GtkWidget *
 _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
-                                      GParamSpec              **param_specs,
-                                      guint                     n_param_specs,
-                                      GeglRectangle            *area,
-                                      GimpContext              *context,
-                                      GimpCreatePickerFunc      create_picker_func,
-                                      GimpCreateControllerFunc  create_controller_func,
-                                      gpointer                  creator);
+                                       GParamSpec              **param_specs,
+                                       guint                     n_param_specs,
+                                       GeglRectangle            *area,
+                                       GimpContext              *context,
+                                       GimpCreatePickerFunc      create_picker_func,
+                                       GimpCreateControllerFunc  create_controller_func,
+                                       gpointer                  creator);
 
 
 #endif /* __GIMP_PROP_GUI_SHADOWS_HIGHLIGHTS_H__ */

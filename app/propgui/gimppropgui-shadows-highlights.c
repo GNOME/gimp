@@ -38,18 +38,17 @@
 
 GtkWidget *
 _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
-                                      GParamSpec              **param_specs,
-                                      guint                     n_param_specs,
-                                      GeglRectangle            *area,
-                                      GimpContext              *context,
-                                      GimpCreatePickerFunc      create_picker_func,
-                                      GimpCreateControllerFunc  create_controller_func,
-                                      gpointer                  creator)
+                                       GParamSpec              **param_specs,
+                                       guint                     n_param_specs,
+                                       GeglRectangle            *area,
+                                       GimpContext              *context,
+                                       GimpCreatePickerFunc      create_picker_func,
+                                       GimpCreateControllerFunc  create_controller_func,
+                                       gpointer                  creator)
 {
   GtkWidget   *main_vbox;
   GtkWidget   *frame;
   GtkWidget   *vbox;
-  GtkWidget   *checkbox;
   GtkWidget   *scale;
   const gchar *label;
 
@@ -58,7 +57,7 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   g_return_val_if_fail (n_param_specs > 0, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
   frame = gimp_frame_new (_("Shadows"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -73,7 +72,7 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_widget_new (config, "shadows_ccorrect",
+  scale = gimp_prop_widget_new (config, "shadows-ccorrect",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -91,7 +90,7 @@ _gimp_prop_gui_new_shadows_highlights (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_widget_new (config, "highlights_ccorrect",
+  scale = gimp_prop_widget_new (config, "highlights-ccorrect",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
