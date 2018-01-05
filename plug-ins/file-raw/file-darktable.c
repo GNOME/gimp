@@ -363,6 +363,7 @@ load_image (const gchar  *filename,
                                                 filename_out);
 
   gchar *darktable_stdout    = NULL;
+  gchar *darktable_stderr    = NULL;
 
   /* allow the user to have some insight into why darktable may fail. */
   gboolean  debug_prints     = g_getenv ("DARKTABLE_DEBUG") != NULL;
@@ -393,16 +394,24 @@ load_image (const gchar  *filename,
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
+  if (debug_prints)
+    {
+      printf ("[%s] trying to call\n", __FILE__);
+      for (gchar **iter = argv; *iter; iter++)
+        printf ("    %s\n", *iter);
+      printf("\n");
+    }
+
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
                     /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
-                    G_SPAWN_STDERR_TO_DEV_NULL |
+                    /*G_SPAWN_STDERR_TO_DEV_NULL |*/
                     (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &darktable_stdout,
-                    NULL,
+                    &darktable_stderr,
                     NULL,
                     error))
     {
@@ -411,9 +420,15 @@ load_image (const gchar  *filename,
         gimp_image_set_filename (image_ID, filename);
     }
 
-  if (debug_prints && darktable_stdout && *darktable_stdout)
-    printf ("%s\n", darktable_stdout);
+  if (debug_prints)
+    {
+      if (darktable_stdout && *darktable_stdout)
+        printf ("%s\n", darktable_stdout);
+      if (darktable_stderr && *darktable_stderr)
+        printf ("%s\n", darktable_stderr);
+    }
   g_free (darktable_stdout);
+  g_free (darktable_stderr);
 
   g_unlink (filename_out);
   g_free (lua_cmd);
