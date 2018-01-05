@@ -78,9 +78,9 @@ Building:
 Translations:
 
   - Windows installer now localized with gettext.
-  - String freeze has started and GIMP received updates from: 
+  - String freeze has started and GIMP received updates from:
     Brazilian Portuguese, Chinese (Taiwan), Danish, Esperanto,
-    Icelandic, Polish, Russian, Serbian, Turkish.
+    Icelandic, Italian, Polish, Russian, Serbian, Slovenian, Turkish.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
