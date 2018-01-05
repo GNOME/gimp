@@ -424,6 +424,7 @@
 #define GIMP_HELP_FILTER_SATURATION               "gimp-filter-saturation"
 #define GIMP_HELP_FILTER_SEMI_FLATTEN             "gimp-filter-semi-flatten"
 #define GIMP_HELP_FILTER_SEPIA                    "gimp-filter-sepia"
+#define GIMP_HELP_FILTER_SHADOWS_HIGHLIGHTS       "gimp-filter-shadows-highlights"
 #define GIMP_HELP_FILTER_SHIFT                    "gimp-filter-shift"
 #define GIMP_HELP_FILTER_SINUS                    "gimp-filter-sinus"
 #define GIMP_HELP_FILTER_SLIC                     "gimp-filter-slic"
