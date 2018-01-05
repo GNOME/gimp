@@ -736,7 +736,6 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
               g_object_set (options,
                             "preview-position", CLAMP (position, 0.0, 1.0),
                             NULL);
-
             }
         }
 
@@ -1347,6 +1346,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     {
       gimp_drawable_filter_abort (filter_tool->filter);
       g_clear_object (&filter_tool->filter);
+
+      gimp_filter_tool_remove_guide (filter_tool);
     }
 
   g_clear_object (&filter_tool->operation);
