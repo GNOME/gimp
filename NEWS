@@ -34,6 +34,14 @@ Core:
 GUI and Usability:
 
   - New icons: "gimp-tool-color-temperature" and "gimp-tool-exposure".
+  - Switching between linear and perceptual (gamma-corrected) spaces
+    in the Histogram dialog is easier now: two buttons instead of one
+    two-way button where current state was difficult to understand.
+
+Configurability:
+
+  - Wilber logo in the toolbox can now be disabled via Preferences
+    (the Toolbox page).
 
 Tools:
   - "Link brush size with canvas zoom" paint option becomes "Lock brush
@@ -45,6 +53,9 @@ Tools:
     constraint feature (for instance blend tool, paint tools in line
     mode, etc.) will now do so relatively to the display, allowing you
     to rotate the canvas in order to constrain to any arbitrary angle.
+  - Levels and Curves can now work on linear light data, the toggles are
+    at the top of respective dialogs, right next to linear/log toggles
+    for the histogram.
 
 Filters:
 
