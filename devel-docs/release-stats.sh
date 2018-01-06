@@ -88,6 +88,16 @@ echo
 echo "## DESIGN ##"
 echo
 
+new_icons=`git log --name-status $PREV..$CUR -- icons/ 2>/dev/null|grep "^A\s"|sed 's%^.*/\([^/]*\)\..*$%\1%' | sort | uniq` 
+icons_n=`printf "$new_icons" | wc -l`
+icons_comma=`printf "$new_icons"  | paste -s -d, | sed 's/,/, /g'`
+
+if [ "$icons_n" -lt 20 ]; then
+  echo "$icons_n icons were added: $icons_comma"
+else
+  echo "$icons_n icons were added (too many to list them all)."
+fi
+echo
 echo "Icon designers:"
 git --no-pager shortlog -sn $PREV..$CUR -- "icons/*.svg" "icons/*.png"
 
