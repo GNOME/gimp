@@ -29,12 +29,12 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="32"
-     inkscape:cx="8.919924"
-     inkscape:cy="6.9396371"
+     inkscape:cx="7.8856033"
+     inkscape:cy="10.412292"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
-     showgrid="true"
+     showgrid="false"
      units="px"
      inkscape:window-width="1920"
      inkscape:window-height="1136"
@@ -52,7 +52,7 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      inkscape:snap-page="true"
-     inkscape:snap-global="false">
+     inkscape:snap-global="true">
     <inkscape:grid
        type="xygrid"
        id="grid812" />
@@ -65,7 +65,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -74,6 +74,18 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-292.76665)">
+    <rect
+       style="color:#000000;overflow:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+       id="rect2483"
+       width="3.7041667"
+       height="3.7041807"
+       x="0.26458335"
+       y="293.03122" />
+    <path
+       style="fill:#bebebe;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+       d="M 0.26458334,294.08957 H 1.8520834 v 2.64583 H 1.5875 v -2.38125 H 0.26458334 Z"
+       id="path1375"
+       inkscape:connector-curvature="0" />
     <g
        id="gimp-color-space-perceptual"
        style="fill:#2d2d2d">
@@ -81,14 +93,15 @@
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path819"
-         d="m 0.52916668,296.47082 c 0.33769803,-1.99099 1.48398662,-2.91672 3.17500012,-3.175"
+         d="m 0.26458334,296.7354 c 0.33769803,-1.99099 2.01315326,-3.44589 3.70416676,-3.70417"
          style="fill:none;fill-rule:evenodd;stroke:#dc0000;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          id="rect814"
          transform="matrix(0.26458334,0,0,0.26458334,0,292.76665)"
-         d="M 1,1 V 15 H 15 V 1 Z M 2,2 H 14 V 14 H 2 Z"
+         d="m 0,0 v 16 l 16,0 V 0 Z M 0.99999999,0.99999999 15,1 V 15 L 0.99999999,15 Z"
          style="color:#000000;overflow:visible;opacity:1;fill:#2d2d2d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
-         inkscape:connector-curvature="0" />
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccc" />
     </g>
   </g>
 </svg>

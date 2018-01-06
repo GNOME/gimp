@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313708"
-     inkscape:cx="23.988368"
-     inkscape:cy="9.1547432"
+     inkscape:zoom="1"
+     inkscape:cx="8.626758"
+     inkscape:cy="1.2759042"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -68,7 +68,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -77,18 +77,31 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-290.64998)">
+    <rect
+       style="color:#000000;overflow:visible;opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
+       id="rect2481"
+       width="5.8208337"
+       height="5.8208461"
+       x="0.26458335"
+       y="290.91455" />
+    <path
+       style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 0.26458334,292.50206 H 2.6458334 v 4.23334 H 2.3812501 v -3.96876 H 0.26458334 Z"
+       id="path2687"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
     <g
        id="gimp-color-space-perceptual-24">
       <path
          sodipodi:nodetypes="cc"
          inkscape:connector-curvature="0"
          id="path819"
-         d="M 0.52916668,296.47082 C 1.1812825,293.95031 2.5894277,291.2872 5.8208334,291.17915"
+         d="m 0.26458335,296.73538 c 0.65211582,-2.52051 2.58942775,-5.71277 5.82083345,-5.82082"
          style="fill:none;fill-rule:evenodd;stroke:#dc0000;stroke-width:0.26458335;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
       <path
          id="rect814"
          transform="matrix(0.26458334,0,0,0.26458334,0,292.76665)"
-         d="M 0.99999998,-7.0000124 1,15 23,14.999987 V -7.0000124 Z M 2,-6.0000124 H 22 V 13.999987 H 2 Z"
+         d="M 0,-8.0000124 V 15.999987 H 24 V -8.0000124 Z m 1,1 H 23 V 14.999987 l -22,-1.3e-5 z"
          style="color:#000000;overflow:visible;opacity:1;fill:#2d2d2d;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;paint-order:normal"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccccccc" />
