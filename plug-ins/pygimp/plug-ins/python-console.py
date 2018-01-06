@@ -30,6 +30,7 @@ def do_console():
     pygtk.require('2.0')
 
     import sys, gobject, gtk, gimpenums, gimpshelf, gimpui, pyconsole
+    gimpui.gimp_ui_init ()
 
     namespace = {'__builtins__': __builtins__,
                  '__name__': '__main__', '__doc__': None,
