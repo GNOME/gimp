@@ -37,7 +37,7 @@ fi
 echo "## GIMP contributions between $PREV and $CUR ##"
 echo
 
-# Main list:
+# Main stats:
 contribs=`git --no-pager shortlog -s -n $PREV..$CUR`
 contribs_n=`printf "$contribs" | wc -l`
 commits_n=`git log --oneline $PREV..$CUR | wc -l`
@@ -61,6 +61,8 @@ echo
 echo "## DEVELOPERS ##"
 echo
 
+echo "Statistics on C files:" `git diff --shortstat $PREV..$CUR  -- "*.[ch]" 2>/dev/null`
+echo
 echo "Core developers:"
 
 git --no-pager shortlog -s -n $PREV..$CUR -- app/ "libgimp*" pdb tools/pdbgen/
