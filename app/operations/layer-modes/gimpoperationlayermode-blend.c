@@ -35,7 +35,41 @@
 #include "gimpoperationlayermode-blend.h"
 
 
-#define EPSILON 1e-6f
+#define EPSILON      1e-6f
+
+#define SAFE_DIV_MIN EPSILON
+#define SAFE_DIV_MAX (1.0f / SAFE_DIV_MIN)
+
+
+/*  local function prototypes  */
+
+static inline gfloat   safe_div (gfloat a,
+                                 gfloat b);
+
+
+/*  private functions  */
+
+
+/* returns a / b, clamped to [-SAFE_DIV_MAX, SAFE_DIV_MAX].
+ * if -SAFE_DIV_MIN <= a <= SAFE_DIV_MIN, returns 0.
+ */
+static inline gfloat
+safe_div (gfloat a,
+          gfloat b)
+{
+  gfloat result = 0.0f;
+
+  if (fabsf (a) > SAFE_DIV_MIN)
+    {
+      result = a / b;
+      result = CLAMP (result, -SAFE_DIV_MAX, SAFE_DIV_MAX);
+    }
+
+  return result;
+}
+
+
+/*  public functions  */
 
 
 /*  non-subtractive blending functions.  these functions must set comp[ALPHA]
@@ -82,14 +116,7 @@ gimp_operation_layer_mode_blend_burn (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              gfloat val = 1.0f - (1.0f - in[c]) / layer[c];
-
-              /* The CLAMP macro is deliberately inlined and written
-               * to map comp == NAN (0 / 0) -> 1
-               */
-              comp[c] = val < 0 ? 0.0f : val < 1.0f ? val : 1.0f;
-            }
+            comp[c] = 1.0f - safe_div (1.0f - in[c], layer[c]);
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -166,19 +193,7 @@ gimp_operation_layer_mode_blend_divide (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              gfloat val = in[c] / layer[c];
-
-              /* make infinities(or NaN) correspond to a high number,
-               * to get more predictable math, ideally higher than 5.0
-               * but it seems like some babl conversions might be
-               * acting up then
-               */
-              if (!(val > -42949672.0f && val < 5.0f))
-                val = 5.0f;
-
-              comp[c] = val;
-            }
+            comp[c] = safe_div (in[c], layer[c]);
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -202,13 +217,7 @@ gimp_operation_layer_mode_blend_dodge (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              gfloat val = in[c] / (1.0f - layer[c]);
-
-              val = MIN (val, 1.0f);
-
-              comp[c] = val;
-            }
+            comp[c] = safe_div (in[c], 1.0f - layer[c]);
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -872,7 +881,7 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
     {
       if (layer[ALPHA] != 0.0f && in[ALPHA] != 0.0f)
         {
-          gfloat ratio = layer_Y_p[0] / MAX(in_Y_p[0], 0.0000000000000000001);
+          gfloat ratio = safe_div (layer_Y_p[0], in_Y_p[0]);
           gint c;
           for (c = 0; c < 3; c ++)
             comp[c] = in[c] * ratio;
@@ -1082,14 +1091,9 @@ gimp_operation_layer_mode_blend_vivid_light (const gfloat *in,
               gfloat val;
 
               if (layer[c] <= 0.5f)
-                {
-                  val = 1.0f - (1.0f - in[c]) / (2.0f * (layer[c]));
-                }
+                val = 1.0f - safe_div (1.0f - in[c], 2.0f * layer[c]);
               else
-                {
-                  val = in[c] / (2.0f * (1.0f - layer[c]));
-                }
-              val = MIN (val, 1.0f);
+                val = safe_div (in[c], 2.0f * (1.0f - layer[c]));
 
               comp[c] = val;
             }
