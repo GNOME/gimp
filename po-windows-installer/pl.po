@@ -25,7 +25,7 @@ msgstr "Umowa licencyjna"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Instalator utworzony przez Jerneja Simonèiè, jernej-gimp@ena.si"
+msgstr "Instalator utworzony przez Jerneja Simončiča, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
