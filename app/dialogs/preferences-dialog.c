@@ -1949,6 +1949,10 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Appearance"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  prefs_check_button_add_with_icon (object, "toolbox-wilber",
+                                    _("Show GIMP _logo (drag-and-drop target)"),
+                                    GIMP_ICON_WILBER,
+                                    GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-color-area",
                                     _("Show _foreground & background color"),
                                     GIMP_ICON_COLORS_DEFAULT,
