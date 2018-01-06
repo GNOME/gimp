@@ -33,7 +33,9 @@ Core:
 
 GUI and Usability:
 
-  - New icons: "gimp-tool-color-temperature" and "gimp-tool-exposure".
+  - New icons: "gimp-color-space-linear", "gimp-color-space-perceptual",
+    "gimp-tool-color-temperature", "gimp-tool-exposure",
+    "gimp-tool-shadows-highlights".
   - Switching between linear and perceptual (gamma-corrected) spaces
     in the Histogram dialog is easier now: two buttons instead of one
     two-way button where current state was difficult to understand.
@@ -90,8 +92,9 @@ Translations:
 
   - Windows installer now localized with gettext.
   - String freeze has started and GIMP received updates from:
-    Brazilian Portuguese, Chinese (Taiwan), Danish, Esperanto,
-    Icelandic, Italian, Polish, Russian, Serbian, Slovenian, Turkish.
+    Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish, Esperanto,
+    Icelandic, Italian, Polish, Russian, Serbian, Slovenian, Swedish,
+    Turkish.
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
