@@ -164,12 +164,7 @@ gimp_operation_layer_mode_blend_difference (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              comp[c] = in[c] - layer[c];
-
-              if (comp[c] < 0)
-                comp[c] = -comp[c];
-            }
+            comp[c] = fabsf (in[c] - layer[c]);
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -241,9 +236,7 @@ gimp_operation_layer_mode_blend_exclusion (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              comp[c] = 0.5f - 2.0f * (in[c] - 0.5f) * (layer[c] - 0.5f);
-            }
+            comp[c] = 0.5f - 2.0f * (in[c] - 0.5f) * (layer[c] - 0.5f);
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -315,9 +308,7 @@ gimp_operation_layer_mode_blend_hard_mix (const gfloat *in,
           gint c;
 
           for (c = 0; c < 3; c++)
-            {
-              comp[c] = in[c] + layer[c] < 1.0f ? 0.0f : 1.0f;
-            }
+            comp[c] = in[c] + layer[c] < 1.0f ? 0.0f : 1.0f;
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -779,13 +770,10 @@ gimp_operation_layer_mode_blend_linear_light (const gfloat *in,
               gfloat val;
 
               if (layer[c] <= 0.5f)
-                {
-                  val = in[c] + 2.0 * layer[c] - 1.0f;
-                }
+                val = in[c] + 2.0f * layer[c] - 1.0f;
               else
-                {
-                  val = in[c] + 2.0 * (layer[c] - 0.5f);
-                }
+                val = in[c] + 2.0f * (layer[c] - 0.5f);
+
               comp[c] = val;
             }
         }
@@ -808,18 +796,23 @@ gimp_operation_layer_mode_blend_luma_darken_only (const gfloat *in,
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
         {
-          gint c;
-          gfloat dest_luminance =
-             GIMP_RGB_LUMINANCE(in[0], in[1], in[2]);
-          gfloat src_luminance =
-             GIMP_RGB_LUMINANCE(layer[0], layer[1], layer[2]);
+          gfloat dest_luminance;
+          gfloat src_luminance;
+          gint   c;
+
+          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
+          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
 
           if (dest_luminance <= src_luminance)
-            for (c = 0; c < 3; c++)
-              comp[c] = in[c];
+            {
+              for (c = 0; c < 3; c++)
+                comp[c] = in[c];
+            }
           else
-            for (c = 0; c < 3; c++)
-              comp[c] = layer[c];
+            {
+              for (c = 0; c < 3; c++)
+                comp[c] = layer[c];
+            }
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -840,18 +833,23 @@ gimp_operation_layer_mode_blend_luma_lighten_only (const gfloat *in,
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
         {
-          gint c;
-          gfloat dest_luminance =
-             GIMP_RGB_LUMINANCE(in[0], in[1], in[2]);
-          gfloat src_luminance =
-             GIMP_RGB_LUMINANCE(layer[0], layer[1], layer[2]);
+          gfloat dest_luminance;
+          gfloat src_luminance;
+          gint   c;
+
+          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
+          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
 
           if (dest_luminance >= src_luminance)
-            for (c = 0; c < 3; c++)
-              comp[c] = in[c];
+            {
+              for (c = 0; c < 3; c++)
+                comp[c] = in[c];
+            }
           else
-            for (c = 0; c < 3; c++)
-              comp[c] = layer[c];
+            {
+              for (c = 0; c < 3; c++)
+                comp[c] = layer[c];
+            }
         }
 
       comp[ALPHA] = layer[ALPHA];
@@ -869,20 +867,21 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
                                            gint          samples)
 {
   gfloat layer_Y[samples], *layer_Y_p;
-  gfloat in_Y[samples], *in_Y_p;
+  gfloat in_Y[samples],    *in_Y_p;
 
   babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
-  babl_process (babl_fish ("RGBA float", "Y float"), in, in_Y, samples);
+  babl_process (babl_fish ("RGBA float", "Y float"), in,    in_Y,    samples);
 
   layer_Y_p = &layer_Y[0];
-  in_Y_p = &in_Y[0];
+  in_Y_p    = &in_Y[0];
 
   while (samples--)
     {
       if (layer[ALPHA] != 0.0f && in[ALPHA] != 0.0f)
         {
           gfloat ratio = safe_div (layer_Y_p[0], in_Y_p[0]);
-          gint c;
+          gint   c;
+
           for (c = 0; c < 3; c ++)
             comp[c] = in[c] * ratio;
         }
@@ -938,13 +937,9 @@ gimp_operation_layer_mode_blend_overlay (const gfloat *in,
               gfloat val;
 
               if (in[c] < 0.5f)
-                {
-                  val = 2.0f * in[c] * layer[c];
-                }
+                val = 2.0f * in[c] * layer[c];
               else
-                {
-                  val = 1.0f - 2.0f * (1.0f - layer[c]) * (1.0f - in[c]);
-                }
+                val = 1.0f - 2.0f * (1.0f - layer[c]) * (1.0f - in[c]);
 
               comp[c] = val;
             }
@@ -976,13 +971,10 @@ gimp_operation_layer_mode_blend_pin_light (const gfloat *in,
               gfloat val;
 
               if (layer[c] > 0.5f)
-                {
-                  val = MAX(in[c], 2 * (layer[c] - 0.5));
-                }
+                val = MAX(in[c], 2.0f * (layer[c] - 0.5f));
               else
-                {
-                  val = MIN(in[c], 2 * layer[c]);
-                }
+                val = MIN(in[c], 2.0f * layer[c]);
+
               comp[c] = val;
             }
         }
