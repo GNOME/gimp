@@ -35,6 +35,7 @@
 #include "gimphistogrambox.h"
 #include "gimphistogrameditor.h"
 #include "gimphistogramview.h"
+#include "gimppropwidgets.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpwidgets-utils.h"
 
@@ -119,7 +120,6 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   GtkWidget         *hbox;
   GtkWidget         *label;
   GtkWidget         *menu;
-  GtkWidget         *button;
   GtkWidget         *table;
   gint               i;
 
@@ -139,7 +139,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
 
   view = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -165,16 +165,13 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
-  button = gimp_prop_check_button_new (G_OBJECT (editor), "linear", NULL);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  gimp_help_set_help_data (button,
-                           "This button switches between a histogram in "
-                           "sRGB (gamma corrected) space and a histogram "
-                           "in linear space. Also, it's horrible UI and "
-                           "needs to be changed.", NULL);
+  menu = gimp_prop_boolean_icon_box_new (G_OBJECT (editor), "linear",
+                                         GIMP_ICON_COLOR_SPACE_LINEAR,
+                                         GIMP_ICON_COLOR_SPACE_PERCEPTUAL,
+                                         _("Show values in linear space"),
+                                         _("Show values in perceptual space"));
+  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
 
   gtk_box_pack_start (GTK_BOX (editor), editor->box, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->box));

@@ -380,16 +380,22 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
                     G_CALLBACK (levels_channel_reset_callback),
                     tool);
 
+  /*  The histogram scale radio buttons  */
   hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
                                        "histogram-scale", "gimp-histogram",
                                        0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
-  button = gimp_prop_check_button_new (G_OBJECT (config), "linear", NULL);
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  /*  The linear/perceptual radio buttons  */
+  hbox2 = gimp_prop_boolean_icon_box_new (G_OBJECT (config),
+                                          "linear",
+                                          GIMP_ICON_COLOR_SPACE_LINEAR,
+                                          GIMP_ICON_COLOR_SPACE_PERCEPTUAL,
+                                          _("Adjust levels in linear light"),
+                                          _("Adjust levels perceptually"));
+  gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
 
   frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
