@@ -30,6 +30,13 @@ GtkWidget * gimp_prop_expanding_frame_new   (GObject       *config,
                                              GtkWidget     *child,
                                              GtkWidget    **button);
 
+GtkWidget * gimp_prop_boolean_icon_box_new  (GObject      *config,
+                                             const gchar  *property_name,
+                                             const gchar  *true_icon,
+                                             const gchar  *false_icon,
+                                             const gchar  *true_tooltip,
+                                             const gchar  *false_tooltip);
+
 
 /*  GParamEnum  */
 

@@ -142,6 +142,142 @@ gimp_prop_expanding_frame_new (GObject      *config,
 }
 
 
+/**********************/
+/*  boolean icon box  */
+/**********************/
+
+static void  gimp_prop_radio_button_callback (GtkWidget  *widget,
+                                              GObject    *config);
+static void  gimp_prop_radio_button_notify   (GObject    *config,
+                                              GParamSpec *param_spec,
+                                              GtkWidget  *button);
+
+GtkWidget *
+gimp_prop_boolean_icon_box_new (GObject     *config,
+                                const gchar *property_name,
+                                const gchar *true_icon,
+                                const gchar *false_icon,
+                                const gchar *true_tooltip,
+                                const gchar *false_tooltip)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *box;
+  GtkWidget  *button;
+  GtkWidget  *first_button;
+  GtkWidget  *image;
+  GSList     *group = NULL;
+  gboolean    value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+
+  button = first_button = gtk_radio_button_new (group);
+  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_icon_name (true_icon, GTK_ICON_SIZE_MENU);
+  if (image)
+    {
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+    }
+
+  gimp_help_set_help_data (button, true_tooltip, NULL);
+
+
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (TRUE));
+
+  set_param_spec (G_OBJECT (button), NULL, param_spec);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_prop_radio_button_callback),
+                    config);
+
+  button = gtk_radio_button_new (group);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_icon_name (false_icon, GTK_ICON_SIZE_MENU);
+  if (image)
+    {
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+    }
+
+  gimp_help_set_help_data (button, false_tooltip, NULL);
+
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (FALSE));
+
+  set_param_spec (G_OBJECT (button), NULL, param_spec);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_prop_radio_button_callback),
+                    config);
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (first_button), value);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  button);
+
+  return box;
+}
+
+static void
+gimp_prop_radio_button_callback (GtkWidget *widget,
+                                 GObject   *config)
+{
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      GParamSpec *param_spec;
+      gint        value;
+
+      param_spec = get_param_spec (G_OBJECT (widget));
+      if (! param_spec)
+        return;
+
+      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-item-data"));
+
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
+    }
+}
+
+static void
+gimp_prop_radio_button_notify (GObject    *config,
+                               GParamSpec *param_spec,
+                               GtkWidget  *button)
+{
+  gint value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
+}
+
+
 /********************/
 /*  layer mode box  */
 /********************/
