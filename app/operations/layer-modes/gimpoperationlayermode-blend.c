@@ -1083,9 +1083,15 @@ gimp_operation_layer_mode_blend_vivid_light (const gfloat *in,
               gfloat val;
 
               if (layer[c] <= 0.5f)
-                val = 1.0f - safe_div (1.0f - in[c], 2.0f * layer[c]);
+                {
+                  val = 1.0f - safe_div (1.0f - in[c], 2.0f * layer[c]);
+                  val = MAX (val, 0.0f);
+                }
               else
-                val = safe_div (in[c], 2.0f * (1.0f - layer[c]));
+                {
+                  val = safe_div (in[c], 2.0f * (1.0f - layer[c]));
+                  val = MIN (val, 1.0f);
+                }
 
               comp[c] = val;
             }
