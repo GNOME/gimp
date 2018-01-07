@@ -1471,7 +1471,7 @@ save_image (const gchar *filename,
    * define this in that function is easy to read but place here to
    * reduce overheads.
    */
-  re = g_regex_new ("[(][ ]*(\\d+)[ ]*(px|ms)[ ]*[)]",
+  re = g_regex_new ("[(][ 0]*(\\d+)[ ]*(px|ms)[ ]*[)]",
                     G_REGEX_CASELESS | G_REGEX_OPTIMIZE,
                     0,
                     NULL);
