@@ -1764,8 +1764,8 @@ save_image (const gchar *filename,
     {
       g_message (_("Your cursor was successfully exported but it contains one or "
                    "more frames whose width or height is more than %ipx, "
-                   "a historical max dimension value in X11.\n"
-                   "It may be unsupported by some environments."),
+                   "a historical max dimension value for X bitmap cursors.\n"
+                   "It might be unsupported by some environments."),
                    MAX_BITMAP_CURSOR_SIZE);
     }
   if (size_warn)
