@@ -413,7 +413,7 @@ run (const gchar      *name,
   INIT_I18N ();
   gegl_init (NULL, NULL);
 
-  DM_XMC("run: start.\n");
+  DM_XMC ("run: start.\n");
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -422,8 +422,8 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      DM_XMC("Starting to load file.\tparam.data=%s\n",
-               param[1].data.d_string);
+      DM_XMC ("Starting to load file.\tparam.data=%s\n",
+              param[1].data.d_string);
       image_ID = load_image (param[1].data.d_string, &error);
 
       if (image_ID != -1)
@@ -431,7 +431,7 @@ run (const gchar      *name,
           *nreturn_vals = 2;
           values[1].type = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
-          DM_XMC("LOAD_PROC successfully load image. image_ID=%i\n",image_ID);
+          DM_XMC ("LOAD_PROC successfully load image. image_ID=%i\n", image_ID);
         }
       else
         {
@@ -440,8 +440,8 @@ run (const gchar      *name,
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
-      DM_XMC("Starting to load thumbnail.\tfilename=%s\tthumb-size=%d\n",
-               param[0].data.d_string, param[1].data.d_int32);
+      DM_XMC ("Starting to load thumbnail.\tfilename=%s\tthumb-size=%d\n",
+              param[0].data.d_string, param[1].data.d_int32);
       image_ID = load_thumbnail (param[0].data.d_string,
                                  param[1].data.d_int32,
                                  &width,
@@ -464,7 +464,7 @@ run (const gchar      *name,
           values[5].type = GIMP_PDB_INT32;
           values[5].data.d_int32 = num_layers;       /* num_layers */
 
-          DM_XMC("LOAD_THUMB_PROC successfully load image. image_ID=%i\n",image_ID);
+          DM_XMC ("LOAD_THUMB_PROC successfully load image. image_ID=%i\n", image_ID);
         }
       else
         {
@@ -473,7 +473,7 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      DM_XMC("run: export %s\n", name);
+      DM_XMC ("run: export %s\n", name);
       run_mode    = param[0].data.d_int32;
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
@@ -615,7 +615,7 @@ run (const gchar      *name,
     }
   else
     {
-      DM_XMC("name=%s\n", name);
+      DM_XMC ("name=%s\n", name);
       status = GIMP_PDB_CALLING_ERROR;
     }
 
@@ -627,7 +627,7 @@ run (const gchar      *name,
      }
 
   values[0].data.d_status = status;
-  DM_XMC("run: finish\n");
+  DM_XMC ("run: finish\n");
 }
 
 
@@ -698,8 +698,8 @@ load_image (const gchar  *filename,
                                 &xmcparas.x, &xmcparas.y,
                                 &img_width, &img_height);
 
-  DM_XMC("xhot=%i,\tyhot=%i,\timg_width=%i,\timg_height=%i\n",
-         xmcparas.x, xmcparas.y, img_width, img_height);
+  DM_XMC ("xhot=%i,\tyhot=%i,\timg_width=%i,\timg_height=%i\n",
+          xmcparas.x, xmcparas.y, img_width, img_height);
 
   image_ID = gimp_image_new (img_width, img_height, GIMP_RGB);
 
@@ -724,11 +724,11 @@ load_image (const gchar  *filename,
           delay = CURSOR_DEFAULT_DELAY;
         }
 
-      DM_XMC("images[%i]->delay=%i\twidth=%d\theight=%d\n"
-            ,i ,delay, imagesp->images[i]->width, imagesp->images[i]->height);
+      DM_XMC ("images[%i]->delay=%i\twidth=%d\theight=%d\n",
+              i ,delay, imagesp->images[i]->width, imagesp->images[i]->height);
 
       framename = make_framename (imagesp->images[i]->size, delay,
-                                  DISPLAY_DIGIT(imagesp->nimage), error);
+                                  DISPLAY_DIGIT (imagesp->nimage), error);
       if (!framename)
         return -1;
 
@@ -775,8 +775,8 @@ load_image (const gchar  *filename,
       for (i = 0; i < commentsp->ncomment; ++i)
         {
           DM_XMC ("comment type=%d\tcomment=%s\n",
-                   commentsp->comments[i]->comment_type,
-                   commentsp->comments[i]->comment);
+                  commentsp->comments[i]->comment_type,
+                  commentsp->comments[i]->comment);
           if (! set_comment_to_pname (image_ID,
                                       commentsp->comments[i]->comment,
                                       parasiteName[commentsp->comments[i]->comment_type -1]))
@@ -787,7 +787,7 @@ load_image (const gchar  *filename,
         }
     }
 
-  DM_XMC("Comment parsing done.\n");
+  DM_XMC ("Comment parsing done.\n");
   XcursorImagesDestroy (imagesp);
   XcursorCommentsDestroy (commentsp);
   fclose (fp);
@@ -931,14 +931,14 @@ load_thumbnail (const gchar *filename,
       xcIs->images[i] = xcI;
     }
 
-  DM_XMC("selected size is %i or %i\n",
-         thumb_size - min_diff, thumb_size + min_diff);
+  DM_XMC ("selected size is %i or %i\n",
+          thumb_size - min_diff, thumb_size + min_diff);
 
   /* get entire image dimensions */
   find_hotspots_and_dimensions (xcIs, NULL, NULL, thumb_width, thumb_height);
 
-  DM_XMC("width=%i\theight=%i\tnum-layers=%i\n",
-         *thumb_width, *thumb_height, xcIs->nimage);
+  DM_XMC ("width=%i\theight=%i\tnum-layers=%i\n",
+          *thumb_width, *thumb_height, xcIs->nimage);
 
   /* dimension check */
   if (*thumb_width > MAX_LOAD_DIMENSION)
@@ -1247,7 +1247,7 @@ save_dialog (const gint32   image_ID,
   /*
    *  Copyright
    */
-  tmpwidget = gtk_entry_new();
+  tmpwidget = gtk_entry_new ();
   /* Maximum length will be clamped to 65536 */
   gtk_entry_set_max_length (GTK_ENTRY (tmpwidget), XCURSOR_COMMENT_MAX_LEN);
 
@@ -1275,7 +1275,7 @@ save_dialog (const gint32   image_ID,
   /*
    *  License
    */
-  tmpwidget = gtk_entry_new();
+  tmpwidget = gtk_entry_new ();
   /* Maximum length will be clamped to 65536 */
   gtk_entry_set_max_length (GTK_ENTRY (tmpwidget), XCURSOR_COMMENT_MAX_LEN);
 
@@ -1464,7 +1464,7 @@ save_image (const gchar *filename,
   GeglRectangle    save_rgn;               /* region to save */
   gint             layer_xoffset, layer_yoffset;
   /* temporary buffer which store pixel data (guchar * bpp = guint32) */
-  guint32          pixelbuf[SQR(MAX_SAVE_DIMENSION)];
+  guint32          pixelbuf[SQR (MAX_SAVE_DIMENSION)];
   gint             i, j;                   /* Looping vars */
 
   /* This will be used in set_size_and_delay function later.  To
@@ -1497,10 +1497,10 @@ save_image (const gchar *filename,
   layers = gimp_image_get_layers (image_ID, &nlayers);
 
   /* create new XcursorImages. */
-  imagesp = XcursorImagesCreate(nlayers);
+  imagesp = XcursorImagesCreate (nlayers);
   if (!imagesp)
     {
-      DM_XMC("Failed to XcursorImagesCreate!\n");
+      DM_XMC ("Failed to XcursorImagesCreate!\n");
       return FALSE;
     }
   imagesp->nimage = nlayers;
@@ -1533,7 +1533,7 @@ save_image (const gchar *filename,
       /*
        * layer dimension check.
        */
-      DM_XMC("layer size check.\n");
+      DM_XMC ("layer size check.\n");
       /* We allow to save a cursor which dimensions are no more than
        * MAX_SAVE_DIMENSION but after auto-cropping, we warn (only
        * warn, don't stop) if dimension is over
@@ -1568,7 +1568,7 @@ save_image (const gchar *filename,
       if (xmcvals.crop) /* with auto-cropping */
         {
           /* get the region of auto-cropped area. */
-          DM_XMC("get_cropped_region\n");
+          DM_XMC ("get_cropped_region\n");
           get_cropped_region (&save_rgn, buffer);
 
           /* don't forget save_rgn's origin is not a entire image
@@ -1577,7 +1577,7 @@ save_image (const gchar *filename,
 
           if (save_rgn.width == 0 || save_rgn.height == 0)
             {/* perfectly transparent frames become 1x1px transparent pixel. */
-              DM_XMC("get_cropped_region return 0.\n");
+              DM_XMC ("get_cropped_region return 0.\n");
               imagesp->images[i] = XcursorImageCreate (1, 1);
               if (!imagesp->images[i])
                 {
@@ -1629,7 +1629,7 @@ save_image (const gchar *filename,
       /*
        * Create new XcursorImage.
        */
-      DM_XMC("create new xcursorimage.\twidth=%i\theight=%i\n",
+      DM_XMC ("create new xcursorimage.\twidth=%i\theight=%i\n",
               save_rgn.width, save_rgn.height);
       imagesp->images[i] = XcursorImageCreate (save_rgn.width, save_rgn.height);
       /* Cursor width & height is automatically set by function */
@@ -1644,13 +1644,13 @@ save_image (const gchar *filename,
        */
       /* [Cropped layer's hotspot] =
                    [image's hotspot] - [layer's offset] - [save_rgn's offset]. */
-      DM_XMC("xhot=%i\tsave_rgn->xoffset=%i\tlayer_xoffset=%i\n",
+      DM_XMC ("xhot=%i\tsave_rgn->xoffset=%i\tlayer_xoffset=%i\n",
               xmcparas.x, layer_xoffset, save_rgn.x);
-      DM_XMC("yhot=%i\tsave_rgn->yoffset=%i\tlayer_yoffset=%i\n",
+      DM_XMC ("yhot=%i\tsave_rgn->yoffset=%i\tlayer_yoffset=%i\n",
               xmcparas.y, layer_yoffset, save_rgn.y);
       imagesp->images[i]->xhot = xmcparas.x - layer_xoffset - save_rgn.x;
       imagesp->images[i]->yhot = xmcparas.y - layer_yoffset - save_rgn.y;
-      DM_XMC("images[%i]->xhot=%i\tyhot=%i\n", i,
+      DM_XMC ("images[%i]->xhot=%i\tyhot=%i\n", i,
               imagesp->images[i]->xhot, imagesp->images[i]->yhot);
 
       /*
@@ -1664,7 +1664,7 @@ save_image (const gchar *filename,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       /*convert pixel date to XcursorPixel. */
-      g_assert (save_rgn.width * save_rgn.height < SQR(MAX_SAVE_DIMENSION));
+      g_assert (save_rgn.width * save_rgn.height < SQR (MAX_SAVE_DIMENSION));
       for (j = 0; j < save_rgn.width * save_rgn.height; j++)
         {
           imagesp->images[i]->pixels[j] = premultiply_alpha (pixelbuf[j]);
@@ -1684,7 +1684,7 @@ save_image (const gchar *filename,
       g_free (framename);
       framename = make_framename (imagesp->images[i]->size,
                                   imagesp->images[i]->delay,
-                                  DISPLAY_DIGIT(imagesp->nimage),
+                                  DISPLAY_DIGIT (imagesp->nimage),
                                   error);
       if (!framename)
         return FALSE;
@@ -1705,10 +1705,10 @@ save_image (const gchar *filename,
   commentsp = set_cursor_comments ();
 
 #ifdef XMC_DEBUG
-  DM_XMC("imagesp->nimage=%i\tname=%s\n",imagesp->nimage,imagesp->name);
+  DM_XMC ("imagesp->nimage=%i\tname=%s\n", imagesp->nimage, imagesp->name);
   for (i = 0; i < imagesp->nimage; ++i)
     {
-      DM_XMC("\timages[%i]->size=%i\n\
+      DM_XMC ("\timages[%i]->size=%i\n\
                \twidth=%i\n\
                \theight=%i\n\
                \txhot=%i\n\
@@ -1730,8 +1730,8 @@ save_image (const gchar *filename,
       for (i = 0; i < commentsp->ncomment; ++i)
         {
           DM_XMC ("comment type=%d\tcomment=%s\n",
-                   commentsp->comments[i]->comment_type,
-                   commentsp->comments[i]->comment);
+                  commentsp->comments[i]->comment_type,
+                  commentsp->comments[i]->comment);
         }
     }
 #endif
@@ -1744,8 +1744,8 @@ save_image (const gchar *filename,
     {
       if (! XcursorFileSave (fp, commentsp, imagesp))
         {
-          DM_XMC("Failed to XcursorFileSave.\t%p\t%p\t%p\n",
-                 fp, commentsp, imagesp);
+          DM_XMC ("Failed to XcursorFileSave.\t%p\t%p\t%p\n",
+                  fp, commentsp, imagesp);
           return FALSE;
         }
 
@@ -1754,7 +1754,7 @@ save_image (const gchar *filename,
     {
       if (! XcursorFileSaveImages (fp, imagesp))
         {
-          DM_XMC("Failed to XcursorFileSaveImages.\t%p\t%p\n", fp, imagesp);
+          DM_XMC ("Failed to XcursorFileSaveImages.\t%p\t%p\n", fp, imagesp);
           return FALSE;
         }
     }
@@ -1780,13 +1780,13 @@ save_image (const gchar *filename,
   /*
    * Done with the file...
    */
-  g_regex_unref(re);
-  DM_XMC("fp=%p\n",fp);
+  g_regex_unref (re);
+  DM_XMC ("fp=%p\n", fp);
   fclose (fp);
-  DM_XMC("%i frames written.\n", imagesp->nimage);
+  DM_XMC ("%i frames written.\n", imagesp->nimage);
   XcursorImagesDestroy (imagesp);
-  DM_XMC("Xcursor destroyed.\n");
-  XcursorCommentsDestroy(commentsp); /* this is safe even if commentsp is NULL. */
+  DM_XMC ("Xcursor destroyed.\n");
+  XcursorCommentsDestroy (commentsp); /* this is safe even if commentsp is NULL. */
   gimp_progress_end ();
 
   /* Save the comment back to the original image */
@@ -1816,7 +1816,7 @@ separate_alpha (guint32 pixel)
   guint32 retval;
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  pixel = GUINT32_TO_LE(pixel);
+  pixel = GUINT32_TO_LE (pixel);
 #endif
 
   blue = pixel & 0xff;
@@ -1835,7 +1835,7 @@ separate_alpha (guint32 pixel)
   retval = red + (green<<8) + (blue<<16) + (alpha<<24);
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  pixel = GUINT32_FROM_LE(pixel);
+  pixel = GUINT32_FROM_LE (pixel);
 #endif
 
   return retval;
@@ -1848,7 +1848,7 @@ premultiply_alpha (guint32 pixel)
   guint32 retval;
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  pixel = GUINT32_TO_LE(pixel);
+  pixel = GUINT32_TO_LE (pixel);
 #endif
 
   red   = pixel         & 0xff;
@@ -1865,7 +1865,7 @@ premultiply_alpha (guint32 pixel)
   retval = blue + (green << 8) + (red << 16) + (alpha << 24);
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  pixel = GUINT32_FROM_LE(pixel);
+  pixel = GUINT32_FROM_LE (pixel);
 #endif
 
   return retval;
@@ -1904,7 +1904,7 @@ set_cursor_comments (void)
               else
                 {
                   g_stpcpy (xcCommentp[i]->comment, xmcparas.comments[i]);
-                  g_array_append_val(xcCommentsArray, xcCommentp[i]);
+                  g_array_append_val (xcCommentsArray, xcCommentp[i]);
                 }
             }
         }
@@ -1921,7 +1921,7 @@ set_cursor_comments (void)
   for (i = 0; i < arraylen; ++i)
     {
       xcCommentsp->comments[i] =
-        g_array_index(xcCommentsArray, XcursorComment* ,i);
+        g_array_index (xcCommentsArray, XcursorComment* ,i);
     }
 
   return xcCommentsp;
@@ -2059,7 +2059,7 @@ get_hotspot_from_parasite (gint32 image_ID)
 
   g_return_val_if_fail (image_ID != -1, FALSE);
 
-  DM_XMC("function: getHotsopt\n");
+  DM_XMC ("function: getHotsopt\n");
 
   parasite = gimp_image_get_parasite (image_ID, "hot-spot");
   if (!parasite)  /* cannot find a parasite named "hot-spot". */
@@ -2097,7 +2097,7 @@ set_size_and_delay (const gchar *framename,
   g_return_if_fail (delayp);
   g_return_if_fail (re);
 
-  DM_XMC("function: set_size_and_delay\tframename=%s\n", framename);
+  DM_XMC ("function: set_size_and_delay\tframename=%s\n", framename);
 
   /* re is defined at the start of save_image() as
         [(]                : open parenthesis
@@ -2180,7 +2180,7 @@ set_size_and_delay (const gchar *framename,
 
   *delayp = delay;
 
-  DM_XMC("set_size_and_delay return\tsize=%i\tdelay=%i\n", size, delay);
+  DM_XMC ("set_size_and_delay return\tsize=%i\tdelay=%i\n", size, delay);
 }
 
 /* Return framename as format: "([x]px)_[i] ([t]ms) (replace)"
@@ -2252,14 +2252,14 @@ get_cropped_region (GeglRectangle *return_rgn,
 
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  DM_XMC("function:get_cropped_region\n");
+  DM_XMC ("function:get_cropped_region\n");
 
-  DM_XMC("getTrim:\tMAX=%i\tpr->w=%i\tpr->h=%i\n", sizeof(buf)/4, pr->w, pr->h);
+  DM_XMC ("getTrim:\tMAX=%i\tpr->w=%i\tpr->h=%i\n", sizeof (buf)/4, pr->w, pr->h);
 
   /* find left border. */
   for (i = 0; i < width; ++i)
     {
-      DM_XMC("i=%i  width=%i\n", i, width);
+      DM_XMC ("i=%i  width=%i\n", i, width);
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (i, 0, 1, height), 1.0,
                        format, buf,
@@ -2283,7 +2283,7 @@ get_cropped_region (GeglRectangle *return_rgn,
  find_right:
   for (i = 0; i < width ; ++i)
     {
-      DM_XMC("width-1-i=%i  height=%i\n", width - 1 - i, height);
+      DM_XMC ("width-1-i=%i  height=%i\n", width - 1 - i, height);
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (width - 1 - i, 0, 1, height), 1.0,
                        format, buf,
@@ -2304,7 +2304,7 @@ get_cropped_region (GeglRectangle *return_rgn,
  find_top:
   for (j = 0; j < height; ++j)
     {
-      DM_XMC("j=%i  width=%i\n",j ,width);
+      DM_XMC ("j=%i  width=%i\n", j, width);
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, j, width, 1), 1.0,
                        format, buf,
@@ -2358,7 +2358,7 @@ static inline gboolean
 pix_is_opaque (guint32 pix)
 {
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
-  pix = GUINT32_TO_LE(pix);
+  pix = GUINT32_TO_LE (pix);
 #endif
 
   return ((pix >> 24) != 0);
