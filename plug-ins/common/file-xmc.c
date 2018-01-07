@@ -88,8 +88,14 @@
 
 /* The maximum dimension of Xcursor which is fully supported in any
  * environments. This is defined on line 59 of xcursorint.h in
- * libXcursor source code. Make sure this is about dimensions(width
+ * libXcursor source code. Make sure this is about dimensions (width
  * and height) not about nominal size despite of it's name.
+ *
+ * As of 2018, this macro still exists in libXCursor codebase, but I am
+ * unsure how far this restriction is enforced since this is a very low
+ * max dimension for today's displays. Therefore our code will not
+ * enforce this value anymore, but only warn about possible
+ * incompatibilities when using higher values.
  */
 #define MAX_BITMAP_CURSOR_SIZE  64
 
@@ -1757,8 +1763,9 @@ save_image (const gchar *filename,
   if (dimension_warn)
     {
       g_message (_("Your cursor was successfully exported but it contains one or "
-                   "more frames whose width or height is more than %ipx.\n"
-                   "It will clutter the screen in some environments."),
+                   "more frames whose width or height is more than %ipx, "
+                   "a historical max dimension value in X11.\n"
+                   "It may be unsupported by some environments."),
                    MAX_BITMAP_CURSOR_SIZE);
     }
   if (size_warn)
@@ -2114,9 +2121,17 @@ set_size_and_delay (const gchar *framename,
           if (!size) /* substitute it only for the first time */
             {
               if (strlen (digits) > 8) /* too large number should be clamped */
-                size = MAX_BITMAP_CURSOR_SIZE;
+                {
+                  g_message (_("Your cursor was successfully exported but it contains one or "
+                               "more frames whose size is over 8 digits.\n"
+                               "We clamped it to %dpx. You should check the exported cursor."),
+                             MAX_BITMAP_CURSOR_SIZE);
+                  size = MAX_BITMAP_CURSOR_SIZE;
+                }
               else
-                size = MIN (MAX_BITMAP_CURSOR_SIZE, atoi (digits));
+                {
+                  size = atoi (digits);
+                }
             }
         }
       else /* suffix is "ms" */
@@ -2146,7 +2161,8 @@ set_size_and_delay (const gchar *framename,
     }
   else if (! *size_warnp &&
            size != 12 && size != 16 && size != 24 && size != 32 &&
-           size != 36 && size != 40 && size != 48 && size != 64)
+           size != 36 && size != 40 && size != 48 && size != 64 &&
+           size != 96)
     { /* if the size is different from these values, we warn about it after
          successfully saving because gnome-appearance-properties only support
          them. */
