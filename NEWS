@@ -39,6 +39,8 @@ GUI and Usability:
   - Switching between linear and perceptual (gamma-corrected) spaces
     in the Histogram dialog is easier now: two buttons instead of one
     two-way button where current state was difficult to understand.
+  - Shorten color channel labels in the color frame (color picker tool,
+    sample point editor…) and split coordinates on 2 lines.
 
 Configurability:
 
@@ -77,6 +79,7 @@ Plug-ins:
   - No more max dimension limitation for X cursors. We still warn when
     cursor size is over a max limit for X bitmap cursors, but we don't
     clamp anymore on export.
+  - qbist ported to GEGL.
 
 Building:
 
