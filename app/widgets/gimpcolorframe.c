@@ -824,11 +824,11 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_LCH:
       /* TRANSLATORS: L for Lightness (LCH color space) */
-      names[0] = C_("LCH color space", "L:");
+      names[0] = C_("LCH color space", "L*:");
       /* TRANSLATORS: C for Chroma (LCH color space) */
-      names[1] = C_("LCH color space", "C:");
-      /* TRANSLATORS: H for Hue (LCH color space) */
-      names[2] = C_("LCH color space", "H:");
+      names[1] = C_("LCH color space", "C*:");
+      /* TRANSLATORS: H for Hue angle (LCH color space) */
+      names[2] = C_("LCH color space", "h\302\260:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
