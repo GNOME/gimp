@@ -213,13 +213,12 @@ optimize (ExpInfo *info)
 
 static void
 qbist (ExpInfo *info,
-       guchar  *buffer,
+       gfloat  *buffer,
        gint     xp,
        gint     yp,
        gint     num,
        gint     width,
        gint     height,
-       gint     bpp,
        gint     oversampling)
 {
   gint gx;
@@ -228,11 +227,12 @@ qbist (ExpInfo *info,
 
   for (gx = 0; gx < num; gx++)
     {
-      gint accum[3], yy, i;
+      gfloat accum[3];
+      gint   yy, i;
 
       for (i = 0; i < 3; i++)
         {
-          accum[i] = 0;
+          accum[i] = 0.0;
         }
 
       for (yy = 0; yy < oversampling; yy++)
@@ -345,27 +345,19 @@ qbist (ExpInfo *info,
                         break;
                       }
                 }
-              for (i = 0; i < 3; i++)
-                {
-                  accum[i] += (unsigned char) (reg[0][i] * 255.0 + 0.5);
-                }
+
+              accum[0] += reg[0][0];
+              accum[1] += reg[0][1];
+              accum[2] += reg[0][2];
             }
         }
 
-      for (i = 0; i < bpp; i++)
-        {
-          if (i < 3)
-            {
-              buffer[i] = (guchar) (((gfloat) accum[i] /
-                                     (gfloat) (oversampling * oversampling)) + 0.5);
-            }
-          else
-            {
-              buffer[i] = 255;
-            }
-        }
+      buffer[0] = accum[0] / (gfloat) (oversampling * oversampling);
+      buffer[1] = accum[1] / (gfloat) (oversampling * oversampling);
+      buffer[2] = accum[2] / (gfloat) (oversampling * oversampling);
+      buffer[3] = 1.0;
 
-      buffer += bpp;
+      buffer += 4;
     }
 }
 
@@ -507,7 +499,7 @@ run (const gchar      *name,
           iter = gegl_buffer_iterator_new (buffer,
                                            GEGL_RECTANGLE (0, 0,
                                                            img_width, img_height),
-                                           0, babl_format ("RGBA u8"),
+                                           0, babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
                                            GEGL_ABYSS_NONE);
 
@@ -517,7 +509,7 @@ run (const gchar      *name,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              guchar        *data = iter->data[0];
+              gfloat        *data = iter->data[0];
               GeglRectangle  roi  = iter->roi[0];
               gint           row;
 
@@ -530,7 +522,6 @@ run (const gchar      *name,
                          roi.width,
                          sel_width,
                          sel_height,
-                         4,
                          qbist_info.oversampling);
                 }
 
@@ -578,22 +569,33 @@ static void
 dialog_update_previews (GtkWidget *widget,
                         gpointer   data)
 {
-  gint i, j;
-  guchar buf[PREVIEW_SIZE * PREVIEW_SIZE * 3];
+  static const Babl *fish = NULL;
+
+  gfloat buf[PREVIEW_SIZE * PREVIEW_SIZE * 4];
+  guchar u8_buf[PREVIEW_SIZE * PREVIEW_SIZE * 4];
+  gint   i, j;
+
+  if (! fish)
+    fish = babl_fish (babl_format ("R'G'B'A float"),
+                      babl_format ("R'G'B'A u8"));
 
   for (j = 0; j < 9; j++)
     {
       optimize (&info[(j + 5) % 9]);
+
       for (i = 0; i < PREVIEW_SIZE; i++)
         {
-          qbist (&info[(j + 5) % 9], buf + i * PREVIEW_SIZE * 3,
-                 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 3, 1);
+          qbist (&info[(j + 5) % 9], buf + i * PREVIEW_SIZE * 4,
+                 0, i, PREVIEW_SIZE, PREVIEW_SIZE, PREVIEW_SIZE, 1);
         }
+
+      babl_process (fish, buf, u8_buf, PREVIEW_SIZE * PREVIEW_SIZE);
+
       gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview[j]),
                               0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
-                              GIMP_RGB_IMAGE,
-                              buf,
-                              PREVIEW_SIZE *3);
+                              GIMP_RGBA_IMAGE,
+                              u8_buf,
+                              PREVIEW_SIZE * 4);
     }
 }
 
