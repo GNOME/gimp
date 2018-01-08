@@ -1,15 +1,16 @@
 # Swedish translation for gimp.
-# Copyright © 2017 Free Software Foundation, Inc.
+# Copyright © 2017, 2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Sebastian Rasmussen <sebras@gmail.com>, 2017.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-12-28 15:40+0000\n"
-"PO-Revision-Date: 2017-12-29 22:16+0100\n"
+"POT-Creation-Date: 2018-01-03 00:41+0000\n"
+"PO-Revision-Date: 2018-01-03 13:48+0100\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -39,21 +40,25 @@ msgstr ""
 msgid "Development version"
 msgstr "Utvecklingsversion"
 
-# Vill man vara petig heter komponenten "Windows Installer"
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
 msgid ""
-"This is a development version of GIMP installer. It hasn't been tested as "
-"much as the stable installer, which can result in GIMP not working properly. "
-"Please report any problems you encounter in the GIMP bugzilla (Installer "
-"component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-"you wish to continue with installation anyway?"
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP bugzilla:"
+"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
+"continue with installation anyway?"
 msgstr ""
-"Detta är en utvecklingsversion av GIMP-installationen. Den har inte testats "
-"lika mycket som den stabila installationen, vilket kan resultera i att GIMP "
-"inte fungerar korrekt. Rapportera problem du upptäcker i GIMP:s "
-"felrapporteringssystem (komponenten Installer):%n_https://bugzilla.gnome.org/"
-"enter_bug.cgi?product=GIMP%n%nVill du fortsätta med installationen ändå?"
+"Detta är en utvecklingsversion av GIMP där vissa funktioner kanske inte är "
+"färdiga, eller så kan den vara instabil.%nDenna version av GIMP är inte "
+"avsedd för vardagligt bruk då den kan vara instabil, så du skulle kunna "
+"förlora vad du skapat.%nOm du påträffar några problem bör du först bekräfta "
+"att de inte redan fixats i GIT innan du kontaktar utvecklarna eller "
+"rapporterar problemen i GIMP:s felrapporteringssystem:%n_https://bugzilla."
+"gnome.org/enter_bug.cgi?product=GIMP%n%nVill du fortsätta med installationen "
+"ändå?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
