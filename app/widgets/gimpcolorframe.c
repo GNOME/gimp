@@ -189,6 +189,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   frame->coords_box_x = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), frame->coords_box_x, FALSE, FALSE, 0);
 
+  /* TRANSLATORS: X for the X coordinate. */
   label = gtk_label_new (_("X:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_x), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -202,6 +203,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   frame->coords_box_y = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), frame->coords_box_y, FALSE, FALSE, 0);
 
+  /* TRANSLATORS: Y for the Y coordinate. */
   label = gtk_label_new (_("Y:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_y), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -631,7 +633,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
     }
   else
     {
+      /* TRANSLATORS: n/a for Not Available. */
       gtk_label_set_text (GTK_LABEL (frame->coords_label_x), _("n/a"));
+      /* TRANSLATORS: n/a for Not Available. */
       gtk_label_set_text (GTK_LABEL (frame->coords_label_y), _("n/a"));
     }
 
@@ -704,18 +708,24 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
         if (base_type == GIMP_GRAY)
           {
+            /* TRANSLATORS: V for Value (grayscale) */
             names[0] = _("V:");
 
             if (has_alpha)
+              /* TRANSLATORS: A for Alpha (color transparency) */
               names[1] = _("A:");
           }
         else
           {
+            /* TRANSLATORS: R for Red (RGB) */
             names[0] = _("R:");
+            /* TRANSLATORS: G for Green (RGB) */
             names[1] = _("G:");
+            /* TRANSLATORS: B for Blue (RGB) */
             names[2] = _("B:");
 
             if (has_alpha)
+              /* TRANSLATORS: A for Alpha (color transparency) */
               names[3] = _("A:");
 
             if (babl_format_is_palette (frame->sample_format))
@@ -742,13 +752,18 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_RGB_PERCENT:
     case GIMP_COLOR_FRAME_MODE_RGB_U8:
+      /* TRANSLATORS: R for Red (RGB) */
       names[0] = _("R:");
+      /* TRANSLATORS: G for Green (RGB) */
       names[1] = _("G:");
+      /* TRANSLATORS: B for Blue (RGB) */
       names[2] = _("B:");
 
       if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
         names[3] = _("A:");
 
+      /* TRANSLATORS: Hex for Hexadecimal (representation of a color) */
       names[4] = _("Hex:");
 
       if (frame->sample_valid)
@@ -779,11 +794,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_FRAME_MODE_HSV:
+      /* TRANSLATORS: H for Hue (HSV color space) */
       names[0] = _("H:");
+      /* TRANSLATORS: S for Saturation (HSV color space) */
       names[1] = _("S:");
+      /* TRANSLATORS: V for Value (HSV color space) */
       names[2] = _("V:");
 
       if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
         names[3] = _("A:");
 
       if (frame->sample_valid)
@@ -803,11 +822,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_FRAME_MODE_LCH:
+      /* TRANSLATORS: L for Lightness (LCH color space) */
       names[0] = _("L:");
+      /* TRANSLATORS: C for Chroma (LCH color space) */
       names[1] = _("C:");
+      /* TRANSLATORS: H for Hue (LCH color space) */
       names[2] = _("H:");
 
       if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
         names[3] = _("A:");
 
       if (frame->sample_valid)
@@ -831,11 +854,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_FRAME_MODE_LAB:
+      /* TRANSLATORS: L for Lightness (Lab color space) */
       names[0] = _("L:");
+      /* TRANSLATORS: a* color channel in Lab color space */
       names[1] = _("A:");
+      /* TRANSLATORS: b* color channel in Lab color space */
       names[2] = _("B:");
 
       if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
         names[3] = _("A:");
 
       if (frame->sample_valid)
@@ -859,12 +886,17 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_FRAME_MODE_CMYK:
+      /* TRANSLATORS: C for Cyan (CMYK) */
       names[0] = _("C:");
+      /* TRANSLATORS: M for Magenta (CMYK) */
       names[1] = _("M:");
+      /* TRANSLATORS: Y for Yellow (CMYK) */
       names[2] = _("Y:");
+      /* TRANSLATORS: K for Key/black (CMYK) */
       names[3] = _("K:");
 
       if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
         names[4] = _("A:");
 
       if (frame->sample_valid)
