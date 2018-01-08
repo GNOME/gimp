@@ -147,7 +147,6 @@ EXTRA_PROGRAMS = \
 	file-aa \
 	file-jp2-load \
 	file-mng \
-	file-pdf-load \
 	file-pdf-save \
 	file-ps \
 	file-wmf \
