@@ -1,15 +1,15 @@
 # Polish translation for gimp-windows-installer.
-# Copyright © 2012, 2017 the gimp authors.
+# Copyright © 2012, 2017-2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012, 2017.
-# Aviary.pl <community-poland@mozilla.org>, 2012, 2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012, 2017-2018.
+# Aviary.pl <community-poland@mozilla.org>, 2012, 2017-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-31 23:49+0100\n"
-"PO-Revision-Date: 2017-12-31 23:50+0100\n"
+"POT-Creation-Date: 2018-01-08 14:54+0100\n"
+"PO-Revision-Date: 2018-01-08 14:55+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -42,18 +42,22 @@ msgstr "Wersja rozwojowa"
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
 msgid ""
-"This is a development version of GIMP installer. It hasn't been tested as "
-"much as the stable installer, which can result in GIMP not working properly. "
-"Please report any problems you encounter in the GIMP bugzilla (Installer "
-"component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-"you wish to continue with installation anyway?"
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP bugzilla:"
+"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
+"continue with installation anyway?"
 msgstr ""
-"To jest rozwojowa wersja instalatora programu GIMP. Nie została ona "
-"przetestowana tak dokładnie, jak stabilna wersja, co może powodować "
-"nieprawidłowe działanie programu GIMP. Prosimy zgłaszać napotkane błędy w "
-"systemie Bugzilla programu GIMP (komponent \\\"Installer\\\"):%n_https://"
-"bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nKontynuować instalację mimo "
-"to?"
+"To jest rozwojowa wersja programu GIMP, w której niektóre funkcje mogą nie "
+"być ukończone lub program może być niestabilny.%nTa wersja programu GIMP nie "
+"jest przeznaczona do codziennego użytku, ponieważ może być niestabilna, co "
+"może doprowadzić do utraty danych.%nJeśli wystąpił problem, to prosimy "
+"najpierw sprawdzić, czy nie został on już naprawiony w repozytorium git. "
+"Jeśli nie, to prosimy zgłosić go w systemie Bugzilla programu GIMP (w języku "
+"angielskim):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n"
+"%nKontynuować instalację mimo to?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
