@@ -855,12 +855,12 @@ gimp_color_frame_update (GimpColorFrame *frame)
       break;
 
     case GIMP_COLOR_FRAME_MODE_LAB:
-      /* TRANSLATORS: L for Lightness (Lab color space) */
-      names[0] = C_("Lab color space", "L:");
+      /* TRANSLATORS: L* for Lightness (Lab color space) */
+      names[0] = C_("Lab color space", "L*:");
       /* TRANSLATORS: a* color channel in Lab color space */
-      names[1] = C_("Lab color space", "A:");
+      names[1] = C_("Lab color space", "a*:");
       /* TRANSLATORS: b* color channel in Lab color space */
-      names[2] = C_("Lab color space", "B:");
+      names[2] = C_("Lab color space", "b*:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
