@@ -190,7 +190,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_box_pack_start (GTK_BOX (vbox), frame->coords_box_x, FALSE, FALSE, 0);
 
   /* TRANSLATORS: X for the X coordinate. */
-  label = gtk_label_new (_("X:"));
+  label = gtk_label_new (C_("Coordinates", "X:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_x), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -204,7 +204,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
   gtk_box_pack_start (GTK_BOX (vbox), frame->coords_box_y, FALSE, FALSE, 0);
 
   /* TRANSLATORS: Y for the Y coordinate. */
-  label = gtk_label_new (_("Y:"));
+  label = gtk_label_new (C_("Coordinates", "Y:"));
   gtk_box_pack_start (GTK_BOX (frame->coords_box_y), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -634,9 +634,9 @@ gimp_color_frame_update (GimpColorFrame *frame)
   else
     {
       /* TRANSLATORS: n/a for Not Available. */
-      gtk_label_set_text (GTK_LABEL (frame->coords_label_x), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (frame->coords_label_x), C_("Coordinates", "n/a"));
       /* TRANSLATORS: n/a for Not Available. */
-      gtk_label_set_text (GTK_LABEL (frame->coords_label_y), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (frame->coords_label_y), C_("Coordinates", "n/a"));
     }
 
   switch (frame->frame_mode)
@@ -709,24 +709,24 @@ gimp_color_frame_update (GimpColorFrame *frame)
         if (base_type == GIMP_GRAY)
           {
             /* TRANSLATORS: V for Value (grayscale) */
-            names[0] = _("V:");
+            names[0] = C_("Grayscale", "V:");
 
             if (has_alpha)
               /* TRANSLATORS: A for Alpha (color transparency) */
-              names[1] = _("A:");
+              names[1] = C_("Alpha channel", "A:");
           }
         else
           {
             /* TRANSLATORS: R for Red (RGB) */
-            names[0] = _("R:");
+            names[0] = C_("RGB", "R:");
             /* TRANSLATORS: G for Green (RGB) */
-            names[1] = _("G:");
+            names[1] = C_("RGB", "G:");
             /* TRANSLATORS: B for Blue (RGB) */
-            names[2] = _("B:");
+            names[2] = C_("RGB", "B:");
 
             if (has_alpha)
               /* TRANSLATORS: A for Alpha (color transparency) */
-              names[3] = _("A:");
+              names[3] = C_("Alpha channel", "A:");
 
             if (babl_format_is_palette (frame->sample_format))
               {
@@ -753,18 +753,18 @@ gimp_color_frame_update (GimpColorFrame *frame)
     case GIMP_COLOR_FRAME_MODE_RGB_PERCENT:
     case GIMP_COLOR_FRAME_MODE_RGB_U8:
       /* TRANSLATORS: R for Red (RGB) */
-      names[0] = _("R:");
+      names[0] = C_("RGB", "R:");
       /* TRANSLATORS: G for Green (RGB) */
-      names[1] = _("G:");
+      names[1] = C_("RGB", "G:");
       /* TRANSLATORS: B for Blue (RGB) */
-      names[2] = _("B:");
+      names[2] = C_("RGB", "B:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
-        names[3] = _("A:");
+        names[3] = C_("Alpha channel", "A:");
 
       /* TRANSLATORS: Hex for Hexadecimal (representation of a color) */
-      names[4] = _("Hex:");
+      names[4] = C_("Color representation", "Hex:");
 
       if (frame->sample_valid)
         {
@@ -795,15 +795,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_HSV:
       /* TRANSLATORS: H for Hue (HSV color space) */
-      names[0] = _("H:");
+      names[0] = C_("HSV color space", "H:");
       /* TRANSLATORS: S for Saturation (HSV color space) */
-      names[1] = _("S:");
+      names[1] = C_("HSV color space", "S:");
       /* TRANSLATORS: V for Value (HSV color space) */
-      names[2] = _("V:");
+      names[2] = C_("HSV color space", "V:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
-        names[3] = _("A:");
+        names[3] = C_("Alpha channel", "A:");
 
       if (frame->sample_valid)
         {
@@ -823,15 +823,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_LCH:
       /* TRANSLATORS: L for Lightness (LCH color space) */
-      names[0] = _("L:");
+      names[0] = C_("LCH color space", "L:");
       /* TRANSLATORS: C for Chroma (LCH color space) */
-      names[1] = _("C:");
+      names[1] = C_("LCH color space", "C:");
       /* TRANSLATORS: H for Hue (LCH color space) */
-      names[2] = _("H:");
+      names[2] = C_("LCH color space", "H:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
-        names[3] = _("A:");
+        names[3] = C_("Alpha channel", "A:");
 
       if (frame->sample_valid)
         {
@@ -855,15 +855,15 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_LAB:
       /* TRANSLATORS: L for Lightness (Lab color space) */
-      names[0] = _("L:");
+      names[0] = C_("Lab color space", "L:");
       /* TRANSLATORS: a* color channel in Lab color space */
-      names[1] = _("A:");
+      names[1] = C_("Lab color space", "A:");
       /* TRANSLATORS: b* color channel in Lab color space */
-      names[2] = _("B:");
+      names[2] = C_("Lab color space", "B:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
-        names[3] = _("A:");
+        names[3] = C_("Alpha channel", "A:");
 
       if (frame->sample_valid)
         {
@@ -887,17 +887,17 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
     case GIMP_COLOR_FRAME_MODE_CMYK:
       /* TRANSLATORS: C for Cyan (CMYK) */
-      names[0] = _("C:");
+      names[0] = C_("CMYK", "C:");
       /* TRANSLATORS: M for Magenta (CMYK) */
-      names[1] = _("M:");
+      names[1] = C_("CMYK", "M:");
       /* TRANSLATORS: Y for Yellow (CMYK) */
-      names[2] = _("Y:");
+      names[2] = C_("CMYK", "Y:");
       /* TRANSLATORS: K for Key/black (CMYK) */
-      names[3] = _("K:");
+      names[3] = C_("CMYK", "K:");
 
       if (has_alpha)
         /* TRANSLATORS: A for Alpha (color transparency) */
-        names[4] = _("A:");
+        names[4] = C_("Alpha channel", "A:");
 
       if (frame->sample_valid)
         {
