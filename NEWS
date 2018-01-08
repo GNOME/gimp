@@ -74,6 +74,9 @@ Plug-ins:
     PSP (CVE-2017-17787 and CVE-2017-17789), TGA (CVE-2017-17786) and
     FLI (CVE-2017-17785).
   - Fix WebP export under Windows.
+  - No more max dimension limitation for X cursors. We still warn when
+    cursor size is over a max limit for X bitmap cursors, but we don't
+    clamp anymore on export.
 
 Building:
 
