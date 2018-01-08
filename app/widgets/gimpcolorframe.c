@@ -730,7 +730,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
             if (babl_format_is_palette (frame->sample_format))
               {
-                names[4] = _("Index:");
+                /* TRANSLATORS: Index of the color in the palette. */
+                names[4] = C_("Indexed color", "Index:");
 
                 if (frame->sample_valid)
                   {
@@ -954,7 +955,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
           if (frame->sample_valid && values[i])
             gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), values[i]);
           else
-            gtk_label_set_text (GTK_LABEL (frame->value_labels[i]), _("n/a"));
+            gtk_label_set_text (GTK_LABEL (frame->value_labels[i]),
+                                C_("Color value", "n/a"));
         }
       else
         {
