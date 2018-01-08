@@ -28,8 +28,6 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE  /* need PATH_MAX */
-
 #include <string.h>
 #include <limits.h>
 
@@ -40,15 +38,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#if ! defined PATH_MAX
-#  if defined _MAX_PATH
-#    define PATH_MAX _MAX_PATH
-#  elif defined MAXPATHLEN
-#    define PATH_MAX MAXPATHLEN
-#  else
-#    define PATH_MAX 1024
-#  endif
-#endif
 
 /** qbist renderer ***********************************************************/
 
@@ -68,15 +57,15 @@ typedef gfloat vreg[3];
 
 typedef enum
 {
- PROJECTION,
- SHIFT,
- SHIFTBACK,
- ROTATE,
- ROTATE2,
- MULTIPLY,
- SINE,
- CONDITIONAL,
- COMPLEMENT
+  PROJECTION,
+  SHIFT,
+  SHIFTBACK,
+  ROTATE,
+  ROTATE2,
+  MULTIPLY,
+  SINE,
+  CONDITIONAL,
+  COMPLEMENT
 } TransformType;
 
 #define NUM_TRANSFORMS  (COMPLEMENT + 1)
@@ -88,34 +77,32 @@ typedef struct
   gint          source[MAX_TRANSFORMS];
   gint          control[MAX_TRANSFORMS];
   gint          dest[MAX_TRANSFORMS];
-}
-ExpInfo;
+} ExpInfo;
 
 typedef struct
 {
   ExpInfo  info;
   gint     oversampling;
   gchar    path[PATH_MAX];
-}
-QbistInfo;
+} QbistInfo;
 
 
 /** prototypes **************************************************************/
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+static void      query                  (void);
+static void      run                    (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *param,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
 
 static gboolean  dialog_run             (void);
-static void      dialog_new_variations  (GtkWidget *widget,
-                                         gpointer   data);
-static void      dialog_update_previews (GtkWidget *widget,
-                                         gpointer   data);
-static void      dialog_select_preview  (GtkWidget *widget,
-                                         ExpInfo   *n_info);
+static void      dialog_new_variations  (GtkWidget        *widget,
+                                         gpointer          data);
+static void      dialog_update_previews (GtkWidget        *widget,
+                                         gpointer          data);
+static void      dialog_select_preview  (GtkWidget        *widget,
+                                         ExpInfo          *n_info);
 
 static QbistInfo  qbist_info;
 static GRand     *gr = NULL;
@@ -429,12 +416,11 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  gint sel_x1, sel_y1, sel_width, sel_height;
-  gint img_height, img_width;
-
-  GimpDrawable      *drawable;
+  static GimpParam   values[1];
+  gint               sel_x1, sel_y1, sel_width, sel_height;
+  gint               img_height, img_width;
   GimpRunMode        run_mode;
+  gint32             drawable_id;
   GimpPDBStatusType  status;
 
   *nreturn_vals = 1;
@@ -447,19 +433,20 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   if (param[2].type != GIMP_PDB_DRAWABLE)
     status = GIMP_PDB_CALLING_ERROR;
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  drawable_id = param[2].data.d_drawable;
 
-  img_width = gimp_drawable_width (drawable->drawable_id);
-  img_height = gimp_drawable_height (drawable->drawable_id);
+  img_width = gimp_drawable_width (drawable_id);
+  img_height = gimp_drawable_height (drawable_id);
 
-  if (! gimp_drawable_is_rgb (drawable->drawable_id))
+  if (! gimp_drawable_is_rgb (drawable_id))
     status = GIMP_PDB_CALLING_ERROR;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     {
@@ -510,46 +497,56 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          GimpPixelRgn imagePR;
-          gpointer     pr;
+          GeglBuffer         *buffer;
+          GeglBufferIterator *iter;
+          gint                total_pixels = img_width * img_height;
+          gint                done_pixels  = 0;
 
-          gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
-                                  gimp_tile_width ());
-          gimp_pixel_rgn_init (&imagePR, drawable,
-                               0, 0, img_width, img_height, TRUE, TRUE);
+          buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+
+          iter = gegl_buffer_iterator_new (buffer,
+                                           GEGL_RECTANGLE (0, 0,
+                                                           img_width, img_height),
+                                           0, babl_format ("RGBA u8"),
+                                           GEGL_ACCESS_READWRITE,
+                                           GEGL_ABYSS_NONE);
 
           optimize (&qbist_info.info);
 
           gimp_progress_init (_("Qbist"));
 
-          for (pr = gimp_pixel_rgns_register (1, &imagePR);
-               pr != NULL;
-               pr = gimp_pixel_rgns_process (pr))
+          while (gegl_buffer_iterator_next (iter))
             {
-              gint row;
+              guchar        *data = iter->data[0];
+              GeglRectangle  roi  = iter->roi[0];
+              gint           row;
 
-              for (row = 0; row < imagePR.h; row++)
+              for (row = 0; row < roi.height; row++)
                 {
                   qbist (&qbist_info.info,
-                         imagePR.data + row * imagePR.rowstride,
-                         imagePR.x,
-                         imagePR.y + row,
-                         imagePR.w,
+                         data + row * roi.width * 4,
+                         roi.x,
+                         roi.y + row,
+                         roi.width,
                          sel_width,
                          sel_height,
-                         imagePR.bpp,
+                         4,
                          qbist_info.oversampling);
                 }
 
-              gimp_progress_update ((gfloat) (imagePR.y - sel_y1) /
-                                    (gfloat) sel_height);
+              done_pixels += roi.width * roi.height;
+
+              gimp_progress_update ((gdouble) done_pixels /
+                                    (gdouble) total_pixels);
             }
 
+          g_object_unref (buffer);
+
           gimp_progress_update (1.0);
-          gimp_drawable_flush (drawable);
-          gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-          gimp_drawable_update (drawable->drawable_id, sel_x1, sel_y1,
-						  sel_width, sel_height);
+
+          gimp_drawable_merge_shadow (drawable_id, TRUE);
+          gimp_drawable_update (drawable_id, sel_x1, sel_y1,
+                                sel_width, sel_height);
 
           gimp_displays_flush ();
         }
@@ -559,8 +556,6 @@ run (const gchar      *name,
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 /** User interface ***********************************************************/

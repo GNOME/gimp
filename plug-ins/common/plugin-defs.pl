@@ -75,7 +75,7 @@
     'photocopy' => { ui => 1 },
     'plugin-browser' => { ui => 1 },
     'procedure-browser' => { ui => 1 },
-    'qbist' => { ui => 1 },
+    'qbist' => { ui => 1, gegl => 1 },
     'ripple' => { ui => 1 },
     'sample-colorize' => { ui => 1 },
     'sharpen' => { ui => 1 },
