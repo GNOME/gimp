@@ -183,6 +183,12 @@ gimp_metadata_class_init (GimpMetadataClass *klass)
       g_printerr ("Failed to register XMP namespace 'DICOM'\n");
     }
 
+  if (! gexiv2_metadata_register_xmp_namespace ("http://darktable.sf.net/",
+                                                "darktable"))
+    {
+      g_printerr ("Failed to register XMP namespace 'darktable'\n");
+    }
+
   /* Usage example Xmp.GIMP.tagname */
   if (! gexiv2_metadata_register_xmp_namespace ("http://www.gimp.org/xmp/",
                                                 "GIMP"))
@@ -472,7 +478,6 @@ gimp_metadata_new (void)
   if (gexiv2_initialize ())
     {
       metadata = g_object_new (GIMP_TYPE_METADATA, NULL);
-                               gexiv2_metadata_new ();
 
       if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (metadata),
                                       wilber_jpg, wilber_jpg_len,
