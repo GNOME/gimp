@@ -76,8 +76,12 @@ echo "## TRANSLATIONS ##"
 echo
 #git --no-pager log --stat $PREV..$CUR -- po* | grep "Updated\? .* translation"|sed "s/ *Updated\? \(.*\) translation.*/\\1/" | sort | uniq | paste -s -d, | sed 's/,/, /g'
 
-i18n=`git --no-pager log --stat $PREV..$CUR -- po* | grep "Updated\? .* translation"|sed "s/ *Updated\? \(.*\) translation.*/\\1/" | sort | uniq`
+i18n=`git --no-pager log --stat $PREV..$CUR -- po* | grep "Updated\? .* \(translation\|language\)"`
+i18n=`printf "$i18n" | sed "s/ *Updated\? \(.*\) \(translation\|language\).*/\\1/" | sort | uniq`
 i18n_n=`printf "$i18n" | wc -l`
+# It seems that if the last line has no newline, wc does not count it.
+# Add one line manually.
+i18n_n=$(( $i18n_n + 1 ))
 i18n_comma=`printf "$i18n" | paste -s -d, | sed 's/,/, /g'`
 
 echo "$i18n_n translations were updated: $i18n_comma."
@@ -113,7 +117,7 @@ echo
 echo "## Documenters ##"
 echo
 
-git --no-pager shortlog -sn $PREV..$CUR -- docs/ devel-docs/
+git --no-pager shortlog -sn $PREV..$CUR -- docs/ devel-docs/ NEWS INSTALL.in "*README*" HACKING
 
 echo
 echo "## Build maintainers ##"
