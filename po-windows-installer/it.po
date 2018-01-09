@@ -1,16 +1,17 @@
-# Italian translation for gimp-windows-installer.
-# Copyright (C) 2017 the gimp authors.
-# This file is distributed under the same license as the gimp package.
-#
+# The GIMP Windows installer translation.
+# Copyright (C) 2018 Free Software Foundation, Inc.
+# Marco Ciampa <ciampix@posteo.net>, 2018.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-windows-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 02:30+0100\n"
+"Project-Id-Version: GIMP Windows Installer\n"
+"PO-Revision-Date: 2018-01-09 12:05+0100\n"
+"Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
+"Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -18,7 +19,7 @@ msgstr "Accordo di licenza"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr ""
+msgstr "Installazione creata da Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
@@ -163,11 +164,11 @@ msgstr "Consente di usare i plugin di GIMP scritti in liguaggio Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "MyPaint brushes"
-msgstr ""
+msgstr "Pennelli MyPaint"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Install the default set of MyPaint brushes"
-msgstr ""
+msgstr "Installazione dell'insieme predefinito dei pennelli MyPaint"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "PostScript support"
@@ -225,9 +226,8 @@ msgid "Error updating Python interpreter info."
 msgstr "Errore aggiornando i dati dell'interprete Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
-#, fuzzy
 msgid "Error updating MyPaint brushes info."
-msgstr "Errore aggiornando i dati dell'interprete Python."
+msgstr "Errore durante l'aggiornamento delle informazioni dei pennelli MyPaint."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 #, no-c-format
@@ -352,9 +352,8 @@ msgid "Setting up environment for GIMP Python extension..."
 msgstr "Impostazione dell'ambiente per l'estensione Python di GIMP..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
-#, fuzzy
 msgid "Setting up MyPaint brushes..."
-msgstr "Impostazione dell'ambiente di GIMP..."
+msgstr "Impostazione dei pennelli MyPaint..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up GIMP environment..."
@@ -384,12 +383,3 @@ msgid ""
 msgstr ""
 "GIMP non sembra essere installato nella directory selezionata. Continuare "
 "ugualmente?"
-
-#~ msgid ""
-#~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "
-#~ "page of Setup by Alexia_Death%nImage on closing page of Setup by Jakub "
-#~ "Steiner"
-#~ msgstr ""
-#~ "Installazione creata da Jernej Simonèiè, jernej-gimp@ena.si%n%nImmagine "
-#~ "all'avvio dell'installazione di Alexia_Death%nImmagine alla fine "
-#~ "dell'installazione di Jakub Steiner"
