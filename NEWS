@@ -10,6 +10,7 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+
 Overview of Changes from GIMP 2.9.8 to GIMP 2.10 RC1
 ====================================================
 
@@ -50,6 +51,7 @@ Configurability:
     (the Toolbox page).
 
 Tools:
+
   - "Link brush size with canvas zoom" paint option becomes "Lock brush
     to view" to make a brush invariant in display space whichever
     scaling, rotation, and reflection.
@@ -110,6 +112,7 @@ Translations:
     Basque, Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish,
     Esperanto, German, Icelandic, Italian, Polish, Russian, Serbian,
     Slovenian, Swedish, Turkish.
+
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
@@ -263,6 +266,7 @@ gogo, Luis Angel Gonzo, Anders Jonsson, Christian Kirbach,
 Michael Natterer, Jehan Pagès, Juan Palacios, Alexandre Prokoudine,
 Christopher Rogers, Michael Schumacher, shark0r, Dimitris Spingos,
 Tobias Stoeckmann, Andika Triwidada, Massimo Valentini.
+
 
 Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 =================================================
