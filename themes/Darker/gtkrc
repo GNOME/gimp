@@ -2501,4 +2501,12 @@ widget "GtkMenuItem" style "ubuntu-fix-menu-item"
 
 ###########################################################
 
+style "dark-python-console"
+{
+  text[SELECTED] = "#8f8"
+  text[INSENSITIVE] = "#f88"
+}
+
+widget "python-fu-console" style "dark-python-console"
+
 # EOF
