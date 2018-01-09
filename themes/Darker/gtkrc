@@ -2503,7 +2503,7 @@ widget "GtkMenuItem" style "ubuntu-fix-menu-item"
 
 style "dark-python-console"
 {
-  text[SELECTED] = "#8f8"
+  text[NORMAL] = "#8f8"
   text[INSENSITIVE] = "#f88"
 }
 

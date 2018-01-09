@@ -2514,7 +2514,7 @@ widget "GtkMenuItem" style "ubuntu-fix-menu-item"
 
 style "light-python-console"
 {
-  text[SELECTED] = "#080"
+  text[NORMAL] = "#080"
   text[INSENSITIVE] = "#800"
 }
 

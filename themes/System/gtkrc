@@ -105,11 +105,3 @@ style "gimp-display-style" = "gimp-default-style"
 }
 
 widget "*GimpDisplayShell.*" style "gimp-display-style"
-
-style "gimp-python-console"
-{
-  text[SELECTED] = "#080"
-  text[INSENSITIVE] = "#800"
-}
-
-widget "python-fu-console" style "gimp-python-console"

@@ -97,7 +97,7 @@ def do_console():
 
         def style_set(self, old_style, user_data):
             style = self.get_style ()
-            self.cons.stdout_tag.set_property ("foreground", style.text[gtk.STATE_SELECTED])
+            self.cons.stdout_tag.set_property ("foreground", style.text[gtk.STATE_NORMAL])
             self.cons.stderr_tag.set_property ("foreground", style.text[gtk.STATE_INSENSITIVE])
 
         def response(self, dialog, response_id):
