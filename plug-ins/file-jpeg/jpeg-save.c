@@ -64,10 +64,10 @@ static gboolean arithc_supported = FALSE;
 #define DEFAULT_RESTART_MCU_ROWS 16
 #define DEFAULT_DCT              0
 #define DEFAULT_PREVIEW          FALSE
-#define DEFAULT_EXIF             TRUE
+#define DEFAULT_EXIF             FALSE
 #define DEFAULT_THUMBNAIL        FALSE
-#define DEFAULT_XMP              TRUE
-#define DEFAULT_IPTC             TRUE
+#define DEFAULT_XMP              FALSE
+#define DEFAULT_IPTC             FALSE
 #define DEFAULT_USE_ORIG_QUALITY FALSE
 
 #define JPEG_DEFAULTS_PARASITE  "jpeg-save-defaults"

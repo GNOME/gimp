@@ -212,9 +212,9 @@ static const PngSaveVals defaults =
   TRUE,
   TRUE,
   9,
-  TRUE,                /* save exif       */
-  TRUE,                /* save xmp        */
-  TRUE,                /* save iptc        */
+  FALSE,               /* save exif       */
+  FALSE,               /* save xmp        */
+  FALSE,               /* save iptc        */
   TRUE,                /* save thumbnail  */
   PNG_FORMAT_AUTO
 };

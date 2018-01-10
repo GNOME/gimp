@@ -199,9 +199,9 @@ run (const gchar      *name,
           params.kf_distance   = 50;
           params.quality       = 90.0f;
           params.alpha_quality = 100.0f;
-          params.exif          = TRUE;
-          params.iptc          = TRUE;
-          params.xmp           = TRUE;
+          params.exif          = FALSE;
+          params.iptc          = FALSE;
+          params.xmp           = FALSE;
           params.delay         = 200;
           params.force_delay   = FALSE;
 
