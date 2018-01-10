@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 # GIMP Plug-in for the OpenRaster file format
 # http://create.freedesktop.org/wiki/OpenRaster
