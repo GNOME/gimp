@@ -448,8 +448,6 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  g_printerr ("modifier key\n");
-
   if (tr_tool->widget)
     {
       GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
