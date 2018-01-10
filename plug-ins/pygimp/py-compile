@@ -2,7 +2,12 @@
 # called as "py-compile [--basedir DIR] PY_FILES ...
 
 if [ -z "$PYTHON" ]; then
-  PYTHON=python
+    if [[ -x "$(command -v python2)" ]]; then
+        PYTHON=python2
+    else
+        # Let's hope it's Python2
+        PYTHON=python
+    fi
 fi
 
 basedir=
@@ -65,4 +70,3 @@ for file in string.split(files):
     sys.stdout.flush()
     py_compile.compile(path)
 print" 2>/dev/null || :
-
