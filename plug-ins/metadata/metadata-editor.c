@@ -445,7 +445,7 @@ run (const gchar      *name,
 
   force_write = FALSE;
 
-  INIT_I18N();
+  INIT_I18N ();
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
   if (! strcmp (name, PLUG_IN_PROC))
@@ -463,7 +463,7 @@ run (const gchar      *name,
 
       if (!metadata)
         {
-          metadata = gimp_metadata_new();
+          metadata = gimp_metadata_new ();
           gimp_image_set_metadata (image_ID, metadata);
         }
 
@@ -509,14 +509,14 @@ metadata_editor_dialog (gint32        image_id,
   GError         *error = NULL;
   gboolean        run;
 
-  metadata = GEXIV2_METADATA(g_metadata);
+  metadata = GEXIV2_METADATA (g_metadata);
 
   builder = gtk_builder_new ();
 
   meta_args.image_id = image_id;
   meta_args.builder = builder;
   meta_args.metadata = metadata;
-  meta_args.filename = g_strconcat (g_get_home_dir(), "/", DEFAULT_TEMPLATE_FILE,
+  meta_args.filename = g_strconcat (g_get_home_dir (), "/", DEFAULT_TEMPLATE_FILE,
                                     NULL);
 
   ui_file = g_build_filename (gimp_data_directory (),
@@ -566,16 +566,16 @@ metadata_editor_dialog (gint32        image_id,
   metadata_vbox = builder_get_widget (builder, "metadata-vbox");
   impex_combo   = builder_get_widget (builder, "impex_combo");
 
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(impex_combo),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
                                   _("Select:"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(impex_combo),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
                                   _("Import metadata"));
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(impex_combo),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (impex_combo),
                                   _("Export metadata"));
-  gtk_combo_box_set_active (GTK_COMBO_BOX(impex_combo), 0);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (impex_combo), 0);
 
-  g_signal_connect(G_OBJECT(impex_combo),
-                   "changed", G_CALLBACK(impex_combo_callback), &meta_args);
+  g_signal_connect (G_OBJECT (impex_combo),
+                    "changed", G_CALLBACK (impex_combo_callback), &meta_args);
 
   gtk_container_set_border_width (GTK_CONTAINER (metadata_vbox), 12);
   gtk_box_pack_start (GTK_BOX (content_area), metadata_vbox, TRUE, TRUE, 0);
@@ -608,7 +608,7 @@ remove_substring (const gchar *string,
 {
   if (string != NULL && substring != NULL)
     {
-      gchar *p = strstr(string, substring);
+      gchar *p = strstr (string, substring);
       if (p)
         {
           strcpy (p, p + strlen (substring));
@@ -632,9 +632,10 @@ count_tags (GExiv2Metadata  *metadata,
     {
       for (ii = 0; ii < items; ii++)
         {
-          g_sprintf((gchar*)&tag, "%s[%d]", header, oo);
-          g_sprintf((gchar*)&tag, "%s%s", (gchar*)&tag, (gchar*)tags[ii]);
-          if (gexiv2_metadata_has_tag(metadata, (gchar*)&tag))
+          g_sprintf ((gchar*) &tag, "%s[%d]", header, oo);
+          g_sprintf ((gchar*) &tag, "%s%s",
+                     (gchar*) &tag, (gchar*) tags[ii]);
+          if (gexiv2_metadata_has_tag (metadata, (gchar*) &tag))
             {
               tagcount++;
               break;
@@ -660,10 +661,10 @@ get_tags (GExiv2Metadata  *metadata,
       for (iii = 0; iii < items; iii++)
         {
           gchar *value;
-          g_sprintf((gchar*)&tag, "%s[%d]", header, ooo);
-          g_sprintf((gchar*)&tag, "%s%s", (gchar*)&tag, (gchar*)tags[iii]);
-          value = gexiv2_metadata_get_tag_string(metadata, (gchar*)&tag);
-          tagdata[ooo-1][iii] = strdup(value);
+          g_sprintf ((gchar*) &tag, "%s[%d]", header, ooo);
+          g_sprintf ((gchar*) &tag, "%s%s", (gchar*) &tag, (gchar*) tags[iii]);
+          value = gexiv2_metadata_get_tag_string (metadata, (gchar*) &tag);
+          tagdata[ooo-1][iii] = strdup (value);
         }
     }
 }
@@ -746,7 +747,7 @@ on_date_button_clicked (GtkButton *widget,
   date_text = gtk_entry_get_text (GTK_ENTRY (entry_widget));
   if (date_text && date_text[0] != '\0')
     {
-      sscanf(date_text, "%d-%d-%d;", &year, &month, &day);
+      sscanf (date_text, "%d-%d-%d;", &year, &month, &day);
       month--;
     }
   else
@@ -793,7 +794,7 @@ on_date_button_clicked (GtkButton *widget,
     {
       gchar date[25];
       gtk_calendar_get_date (GTK_CALENDAR (calendar), &year, &month, &day);
-      g_sprintf((gchar*)&date, "%d-%02d-%02d", year, month+1, day);
+      g_sprintf ((gchar*) &date, "%d-%02d-%02d", year, month+1, day);
       gtk_entry_set_text (GTK_ENTRY (entry_widget), date);
     }
 
@@ -953,7 +954,7 @@ cell_edited_callback_combo (GtkCellRendererCombo *cell,
   GtkTreePath      *path;
   GtkTreeSelection *selection;
 
-  widget = GTK_WIDGET(data);
+  widget = GTK_WIDGET (data);
 
   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
   liststore = GTK_LIST_STORE (treemodel);
@@ -1759,7 +1760,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           gchar *value_clean;
           gchar *value_utf;
 
-          value_clean = g_strdup(value);
+          value_clean = g_strdup (value);
 
           if (strstr (value_clean, lang_default) != NULL)
             {
@@ -1875,7 +1876,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
           value_clean = g_strdup (value);
 
-          if (strstr(value_clean, lang_default) != NULL)
+          if (strstr (value_clean, lang_default) != NULL)
             {
               remove_substring (value_clean, lang_default);
               if (strstr (value_clean, " ") != NULL)
@@ -1908,7 +1909,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
             {
               gtk_entry_set_text (GTK_ENTRY (widget), value_utf);
             }
-          else if (! strcmp("multi", creatorContactInfoTags[i].mode))
+          else if (! strcmp ("multi", creatorContactInfoTags[i].mode))
             {
               GtkTextBuffer *buffer;
               buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
@@ -1931,7 +1932,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
           gint index;
 
           if (value)
-            g_free(value);
+            g_free (value);
 
           index = default_metadata_tags[i].other_tag_index;
           if (index > -1)
@@ -1948,7 +1949,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
           value_clean = g_strdup (value);
 
-          if (strstr(value_clean, lang_default) != NULL)
+          if (strstr (value_clean, lang_default) != NULL)
             {
               remove_substring (value_clean, lang_default);
               if (strstr (value_clean, " ") != NULL)
@@ -1981,7 +1982,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
             {
               gchar *new_value_clean[2];
 
-              new_value_clean[0] = strtok(value_clean," ");
+              new_value_clean[0] = strtok (value_clean, " ");
               strcpy (value_clean, new_value_clean[0]);
             }
 
@@ -2617,7 +2618,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   store_index = 0;
                   if (value)
                     {
-                      for(i_ctr = 0, str = strtok (value, ",;");
+                      for (i_ctr = 0, str = strtok (value, ",;");
                           str;
                           i_ctr++, str = strtok (NULL, ",;"))
                         {
@@ -3076,7 +3077,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                             licensor,
                             G_N_ELEMENTS (licensor), counter);
 
-                  phonestore = gtk_list_store_new(1, G_TYPE_STRING);
+                  phonestore = gtk_list_store_new (1, G_TYPE_STRING);
                   gtk_list_store_append (phonestore, &phoneiter);
                   gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
                   for (j=1; j < 6; j++)
@@ -5000,7 +5001,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                            gettext (phone_types[types].display));
                   if (! strcmp (tag_data, gettext (phone_types[types].display)))
                     {
-                      g_print("%d %s \n", types, phone_types[types].data);
+                      g_print ("%d %s \n", types, phone_types[types].data);
                       strcpy (type2, phone_types[types].data);
                       break;
                     }
@@ -5209,7 +5210,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               const gchar  delimiters_dms[] = " deg'\"";
               gchar        lat[256];
-              gchar       *s    = g_strdup(value_entry);
+              gchar       *s    = g_strdup (value_entry);
               gchar       *str1 = NULL;
               gchar       *str2 = NULL;
               gchar       *str3 = NULL;
@@ -5284,7 +5285,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
 
               if (s)
-                free(s);
+                free (s);
             }
           else if (! strcmp ("Exif.GPSInfo.GPSAltitude",
                              default_metadata_tags[i].tag))
@@ -5303,7 +5304,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 alt_d = (alt_d * 12 * 2.54) / 100;
               alt_d *= 10.f;
 
-              g_snprintf(alt_str, sizeof (alt_str), "%d/10", (gint) alt_d);
+              g_snprintf (alt_str, sizeof (alt_str), "%d/10", (gint) alt_d);
 
               if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
                                                     default_metadata_tags[i].tag,
@@ -5463,7 +5464,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
                                                   default_metadata_tags[i].tag,
                                                   save);
-                  g_free(save);
+                  g_free (save);
                 }
             }
           else if (! strcmp ("Xmp.DICOM.PatientSex",
@@ -5658,7 +5659,7 @@ import_dialog_metadata (metadata_editor *args)
               g_free (args->filename);
             }
 
-          args->filename = g_strdup(filename);
+          args->filename = g_strdup (filename);
           import_file_metadata (args);
         }
     }
@@ -5713,7 +5714,7 @@ impex_combo_callback (GtkComboBoxText *combo,
   args = data;
   selection = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-  switch(selection)
+  switch (selection)
     {
     case 1: /* Import */
       import_dialog_metadata (args);
@@ -5743,7 +5744,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
 
   entry = builder_get_widget (builder, "Exif.GPSInfo.GPSAltitude");
 
-  switch(selection)
+  switch (selection)
     {
     case 0: /* Meters */
       if (last_gpsaltsys_sel != 0)
