@@ -192,10 +192,8 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   memsize += gimp_g_slist_get_memsize (manager->plug_in_stack, 0);
 
   memsize += 0; /* FIXME manager->shm */
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (manager->interpreter_db),
-                                      gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (manager->environ_table),
-                                      gui_size);
+  memsize += /* FIXME */ gimp_g_object_get_memsize (G_OBJECT (manager->interpreter_db));
+  memsize += /* FIXME */ gimp_g_object_get_memsize (G_OBJECT (manager->environ_table));
   memsize += 0; /* FIXME manager->plug_in_debug */
   memsize += gimp_g_list_get_memsize (manager->data_list, 0 /* FIXME */);
 
