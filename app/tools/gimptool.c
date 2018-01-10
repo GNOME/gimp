@@ -822,7 +822,9 @@ gimp_tool_button_release (GimpTool         *tool,
 
   g_warn_if_fail (gimp_tool_control_is_active (tool->control) == FALSE);
 
-  if (tool->active_modifier_state != 0)
+  if (tool->active_modifier_state                            != 0 &&
+      gimp_tool_control_get_active_modifiers (tool->control) !=
+      GIMP_TOOL_ACTIVE_MODIFIERS_SAME)
     {
       gimp_tool_control_activate (tool->control);
 
@@ -831,7 +833,8 @@ gimp_tool_button_release (GimpTool         *tool,
       gimp_tool_control_halt (tool->control);
     }
 
-  tool->button_press_state = 0;
+  tool->button_press_state    = 0;
+  tool->active_modifier_state = 0;
 
   g_object_unref (tool);
 }
@@ -1161,6 +1164,9 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
     }
 
   tool->active_modifier_state = state;
+
+  if (active_modifiers == GIMP_TOOL_ACTIVE_MODIFIERS_SAME)
+    tool->modifier_state = state;
 }
 
 void
