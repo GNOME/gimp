@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 #   Gimp-Python - allows the writing of Gimp plugins in Python.
 #   Copyright (C) 1997  James Henstridge <james@daa.com.au>
@@ -119,8 +119,8 @@ def whirl_pinch(image, drawable, whirl, pinch, radius):
                 bot_p = ''
                 for col in range(self.sel_x1, self.sel_x2):
                         q, cx, cy = calc_undistorted_coords(self, col,
-							    row, whirl, pinch,
-							    radius)
+                                                            row, whirl, pinch,
+                                                            radius)
                         if q:
                                 if cx >= 0: ix = int(cx)
                                 else:       ix = -(int(-cx) + 1)
