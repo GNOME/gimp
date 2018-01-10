@@ -1976,7 +1976,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
             }
 
           if (! strcmp ("Exif.GPSInfo.GPSAltitude",
-                        default_metadata_tags[i].tag))
+                        default_metadata_tags[i].tag) &&
+              value_clean)
             {
               gchar *new_value_clean[2];
 
@@ -2446,19 +2447,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (* str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (* str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -2527,19 +2531,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (* str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (* str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -2608,19 +2615,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for(i_ctr = 0, str = strtok (value, ",;");
-                      str;
-                      i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for(i_ctr = 0, str = strtok (value, ",;");
+                          str;
+                          i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (* str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (* str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -2698,19 +2708,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (*str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (*str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -4009,19 +4022,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (*str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (*str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -4075,19 +4091,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (*str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (*str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -4141,19 +4160,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (*str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (*str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -4207,19 +4229,22 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
                   /* seperate list on commas */
                   store_index = 0;
-                  for (i_ctr = 0, str = strtok (value, ",;");
-                       str;
-                       i_ctr++, str = strtok (NULL, ",;"))
+                  if (value)
                     {
-                      /* remove leading whitespace */
-                      gint l = strlen (str);
+                      for (i_ctr = 0, str = strtok (value, ",;");
+                           str;
+                           i_ctr++, str = strtok (NULL, ",;"))
+                        {
+                          /* remove leading whitespace */
+                          gint l = strlen (str);
 
-                      while (isspace (str[l - 1])) --l;
-                      while (*str && isspace (*str)) ++str, --l;
+                          while (isspace (str[l - 1])) --l;
+                          while (*str && isspace (*str)) ++str, --l;
 
-                      /* stuff into array */
-                      strcpy (arr[i_ctr], str);
-                      store_index++;
+                          /* stuff into array */
+                          strcpy (arr[i_ctr], str);
+                          store_index++;
+                        }
                     }
 
                   treemodel = gtk_tree_view_get_model (GTK_TREE_VIEW (widget));
@@ -5094,14 +5119,14 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           if (! strcmp ("Exif.GPSInfo.GPSLongitude",
                         default_metadata_tags[i].tag))
             {
-              const gchar delimiters_dms[] = " deg'\"";
-              gchar *s = g_strdup (value_entry);
-              gchar lng[256];
-              gchar *str1;
-              gchar *str2;
-              gchar *str3;
+              const gchar  delimiters_dms[] = " deg'\"";
+              gchar        lng[256];
+              gchar       *s    = g_strdup (value_entry);
+              gchar       *str1 = NULL;
+              gchar       *str2 = NULL;
+              gchar       *str3 = NULL;
 
-              if (strstr (s, "."))
+              if (s && strstr (s, "."))
                 {
                   gdouble degs;
                   gint    deg;
@@ -5121,7 +5146,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   g_sprintf (str2, "%d", min);
                   g_sprintf (str3, "%d", sec);
                 }
-              else
+              else if (s)
                 {
                   str1 = strtok (s, delimiters_dms);
                   str2 = strtok (NULL, delimiters_dms);
@@ -5170,7 +5195,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                               default_metadata_tags[i].tag);
                 }
 
-              if (strstr (s, "."))
+              if (s && strstr (s, "."))
                 {
                   free (str1);
                   free (str2);
@@ -5182,14 +5207,14 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           else if (! strcmp ("Exif.GPSInfo.GPSLatitude",
                              default_metadata_tags[i].tag))
             {
-              const gchar delimiters_dms[] = " deg'\"";
-              gchar *s = g_strdup(value_entry);
-              gchar lat[256];
-              gchar *str1;
-              gchar *str2;
-              gchar *str3;
+              const gchar  delimiters_dms[] = " deg'\"";
+              gchar        lat[256];
+              gchar       *s    = g_strdup(value_entry);
+              gchar       *str1 = NULL;
+              gchar       *str2 = NULL;
+              gchar       *str3 = NULL;
 
-              if (strstr (s, "."))
+              if (s && strstr (s, "."))
                 {
                   gdouble degs;
                   gint    deg;
@@ -5209,7 +5234,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                   g_sprintf (str2, "%d", min);
                   g_sprintf (str3, "%d", sec);
                 }
-              else
+              else if (s)
                 {
                   str1 = strtok (s, delimiters_dms);
                   str2 = strtok (NULL, delimiters_dms);
