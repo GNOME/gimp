@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import sys,re
 
@@ -50,51 +50,51 @@ class Path:
    def readgimpfile (self, filedesc):
       text = filedesc.readlines()
       for line in text:
-	 namematch = re.match ("Name: (.*)$", line)
-	 if namematch:
-	    path.name = namematch.group(1)
-	 pointmatch = re.match ("TYPE: (\d) X: (\d+) Y: (\d+)", line)
-	 if pointmatch:
-	    if pointmatch.group (1) == "3":
-	       path.gimppoints.append ([])
-	    (x, y) = map (int, pointmatch.groups()[1:])
-	    path.gimppoints[-1].append (map (int, pointmatch.groups()))
-	    if self.bounds:
-	       if self.bounds[0] > x: self.bounds[0] = x
-	       if self.bounds[1] > y: self.bounds[1] = y
-	       if self.bounds[2] < x: self.bounds[2] = x
-	       if self.bounds[3] < y: self.bounds[3] = y
-	    else:
-	       self.bounds = [x,y,x,y]
+         namematch = re.match ("Name: (.*)$", line)
+         if namematch:
+            path.name = namematch.group(1)
+         pointmatch = re.match ("TYPE: (\d) X: (\d+) Y: (\d+)", line)
+         if pointmatch:
+            if pointmatch.group (1) == "3":
+               path.gimppoints.append ([])
+            (x, y) = map (int, pointmatch.groups()[1:])
+            path.gimppoints[-1].append (map (int, pointmatch.groups()))
+            if self.bounds:
+               if self.bounds[0] > x: self.bounds[0] = x
+               if self.bounds[1] > y: self.bounds[1] = y
+               if self.bounds[2] < x: self.bounds[2] = x
+               if self.bounds[3] < y: self.bounds[3] = y
+            else:
+               self.bounds = [x,y,x,y]
 
    def makesvg (self):
       for path in self.gimppoints:
          if path:
-	    start = path[0]
-	    svg = "M %d %d " % tuple (start[1:])
-	    path = path[1:]
-	    while path:
-	       curve = path [0:3]
-	       path = path[3:]
-	       if len (curve) == 2:
-		  svg = svg + "C %d %d %d %d %d %d z " % tuple (
-			   tuple (curve [0][1:]) +
-			   tuple (curve [1][1:]) +
-			   tuple (start [1:]))
-	       if len (curve) == 3:
-		  svg = svg + "C %d %d %d %d %d %d " % tuple (
-			   tuple (curve [0][1:]) +
-			   tuple (curve [1][1:]) +
-			   tuple (curve [2][1:]))
-	    self.svgpath = self.svgpath + svg
+            start = path[0]
+            svg = "M %d %d " % tuple (start[1:])
+            path = path[1:]
+            while path:
+               curve = path [0:3]
+               path = path[3:]
+               if len (curve) == 2:
+                  svg = svg + "C %d %d %d %d %d %d z " % tuple (
+                           tuple (curve [0][1:]) +
+                           tuple (curve [1][1:]) +
+                           tuple (start [1:]))
+               if len (curve) == 3:
+                  svg = svg + "C %d %d %d %d %d %d " % tuple (
+                           tuple (curve [0][1:]) +
+                           tuple (curve [1][1:]) +
+                           tuple (curve [2][1:]))
+            self.svgpath = self.svgpath + svg
 
    def writesvgfile (self, outfile):
       if self.svgpath:
-	 svg = svgtemplate % (self.bounds[2]-self.bounds[0],
-			      self.bounds[3]-self.bounds[1],
-			      self.name,
-			      -self.bounds[0], -self.bounds[1],
-			      self.svgpath)
+         svg = svgtemplate % (self.bounds[2]-self.bounds[0],
+                              self.bounds[3]-self.bounds[1],
+                              self.name,
+                              -self.bounds[0], -self.bounds[1],
+                              self.svgpath)
       else:
          svg = emptysvgtemplate
       outfile.write (svg)
@@ -115,4 +115,3 @@ path = Path()
 path.readgimpfile (infile)
 path.makesvg()
 path.writesvgfile (outfile)
-
