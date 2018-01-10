@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 """
 module-dependencies.py -- GIMP library and core module dependency constructor
@@ -24,18 +24,18 @@ with dependencies between GIMP library and core modules. Run it from
 the source root. Note that you'll either need the very latest
 PyGraphViz binding or use this hack in agraph.py:
 
---- agraph.py.orig	2010-01-04 16:07:46.000000000 +0100
-+++ agraph.py	2010-01-04 16:13:54.000000000 +0100
+--- agraph.py.orig        2010-01-04 16:07:46.000000000 +0100
++++ agraph.py        2010-01-04 16:13:54.000000000 +0100
 @@ -1154,7 +1154,8 @@ class AGraph(object):
              raise IOError("".join(errors))
- 
+
          if len(errors)>0:
 -            raise IOError("".join(errors))
 +            # Workaround exception throwing due to warning about cycles
 +            pass
          return "".join(data)
- 
- 
+
+
 """
 
 

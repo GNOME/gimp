@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 #   Gimp-Python - allows the writing of Gimp plugins in Python.
 #   Copyright (C) 2003, 2005  Manish Singh <yosh@gimp.org>
@@ -58,7 +58,7 @@ preamble = """<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 postamble = """\n</pre>\n</body>\n</html>\n"""
 
 def colorxhtml(img, drawable, filename, raw_filename,
-	       source_type, characters, size, separate):
+        source_type, characters, size, separate):
     width = drawable.width
     height = drawable.height
     bpp = drawable.bpp
