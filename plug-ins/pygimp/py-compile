@@ -2,26 +2,26 @@
 # called as "py-compile [--basedir DIR] PY_FILES ...
 
 if [ -z "$PYTHON" ]; then
-  PYTHON=python
+    PYTHON=python
 fi
 
 basedir=
 
 case "$1" in
     --basedir)
-	basedir=$2
-	shift 2
-	;;
+        basedir=$2
+        shift 2
+        ;;
     --help)
-	echo "Usage: py-compile [--basedir DIR] PY_FILES ..."
-	echo "Byte compile some python scripts.  This should be performed"
-	echo "after they have been moved to the final installation location"
-	exit 0
-	;;
+        echo "Usage: py-compile [--basedir DIR] PY_FILES ..."
+        echo "Byte compile some python scripts.  This should be performed"
+        echo "after they have been moved to the final installation location"
+        exit 0
+        ;;
     --version)
-	echo "py-compile version 0.0"
-	exit 0
-	;;
+        echo "py-compile version 0.0"
+        exit 0
+        ;;
 esac
 
 if [ $# = 0 ]; then
@@ -45,7 +45,7 @@ print 'Byte-compiling python modules...'
 for file in string.split(files):
     $trans
     if not os.path.exists(path) or not (len(path) >= 3 and path[-3:] == '.py'):
-	continue
+        continue
     print file,
     sys.stdout.flush()
     py_compile.compile(path)
@@ -60,9 +60,8 @@ print 'Byte-compiling python modules (optimised versions) ...'
 for file in string.split(files):
     $trans
     if not os.path.exists(path) or not (len(path) >= 3 and path[-3:] == '.py'):
-	continue
+        continue
     print file,
     sys.stdout.flush()
     py_compile.compile(path)
 print" 2>/dev/null || :
-
