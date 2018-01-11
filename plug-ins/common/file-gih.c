@@ -493,7 +493,7 @@ gih_load_one_brush (GInputStream  *input,
 
   if ((size = (bh.header_size - sizeof (bh))) > 0)
     {
-      name = g_new (gchar, size);
+      name = g_new0 (gchar, size + 1);
 
       if (! g_input_stream_read_all (input, name, size,
                                      &bytes_read, NULL, error) ||
@@ -622,7 +622,7 @@ gih_load_one_brush (GInputStream  *input,
       new_height = MAX (height, bh.height);
       gimp_image_resize (image_ID,
                          new_width, new_height,
-                         (width - new_width) / 2, (height - new_height) / 2);
+                         (new_width - width) / 2, (new_height - height) / 2);
     }
 
   layer_ID = gimp_layer_new (image_ID, name,
@@ -1197,7 +1197,7 @@ gih_save_one_brush (GOutputStream  *output,
   guchar        *data;
   GimpImageType  drawable_type;
   gint           bpp;
-  guint          y;
+  gint           y;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
