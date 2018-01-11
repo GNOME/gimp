@@ -33,6 +33,16 @@ Core:
     it's the expected behavior these days.
   - GIMP doesn't warn anymore for unknown darktable XMP metadata. We now
     registers the corresponding namespace.
+  - Adding settings for metadata export handling in "Image Import &
+    Export" page of Preferences. In particular, metadata are not
+    exported anymore as a default. This is indeed a privacy hazard since
+    metadata often contain a lot of sensitive information.
+
+Libgimp:
+
+   - New gimp_export_exif(), gimp_export_xmp() and gimp_export_iptc()
+     functions returning the creator choice regarding default handling
+     for metadata export (as set in the Preferences).
 
 GUI and Usability:
 
@@ -92,6 +102,8 @@ Plug-ins:
     good enough (for instance, if one has a specific type of color
     blindness), at least it is now possible to create a custom theme
     adapted to one's needs.
+  - JPEG, PNG, TIFF and WebP export plug-ins updated to honor creator's
+    choice regarding metadata handling.
 
 Building:
 
