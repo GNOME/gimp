@@ -206,9 +206,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                  gui_config->show_help_button);
       config.use_cpu_accel    = manager->gimp->use_cpu_accel;
       config.use_opencl       = gegl_config->use_opencl;
-      config.gimp_reserved_6  = 0;
-      config.gimp_reserved_7  = 0;
-      config.gimp_reserved_8  = 0;
+      config.export_exif      = core_config->export_metadata_exif;
+      config.export_xmp       = core_config->export_metadata_xmp;
+      config.export_iptc      = core_config->export_metadata_iptc;
       config.install_cmap     = FALSE;
       config.show_tooltips    = gui_config->show_tooltips;
       config.min_colors       = 144;
