@@ -729,18 +729,18 @@ save_animation (const gchar    *filename,
 
 
 gboolean
-save_image (const gchar    *filename,
-            gint32          nLayers,
-            gint32         *allLayers,
-            gint32          image_ID,
-            gint32          drawable_ID,
-            WebPSaveParams *params,
-            GError        **error)
+save_image (const gchar            *filename,
+            gint32                  nLayers,
+            gint32                 *allLayers,
+            gint32                  image_ID,
+            gint32                  drawable_ID,
+            GimpMetadata           *metadata,
+            GimpMetadataSaveFlags   metadata_flags,
+            WebPSaveParams         *params,
+            GError                **error)
 {
-  GimpMetadata          *metadata;
-  GimpMetadataSaveFlags  metadata_flags;
-  gboolean               status = FALSE;
-  GFile                 *file;
+  GFile    *file;
+  gboolean  status = FALSE;
 
   if (nLayers == 0)
     return FALSE;
@@ -767,10 +767,6 @@ save_image (const gchar    *filename,
                                    params, error);
         }
     }
-
-  metadata = gimp_image_metadata_save_prepare (image_ID,
-                                               "image/webp",
-                                               &metadata_flags);
 
   if (metadata)
     {

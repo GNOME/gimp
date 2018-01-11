@@ -41,13 +41,15 @@ typedef struct
 } WebPSaveParams;
 
 
-gboolean   save_image (const gchar    *filename,
-                       gint32          nLayers,
-                       gint32         *allLayers,
-                       gint32          image_ID,
-                       gint32          drawable_ID,
-                       WebPSaveParams *params,
-                       GError        **error);
+gboolean   save_image (const gchar            *filename,
+                       gint32                  nLayers,
+                       gint32                 *allLayers,
+                       gint32                  image_ID,
+                       gint32                  drawable_ID,
+                       GimpMetadata           *metadata,
+                       GimpMetadataSaveFlags   metadata_flags,
+                       WebPSaveParams         *params,
+                       GError                **error);
 
 
 #endif /* __WEBP_SAVE_H__ */

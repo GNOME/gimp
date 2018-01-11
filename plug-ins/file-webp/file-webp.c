@@ -174,10 +174,12 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      WebPSaveParams    params;
-      GimpExportReturn  export = GIMP_EXPORT_CANCEL;
-      gint32           *layers = NULL;
-      gint32            n_layers;
+      GimpMetadata          *metadata = NULL;
+      GimpMetadataSaveFlags  metadata_flags;
+      WebPSaveParams         params;
+      GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+      gint32                *layers = NULL;
+      gint32                 n_layers;
 
       if (run_mode == GIMP_RUN_INTERACTIVE ||
           run_mode == GIMP_RUN_WITH_LAST_VALS)
@@ -204,6 +206,14 @@ run (const gchar      *name,
           params.xmp           = FALSE;
           params.delay         = 200;
           params.force_delay   = FALSE;
+
+          /* Override the defaults with preferences. */
+          metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                       "image/webp",
+                                                       &metadata_flags);
+          params.exif = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+          params.xmp  = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+          params.iptc = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
 
           /*  Possibly override with session data  */
           gimp_get_data (SAVE_PROC, &params);
@@ -275,6 +285,7 @@ run (const gchar      *name,
                             n_layers, layers,
                             image_ID,
                             drawable_ID,
+                            metadata, metadata_flags,
                             &params,
                             &error))
             {
@@ -287,6 +298,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
+      if (metadata)
+        g_object_unref (metadata);
 
       if (status == GIMP_PDB_SUCCESS)
         {
