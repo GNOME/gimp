@@ -20,12 +20,12 @@ to provide support for CORBA and other languages suited to static
 autogeneration.
 
 Invoking PDBGEN from the command line:
-1. Change into the ./tools/pdbgen directory.
+1. Change into the ./pdb directory.
 2. $ ./pdbgen.pl DIRNAME
 where DIRNAME is either "lib" or "app", depending on which set of files
 you want to generate. The files are written into $destdir/app or $destdir/libgimp.
 $destdir is the environment variable destdir. If it's not set,
-then it's the ./tools/pdbgen directory. Make sure the directories
+then it's the ./pdb directory. Make sure the directories
 $destdir/app and $destdir/libgimp already exist and you have write permissions.
 Otherwise the code generator will fail and exit.
 It's up to you to diff the file you changed. When you're happy with
