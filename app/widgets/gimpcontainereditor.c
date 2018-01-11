@@ -278,9 +278,14 @@ gimp_container_editor_constructed (GObject *object)
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->view));
 
+  /*  Connect "select-item" with G_CONNECT_AFTER because it's a
+   *  RUN_LAST signal and the default handler selecting the row must
+   *  run before signal connections. See bug #784176.
+   */
   g_signal_connect_object (editor->view, "select-item",
                            G_CALLBACK (gimp_container_editor_select_item),
-                           editor, 0);
+                           editor, G_CONNECT_AFTER);
+
   g_signal_connect_object (editor->view, "activate-item",
                            G_CALLBACK (gimp_container_editor_activate_item),
                            editor, 0);
