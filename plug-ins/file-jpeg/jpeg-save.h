@@ -51,5 +51,6 @@ gboolean    save_image         (const gchar  *filename,
                                 GError      **error);
 gboolean    save_dialog        (void);
 void        load_defaults      (void);
+void        load_parasite      (void);
 
 #endif /* __JPEG_SAVE_H__ */

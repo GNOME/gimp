@@ -336,10 +336,13 @@ run (const gchar      *name,
           break;
         }
 
+      /* Initialize with hardcoded defaults */
+      load_defaults ();
+
+      /* Override the defaults with preferences. */
       metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                    "image/jpeg",
                                                    &metadata_flags);
-
       jsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       jsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       jsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
@@ -353,8 +356,8 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
         }
 
-      /* load defaults from gimp parasite */
-      load_defaults ();
+      /* Override preferences from JPG export defaults (if saved). */
+      load_parasite ();
 
       switch (run_mode)
         {

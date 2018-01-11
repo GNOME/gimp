@@ -1231,12 +1231,6 @@ save_dialog_response (GtkWidget *widget,
 void
 load_defaults (void)
 {
-  GimpParasite *parasite;
-  gchar        *def_str;
-  JpegSaveVals  tmpvals;
-  gint          num_fields;
-  gint          subsampling;
-
   jsvals.quality          = DEFAULT_QUALITY;
   jsvals.smoothing        = DEFAULT_SMOOTHING;
   jsvals.optimize         = DEFAULT_OPTIMIZE;
@@ -1252,6 +1246,16 @@ load_defaults (void)
   jsvals.save_xmp         = DEFAULT_XMP;
   jsvals.save_iptc        = DEFAULT_IPTC;
   jsvals.use_orig_quality = DEFAULT_USE_ORIG_QUALITY;
+}
+
+void
+load_parasite (void)
+{
+  GimpParasite *parasite;
+  gchar        *def_str;
+  JpegSaveVals  tmpvals;
+  gint          num_fields;
+  gint          subsampling;
 
   parasite = gimp_get_parasite (JPEG_DEFAULTS_PARASITE);
 
@@ -1333,6 +1337,7 @@ load_gui_defaults (JpegSaveGui *pg)
   GtkAdjustment *restart_markers;
 
   load_defaults ();
+  load_parasite ();
 
 #define SET_ACTIVE_BTTN(field) \
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->field), jsvals.field)

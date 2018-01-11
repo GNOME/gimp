@@ -358,9 +358,14 @@ run (const gchar      *name,
           break;
         }
 
+      /* Override the defaults with preferences. */
       metadata = gimp_image_metadata_save_prepare (orig_image,
                                                    "image/tiff",
                                                    &metadata_flags);
+      tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)

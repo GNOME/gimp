@@ -184,8 +184,8 @@ static gboolean  ia_has_transparent_pixels (GeglBuffer       *buffer);
 static gint      find_unused_ia_color      (GeglBuffer       *buffer,
                                             gint             *colors);
 
-static void      load_defaults             (void);
-static void      save_defaults             (void);
+static void      load_parasite             (void);
+static void      save_parasite             (void);
 static void      load_gui_defaults         (PngSaveGui       *pg);
 
 
@@ -540,21 +540,25 @@ run (const gchar      *name,
           break;
         }
 
+      /* Initialize with hardcoded defaults */
+      pngvals = defaults;
+
+      /* Override the defaults with preferences. */
       metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                    "image/png",
                                                    &metadata_flags);
-
       pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
 
-      load_defaults ();
+      /* Override preferences from PNG export defaults (if saved). */
+      load_parasite ();
 
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          /* possibly retrieve data */
+          /* Finally possibly retrieve data from previous run. */
           gimp_get_data (SAVE_PROC, &pngvals);
 
           alpha = gimp_drawable_has_alpha (drawable_ID);
@@ -676,7 +680,8 @@ run (const gchar      *name,
     }
   else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {
-      load_defaults ();
+      pngvals = defaults;
+      load_parasite ();
 
       *nreturn_vals = 10;
 
@@ -701,7 +706,8 @@ run (const gchar      *name,
     {
       if (nparams == 9)
         {
-          load_defaults ();
+          pngvals = defaults;
+          load_parasite ();
 
           pngvals.interlaced          = param[0].data.d_int32;
           pngvals.compression_level   = param[1].data.d_int32;
@@ -713,7 +719,7 @@ run (const gchar      *name,
           pngvals.comment             = param[7].data.d_int32;
           pngvals.save_transp_pixels  = param[8].data.d_int32;
 
-          save_defaults ();
+          save_parasite ();
         }
       else
         {
@@ -2430,7 +2436,7 @@ save_dialog (gint32    image_ID,
 
   g_signal_connect_swapped (gtk_builder_get_object (builder, "save-defaults"),
                             "clicked",
-                            G_CALLBACK (save_defaults),
+                            G_CALLBACK (save_parasite),
                             &pg);
 
   /* Show dialog and run */
@@ -2462,12 +2468,9 @@ save_dialog_response (GtkWidget *widget,
 }
 
 static void
-load_defaults (void)
+load_parasite (void)
 {
   GimpParasite *parasite;
-
-  /* initialize with hardcoded defaults */
-  pngvals = defaults;
 
   parasite = gimp_get_parasite (PNG_DEFAULTS_PARASITE);
 
@@ -2505,7 +2508,7 @@ load_defaults (void)
 }
 
 static void
-save_defaults (void)
+save_parasite (void)
 {
   GimpParasite *parasite;
   gchar        *def_str;
@@ -2538,7 +2541,10 @@ save_defaults (void)
 static void
 load_gui_defaults (PngSaveGui *pg)
 {
-  load_defaults ();
+  /* initialize with hardcoded defaults */
+  pngvals = defaults;
+  /* Override with parasite. */
+  load_parasite ();
 
 #define SET_ACTIVE(field) \
   if (gtk_widget_is_sensitive (pg->field)) \
