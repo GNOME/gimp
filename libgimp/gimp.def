@@ -304,6 +304,9 @@ EXPORTS
 	gimp_equalize
 	gimp_eraser
 	gimp_eraser_default
+	gimp_export_exif
+	gimp_export_iptc
+	gimp_export_xmp
 	gimp_extension_ack
 	gimp_extension_enable
 	gimp_extension_process
