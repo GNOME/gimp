@@ -1422,7 +1422,7 @@ gimp_statusbar_shell_rotated (GimpDisplayShell *shell,
     {
       /* Degree symbol U+00B0. There are no spaces between the value and the
        * unit for angular rotation. */
-      text = g_strdup_printf ("%.2f\xC2\xB0", shell->rotate_angle);
+      text = g_strdup_printf (" %.2f\xC2\xB0", shell->rotate_angle);
     }
   gtk_label_set_text (GTK_LABEL (statusbar->rotate_label), text);
   if (text)
