@@ -504,15 +504,15 @@ _gp_config_read (GIOChannel      *channel,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->gimp_reserved_6, 1,
+                              (guint8 *) &config->export_exif, 1,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->gimp_reserved_7, 1,
+                              (guint8 *) &config->export_xmp, 1,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->gimp_reserved_8, 1,
+                              (guint8 *) &config->export_iptc, 1,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
@@ -596,15 +596,15 @@ _gp_config_write (GIOChannel      *channel,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->gimp_reserved_6, 1,
+                               (const guint8 *) &config->export_exif, 1,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->gimp_reserved_7, 1,
+                               (const guint8 *) &config->export_xmp, 1,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->gimp_reserved_8, 1,
+                               (const guint8 *) &config->export_iptc, 1,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,

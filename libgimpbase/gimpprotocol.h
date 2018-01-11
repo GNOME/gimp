@@ -70,9 +70,9 @@ struct _GPConfig
   gint8    show_help_button;
   gint8    use_cpu_accel;
   gint8    use_opencl;
-  gint8    gimp_reserved_6;
-  gint8    gimp_reserved_7;
-  gint8    gimp_reserved_8;
+  gint8    export_exif;
+  gint8    export_xmp;
+  gint8    export_iptc;
   gint8    install_cmap;
   gint8    show_tooltips;
   gint32   min_colors;

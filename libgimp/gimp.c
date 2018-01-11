@@ -195,6 +195,9 @@ static const gdouble  _gamma_val         = 2.2;
 static gboolean       _install_cmap      = FALSE;
 static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
+static gboolean       _export_exif       = FALSE;
+static gboolean       _export_xmp        = FALSE;
+static gboolean       _export_iptc       = FALSE;
 static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
 static gint           _min_colors        = 144;
@@ -1376,6 +1379,57 @@ gimp_show_help_button (void)
 }
 
 /**
+ * gimp_export_exif:
+ *
+ * Returns whether file plug-ins should default to exporting Exif
+ * metadata, according preferences (original settings is #FALSE since
+ * metadata can contain sensitive information).
+ *
+ * Return value: TRUE if preferences are set to export Exif.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_export_exif (void)
+{
+  return _export_exif;
+}
+
+/**
+ * gimp_export_xmp:
+ *
+ * Returns whether file plug-ins should default to exporting XMP
+ * metadata, according preferences (original settings is #FALSE since
+ * metadata can contain sensitive information).
+ *
+ * Return value: TRUE if preferences are set to export XMP.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_export_xmp (void)
+{
+  return _export_xmp;
+}
+
+/**
+ * gimp_export_iptc:
+ *
+ * Returns whether file plug-ins should default to exporting IPTC
+ * metadata, according preferences (original settings is #FALSE since
+ * metadata can contain sensitive information).
+ *
+ * Return value: TRUE if preferences are set to export IPTC.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_export_iptc (void)
+{
+  return _export_iptc;
+}
+
+/**
  * gimp_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
@@ -2054,6 +2108,9 @@ gimp_config (GPConfig *config)
   _install_cmap     = config->install_cmap     ? TRUE : FALSE;
   _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
+  _export_exif      = config->export_exif      ? TRUE : FALSE;
+  _export_xmp       = config->export_xmp       ? TRUE : FALSE;
+  _export_iptc      = config->export_iptc      ? TRUE : FALSE;
   _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;
   _wm_class         = g_strdup (config->wm_class);
