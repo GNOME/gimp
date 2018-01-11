@@ -406,18 +406,17 @@ gimp_transform_options_reset (GimpConfig *config)
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
-  GObject     *config = G_OBJECT (tool_options);
-  GtkWidget   *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget   *hbox;
-  GtkWidget   *box;
-  GtkWidget   *label;
-  GtkWidget   *frame;
-  GtkWidget   *combo;
-  GtkWidget   *scale;
-  GtkWidget   *grid_box;
-  const gchar *constrain_name  = NULL;
-  const gchar *constrain_label = NULL;
-  const gchar *constrain_tip   = NULL;
+  GObject         *config = G_OBJECT (tool_options);
+  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget       *hbox;
+  GtkWidget       *box;
+  GtkWidget       *label;
+  GtkWidget       *frame;
+  GtkWidget       *combo;
+  GtkWidget       *scale;
+  GtkWidget       *grid_box;
+  GdkModifierType  extend_mask    = gimp_get_extend_selection_mask ();
+  GdkModifierType  constrain_mask = gimp_get_constrain_behavior_mask ();
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -486,56 +485,85 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
     {
-      constrain_name  = "constrain-rotate";
-      constrain_label = _("15 degrees (%s)");
-      constrain_tip   = _("Limit rotation steps to 15 degrees");
+      GtkWidget *button;
+      gchar     *label;
+
+      label = g_strdup_printf (_("15 degrees (%s)"),
+                               gimp_get_mod_string (extend_mask));
+
+      button = gimp_prop_check_button_new (config, "constrain-rotate", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (button, _("Limit rotation steps to 15 degrees"),
+                               NULL);
+
+      g_free (label);
     }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
-      constrain_name  = "constrain-scale";
-      constrain_label = _("Keep aspect (%s)");
-      constrain_tip   = _("Keep the original aspect ratio");
-    }
+      GtkWidget *button;
+      gchar     *label;
 
-  //TODO: check that the selection tools use the gimp_get_*_mask() functions for constrain/etc or change to what they use
+      label = g_strdup_printf (_("Keep aspect (%s)"),
+                               gimp_get_mod_string (extend_mask));
+
+      button = gimp_prop_check_button_new (config, "constrain-scale", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (button, _("Keep the original aspect ratio"),
+                               NULL);
+
+      g_free (label);
+
+      label = g_strdup_printf (_("Around center (%s)"),
+                               gimp_get_mod_string (constrain_mask));
+
+      button = gimp_prop_check_button_new (config, "frompivot-scale", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (button, _("Scale around the center point"),
+                               NULL);
+
+      g_free (label);
+    }
   else if (tool_options->tool_info->tool_type == GIMP_TYPE_UNIFIED_TRANSFORM_TOOL)
     {
-      GdkModifierType shift = gimp_get_extend_selection_mask ();
-      GdkModifierType ctrl  = gimp_get_constrain_behavior_mask ();
-
       struct
       {
-        GdkModifierType mod;
-        gchar *name;
-        gchar *desc;
-        gchar *tip;
+        GdkModifierType  mod;
+        gchar           *name;
+        gchar           *desc;
+        gchar           *tip;
       }
       opt_list[] =
       {
-        { shift, NULL, N_("Constrain (%s)") },
-        { shift, "constrain-move", N_("Move"),
+        { extend_mask, NULL, N_("Constrain (%s)") },
+        { extend_mask, "constrain-move", N_("Move"),
           N_("Constrain movement to 45 degree angles from center (%s)") },
-        { shift, "constrain-scale", N_("Scale"),
+        { extend_mask, "constrain-scale", N_("Scale"),
           N_("Maintain aspect ratio when scaling (%s)") },
-        { shift, "constrain-rotate", N_("Rotate"),
+        { extend_mask, "constrain-rotate", N_("Rotate"),
           N_("Constrain rotation to 15 degree increments (%s)") },
-        { shift, "constrain-shear", N_("Shear"),
+        { extend_mask, "constrain-shear", N_("Shear"),
           N_("Shear along edge direction only (%s)") },
-        { shift, "constrain-perspective", N_("Perspective"),
+        { extend_mask, "constrain-perspective", N_("Perspective"),
           N_("Constrain perspective handles to move along edges and diagonal (%s)") },
 
-        { ctrl, NULL,
+        { constrain_mask, NULL,
           N_("From pivot  (%s)") },
-        { ctrl, "frompivot-scale", N_("Scale"),
+        { constrain_mask, "frompivot-scale", N_("Scale"),
           N_("Scale from pivot point (%s)") },
-        { ctrl, "frompivot-shear", N_("Shear"),
+        { constrain_mask, "frompivot-shear", N_("Shear"),
           N_("Shear opposite edge by same amount (%s)") },
-        { ctrl, "frompivot-perspective", N_("Perspective"),
+        { constrain_mask, "frompivot-perspective", N_("Perspective"),
           N_("Maintain position of pivot while changing perspective (%s)") },
 
         { 0, NULL,
           N_("Pivot") },
-        { shift, "cornersnap", N_("Snap (%s)"),
+        { extend_mask, "cornersnap", N_("Snap (%s)"),
           N_("Snap pivot to corners and center (%s)") },
         { 0, "fixedpivot", N_("Lock"),
           N_("Lock pivot position to canvas") },
@@ -549,7 +577,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
       for (i = 0; i < G_N_ELEMENTS (opt_list); i++)
         {
-          if (!opt_list[i].name && !opt_list[i].desc)
+          if (! opt_list[i].name && ! opt_list[i].desc)
             {
               frame = NULL;
               continue;
@@ -587,26 +615,6 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
           g_free (label);
         }
-    }
-
-  if (constrain_label)
-    {
-      GtkWidget       *button;
-      gchar           *label;
-      GdkModifierType  constrain_mask;
-
-      constrain_mask = gimp_get_extend_selection_mask ();
-
-      label = g_strdup_printf (constrain_label,
-                               gimp_get_mod_string (constrain_mask));
-
-      button = gimp_prop_check_button_new (config, constrain_name, label);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      gimp_help_set_help_data (button, constrain_tip, NULL);
-
-      g_free (label);
     }
 
   return vbox;
