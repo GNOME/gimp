@@ -202,19 +202,23 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * gimp_image_metadata_save_prepare:
  * @image_ID:        The image
  * @mime_type:       The saved file's mime-type
- * @available_flags: Value of @flags which would save all available
- *                   metadata in @image_ID when passed to
+ * @suggested_flags: Suggested default values for the @flags passed to
  *                   gimp_image_metadata_save_finish()
  *
  * Gets the image metadata for saving it using
  * gimp_image_metadata_save_finish().
  *
- * The @available_flags are determined from what kind of metadata
- * (Exif, XMP, ...) is actually present in the image. The suggested
- * value for GIMP_METADATA_SAVE_THUMBNAIL is determined by whether
- * there was a thumbnail in the previously imported image.
- * It is up to the calling application to update @available_flags in
- * order to remove any unwanted metadata before exporting.
+ * The @suggested_flags are determined from what kind of metadata
+ * (Exif, XMP, ...) is actually present in the image and the preferences
+ * for metadata exporting.
+ * The calling application may still update @available_flags, for
+ * instance to follow the settings from a previous export in the same
+ * session, or a previous export of the same image. But it should not
+ * override the preferences without a good reason since it is a data
+ * leak.
+ *
+ * The suggested value for GIMP_METADATA_SAVE_THUMBNAIL is determined by
+ * whether there was a thumbnail in the previously imported image.
  *
  * Returns: The image's metadata, prepared for saving.
  *
@@ -258,7 +262,8 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* Exif */
 
-      if (! gexiv2_metadata_has_exif (g2metadata))
+      if (! gimp_export_exif () ||
+          ! gexiv2_metadata_has_exif (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
 
       if (comment)
@@ -296,7 +301,8 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* XMP */
 
-      if (! gexiv2_metadata_has_xmp (g2metadata))
+      if (! gimp_export_xmp () ||
+          ! gexiv2_metadata_has_xmp (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_XMP;
 
       gexiv2_metadata_set_tag_string (g2metadata,
@@ -332,7 +338,8 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* IPTC */
 
-      if (! gexiv2_metadata_has_iptc (g2metadata))
+      if (! gimp_export_xmp () ||
+          ! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
       g_snprintf (buffer, sizeof (buffer),
