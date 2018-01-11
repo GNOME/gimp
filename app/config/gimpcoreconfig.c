@@ -110,6 +110,9 @@ enum
   PROP_IMPORT_PROMOTE_DITHER,
   PROP_IMPORT_ADD_ALPHA,
   PROP_IMPORT_RAW_PLUG_IN,
+  PROP_EXPORT_METADATA_EXIF,
+  PROP_EXPORT_METADATA_XMP,
+  PROP_EXPORT_METADATA_IPTC,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -630,6 +633,27 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_EXIF,
+                            "export-metadata-exif",
+                            "Export Exif metadata",
+                            EXPORT_METADATA_EXIF_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_XMP,
+                            "export-metadata-xmp",
+                            "Export XMP metadata",
+                            EXPORT_METADATA_XMP_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_IPTC,
+                            "export-metadata-iptc",
+                            "Export IPTC metadata",
+                            EXPORT_METADATA_IPTC_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                             "install-colormap",
@@ -923,6 +947,15 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->import_raw_plug_in);
       core_config->import_raw_plug_in = g_value_dup_string (value);
       break;
+    case PROP_EXPORT_METADATA_EXIF:
+      core_config->export_metadata_exif = g_value_get_boolean (value);
+      break;
+    case PROP_EXPORT_METADATA_XMP:
+      core_config->export_metadata_xmp = g_value_get_boolean (value);
+      break;
+    case PROP_EXPORT_METADATA_IPTC:
+      core_config->export_metadata_iptc = g_value_get_boolean (value);
+      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -1109,6 +1142,15 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_IMPORT_RAW_PLUG_IN:
       g_value_set_string (value, core_config->import_raw_plug_in);
+      break;
+    case PROP_EXPORT_METADATA_EXIF:
+      g_value_set_boolean (value, core_config->export_metadata_exif);
+      break;
+    case PROP_EXPORT_METADATA_XMP:
+      g_value_set_boolean (value, core_config->export_metadata_xmp);
+      break;
+    case PROP_EXPORT_METADATA_IPTC:
+      g_value_set_boolean (value, core_config->export_metadata_iptc);
       break;
 
     case PROP_INSTALL_COLORMAP:

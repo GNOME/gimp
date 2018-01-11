@@ -1402,7 +1402,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   "gimp-prefs-import-export",
                                   _("Image Import & Export"),
-                                  _("Image Import"),
+                                  _("Image Import & Export"),
                                   GIMP_HELP_PREFS_DIALOG,
                                   NULL,
                                   &top_iter);
@@ -1430,6 +1430,24 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                      _("Color profile policy:"),
                                      GTK_TABLE (table), 0, NULL);
+
+  /*  Export Policies  */
+  vbox2 = prefs_frame_new (_("Export Policies"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  button = prefs_check_button_add (object, "export-metadata-exif",
+                                   _("Export Exif metadata by default when available"),
+                                   GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "export-metadata-xmp",
+                                   _("Export XMP metadata by default when available"),
+                                   GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "export-metadata-iptc",
+                                   _("Export IPTC metadata by default when available"),
+                                   GTK_BOX (vbox2));
+  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                             _("Metadata can contain sensitive information."));
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
 
   /*  Raw Image Importer  */
   vbox2 = prefs_frame_new (_("Raw Image Importer"),
