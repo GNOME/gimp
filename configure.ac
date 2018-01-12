@@ -1729,13 +1729,10 @@ AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" = xyes)
 # PDF import support is a granted feature.
 PKG_CHECK_MODULES(POPPLER, [poppler-glib >= poppler_required_version],,
                   [add_deps_error([poppler-glib >= poppler_required_version])])
-# We don't check against a poppler-data version, which basically means
-# at least 0.4.7 since it has a pkg-config file since 0.4.7, thus we
-# can't verify presence of older versions. Anyway all modern
-# distributions have at least this version and CJK/Cyrillic support
-# should not be considered as "second-zone citizen".
-PKG_CHECK_MODULES(POPPLER_DATA, [poppler-data],,
-                  [add_deps_error([poppler-data])])
+# All modern distributions have at least this version and CJK/Cyrillic
+# support should not be considered as "second-zone citizen".
+PKG_CHECK_MODULES(POPPLER_DATA, [poppler-data >= poppler_data_required_version],,
+                  [add_deps_error([poppler-data >= poppler_data_required_version])])
 
 # MIME_TYPES is for the formats we can open as used for instance in the
 # desktop file. Even if cairo-pdf (used for PDF export) is not
