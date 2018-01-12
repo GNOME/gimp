@@ -70,6 +70,19 @@ static gboolean save_image (const gchar      *filename,
 static const FileFormat file_formats[] =
 {
   {
+    N_("Radiance RGBE"),
+    "image/vnd.radiance",
+    "hdr",
+    "0,string,?#RADIANCE\x0a",
+
+    "file-gegl-load-rgbe",
+    "Load files in the RGBE file format",
+    "This procedure loads images in the RGBE format, using gegl:load",
+
+    /* no RGBE saving */
+    NULL, NULL, NULL
+  },
+  {
     N_("OpenEXR image"),
     "image/x-exr",
     "exr",
