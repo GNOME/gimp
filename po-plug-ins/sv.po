@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-08 15:46+0000\n"
-"PO-Revision-Date: 2018-01-08 16:56+0100\n"
+"POT-Creation-Date: 2018-01-12 21:09+0000\n"
+"PO-Revision-Date: 2018-01-12 23:10+0100\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -63,8 +63,8 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
 #: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
-#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:718
-#: ../plug-ins/common/qbist.c:760 ../plug-ins/common/qbist.c:814
+#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
+#: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
 #: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
 #: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
 #: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
@@ -101,9 +101,9 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
-#: ../plug-ins/metadata/metadata-editor.c:764
-#: ../plug-ins/metadata/metadata-editor.c:5618
-#: ../plug-ins/metadata/metadata-editor.c:5653
+#: ../plug-ins/metadata/metadata-editor.c:765
+#: ../plug-ins/metadata/metadata-editor.c:5644
+#: ../plug-ins/metadata/metadata-editor.c:5679
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -125,7 +125,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:815 ../plug-ins/common/ripple.c:488
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
@@ -444,10 +444,10 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:427 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1066 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -826,8 +826,8 @@ msgstr "Slumpfrö"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
-#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:719
-#: ../plug-ins/common/qbist.c:883 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:871 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1045
@@ -846,7 +846,7 @@ msgstr "_Öppna"
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
 #: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
-#: ../plug-ins/common/qbist.c:761 ../plug-ins/common/qbist.c:891
+#: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1053
@@ -1043,7 +1043,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1562
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
@@ -1074,7 +1074,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:914
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -1638,7 +1638,7 @@ msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:860
+#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
 #: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
@@ -2194,11 +2194,11 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:311
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:906
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2288,7 +2288,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1555 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
@@ -2453,11 +2453,16 @@ msgstr "Beskrivning:"
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
-#: ../plug-ins/common/file-gegl.c:73 ../plug-ins/file-exr/file-exr.c:86
+# Programvaran Radiance. https://www.radiance-online.org/about
+#: ../plug-ins/common/file-gegl.c:73
+msgid "Radiance RGBE"
+msgstr "Radiance RGBE"
+
+#: ../plug-ins/common/file-gegl.c:86 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "OpenEXR-bild"
 
-#: ../plug-ins/common/file-gegl.c:322
+#: ../plug-ins/common/file-gegl.c:335
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Kunde inte öppna ”%s”"
@@ -2855,7 +2860,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2265
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
@@ -2890,7 +2895,7 @@ msgid "Save creation time"
 msgstr "Spara skapad tid"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2323
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
 msgid "PNG"
 msgstr "PNG"
 
@@ -3117,7 +3122,7 @@ msgstr "Importera från PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5619
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "_Import"
 msgstr "_Importera"
 
@@ -3244,32 +3249,32 @@ msgstr "Alias Pix-bild"
 msgid "PNG image"
 msgstr "PNG-bild"
 
-#: ../plug-ins/common/file-png.c:762
+#: ../plug-ins/common/file-png.c:768
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Fel vid inläsning av PNG-fil: %s"
 
-#: ../plug-ins/common/file-png.c:879
+#: ../plug-ins/common/file-png.c:885
 #, c-format
 msgid "Error creating PNG read struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG läs-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:889
+#: ../plug-ins/common/file-png.c:895
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid inläsning av ”%s”. Trasig fil?"
 
-#: ../plug-ins/common/file-png.c:1044
+#: ../plug-ins/common/file-png.c:1050
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-filen ”%s”."
 
-#: ../plug-ins/common/file-png.c:1057 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunde inte skapa ny bild för ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1113
+#: ../plug-ins/common/file-png.c:1119
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3277,19 +3282,19 @@ msgstr ""
 "PNG-filen angav en position som orsakade att lagret blev placerat utanför "
 "bilden."
 
-#: ../plug-ins/common/file-png.c:1390
+#: ../plug-ins/common/file-png.c:1396
 msgid "Apply PNG Offset"
 msgstr "Tillämpa PNG-kompensation"
 
-#: ../plug-ins/common/file-png.c:1394
+#: ../plug-ins/common/file-png.c:1400
 msgid "Ignore PNG offset"
 msgstr "Ignorera PNG-kompensation"
 
-#: ../plug-ins/common/file-png.c:1395
+#: ../plug-ins/common/file-png.c:1401
 msgid "Apply PNG offset to layer"
 msgstr "Tillämpa PNG-kompensation på lager"
 
-#: ../plug-ins/common/file-png.c:1420
+#: ../plug-ins/common/file-png.c:1426
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3298,23 +3303,23 @@ msgstr ""
 "PNG-bilden du importerar anger en kompensation på %d, %d. Vill du tillämpa "
 "denna kompensation på lagret?"
 
-#: ../plug-ins/common/file-png.c:1528
+#: ../plug-ins/common/file-png.c:1534
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG skriv-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:1538
+#: ../plug-ins/common/file-png.c:1544
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fel vid exporterande av ”%s”. Kunde inte exportera bild."
 
-#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fel vid inläsning av användargränssnittsfilen ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2341 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Okänt fel"
@@ -5532,32 +5537,32 @@ msgstr "Procedur_bläddrare"
 msgid "Procedure Browser"
 msgstr "Procedurbläddrare"
 
-#: ../plug-ins/common/qbist.c:395
+#: ../plug-ins/common/qbist.c:387
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Generera ett stort urval av abstrakta mönster"
 
-#: ../plug-ins/common/qbist.c:403
+#: ../plug-ins/common/qbist.c:395
 msgid "_Qbist..."
 msgstr "_Qbist…"
 
-#: ../plug-ins/common/qbist.c:516
+#: ../plug-ins/common/qbist.c:508
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/qbist.c:714
+#: ../plug-ins/common/qbist.c:716
 msgid "Load QBE File"
 msgstr "Läs in QBE-fil"
 
-#: ../plug-ins/common/qbist.c:756
+#: ../plug-ins/common/qbist.c:758
 msgid "Save as QBE File"
 msgstr "Spara som QBE-fil"
 
-#: ../plug-ins/common/qbist.c:810
+#: ../plug-ins/common/qbist.c:812
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
 # src/menus.c:302
-#: ../plug-ins/common/qbist.c:875
+#: ../plug-ins/common/qbist.c:877
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
 #: ../plug-ins/gfig/gfig-dialog.c:886
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
@@ -11850,27 +11855,27 @@ msgstr "Importera metadata"
 msgid "Export metadata"
 msgstr "Exportera metadata"
 
-#: ../plug-ins/metadata/metadata-editor.c:761
+#: ../plug-ins/metadata/metadata-editor.c:762
 msgid "Calendar Date:"
 msgstr "Kalenderdatum:"
 
-#: ../plug-ins/metadata/metadata-editor.c:765
+#: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
 msgstr "Ställ in datum"
 
-#: ../plug-ins/metadata/metadata-editor.c:1615
+#: ../plug-ins/metadata/metadata-editor.c:1616
 msgid "Unrated"
 msgstr "Icke rankad"
 
-#: ../plug-ins/metadata/metadata-editor.c:5615
+#: ../plug-ins/metadata/metadata-editor.c:5641
 msgid "Import Metadata File"
 msgstr "Importera metadatafil"
 
-#: ../plug-ins/metadata/metadata-editor.c:5650
+#: ../plug-ins/metadata/metadata-editor.c:5676
 msgid "Export Metadata File"
 msgstr "Exportera metadatafil"
 
-#: ../plug-ins/metadata/metadata-editor.c:5654
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "_Export"
 msgstr "_Exportera"
 
@@ -13300,9 +13305,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Units"
 #~ msgstr "Enheter"
-
-#~ msgid "Radians"
-#~ msgstr "Radianer"
 
 #~ msgid "Radians/Pi"
 #~ msgstr "Radianer/pi"
