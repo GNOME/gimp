@@ -915,8 +915,8 @@ gimp_gui_config_detect_icon_size (GimpGuiConfig *gui_config)
       else if (display_config->monitor_xres < 192.0 ||
                display_config->monitor_yres < 192.0)
         size = GIMP_ICON_SIZE_MEDIUM;
-      else if (display_config->monitor_xres < 300.0 ||
-               display_config->monitor_yres < 300.0)
+      else if (display_config->monitor_xres < 250.0 ||
+               display_config->monitor_yres < 250.0)
         size = GIMP_ICON_SIZE_LARGE;
       else
         size = GIMP_ICON_SIZE_HUGE;
