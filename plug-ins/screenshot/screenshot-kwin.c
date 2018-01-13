@@ -86,9 +86,9 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
                        gint32            *image_ID,
                        GError           **error)
 {
-  gchar       *filename;
-  const gchar *method = NULL;
-  GVariant    *args   = NULL;
+  gchar       *filename = NULL;
+  const gchar *method   = NULL;
+  GVariant    *args     = NULL;
   GVariant    *retval;
   gint         monitor = shootvals->monitor;
   gint32       mask;
@@ -197,7 +197,8 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
 
  failure:
 
-  g_free (filename);
+  if (filename)
+    g_free (filename);
 
   g_object_unref (proxy);
   proxy = NULL;
