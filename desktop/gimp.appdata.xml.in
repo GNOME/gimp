@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1995-2017 Spencer Kimball, Peter Mattis, and others -->
 <component type="desktop">
-  <id>gimp.desktop</id>
+  <id>org.gimp.GIMP</id>
 
   <!--
       The tag 'metadata_license' means the licence of this file, not the whole
