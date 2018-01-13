@@ -62,6 +62,15 @@
   </kudos>
   <project_group>GNOME</project_group>
   <translation type="gettext">gimp20</translation>
+
+  <launchable type="desktop-id">gimp.desktop</launchable>
+  <provides>
+    <binary>@GIMP_COMMAND@</binary>
+    <!-- Fix the ID renaming, and things like past reviews made on the
+         older ID in software installers. -->
+    <id>gimp.desktop</id>
+  <provides>
+
   <releases>
   <!--
     <release version="2.10.0" date="TODO">
