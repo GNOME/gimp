@@ -75,12 +75,13 @@ static const FileFormat file_formats[] =
     "hdr",
     "0,string,?#",
 
-    "file-gegl-load-rgbe",
+    "file-load-rgbe",
     "Load files in the RGBE file format",
     "This procedure loads images in the RGBE format, using gegl:load",
 
-    /* no RGBE saving */
-    NULL, NULL, NULL
+    "file-save-rgbe",
+    "Saves files in the RGBE file format",
+    "This procedure exports images in the RGBE format, using gegl:save"
   },
   {
     N_("OpenEXR image"),
