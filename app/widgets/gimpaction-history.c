@@ -138,12 +138,15 @@ gimp_action_history_init (Gimp *gimp)
                   break;
                 }
 
-              history.items =
-                g_list_insert_sorted (history.items,
-                                      gimp_action_history_item_new (action_name, count),
-                                      (GCompareFunc) gimp_action_history_init_compare_func);
+              if (! gimp_action_history_excluded_action (action_name))
+                {
+                  history.items =
+                    g_list_insert_sorted (history.items,
+                                          gimp_action_history_item_new (action_name, count),
+                                          (GCompareFunc) gimp_action_history_init_compare_func);
 
-              n_items++;
+                  n_items++;
+                }
 
               g_free (action_name);
             }
