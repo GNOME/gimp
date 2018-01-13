@@ -109,7 +109,7 @@ File formats:
     clamp anymore on export.
   - JPEG, PNG, TIFF and WebP export plug-ins updated to honor creator's
     default choice regarding metadata handling.
-  - RGBE (Radiance HDR) format files can now be imported.
+  - RGBE (Radiance HDR) format files can now be imported and exported.
 
 Building:
 
@@ -123,6 +123,8 @@ Building:
   - Require glib >= 2.54.2.
   - New dependency to mypaint-brushes-1.0 for stable MyPaint brushes
     available at installation.
+  - AppStream ID renamed from gimp.desktop to org.gimp.GIMP following
+    current convention.
 
 Translations:
 
