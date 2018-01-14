@@ -468,8 +468,46 @@ splash_image_load_from_file (const gchar *filename,
                              gboolean     be_verbose)
 {
   GdkPixbufAnimation *animation;
+  GFile              *file;
+  GFileInfo          *info;
+  gboolean            is_svg = FALSE;
+
   if (be_verbose)
     g_printerr ("Trying splash '%s' ... ", filename);
+
+  file = g_file_new_for_path (filename);
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
+                            G_FILE_QUERY_INFO_NONE, NULL, NULL);
+  if (info)
+    {
+      const gchar *content_type;
+
+      content_type = g_file_info_get_content_type (info);
+      if (content_type)
+        {
+          gchar *mime_type;
+
+          mime_type = g_content_type_get_mime_type (content_type);
+          if (mime_type)
+            {
+              if (g_strcmp0 (mime_type, "image/svg+xml") == 0)
+                {
+                  /* We want to treat vector images differently than
+                   * pixel images. We only scale down bitmaps, but we
+                   * don't try to scale them up.
+                   * On the other hand, we can always scale down and up
+                   * vector images so that they end up in an ideal size
+                   * in all cases.
+                   */
+                  is_svg = TRUE;
+                }
+              g_free (mime_type);
+            }
+        }
+      g_object_unref (info);
+    }
+  g_object_unref (file);
 
   animation = gdk_pixbuf_animation_new_from_file (filename, NULL);
 
@@ -478,7 +516,8 @@ splash_image_load_from_file (const gchar *filename,
    */
   if (animation && gdk_pixbuf_animation_is_static_image (animation) &&
       (gdk_pixbuf_animation_get_width (animation) > max_width        ||
-       gdk_pixbuf_animation_get_height (animation) > max_height))
+       gdk_pixbuf_animation_get_height (animation) > max_height      ||
+       is_svg))
     {
       GdkPixbuf *pixbuf;
 
