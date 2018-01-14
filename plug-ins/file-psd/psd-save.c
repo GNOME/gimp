@@ -1137,11 +1137,14 @@ save_layer_and_mask (FILE   *fd,
 
   for (i = PSDImageData.nLayers - 1; i >= 0; i--)
     {
+      gimp_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
+
       IFDBG printf ("\t\tWriting pixel data for layer slot %d\n", i);
       write_pixel_data(fd, PSDImageData.lLayers[i].id, ChannelLengthPos[i], 0);
       g_free (ChannelLengthPos[i]);
     }
 
+  gimp_progress_update (PSDImageData.nLayers / (PSDImageData.nLayers + 1.0));
   eof_pos = ftell (fd);
 
   /* Write actual size of Layer info section */
@@ -1611,6 +1614,9 @@ save_image (const gchar  *filename,
   IFDBG printf ("----- Closing PSD file, done -----\n\n");
 
   fclose (fd);
+
+  gimp_progress_update (1.0);
+
   return TRUE;
 }
 
