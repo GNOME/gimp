@@ -1,6 +1,7 @@
 /Makefile.in
 /Makefile
-/gimp.appdata.xml
+/org.gimp.GIMP.appdata.xml.in
+/org.gimp.GIMP.appdata.xml
 /gimp.desktop.in
 /gimp.desktop
 /.thumbnails

@@ -3,7 +3,7 @@
 
 [encoding: UTF-8]
 
-desktop/gimp.appdata.xml.in
+desktop/org.gimp.GIMP.appdata.xml.in.in
 desktop/gimp-data-extras.metainfo.xml.in
 desktop/gimp.desktop.in.in
 

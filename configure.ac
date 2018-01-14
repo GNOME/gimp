@@ -2672,6 +2672,7 @@ data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
 desktop/Makefile
 desktop/gimp.desktop.in
+desktop/org.gimp.GIMP.appdata.xml.in
 etc/Makefile
 m4macros/Makefile
 po/Makefile.in

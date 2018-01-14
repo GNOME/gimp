@@ -69,7 +69,7 @@
     <!-- Fix the ID renaming, and things like past reviews made on the
          older ID in software installers. -->
     <id>gimp.desktop</id>
-  <provides>
+  </provides>
 
   <releases>
   <!--

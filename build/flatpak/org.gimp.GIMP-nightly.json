@@ -8,7 +8,6 @@
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.9",
     "rename-desktop-file": "gimp.desktop",
-    "rename-appdata-file": "gimp.appdata.xml",
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--socket=x11", "--share=network",
                     "--filesystem=host", "--filesystem=xdg-config/GIMP",

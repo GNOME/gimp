@@ -22,8 +22,8 @@
      to sort out issues with their builds.
 
  ( ) If this is a stable release, make sure we have a <release> tag
-     inside desktop/gimp.appdata.xml.in for this upcoming version. Some
-     installers may feature more prominently software with recent
+     inside desktop/org.gimp.GIMP.appdata.xml.in for this upcoming version.
+     Some installers may feature more prominently software with recent
      releases if the appropriate tag was set (e.g. GNOME Software has a
      "Recent Releases" category).
      If a description is added, it may be featured in installers and
