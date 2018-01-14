@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-24 23:32+0000\n"
-"PO-Revision-Date: 2017-10-25 01:39+0200\n"
+"POT-Creation-Date: 2018-01-12 21:09+0000\n"
+"PO-Revision-Date: 2018-01-14 21:10+0100\n"
 "Last-Translator: Konfrare Albert <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -58,23 +58,23 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
-#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
-#: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
-#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
+#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
+#: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
+#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
-#: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:594
+#: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
 #: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
-#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:723
-#: ../plug-ins/common/qbist.c:765 ../plug-ins/common/qbist.c:819
+#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
+#: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
 #: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
 #: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
 #: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:350
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -104,10 +104,10 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
-#: ../plug-ins/metadata/metadata-editor.c:764
-#: ../plug-ins/metadata/metadata-editor.c:5618
-#: ../plug-ins/metadata/metadata-editor.c:5653
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:427
+#: ../plug-ins/metadata/metadata-editor.c:765
+#: ../plug-ins/metadata/metadata-editor.c:5644
+#: ../plug-ins/metadata/metadata-editor.c:5679
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Cancel·la"
@@ -122,19 +122,19 @@ msgstr "_Cancel·la"
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
 #: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
-#: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1264
+#: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1271
 #: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
-#: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:595
+#: ../plug-ins/common/grid.c:648 ../plug-ins/common/hot.c:595
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:820 ../plug-ins/common/ripple.c:488
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
 #: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
 #: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:313 ../plug-ins/flame/flame.c:650
+#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
 #: ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -447,24 +447,24 @@ msgstr "_Vertical"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:427 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1160
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
+#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-raw-data.c:1392
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:258
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
-#: ../plug-ins/file-jpeg/jpeg-load.c:241
+#: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1804 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1816 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:257 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:264 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Fons"
 
@@ -533,8 +533,8 @@ msgid "Simulate a cartoon by enhancing edges"
 msgstr "Simula un còmic realçant les vores amb negre"
 
 #: ../plug-ins/common/cartoon.c:147
-msgid "Ca_rtoon..."
-msgstr "Cò_mic..."
+msgid "Ca_rtoon (legacy)..."
+msgstr "Cò_mic (antic)..."
 
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
 #: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
@@ -560,8 +560,8 @@ msgid "Create a checkerboard pattern"
 msgstr "Crea un patró estil tauler d'escacs"
 
 #: ../plug-ins/common/checkerboard.c:94
-msgid "_Checkerboard..."
-msgstr "Tauler d'es_cacs..."
+msgid "_Checkerboard (legacy)..."
+msgstr "Tauler d'es_cacs (antic)..."
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
@@ -571,7 +571,7 @@ msgstr "S'està afegint un tauler d'escacs"
 msgid "Checkerboard"
 msgstr "Tauler d'escacs"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1170
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1176
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Mida:"
@@ -829,8 +829,8 @@ msgstr "Llavor aleatòria"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
-#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/qbist.c:724
-#: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:871 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1045
@@ -848,7 +848,7 @@ msgstr "_Obre"
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
 #: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
-#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/qbist.c:896
+#: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1053
@@ -1045,14 +1045,14 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1561
-#: ../plug-ins/common/file-raw-data.c:975
-#: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1484
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
+#: ../plug-ins/common/file-raw-data.c:1192
+#: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1559
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1581
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1076,19 +1076,20 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
-#: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3371
-#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:372
-#: ../plug-ins/common/file-raw-data.c:1084 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
+#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
+#: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
+#: ../plug-ins/common/file-raw-data.c:477
+#: ../plug-ins/common/file-raw-data.c:1301 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:711
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
-#: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:842
+#: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:848
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
-#: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:97
-#: ../plug-ins/file-jpeg/jpeg-load.c:519 ../plug-ins/file-psd/psd-load.c:138
+#: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
+#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:924
@@ -1157,8 +1158,8 @@ msgid "Stretch color saturation to cover maximum possible range"
 msgstr "Amplia la saturació del color per cobrir-ne el màxim rang possible"
 
 #: ../plug-ins/common/color-enhance.c:80
-msgid "_Color Enhance"
-msgstr "Millora del _color"
+msgid "_Color Enhance (legacy)"
+msgstr "Millora del _color (antic)"
 
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
@@ -1359,8 +1360,11 @@ msgstr "_Blavor cb709:"
 msgid "_Redness cr709:"
 msgstr "Ve_rmellor cr709:"
 
+#. Generic case for any data. Let's leave choice to select the
+#. * right type of raw data.
+#.
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1601
+#: ../plug-ins/common/file-raw-data.c:1937
 msgid "RGB"
 msgstr "RGB"
 
@@ -1643,7 +1647,7 @@ msgid "Smoo_thing"
 msgstr "Suavi_tza"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:865
+#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
 #: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Antialiàsing"
@@ -1968,7 +1972,7 @@ msgstr "Font 2:"
 msgid "O_verlap:"
 msgstr "Su_perposa:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1629
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1971
 msgid "O_ffset:"
 msgstr "_Desplaçament:"
 
@@ -2036,8 +2040,8 @@ msgid "Destripe"
 msgstr "Treu les bandes"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
-#: ../plug-ins/common/file-ps.c:3497 ../plug-ins/common/file-ps.c:3702
-#: ../plug-ins/common/file-raw-data.c:1642
+#: ../plug-ins/common/file-ps.c:3467 ../plug-ins/common/file-ps.c:3672
+#: ../plug-ins/common/file-raw-data.c:1986
 #: ../plug-ins/common/smooth-palette.c:454 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2054,8 +2058,8 @@ msgid "Edge detection with control of edge thickness"
 msgstr "Detecta les vores segons la mida de les vores"
 
 #: ../plug-ins/common/edge-dog.c:142
-msgid "_Difference of Gaussians..."
-msgstr "_Diferència de gaussians..."
+msgid "_Difference of Gaussians (legacy)..."
+msgstr "_Diferència de gaussians (antic)..."
 
 #: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
@@ -2082,8 +2086,8 @@ msgid "Simulate the glowing boundary of a neon light"
 msgstr "Simula la lluentor d'un llum de neó"
 
 #: ../plug-ins/common/edge-neon.c:140
-msgid "_Neon..."
-msgstr "_Neó..."
+msgid "_Neon (legacy)..."
+msgstr "_Neó (antic)..."
 
 #: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
@@ -2102,8 +2106,8 @@ msgid "Simulate an image created by embossing"
 msgstr "Simula una imatge esculpida sobre la pedra"
 
 #: ../plug-ins/common/emboss.c:131
-msgid "_Emboss..."
-msgstr "_Esculpeix..."
+msgid "_Emboss (legacy)..."
+msgstr "_Esculpeix (antic)..."
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -2201,22 +2205,22 @@ msgstr ""
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:311
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
+#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
-#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
+#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-raw/file-darktable.c:363
-#: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-raw/file-darktable.c:399
+#: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2297,17 +2301,17 @@ msgstr ""
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:691
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1554 ../plug-ins/common/file-pnm.c:1246
-#: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1199 ../plug-ins/common/file-xbm.c:1033
+#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
+#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1530
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1552
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2416,7 +2420,7 @@ msgstr "«%s»: no és un fitxer DICOM."
 msgid "Cannot save images with alpha channel."
 msgstr "No es poden desar imatges amb canal alfa."
 
-#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1260
+#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1231
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2433,45 +2437,53 @@ msgstr ""
 "Les dades de la capçalera no són vàlides a «%s»: amplada=%lu, alçada=%lu, "
 "bytes=%lu"
 
-#: ../plug-ins/common/file-gbr.c:437 ../plug-ins/common/file-gbr.c:448
+#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
+#: ../plug-ins/common/file-gbr.c:455
+#, c-format
 msgid "Unsupported brush format"
 msgstr "Aquest format de pinzell no és compatible"
 
-#: ../plug-ins/common/file-gbr.c:462
+#: ../plug-ins/common/file-gbr.c:469
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "El fitxer del pinzell del GIMP «%s» està malament"
 
-#: ../plug-ins/common/file-gbr.c:470
+#: ../plug-ins/common/file-gbr.c:477
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "S'ha trobat una cadena UTF-8 invàlida al fitxer del pinzell «%s»."
 
-#: ../plug-ins/common/file-gbr.c:476 ../plug-ins/common/file-gih.c:508
+#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:508
 #: ../plug-ins/common/file-gih.c:1207
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: ../plug-ins/common/file-gbr.c:793
+#: ../plug-ins/common/file-gbr.c:800
 msgid "Brush"
 msgstr "Pinzell"
 
-#: ../plug-ins/common/file-gbr.c:809 ../plug-ins/common/file-gih.c:933
+#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:933
 #: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Descripció:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:821 ../plug-ins/common/grid.c:798
+#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Espaiat:"
 
-#: ../plug-ins/common/file-gegl.c:73 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:73
+#, fuzzy
+#| msgid "Radians"
+msgid "Radiance RGBE"
+msgstr "Radians"
+
+#: ../plug-ins/common/file-gegl.c:86 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "Obre la imatge EXR"
 
-#: ../plug-ins/common/file-gegl.c:322
+#: ../plug-ins/common/file-gegl.c:335
 #, c-format
 msgid "Could not open '%s'"
 msgstr "No s'ha pogut obrir «%s»"
@@ -2768,9 +2780,9 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr ""
 "Amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
-#: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3510
-#: ../plug-ins/common/file-ps.c:3714 ../plug-ins/common/file-raw-data.c:1658
-#: ../plug-ins/common/film.c:1007 ../plug-ins/common/smooth-palette.c:459
+#: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3480
+#: ../plug-ins/common/file-ps.c:3684 ../plug-ins/common/file-raw-data.c:2002
+#: ../plug-ins/common/film.c:1008 ../plug-ins/common/smooth-palette.c:459
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:286
@@ -2873,7 +2885,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2264
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
@@ -2907,7 +2919,7 @@ msgid "Save creation time"
 msgstr "Desa el moment de creació"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2322
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
 msgid "PNG"
 msgstr "PNG"
 
@@ -3124,7 +3136,7 @@ msgstr "Contrasenya incorrecta! Introduïu la correcta:"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1156
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pàgines"
@@ -3133,9 +3145,9 @@ msgstr "%s-pàgines"
 msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5619
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "_Import"
 msgstr "_Importa"
 
@@ -3238,7 +3250,7 @@ msgstr "Afegeix aquesta Imatge"
 
 #: ../plug-ins/common/file-pdf-save.c:1159
 #: ../plug-ins/common/file-pdf-save.c:1227
-#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1886
 #: ../plug-ins/file-tiff/file-tiff-load.c:926
 #, c-format
 msgid "Page %d"
@@ -3262,34 +3274,34 @@ msgstr "Imatge Alias Pix"
 msgid "PNG image"
 msgstr "Imatge PNG"
 
-#: ../plug-ins/common/file-png.c:761
+#: ../plug-ins/common/file-png.c:768
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "No s'ha pogut obrir el fitxer PNG: %s"
 
-#: ../plug-ins/common/file-png.c:878
+#: ../plug-ins/common/file-png.c:885
 #, c-format
 msgid "Error creating PNG read struct while exporting '%s'."
 msgstr ""
 "S'ha produït un error en la lectura de l'estructura del PNG mentre "
 "s'exportava «%s»."
 
-#: ../plug-ins/common/file-png.c:888
+#: ../plug-ins/common/file-png.c:895
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "S'ha produït un error en llegir «%s». Potser el fitxer està malmès."
 
-#: ../plug-ins/common/file-png.c:1043
+#: ../plug-ins/common/file-png.c:1050
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Es desconeix el model de color del fitxer PNG «%s»."
 
-#: ../plug-ins/common/file-png.c:1056 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "No s'ha pogut crear una imatge nova per a «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:1112
+#: ../plug-ins/common/file-png.c:1119
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3297,19 +3309,19 @@ msgstr ""
 "El fitxer PNG especifica un desplaçament que ha causat que la capa es "
 "posicioni fora de la imatge."
 
-#: ../plug-ins/common/file-png.c:1389
+#: ../plug-ins/common/file-png.c:1396
 msgid "Apply PNG Offset"
 msgstr "Aplica el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1393
+#: ../plug-ins/common/file-png.c:1400
 msgid "Ignore PNG offset"
 msgstr "Ignora el desplaçament PNG"
 
-#: ../plug-ins/common/file-png.c:1394
+#: ../plug-ins/common/file-png.c:1401
 msgid "Apply PNG offset to layer"
 msgstr "Aplica el desplaçament PNG a la capa"
 
-#: ../plug-ins/common/file-png.c:1419
+#: ../plug-ins/common/file-png.c:1426
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3318,26 +3330,26 @@ msgstr ""
 "La imatge PNG que esteu important té un desplaçament de %d, %d. Voleu "
 "aplicar aquest desplaçament a la capa?"
 
-#: ../plug-ins/common/file-png.c:1527
+#: ../plug-ins/common/file-png.c:1534
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "S'ha produït un error en l'escriptura de l'estructura del PNG mentre "
 "s'exportava «%s»."
 
-#: ../plug-ins/common/file-png.c:1537
+#: ../plug-ins/common/file-png.c:1544
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la imatge."
 
-#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1784
+#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "No s'ha pogut obrir el fitxer d'interfície d'usuari «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:2340 ../plug-ins/common/file-raw-data.c:1785
+#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Error desconegut"
@@ -3427,134 +3439,130 @@ msgstr "En cru"
 msgid "ASCII"
 msgstr "ASCII"
 
-#: ../plug-ins/common/file-ps.c:654 ../plug-ins/common/file-ps.c:746
+#: ../plug-ins/common/file-ps.c:652 ../plug-ins/common/file-ps.c:719
 msgid "PostScript document"
 msgstr "Document PostScript"
 
-#: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:763
+#: ../plug-ins/common/file-ps.c:671 ../plug-ins/common/file-ps.c:736
 msgid "Encapsulated PostScript image"
 msgstr "Imatge PostScript encapsulada"
 
-#: ../plug-ins/common/file-ps.c:693
-msgid "PDF document"
-msgstr "Document PDF"
-
-#: ../plug-ins/common/file-ps.c:1110
+#: ../plug-ins/common/file-ps.c:1081
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "No s'ha pogut interpretar el fitxer PostScript «%s»"
 
-#: ../plug-ins/common/file-ps.c:1247
+#: ../plug-ins/common/file-ps.c:1218
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "L'exportació a PostScript no pot gestionar imatges amb canals alfa"
 
-#: ../plug-ins/common/file-ps.c:3418
+#: ../plug-ins/common/file-ps.c:3388
 msgid "Import from PostScript"
 msgstr "Importa des del PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3462
+#: ../plug-ins/common/file-ps.c:3432
 msgid "Rendering"
 msgstr "S'està generant la imatge"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3481 ../plug-ins/common/file-svg.c:910
+#: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
 #: ../plug-ins/common/file-wmf.c:694
 msgid "Resolution:"
 msgstr "Resolució:"
 
-#: ../plug-ins/common/file-ps.c:3523
+#: ../plug-ins/common/file-ps.c:3493
 msgid "Pages:"
 msgstr "Pàgines:"
 
-#: ../plug-ins/common/file-ps.c:3530
+#: ../plug-ins/common/file-ps.c:3500
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pàgines a carregar (p. ex. 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3535 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3505 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Capes"
 
-#: ../plug-ins/common/file-ps.c:3538
+#: ../plug-ins/common/file-ps.c:3508
 msgid "Images"
 msgstr "Imatges"
 
-#: ../plug-ins/common/file-ps.c:3541
+#: ../plug-ins/common/file-ps.c:3511
 msgid "Open as"
 msgstr "Obre com a"
 
-#: ../plug-ins/common/file-ps.c:3545
+#: ../plug-ins/common/file-ps.c:3515
 msgid "Try Bounding Box"
 msgstr "Intenta delimitar el quadre"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3558
+#: ../plug-ins/common/file-ps.c:3528
 msgid "Coloring"
 msgstr "S'està acolorint"
 
-#: ../plug-ins/common/file-ps.c:3562
+#: ../plug-ins/common/file-ps.c:3532
 msgid "B/W"
 msgstr "B/N"
 
-#: ../plug-ins/common/file-ps.c:3563 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3533 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/file-ps.c:3564 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Color"
 
-#: ../plug-ins/common/file-ps.c:3565 ../plug-ins/file-fits/fits.c:1186
+#: ../plug-ins/common/file-ps.c:3535 ../plug-ins/file-fits/fits.c:1186
 msgid "Automatic"
 msgstr "Automàtic"
 
-#: ../plug-ins/common/file-ps.c:3576
+#: ../plug-ins/common/file-ps.c:3546
 msgid "Text antialiasing"
 msgstr "Antialiàsing del text"
 
-#: ../plug-ins/common/file-ps.c:3580 ../plug-ins/common/file-ps.c:3592
+#: ../plug-ins/common/file-ps.c:3550 ../plug-ins/common/file-ps.c:3562
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Cap"
 
-#: ../plug-ins/common/file-ps.c:3581 ../plug-ins/common/file-ps.c:3593
+#: ../plug-ins/common/file-ps.c:3551 ../plug-ins/common/file-ps.c:3563
 msgid "Weak"
 msgstr "Feble"
 
-#: ../plug-ins/common/file-ps.c:3582 ../plug-ins/common/file-ps.c:3594
+#: ../plug-ins/common/file-ps.c:3552 ../plug-ins/common/file-ps.c:3564
 msgid "Strong"
 msgstr "Fort"
 
-#: ../plug-ins/common/file-ps.c:3588
+#: ../plug-ins/common/file-ps.c:3558
 msgid "Graphic antialiasing"
 msgstr "Antiàliasing gràfic"
 
-#: ../plug-ins/common/file-ps.c:3666
+#: ../plug-ins/common/file-ps.c:3636
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3683
+#: ../plug-ins/common/file-ps.c:3653
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
-#: ../plug-ins/common/file-ps.c:3726
+#: ../plug-ins/common/file-ps.c:3696
 msgid "_X offset:"
 msgstr "Desplaçament en _X:"
 
-#: ../plug-ins/common/file-ps.c:3738
+#: ../plug-ins/common/file-ps.c:3708
 msgid "_Y offset:"
 msgstr "Desplaçament en _Y:"
 
-#: ../plug-ins/common/file-ps.c:3744
+#: ../plug-ins/common/file-ps.c:3714
 msgid "_Keep aspect ratio"
 msgstr "_Conserva la relació d'aspecte"
 
-#: ../plug-ins/common/file-ps.c:3750
+#: ../plug-ins/common/file-ps.c:3720
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3563,42 +3571,42 @@ msgstr ""
 "donada sense canviar la relació d'aspecte."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3760
+#: ../plug-ins/common/file-ps.c:3730
 msgid "Unit"
 msgstr "Unitat"
 
-#: ../plug-ins/common/file-ps.c:3764
+#: ../plug-ins/common/file-ps.c:3734
 msgid "_Inch"
 msgstr "_Polzada"
 
-#: ../plug-ins/common/file-ps.c:3765
+#: ../plug-ins/common/file-ps.c:3735
 msgid "_Millimeter"
 msgstr "_Mil·límetre"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3776
+#: ../plug-ins/common/file-ps.c:3746
 #: ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "Rotació"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3791
+#: ../plug-ins/common/file-ps.c:3761
 msgid "Output"
 msgstr "Sortida"
 
-#: ../plug-ins/common/file-ps.c:3797
+#: ../plug-ins/common/file-ps.c:3767
 msgid "_PostScript level 2"
 msgstr "_PostScript nivell 2"
 
-#: ../plug-ins/common/file-ps.c:3806
+#: ../plug-ins/common/file-ps.c:3776
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulat"
 
-#: ../plug-ins/common/file-ps.c:3815
+#: ../plug-ins/common/file-ps.c:3785
 msgid "P_review"
 msgstr "P_revisualitza"
 
-#: ../plug-ins/common/file-ps.c:3839
+#: ../plug-ins/common/file-ps.c:3809
 msgid "Preview _size:"
 msgstr "Mida de previ_sualització:"
 
@@ -3628,104 +3636,310 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw-data.c:253
-#: ../plug-ins/common/file-raw-data.c:269
-#: ../plug-ins/common/file-raw-data.c:281
+#: ../plug-ins/common/file-psp.c:728
+#, c-format
+msgid "Error reading block header"
+msgstr "S'ha produït un error en llegir la capçalera del bloc"
+
+#: ../plug-ins/common/file-psp.c:735
+#, c-format
+msgid "Invalid block header at %ld"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:738
+msgid "Invalid block header"
+msgstr "La capçalera del bloc no és vàlid"
+
+#: ../plug-ins/common/file-psp.c:841
+#, fuzzy, c-format
+#| msgid "WebP error: '%s'"
+msgid "Seek error: %s"
+msgstr "Error WebP: «%s»"
+
+#: ../plug-ins/common/file-psp.c:881
+#, c-format
+msgid "Error reading creator keyword chunk"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:887
+#, c-format
+msgid "Invalid keyword chunk header"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
+#, c-format
+msgid "Error reading creator keyword data"
+msgstr "Error en llegir les dades del creador de paraules clau"
+
+#: ../plug-ins/common/file-psp.c:909
+#, c-format
+msgid "Creator keyword data not nul-terminated"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1285 ../plug-ins/common/file-psp.c:1299
+#, c-format
+msgid "zlib error"
+msgstr "error zlib"
+
+#: ../plug-ins/common/file-psp.c:1365
+#, c-format
+msgid "Invalid layer sub-block %s, should be LAYER"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
+#, fuzzy, c-format
+#| msgid "Error reading BMP file header from '%s'"
+msgid "Error reading layer information chunk"
+msgstr ""
+"S'ha produït un error en llegir la capçalera del fitxer BMP des de «%s»"
+
+#: ../plug-ins/common/file-psp.c:1462
+#, c-format
+msgid "Invalid layer dimensions: %dx%d"
+msgstr "Dimensions de la capa no vàlides: %dx%d"
+
+#: ../plug-ins/common/file-psp.c:1515
+#, c-format
+msgid "Error creating layer"
+msgstr "S'ha produït un error en crear la capa"
+
+#: ../plug-ins/common/file-psp.c:1566
+#, c-format
+msgid "Invalid layer sub-block %s, should be CHANNEL"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1582
+#, c-format
+msgid "Error reading channel information chunk"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1594
+#, c-format
+msgid "Invalid bitmap type %d in channel information chunk"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1602
+#, c-format
+msgid "Invalid channel type %d in channel information chunk"
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1682
+#, fuzzy, c-format
+#| msgid "Error reading pixel data from '%s'"
+msgid "Error reading tube data chunk"
+msgstr "S'ha produït un error en llegir les dades del píxel «%s»"
+
+#: ../plug-ins/common/file-psp.c:1783
+#, fuzzy, c-format
+#| msgid "Error reading file."
+msgid "Error reading file header."
+msgstr "S'ha produït un error en llegir el fitxer."
+
+#: ../plug-ins/common/file-psp.c:1790
+#, c-format
+msgid "Incorrect file signature."
+msgstr "La signatura del fitxer no és correcta"
+
+#: ../plug-ins/common/file-psp.c:1808
+#, fuzzy, c-format
+#| msgid "Unsupported file format version: %d"
+msgid "Unsupported PSP file format version %d.%d."
+msgstr "No s'accepten fitxers amb aquesta versió del format: %d"
+
+#: ../plug-ins/common/file-psp.c:1828
+msgid "invalid block size"
+msgstr "la mida del bloc no és vàlida"
+
+#: ../plug-ins/common/file-psp.c:1837
+#, c-format
+msgid "Duplicate General Image Attributes block."
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1867
+#, c-format
+msgid "Missing General Image Attributes block."
+msgstr ""
+
+#: ../plug-ins/common/file-psp.c:1956
+#, c-format
+msgid "Exporting not implemented yet."
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:283
+#: ../plug-ins/common/file-raw-data.c:319
+#: ../plug-ins/common/file-raw-data.c:331
 msgid "Raw image data"
 msgstr "Dades d'imatge sense format"
 
-#: ../plug-ins/common/file-raw-data.c:1549
+#: ../plug-ins/common/file-raw-data.c:304
+#: ../plug-ins/common/file-raw-data.c:1882
+msgid "Digital Elevation Model data"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:424
+#, fuzzy, c-format
+#| msgid "Could not open '%s' for writing: %s"
+msgid "Could not open '%s' for size verification: %s"
+msgstr "No s'ha pogut obrir «%s» en escriptura: %s"
+
+#: ../plug-ins/common/file-raw-data.c:502
+#, c-format
+msgid ""
+"%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:520
+#, c-format
+msgid ""
+"Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
+"valid HGT file or its variant is not supported yet. Supported HGT files are: "
+"SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1829
 msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
 
-#: ../plug-ins/common/file-raw-data.c:1591
+#. Translators: Digital Elevation Model (DEM) is a technical term
+#. * used for 3D surface modeling or relief maps; so it must be
+#. * translated by the proper technical term in your language.
+#.
+#: ../plug-ins/common/file-raw-data.c:1878
+msgid "Digital Elevation Model data (1 arc-second)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1880
+msgid "Digital Elevation Model data (3 arc-seconds)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1886
 msgid "Image"
 msgstr "Imatge"
 
-#: ../plug-ins/common/file-raw-data.c:1602
+#. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
+#. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
+#. * "SRTM-1 data are sampled at one arc-second of latitude and longitude and
+#. *  each file contains 3601 lines and 3601 samples.
+#. * [...]
+#. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
+#. * 1201 samples with similar overlapping rows and columns."
+#.
+#: ../plug-ins/common/file-raw-data.c:1916
+msgid "SRTM-1 (1 arc-second)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1917
+msgid "SRTM-3 (3 arc-seconds)"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1920
+msgid "_Sample Spacing:"
+msgstr "_Mostra d'espaiat:"
+
+#: ../plug-ins/common/file-raw-data.c:1938
 msgid "RGB Alpha"
 msgstr "RGB amb Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1603
+#: ../plug-ins/common/file-raw-data.c:1939
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Gran-petit"
 
-#: ../plug-ins/common/file-raw-data.c:1604
+#: ../plug-ins/common/file-raw-data.c:1940
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Petit-gran"
 
-#: ../plug-ins/common/file-raw-data.c:1605
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Gran-petit"
 
-#: ../plug-ins/common/file-raw-data.c:1606
+#: ../plug-ins/common/file-raw-data.c:1942
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Petit-gran"
 
-#: ../plug-ins/common/file-raw-data.c:1607
+#: ../plug-ins/common/file-raw-data.c:1943
 msgid "Planar RGB"
 msgstr "RGB planar"
 
-#: ../plug-ins/common/file-raw-data.c:1608
+#: ../plug-ins/common/file-raw-data.c:1944
 msgid "B&W 1 bit"
 msgstr "B&W 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1609
+#: ../plug-ins/common/file-raw-data.c:1945
 msgid "Gray 2 bit"
 msgstr "Gris 2 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1610
+#: ../plug-ins/common/file-raw-data.c:1946
 msgid "Gray 4 bit"
 msgstr "Gris 4 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1611
+#: ../plug-ins/common/file-raw-data.c:1947
 msgid "Gray 8 bit"
 msgstr "Gris 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1612
+#: ../plug-ins/common/file-raw-data.c:1948
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../plug-ins/common/file-raw-data.c:1613
+#: ../plug-ins/common/file-raw-data.c:1949
 msgid "Indexed Alpha"
 msgstr "Indexat amb Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1618
+#: ../plug-ins/common/file-raw-data.c:1950
+msgid "Gray unsigned 16 bit Big Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1951
+msgid "Gray unsigned 16 bit Little Endian"
+msgstr ""
+
+#: ../plug-ins/common/file-raw-data.c:1952
+#, fuzzy
+#| msgid "RGB565 Big Endian"
+msgid "Gray 16 bit Big Endian"
+msgstr "RGB565 Gran-petit"
+
+#: ../plug-ins/common/file-raw-data.c:1953
+#, fuzzy
+#| msgid "RGB565 Little Endian"
+msgid "Gray 16 bit Little Endian"
+msgstr "RGB565 Petit-gran"
+
+#: ../plug-ins/common/file-raw-data.c:1958
 msgid "Image _Type:"
 msgstr "_Tipus d'imatge:"
 
-#: ../plug-ins/common/file-raw-data.c:1674
+#: ../plug-ins/common/file-raw-data.c:2019
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1684
+#: ../plug-ins/common/file-raw-data.c:2029
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/common/file-raw-data.c:2030
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estil BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1690
+#: ../plug-ins/common/file-raw-data.c:2035
 msgid "_Palette Type:"
 msgstr "Tipus de _paleta:"
 
-#: ../plug-ins/common/file-raw-data.c:1701
+#: ../plug-ins/common/file-raw-data.c:2046
 msgid "Off_set:"
 msgstr "De_splaçament:"
 
-#: ../plug-ins/common/file-raw-data.c:1713
+#: ../plug-ins/common/file-raw-data.c:2058
 msgid "Select Palette File"
 msgstr "Selecció del fitxer amb la paleta de colors"
 
-#: ../plug-ins/common/file-raw-data.c:1719
+#: ../plug-ins/common/file-raw-data.c:2064
 msgid "Pal_ette File:"
 msgstr "Fitxer de pal_eta de colors:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:1768
+#: ../plug-ins/common/file-raw-data.c:2113
 msgid "Raw Image"
 msgstr "Imatge en cru"
 
@@ -3867,7 +4081,7 @@ msgstr "Compon el gràfic de vectors escalables (SVG)"
 
 #. Width and Height
 #: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:571
-#: ../plug-ins/common/grid.c:732
+#: ../plug-ins/common/grid.c:733
 msgid "Width:"
 msgstr "Amplada:"
 
@@ -3922,24 +4136,24 @@ msgstr "No es pot llegir l'extensió de «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "No es pot llegir la capçalera de «%s»"
 
-#: ../plug-ins/common/file-tga.c:1414
+#: ../plug-ins/common/file-tga.c:1417
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1423
+#: ../plug-ins/common/file-tga.c:1426
 msgid "_RLE compression"
 msgstr "Compressió _RLE"
 
-#: ../plug-ins/common/file-tga.c:1437
+#: ../plug-ins/common/file-tga.c:1440
 msgid "Or_igin:"
 msgstr "Or_igen:"
 
-#: ../plug-ins/common/file-tga.c:1441
+#: ../plug-ins/common/file-tga.c:1444
 msgid "Bottom left"
 msgstr "Inferior esquerre"
 
-#: ../plug-ins/common/file-tga.c:1442
+#: ../plug-ins/common/file-tga.c:1445
 msgid "Top left"
 msgstr "Superior esquerre"
 
@@ -4038,7 +4252,7 @@ msgstr "Comentari:"
 msgid "_Write hot spot values"
 msgstr "Escriu els _valors del punt calent"
 
-#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1082
+#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1088
 msgid "Hot spot _X:"
 msgstr "Punt calent _X:"
 
@@ -4059,12 +4273,12 @@ msgstr "Esc_riu el fitxer de màscara extra"
 msgid "_Mask file extension:"
 msgstr "Extensió del fitxer de _màscara:"
 
-#: ../plug-ins/common/file-xmc.c:335 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1049
+#: ../plug-ins/common/file-xmc.c:341 ../plug-ins/common/file-xmc.c:379
+#: ../plug-ins/common/file-xmc.c:1055
 msgid "X11 Mouse Cursor"
 msgstr "Cursor de ratolí X11"
 
-#: ../plug-ins/common/file-xmc.c:479
+#: ../plug-ins/common/file-xmc.c:485
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -4074,37 +4288,37 @@ msgstr ""
 "Hauríeu de disposar les capes de manera que totes elles tinguin una "
 "intersecció."
 
-#: ../plug-ins/common/file-xmc.c:666
+#: ../plug-ins/common/file-xmc.c:672
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "«%s» no és un cursor X vàlid."
 
-#: ../plug-ins/common/file-xmc.c:678
+#: ../plug-ins/common/file-xmc.c:684
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "L'amplada del marc %d de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:685
+#: ../plug-ins/common/file-xmc.c:691
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "L'alçada del marc %d de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:901
+#: ../plug-ins/common/file-xmc.c:907
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "Manca un bocí de la imatge a «%s». "
 
-#: ../plug-ins/common/file-xmc.c:941
+#: ../plug-ins/common/file-xmc.c:947
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:949
+#: ../plug-ins/common/file-xmc.c:955
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "L'alçada de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:1012
+#: ../plug-ins/common/file-xmc.c:1018
 #, c-format
 msgid "A read error occurred."
 msgstr "S'ha produït un error de lectura."
@@ -4112,27 +4326,27 @@ msgstr "S'ha produït un error de lectura."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1055
+#: ../plug-ins/common/file-xmc.c:1061
 msgid "XMC Options"
 msgstr "Opcions de l'XMC"
 
-#: ../plug-ins/common/file-xmc.c:1090
+#: ../plug-ins/common/file-xmc.c:1096
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Introduïu el valor de la coordenada X del punt calent. L'origen és a la "
 "cantonada de dalt a l'esquerra."
 
-#: ../plug-ins/common/file-xmc.c:1113
+#: ../plug-ins/common/file-xmc.c:1119
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Introduïu el valor de la coordenada Y del punt calent. L'origen és a la "
 "cantonada de dalt a l'esquerra."
 
-#: ../plug-ins/common/file-xmc.c:1122
+#: ../plug-ins/common/file-xmc.c:1128
 msgid "_Auto-Crop all frames."
 msgstr "Esc_apça automàticament tots els marcs."
 
-#: ../plug-ins/common/file-xmc.c:1135
+#: ../plug-ins/common/file-xmc.c:1141
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4145,7 +4359,7 @@ msgstr ""
 "Desmarqueu aquesta opció si penseu editar el cursor exportat amb alguna "
 "altra aplicació."
 
-#: ../plug-ins/common/file-xmc.c:1158
+#: ../plug-ins/common/file-xmc.c:1164
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4164,61 +4378,61 @@ msgstr ""
 "de l'animació i quina seqüència s'utilitza en cada cas basant-se amb el "
 "valor de «gtk-cursor-theme-size»."
 
-#: ../plug-ins/common/file-xmc.c:1175
+#: ../plug-ins/common/file-xmc.c:1181
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_Utilitza aquest valor només quan no s'especifiqui la mida del marc."
 
-#: ../plug-ins/common/file-xmc.c:1178
+#: ../plug-ins/common/file-xmc.c:1184
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Reemplaça la mida de tots els marcs encara que estigui especificada."
 
-#: ../plug-ins/common/file-xmc.c:1194
+#: ../plug-ins/common/file-xmc.c:1200
 msgid "_Delay:"
 msgstr "Retar_d:"
 
-#: ../plug-ins/common/file-xmc.c:1199
+#: ../plug-ins/common/file-xmc.c:1205
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 "Introduïu el temps en mil·lisegons durant el qual es renderitzarà cada marc."
 
-#: ../plug-ins/common/file-xmc.c:1227
+#: ../plug-ins/common/file-xmc.c:1233
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 "_Utilitza aquest valor pel fotograma en el qual no s'ha especificat el temps "
 "de retard."
 
-#: ../plug-ins/common/file-xmc.c:1230
+#: ../plug-ins/common/file-xmc.c:1236
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr ""
 "_Substitueix el retard de tots els fotogrames fins i tot si està especificat."
 
-#: ../plug-ins/common/file-xmc.c:1255
+#: ../plug-ins/common/file-xmc.c:1261
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "S'ha eliminat el fragment de la informació del copyright que superava els "
 "65535 caràcters."
 
-#: ../plug-ins/common/file-xmc.c:1265
+#: ../plug-ins/common/file-xmc.c:1271
 msgid "Enter copyright information."
 msgstr "Introduïu la informació del copyright."
 
-#: ../plug-ins/common/file-xmc.c:1267
+#: ../plug-ins/common/file-xmc.c:1273
 msgid "_Copyright:"
 msgstr "_Copyright:"
 
-#: ../plug-ins/common/file-xmc.c:1283
+#: ../plug-ins/common/file-xmc.c:1289
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "S'ha eliminat el fragment de la informació de la llicència que superava els "
 "65535 caràcters."
 
-#: ../plug-ins/common/file-xmc.c:1293
+#: ../plug-ins/common/file-xmc.c:1299
 msgid "Enter license information."
 msgstr "Introduïu la informació de la llicència."
 
-#: ../plug-ins/common/file-xmc.c:1295
+#: ../plug-ins/common/file-xmc.c:1301
 msgid "_License:"
 msgstr "_Llicència:"
 
@@ -4227,15 +4441,15 @@ msgstr "_Llicència:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1302
+#: ../plug-ins/common/file-xmc.c:1308
 msgid "_Other:"
 msgstr "Al_tres:"
 
-#: ../plug-ins/common/file-xmc.c:1337
+#: ../plug-ins/common/file-xmc.c:1343
 msgid "Enter other comment if you want."
 msgstr "Introduïu comentaris addicionals si voleu. "
 
-#: ../plug-ins/common/file-xmc.c:1389
+#: ../plug-ins/common/file-xmc.c:1395
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "El comentari està limitat a %d caràcters."
@@ -4244,29 +4458,29 @@ msgstr "El comentari està limitat a %d caràcters."
 #  init the progress meter
 #  Set up progress display
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1473
+#: ../plug-ins/common/file-xmc.c:1479
 #: ../plug-ins/file-webp/file-webp-save.c:173
-#: ../plug-ins/file-webp/file-webp-save.c:506
+#: ../plug-ins/file-webp/file-webp-save.c:507
 #, c-format
 msgid "Saving '%s'"
 msgstr "S'està desant «%s»"
 
-#: ../plug-ins/common/file-xmc.c:1539
+#: ../plug-ins/common/file-xmc.c:1545
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "El marc «%s» és massa ample. Reduïu-lo en més de %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1548
+#: ../plug-ins/common/file-xmc.c:1554
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "El marc «%s» és massa alt. Reduïu-lo en més de %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1557
+#: ../plug-ins/common/file-xmc.c:1563
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "L'amplada i/o l'alçada del marc «%s» és zero."
 
-#: ../plug-ins/common/file-xmc.c:1596
+#: ../plug-ins/common/file-xmc.c:1602
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4277,18 +4491,23 @@ msgstr ""
 "Intenteu canviar la posició del punt calent, la geometria de la capa o "
 "exporteu la capa sense l'escapçat automàtic."
 
-#: ../plug-ins/common/file-xmc.c:1759
-#, c-format
+#: ../plug-ins/common/file-xmc.c:1765
+#, fuzzy, c-format
+#| msgid ""
+#| "Your cursor was successfully exported but it contains one or more frames "
+#| "whose width or height is more than %ipx.\n"
+#| "It will clutter the screen in some environments."
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
-"whose width or height is more than %ipx.\n"
-"It will clutter the screen in some environments."
+"whose width or height is more than %ipx, a historical max dimension value "
+"for X bitmap cursors.\n"
+"It might be unsupported by some environments."
 msgstr ""
 "El cursor s'ha desat correctament però conté un o més marcs que excedeixen "
 "l'alçada o l'amplada en %ipx .\n"
 "Això pot fer que es vegi desordenat en algunes pantalles."
 
-#: ../plug-ins/common/file-xmc.c:1766
+#: ../plug-ins/common/file-xmc.c:1773
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4301,7 +4520,7 @@ msgstr ""
 "marcs...» al diàleg d'exportació, o el cursor no pot aparèixer en la "
 "configuració del GNOME."
 
-#: ../plug-ins/common/file-xmc.c:2003
+#: ../plug-ins/common/file-xmc.c:2010
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4310,8 +4529,23 @@ msgstr ""
 "El paràsit «%s» és massa llarg pel comentari del cursor X.\n"
 "S'ha suprimit la cadena que sobrepassa."
 
+#: ../plug-ins/common/file-xmc.c:2125
+#, fuzzy, c-format
+#| msgid ""
+#| "Your cursor was successfully exported but it contains one or more frames "
+#| "whose width or height is more than %ipx.\n"
+#| "It will clutter the screen in some environments."
+msgid ""
+"Your cursor was successfully exported but it contains one or more frames "
+"whose size is over 8 digits.\n"
+"We clamped it to %dpx. You should check the exported cursor."
+msgstr ""
+"El cursor s'ha desat correctament però conté un o més marcs que excedeixen "
+"l'alçada o l'amplada en %ipx .\n"
+"Això pot fer que es vegi desordenat en algunes pantalles."
+
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2206
+#: ../plug-ins/common/file-xmc.c:2222
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -4439,98 +4673,98 @@ msgid "_Remove"
 msgstr "Sup_rimeix"
 
 #. Create selection
-#: ../plug-ins/common/film.c:967 ../plug-ins/imagemap/imap_selection.c:338
+#: ../plug-ins/common/film.c:968 ../plug-ins/imagemap/imap_selection.c:338
 #: ../plug-ins/selection-to-path/selection-to-path.c:437
 msgid "Selection"
 msgstr "Selecció"
 
 #. Film height/color
-#: ../plug-ins/common/film.c:977 ../plug-ins/common/film.c:1259
+#: ../plug-ins/common/film.c:978 ../plug-ins/common/film.c:1266
 msgid "Filmstrip"
 msgstr "Cel·luloide"
 
 #. Keep maximum image height
-#: ../plug-ins/common/film.c:986
+#: ../plug-ins/common/film.c:987
 msgid "_Fit height to images"
 msgstr "_Ajusta l'alçada a les imatges"
 
 #. Film color
-#: ../plug-ins/common/film.c:1028
+#: ../plug-ins/common/film.c:1029
 msgid "Select Film Color"
 msgstr "Tria el color de la pel·lícula"
 
-#: ../plug-ins/common/film.c:1033 ../plug-ins/common/film.c:1086
+#: ../plug-ins/common/film.c:1034 ../plug-ins/common/film.c:1090
 msgid "Co_lor:"
 msgstr "Co_lor:"
 
 #. Film numbering: Startindex/Font/color
-#: ../plug-ins/common/film.c:1042
+#: ../plug-ins/common/film.c:1046
 msgid "Numbering"
 msgstr "S'està numerant"
 
-#: ../plug-ins/common/film.c:1063
+#: ../plug-ins/common/film.c:1067
 msgid "Start _index:"
 msgstr "_Inicia l'índex:"
 
-#: ../plug-ins/common/film.c:1076
+#: ../plug-ins/common/film.c:1080
 msgid "_Font:"
 msgstr "_Lletra:"
 
 #. Numbering color
-#: ../plug-ins/common/film.c:1081
+#: ../plug-ins/common/film.c:1085
 msgid "Select Number Color"
 msgstr "Tria el color del nombre"
 
-#: ../plug-ins/common/film.c:1096
+#: ../plug-ins/common/film.c:1103
 msgid "At _bottom"
 msgstr "A la part _inferior"
 
-#: ../plug-ins/common/film.c:1097
+#: ../plug-ins/common/film.c:1104
 msgid "At _top"
 msgstr "A la part _superior"
 
 #. ** The right frame keeps the image selection **
-#: ../plug-ins/common/film.c:1110
+#: ../plug-ins/common/film.c:1117
 msgid "Image Selection"
 msgstr "Selecció de la imatge"
 
-#: ../plug-ins/common/film.c:1139
+#: ../plug-ins/common/film.c:1146
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Tots els valors són fraccions de l'alçada de la pel·lícula"
 
-#: ../plug-ins/common/film.c:1142
+#: ../plug-ins/common/film.c:1149
 msgid "Ad_vanced"
 msgstr "A_vançat"
 
-#: ../plug-ins/common/film.c:1161
+#: ../plug-ins/common/film.c:1168
 msgid "Image _height:"
 msgstr "A_lçada de la imatge:"
 
-#: ../plug-ins/common/film.c:1172
+#: ../plug-ins/common/film.c:1179
 msgid "Image spac_ing:"
 msgstr "Espa_iat de la imatge:"
 
-#: ../plug-ins/common/film.c:1183
+#: ../plug-ins/common/film.c:1190
 msgid "_Hole offset:"
 msgstr "Desplaçament del _forat:"
 
-#: ../plug-ins/common/film.c:1194
+#: ../plug-ins/common/film.c:1201
 msgid "Ho_le width:"
 msgstr "Amp_lada del forat:"
 
-#: ../plug-ins/common/film.c:1205
+#: ../plug-ins/common/film.c:1212
 msgid "Hol_e height:"
 msgstr "Alçada d_el forat:"
 
-#: ../plug-ins/common/film.c:1216
+#: ../plug-ins/common/film.c:1223
 msgid "Hole sp_acing:"
 msgstr "Espai_at del forat:"
 
-#: ../plug-ins/common/film.c:1227
+#: ../plug-ins/common/film.c:1234
 msgid "_Number height:"
 msgstr "Alçada del _número:"
 
-#: ../plug-ins/common/film.c:1240
+#: ../plug-ins/common/film.c:1247
 msgid "Re_set"
 msgstr "Restableix"
 
@@ -4714,8 +4948,8 @@ msgid "Transform image with the Mandelbrot Fractal"
 msgstr "Transforma la imatge amb una fractal Mandelbrot"
 
 #: ../plug-ins/common/fractal-trace.c:121
-msgid "_Fractal Trace..."
-msgstr "Composició _fractal..."
+msgid "_Fractal Trace (legacy)..."
+msgstr "Composició _fractal (antic)..."
 
 #: ../plug-ins/common/fractal-trace.c:471
 #: ../plug-ins/common/fractal-trace.c:707
@@ -4797,20 +5031,20 @@ msgid "Draw a grid on the image"
 msgstr "Dibuixa una quadrícula en la imatge"
 
 #: ../plug-ins/common/grid.c:148
-msgid "_Grid..."
-msgstr "_Quadrícula..."
+msgid "_Grid (legacy)..."
+msgstr "_Quadrícula (antic)..."
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
 msgstr "Quadrícula de dibuix"
 
-#: ../plug-ins/common/grid.c:642 ../plug-ins/gfig/gfig-dialog.c:1391
+#: ../plug-ins/common/grid.c:643 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Quadrícula"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:725
+#: ../plug-ins/common/grid.c:726
 msgid ""
 "Horizontal\n"
 "Lines"
@@ -4818,7 +5052,7 @@ msgstr ""
 "Horitzontal\n"
 "Línies"
 
-#: ../plug-ins/common/grid.c:727
+#: ../plug-ins/common/grid.c:728
 msgid ""
 "Vertical\n"
 "Lines"
@@ -4826,25 +5060,25 @@ msgstr ""
 "Vertical\n"
 "Línies"
 
-#: ../plug-ins/common/grid.c:729
+#: ../plug-ins/common/grid.c:730
 msgid "Intersection"
 msgstr "Intersecció"
 
 #. attach labels
-#: ../plug-ins/common/grid.c:865
+#: ../plug-ins/common/grid.c:866
 msgid "Offset:"
 msgstr "Desplaçament:"
 
 #. attach color selectors
-#: ../plug-ins/common/grid.c:904
+#: ../plug-ins/common/grid.c:905
 msgid "Horizontal Color"
 msgstr "Color horitzontal"
 
-#: ../plug-ins/common/grid.c:922
+#: ../plug-ins/common/grid.c:927
 msgid "Vertical Color"
 msgstr "Color vertical"
 
-#: ../plug-ins/common/grid.c:940
+#: ../plug-ins/common/grid.c:948
 msgid "Intersection Color"
 msgstr "Color de la intersecció"
 
@@ -5214,8 +5448,8 @@ msgid "Smear colors to simulate an oil painting"
 msgstr "Barreja els colors per simular una pintura a l'oli"
 
 #: ../plug-ins/common/oilify.c:125
-msgid "Oili_fy..."
-msgstr "Pintura a l'_oli..."
+msgid "Oili_fy (legacy)..."
+msgstr "Pintura a l'_oli (antic)..."
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
@@ -5259,8 +5493,8 @@ msgid "Simulate color distortion produced by a copy machine"
 msgstr "Simula la distorsió de color que produeix una màquina fotocopiadora"
 
 #: ../plug-ins/common/photocopy.c:158
-msgid "_Photocopy..."
-msgstr "Fotocò_pia..."
+msgid "_Photocopy (legacy)..."
+msgstr "Fotocò_pia (antic)..."
 
 #: ../plug-ins/common/photocopy.c:836
 msgid "Photocopy"
@@ -5357,31 +5591,31 @@ msgstr "Navegador de _procediments"
 msgid "Procedure Browser"
 msgstr "Navegador de procediments"
 
-#: ../plug-ins/common/qbist.c:408
+#: ../plug-ins/common/qbist.c:387
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Genera una enorme varietat de patrons abstractes"
 
-#: ../plug-ins/common/qbist.c:416
+#: ../plug-ins/common/qbist.c:395
 msgid "_Qbist..."
 msgstr "_Qbist..."
 
-#: ../plug-ins/common/qbist.c:523
+#: ../plug-ins/common/qbist.c:508
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/qbist.c:719
+#: ../plug-ins/common/qbist.c:716
 msgid "Load QBE File"
 msgstr "Carrega el fitxer QBE"
 
-#: ../plug-ins/common/qbist.c:761
+#: ../plug-ins/common/qbist.c:758
 msgid "Save as QBE File"
 msgstr "Desa com a fitxer QBE"
 
-#: ../plug-ins/common/qbist.c:815
+#: ../plug-ins/common/qbist.c:812
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
-#: ../plug-ins/common/qbist.c:880
+#: ../plug-ins/common/qbist.c:877
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
 #: ../plug-ins/gfig/gfig-dialog.c:886
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
@@ -5584,8 +5818,8 @@ msgid "Simulate glow by making highlights intense and fuzzy"
 msgstr "Simula una lluentor fent taques de llum intenses i difoses"
 
 #: ../plug-ins/common/softglow.c:139
-msgid "_Softglow..."
-msgstr "Lluentor _suau..."
+msgid "_Softglow (legacy)..."
+msgstr "Lluentor _suau (antic)..."
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
@@ -6163,8 +6397,8 @@ msgid "The most widely useful method for sharpening an image"
 msgstr "La forma més útil per difuminar o realçar les vores d'una imatge"
 
 #: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask..."
-msgstr "_Emmascara les parts borroses..."
+msgid "_Unsharp Mask (legacy)..."
+msgstr "_Emmascara les parts borroses (antic)..."
 
 #: ../plug-ins/common/unsharp-mask.c:694
 msgid "Merging"
@@ -6376,7 +6610,7 @@ msgid "Flow step %d"
 msgstr "Flux de pas %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
-#: ../plug-ins/common/wavelet-decompose.c:308
+#: ../plug-ins/common/wavelet-decompose.c:346
 msgid "Wavelet decompose"
 msgstr "Descomposició de l'oneta"
 
@@ -6384,34 +6618,34 @@ msgstr "Descomposició de l'oneta"
 msgid "_Wavelet-decompose..."
 msgstr "Descomposició de l'oneta..."
 
-#: ../plug-ins/common/wavelet-decompose.c:175
+#: ../plug-ins/common/wavelet-decompose.c:177
 msgid "Wavelet-Decompose"
 msgstr "Descomposició de l'oneta"
 
-#: ../plug-ins/common/wavelet-decompose.c:182
+#: ../plug-ins/common/wavelet-decompose.c:184
 msgid "Decomposition"
 msgstr "Descomposició"
 
-#: ../plug-ins/common/wavelet-decompose.c:208
+#: ../plug-ins/common/wavelet-decompose.c:246
 #, c-format
 msgid "Scale %d"
 msgstr "Escala %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:232
+#: ../plug-ins/common/wavelet-decompose.c:270
 msgid "Residual"
 msgstr "Residual"
 
-#: ../plug-ins/common/wavelet-decompose.c:339
+#: ../plug-ins/common/wavelet-decompose.c:377
 msgid "Scales:"
 msgstr "Escales:"
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/common/wavelet-decompose.c:389
 msgid "Create a layer group to store the decomposition"
 msgstr "Fes un grup de capes per emmagatzemar la descomposició"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:363
+#: ../plug-ins/common/wavelet-decompose.c:401
 msgid "Add a layer mask to each scales layers"
 msgstr "Afegeix una màscara de capa a cada capa d'escala"
 
@@ -6811,10 +7045,10 @@ msgstr "La icona #%d té una amplada o alçada zero"
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:505
+#: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:527
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:441
-#: ../plug-ins/file-raw/file-rawtherapee.c:429
+#: ../plug-ins/file-raw/file-darktable.c:494
+#: ../plug-ins/file-raw/file-rawtherapee.c:430
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "S'està obrint la miniatura per a «%s»"
@@ -6823,7 +7057,7 @@ msgstr "S'està obrint la miniatura per a «%s»"
 msgid "Microsoft Windows icon"
 msgstr "Icona del Microsoft Windows"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:231
+#: ../plug-ins/file-jpeg/jpeg-load.c:230
 msgid "JPEG preview"
 msgstr "Previsualització del JPEG"
 
@@ -7064,21 +7298,21 @@ msgstr "L'amplada de la capa no és vàlida o no és compatible: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1315 ../plug-ins/file-psd/psd-load.c:1779
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1791
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compressió no compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1875
+#: ../plug-ins/file-psd/psd-load.c:1887
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2054
+#: ../plug-ins/file-psd/psd-load.c:2066
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "La mida del canal no és vàlida o no és compatible"
 
-#: ../plug-ins/file-psd/psd-load.c:2123
+#: ../plug-ins/file-psd/psd-load.c:2135
 #, c-format
 msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
@@ -7087,7 +7321,7 @@ msgstr "No s'han pogut descomprimir les dades"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1523
+#: ../plug-ins/file-psd/psd-save.c:1545
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7096,7 +7330,7 @@ msgstr ""
 "No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
 "imatges de més de 30.000 píxels d'amplada o alçada."
 
-#: ../plug-ins/file-psd/psd-save.c:1544
+#: ../plug-ins/file-psd/psd-save.c:1566
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7527,12 +7761,13 @@ msgid "unknown error"
 msgstr "error desconegut"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
-#: ../plug-ins/file-webp/file-webp-save.c:514
-#, c-format
-msgid "Unable to open '%s' for writing"
+#: ../plug-ins/file-webp/file-webp-save.c:515
+#, fuzzy, c-format
+#| msgid "Unable to open '%s' for writing"
+msgid "Unable to open '%s' for writing: %s"
 msgstr "No s'ha pogut obrir el fitxer «%s» per a escriure-hi."
 
-#: ../plug-ins/file-webp/file-webp-save.c:253
+#: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Error WebP: «%s»"
@@ -11698,27 +11933,27 @@ msgstr "Importa les metadades"
 msgid "Export metadata"
 msgstr "Exporta metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:761
+#: ../plug-ins/metadata/metadata-editor.c:762
 msgid "Calendar Date:"
 msgstr "Data del calendari:"
 
-#: ../plug-ins/metadata/metadata-editor.c:765
+#: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
 msgstr "Estableix la data"
 
-#: ../plug-ins/metadata/metadata-editor.c:1615
+#: ../plug-ins/metadata/metadata-editor.c:1616
 msgid "Unrated"
 msgstr "Sense velocitat"
 
-#: ../plug-ins/metadata/metadata-editor.c:5615
+#: ../plug-ins/metadata/metadata-editor.c:5641
 msgid "Import Metadata File"
 msgstr "Importa el fitxer de metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:5650
+#: ../plug-ins/metadata/metadata-editor.c:5676
 msgid "Export Metadata File"
 msgstr "Exporta el fitxer de metadades"
 
-#: ../plug-ins/metadata/metadata-editor.c:5654
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "_Export"
 msgstr "_Exporta"
 
@@ -12081,91 +12316,117 @@ msgstr "S'ha produït un error en imprimir:"
 msgid "Printing"
 msgstr "S'està imprimint"
 
-#: ../plug-ins/screenshot/screenshot.c:123
+#: ../plug-ins/screenshot/screenshot.c:128
 msgid "Create an image from an area of the screen"
 msgstr "Crea una imatge a partir d'una àrea de la pantalla"
 
-#: ../plug-ins/screenshot/screenshot.c:144
+#: ../plug-ins/screenshot/screenshot.c:149
 msgid "_Screenshot..."
 msgstr "Captura de _pantalla..."
 
-#: ../plug-ins/screenshot/screenshot.c:423
+#: ../plug-ins/screenshot/screenshot.c:482
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: ../plug-ins/screenshot/screenshot.c:428
+#: ../plug-ins/screenshot/screenshot.c:487
 msgid "S_nap"
 msgstr "_Captura"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:452
+#: ../plug-ins/screenshot/screenshot.c:514
 msgid "Area"
 msgstr "Àrea"
 
-#: ../plug-ins/screenshot/screenshot.c:462
+#: ../plug-ins/screenshot/screenshot.c:526
 msgid "Take a screenshot of a single _window"
 msgstr "Obtén una captura de pantalla d'una _finestra única"
 
-#: ../plug-ins/screenshot/screenshot.c:482
+#: ../plug-ins/screenshot/screenshot.c:549
 msgid "Include window _decoration"
 msgstr "Inclou la _decoració de la finestra"
 
-#: ../plug-ins/screenshot/screenshot.c:503
-#: ../plug-ins/screenshot/screenshot.c:544
+#: ../plug-ins/screenshot/screenshot.c:570
+#: ../plug-ins/screenshot/screenshot.c:615
 msgid "Include _mouse pointer"
 msgstr "Inclou el punter del _ratolí"
 
-#: ../plug-ins/screenshot/screenshot.c:524
+#: ../plug-ins/screenshot/screenshot.c:592
 msgid "Take a screenshot of the entire _screen"
 msgstr "Obtén una captura de la pantalla _sencera"
 
-#: ../plug-ins/screenshot/screenshot.c:572
+#: ../plug-ins/screenshot/screenshot.c:643
 msgid "Select a _region to grab"
 msgstr "Selecciona una _regió"
 
-#. Delay
-#: ../plug-ins/screenshot/screenshot.c:588
+#: ../plug-ins/screenshot/screenshot.c:661
 msgid "Delay"
 msgstr "Retard"
 
+#: ../plug-ins/screenshot/screenshot.c:681
+#, fuzzy
+#| msgid "Se_lection only"
+msgid "Selection delay: "
+msgstr "Només la se_lecció"
+
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:700
+#: ../plug-ins/screenshot/screenshot.c:763
 msgid "seconds"
 msgstr "segons"
 
-#: ../plug-ins/screenshot/screenshot.c:622
-msgid "After the delay, the screenshot is taken."
-msgstr "Després del retard es farà la captura de pantalla."
-
-#: ../plug-ins/screenshot/screenshot.c:624
+#: ../plug-ins/screenshot/screenshot.c:714
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Després del retard arrossegueu el vostre ratolí per a seleccionar la regió "
 "de la pantalla que voleu capturar."
 
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:718
 msgid "Click in a window to snap it after delay."
 msgstr "Feu clic en una finestra perquè hi encaixi després d'un retard."
 
-#: ../plug-ins/screenshot/screenshot.c:631
+#: ../plug-ins/screenshot/screenshot.c:723
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Al final del retard feu clic a la finestra per a capturar-la."
 
-#: ../plug-ins/screenshot/screenshot.c:638
+#: ../plug-ins/screenshot/screenshot.c:744
+#, fuzzy
+#| msgid "Screenshot"
+msgid "Screenshot delay: "
+msgstr "Captura de pantalla"
+
+#: ../plug-ins/screenshot/screenshot.c:775
+msgid "After the delay, the screenshot is taken."
+msgstr "Després del retard es farà la captura de pantalla."
+
+#: ../plug-ins/screenshot/screenshot.c:777
+msgid "Once the region is selected, it will be captured after this delay."
+msgstr ""
+
+#: ../plug-ins/screenshot/screenshot.c:782
+msgid "Once the window is selected, it will be captured after this delay."
+msgstr ""
+
+#: ../plug-ins/screenshot/screenshot.c:788
+#, fuzzy
+#| msgid "After the delay, the screenshot is taken."
+msgid "After the delay, the active window will be captured."
+msgstr "Després del retard es farà la captura de pantalla."
+
+#: ../plug-ins/screenshot/screenshot.c:795
 msgid "Color Profile"
 msgstr "Color de perfil"
 
-#: ../plug-ins/screenshot/screenshot.c:643
+#: ../plug-ins/screenshot/screenshot.c:800
 msgid "Tag image with _monitor profile"
 msgstr "Marca la imatge amb el perfil del _monitor"
 
-#: ../plug-ins/screenshot/screenshot.c:647
+#: ../plug-ins/screenshot/screenshot.c:804
 msgid "Convert image to sR_GB"
 msgstr "Converteix la imatge a sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:244
+#: ../plug-ins/screenshot/screenshot-win32.c:251
 msgid "No data captured"
 msgstr "No s'ha capturat cap dada"
 
@@ -12181,7 +12442,7 @@ msgstr "Importa la captura de pantalla"
 msgid "Mouse Pointer"
 msgstr "Punter del ratolí"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:622
+#: ../plug-ins/screenshot/screenshot-x11.c:628
 msgid "Specified window not found"
 msgstr "No s'ha trobat la finestra especificada"
 
@@ -12448,6 +12709,9 @@ msgstr "E_scàner/càmera..."
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
 
+#~ msgid "PDF document"
+#~ msgstr "Document PDF"
+
 #~ msgid "Indexed Palette Type"
 #~ msgstr "Tipus de paleta indexada"
 
@@ -12537,9 +12801,6 @@ msgstr "S'estan transferint dades de l'escàner/càmera"
 
 #~ msgid "Units"
 #~ msgstr "Unitats"
-
-#~ msgid "Radians"
-#~ msgstr "Radians"
 
 #~ msgid "Radians/Pi"
 #~ msgstr "Radians/Pi"
@@ -13224,9 +13485,6 @@ msgstr "S'estan transferint dades de l'escàner/càmera"
 
 #~ msgid "Couldn't load one brush in the pipe, giving up."
 #~ msgstr "No s'ha pogut carregar un pinzell al conducte, renuncieu-hi."
-
-#~ msgid "Error reading file."
-#~ msgstr "S'ha produït un error en llegir el fitxer."
 
 #~ msgid "RGB565"
 #~ msgstr "RGB565"
