@@ -63,28 +63,37 @@ typedef struct
 static GimpSplash *splash = NULL;
 
 
-static void        splash_position_layouts    (GimpSplash     *splash,
-                                               const gchar    *text1,
-                                               const gchar    *text2,
-                                               GdkRectangle   *area);
-static gboolean    splash_area_expose         (GtkWidget      *widget,
-                                               GdkEventExpose *event,
-                                               GimpSplash     *splash);
-static void        splash_rectangle_union     (GdkRectangle   *dest,
-                                               PangoRectangle *pango_rect,
-                                               gint            offset_x,
-                                               gint            offset_y);
-static gboolean    splash_average_text_area   (GimpSplash     *splash,
-                                               GdkPixbuf      *pixbuf,
-                                               GdkColor       *color);
+static void        splash_position_layouts     (GimpSplash     *splash,
+                                                const gchar    *text1,
+                                                const gchar    *text2,
+                                                GdkRectangle   *area);
+static gboolean    splash_area_expose          (GtkWidget      *widget,
+                                                GdkEventExpose *event,
+                                                GimpSplash     *splash);
+static void        splash_rectangle_union      (GdkRectangle   *dest,
+                                                PangoRectangle *pango_rect,
+                                                gint            offset_x,
+                                                gint            offset_y);
+static gboolean    splash_average_text_area    (GimpSplash     *splash,
+                                                GdkPixbuf      *pixbuf,
+                                                GdkColor       *color);
 
 static GdkPixbufAnimation *
-                   splash_image_load          (gboolean        be_verbose);
+                   splash_image_load           (gint            max_width,
+                                                gint            max_height,
+                                                gboolean        be_verbose);
 static GdkPixbufAnimation *
-                   splash_image_pick_from_dir (const gchar    *dirname,
-                                               gboolean        be_verbose);
+                   splash_image_load_from_file (const gchar    *filename,
+                                                gint            max_width,
+                                                gint            max_height,
+                                                gboolean        be_verbose);
+static GdkPixbufAnimation *
+                   splash_image_pick_from_dir  (const gchar    *dirname,
+                                                gint            max_width,
+                                                gint            max_height,
+                                                gboolean        be_verbose);
 
-static void        splash_timer_elapsed       (void);
+static void        splash_timer_elapsed        (void);
 
 
 /*  public functions  */
@@ -97,11 +106,15 @@ splash_create (gboolean   be_verbose,
   GtkWidget          *frame;
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
+  gint                max_width;
+  gint                max_height;
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  pixbuf = splash_image_load (be_verbose);
+  max_width  = gdk_screen_get_width (screen) * 2 / 3;
+  max_height = gdk_screen_get_height (screen) * 2 / 3;
+  pixbuf = splash_image_load (max_width, max_height, be_verbose);
 
   if (! pixbuf)
     return;
@@ -403,60 +416,107 @@ splash_average_text_area (GimpSplash *splash,
 }
 
 static GdkPixbufAnimation *
-splash_image_load (gboolean be_verbose)
+splash_image_load (gint     max_width,
+                   gint     max_height,
+                   gboolean be_verbose)
 {
-  GdkPixbufAnimation *pixbuf;
+  GdkPixbufAnimation *animation = NULL;
   gchar              *filename;
 
+  /* File "gimp-splash.png" in personal configuration directory. */
   filename = gimp_personal_rc_file ("gimp-splash.png");
-
-  if (be_verbose)
-    g_printerr ("Trying splash '%s' ... ", filename);
-
-  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
+  animation = splash_image_load_from_file (filename,
+                                           max_width, max_height,
+                                           be_verbose);
   g_free (filename);
+  if (animation)
+    return animation;
 
-  if (be_verbose)
-    g_printerr (pixbuf ? "OK\n" : "failed\n");
-
-  if (pixbuf)
-    return pixbuf;
-
+  /* Random image under splashes/ directory in personal config dir. */
   filename = gimp_personal_rc_file ("splashes");
-  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
+  animation = splash_image_pick_from_dir (filename,
+                                          max_width, max_height,
+                                          be_verbose);
   g_free (filename);
+  if (animation)
+    return animation;
 
-  if (pixbuf)
-    return pixbuf;
-
+  /* Release splash image. */
   filename = g_build_filename (gimp_data_directory (),
                                "images", "gimp-splash.png", NULL);
+  animation = splash_image_load_from_file (filename,
+                                           max_width, max_height,
+                                           be_verbose);
+  g_free (filename);
+  if (animation)
+    return animation;
 
+  /* Random release image in installed splashes/ directory. */
+  filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
+  animation = splash_image_pick_from_dir (filename,
+                                          max_width, max_height,
+                                          be_verbose);
+  g_free (filename);
+
+  return animation;
+}
+
+static GdkPixbufAnimation *
+splash_image_load_from_file (const gchar *filename,
+                             gint         max_width,
+                             gint         max_height,
+                             gboolean     be_verbose)
+{
+  GdkPixbufAnimation *animation;
   if (be_verbose)
     g_printerr ("Trying splash '%s' ... ", filename);
 
-  pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
-  g_free (filename);
+  animation = gdk_pixbuf_animation_new_from_file (filename, NULL);
+
+  /* FIXME Right now, we only try to scale static images.
+   * Animated images may end up bigger than the expected max dimensions.
+   */
+  if (animation && gdk_pixbuf_animation_is_static_image (animation) &&
+      (gdk_pixbuf_animation_get_width (animation) > max_width        ||
+       gdk_pixbuf_animation_get_height (animation) > max_height))
+    {
+      GdkPixbuf *pixbuf;
+
+      pixbuf = gdk_pixbuf_new_from_file_at_size (filename,
+                                                 max_width, max_height,
+                                                 NULL);
+      if (pixbuf)
+        {
+          GdkPixbufSimpleAnim *simple_anim = NULL;
+
+          simple_anim = gdk_pixbuf_simple_anim_new (gdk_pixbuf_get_width (pixbuf),
+                                                    gdk_pixbuf_get_height (pixbuf),
+                                                    1.0);
+          if (simple_anim)
+            {
+              gdk_pixbuf_simple_anim_add_frame (simple_anim, pixbuf);
+
+              g_object_unref (animation);
+              animation = GDK_PIXBUF_ANIMATION (simple_anim);
+            }
+          g_object_unref (pixbuf);
+        }
+    }
 
   if (be_verbose)
-    g_printerr (pixbuf ? "OK\n" : "failed\n");
+    g_printerr (animation ? "OK\n" : "failed\n");
 
-  if (pixbuf)
-    return pixbuf;
-
-  filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
-  pixbuf = splash_image_pick_from_dir (filename, be_verbose);
-  g_free (filename);
-
-  return pixbuf;
+  return animation;
 }
 
 static GdkPixbufAnimation *
 splash_image_pick_from_dir (const gchar *dirname,
+                            gint         max_width,
+                            gint         max_height,
                             gboolean     be_verbose)
 {
-  GdkPixbufAnimation *pixbuf = NULL;
-  GDir               *dir    = g_dir_open (dirname, 0, NULL);
+  GdkPixbufAnimation *animation = NULL;
+  GDir               *dir       = g_dir_open (dirname, 0, NULL);
 
   if (dir)
     {
@@ -475,20 +535,15 @@ splash_image_pick_from_dir (const gchar *dirname,
                                                g_list_nth_data (splashes, i),
                                                NULL);
 
-          if (be_verbose)
-            g_printerr ("Trying splash '%s' ... ", filename);
-
-          pixbuf = gdk_pixbuf_animation_new_from_file (filename, NULL);
+          animation = splash_image_load_from_file (filename,
+                                                   max_width, max_height,
+                                                   be_verbose);
           g_free (filename);
-
-          if (be_verbose)
-            g_printerr (pixbuf ? "OK\n" : "failed\n");
-
           g_list_free_full (splashes, (GDestroyNotify) g_free);
         }
     }
 
-  return pixbuf;
+  return animation;
 }
 
 static void
