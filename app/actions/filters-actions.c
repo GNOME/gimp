@@ -183,6 +183,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:apply-lens",
     GIMP_HELP_FILTER_APPLY_LENS },
 
+  { "filters-brightness-contrast", GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
+    NC_("filters-action", "B_rightness-Contrast..."), NULL, NULL,
+    "gimp:brightness-contrast",
+    GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST },
+
   { "filters-bump-map", GIMP_ICON_GEGL,
     NC_("filters-action", "_Bump Map..."), NULL, NULL,
     "gegl:bump-map",
@@ -257,6 +262,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Cubism..."), NULL, NULL,
     "gegl:cubism",
     GIMP_HELP_FILTER_CUBISM },
+
+  { "filters-curves", GIMP_ICON_TOOL_CURVES,
+    NC_("filters-action", "_Curves..."), NULL, NULL,
+    "gimp:curves",
+    GIMP_HELP_TOOL_CURVES },
 
   { "filters-deinterlace", GIMP_ICON_GEGL,
     NC_("filters-action", "_Deinterlace..."), NULL, NULL,
@@ -397,6 +407,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "Lens Flare..."), NULL, NULL,
     "gegl:lens-flare",
     GIMP_HELP_FILTER_LENS_FLARE },
+
+  { "filters-levels", GIMP_ICON_TOOL_LEVELS,
+    NC_("filters-action", "_Levels..."), NULL, NULL,
+    "gimp:levels",
+    GIMP_HELP_TOOL_LEVELS },
 
   { "filters-mantiuk-2006", GIMP_ICON_GEGL,
     NC_("filters-action", "_Mantiuk 2006..."), NULL, NULL,
@@ -618,6 +633,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:supernova",
     GIMP_HELP_FILTER_SUPERNOVA },
 
+  { "filters-threshold", GIMP_ICON_TOOL_THRESHOLD,
+    NC_("filters-action", "_Threshold..."), NULL, NULL,
+    "gimp:threshold",
+    GIMP_HELP_TOOL_THRESHOLD },
+
   { "filters-threshold-alpha", GIMP_ICON_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
@@ -808,6 +828,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-antialias",               writable);
   SET_SENSITIVE ("filters-apply-canvas",            writable);
   SET_SENSITIVE ("filters-apply-lens",              writable);
+  SET_SENSITIVE ("filters-brightness-contrast",     writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
@@ -824,6 +845,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-component-extract",       writable);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
+  SET_SENSITIVE ("filters-curves",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-desaturate",              writable && !gray);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
@@ -857,6 +879,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
+  SET_SENSITIVE ("filters-levels",                  writable);
   SET_SENSITIVE ("filters-mantiuk-2006",            writable);
   SET_SENSITIVE ("filters-maze",                    writable);
   SET_SENSITIVE ("filters-median-blur",             writable);
@@ -901,6 +924,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
   SET_SENSITIVE ("filters-stress",                  writable);
   SET_SENSITIVE ("filters-supernova",               writable);
+  SET_SENSITIVE ("filters-threshold",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-paper",              writable);

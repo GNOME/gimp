@@ -32,6 +32,8 @@
 #include "gimpbrightnesscontrastconfig.h"
 #include "gimpoperationbrightnesscontrast.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_brightness_contrast_process (GeglOperation       *operation,
                                                             void                *in_buf,
@@ -60,7 +62,7 @@ gimp_operation_brightness_contrast_class_init (GimpOperationBrightnessContrastCl
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:brightness-contrast",
                                  "categories",  "color",
-                                 "description", "GIMP Brightness-Contrast operation",
+                                 "description", _("Adjust brightness and contrast"),
                                  NULL);
 
   point_class->process         = gimp_operation_brightness_contrast_process;

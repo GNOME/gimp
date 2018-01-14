@@ -31,6 +31,8 @@
 #include "gimplevelsconfig.h"
 #include "gimpoperationlevels.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_levels_process (GeglOperation       *operation,
                                                void                *in_buf,
@@ -59,7 +61,7 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:levels",
                                  "categories",  "color",
-                                 "description", "GIMP Levels operation",
+                                 "description", _("Adjust color levels"),
                                  NULL);
 
   point_class->process = gimp_operation_levels_process;

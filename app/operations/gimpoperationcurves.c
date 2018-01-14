@@ -34,6 +34,8 @@
 #include "gimpcurvesconfig.h"
 #include "gimpoperationcurves.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_curves_process (GeglOperation       *operation,
                                                void                *in_buf,
@@ -62,7 +64,7 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:curves",
                                  "categories",  "color",
-                                 "description", "GIMP Curves operation",
+                                 "description", _("Adjust color curves"),
                                  NULL);
 
   point_class->process = gimp_operation_curves_process;

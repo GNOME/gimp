@@ -280,12 +280,15 @@ app/operations/gimpcolorbalanceconfig.c
 app/operations/gimpcurvesconfig.c
 app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
+app/operations/gimpoperationbrightnesscontrast.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
 app/operations/gimpoperationcolorbalance.c
 app/operations/gimpoperationcolorize.c
+app/operations/gimpoperationcurves.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationhuesaturation.c
+app/operations/gimpoperationlevels.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthreshold.c

@@ -330,6 +330,14 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "tools-warp-effect-hardness-"
     };
 
+  static const gchar *actions[] =
+    {
+      "tools-brightness-contrast",
+      "tools-curves",
+      "tools-levels",
+      "tools-threshold"
+    };
+
   gint i;
 
   if (! (action_name && *action_name))
@@ -344,6 +352,12 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
   for (i = 0; i < G_N_ELEMENTS (prefixes); i++)
     {
       if (g_str_has_prefix (action_name, prefixes[i]))
+        return TRUE;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (actions); i++)
+    {
+      if (! strcmp (action_name, actions[i]))
         return TRUE;
     }
 

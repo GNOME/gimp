@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpgeglprocedure.c
- * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2016-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -272,6 +272,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   GimpRunMode  run_mode;
   GimpObject  *settings;
   GimpTool    *active_tool;
+  const gchar *tool_name;
 
   run_mode = g_value_get_int    (gimp_value_array_index (args, 0));
   settings = g_value_get_object (gimp_value_array_index (args, 3));
@@ -321,6 +322,27 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
                     gimp_procedure_get_label (procedure));
     }
 
+  if (! strcmp (procedure->original_name, "gimp:brightness-contrast"))
+    {
+      tool_name = "gimp-brightness-contrast-tool";
+    }
+  else if (! strcmp (procedure->original_name, "gimp:curves"))
+    {
+      tool_name = "gimp-curves-tool";
+    }
+  else if (! strcmp (procedure->original_name, "gimp:levels"))
+    {
+      tool_name = "gimp-levels-tool";
+    }
+  else if (! strcmp (procedure->original_name, "gimp:threshold"))
+    {
+      tool_name = "gimp-threshold-tool";
+    }
+  else
+    {
+      tool_name = "gimp-operation-tool";
+    }
+
   active_tool = tool_manager_get_active (gimp);
 
   /*  do not use the passed context because we need to set the active
@@ -328,10 +350,9 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
    */
   context = gimp_get_user_context (gimp);
 
-  if (G_TYPE_FROM_INSTANCE (active_tool) != GIMP_TYPE_OPERATION_TOOL)
+  if (strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
     {
-      GimpToolInfo *tool_info = gimp_get_tool_info (gimp,
-                                                    "gimp-operation-tool");
+      GimpToolInfo *tool_info = gimp_get_tool_info (gimp, tool_name);
 
       if (GIMP_IS_TOOL_INFO (tool_info))
         gimp_context_set_tool (context, tool_info);
@@ -343,25 +364,28 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
   active_tool = tool_manager_get_active (gimp);
 
-  if (GIMP_IS_OPERATION_TOOL (active_tool))
+  if (! strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
     {
-      /*  Remember the prodecure that created this tool, because we
-       *  can't just switch to an operation tool using
+      /*  Remember the prodecure that created this tool, because
+       *  we can't just switch to an operation tool using
        *  gimp_context_set_tool(), we also have to go through the
-       *  initialization code below, otherwise we end up with a dummy
-       *  tool that does nothing. See bug #776370.
+       *  initialization code below, otherwise we end up with a
+       *  dummy tool that does nothing. See bug #776370.
        */
       g_object_set_data_full (G_OBJECT (active_tool), "gimp-gegl-procedure",
                               g_object_ref (procedure),
                               (GDestroyNotify) g_object_unref);
 
-      gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
-                                         procedure->original_name,
-                                         gimp_procedure_get_label (procedure),
-                                         gimp_procedure_get_label (procedure),
-                                         gimp_procedure_get_label (procedure),
-                                         gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
-                                         gimp_procedure_get_help_id (procedure));
+      if (! strcmp (tool_name, "gimp-operation-tool"))
+        {
+          gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
+                                             procedure->original_name,
+                                             gimp_procedure_get_label (procedure),
+                                             gimp_procedure_get_label (procedure),
+                                             gimp_procedure_get_label (procedure),
+                                             gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
+                                             gimp_procedure_get_help_id (procedure));
+        }
 
       tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
 

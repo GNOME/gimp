@@ -569,9 +569,9 @@
       <menuitem action="filters-saturation" />
       <menuitem action="filters-exposure" />
       <menuitem action="filters-shadows-highlights" />
-      <menuitem action="tools-brightness-contrast" />
-      <menuitem action="tools-levels" />
-      <menuitem action="tools-curves" />
+      <menuitem action="filters-brightness-contrast" />
+      <menuitem action="filters-levels" />
+      <menuitem action="filters-curves" />
       <separator />
       <placeholder name="Invert">
         <menuitem action="filters-invert-perceptual" />
@@ -616,7 +616,7 @@
         <menuitem action="dialogs-histogram" />
       </menu>
       <separator />
-      <menuitem action="tools-threshold" />
+      <menuitem action="filters-threshold" />
       <menuitem action="filters-colorize" />
       <menuitem action="filters-posterize" />
       <menuitem action="filters-color-to-alpha" />
