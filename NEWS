@@ -37,12 +37,21 @@ Core:
     Export" page of Preferences. In particular, metadata are not
     exported anymore as a default. This is indeed a privacy hazard since
     metadata often contain a lot of sensitive information.
+  - Splash image now scaled down to maximum 2/3 of the screen area. This
+    will allow to ship a big splash image which will be visible on all
+    type of screens, whichever low or high resolution. Vector splash
+    images are scaled both up or down to have them always at ideal size.
+  - Brightness-Contrast, Curves, Levels and Threshold are now available
+    in "Repeat last" history.
+  - Improve action history to not show newly excluded actions (which
+    were already in our history from before the exclusion).
 
 Libgimp:
 
    - New gimp_export_exif(), gimp_export_xmp() and gimp_export_iptc()
      functions returning the creator choice regarding default handling
      for metadata export (as set in the Preferences).
+   - GIMP Protocol version incremented.
 
 GUI and Usability:
 
@@ -97,6 +106,7 @@ Plug-ins:
     good enough (for instance, if one has a specific type of color
     blindness), at least it is now possible to create a custom theme
     adapted to one's needs.
+  - PSD export now happens with progress bar update for feedback.
 
 File formats:
 
@@ -109,6 +119,7 @@ File formats:
     clamp anymore on export.
   - JPEG, PNG, TIFF and WebP export plug-ins updated to honor creator's
     default choice regarding metadata handling.
+  - Fix GIH brushes using different-sized layers.
   - RGBE (Radiance HDR) format files can now be imported and exported.
 
 Building:
