@@ -249,7 +249,7 @@ static const GimpRadioActionEntry image_convert_gamma_actions[] =
   { "image-convert-gamma", NULL,
     NC_("image-convert-action", "Perceptual gamma (sRGB)"), NULL,
     NC_("image-convert-action",
-        "Convert the image to preceptual (sRGB) gamma"),
+        "Convert the image to perceptual (sRGB) gamma"),
     FALSE, GIMP_HELP_IMAGE_CONVERT_GAMMA },
 
   { "image-convert-linear", NULL,
