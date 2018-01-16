@@ -585,14 +585,14 @@ gimp_display_shell_constructed (GObject *object)
                     G_CALLBACK (gimp_display_shell_vruler_button_press),
                     shell);
 
+  gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
+
   /*  set the rulers as track widgets for each other, so we don't end up
    *  with one ruler wrongly being stuck a few pixels off while we are
    *  hovering the other
    */
   gimp_ruler_add_track_widget (GIMP_RULER (shell->hrule), shell->vrule);
   gimp_ruler_add_track_widget (GIMP_RULER (shell->vrule), shell->hrule);
-
-  gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
   gimp_devices_add_widget (shell->display->gimp, shell->hrule);
   gimp_devices_add_widget (shell->display->gimp, shell->vrule);
