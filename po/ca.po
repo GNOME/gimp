@@ -425,7 +425,7 @@ msgstr "Capes"
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:327 ../app/dialogs/dialogs.c:339
 #: ../app/dialogs/preferences-dialog.c:3022
 msgid "MyPaint Brushes"
-msgstr "Pinzells El Meu Pinzell"
+msgstr "Pinzells del MyPaint"
 
 #: ../app/actions/actions.c:201 ../app/dialogs/dialogs.c:430 ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
@@ -2617,12 +2617,12 @@ msgstr "Obre l'editor de la dinàmica de la pintura"
 #: ../app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "Pinzells El Meu Pinzell"
+msgstr "_Pinzells del MyPaint"
 
 #: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "Obre el diàleg dels pinzells"
+msgstr "Obre el diàleg dels pinzells del MyPaint"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -6728,37 +6728,37 @@ msgstr "No s'ha pogut escapçar perquè la capa seleccionada ja s'ha escapçat a
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
-msgstr "Menú de pinzells El Meu Pinzell"
+msgstr "Menú de pinzells del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "Pinzell nou El Meu Pinzell"
+msgstr "_Pinzell nou del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
 msgctxt "mypaint-brushes-action"
 msgid "Create a new MyPaint brush"
-msgstr "Crea un pinzell nou El Meu Pinzell"
+msgstr "Crea un pinzell nou del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:53
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "D_uplica el pinzell El Meu Pinzell"
+msgstr "D_uplica el pinzell del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:54
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "Duplica aquest pinzell El Meu Pinzell"
+msgstr "Duplica aquest pinzell MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:59
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint Brush _Location"
-msgstr "Copia _la ubicació del pinzell El Meu Pinzell"
+msgstr "Copia _la ubicació del pinzell del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "Copia la ubicació del fitxer del pinzell El Meu Pinzell al porta-retalls"
+msgstr "Copia la ubicació del fitxer del pinzell del MyPaint al porta-retalls"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
@@ -6768,37 +6768,37 @@ msgstr "Mostra en el Gestor de _fitxers"
 #: ../app/actions/mypaint-brushes-actions.c:66
 msgctxt "mypaint-brushes-action"
 msgid "Show MyPaint brush file location in the file manager"
-msgstr "Mostra la ubicació del fitxer del pinzell El Meu Pinzell al gestor de fitxers"
+msgstr "Mostra la ubicació del fitxer del pinzell del MyPaint al gestor de fitxers"
 
 #: ../app/actions/mypaint-brushes-actions.c:71
 msgctxt "mypaint-brushes-action"
 msgid "_Delete MyPaint Brush"
-msgstr "_Suprimeix el pinzell El Meu Pinzell"
+msgstr "_Suprimeix el pinzell del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:72
 msgctxt "mypaint-brushes-action"
 msgid "Delete this MyPaint brush"
-msgstr "Suprimeix aquest pinzell El Meu Pinzell"
+msgstr "Suprimeix aquest pinzell del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:77
 msgctxt "mypaint-brushes-action"
 msgid "_Refresh MyPaint Brushes"
-msgstr "Actualitza els _pinzells El Meu Pinzell"
+msgstr "Actualitza els _pinzells del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:78
 msgctxt "mypaint-brushes-action"
 msgid "Refresh MyPaint brushes"
-msgstr "Actualitza els pinzells El Meu Pinzell"
+msgstr "Actualitza els pinzells del MyPaint"
 
 #: ../app/actions/mypaint-brushes-actions.c:86
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "_Edita el pinzell El Meu Pinzell..."
+msgstr "_Edita el pinzell del MyPaint..."
 
 #: ../app/actions/mypaint-brushes-actions.c:87
 msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
-msgstr "Edita el pinzell El Meu Pinzell"
+msgstr "Edita el pinzell del MyPaint"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
@@ -10229,7 +10229,7 @@ msgstr "Habilita la simetria al dibuixar."
 
 #: ../app/config/gimprc-blurbs.h:400
 msgid "Enable the MyPaint Brush tool."
-msgstr "Habilita l'eina El meu pinzell."
+msgstr "Habilita l'eina del MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid "Enable the Seamless Clone tool."
@@ -11874,7 +11874,7 @@ msgstr "Dinàmica de la pintura"
 
 #: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719 ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
-msgstr "El Meu Pinzell"
+msgstr "Pinzell del MyPaint"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
 msgid "Pattern"
@@ -12851,12 +12851,12 @@ msgstr "No s'ha pogut canviar el nom de les màscares de capa."
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
-msgstr "El fitxer del pinzell és excessivament gran, s'està ometent."
+msgstr "El fitxer del pinzell del del MyPaint és excessivament gran, s'està ometent."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr "Errada en desserialitzar el pinzell El Meu Pinzell."
+msgstr "Errada en desserialitzar el pinzell del MyPaint."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -13321,7 +13321,7 @@ msgstr "Aplica la dinàmica desada"
 
 #: ../app/core/gimptoolpreset.c:168
 msgid "Apply stored MyPaint brush"
-msgstr "Aplica el pinzell desat"
+msgstr "Aplica el pinzell del MyPaint desat"
 
 #: ../app/core/gimptoolpreset.c:175
 msgid "Apply stored pattern"
@@ -13428,7 +13428,7 @@ msgid ""
 "commit %s"
 msgstr ""
 "Aquesta és una versió inestable de desenvolupament\n"
-"publicació de canvis %s"
+"«commit» %s"
 
 #: ../app/dialogs/action-search-dialog.c:67
 msgid "Search Actions"
@@ -15519,11 +15519,11 @@ msgstr "Selecciona carpetes de valors predefinits de l'eina"
 
 #: ../app/dialogs/preferences-dialog.c:3022
 msgid "MyPaint Brush Folders"
-msgstr "Carpetes de pinzells El Meu Pinzell"
+msgstr "Carpetes de pinzells del MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3024
 msgid "Select MyPaint Brush Folders"
-msgstr "Selecciona carpetes de pinzells El Meu Pinzell"
+msgstr "Selecciona carpetes de pinzells del MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:3026
 msgid "Plug-in Folders"
@@ -17574,7 +17574,7 @@ msgstr "El Meu Pinzell"
 
 #: ../app/paint/gimpmybrushcore.c:160
 msgid "No MyPaint brushes available for use with this tool."
-msgstr "No es disposa de cap pinzell per utilitzar amb aquesta eina."
+msgstr "No es disposa de cap pinzell del MyPaint per utilitzar amb aquesta eina."
 
 #: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
 #: ../app/tools/gimprectangleselectoptions.c:100 ../app/tools/gimpselectionoptions.c:94
@@ -23577,7 +23577,7 @@ msgstr "Obre el diàleg de selecció de dinàmica"
 
 #: ../app/widgets/gimpviewablebox.c:226
 msgid "Open the MyPaint brush selection dialog"
-msgstr "Obre el diàleg de selecció de pinzells"
+msgstr "Obre el diàleg de selecció de pinzells del MyPaint"
 
 #: ../app/widgets/gimpviewablebox.c:289
 msgid "Open the pattern selection dialog"
