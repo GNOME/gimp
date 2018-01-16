@@ -40,8 +40,8 @@ msgid ""
 "wish to continue with installation anyway?"
 msgstr ""
 "Aquesta és una versió de desenvolupament del GIMP on algunes característiques poden no estar acabades o no ser estables.%nAquesta versió del "
-"GIMP no està pensada per ser usada en la feina diària ja que pot ser inestable, i podríeu perdre la vostra feina.%nSi trobeu qualsevol problema, "
-"verifiqueu primer que no estat ja solucionat a Git abans de contactar als desenvolupadors o informar-ne a Bugzilla:%n_https://bugzilla.gnome.org/"
+"GIMP no està pensada per ser usada en la feina diària ja que pot ser inestable, i podríeu perdre la feina feta.%nSi trobeu qualsevol problema, "
+"verifiqueu primer que no estigui ja solucionat a Git abans de contactar als desenvolupadors o informar-ne a Bugzilla:%n_https://bugzilla.gnome.org/"
 "enter_bug.cgi?product=GIMP%n%nVoleu continuar la instal·lació de totes maneres?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
