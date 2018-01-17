@@ -2,14 +2,15 @@
 # GIMP translation to Catalan.
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
-# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Diversos contribuïdors, 2000-2008.
 # Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
 # Jordi Jover, jordijn@softcatala.org, 2002.
 # Joaquim Perez <noguer@gmail.com>, 2008.
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
 # Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2016-2017
+# Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018
 #
 msgid ""
 msgstr ""
@@ -4375,8 +4376,6 @@ msgid "Apply _Lens..."
 msgstr "Aplica la _lent..."
 
 #: ../app/actions/filters-actions.c:187
-#, fuzzy
-#| msgid "B_rightness-Contrast..."
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "B_rillantor-contrast..."
@@ -4457,11 +4456,9 @@ msgid "_Cubism..."
 msgstr "_Cubisme..."
 
 #: ../app/actions/filters-actions.c:267
-#, fuzzy
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Curves..."
-msgstr "_Corbes de color..."
+msgstr "_Corbes..."
 
 #: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
@@ -4606,11 +4603,9 @@ msgid "Lens Flare..."
 msgstr "Centelleig de la lent..."
 
 #: ../app/actions/filters-actions.c:412
-#, fuzzy
-#| msgid "_Levels..."
 msgctxt "filters-action"
 msgid "_Levels..."
-msgstr "Nive_lls de color..."
+msgstr "Nive_lls..."
 
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
@@ -4833,11 +4828,9 @@ msgid "Super_nova..."
 msgstr "Super_nova..."
 
 #: ../app/actions/filters-actions.c:637
-#, fuzzy
-#| msgid "_Threshold..."
 msgctxt "filters-action"
 msgid "_Threshold..."
-msgstr "_Llindar blanc i negre..."
+msgstr "_Llindar..."
 
 #: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
@@ -5792,10 +5785,6 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma perceptiva (sRGB)"
 
 #: ../app/actions/image-actions.c:252
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to preceptual (sRGB) gamma"
-msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Converteix la imatge a gamma perceptiva (sRGB)"
 
@@ -8614,7 +8603,7 @@ msgstr "Bl_oqueja els traços del camí"
 #: ../app/actions/vectors-actions.c:184
 msgctxt "vectors-action"
 msgid "L_ock Position of Path"
-msgstr "B_loqueja la posició del camaí"
+msgstr "B_loqueja la posició del camí"
 
 #: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
@@ -8952,7 +8941,7 @@ msgstr "Restaura l'estat d'ampliació/reducció anterior"
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "Un altre angle de rotació"
+msgstr "_Un altre angle de rotació..."
 
 #: ../app/actions/view-actions.c:126
 msgctxt "view-action"
@@ -10696,7 +10685,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:528
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
-"Defineix la màscara estat per defecte per al diàleg «Afegeix màscara de capa»"
+"Defineix la màscara estat per defecte per al diàleg «Afegeix màscara de capa»."
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
@@ -10722,7 +10711,7 @@ msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Defineix el paràmetre per defecte «Descarta invisible» per al diàleg "
-"«Fusiona capes visibles»"
+"«Fusiona capes visibles»."
 
 #: ../app/config/gimprc-blurbs.h:543
 msgid "Sets the default channel name for the 'New Channel' dialog."
@@ -11969,11 +11958,9 @@ msgstr ""
 "format abr versió %d."
 
 #: ../app/core/gimpbrush-load.c:1114 ../app/core/gimpbrush-load.c:1132
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
-"Error greu d'anàlisi en el fitxer de pinzell «%s»: el fitxer està malmès."
+"Error greu d'anàlisi en el fitxer de pinzell «%s»: les dades comprimides amb RLE del pinzell estan malmeses."
 
 #: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Spacing"
@@ -12945,11 +12932,8 @@ msgid "Cannot flatten an image without any visible layer."
 msgstr "No es pot aplanar la imatge si no hi ha una capa visible."
 
 #: ../app/core/gimpimage-merge.c:245
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Create a floating selection"
 msgid "Cannot merge down a floating selection."
-msgstr "Crea una selecció flotant"
+msgstr "No es pot fusionar cap avall una selecció flotant."
 
 #: ../app/core/gimpimage-merge.c:270
 msgid "Cannot merge down to a layer group."
@@ -13848,7 +13832,16 @@ msgstr "Visiteu el web del GIMP"
 #. separated by newline
 #: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
-msgstr "Softcatalà - www.softcatala.org"
+msgstr "Softcatalà - www.softcatala.org\n"
+" Diversos contribuïdors, 2000-2008.\n"
+" Quim Perez i Noguer <noguer a gmail.com>, 2005-2008\n"
+" Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007\n"
+" Jordi Jover, jordijn@softcatala.org, 2002\n"
+" Joaquim Perez <noguer@gmail.com>, 2008\n"
+" Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011\n"
+" Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013\n"
+" Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017\n"
+" Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018"
 
 #: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
@@ -15119,26 +15112,24 @@ msgstr "Política del perfil de color:"
 
 #. Export Policies
 #: ../app/dialogs/preferences-dialog.c:1435
-#, fuzzy
-#| msgid "Import Policies"
 msgid "Export Policies"
-msgstr "Polítiques d'importació"
+msgstr "Polítiques d'exportació"
 
 #: ../app/dialogs/preferences-dialog.c:1439
 msgid "Export Exif metadata by default when available"
-msgstr ""
+msgstr "Exporta les metadades Exif per defecte si estan disponibles"
 
 #: ../app/dialogs/preferences-dialog.c:1442
 msgid "Export XMP metadata by default when available"
-msgstr ""
+msgstr "Exporta les metadades XMP per defecte si estan disponibles"
 
 #: ../app/dialogs/preferences-dialog.c:1445
 msgid "Export IPTC metadata by default when available"
-msgstr ""
+msgstr "Exporta les metadades IPTC per defecte si estan disponibles"
 
 #: ../app/dialogs/preferences-dialog.c:1448
 msgid "Metadata can contain sensitive information."
-msgstr ""
+msgstr "Les metadades poden contenir informació sensible."
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1453
@@ -17743,12 +17734,12 @@ msgstr "Només enfosqueix la Luminància"
 #| msgid "Luma/Luminance darken only"
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Només enfosqueix la Luminància"
+msgstr "Només enfosqueix la luminància"
 
 #: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "Només aclareix la Luminància"
+msgstr "Només aclareix la uminància"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
@@ -18044,12 +18035,8 @@ msgstr "Reemplaça la transparència parcial amb un color"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:88
-#, fuzzy
-#| msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
-"Eina Llindar blanc i negre: redueix la imatge a dos colors utilitzant un "
-"llindar"
+msgstr "Redueix la imatge a dos colors utilitzant un llindar"
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
@@ -18236,11 +18223,8 @@ msgid "Erase with this brush"
 msgstr "Esborra aquest pinzell"
 
 #: ../app/paint/gimpmybrushoptions.c:114
-#, fuzzy
-#| msgctxt "smudge-tool"
-#| msgid "No erasing effect"
 msgid "No erasing effect"
-msgstr "Sense efectes de l’esborrat"
+msgstr "Sense efecte d'esborrat"
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:85
 msgid "Never decrease alpha of existing pixels"
@@ -18736,7 +18720,7 @@ msgstr "Un nom de tipus de lletra buit no és vàlid"
 #: ../app/pdb/gimppdb-utils.c:354
 #, c-format
 msgid "Font '%s' not found"
-msgstr "No s'ha trobat la font tipogràfica «%s»"
+msgstr "No s'ha trobat el tipus de lletra «%s»"
 
 #: ../app/pdb/gimppdb-utils.c:373
 msgid "Invalid empty buffer name"
@@ -20646,7 +20630,7 @@ msgstr "Ajusta les corbes en la llum lineal"
 
 #: ../app/tools/gimpcurvestool.c:453
 msgid "Adjust curves perceptually"
-msgstr "Ajusta els corbes perceptiblement"
+msgstr "Ajusta les corbes perceptiblement"
 
 #: ../app/tools/gimpcurvestool.c:539 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
@@ -20898,7 +20882,7 @@ msgstr "Amplada del traç"
 
 #: ../app/tools/gimpforegroundselectoptions.c:94
 msgid "Size of the brush used for refinements"
-msgstr "Mida del pinzell utilitzat per a concretar la selecció"
+msgstr "Mida dels pinzell utilitzat per a concretar la selecció"
 
 #: ../app/tools/gimpforegroundselectoptions.c:100
 #: ../app/tools/gimpforegroundselectoptions.c:305
@@ -22200,10 +22184,8 @@ msgid "Keep the original aspect ratio"
 msgstr "Mantén la relació d'aspecte original"
 
 #: ../app/tools/gimptransformoptions.c:520
-#, fuzzy, c-format
-#| msgid "Rounded corners"
 msgid "Around center (%s)"
-msgstr "Vores arrodonides"
+msgstr "Vores arrodonides (%s)"
 
 #: ../app/tools/gimptransformoptions.c:527
 msgid "Scale around the center point"
@@ -22853,27 +22835,21 @@ msgstr ""
 
 #. TRANSLATORS: X for the X coordinate.
 #: ../app/widgets/gimpcolorframe.c:193
-#, fuzzy
-#| msgid "X:"
 msgctxt "Coordinates"
 msgid "X:"
 msgstr "X:"
 
 #. TRANSLATORS: Y for the Y coordinate.
 #: ../app/widgets/gimpcolorframe.c:207
-#, fuzzy
-#| msgid "Y:"
 msgctxt "Coordinates"
 msgid "Y:"
 msgstr "Y:"
 
 #. TRANSLATORS: n/a for Not Available.
 #: ../app/widgets/gimpcolorframe.c:637 ../app/widgets/gimpcolorframe.c:639
-#, fuzzy
-#| msgid "n/a"
 msgctxt "Coordinates"
 msgid "n/a"
-msgstr "n/a"
+msgstr "n/d"
 
 #. TRANSLATORS: V for Value (grayscale)
 #: ../app/widgets/gimpcolorframe.c:712
@@ -22886,54 +22862,42 @@ msgstr ""
 #: ../app/widgets/gimpcolorframe.c:765 ../app/widgets/gimpcolorframe.c:807
 #: ../app/widgets/gimpcolorframe.c:835 ../app/widgets/gimpcolorframe.c:867
 #: ../app/widgets/gimpcolorframe.c:901
-#, fuzzy
-#| msgid "A:"
 msgctxt "Alpha channel"
 msgid "A:"
 msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
 #: ../app/widgets/gimpcolorframe.c:721 ../app/widgets/gimpcolorframe.c:757
-#, fuzzy
-#| msgid "Red:"
 msgctxt "RGB"
 msgid "R:"
-msgstr "Vermell:"
+msgstr "R:"
 
 #. TRANSLATORS: G for Green (RGB)
 #: ../app/widgets/gimpcolorframe.c:723 ../app/widgets/gimpcolorframe.c:759
 msgctxt "RGB"
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #. TRANSLATORS: B for Blue (RGB)
 #: ../app/widgets/gimpcolorframe.c:725 ../app/widgets/gimpcolorframe.c:761
-#, fuzzy
-#| msgid "Box:"
 msgctxt "RGB"
 msgid "B:"
-msgstr "Capsa:"
+msgstr "B:"
 
 #. TRANSLATORS: Index of the color in the palette.
 #: ../app/widgets/gimpcolorframe.c:734
-#, fuzzy
-#| msgid "Index:"
 msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Índex:"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
 #: ../app/widgets/gimpcolorframe.c:768
-#, fuzzy
-#| msgid "Hex:"
 msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hexa:"
 
 #. TRANSLATORS: H for Hue (HSV color space)
 #: ../app/widgets/gimpcolorframe.c:799
-#, fuzzy
-#| msgid "H"
 msgctxt "HSV color space"
 msgid "H:"
 msgstr "H"
@@ -22952,11 +22916,9 @@ msgstr ""
 
 #. TRANSLATORS: L for Lightness (LCH color space)
 #: ../app/widgets/gimpcolorframe.c:827
-#, fuzzy
-#| msgid "Lab_L*:"
 msgctxt "LCH color space"
 msgid "L*:"
-msgstr "Lab_L*:"
+msgstr "L*:"
 
 #. TRANSLATORS: C for Chroma (LCH color space)
 #: ../app/widgets/gimpcolorframe.c:829
@@ -22972,44 +22934,36 @@ msgstr ""
 
 #. TRANSLATORS: L* for Lightness (Lab color space)
 #: ../app/widgets/gimpcolorframe.c:859
-#, fuzzy
-#| msgid "Lab_L*:"
 msgctxt "Lab color space"
 msgid "L*:"
-msgstr "Lab_L*:"
+msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:861
-#, fuzzy
-#| msgid "Lab_L*:"
 msgctxt "Lab color space"
 msgid "a*:"
-msgstr "Lab_L*:"
+msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:863
-#, fuzzy
-#| msgid "Lab_L*:"
 msgctxt "Lab color space"
 msgid "b*:"
-msgstr "Lab_L*:"
+msgstr "b*:"
 
 #. TRANSLATORS: C for Cyan (CMYK)
 #: ../app/widgets/gimpcolorframe.c:891
 msgctxt "CMYK"
 msgid "C:"
-msgstr ""
+msgstr "C:"
 
 #. TRANSLATORS: M for Magenta (CMYK)
 #: ../app/widgets/gimpcolorframe.c:893
 msgctxt "CMYK"
 msgid "M:"
-msgstr ""
+msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
 #: ../app/widgets/gimpcolorframe.c:895
-#, fuzzy
-#| msgid "Y:"
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y:"
@@ -23018,14 +22972,12 @@ msgstr "Y:"
 #: ../app/widgets/gimpcolorframe.c:897
 msgctxt "CMYK"
 msgid "K:"
-msgstr ""
+msgstr "K:"
 
 #: ../app/widgets/gimpcolorframe.c:959
-#, fuzzy
-#| msgid "n/a"
 msgctxt "Color value"
 msgid "n/a"
-msgstr "n/a"
+msgstr "n/d"
 
 #: ../app/widgets/gimpcolormapeditor.c:203
 msgid "Color index:"
@@ -23392,7 +23344,7 @@ msgstr "_Mida de la memòria cau:"
 #: ../app/widgets/gimpdashboard.c:303
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr ""
+msgstr "Màxim"
 
 #: ../app/widgets/gimpdashboard.c:304
 msgid "Maximal tile cache occupied size"
@@ -23423,7 +23375,7 @@ msgstr "Encerts/Faltes"
 
 #: ../app/widgets/gimpdashboard.c:333
 msgid "Tile cache hit/miss ratio"
-msgstr "Ràtio d'encerts/faltes de la memòria cau dels mòsaics"
+msgstr "Ràtio d'encerts/faltes de la memòria cau dels mosaics"
 
 #: ../app/widgets/gimpdashboard.c:346
 #, fuzzy
@@ -23472,10 +23424,8 @@ msgid "On-disk tile swap"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:595
-#, fuzzy
-#| msgid "Select All"
 msgid "Select fields"
-msgstr "Selecciona-ho tot"
+msgstr "Selecciona els camps"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
 #: ../app/widgets/gimpdashboard.c:1824
@@ -24422,7 +24372,7 @@ msgstr "Barrat"
 #: ../app/widgets/gimptextstyleeditor.c:1290
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
-msgstr "La font tipogràfica «%s» no està disponible en aquest sistema"
+msgstr "El tipus de lletra «%s» no està disponible en aquest sistema"
 
 #: ../app/widgets/gimpthumbbox.c:324
 #, c-format
