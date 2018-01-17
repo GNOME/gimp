@@ -442,7 +442,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                    g_param_spec_boolean ("single-window-mode",
                                                          NULL,
                                                          SINGLE_WINDOW_MODE_BLURB,
-                                                         FALSE,
+                                                         TRUE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_STATIC_STRINGS));
