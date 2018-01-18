@@ -438,6 +438,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (object_class, PROP_SINGLE_WINDOW_MODE,
                                    g_param_spec_boolean ("single-window-mode",
                                                          NULL,
@@ -446,12 +447,15 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (object_class, PROP_TABS_POSITION,
                                    g_param_spec_enum ("tabs-position", NULL, NULL,
-                                                      GIMP_TYPE_POSITION, GIMP_POSITION_TOP,
+                                                      GIMP_TYPE_POSITION,
+                                                      GIMP_POSITION_TOP,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT |
                                                       GIMP_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (object_class, PROP_LAST_TIP_SHOWN,
                                    g_param_spec_int ("last-tip-shown",
                                                      NULL, NULL,
