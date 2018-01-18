@@ -126,14 +126,13 @@ static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
                                                      GimpBrushCore     *core);
 
 /*  brush pipe utility functions  */
-static void  gimp_brush_core_paint_line_pixmap_mask (GimpDrawable      *drawable,
+static void  gimp_brush_core_paint_line_pixmap_mask (const Babl        *fish,
                                                      const GimpTempBuf *pixmap_mask,
                                                      const GimpTempBuf *brush_mask,
                                                      gfloat            *d,
                                                      gint               x,
                                                      gint               y,
-                                                     gint               width,
-                                                     GimpBrushApplicationMode  mode);
+                                                     gint               width);
 
 
 G_DEFINE_TYPE (GimpBrushCore, gimp_brush_core, GIMP_TYPE_PAINT_CORE)
@@ -1610,6 +1609,9 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   gint                offsety;
   const GimpTempBuf  *pixmap_mask;
   const GimpTempBuf  *brush_mask;
+  const Babl         *area_format;
+  const Babl         *pixmap_format;
+  const Babl         *fish = NULL;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
   g_return_if_fail (gimp_brush_get_pixmap (core->brush) != NULL);
@@ -1642,9 +1644,31 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   offsetx = area_x - ulx;
   offsety = area_y - uly;
 
-  iter = gegl_buffer_iterator_new (area, NULL, 0,
-                                   babl_format ("RGBA float"),
+  area_format   = gegl_buffer_get_format (area);
+  pixmap_format = gimp_temp_buf_get_format (pixmap_mask);
+
+  iter = gegl_buffer_iterator_new (area, NULL, 0, area_format,
                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  if (mode == GIMP_BRUSH_SOFT && brush_mask)
+    {
+      GimpImageBaseType pixmap_base_type;
+      GimpPrecision     pixmap_precision;
+
+      pixmap_base_type = gimp_babl_format_get_base_type (pixmap_format);
+      pixmap_precision = gimp_babl_format_get_precision (pixmap_format);
+
+      fish = babl_fish (gimp_babl_format (pixmap_base_type, pixmap_precision,
+                                          TRUE),
+                        area_format);
+    }
+  else
+    {
+      fish = babl_fish (pixmap_format, area_format);
+
+      brush_mask = NULL;
+    }
+
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
@@ -1654,101 +1678,102 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 
       for (y = 0; y < roi->height; y++)
         {
-          gimp_brush_core_paint_line_pixmap_mask (drawable,
+          gimp_brush_core_paint_line_pixmap_mask (fish,
                                                   pixmap_mask, brush_mask,
                                                   d, offsetx, y + offsety,
-                                                  roi->width, mode);
+                                                  roi->width);
           d += roi->width * 4;
         }
     }
 }
 
 static void
-gimp_brush_core_paint_line_pixmap_mask (GimpDrawable             *drawable,
-                                        const GimpTempBuf        *pixmap_mask,
-                                        const GimpTempBuf        *brush_mask,
-                                        gfloat                   *d,
-                                        gint                      x,
-                                        gint                      y,
-                                        gint                      width,
-                                        GimpBrushApplicationMode  mode)
+gimp_brush_core_paint_line_pixmap_mask (const Babl        *fish,
+                                        const GimpTempBuf *pixmap_mask,
+                                        const GimpTempBuf *brush_mask,
+                                        gfloat            *d,
+                                        gint               x,
+                                        gint               y,
+                                        gint               width)
 {
-  const Babl        *pixmap_format;
-  GimpImageBaseType  pixmap_base_type;
-  GimpPrecision      pixmap_precision;
-  gint               pixmap_bytes;
-  gint               pixmap_width;
-  gint               pixmap_height;
-  guchar            *b;
+  const Babl *pixmap_format;
+  gint        pixmap_bytes;
+  gint        pixmap_width;
+  gint        pixmap_height;
+  guchar     *b;
 
   pixmap_width  = gimp_temp_buf_get_width  (pixmap_mask);
   pixmap_height = gimp_temp_buf_get_height (pixmap_mask);
 
   /*  Make sure x, y are positive  */
-  while (x < 0) x += pixmap_width;
-  while (y < 0) y += pixmap_height;
+  x %= pixmap_width;
+  if (x < 0)
+    x += pixmap_width;
 
-  pixmap_format    = gimp_temp_buf_get_format (pixmap_mask);
-  pixmap_base_type = gimp_babl_format_get_base_type (pixmap_format);
-  pixmap_precision = gimp_babl_format_get_precision (pixmap_format);
-  pixmap_bytes     = babl_format_get_bytes_per_pixel (pixmap_format);
+  y %= pixmap_height;
+  if (y < 0)
+    y += pixmap_height;
+
+  pixmap_format = gimp_temp_buf_get_format (pixmap_mask);
+  pixmap_bytes  = babl_format_get_bytes_per_pixel (pixmap_format);
 
   /* Point to the approriate scanline */
   b = (gimp_temp_buf_get_data (pixmap_mask) +
-       (y % pixmap_height) * pixmap_width * pixmap_bytes);
+       y * pixmap_width * pixmap_bytes);
 
-  if (mode == GIMP_BRUSH_SOFT && brush_mask)
+  if (brush_mask)
     {
-      const Babl   *fish;
       const guchar *mask     = (gimp_temp_buf_get_data (brush_mask) +
-                                (y % gimp_temp_buf_get_height (brush_mask)) *
-                                gimp_temp_buf_get_width (brush_mask));
+                                y * pixmap_width);
       guchar       *line_buf = g_alloca (width * (pixmap_bytes + 1));
       guchar       *l        = line_buf;
       gint          i;
 
-      fish = babl_fish (gimp_babl_format (pixmap_base_type, pixmap_precision,
-                                          TRUE),
-                        babl_format ("RGBA float"));
+      g_return_if_fail (gimp_temp_buf_get_width  (brush_mask) == pixmap_width);
+      g_return_if_fail (gimp_temp_buf_get_height (brush_mask) == pixmap_height);
 
       /* put the source pixmap's pixels, plus the mask's alpha, into
        * one line, so we can use one single call to babl_process() to
        * convert the entire line
        */
+
       for (i = 0; i < width; i++)
         {
-          gint    x_index = ((i + x) % pixmap_width);
           gint    p_bytes = pixmap_bytes;
-          guchar *p       = b + x_index * p_bytes;
+          guchar *p       = b + x * p_bytes;
 
           while (p_bytes--)
             *l++ = *p++;
 
-          *l++ = mask[x_index];
+          *l++ = mask[x++];
+
+          if (x == pixmap_width)
+            x = 0;
         }
 
       babl_process (fish, line_buf, d, width);
     }
   else
     {
-      const Babl *fish;
-      guchar     *line_buf = g_alloca (width * (pixmap_bytes));
-      guchar     *l        = line_buf;
-      gint        i;
-
-      fish = babl_fish (pixmap_format, babl_format ("RGBA float"));
+      guchar *line_buf = g_alloca (width * (pixmap_bytes));
+      guchar *l        = line_buf;
+      gint    i;
 
       /* put the source pixmap's pixels into one line, so we can use
        * one single call to babl_process() to convert the entire line
        */
       for (i = 0; i < width; i++)
         {
-          gint    x_index = ((i + x) % pixmap_width);
           gint    p_bytes = pixmap_bytes;
-          guchar *p       = b + x_index * p_bytes;
+          guchar *p       = b + x * p_bytes;
 
           while (p_bytes--)
             *l++ = *p++;
+
+          x++;
+
+          if (x == pixmap_width)
+            x = 0;
         }
 
       babl_process (fish, line_buf, d, width);
