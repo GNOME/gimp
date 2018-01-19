@@ -1226,6 +1226,21 @@ gimp_get_pdb_error (void)
 }
 
 /**
+ * gimp_get_pdb_status:
+ *
+ * Retrieves the status from the last procedure call.
+ *
+ * Return value: the #GimpPDBStatusType.
+ *
+ * Since: 2.10
+ **/
+GimpPDBStatusType
+gimp_get_pdb_status (void)
+{
+  return pdb_error_status;
+}
+
+/**
  * gimp_tile_width:
  *
  * Returns the tile width GIMP is using.

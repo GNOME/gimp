@@ -343,6 +343,7 @@ EXPORTS
 	gimp_get_parasite_list
 	gimp_get_path_by_tattoo
 	gimp_get_pdb_error
+	gimp_get_pdb_status
 	gimp_get_progname
 	gimp_get_theme_dir
 	gimp_getpid
