@@ -508,7 +508,10 @@ load_image (const Compressor   *compressor,
     }
   else
     {
-      *status = GIMP_PDB_EXECUTION_ERROR;
+      /* Forward the return status of the underlining plug-in for the
+       * given format.
+       */
+      *status = gimp_get_pdb_status ();
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s", gimp_get_pdb_error ());
