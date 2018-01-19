@@ -26,6 +26,14 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
+#ifdef HAVE_SYS_TIMES_H
+#include <sys/times.h>
+#define HAVE_CPU_GROUP
+#elif defined (G_OS_WIN32)
+#include <windows.h>
+#define HAVE_CPU_GROUP
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -53,6 +61,9 @@
 #define LOW_SWAP_SPACE_WARNING_ON      /* swap occupied is above */ 0.90 /* of swap limit */
 #define LOW_SWAP_SPACE_WARNING_OFF     /* swap occupied is below */ 0.85 /* of swap limit */
 
+#define CPU_ACTIVE_ON                  /* individual cpu usage is above */ 0.75
+#define CPU_ACTIVE_OFF                 /* individual cpu usage is below */ 0.25
+
 
 typedef enum
 {
@@ -75,6 +86,13 @@ typedef enum
 
   VARIABLE_SWAP_BUSY,
 
+#ifdef HAVE_CPU_GROUP
+  /* cpu */
+  VARIABLE_CPU_USAGE,
+  VARIABLE_CPU_ACTIVE,
+  VARIABLE_CPU_ACTIVE_TIME,
+#endif
+
 
   N_VARIABLES,
 
@@ -86,7 +104,9 @@ typedef enum
   VARIABLE_TYPE_BOOLEAN,
   VARIABLE_TYPE_SIZE,
   VARIABLE_TYPE_SIZE_RATIO,
-  VARIABLE_TYPE_INT_RATIO
+  VARIABLE_TYPE_INT_RATIO,
+  VARIABLE_TYPE_PERCENTAGE,
+  VARIABLE_TYPE_DURATION
 } VariableType;
 
 typedef enum
@@ -95,6 +115,9 @@ typedef enum
 
   GROUP_CACHE = FIRST_GROUP,
   GROUP_SWAP,
+#ifdef HAVE_CPU_GROUP
+  GROUP_CPU,
+#endif
 
   N_GROUPS
 } Group;
@@ -107,19 +130,20 @@ typedef struct _VariableData  VariableData;
 typedef struct _FieldData     FieldData;
 typedef struct _GroupData     GroupData;
 
-typedef void (* VariableSampleFunc) (GimpDashboard *dashboard,
-                                     Variable       variable);
+typedef void (* VariableFunc) (GimpDashboard *dashboard,
+                               Variable       variable);
 
 
 struct _VariableInfo
 {
-  const gchar        *name;
-  const gchar        *title;
-  const gchar        *description;
-  VariableType        type;
-  GimpRGB             color;
-  VariableSampleFunc  sample_func;
-  gpointer            data;
+  const gchar  *name;
+  const gchar  *title;
+  const gchar  *description;
+  VariableType  type;
+  GimpRGB       color;
+  VariableFunc  sample_func;
+  VariableFunc  reset_func;
+  gpointer      data;
 };
 
 struct _FieldInfo
@@ -127,6 +151,7 @@ struct _FieldInfo
   Variable variable;
   gboolean default_active;
   gboolean show_in_header;
+  Variable meter_variable;
   gint     meter_value;
 };
 
@@ -149,7 +174,7 @@ struct _VariableData
   union
   {
     gboolean  boolean;
-    guint64   size;
+    guint64   size;       /* in bytes    */
     struct
     {
       guint64 antecedent;
@@ -160,6 +185,8 @@ struct _VariableData
       gint    antecedent;
       gint    consequent;
     } int_ratio;
+    gdouble   percentage; /* from 0 to 1 */
+    gdouble   duration;   /* in seconds  */
   } value;
 };
 
@@ -243,6 +270,18 @@ static void       gimp_dashboard_sample_gegl_stats           (GimpDashboard     
                                                               Variable             variable);
 static void       gimp_dashboard_sample_swap_limit           (GimpDashboard       *dashboard,
                                                               Variable             variable);
+#ifdef HAVE_CPU_GROUP
+static void       gimp_dashboard_sample_cpu_usage            (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_sample_cpu_active           (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_reset_cpu_active            (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_sample_cpu_active_time      (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_reset_cpu_active_time       (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+#endif /* HAVE_CPU_GROUP */
 
 static void       gimp_dashboard_sample_object               (GimpDashboard       *dashboard,
                                                               GObject             *object,
@@ -376,7 +415,41 @@ static const VariableInfo variables[] =
     .color            = {0.8, 0.4, 0.4, 1.0},
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-busy"
+  },
+
+
+#ifdef HAVE_CPU_GROUP
+  /* cpu variables */
+
+  [VARIABLE_CPU_USAGE] =
+  { .name             = "cpu-usage",
+    .title            = NC_("dashboard-variable", "Usage"),
+    .description      = N_("Total CPU usage"),
+    .type             = VARIABLE_TYPE_PERCENTAGE,
+    .color            = {0.8, 0.7, 0.2, 1.0},
+    .sample_func      = gimp_dashboard_sample_cpu_usage
+  },
+
+  [VARIABLE_CPU_ACTIVE] =
+  { .name             = "cpu-active",
+    .title            = NC_("dashboard-variable", "Active"),
+    .description      = N_("Whether the CPU is active"),
+    .type             = VARIABLE_TYPE_BOOLEAN,
+    .color            = {0.9, 0.8, 0.3, 1.0},
+    .sample_func      = gimp_dashboard_sample_cpu_active,
+    .reset_func       = gimp_dashboard_reset_cpu_active
+  },
+
+  [VARIABLE_CPU_ACTIVE_TIME] =
+  { .name             = "cpu-active-time",
+    .title            = NC_("dashboard-variable", "Active"),
+    .description      = N_("Total amount of time the CPU has been active"),
+    .type             = VARIABLE_TYPE_DURATION,
+    .color            = {0.8, 0.7, 0.2, 0.4},
+    .sample_func      = gimp_dashboard_sample_cpu_active_time,
+    .reset_func       = gimp_dashboard_reset_cpu_active_time
   }
+#endif /* HAVE_CPU_GROUP */
 };
 
 static const GroupInfo groups[] =
@@ -443,7 +516,37 @@ static const GroupInfo groups[] =
 
                           {}
                         }
+  },
+
+#ifdef HAVE_CPU_GROUP
+  /* cpu group */
+  [GROUP_CPU] =
+  { .name             = "cpu",
+    .title            = NC_("dashboard-group", "CPU"),
+    .description      = N_("CPU usage"),
+    .default_expanded = FALSE,
+    .has_meter        = TRUE,
+    .meter_led        = VARIABLE_CPU_ACTIVE,
+    .fields           = (const FieldInfo[])
+                        {
+                          { .variable       = VARIABLE_CPU_USAGE,
+                            .default_active = TRUE,
+                            .show_in_header = TRUE,
+                            .meter_value    = 2
+                          },
+
+                          { VARIABLE_SEPARATOR },
+
+                          { .variable       = VARIABLE_CPU_ACTIVE_TIME,
+                            .default_active = FALSE,
+                            .meter_variable = VARIABLE_CPU_ACTIVE,
+                            .meter_value    = 1
+                          },
+
+                          {}
+                        }
   }
+#endif /* HAVE_CPU_GROUP */
 };
 
 
@@ -685,11 +788,25 @@ gimp_dashboard_init (GimpDashboard *dashboard)
 
               if (field_info->meter_value)
                 {
-                  const VariableInfo *variable_info = &variables[field_info->variable];
+                  const VariableInfo *variable_info       = &variables[field_info->variable];
+                  const VariableInfo *meter_variable_info = variable_info;
+
+                  if (field_info->meter_variable)
+                    meter_variable_info = &variables[field_info->meter_variable];
 
                   gimp_meter_set_value_color (GIMP_METER (meter),
                                               field_info->meter_value - 1,
                                               &variable_info->color);
+
+                  if (meter_variable_info->type == VARIABLE_TYPE_BOOLEAN)
+                    {
+                      gimp_meter_set_value_show_in_gauge (GIMP_METER (meter),
+                                                          field_info->meter_value - 1,
+                                                          FALSE);
+                      gimp_meter_set_value_interpolation (GIMP_METER (meter),
+                                                          field_info->meter_value - 1,
+                                                          GIMP_INTERPOLATION_NONE);
+                    }
                 }
             }
         }
@@ -1084,12 +1201,12 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
       if (! g_cond_wait_until (&priv->cond, &priv->mutex, end_time) ||
           priv->update_now)
         {
-          gboolean varaibles_changed = FALSE;
+          gboolean variables_changed = FALSE;
           Variable variable;
           Group    group;
           gint     field;
 
-          /* sample all varaibles */
+          /* sample all variables */
           for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
             {
               const VariableInfo *variable_info      = &variables[variable];
@@ -1098,7 +1215,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
               variable_info->sample_func (dashboard, variable);
 
-              varaibles_changed = varaibles_changed ||
+              variables_changed = variables_changed ||
                                   memcmp (variable_data, &prev_variable_data,
                                           sizeof (VariableData));
             }
@@ -1121,9 +1238,13 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
                   if (field_info->meter_value)
                     {
+                      if (field_info->meter_variable)
+                        variable = field_info->meter_variable;
+                      else
+                        variable = field_info->variable;
+
                       sample[field_info->meter_value - 1] =
-                        gimp_dashboard_variable_to_double (dashboard,
-                                                           field_info->variable);
+                        gimp_dashboard_variable_to_double (dashboard, variable);
                     }
                 }
 
@@ -1132,7 +1253,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
               g_free (sample);
             }
 
-          if (varaibles_changed)
+          if (variables_changed)
             {
               /* enqueue update source */
               if (! priv->update_idle_id &&
@@ -1369,6 +1490,189 @@ gimp_dashboard_sample_swap_limit (GimpDashboard *dashboard,
     }
 }
 
+#ifdef HAVE_CPU_GROUP
+
+#ifdef HAVE_SYS_TIMES_H
+
+static void
+gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
+                                 Variable       variable)
+{
+  GimpDashboardPrivate *priv            = dashboard->priv;
+  VariableData         *variable_data   = &priv->variables[variable];
+  static clock_t        prev_clock      = 0;
+  static clock_t        prev_usage;
+  clock_t               curr_clock;
+  clock_t               curr_usage;
+  struct tms            tms;
+
+  curr_clock = times (&tms);
+
+  if (curr_clock == (clock_t) -1)
+    {
+      prev_clock = 0;
+
+      variable_data->available = FALSE;
+
+      return;
+    }
+
+  curr_usage = tms.tms_utime + tms.tms_stime;
+
+  if (prev_clock)
+    {
+      variable_data->available         = TRUE;
+      variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
+                                                   (curr_clock - prev_clock);
+      variable_data->value.percentage /= g_get_num_processors ();
+    }
+  else
+    {
+      variable_data->available         = FALSE;
+    }
+
+  prev_clock = curr_clock;
+  prev_usage = curr_usage;
+}
+
+#elif defined (G_OS_WIN32)
+
+static void
+gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
+                                 Variable       variable)
+{
+  GimpDashboardPrivate *priv            = dashboard->priv;
+  VariableData         *variable_data   = &priv->variables[variable];
+  static guint64        prev_time       = 0;
+  static guint64        prev_usage;
+  guint64               curr_time;
+  guint64               curr_usage;
+  FILETIME              system_time;
+  FILETIME              process_creation_time;
+  FILETIME              process_exit_time;
+  FILETIME              process_kernel_time;
+  FILETIME              process_user_time;
+
+  if (! GetProcessTimes (GetCurrentProcess (),
+                         &process_creation_time,
+                         &process_exit_time,
+                         &process_system_time,
+                         &process_user_time))
+    {
+      prev_time = 0;
+
+      variable_data->available = FALSE;
+
+      return;
+    }
+
+  GetSystemTimeAsFileTime (&system_time);
+
+  curr_time   = ((guint64) system_time.dwLowDateTime << 32) |
+                 (guint64) system_time.dwHighDateTime;
+
+  curr_usage  = ((guint64) process_kernel_time.dwLowDateTime << 32) |
+                 (guint64) process_kernel_time.dwHighDateTime;
+  curr_usage += ((guint64) process_user_time.dwLowDateTime << 32) |
+                 (guint64) process_user_time.dwHighDateTime;
+
+  if (prev_time)
+    {
+      variable_data->available         = TRUE;
+      variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
+                                                   (curr_time  - prev_time);
+      variable_data->value.percentage /= g_get_num_processors ();
+    }
+  else
+    {
+      variable_data->available         = FALSE;
+    }
+
+  prev_time  = curr_time;
+  prev_usage = curr_usage;
+}
+
+#endif /* G_OS_WIN32 */
+
+static gboolean cpu_active = FALSE;
+
+static void
+gimp_dashboard_sample_cpu_active (GimpDashboard *dashboard,
+                                  Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  gboolean              active        = FALSE;
+
+  if (priv->variables[VARIABLE_CPU_USAGE].available)
+    {
+      if (! cpu_active)
+        {
+          active =
+            priv->variables[VARIABLE_CPU_USAGE].value.percentage *
+            g_get_num_processors () > CPU_ACTIVE_ON;
+        }
+      else
+        {
+          active =
+            priv->variables[VARIABLE_CPU_USAGE].value.percentage *
+            g_get_num_processors () > CPU_ACTIVE_OFF;
+        }
+
+      variable_data->available = TRUE;
+    }
+  else
+    {
+      variable_data->available = FALSE;
+    }
+
+  cpu_active                   = active;
+  variable_data->value.boolean = active;
+}
+
+static void
+gimp_dashboard_reset_cpu_active (GimpDashboard *dashboard,
+                                 Variable       variable)
+{
+  cpu_active = FALSE;
+}
+
+static gint64 cpu_active_time_prev_time = 0;
+static gint64 cpu_active_time           = 0;
+
+static void
+gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
+                                       Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  gint64                curr_time;
+
+  curr_time = g_get_monotonic_time ();
+
+  if (priv->variables[VARIABLE_CPU_ACTIVE].available)
+    {
+      gboolean active = priv->variables[VARIABLE_CPU_ACTIVE].value.boolean;
+
+      if (active && cpu_active_time_prev_time)
+        cpu_active_time += curr_time - cpu_active_time_prev_time;
+    }
+
+  cpu_active_time_prev_time = curr_time;
+
+  variable_data->available      = TRUE;
+  variable_data->value.duration = cpu_active_time / 1000000.0;
+}
+
+static void
+gimp_dashboard_reset_cpu_active_time (GimpDashboard *dashboard,
+                                      Variable       variable)
+{
+  cpu_active_time = 0;
+}
+
+#endif /* HAVE_CPU_GROUP */
+
 static void
 gimp_dashboard_sample_object (GimpDashboard *dashboard,
                               GObject       *object,
@@ -1439,6 +1743,28 @@ gimp_dashboard_sample_object (GimpDashboard *dashboard,
                           NULL);
           }
       }
+      break;
+
+    case VARIABLE_TYPE_PERCENTAGE:
+      if (g_object_class_find_property (klass, variable_info->data))
+        {
+          variable_data->available = TRUE;
+
+          g_object_get (object,
+                        variable_info->data, &variable_data->value.percentage,
+                        NULL);
+        }
+      break;
+
+    case VARIABLE_TYPE_DURATION:
+      if (g_object_class_find_property (klass, variable_info->data))
+        {
+          variable_data->available = TRUE;
+
+          g_object_get (object,
+                        variable_info->data, &variable_data->value.duration,
+                        NULL);
+        }
       break;
     }
 }
@@ -1763,6 +2089,12 @@ gimp_dashboard_variable_to_boolean (GimpDashboard *dashboard,
         case VARIABLE_TYPE_INT_RATIO:
           return variable_data->value.int_ratio.antecedent != 0 &&
                  variable_data->value.int_ratio.consequent != 0;
+
+        case VARIABLE_TYPE_PERCENTAGE:
+          return variable_data->value.percentage != 0.0;
+
+        case VARIABLE_TYPE_DURATION:
+          return variable_data->value.duration != 0.0;
         }
     }
 
@@ -1802,6 +2134,12 @@ gimp_dashboard_variable_to_double (GimpDashboard *dashboard,
                      (gdouble) variable_data->value.int_ratio.consequent;
             }
           break;
+
+        case VARIABLE_TYPE_PERCENTAGE:
+          return variable_data->value.percentage;
+
+        case VARIABLE_TYPE_DURATION:
+          return variable_data->value.duration;
         }
     }
 
@@ -1823,6 +2161,7 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
   /* Tranlators: "N/A" is an abbreviation for "not available" */
   const gchar          *str           = C_("dashboard-value", "N/A");
   gboolean              static_str    = TRUE;
+  gboolean              show_limit    = TRUE;
 
   if (variable_data->available)
     {
@@ -1887,9 +2226,28 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
               }
           }
           break;
+
+        case VARIABLE_TYPE_PERCENTAGE:
+          str        = g_strdup_printf ("%d%%",
+                                        SIGNED_ROUND (100.0 * variable_data->value.percentage));
+          static_str = FALSE;
+          show_limit = FALSE;
+          break;
+
+        case VARIABLE_TYPE_DURATION:
+          str        = g_strdup_printf ("%02d:%02d:%04.1f",
+                                        (gint) floor (variable_data->value.duration / 3600.0),
+                                        (gint) floor (fmod (variable_data->value.duration / 60.0, 60.0)),
+                                        floor (fmod (variable_data->value.duration, 60.0) * 10.0) / 10.0);
+          static_str = FALSE;
+          show_limit = FALSE;
+          break;
         }
 
-      if (field_info->meter_value && group_data->limit)
+      if (show_limit               &&
+          variable_data->available &&
+          field_info->meter_value  &&
+          group_data->limit)
         {
           gdouble  value;
           gchar   *tmp;
@@ -1961,6 +2319,7 @@ void
 gimp_dashboard_reset (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv;
+  Variable              variable;
   Group                 group;
 
   g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
@@ -1970,6 +2329,14 @@ gimp_dashboard_reset (GimpDashboard *dashboard)
   g_mutex_lock (&priv->mutex);
 
   gegl_reset_stats ();
+
+  for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
+    {
+      const VariableInfo *variable_info = &variables[variable];
+
+      if (variable_info->reset_func)
+        variable_info->reset_func (dashboard, variable);
+    }
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
