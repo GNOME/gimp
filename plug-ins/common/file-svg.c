@@ -251,7 +251,7 @@ run (const gchar      *name,
 
           gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
         }
-     }
+    }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
