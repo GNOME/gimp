@@ -64,8 +64,11 @@ enum
 
 typedef struct
 {
-  gboolean active;
-  GimpRGB  color;
+  gboolean              active;
+  gboolean              show_in_gauge;
+  gboolean              show_in_history;
+  GimpRGB               color;
+  GimpInterpolationType interpolation;
 } Value;
 
 struct _GimpMeterPrivate
@@ -119,6 +122,10 @@ static gboolean   gimp_meter_timeout                (GimpMeter      *meter);
 static void       gimp_meter_clear_history_unlocked (GimpMeter      *meter);
 static void       gimp_meter_update_samples         (GimpMeter      *meter);
 static void       gimp_meter_shift_samples          (GimpMeter      *meter);
+
+static void       gimp_meter_mask_sample            (GimpMeter      *meter,
+                                                     const gdouble  *sample,
+                                                     gdouble        *result);
 
 
 G_DEFINE_TYPE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
@@ -505,8 +512,11 @@ gimp_meter_expose_event (GtkWidget      *widget,
             {
               gdouble v = VALUE (0, i);
 
-              if (! meter->priv->values[i].active)
-                continue;
+              if (! meter->priv->values[i].active ||
+                  ! meter->priv->values[i].show_in_gauge)
+                {
+                  continue;
+                }
 
               gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
               cairo_move_to (cr, 0.0, 0.0);
@@ -599,48 +609,85 @@ gimp_meter_expose_event (GtkWidget      *widget,
                                2.0,
                                0.0);
 
-              /* paint history graph for each value, with cubic interpolation */
+              /* paint history graph for each value */
               for (i = 0; i < meter->priv->n_values; i++)
                 {
-                  gdouble y[4];
-                  gdouble t[2];
-                  gdouble c[4];
-                  gdouble x;
+                  gdouble y;
 
-                  if (! meter->priv->values[i].active)
-                    continue;
+                  if (! meter->priv->values[i].active ||
+                      ! meter->priv->values[i].show_in_history)
+                    {
+                      continue;
+                    }
 
                   gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
                   cairo_move_to (cr, 0.0, 0.0);
 
-                  for (j = 1; j < meter->priv->n_samples - 2; j++)
+                  switch (meter->priv->values[i].interpolation)
                     {
-                      for (k = 0; k < 4; k++)
-                        y[k] = VALUE (j + k - 1, i);
+                    case GIMP_INTERPOLATION_NONE:
+                      {
+                        for (j = 1; j < meter->priv->n_samples - 2; j++)
+                          {
+                            gdouble y0 = VALUE (j - 1, i);
+                            gdouble y1 = VALUE (j,     i);
 
-                      for (k = 0; k < 2; k++)
-                        {
-                          t[k] = (y[k + 2] - y[k]) / 2.0;
-                          t[k] = CLAMP (t[k], y[k + 1] - 1.0, y[k + 1]);
-                          t[k] = CLAMP (t[k], -y[k + 1], 1.0 - y[k + 1]);
-                        }
+                            cairo_line_to (cr, j, y0);
+                            cairo_line_to (cr, j, y1);
+                          }
+                      }
+                      break;
 
-                      c[0] = y[1];
-                      c[1] = t[0];
-                      c[2] = 3 * (y[2] - y[1]) - 2 * t[0] - t[1];
-                      c[3] = t[0] + t[1] - 2 * (y[2] - y[1]);
+                    case GIMP_INTERPOLATION_LINEAR:
+                      {
+                        for (j = 1; j < meter->priv->n_samples - 2; j++)
+                          {
+                            gdouble y = VALUE (j, i);
 
-                      for (x = 0.0; x < 1.0; x += dx)
-                        {
-                          gdouble y = ((c[3] * x + c[2]) * x + c[1]) * x + c[0];
+                            cairo_line_to (cr, j, y);
+                          }
+                      }
+                      break;
 
-                          cairo_line_to (cr, j + x, y);
-                        }
+                    case GIMP_INTERPOLATION_CUBIC:
+                    default:
+                      {
+                        for (j = 1; j < meter->priv->n_samples - 2; j++)
+                          {
+                            gdouble y[4];
+                            gdouble t[2];
+                            gdouble c[4];
+                            gdouble x;
+
+                            for (k = 0; k < 4; k++)
+                              y[k] = VALUE (j + k - 1, i);
+
+                            for (k = 0; k < 2; k++)
+                              {
+                                t[k] = (y[k + 2] - y[k]) / 2.0;
+                                t[k] = CLAMP (t[k], y[k + 1] - 1.0, y[k + 1]);
+                                t[k] = CLAMP (t[k], -y[k + 1], 1.0 - y[k + 1]);
+                              }
+
+                            c[0] = y[1];
+                            c[1] = t[0];
+                            c[2] = 3 * (y[2] - y[1]) - 2 * t[0] - t[1];
+                            c[3] = t[0] + t[1] - 2 * (y[2] - y[1]);
+
+                            for (x = 0.0; x < 1.0; x += dx)
+                              {
+                                gdouble y = ((c[3] * x + c[2]) * x + c[1]) * x + c[0];
+
+                                cairo_line_to (cr, j + x, y);
+                              }
+                          }
+                      }
+                      break;
                     }
 
-                  y[1] = VALUE (j, i);
+                  y = VALUE (j, i);
 
-                  cairo_line_to (cr, meter->priv->n_samples - 2, y[1]);
+                  cairo_line_to (cr, meter->priv->n_samples - 2, y);
                   cairo_line_to (cr, meter->priv->n_samples - 2, 0.0);
                   cairo_close_path (cr);
                   cairo_fill (cr);
@@ -705,34 +752,38 @@ gimp_meter_expose_event (GtkWidget      *widget,
 static gboolean
 gimp_meter_timeout (GimpMeter *meter)
 {
-  gboolean uniform;
-  gboolean redraw;
+  gboolean uniform = TRUE;
+  gboolean redraw  = TRUE;
+  gdouble  sample0[meter->priv->n_values];
+  gint     i;
 
   g_mutex_lock (&meter->priv->mutex);
 
   gimp_meter_shift_samples (meter);
 
+  gimp_meter_mask_sample (meter, SAMPLE (0), sample0);
+
   if (meter->priv->history_visible)
     {
-      uniform = ! memcmp (SAMPLE (0), SAMPLE (1),
-                          (meter->priv->n_samples - 1) * SAMPLE_SIZE);
-    }
-  else
-    {
-      uniform = TRUE;
+      for (i = 1; uniform && i < meter->priv->n_samples; i++)
+        {
+          gdouble sample[meter->priv->n_values];
+
+          gimp_meter_mask_sample (meter, SAMPLE (i), sample);
+
+          uniform = ! memcmp (sample0, sample, SAMPLE_SIZE);
+        }
     }
 
   if (uniform && meter->priv->uniform_sample)
-    redraw = memcmp (SAMPLE (0), meter->priv->uniform_sample, SAMPLE_SIZE);
-  else
-    redraw = TRUE;
+    redraw = memcmp (sample0, meter->priv->uniform_sample, SAMPLE_SIZE);
 
   if (uniform)
     {
       if (! meter->priv->uniform_sample)
         meter->priv->uniform_sample = g_malloc (SAMPLE_SIZE);
 
-      memcpy (meter->priv->uniform_sample, SAMPLE (0), SAMPLE_SIZE);
+      memcpy (meter->priv->uniform_sample, sample0, SAMPLE_SIZE);
     }
   else
     {
@@ -794,6 +845,28 @@ gimp_meter_shift_samples (GimpMeter *meter)
                        n_new_samples);
 
   meter->priv->last_sample_time = time;
+}
+
+static void
+gimp_meter_mask_sample (GimpMeter     *meter,
+                        const gdouble *sample,
+                        gdouble       *result)
+{
+  gint i;
+
+  for (i = 0; i < meter->priv->n_values; i++)
+    {
+      if (meter->priv->values[i].active         &&
+          (meter->priv->values[i].show_in_gauge ||
+           meter->priv->values[i].show_in_history))
+        {
+          result[i] = sample[i];
+        }
+      else
+        {
+          result[i] = 0.0;
+        }
+    }
 }
 
 
@@ -934,7 +1007,11 @@ gimp_meter_set_n_values (GimpMeter *meter,
       if (n_values > meter->priv->n_values)
         {
           gegl_memset_pattern (meter->priv->values,
-                               &(Value) { .active = TRUE }, sizeof (Value),
+                               &(Value) { .active          = TRUE,
+                                          .show_in_gauge   = TRUE,
+                                          .show_in_history = TRUE,
+                                          .interpolation   = GIMP_INTERPOLATION_CUBIC},
+                               sizeof (Value),
                                n_values - meter->priv->n_values);
         }
 
@@ -1010,6 +1087,85 @@ gimp_meter_get_value_color (GimpMeter *meter,
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, NULL);
 
   return &meter->priv->values[value].color;
+}
+
+void
+gimp_meter_set_value_interpolation (GimpMeter             *meter,
+                                    gint                   value,
+                                    GimpInterpolationType  interpolation)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (value >= 0 && value < meter->priv->n_values);
+
+  if (meter->priv->values[value].interpolation != interpolation)
+    {
+      meter->priv->values[value].interpolation = interpolation;
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+    }
+}
+
+GimpInterpolationType
+gimp_meter_get_value_interpolation (GimpMeter *meter,
+                                    gint       value)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), GIMP_INTERPOLATION_NONE);
+  g_return_val_if_fail (value >= 0 && value < meter->priv->n_values,
+                        GIMP_INTERPOLATION_NONE);
+
+  return meter->priv->values[value].interpolation;
+}
+
+void
+gimp_meter_set_value_show_in_gauge (GimpMeter *meter,
+                                    gint       value,
+                                    gboolean   show)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (value >= 0 && value < meter->priv->n_values);
+
+  if (meter->priv->values[value].show_in_gauge != show)
+    {
+      meter->priv->values[value].show_in_gauge = show;
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+    }
+}
+
+gboolean
+gimp_meter_get_value_show_in_gauge (GimpMeter *meter,
+                                    gint       value)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
+
+  return meter->priv->values[value].show_in_gauge;
+}
+
+void
+gimp_meter_set_value_show_in_history (GimpMeter *meter,
+                                      gint       value,
+                                      gboolean   show)
+{
+  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (value >= 0 && value < meter->priv->n_values);
+
+  if (meter->priv->values[value].show_in_history != show)
+    {
+      meter->priv->values[value].show_in_history = show;
+
+      gtk_widget_queue_draw (GTK_WIDGET (meter));
+    }
+}
+
+gboolean
+gimp_meter_get_value_show_in_history (GimpMeter *meter,
+                                      gint       value)
+{
+  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
+
+  return meter->priv->values[value].show_in_history;
 }
 
 void
