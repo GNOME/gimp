@@ -11,9 +11,9 @@ choose a separate prefix which is not in your default library search
 path.
 
 GIMP @GIMP_APP_VERSION@ is fully backward compatible to all earlier GIMP 2.x version.
-Plug-ins and scripts written for GIMP 2.6 or earlier GIMP 2.x versions
-will continue to work and don't need to be changed nor recompiled to
-be used with GIMP @GIMP_APP_VERSION@.
+Plug-ins and scripts written for GIMP 2.8, 2.6 or earlier GIMP 2.x
+versions will continue to work and don't need to be changed nor
+recompiled to be used with GIMP @GIMP_APP_VERSION@.
 
 The most important part is to make sure the requirements for a build
 are fulfilled.  We depend on a number of tools and libraries which are
@@ -46,7 +46,7 @@ header files installed.
        git://git.gnome.org/gegl
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
-     GIMP also need a recent versions of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
+     GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
      (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
      from ftp://ftp.gtk.org/.
 
@@ -205,8 +205,8 @@ options can be listed using the command `./configure --help'. There
 are several special options the GIMP `configure' script recognizes.
 These are:
 
-  --enable-vector-icons.  This option installs vector icons instead of
-     raster icons.
+  --disable-vector-icons.  This option installs raster icons instead of
+     vector icons.
 
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
