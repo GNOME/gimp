@@ -725,7 +725,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
               const VariableInfo *variable_info = &variables[field_info->variable];
 
               item = gtk_check_menu_item_new_with_label (
-                g_dpgettext2 (NULL, "dashboard-field", variable_info->title));
+                g_dpgettext2 (NULL, "dashboard-variable", variable_info->title));
               field_data->menu_item = GTK_CHECK_MENU_ITEM (item);
               gimp_help_set_help_data (item,
                                        g_dgettext (NULL, variable_info->description),
