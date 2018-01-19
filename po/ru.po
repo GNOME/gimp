@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 05:11+0300\n"
-"PO-Revision-Date: 2018-01-19 10:10+0300\n"
+"POT-Creation-Date: 2018-01-19 21:35+0300\n"
+"PO-Revision-Date: 2018-01-20 01:50+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -2349,10 +2349,9 @@ msgid "Reset"
 msgstr "Сбросить"
 
 #: ../app/actions/dashboard-actions.c:50
-#, fuzzy
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr "Ориентир"
+msgstr "Сбросить накопленные данные"
 
 #: ../app/actions/dashboard-actions.c:58
 msgctxt "dashboard-action"
@@ -3608,10 +3607,9 @@ msgid "Paste In Place"
 msgstr "Вставить на место"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
-msgstr "Вставить содержимое буфера в выделенную область"
+msgstr "Вставить содержимое буфера обмена в его исходную позицию"
 
 #: ../app/actions/edit-actions.c:189
 msgctxt "edit-action"
@@ -3629,12 +3627,11 @@ msgid "Paste Into Selection In Place"
 msgstr "Вставить в выделение на место"
 
 #: ../app/actions/edit-actions.c:198
-#, fuzzy
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
-msgstr "Вставить содержимое буфера в выделенную область"
+msgstr "Вставить содержимое буфера в выделенную область в его исходную позицию"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
@@ -3652,12 +3649,13 @@ msgid "New Layer In _Place"
 msgstr "Новый слой на _место"
 
 #: ../app/actions/edit-actions.c:212
-#, fuzzy
 msgctxt "edit-action"
 msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
-msgstr "Создать новый слой из содержимого буфера обмена"
+msgstr ""
+"Создать новый слой из содержимого буфера обмена и вставить его в его "
+"исходную позицию"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -3816,7 +3814,7 @@ msgstr "Выделить все сообщения об ошибках"
 #: ../app/actions/error-console-actions.c:56
 msgctxt "error-console-action"
 msgid "_Highlight"
-msgstr "_Подсвечивать"
+msgstr "_Активировать, когда есть"
 
 #: ../app/actions/error-console-actions.c:63
 msgctxt "error-console-action"
@@ -3846,7 +3844,7 @@ msgstr "О_шибки"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "Показывать консоль при появлении ошибок"
 
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
@@ -3856,7 +3854,7 @@ msgstr "_Предупреждения"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "Показывать консоль при появлении предупреждений"
 
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
@@ -3866,7 +3864,7 @@ msgstr "_Сообщения"
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
 msgid "Highlight error console on messages"
-msgstr ""
+msgstr "Показывать консоль при появлении сообщений"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -4536,7 +4534,7 @@ msgstr "Иллю_зия..."
 #: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "_Image Gradient..."
-msgstr ""
+msgstr "_Градиент изображения..."
 
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
@@ -5727,10 +5725,9 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Нелинейное пространство (sRGB)"
 
 #: ../app/actions/image-actions.c:252
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "Преобразовать изображение в градации серого"
+msgstr "Преобразовать изображение в нелинейное (sRGB)"
 
 #: ../app/actions/image-actions.c:256
 msgctxt "image-convert-action"
@@ -13355,7 +13352,7 @@ msgstr "Горизонтальная симметрия"
 
 #: ../app/core/gimpsymmetry-mirror.c:131
 msgid "Reflect the initial stroke across a horizontal axis"
-msgstr ""
+msgstr "Зеркалировать штрихи относительно горизонтальной оси"
 
 #: ../app/core/gimpsymmetry-mirror.c:138
 msgid "Vertical Symmetry"
@@ -13363,7 +13360,7 @@ msgstr "Вертикальная симметрия"
 
 #: ../app/core/gimpsymmetry-mirror.c:139
 msgid "Reflect the initial stroke across a vertical axis"
-msgstr ""
+msgstr "Зеркалировать штрихи относительно вертикальной оси"
 
 #: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
@@ -13379,11 +13376,11 @@ msgstr "Отключить отражение кистей"
 
 #: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
-msgstr "Положение вертикальной оси"
+msgstr "Вертикальная ось"
 
 #: ../app/core/gimpsymmetry-mirror.c:174
 msgid "Horizontal axis position"
-msgstr "Положение горизонтальной оси"
+msgstr "Горизонтальная ось"
 
 #: ../app/core/gimpsymmetry-tiling.c:102
 msgid "Tiling"
@@ -16629,9 +16626,8 @@ msgid "%s for constrained angles"
 msgstr "%s для ограничения шага угла"
 
 #: ../app/display/gimptoolline.c:1497
-#, fuzzy
 msgid "Release to remove the slider"
-msgstr "Щёлкните для перемещения линии"
+msgstr "Отпустите, чтобы удалить этот регулятор"
 
 #: ../app/display/gimptoolline.c:1501
 #, c-format
@@ -16644,29 +16640,24 @@ msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr "Нажмите и перетащите для смещения маски выделения"
 
 #: ../app/display/gimptoolline.c:1516
-#, fuzzy
 msgid "Click-Drag to move or remove the slider"
-msgstr "Щёлкните и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите, чтобы переместить или удалить регулятор"
 
 #: ../app/display/gimptoolline.c:1521
-#, fuzzy
 msgid "Click-Drag to move the slider"
-msgstr "Щёлкните и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите, чтобы переместить регулятор"
 
 #: ../app/display/gimptoolline.c:1532
-#, fuzzy
 msgid "Click-Drag away to remove the slider"
-msgstr "Щёлкните и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите в сторону, чтобы удалить регулятор"
 
 #: ../app/display/gimptoolline.c:1536
-#, fuzzy
 msgid "Click-Drag to remove the slider"
-msgstr "Щёлкните и потащите, чтобы переместить рычаг"
+msgstr "Щёлкните и потащите, чтобы удалить регулятор"
 
 #: ../app/display/gimptoolline.c:1547
-#, fuzzy
 msgid "Click or Click-Drag to add a new slider"
-msgstr "Щёлкните или щёлкните и потащите для добавления узла"
+msgstr "Щёлкните или щёлкните и потащите, чтобы добавить регулятор"
 
 #: ../app/display/gimptoolline.c:1553
 #, fuzzy
@@ -17629,7 +17620,7 @@ msgstr "_Линейно"
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:109
 msgid "Work on linear RGB"
-msgstr ""
+msgstr "Работать в линейном RGB"
 
 #: ../app/operations/gimpcurvesconfig.c:112
 #: ../app/operations/gimplevelsconfig.c:115
@@ -17729,7 +17720,6 @@ msgstr "Не удалось записать файл профиля уровн�
 
 #: ../app/operations/gimpoperationbrightnesscontrast.c:65
 #: ../app/tools/gimpbrightnesscontrasttool.c:98
-#, fuzzy
 msgid "Adjust brightness and contrast"
 msgstr "Коррекция яркости и контраста"
 
@@ -17765,7 +17755,6 @@ msgid "Color"
 msgstr "Цвет"
 
 #: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
-#, fuzzy
 msgid "Adjust color curves"
 msgstr "Коррекция цветовых кривых"
 
@@ -17782,7 +17771,6 @@ msgid "Adjust hue, saturation, and lightness"
 msgstr "Тон-Насыщенность: коррекция тона, насыщенности и светлоты"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:133
-#, fuzzy
 msgid "Adjust color levels"
 msgstr "Коррекция цветовых уровней"
 
@@ -17800,9 +17788,8 @@ msgstr "Закрасить частично прозрачные пикселы"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:88
-#, fuzzy
 msgid "Reduce image to two colors using a threshold"
-msgstr "Порог: преобразует изображение в двухцветное, используя порог"
+msgstr "Преобразовать изображение в двухцветное, используя порог"
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
@@ -17986,7 +17973,6 @@ msgid "Erase with this brush"
 msgstr "Стирать этой кистью"
 
 #: ../app/paint/gimpmybrushoptions.c:114
-#, fuzzy
 msgid "No erasing effect"
 msgstr "Без эффекта стирания"
 
@@ -18070,7 +18056,7 @@ msgstr "Привязать кисть к виду"
 
 #: ../app/paint/gimppaintoptions.c:269
 msgid "Keep brush appearance fixed relative to the view"
-msgstr ""
+msgstr "Привязать размер и поворот кисти к виду холста"
 
 #: ../app/paint/gimppaintoptions.c:275
 msgid "Incremental"
@@ -18094,7 +18080,7 @@ msgstr "Разброс"
 
 #: ../app/paint/gimppaintoptions.c:291
 msgid "Scatter brush as you paint"
-msgstr ""
+msgstr "Разбрасывать мазки кистью в стороны при рисовании"
 
 #: ../app/paint/gimppaintoptions.c:296
 msgid "Amount"
@@ -18131,7 +18117,7 @@ msgstr "Повтор"
 
 #: ../app/paint/gimppaintoptions.c:328
 msgid "How fade is repeated as you paint"
-msgstr ""
+msgstr "Как угасание повторяется при рисовании"
 
 #: ../app/paint/gimppaintoptions.c:397
 msgid "Smooth stroke"
@@ -18173,7 +18159,7 @@ msgstr "Частота"
 
 #: ../app/paint/gimpsmudgeoptions.c:71
 msgid "The strength of smudging"
-msgstr ""
+msgstr "Сила размазывания"
 
 #: ../app/paint/gimpsmudgeoptions.c:77
 msgctxt "smudge-tool"
@@ -18182,7 +18168,7 @@ msgstr "Подмешивание цвета"
 
 #: ../app/paint/gimpsmudgeoptions.c:78
 msgid "The amount of brush color to blend"
-msgstr ""
+msgstr "Сколько цвета переднего плана подмешать"
 
 #: ../app/paint/gimpsmudgeoptions.c:84
 msgctxt "smudge-tool"
@@ -19459,52 +19445,51 @@ msgstr "Сверхновая: "
 
 #: ../app/propgui/gimppropgui-utils.c:70
 msgid "1,700 K – Match flame"
-msgstr "1,700 K – Пламя спички"
+msgstr "1700 K — пламя спички"
 
 #: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr "1,850 K – Пламя свечи, рассвет/закат"
+msgstr "1850 K — пламя свечи, рассвет/закат"
 
 #: ../app/propgui/gimppropgui-utils.c:72
-#, fuzzy
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr "3,000 K – тёплый белый свет компактных флюоресцентных ламп"
+msgstr "2700 K — LED-лампа тёплого цвета"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr "3,000 K – тёплый белый свет компактных флюоресцентных ламп"
+msgstr "3000 K — тёплый белый свет компактных флюоресцентных ламп"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr "3,200 K – типичные киносъёмочные лампы"
+msgstr "3200 K — типичные киносъёмочные лампы"
 
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,300 K – Incandescent lamps"
-msgstr "3,300 K – лампы накаливания"
+msgstr "3300 K — лампы накаливания"
 
 #: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,350 K – Studio \"CP\" light"
-msgstr "3,350 K – студийное освещение"
+msgstr "3350 K — студийное освещение"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr ""
+msgstr "4000 K — LED-лампа холодного (дневного) цвета"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,100 K – Moonlight"
-msgstr "4,100 K – Лунный свет"
+msgstr "4100 K — лунный свет"
 
 #: ../app/propgui/gimppropgui-utils.c:79
 msgid "5,000 K – D50"
-msgstr "5,000 K – D50"
+msgstr "5000 K — D50"
 
 #: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
-msgstr "5,000 K – прохладный белый свет компактных флюоресцентных ламп"
+msgstr "5000 K — прохладный белый свет компактных флюоресцентных ламп"
 
 #: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,000 K – Horizon daylight"
-msgstr "5,000 K – солнце в полдень"
+msgstr "5000 K — солнце в полдень"
 
 #: ../app/propgui/gimppropgui-utils.c:82
 msgid "5,500 K – D55"
@@ -19512,31 +19497,31 @@ msgstr "5,500 K – D55"
 
 #: ../app/propgui/gimppropgui-utils.c:83
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr "5,500 K – вертикальный дневной свет, электровспышка"
+msgstr "5500 K — вертикальный дневной свет, электровспышка"
 
 #: ../app/propgui/gimppropgui-utils.c:84
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr "6,200 K – ксеноновая дуговая лампа"
+msgstr "6200 K — ксеноновая дуговая лампа"
 
 #: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,500 K – D65"
-msgstr "6,500 K – D65"
+msgstr "6500 K — D65"
 
 #: ../app/propgui/gimppropgui-utils.c:86
 msgid "6,500 K – Daylight, overcast"
-msgstr "6,500 K – дневной свет, пасмурно"
+msgstr "6500 K — дневной свет, пасмурно"
 
 #: ../app/propgui/gimppropgui-utils.c:87
 msgid "7,500 K – D75"
-msgstr "7,500 K – D75"
+msgstr "7500 K – D75"
 
 #: ../app/propgui/gimppropgui-utils.c:88
 msgid "9,300 K"
-msgstr "9,300 K"
+msgstr "9300 K"
 
 #: ../app/propgui/gimppropgui-utils.c:103
 msgid "Choose from a list of common color temperatures"
-msgstr ""
+msgstr "Выберите из списка температур цвета"
 
 #: ../app/propgui/gimppropgui-utils.c:154
 msgid "New Seed"
@@ -19667,15 +19652,15 @@ msgstr "Ориентир"
 
 #: ../app/tools/gimpalignoptions.c:93
 msgid "Reference image object a layer will be aligned on"
-msgstr ""
+msgstr "Объект, относительно которого будет выравниваться слой"
 
 #: ../app/tools/gimpalignoptions.c:101
 msgid "Horizontal offset for distribution"
-msgstr "Цветовой баланс: коррекция распределения цвета"
+msgstr "Смещение по горизонтали при распределении"
 
 #: ../app/tools/gimpalignoptions.c:108
 msgid "Vertical offset for distribution"
-msgstr ""
+msgstr "Смещение по вертикали при распределении"
 
 #: ../app/tools/gimpalignoptions.c:282 ../app/tools/gimpaligntool.c:123
 msgid "Align"
@@ -19707,7 +19692,7 @@ msgstr "Выровнять по нижнему краю объекта"
 
 #: ../app/tools/gimpalignoptions.c:328
 msgid "Distribute"
-msgstr "Расположить"
+msgstr "Распределение"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute left edges of targets"
@@ -19806,9 +19791,8 @@ msgid "Modify active gradient"
 msgstr "Изменять активный градиент"
 
 #: ../app/tools/gimpblendoptions.c:139
-#, fuzzy
 msgid "Modify the active gradient in-place"
-msgstr "Изменить активный градиент"
+msgstr "Изменить выбранный градиент на месте"
 
 #: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:379
 msgid "Edit this gradient"
@@ -19825,6 +19809,8 @@ msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr ""
+"Выбранный градиент доступен только для чтения и не может быть изменён "
+"напрямую. Выключите эту функцию, чтобы редактировать копию."
 
 #: ../app/tools/gimpblendtool.c:156
 msgid "Blend"
@@ -19988,7 +19974,7 @@ msgstr "Использовать для определения заполняе�
 #: ../app/tools/gimpbucketfilloptions.c:125
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "Считать соседние по диагонали пиксели связанными"
 
 #: ../app/tools/gimpbucketfilloptions.c:133
 msgid ""
@@ -20138,7 +20124,7 @@ msgstr "Режим пипетки"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 msgid "Choose what color picker will do"
-msgstr ""
+msgstr "Выберите режим работы пипетки"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
 #: ../app/tools/gimpmeasureoptions.c:68
@@ -20149,6 +20135,8 @@ msgstr "Информационное окно"
 msgid ""
 "Open a floating dialog to view picked color values in various color models"
 msgstr ""
+"Открыть плавающую панель для просмотра значений снятого цвета в разных "
+"цветовых моделей"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
@@ -20274,6 +20262,8 @@ msgstr "Разрешить наращивание"
 #: ../app/tools/gimpcropoptions.c:101
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
+"Разрешить увеличение холста при перетаскивании краёв кадрирующей рамки за "
+"пределы холста"
 
 #: ../app/tools/gimpcropoptions.c:108 ../app/tools/gimpcropoptions.c:200
 msgid "Fill with"
@@ -20355,14 +20345,12 @@ msgid "R_eset Channel"
 msgstr "_Восстановить"
 
 #: ../app/tools/gimpcurvestool.c:452
-#, fuzzy
 msgid "Adjust curves in linear light"
-msgstr "Инвертировать цвета в линейном пространстве"
+msgstr "Корректировать кривые в линейном пространстве"
 
 #: ../app/tools/gimpcurvestool.c:453
-#, fuzzy
 msgid "Adjust curves perceptually"
-msgstr "Инвертировать цвета в гамма-корректированном пространстве"
+msgstr "Корректировать кривые в нелинейном пространстве"
 
 #: ../app/tools/gimpcurvestool.c:539 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
@@ -20949,14 +20937,12 @@ msgid "Pick white point for the selected channel"
 msgstr "Выберите белую точку для выбранного канала"
 
 #: ../app/tools/gimplevelstool.c:395
-#, fuzzy
 msgid "Adjust levels in linear light"
-msgstr "Инвертировать цвета в линейном пространстве"
+msgstr "Корректировать уровни в линейном пространстве"
 
 #: ../app/tools/gimplevelstool.c:396
-#, fuzzy
 msgid "Adjust levels perceptually"
-msgstr "Инвертировать цвета в гамма-корректированном пространстве"
+msgstr "Корректировать уровни в нелинейном пространстве"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:405
@@ -21889,9 +21875,9 @@ msgid "Keep the original aspect ratio"
 msgstr "Сохранять исходное соотношение сторон"
 
 #: ../app/tools/gimptransformoptions.c:520
-#, fuzzy, c-format
+#, c-format
 msgid "Around center (%s)"
-msgstr "Закруглённые углы"
+msgstr "Вокруг центра (%s)"
 
 #: ../app/tools/gimptransformoptions.c:527
 msgid "Scale around the center point"
@@ -22542,14 +22528,12 @@ msgstr ""
 
 #. TRANSLATORS: X for the X coordinate.
 #: ../app/widgets/gimpcolorframe.c:193
-#, fuzzy
 msgctxt "Coordinates"
 msgid "X:"
 msgstr "X:"
 
 #. TRANSLATORS: Y for the Y coordinate.
 #: ../app/widgets/gimpcolorframe.c:207
-#, fuzzy
 msgctxt "Coordinates"
 msgid "Y:"
 msgstr "Y:"
@@ -22564,7 +22548,7 @@ msgstr "н/д"
 #: ../app/widgets/gimpcolorframe.c:712
 msgctxt "Grayscale"
 msgid "V:"
-msgstr ""
+msgstr "V:"
 
 #. TRANSLATORS: A for Alpha (color transparency)
 #: ../app/widgets/gimpcolorframe.c:716 ../app/widgets/gimpcolorframe.c:729
@@ -22573,7 +22557,7 @@ msgstr ""
 #: ../app/widgets/gimpcolorframe.c:901
 msgctxt "Alpha channel"
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #. TRANSLATORS: R for Red (RGB)
 #: ../app/widgets/gimpcolorframe.c:721 ../app/widgets/gimpcolorframe.c:757
@@ -22585,21 +22569,19 @@ msgstr "R:"
 #: ../app/widgets/gimpcolorframe.c:723 ../app/widgets/gimpcolorframe.c:759
 msgctxt "RGB"
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #. TRANSLATORS: B for Blue (RGB)
 #: ../app/widgets/gimpcolorframe.c:725 ../app/widgets/gimpcolorframe.c:761
-#, fuzzy
 msgctxt "RGB"
 msgid "B:"
-msgstr "Блок:"
+msgstr "B:"
 
 #. TRANSLATORS: Index of the color in the palette.
 #: ../app/widgets/gimpcolorframe.c:734
-#, fuzzy
 msgctxt "Indexed color"
 msgid "Index:"
-msgstr "Номер:"
+msgstr "Индекс:"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
 #: ../app/widgets/gimpcolorframe.c:768
@@ -22623,7 +22605,7 @@ msgstr "S:"
 #: ../app/widgets/gimpcolorframe.c:803
 msgctxt "HSV color space"
 msgid "V:"
-msgstr ""
+msgstr "V:"
 
 #. TRANSLATORS: L for Lightness (LCH color space)
 #: ../app/widgets/gimpcolorframe.c:827
@@ -22651,17 +22633,15 @@ msgstr "L*:"
 
 #. TRANSLATORS: a* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:861
-#, fuzzy
 msgctxt "Lab color space"
 msgid "a*:"
-msgstr "Lab_L*:"
+msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:863
-#, fuzzy
 msgctxt "Lab color space"
 msgid "b*:"
-msgstr "Lab_L*:"
+msgstr "b*:"
 
 #. TRANSLATORS: C for Cyan (CMYK)
 #: ../app/widgets/gimpcolorframe.c:891
@@ -22677,7 +22657,6 @@ msgstr "M:"
 
 #. TRANSLATORS: Y for Yellow (CMYK)
 #: ../app/widgets/gimpcolorframe.c:895
-#, fuzzy
 msgctxt "CMYK"
 msgid "Y:"
 msgstr "Y:"
@@ -22686,7 +22665,7 @@ msgstr "Y:"
 #: ../app/widgets/gimpcolorframe.c:897
 msgctxt "CMYK"
 msgid "K:"
-msgstr ""
+msgstr "K:"
 
 #: ../app/widgets/gimpcolorframe.c:959
 msgctxt "Color value"
@@ -23043,112 +23022,142 @@ msgstr "Колесо мыши"
 msgid "Mouse Wheel Events"
 msgstr "Действия колеса мыши"
 
-#: ../app/widgets/gimpdashboard.c:293 ../app/widgets/gimpdashboard.c:345
+#: ../app/widgets/gimpdashboard.c:332 ../app/widgets/gimpdashboard.c:384
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Занято"
 
-#: ../app/widgets/gimpdashboard.c:294
+#: ../app/widgets/gimpdashboard.c:333
 msgid "Tile cache occupied size"
 msgstr "Размер, занимаемый кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:303
+#: ../app/widgets/gimpdashboard.c:342
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Максимум"
 
-#: ../app/widgets/gimpdashboard.c:304
+#: ../app/widgets/gimpdashboard.c:343
 msgid "Maximal tile cache occupied size"
 msgstr "Максимальный размер места, занятого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:313 ../app/widgets/gimpdashboard.c:365
+#: ../app/widgets/gimpdashboard.c:352 ../app/widgets/gimpdashboard.c:404
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Предел"
 
-#: ../app/widgets/gimpdashboard.c:314
+#: ../app/widgets/gimpdashboard.c:353
 msgid "Tile cache size limit"
 msgstr "Предел размера, занимаемого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:322
+#: ../app/widgets/gimpdashboard.c:361
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Сжатие"
 
-#: ../app/widgets/gimpdashboard.c:323
+#: ../app/widgets/gimpdashboard.c:362
 msgid "Tile cache compression ratio"
 msgstr "Коэффициент сжатия, занимаемого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:332
+#: ../app/widgets/gimpdashboard.c:371
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Попадание/промах"
 
-#: ../app/widgets/gimpdashboard.c:333
+#: ../app/widgets/gimpdashboard.c:372
 msgid "Tile cache hit/miss ratio"
 msgstr "Соотношение попаданий к промахам при чтении кэша"
 
-#: ../app/widgets/gimpdashboard.c:346
+#: ../app/widgets/gimpdashboard.c:385
 msgid "Swap file occupied size"
 msgstr "Размер места, занимаемого файлом подкачки"
 
-#: ../app/widgets/gimpdashboard.c:355
+#: ../app/widgets/gimpdashboard.c:394
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Размер"
 
-#: ../app/widgets/gimpdashboard.c:356
+#: ../app/widgets/gimpdashboard.c:395
 msgid "Swap file size"
 msgstr "Размер файла подкачки"
 
-#: ../app/widgets/gimpdashboard.c:366
+#: ../app/widgets/gimpdashboard.c:405
 msgid "Swap file size limit"
 msgstr "Предел места, занимаемого файлом подкачки"
 
-#: ../app/widgets/gimpdashboard.c:373
+#: ../app/widgets/gimpdashboard.c:412
 msgctxt "dashboard-variable"
 msgid "Busy"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:374
+#: ../app/widgets/gimpdashboard.c:413
 msgid "Whether there is work queued for the swap file"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:387
+#: ../app/widgets/gimpdashboard.c:426
+msgctxt "dashboard-variable"
+msgid "Usage"
+msgstr "Использование"
+
+#: ../app/widgets/gimpdashboard.c:427
+msgid "Total CPU usage"
+msgstr "Общее использование ЦП"
+
+#: ../app/widgets/gimpdashboard.c:435 ../app/widgets/gimpdashboard.c:445
+msgctxt "dashboard-variable"
+msgid "Active"
+msgstr "Активность"
+
+#: ../app/widgets/gimpdashboard.c:436
+msgid "Whether the CPU is active"
+msgstr "Активен ли центральный процессор"
+
+#: ../app/widgets/gimpdashboard.c:446
+msgid "Total amount of time the CPU has been active"
+msgstr "Общая длительность активности центрального процессора"
+
+#: ../app/widgets/gimpdashboard.c:460
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Кэш"
 
-#: ../app/widgets/gimpdashboard.c:388
+#: ../app/widgets/gimpdashboard.c:461
 msgid "In-memory tile cache"
 msgstr "Кэш тайлов, хранящийся в оперативной памяти"
 
-#: ../app/widgets/gimpdashboard.c:423
+#: ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Подкачка"
 
-#: ../app/widgets/gimpdashboard.c:424
+#: ../app/widgets/gimpdashboard.c:497
 msgid "On-disk tile swap"
 msgstr "Файл подкачки тайлов, хранящийся на диске"
 
-#: ../app/widgets/gimpdashboard.c:595
-#, fuzzy
+#: ../app/widgets/gimpdashboard.c:525
+msgctxt "dashboard-group"
+msgid "CPU"
+msgstr "Процессор"
+
+#: ../app/widgets/gimpdashboard.c:526
+msgid "CPU usage"
+msgstr "Использование процессора"
+
+#: ../app/widgets/gimpdashboard.c:698
 msgid "Select fields"
-msgstr "Выделить всё"
+msgstr "Выбрать поля"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:1824
+#: ../app/widgets/gimpdashboard.c:2162
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../app/widgets/gimpdashboard.c:1832
+#: ../app/widgets/gimpdashboard.c:2171
 msgctxt "dashboard-value"
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
-#: ../app/widgets/gimpdashboard.c:1833
+#: ../app/widgets/gimpdashboard.c:2172
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Нет"
