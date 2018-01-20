@@ -672,7 +672,8 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
   GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
                                                         config, pspec);
 
-  if (! levels_tool->channel_menu)
+  if (! levels_tool->channel_menu ||
+      ! levels_tool->histogram_view)
     return;
 
   if (! strcmp (pspec->name, "linear"))
