@@ -153,6 +153,38 @@ gimp_color_selector_channel_get_type (void)
 }
 
 GType
+gimp_color_selector_model_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_SELECTOR_RGB, "GIMP_COLOR_SELECTOR_RGB", "rgb" },
+    { GIMP_COLOR_SELECTOR_LCH, "GIMP_COLOR_SELECTOR_LCH", "lch" },
+    { GIMP_COLOR_SELECTOR_HSV, "GIMP_COLOR_SELECTOR_HSV", "hsv" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COLOR_SELECTOR_RGB, NC_("color-selector-model", "RGB"), N_("RGB color model") },
+    { GIMP_COLOR_SELECTOR_LCH, NC_("color-selector-model", "LCH"), N_("CIELCh color model") },
+    { GIMP_COLOR_SELECTOR_HSV, NC_("color-selector-model", "HSV"), N_("HSV color model") },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpColorSelectorModel", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "color-selector-model");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_page_selector_target_get_type (void)
 {
   static const GEnumValue values[] =

@@ -121,6 +121,25 @@ typedef enum
   GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCH Hue"        >*/
 } GimpColorSelectorChannel;
 
+/**
+ * GimpColorSelectorModel:
+ * @GIMP_COLOR_SELECTOR_RGB:            RGB color model
+ * @GIMP_COLOR_SELECTOR_LCH:            CIELCh color model
+ * @GIMP_COLOR_SELECTOR_HSV:            HSV color model
+ *
+ * An enum to specify the types of color spaces edited in
+ * #GimpColorSelector widgets.
+ **/
+#define GIMP_TYPE_COLOR_SELECTOR_MODEL (gimp_color_selector_model_get_type ())
+
+GType gimp_color_selector_model_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COLOR_SELECTOR_RGB,           /*< desc="RGB", help="RGB color model"    >*/
+  GIMP_COLOR_SELECTOR_LCH,           /*< desc="LCH", help="CIELCh color model" >*/
+  GIMP_COLOR_SELECTOR_HSV            /*< desc="HSV", help="HSV color model"    >*/
+} GimpColorSelectorModel;
 
 /**
  * GimpPageSelectorTarget:

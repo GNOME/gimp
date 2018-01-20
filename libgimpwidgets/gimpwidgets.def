@@ -103,10 +103,8 @@ EXPORTS
 	gimp_color_scale_set_channel
 	gimp_color_scale_set_color
 	gimp_color_scale_set_color_config
-	gimp_color_scales_get_show_hsv
 	gimp_color_scales_get_show_rgb_u8
 	gimp_color_scales_get_type
-	gimp_color_scales_set_show_hsv
 	gimp_color_scales_set_show_rgb_u8
 	gimp_color_select_get_type
 	gimp_color_selection_color_changed
@@ -125,6 +123,7 @@ EXPORTS
 	gimp_color_selector_color_changed
 	gimp_color_selector_get_channel
 	gimp_color_selector_get_color
+	gimp_color_selector_get_model
 	gimp_color_selector_get_show_alpha
 	gimp_color_selector_get_toggles_sensitive
 	gimp_color_selector_get_toggles_visible
@@ -133,6 +132,7 @@ EXPORTS
 	gimp_color_selector_set_channel
 	gimp_color_selector_set_color
 	gimp_color_selector_set_config
+	gimp_color_selector_set_model
 	gimp_color_selector_set_show_alpha
 	gimp_color_selector_set_toggles_sensitive
 	gimp_color_selector_set_toggles_visible

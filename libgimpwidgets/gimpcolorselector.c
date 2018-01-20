@@ -53,6 +53,7 @@ enum
 {
   COLOR_CHANGED,
   CHANNEL_CHANGED,
+  MODEL_CHANGED,
   LAST_SIGNAL
 };
 
@@ -95,6 +96,16 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 
+  selector_signals[MODEL_CHANGED] =
+    g_signal_new ("model-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorSelectorClass, model_changed),
+                  NULL, NULL,
+                  _gimp_widgets_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
+
   klass->name                  = "Unnamed";
   klass->help_id               = NULL;
   klass->icon_name             = GIMP_ICON_PALETTE;
@@ -103,6 +114,7 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
   klass->set_toggles_sensitive = NULL;
   klass->set_show_alpha        = NULL;
   klass->set_color             = NULL;
+  klass->set_model             = NULL;
   klass->set_channel           = NULL;
   klass->color_changed         = NULL;
   klass->channel_changed       = NULL;
@@ -123,6 +135,7 @@ gimp_color_selector_init (GimpColorSelector *selector)
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
   selector->channel = GIMP_COLOR_SELECTOR_RED;
+  selector->model   = GIMP_COLOR_SELECTOR_RGB;
 }
 
 static void
@@ -373,6 +386,7 @@ gimp_color_selector_get_color (GimpColorSelector *selector,
  *
  * Changes between displayed channels if this @selector instance has
  * the ability to show different channels.
+ * This will also update the color model if needed.
  **/
 void
 gimp_color_selector_set_channel (GimpColorSelector        *selector,
@@ -383,15 +397,50 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
   if (channel != selector->channel)
     {
       GimpColorSelectorClass *selector_class;
+      GimpColorSelectorModel  model = selector->channel;
 
       selector->channel = channel;
-
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+
+      switch (channel)
+        {
+        case GIMP_COLOR_SELECTOR_RED:
+        case GIMP_COLOR_SELECTOR_GREEN:
+        case GIMP_COLOR_SELECTOR_BLUE:
+          model = GIMP_COLOR_SELECTOR_RGB;
+          break;
+        case GIMP_COLOR_SELECTOR_HUE:
+        case GIMP_COLOR_SELECTOR_SATURATION:
+        case GIMP_COLOR_SELECTOR_VALUE:
+          model = GIMP_COLOR_SELECTOR_HSV;
+          break;
+        case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
+        case GIMP_COLOR_SELECTOR_LCH_CHROMA:
+        case GIMP_COLOR_SELECTOR_LCH_HUE:
+          model = GIMP_COLOR_SELECTOR_LCH;
+          break;
+        case GIMP_COLOR_SELECTOR_ALPHA:
+          /* Alpha channel does not change the color model. */
+        default:
+          /* Should not happen. */
+          break;
+        }
 
       if (selector_class->set_channel)
         selector_class->set_channel (selector, channel);
 
       gimp_color_selector_channel_changed (selector);
+
+      if (model != selector->model)
+        {
+          selector->model = model;
+
+          if (selector_class->set_model)
+            selector_class->set_model (selector, model);
+
+          g_signal_emit (selector, selector_signals[MODEL_CHANGED], 0,
+                         selector->model);
+        }
     }
 }
 
@@ -413,6 +462,75 @@ gimp_color_selector_get_channel (GimpColorSelector *selector)
                         GIMP_COLOR_SELECTOR_RED);
 
   return selector->channel;
+}
+
+/**
+ * gimp_color_selector_set_model:
+ * @selector: A #GimpColorSelector widget.
+ * @model:    The new #GimpColorSelectorModel setting.
+ *
+ * Sets the @model property of the @selector widget.
+ *
+ * Changes between displayed models if this @selector instance has
+ * the ability to show different color models.
+ * If the model actually changes, the channel will also be updated
+ * automatically to an arbitrary channel within this color model.
+ * If you want to control exactly which channel is selected, use
+ * gimp_color_selector_set_channel() instead, which will also change
+ * to the adequate model.
+ *
+ **/
+void
+gimp_color_selector_set_model (GimpColorSelector      *selector,
+                               GimpColorSelectorModel  model)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+
+  if (model != selector->model)
+    {
+      /* Don't change the model here. Simply redirect to
+       * gimp_color_selector_set_channel() with appropriate default
+       * channel.
+       */
+      switch (model)
+        {
+        case GIMP_COLOR_SELECTOR_RGB:
+          gimp_color_selector_set_channel (selector,
+                                           GIMP_COLOR_SELECTOR_RED);
+          break;
+        case GIMP_COLOR_SELECTOR_HSV:
+          gimp_color_selector_set_channel (selector,
+                                           GIMP_COLOR_SELECTOR_HUE);
+          break;
+        case GIMP_COLOR_SELECTOR_LCH:
+          gimp_color_selector_set_channel (selector,
+                                           GIMP_COLOR_SELECTOR_LCH_LIGHTNESS);
+          break;
+        default:
+          /* Should not happen. */
+          break;
+        }
+    }
+}
+
+/**
+ * gimp_color_selector_get_model:
+ * @selector: A #GimpColorSelector widget.
+ *
+ * Returns the @selector's current color model.
+ *
+ * Return value: The #GimpColorSelectorModel currently shown by the
+ * @selector.
+ *
+ * Since: 2.10
+ **/
+GimpColorSelectorModel
+gimp_color_selector_get_model (GimpColorSelector *selector)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
+                        GIMP_COLOR_SELECTOR_RGB);
+
+  return selector->model;
 }
 
 /**
