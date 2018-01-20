@@ -611,7 +611,8 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
                                                         config, pspec);
 
-  if (! curves_tool->channel_menu)
+  if (! curves_tool->channel_menu ||
+      ! curves_tool->graph)
     return;
 
   if (! strcmp (pspec->name, "linear"))
