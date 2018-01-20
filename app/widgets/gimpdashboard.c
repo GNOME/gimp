@@ -1556,7 +1556,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
   if (! GetProcessTimes (GetCurrentProcess (),
                          &process_creation_time,
                          &process_exit_time,
-                         &process_system_time,
+                         &process_kernel_time,
                          &process_user_time))
     {
       prev_time = 0;
