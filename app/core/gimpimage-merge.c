@@ -246,6 +246,13 @@ gimp_image_merge_down (GimpImage      *image,
       return NULL;
     }
 
+  if (! gimp_item_get_visible (GIMP_ITEM (current_layer)))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Cannot merge down an invisible layer."));
+      return NULL;
+    }
+
   for (list = gimp_item_get_container_iter (GIMP_ITEM (current_layer));
        list;
        list = g_list_next (list))
