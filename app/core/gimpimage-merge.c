@@ -449,7 +449,14 @@ gimp_image_merge_layers (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  parent = gimp_layer_get_parent (merge_list->data);
+  top_layer = merge_list->data;
+  parent    = gimp_layer_get_parent (top_layer);
+
+  /*  Build our graph inside the top-layer's parent node  */
+  source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
+  node = gegl_node_get_parent (source_node);
+
+  g_return_val_if_fail (node, NULL);
 
   /*  Get the layer extents  */
   x1 = y1 = 0;
@@ -519,7 +526,6 @@ gimp_image_merge_layers (GimpImage     *image,
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
     return NULL;
 
-  top_layer    = merge_list->data;
   bottom_layer = layer;
 
   flatten_node = NULL;
@@ -588,12 +594,6 @@ gimp_image_merge_layers (GimpImage     *image,
    *  a parent node.
    */
   (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
-
-  /*  Build our graph inside the top-layer's parent node  */
-  source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
-
-  node = gegl_node_get_parent (source_node);
-  g_assert (node != NULL);
 
   offset_node = gegl_node_new_child (node,
                                      "operation", "gegl:translate",
