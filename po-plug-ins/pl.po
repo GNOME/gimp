@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-14 19:19+0100\n"
-"PO-Revision-Date: 2018-01-14 19:20+0100\n"
+"POT-Creation-Date: 2018-01-21 17:04+0100\n"
+"PO-Revision-Date: 2018-01-21 17:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1044,7 +1044,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1581
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1584
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -2292,7 +2292,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1552
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1555
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -7276,7 +7276,7 @@ msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1545
+#: ../plug-ins/file-psd/psd-save.c:1548
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7285,7 +7285,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1566
+#: ../plug-ins/file-psd/psd-save.c:1569
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -12326,7 +12326,8 @@ msgstr "s"
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
-"Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
+"Po podanym czasie należy przeciągnąć mysz, aby zaznaczyć obszar dla zrzutu "
+"ekranu."
 
 #: ../plug-ins/screenshot/screenshot.c:718
 msgid "Click in a window to snap it after delay."

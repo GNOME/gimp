@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-14 19:19+0100\n"
-"PO-Revision-Date: 2018-01-14 19:20+0100\n"
+"POT-Creation-Date: 2018-01-21 17:04+0100\n"
+"PO-Revision-Date: 2018-01-21 17:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5755,7 +5755,7 @@ msgstr "Gamma percepcyjna (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 msgctxt "image-convert-action"
-msgid "Convert the image to preceptual (sRGB) gamma"
+msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Konwertuje obraz do trybu gammy percepcyjnej (sRGB)"
 
 #: ../app/actions/image-actions.c:256
@@ -16502,7 +16502,7 @@ msgstr "Kontroluje wyświetlanie obrazu"
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:540
+#: ../app/display/gimpdisplayshell-callbacks.c:551
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -17991,7 +17991,7 @@ msgstr "default:LTR"
 msgid "Documents"
 msgstr "Dokumenty"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:128
 msgid "GIMP Startup"
 msgstr "Uruchamianie programu GIMP"
 
@@ -20539,11 +20539,11 @@ msgstr "Modyfikowanie krzywych percepcyjnie"
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
-#: ../app/tools/gimpcurvestool.c:656 ../app/tools/gimplevelstool.c:739
+#: ../app/tools/gimpcurvestool.c:657 ../app/tools/gimplevelstool.c:740
 msgid "Could not read header: "
 msgstr "Nie można odczytać nagłówka: "
 
-#: ../app/tools/gimpcurvestool.c:730
+#: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
 msgstr "_Stary format pliku krzywych"
 
@@ -21172,7 +21172,7 @@ msgstr "Dopasowuje poziomy automatycznie dla wszystkich kanałów"
 msgid "Edit these Settings as Curves"
 msgstr "Modyfikacja tych ustawień jako krzywe"
 
-#: ../app/tools/gimplevelstool.c:855
+#: ../app/tools/gimplevelstool.c:856
 msgid "Use _old levels file format"
 msgstr "_Stary format pliku poziomów"
 
@@ -23222,111 +23222,142 @@ msgstr "Kółko myszy"
 msgid "Mouse Wheel Events"
 msgstr "Zdarzenia kółka myszy"
 
-#: ../app/widgets/gimpdashboard.c:293 ../app/widgets/gimpdashboard.c:345
+#: ../app/widgets/gimpdashboard.c:332 ../app/widgets/gimpdashboard.c:384
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Zajęte"
 
-#: ../app/widgets/gimpdashboard.c:294
+#: ../app/widgets/gimpdashboard.c:333
 msgid "Tile cache occupied size"
 msgstr "Rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:303
+#: ../app/widgets/gimpdashboard.c:342
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maksymalnie"
 
-#: ../app/widgets/gimpdashboard.c:304
+#: ../app/widgets/gimpdashboard.c:343
 msgid "Maximal tile cache occupied size"
 msgstr "Maksymalny rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:313 ../app/widgets/gimpdashboard.c:365
+#: ../app/widgets/gimpdashboard.c:352 ../app/widgets/gimpdashboard.c:404
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Ograniczenie"
 
-#: ../app/widgets/gimpdashboard.c:314
+#: ../app/widgets/gimpdashboard.c:353
 msgid "Tile cache size limit"
 msgstr "Ograniczenie rozmiaru pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:322
+#: ../app/widgets/gimpdashboard.c:361
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../app/widgets/gimpdashboard.c:323
+#: ../app/widgets/gimpdashboard.c:362
 msgid "Tile cache compression ratio"
 msgstr "Współczynnik kompresji pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:332
+#: ../app/widgets/gimpdashboard.c:371
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Trafienia/pudła"
 
-#: ../app/widgets/gimpdashboard.c:333
+#: ../app/widgets/gimpdashboard.c:372
 msgid "Tile cache hit/miss ratio"
 msgstr "Proporcja trafień do pudeł pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:346
+#: ../app/widgets/gimpdashboard.c:385
 msgid "Swap file occupied size"
 msgstr "Rozmiar zajętego pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:355
+#: ../app/widgets/gimpdashboard.c:394
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/widgets/gimpdashboard.c:356
+#: ../app/widgets/gimpdashboard.c:395
 msgid "Swap file size"
 msgstr "Rozmiar pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:366
+#: ../app/widgets/gimpdashboard.c:405
 msgid "Swap file size limit"
 msgstr "Ograniczenie rozmiaru pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:373
+#: ../app/widgets/gimpdashboard.c:412
 msgctxt "dashboard-variable"
 msgid "Busy"
 msgstr "Zajęte"
 
-#: ../app/widgets/gimpdashboard.c:374
+#: ../app/widgets/gimpdashboard.c:413
 msgid "Whether there is work queued for the swap file"
 msgstr "Czy coś jest w kolejce pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:387
+#: ../app/widgets/gimpdashboard.c:426
+msgctxt "dashboard-variable"
+msgid "Usage"
+msgstr "Użycie"
+
+#: ../app/widgets/gimpdashboard.c:427
+msgid "Total CPU usage"
+msgstr "Całkowite użycie procesora"
+
+#: ../app/widgets/gimpdashboard.c:435 ../app/widgets/gimpdashboard.c:445
+msgctxt "dashboard-variable"
+msgid "Active"
+msgstr "Aktywny"
+
+#: ../app/widgets/gimpdashboard.c:436
+msgid "Whether the CPU is active"
+msgstr "Czy procesor jest aktywny"
+
+#: ../app/widgets/gimpdashboard.c:446
+msgid "Total amount of time the CPU has been active"
+msgstr "Całkowity czas, przez jaki procesor był aktywny"
+
+#: ../app/widgets/gimpdashboard.c:460
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#: ../app/widgets/gimpdashboard.c:388
+#: ../app/widgets/gimpdashboard.c:461
 msgid "In-memory tile cache"
 msgstr "Pamięć podręczna kafli w pamięci"
 
-#: ../app/widgets/gimpdashboard.c:423
+#: ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Pamięć wymiany"
 
-#: ../app/widgets/gimpdashboard.c:424
+#: ../app/widgets/gimpdashboard.c:497
 msgid "On-disk tile swap"
 msgstr "Pamięć wymiany kafli na dysku"
 
-#: ../app/widgets/gimpdashboard.c:595
+#: ../app/widgets/gimpdashboard.c:525
+msgctxt "dashboard-group"
+msgid "CPU"
+msgstr "Procesor"
+
+#: ../app/widgets/gimpdashboard.c:526
+msgid "CPU usage"
+msgstr "Użycie procesora"
+
+#: ../app/widgets/gimpdashboard.c:698
 msgid "Select fields"
 msgstr "Zaznacz pola"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:1824
+#: ../app/widgets/gimpdashboard.c:2162
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:1832
+#: ../app/widgets/gimpdashboard.c:2171
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:1833
+#: ../app/widgets/gimpdashboard.c:2172
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
