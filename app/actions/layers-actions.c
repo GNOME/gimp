@@ -757,6 +757,7 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       lock_alpha     = FALSE;
   gboolean       can_lock_alpha = FALSE;
   gboolean       text_layer     = FALSE;
+  gboolean       visible        = FALSE;
   gboolean       writable       = FALSE;
   gboolean       movable        = FALSE;
   gboolean       children       = FALSE;
@@ -842,6 +843,7 @@ layers_actions_update (GimpActionGroup *group,
           lock_alpha     = gimp_layer_get_lock_alpha (layer);
           can_lock_alpha = gimp_layer_can_lock_alpha (layer);
           alpha          = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+          visible        = gimp_item_get_visible (GIMP_ITEM (layer));
           writable       = ! gimp_item_is_content_locked (GIMP_ITEM (layer));
           movable        = ! gimp_item_is_position_locked (GIMP_ITEM (layer));
 
@@ -936,7 +938,7 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lower-to-bottom",  layer && !fs && !ac && next);
 
   SET_SENSITIVE ("layers-anchor",           layer &&  fs && !ac);
-  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && next_visible);
+  SET_SENSITIVE ("layers-merge-down",       layer && !fs && !ac && visible && next_visible);
   SET_VISIBLE   ("layers-merge-group",      children);
   SET_SENSITIVE ("layers-merge-group",      layer && !fs && !ac && children);
   SET_SENSITIVE ("layers-merge-layers",     layer && !fs && !ac);
