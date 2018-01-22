@@ -87,7 +87,7 @@ gimp_layer_prop_undo_constructed (GObject *object)
       break;
 
     default:
-      g_assert_not_reached ();
+      g_return_if_reached ();
     }
 }
 
@@ -152,6 +152,6 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
       break;
 
     default:
-      g_assert_not_reached ();
+      g_return_if_reached ();
     }
 }

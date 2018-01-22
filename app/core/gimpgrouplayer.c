@@ -895,7 +895,7 @@ get_projection_format (GimpProjectable   *projectable,
       return gimp_image_get_format (image, GIMP_GRAY, precision, TRUE);
     }
 
-  g_assert_not_reached ();
+  g_return_val_if_reached (NULL);
 
   return NULL;
 }

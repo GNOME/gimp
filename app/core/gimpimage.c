@@ -1448,7 +1448,7 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
                                     gimp_image_get_precision (image), TRUE);
     }
 
-  g_assert_not_reached ();
+  g_return_val_if_reached (NULL);
 
   return NULL;
 }

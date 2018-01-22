@@ -109,7 +109,7 @@ gimp_image_rotate (GimpImage        *image,
       break;
 
     default:
-      g_assert_not_reached ();
+      g_return_if_reached ();
       return;
     }
 
@@ -266,6 +266,9 @@ gimp_image_rotate_item_offset (GimpImage        *image,
 
     case GIMP_ROTATE_180:
       return;
+
+    default:
+      g_return_if_reached ();
     }
 
   gimp_item_get_offset (item, &off_x, &off_y);

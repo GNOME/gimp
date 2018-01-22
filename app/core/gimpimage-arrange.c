@@ -121,6 +121,9 @@ gimp_image_arrange_objects (GimpImage         *image,
       do_y = TRUE;
       compute_offsets (list, alignment);
       break;
+
+    default:
+      g_return_if_reached ();
     }
 
   object_list = sort_by_offset (list);
@@ -365,7 +368,7 @@ compute_offset (GObject           *object,
       break;
 
     default:
-      g_assert_not_reached ();
+      g_return_if_reached ();
     }
 
   g_object_set_data (object, "align-offset",
