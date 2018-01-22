@@ -570,7 +570,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
-                     "Brush size value currupt."));
+                     "Brush size value corrupt."));
       return NULL;
     }
 
@@ -789,7 +789,7 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: "
-                     "Brush size value currupt."));
+                     "Brush size value corrupt."));
       return NULL;
     }
 
