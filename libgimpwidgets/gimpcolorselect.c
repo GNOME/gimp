@@ -466,6 +466,7 @@ gimp_color_select_init (GimpColorSelect *select)
               break;
             default:
               /* Should not happen. */
+              g_return_if_reached ();
               break;
             }
           end_channel = channel + 3;

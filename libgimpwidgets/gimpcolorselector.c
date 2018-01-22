@@ -421,8 +421,10 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
           break;
         case GIMP_COLOR_SELECTOR_ALPHA:
           /* Alpha channel does not change the color model. */
+          break;
         default:
           /* Should not happen. */
+          g_return_if_reached ();
           break;
         }
 
@@ -508,6 +510,7 @@ gimp_color_selector_set_model (GimpColorSelector      *selector,
           break;
         default:
           /* Should not happen. */
+          g_return_if_reached ();
           break;
         }
     }
