@@ -99,8 +99,6 @@ struct _GimpColorSelectorClass
   void (* set_color)             (GimpColorSelector        *selector,
                                   const GimpRGB            *rgb,
                                   const GimpHSV            *hsv);
-  void (* set_model)             (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model);
   void (* set_channel)           (GimpColorSelector        *selector,
                                   GimpColorSelectorChannel  channel);
 
@@ -108,8 +106,6 @@ struct _GimpColorSelectorClass
   void (* color_changed)         (GimpColorSelector        *selector,
                                   const GimpRGB            *rgb,
                                   const GimpHSV            *hsv);
-  void (* model_changed)         (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model);
   void (* channel_changed)       (GimpColorSelector        *selector,
                                   GimpColorSelectorChannel  channel);
 
@@ -120,9 +116,13 @@ struct _GimpColorSelectorClass
   /*  icon name  */
   const gchar *icon_name;
 
-  /* Padding for future expansion */
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
+  /*  another virtual function  */
+  void (* set_model)             (GimpColorSelector        *selector,
+                                  GimpColorSelectorModel    model);
+
+  /*  another signal  */
+  void (* model_changed)         (GimpColorSelector        *selector,
+                                  GimpColorSelectorModel    model);
 };
 
 
