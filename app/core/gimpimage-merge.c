@@ -459,6 +459,11 @@ gimp_image_merge_layers (GimpImage     *image,
   top_layer = merge_list->data;
   parent    = gimp_layer_get_parent (top_layer);
 
+  /*  Make sure the image's graph is constructed, so that top-level layers have
+   *  a parent node.
+   */
+  (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+
   /*  Build our graph inside the top-layer's parent node  */
   source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
   node = gegl_node_get_parent (source_node);
@@ -596,11 +601,6 @@ gimp_image_merge_layers (GimpImage     *image,
     }
 
   gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
-
-  /*  Make sure the image's graph is constructed, so that top-level layers have
-   *  a parent node.
-   */
-  (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
 
   offset_node = gegl_node_new_child (node,
                                      "operation", "gegl:translate",
