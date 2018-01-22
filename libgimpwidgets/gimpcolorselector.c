@@ -397,7 +397,7 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
   if (channel != selector->channel)
     {
       GimpColorSelectorClass *selector_class;
-      GimpColorSelectorModel  model = selector->channel;
+      GimpColorSelectorModel  model = selector->model;
 
       selector->channel = channel;
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
