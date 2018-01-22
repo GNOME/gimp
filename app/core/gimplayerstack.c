@@ -85,8 +85,8 @@ gimp_layer_stack_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (g_type_is_a (gimp_container_get_children_type (container),
-                         GIMP_TYPE_LAYER));
+  g_return_if_fail (g_type_is_a (gimp_container_get_children_type (container),
+                                 GIMP_TYPE_LAYER));
 
   gimp_container_add_handler (container, "active-changed",
                               G_CALLBACK (gimp_layer_stack_layer_active),
@@ -205,7 +205,7 @@ gimp_layer_stack_update_range (GimpLayerStack *stack,
 {
   GList *iter;
 
-  g_assert (first >= 0 && last >= -1);
+  g_return_if_fail (first >= 0 && last >= -1);
 
   /* if the range is reversed, flip first and last; note that last == -1 is
    * used to update all layers from first onward.

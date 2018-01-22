@@ -103,7 +103,7 @@ gimp_pattern_clipboard_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (pattern->gimp));
+  g_return_if_fail (GIMP_IS_GIMP (pattern->gimp));
 
   g_signal_connect_object (pattern->gimp, "clipboard-changed",
                            G_CALLBACK (gimp_pattern_clipboard_changed),

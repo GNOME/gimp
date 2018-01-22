@@ -185,7 +185,7 @@ gimp_brush_pipe_load (GimpContext   *context,
       else
         pipe->stride[i] = pipe->stride[i-1] / pipe->rank[i];
     }
-  g_assert (pipe->stride[pipe->dimension-1] == 1);
+  g_return_val_if_fail (pipe->stride[pipe->dimension-1] == 1, NULL);
 
   pipe->brushes = g_new0 (GimpBrush *, num_of_brushes);
 

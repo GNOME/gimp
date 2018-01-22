@@ -846,7 +846,7 @@ gimp_context_constructed (GObject *object)
 
   gimp = GIMP_CONTEXT (object)->gimp;
 
-  g_assert (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->context_list = g_list_prepend (gimp->context_list, object);
 

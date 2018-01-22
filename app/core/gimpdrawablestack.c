@@ -104,8 +104,8 @@ gimp_drawable_stack_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (g_type_is_a (gimp_container_get_children_type (container),
-                         GIMP_TYPE_DRAWABLE));
+  g_return_if_fail (g_type_is_a (gimp_container_get_children_type (container),
+                                 GIMP_TYPE_DRAWABLE));
 
   gimp_container_add_handler (container, "update",
                               G_CALLBACK (gimp_drawable_stack_drawable_update),

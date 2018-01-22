@@ -218,7 +218,7 @@ gimp_tool_preset_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (preset->gimp));
+  g_return_if_fail (GIMP_IS_GIMP (preset->gimp));
 }
 
 static void

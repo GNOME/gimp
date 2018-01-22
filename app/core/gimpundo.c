@@ -184,7 +184,7 @@ gimp_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_IMAGE (undo->image));
+  g_return_if_fail (GIMP_IS_IMAGE (undo->image));
 }
 
 static void

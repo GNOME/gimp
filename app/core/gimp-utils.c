@@ -461,7 +461,7 @@ unescape_gstring (GString *string)
         }
     }
 
-  g_assert (to - string->str <= string->len);
+  g_return_val_if_fail (to - string->str <= string->len, FALSE);
   if (to - string->str != string->len)
     g_string_truncate (string, to - string->str);
 

@@ -89,7 +89,7 @@ gimp_sample_point_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (sample_point_undo->sample_point != NULL);
+  g_return_if_fail (sample_point_undo->sample_point != NULL);
 
   gimp_sample_point_get_position (sample_point_undo->sample_point,
                                   &sample_point_undo->x,

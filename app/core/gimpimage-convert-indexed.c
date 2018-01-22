@@ -2015,22 +2015,22 @@ median_cut_rgb (CFHistogram   histogram,
           lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
           b1->Rmax = lb;
           b2->Rmin = lb+1;
-          g_assert (b1->Rmax >= b1->Rmin);
-          g_assert (b2->Rmax >= b2->Rmin);
+          g_return_val_if_fail (b1->Rmax >= b1->Rmin, numboxes);
+          g_return_val_if_fail (b2->Rmax >= b2->Rmin, numboxes);
           break;
         case AXIS_GREEN:
           lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
           b1->Gmax = lb;
           b2->Gmin = lb+1;
-          g_assert (b1->Gmax >= b1->Gmin);
-          g_assert (b2->Gmax >= b2->Gmin);
+          g_return_val_if_fail (b1->Gmax >= b1->Gmin, numboxes);
+          g_return_val_if_fail (b2->Gmax >= b2->Gmin, numboxes);
           break;
         case AXIS_BLUE:
           lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
           b1->Bmax = lb;
           b2->Bmin = lb+1;
-          g_assert (b1->Bmax >= b1->Bmin);
-          g_assert (b2->Bmax >= b2->Bmin);
+          g_return_val_if_fail (b1->Bmax >= b1->Bmin, numboxes);
+          g_return_val_if_fail (b2->Bmax >= b2->Bmin, numboxes);
           break;
         default:
           g_error ("Uh-oh.");

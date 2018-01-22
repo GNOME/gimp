@@ -89,7 +89,7 @@ gimp_guide_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GUIDE (guide_undo->guide));
+  g_return_if_fail (GIMP_IS_GUIDE (guide_undo->guide));
 
   guide_undo->orientation = gimp_guide_get_orientation (guide_undo->guide);
   guide_undo->position    = gimp_guide_get_position (guide_undo->guide);

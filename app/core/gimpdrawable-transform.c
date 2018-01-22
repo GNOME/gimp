@@ -555,7 +555,11 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
         guchar *buf = g_new (guchar, new_height * orig_bpp);
         gint    i;
 
-        g_assert (new_height == orig_width);
+        /* Not cool, we leak memory if we return, but anyway that is
+         * never supposed to happen. If we see this warning, a bug has
+         * to be fixed!
+         */
+        g_return_val_if_fail (new_height == orig_width, NULL);
 
         src_rect.y      = orig_y + orig_height - 1;
         src_rect.height = 1;
@@ -583,7 +587,11 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i, j, k;
 
-        g_assert (new_width == orig_width);
+        /* Not cool, we leak memory if we return, but anyway that is
+         * never supposed to happen. If we see this warning, a bug has
+         * to be fixed!
+         */
+        g_return_val_if_fail (new_width == orig_width, NULL);
 
         src_rect.y      = orig_y + orig_height - 1;
         src_rect.height = 1;
@@ -625,7 +633,11 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
         guchar *buf = g_new (guchar, new_width * orig_bpp);
         gint    i;
 
-        g_assert (new_width == orig_height);
+        /* Not cool, we leak memory if we return, but anyway that is
+         * never supposed to happen. If we see this warning, a bug has
+         * to be fixed!
+         */
+        g_return_val_if_fail (new_width == orig_height, NULL);
 
         src_rect.x     = orig_x + orig_width - 1;
         src_rect.width = 1;

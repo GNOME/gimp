@@ -270,10 +270,10 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
    *
    * FIXME:  we save the data whether it's dirty or not, since it might not
    * exist on disk.  currently, we only use this for cheap data, such as
-   * gradients, so this is not a big concern, but if we save more expensive 
+   * gradients, so this is not a big concern, but if we save more expensive
    * data in the future, we should fix this.
    */
-  g_assert (GIMP_DATA_GET_CLASS (data)->save);
+  g_return_val_if_fail (GIMP_DATA_GET_CLASS (data)->save, FALSE);
   success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
 
   g_object_unref (output);

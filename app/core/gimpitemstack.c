@@ -73,8 +73,8 @@ gimp_item_stack_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (g_type_is_a (gimp_container_get_children_type (container),
-                         GIMP_TYPE_ITEM));
+  g_return_if_fail (g_type_is_a (gimp_container_get_children_type (container),
+                                 GIMP_TYPE_ITEM));
 }
 
 static void

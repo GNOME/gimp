@@ -124,7 +124,7 @@ gimp_filtered_container_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_CONTAINER (filtered_container->src_container));
+  g_return_if_fail (GIMP_IS_CONTAINER (filtered_container->src_container));
 
   if (! gimp_container_frozen (filtered_container->src_container))
     {

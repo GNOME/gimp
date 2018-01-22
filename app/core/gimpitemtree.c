@@ -150,10 +150,10 @@ gimp_item_tree_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_IMAGE (private->image));
-  g_assert (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));
-  g_assert (g_type_is_a (private->item_type,      GIMP_TYPE_ITEM));
-  g_assert (private->item_type != GIMP_TYPE_ITEM);
+  g_return_if_fail (GIMP_IS_IMAGE (private->image));
+  g_return_if_fail (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));
+  g_return_if_fail (g_type_is_a (private->item_type,      GIMP_TYPE_ITEM));
+  g_return_if_fail (private->item_type != GIMP_TYPE_ITEM);
 
   tree->container = g_object_new (private->container_type,
                                   "name",          g_type_name (private->item_type),
