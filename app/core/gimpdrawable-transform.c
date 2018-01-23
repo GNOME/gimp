@@ -347,6 +347,8 @@ gimp_drawable_transform_rotate_point (gint              x,
       break;
 
     default:
+      *new_x = x;
+      *new_y = y;
       g_return_if_reached ();
     }
 }

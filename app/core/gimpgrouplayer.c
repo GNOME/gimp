@@ -896,8 +896,6 @@ get_projection_format (GimpProjectable   *projectable,
     }
 
   g_return_val_if_reached (NULL);
-
-  return NULL;
 }
 
 static void

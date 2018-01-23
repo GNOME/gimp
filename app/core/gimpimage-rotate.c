@@ -71,8 +71,6 @@ gimp_image_rotate (GimpImage        *image,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  gimp_set_busy (image->gimp);
-
   previous_image_width  = gimp_image_get_width  (image);
   previous_image_height = gimp_image_get_height (image);
 
@@ -83,10 +81,6 @@ gimp_image_rotate (GimpImage        *image,
                   gimp_container_get_n_children (gimp_image_get_layers (image))   +
                   gimp_container_get_n_children (gimp_image_get_vectors (image))  +
                   1 /* selection */);
-
-  g_object_freeze_notify (G_OBJECT (image));
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ROTATE, NULL);
 
   /*  Resize the image (if needed)  */
   switch (rotate_type)
@@ -112,6 +106,12 @@ gimp_image_rotate (GimpImage        *image,
       g_return_if_reached ();
       return;
     }
+
+  gimp_set_busy (image->gimp);
+
+  g_object_freeze_notify (G_OBJECT (image));
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ROTATE, NULL);
 
   /*  Rotate all channels  */
   for (list = gimp_image_get_channel_iter (image);
