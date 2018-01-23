@@ -77,6 +77,10 @@ GtkWidget * dialogs_error_get                   (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,
                                                  gint               view_size);
+GtkWidget * dialogs_critical_get                (GimpDialogFactory *factory,
+                                                 GimpContext       *context,
+                                                 GimpUIManager     *ui_manager,
+                                                 gint               view_size);
 GtkWidget * dialogs_close_all_get               (GimpDialogFactory *factory,
                                                  GimpContext       *context,
                                                  GimpUIManager     *ui_manager,

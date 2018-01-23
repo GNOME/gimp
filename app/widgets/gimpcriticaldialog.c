@@ -1,0 +1,262 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpcriticaldialog.c
+ * Copyright (C) 2018  Jehan <jehan@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "gimpcriticaldialog.h"
+
+#include "version.h"
+
+#include "gimp-intl.h"
+
+#define GIMP_CRITICAL_RESPONSE_CLIPBOARD 1
+#define GIMP_CRITICAL_RESPONSE_URL       2
+
+
+static void    gimp_critical_dialog_response (GtkDialog           *dialog,
+                                              gint                 response_id);
+
+G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GIMP_TYPE_DIALOG)
+
+#define parent_class gimp_critical_dialog_parent_class
+
+
+static void
+gimp_critical_dialog_class_init (GimpCriticalDialogClass *klass)
+{
+  GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
+
+  dialog_class->response = gimp_critical_dialog_response;
+}
+
+static void
+gimp_critical_dialog_init (GimpCriticalDialog *dialog)
+{
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+  gchar          *text;
+  gchar          *version;
+  GtkWidget      *widget;
+  GtkTextBuffer  *buffer;
+  const gchar    *button1 = _("Copy bug information");
+  const gchar    *button2 = _("Open bug tracker");
+
+  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-critical");
+
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          button1,     GIMP_CRITICAL_RESPONSE_CLIPBOARD,
+                          button2,     GIMP_CRITICAL_RESPONSE_URL,
+                          _("_Close"), GTK_RESPONSE_CLOSE,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
+
+  dialog->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      dialog->vbox, TRUE, TRUE, 0);
+  gtk_widget_show (dialog->vbox);
+
+  /* The error label. */
+  dialog->label = gtk_label_new (NULL);
+  gtk_label_set_justify (GTK_LABEL (dialog->label), GTK_JUSTIFY_CENTER);
+  gtk_label_set_selectable (GTK_LABEL (dialog->label), TRUE);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox),
+                      dialog->label, FALSE, FALSE, 0);
+
+  attrs = pango_attr_list_new ();
+  attr  = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
+  pango_attr_list_insert (attrs, attr);
+  gtk_label_set_attributes (GTK_LABEL (dialog->label), attrs);
+  pango_attr_list_unref (attrs);
+
+  gtk_widget_show (dialog->label);
+
+  /* Generic "report a bug" instructions. */
+  text = g_strdup_printf ("%s\n"
+                          " \xe2\x80\xa2 %s %s\n"
+                          " \xe2\x80\xa2 %s %s\n"
+                          " \xe2\x80\xa2 %s \n"
+                          " \xe2\x80\xa2 %s \n"
+                          " \xe2\x80\xa2 %s \n"
+                          " \xe2\x80\xa2 %s\n\n"
+                          "%s",
+                          _("To help us improve GIMP, you can report the bug with "
+                            "these simple steps:"),
+                          _("Copy the bug information to clipboard by clicking: "),
+                          button1,
+                          _("Open our bug tracker in browser by clicking: "),
+                          button2,
+                          _("Create a login if you don't have one yet."),
+                          _("Paste the clipboard text in a new bug report."),
+                          _("Add relevant information in English in the bug report "
+                            "explaining what you were doing when this error occurred."),
+                          _("This error may have left GIMP in an inconsistent state. "
+                            "It is advised to save your work and restart GIMP."),
+                          _("Note: you can also close the dialog directly but reporting "
+                            "bugs is the best way to make your software awesome."));
+  widget = gtk_label_new (text);
+  g_free (text);
+  gtk_label_set_selectable (GTK_LABEL (widget), TRUE);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  /* Bug details for developers. */
+  widget = gtk_scrolled_window_new (NULL, NULL);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, TRUE, TRUE, 0);
+  gtk_widget_show (widget);
+
+  buffer = gtk_text_buffer_new (NULL);
+  version = gimp_version (TRUE, FALSE);
+  gtk_text_buffer_set_text (buffer, version, -1);
+  g_free (version);
+
+  dialog->details = gtk_text_view_new_with_buffer (buffer);
+  g_object_unref (buffer);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (dialog->details), FALSE);
+  gtk_widget_show (dialog->details);
+  gtk_container_add (GTK_CONTAINER (widget), dialog->details);
+}
+
+static void
+gimp_critical_dialog_response (GtkDialog *dialog,
+                               gint       response_id)
+{
+  GimpCriticalDialog *critical = GIMP_CRITICAL_DIALOG (dialog);
+
+  switch (response_id)
+    {
+    case GIMP_CRITICAL_RESPONSE_CLIPBOARD:
+        {
+          GtkClipboard  *clipboard;
+
+          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                     GDK_SELECTION_CLIPBOARD);
+          if (clipboard)
+            {
+              GtkTextBuffer *buffer;
+              gchar         *text;
+              GtkTextIter    start;
+              GtkTextIter    end;
+
+              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
+              gtk_text_buffer_get_iter_at_offset (buffer, &start, 0);
+              gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
+              text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+              gtk_clipboard_set_text (clipboard, text, -1);
+              g_free (text);
+            }
+        }
+      break;
+    case GIMP_CRITICAL_RESPONSE_URL:
+        {
+          const gchar *url;
+
+          /* XXX Ideally I'd find a way to prefill the bug report
+           * through the URL or with POST data. But I could not find
+           * any. Anyway since we may soon ditch bugzilla to follow
+           * GNOME infrastructure changes, I don't want to waste too
+           * much time digging into it.
+           */
+          url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
+          gtk_show_uri (gdk_screen_get_default (),
+                        url,
+                        gtk_get_current_event_time(),
+                        NULL);
+        }
+      break;
+    case GTK_RESPONSE_DELETE_EVENT:
+    case GTK_RESPONSE_CLOSE:
+    default:
+      gtk_widget_destroy (GTK_WIDGET (dialog));
+      break;
+    }
+}
+
+/*  public functions  */
+
+GtkWidget *
+gimp_critical_dialog_new (const gchar *title)
+{
+  g_return_val_if_fail (title != NULL, NULL);
+
+  return g_object_new (GIMP_TYPE_CRITICAL_DIALOG,
+                       "title", title,
+                       NULL);
+}
+
+void
+gimp_critical_dialog_add (GimpCriticalDialog  *dialog,
+                          const gchar         *message,
+                          const gchar         *trace)
+{
+  GtkTextBuffer *buffer;
+  GtkTextIter    end;
+  gchar         *text;
+
+  if (! GIMP_IS_CRITICAL_DIALOG (dialog) || ! message || ! trace)
+    {
+      /* This is a bit hackish. We usually should use
+       * g_return_if_fail(). But I don't want to end up in a critical
+       * recursing loop if our code had bugs. We would crash GIMP with
+       * a CRITICAL which would otherwise not have necessarily ended up
+       * in a crash.
+       */
+      return;
+    }
+
+  /* The user text, which should be localized. */
+  if (! gtk_label_get_text (GTK_LABEL (dialog->label)) ||
+      strlen (gtk_label_get_text (GTK_LABEL (dialog->label))) == 0)
+    {
+      /* First critical error. Let's just display it. */
+      text = g_strdup_printf (_("GIMP encountered a critical error: %s"),
+                              message);
+    }
+  else
+    {
+      /* Let's not display all errors. They will be in the bug report
+       * part anyway.
+       */
+      text = g_strdup_printf (_("GIMP encountered several critical errors!"));
+    }
+  gtk_label_set_text (GTK_LABEL (dialog->label),
+                      text);
+  g_free (text);
+
+  /* The details text is untranslated on purpose. This is the message
+   * meant to go to clipboard for the bug report. It has to be in
+   * English.
+   */
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (dialog->details));
+  gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
+  text = g_strdup_printf ("\n\n> %s\n\nStack trace:\n%s", message, trace);
+  gtk_text_buffer_insert (buffer, &end, text, -1);
+  g_free (text);
+}

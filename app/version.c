@@ -38,15 +38,17 @@
 #include "gimp-intl.h"
 
 
-static void
-gimp_show_library_version (const gchar *package,
-                           gint         build_time_major,
-                           gint         build_time_minor,
-                           gint         build_time_micro,
-                           gint         run_time_major,
-                           gint         run_time_minor,
-                           gint         run_time_micro)
+static gchar *
+gimp_library_version (const gchar *package,
+                      gint         build_time_major,
+                      gint         build_time_minor,
+                      gint         build_time_micro,
+                      gint         run_time_major,
+                      gint         run_time_minor,
+                      gint         run_time_micro,
+                      gboolean     localized)
 {
+  gchar *lib_version;
   gchar *build_time_version;
   gchar *run_time_version;
 
@@ -60,91 +62,156 @@ gimp_show_library_version (const gchar *package,
                                       run_time_micro);
 
   /* show versions of libraries used by GIMP */
-  g_print (_("using %s version %s (compiled against version %s)"),
-           package, run_time_version, build_time_version);
-  g_print ("\n");
-
+  lib_version = g_strdup_printf (localized ?
+                                 _("using %s version %s (compiled against version %s)") :
+                                 "using %s version %s (compiled against version %s)",
+                                 package, run_time_version, build_time_version);
   g_free (run_time_version);
   g_free (build_time_version);
+
+  return lib_version;
 }
 
-static void
-gimp_show_library_versions (void)
+static gchar *
+gimp_library_versions (gboolean localized)
 {
-  gint gegl_major_version;
-  gint gegl_minor_version;
-  gint gegl_micro_version;
+  gchar *lib_versions;
+  gchar *lib_version;
+  gchar *temp;
+  gint   gegl_major_version;
+  gint   gegl_minor_version;
+  gint   gegl_micro_version;
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
                     &gegl_micro_version);
 
-  gimp_show_library_version ("GEGL",
-                             GEGL_MAJOR_VERSION,
-                             GEGL_MINOR_VERSION,
-                             GEGL_MICRO_VERSION,
-                             gegl_major_version,
-                             gegl_minor_version,
-                             gegl_micro_version);
+  lib_versions = gimp_library_version ("GEGL",
+                                       GEGL_MAJOR_VERSION,
+                                       GEGL_MINOR_VERSION,
+                                       GEGL_MICRO_VERSION,
+                                       gegl_major_version,
+                                       gegl_minor_version,
+                                       gegl_micro_version,
+                                       localized);
 
-  gimp_show_library_version ("GLib",
-                             GLIB_MAJOR_VERSION,
-                             GLIB_MINOR_VERSION,
-                             GLIB_MICRO_VERSION,
-                             glib_major_version,
-                             glib_minor_version,
-                             glib_micro_version);
+  lib_version = gimp_library_version ("GLib",
+                                      GLIB_MAJOR_VERSION,
+                                      GLIB_MINOR_VERSION,
+                                      GLIB_MICRO_VERSION,
+                                      glib_major_version,
+                                      glib_minor_version,
+                                      glib_micro_version,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 
-  gimp_show_library_version ("GdkPixbuf",
-                             GDK_PIXBUF_MAJOR,
-                             GDK_PIXBUF_MINOR,
-                             GDK_PIXBUF_MICRO,
-                             gdk_pixbuf_major_version,
-                             gdk_pixbuf_minor_version,
-                             gdk_pixbuf_micro_version);
+  lib_version = gimp_library_version ("GdkPixbuf",
+                                      GDK_PIXBUF_MAJOR,
+                                      GDK_PIXBUF_MINOR,
+                                      GDK_PIXBUF_MICRO,
+                                      gdk_pixbuf_major_version,
+                                      gdk_pixbuf_minor_version,
+                                      gdk_pixbuf_micro_version,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 
 #ifndef GIMP_CONSOLE_COMPILATION
-  gimp_show_library_version ("GTK+",
-                             GTK_MAJOR_VERSION,
-                             GTK_MINOR_VERSION,
-                             GTK_MICRO_VERSION,
-                             gtk_major_version,
-                             gtk_minor_version,
-                             gtk_micro_version);
+  lib_version = gimp_library_version ("GTK+",
+                                      GTK_MAJOR_VERSION,
+                                      GTK_MINOR_VERSION,
+                                      GTK_MICRO_VERSION,
+                                      gtk_major_version,
+                                      gtk_minor_version,
+                                      gtk_micro_version,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 #endif
 
-  gimp_show_library_version ("Pango",
-                             PANGO_VERSION_MAJOR,
-                             PANGO_VERSION_MINOR,
-                             PANGO_VERSION_MICRO,
-                             pango_version () / 100 / 100,
-                             pango_version () / 100 % 100,
-                             pango_version () % 100);
+  lib_version = gimp_library_version ("Pango",
+                                      PANGO_VERSION_MAJOR,
+                                      PANGO_VERSION_MINOR,
+                                      PANGO_VERSION_MICRO,
+                                      pango_version () / 100 / 100,
+                                      pango_version () / 100 % 100,
+                                      pango_version () % 100,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 
-  gimp_show_library_version ("Fontconfig",
-                             FC_MAJOR, FC_MINOR, FC_REVISION,
-                             FcGetVersion () / 100 / 100,
-                             FcGetVersion () / 100 % 100,
-                             FcGetVersion () % 100);
+  lib_version = gimp_library_version ("Fontconfig",
+                                      FC_MAJOR, FC_MINOR, FC_REVISION,
+                                      FcGetVersion () / 100 / 100,
+                                      FcGetVersion () / 100 % 100,
+                                      FcGetVersion () % 100,
+                                      localized);
+  temp = g_strdup_printf ("%s\n%s", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
 
-  g_print (_("using %s version %s (compiled against version %s)"),
-           "Cairo", cairo_version_string (), CAIRO_VERSION_STRING);
-  g_print ("\n");
+  lib_version = g_strdup_printf (localized ?
+                                 _("using %s version %s (compiled against version %s)") :
+                                 "using %s version %s (compiled against version %s)",
+                                 "Cairo", cairo_version_string (), CAIRO_VERSION_STRING);
+  temp = g_strdup_printf ("%s\n%s\n", lib_versions, lib_version);
+  g_free (lib_versions);
+  g_free (lib_version);
+  lib_versions = temp;
+
+  return lib_versions;
 }
 
 void
 gimp_version_show (gboolean be_verbose)
 {
-  g_print (_("%s version %s"), GIMP_NAME, GIMP_VERSION);
-  g_print ("\n");
+  gchar *version = gimp_version (be_verbose, TRUE);
+
+  g_print ("%s", version);
+
+  g_free (version);
+}
+
+gchar *
+gimp_version (gboolean be_verbose,
+              gboolean localized)
+{
+  gchar *version;
+  gchar *temp;
+
+  version = g_strdup_printf (localized ? _("%s version %s") : "%s version %s",
+                             GIMP_NAME, GIMP_VERSION);;
+  temp = g_strconcat (version, "\n", NULL);
+  g_free (version);
+  version = temp;
 
   if (be_verbose)
     {
-      g_print ("git-describe: %s", GIMP_GIT_VERSION);
-      g_print ("\n");
-      g_print ("C compiler:\n%s", CC_VERSION);
+      gchar *verbose_info;
+      gchar *lib_versions;
 
-      g_print ("\n");
-      gimp_show_library_versions ();
+      lib_versions = gimp_library_versions (localized);
+      verbose_info = g_strdup_printf ("git-describe: %s\n"
+                                      "C compiler:\n%s\n%s",
+                                      GIMP_GIT_VERSION, CC_VERSION,
+                                      lib_versions);
+      g_free (lib_versions);
+
+      temp = g_strconcat (version, verbose_info, NULL);
+      g_free (version);
+      g_free (verbose_info);
+      version = temp;
     }
+
+  return version;
 }

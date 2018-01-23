@@ -19,12 +19,10 @@
 #define __VERSION_H__
 
 
-#ifndef GIMP_APP_GLUE_COMPILATION
-#error You must not #include "version.h" from an app/ subdir
-#endif
 
-
-void   gimp_version_show (gboolean be_verbose);
+void    gimp_version_show (gboolean be_verbose);
+gchar * gimp_version      (gboolean be_verbose,
+                           gboolean localized);
 
 
 #endif /* __VERSION_H__ */

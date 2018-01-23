@@ -35,6 +35,7 @@
 #include "widgets/gimpchanneltreeview.h"
 #include "widgets/gimpcoloreditor.h"
 #include "widgets/gimpcolormapeditor.h"
+#include "widgets/gimpcriticaldialog.h"
 #include "widgets/gimpdashboard.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -213,6 +214,15 @@ dialogs_error_get (GimpDialogFactory *factory,
                    gint               view_size)
 {
   return gimp_error_dialog_new (_("GIMP Message"));
+}
+
+GtkWidget *
+dialogs_critical_get (GimpDialogFactory *factory,
+                      GimpContext       *context,
+                      GimpUIManager     *ui_manager,
+                      gint               view_size)
+{
+  return gimp_critical_dialog_new (_("GIMP critical error"));
 }
 
 GtkWidget *

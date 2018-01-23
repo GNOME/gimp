@@ -35,7 +35,8 @@ struct _GimpGui
                                              GObject             *handler,
                                              GimpMessageSeverity  severity,
                                              const gchar         *domain,
-                                             const gchar         *message);
+                                             const gchar         *message,
+                                             const gchar         *trace);
   void           (* help)                   (Gimp                *gimp,
                                              GimpProgress        *progress,
                                              const gchar         *help_domain,
@@ -144,7 +145,8 @@ void           gimp_show_message           (Gimp                *gimp,
                                             GObject             *handler,
                                             GimpMessageSeverity  severity,
                                             const gchar         *domain,
-                                            const gchar         *message);
+                                            const gchar         *message,
+                                            const gchar         *trace);
 void           gimp_help                   (Gimp                *gimp,
                                             GimpProgress        *progress,
                                             const gchar         *help_domain,

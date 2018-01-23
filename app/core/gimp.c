@@ -1123,7 +1123,7 @@ gimp_message_valist (Gimp                *gimp,
 
   message = g_strdup_vprintf (format, args);
 
-  gimp_show_message (gimp, handler, severity, NULL, message);
+  gimp_show_message (gimp, handler, severity, NULL, message, NULL);
 
   g_free (message);
 }
@@ -1138,7 +1138,7 @@ gimp_message_literal (Gimp                *gimp,
   g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
   g_return_if_fail (message != NULL);
 
-  gimp_show_message (gimp, handler, severity, NULL, message);
+  gimp_show_message (gimp, handler, severity, NULL, message, NULL);
 }
 
 void

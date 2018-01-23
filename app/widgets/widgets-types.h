@@ -145,6 +145,7 @@ typedef struct _GimpSaveDialog               GimpSaveDialog;
 /*  misc dialogs  */
 
 typedef struct _GimpColorDialog              GimpColorDialog;
+typedef struct _GimpCriticalDialog           GimpCriticalDialog;
 typedef struct _GimpErrorDialog              GimpErrorDialog;
 typedef struct _GimpMessageDialog            GimpMessageDialog;
 typedef struct _GimpProgressDialog           GimpProgressDialog;
