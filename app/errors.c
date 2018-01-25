@@ -307,12 +307,10 @@ gimp_get_stack_trace (void)
 {
   gchar   *trace  = NULL;
 #if defined(G_OS_UNIX)
-  GString *gtrace = NULL;
-  gchar    buffer[256];
-  ssize_t  read_n;
-  pid_t    pid;
-  int      status;
-  int      out_fd[2];
+  gchar   *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
+                       full_prog_name, NULL, NULL };
+  gchar   *gdb_stdout;
+  gchar    pid[16];
 #endif
 
   /* Though we should theoretically ask with GIMP_STACK_TRACE_QUERY, we
@@ -325,66 +323,20 @@ gimp_get_stack_trace (void)
    * another method, probably with DrMingW.
    */
 #if defined(G_OS_UNIX)
-  if (pipe (out_fd) == -1)
+  g_snprintf (pid, 16, "%u", (guint) getpid ());
+  args[5] = pid;
+
+  if (g_spawn_sync (NULL, args, NULL,
+                    G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
+                    NULL, NULL, &gdb_stdout, NULL, NULL, NULL))
     {
-      return NULL;
+      trace = g_strdup (gdb_stdout);
+    }
+  else if (gdb_stdout)
+    {
+      g_free (gdb_stdout);
     }
 
-  /* This is a trick to get the stack trace inside a string.
-   * GLib's g_on_error_stack_trace() unfortunately writes directly to
-   * the standard output, which is a very unfortunate implementation.
-   */
-  pid = fork ();
-  if (pid == 0)
-    {
-      /* Child process. */
-
-      /* XXX I just don't understand why, but somehow the parent process
-       * doesn't get the output if I don't print something first. I just
-       * leave this very dirty hack until I figure out what's going on.
-       */
-      printf(" ");
-
-      /* Redirect the debugger output. */
-      dup2 (out_fd[1], STDOUT_FILENO);
-      close (out_fd[0]);
-      close (out_fd[1]);
-      g_on_error_stack_trace (full_prog_name);
-      _exit (0);
-    }
-  else if (pid > 0)
-    {
-      /* Main process. */
-      waitpid (pid, &status, 0);
-    }
-  else if (pid == (pid_t) -1)
-    {
-      /* No trace can be done. */
-      return NULL;
-    }
-
-  gtrace = g_string_new ("");
-
-  /* It is important to close the writing side of the pipe, otherwise
-   * the read() will wait forever without getting the information that
-   * writing is finished.
-   */
-  close (out_fd[1]);
-
-  while ((read_n = read (out_fd[0], buffer, 256)) > 0)
-    {
-      g_string_append_len (gtrace, buffer, read_n);
-    }
-  close (out_fd[0]);
-
-  if (gtrace)
-    trace = g_string_free (gtrace, FALSE);
-  if (trace && strlen (g_strstrip (trace)) == 0)
-    {
-      /* Empty strings are the same as no strings. */
-      g_free (trace);
-      trace = NULL;
-    }
 #endif
 
   return trace;
