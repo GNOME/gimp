@@ -1568,13 +1568,13 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 
   GetSystemTimeAsFileTime (&system_time);
 
-  curr_time   = ((guint64) system_time.dwLowDateTime << 32) |
-                 (guint64) system_time.dwHighDateTime;
+  curr_time   = ((guint64) system_time.dwHighDateTime << 32) |
+                 (guint64) system_time.dwLowDateTime;
 
-  curr_usage  = ((guint64) process_kernel_time.dwLowDateTime << 32) |
-                 (guint64) process_kernel_time.dwHighDateTime;
-  curr_usage += ((guint64) process_user_time.dwLowDateTime << 32) |
-                 (guint64) process_user_time.dwHighDateTime;
+  curr_usage  = ((guint64) process_kernel_time.dwHighDateTime << 32) |
+                 (guint64) process_kernel_time.dwLowDateTime;
+  curr_usage += ((guint64) process_user_time.dwHighDateTime << 32) |
+                 (guint64) process_user_time.dwLowDateTime;
 
   if (prev_time)
     {
