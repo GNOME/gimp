@@ -318,8 +318,7 @@ gui_message_error_dialog (Gimp                *gimp,
 
       dialog = global_critical_dialog ();
       text = gui_message_format (severity, domain, message);
-      gimp_critical_dialog_add (GIMP_CRITICAL_DIALOG (dialog),
-                                text, trace);
+      gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
       g_free (text);
       gtk_widget_show (dialog);
 

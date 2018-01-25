@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+AUTOMAKE_OPTIONS = subdir-objects
+
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if OS_WIN32
@@ -12,7 +14,7 @@ gimp_debug_resume_SOURCES = gimp-debug-resume.c
 
 else
 
-bin_PROGRAMS = gimptool-2.0
+bin_PROGRAMS = gimptool-2.0 gimpdebug-2.0
 
 endif
 
@@ -20,6 +22,24 @@ noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
 	kernelgen
+
+gimpdebug_2_0_SOURCES = gimpdebug.c                         \
+			../app/widgets/gimpcriticaldialog.h \
+			../app/widgets/gimpcriticaldialog.c \
+			../app/version.h                    \
+			../app/version.c
+
+gimpdebug_2_0_CPPFLAGS = \
+	-DCC_VERSION=\""$(CC_VERSION)"\" \
+	-I$(top_srcdir)/app              \
+	-I$(top_builddir)/app            \
+	$(AM_CPPFLAGS)                   \
+	$(GEGL_CFLAGS)	                 \
+	$(GTK_CFLAGS)
+
+gimpdebug_2_0_LDADD =   \
+	$(GEGL_LIBS)	\
+	$(GTK_LIBS)
 
 
 gimptool_2_0_SOURCES = gimptool.c

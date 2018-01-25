@@ -262,27 +262,30 @@ gimp_eek (const gchar *reason,
           break;
 
         case GIMP_STACK_TRACE_QUERY:
-          {
-            sigset_t sigset;
-
-            sigemptyset (&sigset);
-            sigprocmask (SIG_SETMASK, &sigset, NULL);
-
-            if (the_errors_gimp)
-              gimp_gui_ungrab (the_errors_gimp);
-
-            g_on_error_query (full_prog_name);
-          }
-          break;
-
+          /* Basically we don't have the "QUERY" case anymore, at least
+           * for now until I figure out something.
+           */
         case GIMP_STACK_TRACE_ALWAYS:
           {
-            sigset_t sigset;
+#if defined(G_OS_UNIX)
+            gchar   *args[6] = { "gimpdebug-2.0", full_prog_name, NULL,
+                                 (gchar *) reason, (gchar *) message, NULL };
+            gchar    pid[16];
+            gint     exit_status;
 
-            sigemptyset (&sigset);
-            sigprocmask (SIG_SETMASK, &sigset, NULL);
+            g_snprintf (pid, 16, "%u", (guint) getpid ());
+            args[2] = pid;
 
-            g_on_error_stack_trace (full_prog_name);
+            /* We don't care about any return value. If it fails, too
+             * bad, we just won't have any stack trace.
+             * We still need to use the sync() variant because we have
+             * to keep GIMP up long enough for the debugger to get its
+             * trace.
+             */
+            g_spawn_sync (NULL, args, NULL,
+                          G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
+                          NULL, NULL, NULL, NULL, &exit_status, NULL);
+#endif
           }
           break;
 

@@ -36,27 +36,32 @@ typedef struct _GimpCriticalDialogClass  GimpCriticalDialogClass;
 
 struct _GimpCriticalDialog
 {
-  GimpDialog       parent_instance;
+  GtkDialog        parent_instance;
 
   GtkWidget       *vbox;
 
   GtkWidget       *label;
   GtkWidget       *details;
+
+  gchar           *program;
+  pid_t            pid;
 };
 
 struct _GimpCriticalDialogClass
 {
-  GimpDialogClass  parent_class;
+  GtkDialogClass   parent_class;
 };
 
 
 GType       gimp_critical_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_critical_dialog_new      (const gchar        *title);
-void        gimp_critical_dialog_add      (GimpCriticalDialog *dialog,
+void        gimp_critical_dialog_add      (GtkWidget          *dialog,
                                            const gchar        *message,
-                                           const gchar        *trace);
-
+                                           const gchar        *trace,
+                                           gboolean            is_fatal,
+                                           const gchar        *program,
+                                           pid_t               pid);
 
 
 G_END_DECLS

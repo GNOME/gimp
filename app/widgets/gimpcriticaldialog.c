@@ -18,17 +18,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/*
+ * This widget is particular that I want to be able to use it internally
+ * but also from an alternate tool (gimpdebug). It means that the
+ * implementation must stay as generic glib/GTK+ as possible.
+ */
+
 #include "config.h"
 
 #include <string.h>
 
-#include <gegl.h>
+#include <glib.h>
 #include <gtk/gtk.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
-#include "widgets-types.h"
 
 #include "gimpcriticaldialog.h"
 
@@ -36,14 +37,18 @@
 
 #include "gimp-intl.h"
 
+typedef struct _GimpCriticalDialog       GimpCriticalDialog;
+
 #define GIMP_CRITICAL_RESPONSE_CLIPBOARD 1
 #define GIMP_CRITICAL_RESPONSE_URL       2
+#define GIMP_CRITICAL_RESPONSE_RESTART   3
 
 
-static void    gimp_critical_dialog_response (GtkDialog           *dialog,
-                                              gint                 response_id);
+static void    gimp_critical_dialog_finalize (GObject    *object);
+static void    gimp_critical_dialog_response (GtkDialog  *dialog,
+                                              gint        response_id);
 
-G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GIMP_TYPE_DIALOG)
+G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GTK_TYPE_DIALOG)
 
 #define parent_class gimp_critical_dialog_parent_class
 
@@ -51,7 +56,10 @@ G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GIMP_TYPE_DIALOG)
 static void
 gimp_critical_dialog_class_init (GimpCriticalDialogClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
+
+  object_class->finalize = gimp_critical_dialog_finalize;
 
   dialog_class->response = gimp_critical_dialog_response;
 }
@@ -78,7 +86,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
-  dialog->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  dialog->vbox = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->vbox, TRUE, TRUE, 0);
   gtk_widget_show (dialog->vbox);
@@ -142,6 +150,20 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_text_view_set_editable (GTK_TEXT_VIEW (dialog->details), FALSE);
   gtk_widget_show (dialog->details);
   gtk_container_add (GTK_CONTAINER (widget), dialog->details);
+
+  dialog->pid     = 0;
+  dialog->program = NULL;
+}
+
+static void
+gimp_critical_dialog_finalize (GObject *object)
+{
+  GimpCriticalDialog *dialog = GIMP_CRITICAL_DIALOG (object);
+
+  if (dialog->program)
+    g_free (dialog->program);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -191,6 +213,17 @@ gimp_critical_dialog_response (GtkDialog *dialog,
                         NULL);
         }
       break;
+    case GIMP_CRITICAL_RESPONSE_RESTART:
+        {
+          gchar *args[2] = { critical->program , NULL };
+
+          if (critical->pid > 0)
+            kill (critical->pid, SIGINT);
+          if (critical->program)
+            g_spawn_async (NULL, args, NULL, G_SPAWN_DEFAULT,
+                           NULL, NULL, NULL, NULL);
+        }
+      /* Fall through. */
     case GTK_RESPONSE_DELETE_EVENT:
     case GTK_RESPONSE_CLOSE:
     default:
@@ -212,10 +245,14 @@ gimp_critical_dialog_new (const gchar *title)
 }
 
 void
-gimp_critical_dialog_add (GimpCriticalDialog  *dialog,
+gimp_critical_dialog_add (GtkWidget  *dialog,
                           const gchar         *message,
-                          const gchar         *trace)
+                          const gchar         *trace,
+                          gboolean             is_fatal,
+                          const gchar         *program,
+                          pid_t                pid)
 {
+  GimpCriticalDialog *critical;
   GtkTextBuffer *buffer;
   GtkTextIter    end;
   gchar         *text;
@@ -230,10 +267,16 @@ gimp_critical_dialog_add (GimpCriticalDialog  *dialog,
        */
       return;
     }
+  critical = GIMP_CRITICAL_DIALOG (dialog);
 
   /* The user text, which should be localized. */
-  if (! gtk_label_get_text (GTK_LABEL (dialog->label)) ||
-      strlen (gtk_label_get_text (GTK_LABEL (dialog->label))) == 0)
+  if (is_fatal)
+    {
+      text = g_strdup_printf (_("GIMP crashed with a fatal error: %s"),
+                              message);
+    }
+  else if (! gtk_label_get_text (GTK_LABEL (critical->label)) ||
+           strlen (gtk_label_get_text (GTK_LABEL (critical->label))) == 0)
     {
       /* First critical error. Let's just display it. */
       text = g_strdup_printf (_("GIMP encountered a critical error: %s"),
@@ -246,7 +289,7 @@ gimp_critical_dialog_add (GimpCriticalDialog  *dialog,
        */
       text = g_strdup_printf (_("GIMP encountered several critical errors!"));
     }
-  gtk_label_set_text (GTK_LABEL (dialog->label),
+  gtk_label_set_text (GTK_LABEL (critical->label),
                       text);
   g_free (text);
 
@@ -254,9 +297,21 @@ gimp_critical_dialog_add (GimpCriticalDialog  *dialog,
    * meant to go to clipboard for the bug report. It has to be in
    * English.
    */
-  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (dialog->details));
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
   gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
   text = g_strdup_printf ("\n\n> %s\n\nStack trace:\n%s", message, trace);
   gtk_text_buffer_insert (buffer, &end, text, -1);
   g_free (text);
+
+  /* Finally when encountering a fatal message, propose one more button
+   * to restart GIMP.
+   */
+  if (is_fatal)
+    {
+      gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                              _("_Restart GIMP"), GIMP_CRITICAL_RESPONSE_RESTART,
+                              NULL);
+      critical->program = g_strdup (program);
+      critical->pid     = pid;
+    }
 }
