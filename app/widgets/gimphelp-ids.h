@@ -610,6 +610,7 @@
 
 #define GIMP_HELP_PREFS_DIALOG                    "gimp-prefs-dialog"
 #define GIMP_HELP_PREFS_NEW_IMAGE                 "gimp-prefs-new-image"
+#define GIMP_HELP_PREFS_DEBUGGING                 "gimp-prefs-debugging"
 #define GIMP_HELP_PREFS_DEFAULT_GRID              "gimp-prefs-default-grid"
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"

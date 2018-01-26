@@ -133,6 +133,12 @@ static void   prefs_help_language_change_callback  (GtkComboBox  *combo,
                                                     Gimp         *gimp);
 static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
                                                     GtkContainer *box);
+static void   prefs_sensitive_debug_on_success     (GPid          pid,
+                                                    gint          status,
+                                                    GtkWidget    *widget);
+static void   prefs_notify_sensitive_debug         (GtkWidget    *button,
+                                                    GParamSpec   *pspec,
+                                                    GtkWidget    *label);
 
 /*  private variables  */
 
@@ -836,6 +842,26 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
 }
 
 static void
+prefs_sensitive_debug_on_success (GPid       pid,
+                                  gint       status,
+                                  GtkWidget *widget)
+{
+  if (g_spawn_check_exit_status (status, NULL))
+    gtk_widget_set_sensitive (widget, TRUE);
+
+  g_spawn_close_pid (pid);
+}
+
+static void
+prefs_notify_sensitive_debug (GtkWidget  *button,
+                              GParamSpec *pspec,
+                              GtkWidget  *label)
+{
+  gtk_widget_set_visible (label,
+                          ! gtk_widget_is_sensitive (button));
+}
+
+static void
 prefs_format_string_select_callback (GtkTreeSelection *sel,
                                      GtkEntry         *entry)
 {
@@ -1176,16 +1202,6 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use OpenCL"),
                           GTK_BOX (vbox2));
 
-#ifndef G_OS_WIN32
-  vbox2 = prefs_frame_new (_("Debugging"), GTK_CONTAINER (vbox),
-                           FALSE);
-
-  prefs_check_button_add (object, "generate-backtrace",
-                          _("Try generating debug data for bug reporting when appropriate.\n"
-                            "This will require \"gdb\" installed on your computer."),
-                          GTK_BOX (vbox2));
-#endif
-
   /*  Image Thumbnails  */
   vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
 
@@ -1209,6 +1225,75 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Keep record of used files in the Recent Documents list"),
                           GTK_BOX (vbox2));
 
+
+  /***************/
+  /*  Debugging  */
+  /***************/
+#ifndef G_OS_WIN32
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  /* TODO: icon needed. */
+                                  "gimp-prefs-debugging",
+                                  _("Debugging"),
+                                  _("Debugging"),
+                                  GIMP_HELP_PREFS_DEBUGGING,
+                                  NULL,
+                                  &top_iter);
+  hbox = g_object_new (GIMP_TYPE_HINT_BOX,
+                       "icon-name", GIMP_ICON_DIALOG_WARNING,
+                       "hint",      _("We hope you will never need these settings, "
+                                      "but as any software, bugs and crash can occur. "
+                                      "If it happens, you can help us by reporting bugs."),
+                        NULL);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+  vbox2 = prefs_frame_new (_("Bug reporting"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  button = prefs_check_button_add (object, "generate-backtrace",
+                                   _("Try generating debug data for bug reporting when appropriate."),
+                                   GTK_BOX (vbox2));
+  gtk_widget_set_sensitive (button, FALSE);
+
+  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                             _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  g_signal_connect (button, "notify::sensitive",
+                    G_CALLBACK (prefs_notify_sensitive_debug),
+                    hbox);
+
+  /* Check existence of gdb or lldb to activate the preference, as a
+   * good hint of its prerequisite.
+   */
+    {
+      gchar *args[3] = { "gdb", "--version", NULL};
+      GPid   pid;
+
+      if (g_spawn_async (NULL, args, NULL,
+                         G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH |
+                         G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                         NULL, NULL, &pid, NULL))
+        {
+          g_child_watch_add (pid,
+                             (GChildWatchFunc) prefs_sensitive_debug_on_success,
+                             button);
+        }
+      else
+        {
+          args[0] = "lldb";
+          if (g_spawn_async (NULL, args, NULL,
+                             G_SPAWN_DO_NOT_REAP_CHILD | G_SPAWN_SEARCH_PATH |
+                             G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                             NULL, NULL, &pid, NULL))
+            {
+              g_child_watch_add (pid,
+                                 (GChildWatchFunc) prefs_sensitive_debug_on_success,
+                                 button);
+            }
+        }
+    }
+
+#endif
 
   /**********************/
   /*  Color Management  */
