@@ -28,7 +28,7 @@ resume_process (DWORD dwOwnerPID)
           if (te32.th32OwnerProcessID == dwOwnerPID)
             {
               HANDLE hThread = OpenThread (THREAD_SUSPEND_RESUME, FALSE, te32.th32ThreadID);
-              printf ("Resuming Thread: %u\n",te32.th32ThreadID);
+              printf ("Resuming Thread: %u\n", (unsigned int) te32.th32ThreadID);
               ResumeThread (hThread);
               CloseHandle (hThread);
             }
@@ -62,7 +62,9 @@ process_list (void)
     {
       do
         {
-          printf ("PID:\t%u\t%s\n", pe32.th32ProcessID, pe32.szExeFile);
+          printf ("PID:\t%u\t%s\n",
+                  (unsigned int) pe32.th32ProcessID,
+                  pe32.szExeFile);
         }
       while (Process32Next (hProcessSnap, &pe32));
       bRet = TRUE;
@@ -90,12 +92,12 @@ main (int   argc,
       pid = atoi (argv[1]);
       if (pid == 0)
         {
-          printf ("invalid: %s\n", pid);
+          printf ("invalid: %lu\n", pid);
           return 1;
         }
       else
         {
-          printf ("process: %u\n", pid);
+          printf ("process: %lu\n", pid);
           resume_process (pid);
         }
     }
