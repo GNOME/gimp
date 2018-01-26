@@ -19,13 +19,7 @@
 
 #define _GNU_SOURCE  /* need the POSIX signal API */
 
-#include <signal.h>
-#include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -262,8 +256,9 @@ gimp_eek (const gchar *reason,
           const gchar *message,
           gboolean     use_handler)
 {
-  GimpCoreConfig *config = the_errors_gimp->config;
+  GimpCoreConfig *config             = the_errors_gimp->config;
   gboolean        generate_backtrace = FALSE;
+  gboolean        eek_handled        = FALSE;
 
   /* GIMP has 2 ways to handle termination signals and fatal errors: one
    * is the stack trace mode which is set at start as command line
@@ -277,9 +272,12 @@ gimp_eek (const gchar *reason,
                 "generate-backtrace", &generate_backtrace,
                 NULL);
 
-#ifndef G_OS_WIN32
+  /* Let's just always output on stdout at least so that there is a
+   * trace if the rest fails. */
   g_printerr ("%s: %s: %s\n", gimp_filename_to_utf8 (full_prog_name),
               reason, message);
+
+#if ! defined (G_OS_WIN32) || defined (HAVE_EXCHNDL)
 
   if (use_handler)
     {
@@ -307,9 +305,12 @@ gimp_eek (const gchar *reason,
           g_spawn_sync (NULL, args, NULL,
                         G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
                         NULL, NULL, NULL, NULL, &exit_status, NULL);
+          eek_handled = TRUE;
         }
-      else
-#endif
+#endif /* !GIMP_CONSOLE_COMPILATION */
+
+#ifndef G_OS_WIN32
+      if (! eek_handled)
         {
           switch (stack_trace_mode)
             {
@@ -345,15 +346,16 @@ gimp_eek (const gchar *reason,
               break;
             }
         }
-    }
-#else
-
-  /* g_on_error_* don't do anything reasonable on Win32. */
-
-  MessageBox (NULL, g_strdup_printf ("%s: %s", reason, message),
-              full_prog_name, MB_OK|MB_ICONERROR);
-
 #endif /* ! G_OS_WIN32 */
+    }
+#endif /* ! G_OS_WIN32 || HAVE_EXCHNDL */
+
+#if defined (G_OS_WIN32) && ! defined (GIMP_CONSOLE_COMPILATION)
+  /* g_on_error_* don't do anything reasonable on Win32. */
+  if (! eek_handled && ! the_errors_gimp->no_interface)
+    MessageBox (NULL, g_strdup_printf ("%s: %s", reason, message),
+                full_prog_name, MB_OK|MB_ICONERROR);
+#endif
 
   exit (EXIT_FAILURE);
 }

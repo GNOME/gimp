@@ -44,7 +44,7 @@ struct _GimpCriticalDialog
   GtkWidget       *details;
 
   gchar           *program;
-  pid_t            pid;
+  gint             pid;
 };
 
 struct _GimpCriticalDialogClass
@@ -61,7 +61,7 @@ void        gimp_critical_dialog_add      (GtkWidget          *dialog,
                                            const gchar        *trace,
                                            gboolean            is_fatal,
                                            const gchar        *program,
-                                           pid_t               pid);
+                                           gint                pid);
 
 
 G_END_DECLS

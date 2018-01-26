@@ -217,8 +217,10 @@ gimp_critical_dialog_response (GtkDialog *dialog,
         {
           gchar *args[2] = { critical->program , NULL };
 
+#ifndef G_OS_WIN32
           if (critical->pid > 0)
-            kill (critical->pid, SIGINT);
+            kill ((pid_t ) critical->pid, SIGINT);
+#endif
           if (critical->program)
             g_spawn_async (NULL, args, NULL, G_SPAWN_DEFAULT,
                            NULL, NULL, NULL, NULL);
@@ -250,7 +252,7 @@ gimp_critical_dialog_add (GtkWidget  *dialog,
                           const gchar         *trace,
                           gboolean             is_fatal,
                           const gchar         *program,
-                          pid_t                pid)
+                          gint                 pid)
 {
   GimpCriticalDialog *critical;
   GtkTextBuffer *buffer;

@@ -7,24 +7,17 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 if OS_WIN32
 
 bin_PROGRAMS = \
-	gimptool-2.0 \
-	gimp-debug-resume
-
-if !ENABLE_GIMP_CONSOLE
-if HAVE_EXCHNDL
-bin_PROGRAMS += gimpdebug-2.0
-endif
-endif
+	       gimptool-2.0 \
+	       gimpdebug-2.0 \
+	       gimp-debug-resume
 
 gimp_debug_resume_SOURCES = gimp-debug-resume.c
 
 else
 
-bin_PROGRAMS = gimptool-2.0
-
-if !ENABLE_GIMP_CONSOLE
-bin_PROGRAMS += gimpdebug-2.0
-endif
+bin_PROGRAMS = \
+	       gimptool-2.0 \
+	       gimpdebug-2.0
 
 endif
 
@@ -44,12 +37,16 @@ gimpdebug_2_0_CPPFLAGS = \
 	-I$(top_srcdir)/app              \
 	-I$(top_builddir)/app            \
 	$(AM_CPPFLAGS)                   \
+	$(GIO_CFLAGS)	                 \
 	$(GEGL_CFLAGS)	                 \
-	$(GTK_CFLAGS)
+	$(GTK_CFLAGS)                    \
+	$(FONTCONFIG_CFLAGS)
 
 gimpdebug_2_0_LDADD =   \
+	$(GIO_LIBS)	\
 	$(GEGL_LIBS)	\
-	$(GTK_LIBS)
+	$(GTK_LIBS)     \
+	$(FONTCONFIG_LIBS)
 
 
 gimptool_2_0_SOURCES = gimptool.c
