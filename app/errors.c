@@ -385,6 +385,28 @@ gimp_get_stack_trace (void)
     {
       g_free (gdb_stdout);
     }
+  if (! trace)
+    {
+      /* Alternatively, use LLDB. It seems to be more common on some
+       * platforms, especially macOS.
+       */
+      gchar *args_lldb[11] = { "lldb", "--attach-pid", NULL, "--batch",
+                               "--one-line", "bt",
+                               "--one-line-on-crash", "bt",
+                               "--one-line-on-crash", "quit", NULL };
+
+      args_lldb[2] = pid;
+      if (g_spawn_sync (NULL, args_lldb, NULL,
+                        G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
+                        NULL, NULL, &gdb_stdout, NULL, NULL, NULL))
+        {
+          trace = g_strdup (gdb_stdout);
+        }
+      else if (gdb_stdout)
+        {
+          g_free (gdb_stdout);
+        }
+    }
 
 #endif
 
