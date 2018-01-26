@@ -113,6 +113,7 @@ enum
   PROP_EXPORT_METADATA_EXIF,
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
+  PROP_GENERATE_BACKTRACE,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -654,6 +655,17 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GENERATE_BACKTRACE,
+                            "generate-backtrace",
+                            "Try generating backtrace upon errors",
+                            GENERATE_BACKTRACE_BLURB,
+#ifdef GIMP_UNSTABLE
+                            TRUE,
+#else
+                            FALSE,
+#endif
+                            GIMP_PARAM_STATIC_STRINGS);
+
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                             "install-colormap",
@@ -956,6 +968,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_EXPORT_METADATA_IPTC:
       core_config->export_metadata_iptc = g_value_get_boolean (value);
       break;
+    case PROP_GENERATE_BACKTRACE:
+      core_config->generate_backtrace = g_value_get_boolean (value);
+      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -1151,6 +1166,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_EXPORT_METADATA_IPTC:
       g_value_set_boolean (value, core_config->export_metadata_iptc);
+      break;
+    case PROP_GENERATE_BACKTRACE:
+      g_value_set_boolean (value, core_config->generate_backtrace);
       break;
 
     case PROP_INSTALL_COLORMAP:

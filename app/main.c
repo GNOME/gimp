@@ -540,7 +540,7 @@ main (int    argc,
   if (abort_message)
     app_abort (no_interface, abort_message);
 
-  gimp_init_signal_handlers (stack_trace_mode);
+  gimp_init_signal_handlers ();
 
   if (system_gimprc)
     system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);

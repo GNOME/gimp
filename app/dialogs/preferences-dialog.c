@@ -1176,6 +1176,16 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use OpenCL"),
                           GTK_BOX (vbox2));
 
+#ifdef G_OS_UNIX
+  vbox2 = prefs_frame_new (_("Debugging"), GTK_CONTAINER (vbox),
+                           FALSE);
+
+  prefs_check_button_add (object, "generate-backtrace",
+                          _("Try generating debug data for bug reporting when appropriate.\n"
+                            "This will require \"gdb\" installed on your computer."),
+                          GTK_BOX (vbox2));
+#endif
+
   /*  Image Thumbnails  */
   vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
 

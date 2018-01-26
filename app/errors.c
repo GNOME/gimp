@@ -199,8 +199,14 @@ gimp_message_log_func (const gchar    *log_domain,
   GimpMessageSeverity  severity = GIMP_MESSAGE_WARNING;
   Gimp                *gimp = data;
   gchar               *trace = NULL;
+  GimpCoreConfig      *config = gimp->config;
+  gboolean             generate_backtrace = FALSE;
 
-  if (flags & G_LOG_LEVEL_CRITICAL)
+  g_object_get (G_OBJECT (config),
+                "generate-backtrace", &generate_backtrace,
+                NULL);
+
+  if (generate_backtrace && (flags & G_LOG_LEVEL_CRITICAL))
     {
       severity = GIMP_MESSAGE_ERROR;
 
@@ -250,47 +256,87 @@ gimp_eek (const gchar *reason,
           const gchar *message,
           gboolean     use_handler)
 {
+  GimpCoreConfig *config = the_errors_gimp->config;
+  gboolean        generate_backtrace = FALSE;
+
+  /* GIMP has 2 ways to handle termination signals and fatal errors: one
+   * is the stack trace mode which is set at start as command line
+   * option --stack-trace-mode, this won't change for the length of the
+   * session and outputs a trace in terminal; the other is set in
+   * preferences, outputs a trace in a GUI and can change anytime during
+   * the session.
+   * The GUI backtrace has priority if it is set.
+   */
+  g_object_get (G_OBJECT (config),
+                "generate-backtrace", &generate_backtrace,
+                NULL);
+
 #ifndef G_OS_WIN32
   g_printerr ("%s: %s: %s\n", gimp_filename_to_utf8 (full_prog_name),
               reason, message);
 
   if (use_handler)
     {
-      switch (stack_trace_mode)
+#ifdef G_OS_UNIX
+      if (generate_backtrace)
         {
-        case GIMP_STACK_TRACE_NEVER:
-          break;
-
-        case GIMP_STACK_TRACE_QUERY:
-          /* Basically we don't have the "QUERY" case anymore, at least
-           * for now until I figure out something.
+          /* If enabled (it is disabled by default), the GUI preference
+           * takes precedence over the command line argument.
            */
-        case GIMP_STACK_TRACE_ALWAYS:
-          {
-#if defined(G_OS_UNIX)
-            gchar   *args[6] = { "gimpdebug-2.0", full_prog_name, NULL,
-                                 (gchar *) reason, (gchar *) message, NULL };
-            gchar    pid[16];
-            gint     exit_status;
+          gchar *args[6] = { "gimpdebug-2.0", full_prog_name, NULL,
+                             (gchar *) reason, (gchar *) message, NULL };
+          gchar  pid[16];
+          gint   exit_status;
 
-            g_snprintf (pid, 16, "%u", (guint) getpid ());
-            args[2] = pid;
+          g_snprintf (pid, 16, "%u", (guint) getpid ());
+          args[2] = pid;
 
-            /* We don't care about any return value. If it fails, too
-             * bad, we just won't have any stack trace.
-             * We still need to use the sync() variant because we have
-             * to keep GIMP up long enough for the debugger to get its
-             * trace.
-             */
-            g_spawn_sync (NULL, args, NULL,
-                          G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
-                          NULL, NULL, NULL, NULL, &exit_status, NULL);
+          /* We don't care about any return value. If it fails, too
+           * bad, we just won't have any stack trace.
+           * We still need to use the sync() variant because we have
+           * to keep GIMP up long enough for the debugger to get its
+           * trace.
+           */
+          g_spawn_sync (NULL, args, NULL,
+                        G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
+                        NULL, NULL, NULL, NULL, &exit_status, NULL);
+        }
+      else
 #endif
-          }
-          break;
+        {
+          switch (stack_trace_mode)
+            {
+            case GIMP_STACK_TRACE_NEVER:
+              break;
 
-        default:
-          break;
+            case GIMP_STACK_TRACE_QUERY:
+                {
+                  sigset_t sigset;
+
+                  sigemptyset (&sigset);
+                  sigprocmask (SIG_SETMASK, &sigset, NULL);
+
+                  if (the_errors_gimp)
+                    gimp_gui_ungrab (the_errors_gimp);
+
+                  g_on_error_query (full_prog_name);
+                }
+              break;
+
+            case GIMP_STACK_TRACE_ALWAYS:
+                {
+                  sigset_t sigset;
+
+                  sigemptyset (&sigset);
+                  sigprocmask (SIG_SETMASK, &sigset, NULL);
+
+                  g_on_error_stack_trace (full_prog_name);
+                }
+              break;
+
+            default:
+              break;
+            }
         }
     }
 #else

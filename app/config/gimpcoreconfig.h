@@ -98,6 +98,7 @@ struct _GimpCoreConfig
   gboolean                export_metadata_exif;
   gboolean                export_metadata_xmp;
   gboolean                export_metadata_iptc;
+  gboolean                generate_backtrace;
 };
 
 struct _GimpCoreConfigClass

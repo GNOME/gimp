@@ -25,6 +25,8 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
+
 #include "errors.h"
 #include "signals.h"
 
@@ -35,7 +37,7 @@ static void  gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
 
 
 void
-gimp_init_signal_handlers (GimpStackTraceMode stack_trace_mode)
+gimp_init_signal_handlers (void)
 {
 #ifndef G_OS_WIN32
   /* No use catching these on Win32, the user won't get any stack
@@ -54,13 +56,10 @@ gimp_init_signal_handlers (GimpStackTraceMode stack_trace_mode)
   gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
 
-  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER)
-    {
-      /* these are handled by gimp_fatal_error() */
-      gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
-      gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
-    }
+  /* these are handled by gimp_fatal_error() */
+  gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
+  gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
 
   /* Ignore SIGPIPE because plug_in.c handles broken pipes */
   gimp_signal_private (SIGPIPE, SIG_IGN, 0);
