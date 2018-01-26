@@ -49,7 +49,8 @@ void  app_run       (const gchar         *full_prog_name,
                      gboolean             use_debug_handler,
                      gboolean             show_playground,
                      GimpStackTraceMode   stack_trace_mode,
-                     GimpPDBCompatMode    pdb_compat_mode);
+                     GimpPDBCompatMode    pdb_compat_mode,
+                     const gchar         *backtrace_file);
 
 
 #endif /* __APP_H__ */

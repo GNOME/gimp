@@ -52,6 +52,7 @@ static Gimp                *the_errors_gimp   = NULL;
 static gboolean             use_debug_handler = FALSE;
 static GimpStackTraceMode   stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static gchar               *full_prog_name    = NULL;
+static gchar               *backtrace_file    = NULL;
 
 
 /*  local function prototypes  */
@@ -82,7 +83,8 @@ void
 errors_init (Gimp               *gimp,
              const gchar        *_full_prog_name,
              gboolean            _use_debug_handler,
-             GimpStackTraceMode  _stack_trace_mode)
+             GimpStackTraceMode  _stack_trace_mode,
+             const gchar        *_backtrace_file)
 {
   const gchar * const log_domains[] =
   {
@@ -131,6 +133,7 @@ errors_init (Gimp               *gimp,
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
+  backtrace_file    = g_strdup (_backtrace_file);
 
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     g_log_set_handler (log_domains[i],
@@ -149,6 +152,9 @@ void
 errors_exit (void)
 {
   the_errors_gimp = NULL;
+
+  if (backtrace_file)
+    g_free (backtrace_file);
 }
 
 void
@@ -283,8 +289,9 @@ gimp_eek (const gchar *reason,
           /* If enabled (it is disabled by default), the GUI preference
            * takes precedence over the command line argument.
            */
-          gchar *args[6] = { "gimpdebug-2.0", full_prog_name, NULL,
-                             (gchar *) reason, (gchar *) message, NULL };
+          gchar *args[7] = { "gimpdebug-2.0", full_prog_name, NULL,
+                             (gchar *) reason, (gchar *) message,
+                             backtrace_file, NULL };
           gchar  pid[16];
           gint   exit_status;
 

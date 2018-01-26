@@ -1229,6 +1229,11 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Debugging  */
   /***************/
+  /* No debugging preferences are needed on win32. Either GIMP has been
+   * built with DrMinGW support (HAVE_EXCHNDL) or not. If it has, then
+   * the backtracing is enabled and can't be disabled. It assume it will
+   * work only upon a crash.
+   */
 #ifndef G_OS_WIN32
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   /* TODO: icon needed. */

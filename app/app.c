@@ -173,7 +173,8 @@ app_run (const gchar         *full_prog_name,
          gboolean             use_debug_handler,
          gboolean             show_playground,
          GimpStackTraceMode   stack_trace_mode,
-         GimpPDBCompatMode    pdb_compat_mode)
+         GimpPDBCompatMode    pdb_compat_mode,
+         const gchar         *backtrace_file)
 {
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
@@ -247,7 +248,8 @@ app_run (const gchar         *full_prog_name,
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
-  errors_init (gimp, full_prog_name, use_debug_handler, stack_trace_mode);
+  errors_init (gimp, full_prog_name, use_debug_handler,
+               stack_trace_mode, backtrace_file);
 
   /*  Check if the user's gimp_directory exists
    */

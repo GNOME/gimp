@@ -305,6 +305,7 @@ main (int    argc,
   gchar          *basename;
   GFile          *system_gimprc_file = NULL;
   GFile          *user_gimprc_file   = NULL;
+  gchar          *backtrace_file     = NULL;
   gint            i;
 
 #if defined (__GNUC__) && defined (_WIN64)
@@ -369,7 +370,6 @@ main (int    argc,
     time_t t;
     gchar *filename;
     gchar *dir;
-    gchar *path;
 
     /* This has to be the non-roaming directory (i.e., the local
        directory) as backtraces correspond to the binaries on this
@@ -383,14 +383,12 @@ main (int    argc,
     time (&t);
     filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
                                 g_get_prgname(), t);
-    path = g_build_filename (dir, filename, NULL);
+    backtrace_file = g_build_filename (dir, filename, NULL);
     g_free (filename);
     g_free (dir);
 
     ExcHndlInit ();
-    ExcHndlSetLogFileNameA (path);
-
-    g_free (path);
+    ExcHndlSetLogFileNameA (backtrace_file);
   }
 #endif
 
@@ -567,7 +565,11 @@ main (int    argc,
            use_debug_handler,
            show_playground,
            stack_trace_mode,
-           pdb_compat_mode);
+           pdb_compat_mode,
+           backtrace_file);
+
+  if (backtrace_file)
+    g_free (backtrace_file);
 
   if (system_gimprc_file)
     g_object_unref (system_gimprc_file);

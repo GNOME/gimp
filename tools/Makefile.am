@@ -10,6 +10,12 @@ bin_PROGRAMS = \
 	gimptool-2.0 \
 	gimp-debug-resume
 
+if !ENABLE_GIMP_CONSOLE
+if HAVE_EXCHNDL
+bin_PROGRAMS += gimpdebug-2.0
+endif
+endif
+
 gimp_debug_resume_SOURCES = gimp-debug-resume.c
 
 else

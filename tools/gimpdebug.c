@@ -56,13 +56,15 @@ main (int    argc,
   const gchar *pid;
   const gchar *reason;
   const gchar *message;
-  gchar       *trace;
+  const gchar *bt_file = NULL;
+  gchar       *trace   = NULL;
   gchar       *error;
   GtkWidget   *dialog;
 
-  if (argc != 5)
+  if (argc != 5 && argc != 6)
     {
-      g_print ("Usage: gimpdebug-2.0 [PROGRAM] [PID] [REASON] [MESSAGE]\n");
+      g_print ("Usage: gimpdebug-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n\n"
+               "Note: the backtrace file is optional and only used in Windows.\n");
       exit (EXIT_FAILURE);
     }
 
@@ -70,9 +72,18 @@ main (int    argc,
   pid     = argv[2];
   reason  = argv[3];
   message = argv[4];
+
   error   = g_strdup_printf ("%s: %s", reason, message);
 
-  trace   = gimp_debug_get_stack_trace (program, pid);
+  if (argc == 6)
+    {
+      bt_file = argv[5];
+      g_file_get_contents (bt_file, &trace, NULL, NULL);
+    }
+  else
+    {
+      trace = gimp_debug_get_stack_trace (program, pid);
+    }
 
   if (trace == NULL || strlen (trace) == 0)
     exit (EXIT_FAILURE);
