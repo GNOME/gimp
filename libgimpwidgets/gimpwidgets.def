@@ -128,6 +128,7 @@ EXPORTS
 	gimp_color_selector_get_toggles_sensitive
 	gimp_color_selector_get_toggles_visible
 	gimp_color_selector_get_type
+	gimp_color_selector_model_get_type
 	gimp_color_selector_new
 	gimp_color_selector_set_channel
 	gimp_color_selector_set_color
