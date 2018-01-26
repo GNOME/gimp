@@ -1176,7 +1176,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use OpenCL"),
                           GTK_BOX (vbox2));
 
-#ifdef G_OS_UNIX
+#ifndef G_OS_WIN32
   vbox2 = prefs_frame_new (_("Debugging"), GTK_CONTAINER (vbox),
                            FALSE);
 

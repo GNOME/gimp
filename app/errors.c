@@ -277,8 +277,8 @@ gimp_eek (const gchar *reason,
 
   if (use_handler)
     {
-#ifdef G_OS_UNIX
-      if (generate_backtrace)
+#ifndef GIMP_CONSOLE_COMPILATION
+      if (generate_backtrace && ! the_errors_gimp->no_interface)
         {
           /* If enabled (it is disabled by default), the GUI preference
            * takes precedence over the command line argument.
@@ -355,7 +355,7 @@ static gchar *
 gimp_get_stack_trace (void)
 {
   gchar   *trace  = NULL;
-#if defined(G_OS_UNIX)
+#ifndef G_OS_WIN32
   gchar   *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
                        full_prog_name, NULL, NULL };
   gchar   *gdb_stdout;
@@ -371,7 +371,7 @@ gimp_get_stack_trace (void)
   /* This works only on UNIX systems. On Windows, we'll have to find
    * another method, probably with DrMingW.
    */
-#if defined(G_OS_UNIX)
+#ifndef G_OS_WIN32
   g_snprintf (pid, 16, "%u", (guint) getpid ());
   args[5] = pid;
 
