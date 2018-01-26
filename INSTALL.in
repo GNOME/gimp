@@ -180,6 +180,7 @@ header files installed.
      RawTherapee >= 5.2 for raw loading
      xdg-email for sending emails
      sendmail for sending emails if --with-sendmail enabled
+     gdb or lldb for our new bug-reporting dialog
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
