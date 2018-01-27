@@ -26,6 +26,9 @@
 #include "gimp-transform-utils.h"
 
 
+#define EPSILON 1e-6
+
+
 void
 gimp_transform_get_rotate_center (gint      x,
                                   gint      y,
@@ -363,7 +366,7 @@ mod_gauss (gdouble matrix[],
   for (r = 0; r < s; r++)
     {
       /* make sure that (r,r) is not 0 */
-      if (matrix[p[r] * t + r] == 0.0)
+      if (fabs (matrix[p[r] * t + r]) <= EPSILON)
         {
           /* we need to permutate rows */
           for (i = r + 1; i <= s; i++)
@@ -376,7 +379,7 @@ mod_gauss (gdouble matrix[],
                   return FALSE;
                 }
 
-              if (matrix[p[i] * t + r] != 0.0)
+              if (fabs (matrix[p[i] * t + r]) > EPSILON)
                 break;
             }
 
