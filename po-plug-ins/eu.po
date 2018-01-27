@@ -2,26 +2,26 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
+#
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2005, 2006, 2007, 2008, 2010.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2018.
 # Edurne Labaka <elabaka@uzei.com>, 2015.
 # Asier Sarasua Garmendia <asiersar@yahoo.com>, 2018.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-14 22:30+0000\n"
-"PO-Revision-Date: 2015-01-29 15:23+0100\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"POT-Creation-Date: 2018-01-27 16:16+0000\n"
+"PO-Revision-Date: 2018-01-27 17:23+0100\n"
+"Last-Translator: Inaki Larranaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -42,7 +42,8 @@ msgstr "Lerrokatu geruza ikusgaiak"
 
 #: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
 #: ../plug-ins/common/border-average.c:362 ../plug-ins/common/cartoon.c:813
-#: ../plug-ins/common/checkerboard.c:350 ../plug-ins/common/cml-explorer.c:1189
+#: ../plug-ins/common/checkerboard.c:350
+#: ../plug-ins/common/cml-explorer.c:1189
 #: ../plug-ins/common/cml-explorer.c:1986
 #: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
 #: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1076
@@ -58,16 +59,17 @@ msgstr "Lerrokatu geruza ikusgaiak"
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
-#: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
-#: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
-#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
-#: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
-#: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
-#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
-#: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/filter-pack.c:1206
+#: ../plug-ins/common/fractal-trace.c:711 ../plug-ins/common/grid.c:647
+#: ../plug-ins/common/hot.c:594 ../plug-ins/common/jigsaw.c:2397
+#: ../plug-ins/common/mail.c:499 ../plug-ins/common/max-rgb.c:261
+#: ../plug-ins/common/newsprint.c:1183 ../plug-ins/common/nl-filter.c:1021
+#: ../plug-ins/common/oilify.c:785 ../plug-ins/common/photocopy.c:840
+#: ../plug-ins/common/qbist.c:720 ../plug-ins/common/qbist.c:762
+#: ../plug-ins/common/qbist.c:816 ../plug-ins/common/ripple.c:487
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:434
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
@@ -111,28 +113,29 @@ msgstr "_Utzi"
 
 #: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
 #: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
-#: ../plug-ins/common/checkerboard.c:351 ../plug-ins/common/cml-explorer.c:1190
-#: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:622
-#: ../plug-ins/common/compose.c:1077 ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/checkerboard.c:351
+#: ../plug-ins/common/cml-explorer.c:1190 ../plug-ins/common/colorify.c:258
+#: ../plug-ins/common/colormap-remap.c:622 ../plug-ins/common/compose.c:1077
+#: ../plug-ins/common/contrast-retinex.c:290
 #: ../plug-ins/common/curve-bend.c:1228 ../plug-ins/common/decompose.c:823
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
 #: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
 #: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1271
-#: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
-#: ../plug-ins/common/grid.c:648 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
-#: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
-#: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/filter-pack.c:1207
+#: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
+#: ../plug-ins/common/hot.c:595 ../plug-ins/common/jigsaw.c:2398
+#: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
+#: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:817
+#: ../plug-ins/common/ripple.c:488 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -458,7 +461,8 @@ msgstr "_Bertikala"
 #: ../plug-ins/file-psd/psd-load.c:1816 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
-#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1321
+#: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
 #: ../plug-ins/screenshot/screenshot-win32.c:264 ../plug-ins/twain/twain.c:567
 msgid "Background"
@@ -830,7 +834,8 @@ msgstr "Ausazko hazia"
 #: ../plug-ins/flame/flame.c:1045
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:805
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
-#: ../plug-ins/gfig/gfig-dialog.c:640 ../plug-ins/ifs-compose/ifs-compose.c:760
+#: ../plug-ins/gfig/gfig-dialog.c:640
+#: ../plug-ins/ifs-compose/ifs-compose.c:760
 #: ../plug-ins/ifs-compose/ifs-compose.c:2568
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:600
@@ -841,9 +846,9 @@ msgstr "_Ireki"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
-#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
-#: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
-#: ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/curve-bend.c:2101
+#: ../plug-ins/common/file-pdf-save.c:1008 ../plug-ins/common/qbist.c:763
+#: ../plug-ins/common/qbist.c:893 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1053
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:822
@@ -1040,8 +1045,9 @@ msgstr "Gorde CML arakatzailearen parametroak"
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
 #: ../plug-ins/common/file-raw-data.c:1192
-#: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
+#: ../plug-ins/common/file-raw-data.c:1220
+#: ../plug-ins/common/file-sunras.c:610 ../plug-ins/common/file-tga.c:1208
+#: ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
@@ -1073,11 +1079,12 @@ msgstr "Kargatu CML arakatzailearen parametroak"
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1301 ../plug-ins/common/file-sunras.c:436
-#: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:711
-#: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
-#: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:848
-#: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-raw-data.c:1301
+#: ../plug-ins/common/file-sunras.c:436 ../plug-ins/common/file-svg.c:329
+#: ../plug-ins/common/file-svg.c:711 ../plug-ins/common/file-tga.c:446
+#: ../plug-ins/common/file-xbm.c:747 ../plug-ins/common/file-xmc.c:665
+#: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:455
+#: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
@@ -1231,8 +1238,8 @@ msgid "Rearrange Colormap"
 msgstr "Berrantolatu kolore-mapa"
 
 #. The Reset button
-#: ../plug-ins/common/colormap-remap.c:620 ../plug-ins/common/curve-bend.c:1471
-#: ../plug-ins/common/filter-pack.c:1205
+#: ../plug-ins/common/colormap-remap.c:620
+#: ../plug-ins/common/curve-bend.c:1471 ../plug-ins/common/filter-pack.c:1205
 #: ../plug-ins/common/sample-colorize.c:1329
 #: ../plug-ins/common/sphere-designer.c:2560
 #: ../plug-ins/common/tile-small.c:452
@@ -1493,7 +1500,8 @@ msgstr "Maskararen balioa"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Tiratu distiraren balioak barruti osoa estaltzeko"
 
-#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91
+#: ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "_Normalizatu"
 
@@ -1961,7 +1969,8 @@ msgstr "2 sorburua:"
 msgid "O_verlap:"
 msgstr "_Teilakatu:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1971
+#: ../plug-ins/common/depth-merge.c:775
+#: ../plug-ins/common/file-raw-data.c:1971
 msgid "O_ffset:"
 msgstr "_Desplazamendua:"
 
@@ -2198,14 +2207,14 @@ msgstr "EOF edo errorea irudiaren goiburua irakurtzean"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
-#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
-#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
-#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/common/file-raw-data.c:1294
+#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
+#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
+#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
+#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
+#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2454,7 +2463,7 @@ msgstr "Tartea:"
 
 #: ../plug-ins/common/file-gegl.c:73
 msgid "Radiance RGBE"
-msgstr ""
+msgstr "RGBE dirdira"
 
 #: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
@@ -4457,11 +4466,7 @@ msgstr ""
 "mozketa automatikorik gabe esportatzen."
 
 #: ../plug-ins/common/file-xmc.c:1765
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose width or height is more than %ipx, a historical max dimension value "
@@ -4469,8 +4474,9 @@ msgid ""
 "It might be unsupported by some environments."
 msgstr ""
 "Kurtsorea ongi esportatu da, baina fotograma bat edo gehiago ditu %i px "
-"baino gehiagoko zabalera edo altuerarekin.\n"
-"Ingurune batzuetan, pantaila hankaz gora jarri dezake."
+"baino gehiagoko zabalera edo altuerarekin, X bitmap kurtsoreen gehienezko "
+"dimentsio historiko bat.\n"
+"Baliteke ingurune batzuetan onartu gabe egotea."
 
 #: ../plug-ins/common/file-xmc.c:1773
 msgid ""
@@ -4495,19 +4501,15 @@ msgstr ""
 "Moztu egin da da doitzeko."
 
 #: ../plug-ins/common/file-xmc.c:2125
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"Kurtsorea ongi esportatu da, baina fotograma bat edo gehiago ditu %i px "
-"baino gehiagoko zabalera edo altuerarekin.\n"
-"Ingurune batzuetan, pantaila hankaz gora jarri dezake."
+"Kurtsorea ongi esportatu da, baina fotograma bat edo gehiago ditu 8 digitu "
+"baino tamaina handiagoekin.\n"
+"%d px tamainara moztu dugu. Esportatutako kurtsorea egiaztatu beharko zenuke."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2222
@@ -8553,7 +8555,8 @@ msgstr "Ezkutatu kontrol-puntuak"
 msgid "Max undo:"
 msgstr "Geh desegitea:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320
+#: ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Gardena"
 
@@ -10236,7 +10239,8 @@ msgstr "Ausazko hazia:"
 msgid "_Second Flares"
 msgstr "_Bigarren erlantzak"
 
-#: ../plug-ins/help-browser/dialog.c:180 ../plug-ins/help-browser/dialog.c:1107
+#: ../plug-ins/help-browser/dialog.c:180
+#: ../plug-ins/help-browser/dialog.c:1107
 msgid "GIMP Help Browser"
 msgstr "GIMPeko Laguntza arakatzailea"
 
@@ -10560,7 +10564,8 @@ msgstr "_x zentroa:"
 #: ../plug-ins/imagemap/imap_circle.c:266
 #: ../plug-ins/imagemap/imap_circle.c:273
 #: ../plug-ins/imagemap/imap_circle.c:279 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:502
+#: ../plug-ins/imagemap/imap_grid.c:255
+#: ../plug-ins/imagemap/imap_polygon.c:502
 #: ../plug-ins/imagemap/imap_polygon.c:510
 #: ../plug-ins/imagemap/imap_rectangle.c:390
 #: ../plug-ins/imagemap/imap_rectangle.c:397
@@ -12651,3 +12656,4 @@ msgstr "_Eskanerra/Kamera..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Eskanerretik/kameratik datuak transferitzen"
+
