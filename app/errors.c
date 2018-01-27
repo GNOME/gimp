@@ -284,14 +284,18 @@ gimp_eek (const gchar *reason,
 #ifndef GIMP_CONSOLE_COMPILATION
       if (generate_backtrace && ! the_errors_gimp->no_interface)
         {
-          /* If enabled (it is disabled by default), the GUI preference
+          /* If GUI backtrace enabled (it is disabled by default), it
            * takes precedence over the command line argument.
            */
-          gchar *args[7] = { "gimpdebug-2.0", full_prog_name, NULL,
+#ifdef G_OS_WIN32
+          const gchar *gimpdebug = "gimpdebug-2.0.exe";
+#else
+          const gchar *gimpdebug = "gimpdebug-2.0";
+#endif
+          gchar *args[7] = { (gchar *) gimpdebug, full_prog_name, NULL,
                              (gchar *) reason, (gchar *) message,
                              backtrace_file, NULL };
           gchar  pid[16];
-          gint   exit_status;
 
           g_snprintf (pid, 16, "%u", (guint) getpid ());
           args[2] = pid;
@@ -302,10 +306,25 @@ gimp_eek (const gchar *reason,
            * to keep GIMP up long enough for the debugger to get its
            * trace.
            */
-          g_spawn_sync (NULL, args, NULL,
-                        G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
-                        NULL, NULL, NULL, NULL, &exit_status, NULL);
-          eek_handled = TRUE;
+#ifdef HAVE_EXCHNDL
+          /* On Win32, the trace has already been processed by ExcHnl
+           * and is waiting for us in a text file.
+           * We just want to spawn the trace GUI and exit GIMP directly.
+           */
+          if (g_file_test (backtrace_file, G_FILE_TEST_IS_REGULAR) &&
+              g_spawn_async (NULL, args, NULL,
+                             G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
+                             NULL, NULL, NULL, NULL))
+#else
+          /* On Unix machines, the spawned process will attach to the
+           * main GIMP process and will generate the backtrace. So we
+           * run it as a synced process.
+           */
+          if (g_spawn_sync (NULL, args, NULL,
+                            G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL | G_SPAWN_STDOUT_TO_DEV_NULL,
+                            NULL, NULL, NULL, NULL, NULL, NULL))
+#endif
+            eek_handled = TRUE;
         }
 #endif /* !GIMP_CONSOLE_COMPILATION */
 

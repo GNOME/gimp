@@ -36,11 +36,6 @@
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */
 
-#ifdef HAVE_EXCHNDL
-#include <time.h>
-#include <exchndl.h>
-#endif
-
 #endif /* G_OS_WIN32 */
 
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -318,6 +313,9 @@ main (int    argc,
   argv = __argv;
 #endif
 
+  /* Start signal handlers early. */
+  gimp_init_signal_handlers (&backtrace_file);
+
 #ifdef G_OS_WIN32
   /* Reduce risks */
   {
@@ -363,34 +361,6 @@ main (int    argc,
       g_free (w_bin_dir);
     g_free (bin_dir);
   }
-
-#ifdef HAVE_EXCHNDL
-  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
-  {
-    time_t t;
-    gchar *filename;
-    gchar *dir;
-
-    /* This has to be the non-roaming directory (i.e., the local
-       directory) as backtraces correspond to the binaries on this
-       system. */
-    dir = g_build_filename (g_get_user_data_dir (),
-                            GIMPDIR, GIMP_USER_VERSION, "CrashLog",
-                            NULL);
-    /* Ensure the path exists. */
-    g_mkdir_with_parents (dir, 0700);
-
-    time (&t);
-    filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                                g_get_prgname(), t);
-    backtrace_file = g_build_filename (dir, filename, NULL);
-    g_free (filename);
-    g_free (dir);
-
-    ExcHndlInit ();
-    ExcHndlSetLogFileNameA (backtrace_file);
-  }
-#endif
 
 #ifndef _WIN64
   {
@@ -537,8 +507,6 @@ main (int    argc,
   abort_message = sanity_check_early ();
   if (abort_message)
     app_abort (no_interface, abort_message);
-
-  gimp_init_signal_handlers ();
 
   if (system_gimprc)
     system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);

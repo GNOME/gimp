@@ -30,22 +30,68 @@
 #include "errors.h"
 #include "signals.h"
 
+#ifdef HAVE_EXCHNDL
+#include <windows.h>
+#include <time.h>
+#include <exchndl.h>
 
-#ifndef G_OS_WIN32
-static void  gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
+static LPTOP_LEVEL_EXCEPTION_FILTER g_prevExceptionFilter = NULL;
+
+static LONG WINAPI  gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+
+#else
+
+static void         gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
+
 #endif
 
 
 void
-gimp_init_signal_handlers (void)
+gimp_init_signal_handlers (gchar **backtrace_file)
 {
-#ifndef G_OS_WIN32
-  /* No use catching these on Win32, the user won't get any stack
-   * trace from glib anyhow. It's better to let Windows inform about
-   * the program error, and offer debugging (if the user has installed
-   * MSVC or some other compiler that knows how to install itself as a
+#ifdef G_OS_WIN32
+  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. Do
+   * nothing otherwise on Win32.
+   * The user won't get any stack trace from glib anyhow.
+   * Without Dr. MinGW, It's better to let Windows inform about the
+   * program error, and offer debugging (if the user has installed MSVC
+   * or some other compiler that knows how to install itself as a
    * handler for program errors).
    */
+#ifdef HAVE_EXCHNDL
+  time_t  t;
+  gchar  *filename;
+  gchar  *dir;
+
+  /* Order is very important here. We need to add our signal handler
+   * first, then run ExcHndlInit() which will add its own handler, so
+   * that ExcHnl's handler runs first since that's in FILO order.
+   */
+  if (! g_prevExceptionFilter)
+    g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
+
+  /* This has to be the non-roaming directory (i.e., the local
+     directory) as backtraces correspond to the binaries on this
+     system. */
+  dir = g_build_filename (g_get_user_data_dir (),
+                          GIMPDIR, GIMP_USER_VERSION, "CrashLog",
+                          NULL);
+  /* Ensure the path exists. */
+  g_mkdir_with_parents (dir, 0700);
+
+  time (&t);
+  filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
+                              g_get_prgname(), t);
+  *backtrace_file = g_build_filename (dir, filename, NULL);
+  g_free (filename);
+  g_free (dir);
+
+  ExcHndlInit ();
+  ExcHndlSetLogFileNameA (*backtrace_file);
+
+#endif /* HAVE_EXCHNDL */
+
+#else
 
   /* Handle fatal signals */
 
@@ -67,11 +113,32 @@ gimp_init_signal_handlers (void)
   /* Restart syscalls on SIGCHLD */
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
-#endif /* ! G_OS_WIN32 */
+#endif /* G_OS_WIN32 */
 }
 
 
-#ifndef G_OS_WIN32
+#ifdef G_OS_WIN32
+
+#ifdef HAVE_EXCHNDL
+static LONG WINAPI
+gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
+{
+  /* Just in case, so that we don't loop or anything similar, just
+   * re-establish previous handler.
+   */
+  SetUnhandledExceptionFilter (g_prevExceptionFilter);
+
+  /* Now process the exception. */
+  gimp_fatal_error ("unhandled exception");
+
+  if (g_prevExceptionFilter && g_prevExceptionFilter != gimp_sigfatal_handler)
+    return g_prevExceptionFilter (pExceptionInfo);
+  else
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+#endif
+
+#else
 
 /* gimp core signal handler for fatal signals */
 
@@ -97,4 +164,4 @@ gimp_sigfatal_handler (gint sig_num)
     }
 }
 
-#endif /* ! G_OS_WIN32 */
+#endif /* G_OS_WIN32 */

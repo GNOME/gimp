@@ -31,6 +31,15 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#ifdef PLATFORM_OSX
+#import <Cocoa/Cocoa.h>
+#endif
+
+#ifdef G_OS_WIN32
+#undef DATADIR
+#include <windows.h>
+#endif
+
 #include "gimpcriticaldialog.h"
 
 #include "version.h"
@@ -44,9 +53,12 @@ typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 #define GIMP_CRITICAL_RESPONSE_RESTART   3
 
 
-static void    gimp_critical_dialog_finalize (GObject    *object);
-static void    gimp_critical_dialog_response (GtkDialog  *dialog,
-                                              gint        response_id);
+static void    gimp_critical_dialog_finalize (GObject     *object);
+static void    gimp_critical_dialog_response (GtkDialog   *dialog,
+                                              gint         response_id);
+
+static gboolean browser_open_url             (const gchar  *url,
+                                              GError      **error);
 
 G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GTK_TYPE_DIALOG)
 
@@ -166,6 +178,102 @@ gimp_critical_dialog_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+
+/* XXX This is taken straight from plug-ins/common/web-browser.c
+ * This really sucks but this class also needs to be called by
+ * tools/gimpdebug.c as a separate process and therefore cannot make use
+ * of the PDB. Anyway shouldn't we just move this as a utils function?
+ * Why does such basic feature as opening a URL in a cross-platform way
+ * need to be a plug-in?
+ */
+static gboolean
+browser_open_url (const gchar  *url,
+                  GError      **error)
+{
+#ifdef G_OS_WIN32
+
+  HINSTANCE hinst = ShellExecute (GetDesktopWindow(),
+                                  "open", url, NULL, NULL, SW_SHOW);
+
+  if ((gint) hinst <= 32)
+    {
+      const gchar *err;
+
+      switch ((gint) hinst)
+        {
+          case 0 :
+            err = _("The operating system is out of memory or resources.");
+            break;
+          case ERROR_FILE_NOT_FOUND :
+            err = _("The specified file was not found.");
+            break;
+          case ERROR_PATH_NOT_FOUND :
+            err = _("The specified path was not found.");
+            break;
+          case ERROR_BAD_FORMAT :
+            err = _("The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image).");
+            break;
+          case SE_ERR_ACCESSDENIED :
+            err = _("The operating system denied access to the specified file.");
+            break;
+          case SE_ERR_ASSOCINCOMPLETE :
+            err = _("The file name association is incomplete or invalid.");
+            break;
+          case SE_ERR_DDEBUSY :
+            err = _("DDE transaction busy");
+            break;
+          case SE_ERR_DDEFAIL :
+            err = _("The DDE transaction failed.");
+            break;
+          case SE_ERR_DDETIMEOUT :
+            err = _("The DDE transaction timed out.");
+            break;
+          case SE_ERR_DLLNOTFOUND :
+            err = _("The specified DLL was not found.");
+            break;
+          case SE_ERR_NOASSOC :
+            err = _("There is no application associated with the given file name extension.");
+            break;
+          case SE_ERR_OOM :
+            err = _("There was not enough memory to complete the operation.");
+            break;
+          case SE_ERR_SHARE:
+            err = _("A sharing violation occurred.");
+            break;
+          default :
+            err = _("Unknown Microsoft Windows error.");
+        }
+
+      g_set_error (error, 0, 0, _("Failed to open '%s': %s"), url, err);
+
+      return FALSE;
+    }
+
+  return TRUE;
+
+#elif defined(PLATFORM_OSX)
+
+  NSURL    *ns_url;
+  gboolean  retval;
+
+  @autoreleasepool
+    {
+      ns_url = [NSURL URLWithString: [NSString stringWithUTF8String: url]];
+      retval = [[NSWorkspace sharedWorkspace] openURL: ns_url];
+    }
+
+  return retval;
+
+#else
+
+  return gtk_show_uri (gdk_screen_get_default (),
+                       url,
+                       gtk_get_current_event_time(),
+                       error);
+
+#endif
+}
+
 static void
 gimp_critical_dialog_response (GtkDialog *dialog,
                                gint       response_id)
@@ -207,10 +315,7 @@ gimp_critical_dialog_response (GtkDialog *dialog,
            * much time digging into it.
            */
           url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
-          gtk_show_uri (gdk_screen_get_default (),
-                        url,
-                        gtk_get_current_event_time(),
-                        NULL);
+          browser_open_url (url, NULL);
         }
       break;
     case GIMP_CRITICAL_RESPONSE_RESTART:
@@ -218,6 +323,10 @@ gimp_critical_dialog_response (GtkDialog *dialog,
           gchar *args[2] = { critical->program , NULL };
 
 #ifndef G_OS_WIN32
+          /* It is unneeded to kill the process on Win32. This was run
+           * as an async call and the main process should already be
+           * dead by now.
+           */
           if (critical->pid > 0)
             kill ((pid_t ) critical->pid, SIGINT);
 #endif
