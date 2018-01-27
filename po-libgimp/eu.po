@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2018-01-27 16:07+0000\n"
-"PO-Revision-Date: 2018-01-27 17:11+0100\n"
+"PO-Revision-Date: 2018-01-27 17:15+0100\n"
 "Last-Translator: Inaki Larranaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -1926,7 +1926,7 @@ msgstr "Eskalak"
 
 #: ../libgimpwidgets/gimpcolorscales.c:383
 msgid "RGB"
-msgstr "GBU"
+msgstr "RGB"
 
 #: ../libgimpwidgets/gimpcolorscales.c:416
 msgid "0..100"
@@ -2320,11 +2320,11 @@ msgstr "LCH ñabardura"
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgctxt "color-selector-model"
 msgid "RGB"
-msgstr "GBU"
+msgstr "RGB"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgid "RGB color model"
-msgstr "GBU kolorea"
+msgstr "RGB kolorea"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
@@ -2338,11 +2338,11 @@ msgstr "CIELCh kolore-eredua"
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "HSV"
-msgstr "ÑSB"
+msgstr "HSV"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgid "HSV color model"
-msgstr "ÑSB kolore-eredua"
+msgstr "HSV kolore-eredua"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
@@ -2431,7 +2431,7 @@ msgstr "Presioa"
 
 #: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
-msgstr "ÑSB kolore-gurpila"
+msgstr "HSV kolore-gurpila"
 
 #: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
