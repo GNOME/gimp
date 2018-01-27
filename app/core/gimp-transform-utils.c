@@ -519,6 +519,62 @@ gimp_transform_matrix_handles (GimpMatrix3 *matrix,
 }
 
 gboolean
+gimp_transform_matrix_generic (GimpMatrix3       *matrix,
+                               const GimpVector2 *input_points,
+                               const GimpVector2 *output_points)
+{
+  GimpMatrix3 trafo;
+  gdouble     coeff[8 * 9];
+  gint        i;
+
+  g_return_val_if_fail (matrix != NULL, FALSE);
+  g_return_val_if_fail (input_points != NULL, FALSE);
+  g_return_val_if_fail (output_points != NULL, FALSE);
+
+  for (i = 0; i < 4; i++)
+    {
+      coeff[i * 9 + 0] = input_points[i].x;
+      coeff[i * 9 + 1] = input_points[i].y;
+      coeff[i * 9 + 2] = 1.0;
+      coeff[i * 9 + 3] = 0.0;
+      coeff[i * 9 + 4] = 0.0;
+      coeff[i * 9 + 5] = 0.0;
+      coeff[i * 9 + 6] = -input_points[i].x * output_points[i].x;
+      coeff[i * 9 + 7] = -input_points[i].y * output_points[i].x;
+      coeff[i * 9 + 8] =                      output_points[i].x;
+
+      coeff[(i + 4) * 9 + 0] = 0.0;
+      coeff[(i + 4) * 9 + 1] = 0.0;
+      coeff[(i + 4) * 9 + 2] = 0.0;
+      coeff[(i + 4) * 9 + 3] = input_points[i].x;
+      coeff[(i + 4) * 9 + 4] = input_points[i].y;
+      coeff[(i + 4) * 9 + 5] = 1.0;
+      coeff[(i + 4) * 9 + 6] = -input_points[i].x * output_points[i].y;
+      coeff[(i + 4) * 9 + 7] = -input_points[i].y * output_points[i].y;
+      coeff[(i + 4) * 9 + 8] =                      output_points[i].y;
+    }
+
+  if (! mod_gauss (coeff, (gdouble *) trafo.coeff, 8))
+    return FALSE;
+
+  trafo.coeff[2][2] = 1.0;
+
+  gimp_matrix3_mult (&trafo, matrix);
+
+  for (i = 0; i < 4; i++)
+    {
+      gdouble w = matrix->coeff[2][0] * input_points[i].x +
+                  matrix->coeff[2][1] * input_points[i].y +
+                  matrix->coeff[2][2];
+
+      if (w <= EPSILON)
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_transform_polygon_is_convex (gdouble x1,
                                   gdouble y1,
                                   gdouble x2,

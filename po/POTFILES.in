@@ -434,6 +434,7 @@ app/tools/gimpforegroundselecttool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimpgegltool.c
+app/tools/gimpgenerictransformtool.c
 app/tools/gimpguidetool.c
 app/tools/gimphandletransformoptions.c
 app/tools/gimphandletransformtool.c
