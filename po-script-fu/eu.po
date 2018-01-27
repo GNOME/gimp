@@ -1,25 +1,27 @@
 # Basque translation for gimp-script-fu
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# 
+#
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011.
 # Edurne Labaka <elabaka@uzei.com>, 2015.
-# 
+# Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2018.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-07 15:44+0100\n"
-"PO-Revision-Date: 2014-11-11 14:54+0100\n"
-"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2018-01-27 16:24+0000\n"
+"PO-Revision-Date: 2018-01-20 15:25+0100\n"
+"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: OmegaT 2.6.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
@@ -99,7 +101,7 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"Ezin duzu \"Freskatu script-ak\" erabili Script-Fu elkarrizketa-koadroa "
+"Ezin duzu 'Freskatu script-ak' erabili Script-Fu elkarrizketa-koadroa "
 "irekita dagoenean. Itxi Script-Fu leiho guztiak eta saiatu berriro."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
@@ -107,13 +109,27 @@ msgstr ""
 msgid "Script-Fu Console"
 msgstr "Script-Fu kontsola"
 
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "_Save"
+msgstr "_Gorde"
+
+#: ../plug-ins/script-fu/script-fu-console.c:133
+msgid "C_lear"
+msgstr "G_arbitu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:134
+#: ../plug-ins/script-fu/script-fu-console.c:371
+msgid "_Close"
+msgstr "It_xi"
+
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
 msgstr "Ongi etorri TinyScheme-ra"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
-msgstr "Eskema garapen interaktiboa"
+msgstr "Eskema-garapen interaktiboa"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
@@ -123,76 +139,94 @@ msgstr "_Arakatu..."
 msgid "Save Script-Fu Console Output"
 msgstr "Gorde Script-Fu kontsolaren irteera"
 
-#: ../plug-ins/script-fu/script-fu-console.c:335
+#: ../plug-ins/script-fu/script-fu-console.c:292
+#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ezin izan da '%s' ireki idazteko: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:364
+#: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-ren prozedura-arakatzailea"
+
+#: ../plug-ins/script-fu/script-fu-console.c:370
+msgid "_Apply"
+msgstr "_Aplikatu"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
-"Script-Fu-ren ebaluatze-moduak deitze ez-interaktiboak bakarrik baimentzen "
+"Script-Fu-ren ebaluatze moduak deitze ez-interaktiboak bakarrik baimentzen "
 "ditu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
-msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "'Script-Fu'-k ezin du bi script aldi berean landu."
-
 #: ../plug-ins/script-fu/script-fu-interface.c:200
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu-k ezin du bi script aldi berean landu."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" scripta jadanik exekutatzen ari zara."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "_Berrezarri"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "_Ados"
+
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:341
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-ren kolore-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-ren fitxategi-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-ren karpeta-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:473
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-ren letra-tipoaren hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-ren paleta-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:490
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-ren eredu-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-ren gradiente-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:508
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-ren brotxa-hautapena"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:857
+#: ../plug-ins/script-fu/script-fu-interface.c:877
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Errorea gertatu da %s exekutatzean:"
@@ -201,32 +235,32 @@ msgstr "Errorea gertatu da %s exekutatzean:"
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Argumentu gutxiegi 'script-fu-register' deian"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Errorea gertatu da %s kargatzean:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-ren zerbitzari-aukerak"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "_Abiarazi zerbitzaria..."
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Entzun IPn:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Zerbitzari-ataka:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Zerbitzariaren egunkaria:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -235,50 +269,1437 @@ msgstr ""
 "erasotzaileei bide eman diezaieke urrunetik intentzio txarreko kodea "
 "exekutatzeko makina honetan."
 
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "Erliebe-mapa"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "Gehitu _alaka..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr "Gehitu alakatutako ertza irudiari"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "Lodiera"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Kopian lan egin"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr "Mantendu erliebe-geruza"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "Ertzaren geruza"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "Gehitu _ertza..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr "Gehitu ertza irudiaren inguruan"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "Ertzaren X tamaina"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "Ertzaren Y tamaina"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "Ertzaren kolorea"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr "Koloreko delta balioa"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "Markoa"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "Animazio nahastuak gutxienez iturburuko hiru geruza behar ditu"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_Nahastu..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Sortu tarteko geruzak bi edo geruza gehiago atzeko planoaren gainean "
+"animazio gisa nahasteko"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "Tarteko markoak"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Geh lausotze-erradioa"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "Begiztatua"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"Erregailua: guztira bi geruza behar ditu. Aurreko planoa gardentasunarekin "
+"eta atzeko planoko geruza."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr "_Erregailua..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Sortu tarteko geruzak bi geruzen artean trantsizioko 'erregailua' motako "
+"animazioa sortzeko"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "Dirdiraren kolorea"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr "Iraungitzea"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+msgid "Fadeout width"
+msgstr "Iraungitzearen zabalera"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr "Koroaren zabalera"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr "Dirdiraren ondoren"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr "Gehitu dirdira"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr "Prestatu GIFerako"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr "Abiadura (pixel/marko)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr "Zizelatutako azalera"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+msgid "Bevel Shadow"
+msgstr "Alakaren itzala"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+msgid "Bevel Highlight"
+msgstr "Alakaren nabarmena"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+msgid "Cast Shadow"
+msgstr "Igorritako itzala"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr "Barnekoa"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "Klixe _zizela..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+"Erabili zehaztutako marrazgaia klixe gisa, zehaztutako iruditik zizelkatzeko."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "Zizelkatzeko irudia"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "Zizelkatu area zuriak"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "Atzeko planoa"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
+msgstr "1. geruza"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "2. geruza"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "3. geruza"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "Jaregin itzala"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr "Kromatu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "Nabarmendu"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr "Klixe k_romatu..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Gehitu efektu kromatua hautatutako eskualdeari (edo gardentasunari) "
+"zehaztutako txantiloia (gris-eskala) erabiliz"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr "Kromatze-saturazioa"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr "Kromatze-argitasuna"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr "Kromatze-faktorea"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr "Ingurune-mapa"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+msgid "Highlight balance"
+msgstr "Nabarmentzearen balantzea"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr "Kromatze-balantzea"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr "Kromatu area zuriak"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr "Geruzaren efektua"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+msgid "_Circuit..."
+msgstr "Zirkuitu-hazia"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"Bete hautatutako eskualdea (edo gardentasuna) zirkuito elektronikoko "
+"trazuekin bezala"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid "Oilify mask size"
+msgstr "Olio-maskararen tamaina"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+msgid "Circuit seed"
+msgstr "Zirkuitu-hazia"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+msgid "No background (only for separate layer)"
+msgstr "Atzeko planorik ez (bereizitako geruzetarako bakarrik)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "Mantendu hautapena"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "Geruza bereizia"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "_Oihal egin..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Gehitu ehunaren testura hautatutako eskualdeari (edo gardentasunari)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "Lausotu X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Lausotu Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "Azimuta"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "Goratzea"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Sakonera"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "Orbanak"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "_Kafe orbanak..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Gehitu kafearen lohidura itxura errealistikoa irudiari"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr "Orbanak"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Darken only"
+msgstr "Ilundu soilik"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+msgid "Difference Clouds..."
+msgstr "Laino diferentziak..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Zarata solidoa diferentzia geruza moduarekin aplikatuta"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr "_Distortsioa..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr "Trabatu hautapena"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Atalasea (handiagoa 1<-->254 txikiagoa)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Spread"
+msgstr "Sakabanatu"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Granularity (1 is low)"
+msgstr "Pikortzea (1 txikia da)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "Smooth"
+msgstr "Leuna"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+msgid "Smooth horizontally"
+msgstr "Leundu horizontalki"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth vertically"
+msgstr "Leundu bertikalki"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr "_Itzal jaurtia (zaharra)..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Gehitu itzal jaurtia hautatutako eskualdeari (edo gardentasunari)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "X desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Y desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Lausotze-erradioa"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Kolorea"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Opakutasuna"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "Baimendu tamaina aldatzea"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr "_Ezabatu bi errenkadatatik bat..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr "Ezabatu bi errenkadatatik/zutabetik bat"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows/cols"
+msgstr "Errenkadak/Zutabeak"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
-msgstr "Errenkadak"
+msgstr "Erren."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Zutabeak"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
+msgstr "Bikoitia/Bakoitia"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "Bikoitia"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr "Bakoitia"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase/fill"
+msgstr "Ezabatu/Bete"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
-msgstr "Ezabatu"
+msgstr "Borratu"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "Bete atzeko planoarekin"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "Errendatu _letra-mapa..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Sortu irudia letra-izenaren iragazkiarekin bat datozen letra-tipoen "
+"aurrebistekin beteta"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_Testua"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Erabili letra-tipoaren _izena testu gisa"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "_Etiketak"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "_Iragazkia (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "Letra-_tamaina (pixeletan)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "_Ertza (pixeletan)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "_Kolorearen eskema"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Beltza zurian"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "Aktibatu koloreak"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr "_Ertz lausoa..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Gehitu koskadun ertz lausoa irudiari"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Ertzaren tamaina"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "Lausotu ertza"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr "Pikortzea (1 txikia da)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "Gehitu itzala"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "Itzalaren pisua (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "Berdindu irudia"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "_Bide-izenak erabiltzea"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Sortu erabiltzailearen eskuliburuaren laster-marka"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Irudiak web guneentzako prestatzea"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "_Argazki kamera digitalekin lan egitea"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "Sortu, ireki eta gorde _fitxategiak"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "_Oinarrizko laguntzak"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Nola erabili _elkarrizketa-koadroak"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Objektu bakunak marraztea"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "Sortu eta erabili _hautapenak"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "_Webgune nagusia"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "Sortu GIMPen webgunearen laster-marka"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "_Garatzaileen web gunea"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "_Erabiltzailearen eskuliburuaren web gune nagusia"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "Pluginen _erregistroa"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "_Gradiente pertsonalizatua..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Sortu irudia uneko gradientearen adibidearekin beteta"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "Zabalera"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Altuera"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "Gradiente alderantzikatua"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Sareta..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr "Marraztu sareta zehaztutako X eta Y kokalekuekin uneko brotxa erabiliz"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "X zatiketa"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Y zatiketa"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Gida berriak _hautapenetik"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "Sortu lau gida uneko hautapenaren muga-koadroaren inguruan"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Gida berria (%)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "Gehitu gida irudi-tamainaren ehunekotan zehaztutako posizioan"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "Noranzkoa"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Horizontala"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Bertikala"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "Posizioa (%)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "Gida _berria..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "Gehitu gida zehaztutako orientazioan eta posizioan (pixeletan)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "Posizioa"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "_Kendu gida guztiak"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Kendu gida horizontal eta bertikal guztiak"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Laba..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Bete uneko hautapena labarekin"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Hazia"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Tamaina"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Zimurtasuna"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Gradientea"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Erabili uneko gradientea"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+msgid "Line _Nova..."
+msgstr "_Noba linea..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr "Bete geruza kanporantz doazen izpiekin Aur.Planoko kolorea erabiliz"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Number of lines"
+msgstr "Sareta-marren kopurua"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Sharpness (degrees)"
+msgstr "Zorroztasuna (gradutan)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+msgid "Offset radius"
+msgstr "Desplazamendu-erradioa"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+msgid "Randomness"
+msgstr "Ausazkotasuna"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "_Laukizuzena..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "Sortu brotxa laukizuzena"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "Izena"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "Tartea"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "_Laukizuzena, lumaduna..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Sortu brotxa laukizuzena lumadun ertzekin"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr "Difuminatzea"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr "_Eliptikoa..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr "Sortu brotxa eliptikoa"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr "_Eliptikoa, lumaduna..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Sortu brotxa eliptikoa lumadun ertzekin"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "_argazki zaharra..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Sortu irudia argazki zaharkituaren itxurarekin"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "Fokatu gabe"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Sepia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "Marmola"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr "Irteerako fitxategiaren karpeta"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Sortuko den fitxategiaren izena (izen berdineko fitxategia egonez gero, "
+"ordeztua izango da)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+"Idatzi duzun fitxategi-izena ez da fitxategi baten izenarentzako egokia."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Izeneko karaktere guztiak edo zuriuneak dira edo fitxategi-izenetan ager "
+"ezin daitezkeen karaktereak dira."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Esportatu paleta aktiboa CSS estilo-orri gisa kolore-sarreraren izena "
+"beraien klase-izen gisa, eta kolore bera kolorearen atributu gisa"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Esportatu paleta aktiboa PHP hiztegi gisa (izena => kolorea)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Esportatu paleta aktiboa Python hiztegi gisa (izena: kolorea)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Idatzi paleta bateko kolore guztiak testu-fitxategi batean, balio hamaseitar "
+"bat lerroko (izenik gabe)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Esportatu paleta aktiboa java.util.Hashtable<Izena, Kolorea> gisa"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Ez dago irudiaren daturik arbelean itsasteko."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "_Brotxa berria..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Itsatsi arbeleko edukia brotxa berrian"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "Brotxaren izena"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "Fitxategi-izena"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "E_redu berria..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Itsatsi arbeleko edukia eredu berrian"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "Eredu-izena"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "_Perspektiba..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr ""
+"Gehitu itzalaren perspektiba hautatutako eskualdeari (edo gardentasunari)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Angelua"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "Zerumugaren distantzia erlatiboa"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "Itzalaren luzera erlatiboa"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Interpolazioa"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "_Harraparia..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr ""
+"Gehitu 'Harraparia' efektua hautatutako eskualdeari (edo gardentasunari)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "Ertz kopurua"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "Pixelizatu"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "Pixel kopurua"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "Alderantzikatu geruzen ordena"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "Alderantzikatu irudiaren geruzen ordena"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
+msgid "_Rippling..."
+msgstr "_Izurtu..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+"Sortu geruza anitzeko irudi bat, uneko geruzari izurtze-efektua gehituta"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
+msgid "Rippling strength"
+msgstr "Izurtze-indarra"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Marko kopurua"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Edge behavior"
+msgstr "Ertzaren portaera"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Wrap"
 msgstr "Doitu"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Smear"
+msgstr "Lohitu"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Black"
+msgstr "Beltza"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "_Biribildu izkinak..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Biribildu irudiaren ertzak, eta aukera gehitu itzal jaurtia eta atzeko planoa"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Ertzaren erradioa"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "Gehitu itzala"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "Itzalaren X desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Itzalaren Y desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Gehitu atzeko planoa"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "E_zarri kolore-mapa..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Aldatu irudiaren kolore-mapa paletan zehaztutako koloretara"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "Laukizuzen bi_ribildua..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Biribildu uneko hautapenaren ertzak"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "Erradioa (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "Ahurra"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "_Brotxara..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "Bihurtu hautapena brotxa"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "_Irudira"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "Bihurtu hautapena irudi"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "E_redura..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "Bihurtu hautapena eredu"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr "_Diapositiba..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Gehitu film-diapositiba bezalako markoa, piñoien zuloekin eta etiketekin "
+"irudian"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "Testua"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Zenbakia"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Letra-tipoa"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "Letra-tipoaren kolorea"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "Globo b_irakaria..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "Sortu animazioa uneko irudia biraka dagoen esferan mapatuz"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Markoak"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "Biratu ezkerretik eskuinera"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Atzeko plano gardena"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Indexatu n koloretan (0 = Mantendu RGB)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "Espirografia marrazten"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr "E_spirografoa..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+"Gehitu espirografoak, epitrokoideak eta Lissajous kurbak uneko geruzari"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "Mota"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Espirografoa"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "Epitrokoidea"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "Forma"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "Zirkulua"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "Triangelua"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "Karratua"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "Pentagonoa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "Hexagonoa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "Poligonoa: 7 alde"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "Poligonoa: 8 alde"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "Poligonoa: 9 alde"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "Poligonoa: 10 alde"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "Kanpoko hortzak"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "Barruko hortzak"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "Marjina (pixeletan)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "Zuloaren erradioa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "Hasierako angelua"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "Tresna"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "Arkatza"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "Brotxa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "Aerografoa"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "Koloreztatze-metodoa"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "Kolore lisoa"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "Gradientea: begizta horzduna"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "Gradientea: begizta triangelua"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+msgid "_Sphere..."
+msgstr "_Esfera..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "_Lausotze teilakagarria..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "Lausotu irudiaren ertzak emaitzarekin mosaikoa osatzeko"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Erradioa"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "Lausotu bertikalki"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "Lausotu horizontalki"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "Lausotze mota"
+
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Maskararen tamaina"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Maskararen opakutasuna"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_Uhinak..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Sortu geruza anitzeko irudia harria uneko irudiaren gainetik igaro balitz "
+"bezalako efektuarekin"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "Anplitudea"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "Uhinaren luzera"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "Alderantzikatu noranzkoa"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr "_Bilbea..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Sortu geruza berria uhin efektuarekin gainjartzeko edo erliebe-mapa gisa "
+"erabiltzeko"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr "Bandaren zabalera"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr "Banda arteko tartea"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "Itzalaren iluntasuna"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "Itzalaren sakonera"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr "Hariaren luzera"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr "Hariaren dentsitatea"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr "Hariaren intentsitatea"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Itzala"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "_Xach-en efektua..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+"Gehitu 3D efektu zeharrargitsu leuna hautatutako eskualdeari (edo "
+"gardentasunari)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "Nabarmentzearen X desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "Nabarmentzearen Y desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Nabarmentzearen kolorea"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "Nabarmentzearen opakutasuna"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "Itzalaren kolorea"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "Itzalaren opakutasuna"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "Itzalaren lausotze-erradioa"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "Itzalaren X desplazamendua"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "Itzalaren Y desplazamendua"
 
 #~ msgid "Right"
 #~ msgstr "Eskuinean"
@@ -317,23 +1738,11 @@ msgstr "IIR"
 #~ msgid "Default bumpmap settings"
 #~ msgstr "Erliebe-maparen ezarpen lehenetsiak"
 
-#~ msgid "Shadow X offset"
-#~ msgstr "Itzalaren X desplazamendua"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Itzalaren Y desplazamendua"
-
 #~ msgid "Create a logo with outlined text and a drop shadow"
 #~ msgstr "Sortu logotipoa testuaren eskemarekin eta itzal jaurtiarekin"
 
-#~ msgid "Text"
-#~ msgstr "Testua"
-
 #~ msgid "Font size (pixels)"
 #~ msgstr "Letra-tamaina (pixeletan)"
-
-#~ msgid "Font"
-#~ msgstr "Letra-tipoa"
 
 #~ msgid "3_D Truchet..."
 #~ msgstr "3_D Truchet..."
@@ -343,9 +1752,6 @@ msgstr "IIR"
 
 #~ msgid "Block size"
 #~ msgstr "Bloke-tamaina"
-
-#~ msgid "Thickness"
-#~ msgstr "Lodiera"
 
 #~ msgid "Background color"
 #~ msgstr "Atzeko planoaren kolorea"
@@ -365,50 +1771,11 @@ msgstr "IIR"
 #~ msgid "Number of Y tiles"
 #~ msgstr "Yko lauza kopurua"
 
-#~ msgid "Bumpmap"
-#~ msgstr "Erliebe-mapa"
-
-#~ msgid "Add B_evel..."
-#~ msgstr "Gehitu _alaka..."
-
-#~ msgid "Add a beveled border to an image"
-#~ msgstr "Gehitu alakatutako ertza irudiari"
-
-#~ msgid "Work on copy"
-#~ msgstr "Kopian lan egin"
-
-#~ msgid "Keep bump layer"
-#~ msgstr "Mantendu erliebe-geruza"
-
-#~ msgid "Border Layer"
-#~ msgstr "Ertzaren geruza"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Gehitu _ertza..."
-
-#~ msgid "Add a border around an image"
-#~ msgstr "Gehitu ertza irudiaren inguruan"
-
-#~ msgid "Border X size"
-#~ msgstr "Ertzaren X tamaina"
-
-#~ msgid "Border Y size"
-#~ msgstr "Ertzaren Y tamaina"
-
-#~ msgid "Border color"
-#~ msgstr "Ertzaren kolorea"
-
-#~ msgid "Delta value on color"
-#~ msgstr "Koloreko delta balioa"
-
 #~ msgid "Arrow"
 #~ msgstr "Gezia"
 
 #~ msgid "Alien Glow"
 #~ msgstr "Estralurtarren dirdira"
-
-#~ msgid "Background"
-#~ msgstr "Atzeko planoa"
 
 #~ msgid "_Arrow..."
 #~ msgstr "_Gezia..."
@@ -416,9 +1783,6 @@ msgstr "IIR"
 #~ msgid "Create an arrow graphic with an eerie glow for web pages"
 #~ msgstr ""
 #~ "Sortu gezi formako grafikoa dirdira espektralekin web orrialdeentzako"
-
-#~ msgid "Size"
-#~ msgstr "Tamaina"
 
 #~ msgid "Orientation"
 #~ msgstr "Orientazioa"
@@ -431,12 +1795,6 @@ msgstr "IIR"
 
 #~ msgid "Down"
 #~ msgstr "Behean"
-
-#~ msgid "Glow color"
-#~ msgstr "Dirdiraren kolorea"
-
-#~ msgid "Flatten image"
-#~ msgstr "Berdindu irudia"
 
 #~ msgid "Bar"
 #~ msgstr "Barra"
@@ -464,9 +1822,6 @@ msgstr "IIR"
 #~ msgid "Create a bullet graphic with an eerie glow for web pages"
 #~ msgstr ""
 #~ "Sortu buleta formako grafikoa dirdira espektralekin web orrialdeentzako"
-
-#~ msgid "Radius"
-#~ msgstr "Erradioa"
 
 #~ msgid "Glow"
 #~ msgstr "Dirdira"
@@ -552,9 +1907,6 @@ msgstr "IIR"
 #~ msgid "Create a simple logo with a shadow and a highlight"
 #~ msgstr "Sortu logotipo bakuna itzalarekin eta nabarmedua"
 
-#~ msgid "Gradient"
-#~ msgstr "Gradientea"
-
 #~ msgid "Simple _Beveled Button..."
 #~ msgstr "Bo_toi soil alakatua..."
 
@@ -582,9 +1934,6 @@ msgstr "IIR"
 #~ msgid "Diameter"
 #~ msgstr "Diametroa"
 
-#~ msgid "Transparent background"
-#~ msgstr "Atzeko plano gardena"
-
 #~ msgid "Create a beveled pattern button for webpages"
 #~ msgstr "Sortu alakatutako botoi eredua web orrialdeentzako"
 
@@ -599,37 +1948,6 @@ msgstr "IIR"
 
 #~ msgid "Create a beveled pattern hrule for webpages"
 #~ msgstr "Sortu alakatutako marra horizontal eredua web orrialdeentzako"
-
-#~ msgid "Width"
-#~ msgstr "Zabalera"
-
-#~ msgid "Height"
-#~ msgstr "Altuera"
-
-#~ msgid "Frame"
-#~ msgstr "Markoa"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "Animazio nahastuak gutxienez iturburuko hiru geruza behar ditu"
-
-#~ msgid "_Blend..."
-#~ msgstr "_Nahastu..."
-
-#~ msgid ""
-#~ "Create intermediate layers to blend two or more layers over a background "
-#~ "as an animation"
-#~ msgstr ""
-#~ "Sortu tarteko geruzak bi edo geruza gehiago atzeko planoaren gainean "
-#~ "animazio gisa nahasteko"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "Tarteko markoak"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "Geh lausotze-erradioa"
-
-#~ msgid "Looped"
-#~ msgstr "Begiztatua"
 
 #~ msgid "Blen_ded..."
 #~ msgstr "_Nahastuta..."
@@ -656,9 +1974,6 @@ msgstr "IIR"
 #~ msgid "Custom Gradient"
 #~ msgstr "Gradiente pertsonalizatua"
 
-#~ msgid "Gradient reverse"
-#~ msgstr "Gradiente alderantzikatua"
-
 #~ msgid "Create a logo with blended backgrounds, highlights, and shadows"
 #~ msgstr "Sortu logotipoa atzeko plano, nabarmendu eta itzal nahastuekin"
 
@@ -679,44 +1994,6 @@ msgstr "IIR"
 
 #~ msgid "Create a logo with text in the style of 'cow spots'"
 #~ msgstr "Sortu logotipoa testuarekin 'behi azala' estiloan"
-
-#~ msgid ""
-#~ "The Burn-In script needs two layers in total. A foreground layer with "
-#~ "transparency and a background layer."
-#~ msgstr ""
-#~ "Erregailua: guztira bi geruza behar ditu. Aurreko planoa "
-#~ "gardentasunarekin eta atzeko planoko geruza."
-
-#~ msgid "B_urn-In..."
-#~ msgstr "_Erregailua..."
-
-#~ msgid ""
-#~ "Create intermediate layers to produce an animated 'burn-in' transition "
-#~ "between two layers"
-#~ msgstr ""
-#~ "Sortu tarteko geruzak bi geruzen artean trantsizioko 'erregailua' motako "
-#~ "animazioa sortzeko"
-
-#~ msgid "Fadeout"
-#~ msgstr "Iraungitzea"
-
-#~ msgid "Fadeout width"
-#~ msgstr "Iraungitzearen zabalera"
-
-#~ msgid "Corona width"
-#~ msgstr "Koroaren zabalera"
-
-#~ msgid "After glow"
-#~ msgstr "Dirdiraren ondoren"
-
-#~ msgid "Add glowing"
-#~ msgstr "Gehitu dirdira"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "Prestatu GIFerako "
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "Abiadura (pixel/marko)"
 
 #~ msgid "_Camouflage..."
 #~ msgstr "_Kamuflajea..."
@@ -739,24 +2016,6 @@ msgstr "IIR"
 #~ msgid "Color 3"
 #~ msgstr "3. kolorea"
 
-#~ msgid "Smooth"
-#~ msgstr "Leuna"
-
-#~ msgid "Carved Surface"
-#~ msgstr "Zizelatutako azalera"
-
-#~ msgid "Bevel Shadow"
-#~ msgstr "Alakaren itzala"
-
-#~ msgid "Bevel Highlight"
-#~ msgstr "Alakaren nabarmena"
-
-#~ msgid "Cast Shadow"
-#~ msgstr "Igorritako itzala"
-
-#~ msgid "Inset"
-#~ msgstr "Txertatu"
-
 #~ msgid "Carved..."
 #~ msgstr "Zizelkatua..."
 
@@ -775,15 +2034,6 @@ msgstr "IIR"
 
 #~ msgid "Padding around text"
 #~ msgstr "Testu inguruko betegarria"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "Klixe _zizala..."
-
-#~ msgid "Image to carve"
-#~ msgstr "Zizelkatzeko irudia"
-
-#~ msgid "Carve white areas"
-#~ msgstr "Zizelkatu area zuriak"
 
 #~ msgid "_Chalk..."
 #~ msgstr "_Klera..."
@@ -827,55 +2077,6 @@ msgstr "IIR"
 #~ msgid "Create a logo resembling a chipped wood carving"
 #~ msgstr "Sortu logotipoa akastun zurezko eskultura baten antzera"
 
-#~ msgid "Layer 1"
-#~ msgstr "1. geruza"
-
-#~ msgid "Layer 2"
-#~ msgstr "2. geruza"
-
-#~ msgid "Layer 3"
-#~ msgstr "3. geruza"
-
-#~ msgid "Drop Shadow"
-#~ msgstr "Jaregin itzala"
-
-#~ msgid "Chrome"
-#~ msgstr "Kromatu"
-
-#~ msgid "Highlight"
-#~ msgstr "Nabarmendu"
-
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "Klixe k_romatu..."
-
-#~ msgid ""
-#~ "Add a chrome effect to the selected region (or alpha) using a specified "
-#~ "(grayscale) stencil"
-#~ msgstr ""
-#~ "Gehitu efektu kromatua hautatutako eskualdeari (edo gardentasunari) "
-#~ "zehaztutako txantiloia (gris-eskala) erabiliz"
-
-#~ msgid "Chrome saturation"
-#~ msgstr "Kromatze-saturazioa"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "Kromatze-argitasuna"
-
-#~ msgid "Chrome factor"
-#~ msgstr "Kromatze-faktorea"
-
-#~ msgid "Environment map"
-#~ msgstr "Ingurune-mapa"
-
-#~ msgid "Highlight balance"
-#~ msgstr "Nabarmentzearen balantzea"
-
-#~ msgid "Chrome balance"
-#~ msgstr "Kromatze-balantzea"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "Kromatu area zuriak"
-
 #~ msgid "C_hrome..."
 #~ msgstr "K_romatu..."
 
@@ -887,71 +2088,6 @@ msgstr "IIR"
 
 #~ msgid "Create a simplistic, but cool, chromed logo"
 #~ msgstr "Sortu kromatutako logotipo bakuna baina dotorea"
-
-#~ msgid "Effect layer"
-#~ msgstr "Geruzaren efektua"
-
-#~ msgid "_Circuit..."
-#~ msgstr "Zirkuitu-hazia"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with traces like those on a circuit "
-#~ "board"
-#~ msgstr ""
-#~ "Bete hautatutako eskualdea (edo gardentasuna) zirkuito elektronikoko "
-#~ "trazuekin bezala"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "Olio-maskararen tamaina"
-
-#~ msgid "Circuit seed"
-#~ msgstr "Zirkuitu-hazia"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "Atzeko planorik ez (bereizitako geruzetarako bakarrik)"
-
-#~ msgid "Keep selection"
-#~ msgstr "Mantendu hautapena"
-
-#~ msgid "Separate layer"
-#~ msgstr "Geruza bereizia"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Oihal egin..."
-
-#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Gehitu ehunaren testura hautatutako eskualdeari (edo gardentasunari)"
-
-#~ msgid "Blur X"
-#~ msgstr "Lausotu X"
-
-#~ msgid "Blur Y"
-#~ msgstr "Lausotu Y"
-
-#~ msgid "Azimuth"
-#~ msgstr "Azimuta"
-
-#~ msgid "Elevation"
-#~ msgstr "Goratzea"
-
-#~ msgid "Depth"
-#~ msgstr "Sakonera"
-
-#~ msgid "Stain"
-#~ msgstr "Orbanak"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Kafe orbanak..."
-
-#~ msgid "Add realistic looking coffee stains to the image"
-#~ msgstr "Gehitu kafearen lohidura itxura errealistikoa irudiari"
-
-#~ msgid "Stains"
-#~ msgstr "Orbanak"
-
-#~ msgid "Darken only"
-#~ msgstr "Ilundu bakarrik"
 
 #~ msgid "Comic Boo_k..."
 #~ msgstr "Komikia..."
@@ -1001,82 +2137,6 @@ msgstr "IIR"
 #~ msgid "Background image"
 #~ msgstr "Atzeko planoko irudia"
 
-#~ msgid "Difference Clouds..."
-#~ msgstr "Laino diferentziak..."
-
-#~ msgid "Solid noise applied with Difference layer mode"
-#~ msgstr "Zarata solidoa diferentzia geruza moduarekin aplikatuta"
-
-#~ msgid "_Distort..."
-#~ msgstr "_Distortsioa..."
-
-#~ msgid "Distress the selection"
-#~ msgstr "Trabatu hautapena"
-
-#, fuzzy
-#~ msgid "Threshold (bigger 1<-->254 smaller)"
-#~ msgstr "Muga (Handiagoa 1<-->255 Txikiagoa)"
-
-#~ msgid "Spread"
-#~ msgstr "Zabaldu"
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "Pikortzea (1 txikia da)"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "Leundu horizontalki"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Leundu bertikalki"
-
-#~ msgid "_Drop Shadow..."
-#~ msgstr "_Itzal jaurtia..."
-
-#~ msgid "Add a drop shadow to the selected region (or alpha)"
-#~ msgstr "Gehitu itzal jaurtia hautatutako eskualdeari (edo gardentasunari)"
-
-#~ msgid "Offset X"
-#~ msgstr "X desplazamendua"
-
-#~ msgid "Offset Y"
-#~ msgstr "Y desplazamendua"
-
-#~ msgid "Blur radius"
-#~ msgstr "Lausotze-erradioa"
-
-#~ msgid "Color"
-#~ msgstr "Kolorea"
-
-#~ msgid "Opacity"
-#~ msgstr "Opakutasuna"
-
-#~ msgid "Allow resizing"
-#~ msgstr "Baimendu tamaina aldatzea"
-
-#~ msgid "_Erase Every Other Row..."
-#~ msgstr "_Ezabatu bi errenkadatatik bat..."
-
-#~ msgid "Erase every other row or column"
-#~ msgstr "Ezabatu bi errenkadatatik/zutabetik bat"
-
-#~ msgid "Rows/cols"
-#~ msgstr "Errenkadak/Zutabeak"
-
-#~ msgid "Columns"
-#~ msgstr "Zutabeak"
-
-#~ msgid "Even/odd"
-#~ msgstr "Bikoitia/Bakoitia"
-
-#~ msgid "Odd"
-#~ msgstr "Bakoitia"
-
-#~ msgid "Erase/fill"
-#~ msgstr "Ezabatu/Bete"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Bete atzeko planoarekin"
-
 #~ msgid "_Flatland..."
 #~ msgstr "_Lur laua..."
 
@@ -1101,39 +2161,6 @@ msgstr "IIR"
 #~ msgid "Scale Y"
 #~ msgstr "Y eskala"
 
-#~ msgid "Render _Font Map..."
-#~ msgstr "Errendatu _letra-mapa..."
-
-#~ msgid ""
-#~ "Create an image filled with previews of fonts matching a fontname filter"
-#~ msgstr ""
-#~ "Sortu irudia letra-izenaren iragazkiarekin bat datozen letra-tipoen "
-#~ "aurrebistekin beteta"
-
-#~ msgid "_Text"
-#~ msgstr "_Testua"
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Erabili letra-tipoaren _izena testu gisa"
-
-#~ msgid "_Labels"
-#~ msgstr "_Etiketak"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "_Iragazkia (regexp)"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "Letra-_tamaina (pixeletan)"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "_Ertza (pixeletan)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "_Kolorearen eskema"
-
-#~ msgid "Active colors"
-#~ msgstr "Aktibatu koloreak"
-
 #~ msgid "_Frosty..."
 #~ msgstr "_Izoztuta..."
 
@@ -1146,69 +2173,6 @@ msgstr "IIR"
 
 #~ msgid "Create frozen logo with an added drop shadow"
 #~ msgstr "Sortu izoztutako logotipoa gehitutako itzal jaurtiarekin"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "_Ertz lausoa..."
-
-#~ msgid "Add a jagged, fuzzy border to an image"
-#~ msgstr "Gehitu koskadun ertz lausoa irudiari"
-
-#~ msgid "Border size"
-#~ msgstr "Ertzaren tamaina"
-
-#~ msgid "Blur border"
-#~ msgstr "Lausotu ertza"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "Pikortzea (1 txikia da)"
-
-#~ msgid "Add shadow"
-#~ msgstr "Gehitu itzala"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Itzalaren pisua (%)"
-
-#~ msgid "Using _Paths"
-#~ msgstr "_Bide-izenak erabiltzea"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "Sortu erabiltzailearen eskuliburuaren laster-marka"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Irudiak web guneentzako prestatzea"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "_Argazki kamera digitalekin lan egitea"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "Sortu, ireki eta gorde _fitxategiak"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "_Oinarrizko laguntzak"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Nola erabili _elkarrizketa-koadroak"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Objektu bakunak marraztea"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "Sortu eta erabili _hautapenak"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "_Web gune nagusia"
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "Sortu GIMPen webgunearen laster-marka"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "_Garatzaileen web gunea"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "_Erabiltzailearen eskuliburuaren web gune nagusia"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "Plugin-en _erregistroa"
 
 #~ msgid "Glo_ssy..."
 #~ msgstr "_Satinatua..."
@@ -1250,9 +2214,6 @@ msgstr "IIR"
 #~ msgid "Pattern (overlay)"
 #~ msgstr "Eredua (gainjarria)"
 
-#~ msgid "Shadow"
-#~ msgstr "Itzala"
-
 #~ msgid "Create a logo with gradients, patterns, shadows, and bump maps"
 #~ msgstr "Sortu logotipoa gradiente, eredu, itzal eta erliebe-mapekin"
 
@@ -1284,65 +2245,6 @@ msgstr "IIR"
 #~ msgid "Create a logo with a shiny look and beveled edges"
 #~ msgstr "Sortu logotipoa alakadun ertz disdiratsuekin"
 
-#~ msgid "Custom _Gradient..."
-#~ msgstr "_Gradiente pertsonalizatua..."
-
-#~ msgid "Create an image filled with an example of the current gradient"
-#~ msgstr "Sortu irudia uneko gradientearen adibidearekin beteta"
-
-#~ msgid "_Grid..."
-#~ msgstr "_Sareta..."
-
-#~ msgid ""
-#~ "Draw a grid as specified by the lists of X and Y locations using the "
-#~ "current brush"
-#~ msgstr ""
-#~ "Marraztu sareta zehaztutako X eta Y kokalekuekin uneko brotxa erabiliz"
-
-#~ msgid "X divisions"
-#~ msgstr "X zatiketa"
-
-#~ msgid "Y divisions"
-#~ msgstr "Y zatiketa"
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Gida berriak _hautapenetik"
-
-#, fuzzy
-#~ msgid "Create four guides around the bounding box of the current selection"
-#~ msgstr "Biribildu uneko hautapenaren ertzak"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Gida berria (%)..."
-
-#~ msgid ""
-#~ "Add a guide at the position specified as a percentage of the image size"
-#~ msgstr "Gehitu gida irudi-tamainaren ehunekotan zehaztutako posizioan"
-
-#~ msgid "Direction"
-#~ msgstr "Noranzkoa"
-
-#~ msgid "Vertical"
-#~ msgstr "Bertikala"
-
-#~ msgid "Position (in %)"
-#~ msgstr "Posizioa (%)"
-
-#~ msgid "New _Guide..."
-#~ msgstr "Gida _berria..."
-
-#~ msgid "Add a guide at the orientation and position specified (in pixels)"
-#~ msgstr "Gehitu gida zehaztutako orientazioan eta posizioan (pixeletan)"
-
-#~ msgid "Position"
-#~ msgstr "Posizioa"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "_Kendu gida guztiak"
-
-#~ msgid "Remove all horizontal and vertical guides"
-#~ msgstr "Kendu gida horizontal eta bertikal guztiak"
-
 #~ msgid "Imigre-_26..."
 #~ msgstr "Imigre-_26..."
 
@@ -1366,74 +2268,6 @@ msgstr "IIR"
 
 #~ msgid "Sea depth"
 #~ msgstr "Itsasoaren sakonera"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Laba..."
-
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "Bete uneko hautapena labarekin"
-
-#~ msgid "Seed"
-#~ msgstr "Hazia"
-
-#~ msgid "Roughness"
-#~ msgstr "Zimurtasuna"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Erabili uneko gradientea"
-
-#~ msgid "Line _Nova..."
-#~ msgstr "_Noba linea..."
-
-#~ msgid ""
-#~ "Fill a layer with rays emanating outward from its center using the "
-#~ "foreground color"
-#~ msgstr "Bete geruza kanporantz doazen izpiekin Aur.Planoko kolorea erabiliz"
-
-#~ msgid "Number of lines"
-#~ msgstr "Marra kopurua"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "Zorroztasuna (gradutan)"
-
-#~ msgid "Offset radius"
-#~ msgstr "Desplazamendu-erradioa"
-
-#~ msgid "Randomness"
-#~ msgstr "Ausazkotasuna"
-
-#~ msgid "_Rectangular..."
-#~ msgstr "_Laukizuzena..."
-
-#~ msgid "Create a rectangular brush"
-#~ msgstr "Sortu brotxa laukizuzena"
-
-#~ msgid "Name"
-#~ msgstr "Izena"
-
-#~ msgid "Spacing"
-#~ msgstr "Tartea"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "_Laukizuzena, lumaduna..."
-
-#~ msgid "Create a rectangular brush with feathered edges"
-#~ msgstr "Sortu brotxa laukizuzena lumadun ertzekin"
-
-#~ msgid "Feathering"
-#~ msgstr "Difuminatzea"
-
-#~ msgid "_Elliptical..."
-#~ msgstr "_Eliptikoa..."
-
-#~ msgid "Create an elliptical brush"
-#~ msgstr "Sortu brotxa eliptikoa"
-
-#~ msgid "Elli_ptical, Feathered..."
-#~ msgstr "_Eliptikoa, lumaduna..."
-
-#~ msgid "Create an elliptical brush with feathered edges"
-#~ msgstr "Sortu brotxa eliptikoa lumadun ertzekin"
 
 #~ msgid "N_eon..."
 #~ msgstr "N_eon..."
@@ -1459,124 +2293,6 @@ msgstr "IIR"
 
 #~ msgid "Density (%)"
 #~ msgstr "Dentsitatea (%)"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "_argazki zaharra..."
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "Sortu irudia argazki zaharkituaren itxurarekin"
-
-#~ msgid "Defocus"
-#~ msgstr "Fokatu gabe"
-
-#~ msgid "Sepia"
-#~ msgstr "Sepia"
-
-#~ msgid "Mottle"
-#~ msgstr "Marmola"
-
-#~ msgid "Folder for the output file"
-#~ msgstr "Irteerako fitxategiaren karpeta"
-
-#~ msgid ""
-#~ "The name of the file to create (if a file with this name already exist, "
-#~ "it will be replaced)"
-#~ msgstr ""
-#~ "Sortuko den fitxategiaren izena (izen berdineko fitxategia egonez gero, "
-#~ "ordeztua izango da)"
-
-#~ msgid "The filename you entered is not a suitable name for a file."
-#~ msgstr ""
-#~ "Idatzi duzun fitxategi-izena ez da fitxategi baten izenarentzako egokia."
-
-#~ msgid ""
-#~ "All characters in the name are either white-spaces or characters which "
-#~ "can not appear in filenames."
-#~ msgstr ""
-#~ "Izeneko karaktere guztiak edo zuriuneak dira edo fitxategi-izenetan ager "
-#~ "ezin daitezkeen karaktereak dira."
-
-#~ msgid ""
-#~ "Export the active palette as a CSS stylesheet with the color entry name "
-#~ "as their class name, and the color itself as the color attribute"
-#~ msgstr ""
-#~ "Esportatu paleta aktiboa CSS estilo-orri gisa kolore-sarreraren izena "
-#~ "beraien klase-izen gisa, eta kolore bera kolorearen atributu gisa"
-
-#~ msgid "Export the active palette as a PHP dictionary (name => color)"
-#~ msgstr "Esportatu paleta aktiboa PHP hiztegi gisa (izena => kolorea)"
-
-#~ msgid "Export the active palette as a Python dictionary (name: color)"
-#~ msgstr "Esportatu paleta aktiboa Python hiztegi gisa (izena: kolorea)"
-
-#~ msgid ""
-#~ "Write all the colors in a palette to a text file, one hexadecimal value "
-#~ "per line (no names)"
-#~ msgstr ""
-#~ "Idatzi paleta bateko kolore guztiak testu-fitxategi batean, balio "
-#~ "hamaseitar bat lerroko (izenik gabe)"
-
-#~ msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-#~ msgstr "Esportatu paleta aktiboa java.util.Hashtable<Izena, Kolorea> gisa"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "Ez dago irudiaren daturik arbelean itsasteko."
-
-#~ msgid "New _Brush..."
-#~ msgstr "_Brotxa berria..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "Itsatsi arbeleko edukia brotxa berrian"
-
-#~ msgid "Brush name"
-#~ msgstr "Brotxaren izena"
-
-#~ msgid "File name"
-#~ msgstr "Fitxategi-izena"
-
-#~ msgid "New _Pattern..."
-#~ msgstr "E_redu berria..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "Itsatsi arbeleko edukia eredu berrian"
-
-#~ msgid "Pattern name"
-#~ msgstr "Eredu-izena"
-
-#~ msgid "_Perspective..."
-#~ msgstr "_Perspektiba..."
-
-#~ msgid "Add a perspective shadow to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Gehitu itzalaren perspektiba hautatutako eskualdeari (edo gardentasunari)"
-
-#~ msgid "Angle"
-#~ msgstr "Angelua"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "Zerumugaren distantzia erlatiboa"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "Itzalaren luzera erlatiboa"
-
-#~ msgid "Interpolation"
-#~ msgstr "Interpolazioa"
-
-#~ msgid "_Predator..."
-#~ msgstr "_Harraparia..."
-
-#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Gehitu 'Harraparia' efektua hautatutako eskualdeari (edo gardentasunari)"
-
-#~ msgid "Edge amount"
-#~ msgstr "Ertz kopurua"
-
-#~ msgid "Pixelize"
-#~ msgstr "Pixelizatu"
-
-#~ msgid "Pixel amount"
-#~ msgstr "Pixel kopurua"
 
 #~ msgid "_Round Button..."
 #~ msgstr "Bo_toi biribila..."
@@ -1626,107 +2342,6 @@ msgstr "IIR"
 #~ msgid "Detail in Middle"
 #~ msgstr "Xehetasuna erdian"
 
-#~ msgid "Reverse Layer Order"
-#~ msgstr "Alderantzikatu geruzen ordena"
-
-#~ msgid "Reverse the order of layers in the image"
-#~ msgstr "Alderantzikatu irudiaren geruzen ordena"
-
-#~ msgid "_Rippling..."
-#~ msgstr "_Izurtu..."
-
-#~ msgid ""
-#~ "Create a multi-layer image by adding a ripple effect to the current image"
-#~ msgstr "Sortu geruza anitzeko irudia uneko irudiari izurtze-efektua gehituz"
-
-#~ msgid "Rippling strength"
-#~ msgstr "Izurtze-indarra"
-
-#~ msgid "Number of frames"
-#~ msgstr "Marko kopurua"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Ertzaren portaera"
-
-#~ msgid "Smear"
-#~ msgstr "Lohitu"
-
-#~ msgid "Black"
-#~ msgstr "Beltza"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "_Biribildu izkinak..."
-
-#~ msgid ""
-#~ "Round the corners of an image and optionally add a drop-shadow and "
-#~ "background"
-#~ msgstr ""
-#~ "Biribildu irudiaren ertzak, eta aukera gehitu itzal jaurtia eta atzeko "
-#~ "planoa"
-
-#~ msgid "Edge radius"
-#~ msgstr "Ertzaren erradioa"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "Gehitu itzala"
-
-#~ msgid "Add background"
-#~ msgstr "Gehitu atzeko planoa"
-
-#~ msgid "Se_t Colormap..."
-#~ msgstr "E_zarri kolore-mapa..."
-
-#~ msgid ""
-#~ "Change the colormap of an image to the colors in a specified palette."
-#~ msgstr "Aldatu irudiaren kolore-mapa paletan zehaztutako koloretara"
-
-#~ msgid "Palette"
-#~ msgstr "Paleta"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Laukizuzen bi_ribildua..."
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "Biribildu uneko hautapenaren ertzak"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Erradioa (%)"
-
-#~ msgid "Concave"
-#~ msgstr "Ahurra"
-
-#~ msgid "To _Brush..."
-#~ msgstr "_Brotxara..."
-
-#~ msgid "Convert a selection to a brush"
-#~ msgstr "Bihurtu hautapena brotxa"
-
-#~ msgid "To _Image"
-#~ msgstr "_Irudira"
-
-#~ msgid "Convert a selection to an image"
-#~ msgstr "Bihurtu hautapena irudi"
-
-#~ msgid "To _Pattern..."
-#~ msgstr "E_redura..."
-
-#~ msgid "Convert a selection to a pattern"
-#~ msgstr "Bihurtu hautapena eredu"
-
-#~ msgid "_Slide..."
-#~ msgstr "_Diapositiba..."
-
-#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-#~ msgstr ""
-#~ "Gehitu film-diapositiba bezalako markoa, piñoien zuloekin eta etiketekin "
-#~ "irudian"
-
-#~ msgid "Number"
-#~ msgstr "Zenbakia"
-
-#~ msgid "Font color"
-#~ msgstr "Letra-tipoaren kolorea"
-
 #~ msgid "SOTA Chrome..."
 #~ msgstr "SOTA kromatua..."
 
@@ -1738,102 +2353,6 @@ msgstr "IIR"
 
 #~ msgid "Create a logo with a speedy text effect"
 #~ msgstr "Sortu logotipoa abiaduradun testuaren efektuarekin"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "Globo b_irakaria..."
-
-#~ msgid ""
-#~ "Create an animation by mapping the current image onto a spinning sphere"
-#~ msgstr "Sortu animazioa uneko irudia biraka dagoen esferan mapatuz"
-
-#~ msgid "Frames"
-#~ msgstr "Markoak"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "Biratu ezkerretik eskuinera"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "Indexatu n koloretan (0 = Mantendu GBU)"
-
-#~ msgid "Rendering Spyro"
-#~ msgstr "Espirografia marrazten"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "E_spirografoa..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr ""
-#~ "Gehitu espirografoak, epitrokoideak eta Lissajous kurbak uneko geruzari"
-
-#~ msgid "Type"
-#~ msgstr "Mota"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "Epitrokoidea"
-
-#~ msgid "Lissajous"
-#~ msgstr "Lissajous"
-
-#~ msgid "Shape"
-#~ msgstr "Forma"
-
-#~ msgid "Triangle"
-#~ msgstr "Triangelua"
-
-#~ msgid "Square"
-#~ msgstr "Karratua"
-
-#~ msgid "Pentagon"
-#~ msgstr "Pentagonoa"
-
-#~ msgid "Hexagon"
-#~ msgstr "Hexagonoa"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "Poligonoa: 7 alde"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "Poligonoa: 8 alde"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "Poligonoa: 9 alde"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "Poligonoa: 10 alde"
-
-#~ msgid "Outer teeth"
-#~ msgstr "Kanpoko hortzak"
-
-#~ msgid "Inner teeth"
-#~ msgstr "Barruko hortzak"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "Marjina (pixeletan)"
-
-#~ msgid "Hole ratio"
-#~ msgstr "Zuloaren erradioa"
-
-#~ msgid "Start angle"
-#~ msgstr "Hasierako angelua"
-
-#~ msgid "Tool"
-#~ msgstr "Tresna"
-
-#~ msgid "Brush"
-#~ msgstr "Brotxa"
-
-#~ msgid "Airbrush"
-#~ msgstr "Aerografoa"
-
-#~ msgid "Color method"
-#~ msgstr "Koloreztatze-metodoa"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "Gradientea: begizta horzduna"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "Gradientea: begizta triangelua"
 
 #~ msgid "Sta_rscape..."
 #~ msgstr "Iz_arretakoa..."
@@ -1865,10 +2384,6 @@ msgstr "IIR"
 
 #~ msgid "Number of times to whirl"
 #~ msgstr "Biratu beharreko aldi kopurua"
-
-#, fuzzy
-#~ msgid "_Sphere..."
-#~ msgstr "K_romatu..."
 
 #~ msgid "Text C_ircle..."
 #~ msgstr "Testu _zirkularra..."
@@ -1919,24 +2434,6 @@ msgstr "IIR"
 #~ msgid "Text pattern"
 #~ msgstr "Testu-eredua"
 
-#~ msgid "_Tileable Blur..."
-#~ msgstr "_Lausotze teilakagarria..."
-
-#~ msgid "Blur the edges of an image so the result tiles seamlessly"
-#~ msgstr "Lausotu irudiaren ertzak emaitzarekin mosaikoa osatzeko"
-
-#~ msgid "Blur vertically"
-#~ msgstr "Lausotu bertikalki"
-
-#~ msgid "Blur horizontally"
-#~ msgstr "Lausotu horizontalki"
-
-#~ msgid "Blur type"
-#~ msgstr "Lausotze mota"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
 #~ msgid "Web Title Header..."
 #~ msgstr "Web izenburuen goiburua..."
 
@@ -1974,94 +2471,3 @@ msgstr "IIR"
 
 #~ msgid "Foreground color"
 #~ msgstr "Aurreko planoaren kolorea"
-
-#~ msgid "Mask size"
-#~ msgstr "Maskararen tamaina"
-
-#~ msgid "Mask opacity"
-#~ msgstr "Maskararen opakutasuna"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Uhinak..."
-
-#~ msgid ""
-#~ "Create a multi-layer image with an effect like a stone was thrown into "
-#~ "the current image"
-#~ msgstr ""
-#~ "Sortu geruza anitzeko irudia harria uneko irudiaren gainetik igaro balitz "
-#~ "bezalako efektuarekin"
-
-#~ msgid "Amplitude"
-#~ msgstr "Anplitudea"
-
-#~ msgid "Wavelength"
-#~ msgstr "Uhinaren luzera"
-
-#~ msgid "Invert direction"
-#~ msgstr "Alderantzikatu noranzkoa"
-
-#~ msgid "_Weave..."
-#~ msgstr "_Bilbea..."
-
-#~ msgid ""
-#~ "Create a new layer filled with a weave effect to be used as an overlay or "
-#~ "bump map"
-#~ msgstr ""
-#~ "Sortu geruza berria uhin efektuarekin gainjartzeko edo erliebe-mapa gisa "
-#~ "erabiltzeko"
-
-#~ msgid "Ribbon width"
-#~ msgstr "Bandaren zabalera"
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "Banda arteko tartea"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Itzalaren iluntasuna"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Itzalaren sakonera"
-
-#~ msgid "Thread length"
-#~ msgstr "Hariaren luzera"
-
-#~ msgid "Thread density"
-#~ msgstr "Hariaren dentsitatea"
-
-#~ msgid "Thread intensity"
-#~ msgstr "Hariaren intentsitatea"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "_Xach-en efektua..."
-
-#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Gehitu 3D efektu zeharrargitsu leuna hautatutako eskualdeari (edo "
-#~ "gardentasunari)"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "Nabarmentzearen X desplazamendua"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "Nabarmentzearen Y desplazamendua"
-
-#~ msgid "Highlight color"
-#~ msgstr "Nabarmentzearen kolorea"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "Nabarmentzearen opakutasuna"
-
-#~ msgid "Drop shadow color"
-#~ msgstr "Itzalaren kolorea"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "Itzalaren opakutasuna"
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "Itzalaren lausotze-erradioa"
-
-#~ msgid "Drop shadow X offset"
-#~ msgstr "Itzalaren X desplazamendua"
-
-#~ msgid "Drop shadow Y offset"
-#~ msgstr "Itzalaren Y desplazamendua"
