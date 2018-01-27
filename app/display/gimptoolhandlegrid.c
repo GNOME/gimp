@@ -70,11 +70,9 @@ struct _GimpToolHandleGridPrivate
 {
   GimpTransformHandleMode  handle_mode; /* enum to be renamed */
 
-  gint     n_handles;
-  gdouble  orig_x[4];
-  gdouble  orig_y[4];
-  gdouble  trans_x[4];
-  gdouble  trans_y[4];
+  gint        n_handles;
+  GimpVector2 orig[4];
+  GimpVector2 trans[4];
 
   gint     handle;
   gdouble  last_x;
@@ -386,53 +384,53 @@ gimp_tool_handle_grid_set_property (GObject      *object,
       break;
 
     case PROP_ORIG_X1:
-      private->orig_x[0] = g_value_get_double (value);
+      private->orig[0].x = g_value_get_double (value);
       break;
     case PROP_ORIG_Y1:
-      private->orig_y[0] = g_value_get_double (value);
+      private->orig[0].y = g_value_get_double (value);
       break;
     case PROP_ORIG_X2:
-      private->orig_x[1] = g_value_get_double (value);
+      private->orig[1].x = g_value_get_double (value);
       break;
     case PROP_ORIG_Y2:
-      private->orig_y[1] = g_value_get_double (value);
+      private->orig[1].y = g_value_get_double (value);
       break;
     case PROP_ORIG_X3:
-      private->orig_x[2] = g_value_get_double (value);
+      private->orig[2].x = g_value_get_double (value);
       break;
     case PROP_ORIG_Y3:
-      private->orig_y[2] = g_value_get_double (value);
+      private->orig[2].y = g_value_get_double (value);
       break;
     case PROP_ORIG_X4:
-      private->orig_x[3] = g_value_get_double (value);
+      private->orig[3].x = g_value_get_double (value);
       break;
     case PROP_ORIG_Y4:
-      private->orig_y[3] = g_value_get_double (value);
+      private->orig[3].y = g_value_get_double (value);
       break;
 
     case PROP_TRANS_X1:
-      private->trans_x[0] = g_value_get_double (value);
+      private->trans[0].x = g_value_get_double (value);
       break;
     case PROP_TRANS_Y1:
-      private->trans_y[0] = g_value_get_double (value);
+      private->trans[0].y = g_value_get_double (value);
       break;
     case PROP_TRANS_X2:
-      private->trans_x[1] = g_value_get_double (value);
+      private->trans[1].x = g_value_get_double (value);
       break;
     case PROP_TRANS_Y2:
-      private->trans_y[1] = g_value_get_double (value);
+      private->trans[1].y = g_value_get_double (value);
       break;
     case PROP_TRANS_X3:
-      private->trans_x[2] = g_value_get_double (value);
+      private->trans[2].x = g_value_get_double (value);
       break;
     case PROP_TRANS_Y3:
-      private->trans_y[2] = g_value_get_double (value);
+      private->trans[2].y = g_value_get_double (value);
       break;
     case PROP_TRANS_X4:
-      private->trans_x[3] = g_value_get_double (value);
+      private->trans[3].x = g_value_get_double (value);
       break;
     case PROP_TRANS_Y4:
-      private->trans_y[3] = g_value_get_double (value);
+      private->trans[3].y = g_value_get_double (value);
       break;
 
     default:
@@ -461,53 +459,53 @@ gimp_tool_handle_grid_get_property (GObject    *object,
       break;
 
     case PROP_ORIG_X1:
-      g_value_set_double (value, private->orig_x[0]);
+      g_value_set_double (value, private->orig[0].x);
       break;
     case PROP_ORIG_Y1:
-      g_value_set_double (value, private->orig_y[0]);
+      g_value_set_double (value, private->orig[0].y);
       break;
     case PROP_ORIG_X2:
-      g_value_set_double (value, private->orig_x[1]);
+      g_value_set_double (value, private->orig[1].x);
       break;
     case PROP_ORIG_Y2:
-      g_value_set_double (value, private->orig_y[1]);
+      g_value_set_double (value, private->orig[1].y);
       break;
     case PROP_ORIG_X3:
-      g_value_set_double (value, private->orig_x[2]);
+      g_value_set_double (value, private->orig[2].x);
       break;
     case PROP_ORIG_Y3:
-      g_value_set_double (value, private->orig_y[2]);
+      g_value_set_double (value, private->orig[2].y);
       break;
     case PROP_ORIG_X4:
-      g_value_set_double (value, private->orig_x[3]);
+      g_value_set_double (value, private->orig[3].x);
       break;
     case PROP_ORIG_Y4:
-      g_value_set_double (value, private->orig_y[3]);
+      g_value_set_double (value, private->orig[3].y);
       break;
 
     case PROP_TRANS_X1:
-      g_value_set_double (value, private->trans_x[0]);
+      g_value_set_double (value, private->trans[0].x);
       break;
     case PROP_TRANS_Y1:
-      g_value_set_double (value, private->trans_y[0]);
+      g_value_set_double (value, private->trans[0].y);
       break;
     case PROP_TRANS_X2:
-      g_value_set_double (value, private->trans_x[1]);
+      g_value_set_double (value, private->trans[1].x);
       break;
     case PROP_TRANS_Y2:
-      g_value_set_double (value, private->trans_y[1]);
+      g_value_set_double (value, private->trans[1].y);
       break;
     case PROP_TRANS_X3:
-      g_value_set_double (value, private->trans_x[2]);
+      g_value_set_double (value, private->trans[2].x);
       break;
     case PROP_TRANS_Y3:
-      g_value_set_double (value, private->trans_y[2]);
+      g_value_set_double (value, private->trans[2].y);
       break;
     case PROP_TRANS_X4:
-      g_value_set_double (value, private->trans_x[3]);
+      g_value_set_double (value, private->trans[3].x);
       break;
     case PROP_TRANS_Y4:
-      g_value_set_double (value, private->trans_y[3]);
+      g_value_set_double (value, private->trans[3].y);
       break;
 
     default:
@@ -528,8 +526,8 @@ gimp_tool_handle_grid_changed (GimpToolWidget *widget)
   for (i = 0; i < 4; i++)
     {
       gimp_canvas_handle_set_position (private->handles[i + 1],
-                                       private->trans_x[i],
-                                       private->trans_y[i]);
+                                       private->trans[i].x,
+                                       private->trans[i].y);
       gimp_canvas_item_set_visible (private->handles[i + 1],
                                     i < private->n_handles);
     }
@@ -560,8 +558,8 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
 
           active_handle = n_handles;
 
-          private->trans_x[active_handle] = coords->x;
-          private->trans_y[active_handle] = coords->y;
+          private->trans[active_handle].x = coords->x;
+          private->trans[active_handle].y = coords->y;
           private->n_handles++;
 
           if (! is_handle_position_valid (grid, active_handle))
@@ -576,10 +574,10 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
 
           gimp_matrix3_invert (matrix);
           gimp_matrix3_transform_point (matrix,
-                                        private->trans_x[active_handle],
-                                        private->trans_y[active_handle],
-                                        &private->orig_x[active_handle],
-                                        &private->orig_y[active_handle]);
+                                        private->trans[active_handle].x,
+                                        private->trans[active_handle].y,
+                                        &private->orig[active_handle].x,
+                                        &private->orig[active_handle].y);
 
           g_free (matrix);
 
@@ -602,27 +600,21 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
         {
           /* remove handle */
 
-          gdouble tempx  = private->trans_x[active_handle];
-          gdouble tempy  = private->trans_y[active_handle];
-          gdouble tempox = private->orig_x[active_handle];
-          gdouble tempoy = private->orig_y[active_handle];
-          gint    i;
+          GimpVector2 temp  = private->trans[active_handle];
+          GimpVector2 tempo = private->orig[active_handle];
+          gint        i;
 
           n_handles--;
           private->n_handles--;
 
           for (i = active_handle; i < n_handles; i++)
             {
-              private->trans_x[i] = private->trans_x[i + 1];
-              private->trans_y[i] = private->trans_y[i + 1];
-              private->orig_x[i]  = private->orig_x[i + 1];
-              private->orig_y[i]  = private->orig_y[i + 1];
+              private->trans[i] = private->trans[i + 1];
+              private->orig[i]  = private->orig[i + 1];
             }
 
-          private->trans_x[n_handles] = tempx;
-          private->trans_y[n_handles] = tempy;
-          private->orig_x[n_handles]  = tempox;
-          private->orig_y[n_handles]  = tempoy;
+          private->trans[n_handles] = temp;
+          private->orig[n_handles]  = tempo;
 
           g_object_notify (G_OBJECT (grid), "n-handles");
         }
@@ -664,10 +656,10 @@ gimp_tool_handle_grid_button_release (GimpToolWidget        *widget,
 
       gimp_matrix3_invert (matrix);
       gimp_matrix3_transform_point (matrix,
-                                    private->trans_x[active_handle],
-                                    private->trans_y[active_handle],
-                                    &private->orig_x[active_handle],
-                                    &private->orig_y[active_handle]);
+                                    private->trans[active_handle].x,
+                                    private->trans[active_handle].y,
+                                    &private->orig[active_handle].x,
+                                    &private->orig[active_handle].y);
 
       g_free (matrix);
 
@@ -695,8 +687,8 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
     {
       if (private->handle_mode == GIMP_HANDLE_MODE_MOVE)
         {
-          private->trans_x[active_handle] += diff_x;
-          private->trans_y[active_handle] += diff_y;
+          private->trans[active_handle].x += diff_x;
+          private->trans[active_handle].y += diff_y;
 
           /* check for valid position and calculating of OX0...OY3 is
            * done on button release hopefully this makes the code run
@@ -704,16 +696,15 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
            * for the image preview
            */
           gimp_canvas_handle_set_position (private->handles[active_handle + 1],
-                                           private->trans_x[active_handle],
-                                           private->trans_y[active_handle]);
+                                           private->trans[active_handle].x,
+                                           private->trans[active_handle].y);
         }
       else if (private->handle_mode == GIMP_HANDLE_MODE_ADD_TRANSFORM)
         {
           gdouble angle, angle_sin, angle_cos, scale;
-          gdouble fixed_handles_x[3];
-          gdouble fixed_handles_y[3];
-          gdouble oldpos_x[4], oldpos_y[4];
-          gdouble newpos_x[4], newpos_y[4];
+          GimpVector2 fixed_handles[3];
+          GimpVector2 oldpos[4];
+          GimpVector2 newpos[4];
           gint    i, j;
 
           for (i = 0, j = 0; i < 4; i++)
@@ -721,17 +712,15 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
               /* Find all visible handles that are not being moved */
               if (i < n_handles && i != active_handle)
                 {
-                  fixed_handles_x[j] = private->trans_x[i];
-                  fixed_handles_y[j] = private->trans_y[i];
+                  fixed_handles[j] = private->trans[i];
                   j++;
                 }
 
-              newpos_x[i] = oldpos_x[i] = private->trans_x[i];
-              newpos_y[i] = oldpos_y[i] = private->trans_y[i];
+              newpos[i] = oldpos[i] = private->trans[i];
             }
 
-          newpos_x[active_handle] = oldpos_x[active_handle] + diff_x;
-          newpos_y[active_handle] = oldpos_y[active_handle] + diff_y;
+          newpos[active_handle].x = oldpos[active_handle].x + diff_x;
+          newpos[active_handle].y = oldpos[active_handle].y + diff_y;
 
           switch (n_handles)
             {
@@ -739,61 +728,60 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
               /* move */
               for (i = 0; i < 4; i++)
                 {
-                  newpos_x[i] = oldpos_x[i] + diff_x;
-                  newpos_y[i] = oldpos_y[i] + diff_y;
+                  newpos[i].x = oldpos[i].x + diff_x;
+                  newpos[i].y = oldpos[i].y + diff_y;
                 }
               break;
 
             case 2:
               /* rotate and keep-aspect-scale */
               scale =
-                calc_len (newpos_x[active_handle] - fixed_handles_x[0],
-                          newpos_y[active_handle] - fixed_handles_y[0]) /
-                calc_len (oldpos_x[active_handle] - fixed_handles_x[0],
-                          oldpos_y[active_handle] - fixed_handles_y[0]);
+                calc_len (newpos[active_handle].x - fixed_handles[0].x,
+                          newpos[active_handle].y - fixed_handles[0].y) /
+                calc_len (oldpos[active_handle].x - fixed_handles[0].x,
+                          oldpos[active_handle].y - fixed_handles[0].y);
 
-              angle = calc_angle (oldpos_x[active_handle] - fixed_handles_x[0],
-                                  oldpos_y[active_handle] - fixed_handles_y[0],
-                                  newpos_x[active_handle] - fixed_handles_x[0],
-                                  newpos_y[active_handle] - fixed_handles_y[0]);
+              angle = calc_angle (oldpos[active_handle].x - fixed_handles[0].x,
+                                  oldpos[active_handle].y - fixed_handles[0].y,
+                                  newpos[active_handle].x - fixed_handles[0].x,
+                                  newpos[active_handle].y - fixed_handles[0].y);
 
               angle_sin = sin (angle);
               angle_cos = cos (angle);
 
               for (i = 2; i < 4; i++)
                 {
-                  newpos_x[i] =
-                    fixed_handles_x[0] +
-                    scale * (angle_cos * (oldpos_x[i] - fixed_handles_x[0]) +
-                             angle_sin * (oldpos_y[i] - fixed_handles_y[0]));
+                  newpos[i].x =
+                    fixed_handles[0].x +
+                    scale * (angle_cos * (oldpos[i].x - fixed_handles[0].x) +
+                             angle_sin * (oldpos[i].y - fixed_handles[0].y));
 
-                  newpos_y[i] =
-                    fixed_handles_y[0] +
-                    scale * (-angle_sin * (oldpos_x[i] - fixed_handles_x[0]) +
-                              angle_cos * (oldpos_y[i] - fixed_handles_y[0]));
+                  newpos[i].y =
+                    fixed_handles[0].y +
+                    scale * (-angle_sin * (oldpos[i].x - fixed_handles[0].x) +
+                              angle_cos * (oldpos[i].y - fixed_handles[0].y));
                 }
               break;
 
             case 3:
               /* shear and non-aspect-scale */
-              scale = calc_lineintersect_ratio (oldpos_x[3],
-                                                oldpos_y[3],
-                                                oldpos_x[active_handle],
-                                                oldpos_y[active_handle],
-                                                fixed_handles_x[0],
-                                                fixed_handles_y[0],
-                                                fixed_handles_x[1],
-                                                fixed_handles_y[1]);
+              scale = calc_lineintersect_ratio (oldpos[3].x,
+                                                oldpos[3].y,
+                                                oldpos[active_handle].x,
+                                                oldpos[active_handle].y,
+                                                fixed_handles[0].x,
+                                                fixed_handles[0].y,
+                                                fixed_handles[1].x,
+                                                fixed_handles[1].y);
 
-              newpos_x[3] = oldpos_x[3] + scale * diff_x;
-              newpos_y[3] = oldpos_y[3] + scale * diff_y;
+              newpos[3].x = oldpos[3].x + scale * diff_x;
+              newpos[3].y = oldpos[3].y + scale * diff_y;
               break;
             }
 
           for (i = 0; i < 4; i++)
             {
-              private->trans_x[i] = newpos_x[i];
-              private->trans_y[i] = newpos_y[i];
+              private->trans[i] = newpos[i];
             }
 
           gimp_tool_handle_grid_update_matrix (grid);
@@ -981,28 +969,16 @@ gimp_tool_handle_grid_update_matrix (GimpToolHandleGrid *grid)
 {
   GimpToolHandleGridPrivate *private = grid->private;
   GimpMatrix3                transform;
+  gboolean                   transform_valid;
 
   gimp_matrix3_identity (&transform);
-  gimp_transform_matrix_handles (&transform,
-                                 private->orig_x[0],
-                                 private->orig_y[0],
-                                 private->orig_x[1],
-                                 private->orig_y[1],
-                                 private->orig_x[2],
-                                 private->orig_y[2],
-                                 private->orig_x[3],
-                                 private->orig_y[3],
-                                 private->trans_x[0],
-                                 private->trans_y[0],
-                                 private->trans_x[1],
-                                 private->trans_y[1],
-                                 private->trans_x[2],
-                                 private->trans_y[2],
-                                 private->trans_x[3],
-                                 private->trans_y[3]);
+  transform_valid = gimp_transform_matrix_generic (&transform,
+                                                   private->orig,
+                                                   private->trans);
 
   g_object_set (grid,
-                "transform", &transform,
+                "transform",   &transform,
+                "show-guides", transform_valid,
                 NULL);
 }
 
@@ -1024,15 +1000,15 @@ is_handle_position_valid (GimpToolHandleGrid *grid,
                   handle == j ||
                   handle == k)
                 {
-                  if ((private->trans_x[i] -
-                       private->trans_x[j]) *
-                      (private->trans_y[j] -
-                       private->trans_y[k]) ==
+                  if ((private->trans[i].x -
+                       private->trans[j].x) *
+                      (private->trans[j].y -
+                       private->trans[k].y) ==
 
-                      (private->trans_x[j] -
-                       private->trans_x[k]) *
-                      (private->trans_y[i] -
-                       private->trans_y[j]))
+                      (private->trans[j].x -
+                       private->trans[k].x) *
+                      (private->trans[i].y -
+                       private->trans[j].y))
                     {
                       return FALSE;
                     }
@@ -1051,17 +1027,17 @@ handle_micro_move (GimpToolHandleGrid *grid,
                    gint                handle)
 {
   GimpToolHandleGridPrivate *private = grid->private;
-  gdouble                    posx    = private->trans_x[handle];
-  gdouble                    posy    = private->trans_y[handle];
+  gdouble                    posx    = private->trans[handle].x;
+  gdouble                    posy    = private->trans[handle].y;
   gdouble                    dx, dy;
 
   for (dx = -0.1; dx < 0.11; dx += 0.1)
     {
-      private->trans_x[handle] = posx + dx;
+      private->trans[handle].x = posx + dx;
 
       for (dy = -0.1; dy < 0.11; dy += 0.1)
         {
-          private->trans_y[handle] = posy + dy;
+          private->trans[handle].y = posy + dy;
 
           if (is_handle_position_valid (grid, handle))
             {
