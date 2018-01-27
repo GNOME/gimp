@@ -59,6 +59,7 @@ enum
   PROP_PIVOT_Y,
   PROP_GUIDE_TYPE,
   PROP_N_GUIDES,
+  PROP_SHOW_GUIDES,
   PROP_INSIDE_FUNCTION,
   PROP_OUTSIDE_FUNCTION,
   PROP_USE_CORNER_HANDLES,
@@ -89,6 +90,7 @@ struct _GimpToolTransformGridPrivate
   gdouble                pivot_y;
   GimpGuidesType         guide_type;
   gint                   n_guides;
+  gboolean               show_guides;
   GimpTransformFunction  inside_function;
   GimpTransformFunction  outside_function;
   gboolean               use_corner_handles;
@@ -289,6 +291,12 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
                                                      1, 128, 4,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_SHOW_GUIDES,
+                                   g_param_spec_boolean ("show-guides", NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_INSIDE_FUNCTION,
                                    g_param_spec_enum ("inside-function",
@@ -578,6 +586,9 @@ gimp_tool_transform_grid_set_property (GObject      *object,
     case PROP_N_GUIDES:
       private->n_guides = g_value_get_int (value);
       break;
+    case PROP_SHOW_GUIDES:
+      private->show_guides = g_value_get_boolean (value);
+      break;
 
     case PROP_INSIDE_FUNCTION:
       private->inside_function = g_value_get_enum (value);
@@ -690,6 +701,9 @@ gimp_tool_transform_grid_get_property (GObject    *object,
       break;
     case PROP_N_GUIDES:
       g_value_set_int (value, private->n_guides);
+      break;
+    case PROP_SHOW_GUIDES:
+      g_value_set_boolean (value, private->show_guides);
       break;
 
     case PROP_INSIDE_FUNCTION:
@@ -1020,6 +1034,7 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
                                     private->y2,
                                     private->guide_type,
                                     private->n_guides);
+  gimp_canvas_item_set_visible (private->guides, private->show_guides);
 
   get_handle_geometry (grid, o, angle);
   gimp_tool_transform_grid_calc_handles (grid, &handle_w, &handle_h);
