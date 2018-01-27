@@ -2,25 +2,26 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
+#
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006, 2008.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011, 2013.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011, 2013, 2018.
 # Edurne Labaka <elabaka@uzei.com>, 2015.
 # Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2018.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-19 18:29+0100\n"
-"PO-Revision-Date: 2018-01-06 15:25+0100\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2018-01-27 16:07+0000\n"
+"PO-Revision-Date: 2018-01-27 17:11+0100\n"
+"Last-Translator: Inaki Larranaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
@@ -1919,23 +1920,27 @@ msgstr "Fabrikatzailea: "
 msgid "Copyright: "
 msgstr "Copyright-a: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:201
+#: ../libgimpwidgets/gimpcolorscales.c:204
 msgid "Scales"
 msgstr "Eskalak"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:383
+msgid "RGB"
+msgstr "GBU"
+
+#: ../libgimpwidgets/gimpcolorscales.c:416
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:441
+#: ../libgimpwidgets/gimpcolorscales.c:418
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:444
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:464
+#: ../libgimpwidgets/gimpcolorscales.c:453
 msgid "HSV"
 msgstr "HSV"
 
@@ -2312,22 +2317,49 @@ msgstr "LCH chroma"
 msgid "LCH Hue"
 msgstr "LCH ñabardura"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "GBU"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "GBU kolorea"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "CIELCh kolore-eredua"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "ÑSB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "ÑSB kolore-eredua"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Geruzak"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Irudiak"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Handiagotu"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Txikiagotu"
