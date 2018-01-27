@@ -311,6 +311,9 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
                                    private->x, private->y,
                                    &tx, &ty);
 
+  tx = floor (tx) + 0.5;
+  ty = floor (ty) + 0.5;
+
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
