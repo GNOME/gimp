@@ -2,38 +2,39 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
+#
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2010.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015, 2018.
 # Edurne Labaka <elabaka@uzei.com>, 2015.
-# Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2017.
-#
+# Asier Sarasua Garmendia <asier.sarasua@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-06 04:40+0000\n"
-"PO-Revision-Date: 2018-01-02 12:00+0000\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersar@yahoo.com>\n"
+"POT-Creation-Date: 2018-01-27 12:31+0000\n"
+"PO-Revision-Date: 2018-01-27 16:49+0100\n"
+"Last-Translator: Inaki Larranaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
-#: ../app/about.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
+#: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
 msgid "GNU Image Manipulation Program"
 msgstr "GNUren Irudiak Manipulatzeko Programa"
 
-#: ../desktop/gimp.appdata.xml.in.h:2 ../desktop/gimp.desktop.in.in.h:3
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:2
+#: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Sortu irudiak eta editatu argazkiak"
 
-#: ../desktop/gimp.appdata.xml.in.h:3
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:3
 msgid ""
 "GIMP is an acronym for GNU Image Manipulation Program. It is a freely "
 "distributed program for such tasks as photo retouching, image composition "
@@ -43,7 +44,7 @@ msgstr ""
 "moldatzeko, irudiak konposatzeko eta irudiak sortzeko programa bat da, modu "
 "librean banatzen dena."
 
-#: ../desktop/gimp.appdata.xml.in.h:4
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:4
 msgid ""
 "It has many capabilities. It can be used as a simple paint program, an "
 "expert quality photo retouching program, an online batch processing system, "
@@ -54,7 +55,7 @@ msgstr ""
 "prozesatzeko sistema gisa, irudiak errendatzeko ekoizpen handiko sistema "
 "gisa, irudiak formatuz bihurtzeko bezala eta abar erabil daiteke."
 
-#: ../desktop/gimp.appdata.xml.in.h:5
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
@@ -68,11 +69,11 @@ msgstr ""
 "prozesuetan. Linux, Microsoft Windows eta OS X sistemetan erabilgarri dago "
 "GIMP."
 
-#: ../desktop/gimp.appdata.xml.in.h:6
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
 msgid "Painting in GIMP"
 msgstr "GIMPen margotzea"
 
-#: ../desktop/gimp.appdata.xml.in.h:7
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:7
 msgid "Photo editing in GIMP"
 msgstr "GIMPen argazkiak editatzea"
 
@@ -314,7 +315,7 @@ msgstr "Brotxa-editorea"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:114 ../app/core/gimp-data-factories.c:317
-#: ../app/dialogs/dialogs.c:333 ../app/dialogs/preferences-dialog.c:2994
+#: ../app/dialogs/dialogs.c:333 ../app/dialogs/preferences-dialog.c:3012
 msgid "Brushes"
 msgstr "Brotxak"
 
@@ -396,7 +397,7 @@ msgid "Filters"
 msgstr "Iragazkiak"
 
 #: ../app/actions/actions.c:171 ../app/dialogs/dialogs.c:351
-#: ../app/dialogs/preferences-dialog.c:3014
+#: ../app/dialogs/preferences-dialog.c:3032
 msgid "Fonts"
 msgstr "Letra-tipoa"
 
@@ -407,12 +408,12 @@ msgstr "Gradiente-editorea"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:342
-#: ../app/dialogs/dialogs.c:345 ../app/dialogs/preferences-dialog.c:3010
+#: ../app/dialogs/dialogs.c:345 ../app/dialogs/preferences-dialog.c:3028
 msgid "Gradients"
 msgstr "Gradienteak"
 
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:353
-#: ../app/dialogs/dialogs.c:357 ../app/dialogs/preferences-dialog.c:3018
+#: ../app/dialogs/dialogs.c:357 ../app/dialogs/preferences-dialog.c:3036
 msgid "Tool Presets"
 msgstr "Tresnen aurrezarpenak"
 
@@ -441,7 +442,7 @@ msgstr "Geruzak"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:327
-#: ../app/dialogs/dialogs.c:339 ../app/dialogs/preferences-dialog.c:3022
+#: ../app/dialogs/dialogs.c:339 ../app/dialogs/preferences-dialog.c:3040
 msgid "MyPaint Brushes"
 msgstr "MyPaint brotxak"
 
@@ -452,23 +453,23 @@ msgstr "Paleta-editorea"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:204 ../app/core/gimp-data-factories.c:337
-#: ../app/dialogs/dialogs.c:348 ../app/dialogs/preferences-dialog.c:3006
+#: ../app/dialogs/dialogs.c:348 ../app/dialogs/preferences-dialog.c:3024
 msgid "Palettes"
 msgstr "Paletak"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:207 ../app/core/gimp-data-factories.c:332
-#: ../app/dialogs/dialogs.c:342 ../app/dialogs/preferences-dialog.c:3002
+#: ../app/dialogs/dialogs.c:342 ../app/dialogs/preferences-dialog.c:3020
 msgid "Patterns"
 msgstr "Ereduak"
 
-#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3026
+#: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3044
 msgid "Plug-ins"
 msgstr "Pluginak"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:408
-#: ../app/dialogs/preferences-dialog.c:1602
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "Quick Mask"
 msgstr "Maskara azkarra"
 
@@ -2443,8 +2444,9 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
+#: ../app/actions/data-commands.c:114
+#: ../app/actions/tool-options-commands.c:74
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1964
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -2858,8 +2860,8 @@ msgid "Search commands by keyword, and run them"
 msgstr "Bilatu komandoak gako-hitzaren bidez, eta exekutatu komandoak"
 
 #: ../app/actions/dialogs-actions.c:357
-#: ../app/dialogs/preferences-dialog.c:1940
-#: ../app/dialogs/preferences-dialog.c:1941 ../app/widgets/gimptoolbox.c:529
+#: ../app/dialogs/preferences-dialog.c:1958
+#: ../app/dialogs/preferences-dialog.c:1959 ../app/widgets/gimptoolbox.c:529
 msgid "Toolbox"
 msgstr "Tresna-kutxa"
 
@@ -3149,7 +3151,8 @@ msgstr "Garbitu dokumentuaren historia"
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:478
 #: ../app/actions/gradient-editor-commands.c:580
-#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:180
+#: ../app/actions/gradients-commands.c:78
+#: ../app/actions/plug-in-commands.c:180
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
 #: ../app/actions/text-tool-commands.c:118
@@ -3188,9 +3191,9 @@ msgstr "Garbitu dokumentuaren historia"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1581
-#: ../app/tools/gimptransformtool.c:1175 ../app/widgets/gimpactionview.c:669
-#: ../app/widgets/gimpcolordialog.c:110
+#: ../app/tools/gimpforegroundselecttool.c:307
+#: ../app/tools/gimptexttool.c:1581 ../app/tools/gimptransformtool.c:1200
+#: ../app/widgets/gimpactionview.c:669 ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
@@ -3767,11 +3770,13 @@ msgstr "Kopiatu izenduna"
 msgid "Copy Visible Named "
 msgstr "Kopia ikusgai izenduna "
 
-#: ../app/actions/edit-commands.c:569 ../app/display/gimpdisplayshell-dnd.c:479
+#: ../app/actions/edit-commands.c:569
+#: ../app/display/gimpdisplayshell-dnd.c:479
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Geruza berri gisa itsatsi da helburua geruza talde bat delako."
 
-#: ../app/actions/edit-commands.c:578 ../app/display/gimpdisplayshell-dnd.c:488
+#: ../app/actions/edit-commands.c:578
+#: ../app/display/gimpdisplayshell-dnd.c:488
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Geruza berri gisa itsatsi da helburuko pixelak blokeatuta daudelako."
 
@@ -3877,7 +3882,8 @@ msgid "Save Error Log to File"
 msgstr "Gorde errore-egunkaria fitxategian"
 
 #: ../app/actions/error-console-commands.c:97
-#: ../app/actions/gradients-commands.c:79 ../app/dialogs/file-save-dialog.c:715
+#: ../app/actions/gradients-commands.c:79
+#: ../app/dialogs/file-save-dialog.c:715
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -4330,538 +4336,555 @@ msgstr "Aplikatu _leiarrak..."
 
 #: ../app/actions/filters-actions.c:187
 msgctxt "filters-action"
+msgid "B_rightness-Contrast..."
+msgstr "Di_stira eta kontrastea..."
+
+#: ../app/actions/filters-actions.c:192
+msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "_Erliebe-mapa..."
 
-#: ../app/actions/filters-actions.c:192
+#: ../app/actions/filters-actions.c:197
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "_Kolorea grisera..."
 
-#: ../app/actions/filters-actions.c:197
+#: ../app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "K_omikia..."
 
-#: ../app/actions/filters-actions.c:202
+#: ../app/actions/filters-actions.c:207
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "K_anal-nahasgailua..."
 
-#: ../app/actions/filters-actions.c:207
+#: ../app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "_Xake-taula"
 
-#: ../app/actions/filters-actions.c:212
+#: ../app/actions/filters-actions.c:217
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "Kolore-_balantzea..."
 
-#: ../app/actions/filters-actions.c:217
+#: ../app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "Kolore-_trukea..."
 
-#: ../app/actions/filters-actions.c:222
+#: ../app/actions/filters-actions.c:227
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Koloreztatu..."
 
-#: ../app/actions/filters-actions.c:227
+#: ../app/actions/filters-actions.c:232
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "B_ilbatu..."
 
-#: ../app/actions/filters-actions.c:232
+#: ../app/actions/filters-actions.c:237
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "_Biratu koloreak..."
 
-#: ../app/actions/filters-actions.c:237
+#: ../app/actions/filters-actions.c:242
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "Kolore-t_enperatura..."
 
-#: ../app/actions/filters-actions.c:242
+#: ../app/actions/filters-actions.c:247
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Kolorea _alfara..."
 
-#: ../app/actions/filters-actions.c:247
+#: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "Erauzi _osagaia"
 
-#: ../app/actions/filters-actions.c:252
+#: ../app/actions/filters-actions.c:257
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Konboluzio-matrizea..."
 
-#: ../app/actions/filters-actions.c:257
+#: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubismoa..."
 
-#: ../app/actions/filters-actions.c:262
+#: ../app/actions/filters-actions.c:267
+msgctxt "filters-action"
+msgid "_Curves..."
+msgstr "_Kurbak..."
+
+#: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Gurutzelarkatu"
 
-#: ../app/actions/filters-actions.c:267
+#: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Desasetu"
 
-#: ../app/actions/filters-actions.c:272
+#: ../app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "Difference of Gaussians..."
 msgstr "Gausstarren diferentzia..."
 
-#: ../app/actions/filters-actions.c:277
+#: ../app/actions/filters-actions.c:287
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
 msgstr "Difrakzio-ereduak..."
 
-#: ../app/actions/filters-actions.c:282
+#: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
 msgid "Displace..."
 msgstr "Desplazatu..."
 
-#: ../app/actions/filters-actions.c:287
+#: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
 msgid "Distance Map..."
 msgstr "Distantzia-mapa..."
 
-#: ../app/actions/filters-actions.c:292
+#: ../app/actions/filters-actions.c:302
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Jaregin itzala..."
 
-#: ../app/actions/filters-actions.c:297
+#: ../app/actions/filters-actions.c:307
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Ertza..."
 
-#: ../app/actions/filters-actions.c:302
+#: ../app/actions/filters-actions.c:312
 msgctxt "filters-action"
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: ../app/actions/filters-actions.c:307
+#: ../app/actions/filters-actions.c:317
 msgctxt "filters-action"
 msgid "_Neon..."
-msgstr "_Neoia..."
+msgstr "_Neona..."
 
-#: ../app/actions/filters-actions.c:312
+#: ../app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel iragazkia..."
 
-#: ../app/actions/filters-actions.c:317
+#: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Bozeldu..."
 
-#: ../app/actions/filters-actions.c:322
+#: ../app/actions/filters-actions.c:332
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Grabatu..."
 
-#: ../app/actions/filters-actions.c:327
+#: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "E_sposizioa..."
 
-#: ../app/actions/filters-actions.c:332
+#: ../app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal et al. 2002..."
 
-#: ../app/actions/filters-actions.c:337
+#: ../app/actions/filters-actions.c:347
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "_Kalko fraktala..."
 
-#: ../app/actions/filters-actions.c:342
+#: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "_Gaussen lausotzea..."
 
-#: ../app/actions/filters-actions.c:347
+#: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Gaussen lausotze selektiboa..."
 
-#: ../app/actions/filters-actions.c:352
+#: ../app/actions/filters-actions.c:362
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "_GEGL grafoa..."
 
-#: ../app/actions/filters-actions.c:357
+#: ../app/actions/filters-actions.c:367
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Sareta..."
 
-#: ../app/actions/filters-actions.c:362
+#: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Pasaera handia..."
 
-#: ../app/actions/filters-actions.c:367
+#: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Ñabardura eta _chroma..."
 
-#: ../app/actions/filters-actions.c:372
+#: ../app/actions/filters-actions.c:382
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "Ñabardura eta _saturazioa..."
 
-#: ../app/actions/filters-actions.c:377
+#: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Ilusioa..."
 
-#: ../app/actions/filters-actions.c:382
+#: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "I_rudi-gradientea..."
 
-#: ../app/actions/filters-actions.c:387
+#: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kaleidoskopioa..."
 
-#: ../app/actions/filters-actions.c:392
+#: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Leiarren distortsioa..."
 
-#: ../app/actions/filters-actions.c:397
+#: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "Lens Flare..."
 msgstr "Leiarren dirdaia..."
 
-#: ../app/actions/filters-actions.c:402
+#: ../app/actions/filters-actions.c:412
+msgctxt "filters-action"
+msgid "_Levels..."
+msgstr "_Mailak..."
+
+#: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: ../app/actions/filters-actions.c:407
+#: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labirintoa..."
 
-#: ../app/actions/filters-actions.c:412
+#: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Mediana-lausotzea..."
 
-#: ../app/actions/filters-actions.c:417
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "M_ono-nahasgailua..."
 
-#: ../app/actions/filters-actions.c:422
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaikoa..."
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "Mugimendu-lausotze _zirkularra..."
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Mugimendu-lausotze _lineala..."
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zoomaren araberako mugimendu-lausotzea..."
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Gelaxka-zarata..."
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "CIE LCH zarata..."
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "HSV zarata..."
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Jaurti..."
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "_Perlin zarata..."
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Aukeratu..."
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB zarata..."
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "Zarata-m_urrizketa..."
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex zarata..."
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Urtu..."
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "Zarata _solidoa..."
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Sa_kabanatu..."
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "O_lio bihurtu..."
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panorama-proiekzioa..."
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopia..."
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pixelizatu..."
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Koordenatu pola_rrak..."
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterizatu..."
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Begi _gorriak kentzea..."
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB _moztea..."
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Izurtu..."
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "Sat_urazioa..."
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Berdindu erdizka..."
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia..."
 
-#: ../app/actions/filters-actions.c:572
-#, fuzzy
-#| msgctxt "error-console-action"
-#| msgid "_Highlight"
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Nabarmendu"
+msgstr "A_rgiak-itzalak..."
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Mugitu..."
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "Si_nua..."
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Multzokatze iteratibo lineal sinplea..."
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Gertueneko balio simetrikoa..."
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Dirdira leuna..."
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "E_spirala..."
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Tiratu kontrastea..."
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Tentsioa..."
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_noba..."
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:637
+msgctxt "filters-action"
+msgid "_Threshold..."
+msgstr "_Atalasea..."
+
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Al_faren atalasea..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Beiratea..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Paper-lauzak..."
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "J_osturarik gabeko lauzak..."
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Desenfokatze-maskara..."
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Balioen _hedatzea..."
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Bi_deo-degradazioa..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Bineta..."
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "U_r-pixelak..."
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Uhinak..."
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Bi_hurritu eta tiratu..."
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Haizea..."
 
-#: ../app/actions/filters-actions.c:685
+#: ../app/actions/filters-actions.c:705
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Erre_pikatu azkena"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Exekutatu berriro erabilitako azken plugina, ezarpen berdinak erabilita"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Erakutsi _berriro azkena"
 
-#: ../app/actions/filters-actions.c:693
+#: ../app/actions/filters-actions.c:713
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Erakutsi berriro erabilitako azken pluginaren elkarrizketa-koadroa"
 
-#: ../app/actions/filters-actions.c:1012
+#: ../app/actions/filters-actions.c:1036
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Erre_pikatu \"%s\""
 
-#: ../app/actions/filters-actions.c:1013
+#: ../app/actions/filters-actions.c:1037
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Erakutsi _berriro \"%s\""
 
-#: ../app/actions/filters-actions.c:1051
+#: ../app/actions/filters-actions.c:1075
 msgid "Repeat Last"
 msgstr "Errepikatu azkena"
 
-#: ../app/actions/filters-actions.c:1053
+#: ../app/actions/filters-actions.c:1077
 msgid "Re-Show Last"
 msgstr "Erakutsi berriro azkena"
 
@@ -4880,7 +4903,7 @@ msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
 msgstr "Eskaneatu berriro instalatutako letra-tipoak"
 
-#: ../app/actions/gimpgeglprocedure.c:319
+#: ../app/actions/gimpgeglprocedure.c:320
 #, c-format
 msgid "There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
@@ -5716,7 +5739,7 @@ msgstr "Pertzepziozko gamma (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 msgctxt "image-convert-action"
-msgid "Convert the image to preceptual (sRGB) gamma"
+msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Bihurtu irudia pertzepziozko (sRGB) gammara"
 
 #: ../app/actions/image-actions.c:256
@@ -5811,13 +5834,15 @@ msgstr "Tamaina aldatzen"
 msgid "Set Image Print Resolution"
 msgstr "Ezarri irudiaren inprimazio bereizmena"
 
-#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:799
+#: ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Iraultzen"
 
-#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:823
+#: ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:129
@@ -5874,7 +5899,7 @@ msgstr "Eskalatu irudia"
 
 #. Scaling
 #: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1592
-#: ../app/dialogs/preferences-dialog.c:1524
+#: ../app/dialogs/preferences-dialog.c:1542
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
@@ -6022,7 +6047,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Editatu geruzaren izena"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:912
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:914
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Geruza _berria..."
@@ -6032,7 +6057,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Sortu geruza berria eta gehitu irudiari"
 
-#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:913
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:915
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Geruza _berria"
@@ -6730,7 +6755,7 @@ msgstr "Laster-tekla: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-Egin klik 'Geruzak' atrakagarriko koadro txikiaren gainean"
 
-#: ../app/actions/layers-actions.c:907 ../app/actions/layers-actions.c:908
+#: ../app/actions/layers-actions.c:909 ../app/actions/layers-actions.c:910
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Geruza _berrira"
@@ -7141,7 +7166,7 @@ msgstr "Berrezarri iragazki guztiak"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1174
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1199
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Berrezarri"
@@ -7505,7 +7530,8 @@ msgid "Delete Template"
 msgstr "Ezabatu txantiloia"
 
 #: ../app/actions/templates-commands.c:245
-#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:509
+#: ../app/dialogs/data-delete-dialog.c:87
+#: ../app/widgets/gimpdeviceeditor.c:509
 msgid "_Delete"
 msgstr "E_zabatu"
 
@@ -9950,12 +9976,10 @@ msgid "How to handle embedded color profiles when opening a file."
 msgstr "Nola kudeatu kolore kapsulatuen profilak fitxategi bat irekitzean."
 
 #: ../app/config/gimprc-blurbs.h:46
-#, fuzzy
-#| msgid "Sets the default folder path for the 'Export Path' dialog."
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"'Esportatu bidea' elkarrizketa-koadrorako bideen karpeta lehenetsia ezartzen "
-"du."
+"Kolore-profilen elkarrizketa-koadro guztietarako bideen karpeta lehenetsia "
+"ezartzen du."
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the type of mouse pointers to use."
@@ -10075,6 +10099,18 @@ msgstr ""
 "inportatzeko."
 
 #: ../app/config/gimprc-blurbs.h:205
+msgid "Export Exif metadata by default."
+msgstr "Esportatu EXIF metadatuak modu lehenetsian."
+
+#: ../app/config/gimprc-blurbs.h:208
+msgid "Export XMP metadata by default."
+msgstr "Esportatu XMP metadatuak modu lehenetsian."
+
+#: ../app/config/gimprc-blurbs.h:211
+msgid "Export IPTC metadata by default."
+msgstr "Esportatu IPTC metadatuak modu lehenetsian."
+
+#: ../app/config/gimprc-blurbs.h:214
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -10082,24 +10118,24 @@ msgstr ""
 "Gaituta dagoenean, irudi osoa ikusgai egongo da fitxategia irekitakoan, "
 "bestela 1:1 eskalan bistaratuko da."
 
-#: ../app/config/gimprc-blurbs.h:209
+#: ../app/config/gimprc-blurbs.h:218
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Ezarri eskalatzeko eta bestelako eraldatzeetarako erabiliko den interpolazio-"
 "maila."
 
-#: ../app/config/gimprc-blurbs.h:216
+#: ../app/config/gimprc-blurbs.h:225
 msgid "Specifies the language to use for the user interface."
 msgstr "Interfazean erabiliko den hizkuntza ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:219
+#: ../app/config/gimprc-blurbs.h:228
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
 "Irudi-fitxategi ireki berrien zenbat izen gorde behar diren Fitxategia "
 "menuan."
 
-#: ../app/config/gimprc-blurbs.h:222
+#: ../app/config/gimprc-blurbs.h:231
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -10107,7 +10143,7 @@ msgstr ""
 "Inurrien abiadura hautaketa-eskeman. Balioa milisegundotan dago (zenbat eta "
 "denbora gutxiago, abiadura handiagoa)."
 
-#: ../app/config/gimprc-blurbs.h:226
+#: ../app/config/gimprc-blurbs.h:235
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -10115,7 +10151,7 @@ msgstr ""
 "GIMPek erabiltzaileari abisatuko dio hemen zehaztutako tamaina baino memoria "
 "gehiago hartuko lukeen irudi bat sortzen saiatzen bada."
 
-#: ../app/config/gimprc-blurbs.h:236
+#: ../app/config/gimprc-blurbs.h:245
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -10125,7 +10161,7 @@ msgstr ""
 "balioarekin ezartzen bada, X zerbitzariari bereizmen bai horizontalaren bai "
 "bertikalaren informazioa eskatzeko behartuko zaio."
 
-#: ../app/config/gimprc-blurbs.h:241
+#: ../app/config/gimprc-blurbs.h:250
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -10135,7 +10171,7 @@ msgstr ""
 "balioarekin ezartzen bada, X zerbitzariari bereizmen bai horizontalaren bai "
 "bertikalaren informazioa eskatzeko behartuko zaio."
 
-#: ../app/config/gimprc-blurbs.h:246
+#: ../app/config/gimprc-blurbs.h:255
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -10144,7 +10180,7 @@ msgstr ""
 "gisa aldatzen du. Bertsio zaharragoetan lehenespeneko portaera izateko "
 "erabiltzen da."
 
-#: ../app/config/gimprc-blurbs.h:255
+#: ../app/config/gimprc-blurbs.h:264
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -10152,13 +10188,13 @@ msgstr ""
 "Irudi-leihoaren beheko eskuineko izkinan erabilgarri dagoen nabigatzeko "
 "aurrebistaren tamaina ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:259
+#: ../app/config/gimprc-blurbs.h:268
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 "GIMPek zenbat hari erabiliko dituen ezartzen du, hori onartzen duten "
 "eragiketak gauzatzeko."
 
-#: ../app/config/gimprc-blurbs.h:281
+#: ../app/config/gimprc-blurbs.h:290
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -10168,7 +10204,7 @@ msgstr ""
 "du. Atsegina da aurrebistak edukitzea geruzen eta kanalen elkarrizketa-"
 "koadroan, baina irudi handiekin lan egitean lana moteldu egin dezake."
 
-#: ../app/config/gimprc-blurbs.h:286
+#: ../app/config/gimprc-blurbs.h:295
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -10176,11 +10212,11 @@ msgstr ""
 "Geruzen eta kanalen aurrebistaren tamaina lehenetsia ezartzen du, sortu "
 "berri diren elkarrizketa-koadroetan."
 
-#: ../app/config/gimprc-blurbs.h:290
+#: ../app/config/gimprc-blurbs.h:299
 msgid "Sets the default quick mask color."
 msgstr "Maskara azkarraren kolore lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:293
+#: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -10190,7 +10226,7 @@ msgstr ""
 "irudiaren tamaina fisikoa aldatzen den bakoitzean. Ezarpen honek leiho "
 "anitzeko moduan soilik funtzionatzen du."
 
-#: ../app/config/gimprc-blurbs.h:298
+#: ../app/config/gimprc-blurbs.h:307
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -10199,12 +10235,12 @@ msgstr ""
 "irudiaren zooma handitzean eta txikitzean. Ezarpen honek leiho anitzeko "
 "moduan soilik funtzionatzen du."
 
-#: ../app/config/gimprc-blurbs.h:303
+#: ../app/config/gimprc-blurbs.h:312
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Utzi GIMP saia dadin abio bakoitzean gordetako azken saioa leheneratzen."
 
-#: ../app/config/gimprc-blurbs.h:306
+#: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -10213,13 +10249,13 @@ msgstr ""
 "pantailetan irekitzen. Desgaituta dagoenean, leihoak uneko pantailan "
 "agertuko dira."
 
-#: ../app/config/gimprc-blurbs.h:311
+#: ../app/config/gimprc-blurbs.h:320
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Gogoratu uneko tresna, eredua, kolorea eta brotxa hurrengo GIMP saioetan."
 
-#: ../app/config/gimprc-blurbs.h:315
+#: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -10228,7 +10264,7 @@ msgstr ""
 "gailu guztietan. Tresnak ez dira txandakatuko sarrerako gailua aldatzen "
 "denean."
 
-#: ../app/config/gimprc-blurbs.h:320
+#: ../app/config/gimprc-blurbs.h:329
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -10236,16 +10272,16 @@ msgstr ""
 "Mantendu irekitako eta gordetako fitxategi guztien betiko erregistroa azken "
 "dokumentuen zerrendan."
 
-#: ../app/config/gimprc-blurbs.h:324
+#: ../app/config/gimprc-blurbs.h:333
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Gorde elkarrizketa-koadro nagusien kokalekuak eta tamainak GIMP ixtean."
 
-#: ../app/config/gimprc-blurbs.h:327
+#: ../app/config/gimprc-blurbs.h:336
 msgid "Save the tool options when GIMP exits."
 msgstr "Gorde tresna-aukerak GIMP ixtean."
 
-#: ../app/config/gimprc-blurbs.h:333
+#: ../app/config/gimprc-blurbs.h:342
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -10253,7 +10289,7 @@ msgstr ""
 "Gaituta dagoenean, margotzeko tresna guztiek uneko brotxen eskemaren "
 "aurrebista erakutsiko dute."
 
-#: ../app/config/gimprc-blurbs.h:337
+#: ../app/config/gimprc-blurbs.h:346
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -10263,7 +10299,7 @@ msgstr ""
 "dagokien laguntzako orrialdera joateko. Botoi hau gabe ere, laguntzako "
 "orrialdeak F1 tekla sakatuz eskura daitezke."
 
-#: ../app/config/gimprc-blurbs.h:342
+#: ../app/config/gimprc-blurbs.h:351
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -10271,7 +10307,7 @@ msgstr ""
 "Gaituta dagoenean, kurtsorea irudiaren gainean erakutsiko da, margotze-"
 "tresna erabiltzean."
 
-#: ../app/config/gimprc-blurbs.h:346
+#: ../app/config/gimprc-blurbs.h:355
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -10280,7 +10316,7 @@ msgstr ""
 "\"Ikuspegia->Erakutsi menu-barra\" komandoaren bidez ere aktibatu eta "
 "desaktibatu daiteke."
 
-#: ../app/config/gimprc-blurbs.h:350
+#: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -10288,7 +10324,7 @@ msgstr ""
 "Gaituta dagoenean, erregelak ikusgai daude lehenespenez. Hori \"Ikuspegia-"
 ">Erakutsi erregelak\" komandoaren bidez ere aktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:354
+#: ../app/config/gimprc-blurbs.h:363
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -10297,7 +10333,7 @@ msgstr ""
 "\"Ikuspegia->Erakutsi korritze-barrak bai/ez\" komandoaren bidez ere aktiba "
 "daiteke."
 
-#: ../app/config/gimprc-blurbs.h:358
+#: ../app/config/gimprc-blurbs.h:367
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -10305,7 +10341,7 @@ msgstr ""
 "Gaituta dagoenean, egoera-barra ikusgai dago lehenespenez. Hori \"Ikuspegia-"
 ">Erakutsi egoera-barra\" komandoaren bidez ere aktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:362
+#: ../app/config/gimprc-blurbs.h:371
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -10314,7 +10350,7 @@ msgstr ""
 "\"Ikuspegia->Erakutsi hautapena\" komandoaren bidez ere aktiba eta desaktiba "
 "daiteke."
 
-#: ../app/config/gimprc-blurbs.h:366
+#: ../app/config/gimprc-blurbs.h:375
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -10323,7 +10359,7 @@ msgstr ""
 "\"Ikuspegia->Erakutsi geruzaren muga\" komandoaren bidez ere aktiba eta "
 "desaktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:370
+#: ../app/config/gimprc-blurbs.h:379
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -10331,7 +10367,7 @@ msgstr ""
 "Gaituta dagoenean, gidak ikusgai daude lehenespenez. Hori \"Ikuspegia-"
 ">Erakutsi gidak\" komandoaren bidez ere aktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:374
+#: ../app/config/gimprc-blurbs.h:383
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -10339,7 +10375,7 @@ msgstr ""
 "Gaituta dagoenean, sareta ikusgai egongo da lehenespenez. Hori \"Ikuspegia-"
 ">Erakutsi sareta\" komandoaren bidez ere aktiba eta desaktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:378
+#: ../app/config/gimprc-blurbs.h:387
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -10347,44 +10383,44 @@ msgstr ""
 "Gaituta dagoenean, lagin-puntuak ikusgai daude lehenespenez. Hori "
 "\"Ikuspegia->Erakutsi lagin-puntuak\" komandoaren bidez ere aktiba daiteke."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:391
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Erakutsi aholkua kurtsorea elementu baten gainean kokatzean."
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:394
 msgid "Use GIMP in a single-window mode."
 msgstr "Erabili GIMP leiho bakarreko moduan."
 
-#: ../app/config/gimprc-blurbs.h:388
+#: ../app/config/gimprc-blurbs.h:397
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
 "Ezkutatu atrakagarriak eta bestelako leihoak, irudien leihoak soilik utziz."
 
-#: ../app/config/gimprc-blurbs.h:391
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Enable the N-Point Deformation tool."
 msgstr "Gaitu N punturen deformazio-tresna."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:403
 msgid "Enable the Handle Transform tool."
 msgstr "Gaitu heldulekuen bidezko eraldatze-tresna."
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:406
 msgid "Enable symmetry on painting."
 msgstr "Gaitu margotze simetrikoa."
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:409
 msgid "Enable the MyPaint Brush tool."
 msgstr "Gaitu MyPaint brotxen tresna."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:412
 msgid "Enable the Seamless Clone tool."
 msgstr "Gaitu josturarik gabeko klonatze-tresna."
 
-#: ../app/config/gimprc-blurbs.h:406
+#: ../app/config/gimprc-blurbs.h:415
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Zer egin zuriune-barra sakatzen bada leiho nagusian."
 
-#: ../app/config/gimprc-blurbs.h:409
+#: ../app/config/gimprc-blurbs.h:418
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -10401,11 +10437,11 @@ msgstr ""
 "fitxategia NFSren gainean muntatutako direktorioan sortzen bada. Hori dela "
 "eta, komeni da zure trukatze-fitxategia \"/tmp\" karpetan gordetzea."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:427
 msgid "When enabled, menus can be torn off."
 msgstr "Gaituta dagoenean, menuak bereizi egin daitezke."
 
-#: ../app/config/gimprc-blurbs.h:421
+#: ../app/config/gimprc-blurbs.h:430
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -10413,15 +10449,15 @@ msgstr ""
 "Gaituta dagoenean, menu-elementuen laster-teklak alda ditzakezu menu-"
 "elementua nabarmendua dagoenean tekla konbinazio bat sakatuz."
 
-#: ../app/config/gimprc-blurbs.h:425
+#: ../app/config/gimprc-blurbs.h:434
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Gorde aldatutako laster-teklak GIMP ixtean."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:437
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Leheneratu gordetako laster-teklak GIMP abiarazten duzun bakoitzean."
 
-#: ../app/config/gimprc-blurbs.h:431
+#: ../app/config/gimprc-blurbs.h:440
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -10433,14 +10469,14 @@ msgstr ""
 "GIMP ixtean, baina baliteke fitxategi batzuk geratzea; beraz, hobe da "
 "direktorio hau beste erabiltzaileekin ez partekatzea."
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:461
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "'Bihurtu kolore-profilera' elkarrizketa-koadrorako errendatze-saiakera "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:455
+#: ../app/config/gimprc-blurbs.h:464
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -10448,14 +10484,14 @@ msgstr ""
 "'Bihurtu kolore-profilera' elkarrizketa-koadrorako puntu beltzaren "
 "konpentsazio lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:459
+#: ../app/config/gimprc-blurbs.h:468
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Zehaztasunaren bihurketa' elkarrizketa-koadrorako geruzen bilbatze-metodo "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:471
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -10463,20 +10499,20 @@ msgstr ""
 "'Zehaztasunaren bihurketa' elkarrizketa-koadrorako testu-geruzen bilbatze-"
 "metodo lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:465
+#: ../app/config/gimprc-blurbs.h:474
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "'Zehaztasunaren bihurketa' elkarrizketa-koadrorako kanalen bilbatze-metodo "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:468
+#: ../app/config/gimprc-blurbs.h:477
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 "'Bihurtu kolore-profilera' elkarrizketa-koadrorako paleta mota lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:471
+#: ../app/config/gimprc-blurbs.h:480
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -10484,7 +10520,7 @@ msgstr ""
 "'Bihurtu kolore indexatura' elkarrizketa-koadrorako kolore kopuru maximo "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:474
+#: ../app/config/gimprc-blurbs.h:483
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -10492,20 +10528,20 @@ msgstr ""
 "'Bihurtu kolore indexatuetara' elkarrizketa-koadrorako 'Kendu kolore "
 "bikoiztuak' egoera lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:477
+#: ../app/config/gimprc-blurbs.h:486
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "'Bihurtu kolore indexatuetara' elkarrizketa-koadrorako bilbatze mota "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:480
+#: ../app/config/gimprc-blurbs.h:489
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "'Bihurtu kolore indexatuetara' elkarrizketa-koadrorako 'BIlbatu alfa' egoera "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:483
+#: ../app/config/gimprc-blurbs.h:492
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -10513,144 +10549,144 @@ msgstr ""
 "'Bihurtu kolore indexatuetara' elkarrizketa-koadrorako 'Bilbatu testu-"
 "geruzak' egoera lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:486
+#: ../app/config/gimprc-blurbs.h:495
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
 "'Oihalaren tamaina' elkarrizketa-koadrorako betegarri mota lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:489
+#: ../app/config/gimprc-blurbs.h:498
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "'Oihalaren tamaina' elkarrizketa-koadrorako, tamainaz aldatuko den geruza "
 "multzo lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:492
+#: ../app/config/gimprc-blurbs.h:501
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "'Oihalaren tamaina' elkarrizketa-koadrorako 'Aldatu testu-geruzen tamaina' "
 "egoera lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:495
+#: ../app/config/gimprc-blurbs.h:504
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako geruza-izen lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:498
+#: ../app/config/gimprc-blurbs.h:507
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "'Geruza berria' elkarrizketa-koadrorako modu lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:501
+#: ../app/config/gimprc-blurbs.h:510
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako nahaste-espazio lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:504
+#: ../app/config/gimprc-blurbs.h:513
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako konposizio-espazio lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:507
+#: ../app/config/gimprc-blurbs.h:516
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako konposizio-modu lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:510
+#: ../app/config/gimprc-blurbs.h:519
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako opakutasun lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:513
+#: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr ""
 "'Geruza berria' elkarrizketa-koadrorako betegarri mota lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:516
+#: ../app/config/gimprc-blurbs.h:525
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "'Geruzaren mugaren tamaina' ekarrizketa-koadrorako betegarri mota lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:519
+#: ../app/config/gimprc-blurbs.h:528
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
 "'Gehitu geruza-maskara' elkarrizketa-koadrorako maskara lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:522
+#: ../app/config/gimprc-blurbs.h:531
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "'Gehitu geruza-maskara' elkarrizketa-koadrorako 'Alderantzikatu maskara' "
 "egoera lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:525
+#: ../app/config/gimprc-blurbs.h:534
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Batu ikusgai dauden geruzak' elkarrizketa-koadrorako batze mota lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:528
+#: ../app/config/gimprc-blurbs.h:537
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Batu ikusgai dauden geruzak' elkarrizketa-koadrorako 'Talde aktiboa soilik' "
 "lehenetsia ezartzen du.."
 
-#: ../app/config/gimprc-blurbs.h:531
+#: ../app/config/gimprc-blurbs.h:540
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Batu ikusgai dauden geruzak' elkarrizketa-koadrorako 'Baztertu ikusezina' "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:534
+#: ../app/config/gimprc-blurbs.h:543
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr ""
 "'Kanal berria' elkarrizketa-koadrorako kanal-izen lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:537
+#: ../app/config/gimprc-blurbs.h:546
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 "'Kanal berria' elkarrizketa-koadrorako kolore eta opakutasun lehenetsia "
 "ezartzen ditu."
 
-#: ../app/config/gimprc-blurbs.h:540
+#: ../app/config/gimprc-blurbs.h:549
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr ""
 "'Bide berria' elkarrizketa-koadrorako bide-izen lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:543
+#: ../app/config/gimprc-blurbs.h:552
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "'Esportatu bidea' elkarrizketa-koadrorako bideen karpeta lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:546
+#: ../app/config/gimprc-blurbs.h:555
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "'Esportatu bidea' elkarrizketa-koadrorako 'Esportatu bide aktiboa' egoera "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:549
+#: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 "'Inportatu bidea' elkarrizketa-koadrorako bideen karpeta lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:552
+#: ../app/config/gimprc-blurbs.h:561
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "'Inportatu bidea' elkarrizketa-koadrorako 'Batu inportatutako bideak' egoera "
 "lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:555
+#: ../app/config/gimprc-blurbs.h:564
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -10658,25 +10694,25 @@ msgstr ""
 "'Inportatu bidea' elkarrizketa-koadrorako 'Eskalatu inportatutako bideak "
 "tamainara doitzeko' egoera lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:558
+#: ../app/config/gimprc-blurbs.h:567
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
 "Lanbrotze-erradio lehenetsia ezartzen du 'Lanbrotu hautapena' elkarrizketa-"
 "koadrorako."
 
-#: ../app/config/gimprc-blurbs.h:561
+#: ../app/config/gimprc-blurbs.h:570
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "'Handitu hautapena' elkarrizketa-koadrorako handitze-erradio lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:564
+#: ../app/config/gimprc-blurbs.h:573
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "'Uzkurtu hautapena' elkarrizketa-koadrorako uzkurtze-erradio lehenetsia "
 "ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:567
+#: ../app/config/gimprc-blurbs.h:576
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -10684,13 +10720,13 @@ msgstr ""
 "'Uzkurtu hautapena' elkarrizketa-koadrorako 'Hautatutako areek irudiaren "
 "kanpoaldetik jarraitzen dute' ezarpen lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 "'Ertzen hautapena' elkarrizketa-koadrorako ertz-erradio lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:574
+#: ../app/config/gimprc-blurbs.h:583
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -10698,19 +10734,19 @@ msgstr ""
 "'Ertzen hautapena' elkarrizketa-koadrorako 'Hautatutako areek irudiaren "
 "kanpoaldetik jarraitzen dute' ezarpen lehenetsia ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:578
+#: ../app/config/gimprc-blurbs.h:587
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 "'Ertzen hautapena' elkarrizketa-koadrorako ertz-estilo lehenetsia ezartzen "
 "du."
 
-#: ../app/config/gimprc-blurbs.h:587
+#: ../app/config/gimprc-blurbs.h:596
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 "'Ireki' elkarrizketa-koadroan erakusten den koadro txikiaren tamaina "
 "ezartzen du"
 
-#: ../app/config/gimprc-blurbs.h:590
+#: ../app/config/gimprc-blurbs.h:599
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -10718,7 +10754,7 @@ msgstr ""
 "'Ireki' elkarrizketa-koadroko koadro txikia automatikoki eguneratuko da "
 "aurrebistan dagoen fitxategia ezarritako tamaina baino txikiagoa bada."
 
-#: ../app/config/gimprc-blurbs.h:594
+#: ../app/config/gimprc-blurbs.h:603
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -10730,28 +10766,28 @@ msgstr ""
 "irudiekin lan egitea uzten du. Ordenagailuak RAM memoria ugari izanez gero, "
 "handiagotu hau balio altuagora."
 
-#: ../app/config/gimprc-blurbs.h:600
+#: ../app/config/gimprc-blurbs.h:609
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Erakutsi uneko aurreko eta atzeko planoen koloreak tresna-barran."
 
-#: ../app/config/gimprc-blurbs.h:603
+#: ../app/config/gimprc-blurbs.h:612
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "Erakutsi unean hautatutako brotxa, eredu eta gradientea tresna-barran."
 
-#: ../app/config/gimprc-blurbs.h:606
+#: ../app/config/gimprc-blurbs.h:615
 msgid "Show the currently active image in the toolbox."
 msgstr "Erakutsi uneko irudi aktiboa tresna-barran."
 
-#: ../app/config/gimprc-blurbs.h:612
+#: ../app/config/gimprc-blurbs.h:621
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Gardentasuna irudietan bistaratzeko modua ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:615
+#: ../app/config/gimprc-blurbs.h:624
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Gardentasuna bistaratzeko erabiltzen den koadrikularen tamaina ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:618
+#: ../app/config/gimprc-blurbs.h:627
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -10759,7 +10795,7 @@ msgstr ""
 "Gaituta dagoenean, GIMPek ez du gordeko irudia ireki denetik aldatu gabe "
 "badago."
 
-#: ../app/config/gimprc-blurbs.h:622
+#: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -10767,7 +10803,7 @@ msgstr ""
 "Desegin daitezkeen eragiketen gutxieneko kopurua ezartzen du. Desegiteko "
 "maila gehiago eskaintzen dira desegiteko mailen mugara heldu arte."
 
-#: ../app/config/gimprc-blurbs.h:626
+#: ../app/config/gimprc-blurbs.h:635
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -10777,15 +10813,15 @@ msgstr ""
 "memoriaren gehienezko muga ezartzen du. Ezarpen honetaz aparte, "
 "konfigurazioaren arabera hainbat aldiz desegin daiteke."
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:640
 msgid "Sets the size of the previews in the Undo History."
 msgstr "'Desegin historia'-ko aurrebistaren tamaina ezartzen du."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:643
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Gaituta dagoenean, laguntza-arakatzailea irekiko da F1 sakatzen bada."
 
-#: ../app/config/gimprc-blurbs.h:637
+#: ../app/config/gimprc-blurbs.h:646
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Gaituta dagoenean, OpenCL erabiltzen du zenbait eragiketatan."
 
@@ -11227,7 +11263,7 @@ msgid "Text"
 msgstr "Testua"
 
 #: ../app/core/core-enums.c:857 ../app/core/core-enums.c:906
-#: ../app/core/gimpdrawable-transform.c:682
+#: ../app/core/gimpdrawable-transform.c:696
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Eraldatu"
@@ -11614,7 +11650,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Letra-tipoak (denbora behar du)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:799 ../app/dialogs/preferences-dialog.c:3034
+#: ../app/core/gimp.c:799 ../app/dialogs/preferences-dialog.c:3052
 msgid "Modules"
 msgstr "Moduluak"
 
@@ -11639,7 +11675,7 @@ msgstr "Huts egin du \"%s\" ezabatzean: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:322 ../app/core/gimpcontext.c:711
-#: ../app/dialogs/preferences-dialog.c:2998
+#: ../app/dialogs/preferences-dialog.c:3016
 #: ../app/tools/gimppaintoptions-gui.c:225
 msgid "Dynamics"
 msgstr "Dinamika"
@@ -11686,11 +11722,11 @@ msgstr "Aurreko planoa atzekora (ertz gogorra)"
 
 #: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Aurreko planoa atzekora (ÑSB EKN)"
+msgstr "Aurreko planoa atzekora (HSV erlojuaren kontra)"
 
 #: ../app/core/gimp-gradients.c:107
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Aurreko planoa atzekora (ÑSB ENko ñabardura)"
+msgstr "Aurreko planoa atzekora (HSV erlujuaren aldeko ñabardura)"
 
 #: ../app/core/gimp-gradients.c:115
 msgid "FG to Transparent"
@@ -11817,18 +11853,18 @@ msgid "Unable to decode abr format version %d."
 msgstr "Ezin izan da formatu laburreko %d bertsioa deskodetu."
 
 #: ../app/core/gimpbrush-load.c:572 ../app/core/gimpbrush-load.c:791
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgid "Fatal parse error in brush file: Brush size value currupt."
+#, c-format
+msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
-"Analisi-errore larria '%s' brotxa-fitxategian: fitxategia hondatuta dago."
+"Analisi-errore larria brotxa-fitxategian: brotxa-tamainaren balioa hondatuta "
+"dago."
 
 #: ../app/core/gimpbrush-load.c:659 ../app/core/gimpbrush-load.c:849
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file: Wide brushes are not supported."
+#, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
-"Analisi-errore larria brotxa-fitxategian: brotxa zabalak ez daude onartuta."
+"Analisi-errore larria brotxa-fitxategian: brotxa-dimentsioak barrutitik "
+"kanpo daude."
 
 #: ../app/core/gimpbrush-load.c:671
 #, c-format
@@ -11843,10 +11879,9 @@ msgstr ""
 "dirudi. "
 
 #: ../app/core/gimpbrush-load.c:857
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file: Unknown version %d."
+#, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
-msgstr "Analisi-errore larria brotxa-fitxategian: %d bertsio ezezaguna."
+msgstr "Analisi-errore larria brotxa-fitxategian: konpresio-metodo ezezaguna."
 
 #: ../app/core/gimpbrush-load.c:993
 #, c-format
@@ -11857,11 +11892,11 @@ msgstr ""
 "laburreko %d bertsioa."
 
 #: ../app/core/gimpbrush-load.c:1114 ../app/core/gimpbrush-load.c:1132
-#, fuzzy, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
+#, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
-"Analisi-errore larria '%s' brotxa-fitxategian: fitxategia hondatuta dago."
+"Analisi-errore larria brotxa-fitxategian: RLE konpresioa duen brotxa-datuak "
+"hondatuta daude."
 
 #: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:213
 msgid "Brush Spacing"
@@ -11996,7 +12031,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Biratu kanala"
 
-#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:1003
+#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:1017
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Eraldatu kanala"
@@ -12318,22 +12353,22 @@ msgstr "Desplazatu marrazgaia"
 msgid "Not enough points to stroke"
 msgstr "Ez dago nahikoa puntu trazatzeko"
 
-#: ../app/core/gimpdrawable-transform.c:771
+#: ../app/core/gimpdrawable-transform.c:785
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Irauli"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:870
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Biratu"
 
-#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:438
+#: ../app/core/gimpdrawable-transform.c:1015 ../app/core/gimplayer.c:438
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Eraldatu geruza"
 
-#: ../app/core/gimpdrawable-transform.c:1014
+#: ../app/core/gimpdrawable-transform.c:1028
 msgid "Transformation"
 msgstr "Eraldatzea"
 
@@ -12528,29 +12563,29 @@ msgstr "Eraldatu geruzen taldea"
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: ../app/core/gimpimage.c:2218
+#: ../app/core/gimpimage.c:2216
 msgid " (exported)"
 msgstr " (esportatuta)"
 
-#: ../app/core/gimpimage.c:2222
+#: ../app/core/gimpimage.c:2220
 msgid " (overwritten)"
 msgstr " (gainidatzita)"
 
-#: ../app/core/gimpimage.c:2231
+#: ../app/core/gimpimage.c:2229
 msgid " (imported)"
 msgstr " (inportatuta)"
 
-#: ../app/core/gimpimage.c:2552
+#: ../app/core/gimpimage.c:2550
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Aldatu irudiaren bereizmena"
 
-#: ../app/core/gimpimage.c:2604
+#: ../app/core/gimpimage.c:2602
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Aldatu irudiaren unitatea"
 
-#: ../app/core/gimpimage.c:3488
+#: ../app/core/gimpimage.c:3486
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -12558,52 +12593,52 @@ msgstr ""
 "'gimp-comment' parasitoen balioztatzeak huts egin du: iruzkinak baliogabeko "
 "UTF-8 kodea du"
 
-#: ../app/core/gimpimage.c:3540
+#: ../app/core/gimpimage.c:3538
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Erantsi parasitoa irudiari"
 
-#: ../app/core/gimpimage.c:3581
+#: ../app/core/gimpimage.c:3579
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Kendu parasitoa iruditik"
 
-#: ../app/core/gimpimage.c:4292
+#: ../app/core/gimpimage.c:4290
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Gehitu geruza"
 
-#: ../app/core/gimpimage.c:4344 ../app/core/gimpimage.c:4364
+#: ../app/core/gimpimage.c:4342 ../app/core/gimpimage.c:4362
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Kendu geruza"
 
-#: ../app/core/gimpimage.c:4358
+#: ../app/core/gimpimage.c:4356
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Kendu hautapen mugikorra"
 
-#: ../app/core/gimpimage.c:4523
+#: ../app/core/gimpimage.c:4521
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Gehitu kanala"
 
-#: ../app/core/gimpimage.c:4561 ../app/core/gimpimage.c:4574
+#: ../app/core/gimpimage.c:4559 ../app/core/gimpimage.c:4572
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kendu kanala"
 
-#: ../app/core/gimpimage.c:4628
+#: ../app/core/gimpimage.c:4626
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Gehitu bidea"
 
-#: ../app/core/gimpimage.c:4659
+#: ../app/core/gimpimage.c:4657
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Kendu bidea"
 
-#: ../app/core/gimpimage-arrange.c:170
+#: ../app/core/gimpimage-arrange.c:173
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Antolatu objektuak"
@@ -12837,34 +12872,38 @@ msgstr "Ezin da geruza ikusgairik gabeko irudia berdindu."
 msgid "Cannot merge down a floating selection."
 msgstr "Ezin da hautapen mugikorra beherantz batu."
 
-#: ../app/core/gimpimage-merge.c:270
+#: ../app/core/gimpimage-merge.c:252
+msgid "Cannot merge down an invisible layer."
+msgstr "Ezin da geruza ikusezin bat beherantz batu."
+
+#: ../app/core/gimpimage-merge.c:277
 msgid "Cannot merge down to a layer group."
 msgstr "Ezin da geruzen talde batean batu."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:284
 msgid "The layer to merge down to is locked."
 msgstr "Batzea nahi den helburuko geruza blokeatuta dago."
 
-#: ../app/core/gimpimage-merge.c:289
+#: ../app/core/gimpimage-merge.c:296
 msgid "There is no visible layer to merge down to."
 msgstr "Ez dago helburuko geruza ikusgairik batzeko."
 
-#: ../app/core/gimpimage-merge.c:299
+#: ../app/core/gimpimage-merge.c:306
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Batu beherantz"
 
-#: ../app/core/gimpimage-merge.c:327
+#: ../app/core/gimpimage-merge.c:334
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Batu geruzen taldea"
 
-#: ../app/core/gimpimage-merge.c:380
+#: ../app/core/gimpimage-merge.c:387
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Batu ikusgai dauden bideak"
 
-#: ../app/core/gimpimage-merge.c:416
+#: ../app/core/gimpimage-merge.c:423
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "Ez daude batzeko behar adina bide ikusgai. Gutxienez bi behar dira."
 
@@ -12903,8 +12942,8 @@ msgstr "Eskalatu irudia"
 msgid "Can't undo %s"
 msgstr "Ezin da %s desegin"
 
-#: ../app/core/gimpimagefile.c:750 ../app/dialogs/preferences-dialog.c:1760
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/core/gimpimagefile.c:750 ../app/dialogs/preferences-dialog.c:1778
+#: ../app/dialogs/preferences-dialog.c:1884
 msgid "Folder"
 msgstr "Karpeta"
 
@@ -13446,7 +13485,8 @@ msgstr "Erdigunearen ordenatua"
 msgid "Number of points"
 msgstr "Puntu kopurua"
 
-#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
+#: ../app/core/gimpsymmetry-mandala.c:152
+#: ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Desgaitu brotxaren transformazioa"
 
@@ -13581,7 +13621,8 @@ msgid "Precision"
 msgstr "Zehaztasuna"
 
 #. gamma
-#: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:205
+#: ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:139
 #: ../app/operations/gimplevelsconfig.c:140 ../app/tools/gimplevelstool.c:496
 msgid "Gamma"
@@ -13923,7 +13964,7 @@ msgid "Enable dithering of _transparency"
 msgstr "Gaitu g_ardentasunaren bilbea"
 
 #: ../app/dialogs/convert-indexed-dialog.c:275
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2103
 msgid "Enable dithering of text layers"
 msgstr "Gaitu testu-geruzen bilbatzea"
 
@@ -14208,7 +14249,7 @@ msgid "Create a New Image"
 msgstr "Sortu irudi berria"
 
 #: ../app/dialogs/image-new-dialog.c:138
-#: ../app/dialogs/preferences-dialog.c:1586
+#: ../app/dialogs/preferences-dialog.c:1604
 msgid "_Template:"
 msgstr "_Txantiloia:"
 
@@ -14377,11 +14418,13 @@ msgid "_Opacity:"
 msgstr "_Opakutasuna:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:725
+#: ../app/dialogs/layer-options-dialog.c:252
+#: ../app/tools/gimpmeasuretool.c:725
 msgid "Width:"
 msgstr "Zabalera:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:753
+#: ../app/dialogs/layer-options-dialog.c:258
+#: ../app/tools/gimpmeasuretool.c:753
 msgid "Height:"
 msgstr "Altuera:"
 
@@ -14396,8 +14439,8 @@ msgstr "X desplazamendua:"
 msgid "Offset Y:"
 msgstr "Y desplazamendua:"
 
-#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:452
+#: ../app/dialogs/layer-options-dialog.c:396
+#: ../app/dialogs/resize-dialog.c:369 ../app/widgets/gimptemplateeditor.c:452
 msgid "_Fill with:"
 msgstr "_Bete honekin:"
 
@@ -14574,7 +14617,7 @@ msgid "Select Source"
 msgstr "Hautatu iturburua"
 
 #: ../app/dialogs/palette-import-dialog.c:212
-#: ../app/dialogs/preferences-dialog.c:1548
+#: ../app/dialogs/preferences-dialog.c:1566
 msgid "_Gradient"
 msgstr "_Gradientea"
 
@@ -14691,12 +14734,12 @@ msgstr ""
 "abiarazten den hurrengoan."
 
 #: ../app/dialogs/preferences-dialog.c:817
-#: ../app/dialogs/preferences-dialog.c:2358
+#: ../app/dialogs/preferences-dialog.c:2376
 msgid "There's a local installation of the user manual."
 msgstr "Erabiltzailearen eskuliburua lokalean instalatuta dago."
 
 #: ../app/dialogs/preferences-dialog.c:822
-#: ../app/dialogs/preferences-dialog.c:2364
+#: ../app/dialogs/preferences-dialog.c:2382
 msgid "The user manual is not installed locally."
 msgstr "Erabiltzailearen eskuliburua ez dago lokalean instalatuta."
 
@@ -14963,12 +15006,9 @@ msgid "Show advanced color options"
 msgstr "Erakutsi kolore-aukera aurreratuak"
 
 #: ../app/dialogs/preferences-dialog.c:1404
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "Image Import & Export"
 msgstr "Irudien inportazioa eta esportazioa"
-
-#: ../app/dialogs/preferences-dialog.c:1405
-msgid "Image Import"
-msgstr "Irudien inportazioa"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1411
@@ -14988,530 +15028,546 @@ msgid "Add an alpha channel to imported images"
 msgstr "Gehitu alfa kanala inportatutako irudiei"
 
 #: ../app/dialogs/preferences-dialog.c:1431
-#: ../app/dialogs/preferences-dialog.c:2012
+#: ../app/dialogs/preferences-dialog.c:2030
 msgid "Color profile policy:"
 msgstr "Kolore-profilaren politika:"
 
-#. Raw Image Importer
+#. Export Policies
 #: ../app/dialogs/preferences-dialog.c:1435
+msgid "Export Policies"
+msgstr "Esportazio-politikak"
+
+#: ../app/dialogs/preferences-dialog.c:1439
+msgid "Export Exif metadata by default when available"
+msgstr "Esportatu EXIF metadatuak modu lehenetsian, erabilgarri daudenean"
+
+#: ../app/dialogs/preferences-dialog.c:1442
+msgid "Export XMP metadata by default when available"
+msgstr "Esportatu XMP metadatuak modu lehenetsian, erabilgarri daudenean"
+
+#: ../app/dialogs/preferences-dialog.c:1445
+msgid "Export IPTC metadata by default when available"
+msgstr "Esportatu IPTC metadatuak modu lehenetsian, erabilgarri daudenean"
+
+#: ../app/dialogs/preferences-dialog.c:1448
+msgid "Metadata can contain sensitive information."
+msgstr "Metadatuek informazio sentibera izan dezakete."
+
+#. Raw Image Importer
+#: ../app/dialogs/preferences-dialog.c:1453
 msgid "Raw Image Importer"
 msgstr "RAW irudien inportatzailea"
 
-#: ../app/dialogs/preferences-dialog.c:1468
+#: ../app/dialogs/preferences-dialog.c:1486
 msgid "Experimental Playground"
 msgstr "Esperimentuetarako jolaslekua"
 
-#: ../app/dialogs/preferences-dialog.c:1469
+#: ../app/dialogs/preferences-dialog.c:1487
 msgid "Playground"
 msgstr "Jolaslekua"
 
-#: ../app/dialogs/preferences-dialog.c:1474
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "Insane Options"
 msgstr "Aukera zoroak"
 
-#: ../app/dialogs/preferences-dialog.c:1478
+#: ../app/dialogs/preferences-dialog.c:1496
 msgid "_N-Point Deformation tool"
 msgstr "_N punturen deformaziorako tresna"
 
-#: ../app/dialogs/preferences-dialog.c:1481
+#: ../app/dialogs/preferences-dialog.c:1499
 msgid "_Seamless Clone tool"
 msgstr "_Josturarik gabeko klonatzeetarako tresna"
 
-#: ../app/dialogs/preferences-dialog.c:1491
-#: ../app/dialogs/preferences-dialog.c:1492
+#: ../app/dialogs/preferences-dialog.c:1509
+#: ../app/dialogs/preferences-dialog.c:1510
 msgctxt "preferences"
 msgid "Tool Options"
 msgstr "Tresna-aukerak"
 
 #. General
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1500
-#: ../app/dialogs/preferences-dialog.c:2302
-#: ../app/dialogs/preferences-dialog.c:2630
-#: ../app/dialogs/preferences-dialog.c:2861
+#: ../app/dialogs/preferences-dialog.c:1518
+#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2879
 #: ../app/widgets/gimpcontrollereditor.c:186
 msgid "General"
 msgstr "Orokorra"
 
-#: ../app/dialogs/preferences-dialog.c:1503
+#: ../app/dialogs/preferences-dialog.c:1521
 msgid "_Save tool options on exit"
 msgstr "_Gorde tresna-aukerak irtetean"
 
-#: ../app/dialogs/preferences-dialog.c:1507
+#: ../app/dialogs/preferences-dialog.c:1525
 msgid "Save Tool Options _Now"
 msgstr "Gorde _orain tresna-aukerak"
 
-#: ../app/dialogs/preferences-dialog.c:1514
+#: ../app/dialogs/preferences-dialog.c:1532
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Berrezarri gordetako tresna-aukerak balio lehenetsietan"
 
-#: ../app/dialogs/preferences-dialog.c:1528
+#: ../app/dialogs/preferences-dialog.c:1546
 msgid "Default _interpolation:"
 msgstr "_Interpolazio lehenetsia:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1535
+#: ../app/dialogs/preferences-dialog.c:1553
 msgid "Paint Options Shared Between Tools"
 msgstr "Margotze-aukerak tresnen artean partekatua"
 
-#: ../app/dialogs/preferences-dialog.c:1539
+#: ../app/dialogs/preferences-dialog.c:1557
 msgid "_Brush"
 msgstr "_Brotxa"
 
-#: ../app/dialogs/preferences-dialog.c:1542
+#: ../app/dialogs/preferences-dialog.c:1560
 msgid "_Dynamics"
 msgstr "_Dinamika"
 
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1563
 msgid "_Pattern"
 msgstr "_Eredua"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1552
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Move Tool"
 msgstr "Aldatu tresna lekuz"
 
-#: ../app/dialogs/preferences-dialog.c:1556
+#: ../app/dialogs/preferences-dialog.c:1574
 msgid "Set layer or path as active"
 msgstr "Ezarri geruza edo bidea aktibo gisa"
 
-#: ../app/dialogs/preferences-dialog.c:1569
+#: ../app/dialogs/preferences-dialog.c:1587
 msgid "Default New Image"
 msgstr "Irudi berri lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:1570
+#: ../app/dialogs/preferences-dialog.c:1588
 msgid "Default Image"
 msgstr "Irudi lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:1606
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "Quick Mask color:"
 msgstr "Maskara azkarraren kolorea:"
 
-#: ../app/dialogs/preferences-dialog.c:1607
+#: ../app/dialogs/preferences-dialog.c:1625
 msgid "Set the default Quick Mask color"
 msgstr "Ezarri maskara azkarraren kolorea"
 
-#: ../app/dialogs/preferences-dialog.c:1617
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "Default Image Grid"
 msgstr "Irudi-sareta lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:1618
+#: ../app/dialogs/preferences-dialog.c:1636
 msgid "Default Grid"
 msgstr "Sareta lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:1637
+#: ../app/dialogs/preferences-dialog.c:1655
 msgid "User Interface"
 msgstr "Erabiltzaile-interfazea"
 
-#: ../app/dialogs/preferences-dialog.c:1638
+#: ../app/dialogs/preferences-dialog.c:1656
 msgid "Interface"
 msgstr "Interfazea"
 
-#: ../app/dialogs/preferences-dialog.c:1647 ../app/tools/gimptextoptions.c:151
+#: ../app/dialogs/preferences-dialog.c:1665 ../app/tools/gimptextoptions.c:151
 msgid "Language"
 msgstr "Hizkuntza"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1653
+#: ../app/dialogs/preferences-dialog.c:1671
 msgid "Previews"
 msgstr "Aurrebistak"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1674
 msgid "_Enable layer & channel previews"
 msgstr "_Gaitu geruzen eta kanalen aurrebistak"
 
-#: ../app/dialogs/preferences-dialog.c:1662
+#: ../app/dialogs/preferences-dialog.c:1680
 msgid "_Default layer & channel preview size:"
 msgstr "_Lehenespeneko geruzen eta kanalen aurrebistaren tamaina:"
 
-#: ../app/dialogs/preferences-dialog.c:1665
+#: ../app/dialogs/preferences-dialog.c:1683
 msgid "_Undo preview size:"
 msgstr "_Desegite-aurrebisten tamaina:"
 
-#: ../app/dialogs/preferences-dialog.c:1668
+#: ../app/dialogs/preferences-dialog.c:1686
 msgid "Na_vigation preview size:"
 msgstr "Na_bigazioko aurrebisten tamaina:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1672
+#: ../app/dialogs/preferences-dialog.c:1690
 msgid "Keyboard Shortcuts"
 msgstr "Laster-teklak"
 
-#: ../app/dialogs/preferences-dialog.c:1676
+#: ../app/dialogs/preferences-dialog.c:1694
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "_Erabili laster-tekla dinamikoak"
 
-#: ../app/dialogs/preferences-dialog.c:1680
+#: ../app/dialogs/preferences-dialog.c:1698
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Konfiguratu laster-teklak..."
 
-#: ../app/dialogs/preferences-dialog.c:1687
+#: ../app/dialogs/preferences-dialog.c:1705
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Gorde laster-teklak irtetean"
 
-#: ../app/dialogs/preferences-dialog.c:1691
+#: ../app/dialogs/preferences-dialog.c:1709
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Gorde _orain laster-teklak"
 
-#: ../app/dialogs/preferences-dialog.c:1698
+#: ../app/dialogs/preferences-dialog.c:1716
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Berrezarri laster-teklak balio lehenetsiekin"
 
-#: ../app/dialogs/preferences-dialog.c:1707
+#: ../app/dialogs/preferences-dialog.c:1725
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Kendu laster-tekla _guztiak"
 
-#: ../app/dialogs/preferences-dialog.c:1719
-#: ../app/dialogs/preferences-dialog.c:1720
-#: ../app/dialogs/preferences-dialog.c:1755
+#: ../app/dialogs/preferences-dialog.c:1737
+#: ../app/dialogs/preferences-dialog.c:1738
+#: ../app/dialogs/preferences-dialog.c:1773
 msgid "Theme"
 msgstr "Gaia"
 
-#: ../app/dialogs/preferences-dialog.c:1725
+#: ../app/dialogs/preferences-dialog.c:1743
 msgid "Select Theme"
 msgstr "Hautatu gaia"
 
-#: ../app/dialogs/preferences-dialog.c:1807
+#: ../app/dialogs/preferences-dialog.c:1825
 msgid "Reload C_urrent Theme"
 msgstr "Kargatu _uneko gaia berriro"
 
-#: ../app/dialogs/preferences-dialog.c:1819
-#: ../app/dialogs/preferences-dialog.c:1820
-#: ../app/dialogs/preferences-dialog.c:1861
+#: ../app/dialogs/preferences-dialog.c:1837
+#: ../app/dialogs/preferences-dialog.c:1838
+#: ../app/dialogs/preferences-dialog.c:1879
 msgid "Icon Theme"
 msgstr "Ikono-gaia"
 
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1843
 msgid "Select an Icon Theme"
 msgstr "Hautatu ikono-gai bat"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1949
-#: ../app/dialogs/preferences-dialog.c:2701 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:1967
+#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Itxura"
 
-#: ../app/dialogs/preferences-dialog.c:1953
+#: ../app/dialogs/preferences-dialog.c:1971
 msgid "Show GIMP _logo (drag-and-drop target)"
-msgstr ""
+msgstr "Erakutsi GIMP _logotipoa (arrastatu eta jaregin helburua)"
 
-#: ../app/dialogs/preferences-dialog.c:1957
+#: ../app/dialogs/preferences-dialog.c:1975
 msgid "Show _foreground & background color"
 msgstr "Erakutsi _aurreko eta atzeko planoaren kolorea"
 
-#: ../app/dialogs/preferences-dialog.c:1961
+#: ../app/dialogs/preferences-dialog.c:1979
 msgid "Show active _brush, pattern & gradient"
 msgstr "Erakutsi _brotxa, eredu eta gradiente aktiboa"
 
-#: ../app/dialogs/preferences-dialog.c:1965
+#: ../app/dialogs/preferences-dialog.c:1983
 msgid "Show active _image"
 msgstr "Erakutsi _irudi aktiboa"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1973
+#: ../app/dialogs/preferences-dialog.c:1991
 msgid "Tools Configuration"
 msgstr "Tresnen konfigurazioa"
 
-#: ../app/dialogs/preferences-dialog.c:1989
-#: ../app/dialogs/preferences-dialog.c:1990
+#: ../app/dialogs/preferences-dialog.c:2007
+#: ../app/dialogs/preferences-dialog.c:2008
 msgid "Dialog Defaults"
 msgstr "Elkarrizketa-koadroen balio lehenetsiak"
 
-#: ../app/dialogs/preferences-dialog.c:1999
+#: ../app/dialogs/preferences-dialog.c:2017
 msgid "Reset Dialog Defaults"
 msgstr "Berrezarri elkarrizketa-koadroen balio lehenetsiak"
 
 #. Color profile import dialog
-#: ../app/dialogs/preferences-dialog.c:2007
+#: ../app/dialogs/preferences-dialog.c:2025
 msgid "Color Profile Import Dialog"
 msgstr "Kolore-profilak inportatzeko elkarrizketa-koadroa"
 
 #. All color profile chooser dialogs
-#: ../app/dialogs/preferences-dialog.c:2016
-#, fuzzy
-#| msgid "Color Profile Import Dialog"
+#: ../app/dialogs/preferences-dialog.c:2034
 msgid "Color Profile File Dialogs"
-msgstr "Kolore-profilak inportatzeko elkarrizketa-koadroa"
+msgstr "Kolore-profilen elkarrizketa-koadroak"
 
-#: ../app/dialogs/preferences-dialog.c:2021
-#, fuzzy
-#| msgid "Profile _details"
+#: ../app/dialogs/preferences-dialog.c:2039
 msgid "Profile folder:"
-msgstr "Profilaren _xehetasunak"
+msgstr "Profil-karpeta:"
 
-#: ../app/dialogs/preferences-dialog.c:2022
-#, fuzzy
-#| msgid "Select Default Folder for Exporting Paths"
+#: ../app/dialogs/preferences-dialog.c:2040
 msgid "Select Default Folder for Color Profiles"
-msgstr "Hautatu bideak esportatzeko erabiliko den karpeta lehenetsia"
+msgstr "Hautatu kolore-profiletarako erabiliko den karpeta lehenetsia"
 
 #. Convert to Color Profile Dialog
-#: ../app/dialogs/preferences-dialog.c:2026
+#: ../app/dialogs/preferences-dialog.c:2044
 msgid "Convert to Color Profile Dialog"
 msgstr "'Bihurtu kolore-profilera' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2031
+#: ../app/dialogs/preferences-dialog.c:2049
 msgid "Rendering intent:"
 msgstr "Errendatze-saiakera:"
 
-#: ../app/dialogs/preferences-dialog.c:2035
+#: ../app/dialogs/preferences-dialog.c:2053
 msgid "Black point compensation"
 msgstr "Puntu-beltzaren konpentsazioa"
 
 #. Convert Precision Dialog
-#: ../app/dialogs/preferences-dialog.c:2039
+#: ../app/dialogs/preferences-dialog.c:2057
 msgid "Precision Conversion Dialog"
 msgstr "'Zehaztasunaren bihurketa' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2046
+#: ../app/dialogs/preferences-dialog.c:2064
 msgid "Dither layers:"
 msgstr "Bilbatu geruzak:"
 
-#: ../app/dialogs/preferences-dialog.c:2051
+#: ../app/dialogs/preferences-dialog.c:2069
 msgid "Dither text layers:"
 msgstr "Bilbatu testu-geruzak:"
 
-#: ../app/dialogs/preferences-dialog.c:2056
+#: ../app/dialogs/preferences-dialog.c:2074
 msgid "Dither channels/masks:"
 msgstr "Bilbatu kanalak/maskarak:"
 
 #. Convert Indexed Dialog
-#: ../app/dialogs/preferences-dialog.c:2060
+#: ../app/dialogs/preferences-dialog.c:2078
 msgid "Indexed Conversion Dialog"
 msgstr "Kolore indexatuen bihurketarako elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2065
+#: ../app/dialogs/preferences-dialog.c:2083
 msgid "Colormap:"
 msgstr "Kolore-mapa:"
 
-#: ../app/dialogs/preferences-dialog.c:2068
+#: ../app/dialogs/preferences-dialog.c:2086
 msgid "Maximum number of colors:"
 msgstr "Kolore kopuru maximoa:"
 
-#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:2090
 msgid "Remove unused and duplicate colors from colormap"
 msgstr ""
 "Kendu kolore-mapatik erabiltzen ez diren eta bikoiztuta dauden koloreak"
 
-#: ../app/dialogs/preferences-dialog.c:2078
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Color dithering:"
 msgstr "Kolore-bilbatzea:"
 
-#: ../app/dialogs/preferences-dialog.c:2082
+#: ../app/dialogs/preferences-dialog.c:2100
 msgid "Enable dithering of transparency"
 msgstr "Giatu gardentasunaren bilbatzea"
 
 #. Canvas Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2089
+#: ../app/dialogs/preferences-dialog.c:2107
 msgid "Canvas Size Dialog"
 msgstr "'Oihalaren tamaina' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2094
-#: ../app/dialogs/preferences-dialog.c:2123
+#: ../app/dialogs/preferences-dialog.c:2112
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Fill with:"
 msgstr "Bete honekin:"
 
-#: ../app/dialogs/preferences-dialog.c:2097
+#: ../app/dialogs/preferences-dialog.c:2115
 msgid "Resize layers:"
 msgstr "Aldatu geruzen tamaina:"
 
-#: ../app/dialogs/preferences-dialog.c:2101
+#: ../app/dialogs/preferences-dialog.c:2119
 msgid "Resize text layers"
 msgstr "Aldatu testu-geruzen tamaina"
 
 #. New Layer Dialog
-#: ../app/dialogs/preferences-dialog.c:2105
+#: ../app/dialogs/preferences-dialog.c:2123
 msgid "New Layer Dialog"
 msgstr "'Geruza berria' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2110
+#: ../app/dialogs/preferences-dialog.c:2128
 msgid "Layer name:"
 msgstr "Geruzaren izena:"
 
-#: ../app/dialogs/preferences-dialog.c:2114
+#: ../app/dialogs/preferences-dialog.c:2132
 msgid "Fill type:"
 msgstr "Betegarri mota:"
 
 #. Layer Boundary Size Dialog
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2136
 msgid "Layer Boundary Size Dialog"
 msgstr "'Geruzaren mugaren tamaina' elkarrizketa-koadroa"
 
 #. Add Layer Mask Dialog
-#: ../app/dialogs/preferences-dialog.c:2127
+#: ../app/dialogs/preferences-dialog.c:2145
 msgid "Add Layer Mask Dialog"
 msgstr "'Gehitu geruza maskara' elkarrizketa koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2132
+#: ../app/dialogs/preferences-dialog.c:2150
 msgid "Layer mask type:"
 msgstr "Geruza-maskararen mota:"
 
-#: ../app/dialogs/preferences-dialog.c:2136
+#: ../app/dialogs/preferences-dialog.c:2154
 msgid "Invert mask"
 msgstr "Alderantzikatu maskara"
 
 #. Merge Layers Dialog
-#: ../app/dialogs/preferences-dialog.c:2140
+#: ../app/dialogs/preferences-dialog.c:2158
 msgid "Merge Layers Dialog"
 msgstr "'Batu geruzak' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2147
+#: ../app/dialogs/preferences-dialog.c:2165
 msgid "Merged layer size:"
 msgstr "Batutako geruzaren tamaina:"
 
-#: ../app/dialogs/preferences-dialog.c:2151
+#: ../app/dialogs/preferences-dialog.c:2169
 msgid "Merge within active group only"
 msgstr "Batu talde aktiboan soilik"
 
-#: ../app/dialogs/preferences-dialog.c:2154
+#: ../app/dialogs/preferences-dialog.c:2172
 msgid "Discard invisible layers"
 msgstr "Baztertu geruza ikusezinak"
 
 #. New Channel Dialog
-#: ../app/dialogs/preferences-dialog.c:2158
+#: ../app/dialogs/preferences-dialog.c:2176
 msgid "New Channel Dialog"
 msgstr "'Kanal berria' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2163
+#: ../app/dialogs/preferences-dialog.c:2181
 msgid "Channel name:"
 msgstr "Kanal-izena:"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2185
 msgid "Color and opacity:"
 msgstr "Kolorea eta opakutasuna:"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2186
 msgid "Default New Channel Color and Opacity"
 msgstr "Kanal berriaren kolore eta opakutasun lehenetsiak"
 
 #. New Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2173
+#: ../app/dialogs/preferences-dialog.c:2191
 msgid "New Path Dialog"
 msgstr "'Bide berria' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2178
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "Path name:"
 msgstr "Bidearen izena:"
 
 #. Export Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2182
+#: ../app/dialogs/preferences-dialog.c:2200
 msgid "Export Paths Dialog"
 msgstr "'Esportatu bideak' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2187
+#: ../app/dialogs/preferences-dialog.c:2205
 msgid "Export folder:"
 msgstr "Esportaziorako karpeta:"
 
-#: ../app/dialogs/preferences-dialog.c:2188
+#: ../app/dialogs/preferences-dialog.c:2206
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Hautatu bideak esportatzeko erabiliko den karpeta lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:2192
+#: ../app/dialogs/preferences-dialog.c:2210
 msgid "Export the active path only"
 msgstr "Esportatu bide aktiboa soilik"
 
 #. Import Path Dialog
-#: ../app/dialogs/preferences-dialog.c:2196
+#: ../app/dialogs/preferences-dialog.c:2214
 msgid "Import Paths Dialog"
 msgstr "'Inportatu bidea' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2201
+#: ../app/dialogs/preferences-dialog.c:2219
 msgid "Import folder:"
 msgstr "Inportaziorako karpeta:"
 
-#: ../app/dialogs/preferences-dialog.c:2202
+#: ../app/dialogs/preferences-dialog.c:2220
 msgid "Select Default Folder for Importing Paths"
 msgstr "Hautatu bideak inportatzeko erabiliko den karpeta lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:2206
+#: ../app/dialogs/preferences-dialog.c:2224
 msgid "Merge imported paths"
 msgstr "Batu inportatutako bideak"
 
-#: ../app/dialogs/preferences-dialog.c:2209
+#: ../app/dialogs/preferences-dialog.c:2227
 msgid "Scale imported paths"
 msgstr "Eskalatu inportatutako bideak"
 
 #. Feather Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2213
+#: ../app/dialogs/preferences-dialog.c:2231
 msgid "Feather Selection Dialog"
 msgstr "'Lanbrotu hautapena' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2218
+#: ../app/dialogs/preferences-dialog.c:2236
 msgid "Feather radius:"
 msgstr "Lanbrotu erradioa:"
 
 #. Grow Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2222
+#: ../app/dialogs/preferences-dialog.c:2240
 msgid "Grow Selection Dialog"
 msgstr "'Handitu hautapena' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2227
+#: ../app/dialogs/preferences-dialog.c:2245
 msgid "Grow radius:"
 msgstr "Handitze-erradioa:"
 
 #. Shrink Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2231
+#: ../app/dialogs/preferences-dialog.c:2249
 msgid "Shrink Selection Dialog"
 msgstr "'Uzkurtu hautapena' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2236
+#: ../app/dialogs/preferences-dialog.c:2254
 msgid "Shrink radius:"
 msgstr "Uzkurtze-erradioa:"
 
-#: ../app/dialogs/preferences-dialog.c:2240
-#: ../app/dialogs/preferences-dialog.c:2257
+#: ../app/dialogs/preferences-dialog.c:2258
+#: ../app/dialogs/preferences-dialog.c:2275
 msgid "Selected areas continue outside the image"
 msgstr "Hautatutako areek irudiaren kanpoaldetik jarraitzen dute"
 
 #. Border Selection Dialog
-#: ../app/dialogs/preferences-dialog.c:2244
+#: ../app/dialogs/preferences-dialog.c:2262
 msgid "Border Selection Dialog"
 msgstr "'Ertzen hautapena' elkarrizketa-koadroa"
 
-#: ../app/dialogs/preferences-dialog.c:2249
+#: ../app/dialogs/preferences-dialog.c:2267
 msgid "Border radius:"
 msgstr "Ertzaren erradioa:"
 
-#: ../app/dialogs/preferences-dialog.c:2253
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "Border style:"
 msgstr "Ertzren estiloa:"
 
 #. Fill Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2261
+#: ../app/dialogs/preferences-dialog.c:2279
 msgid "Fill Selection Outline & Fill Path Dialogs"
 msgstr "'Bete hautapenaren eskema' eta 'Bete bidea' elkarrizketa-koadroak"
 
 #. Stroke Options Dialog
-#: ../app/dialogs/preferences-dialog.c:2270
+#: ../app/dialogs/preferences-dialog.c:2288
 msgid "Stroke Selection & Stroke Path Dialogs"
 msgstr "'Trazatu hautapena' eta 'Trazatu bidea' elkarrizketa-koadroak"
 
-#: ../app/dialogs/preferences-dialog.c:2293
-#: ../app/dialogs/preferences-dialog.c:2294
+#: ../app/dialogs/preferences-dialog.c:2311
+#: ../app/dialogs/preferences-dialog.c:2312
 msgid "Help System"
 msgstr "Laguntza-sistema"
 
-#: ../app/dialogs/preferences-dialog.c:2305
+#: ../app/dialogs/preferences-dialog.c:2323
 msgid "Show _tooltips"
 msgstr "Erakutsi aho_lkuak"
 
-#: ../app/dialogs/preferences-dialog.c:2308
+#: ../app/dialogs/preferences-dialog.c:2326
 msgid "Show help _buttons"
 msgstr "Erakutsi laguntza-_botoiak"
 
-#: ../app/dialogs/preferences-dialog.c:2313
+#: ../app/dialogs/preferences-dialog.c:2331
 msgid "Use the online version"
 msgstr "Erabili lineako bertsioa"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2332
 msgid "Use a locally installed copy"
 msgstr "Erabili lokalean instalatutako kopia"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2333
 msgid "User manual:"
 msgstr "Erabiltzailearen eskuliburua:"
 
-#: ../app/dialogs/preferences-dialog.c:2326
+#: ../app/dialogs/preferences-dialog.c:2344
 msgid "User interface language"
 msgstr "Erabiltzaile-interfazearen hizkuntza"
 
@@ -15519,15 +15575,15 @@ msgstr "Erabiltzaile-interfazearen hizkuntza"
 #. *  that doesn't use the help browser, so don't bother showing
 #. *  the combo.
 #.
-#: ../app/dialogs/preferences-dialog.c:2385
+#: ../app/dialogs/preferences-dialog.c:2403
 msgid "Help Browser"
 msgstr "Laguntza-arakatzailea"
 
-#: ../app/dialogs/preferences-dialog.c:2392
+#: ../app/dialogs/preferences-dialog.c:2410
 msgid "H_elp browser to use:"
 msgstr "Erabili beharreko _laguntza-arakatzailea:"
 
-#: ../app/dialogs/preferences-dialog.c:2398
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
@@ -15536,452 +15592,453 @@ msgstr ""
 "ordez, web-nabigatzailea erabiliko da."
 
 #. Action Search
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2433
 msgid "Action Search"
 msgstr "Ekintzen bilaketa"
 
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Show _unavailable actions"
 msgstr "Erakutsi _erabilgarri ez dauden ekintzak"
 
-#: ../app/dialogs/preferences-dialog.c:2422
+#: ../app/dialogs/preferences-dialog.c:2440
 msgid "Maximum History Size:"
 msgstr "Hiztoriaren tamaina maximoa:"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2444
 msgid "Clear Action History"
 msgstr "Garbitu ekintzen historia"
 
-#: ../app/dialogs/preferences-dialog.c:2441
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2459
+#: ../app/dialogs/preferences-dialog.c:2460
 msgid "Display"
 msgstr "Bistaratu"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2450
+#: ../app/dialogs/preferences-dialog.c:2468
 msgid "Transparency"
 msgstr "Gardentasuna"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2472
 msgid "_Check style:"
 msgstr "_Egiaztatu estiloa:"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2475
 msgid "Check _size:"
 msgstr "Egia_ztatu tamaina:"
 
-#: ../app/dialogs/preferences-dialog.c:2460
+#: ../app/dialogs/preferences-dialog.c:2478
 msgid "Monitor Resolution"
 msgstr "Monitorearen bereizmena"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2464 ../app/display/gimpcursorview.c:215
-#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
+#: ../app/dialogs/preferences-dialog.c:2482
+#: ../app/display/gimpcursorview.c:215 ../app/widgets/gimpgrideditor.c:199
+#: ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "Pixelak"
 
-#: ../app/dialogs/preferences-dialog.c:2482 ../app/widgets/gimpgrideditor.c:195
-#: ../app/widgets/gimpgrideditor.c:230
+#: ../app/dialogs/preferences-dialog.c:2500
+#: ../app/widgets/gimpgrideditor.c:195 ../app/widgets/gimpgrideditor.c:230
 msgid "Horizontal"
 msgstr "Horizontala"
 
-#: ../app/dialogs/preferences-dialog.c:2484 ../app/widgets/gimpgrideditor.c:197
-#: ../app/widgets/gimpgrideditor.c:232
+#: ../app/dialogs/preferences-dialog.c:2502
+#: ../app/widgets/gimpgrideditor.c:197 ../app/widgets/gimpgrideditor.c:232
 msgid "Vertical"
 msgstr "Bertikala"
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2504
 #: ../app/widgets/gimpimagepropview.c:457
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2505
+#: ../app/dialogs/preferences-dialog.c:2523
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Detektatu automatikoki (unean %d x %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2523
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "_Enter manually"
 msgstr "_Sartu eskuz"
 
-#: ../app/dialogs/preferences-dialog.c:2538
+#: ../app/dialogs/preferences-dialog.c:2556
 msgid "C_alibrate..."
 msgstr "K_alibratu..."
 
-#: ../app/dialogs/preferences-dialog.c:2566
-#: ../app/dialogs/preferences-dialog.c:2567
+#: ../app/dialogs/preferences-dialog.c:2584
+#: ../app/dialogs/preferences-dialog.c:2585
 msgid "Window Management"
 msgstr "Leiho-kudeaketa"
 
-#: ../app/dialogs/preferences-dialog.c:2572
+#: ../app/dialogs/preferences-dialog.c:2590
 msgid "Window Manager Hints"
 msgstr "Leiho-kudeatzailearen aholkuak"
 
-#: ../app/dialogs/preferences-dialog.c:2578
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "Hint for _docks and toolbox:"
 msgstr "Atrakagarri eta tresna-kutxaren aholkua:"
 
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Focus"
 msgstr "Fokua"
 
-#: ../app/dialogs/preferences-dialog.c:2585
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Activate the _focused image"
 msgstr "Aktibatu irudi _enfokatua"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2589
+#: ../app/dialogs/preferences-dialog.c:2607
 msgid "Window Positions"
 msgstr "Leihoen kokalekuak"
 
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "_Save window positions on exit"
 msgstr "_Gorde leihoen kokalekuak irtetean"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2613
 msgid "Open windows on the same _monitor they were open before"
 msgstr "Ireki leihoak lehenago ireki izan diren _pantaila berean"
 
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Save Window Positions _Now"
 msgstr "Gorde _orain leihoen kokalekuak"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2624
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Berrezarri gordetako leihoen kokalekuak balio lehenetsietan"
 
-#: ../app/dialogs/preferences-dialog.c:2621
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2639
+#: ../app/dialogs/preferences-dialog.c:2640
 msgid "Image Windows"
 msgstr "Irudi-leihoak"
 
-#: ../app/dialogs/preferences-dialog.c:2633
+#: ../app/dialogs/preferences-dialog.c:2651
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Erabili \"_Puntuz puntu\" lehenespenez"
 
-#: ../app/dialogs/preferences-dialog.c:2639
+#: ../app/dialogs/preferences-dialog.c:2657
 msgid "Marching _ants speed:"
 msgstr "Inurrien _abiadura:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2643
+#: ../app/dialogs/preferences-dialog.c:2661
 msgid "Zoom & Resize Behavior"
 msgstr "Zoomaren eta tamaina-aldaketen portaera"
 
-#: ../app/dialogs/preferences-dialog.c:2647
+#: ../app/dialogs/preferences-dialog.c:2665
 msgid "Resize window on _zoom"
 msgstr "Aldatu leihoaren _tamaina zoom egitean"
 
-#: ../app/dialogs/preferences-dialog.c:2650
+#: ../app/dialogs/preferences-dialog.c:2668
 msgid "Resize window on image _size change"
 msgstr "Aldatu leihoaren tamaina _irudiaren tamaina aldatzean"
 
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2674
 msgid "Show entire image"
 msgstr "Erakutsi irudi osoa"
 
-#: ../app/dialogs/preferences-dialog.c:2658
+#: ../app/dialogs/preferences-dialog.c:2676
 msgid "Initial zoom _ratio:"
 msgstr "Hasierako zoomaren _erlazioa:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2662
+#: ../app/dialogs/preferences-dialog.c:2680
 msgid "Space Bar"
 msgstr "Zuriunea tekla"
 
-#: ../app/dialogs/preferences-dialog.c:2668
+#: ../app/dialogs/preferences-dialog.c:2686
 msgid "_While space bar is pressed:"
 msgstr "_Zuriunea tekla sakatzen den heinean:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2672
+#: ../app/dialogs/preferences-dialog.c:2690
 msgid "Mouse Pointers"
 msgstr "Saguaren kurtsoreak"
 
-#: ../app/dialogs/preferences-dialog.c:2676
+#: ../app/dialogs/preferences-dialog.c:2694
 msgid "Show _brush outline"
 msgstr "Erakutsi _brotxaren eskema"
 
-#: ../app/dialogs/preferences-dialog.c:2679
+#: ../app/dialogs/preferences-dialog.c:2697
 msgid "Show pointer for paint _tools"
 msgstr "Erakutsi margotze-_tresnaren kurtsorea"
 
-#: ../app/dialogs/preferences-dialog.c:2685
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Pointer _mode:"
 msgstr "Kurtsore _modua:"
 
-#: ../app/dialogs/preferences-dialog.c:2688
+#: ../app/dialogs/preferences-dialog.c:2706
 msgid "Pointer _handedness:"
 msgstr "Kurtsore _ezkerra/eskuina:"
 
-#: ../app/dialogs/preferences-dialog.c:2700
+#: ../app/dialogs/preferences-dialog.c:2718
 msgid "Image Window Appearance"
 msgstr "Irudiaren leihoaren itxura"
 
-#: ../app/dialogs/preferences-dialog.c:2708
+#: ../app/dialogs/preferences-dialog.c:2726
 msgid "Default Appearance in Normal Mode"
 msgstr "Itxura lehenetsia modu normalean"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2731
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Itxura lehenetsia pantaila osoaren moduan"
 
-#: ../app/dialogs/preferences-dialog.c:2722
+#: ../app/dialogs/preferences-dialog.c:2740
 msgid "Image Title & Statusbar Format"
 msgstr "Irudiaren izenburuaren eta egoera-barraren formatua"
 
-#: ../app/dialogs/preferences-dialog.c:2723
+#: ../app/dialogs/preferences-dialog.c:2741
 msgid "Title & Status"
 msgstr "Izenburua eta egoera"
 
-#: ../app/dialogs/preferences-dialog.c:2741
+#: ../app/dialogs/preferences-dialog.c:2759
 msgid "Current format"
 msgstr "Uneko formatua"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Default format"
 msgstr "Formatu lehenetsia"
 
-#: ../app/dialogs/preferences-dialog.c:2743
+#: ../app/dialogs/preferences-dialog.c:2761
 msgid "Show zoom percentage"
 msgstr "Erakutsi zoomaren ehunekoa"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Show zoom ratio"
 msgstr "Erakutsi zoomaren erlazioa"
 
-#: ../app/dialogs/preferences-dialog.c:2745
+#: ../app/dialogs/preferences-dialog.c:2763
 msgid "Show image size"
 msgstr "Erakutsi irudiaren tamaina"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Show drawable size"
 msgstr "Erakutsi tamaina marrazgaia"
 
-#: ../app/dialogs/preferences-dialog.c:2759
+#: ../app/dialogs/preferences-dialog.c:2777
 msgid "Image Title Format"
 msgstr "Irudiaren izenburuaren formatua"
 
-#: ../app/dialogs/preferences-dialog.c:2761
+#: ../app/dialogs/preferences-dialog.c:2779
 msgid "Image Statusbar Format"
 msgstr "Irudiaren egoera-barraren formatua"
 
-#: ../app/dialogs/preferences-dialog.c:2845
+#: ../app/dialogs/preferences-dialog.c:2863
 msgid "Image Window Snapping Behavior"
 msgstr "Irudi-leihoaren atxikitze-portaera"
 
-#: ../app/dialogs/preferences-dialog.c:2846
+#: ../app/dialogs/preferences-dialog.c:2864
 msgid "Snapping"
 msgstr "Atxikitzea"
 
-#: ../app/dialogs/preferences-dialog.c:2853
+#: ../app/dialogs/preferences-dialog.c:2871
 msgid "Default Behavior in Normal Mode"
 msgstr "Portaera lehenetsia modu normalean"
 
-#: ../app/dialogs/preferences-dialog.c:2857
+#: ../app/dialogs/preferences-dialog.c:2875
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Portaera lehentsia pantaila osoko moduan"
 
-#: ../app/dialogs/preferences-dialog.c:2866
+#: ../app/dialogs/preferences-dialog.c:2884
 msgid "_Snapping distance:"
 msgstr "_Atxikitze-distantzia:"
 
-#: ../app/dialogs/preferences-dialog.c:2875
-#: ../app/dialogs/preferences-dialog.c:2876
+#: ../app/dialogs/preferences-dialog.c:2893
+#: ../app/dialogs/preferences-dialog.c:2894
 msgid "Input Devices"
 msgstr "Sarrerako gailuak"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2882
+#: ../app/dialogs/preferences-dialog.c:2900
 msgid "Extended Input Devices"
 msgstr "Sarrerako gailu hedatuak"
 
-#: ../app/dialogs/preferences-dialog.c:2886
+#: ../app/dialogs/preferences-dialog.c:2904
 msgid "S_hare tool and tool options between input devices"
 msgstr "_Partekatu tresna eta tresna-aukerak sarrerako gailuen artean"
 
-#: ../app/dialogs/preferences-dialog.c:2890
+#: ../app/dialogs/preferences-dialog.c:2908
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfiguratu sarrerako gailu _hedatuak..."
 
-#: ../app/dialogs/preferences-dialog.c:2897
+#: ../app/dialogs/preferences-dialog.c:2915
 msgid "_Save input device settings on exit"
 msgstr "_Gorde sarrerako gailuen ezarpenak irtetean"
 
-#: ../app/dialogs/preferences-dialog.c:2901
+#: ../app/dialogs/preferences-dialog.c:2919
 msgid "Save Input Device Settings _Now"
 msgstr "Gorde _orain sarrerako gailuen ezarpenak"
 
-#: ../app/dialogs/preferences-dialog.c:2908
+#: ../app/dialogs/preferences-dialog.c:2926
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Berrezarri gordetako sarrerako gailuen ezarpenak balio lehenetsietan"
 
-#: ../app/dialogs/preferences-dialog.c:2923
+#: ../app/dialogs/preferences-dialog.c:2941
 msgid "Additional Input Controllers"
 msgstr "Sarrerako kontroladore gehigarriak"
 
-#: ../app/dialogs/preferences-dialog.c:2924
+#: ../app/dialogs/preferences-dialog.c:2942
 msgid "Input Controllers"
 msgstr "Sarrerako kontroladoreak"
 
-#: ../app/dialogs/preferences-dialog.c:2939
-#: ../app/dialogs/preferences-dialog.c:2940
+#: ../app/dialogs/preferences-dialog.c:2957
+#: ../app/dialogs/preferences-dialog.c:2958
 msgid "Folders"
 msgstr "Karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:2956
+#: ../app/dialogs/preferences-dialog.c:2974
 msgid "Temporary folder:"
 msgstr "Aldi baterako karpeta:"
 
-#: ../app/dialogs/preferences-dialog.c:2957
+#: ../app/dialogs/preferences-dialog.c:2975
 msgid "Select Folder for Temporary Files"
 msgstr "Hautatu karpeta aldi baterako fitxategientzat"
 
-#: ../app/dialogs/preferences-dialog.c:2961
+#: ../app/dialogs/preferences-dialog.c:2979
 msgid "Swap folder:"
 msgstr "Trukatze-karpeta:"
 
-#: ../app/dialogs/preferences-dialog.c:2962
+#: ../app/dialogs/preferences-dialog.c:2980
 msgid "Select Swap Folder"
 msgstr "Hautatu trukatze-karpeta"
 
-#: ../app/dialogs/preferences-dialog.c:2994
+#: ../app/dialogs/preferences-dialog.c:3012
 msgid "Brush Folders"
 msgstr "Brotxa-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:2996
+#: ../app/dialogs/preferences-dialog.c:3014
 msgid "Select Brush Folders"
 msgstr "Hautatu brotxa-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:2998
+#: ../app/dialogs/preferences-dialog.c:3016
 msgid "Dynamics Folders"
 msgstr "Dinamiken karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3000
+#: ../app/dialogs/preferences-dialog.c:3018
 msgid "Select Dynamics Folders"
 msgstr "Hautatu dinamiken karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3002
+#: ../app/dialogs/preferences-dialog.c:3020
 msgid "Pattern Folders"
 msgstr "Eredu-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3004
+#: ../app/dialogs/preferences-dialog.c:3022
 msgid "Select Pattern Folders"
 msgstr "Hautatu eredu-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3006
+#: ../app/dialogs/preferences-dialog.c:3024
 msgid "Palette Folders"
 msgstr "Paleta-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3008
+#: ../app/dialogs/preferences-dialog.c:3026
 msgid "Select Palette Folders"
 msgstr "Hautatu paleta-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3010
+#: ../app/dialogs/preferences-dialog.c:3028
 msgid "Gradient Folders"
 msgstr "Gradiente-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3012
+#: ../app/dialogs/preferences-dialog.c:3030
 msgid "Select Gradient Folders"
 msgstr "Hautatu gradiente-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3014
+#: ../app/dialogs/preferences-dialog.c:3032
 msgid "Font Folders"
 msgstr "Letra-tipoen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3016
+#: ../app/dialogs/preferences-dialog.c:3034
 msgid "Select Font Folders"
 msgstr "Hautatu letra-tipoen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3018
+#: ../app/dialogs/preferences-dialog.c:3036
 msgid "Tool Preset Folders"
 msgstr "Tresnen aurrezarpenen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3020
+#: ../app/dialogs/preferences-dialog.c:3038
 msgid "Select Tool Preset Folders"
 msgstr "Hautatu tresnen aurrezarpenen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3022
+#: ../app/dialogs/preferences-dialog.c:3040
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint brotxen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3024
+#: ../app/dialogs/preferences-dialog.c:3042
 msgid "Select MyPaint Brush Folders"
 msgstr "Hautatu MyPaint brotxen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3026
+#: ../app/dialogs/preferences-dialog.c:3044
 msgid "Plug-in Folders"
 msgstr "Pluginen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3028
+#: ../app/dialogs/preferences-dialog.c:3046
 msgid "Select plug-in Folders"
 msgstr "Hautatu pluginen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3030
+#: ../app/dialogs/preferences-dialog.c:3048
 msgid "Scripts"
 msgstr "Script-ak"
 
-#: ../app/dialogs/preferences-dialog.c:3030
+#: ../app/dialogs/preferences-dialog.c:3048
 msgid "Script-Fu Folders"
 msgstr "Script-Fu karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3032
+#: ../app/dialogs/preferences-dialog.c:3050
 msgid "Select Script-Fu Folders"
 msgstr "Hautatu script-Fu karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3034
+#: ../app/dialogs/preferences-dialog.c:3052
 msgid "Module Folders"
 msgstr "Modulu-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3036
+#: ../app/dialogs/preferences-dialog.c:3054
 msgid "Select Module Folders"
 msgstr "Hautatu modulu-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3038
+#: ../app/dialogs/preferences-dialog.c:3056
 msgid "Interpreters"
 msgstr "Interpretatzaileak"
 
-#: ../app/dialogs/preferences-dialog.c:3038
+#: ../app/dialogs/preferences-dialog.c:3056
 msgid "Interpreter Folders"
 msgstr "Interpretatzaileen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3040
+#: ../app/dialogs/preferences-dialog.c:3058
 msgid "Select Interpreter Folders"
 msgstr "Hautatu interpretatzaileen karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3042
+#: ../app/dialogs/preferences-dialog.c:3060
 msgid "Environment"
 msgstr "Ingurunea"
 
-#: ../app/dialogs/preferences-dialog.c:3042
+#: ../app/dialogs/preferences-dialog.c:3060
 msgid "Environment Folders"
 msgstr "Ingurune-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3044
+#: ../app/dialogs/preferences-dialog.c:3062
 msgid "Select Environment Folders"
 msgstr "Hautatu ingurune-karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3046
+#: ../app/dialogs/preferences-dialog.c:3064
 msgid "Themes"
 msgstr "Gaiak"
 
-#: ../app/dialogs/preferences-dialog.c:3046
+#: ../app/dialogs/preferences-dialog.c:3064
 msgid "Theme Folders"
 msgstr "Gaien karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3048
+#: ../app/dialogs/preferences-dialog.c:3066
 msgid "Select Theme Folders"
 msgstr "Hautatu gaien karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3050
+#: ../app/dialogs/preferences-dialog.c:3068
 msgid "Icon Themes"
 msgstr "Ikono-gaiak"
 
-#: ../app/dialogs/preferences-dialog.c:3050
+#: ../app/dialogs/preferences-dialog.c:3068
 msgid "Icon Theme Folders"
 msgstr "Ikono-gaien karpetak"
 
-#: ../app/dialogs/preferences-dialog.c:3052
+#: ../app/dialogs/preferences-dialog.c:3070
 msgid "Select Icon Theme Folders"
 msgstr "Hautatu ikono-gaien karpetak"
 
@@ -16070,7 +16127,8 @@ msgstr "Sakatu '%s' aldaketa guztiak baztertu eta irteteko."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Sakatu '%s' aldaketa guztiak baztertu eta irudi guztiak ixteko."
 
-#: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:399
+#: ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Baztertu aldaketak"
 
@@ -16367,8 +16425,6 @@ msgstr "Lekuz aldatu"
 #: ../app/display/gimpcursorview.c:710 ../app/display/gimpcursorview.c:712
 #: ../app/display/gimpcursorview.c:791 ../app/display/gimpcursorview.c:792
 #: ../app/display/gimpcursorview.c:793 ../app/display/gimpcursorview.c:794
-#: ../app/widgets/gimpcolorframe.c:634 ../app/widgets/gimpcolorframe.c:635
-#: ../app/widgets/gimpcolorframe.c:925
 msgid "n/a"
 msgstr "e/e"
 
@@ -16424,12 +16480,12 @@ msgstr "Txandakatu maskara azkarra"
 msgid "Navigate the image display"
 msgstr "Nabigatu irudiaren ikuspegian"
 
-#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1445
-#: ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:789
+#: ../app/display/gimpdisplayshell.c:1445 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Jaregin irudien fitxategiak hemen irekitzeko"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:540
+#: ../app/display/gimpdisplayshell-callbacks.c:551
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -16522,7 +16578,7 @@ msgstr "Ezin da geruzen taldeko pixelik aldatu."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:443 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:279 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1406 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimptransformtool.c:1434 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Geruza aktiboko pixelak blokeatuta daude."
 
@@ -16661,33 +16717,33 @@ msgstr "Egin klik eta arrastatu puntua lekuz aldatzeko."
 msgid "Click-Drag to move all points"
 msgstr "Egin klik eta arrastatu puntu guztiak lekuz aldatzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:849
-#: ../app/display/gimptooltransformgrid.c:1720
+#: ../app/display/gimptoolhandlegrid.c:837
+#: ../app/display/gimptooltransformgrid.c:1735
 msgid "Click-Drag to move"
 msgstr "Egin klik eta arrastatu mugitzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:852
+#: ../app/display/gimptoolhandlegrid.c:840
 msgid "Click-Drag to rotate and scale"
 msgstr "Egin klik eta arrastatu biratzeko eta tamaina aldatzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:855
+#: ../app/display/gimptoolhandlegrid.c:843
 msgid "Click-Drag to shear and scale"
 msgstr "Egin klik eta arrastatu zizailatzeko eta eskalatzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:858
-#: ../app/display/gimptooltransformgrid.c:1708
+#: ../app/display/gimptoolhandlegrid.c:846
+#: ../app/display/gimptooltransformgrid.c:1723
 msgid "Click-Drag to change perspective"
 msgstr "Egin klik eta arrastatu perspektiba aldatzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:869
+#: ../app/display/gimptoolhandlegrid.c:857
 msgid "Click to add a handle"
 msgstr "Egin klik helduleku bat gehitzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:875
+#: ../app/display/gimptoolhandlegrid.c:863
 msgid "Click-Drag to move this handle"
 msgstr "Egin klik eta arrastatu helduleku hau mugitzeko"
 
-#: ../app/display/gimptoolhandlegrid.c:880
+#: ../app/display/gimptoolhandlegrid.c:868
 msgid "Click-Drag to remove this handle"
 msgstr "Egin klik eta arrastatu helduleku hau kentzeko"
 
@@ -16930,20 +16986,20 @@ msgstr "Laukizuzena: "
 msgid "Position: "
 msgstr "Kokalekua: "
 
-#: ../app/display/gimptooltransformgrid.c:1713
-#: ../app/display/gimptooltransformgrid.c:1718
+#: ../app/display/gimptooltransformgrid.c:1728
+#: ../app/display/gimptooltransformgrid.c:1733
 msgid "Click-Drag to scale"
 msgstr "Egin klik eta arrastatu eskala aldatzeko"
 
-#: ../app/display/gimptooltransformgrid.c:1722
+#: ../app/display/gimptooltransformgrid.c:1737
 msgid "Click-Drag to move the pivot point"
 msgstr "Egin klik eta arrastatu pibote-puntua mugitzeko"
 
-#: ../app/display/gimptooltransformgrid.c:1727
+#: ../app/display/gimptooltransformgrid.c:1742
 msgid "Click-Drag to shear"
 msgstr "Egin klik eta arrastatu zizailatzeko"
 
-#: ../app/display/gimptooltransformgrid.c:1729
+#: ../app/display/gimptooltransformgrid.c:1744
 msgid "Click-Drag to rotate"
 msgstr "Egin klik eta arrastatu biratzeko"
 
@@ -17700,7 +17756,7 @@ msgstr "Lineala"
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:109
 msgid "Work on linear RGB"
-msgstr ""
+msgstr "Egin lan RGB linealean"
 
 #: ../app/operations/gimpcurvesconfig.c:112
 #: ../app/operations/gimplevelsconfig.c:115
@@ -17761,14 +17817,12 @@ msgid "High Input"
 msgstr "Sarrera altua"
 
 #: ../app/operations/gimplevelsconfig.c:133
-#, fuzzy
-#| msgid "Low Input"
 msgid "Clamp Input"
-msgstr "Sarrera baxua"
+msgstr "Bridatu sarrera"
 
 #: ../app/operations/gimplevelsconfig.c:134
 msgid "Clamp input values before applying output mapping."
-msgstr ""
+msgstr "Bridatu sarrera-balioak irteera-mapatzea aplikatu baino lehen."
 
 #: ../app/operations/gimplevelsconfig.c:145
 #: ../app/operations/gimplevelsconfig.c:146
@@ -17781,14 +17835,12 @@ msgid "High Output"
 msgstr "Irteera altua"
 
 #: ../app/operations/gimplevelsconfig.c:157
-#, fuzzy
-#| msgid "Low Output"
 msgid "Clamp Output"
-msgstr "Irteera baxua"
+msgstr "Bridatu irteera"
 
 #: ../app/operations/gimplevelsconfig.c:158
 msgid "Clamp final output values."
-msgstr ""
+msgstr "Bridatu azken irteerako balioak."
 
 #: ../app/operations/gimplevelsconfig.c:842
 msgid "not a GIMP Levels file"
@@ -17801,6 +17853,11 @@ msgstr "analisi-errorea"
 #: ../app/operations/gimplevelsconfig.c:952
 msgid "Writing levels file failed: "
 msgstr "Mailen fitxategia idazteak huts egin du: "
+
+#: ../app/operations/gimpoperationbrightnesscontrast.c:65
+#: ../app/tools/gimpbrightnesscontrasttool.c:98
+msgid "Adjust brightness and contrast"
+msgstr "Doitu distira eta kontrastea"
 
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
@@ -17836,6 +17893,11 @@ msgstr "Koloreztatu irudia"
 msgid "Color"
 msgstr "Kolorea"
 
+#: ../app/operations/gimpoperationcurves.c:67
+#: ../app/tools/gimpcurvestool.c:143
+msgid "Adjust color curves"
+msgstr "Doitu kolore-kurbak"
+
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
 msgstr "Bihurtu koloreak gris-itzaletara"
@@ -17848,6 +17910,11 @@ msgstr "Hautatu oinarri gisa erabiliko den gris-itzala"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Doitu ñabardura, saturazioa eta argitasuna"
 
+#: ../app/operations/gimpoperationlevels.c:64
+#: ../app/tools/gimplevelstool.c:133
+msgid "Adjust color levels"
+msgstr "Doitu kolore-mailak"
+
 #: ../app/operations/gimpoperationposterize.c:82
 msgid "Reduce to a limited set of colors"
 msgstr "Murriztu kolore multzo mugatu batera"
@@ -17859,6 +17926,11 @@ msgstr "Posterizatu mailak"
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
 msgstr "Ordeztu gardentasun partziala kolore batekin"
+
+#: ../app/operations/gimpoperationthreshold.c:84
+#: ../app/tools/gimpthresholdtool.c:88
+msgid "Reduce image to two colors using a threshold"
+msgstr "Murriztu irudia bi koloretara atalase bat erabiliz"
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
@@ -17892,7 +17964,7 @@ msgstr "lehenetsia: Ezk->Esk"
 msgid "Documents"
 msgstr "Dokumentuak"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:128
 msgid "GIMP Startup"
 msgstr "GIMPen abioa"
 
@@ -18043,9 +18115,6 @@ msgid "Erase with this brush"
 msgstr "Borratu brotxa honekin"
 
 #: ../app/paint/gimpmybrushoptions.c:114
-#, fuzzy
-#| msgctxt "smudge-tool"
-#| msgid "No erasing effect"
 msgid "No erasing effect"
 msgstr "Borratze-efekturik ez"
 
@@ -18071,7 +18140,8 @@ msgstr "Aspektu-erlazioa"
 
 #: ../app/paint/gimppaintoptions.c:212 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81
+#: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Tartea"
 
@@ -18370,8 +18440,8 @@ msgstr "Alderantzikatu"
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:270 ../app/pdb/transform-tools-cmds.c:171
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformoptions.c:524
-#: ../app/tools/gimptransformoptions.c:533
+#: ../app/tools/gimptransformoptions.c:552
+#: ../app/tools/gimptransformoptions.c:561
 msgid "Perspective"
 msgstr "Perspektiba"
 
@@ -18713,7 +18783,7 @@ msgid "Diagonal neighbors"
 msgstr "Gertueneko balio diagonalak"
 
 #: ../app/pdb/gimppdbcontext.c:163 ../app/tools/gimptransformoptions.c:124
-#: ../app/tools/gimptransformoptions.c:441 ../app/tools/gimpwarpoptions.c:119
+#: ../app/tools/gimptransformoptions.c:440 ../app/tools/gimpwarpoptions.c:119
 #: ../app/tools/gimpwarpoptions.c:322
 msgid "Interpolation"
 msgstr "Interpolazioa"
@@ -19220,11 +19290,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Bertan behera utzita"
 
-#: ../app/plug-in/gimppluginmanager.c:232
+#: ../app/plug-in/gimppluginmanager.c:230
 msgid "Plug-in Interpreters"
 msgstr "Pluginen interpretatzaileak"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:236
 msgid "Plug-in Environment"
 msgstr "Pluginen ingurunea"
 
@@ -19486,19 +19556,15 @@ msgstr "Berr_ezarri kolorea"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:62
 msgid "Shadows"
-msgstr ""
+msgstr "Itzalak"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:80
-#, fuzzy
-#| msgid "Highlight"
 msgid "Highlights"
-msgstr "Nabarmendu"
+msgstr "Argi-ukituak"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:98
-#, fuzzy
-#| msgid "Comment"
 msgid "Common"
-msgstr "Iruzkina"
+msgstr "Arrunta"
 
 #: ../app/propgui/gimppropgui-spiral.c:220
 msgid "Spiral: "
@@ -19517,10 +19583,8 @@ msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1.850 K – Kandelaren garra, ilunabarra/egunsentia"
 
 #: ../app/propgui/gimppropgui-utils.c:72
-#, fuzzy
-#| msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr "3-000 K - Lanpara fluoreszente zuri konpaktu leunak (edo beroak)"
+msgstr "2.700 K - LED lanpara leunak (edo beroak)"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
@@ -19540,7 +19604,7 @@ msgstr "3.350 K - Estudioko \"CP\" argia"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr ""
+msgstr "4.000 K - LED lanpara hotzak (egun argikoak)"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,100 K – Moonlight"
@@ -19844,7 +19908,8 @@ msgstr "Gainlaginketa moldakorra"
 msgid "Max depth"
 msgstr "Gehien. sakonera"
 
-#: ../app/tools/gimpblendoptions.c:117 ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpblendoptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:87
 msgid "Threshold"
@@ -19902,8 +19967,9 @@ msgstr "Egin klik eta arrastatu gradiente berria marrazteko"
 
 #: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
-#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:286
-#: ../app/tools/gimptransformtool.c:1414 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimpforegroundselecttool.c:288
+#: ../app/tools/gimppainttool.c:286 ../app/tools/gimptransformtool.c:1442
+#: ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Geruza aktiboa ez dago ikusgai."
 
@@ -19916,12 +19982,11 @@ msgid "Blend: "
 msgstr "Nahastea: "
 
 #. the position labels
-#: ../app/tools/gimpblendtool-editor.c:1280 ../app/widgets/gimpcolorframe.c:192
+#: ../app/tools/gimpblendtool-editor.c:1280
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimpblendtool-editor.c:1286 ../app/widgets/gimpcolorframe.c:205
-#: ../app/widgets/gimpcolorframe.c:864
+#: ../app/tools/gimpblendtool-editor.c:1286
 msgid "Y:"
 msgstr "H:"
 
@@ -20003,10 +20068,6 @@ msgstr "Nahaste-urratsa"
 #: ../app/tools/gimpbrightnesscontrasttool.c:97
 msgid "Brightness-Contrast"
 msgstr "Distira eta kontrastea"
-
-#: ../app/tools/gimpbrightnesscontrasttool.c:98
-msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr "Distira eta kontrastearen tresna: doitu distira eta kontrastea"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:99
 msgid "B_rightness-Contrast..."
@@ -20226,7 +20287,7 @@ msgstr ""
 #: ../app/tools/gimpcolorpickeroptions.c:195
 #, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Hautatze-modua  (%s)"
+msgstr "Hautatze modua  (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -20319,21 +20380,17 @@ msgstr "Nabarmendu"
 #: ../app/tools/gimpcropoptions.c:79
 #: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Dim everything outside selection"
-msgstr "Lausotu hautapenetik kanpo dagoen guztia"
+msgstr "Moteldu hautapenetik kanpo dagoen guztia"
 
 #: ../app/tools/gimpcropoptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:86
-#, fuzzy
-#| msgid "Highlight"
 msgid "Highlight opacity"
-msgstr "Nabarmendu"
+msgstr "Nabarmentzearen opakutasuna"
 
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
-#, fuzzy
-#| msgid "Dim everything outside selection"
 msgid "How much to dim everything outside selection"
-msgstr "Lausotu hautapenetik kanpo dagoen guztia"
+msgstr "Zein neurritan motelduko den hautapenaz kanpoko guztia"
 
 #: ../app/tools/gimpcropoptions.c:93
 msgid "Current layer only"
@@ -20393,10 +20450,6 @@ msgstr "Ez dago mozteko geruza aktiborik."
 msgid "Curves"
 msgstr "Kurbak"
 
-#: ../app/tools/gimpcurvestool.c:143
-msgid "Curves Tool: Adjust color curves"
-msgstr "Kurbak tresna: doitu kolore-kurbak"
-
 #: ../app/tools/gimpcurvestool.c:144
 msgid "_Curves..."
 msgstr "_Kurbak..."
@@ -20437,24 +20490,22 @@ msgid "R_eset Channel"
 msgstr "Berrezarri kana_la"
 
 #: ../app/tools/gimpcurvestool.c:452
-#, fuzzy
-#| msgid "Adjust hue, saturation, and lightness"
 msgid "Adjust curves in linear light"
-msgstr "Doitu ñabardura, saturazioa eta argitasuna"
+msgstr "Doitu kurtak argi linealean"
 
 #: ../app/tools/gimpcurvestool.c:453
 msgid "Adjust curves perceptually"
-msgstr ""
+msgstr "Doitu kurbak pertzepziozko moduan"
 
 #: ../app/tools/gimpcurvestool.c:539 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
 msgstr "Kurba _mota:"
 
-#: ../app/tools/gimpcurvestool.c:656 ../app/tools/gimplevelstool.c:739
+#: ../app/tools/gimpcurvestool.c:657 ../app/tools/gimplevelstool.c:740
 msgid "Could not read header: "
 msgstr "Ezin da goiburukoa irakurri: "
 
-#: ../app/tools/gimpcurvestool.c:730
+#: ../app/tools/gimpcurvestool.c:731
 msgid "Use _old curves file format"
 msgstr "Erabili kurben fitxategi-formatu _zaharra"
 
@@ -20602,12 +20653,14 @@ msgstr "%s: txandakatu jatorrizkoa eta iragazia"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: txandakatu horizontala eta bertikala"
 
-#: ../app/tools/gimpfiltertool.c:1295 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1295
+#: ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Inportatu '%s' ezarpenak"
 
-#: ../app/tools/gimpfiltertool.c:1297 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1297
+#: ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esportatu '%s' ezarpenak"
@@ -20629,7 +20682,7 @@ msgstr "Iraulketa mota"
 msgid "Direction of flipping"
 msgstr "Iraulketaren noranzkoa"
 
-#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:426
+#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:425
 msgid "Transform:"
 msgstr "Eraldatu:"
 
@@ -20640,7 +20693,7 @@ msgid "Direction  (%s)"
 msgstr "Noranzkoa (%s)"
 
 #: ../app/tools/gimpflipoptions.c:170 ../app/tools/gimptransformoptions.c:132
-#: ../app/tools/gimptransformoptions.c:448
+#: ../app/tools/gimptransformoptions.c:447
 msgid "Clipping"
 msgstr "Mozketa"
 
@@ -20845,6 +20898,14 @@ msgstr "_GEGL eragiketa..."
 msgid "Select an operation from the list above"
 msgstr "Hautatu eragiketa gaineko zerrendatik"
 
+#: ../app/tools/gimpgenerictransformtool.c:83
+msgid "Transform Matrix"
+msgstr "Eraldatze-matrizea"
+
+#: ../app/tools/gimpgenerictransformtool.c:114
+msgid "Invalid transform"
+msgstr "Baliogabeko eraldaketa"
+
 #: ../app/tools/gimpguidetool.c:274
 msgid "Remove Guide"
 msgstr "Kendu gida"
@@ -20878,17 +20939,17 @@ msgstr "Mugitu eraldatze-heldulekuak"
 msgid "Remove transform handles"
 msgstr "Kendu eraldatze-heldulekuak"
 
-#: ../app/tools/gimphandletransformtool.c:116
+#: ../app/tools/gimphandletransformtool.c:115
 msgid "Handle Transform"
 msgstr "Heldulekuen bidezko eraldatzea"
 
-#: ../app/tools/gimphandletransformtool.c:117
+#: ../app/tools/gimphandletransformtool.c:116
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
 "Heldulekuen bidezko eraldatzerako tresna: deformatu geruza, hautapena edo "
 "bidea heldulekuen bidez"
 
-#: ../app/tools/gimphandletransformtool.c:119
+#: ../app/tools/gimphandletransformtool.c:118
 msgid "_Handle Transform"
 msgstr "_Heldulekuen bidezko eraldatzea"
 
@@ -20896,12 +20957,7 @@ msgstr "_Heldulekuen bidezko eraldatzea"
 msgid "Handle transformation"
 msgstr "Heldulekuen bidezko eraldatzea"
 
-#: ../app/tools/gimphandletransformtool.c:213
-#: ../app/tools/gimpperspectivetool.c:127
-msgid "Transformation Matrix"
-msgstr "Eraldaketa-matrizea"
-
-#: ../app/tools/gimphandletransformtool.c:380
+#: ../app/tools/gimphandletransformtool.c:310
 msgctxt "undo-type"
 msgid "Handle transform"
 msgstr "Heldulekuen bidezko eraldatzea"
@@ -21011,10 +21067,6 @@ msgstr "Egin klik edo klik eta arrastatu puntua gehitzeko"
 msgid "Modify Scissors Curve"
 msgstr "Aldatu guraizeen kurba"
 
-#: ../app/tools/gimplevelstool.c:133
-msgid "Levels Tool: Adjust color levels"
-msgstr "Mailen tresna: doitu kolore-mailak"
-
 #: ../app/tools/gimplevelstool.c:134
 msgid "_Levels..."
 msgstr "_Mailak..."
@@ -21045,13 +21097,11 @@ msgstr "Aukeratu puntu zuria hautatutako kanalerako"
 
 #: ../app/tools/gimplevelstool.c:395
 msgid "Adjust levels in linear light"
-msgstr ""
+msgstr "Doitu mailak argi linealean"
 
 #: ../app/tools/gimplevelstool.c:396
-#, fuzzy
-#| msgid "Adjust levels for all channels automatically"
 msgid "Adjust levels perceptually"
-msgstr "Doitu automatikoki kanal guztien mailak"
+msgstr "Doitu mailak pertzepziozko moduan"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:405
@@ -21060,7 +21110,7 @@ msgstr "Sarrerako mailak"
 
 #: ../app/tools/gimplevelstool.c:488
 msgid "Clamp _input"
-msgstr ""
+msgstr "Bridatu _sarrera"
 
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:531
@@ -21069,7 +21119,7 @@ msgstr "Irteerako mailak"
 
 #: ../app/tools/gimplevelstool.c:579
 msgid "Clamp outpu_t"
-msgstr ""
+msgstr "Bridatu _irteera"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:594
@@ -21088,7 +21138,7 @@ msgstr "Doitu automatikoki kanal guztien mailak"
 msgid "Edit these Settings as Curves"
 msgstr "Editatu ezarpen hauek kurba gisa"
 
-#: ../app/tools/gimplevelstool.c:855
+#: ../app/tools/gimplevelstool.c:856
 msgid "Use _old levels file format"
 msgstr "Erabili mailen fitxategi-formatu _zaharrak"
 
@@ -21100,7 +21150,8 @@ msgstr "Aldatu leihoaren tamaina automatikoki"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Aldatu irudiaren leihoa tamainaz zoomaren maila berriro doitzeko"
 
-#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91
+#: ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:163
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -21202,7 +21253,7 @@ msgstr "_Lekuz aldatu"
 msgid "There is no path to move."
 msgstr "Ez dago mugitzeko biderik."
 
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1441
+#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1469
 msgid "The active path's position is locked."
 msgstr "Bide aktiboaren kokalekua blokeatuta dago."
 
@@ -21264,8 +21315,8 @@ msgid "Show lattice"
 msgstr "Erakutsi sarea"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:518
-#: ../app/tools/gimptransformoptions.c:529
+#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:546
+#: ../app/tools/gimptransformoptions.c:557
 msgid "Scale"
 msgstr "Eskala"
 
@@ -21413,11 +21464,11 @@ msgstr ""
 msgid "_Perspective"
 msgstr "_Perspektiba"
 
-#: ../app/tools/gimpperspectivetool.c:116
+#: ../app/tools/gimpperspectivetool.c:117
 msgid "Perspective transformation"
 msgstr "Perspektibaren eraldaketa"
 
-#: ../app/tools/gimpperspectivetool.c:244
+#: ../app/tools/gimpperspectivetool.c:182
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektiba"
@@ -21570,7 +21621,7 @@ msgstr "Marraztu hautatutako eskualdearen maskara"
 msgid "Move the mouse to change threshold"
 msgstr "Mugitu sagua atalasea aldatzeko"
 
-#: ../app/tools/gimprotatetool.c:95 ../app/tools/gimptransformoptions.c:520
+#: ../app/tools/gimprotatetool.c:95 ../app/tools/gimptransformoptions.c:548
 msgid "Rotate"
 msgstr "Biratu"
 
@@ -21592,11 +21643,11 @@ msgstr "_Angelua:"
 
 #: ../app/tools/gimprotatetool.c:211
 msgid "Center _X:"
-msgstr "_X erdigunea:"
+msgstr "_X zentroa:"
 
 #: ../app/tools/gimprotatetool.c:220
 msgid "Center _Y:"
-msgstr "_Y erdigunea:"
+msgstr "_Y zentroa:"
 
 #: ../app/tools/gimprotatetool.c:348
 #, c-format
@@ -21626,7 +21677,7 @@ msgstr "Gehitu lagin-puntua: "
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Eskalatzeko tresna: eskalatu geruza, hautapena edo bidea"
 
-#: ../app/tools/gimpscaletool.c:253
+#: ../app/tools/gimpscaletool.c:257
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
@@ -21671,7 +21722,8 @@ msgstr "Gaitu hautapenaren ertzak lanbrotzea"
 msgid "Radius of feathering"
 msgstr "Lanbrotze-erradioa"
 
-#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:188
+#: ../app/tools/gimpselectionoptions.c:222
+#: ../app/widgets/gimpbrushselect.c:188
 msgid "Mode:"
 msgstr "Modua:"
 
@@ -21711,8 +21763,8 @@ msgstr "Egin klik eta arrastatu hautatutako pixelen kopia lekuz aldatzeko"
 msgid "Click to anchor the floating selection"
 msgstr "Egin klik hautapen mugikorra ainguratzeko"
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformoptions.c:522
-#: ../app/tools/gimptransformoptions.c:531
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformoptions.c:550
+#: ../app/tools/gimptransformoptions.c:559
 msgid "Shear"
 msgstr "Zizailatu"
 
@@ -21917,10 +21969,6 @@ msgstr ""
 msgid "GIMP Text Editor"
 msgstr "GIMP testu-editorea"
 
-#: ../app/tools/gimpthresholdtool.c:88
-msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Atalasearen tresna: murriztu irudia bi koloretara atalasea erabiliz"
-
 #: ../app/tools/gimpthresholdtool.c:89
 msgid "_Threshold..."
 msgstr "_Atalasea..."
@@ -21937,7 +21985,7 @@ msgstr "_Automatikoa"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Egokitu automatikoki bitarrera bihurtzeko atalase optimora"
 
-#: ../app/tools/gimptool.c:1186
+#: ../app/tools/gimptool.c:1192
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Ez da lanik egin irudi huts batean, gehitu geruza aurrenik"
 
@@ -21970,7 +22018,7 @@ msgid "Opacity of the preview image"
 msgstr "Aurrebistako irudiaren opakutasuna"
 
 #: ../app/tools/gimptransformoptions.c:154
-#: ../app/tools/gimptransformoptions.c:469
+#: ../app/tools/gimptransformoptions.c:468
 msgid "Guides"
 msgstr "Gidak"
 
@@ -21979,99 +22027,108 @@ msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 "Saretako gelaxkaren tamaina gida konponsatuaren kopuru aldagaiarentzako"
 
-#: ../app/tools/gimptransformoptions.c:490
+#: ../app/tools/gimptransformoptions.c:491
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 gradu (%s)"
 
-#: ../app/tools/gimptransformoptions.c:491
+#: ../app/tools/gimptransformoptions.c:498
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Mugatu biraketaren urratsak 15 gradutara"
 
-#: ../app/tools/gimptransformoptions.c:496
+#: ../app/tools/gimptransformoptions.c:508
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Mantendu aspektua (%s)"
 
-#: ../app/tools/gimptransformoptions.c:497
+#: ../app/tools/gimptransformoptions.c:515
 msgid "Keep the original aspect ratio"
 msgstr "Mantendu jatorrizko aspektu-erlazioa"
 
-#: ../app/tools/gimptransformoptions.c:515
+#: ../app/tools/gimptransformoptions.c:520
+#, c-format
+msgid "Around center (%s)"
+msgstr "Zentroaren inguruan (%s)"
+
+#: ../app/tools/gimptransformoptions.c:527
+msgid "Scale around the center point"
+msgstr "Eskalatu zentroko puntuaren inguruan"
+
+#: ../app/tools/gimptransformoptions.c:543
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Murriztu (%s)"
 
-#: ../app/tools/gimptransformoptions.c:516
+#: ../app/tools/gimptransformoptions.c:544
 msgid "Move"
 msgstr "Lekuz aldatu"
 
-#: ../app/tools/gimptransformoptions.c:517
+#: ../app/tools/gimptransformoptions.c:545
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Murriztu mugimendua 45 graduko angeluetara erdigunetik (%s)"
 
-#: ../app/tools/gimptransformoptions.c:519
+#: ../app/tools/gimptransformoptions.c:547
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Mantendu aspektu-erlazioa eskala aldatzean (%s)"
 
-#: ../app/tools/gimptransformoptions.c:521
+#: ../app/tools/gimptransformoptions.c:549
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Murriztu biraketa 15 graduko gehikuntzetara (%s)"
 
-#: ../app/tools/gimptransformoptions.c:523
+#: ../app/tools/gimptransformoptions.c:551
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Zizailatu ertzaren norabidean zehar soilik (%s)"
 
-#: ../app/tools/gimptransformoptions.c:525
+#: ../app/tools/gimptransformoptions.c:553
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Murriztu perspektiba-heldulekuak, ertzetan zehar eta diagonaletik mugi "
 "daitezen (%s)"
 
-#: ../app/tools/gimptransformoptions.c:528
+#: ../app/tools/gimptransformoptions.c:556
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Pibotetik (%s)"
 
-#: ../app/tools/gimptransformoptions.c:530
+#: ../app/tools/gimptransformoptions.c:558
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Eskalatu pibote-puntutik (%s)"
 
-#: ../app/tools/gimptransformoptions.c:532
+#: ../app/tools/gimptransformoptions.c:560
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Zizailatu aurkako ertza kantitate berean (%s)"
 
-#: ../app/tools/gimptransformoptions.c:534
+#: ../app/tools/gimptransformoptions.c:562
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Mantendu pibotearen kokalekua perspektiba aldatzean (%s)"
 
-#: ../app/tools/gimptransformoptions.c:537
+#: ../app/tools/gimptransformoptions.c:565
 msgid "Pivot"
 msgstr "Pibotea"
 
-#: ../app/tools/gimptransformoptions.c:538
+#: ../app/tools/gimptransformoptions.c:566
 #, c-format
 msgid "Snap (%s)"
 msgstr "Atxiki (%s)"
 
-#: ../app/tools/gimptransformoptions.c:539
+#: ../app/tools/gimptransformoptions.c:567
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Atxiki pibotea izkinetara eta erdigunera (%s)"
 
-#: ../app/tools/gimptransformoptions.c:540
+#: ../app/tools/gimptransformoptions.c:568
 msgid "Lock"
 msgstr "Blokeatu"
 
-#: ../app/tools/gimptransformoptions.c:541
+#: ../app/tools/gimptransformoptions.c:569
 msgid "Lock pivot position to canvas"
 msgstr "Blokeatu pibotearen kokalekua oihalean"
 
@@ -22083,60 +22140,60 @@ msgstr "_Eraldatu"
 msgid "Transforming"
 msgstr "Eraldatzen"
 
-#: ../app/tools/gimptransformtool.c:258
+#: ../app/tools/gimptransformtool.c:259
 #, c-format
 msgid "The selection does not intersect with the layer."
 msgstr "Hautapena ez da ebakitzen geruzarekin."
 
-#: ../app/tools/gimptransformtool.c:514 ../app/tools/gimptransformtool.c:526
+#: ../app/tools/gimptransformtool.c:513 ../app/tools/gimptransformtool.c:525
 msgid "Transform Step"
 msgstr "Eraldatze-urratsa"
 
-#: ../app/tools/gimptransformtool.c:1401
+#: ../app/tools/gimptransformtool.c:981
+msgid "The current transform is invalid"
+msgstr "Uneko eraldaketa baliogabea da"
+
+#: ../app/tools/gimptransformtool.c:1429
 msgid "There is no layer to transform."
 msgstr "Ez dago eraldatzeko geruzarik."
 
-#: ../app/tools/gimptransformtool.c:1408
+#: ../app/tools/gimptransformtool.c:1436
 msgid "The active layer's position and size are locked."
 msgstr "Geruza aktiboaren kokalekua eta tamaina blokeatuta daude."
 
-#: ../app/tools/gimptransformtool.c:1421
+#: ../app/tools/gimptransformtool.c:1449
 msgid "There is no selection to transform."
 msgstr "Ez dago eraldatzeko hautapenik."
 
-#: ../app/tools/gimptransformtool.c:1434
+#: ../app/tools/gimptransformtool.c:1462
 msgid "There is no path to transform."
 msgstr "Ez dago eraldatzeko biderik."
 
-#: ../app/tools/gimptransformtool.c:1439
+#: ../app/tools/gimptransformtool.c:1467
 msgid "The active path's strokes are locked."
 msgstr "Bide aktiboaren trazuak blokeatuta daude."
 
-#: ../app/tools/gimptransformtool.c:1443
+#: ../app/tools/gimptransformtool.c:1471
 msgid "The active path has no strokes."
 msgstr "Bide aktiboak ez du trazurik."
 
-#: ../app/tools/gimpunifiedtransformtool.c:86
+#: ../app/tools/gimpunifiedtransformtool.c:87
 msgid "Unified Transform"
 msgstr "Eraldatze bateratua"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "Eraldatze bateraturako tresna: eraldatu geruza, hautapena edo bidea"
 
-#: ../app/tools/gimpunifiedtransformtool.c:89
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "_Unified Transform"
 msgstr "Eraldatze _bateratua"
 
-#: ../app/tools/gimpunifiedtransformtool.c:113
+#: ../app/tools/gimpunifiedtransformtool.c:115
 msgid "Unified transform"
 msgstr "Eraldatze bateratua"
 
-#: ../app/tools/gimpunifiedtransformtool.c:124
-msgid "Transform Matrix"
-msgstr "Eraldatze-matrizea"
-
-#: ../app/tools/gimpunifiedtransformtool.c:251
+#: ../app/tools/gimpunifiedtransformtool.c:190
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Eraldatze bateratua"
@@ -22640,67 +22697,151 @@ msgstr ""
 "Kolorea hamaseitar-notazioan (HTML eta CSS bezala). Sarrera honek CSS kolore-"
 "izenak ere onartzen ditu."
 
-#: ../app/widgets/gimpcolorframe.c:707 ../app/widgets/gimpcolorframe.c:784
+#. TRANSLATORS: X for the X coordinate.
+#: ../app/widgets/gimpcolorframe.c:193
+msgctxt "Coordinates"
+msgid "X:"
+msgstr "X:"
+
+#. TRANSLATORS: Y for the Y coordinate.
+#: ../app/widgets/gimpcolorframe.c:207
+msgctxt "Coordinates"
+msgid "Y:"
+msgstr "H:"
+
+#. TRANSLATORS: n/a for Not Available.
+#: ../app/widgets/gimpcolorframe.c:637 ../app/widgets/gimpcolorframe.c:639
+msgctxt "Coordinates"
+msgid "n/a"
+msgstr "e/e"
+
+#. TRANSLATORS: V for Value (grayscale)
+#: ../app/widgets/gimpcolorframe.c:712
+msgctxt "Grayscale"
 msgid "V:"
-msgstr ""
+msgstr "V:"
 
-#: ../app/widgets/gimpcolorframe.c:710 ../app/widgets/gimpcolorframe.c:719
-#: ../app/widgets/gimpcolorframe.c:750 ../app/widgets/gimpcolorframe.c:787
-#: ../app/widgets/gimpcolorframe.c:811 ../app/widgets/gimpcolorframe.c:835
-#: ../app/widgets/gimpcolorframe.c:839 ../app/widgets/gimpcolorframe.c:868
+#. TRANSLATORS: A for Alpha (color transparency)
+#: ../app/widgets/gimpcolorframe.c:716 ../app/widgets/gimpcolorframe.c:729
+#: ../app/widgets/gimpcolorframe.c:765 ../app/widgets/gimpcolorframe.c:807
+#: ../app/widgets/gimpcolorframe.c:835 ../app/widgets/gimpcolorframe.c:867
+#: ../app/widgets/gimpcolorframe.c:901
+msgctxt "Alpha channel"
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
-#: ../app/widgets/gimpcolorframe.c:714 ../app/widgets/gimpcolorframe.c:745
-#, fuzzy
-#| msgid "Red:"
+#. TRANSLATORS: R for Red (RGB)
+#: ../app/widgets/gimpcolorframe.c:721 ../app/widgets/gimpcolorframe.c:757
+msgctxt "RGB"
 msgid "R:"
-msgstr "Gorria:"
+msgstr "G:"
 
-#: ../app/widgets/gimpcolorframe.c:715 ../app/widgets/gimpcolorframe.c:746
+#. TRANSLATORS: G for Green (RGB)
+#: ../app/widgets/gimpcolorframe.c:723 ../app/widgets/gimpcolorframe.c:759
+msgctxt "RGB"
 msgid "G:"
-msgstr ""
+msgstr "B:"
 
-#: ../app/widgets/gimpcolorframe.c:716 ../app/widgets/gimpcolorframe.c:747
-#: ../app/widgets/gimpcolorframe.c:836
-#, fuzzy
-#| msgid "Box:"
+#. TRANSLATORS: B for Blue (RGB)
+#: ../app/widgets/gimpcolorframe.c:725 ../app/widgets/gimpcolorframe.c:761
+msgctxt "RGB"
 msgid "B:"
-msgstr "Koadroa:"
+msgstr "U:"
 
-#: ../app/widgets/gimpcolorframe.c:723
+#. TRANSLATORS: Index of the color in the palette.
+#: ../app/widgets/gimpcolorframe.c:734
+msgctxt "Indexed color"
 msgid "Index:"
 msgstr "Indizea:"
 
-#: ../app/widgets/gimpcolorframe.c:752
+#. TRANSLATORS: Hex for Hexadecimal (representation of a color)
+#: ../app/widgets/gimpcolorframe.c:768
+msgctxt "Color representation"
 msgid "Hex:"
 msgstr "Hamaseitarra:"
 
-#: ../app/widgets/gimpcolorframe.c:782 ../app/widgets/gimpcolorframe.c:808
-#, fuzzy
-#| msgid "H"
+#. TRANSLATORS: H for Hue (HSV color space)
+#: ../app/widgets/gimpcolorframe.c:799
+msgctxt "HSV color space"
 msgid "H:"
-msgstr "A"
+msgstr "H:"
 
-#: ../app/widgets/gimpcolorframe.c:783
+#. TRANSLATORS: S for Saturation (HSV color space)
+#: ../app/widgets/gimpcolorframe.c:801
+msgctxt "HSV color space"
 msgid "S:"
-msgstr ""
+msgstr "S:"
 
-#: ../app/widgets/gimpcolorframe.c:806 ../app/widgets/gimpcolorframe.c:834
-msgid "L:"
-msgstr ""
+#. TRANSLATORS: V for Value (HSV color space)
+#: ../app/widgets/gimpcolorframe.c:803
+msgctxt "HSV color space"
+msgid "V:"
+msgstr "V:"
 
-#: ../app/widgets/gimpcolorframe.c:807 ../app/widgets/gimpcolorframe.c:862
-msgid "C:"
-msgstr ""
+#. TRANSLATORS: L for Lightness (LCH color space)
+#: ../app/widgets/gimpcolorframe.c:827
+msgctxt "LCH color space"
+msgid "L*:"
+msgstr "L*:"
 
+#. TRANSLATORS: C for Chroma (LCH color space)
+#: ../app/widgets/gimpcolorframe.c:829
+msgctxt "LCH color space"
+msgid "C*:"
+msgstr "C*:"
+
+#. TRANSLATORS: H for Hue angle (LCH color space)
+#: ../app/widgets/gimpcolorframe.c:831
+msgctxt "LCH color space"
+msgid "h°:"
+msgstr "h°:"
+
+#. TRANSLATORS: L* for Lightness (Lab color space)
+#: ../app/widgets/gimpcolorframe.c:859
+msgctxt "Lab color space"
+msgid "L*:"
+msgstr "L*:"
+
+#. TRANSLATORS: a* color channel in Lab color space
+#: ../app/widgets/gimpcolorframe.c:861
+msgctxt "Lab color space"
+msgid "a*:"
+msgstr "a*:"
+
+#. TRANSLATORS: b* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:863
-msgid "M:"
-msgstr ""
+msgctxt "Lab color space"
+msgid "b*:"
+msgstr "b*:"
 
-#: ../app/widgets/gimpcolorframe.c:865
+#. TRANSLATORS: C for Cyan (CMYK)
+#: ../app/widgets/gimpcolorframe.c:891
+msgctxt "CMYK"
+msgid "C:"
+msgstr "C:"
+
+#. TRANSLATORS: M for Magenta (CMYK)
+#: ../app/widgets/gimpcolorframe.c:893
+msgctxt "CMYK"
+msgid "M:"
+msgstr "M:"
+
+#. TRANSLATORS: Y for Yellow (CMYK)
+#: ../app/widgets/gimpcolorframe.c:895
+msgctxt "CMYK"
+msgid "Y:"
+msgstr "H:"
+
+#. TRANSLATORS: K for Key/black (CMYK)
+#: ../app/widgets/gimpcolorframe.c:897
+msgctxt "CMYK"
 msgid "K:"
-msgstr ""
+msgstr "B:"
+
+#: ../app/widgets/gimpcolorframe.c:959
+msgctxt "Color value"
+msgid "n/a"
+msgstr "e/e"
 
 #: ../app/widgets/gimpcolormapeditor.c:203
 msgid "Color index:"
@@ -23053,111 +23194,142 @@ msgstr "Saguaren gurpila"
 msgid "Mouse Wheel Events"
 msgstr "Saguaren gurpil-gertaerak"
 
-#: ../app/widgets/gimpdashboard.c:293 ../app/widgets/gimpdashboard.c:345
+#: ../app/widgets/gimpdashboard.c:332 ../app/widgets/gimpdashboard.c:384
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Beteta"
 
-#: ../app/widgets/gimpdashboard.c:294
+#: ../app/widgets/gimpdashboard.c:333
 msgid "Tile cache occupied size"
 msgstr "Lauzen cacheak betetzen duen tamaina"
 
-#: ../app/widgets/gimpdashboard.c:303
+#: ../app/widgets/gimpdashboard.c:342
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Gehienez"
 
-#: ../app/widgets/gimpdashboard.c:304
+#: ../app/widgets/gimpdashboard.c:343
 msgid "Maximal tile cache occupied size"
 msgstr "Lauzen cacheak betetzen duen tamaina maximoa"
 
-#: ../app/widgets/gimpdashboard.c:313 ../app/widgets/gimpdashboard.c:365
+#: ../app/widgets/gimpdashboard.c:352 ../app/widgets/gimpdashboard.c:404
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Muga"
 
-#: ../app/widgets/gimpdashboard.c:314
+#: ../app/widgets/gimpdashboard.c:353
 msgid "Tile cache size limit"
 msgstr "Lauzen cachearen tamaina-muga"
 
-#: ../app/widgets/gimpdashboard.c:322
+#: ../app/widgets/gimpdashboard.c:361
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Konpresioa"
 
-#: ../app/widgets/gimpdashboard.c:323
+#: ../app/widgets/gimpdashboard.c:362
 msgid "Tile cache compression ratio"
 msgstr "Lauzen cachearen konpresio-tasa"
 
-#: ../app/widgets/gimpdashboard.c:332
+#: ../app/widgets/gimpdashboard.c:371
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Aurkitutakoak/falta direnak"
 
-#: ../app/widgets/gimpdashboard.c:333
+#: ../app/widgets/gimpdashboard.c:372
 msgid "Tile cache hit/miss ratio"
 msgstr "Lauzen cachean aurkitutakoen/falta direnen tasa"
 
-#: ../app/widgets/gimpdashboard.c:346
+#: ../app/widgets/gimpdashboard.c:385
 msgid "Swap file occupied size"
 msgstr "Trukatze-fitxategiak betetzen duen tamaina"
 
-#: ../app/widgets/gimpdashboard.c:355
+#: ../app/widgets/gimpdashboard.c:394
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Tamaina"
 
-#: ../app/widgets/gimpdashboard.c:356
+#: ../app/widgets/gimpdashboard.c:395
 msgid "Swap file size"
 msgstr "Trukatze-fitxategiaren tamaina"
 
-#: ../app/widgets/gimpdashboard.c:366
+#: ../app/widgets/gimpdashboard.c:405
 msgid "Swap file size limit"
 msgstr "Trukatze-fitxategiaren tamaina-muga"
 
-#: ../app/widgets/gimpdashboard.c:373
+#: ../app/widgets/gimpdashboard.c:412
 msgctxt "dashboard-variable"
 msgid "Busy"
 msgstr "Lanpetuta"
 
-#: ../app/widgets/gimpdashboard.c:374
+#: ../app/widgets/gimpdashboard.c:413
 msgid "Whether there is work queued for the swap file"
 msgstr "Trukatze-fitxategirako ilaran lanak dauden ala ez"
 
-#: ../app/widgets/gimpdashboard.c:387
+#: ../app/widgets/gimpdashboard.c:426
+msgctxt "dashboard-variable"
+msgid "Usage"
+msgstr "Erabilera"
+
+#: ../app/widgets/gimpdashboard.c:427
+msgid "Total CPU usage"
+msgstr "CPU erabilera osoa"
+
+#: ../app/widgets/gimpdashboard.c:435 ../app/widgets/gimpdashboard.c:445
+msgctxt "dashboard-variable"
+msgid "Active"
+msgstr "Aktiboa"
+
+#: ../app/widgets/gimpdashboard.c:436
+msgid "Whether the CPU is active"
+msgstr "CPUa aktibo dagoen ala ez"
+
+#: ../app/widgets/gimpdashboard.c:446
+msgid "Total amount of time the CPU has been active"
+msgstr "CPUa aktibo egin den denbora osoa"
+
+#: ../app/widgets/gimpdashboard.c:460
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cachea"
 
-#: ../app/widgets/gimpdashboard.c:388
+#: ../app/widgets/gimpdashboard.c:461
 msgid "In-memory tile cache"
 msgstr "Memoria barruko lauzen cachea"
 
-#: ../app/widgets/gimpdashboard.c:423
+#: ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Trukea"
 
-#: ../app/widgets/gimpdashboard.c:424
+#: ../app/widgets/gimpdashboard.c:497
 msgid "On-disk tile swap"
 msgstr "Diskoko lauzen trukea"
 
-#: ../app/widgets/gimpdashboard.c:595
+#: ../app/widgets/gimpdashboard.c:525
+msgctxt "dashboard-group"
+msgid "CPU"
+msgstr "CPU"
+
+#: ../app/widgets/gimpdashboard.c:526
+msgid "CPU usage"
+msgstr "CPU erabilera"
+
+#: ../app/widgets/gimpdashboard.c:698
 msgid "Select fields"
 msgstr "Hautatu eremuak"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:1824
+#: ../app/widgets/gimpdashboard.c:2162
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "E/E"
 
-#: ../app/widgets/gimpdashboard.c:1832
+#: ../app/widgets/gimpdashboard.c:2171
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Bai"
 
-#: ../app/widgets/gimpdashboard.c:1833
+#: ../app/widgets/gimpdashboard.c:2172
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ez"
@@ -23623,11 +23795,11 @@ msgstr "Histograma-kanala"
 
 #: ../app/widgets/gimphistogrameditor.c:171
 msgid "Show values in linear space"
-msgstr ""
+msgstr "Erakutsi balioak espazio linealean"
 
 #: ../app/widgets/gimphistogrameditor.c:172
 msgid "Show values in perceptual space"
-msgstr ""
+msgstr "Erakutsi balioak pertzepziozko espazioan"
 
 #: ../app/widgets/gimpiconpicker.c:245
 msgid "From File..."
@@ -24550,6 +24722,21 @@ msgstr "biribila"
 msgid "fuzzy"
 msgstr "zalantzazkoa"
 
+#~ msgid "Transformation Matrix"
+#~ msgstr "Eraldaketa-matrizea"
+
+#~ msgid "Image Import"
+#~ msgstr "Irudien inportazioa"
+
+#~ msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
+#~ msgstr "Distira eta kontrastearen tresna: doitu distira eta kontrastea"
+
+#~ msgid "Curves Tool: Adjust color curves"
+#~ msgstr "Kurbak tresna: doitu kolore-kurbak"
+
+#~ msgid "Levels Tool: Adjust color levels"
+#~ msgstr "Mailen tresna: doitu kolore-mailak"
+
 #~ msgid "X,Y:"
 #~ msgstr "X,Y:"
 
@@ -24576,9 +24763,6 @@ msgstr "zalantzazkoa"
 
 #~ msgid "Chr.:"
 #~ msgstr "Chr.:"
-
-#~ msgid "Lab_L*:"
-#~ msgstr "Lab_L*:"
 
 #~ msgid "Lab_a*:"
 #~ msgstr "Lab_a*:"
