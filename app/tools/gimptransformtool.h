@@ -51,6 +51,7 @@ struct _GimpTransformTool
   gint            x2, y2;             /*  lower right hand coords            */
 
   GimpMatrix3     transform;          /*  transformation matrix              */
+  gboolean        transform_valid;    /*  whether the matrix is valid        */
   TransInfo       trans_info;         /*  transformation info                */
   TransInfo      *old_trans_info;     /*  for resetting everything           */
   TransInfo      *prev_trans_info;    /*  the current finished state         */

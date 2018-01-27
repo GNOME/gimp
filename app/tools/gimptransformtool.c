@@ -219,6 +219,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->progress_text = _("Transforming");
 
   gimp_matrix3_identity (&tr_tool->transform);
+  tr_tool->transform_valid = TRUE;
 
   tr_tool->strokes = g_ptr_array_new ();
 }
@@ -617,7 +618,8 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
         {
           gboolean show_preview;
 
-          show_preview = gimp_transform_options_show_preview (tr_options);
+          show_preview = gimp_transform_options_show_preview (tr_options) &&
+                         tr_tool->transform_valid;
 
           gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
         }
@@ -646,7 +648,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
   if (tr_tool->widget)
     {
-      gboolean show_preview = gimp_transform_options_show_preview (options);
+      gboolean show_preview = gimp_transform_options_show_preview (options) &&
+                              tr_tool->transform_valid;
 
       tr_tool->preview =
         gimp_draw_tool_add_transform_preview (draw_tool,
@@ -690,6 +693,9 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                          0, 0);
           g_object_add_weak_pointer (G_OBJECT (tr_tool->boundary_in),
                                      (gpointer) &tr_tool->boundary_in);
+
+          gimp_canvas_item_set_visible (tr_tool->boundary_in,
+                                        tr_tool->transform_valid);
         }
 
       if (segs_out)
@@ -701,6 +707,9 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                          0, 0);
           g_object_add_weak_pointer (G_OBJECT (tr_tool->boundary_in),
                                      (gpointer) &tr_tool->boundary_out);
+
+          gimp_canvas_item_set_visible (tr_tool->boundary_out,
+                                        tr_tool->transform_valid);
         }
     }
   else if (options->type == GIMP_TRANSFORM_TYPE_PATH)
@@ -730,6 +739,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                   g_object_weak_ref (G_OBJECT (item),
                                      (GWeakNotify) g_ptr_array_remove,
                                      tr_tool->strokes);
+
+                  gimp_canvas_item_set_visible (item, tr_tool->transform_valid);
                 }
 
               if (coords)
@@ -834,7 +845,11 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
 
   if (tr_tool->preview)
     {
+      gboolean show_preview = gimp_transform_options_show_preview (options) &&
+                              tr_tool->transform_valid;
+
       gimp_canvas_item_begin_change (tr_tool->preview);
+      gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
       g_object_set (tr_tool->preview,
                     "transform", &matrix,
                     NULL);
@@ -844,6 +859,8 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
   if (tr_tool->boundary_in)
     {
       gimp_canvas_item_begin_change (tr_tool->boundary_in);
+      gimp_canvas_item_set_visible (tr_tool->boundary_in,
+                                    tr_tool->transform_valid);
       g_object_set (tr_tool->boundary_in,
                     "transform", &matrix,
                     NULL);
@@ -853,6 +870,8 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
   if (tr_tool->boundary_out)
     {
       gimp_canvas_item_begin_change (tr_tool->boundary_out);
+      gimp_canvas_item_set_visible (tr_tool->boundary_out,
+                                    tr_tool->transform_valid);
       g_object_set (tr_tool->boundary_out,
                     "transform", &matrix,
                     NULL);
@@ -864,6 +883,7 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
       GimpCanvasItem *item = g_ptr_array_index (tr_tool->strokes, i);
 
       gimp_canvas_item_begin_change (item);
+      gimp_canvas_item_set_visible (item, tr_tool->transform_valid);
       g_object_set (item,
                     "transform", &matrix,
                     NULL);
@@ -952,6 +972,13 @@ gimp_transform_tool_commit (GimpTransformTool *tr_tool)
     {
       gimp_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
+      return;
+    }
+
+  if (! tr_tool->transform_valid)
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The current transform is invalid"));
       return;
     }
 
@@ -1283,6 +1310,7 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool, widget);
 
   gimp_transform_tool_dialog_update (tr_tool);
+  gimp_transform_tool_update_sensitivity (tr_tool);
 
   if (tr_tool->gui)
     gimp_tool_gui_show (tr_tool->gui);
@@ -1348,6 +1376,8 @@ gimp_transform_tool_update_sensitivity (GimpTransformTool *tr_tool)
   if (! tr_tool->gui)
     return;
 
+  gimp_tool_gui_set_response_sensitive (tr_tool->gui, GTK_RESPONSE_OK,
+                                        tr_tool->transform_valid);
   gimp_tool_gui_set_response_sensitive (tr_tool->gui, RESPONSE_RESET,
                                         g_list_next (tr_tool->undo_list) != NULL);
 }
