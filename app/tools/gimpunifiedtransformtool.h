@@ -19,7 +19,7 @@
 #define __GIMP_UNIFIED_TRANSFORM_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimpgenerictransformtool.h"
 
 
 #define GIMP_TYPE_UNIFIED_TRANSFORM_TOOL            (gimp_unified_transform_tool_get_type ())
@@ -35,14 +35,12 @@ typedef struct _GimpUnifiedTransformToolClass GimpUnifiedTransformToolClass;
 
 struct _GimpUnifiedTransformTool
 {
-  GimpTransformTool  parent_instance;
-
-  GtkWidget         *label[3][3];
+  GimpGenericTransformTool  parent_instance;
 };
 
 struct _GimpUnifiedTransformToolClass
 {
-  GimpTransformToolClass  parent_class;
+  GimpGenericTransformToolClass  parent_class;
 };
 
 

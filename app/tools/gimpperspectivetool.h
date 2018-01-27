@@ -19,7 +19,7 @@
 #define __GIMP_PERSPECTIVE_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimpgenerictransformtool.h"
 
 
 #define GIMP_TYPE_PERSPECTIVE_TOOL            (gimp_perspective_tool_get_type ())
@@ -35,14 +35,12 @@ typedef struct _GimpPerspectiveToolClass GimpPerspectiveToolClass;
 
 struct _GimpPerspectiveTool
 {
-  GimpTransformTool  parent_instance;
-
-  GtkWidget         *label[3][3];
+  GimpGenericTransformTool  parent_instance;
 };
 
 struct _GimpPerspectiveToolClass
 {
-  GimpTransformToolClass  parent_class;
+  GimpGenericTransformToolClass  parent_class;
 };
 
 

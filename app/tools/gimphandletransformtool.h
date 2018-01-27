@@ -19,7 +19,7 @@
 #define __GIMP_HANDLE_TRANSFORM_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimpgenerictransformtool.h"
 
 
 #define GIMP_TYPE_HANDLE_TRANSFORM_TOOL            (gimp_handle_transform_tool_get_type ())
@@ -37,16 +37,14 @@ typedef struct _GimpHandleTransformToolClass GimpHandleTransformToolClass;
 
 struct _GimpHandleTransformTool
 {
-  GimpTransformTool        parent_instance;
+  GimpGenericTransformTool  parent_instance;
 
-  GtkWidget               *label[3][3];
-
-  GimpTransformHandleMode  saved_handle_mode;
+  GimpTransformHandleMode   saved_handle_mode;
 };
 
 struct _GimpHandleTransformToolClass
 {
-  GimpTransformToolClass  parent_class;
+  GimpGenericTransformToolClass  parent_class;
 };
 
 
