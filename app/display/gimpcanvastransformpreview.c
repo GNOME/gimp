@@ -464,6 +464,7 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
       private->transform_node =
         gegl_node_new_child (private->node,
                              "operation", "gegl:transform",
+                             "near-z",    GIMP_TRANSFORM_NEAR_Z,
                              "sampler",   GIMP_INTERPOLATION_NONE,
                              NULL);
 

@@ -19,6 +19,9 @@
 #define __GIMP_TRANSFORM_UTILS_H__
 
 
+#define GIMP_TRANSFORM_NEAR_Z 0.02
+
+
 void       gimp_transform_get_rotate_center    (gint                 x,
                                                 gint                 y,
                                                 gint                 width,

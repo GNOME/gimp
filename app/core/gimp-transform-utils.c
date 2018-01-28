@@ -27,7 +27,6 @@
 
 
 #define EPSILON 1e-6
-#define NEAR_Z  0.02
 
 
 void
@@ -541,7 +540,7 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
            matrix->coeff[2][1] * vertices[0].y +
            matrix->coeff[2][2];
 
-  curr_visible = (curr.z >= NEAR_Z);
+  curr_visible = (curr.z >= GIMP_TRANSFORM_NEAR_Z);
 
   for (i = 0; i < n_vertices; i++)
     {
@@ -567,15 +566,15 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
                    matrix->coeff[2][1] * vertices[j].y +
                    matrix->coeff[2][2];
 
-          next_visible = (next.z >= NEAR_Z);
+          next_visible = (next.z >= GIMP_TRANSFORM_NEAR_Z);
 
           if (next_visible != curr_visible)
             {
-              gdouble ratio = (curr.z - NEAR_Z) / (curr.z - next.z);
+              gdouble ratio = (curr.z - GIMP_TRANSFORM_NEAR_Z) / (curr.z - next.z);
 
               t_vertices[(*n_t_vertices)++] =
-                (GimpVector2) { (curr.x + (next.x - curr.x) * ratio) / NEAR_Z,
-                                (curr.y + (next.y - curr.y) * ratio) / NEAR_Z };
+                (GimpVector2) { (curr.x + (next.x - curr.x) * ratio) / GIMP_TRANSFORM_NEAR_Z,
+                                (curr.y + (next.y - curr.y) * ratio) / GIMP_TRANSFORM_NEAR_Z };
             }
 
           curr         = next;

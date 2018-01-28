@@ -28,6 +28,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
 #include "core/gimpprogress.h"
 
@@ -707,6 +708,7 @@ gimp_gegl_apply_transform (GeglBuffer            *src_buffer,
 
   node = gegl_node_new_child (NULL,
                               "operation", "gegl:transform",
+                              "near-z",    GIMP_TRANSFORM_NEAR_Z,
                               "sampler",   interpolation_type,
                               NULL);
 
