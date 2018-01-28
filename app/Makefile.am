@@ -112,6 +112,7 @@ endif
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"				\
+	-DLIBEXECDIR=\""$(libexecdir)"\"			\
 	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	-DGIMP_APP_GLUE_COMPILATION	\

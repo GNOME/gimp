@@ -289,8 +289,10 @@ gimp_eek (const gchar *reason,
            */
 #ifdef G_OS_WIN32
           const gchar *gimpdebug = "gimpdebug-2.0.exe";
-#else
+#elif defined (PLATFORM_OSX)
           const gchar *gimpdebug = "gimpdebug-2.0";
+#else
+          const gchar *gimpdebug = LIBEXECDIR "/gimpdebug-2.0";
 #endif
           gchar *args[7] = { (gchar *) gimpdebug, full_prog_name, NULL,
                              (gchar *) reason, (gchar *) message,
