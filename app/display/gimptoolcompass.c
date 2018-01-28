@@ -519,7 +519,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
   gimp_canvas_line_set (private->angle_line,
                         private->x[0],
                         private->y[0],
-                        private->x[0] + (private->x[1] >= private->x[0] ?
+                        private->x[0] + (private->x[1] > private->x[0] ?
                                           (arc_radius + target) :
                                          -(arc_radius + target)),
                         private->y[0]);
