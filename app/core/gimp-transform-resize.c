@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gio/gio.h>
 #include <gegl.h>
 
