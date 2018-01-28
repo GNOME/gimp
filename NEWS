@@ -17,10 +17,10 @@ Overview of Changes from GIMP 2.9.8 to GIMP 2.10 RC1
 Core:
 
   - New dashboard dockable: shows the current GEGL cache and swap sizes
-    and their recent history. It has options to control the update rate
-    and history duration of the data, and an option to warn (by
-    raising/blinking the dialog) when the swap size approaches its
-    limit.
+    and CPU usage and active time, and their recent history. It has
+    options to control the update rate and history duration of the data,
+    and an option to warn (by raising/blinking the dialog) when the swap
+    size approaches its limit.
   - Make the selection boundary detection the same as 2.8.
   - The environment variable GIMP_DEBUG can now be set to "list-all" to
     display available debug domains. Non-recognized flags will also
@@ -45,6 +45,14 @@ Core:
     in "Repeat last" history.
   - Improve action history to not show newly excluded actions (which
     were already in our history from before the exclusion).
+  - Use GEGL for transform-tools preview, allowing faster and more
+    accurate previews.
+  - Arrange color models in the Color dock (WIP).
+  - New debug tool and infrastructure to handle WARNING and CRITICAL
+    errors, as well as fatal errors (crashes), raising a pop-up with all
+    version information on GIMP and its main dependencies, as well as
+    the error message and backtraces, and encouraging people to make bug
+    reports.
 
 Libgimp:
 
@@ -52,6 +60,11 @@ Libgimp:
      functions returning the creator choice regarding default handling
      for metadata export (as set in the Preferences).
    - GIMP Protocol version incremented.
+   - New gimp_get_pdb_status() to return the status of the last PDB
+     call. This is needed for plug-ins which depends on other plug-in's
+     procedures. If for instance, a second-level plug-in is interrupted
+     interactively, we don't want to process this as an error but as a
+     cancellation.
 
 GUI and Usability:
 
