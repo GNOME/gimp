@@ -25,7 +25,7 @@ msgstr "Άδεια χρήσης"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Η εγκατάσταση δομήθηκε από τον Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Η εγκατάσταση δομήθηκε από τον Jernej Simoncic, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
