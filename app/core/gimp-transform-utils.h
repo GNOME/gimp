@@ -98,5 +98,12 @@ gboolean   gimp_transform_polygon_is_convex    (gdouble              x1,
                                                 gdouble              x4,
                                                 gdouble              y4);
 
+void       gimp_transform_polygon              (const GimpMatrix3   *matrix,
+                                                const GimpVector2   *vertices,
+                                                gint                 n_vertices,
+                                                gboolean             closed,
+                                                GimpVector2         *t_vertices,
+                                                gint                *n_t_vertices);
+
 
 #endif  /*  __GIMP_TRANSFORM_UTILS_H__  */

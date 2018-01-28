@@ -27,6 +27,7 @@
 
 
 #define EPSILON 1e-6
+#define NEAR_Z  0.02
 
 
 void
@@ -505,4 +506,80 @@ gimp_transform_polygon_is_convex (gdouble x1,
         (x1 - x2) * (y3 - y2));
 
   return (z1 * z2 > 0) && (z3 * z4 > 0);
+}
+
+void
+gimp_transform_polygon (const GimpMatrix3 *matrix,
+                        const GimpVector2 *vertices,
+                        gint               n_vertices,
+                        gboolean           closed,
+                        GimpVector2       *t_vertices,
+                        gint              *n_t_vertices)
+{
+  GimpVector3 curr;
+  gboolean    curr_visible;
+  gint        i;
+
+  g_return_if_fail (matrix != NULL);
+  g_return_if_fail (vertices != NULL);
+  g_return_if_fail (n_vertices >= 0);
+  g_return_if_fail (t_vertices != NULL);
+  g_return_if_fail (n_t_vertices != NULL);
+
+  *n_t_vertices = 0;
+
+  if (n_vertices == 0)
+    return;
+
+  curr.x = matrix->coeff[0][0] * vertices[0].x +
+           matrix->coeff[0][1] * vertices[0].y +
+           matrix->coeff[0][2];
+  curr.y = matrix->coeff[1][0] * vertices[0].x +
+           matrix->coeff[1][1] * vertices[0].y +
+           matrix->coeff[1][2];
+  curr.z = matrix->coeff[2][0] * vertices[0].x +
+           matrix->coeff[2][1] * vertices[0].y +
+           matrix->coeff[2][2];
+
+  curr_visible = (curr.z >= NEAR_Z);
+
+  for (i = 0; i < n_vertices; i++)
+    {
+      if (curr_visible)
+        {
+          t_vertices[(*n_t_vertices)++] = (GimpVector2) { curr.x / curr.z,
+                                                          curr.y / curr.z };
+        }
+
+      if (i < n_vertices - 1 || closed)
+        {
+          GimpVector3 next;
+          gboolean    next_visible;
+          gint        j = (i + 1) % n_vertices;
+
+          next.x = matrix->coeff[0][0] * vertices[j].x +
+                   matrix->coeff[0][1] * vertices[j].y +
+                   matrix->coeff[0][2];
+          next.y = matrix->coeff[1][0] * vertices[j].x +
+                   matrix->coeff[1][1] * vertices[j].y +
+                   matrix->coeff[1][2];
+          next.z = matrix->coeff[2][0] * vertices[j].x +
+                   matrix->coeff[2][1] * vertices[j].y +
+                   matrix->coeff[2][2];
+
+          next_visible = (next.z >= NEAR_Z);
+
+          if (next_visible != curr_visible)
+            {
+              gdouble ratio = (curr.z - NEAR_Z) / (curr.z - next.z);
+
+              t_vertices[(*n_t_vertices)++] =
+                (GimpVector2) { (curr.x + (next.x - curr.x) * ratio) / NEAR_Z,
+                                (curr.y + (next.y - curr.y) * ratio) / NEAR_Z };
+            }
+
+          curr         = next;
+          curr_visible = next_visible;
+        }
+    }
 }
