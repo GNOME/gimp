@@ -99,10 +99,10 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
 
   /* these are handled by gimp_fatal_error() */
+  gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
@@ -150,11 +150,11 @@ gimp_sigfatal_handler (gint sig_num)
     case SIGHUP:
     case SIGINT:
     case SIGQUIT:
-    case SIGABRT:
     case SIGTERM:
       gimp_terminate (g_strsignal (sig_num));
       break;
 
+    case SIGABRT:
     case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
