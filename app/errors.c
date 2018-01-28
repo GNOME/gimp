@@ -131,6 +131,9 @@ errors_init (Gimp               *gimp,
 
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     g_log_set_handler (log_domains[i],
+#ifdef GIMP_UNSTABLE
+                       G_LOG_LEVEL_WARNING |
+#endif
                        G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_CRITICAL,
                        gimp_message_log_func, gimp);
 
@@ -206,9 +209,11 @@ gimp_message_log_func (const gchar    *log_domain,
                 "generate-backtrace", &generate_backtrace,
                 NULL);
 
-  if (generate_backtrace && (flags & G_LOG_LEVEL_CRITICAL))
+  if (generate_backtrace &&
+      (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING)))
     {
-      severity = GIMP_MESSAGE_ERROR;
+      severity = (flags & G_LOG_LEVEL_CRITICAL) ?
+                 GIMP_MESSAGE_ERROR : GIMP_MESSAGE_WARNING;
 
       if (n_traces < MAX_TRACES)
         {

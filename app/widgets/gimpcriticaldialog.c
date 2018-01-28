@@ -356,17 +356,17 @@ gimp_critical_dialog_new (const gchar *title)
 }
 
 void
-gimp_critical_dialog_add (GtkWidget  *dialog,
-                          const gchar         *message,
-                          const gchar         *trace,
-                          gboolean             is_fatal,
-                          const gchar         *program,
-                          gint                 pid)
+gimp_critical_dialog_add (GtkWidget   *dialog,
+                          const gchar *message,
+                          const gchar *trace,
+                          gboolean     is_fatal,
+                          const gchar *program,
+                          gint         pid)
 {
   GimpCriticalDialog *critical;
-  GtkTextBuffer *buffer;
-  GtkTextIter    end;
-  gchar         *text;
+  GtkTextBuffer      *buffer;
+  GtkTextIter         end;
+  gchar              *text;
 
   if (! GIMP_IS_CRITICAL_DIALOG (dialog) || ! message || ! trace)
     {
@@ -389,8 +389,8 @@ gimp_critical_dialog_add (GtkWidget  *dialog,
   else if (! gtk_label_get_text (GTK_LABEL (critical->label)) ||
            strlen (gtk_label_get_text (GTK_LABEL (critical->label))) == 0)
     {
-      /* First critical error. Let's just display it. */
-      text = g_strdup_printf (_("GIMP encountered a critical error: %s"),
+      /* First error. Let's just display it. */
+      text = g_strdup_printf (_("GIMP encountered an error: %s"),
                               message);
     }
   else
