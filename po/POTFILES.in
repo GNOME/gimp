@@ -519,6 +519,7 @@ app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
 app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
+app/widgets/gimpcriticaldialog.c
 app/widgets/gimpdashboard.c
 app/widgets/gimpdataeditor.c
 app/widgets/gimpdeviceeditor.c
@@ -608,5 +609,7 @@ app/xcf/xcf-read.c
 app/xcf/xcf-save.c
 app/xcf/xcf-seek.c
 app/xcf/xcf-write.c
+
+tools/gimpdebug.c
 
 data/tags/gimp-tags-default.xml.in
