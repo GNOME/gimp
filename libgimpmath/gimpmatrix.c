@@ -866,42 +866,6 @@ gimp_matrix3_is_simple (const GimpMatrix3 *matrix)
 }
 
 /**
- * gimp_matrix3_will_explode:
- * @matrix: The matrix that is to be tested.
- * @u1:     The rectangle's left coordinate.
- * @v1:     The rectangle's top coordinate.
- * @u2:     The rectangle's right coordinate.
- * @v2:     The rectangle's bottom coordinate.
- *
- * Checks if the given transformation maps a point of the rectangle to
- * infinity, or something equally stupid.
- *
- * Returns: %TRUE if the transformation will fail, %FALSE otherwise
- *
- * Since: 2.10
- */
-gboolean
-gimp_matrix3_will_explode (const GimpMatrix3 *matrix,
-                           gdouble            u1,
-                           gdouble            v1,
-                           gdouble            u2,
-                           gdouble            v2)
-{
-  const gdouble a  = matrix->coeff[2][0];
-  const gdouble b  = matrix->coeff[2][1];
-  const gdouble c  = matrix->coeff[2][2];
-  const gdouble d1 = a * u1 + b * v1 + c;
-  const gdouble d2 = a * u1 + b * v2 + c;
-  const gdouble d3 = a * u2 + b * v1 + c;
-  const gdouble d4 = a * u2 + b * v2 + c;
-
-  /* We are safe if all 4 corners of the region are on the same side
-   * of the a.u+b.v+c=0 line, ie. if d1..d4 have the same sign.
-   */
-  return ! (d1 * d2 > 0 && d1 * d3 > 0 && d1 * d4 > 0);
-}
-
-/**
  * gimp_matrix4_to_deg:
  * @matrix:
  * @a:

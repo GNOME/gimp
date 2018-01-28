@@ -16,7 +16,6 @@ EXPORTS
 	gimp_matrix3_scale
 	gimp_matrix3_transform_point
 	gimp_matrix3_translate
-	gimp_matrix3_will_explode
 	gimp_matrix3_xshear
 	gimp_matrix3_yshear
 	gimp_matrix4_to_deg

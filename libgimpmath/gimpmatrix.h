@@ -111,12 +111,6 @@ gboolean      gimp_matrix3_is_diagonal     (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_affine       (const GimpMatrix3 *matrix);
 gboolean      gimp_matrix3_is_simple       (const GimpMatrix3 *matrix);
 
-gboolean      gimp_matrix3_will_explode    (const GimpMatrix3 *matrix,
-                                            gdouble            u1,
-                                            gdouble            v1,
-                                            gdouble            u2,
-                                            gdouble            v2);
-
 void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
                                             gdouble            x,
                                             gdouble            y,
