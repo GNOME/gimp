@@ -40,7 +40,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-utils.h"
 #include "display/gimptoolcompass.h"
 #include "display/gimptoolgui.h"
 
@@ -448,7 +447,6 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
   GimpImage        *image = gimp_display_get_image (display);
-  gchar            *status;
   gint              ax, ay;
   gint              bx, by;
   gint              pixel_width;
@@ -523,23 +521,26 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   unit_width_digits  = gimp_unit_get_scaled_digits (shell->unit, xres);
   unit_height_digits = gimp_unit_get_scaled_digits (shell->unit, yres);
 
-  status = gimp_display_shell_get_line_status (shell, "", "",
-                                               ax, ay, bx, by);
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
       gimp_tool_replace_status (GIMP_TOOL (measure), display,
-                                "%s (%d × %d)",
-                                status, pixel_width, pixel_height);
+                                "%.1f %s, %.2f\302\260 (%d × %d)",
+                                pixel_distance, _("pixels"), pixel_angle,
+                                pixel_width, pixel_height);
     }
   else
     {
-      g_snprintf (format, sizeof (format), "%s (%%.%df × %%.%df)",
-                  status, unit_width_digits, unit_height_digits);
+      g_snprintf (format, sizeof (format),
+                  "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
+                  unit_distance_digits,
+                  gimp_unit_get_plural (shell->unit),
+                  unit_width_digits,
+                  unit_height_digits);
 
       gimp_tool_replace_status (GIMP_TOOL (measure), display, format,
+                                unit_distance, unit_angle,
                                 unit_width, unit_height);
     }
-  g_free (status);
 
   if (measure->gui)
     {
