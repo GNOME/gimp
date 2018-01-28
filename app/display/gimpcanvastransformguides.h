@@ -56,7 +56,8 @@ GimpCanvasItem * gimp_canvas_transform_guides_new      (GimpDisplayShell  *shell
                                                         gdouble            x2,
                                                         gdouble            y2,
                                                         GimpGuidesType     type,
-                                                        gint               n_guides);
+                                                        gint               n_guides,
+                                                        gboolean           clip);
 
 void             gimp_canvas_transform_guides_set      (GimpCanvasItem    *guides,
                                                         const GimpMatrix3 *transform,
@@ -65,7 +66,8 @@ void             gimp_canvas_transform_guides_set      (GimpCanvasItem    *guide
                                                         gdouble            x2,
                                                         gdouble            y2,
                                                         GimpGuidesType     type,
-                                                        gint               n_guides);
+                                                        gint               n_guides,
+                                                        gboolean           clip);
 
 
 #endif /* __GIMP_CANVAS_TRANSFORM_GUIDES_H__ */

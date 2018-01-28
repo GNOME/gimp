@@ -225,7 +225,8 @@ GimpCanvasItem * gimp_tool_widget_add_transform_guides
                                                  gdouble               x2,
                                                  gdouble               y2,
                                                  GimpGuidesType        type,
-                                                 gint                  n_guides);
+                                                 gint                  n_guides,
+                                                 gboolean              clip);
 
 /*  for tools, to be called from the respective GimpTool method
  *  implementations

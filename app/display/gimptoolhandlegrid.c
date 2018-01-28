@@ -1109,10 +1109,11 @@ gimp_tool_handle_grid_new (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return g_object_new (GIMP_TYPE_TOOL_HANDLE_GRID,
-                       "shell",     shell,
-                       "x1",        x1,
-                       "y1",        y1,
-                       "x2",        x2,
-                       "y2",        y2,
+                       "shell",       shell,
+                       "x1",          x1,
+                       "y1",          y1,
+                       "x2",          x2,
+                       "y2",          y2,
+                       "clip-guides", TRUE,
                        NULL);
 }

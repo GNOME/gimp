@@ -697,7 +697,8 @@ gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
                                        gdouble            x2,
                                        gdouble            y2,
                                        GimpGuidesType     type,
-                                       gint               n_guides)
+                                       gint               n_guides,
+                                       gboolean           clip)
 {
   GimpCanvasItem *item;
 
@@ -705,7 +706,7 @@ gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
 
   item = gimp_canvas_transform_guides_new (widget->private->shell,
                                            transform, x1, y1, x2, y2,
-                                           type, n_guides);
+                                           type, n_guides, clip);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
