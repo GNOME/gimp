@@ -52,6 +52,8 @@ typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 #define GIMP_CRITICAL_RESPONSE_URL       2
 #define GIMP_CRITICAL_RESPONSE_RESTART   3
 
+#define BUTTON1_TEXT "Copy bug information"
+#define BUTTON2_TEXT "Open bug tracker"
 
 static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
@@ -85,15 +87,13 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gchar          *version;
   GtkWidget      *widget;
   GtkTextBuffer  *buffer;
-  const gchar    *button1 = _("Copy bug information");
-  const gchar    *button2 = _("Open bug tracker");
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-critical");
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          button1,     GIMP_CRITICAL_RESPONSE_CLIPBOARD,
-                          button2,     GIMP_CRITICAL_RESPONSE_URL,
-                          _("_Close"), GTK_RESPONSE_CLOSE,
+                          _(BUTTON1_TEXT), GIMP_CRITICAL_RESPONSE_CLIPBOARD,
+                          _(BUTTON2_TEXT), GIMP_CRITICAL_RESPONSE_URL,
+                          _("_Close"),     GTK_RESPONSE_CLOSE,
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
@@ -104,35 +104,35 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_widget_show (dialog->vbox);
 
   /* The error label. */
-  dialog->label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (dialog->label), GTK_JUSTIFY_CENTER);
-  gtk_label_set_selectable (GTK_LABEL (dialog->label), TRUE);
+  dialog->top_label = gtk_label_new (NULL);
+  gtk_label_set_justify (GTK_LABEL (dialog->top_label), GTK_JUSTIFY_CENTER);
+  gtk_label_set_selectable (GTK_LABEL (dialog->top_label), TRUE);
   gtk_box_pack_start (GTK_BOX (dialog->vbox),
-                      dialog->label, FALSE, FALSE, 0);
+                      dialog->top_label, FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();
   attr  = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
   pango_attr_list_insert (attrs, attr);
-  gtk_label_set_attributes (GTK_LABEL (dialog->label), attrs);
+  gtk_label_set_attributes (GTK_LABEL (dialog->top_label), attrs);
   pango_attr_list_unref (attrs);
 
-  gtk_widget_show (dialog->label);
+  gtk_widget_show (dialog->top_label);
 
   /* Generic "report a bug" instructions. */
   text = g_strdup_printf ("%s\n"
                           " \xe2\x80\xa2 %s %s\n"
                           " \xe2\x80\xa2 %s %s\n"
-                          " \xe2\x80\xa2 %s \n"
-                          " \xe2\x80\xa2 %s \n"
-                          " \xe2\x80\xa2 %s \n"
+                          " \xe2\x80\xa2 %s\n"
+                          " \xe2\x80\xa2 %s\n"
+                          " \xe2\x80\xa2 %s\n"
                           " \xe2\x80\xa2 %s\n\n"
                           "%s",
                           _("To help us improve GIMP, you can report the bug with "
                             "these simple steps:"),
                           _("Copy the bug information to clipboard by clicking: "),
-                          button1,
+                          _(BUTTON1_TEXT),
                           _("Open our bug tracker in browser by clicking: "),
-                          button2,
+                          _(BUTTON2_TEXT),
                           _("Create a login if you don't have one yet."),
                           _("Paste the clipboard text in a new bug report."),
                           _("Add relevant information in English in the bug report "
@@ -141,11 +141,11 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
                             "It is advised to save your work and restart GIMP."),
                           _("Note: you can also close the dialog directly but reporting "
                             "bugs is the best way to make your software awesome."));
-  widget = gtk_label_new (text);
+  dialog->bottom_label = gtk_label_new (text);
   g_free (text);
-  gtk_label_set_selectable (GTK_LABEL (widget), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  gtk_label_set_selectable (GTK_LABEL (dialog->bottom_label), TRUE);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->bottom_label, FALSE, FALSE, 0);
+  gtk_widget_show (dialog->bottom_label);
 
   /* Bug details for developers. */
   widget = gtk_scrolled_window_new (NULL, NULL);
@@ -386,8 +386,8 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
       text = g_strdup_printf (_("GIMP crashed with a fatal error: %s"),
                               message);
     }
-  else if (! gtk_label_get_text (GTK_LABEL (critical->label)) ||
-           strlen (gtk_label_get_text (GTK_LABEL (critical->label))) == 0)
+  else if (! gtk_label_get_text (GTK_LABEL (critical->top_label)) ||
+           strlen (gtk_label_get_text (GTK_LABEL (critical->top_label))) == 0)
     {
       /* First error. Let's just display it. */
       text = g_strdup_printf (_("GIMP encountered an error: %s"),
@@ -400,9 +400,40 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
        */
       text = g_strdup_printf (_("GIMP encountered several critical errors!"));
     }
-  gtk_label_set_text (GTK_LABEL (critical->label),
+  gtk_label_set_text (GTK_LABEL (critical->top_label),
                       text);
   g_free (text);
+
+  if (is_fatal)
+    {
+      /* Same text as before except that we don't need the last point
+       * about saving and restarting since anyway we are crashing and
+       * manual saving is not possible anymore (or even advisable since
+       * if it fails, one may corrupt files).
+       */
+      text = g_strdup_printf ("%s\n"
+                              " \xe2\x80\xa2 %s %s\n"
+                              " \xe2\x80\xa2 %s %s\n"
+                              " \xe2\x80\xa2 %s\n"
+                              " \xe2\x80\xa2 %s\n"
+                              " \xe2\x80\xa2 %s\n\n"
+                              "%s",
+                              _("To help us improve GIMP, you can report the bug with "
+                                "these simple steps:"),
+                              _("Copy the bug information to clipboard by clicking: "),
+                              _(BUTTON1_TEXT),
+                              _("Open our bug tracker in browser by clicking: "),
+                              _(BUTTON2_TEXT),
+                              _("Create a login if you don't have one yet."),
+                              _("Paste the clipboard text in a new bug report."),
+                              _("Add relevant information in English in the bug report "
+                                "explaining what you were doing when this error occurred."),
+                              _("Note: you can also close the dialog directly but reporting "
+                                "bugs is the best way to make your software awesome."));
+      gtk_label_set_text (GTK_LABEL (critical->bottom_label),
+                          text);
+      g_free (text);
+    }
 
   /* The details text is untranslated on purpose. This is the message
    * meant to go to clipboard for the bug report. It has to be in

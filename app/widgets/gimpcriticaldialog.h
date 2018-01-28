@@ -40,7 +40,8 @@ struct _GimpCriticalDialog
 
   GtkWidget       *vbox;
 
-  GtkWidget       *label;
+  GtkWidget       *top_label;
+  GtkWidget       *bottom_label;
   GtkWidget       *details;
 
   gchar           *program;
