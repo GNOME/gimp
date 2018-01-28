@@ -295,57 +295,53 @@ gimp_canvas_transform_preview_transform (GimpCanvasItem        *item,
                                          cairo_rectangle_int_t *extents)
 {
   GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  gdouble                            tx1, ty1;
-  gdouble                            tx2, ty2;
-  gdouble                            tx3, ty3;
-  gdouble                            tx4, ty4;
+  GimpVector2                        vertices[4];
+  GimpVector2                        t_vertices[5];
+  gint                               n_t_vertices;
 
-  gimp_matrix3_transform_point (&private->transform,
-                                private->x1, private->y1,
-                                &tx1, &ty1);
-  gimp_matrix3_transform_point (&private->transform,
-                                private->x2, private->y1,
-                                &tx2, &ty2);
-  gimp_matrix3_transform_point (&private->transform,
-                                private->x1, private->y2,
-                                &tx3, &ty3);
-  gimp_matrix3_transform_point (&private->transform,
-                                private->x2, private->y2,
-                                &tx4, &ty4);
+  vertices[0] = (GimpVector2) { private->x1, private->y1 };
+  vertices[1] = (GimpVector2) { private->x2, private->y1 };
+  vertices[2] = (GimpVector2) { private->x2, private->y2 };
+  vertices[3] = (GimpVector2) { private->x1, private->y2 };
 
-  if (! gimp_transform_polygon_is_convex (tx1, ty1,
-                                          tx2, ty2,
-                                          tx3, ty3,
-                                          tx4, ty4))
+  gimp_transform_polygon (&private->transform, vertices, 4, TRUE,
+                          t_vertices, &n_t_vertices);
+
+  if (n_t_vertices < 2)
     return FALSE;
 
   if (extents)
     {
-      gdouble dx1, dy1;
-      gdouble dx2, dy2;
-      gdouble dx3, dy3;
-      gdouble dx4, dy4;
+      GimpVector2 top_left;
+      GimpVector2 bottom_right;
+      gint        i;
 
-      gimp_canvas_item_transform_xy_f (item,
-                                       tx1, ty1,
-                                       &dx1, &dy1);
-      gimp_canvas_item_transform_xy_f (item,
-                                       tx2, ty2,
-                                       &dx2, &dy2);
-      gimp_canvas_item_transform_xy_f (item,
-                                       tx3, ty3,
-                                       &dx3, &dy3);
-      gimp_canvas_item_transform_xy_f (item,
-                                       tx4, ty4,
-                                       &dx4, &dy4);
+      for (i = 0; i < n_t_vertices; i++)
+        {
+          GimpVector2 v;
 
-      extents->x      = (gint) floor (MIN4 (dx1, dx2, dx3, dx4));
-      extents->y      = (gint) floor (MIN4 (dy1, dy2, dy3, dy4));
-      extents->width  = (gint) ceil (MAX4 (dx1, dx2, dx3, dx4));
-      extents->height = (gint) ceil (MAX4 (dy1, dy2, dy3, dy4));
+          gimp_canvas_item_transform_xy_f (item,
+                                           t_vertices[i].x,  t_vertices[i].y,
+                                           &v.x, &v.y);
 
-      extents->width  -= extents->x;
-      extents->height -= extents->y;
+          if (i == 0)
+            {
+              top_left = bottom_right = v;
+            }
+          else
+            {
+              top_left.x     = MIN (top_left.x,     v.x);
+              top_left.y     = MIN (top_left.y,     v.y);
+
+              bottom_right.x = MAX (bottom_right.x, v.x);
+              bottom_right.y = MAX (bottom_right.y, v.y);
+            }
+        }
+
+      extents->x      = (gint) floor (top_left.x);
+      extents->y      = (gint) floor (top_left.y);
+      extents->width  = (gint) ceil  (bottom_right.x) - extents->x;
+      extents->height = (gint) ceil  (bottom_right.y) - extents->y;
     }
 
   return TRUE;
@@ -365,7 +361,6 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem *item,
   guchar                            *surface_data;
   gint                               surface_stride;
 
-  /* only draw convex polygons */
   if (! gimp_canvas_transform_preview_transform (item, &extents))
     return;
 
