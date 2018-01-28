@@ -1,16 +1,16 @@
 # Polish translation for gimp-libgimp.
-# Copyright © 2005-2017 the gimp authors.
+# Copyright © 2005-2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2018.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-31 23:49+0100\n"
-"PO-Revision-Date: 2017-12-31 23:50+0100\n"
+"POT-Creation-Date: 2018-01-28 20:01+0100\n"
+"PO-Revision-Date: 2018-01-28 20:02+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21,22 +21,22 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1206
+#: ../libgimp/gimp.c:1209
 msgid "success"
 msgstr "powodzenie"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1210
+#: ../libgimp/gimp.c:1213
 msgid "execution error"
 msgstr "błąd wykonania"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1214
+#: ../libgimp/gimp.c:1217
 msgid "calling error"
 msgstr "błąd wywołania"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1218
+#: ../libgimp/gimp.c:1221
 msgid "cancelled"
 msgstr "anulowano"
 
@@ -170,8 +170,8 @@ msgstr "Potwierdzenie zapisu"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
 #: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:166
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:176
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
 #: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
@@ -239,44 +239,44 @@ msgstr "Wybór czcionki"
 msgid "Gradient Selection"
 msgstr "Wybór gradientu"
 
-#: ../libgimp/gimpimagemetadata.c:477
+#: ../libgimp/gimpimagemetadata.c:487
 msgid "GIMP 2.9/2.10"
 msgstr "GIMP 2.9/2.10"
 
-#: ../libgimp/gimpimagemetadata.c:661
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
 msgstr "Tło"
 
-#: ../libgimp/gimpimagemetadata.c:850
+#: ../libgimp/gimpimagemetadata.c:860
 #, c-format
 msgid "Rotate %s?"
 msgstr "Obrócić %s?"
 
-#: ../libgimp/gimpimagemetadata.c:856
+#: ../libgimp/gimpimagemetadata.c:866
 msgid "_Keep Original"
 msgstr "_Zachowaj oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:908
 msgid "Original"
 msgstr "Oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:914
+#: ../libgimp/gimpimagemetadata.c:924
 msgid "Rotated"
 msgstr "Obrócono"
 
-#: ../libgimp/gimpimagemetadata.c:932
+#: ../libgimp/gimpimagemetadata.c:942
 msgid "This image contains Exif orientation metadata."
 msgstr "Ten obraz zawiera metadane ułożenia Exif."
 
-#: ../libgimp/gimpimagemetadata.c:950
+#: ../libgimp/gimpimagemetadata.c:960
 msgid "Would you like to rotate the image?"
 msgstr "Obrócić obraz?"
 
-#: ../libgimp/gimpimagemetadata.c:962
+#: ../libgimp/gimpimagemetadata.c:972
 msgid "_Don't ask me again"
 msgstr "_Bez pytania ponownie"
 
@@ -1404,27 +1404,27 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Kadrowanie z proporcjami"
 
-#: ../libgimpbase/gimpmetadata.c:840
+#: ../libgimpbase/gimpmetadata.c:845
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Można wczytywać metadane tylko z plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:900
+#: ../libgimpbase/gimpmetadata.c:905
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Można zapisywać metadane tylko do plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:976
+#: ../libgimpbase/gimpmetadata.c:981
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Przetworzenie danych Exif się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:1027
+#: ../libgimpbase/gimpmetadata.c:1032
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Przetworzenie danych IPTC się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:1076
+#: ../libgimpbase/gimpmetadata.c:1081
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Przetworzenie danych XMP się nie powiodło."
@@ -1747,8 +1747,8 @@ msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 msgid "while parsing token '%s': %s"
 msgstr "podczas przetwarzania tokenu „%s”: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:658
-#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:742
+#: ../libgimpconfig/gimpconfig-iface.c:662
+#: ../libgimpconfig/gimpconfig-iface.c:675 ../libgimpconfig/gimpscanner.c:742
 #: ../libgimpconfig/gimpscanner.c:824
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
@@ -1873,28 +1873,28 @@ msgstr "_Przywróć"
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:101
 msgid "All files (*.*)"
 msgstr "Wszystkie pliki (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:106
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil kolorów ICC (*.icc, *.icm)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:167
 msgid "_Save"
 msgstr "_Zapisz"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:177
 msgid "_Open"
 msgstr "_Otwórz"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:339
 #: ../libgimpwidgets/gimppatheditor.c:270
 msgid "Folder"
 msgstr "Katalog"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:344
 msgid "Not a regular file."
 msgstr "Nie jest zwykłym plikiem."
 
@@ -1915,23 +1915,27 @@ msgstr "Producent: "
 msgid "Copyright: "
 msgstr "Prawa autorskie: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:201
+#: ../libgimpwidgets/gimpcolorscales.c:204
 msgid "Scales"
 msgstr "Skale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:383
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpcolorscales.c:416
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:441
+#: ../libgimpwidgets/gimpcolorscales.c:418
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:444
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:464
+#: ../libgimpwidgets/gimpcolorscales.c:453
 msgid "HSV"
 msgstr "HSV"
 
@@ -2312,22 +2316,49 @@ msgstr "Nasycenie LCH"
 msgid "LCH Hue"
 msgstr "Barwa LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "Model kolorów RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "Model kolorów CIELCh"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "Model kolorów HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Warstwy"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Powiększenie"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zmniejszenie"
