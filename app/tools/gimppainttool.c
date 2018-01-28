@@ -659,10 +659,10 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
           status = gimp_display_shell_get_line_status (shell, status_help,
                                                        ". ",
-                                                       core->cur_coords.x,
-                                                       core->cur_coords.y,
                                                        core->last_coords.x,
-                                                       core->last_coords.y);
+                                                       core->last_coords.y,
+                                                       core->cur_coords.x,
+                                                       core->cur_coords.y);
           g_free (status_help);
           paint_tool->draw_line = TRUE;
         }
