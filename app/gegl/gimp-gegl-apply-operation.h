@@ -154,7 +154,6 @@ void   gimp_gegl_apply_transform       (GeglBuffer             *src_buffer,
                                         const gchar            *undo_desc,
                                         GeglBuffer             *dest_buffer,
                                         GimpInterpolationType   interpolation_type,
-                                        GimpTransformResize     clip_result,
                                         GimpMatrix3            *transform);
 
 
