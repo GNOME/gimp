@@ -33,8 +33,8 @@ EXTRA_PROGRAMS = \
 gimpdebug_2_0_SOURCES = gimpdebug.c                         \
 			../app/widgets/gimpcriticaldialog.h \
 			../app/widgets/gimpcriticaldialog.c \
-			../app/version.h                    \
-			../app/version.c
+			../app/gimp-version.h               \
+			../app/gimp-version.c
 
 gimpdebug_2_0_CPPFLAGS = \
 	-DCC_VERSION=\""$(CC_VERSION)"\" \

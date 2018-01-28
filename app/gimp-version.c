@@ -32,10 +32,10 @@
 #include "libgimpbase/gimpbase.h"
 
 #include "about.h"
-#include "version.h"
 #include "git-version.h"
 
 #include "gimp-intl.h"
+#include "gimp-version.h"
 
 
 static gchar *

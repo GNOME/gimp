@@ -60,14 +60,14 @@ libapp_sources = \
 	tests.h			\
 	unique.c		\
 	unique.h		\
-	version.c		\
-	version.h		\
 	gimp-debug.c		\
 	gimp-debug.h		\
+	gimp-intl.h		\
 	gimp-log.c		\
 	gimp-log.h		\
 	gimp-priorities.h	\
-	gimp-intl.h
+	gimp-version.c		\
+	gimp-version.h
 
 libapp_generated_sources = \
 	git-version.h

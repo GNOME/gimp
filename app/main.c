@@ -63,7 +63,6 @@
 #include "sanity.h"
 #include "signals.h"
 #include "unique.h"
-#include "version.h"
 
 #ifdef G_OS_WIN32
 /* To get PROCESS_DEP_* defined we need _WIN32_WINNT at 0x0601. We still
@@ -79,6 +78,7 @@
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
+#include "gimp-version.h"
 
 
 static gboolean  gimp_option_fatal_warnings   (const gchar  *option_name,

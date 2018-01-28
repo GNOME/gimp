@@ -42,9 +42,8 @@
 
 #include "gimpcriticaldialog.h"
 
-#include "version.h"
-
 #include "gimp-intl.h"
+#include "gimp-version.h"
 
 typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 

@@ -19,7 +19,6 @@
 #define __VERSION_H__
 
 
-
 void    gimp_version_show (gboolean be_verbose);
 gchar * gimp_version      (gboolean be_verbose,
                            gboolean localized);
