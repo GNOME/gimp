@@ -488,6 +488,10 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_show (frame);
 
   tool->graph = gimp_curve_view_new ();
+
+  g_object_add_weak_pointer (G_OBJECT (tool->graph),
+                             (gpointer) &tool->graph);
+
   gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (tool->graph), 0, 255);
   gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (tool->graph), 0, 255);
   gtk_widget_set_size_request (tool->graph,

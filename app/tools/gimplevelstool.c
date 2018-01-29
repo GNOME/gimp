@@ -420,6 +420,10 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_show (vbox2);
 
   tool->histogram_view = gimp_histogram_view_new (FALSE);
+
+  g_object_add_weak_pointer (G_OBJECT (tool->histogram_view),
+                             (gpointer) &tool->histogram_view);
+
   gtk_box_pack_start (GTK_BOX (vbox2), tool->histogram_view, TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (tool->histogram_view));
 
