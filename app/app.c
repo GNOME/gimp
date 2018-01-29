@@ -354,6 +354,9 @@ app_run (const gchar         *full_prog_name,
       gimp_threads_enter (gimp);
     }
 
+  if (gimp->be_verbose)
+    g_print ("EXIT: %s\n", G_STRFUNC);
+
   g_main_loop_unref (loop);
 
   g_object_unref (gimp);
