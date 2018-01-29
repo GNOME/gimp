@@ -39,8 +39,6 @@
 #include "about-dialog.h"
 #include "authors.h"
 
-#include "git-version.h"
-
 #include "gimp-intl.h"
 
 
