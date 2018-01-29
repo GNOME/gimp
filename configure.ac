@@ -909,6 +909,12 @@ if test "x$platform_win32" = "xyes"; then
 fi
 AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" = "xyes")
 
+###########################
+# Check for backtrace() API
+###########################
+
+AC_CHECK_HEADERS([execinfo.h])
+
 ##########################################
 # Check for some special functions we need
 ##########################################

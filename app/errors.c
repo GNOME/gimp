@@ -24,6 +24,11 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_EXECINFO_H
+/* Allowing backtrace() API. */
+#include <execinfo.h>
+#endif
+
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -442,7 +447,36 @@ gimp_get_stack_trace (void)
           g_free (gdb_stdout);
         }
     }
+#endif
 
+#ifdef HAVE_EXECINFO_H
+  /* As a last resort, try using the backtrace() Linux API. It is a bit
+   * less fancy than gdb or lldb, which is why it is not given priority.
+   */
+  if (! trace)
+    {
+      void  *buffer[100];
+      char **symbols;
+      int    n_symbols;
+      int    i;
+
+      n_symbols = backtrace (buffer, 100);
+      symbols = backtrace_symbols (buffer, n_symbols);
+      if (symbols)
+        {
+          GString *gtrace = g_string_new (NULL);
+
+          for (i = 0; i < n_symbols; i++)
+            {
+              g_string_append (gtrace,
+                               (const gchar *) symbols[i]);
+              g_string_append_c (gtrace, '\n');
+            }
+          trace = g_string_free (gtrace, FALSE);
+
+          free (symbols);
+        }
+    }
 #endif
 
   return trace;
