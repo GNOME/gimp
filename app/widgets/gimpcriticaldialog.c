@@ -51,8 +51,8 @@ typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 #define GIMP_CRITICAL_RESPONSE_URL       2
 #define GIMP_CRITICAL_RESPONSE_RESTART   3
 
-#define BUTTON1_TEXT "Copy bug information"
-#define BUTTON2_TEXT "Open bug tracker"
+#define BUTTON1_TEXT _("Copy bug information")
+#define BUTTON2_TEXT _("Open bug tracker")
 
 static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
@@ -90,9 +90,9 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-critical");
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _(BUTTON1_TEXT), GIMP_CRITICAL_RESPONSE_CLIPBOARD,
-                          _(BUTTON2_TEXT), GIMP_CRITICAL_RESPONSE_URL,
-                          _("_Close"),     GTK_RESPONSE_CLOSE,
+                          BUTTON1_TEXT, GIMP_CRITICAL_RESPONSE_CLIPBOARD,
+                          BUTTON2_TEXT, GIMP_CRITICAL_RESPONSE_URL,
+                          _("_Close"),  GTK_RESPONSE_CLOSE,
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
@@ -129,9 +129,9 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
                           _("To help us improve GIMP, you can report the bug with "
                             "these simple steps:"),
                           _("Copy the bug information to clipboard by clicking: "),
-                          _(BUTTON1_TEXT),
+                          BUTTON1_TEXT,
                           _("Open our bug tracker in browser by clicking: "),
-                          _(BUTTON2_TEXT),
+                          BUTTON2_TEXT,
                           _("Create a login if you don't have one yet."),
                           _("Paste the clipboard text in a new bug report."),
                           _("Add relevant information in English in the bug report "
@@ -420,9 +420,9 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
                               _("To help us improve GIMP, you can report the bug with "
                                 "these simple steps:"),
                               _("Copy the bug information to clipboard by clicking: "),
-                              _(BUTTON1_TEXT),
+                              BUTTON1_TEXT,
                               _("Open our bug tracker in browser by clicking: "),
-                              _(BUTTON2_TEXT),
+                              BUTTON2_TEXT,
                               _("Create a login if you don't have one yet."),
                               _("Paste the clipboard text in a new bug report."),
                               _("Add relevant information in English in the bug report "
