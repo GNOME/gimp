@@ -9,9 +9,9 @@ desktop/gimp.desktop.in.in
 
 app/about.h
 app/app.c
+app/gimp-version.c
 app/main.c
 app/sanity.c
-app/version.c
 
 app/actions/actions.c
 app/actions/brush-editor-actions.c
