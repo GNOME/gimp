@@ -124,3 +124,44 @@ $(srcdir)/ChangeLog:
 	  echo A git checkout and git-log is required to generate this file >> $@); \
 	fi
 .PHONY: $(srcdir)/ChangeLog
+
+libapp_generated_sources = \
+	git-version.h
+
+# Build git-version.h before anything in the subdirs as this is needed
+# in the about and debug dialog (app/) and in the debug tool (tools/).
+BUILT_SOURCES = $(libapp_generated_sources)
+
+CLEANFILES = $(libapp_generated_sources)
+
+# If git is available, always check if git-version.h should be
+# updated. If git is not available, don't do anything if git-version.h
+# already exists because then we are probably working with a tarball
+# in which case the git-version.h we ship is correct.
+git-version.h: update-git-version-header
+	@if test -e "$(top_srcdir)/.git"; then \
+	  git_version="`git --git-dir=$(top_srcdir)/.git describe --always`"; \
+	  git_version_abbrev="`git --git-dir=$(top_srcdir)/.git rev-parse --short HEAD`"; \
+	  git_last_commit_year="`git --git-dir=$(top_srcdir)/.git log -n1 --reverse --pretty=%ci | cut -b 1-4`"; \
+	elif test ! -f "$@"; then \
+	  git_version="Unknown, shouldn't happen"; \
+	  git_version_abbrev="$$git_version"; \
+	  git_last_commit_timestamp=-1; \
+	  git_last_commit_year="`date -u '+%Y'`"; \
+	fi; \
+	if test -n "$$git_version"; then \
+	  echo "#ifndef __GIT_VERSION_H__" > "$@.tmp"; \
+	  echo "#define __GIT_VERSION_H__" >> "$@.tmp"; \
+	  echo "#define GIMP_GIT_VERSION \"$$git_version\"" >> "$@.tmp"; \
+	  echo "#define GIMP_GIT_VERSION_ABBREV \"$$git_version_abbrev\"" >> "$@.tmp"; \
+	  echo "#define GIMP_GIT_LAST_COMMIT_YEAR \"$$git_last_commit_year\"" >> "$@.tmp"; \
+	  echo "#endif /* __GIT_VERSION_H__ */" >> "$@.tmp"; \
+	fi
+	@if ( test -f "$@.tmp" && test -f "$@" && cmp "$@.tmp" "$@" > /dev/null ); then \
+	  rm -f "$@.tmp"; \
+	elif test -f "$@.tmp"; then \
+	  mv "$@.tmp" "$@"; \
+	  echo "  git HEAD changed: $@ regenerated"; \
+	fi
+
+.PHONY: update-git-version-header
