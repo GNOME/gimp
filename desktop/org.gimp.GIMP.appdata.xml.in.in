@@ -92,23 +92,23 @@
             processing
           </_li>
           <_li>
-            Many new and improved tools
+            New and improved tools
           </_li>
           <_li>
             Color-management improvements
           </_li>
           <_li>
-            Many file format improvements and new formats support:
-            OpenEXR, WebP, HGT…
+            Many file format improvements and new formats:
+            OpenEXR, WebP, HGT, RGBE…
           </_li>
           <_li>
             Metadata viewing and editing
           </_li>
           <_li>
             Improved digital painting: canvas rotation and
-            flipping, symmetry painting, MyPaint brush support…
+            flipping, symmetry painting, MyPaint brushes…
           </_li>
-            Better HiDPI support.
+            Basic HiDPI support.
           <_li>
             And much, much more…
           </_li>
