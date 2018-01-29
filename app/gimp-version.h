@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef __APP_GIMP_VERSION_H__
+#define __APP_GIMP_VERSION_H__
 
 
 void    gimp_version_show (gboolean be_verbose);
@@ -24,4 +24,4 @@ gchar * gimp_version      (gboolean be_verbose,
                            gboolean localized);
 
 
-#endif /* __VERSION_H__ */
+#endif /* __APP_GIMP_VERSION_H__ */
