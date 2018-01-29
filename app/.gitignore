@@ -5,6 +5,5 @@
 /gimp-2.*
 /gimp-console-2.*
 /gimp.rc
-/git-version.h
 /libapp.a
 /makefile.mingw
