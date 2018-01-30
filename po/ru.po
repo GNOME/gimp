@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-29 02:30+0300\n"
-"PO-Revision-Date: 2018-01-29 03:03+0300\n"
+"PO-Revision-Date: 2018-01-30 11:37+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -4468,7 +4468,7 @@ msgstr "Оператор _Собеля"
 #: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr "_Барельеф..."
+msgstr "_Тиснение..."
 
 #: ../app/actions/filters-actions.c:332
 msgctxt "filters-action"
@@ -4623,7 +4623,7 @@ msgstr "_Перлинов шум..."
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr "_Случайный выбор"
+msgstr "_Случайный выбор..."
 
 #: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
@@ -4823,7 +4823,7 @@ msgstr "_Виньетирование..."
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Волны..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
@@ -14175,7 +14175,7 @@ msgstr "Подтвердить масштабирование"
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
 #: ../app/tools/gimpscaletool.c:92 ../app/tools/gimpscaletool.c:110
 msgid "_Scale"
-msgstr "_Масштаб"
+msgstr "_Изменить"
 
 #: ../app/dialogs/image-scale-dialog.c:243
 #, c-format
@@ -20153,7 +20153,7 @@ msgstr "Использовать все видимые слои при выде�
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
-msgstr "Средняя выборка"
+msgstr "Сводить слои"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Use averaged color value from nearby pixels"
