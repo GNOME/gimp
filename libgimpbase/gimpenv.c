@@ -65,14 +65,8 @@
 #define geteuid() 0
 #define getegid() 0
 
-/* This is a hack for Windows known directory support.
- * DATADIR (autotools-generated constant) is a type defined in objidl.h
- * so we must #undef it before including shlobj.h in order to avoid a
- * name clash. */
-static const char* datadir = DATADIR;
-#undef DATADIR
 #include <shlobj.h>
-#define DATADIR datadir
+
 /* Constant available since Shell32.dll 4.72 */
 #ifndef CSIDL_APPDATA
 #define CSIDL_APPDATA 0x001a
@@ -497,7 +491,7 @@ gimp_data_directory (void)
                                      GIMP_DATA_VERSION,
                                      NULL);
 
-      gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", DATADIR, tmp);
+      gimp_data_dir = gimp_env_get_dir ("GIMP2_DATADIR", GIMPDATADIR, tmp);
       g_free (tmp);
     }
 
@@ -584,7 +578,7 @@ gimp_sysconf_directory (void)
                                      GIMP_SYSCONF_VERSION,
                                      NULL);
 
-      gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", SYSCONFDIR, tmp);
+      gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", GIMPSYSCONFDIR, tmp);
       g_free (tmp);
     }
 

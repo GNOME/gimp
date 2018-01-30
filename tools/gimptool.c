@@ -75,7 +75,7 @@ static struct {
   { "bindir",         BINDIR         },
   { "sbindir",        SBINDIR        },
   { "libexecdir",     LIBEXECDIR     },
-  { "datadir",        DATADIR        },
+  { "datadir",        SYSDATADIR     },
   { "datarootdir",    DATAROOTDIR    },
   { "sysconfdir",     SYSCONFDIR     },
   { "sharedstatedir", SHAREDSTATEDIR },
