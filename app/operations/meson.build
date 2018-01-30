@@ -40,7 +40,6 @@ libappoperations_sources = [
   'gimpoperationscalarmultiply.c',
   'gimpoperationsemiflatten.c',
   'gimpoperationsetalpha.c',
-  'gimpoperationshapeburst.c',
   'gimpoperationshrink.c',
   'gimpoperationthreshold.c',
   'gimpoperationthresholdalpha.c',
