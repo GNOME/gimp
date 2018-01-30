@@ -104,6 +104,7 @@ libappwidgets_sources = [
   'gimpgrideditor.c',
   'gimphandlebar.c',
   'gimphelp.c',
+  'gimphighlightablebutton.c',
   'gimphistogrambox.c',
   'gimphistogrameditor.c',
   'gimphistogramview.c',
