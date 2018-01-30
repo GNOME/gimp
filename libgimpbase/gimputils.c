@@ -40,13 +40,8 @@
 #include <glib/gprintf.h>
 
 #if defined(G_OS_WIN32)
-/* This is a hack for Windows known directory support.
- * DATADIR (autotools-generated constant) is a type defined in objidl.h
- * so we must #undef it before including shlobj.h in order to avoid a
- * name clash. */
-#undef DATADIR
-#include <windows.h>
-#include <shlobj.h>
+# include <windows.h>
+# include <shlobj.h>
 #endif
 
 #include "gimpbasetypes.h"
