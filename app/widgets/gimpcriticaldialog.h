@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 #define GIMP_CRITICAL_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CRITICAL_DIALOG, GimpCriticalDialogClass))
 
 
+typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 typedef struct _GimpCriticalDialogClass  GimpCriticalDialogClass;
 
 struct _GimpCriticalDialog

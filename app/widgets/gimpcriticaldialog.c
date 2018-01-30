@@ -28,8 +28,8 @@
 
 #include <string.h>
 
-#include <glib.h>
 #include <gtk/gtk.h>
+#include <gegl.h>
 
 #ifdef PLATFORM_OSX
 #import <Cocoa/Cocoa.h>
@@ -45,14 +45,14 @@
 #include "gimp-intl.h"
 #include "gimp-version.h"
 
-typedef struct _GimpCriticalDialog       GimpCriticalDialog;
 
 #define GIMP_CRITICAL_RESPONSE_CLIPBOARD 1
 #define GIMP_CRITICAL_RESPONSE_URL       2
 #define GIMP_CRITICAL_RESPONSE_RESTART   3
 
-#define BUTTON1_TEXT _("Copy bug information")
-#define BUTTON2_TEXT _("Open bug tracker")
+#define BUTTON1_TEXT _("Copy Bug Information")
+#define BUTTON2_TEXT _("Open Bug Tracker")
+
 
 static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
@@ -60,6 +60,7 @@ static void    gimp_critical_dialog_response (GtkDialog   *dialog,
 
 static gboolean browser_open_url             (const gchar  *url,
                                               GError      **error);
+
 
 G_DEFINE_TYPE (GimpCriticalDialog, gimp_critical_dialog, GTK_TYPE_DIALOG)
 
@@ -97,17 +98,19 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
-  dialog->vbox = gtk_vbox_new (FALSE, 0);
+  dialog->vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog->vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->vbox, TRUE, TRUE, 0);
   gtk_widget_show (dialog->vbox);
 
   /* The error label. */
   dialog->top_label = gtk_label_new (NULL);
-  gtk_label_set_justify (GTK_LABEL (dialog->top_label), GTK_JUSTIFY_CENTER);
+  gtk_misc_set_alignment (GTK_MISC (dialog->top_label), 0.0, 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (dialog->top_label), PANGO_ELLIPSIZE_END);
   gtk_label_set_selectable (GTK_LABEL (dialog->top_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox),
-                      dialog->top_label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->top_label,
+                      FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();
   attr  = pango_attr_weight_new (PANGO_WEIGHT_SEMIBOLD);
@@ -124,30 +127,47 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
                           " \xe2\x80\xa2 %s\n"
                           " \xe2\x80\xa2 %s\n"
                           " \xe2\x80\xa2 %s\n"
-                          " \xe2\x80\xa2 %s\n\n"
-                          "%s",
+                          " \xe2\x80\xa2 %s",
                           _("To help us improve GIMP, you can report the bug with "
                             "these simple steps:"),
-                          _("Copy the bug information to clipboard by clicking: "),
+                          _("Copy the bug information to the clipboard by clicking: "),
                           BUTTON1_TEXT,
-                          _("Open our bug tracker in browser by clicking: "),
+                          _("Open our bug tracker in the browser by clicking: "),
                           BUTTON2_TEXT,
                           _("Create a login if you don't have one yet."),
                           _("Paste the clipboard text in a new bug report."),
                           _("Add relevant information in English in the bug report "
                             "explaining what you were doing when this error occurred."),
                           _("This error may have left GIMP in an inconsistent state. "
-                            "It is advised to save your work and restart GIMP."),
-                          _("Note: you can also close the dialog directly but reporting "
-                            "bugs is the best way to make your software awesome."));
+                            "It is advised to save your work and restart GIMP."));
   dialog->bottom_label = gtk_label_new (text);
   g_free (text);
+
+  gtk_misc_set_alignment (GTK_MISC (dialog->bottom_label), 0.0, 0.5);
   gtk_label_set_selectable (GTK_LABEL (dialog->bottom_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->bottom_label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->bottom_label,
+                      FALSE, FALSE, 0);
   gtk_widget_show (dialog->bottom_label);
+
+  widget = gtk_label_new (_("You can also close the dialog directly but "
+                            "reporting bugs is the best way to make your "
+                            "software awesome."));
+  gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, FALSE, FALSE, 0);
+
+  attrs = pango_attr_list_new ();
+  attr  = pango_attr_style_new (PANGO_STYLE_ITALIC);
+  pango_attr_list_insert (attrs, attr);
+  gtk_label_set_attributes (GTK_LABEL (widget), attrs);
+  pango_attr_list_unref (attrs);
+
+  gtk_widget_show (widget);
 
   /* Bug details for developers. */
   widget = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
+                                       GTK_SHADOW_IN);
+  gtk_widget_set_size_request (widget, -1, 200);
   gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, TRUE, TRUE, 0);
   gtk_widget_show (widget);
 
@@ -282,57 +302,59 @@ gimp_critical_dialog_response (GtkDialog *dialog,
   switch (response_id)
     {
     case GIMP_CRITICAL_RESPONSE_CLIPBOARD:
-        {
-          GtkClipboard  *clipboard;
+      {
+        GtkClipboard *clipboard;
 
-          clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
-                                                     GDK_SELECTION_CLIPBOARD);
-          if (clipboard)
-            {
-              GtkTextBuffer *buffer;
-              gchar         *text;
-              GtkTextIter    start;
-              GtkTextIter    end;
+        clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
+                                                   GDK_SELECTION_CLIPBOARD);
+        if (clipboard)
+          {
+            GtkTextBuffer *buffer;
+            gchar         *text;
+            GtkTextIter    start;
+            GtkTextIter    end;
 
-              buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
-              gtk_text_buffer_get_iter_at_offset (buffer, &start, 0);
-              gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
-              text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
-              gtk_clipboard_set_text (clipboard, text, -1);
-              g_free (text);
-            }
-        }
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
+            gtk_text_buffer_get_iter_at_offset (buffer, &start, 0);
+            gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
+            text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+            gtk_clipboard_set_text (clipboard, text, -1);
+            g_free (text);
+          }
+      }
       break;
+
     case GIMP_CRITICAL_RESPONSE_URL:
-        {
-          const gchar *url;
+      {
+        const gchar *url;
 
-          /* XXX Ideally I'd find a way to prefill the bug report
-           * through the URL or with POST data. But I could not find
-           * any. Anyway since we may soon ditch bugzilla to follow
-           * GNOME infrastructure changes, I don't want to waste too
-           * much time digging into it.
-           */
-          url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
-          browser_open_url (url, NULL);
-        }
+        /* XXX Ideally I'd find a way to prefill the bug report
+         * through the URL or with POST data. But I could not find
+         * any. Anyway since we may soon ditch bugzilla to follow
+         * GNOME infrastructure changes, I don't want to waste too
+         * much time digging into it.
+         */
+        url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
+        browser_open_url (url, NULL);
+      }
       break;
+
     case GIMP_CRITICAL_RESPONSE_RESTART:
-        {
-          gchar *args[2] = { critical->program , NULL };
+      {
+        gchar *args[2] = { critical->program , NULL };
 
 #ifndef G_OS_WIN32
-          /* It is unneeded to kill the process on Win32. This was run
-           * as an async call and the main process should already be
-           * dead by now.
-           */
-          if (critical->pid > 0)
-            kill ((pid_t ) critical->pid, SIGINT);
+        /* It is unneeded to kill the process on Win32. This was run
+         * as an async call and the main process should already be
+         * dead by now.
+         */
+        if (critical->pid > 0)
+          kill ((pid_t ) critical->pid, SIGINT);
 #endif
-          if (critical->program)
-            g_spawn_async (NULL, args, NULL, G_SPAWN_DEFAULT,
-                           NULL, NULL, NULL, NULL);
-        }
+        if (critical->program)
+          g_spawn_async (NULL, args, NULL, G_SPAWN_DEFAULT,
+                         NULL, NULL, NULL, NULL);
+      }
       /* Fall through. */
     case GTK_RESPONSE_DELETE_EVENT:
     case GTK_RESPONSE_CLOSE:
@@ -411,26 +433,22 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
        * if it fails, one may corrupt files).
        */
       text = g_strdup_printf ("%s\n"
-                              " \xe2\x80\xa2 %s %s\n"
-                              " \xe2\x80\xa2 %s %s\n"
+                              " \xe2\x80\xa2 %s \"%s\"\n"
+                              " \xe2\x80\xa2 %s \"%s\"\n"
                               " \xe2\x80\xa2 %s\n"
                               " \xe2\x80\xa2 %s\n"
-                              " \xe2\x80\xa2 %s\n\n"
-                              "%s",
+                              " \xe2\x80\xa2 %s",
                               _("To help us improve GIMP, you can report the bug with "
                                 "these simple steps:"),
-                              _("Copy the bug information to clipboard by clicking: "),
+                              _("Copy the bug information to the clipboard by clicking: "),
                               BUTTON1_TEXT,
-                              _("Open our bug tracker in browser by clicking: "),
+                              _("Open our bug tracker in the browser by clicking: "),
                               BUTTON2_TEXT,
                               _("Create a login if you don't have one yet."),
                               _("Paste the clipboard text in a new bug report."),
                               _("Add relevant information in English in the bug report "
-                                "explaining what you were doing when this error occurred."),
-                              _("Note: you can also close the dialog directly but reporting "
-                                "bugs is the best way to make your software awesome."));
-      gtk_label_set_text (GTK_LABEL (critical->bottom_label),
-                          text);
+                                "explaining what you were doing when this error occurred."));
+      gtk_label_set_text (GTK_LABEL (critical->bottom_label), text);
       g_free (text);
     }
 
