@@ -39,8 +39,6 @@ struct _GimpCriticalDialog
 {
   GtkDialog        parent_instance;
 
-  GtkWidget       *vbox;
-
   GtkWidget       *top_label;
   GtkWidget       *bottom_label;
   GtkWidget       *details;

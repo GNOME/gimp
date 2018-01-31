@@ -85,6 +85,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   PangoAttribute *attr;
   gchar          *text;
   gchar          *version;
+  GtkWidget      *vbox;
   GtkWidget      *widget;
   GtkTextBuffer  *buffer;
 
@@ -98,18 +99,18 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
-  dialog->vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->vbox), 6);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      dialog->vbox, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->vbox);
+                      vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   /* The error label. */
   dialog->top_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (dialog->top_label), 0.0, 0.5);
   gtk_label_set_ellipsize (GTK_LABEL (dialog->top_label), PANGO_ELLIPSIZE_END);
   gtk_label_set_selectable (GTK_LABEL (dialog->top_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->top_label,
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->top_label,
                       FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();
@@ -145,7 +146,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 
   gtk_misc_set_alignment (GTK_MISC (dialog->bottom_label), 0.0, 0.5);
   gtk_label_set_selectable (GTK_LABEL (dialog->bottom_label), TRUE);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), dialog->bottom_label,
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->bottom_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (dialog->bottom_label);
 
@@ -153,7 +154,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
                             "reporting bugs is the best way to make your "
                             "software awesome."));
   gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();
   attr  = pango_attr_style_new (PANGO_STYLE_ITALIC);
@@ -168,7 +169,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
                                        GTK_SHADOW_IN);
   gtk_widget_set_size_request (widget, -1, 200);
-  gtk_box_pack_start (GTK_BOX (dialog->vbox), widget, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), widget, TRUE, TRUE, 0);
   gtk_widget_show (widget);
 
   buffer = gtk_text_buffer_new (NULL);
