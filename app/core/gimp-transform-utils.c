@@ -551,6 +551,18 @@ gimp_transform_polygon_is_convex (gdouble x1,
   return (z1 * z2 > 0) && (z3 * z4 > 0);
 }
 
+/* transforms the polygon or polyline, whose vertices are given by 'vertices',
+ * by 'matrix', performing clipping by the near plane.  'closed' indicates
+ * whether the vertices represent a polygon ('closed == TRUE') or a polyline
+ * ('closed == FALSE').
+ *
+ * returns the transformed vertices in 't_vertices', and their count in
+ * 'n_t_vertices'.  the minimal possible number of transformed vertices is 0,
+ * which happens when the entire input is clipped.  in general, the maximal
+ * possible number of transformed vertices is '3 * n_vertices / 2' (rounded
+ * down), however, for convex polygons the number is 'n_vertices + 1', and for
+ * a single line segment the number is 2.
+ */
 void
 gimp_transform_polygon (const GimpMatrix3 *matrix,
                         const GimpVector2 *vertices,
