@@ -89,8 +89,8 @@ void       gimp_transform_matrix_perspective   (GimpMatrix3         *matrix,
                                                 gdouble              t_x4,
                                                 gdouble              t_y4);
 gboolean   gimp_transform_matrix_generic       (GimpMatrix3         *matrix,
-                                                const GimpVector2   *input_points,
-                                                const GimpVector2   *output_points);
+                                                const GimpVector2    input_points[4],
+                                                const GimpVector2    output_points[4]);
 
 gboolean   gimp_transform_polygon_is_convex    (gdouble              x1,
                                                 gdouble              y1,

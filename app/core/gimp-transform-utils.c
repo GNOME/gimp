@@ -424,19 +424,30 @@ mod_gauss (gdouble matrix[],
   return TRUE;
 }
 
+/* multiplies 'matrix' by the matrix that transforms a set of 4 'input_points'
+ * to corresponding 'output_points', if such matrix exists, and is valid (i.e.,
+ * keeps the output points in front of the camera).
+ *
+ * returns TRUE if successful.
+ */
 gboolean
 gimp_transform_matrix_generic (GimpMatrix3       *matrix,
-                               const GimpVector2 *input_points,
-                               const GimpVector2 *output_points)
+                               const GimpVector2  input_points[4],
+                               const GimpVector2  output_points[4])
 {
   GimpMatrix3 trafo;
   gdouble     coeff[8 * 9];
+  gboolean    negative;
   gint        i;
 
   g_return_val_if_fail (matrix != NULL, FALSE);
   g_return_val_if_fail (input_points != NULL, FALSE);
   g_return_val_if_fail (output_points != NULL, FALSE);
 
+  /* find the matrix that transforms 'input_points' to 'output_points', whose
+   * (3, 3) coeffcient is 1, by solving a system of linear equations whose
+   * solution is the remaining 8 coefficients.
+   */
   for (i = 0; i < 4; i++)
     {
       coeff[i * 9 + 0] = input_points[i].x;
@@ -460,22 +471,55 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
       coeff[(i + 4) * 9 + 8] =                      output_points[i].y;
     }
 
+  /* if there is no solution, bail */
   if (! mod_gauss (coeff, (gdouble *) trafo.coeff, 8))
     return FALSE;
 
   trafo.coeff[2][2] = 1.0;
 
-  gimp_matrix3_mult (&trafo, matrix);
-
+  /* make sure that none of the input points maps to a point at infinity, and
+   * that all output points are on the same side of the camera.
+   */
   for (i = 0; i < 4; i++)
     {
-      gdouble w = matrix->coeff[2][0] * input_points[i].x +
-                  matrix->coeff[2][1] * input_points[i].y +
-                  matrix->coeff[2][2];
+      gdouble  w;
+      gboolean neg;
 
-      if (w <= EPSILON)
+      w = trafo.coeff[2][0] * input_points[i].x +
+          trafo.coeff[2][1] * input_points[i].y +
+          trafo.coeff[2][2];
+
+      if (fabs (w) <= EPSILON)
+        return FALSE;
+
+      neg = (w < 0.0);
+
+      if (i == 0)
+        negative = neg;
+      else if (neg != negative)
         return FALSE;
     }
+
+  /* if the output points are all behind the camera, negate the matrix, which
+   * would map the input points to the corresponding points in front of the
+   * camera.
+   */
+  if (negative)
+    {
+      gint r;
+      gint c;
+
+      for (r = 0; r < 3; r++)
+        {
+          for (c = 0; c < 3; c++)
+            {
+              trafo.coeff[r][c] = -trafo.coeff[r][c];
+            }
+        }
+    }
+
+  /* append the transformation to 'matrix' */
+  gimp_matrix3_mult (&trafo, matrix);
 
   return TRUE;
 }
