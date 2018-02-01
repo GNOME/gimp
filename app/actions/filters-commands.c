@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-filter-history.h"
+#include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 #include "core/gimpsettings.h"
 
@@ -61,18 +62,19 @@ filters_apply_cmd_callback (GtkAction   *action,
                             const gchar *operation_str,
                             gpointer     data)
 {
-  GimpDisplay   *display;
+  GimpImage     *image;
+  GimpDrawable  *drawable;
   gchar         *operation;
   GimpObject    *settings;
   GimpProcedure *procedure;
-  return_if_no_display (display, data);
+  return_if_no_drawable (image, drawable, data);
 
-  operation = filters_parse_operation (action_data_get_gimp (data),
+  operation = filters_parse_operation (image->gimp,
                                        operation_str,
                                        gtk_action_get_icon_name (action),
                                        &settings);
 
-  procedure = gimp_gegl_procedure_new (action_data_get_gimp (data),
+  procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_NONINTERACTIVE, settings,
                                        operation,
                                        gtk_action_get_name (action),
@@ -87,7 +89,7 @@ filters_apply_cmd_callback (GtkAction   *action,
   if (settings)
     g_object_unref (settings);
 
-  gimp_filter_history_add (action_data_get_gimp (data), procedure);
+  gimp_filter_history_add (image->gimp, procedure);
   filters_history_cmd_callback (NULL, procedure, data);
 
   g_object_unref (procedure);
@@ -98,11 +100,12 @@ filters_apply_interactive_cmd_callback (GtkAction   *action,
                                         const gchar *operation,
                                         gpointer     data)
 {
-  GimpDisplay   *display;
+  GimpImage     *image;
+  GimpDrawable  *drawable;
   GimpProcedure *procedure;
-  return_if_no_display (display, data);
+  return_if_no_drawable (image, drawable, data);
 
-  procedure = gimp_gegl_procedure_new (action_data_get_gimp (data),
+  procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_INTERACTIVE, NULL,
                                        operation,
                                        gtk_action_get_name (action),
@@ -112,7 +115,7 @@ filters_apply_interactive_cmd_callback (GtkAction   *action,
                                        g_object_get_qdata (G_OBJECT (action),
                                                            GIMP_HELP_ID));
 
-  gimp_filter_history_add (action_data_get_gimp (data), procedure);
+  gimp_filter_history_add (image->gimp, procedure);
   filters_history_cmd_callback (NULL, procedure, data);
 
   g_object_unref (procedure);
@@ -123,16 +126,18 @@ filters_repeat_cmd_callback (GtkAction *action,
                              gint       value,
                              gpointer   data)
 {
-  Gimp          *gimp;
+  GimpImage     *image;
+  GimpDrawable  *drawable;
   GimpDisplay   *display;
   GimpProcedure *procedure;
-  return_if_no_gimp (gimp, data);
+  return_if_no_drawable (image, drawable, data);
   return_if_no_display (display, data);
 
-  procedure = gimp_filter_history_nth (gimp, 0);
+  procedure = gimp_filter_history_nth (image->gimp, 0);
 
   if (procedure)
-    filters_run_procedure (gimp, display, procedure, (GimpRunMode) value);
+    filters_run_procedure (image->gimp, display, procedure,
+                           (GimpRunMode) value);
 }
 
 void

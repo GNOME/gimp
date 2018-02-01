@@ -914,6 +914,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-saturation",              writable && !gray);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-sepia",                   writable && !gray);
+  SET_SENSITIVE ("filters-shadows-highlights",      writable);
   SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-sinus",                   writable);
   SET_SENSITIVE ("filters-slic",                    writable);
