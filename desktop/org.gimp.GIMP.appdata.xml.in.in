@@ -119,22 +119,23 @@
 
     <release version="2.9.8" date="2017-12-12" type="development">
       <description>
-        <p>Newly released GIMP 2.9.8 introduces on-canvas gradient
+        <_p>GIMP 2.9.8 introduces on-canvas gradient
         editing and various enhancements while focusing on bugfixing
-        and stability.</p>
+        and stability.</_p>
         <ul>
-          <li>On-canvas gradient editing</li>
-          <li>Notification when an image is over/underexposed</li>
-          <li>Better and faster color management</li>
-          <li>Support for color picker and screenshots in Wayland on KDE Plasma</li>
-          <li>Paste in place feature</li>
-          <li>Many usability improvements</li>
-          <li>Manual can be displayed in the user's preferred language</li>
-          <li>Improvements for the Wavelet Decompose filter</li>
-          <li>Improved compatibility with Photoshop .psd files,
-          password-protected PDF support added and new support of HGT format</li>
+          <_li>On-canvas gradient editing</_li>
+          <_li>Notification when an image is over/underexposed</_li>
+          <_li>Better and faster color management</_li>
+          <_li>Support for color picker and screenshots in Wayland on KDE Plasma</_li>
+          <_li>Paste in place feature</_li>
+          <_li>Many usability improvements</_li>
+          <_li>Manual can be displayed in the user's preferred language</_li>
+          <_li>Improvements for the Wavelet Decompose filter</_li>
+          <_li>Improved compatibility with Photoshop .psd files</_li>
+          <_li>New support for password-protected PDF</_li>
+          <_li>New support for HGT format (Digital Elevation Model data)</_li>
         </ul>
-        <p>For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</p>
+        <_p>For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</_p>
       </description>
     </release>
     <release version="2.9.6" date="2017-08-24" type="development" />
