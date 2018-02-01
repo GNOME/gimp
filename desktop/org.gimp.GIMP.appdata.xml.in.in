@@ -116,8 +116,12 @@
       </description>
     </release>
     -->
-    <release version="2.9.8" date="2017-12-12">
+
+    <release version="2.9.8" date="2017-12-12" type="development">
       <description>
+        <p>Newly released GIMP 2.9.8 introduces on-canvas gradient
+        editing and various enhancements while focusing on bugfixing
+        and stability.</p>
         <ul>
           <li>On-canvas gradient editing</li>
           <li>Notification when an image is over/underexposed</li>
@@ -127,11 +131,16 @@
           <li>Many usability improvements</li>
           <li>Manual can be displayed in the user's preferred language</li>
           <li>Improvements for the Wavelet Decompose filter</li>
-          <li>Improved compatibility with Photoshop .psd files</li>
+          <li>Improved compatibility with Photoshop .psd files,
+          password-protected PDF support added and new support of HGT format</li>
         </ul>
         <p>For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</p>
       </description>
     </release>
+    <release version="2.9.6" date="2017-08-24" type="development" />
+    <release version="2.9.4" date="2016-07-13" type="development" />
+    <release version="2.9.2" date="2015-11-27" type="development" />
+
     <release version="2.8.22" date="2017-05-11"/>
     <release version="2.8.20" date="2017-02-01"/>
     <release version="2.8.18" date="2016-07-14"/>
