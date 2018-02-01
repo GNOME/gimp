@@ -155,6 +155,51 @@ gimp_coords_interpolate_bezier_internal (const GimpCoords  bezier_pt[4],
 
 
 /*
+ * Returns the position and/or velocity of a Bezier curve at time 't'.
+ */
+
+void
+gimp_coords_interpolate_bezier_at (const GimpCoords  bezier_pt[4],
+                                   gdouble           t,
+                                   GimpCoords       *position,
+                                   GimpCoords       *velocity)
+{
+  gdouble u = 1.0 - t;
+
+  g_return_if_fail (bezier_pt != NULL);
+
+  if (position)
+    {
+      GimpCoords a;
+      GimpCoords b;
+
+      gimp_coords_mix (      u * u * u, &bezier_pt[0],
+                       3.0 * u * u * t, &bezier_pt[1],
+                                        &a);
+      gimp_coords_mix (3.0 * u * t * t, &bezier_pt[2],
+                             t * t * t, &bezier_pt[3],
+                                        &b);
+
+      gimp_coords_add (&a, &b, position);
+    }
+
+  if (velocity)
+    {
+      GimpCoords a;
+      GimpCoords b;
+
+      gimp_coords_mix (-3.0 * u * u,             &bezier_pt[0],
+                        3.0 * (u - 2.0 * t) * u, &bezier_pt[1],
+                                                 &a);
+      gimp_coords_mix (-3.0 * (t - 2.0 * u) * t, &bezier_pt[2],
+                        3.0 * t * t,             &bezier_pt[3],
+                                                 &b);
+
+      gimp_coords_add (&a, &b, velocity);
+    }
+}
+
+/*
  * a helper function that determines if a bezier segment is "straight
  * enough" to be approximated by a line.
  *
