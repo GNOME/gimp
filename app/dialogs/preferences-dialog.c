@@ -1236,33 +1236,36 @@ prefs_dialog_new (Gimp       *gimp,
    */
 #ifndef G_OS_WIN32
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  /* TODO: icon needed. */
-                                  "gimp-prefs-debugging",
+                                  "gimp-wilber-eek", /* TODO: icon needed. */
                                   _("Debugging"),
                                   _("Debugging"),
                                   GIMP_HELP_PREFS_DEBUGGING,
                                   NULL,
                                   &top_iter);
+
   hbox = g_object_new (GIMP_TYPE_HINT_BOX,
                        "icon-name", GIMP_ICON_DIALOG_WARNING,
-                       "hint",      _("We hope you will never need these settings, "
-                                      "but as any software, bugs and crash can occur. "
-                                      "If it happens, you can help us by reporting bugs."),
+                       "hint",      _("We hope you will never need these "
+                                      "settings, but as all software, GIMP "
+                                      "has bugs, and crashes can occur. If it "
+                                      "happens, you can help us by reporting "
+                                      "bugs."),
                         NULL);
-  gtk_widget_show (hbox);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  vbox2 = prefs_frame_new (_("Bug reporting"),
+  vbox2 = prefs_frame_new (_("Bug Reporting"),
                            GTK_CONTAINER (vbox), FALSE);
 
   button = prefs_check_button_add (object, "generate-backtrace",
-                                   _("Try generating debug data for bug reporting when appropriate."),
+                                   _("Try generating debug data for bug reporting when appropriate"),
                                    GTK_BOX (vbox2));
   gtk_widget_set_sensitive (button, FALSE);
 
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                              _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
   g_signal_connect (button, "notify::sensitive",
                     G_CALLBACK (prefs_notify_sensitive_debug),
                     hbox);
