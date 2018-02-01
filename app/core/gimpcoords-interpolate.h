@@ -20,26 +20,17 @@
 #ifndef __GIMP_COORDS_INTERPOLATE_H__
 #define __GIMP_COORDS_INTERPOLATE_H__
 
-void      gimp_coords_interpolate_bezier  (const GimpCoords bezier_pt1,
-                                           const GimpCoords bezier_pt2,
-                                           const GimpCoords bezier_pt3,
-                                           const GimpCoords bezier_pt4,
-                                           gdouble          precision,
-                                           GArray           **ret_coords,
-                                           GArray           **ret_params);
+void       gimp_coords_interpolate_bezier  (const GimpCoords  bezier_pt[4],
+                                            gdouble           precision,
+                                            GArray           *ret_coords,
+                                            GArray           *ret_params);
 
-gboolean  gimp_coords_bezier_is_straight  (const GimpCoords bezier_pt1,
-                                           const GimpCoords bezier_pt2,
-                                           const GimpCoords bezier_pt3,
-                                           const GimpCoords bezier_pt4,
-                                           gdouble          precision);
+gboolean   gimp_coords_bezier_is_straight  (const GimpCoords  bezier_pt[4],
+                                            gdouble           precision);
 
-void      gimp_coords_interpolate_catmull (const GimpCoords catmul_pt1,
-                                           const GimpCoords catmul_pt2,
-                                           const GimpCoords catmul_pt3,
-                                           const GimpCoords catmul_pt4,
-                                           gdouble          precision,
-                                           GArray           **ret_coords,
-                                           GArray           **ret_params);
+void       gimp_coords_interpolate_catmull (const GimpCoords  catmull_pt[4],
+                                            gdouble           precision,
+                                            GArray           *ret_coords,
+                                            GArray           *ret_params);
 
 #endif /* __GIMP_COORDS_INTERPOLATE_H__ */

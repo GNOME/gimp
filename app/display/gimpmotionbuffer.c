@@ -540,24 +540,22 @@ static void
 gimp_motion_buffer_interpolate_stroke (GimpMotionBuffer *buffer,
                                        GimpCoords       *coords)
 {
-  GArray *ret_coords;
-  gint    i = buffer->event_history->len - 1;
+  GimpCoords  catmull[4];
+  GArray     *ret_coords;
+  gint        i = buffer->event_history->len - 1;
 
   /* Note that there must be exactly one event in buffer or bad things
    * can happen. This must never get called under other circumstances.
    */
   ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
 
-  gimp_coords_interpolate_catmull (g_array_index (buffer->event_history,
-                                                  GimpCoords, i - 1),
-                                   g_array_index (buffer->event_history,
-                                                  GimpCoords, i),
-                                   g_array_index (buffer->event_queue,
-                                                  GimpCoords, 0),
-                                   *coords,
-                                   EVENT_FILL_PRECISION / 2,
-                                   &ret_coords,
-                                   NULL);
+  catmull[0] = g_array_index (buffer->event_history, GimpCoords, i - 1);
+  catmull[1] = g_array_index (buffer->event_history, GimpCoords, i);
+  catmull[2] = g_array_index (buffer->event_queue,   GimpCoords, 0);
+  catmull[3] = *coords;
+
+  gimp_coords_interpolate_catmull (catmull, EVENT_FILL_PRECISION / 2,
+                                   ret_coords, NULL);
 
   /* Push the last actual event in history */
   gimp_motion_buffer_push_event_history (buffer,

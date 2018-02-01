@@ -683,13 +683,9 @@ gimp_bezier_stroke_segment_nearest_point_get (const GimpCoords *beziercoords,
   gimp_coords_difference (&beziercoords[1], &beziercoords[0], &point1);
   gimp_coords_difference (&beziercoords[3], &beziercoords[2], &point2);
 
-  if (!depth || (gimp_coords_bezier_is_straight (beziercoords[0],
-                                                 beziercoords[1],
-                                                 beziercoords[2],
-                                                 beziercoords[3],
-                                                 precision)
-                 && gimp_coords_length_squared (&point1) < precision
-                 && gimp_coords_length_squared (&point2) < precision))
+  if (! depth || (gimp_coords_bezier_is_straight (beziercoords, precision) &&
+                  gimp_coords_length_squared (&point1) < precision         &&
+                  gimp_coords_length_squared (&point2) < precision))
     {
       GimpCoords line, dcoord;
       gdouble    length2, scalar;
@@ -920,12 +916,8 @@ gimp_bezier_stroke_segment_nearest_tangent_get (const GimpCoords *beziercoords,
   g_printerr ("(%.2f, %.2f)-(%.2f,%.2f): ", coord1->x, coord1->y,
               coord2->x, coord2->y);
 
-  gimp_coords_interpolate_bezier (beziercoords[0],
-                                  beziercoords[1],
-                                  beziercoords[2],
-                                  beziercoords[3],
-                                  precision,
-                                  &ret_coords, &ret_params);
+  gimp_coords_interpolate_bezier (beziercoords, precision,
+                                  ret_coords, ret_params);
 
   g_return_val_if_fail (ret_coords->len == ret_params->len, -1.0);
 
@@ -1578,12 +1570,8 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
 
       if (count == 4)
         {
-          gimp_coords_interpolate_bezier (segmentcoords[0],
-                                          segmentcoords[1],
-                                          segmentcoords[2],
-                                          segmentcoords[3],
-                                          precision,
-                                          &ret_coords, NULL);
+          gimp_coords_interpolate_bezier (segmentcoords, precision,
+                                          ret_coords, NULL);
           segmentcoords[0] = segmentcoords[3];
           count = 1;
           need_endpoint = TRUE;
@@ -1603,12 +1591,8 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
       if (anchorlist)
         segmentcoords[3] = GIMP_ANCHOR (anchorlist->data)->position;
 
-      gimp_coords_interpolate_bezier (segmentcoords[0],
-                                      segmentcoords[1],
-                                      segmentcoords[2],
-                                      segmentcoords[3],
-                                      precision,
-                                      &ret_coords, NULL);
+      gimp_coords_interpolate_bezier (segmentcoords, precision,
+                                      ret_coords, NULL);
       need_endpoint = TRUE;
 
     }
