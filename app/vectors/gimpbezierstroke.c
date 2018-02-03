@@ -1779,13 +1779,19 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
       if (first_stroke && stroke->closed)
         {
           /* connect the first and last strokes */
+
+          /* remove the first anchor, which is a synthetic control point */
           gimp_anchor_free (g_queue_pop_head (first_stroke->anchors));
+          /* remove the last anchor, which is the same anchor point as the
+           * first anchor
+           */
           gimp_anchor_free (g_queue_pop_tail (last_stroke->anchors));
 
           if (first_stroke == last_stroke)
             {
-              /* the result is a single stroke.  remove the superfluous
-               * anchors, and close the stroke.
+              /* the result is a single stroke.  move the last anchor, which is
+               * an orphan control point, to the front, to fill in the removed
+               * control point of the first anchor, and close the stroke.
                */
               g_queue_push_head (first_stroke->anchors,
                                  g_queue_pop_tail (first_stroke->anchors));

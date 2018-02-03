@@ -937,8 +937,8 @@ polynomial_odd_roots (const gdouble *poly,
  * clipped segments is 2.
  *
  * if the first clipped segment is an initial segment of 'bezier', sets
- * '*start_in' to TRUE, otherwise to FALSE.  if the last transformed segment is
- * a final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
+ * '*start_in' to TRUE, otherwise to FALSE.  if the last clipped segment is a
+ * final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
  *
  * 'c_bezier' may not alias 'bezier'.
  */
