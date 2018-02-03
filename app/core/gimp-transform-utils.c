@@ -24,6 +24,7 @@
 #include "core-types.h"
 
 #include "gimp-transform-utils.h"
+#include "gimpcoords.h"
 
 
 #define EPSILON 1e-6
@@ -561,7 +562,11 @@ gimp_transform_polygon_is_convex (gdouble x1,
  * which happens when the entire input is clipped.  in general, the maximal
  * possible number of transformed vertices is '3 * n_vertices / 2' (rounded
  * down), however, for convex polygons the number is 'n_vertices + 1', and for
- * a single line segment the number is 2.
+ * a single line segment ('n_vertices == 2' and 'closed == FALSE') the number
+ * is 2.
+ *
+ * 't_vertices' may not alias 'vertices', except when transforming a single
+ * line segment.
  */
 void
 gimp_transform_polygon (const GimpMatrix3 *matrix,
@@ -631,6 +636,95 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
               t_vertices[(*n_t_vertices)++] =
                 (GimpVector2) { (curr.x + (next.x - curr.x) * ratio) / GIMP_TRANSFORM_NEAR_Z,
                                 (curr.y + (next.y - curr.y) * ratio) / GIMP_TRANSFORM_NEAR_Z };
+            }
+
+          curr         = next;
+          curr_visible = next_visible;
+        }
+    }
+}
+
+/* same as gimp_transform_polygon(), but using GimpCoords as the vertex type,
+ * instead of GimpVector2.
+ */
+void
+gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
+                               const GimpCoords  *vertices,
+                               gint               n_vertices,
+                               gboolean           closed,
+                               GimpCoords        *t_vertices,
+                               gint              *n_t_vertices)
+{
+  GimpVector3 curr;
+  gboolean    curr_visible;
+  gint        i;
+
+  g_return_if_fail (matrix != NULL);
+  g_return_if_fail (vertices != NULL);
+  g_return_if_fail (n_vertices >= 0);
+  g_return_if_fail (t_vertices != NULL);
+  g_return_if_fail (n_t_vertices != NULL);
+
+  *n_t_vertices = 0;
+
+  if (n_vertices == 0)
+    return;
+
+  curr.x = matrix->coeff[0][0] * vertices[0].x +
+           matrix->coeff[0][1] * vertices[0].y +
+           matrix->coeff[0][2];
+  curr.y = matrix->coeff[1][0] * vertices[0].x +
+           matrix->coeff[1][1] * vertices[0].y +
+           matrix->coeff[1][2];
+  curr.z = matrix->coeff[2][0] * vertices[0].x +
+           matrix->coeff[2][1] * vertices[0].y +
+           matrix->coeff[2][2];
+
+  curr_visible = (curr.z >= GIMP_TRANSFORM_NEAR_Z);
+
+  for (i = 0; i < n_vertices; i++)
+    {
+      if (curr_visible)
+        {
+          t_vertices[*n_t_vertices]   = vertices[i];
+          t_vertices[*n_t_vertices].x = curr.x / curr.z;
+          t_vertices[*n_t_vertices].y = curr.y / curr.z;
+
+          (*n_t_vertices)++;
+        }
+
+      if (i < n_vertices - 1 || closed)
+        {
+          GimpVector3 next;
+          gboolean    next_visible;
+          gint        j = (i + 1) % n_vertices;
+
+          next.x = matrix->coeff[0][0] * vertices[j].x +
+                   matrix->coeff[0][1] * vertices[j].y +
+                   matrix->coeff[0][2];
+          next.y = matrix->coeff[1][0] * vertices[j].x +
+                   matrix->coeff[1][1] * vertices[j].y +
+                   matrix->coeff[1][2];
+          next.z = matrix->coeff[2][0] * vertices[j].x +
+                   matrix->coeff[2][1] * vertices[j].y +
+                   matrix->coeff[2][2];
+
+          next_visible = (next.z >= GIMP_TRANSFORM_NEAR_Z);
+
+          if (next_visible != curr_visible)
+            {
+              gdouble ratio = (curr.z - GIMP_TRANSFORM_NEAR_Z) / (curr.z - next.z);
+
+              gimp_coords_mix (1.0 - ratio, &vertices[i],
+                                     ratio, &vertices[j],
+                                            &t_vertices[*n_t_vertices]);
+
+              t_vertices[*n_t_vertices].x = (curr.x + (next.x - curr.x) * ratio) /
+                                             GIMP_TRANSFORM_NEAR_Z;
+              t_vertices[*n_t_vertices].y = (curr.y + (next.y - curr.y) * ratio) /
+                                             GIMP_TRANSFORM_NEAR_Z;
+
+              (*n_t_vertices)++;
             }
 
           curr         = next;

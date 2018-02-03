@@ -107,6 +107,12 @@ void       gimp_transform_polygon              (const GimpMatrix3   *matrix,
                                                 gboolean             closed,
                                                 GimpVector2         *t_vertices,
                                                 gint                *n_t_vertices);
+void       gimp_transform_polygon_coords       (const GimpMatrix3   *matrix,
+                                                const GimpCoords    *vertices,
+                                                gint                 n_vertices,
+                                                gboolean             closed,
+                                                GimpCoords          *t_vertices,
+                                                gint                *n_t_vertices);
 
 
 #endif  /*  __GIMP_TRANSFORM_UTILS_H__  */
