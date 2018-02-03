@@ -559,7 +559,7 @@ gimp_vectors_flip (GimpItem            *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, &matrix);
+      gimp_stroke_transform (stroke, &matrix, NULL);
     }
 
   gimp_vectors_thaw (vectors);
@@ -590,7 +590,7 @@ gimp_vectors_rotate (GimpItem         *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, &matrix);
+      gimp_stroke_transform (stroke, &matrix, NULL);
     }
 
   gimp_vectors_thaw (vectors);
@@ -607,6 +607,7 @@ gimp_vectors_transform (GimpItem               *item,
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   GimpMatrix3  local_matrix;
+  GQueue       strokes;
   GList       *list;
 
   gimp_vectors_freeze (vectors);
@@ -620,12 +621,33 @@ gimp_vectors_transform (GimpItem               *item,
   if (direction == GIMP_TRANSFORM_BACKWARD)
     gimp_matrix3_invert (&local_matrix);
 
-  for (list = vectors->strokes->head; list; list = g_list_next (list))
+  g_queue_init (&strokes);
+
+  while (! g_queue_is_empty (vectors->strokes))
+    {
+      GimpStroke *stroke = g_queue_peek_head (vectors->strokes);
+
+      g_object_ref (stroke);
+
+      gimp_vectors_stroke_remove (vectors, stroke);
+
+      gimp_stroke_transform (stroke, &local_matrix, &strokes);
+
+      g_object_unref (stroke);
+    }
+
+  vectors->last_stroke_ID = 0;
+
+  for (list = strokes.head; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, &local_matrix);
+      gimp_vectors_stroke_add (vectors, stroke);
+
+      g_object_unref (stroke);
     }
+
+  g_queue_clear (&strokes);
 
   gimp_vectors_thaw (vectors);
 }

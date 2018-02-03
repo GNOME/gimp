@@ -169,7 +169,8 @@ struct _GimpStrokeClass
                                           gdouble                x2,
                                           gdouble                y2);
   void          (* transform)            (GimpStroke            *stroke,
-                                          const GimpMatrix3     *matrix);
+                                          const GimpMatrix3     *matrix,
+                                          GQueue                *ret_strokes);
 
   GList       * (* get_draw_anchors)     (GimpStroke            *stroke);
   GList       * (* get_draw_controls)    (GimpStroke            *stroke);
@@ -330,7 +331,8 @@ void         gimp_stroke_flip_free            (GimpStroke            *stroke,
                                                gdouble                x2,
                                                gdouble                y2);
 void         gimp_stroke_transform            (GimpStroke            *stroke,
-                                               const GimpMatrix3     *matrix);
+                                               const GimpMatrix3     *matrix,
+                                               GQueue                *ret_strokes);
 
 
 GList      * gimp_stroke_get_draw_anchors     (GimpStroke            *stroke);

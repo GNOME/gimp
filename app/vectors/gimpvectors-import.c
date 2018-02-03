@@ -486,7 +486,7 @@ svg_parser_end_element (GMarkupParseContext  *context,
 
               for (list = path->strokes; list; list = list->next)
                 gimp_stroke_transform (GIMP_STROKE (list->data),
-                                       handler->transform);
+                                       handler->transform, NULL);
             }
 
           g_slice_free (GimpMatrix3, handler->transform);

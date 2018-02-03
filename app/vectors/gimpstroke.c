@@ -153,7 +153,8 @@ static void         gimp_stroke_real_flip_free       (GimpStroke       *stroke,
                                                       gdouble           x2,
                                                       gdouble           y2);
 static void         gimp_stroke_real_transform       (GimpStroke        *stroke,
-                                                      const GimpMatrix3 *matrix);
+                                                      const GimpMatrix3 *matrix,
+                                                      GQueue            *ret_strokes);
 
 static GList    * gimp_stroke_real_get_draw_anchors  (GimpStroke       *stroke);
 static GList    * gimp_stroke_real_get_draw_controls (GimpStroke       *stroke);
@@ -1098,7 +1099,7 @@ gimp_stroke_real_rotate (GimpStroke *stroke,
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_rotate_center (&matrix, center_x, center_y, angle);
 
-  gimp_stroke_transform (stroke, &matrix);
+  gimp_stroke_transform (stroke, &matrix, NULL);
 }
 
 void
@@ -1120,7 +1121,7 @@ gimp_stroke_real_flip (GimpStroke          *stroke,
 
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_flip (&matrix, flip_type, axis);
-  gimp_stroke_transform (stroke, &matrix);
+  gimp_stroke_transform (stroke, &matrix, NULL);
 }
 
 void
@@ -1148,21 +1149,34 @@ gimp_stroke_real_flip_free (GimpStroke *stroke,
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_flip_free (&matrix, x1, y1, x2, y2);
 
-  gimp_stroke_transform (stroke, &matrix);
+  gimp_stroke_transform (stroke, &matrix, NULL);
 }
 
+/* transforms 'stroke' by 'matrix'.  due to clipping, the transformation may
+ * result in multiple strokes.
+ *
+ * if 'ret_strokes' is not NULL, the transformed strokes are appended to the
+ * queue, and 'stroke' is left in an unspecified state.  one of the resulting
+ * strokes may alias 'stroke'.
+ *
+ * if 'ret_strokes' is NULL, the transformation is performed in-place.  if the
+ * transformation results in multiple strokes (which, atm, can only happen for
+ * non-affine transformation), the result is undefined.
+ */
 void
 gimp_stroke_transform (GimpStroke        *stroke,
-                       const GimpMatrix3 *matrix)
+                       const GimpMatrix3 *matrix,
+                       GQueue            *ret_strokes)
 {
   g_return_if_fail (GIMP_IS_STROKE (stroke));
 
-  GIMP_STROKE_GET_CLASS (stroke)->transform (stroke, matrix);
+  GIMP_STROKE_GET_CLASS (stroke)->transform (stroke, matrix, ret_strokes);
 }
 
 static void
 gimp_stroke_real_transform (GimpStroke        *stroke,
-                            const GimpMatrix3 *matrix)
+                            const GimpMatrix3 *matrix,
+                            GQueue            *ret_strokes)
 {
   GList *list;
 
@@ -1175,6 +1189,13 @@ gimp_stroke_real_transform (GimpStroke        *stroke,
                                     anchor->position.y,
                                     &anchor->position.x,
                                     &anchor->position.y);
+    }
+
+  if (ret_strokes)
+    {
+      stroke->ID = 0;
+
+      g_queue_push_tail (ret_strokes, g_object_ref (stroke));
     }
 }
 
