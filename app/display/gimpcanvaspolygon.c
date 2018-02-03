@@ -28,6 +28,7 @@
 
 #include "display-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpparamspecs.h"
 
 #include "gimpcanvaspolygon.h"
@@ -230,23 +231,23 @@ gimp_canvas_polygon_get_property (GObject    *object,
 
 static void
 gimp_canvas_polygon_transform (GimpCanvasItem *item,
-                               GimpVector2    *points)
+                               GimpVector2    *points,
+                               gint           *n_points)
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
   gint                      i;
 
   if (private->transform)
     {
-      for (i = 0; i < private->n_points; i++)
-        {
-          gdouble tx, ty;
+      gimp_transform_polygon (private->transform,
+                              private->points, private->n_points, FALSE,
+                              points, n_points);
 
-          gimp_matrix3_transform_point (private->transform,
-                                        private->points[i].x,
-                                        private->points[i].y,
-                                        &tx, &ty);
+      for (i = 0; i < *n_points; i++)
+        {
           gimp_canvas_item_transform_xy_f (item,
-                                           tx, ty,
+                                           points[i].x,
+                                           points[i].y,
                                            &points[i].x,
                                            &points[i].y);
 
@@ -267,6 +268,8 @@ gimp_canvas_polygon_transform (GimpCanvasItem *item,
           points[i].x = floor (points[i].x) + 0.5;
           points[i].y = floor (points[i].y) + 0.5;
         }
+
+      *n_points = private->n_points;
     }
 }
 
@@ -276,18 +279,31 @@ gimp_canvas_polygon_draw (GimpCanvasItem *item,
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
   GimpVector2              *points;
+  gint                      n_points;
   gint                      i;
 
   if (! private->points)
     return;
 
-  points = g_new0 (GimpVector2, private->n_points);
+  n_points = private->n_points;
 
-  gimp_canvas_polygon_transform (item, points);
+  if (private->transform)
+    n_points = 3 * n_points / 2;
+
+  points = g_new0 (GimpVector2, n_points);
+
+  gimp_canvas_polygon_transform (item, points, &n_points);
+
+  if (n_points < 2)
+    {
+      g_free (points);
+
+      return;
+    }
 
   cairo_move_to (cr, points[0].x, points[0].y);
 
-  for (i = 1; i < private->n_points; i++)
+  for (i = 1; i < n_points; i++)
     {
       cairo_line_to (cr, points[i].x, points[i].y);
     }
@@ -306,22 +322,35 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
   cairo_rectangle_int_t     rectangle;
   GimpVector2              *points;
+  gint                      n_points;
   gint                      x1, y1, x2, y2;
   gint                      i;
 
   if (! private->points)
     return NULL;
 
-  points = g_new0 (GimpVector2, private->n_points);
+  n_points = private->n_points;
 
-  gimp_canvas_polygon_transform (item, points);
+  if (private->transform)
+    n_points = 3 * n_points / 2;
+
+  points = g_new0 (GimpVector2, n_points);
+
+  gimp_canvas_polygon_transform (item, points, &n_points);
+
+  if (n_points < 2)
+    {
+      g_free (points);
+
+      return NULL;
+    }
 
   x1 = floor (points[0].x - 1.5);
   y1 = floor (points[0].y - 1.5);
   x2 = x1 + 3;
   y2 = y1 + 3;
 
-  for (i = 1; i < private->n_points; i++)
+  for (i = 1; i < n_points; i++)
     {
       gint x3 = floor (points[i].x - 1.5);
       gint y3 = floor (points[i].y - 1.5);
@@ -351,6 +380,7 @@ gimp_canvas_polygon_hit (GimpCanvasItem *item,
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
   GimpVector2              *points;
+  gint                      n_points;
   gdouble                   tx, ty;
   cairo_surface_t          *surface;
   cairo_t                  *cr;
@@ -362,9 +392,21 @@ gimp_canvas_polygon_hit (GimpCanvasItem *item,
 
   gimp_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
 
-  points = g_new0 (GimpVector2, private->n_points);
+  n_points = private->n_points;
 
-  gimp_canvas_polygon_transform (item, points);
+  if (private->transform)
+    n_points = 3 * n_points / 2;
+
+  points = g_new0 (GimpVector2, n_points);
+
+  gimp_canvas_polygon_transform (item, points, &n_points);
+
+  if (n_points < 2)
+    {
+      g_free (points);
+
+      return FALSE;
+    }
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
   cr = cairo_create (surface);
