@@ -42,6 +42,8 @@ struct _GimpMessageBox
   gint       repeat;
   GtkWidget *label[3];
   GtkWidget *image;
+
+  guint      idle_id;
 };
 
 struct _GimpMessageBoxClass

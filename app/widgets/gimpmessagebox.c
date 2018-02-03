@@ -73,6 +73,7 @@ static void   gimp_message_box_set_label_markup (GimpMessageBox *box,
                                                  const gchar    *format,
                                                  va_list         args) G_GNUC_PRINTF (3, 0);
 
+static gboolean gimp_message_box_update         (gpointer        data);
 
 G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_BOX)
 
@@ -144,6 +145,7 @@ gimp_message_box_init (GimpMessageBox *box)
 
   box->repeat   = 0;
   box->label[2] = NULL;
+  box->idle_id  = 0;
 }
 
 static void
@@ -184,6 +186,10 @@ static void
 gimp_message_box_finalize (GObject *object)
 {
   GimpMessageBox *box = GIMP_MESSAGE_BOX (object);
+
+  if (box->idle_id)
+    g_source_remove (box->idle_id);
+  box->idle_id = 0;
 
   if (box->icon_name)
     {
@@ -378,6 +384,40 @@ gimp_message_box_set_label_markup (GimpMessageBox *box,
     }
 }
 
+static gboolean
+gimp_message_box_update (gpointer data)
+{
+  GimpMessageBox *box = data;
+  gchar          *message;
+
+  box->idle_id = 0;
+
+  message = g_strdup_printf (ngettext ("Message repeated once.",
+                                       "Message repeated %d times.",
+                                       box->repeat),
+                             box->repeat);
+
+  if (box->label[2])
+    {
+      gtk_label_set_text (GTK_LABEL (box->label[2]), message);
+    }
+  else
+    {
+      GtkWidget *label = box->label[2] = gtk_label_new (message);
+
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
+                                 -1);
+      gtk_box_pack_end (GTK_BOX (box), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+    }
+
+  g_free (message);
+
+  return G_SOURCE_REMOVE;
+}
+
 /*  public functions  */
 
 GtkWidget *
@@ -433,34 +473,22 @@ gimp_message_box_set_markup (GimpMessageBox *box,
 gint
 gimp_message_box_repeat (GimpMessageBox *box)
 {
-  gchar *message;
-
   g_return_val_if_fail (GIMP_IS_MESSAGE_BOX (box), 0);
 
   box->repeat++;
 
-  message = g_strdup_printf (ngettext ("Message repeated once.",
-                                       "Message repeated %d times.",
-                                       box->repeat),
-                             box->repeat);
-
-  if (box->label[2])
+  if (box->idle_id == 0)
     {
-      gtk_label_set_text (GTK_LABEL (box->label[2]), message);
+      /* When a same message is repeated dozens of thousands of times in
+       * a short span of time, updating the GUI at each increment is
+       * extremely slow (like really really slow, your GUI gets stuck
+       * for 10 minutes). So let's just delay GUI update as a low
+       * priority idle task.
+       */
+      box->idle_id = g_idle_add_full (G_PRIORITY_LOW,
+                                      gimp_message_box_update,
+                                      box, NULL);
     }
-  else
-    {
-      GtkWidget *label = box->label[2] = gtk_label_new (message);
-
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gimp_label_set_attributes (GTK_LABEL (label),
-                                 PANGO_ATTR_STYLE, PANGO_STYLE_OBLIQUE,
-                                 -1);
-      gtk_box_pack_end (GTK_BOX (box), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-    }
-
-  g_free (message);
 
   return box->repeat;
 }
