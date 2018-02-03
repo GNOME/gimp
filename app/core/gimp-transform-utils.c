@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -25,6 +27,7 @@
 
 #include "gimp-transform-utils.h"
 #include "gimpcoords.h"
+#include "gimpcoords-interpolate.h"
 
 
 #define EPSILON 1e-6
@@ -730,5 +733,363 @@ gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
           curr         = next;
           curr_visible = next_visible;
         }
+    }
+}
+
+/* returns the value of the polynomial 'poly', of degree 'degree', at 'x'.  the
+ * coefficients of 'poly' should be specified in descending-degree order.
+ */
+static gdouble
+polynomial_eval (const gdouble *poly,
+                 gint           degree,
+                 gdouble        x)
+{
+  gdouble y = poly[0];
+  gint    i;
+
+  for (i = 1; i <= degree; i++)
+    y = y * x + poly[i];
+
+  return y;
+}
+
+/* derives the polynomial 'poly', of degree 'degree'.
+ *
+ * returns the derivative in 'result'.
+ */
+static void
+polynomial_derive (const gdouble *poly,
+                   gint           degree,
+                   gdouble       *result)
+{
+  while (degree)
+    *result++ = *poly++ * degree--;
+}
+
+/* finds the real odd-multiplicity root of the polynomial 'poly', of degree
+ * 'degree', inside the range '(x1, x2)'.
+ *
+ * returns TRUE if such a root exists, and stores its value in '*root'.
+ *
+ * 'poly' shall be monotonic in the range '(x1, x2)'.
+ */
+static gboolean
+polynomial_odd_root (const gdouble *poly,
+                     gint           degree,
+                     gdouble        x1,
+                     gdouble        x2,
+                     gdouble       *root)
+{
+  gdouble y1;
+  gdouble y2;
+  gint    i;
+
+  y1 = polynomial_eval (poly, degree, x1);
+  y2 = polynomial_eval (poly, degree, x2);
+
+  if (y1 * y2 > -EPSILON)
+    {
+      /* the two endpoints have the same sign, or one of them is zero.  there's
+       * no root inside the range.
+       */
+      return FALSE;
+    }
+  else if (y1 > 0.0)
+    {
+      gdouble t;
+
+      /* if the first endpoint is positive, swap the endpoints, so that the
+       * first endpoint is always negative, and the second endpoint is always
+       * positive.
+       */
+
+      t  = x1;
+      x1 = x2;
+      x2 = t;
+    }
+
+  /* approximate the root using binary search */
+  for (i = 0; i < 53; i++)
+    {
+      gdouble x = (x1 + x2) / 2.0;
+      gdouble y = polynomial_eval (poly, degree, x);
+
+      if (y > 0.0)
+        x2 = x;
+      else
+        x1 = x;
+    }
+
+  *root = (x1 + x2) / 2.0;
+
+  return TRUE;
+}
+
+/* finds the real odd-multiplicity roots of the polynomial 'poly', of degree
+ * 'degree', inside the range '(x1, x2)'.
+ *
+ * returns the roots in 'roots', in ascending order, and their count in
+ * 'n_roots'.
+ */
+static void
+polynomial_odd_roots (const gdouble *poly,
+                      gint           degree,
+                      gdouble        x1,
+                      gdouble        x2,
+                      gdouble       *roots,
+                      gint          *n_roots)
+{
+  *n_roots = 0;
+
+  /* find the real degree of the polynomial (skip any leading coefficients that
+   * are 0)
+   */
+  for (; degree && fabs (*poly) < EPSILON; poly++, degree--);
+
+  #define ADD_ROOT(root) \
+    do \
+      { \
+        gdouble r = (root); \
+        \
+        if (r > x1 && r < x2) \
+          roots[(*n_roots)++] = r; \
+      } \
+    while (FALSE)
+
+  switch (degree)
+    {
+    /* constant case */
+    case 0:
+      break;
+
+    /* linear case */
+    case 1:
+      ADD_ROOT (-poly[1] / poly[0]);
+      break;
+
+    /* quadratic case */
+    case 2:
+      {
+        gdouble s = SQR (poly[1]) - 4 * poly[0] * poly[2];
+
+        if (s > EPSILON)
+          {
+            s = sqrt (s);
+
+            if (poly[0] < 0.0)
+              s = -s;
+
+            ADD_ROOT ((-poly[1] - s) / (2.0 * poly[0]));
+            ADD_ROOT ((-poly[1] + s) / (2.0 * poly[0]));
+          }
+
+        break;
+      }
+
+    /* general case */
+    default:
+      {
+        gdouble deriv[degree - 1];
+        gdouble deriv_roots[degree - 1];
+        gint    n_deriv_roots;
+        gdouble a;
+        gdouble b;
+        gint    i;
+
+        /* find the odd roots of the derivative, i.e., the local extrema of the
+         * polynomial
+         */
+        polynomial_derive (poly, degree, deriv);
+        polynomial_odd_roots (deriv, degree - 1, x1, x2,
+                              deriv_roots, &n_deriv_roots);
+
+        /* search for roots between each consecutive pair of extrema, including
+         * the endpoints
+         */
+        a = x1;
+
+        for (i = 0; i <= n_deriv_roots; i++)
+          {
+            if (i < n_deriv_roots)
+              b = deriv_roots[i];
+            else
+              b = x2;
+
+            *n_roots += polynomial_odd_root (poly, degree, a, b,
+                                             &roots[*n_roots]);
+
+            a = b;
+          }
+
+        break;
+      }
+    }
+
+  #undef ADD_ROOT
+}
+
+/* clips the cubic bezier segment, defined by the four control points 'bezier',
+ * to the halfplane 'ax + by + c >= 0'.
+ *
+ * returns the clipped set of bezier segments in 'c_bezier', and their count in
+ * 'n_c_bezier'.  the minimal possible number of clipped segments is 0, which
+ * happens when the entire segment is clipped.  the maximal possible number of
+ * clipped segments is 2.
+ *
+ * if the first clipped segment is an initial segment of 'bezier', sets
+ * '*start_in' to TRUE, otherwise to FALSE.  if the last transformed segment is
+ * a final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
+ *
+ * 'c_bezier' may not alias 'bezier'.
+ */
+static void
+clip_bezier (const GimpCoords  bezier[4],
+             gdouble           a,
+             gdouble           b,
+             gdouble           c,
+             GimpCoords        c_bezier[2][4],
+             gint             *n_c_bezier,
+             gboolean         *start_in,
+             gboolean         *end_in)
+{
+  gdouble dot[4];
+  gdouble poly[4];
+  gdouble roots[5];
+  gint    n_roots;
+  gint    n_positive;
+  gint    i;
+
+  n_positive = 0;
+
+  for (i = 0; i < 4; i++)
+    {
+      dot[i] = a * bezier[i].x + b * bezier[i].y + c;
+
+      n_positive += (dot[i] >= 0.0);
+    }
+
+  if (n_positive == 0)
+    {
+      /* all points are out -- the entire segment is out */
+
+      *n_c_bezier = 0;
+      *start_in   = FALSE;
+      *end_in     = FALSE;
+
+      return;
+    }
+  else if (n_positive == 4)
+    {
+      /* all points are in -- the entire segment is in */
+
+      memcpy (c_bezier[0], bezier, sizeof (GimpCoords[4]));
+
+      *n_c_bezier = 1;
+      *start_in   = TRUE;
+      *end_in     = TRUE;
+
+      return;
+    }
+
+  /* find the points of intersection of the segment with the 'ax + by + c = 0'
+   * line
+   */
+  poly[0] = dot[3] - 3.0 * dot[2] + 3.0 * dot[1] - dot[0];
+  poly[1] = 3.0 * (dot[2] - 2.0 * dot[1] + dot[0]);
+  poly[2] = 3.0 * (dot[1] - dot[0]);
+  poly[3] = dot[0];
+
+  roots[0] = 0.0;
+  polynomial_odd_roots (poly, 3, 0.0, 1.0, roots + 1, &n_roots);
+  roots[++n_roots] = 1.0;
+
+  /* construct the list of segments that are inside the halfplane */
+  *n_c_bezier = 0;
+  *start_in   = (polynomial_eval (poly, 3, roots[1] / 2.0) > 0.0);
+  *end_in     = (*start_in + n_roots + 1) % 2;
+
+  for (i = ! *start_in; i < n_roots; i += 2)
+    {
+      gdouble t0 = roots[i];
+      gdouble t1 = roots[i + 1];
+
+      gimp_coords_interpolate_bezier_at (bezier, t0,
+                                         &c_bezier[*n_c_bezier][0],
+                                         &c_bezier[*n_c_bezier][1]);
+      gimp_coords_interpolate_bezier_at (bezier, t1,
+                                         &c_bezier[*n_c_bezier][3],
+                                         &c_bezier[*n_c_bezier][2]);
+
+      gimp_coords_mix (1.0,             &c_bezier[*n_c_bezier][0],
+                       (t1 - t0) / 3.0, &c_bezier[*n_c_bezier][1],
+                       &c_bezier[*n_c_bezier][1]);
+      gimp_coords_mix (1.0,             &c_bezier[*n_c_bezier][3],
+                       (t0 - t1) / 3.0, &c_bezier[*n_c_bezier][2],
+                       &c_bezier[*n_c_bezier][2]);
+
+      (*n_c_bezier)++;
+    }
+}
+
+/* transforms the cubic bezier segment, defined by the four control points
+ * 'bezier', by 'matrix', performing clipping by the near plane.
+ *
+ * returns the transformed set of bezier segments in 't_bezier', and their
+ * count in 'n_t_bezier'.  the minimal possible number of transformed segments
+ * is 0, which happens when the entire segment is clipped.  the maximal
+ * possible number of transformed segments is 2.
+ *
+ * if the first transformed segment is an initial segment of 'bezier', sets
+ * '*start_in' to TRUE, otherwise to FALSE.  if the last transformed segment is
+ * a final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
+ *
+ * 't_bezier' may not alias 'bezier'.
+ */
+void
+gimp_transform_bezier_coords (const GimpMatrix3 *matrix,
+                              const GimpCoords   bezier[4],
+                              GimpCoords         t_bezier[2][4],
+                              gint              *n_t_bezier,
+                              gboolean          *start_in,
+                              gboolean          *end_in)
+{
+  gint i;
+
+  g_return_if_fail (matrix != NULL);
+  g_return_if_fail (bezier != NULL);
+  g_return_if_fail (t_bezier != NULL);
+  g_return_if_fail (n_t_bezier != NULL);
+  g_return_if_fail (start_in != NULL);
+  g_return_if_fail (end_in != NULL);
+
+  /* clip the segment to the near plane */
+  clip_bezier (bezier,
+               matrix->coeff[2][0],
+               matrix->coeff[2][1],
+               matrix->coeff[2][2] - GIMP_TRANSFORM_NEAR_Z,
+               t_bezier, n_t_bezier,
+               start_in, end_in);
+
+  /* transform the individual control points
+   *
+   * TODO:  a perspective-transformed bezier curve is not itself a bezier curve
+   * in general.  this is therefore only an approximation, in the non-affine
+   * case.  when the curve is highly nonlinear, we should subdivide it to avoid
+   * diverging too much from the real transformed curve.
+   */
+  for (i = 0; i < *n_t_bezier; i++)
+    {
+      gint n;
+
+      /* note that while the segments themselves are clipped to the near plane,
+       * their control points may still get transformed behind the camera.  we
+       * therefore clip the control points to the near plane as well, which is
+       * not too meaningful, but avoids erroneously transforming them behind
+       * the camera.
+       */
+      gimp_transform_polygon_coords (matrix, t_bezier[i], 2, FALSE,
+                                     t_bezier[i], &n);
+      gimp_transform_polygon_coords (matrix, t_bezier[i] + 2, 2, FALSE,
+                                     t_bezier[i] + 2, &n);
     }
 }

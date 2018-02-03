@@ -114,5 +114,12 @@ void       gimp_transform_polygon_coords       (const GimpMatrix3   *matrix,
                                                 GimpCoords          *t_vertices,
                                                 gint                *n_t_vertices);
 
+void       gimp_transform_bezier_coords        (const GimpMatrix3   *matrix,
+                                                const GimpCoords     bezier[4],
+                                                GimpCoords           t_bezier[2][4],
+                                                gint                *n_t_bezier,
+                                                gboolean            *start_in,
+                                                gboolean            *end_in);
+
 
 #endif  /*  __GIMP_TRANSFORM_UTILS_H__  */
