@@ -27,6 +27,7 @@
 
 #include "vectors-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpbezierdesc.h"
 #include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
@@ -134,6 +135,9 @@ static GArray *
                                             gboolean              *closed);
 static GimpBezierDesc *
     gimp_bezier_stroke_make_bezier         (GimpStroke            *stroke);
+static void gimp_bezier_stroke_transform   (GimpStroke            *stroke,
+                                            const GimpMatrix3     *matrix,
+                                            GQueue                *ret_strokes);
 
 static void gimp_bezier_stroke_finalize    (GObject               *object);
 
@@ -174,6 +178,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->connect_stroke       = gimp_bezier_stroke_connect_stroke;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
   stroke_class->make_bezier          = gimp_bezier_stroke_make_bezier;
+  stroke_class->transform            = gimp_bezier_stroke_transform;
 }
 
 static void
@@ -1611,6 +1616,207 @@ gimp_bezier_stroke_interpolate (GimpStroke *stroke,
 
   return ret_coords;
 }
+
+
+static void
+gimp_bezier_stroke_transform (GimpStroke        *stroke,
+                              const GimpMatrix3 *matrix,
+                              GQueue            *ret_strokes)
+{
+  GimpStroke *first_stroke = NULL;
+  GimpStroke *last_stroke  = NULL;
+  GList      *anchorlist;
+  GimpAnchor *anchor;
+  GimpCoords  segmentcoords[4];
+  GimpCoords  transformed[2][4];
+  gint        n_transformed;
+  gint        count;
+  gboolean    first;
+  gboolean    last;
+
+  /* if there's no need for clipping, use the default implementation */
+  if (! ret_strokes                   ||
+      gimp_matrix3_is_affine (matrix) ||
+      g_queue_is_empty (stroke->anchors))
+    {
+      GIMP_STROKE_CLASS (parent_class)->transform (stroke, matrix, ret_strokes);
+
+      return;
+    }
+
+  /* transform the individual segments */
+  count = 0;
+  first = TRUE;
+  last  = FALSE;
+
+  /* find the first non-control anchor */
+  for (anchorlist = stroke->anchors->head;
+       anchorlist && GIMP_ANCHOR (anchorlist->data)->type != GIMP_ANCHOR_ANCHOR;
+       anchorlist = g_list_next (anchorlist));
+
+  for ( ; anchorlist || stroke->closed; anchorlist = g_list_next (anchorlist))
+    {
+      /* wrap around if 'stroke' is closed, so that we transform the final
+       * segment
+       */
+      if (! anchorlist)
+        {
+          anchorlist = stroke->anchors->head;
+          last       = TRUE;
+        }
+
+      anchor = anchorlist->data;
+
+      segmentcoords[count] = anchor->position;
+      count++;
+
+      if (count == 4)
+        {
+          gboolean start_in;
+          gboolean end_in;
+          gint     i;
+
+          gimp_transform_bezier_coords (matrix, segmentcoords,
+                                        transformed, &n_transformed,
+                                        &start_in, &end_in);
+
+          for (i = 0; i < n_transformed; i++)
+            {
+              GimpStroke *s = NULL;
+              gint        j;
+
+              if (i == 0 && start_in)
+                {
+                  /* current stroke is connected to last stroke */
+                  s = last_stroke;
+                }
+              else if (last_stroke)
+                {
+                  /* current stroke is not connected to last stroke.  finalize
+                   * last stroke.
+                   */
+                  anchor = g_queue_peek_tail (last_stroke->anchors);
+
+                  g_queue_push_tail (last_stroke->anchors,
+                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                      &anchor->position));
+                }
+
+              if (! s)
+                {
+                  /* start a new stroke */
+                  s = gimp_bezier_stroke_new ();
+
+                  g_queue_push_tail (s->anchors,
+                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                      &transformed[i][0]));
+
+                  g_queue_push_tail (ret_strokes, s);
+
+                  j = 0;
+                }
+              else
+                {
+                  /* continue an existing stroke, skipping the first anchor,
+                   * which is the same as the last anchor of the last stroke
+                   */
+                  j = 1;
+                }
+
+              for (; j < 4; j++)
+                {
+                  GimpAnchorType type;
+
+                  if (j == 0 || j == 3)
+                    type = GIMP_ANCHOR_ANCHOR;
+                  else
+                    type = GIMP_ANCHOR_CONTROL;
+
+                  g_queue_push_tail (s->anchors,
+                                     gimp_anchor_new (type,
+                                                      &transformed[i][j]));
+                }
+
+              /* if the current stroke is an initial segment of 'stroke',
+               * remember it, so that we can possibly connect it to the last
+               * stroke later.
+               */
+              if (i == 0 && start_in && first)
+                first_stroke = s;
+
+              last_stroke = s;
+              first       = FALSE;
+            }
+
+          if (! end_in && last_stroke)
+            {
+              /* the next stroke is not connected to the last stroke.  finalize
+               * the last stroke.
+               */
+              anchor = g_queue_peek_tail (last_stroke->anchors);
+
+              g_queue_push_tail (last_stroke->anchors,
+                                 gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                  &anchor->position));
+
+              last_stroke = NULL;
+            }
+
+          if (last)
+            break;
+
+          segmentcoords[0] = segmentcoords[3];
+          count = 1;
+        }
+    }
+
+  /* if the last stroke is a final segment of 'stroke'... */
+  if (last_stroke)
+    {
+      /* ... and the first stroke is an initial segment of 'stroke', and
+       * 'stroke' is closed ...
+       */
+      if (first_stroke && stroke->closed)
+        {
+          /* connect the first and last strokes */
+          gimp_anchor_free (g_queue_pop_head (first_stroke->anchors));
+          gimp_anchor_free (g_queue_pop_tail (last_stroke->anchors));
+
+          if (first_stroke == last_stroke)
+            {
+              /* the result is a single stroke.  remove the superfluous
+               * anchors, and close the stroke.
+               */
+              g_queue_push_head (first_stroke->anchors,
+                                 g_queue_pop_tail (first_stroke->anchors));
+
+              first_stroke->closed = TRUE;
+            }
+          else
+            {
+              /* the result is multiple strokes.  prepend the last stroke to
+               * the first stroke, and discard it.
+               */
+              while ((anchor = g_queue_pop_tail (last_stroke->anchors)))
+                g_queue_push_head (first_stroke->anchors, anchor);
+
+              g_object_unref (g_queue_pop_tail (ret_strokes));
+            }
+        }
+      else
+        {
+          /* otherwise, the first and last strokes are not connected.  finalize
+           * the last stroke.
+           */
+          anchor = g_queue_peek_tail (last_stroke->anchors);
+
+          g_queue_push_tail (last_stroke->anchors,
+                             gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                              &anchor->position));
+        }
+    }
+}
+
 
 GimpStroke *
 gimp_bezier_stroke_new_moveto (const GimpCoords *start)
