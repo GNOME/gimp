@@ -1066,10 +1066,14 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
         factor = 1.5;
 
       h = private->handles[GIMP_TRANSFORM_HANDLE_NW + i];
-      gimp_canvas_handle_set_position (h, o[i].x, o[i].y);
-      gimp_canvas_handle_set_size (h, handle_w * factor, handle_h * factor);
-      gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
       gimp_canvas_item_set_visible (h, private->use_corner_handles);
+
+      if (private->use_corner_handles)
+        {
+          gimp_canvas_handle_set_position (h, o[i].x, o[i].y);
+          gimp_canvas_handle_set_size (h, handle_w * factor, handle_h * factor);
+          gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
+        }
 
       /*  the perspective handles  */
       factor = 1.0;
@@ -1077,10 +1081,14 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
         factor = 0.8;
 
       h = private->handles[GIMP_TRANSFORM_HANDLE_NW_P + i];
-      gimp_canvas_handle_set_position (h, o[i].x, o[i].y);
-      gimp_canvas_handle_set_size (h, handle_w * factor, handle_h * factor);
-      gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
       gimp_canvas_item_set_visible (h, private->use_perspective_handles);
+
+      if (private->use_perspective_handles)
+        {
+          gimp_canvas_handle_set_position (h, o[i].x, o[i].y);
+          gimp_canvas_handle_set_size (h, handle_w * factor, handle_h * factor);
+          gimp_canvas_handle_set_angles (h, angle[i + 4], 0.0);
+        }
     }
 
   /*  draw the side handles  */
@@ -1094,10 +1102,14 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
       GimpCanvasItem *h;
 
       h = private->handles[GIMP_TRANSFORM_HANDLE_N + i];
-      gimp_canvas_handle_set_position (h, t[i].x, t[i].y);
-      gimp_canvas_handle_set_size (h, handle_w, handle_h);
-      gimp_canvas_handle_set_angles (h, angle[i], 0.0);
       gimp_canvas_item_set_visible (h, private->use_side_handles);
+
+      if (private->use_side_handles)
+        {
+          gimp_canvas_handle_set_position (h, t[i].x, t[i].y);
+          gimp_canvas_handle_set_size (h, handle_w, handle_h);
+          gimp_canvas_handle_set_angles (h, angle[i], 0.0);
+        }
     }
 
   /*  draw the shear handles  */
@@ -1115,10 +1127,14 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
       GimpCanvasItem *h;
 
       h = private->handles[GIMP_TRANSFORM_HANDLE_N_S + i];
-      gimp_canvas_handle_set_position (h, t[i].x, t[i].y);
-      gimp_canvas_handle_set_size (h, handle_w, handle_h);
-      gimp_canvas_handle_set_angles (h, angle[i], 0.0);
       gimp_canvas_item_set_visible (h, private->use_shear_handles);
+
+      if (private->use_shear_handles)
+        {
+          gimp_canvas_handle_set_position (h, t[i].x, t[i].y);
+          gimp_canvas_handle_set_size (h, handle_w, handle_h);
+          gimp_canvas_handle_set_angles (h, angle[i], 0.0);
+        }
     }
 
   d = MIN (handle_w, handle_h);
@@ -1128,28 +1144,34 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
   gimp_canvas_item_set_visible (private->handles[GIMP_TRANSFORM_HANDLE_PIVOT],
                                 private->use_pivot_handle);
 
-  gimp_canvas_handle_set_position (private->pivot_items[0],
-                                   private->tpx, private->tpy);
-  gimp_canvas_handle_set_size (private->pivot_items[0], d, d);
+  if (private->use_pivot_handle)
+    {
+      gimp_canvas_handle_set_position (private->pivot_items[0],
+                                       private->tpx, private->tpy);
+      gimp_canvas_handle_set_size (private->pivot_items[0], d, d);
 
-  gimp_canvas_handle_set_position (private->pivot_items[1],
-                                   private->tpx, private->tpy);
-  gimp_canvas_handle_set_size (private->pivot_items[1], d, d);
+      gimp_canvas_handle_set_position (private->pivot_items[1],
+                                       private->tpx, private->tpy);
+      gimp_canvas_handle_set_size (private->pivot_items[1], d, d);
+    }
 
   d = MIN (handle_w, handle_h);
 
   gimp_canvas_item_set_visible (private->handles[GIMP_TRANSFORM_HANDLE_CENTER],
                                 private->use_center_handle);
 
-  gimp_canvas_handle_set_position (private->center_items[0],
-                                   private->tcx, private->tcy);
-  gimp_canvas_handle_set_size (private->center_items[0], d, d);
-  gimp_canvas_handle_set_angles (private->center_items[0], angle[8], 0.0);
+  if (private->use_center_handle)
+    {
+      gimp_canvas_handle_set_position (private->center_items[0],
+                                       private->tcx, private->tcy);
+      gimp_canvas_handle_set_size (private->center_items[0], d, d);
+      gimp_canvas_handle_set_angles (private->center_items[0], angle[8], 0.0);
 
-  gimp_canvas_handle_set_position (private->center_items[1],
-                                   private->tcx, private->tcy);
-  gimp_canvas_handle_set_size (private->center_items[1], d, d);
-  gimp_canvas_handle_set_angles (private->center_items[1], angle[8], 0.0);
+      gimp_canvas_handle_set_position (private->center_items[1],
+                                       private->tcx, private->tcy);
+      gimp_canvas_handle_set_size (private->center_items[1], d, d);
+      gimp_canvas_handle_set_angles (private->center_items[1], angle[8], 0.0);
+    }
 
   gimp_tool_transform_grid_update_hilight (grid);
 }
