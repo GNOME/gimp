@@ -4,6 +4,10 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+endif
+
 if OS_WIN32
 
 bin_PROGRAMS = \
@@ -113,7 +117,8 @@ AM_CPPFLAGS = \
 	-DGIMP_PLUGIN_VERSION=\""$(GIMP_PLUGIN_VERSION)"\"	\
 	-I$(top_srcdir)						\
 	$(GTK_CFLAGS)						\
-	-I$(includedir)
+	-I$(includedir)						\
+	$(xobjective_c)
 
 EXTRA_DIST = \
 	defcheck.py	\

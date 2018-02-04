@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+endif
+
 AM_CPPFLAGS = \
         -DISO_CODES_LOCATION=\"$(ISO_CODES_LOCATION)\"		\
         -DISO_CODES_LOCALEDIR=\"$(ISO_CODES_LOCALEDIR)\"	\
@@ -10,7 +14,8 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/app					\
 	$(GEGL_CFLAGS)						\
 	$(GTK_CFLAGS)						\
-	-I$(includedir)
+	-I$(includedir)						\
+	$(xobjective_c)
 
 noinst_LIBRARIES = libappwidgets.a
 
