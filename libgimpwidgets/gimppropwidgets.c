@@ -108,7 +108,7 @@ static void   gimp_prop_check_button_notify   (GObject    *config,
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_check_button_new (GObject     *config,
@@ -155,17 +155,23 @@ gimp_prop_check_button_callback (GtkWidget *widget,
                                  GObject   *config)
 {
   GParamSpec *param_spec;
+  gboolean    value;
+  gboolean    v;
 
   param_spec = get_param_spec (G_OBJECT (widget));
   if (! param_spec)
     return;
 
-  g_object_set (config,
-                param_spec->name,
-                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)),
-                NULL);
+  value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+  g_object_get (config, param_spec->name, &v, NULL);
+
+  if (v != value)
+    {
+      g_object_set (config, param_spec->name, value, NULL);
+
+      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+    }
 }
 
 static void
@@ -218,7 +224,7 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  *
  * Return value: The newly created #GtkCheckButton widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_enum_check_button_new (GObject     *config,
@@ -278,6 +284,8 @@ gimp_prop_enum_check_button_callback (GtkWidget *widget,
   GParamSpec *param_spec;
   gint        false_value;
   gint        true_value;
+  gint        value;
+  gint        v;
 
   param_spec = get_param_spec (G_OBJECT (widget));
   if (! param_spec)
@@ -288,15 +296,19 @@ gimp_prop_enum_check_button_callback (GtkWidget *widget,
   true_value  = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                     "true-value"));
 
-  g_object_set (config,
-                param_spec->name,
-                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ?
-                true_value : false_value,
-                NULL);
+  value = (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ?
+           true_value : false_value);
 
-  gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (widget), FALSE);
+  g_object_get (config, param_spec->name, &v, NULL);
 
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+  if (v != value)
+    {
+      g_object_set (config, param_spec->name, value, NULL);
+
+      gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (widget), FALSE);
+
+      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+    }
 }
 
 static void
@@ -371,7 +383,7 @@ static void gimp_prop_pointer_combo_box_notify   (GObject    *config,
  *
  * Return value: The newly created #GimpIntComboBox widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_int_combo_box_new (GObject      *config,
@@ -427,7 +439,7 @@ gimp_prop_int_combo_box_new (GObject      *config,
  *
  * Return value: The newly created #GimpIntComboBox widget.
  *
- * Since GIMP 2.10
+ * Since: 2.10
  */
 GtkWidget *
 gimp_prop_pointer_combo_box_new (GObject      *config,
@@ -494,7 +506,7 @@ gimp_prop_pointer_combo_box_new (GObject      *config,
  *
  * Return value: The newly created #GimpEnumComboBox widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_enum_combo_box_new (GObject     *config,
@@ -595,9 +607,12 @@ gimp_prop_int_combo_box_callback (GtkWidget *widget,
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
     {
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
+      gint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -637,9 +652,12 @@ gimp_prop_pointer_combo_box_callback (GtkWidget *widget,
   if (gimp_int_combo_box_get_active_user_data (GIMP_INT_COMBO_BOX (widget),
                                                &value))
     {
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
+      gpointer v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -691,7 +709,7 @@ static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
  *
  * Return value: The newly created #GtkComboBox widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_boolean_combo_box_new (GObject     *config,
@@ -747,9 +765,12 @@ gimp_prop_boolean_combo_box_callback (GtkWidget *combo,
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value))
     {
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
+      gint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -804,7 +825,7 @@ static void  gimp_prop_radio_button_notify   (GObject     *config,
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_enum_radio_frame_new (GObject     *config,
@@ -880,7 +901,7 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
  *
  * Return value: A #GtkVBox containing the radio buttons.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_enum_radio_box_new (GObject     *config,
@@ -950,7 +971,7 @@ static void  gimp_prop_enum_label_notify (GObject    *config,
  *
  * Return value: The newly created #GimpEnumLabel widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_enum_label_new (GObject     *config,
@@ -1013,7 +1034,7 @@ gimp_prop_enum_label_notify (GObject    *config,
  *
  * Return value: A #GimpFrame containing the radio buttons.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_boolean_radio_frame_new (GObject     *config,
@@ -1079,9 +1100,9 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
  *
  * Return value: A #libgimpwidgets-gimpenumstockbox containing the radio buttons.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  *
- * Deprecated: GIMP 2.10
+ * Deprecated: 2.10
  */
 GtkWidget *
 gimp_prop_enum_stock_box_new (GObject     *config,
@@ -1110,7 +1131,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
  *
  * Return value: A #libgimpwidgets-gimpenumiconbox containing the radio buttons.
  *
- * Since GIMP 2.10
+ * Since: 2.10
  */
 GtkWidget *
 gimp_prop_enum_icon_box_new (GObject     *config,
@@ -1175,6 +1196,7 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
     {
       GParamSpec *param_spec;
       gint        value;
+      gint        v;
 
       param_spec = get_param_spec (G_OBJECT (widget));
       if (! param_spec)
@@ -1183,9 +1205,10 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
       value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp-item-data"));
 
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -1227,7 +1250,7 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  *
  * Return value: A new #libgimpwidgets-gimpspinbutton.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_spin_button_new (GObject     *config,
@@ -1287,7 +1310,7 @@ gimp_prop_spin_button_new (GObject     *config,
  *
  * Return value: A new #GtkScale.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_hscale_new (GObject     *config,
@@ -1365,7 +1388,7 @@ gimp_prop_hscale_new (GObject     *config,
  *
  * Return value: The #GtkSpinButton's #GtkAdjustment.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkObject *
 gimp_prop_scale_entry_new (GObject     *config,
@@ -1511,7 +1534,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  *
  * Return value:  The #GtkSpinButton's #GtkAdjustment.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkObject *
 gimp_prop_opacity_entry_new (GObject     *config,
@@ -1738,7 +1761,7 @@ static void   gimp_prop_memsize_notify   (GObject          *config,
  *
  * Return value:  A new #GimpMemsizeEntry.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_memsize_entry_new (GObject     *config,
@@ -1791,6 +1814,8 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
                             GObject          *config)
 {
   GParamSpec *param_spec;
+  guint64     value;
+  guint64     v;
 
   param_spec = get_param_spec (G_OBJECT (entry));
   if (! param_spec)
@@ -1798,9 +1823,12 @@ gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
 
   g_return_if_fail (G_IS_PARAM_SPEC_UINT64 (param_spec));
 
-  g_object_set (config,
-                param_spec->name, gimp_memsize_entry_get_value (entry),
-                NULL);
+  value = gimp_memsize_entry_get_value (entry);
+
+  g_object_get (config, param_spec->name, &v, NULL);
+
+  if (v != value)
+    g_object_set (config, param_spec->name, value, NULL);
 }
 
 static void
@@ -1851,7 +1879,7 @@ static void   gimp_prop_label_notify (GObject    *config,
  *
  * Return value:  A new #GtkLabel widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_label_new (GObject     *config,
@@ -1947,7 +1975,7 @@ static void   gimp_prop_entry_notify   (GObject    *config,
  *
  * Return value:  A new #GtkEntry widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_entry_new (GObject     *config,
@@ -1999,25 +2027,31 @@ gimp_prop_entry_callback (GtkWidget *entry,
                           GObject   *config)
 {
   GParamSpec  *param_spec;
-  const gchar *text;
+  const gchar *value;
+  gchar       *v;
 
   param_spec = get_param_spec (G_OBJECT (entry));
   if (! param_spec)
     return;
 
-  text = gtk_entry_get_text (GTK_ENTRY (entry));
+  value = gtk_entry_get_text (GTK_ENTRY (entry));
 
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_entry_notify,
-                                   entry);
+  g_object_get (config, param_spec->name, &v, NULL);
 
-  g_object_set (config,
-                param_spec->name, text,
-                NULL);
+  if (g_strcmp0 (v, value))
+    {
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_entry_notify,
+                                       entry);
 
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_entry_notify,
-                                     entry);
+      g_object_set (config, param_spec->name, value, NULL);
+
+      g_signal_handlers_unblock_by_func (config,
+                                         gimp_prop_entry_notify,
+                                         entry);
+    }
+
+  g_free (v);
 }
 
 static void
@@ -2072,7 +2106,7 @@ static void   gimp_prop_text_buffer_notify   (GObject       *config,
  *
  * Return value:  A new #GtkTextBuffer.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkTextBuffer *
 gimp_prop_text_buffer_new (GObject     *config,
@@ -2153,17 +2187,24 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
     }
   else
     {
-      g_signal_handlers_block_by_func (config,
-                                       gimp_prop_text_buffer_notify,
-                                       text_buffer);
+      gchar *v;
 
-      g_object_set (config,
-                    param_spec->name, text,
-                    NULL);
+      g_object_get (config, param_spec->name, &v, NULL);
 
-      g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_text_buffer_notify,
-                                         text_buffer);
+      if (g_strcmp0 (v, text))
+        {
+          g_signal_handlers_block_by_func (config,
+                                           gimp_prop_text_buffer_notify,
+                                           text_buffer);
+
+          g_object_set (config, param_spec->name, text,  NULL);
+
+          g_signal_handlers_unblock_by_func (config,
+                                             gimp_prop_text_buffer_notify,
+                                             text_buffer);
+        }
+
+      g_free (v);
     }
 
   g_free (text);
@@ -2218,7 +2259,7 @@ static void   gimp_prop_string_combo_box_notify   (GObject     *config,
  *
  * Return value: The newly created #GimpStringComboBox widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_string_combo_box_new (GObject      *config,
@@ -2267,6 +2308,7 @@ gimp_prop_string_combo_box_callback (GtkWidget *widget,
 {
   GParamSpec  *param_spec;
   gchar       *value;
+  gchar       *v;
 
   param_spec = get_param_spec (G_OBJECT (widget));
   if (! param_spec)
@@ -2274,11 +2316,13 @@ gimp_prop_string_combo_box_callback (GtkWidget *widget,
 
   value = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
 
-  g_object_set (config,
-                param_spec->name, value,
-                NULL);
+  g_object_get (config, param_spec->name, &v, NULL);
+
+  if (g_strcmp0 (v, value))
+    g_object_set (config, param_spec->name, value, NULL);
 
   g_free (value);
+  g_free (v);
 }
 
 static void
@@ -2335,7 +2379,7 @@ static void        gimp_prop_file_chooser_button_notify   (GObject        *confi
  *
  * Return value:  A new #GtkFileChooserButton.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_file_chooser_button_new (GObject              *config,
@@ -2376,7 +2420,7 @@ gimp_prop_file_chooser_button_new (GObject              *config,
  *
  * Return value:  A new #GtkFileChooserButton.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
@@ -2450,8 +2494,8 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 {
   GParamSpec *param_spec;
   GFile      *file;
-  gchar      *path = NULL;
-  gchar      *value;
+  gchar      *value = NULL;
+  gchar      *v;
 
   param_spec = get_param_spec (G_OBJECT (button));
   if (! param_spec)
@@ -2461,31 +2505,27 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 
   if (file)
     {
-      path = gimp_file_get_config_path (file, NULL);
+      value = gimp_file_get_config_path (file, NULL);
       g_object_unref (file);
     }
 
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
+  g_object_get (config, param_spec->name, &v, NULL);
 
-  if (! (path && value && strcmp (path, value) == 0))
+  if (g_strcmp0 (v, value))
     {
       g_signal_handlers_block_by_func (config,
                                        gimp_prop_file_chooser_button_notify,
                                        button);
 
-      g_object_set (config,
-                    param_spec->name, path,
-                    NULL);
+      g_object_set (config, param_spec->name, value, NULL);
 
       g_signal_handlers_unblock_by_func (config,
                                          gimp_prop_file_chooser_button_notify,
                                          button);
     }
 
-  g_free (path);
   g_free (value);
+  g_free (v);
 }
 
 static void
@@ -2803,7 +2843,7 @@ static gint   gimp_prop_size_entry_num_chars   (gdouble        lower,
  *
  * Return value:  A new #GimpSizeEntry widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_size_entry_new (GObject                   *config,
@@ -3118,7 +3158,7 @@ static void   gimp_prop_coordinates_notify_unit (GObject       *config,
  *
  * Return value:  A new #GimpSizeEntry widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_coordinates_new (GObject                   *config,
@@ -3571,7 +3611,7 @@ static void   gimp_prop_color_area_notify   (GObject    *config,
  *
  * Return value:  A new #GimpColorArea widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_color_area_new (GObject           *config,
@@ -3683,7 +3723,7 @@ static void   gimp_prop_unit_combo_box_notify   (GObject    *config,
  *
  * Return value:  A new #GimpUnitComboBox widget.
  *
- * Since GIMP 2.8
+ * Since: 2.8
  */
 GtkWidget *
 gimp_prop_unit_combo_box_new (GObject     *config,
@@ -3741,27 +3781,31 @@ gimp_prop_unit_combo_box_callback (GtkWidget *combo,
                                    GObject   *config)
 {
   GParamSpec *param_spec;
-  GimpUnit    unit;
+  GimpUnit    value;
+  GimpUnit    v;
 
   param_spec = get_param_spec (G_OBJECT (combo));
   if (! param_spec)
     return;
 
-  unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (combo));
+  value = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (combo));
 
-  /* FIXME gimp_unit_menu_update (menu, &unit); */
+  g_object_get (config, param_spec->name, &v, NULL);
 
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_unit_combo_box_notify,
-                                   combo);
+  if (v != value)
+    {
+      /* FIXME gimp_unit_menu_update (menu, &unit); */
 
-  g_object_set (config,
-                param_spec->name, unit,
-                NULL);
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_unit_combo_box_notify,
+                                       combo);
 
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_unit_combo_box_notify,
-                                     combo);
+      g_object_set (config, param_spec->name, value, NULL);
+
+      g_signal_handlers_unblock_by_func (config,
+                                         gimp_prop_unit_combo_box_notify,
+                                         combo);
+    }
 }
 
 static void
@@ -3811,7 +3855,9 @@ static void   gimp_prop_unit_menu_notify   (GObject    *config,
  *
  * Return value:  A new #GimpUnitMenu widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
+ *
+ * Deprecated: 2.10
  */
 GtkWidget *
 gimp_prop_unit_menu_new (GObject     *config,
@@ -3930,9 +3976,9 @@ static void   gimp_prop_icon_image_notify (GObject    *config,
  *
  * Return value:  A new #GtkImage widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  *
- * Deprecated: GIMP 2.10
+ * Deprecated: 2.10
  */
 GtkWidget *
 gimp_prop_stock_image_new (GObject     *config,
@@ -3954,7 +4000,7 @@ gimp_prop_stock_image_new (GObject     *config,
  *
  * Return value:  A new #GtkImage widget.
  *
- * Since GIMP 2.10
+ * Since: 2.10
  */
 GtkWidget *
 gimp_prop_icon_image_new (GObject     *config,
@@ -4034,7 +4080,7 @@ static void   gimp_prop_expander_notify (GObject     *config,
  *
  * Return value:  A new #GtkExpander widget.
  *
- * Since GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_prop_expander_new (GObject     *config,
