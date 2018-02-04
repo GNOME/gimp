@@ -19,9 +19,10 @@
  */
 
 /*
- * This widget is particular that I want to be able to use it internally
- * but also from an alternate tool (gimpdebug). It means that the
- * implementation must stay as generic glib/GTK+ as possible.
+ * This widget is particular that I want to be able to use it
+ * internally but also from an alternate tool (gimp-debug-tool). It
+ * means that the implementation must stay as generic glib/GTK+ as
+ * possible.
  */
 
 #include "config.h"
@@ -200,11 +201,12 @@ gimp_critical_dialog_finalize (GObject *object)
 
 
 /* XXX This is taken straight from plug-ins/common/web-browser.c
+ *
  * This really sucks but this class also needs to be called by
- * tools/gimpdebug.c as a separate process and therefore cannot make use
- * of the PDB. Anyway shouldn't we just move this as a utils function?
- * Why does such basic feature as opening a URL in a cross-platform way
- * need to be a plug-in?
+ * tools/gimp-debug-tool.c as a separate process and therefore cannot
+ * make use of the PDB. Anyway shouldn't we just move this as a utils
+ * function?  Why does such basic feature as opening a URL in a
+ * cross-platform way need to be a plug-in?
  */
 static gboolean
 browser_open_url (const gchar  *url,

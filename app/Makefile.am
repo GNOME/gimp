@@ -100,19 +100,20 @@ GIMPCONSOLERC = gimp-console-$(GIMP_APP_VERSION).rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"				\
-	-DLIBEXECDIR=\""$(libexecdir)"\"			\
-	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"		\
-	-DG_LOG_DOMAIN=\"Gimp\"		\
-	-DGIMP_APP_GLUE_COMPILATION	\
-	-DCC_VERSION=\""$(CC_VERSION)"\" \
-	-I$(top_srcdir)			\
-	$(GTK_CFLAGS)			\
-	$(PANGOCAIRO_CFLAGS)		\
-	$(GEGL_CFLAGS)			\
-	$(LCMS_CFLAGS)			\
-	$(GEXIV2_CFLAGS)		\
-	-I$(includedir)			\
+	-DGIMPDIR=\""$(gimpdir)"\"			\
+	-DLIBEXECDIR=\""$(libexecdir)"\"		\
+	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
+	-DGIMP_TOOL_VERSION=\"$(GIMP_TOOL_VERSION)\"	\
+	-DG_LOG_DOMAIN=\"Gimp\"				\
+	-DGIMP_APP_GLUE_COMPILATION			\
+	-DCC_VERSION=\""$(CC_VERSION)"\"		\
+	-I$(top_srcdir)					\
+	$(GTK_CFLAGS)					\
+	$(PANGOCAIRO_CFLAGS)				\
+	$(GEGL_CFLAGS)					\
+	$(LCMS_CFLAGS)					\
+	$(GEXIV2_CFLAGS)				\
+	-I$(includedir)					\
 	-I$(builddir)/gui
 
 # We need this due to circular dependencies

@@ -298,11 +298,11 @@ gimp_eek (const gchar *reason,
            * takes precedence over the command line argument.
            */
 #ifdef G_OS_WIN32
-          const gchar *gimpdebug = "gimpdebug-2.0.exe";
+          const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION ".exe";
 #elif defined (PLATFORM_OSX)
-          const gchar *gimpdebug = "gimpdebug-2.0";
+          const gchar *gimpdebug = "gimp-debug-tool-" GIMP_TOOL_VERSION;
 #else
-          const gchar *gimpdebug = LIBEXECDIR "/gimpdebug-2.0";
+          const gchar *gimpdebug = LIBEXECDIR "/gimp-debug-tool-" GIMP_TOOL_VERSION;
 #endif
           gchar *args[7] = { (gchar *) gimpdebug, full_prog_name, NULL,
                              (gchar *) reason, (gchar *) message,

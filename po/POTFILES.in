@@ -610,6 +610,6 @@ app/xcf/xcf-save.c
 app/xcf/xcf-seek.c
 app/xcf/xcf-write.c
 
-tools/gimpdebug.c
+tools/gimp-debug-tool.c
 
 data/tags/gimp-tags-default.xml.in
