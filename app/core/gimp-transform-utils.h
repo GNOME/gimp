@@ -116,8 +116,8 @@ void       gimp_transform_polygon_coords       (const GimpMatrix3   *matrix,
 
 void       gimp_transform_bezier_coords        (const GimpMatrix3   *matrix,
                                                 const GimpCoords     bezier[4],
-                                                GimpCoords           t_bezier[2][4],
-                                                gint                *n_t_bezier,
+                                                GQueue              *t_beziers[2],
+                                                gint                *n_t_beziers,
                                                 gboolean            *start_in,
                                                 gboolean            *end_in);
 

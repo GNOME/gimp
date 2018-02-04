@@ -1628,7 +1628,7 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
   GList      *anchorlist;
   GimpAnchor *anchor;
   GimpCoords  segmentcoords[4];
-  GimpCoords  transformed[2][4];
+  GQueue     *transformed[2];
   gint        n_transformed;
   gint        count;
   gboolean    first;
@@ -1683,6 +1683,7 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
           for (i = 0; i < n_transformed; i++)
             {
               GimpStroke *s = NULL;
+              GList      *list;
               gint        j;
 
               if (i == 0 && start_in)
@@ -1702,40 +1703,49 @@ gimp_bezier_stroke_transform (GimpStroke        *stroke,
                                                       &anchor->position));
                 }
 
-              if (! s)
+              for (list = transformed[i]->head; list; list = g_list_next (list))
                 {
-                  /* start a new stroke */
-                  s = gimp_bezier_stroke_new ();
+                  GimpCoords *transformedcoords = list->data;
 
-                  g_queue_push_tail (s->anchors,
-                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
-                                                      &transformed[i][0]));
+                  if (! s)
+                    {
+                      /* start a new stroke */
+                      s = gimp_bezier_stroke_new ();
 
-                  g_queue_push_tail (ret_strokes, s);
+                      g_queue_push_tail (s->anchors,
+                                         gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                          &transformedcoords[0]));
 
-                  j = 0;
-                }
-              else
-                {
-                  /* continue an existing stroke, skipping the first anchor,
-                   * which is the same as the last anchor of the last stroke
-                   */
-                  j = 1;
-                }
+                      g_queue_push_tail (ret_strokes, s);
 
-              for (; j < 4; j++)
-                {
-                  GimpAnchorType type;
-
-                  if (j == 0 || j == 3)
-                    type = GIMP_ANCHOR_ANCHOR;
+                      j = 0;
+                    }
                   else
-                    type = GIMP_ANCHOR_CONTROL;
+                    {
+                      /* continue an existing stroke, skipping the first anchor,
+                       * which is the same as the last anchor of the last stroke
+                       */
+                      j = 1;
+                    }
 
-                  g_queue_push_tail (s->anchors,
-                                     gimp_anchor_new (type,
-                                                      &transformed[i][j]));
+                  for (; j < 4; j++)
+                    {
+                      GimpAnchorType type;
+
+                      if (j == 0 || j == 3)
+                        type = GIMP_ANCHOR_ANCHOR;
+                      else
+                        type = GIMP_ANCHOR_CONTROL;
+
+                      g_queue_push_tail (s->anchors,
+                                         gimp_anchor_new (type,
+                                                          &transformedcoords[j]));
+                    }
+
+                  g_free (transformedcoords);
                 }
+
+              g_queue_free (transformed[i]);
 
               /* if the current stroke is an initial segment of 'stroke',
                * remember it, so that we can possibly connect it to the last

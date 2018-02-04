@@ -1032,64 +1032,174 @@ clip_bezier (const GimpCoords  bezier[4],
 }
 
 /* transforms the cubic bezier segment, defined by the four control points
- * 'bezier', by 'matrix', performing clipping by the near plane.
+ * 'bezier', by 'matrix', subdividing it as necessary to avoid diverging too
+ * much from the real transformed curve.  at most 'depth' subdivisions are
+ * performed.
  *
- * returns the transformed set of bezier segments in 't_bezier', and their
- * count in 'n_t_bezier'.  the minimal possible number of transformed segments
- * is 0, which happens when the entire segment is clipped.  the maximal
- * possible number of transformed segments is 2.
+ * appends the transformed sequence of bezier segments to 't_beziers'.
+ *
+ * 'bezier' shall be fully clipped to the near plane.
+ */
+static void
+transform_bezier_coords (const GimpMatrix3 *matrix,
+                         const GimpCoords   bezier[4],
+                         GQueue            *t_beziers,
+                         gint               depth)
+{
+  GimpCoords *t_bezier;
+  gint        n;
+
+  /* check if we need to split the segment */
+  if (depth > 0)
+    {
+      GimpVector2 v[4];
+      GimpVector2 c[2];
+      GimpVector2 b;
+      gint        i;
+
+      for (i = 0; i < 4; i++)
+        v[i] = (GimpVector2) { bezier[i].x, bezier[i].y };
+
+      gimp_vector2_sub (&c[0], &v[1], &v[0]);
+      gimp_vector2_sub (&c[1], &v[2], &v[3]);
+
+      gimp_vector2_sub (&b, &v[3], &v[0]);
+      gimp_vector2_mul (&b, 1.0 / gimp_vector2_inner_product (&b, &b));
+
+      for (i = 0; i < 2; i++)
+        {
+          /* split the segment if one of the control points is too far from the
+           * line connecting the anchors
+           */
+          if (fabs (gimp_vector2_cross_product (&c[i], &b).x) > 0.5)
+            {
+              GimpCoords mid_position;
+              GimpCoords mid_velocity;
+              GimpCoords sub[4];
+
+              gimp_coords_interpolate_bezier_at (bezier, 0.5,
+                                                 &mid_position, &mid_velocity);
+
+              /* first half */
+              sub[0] = bezier[0];
+              sub[3] = mid_position;
+
+              gimp_coords_mix (0.5,        &sub[0],
+                               0.5,        &bezier[1],
+                                           &sub[1]);
+              gimp_coords_mix (1.0,        &sub[3],
+                               -1.0 / 6.0, &mid_velocity,
+                                           &sub[2]);
+
+              transform_bezier_coords (matrix, sub, t_beziers, depth - 1);
+
+              /* second half */
+              sub[0] = mid_position;
+              sub[3] = bezier[3];
+
+              gimp_coords_mix (1.0,        &sub[0],
+                               +1.0 / 6.0, &mid_velocity,
+                                           &sub[1]);
+              gimp_coords_mix (0.5,        &sub[3],
+                               0.5,        &bezier[2],
+                                           &sub[2]);
+
+              transform_bezier_coords (matrix, sub, t_beziers, depth - 1);
+
+              return;
+            }
+        }
+    }
+
+  /* transform the segment by transforming each of the individual points.  note
+   * that, for non-affine transforms, this is only an approximation of the real
+   * transformed curve, but due to subdivision it should be good enough.
+   */
+  t_bezier = g_new (GimpCoords, 4);
+
+  /* note that while the segments themselves are clipped to the near plane,
+   * their control points may still get transformed behind the camera.  we
+   * therefore clip the control points to the near plane as well, which is not
+   * too meaningful, but avoids erroneously transforming them behind the
+   * camera.
+   */
+  gimp_transform_polygon_coords (matrix, bezier, 2, FALSE,
+                                 t_bezier, &n);
+  gimp_transform_polygon_coords (matrix, bezier + 2, 2, FALSE,
+                                 t_bezier + 2, &n);
+
+  g_queue_push_tail (t_beziers, t_bezier);
+}
+
+/* transforms the cubic bezier segment, defined by the four control points
+ * 'bezier', by 'matrix', performing clipping by the near plane and subdividing
+ * as necessary.
+ *
+ * returns the transformed set of bezier-segment sequences in 't_beziers', as
+ * GQueues of GimpCoords[4] bezier-segments, and the number of sequences in
+ * 'n_t_beziers'.  the minimal possible number of transformed sequences is 0,
+ * which happens when the entire segment is clipped.  the maximal possible
+ * number of transformed sequences is 2.  each sequence has at least one
+ * segment.
  *
  * if the first transformed segment is an initial segment of 'bezier', sets
  * '*start_in' to TRUE, otherwise to FALSE.  if the last transformed segment is
  * a final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
- *
- * 't_bezier' may not alias 'bezier'.
  */
 void
 gimp_transform_bezier_coords (const GimpMatrix3 *matrix,
                               const GimpCoords   bezier[4],
-                              GimpCoords         t_bezier[2][4],
-                              gint              *n_t_bezier,
+                              GQueue            *t_beziers[2],
+                              gint              *n_t_beziers,
                               gboolean          *start_in,
                               gboolean          *end_in)
 {
-  gint i;
+  GimpCoords c_bezier[2][4];
+  gint       i;
 
   g_return_if_fail (matrix != NULL);
   g_return_if_fail (bezier != NULL);
-  g_return_if_fail (t_bezier != NULL);
-  g_return_if_fail (n_t_bezier != NULL);
+  g_return_if_fail (t_beziers != NULL);
+  g_return_if_fail (n_t_beziers != NULL);
   g_return_if_fail (start_in != NULL);
   g_return_if_fail (end_in != NULL);
+
+  /* if the matrix is affine, transform the easy way */
+  if (gimp_matrix3_is_affine (matrix))
+    {
+      GimpCoords *t_bezier;
+
+      t_beziers[0] = g_queue_new ();
+      *n_t_beziers = 1;
+
+      t_bezier = g_new (GimpCoords, 1);
+      g_queue_push_tail (t_beziers[0], t_bezier);
+
+      for (i = 0; i < 4; i++)
+        {
+          t_bezier[i] = bezier[i];
+
+          gimp_matrix3_transform_point (matrix,
+                                        bezier[i].x,    bezier[i].y,
+                                        &t_bezier[i].x, &t_bezier[i].y);
+        }
+
+      return;
+    }
 
   /* clip the segment to the near plane */
   clip_bezier (bezier,
                matrix->coeff[2][0],
                matrix->coeff[2][1],
                matrix->coeff[2][2] - GIMP_TRANSFORM_NEAR_Z,
-               t_bezier, n_t_bezier,
+               c_bezier, n_t_beziers,
                start_in, end_in);
 
-  /* transform the individual control points
-   *
-   * TODO:  a perspective-transformed bezier curve is not itself a bezier curve
-   * in general.  this is therefore only an approximation, in the non-affine
-   * case.  when the curve is highly nonlinear, we should subdivide it to avoid
-   * diverging too much from the real transformed curve.
-   */
-  for (i = 0; i < *n_t_bezier; i++)
+  /* transform each of the resulting segments */
+  for (i = 0; i < *n_t_beziers; i++)
     {
-      gint n;
+      t_beziers[i] = g_queue_new ();
 
-      /* note that while the segments themselves are clipped to the near plane,
-       * their control points may still get transformed behind the camera.  we
-       * therefore clip the control points to the near plane as well, which is
-       * not too meaningful, but avoids erroneously transforming them behind
-       * the camera.
-       */
-      gimp_transform_polygon_coords (matrix, t_bezier[i], 2, FALSE,
-                                     t_bezier[i], &n);
-      gimp_transform_polygon_coords (matrix, t_bezier[i] + 2, 2, FALSE,
-                                     t_bezier[i] + 2, &n);
+      transform_bezier_coords (matrix, c_bezier[i], t_beziers[i], 3);
     }
 }
