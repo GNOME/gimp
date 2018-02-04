@@ -249,6 +249,7 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
     {
       GParamSpec *param_spec;
       gint        value;
+      gint        v;
 
       param_spec = get_param_spec (G_OBJECT (widget));
       if (! param_spec)
@@ -257,9 +258,10 @@ gimp_prop_radio_button_callback (GtkWidget *widget,
       value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                   "gimp-item-data"));
 
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -503,22 +505,26 @@ gimp_prop_scale_button_callback (GtkWidget *button,
                                  GObject   *config)
 {
   GParamSpec *param_spec;
+  gdouble     v;
 
   param_spec = get_param_spec (G_OBJECT (button));
   if (! param_spec)
     return;
 
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_scale_button_notify,
-                                   button);
+  g_object_get (config, param_spec->name, &v, NULL);
 
-  g_object_set (config,
-                param_spec->name, value,
-                NULL);
+  if (v != value)
+    {
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_scale_button_notify,
+                                       button);
 
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_scale_button_notify,
-                                     button);
+      g_object_set (config, param_spec->name, value, NULL);
+
+      g_signal_handlers_unblock_by_func (config,
+                                         gimp_prop_scale_button_notify,
+                                         button);
+    }
 }
 
 static void
