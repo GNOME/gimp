@@ -2445,7 +2445,13 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
       /* need version 3 for layer trees */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-        version = MAX (3, version);
+        {
+          version = MAX (3, version);
+
+          /* need version 13 for group layers with masks */
+          if (gimp_layer_get_mask (layer))
+            version = MAX (13, version);
+        }
     }
 
   g_list_free (layers);
@@ -2502,6 +2508,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 10:
     case 11:
     case 12:
+    case 13:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;
