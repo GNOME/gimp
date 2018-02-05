@@ -770,7 +770,9 @@ layer_remove_mask_invoker (GimpProcedure         *procedure,
         modify |= GIMP_PDB_ITEM_CONTENT;
 
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error) &&
-          gimp_layer_get_mask (layer))
+          gimp_layer_get_mask (layer) &&
+          (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)) ||
+           mode == GIMP_MASK_DISCARD))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else
         success = FALSE;

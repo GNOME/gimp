@@ -1965,9 +1965,13 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (! mask)
     return;
 
+  /*  APPLY can not be done to group layers  */
+  g_return_if_fail (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)) ||
+                    mode == GIMP_MASK_DISCARD);
+
   /*  APPLY can only be done to layers with an alpha channel  */
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    g_return_if_fail (mode == GIMP_MASK_DISCARD || push_undo == TRUE);
+  g_return_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ||
+                    mode == GIMP_MASK_DISCARD || push_undo == TRUE);
 
   item  = GIMP_ITEM (layer);
   image = gimp_item_get_image (item);
