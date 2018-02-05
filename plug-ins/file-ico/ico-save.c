@@ -464,6 +464,10 @@ ico_get_layer_num_colors (gint32    layer,
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
+      /* It is possible to count the colors of indexed image more easily
+       * with gimp_image_get_colormap(), but counting only the colors
+       * actually used will allow more efficient bpp if possible. */
+      break;
 
     default:
       g_return_val_if_reached (0);
@@ -599,6 +603,7 @@ ico_image_get_reduced_buf (guint32   layer,
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
+      break;
 
     default:
       g_return_if_reached ();

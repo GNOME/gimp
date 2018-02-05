@@ -258,6 +258,7 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       format = gimp_drawable_get_format (layer);
+      break;
 
     default:
       g_return_if_reached ();
