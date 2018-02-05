@@ -33,6 +33,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimpgrouplayer.h"
+#include "gimpgrouplayerundo.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -109,6 +110,13 @@ static void            gimp_group_layer_start_move   (GimpItem        *item,
                                                       gboolean         push_undo);
 static void            gimp_group_layer_end_move     (GimpItem        *item,
                                                       gboolean         push_undo);
+static void            gimp_group_layer_resize       (GimpItem        *item,
+                                                      GimpContext     *context,
+                                                      GimpFillType     fill_type,
+                                                      gint             new_width,
+                                                      gint             new_height,
+                                                      gint             offset_x,
+                                                      gint             offset_y);
 
 static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
                                                       GimpComponentType  component_type,
@@ -125,13 +133,6 @@ static void            gimp_group_layer_scale        (GimpLayer       *layer,
                                                       gint             new_offset_y,
                                                       GimpInterpolationType  interp_type,
                                                       GimpProgress    *progress);
-static void            gimp_group_layer_resize       (GimpLayer       *layer,
-                                                      GimpContext     *context,
-                                                      GimpFillType     fill_type,
-                                                      gint             new_width,
-                                                      gint             new_height,
-                                                      gint             offset_x,
-                                                      gint             offset_y);
 static void            gimp_group_layer_flip         (GimpLayer       *layer,
                                                       GimpContext     *context,
                                                       GimpOrientationType flip_type,
@@ -268,6 +269,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->convert                    = gimp_group_layer_convert;
   item_class->start_move                 = gimp_group_layer_start_move;
   item_class->end_move                   = gimp_group_layer_end_move;
+  item_class->resize                     = gimp_group_layer_resize;
 
   item_class->default_name               = _("Layer Group");
   item_class->rename_desc                = C_("undo-type", "Rename Layer Group");
@@ -287,7 +289,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   layer_class->mask_changed              = gimp_group_layer_mask_changed;
   layer_class->translate                 = gimp_group_layer_translate;
   layer_class->scale                     = gimp_group_layer_scale;
-  layer_class->resize                    = gimp_group_layer_resize;
   layer_class->flip                      = gimp_group_layer_flip;
   layer_class->rotate                    = gimp_group_layer_rotate;
   layer_class->transform                 = gimp_group_layer_transform;
@@ -625,6 +626,82 @@ gimp_group_layer_end_move (GimpItem *item,
   private->moving--;
 }
 
+static void
+gimp_group_layer_resize (GimpItem     *item,
+                         GimpContext  *context,
+                         GimpFillType  fill_type,
+                         gint          new_width,
+                         gint          new_height,
+                         gint          offset_x,
+                         gint          offset_y)
+{
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
+  GList                 *list;
+  gint                   x, y;
+
+  /* we implement GimpItem::resize(), instead of GimpLayer::resize(), so that
+   * GimpLayer doesn't resize the mask.  instead, we temporarily decrement
+   * private->moving, so that mask resizing is handled by
+   * gimp_group_layer_update_size().
+   */
+  g_return_if_fail (private->moving > 0);
+  private->moving--;
+
+  x = gimp_item_get_offset_x (item) - offset_x;
+  y = gimp_item_get_offset_y (item) - offset_y;
+
+  gimp_group_layer_suspend_resize (group, TRUE);
+
+  list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+
+  while (list)
+    {
+      GimpItem *child = list->data;
+      gint      child_width;
+      gint      child_height;
+      gint      child_x;
+      gint      child_y;
+
+      list = g_list_next (list);
+
+      if (gimp_rectangle_intersect (x,
+                                    y,
+                                    new_width,
+                                    new_height,
+                                    gimp_item_get_offset_x (child),
+                                    gimp_item_get_offset_y (child),
+                                    gimp_item_get_width  (child),
+                                    gimp_item_get_height (child),
+                                    &child_x,
+                                    &child_y,
+                                    &child_width,
+                                    &child_height))
+        {
+          gint child_offset_x = gimp_item_get_offset_x (child) - child_x;
+          gint child_offset_y = gimp_item_get_offset_y (child) - child_y;
+
+          gimp_item_resize (child, context, fill_type,
+                            child_width, child_height,
+                            child_offset_x, child_offset_y);
+        }
+      else if (gimp_item_is_attached (item))
+        {
+          gimp_image_remove_layer (gimp_item_get_image (item),
+                                   GIMP_LAYER (child),
+                                   TRUE, NULL);
+        }
+      else
+        {
+          gimp_container_remove (private->children, GIMP_OBJECT (child));
+        }
+    }
+
+  gimp_group_layer_resume_resize (group, TRUE);
+
+  private->moving++;
+}
+
 static gint64
 gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
                                    GimpComponentType  component_type,
@@ -752,72 +829,6 @@ gimp_group_layer_scale (GimpLayer             *layer,
       else if (gimp_item_is_attached (item))
         {
           gimp_image_remove_layer (gimp_item_get_image (item),
-                                   GIMP_LAYER (child),
-                                   TRUE, NULL);
-        }
-      else
-        {
-          gimp_container_remove (private->children, GIMP_OBJECT (child));
-        }
-    }
-
-  gimp_group_layer_resume_resize (group, TRUE);
-}
-
-static void
-gimp_group_layer_resize (GimpLayer    *layer,
-                         GimpContext  *context,
-                         GimpFillType  fill_type,
-                         gint          new_width,
-                         gint          new_height,
-                         gint          offset_x,
-                         gint          offset_y)
-{
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
-  GList                 *list;
-  gint                   x, y;
-
-  x = gimp_item_get_offset_x (GIMP_ITEM (group)) - offset_x;
-  y = gimp_item_get_offset_y (GIMP_ITEM (group)) - offset_y;
-
-  gimp_group_layer_suspend_resize (group, TRUE);
-
-  list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
-
-  while (list)
-    {
-      GimpItem *child = list->data;
-      gint      child_width;
-      gint      child_height;
-      gint      child_x;
-      gint      child_y;
-
-      list = g_list_next (list);
-
-      if (gimp_rectangle_intersect (x,
-                                    y,
-                                    new_width,
-                                    new_height,
-                                    gimp_item_get_offset_x (child),
-                                    gimp_item_get_offset_y (child),
-                                    gimp_item_get_width  (child),
-                                    gimp_item_get_height (child),
-                                    &child_x,
-                                    &child_y,
-                                    &child_width,
-                                    &child_height))
-        {
-          gint child_offset_x = gimp_item_get_offset_x (child) - child_x;
-          gint child_offset_y = gimp_item_get_offset_y (child) - child_y;
-
-          gimp_item_resize (child, context, fill_type,
-                            child_width, child_height,
-                            child_offset_x, child_offset_y);
-        }
-      else if (gimp_item_is_attached (GIMP_ITEM (group)))
-        {
-          gimp_image_remove_layer (gimp_item_get_image (GIMP_ITEM (group)),
                                    GIMP_LAYER (child),
                                    TRUE, NULL);
         }
@@ -1390,6 +1401,10 @@ gimp_group_layer_resume_resize (GimpGroupLayer *group,
 {
   GimpGroupLayerPrivate *private;
   GimpItem              *item;
+  GimpItem              *mask = NULL;
+  GeglBuffer            *mask_buffer;
+  GeglRectangle          mask_bounds;
+  GimpUndo              *undo;
 
   g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
 
@@ -1403,14 +1418,62 @@ gimp_group_layer_resume_resize (GimpGroupLayer *group,
     push_undo = FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_group_layer_resume_resize (gimp_item_get_image (item),
-                                                    NULL, group);
+    {
+      undo =
+        gimp_image_undo_push_group_layer_resume_resize (gimp_item_get_image (item),
+                                                        NULL, group);
+
+      /* if there were any {suspend,resume}_mask() calls during the time the
+       * group's size was suspended, the resume_mask() calls will not have seen
+       * any changes to the mask, and will therefore won't restore the mask
+       * during undo.  if the group's bounding box did change while resize was
+       * suspended, and if there are no other {suspend,resume}_mask() blocks
+       * that will see the resized mask, we have to restore the mask during the
+       * resume_resize() undo.
+       *
+       * we ref the mask buffer here, and compare it to the mask buffer after
+       * updating the size.
+       */
+      if (private->suspend_resize == 1 && private->suspend_mask == 0)
+        {
+          mask = GIMP_ITEM (gimp_layer_get_mask (GIMP_LAYER (group)));
+
+          if (mask)
+            {
+              mask_buffer =
+                g_object_ref (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)));
+
+              mask_bounds.x      = gimp_item_get_offset_x (mask);
+              mask_bounds.y      = gimp_item_get_offset_y (mask);
+              mask_bounds.width  = gimp_item_get_width    (mask);
+              mask_bounds.height = gimp_item_get_height   (mask);
+            }
+        }
+    }
 
   private->suspend_resize--;
 
   if (private->suspend_resize == 0)
     {
       gimp_group_layer_update_size (group);
+
+      if (mask)
+        {
+          /* if the mask changed, make sure it's restored during undo, as per
+           * the comment above.
+           */
+          if (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)) != mask_buffer)
+            {
+              g_return_if_fail (undo != NULL);
+
+              GIMP_GROUP_LAYER_UNDO (undo)->mask_buffer = mask_buffer;
+              GIMP_GROUP_LAYER_UNDO (undo)->mask_bounds = mask_bounds;
+            }
+          else
+            {
+              g_object_unref (mask_buffer);
+            }
+        }
     }
 }
 

@@ -85,13 +85,12 @@ gimp_group_layer_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_GROUP_LAYER_RESUME_MASK:
-      group_layer_undo->prev_suspended_mask_buffer =
-        _gimp_group_layer_get_suspended_mask(
-          group,
-          &group_layer_undo->prev_suspended_mask_bounds);
+      group_layer_undo->mask_buffer =
+        _gimp_group_layer_get_suspended_mask(group,
+                                             &group_layer_undo->mask_bounds);
 
-      if (group_layer_undo->prev_suspended_mask_buffer)
-        g_object_ref (group_layer_undo->prev_suspended_mask_buffer);
+      if (group_layer_undo->mask_buffer)
+        g_object_ref (group_layer_undo->mask_buffer);
       break;
 
     case GIMP_UNDO_GROUP_LAYER_CONVERT:
@@ -112,8 +111,7 @@ gimp_group_layer_undo_get_memsize (GimpObject *object,
   GimpGroupLayerUndo *group_layer_undo = GIMP_GROUP_LAYER_UNDO (object);
   gint64              memsize       = 0;
 
-  memsize +=
-    gimp_gegl_buffer_get_memsize (group_layer_undo->prev_suspended_mask_buffer);
+  memsize += gimp_gegl_buffer_get_memsize (group_layer_undo->mask_buffer);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -149,6 +147,18 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
           /*  suspend group layer auto-resizing  */
 
           gimp_group_layer_suspend_resize (group, FALSE);
+
+          if (undo->undo_type == GIMP_UNDO_GROUP_LAYER_RESUME_RESIZE &&
+              group_layer_undo->mask_buffer)
+            {
+              GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (group));
+
+              gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
+                                             FALSE, NULL,
+                                             group_layer_undo->mask_buffer,
+                                             group_layer_undo->mask_bounds.x,
+                                             group_layer_undo->mask_bounds.y);
+            }
         }
       break;
 
@@ -170,12 +180,12 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
           gimp_group_layer_suspend_mask (group, FALSE);
 
           if (undo->undo_type == GIMP_UNDO_GROUP_LAYER_RESUME_MASK &&
-              group_layer_undo->prev_suspended_mask_buffer)
+              group_layer_undo->mask_buffer)
             {
               _gimp_group_layer_set_suspended_mask (
                 group,
-                group_layer_undo->prev_suspended_mask_buffer,
-                &group_layer_undo->prev_suspended_mask_bounds);
+                group_layer_undo->mask_buffer,
+                &group_layer_undo->mask_bounds);
             }
         }
       break;
@@ -216,7 +226,7 @@ gimp_group_layer_undo_free (GimpUndo     *undo,
 {
   GimpGroupLayerUndo *group_layer_undo = GIMP_GROUP_LAYER_UNDO (undo);
 
-  g_clear_object (&group_layer_undo->prev_suspended_mask_buffer);
+  g_clear_object (&group_layer_undo->mask_buffer);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }
