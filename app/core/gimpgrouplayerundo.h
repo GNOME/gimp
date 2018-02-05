@@ -37,6 +37,9 @@ struct _GimpGroupLayerUndo
 {
   GimpItemUndo       parent_instance;
 
+  GeglBuffer        *prev_suspended_mask_buffer;
+  GeglRectangle      prev_suspended_mask_bounds;
+
   GimpImageBaseType  prev_type;
   GimpPrecision      prev_precision;
   gboolean           prev_has_alpha;

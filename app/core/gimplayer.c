@@ -44,6 +44,7 @@
 #include "gimpcontainer.h"
 #include "gimpdrawable-floating-selection.h"
 #include "gimperror.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimage-undo.h"
 #include "gimpimage.h"
@@ -128,6 +129,10 @@ static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc,
                                                  GError            **error);
+static void       gimp_layer_start_move         (GimpItem           *item,
+                                                 gboolean            push_undo);
+static void       gimp_layer_end_move           (GimpItem           *item,
+                                                 gboolean            push_undo);
 static void       gimp_layer_translate          (GimpItem           *item,
                                                  gint                offset_x,
                                                  gint                offset_y,
@@ -421,6 +426,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->duplicate               = gimp_layer_duplicate;
   item_class->convert                 = gimp_layer_convert;
   item_class->rename                  = gimp_layer_rename;
+  item_class->start_move              = gimp_layer_start_move;
+  item_class->end_move                = gimp_layer_end_move;
   item_class->translate               = gimp_layer_translate;
   item_class->scale                   = gimp_layer_scale;
   item_class->resize                  = gimp_layer_resize;
@@ -1047,6 +1054,34 @@ gimp_layer_rename (GimpItem     *item,
     gimp_image_undo_group_end (image);
 
   return TRUE;
+}
+
+static void
+gimp_layer_start_move (GimpItem *item,
+                       gboolean  push_undo)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  /* suspend mask cropping for all of the layer's ancestors */
+  while ((layer = gimp_layer_get_parent (layer)))
+    gimp_group_layer_suspend_mask (GIMP_GROUP_LAYER (layer), push_undo);
+
+  if (GIMP_ITEM_CLASS (parent_class)->start_move)
+    GIMP_ITEM_CLASS (parent_class)->start_move (item, push_undo);
+}
+
+static void
+gimp_layer_end_move (GimpItem *item,
+                     gboolean  push_undo)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  if (GIMP_ITEM_CLASS (parent_class)->end_move)
+    GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
+
+  /* resume mask cropping for all of the layer's ancestors */
+  while ((layer = gimp_layer_get_parent (layer)))
+    gimp_group_layer_resume_mask (GIMP_GROUP_LAYER (layer), push_undo);
 }
 
 static void

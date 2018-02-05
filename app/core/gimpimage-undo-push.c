@@ -608,32 +608,64 @@ gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
 /***********************/
 
 GimpUndo *
-gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
-                                          const gchar    *undo_desc,
-                                          GimpGroupLayer *group)
+gimp_image_undo_push_group_layer_suspend_resize (GimpImage      *image,
+                                                 const gchar    *undo_desc,
+                                                 GimpGroupLayer *group)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
-                               GIMP_UNDO_GROUP_LAYER_SUSPEND, undo_desc,
+                               GIMP_UNDO_GROUP_LAYER_SUSPEND_RESIZE, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item",  group,
                                NULL);
 }
 
 GimpUndo *
-gimp_image_undo_push_group_layer_resume (GimpImage      *image,
-                                         const gchar    *undo_desc,
-                                         GimpGroupLayer *group)
+gimp_image_undo_push_group_layer_resume_resize (GimpImage      *image,
+                                                const gchar    *undo_desc,
+                                                GimpGroupLayer *group)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
-                               GIMP_UNDO_GROUP_LAYER_RESUME, undo_desc,
+                               GIMP_UNDO_GROUP_LAYER_RESUME_RESIZE, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_suspend_mask (GimpImage      *image,
+                                               const gchar    *undo_desc,
+                                               GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_SUSPEND_MASK, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_resume_mask (GimpImage      *image,
+                                              const gchar    *undo_desc,
+                                              GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_RESUME_MASK, undo_desc,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item",  group,
                                NULL);

@@ -145,10 +145,20 @@ GimpUndo * gimp_image_undo_push_layer_lock_alpha    (GimpImage     *image,
 
 /*  group layer undos  */
 
-GimpUndo * gimp_image_undo_push_group_layer_suspend (GimpImage      *image,
+GimpUndo *
+    gimp_image_undo_push_group_layer_suspend_resize (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
-GimpUndo * gimp_image_undo_push_group_layer_resume  (GimpImage      *image,
+GimpUndo *
+     gimp_image_undo_push_group_layer_resume_resize (GimpImage      *image,
+                                                     const gchar    *undo_desc,
+                                                     GimpGroupLayer *group);
+GimpUndo *
+      gimp_image_undo_push_group_layer_suspend_mask (GimpImage      *image,
+                                                     const gchar    *undo_desc,
+                                                     GimpGroupLayer *group);
+GimpUndo *
+       gimp_image_undo_push_group_layer_resume_mask (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
 GimpUndo * gimp_image_undo_push_group_layer_convert (GimpImage      *image,
