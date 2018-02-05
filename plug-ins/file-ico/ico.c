@@ -118,8 +118,8 @@ query (void)
                           "Dom Lachowicz, Sven Neumann",
                           "Sven Neumann <sven@gimp.org>",
                           "2005",
-			  NULL,
-			  NULL,
+                          NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (thumb_args),
                           G_N_ELEMENTS (thumb_return_vals),
@@ -218,14 +218,14 @@ run (const gchar      *name,
 
           if (image_ID != -1)
             {
-	      *nreturn_vals = 4;
+              *nreturn_vals = 4;
 
-	      values[1].type         = GIMP_PDB_IMAGE;
-	      values[1].data.d_image = image_ID;
-	      values[2].type         = GIMP_PDB_INT32;
-	      values[2].data.d_int32 = width;
-	      values[3].type         = GIMP_PDB_INT32;
-	      values[3].data.d_int32 = height;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+              values[2].type         = GIMP_PDB_INT32;
+              values[2].data.d_int32 = width;
+              values[3].type         = GIMP_PDB_INT32;
+              values[3].data.d_int32 = height;
             }
           else
             {

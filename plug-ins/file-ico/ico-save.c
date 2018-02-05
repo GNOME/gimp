@@ -159,7 +159,7 @@ static void
 ico_save_init (gint32       image_ID,
                IcoSaveInfo *info)
 {
-  gint	    *layers;
+  gint      *layers;
   gint       i, num_colors;
   gboolean   uses_alpha_values = FALSE;
 
