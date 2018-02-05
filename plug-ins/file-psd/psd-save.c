@@ -191,7 +191,8 @@ static void          write_datablock_luni (FILE          *fd,
 static void          write_pixel_data     (FILE          *fd,
                                            gint32         drawableID,
                                            glong         *ChanLenPosition,
-                                           gint32         rowlenOffset);
+                                           gint32         rowlenOffset,
+                                           gboolean       write_mask);
 
 static gint32        create_merged_image  (gint32         imageID);
 
@@ -959,7 +960,8 @@ save_layer_and_mask (FILE   *fd,
       write_gint32 (fd, offset_y + layerHeight, "Layer bottom");
       write_gint32 (fd, offset_x + layerWidth,  "Layer right");
 
-      hasMask = (gimp_layer_get_mask(PSDImageData.lLayers[i].id) == -1 ) ? 0 : 1;
+      hasMask = (PSDImageData.lLayers[i].type != PSD_LAYER_TYPE_GROUP_END &&
+                 gimp_layer_get_mask (PSDImageData.lLayers[i].id) != -1);
       nChannelsLayer = nChansLayer (PSDImageData.baseType,
                                     gimp_drawable_has_alpha (PSDImageData.lLayers[i].id),
                                     hasMask);
@@ -1022,25 +1024,34 @@ save_layer_and_mask (FILE   *fd,
       ExtraDataPos = ftell (fd); /* Position of Extra Data size */
       write_gint32 (fd, 0, "Extra data size");
 
-      mask = gimp_layer_get_mask (PSDImageData.lLayers[i].id);
-      if (mask  >= 0)
+      if (hasMask)
         {
-          gint     maskWidth  = gimp_drawable_width (mask);
-          gint     maskHeight = gimp_drawable_height (mask);
-          gboolean apply      = gimp_layer_get_apply_mask (PSDImageData.lLayers[i].id);
+          gint     maskOffset_x;
+          gint     maskOffset_y;
+          gint     maskWidth;
+          gint     maskHeight;
+          gboolean apply;
+
+          mask = gimp_layer_get_mask (PSDImageData.lLayers[i].id);
+
+          gimp_drawable_offsets (mask, &maskOffset_x, &maskOffset_y);
+
+          maskWidth  = gimp_drawable_width  (mask);
+          maskHeight = gimp_drawable_height (mask);
+          apply      = gimp_layer_get_apply_mask (PSDImageData.lLayers[i].id);
 
           IFDBG printf ("\t\tLayer mask size: %d\n", 20);
-          write_gint32 (fd, 20,                    "Layer mask size");
-          write_gint32 (fd, offset_y,              "Layer mask top");
-          write_gint32 (fd, offset_x,              "Layer mask left");
-          write_gint32 (fd, offset_y + maskHeight, "Layer mask bottom");
-          write_gint32 (fd, offset_x + maskWidth,  "Layer mask right");
-          write_gchar  (fd, 0,                     "Layer mask default color");
+          write_gint32 (fd, 20,                        "Layer mask size");
+          write_gint32 (fd, maskOffset_y,              "Layer mask top");
+          write_gint32 (fd, maskOffset_x,              "Layer mask left");
+          write_gint32 (fd, maskOffset_y + maskHeight, "Layer mask bottom");
+          write_gint32 (fd, maskOffset_x + maskWidth,  "Layer mask right");
+          write_gchar  (fd, 0,                         "Layer mask default color");
           flags = (0                    |  /* position relative to layer */
                    (apply ? 0 : 1) << 1 |  /* layer mask disabled        */
                    0 << 2);                /* invert layer mask          */
-          write_gchar  (fd, flags,                 "Layer mask flags");
-          write_gint16 (fd, 0,                     "Layer mask Padding");
+          write_gchar  (fd, flags,                     "Layer mask flags");
+          write_gint16 (fd, 0,                         "Layer mask Padding");
         }
       else
         {
@@ -1140,7 +1151,8 @@ save_layer_and_mask (FILE   *fd,
       gimp_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
 
       IFDBG printf ("\t\tWriting pixel data for layer slot %d\n", i);
-      write_pixel_data(fd, PSDImageData.lLayers[i].id, ChannelLengthPos[i], 0);
+      write_pixel_data (fd, PSDImageData.lLayers[i].id, ChannelLengthPos[i], 0,
+                        PSDImageData.lLayers[i].type != PSD_LAYER_TYPE_GROUP_END);
       g_free (ChannelLengthPos[i]);
     }
 
@@ -1167,13 +1179,15 @@ save_layer_and_mask (FILE   *fd,
 }
 
 static void
-write_pixel_data (FILE   *fd,
-                  gint32  drawableID,
-                  glong  *ChanLenPosition,
-                  gint32  ltable_offset)
+write_pixel_data (FILE     *fd,
+                  gint32    drawableID,
+                  glong    *ChanLenPosition,
+                  gint32    ltable_offset,
+                  gboolean  write_mask)
 {
   GeglBuffer   *buffer = gimp_drawable_get_buffer (drawableID);
   const Babl   *format;
+  gint32        maskID;
   gint32        tile_height = gimp_tile_height ();
   gint32        height = gegl_buffer_get_height (buffer);
   gint32        width  = gegl_buffer_get_width (buffer);
@@ -1190,8 +1204,13 @@ write_pixel_data (FILE   *fd,
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
                 drawableID, ltable_offset);
 
-  /* groups have empty channel data */
-  if (gimp_item_is_group (drawableID))
+  if (write_mask)
+    maskID = gimp_layer_get_mask (drawableID);
+  else
+    maskID = -1;
+
+  /* groups have empty channel data, but may have a mask */
+  if (gimp_item_is_group (drawableID) && maskID == -1)
     {
       width  = 0;
       height = 0;
@@ -1215,6 +1234,13 @@ write_pixel_data (FILE   *fd,
                             (width + 10 + (width / 100))));
 
   data = g_new (guchar, MIN (height, tile_height) * width * bytes);
+
+  /* groups have empty channel data */
+  if (gimp_item_is_group (drawableID))
+    {
+      width  = 0;
+      height = 0;
+    }
 
   for (i = 0; i < bytes; i++)
     {
@@ -1294,81 +1320,79 @@ write_pixel_data (FILE   *fd,
     }
 
   /* Write layer mask, as last channel, id -2 */
-  if (gimp_item_is_layer (drawableID))
+  if (maskID != -1)
     {
-      gint32 maskID = gimp_layer_get_mask (drawableID);
+      GeglBuffer *mbuffer = gimp_drawable_get_buffer (maskID);
+      const Babl *mformat = get_mask_format(maskID);
 
-      if (maskID != -1)
+      width  = gegl_buffer_get_width (buffer);
+      height = gegl_buffer_get_height (buffer);
+
+      len = 0;
+
+      if (ChanLenPosition)
         {
-          GeglBuffer *mbuffer = gimp_drawable_get_buffer (maskID);
-          const Babl  *mformat = get_mask_format(maskID);
-
-          len = 0;
-
-          if (ChanLenPosition)
-            {
-              write_gint16 (fd, 1, "Compression type (RLE)");
-              len += 2;
-              IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %d\n", len);
-            }
-
-          if (ltable_offset > 0)
-            {
-              length_table_pos = ltable_offset + 2 * (bytes+1) * height;
-              IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n",
-                                  length_table_pos);
-            }
-          else
-            {
-              length_table_pos = ftell(fd);
-
-              xfwrite (fd, LengthsTable, height * sizeof(gint16),
-                       "Dummy RLE length");
-              len += height * sizeof(gint16);
-              IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n",
-                                  length_table_pos, len);
-            }
-
-          for (y = 0; y < height; y += tile_height)
-            {
-              int tlen;
-              gegl_buffer_get (mbuffer,
-                               GEGL_RECTANGLE (0, y,
-                                               width,
-                                               MIN (height - y, tile_height)),
-                               1.0, mformat, data,
-                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-              tlen = get_compress_channel_data (&data[0],
-                                                width,
-                                                MIN(height - y, tile_height),
-                                                1,
-                                                &LengthsTable[y],
-                                                rledata);
-              len += tlen;
-              xfwrite (fd, rledata, tlen, "Compressed mask data");
-              IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed mask, stream of %d\n", tlen);
-            }
-
-          /* Write compressed lengths table */
-          fseek (fd, length_table_pos, SEEK_SET); /*POS WHERE???*/
-          for (j = 0; j < height; j++) /* write real length table */
-            {
-              write_gint16 (fd, LengthsTable[j], "RLE length");
-              IF_DEEP_DBG printf ("\t\t\t\t. Updating RLE len %d\n",
-                                  LengthsTable[j]);
-            }
-
-          if (ChanLenPosition)    /* Update total compressed length */
-            {
-              fseek (fd, ChanLenPosition[bytes], SEEK_SET); /*+bytes OR SOMETHING*/
-              write_gint32 (fd, len, "channel data length");
-              IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, ftell(fd));
-            }
-          fseek (fd, 0, SEEK_END);
-          IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
-
-          g_object_unref (mbuffer);
+          write_gint16 (fd, 1, "Compression type (RLE)");
+          len += 2;
+          IF_DEEP_DBG printf ("\t\t\t\t. ChanLenPos, len %d\n", len);
         }
+
+      if (ltable_offset > 0)
+        {
+          length_table_pos = ltable_offset + 2 * (bytes+1) * height;
+          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n",
+                              length_table_pos);
+        }
+      else
+        {
+          length_table_pos = ftell(fd);
+
+          xfwrite (fd, LengthsTable, height * sizeof(gint16),
+                   "Dummy RLE length");
+          len += height * sizeof(gint16);
+          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n",
+                              length_table_pos, len);
+        }
+
+      for (y = 0; y < height; y += tile_height)
+        {
+          int tlen;
+          gegl_buffer_get (mbuffer,
+                           GEGL_RECTANGLE (0, y,
+                                           width,
+                                           MIN (height - y, tile_height)),
+                           1.0, mformat, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+          tlen = get_compress_channel_data (&data[0],
+                                            width,
+                                            MIN(height - y, tile_height),
+                                            1,
+                                            &LengthsTable[y],
+                                            rledata);
+          len += tlen;
+          xfwrite (fd, rledata, tlen, "Compressed mask data");
+          IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed mask, stream of %d\n", tlen);
+        }
+
+      /* Write compressed lengths table */
+      fseek (fd, length_table_pos, SEEK_SET); /*POS WHERE???*/
+      for (j = 0; j < height; j++) /* write real length table */
+        {
+          write_gint16 (fd, LengthsTable[j], "RLE length");
+          IF_DEEP_DBG printf ("\t\t\t\t. Updating RLE len %d\n",
+                              LengthsTable[j]);
+        }
+
+      if (ChanLenPosition)    /* Update total compressed length */
+        {
+          fseek (fd, ChanLenPosition[bytes], SEEK_SET); /*+bytes OR SOMETHING*/
+          write_gint32 (fd, len, "channel data length");
+          IFDBG printf ("\t\tUpdating data len to %d, at %ld\n", len, ftell(fd));
+        }
+      fseek (fd, 0, SEEK_END);
+      IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
+
+      g_object_unref (mbuffer);
     }
 
   g_object_unref (buffer);
@@ -1409,7 +1433,7 @@ save_data (FILE   *fd,
 
   IFDBG printf ("\t\tWriting compressed image data\n");
   write_pixel_data (fd, PSDImageData.merged_layer,
-                    NULL, offset);
+                    NULL, offset, FALSE);
 
   chan = nChansLayer (PSDImageData.baseType,
                       gimp_drawable_has_alpha(PSDImageData.merged_layer), 0);
@@ -1419,7 +1443,7 @@ save_data (FILE   *fd,
       IFDBG printf ("\t\tWriting compressed channel data for channel %d\n",
                     i);
       write_pixel_data (fd, PSDImageData.lChannels[i], NULL,
-                        offset + 2*imageHeight*chan); //check how imgs are channels here
+                        offset + 2*imageHeight*chan, FALSE); //check how imgs are channels here
       chan++;
     }
 }

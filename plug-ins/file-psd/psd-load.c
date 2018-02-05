@@ -1399,6 +1399,11 @@ add_layers (gint32     image_id,
                        */
                       g_array_remove_index (parent_group_stack,
                                             parent_group_stack->len - 1);
+
+                      gimp_drawable_offsets (layer_id, &l_x, &l_y);
+
+                      l_w = gimp_drawable_width  (layer_id);
+                      l_h = gimp_drawable_height (layer_id);
                     }
                   else
                     {
@@ -1529,7 +1534,7 @@ add_layers (gint32     image_id,
                 }
 
               /* Layer mask */
-              if (user_mask && lyr_a[lidx]->group_type == 0)
+              if (user_mask && lyr_a[lidx]->group_type != 3)
                 {
                   if (empty_mask)
                     {
