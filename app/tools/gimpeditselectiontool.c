@@ -33,6 +33,7 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpboundary.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-item-list.h"
@@ -225,6 +226,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   GimpDisplayShell      *shell;
   GimpImage             *image;
   GimpItem              *active_item;
+  GList                 *list;
   gint                   off_x, off_y;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
@@ -430,6 +432,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
         }
     }
 
+  for (list = edit_select->live_items; list; list = g_list_next (list))
+    gimp_item_start_move (GIMP_ITEM (list->data), TRUE);
+
   tool_manager_push_tool (display->gimp, tool);
 
   gimp_tool_control_activate (tool->control);
@@ -458,6 +463,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
   GimpDisplayShell      *shell       = gimp_display_get_shell (display);
   GimpImage             *image       = gimp_display_get_image (display);
+  GList                 *list;
 
   /*  resume the current selection  */
   gimp_display_shell_selection_resume (shell);
@@ -479,6 +485,9 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
                                   edit_select->cuml_x,
                                   edit_select->cuml_y,
                                   TRUE);
+
+  for (list = edit_select->live_items; list; list = g_list_next (list))
+    gimp_item_end_move (GIMP_ITEM (list->data), TRUE);
 
   gimp_image_undo_group_end (image);
 

@@ -69,6 +69,10 @@ struct _GimpItemClass
                                           const gchar            *new_name,
                                           const gchar            *undo_desc,
                                           GError                **error);
+  void            (* start_move)         (GimpItem               *item,
+                                          gboolean                push_undo);
+  void            (* end_move)           (GimpItem               *item,
+                                          gboolean                push_undo);
   void            (* translate)          (GimpItem               *item,
                                           gint                    offset_x,
                                           gint                    offset_y,
@@ -206,6 +210,11 @@ void            gimp_item_set_offset         (GimpItem           *item,
                                               gint                offset_y);
 gint            gimp_item_get_offset_x       (GimpItem           *item);
 gint            gimp_item_get_offset_y       (GimpItem           *item);
+
+void            gimp_item_start_move         (GimpItem           *item,
+                                              gboolean            push_undo);
+void            gimp_item_end_move           (GimpItem           *item,
+                                              gboolean            push_undo);
 
 void            gimp_item_translate          (GimpItem           *item,
                                               gint                offset_x,

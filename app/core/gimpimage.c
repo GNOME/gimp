@@ -4316,7 +4316,6 @@ gimp_image_remove_layer (GimpImage *image,
   GimpImagePrivate *private;
   GimpLayer        *active_layer;
   gboolean          old_has_alpha;
-  gboolean          undo_group = FALSE;
   const gchar      *undo_desc;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -4328,6 +4327,12 @@ gimp_image_remove_layer (GimpImage *image,
 
   gimp_image_unset_default_new_layer_mode (image);
 
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                 C_("undo-type", "Remove Layer"));
+
+  gimp_item_start_move (GIMP_ITEM (layer), push_undo);
+
   if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)))
     {
       if (! push_undo)
@@ -4337,10 +4342,6 @@ gimp_image_remove_layer (GimpImage *image,
                      "http://www.gimp.org/bugs/", G_STRFUNC);
           return;
         }
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
-                                   C_("undo-type", "Remove Layer"));
-      undo_group = TRUE;
 
       gimp_image_remove_layer (image,
                                gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)),
@@ -4413,12 +4414,14 @@ gimp_image_remove_layer (GimpImage *image,
       gimp_image_set_active_layer (image, new_active);
     }
 
+  gimp_item_end_move (GIMP_ITEM (layer), push_undo);
+
   g_object_unref (layer);
 
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
-  if (undo_group)
+  if (push_undo)
     gimp_image_undo_group_end (image);
 }
 
@@ -4538,12 +4541,17 @@ gimp_image_remove_channel (GimpImage   *image,
 {
   GimpImagePrivate *private;
   GimpChannel      *active_channel;
-  gboolean          undo_group = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (gimp_item_get_image (GIMP_ITEM (channel)) == image);
+
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                 C_("undo-type", "Remove Channel"));
+
+  gimp_item_start_move (GIMP_ITEM (channel), push_undo);
 
   if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)))
     {
@@ -4554,10 +4562,6 @@ gimp_image_remove_channel (GimpImage   *image,
                      "http://www.gimp.org/bugs/", G_STRFUNC);
           return;
         }
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
-                                   C_("undo-type", "Remove Channel"));
-      undo_group = TRUE;
 
       gimp_image_remove_layer (image,
                                gimp_drawable_get_floating_sel (GIMP_DRAWABLE (channel)),
@@ -4592,9 +4596,11 @@ gimp_image_remove_channel (GimpImage   *image,
         gimp_image_unset_active_channel (image);
     }
 
+  gimp_item_end_move (GIMP_ITEM (channel), push_undo);
+
   g_object_unref (channel);
 
-  if (undo_group)
+  if (push_undo)
     gimp_image_undo_group_end (image);
 }
 
@@ -4651,6 +4657,12 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                 C_("undo-type", "Remove Path"));
+
+  gimp_item_start_move (GIMP_ITEM (vectors), push_undo);
+
   active_vectors = gimp_image_get_active_vectors (image);
 
   if (push_undo)
@@ -4674,7 +4686,12 @@ gimp_image_remove_vectors (GimpImage   *image,
       gimp_image_set_active_vectors (image, new_active);
     }
 
+  gimp_item_end_move (GIMP_ITEM (vectors), push_undo);
+
   g_object_unref (vectors);
+
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 }
 
 gboolean

@@ -259,6 +259,8 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
+  klass->start_move                = NULL;
+  klass->end_move                  = NULL;
   klass->translate                 = gimp_item_real_translate;
   klass->scale                     = gimp_item_real_scale;
   klass->resize                    = gimp_item_real_resize;
@@ -1182,6 +1184,32 @@ gimp_item_get_offset_y (GimpItem *item)
   return GET_PRIVATE (item)->offset_y;
 }
 
+void
+gimp_item_start_move (GimpItem *item,
+                      gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (GIMP_ITEM_GET_CLASS (item)->start_move)
+    GIMP_ITEM_GET_CLASS (item)->start_move (item, push_undo);
+}
+
+void
+gimp_item_end_move (GimpItem *item,
+                    gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (GIMP_ITEM_GET_CLASS (item)->end_move)
+    GIMP_ITEM_GET_CLASS (item)->end_move (item, push_undo);
+}
+
 /**
  * gimp_item_translate:
  * @item:      The #GimpItem to move.
@@ -1213,7 +1241,11 @@ gimp_item_translate (GimpItem *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                  item_class->translate_desc);
 
+  gimp_item_start_move (item, push_undo);
+
   item_class->translate (item, offset_x, offset_y, push_undo);
+
+  gimp_item_end_move (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -1266,6 +1298,7 @@ gimp_item_scale (GimpItem              *item,
 {
   GimpItemClass *item_class;
   GimpImage     *image;
+  gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -1276,9 +1309,13 @@ gimp_item_scale (GimpItem              *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   image = gimp_item_get_image (item);
 
-  if (gimp_item_is_attached (item))
+  push_undo = gimp_item_is_attached (item);
+
+  if (push_undo)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_SCALE,
                                  item_class->scale_desc);
+
+  gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1287,7 +1324,9 @@ gimp_item_scale (GimpItem              *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  if (gimp_item_is_attached (item))
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
     gimp_image_undo_group_end (image);
 }
 
@@ -1444,6 +1483,7 @@ gimp_item_resize (GimpItem     *item,
 {
   GimpItemClass *item_class;
   GimpImage     *image;
+  gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -1454,9 +1494,13 @@ gimp_item_resize (GimpItem     *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   image = gimp_item_get_image (item);
 
-  if (gimp_item_is_attached (item))
+  push_undo = gimp_item_is_attached (item);
+
+  if (push_undo)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                  item_class->resize_desc);
+
+  gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1465,7 +1509,9 @@ gimp_item_resize (GimpItem     *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  if (gimp_item_is_attached (item))
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
     gimp_image_undo_group_end (image);
 }
 
@@ -1478,6 +1524,7 @@ gimp_item_flip (GimpItem            *item,
 {
   GimpItemClass *item_class;
   GimpImage     *image;
+  gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
@@ -1486,8 +1533,13 @@ gimp_item_flip (GimpItem            *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   image = gimp_item_get_image (item);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                               item_class->flip_desc);
+  push_undo = gimp_item_is_attached (item);
+
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+                                 item_class->flip_desc);
+
+  gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1495,7 +1547,10 @@ gimp_item_flip (GimpItem            *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_image_undo_group_end (image);
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 }
 
 void
@@ -1508,6 +1563,7 @@ gimp_item_rotate (GimpItem         *item,
 {
   GimpItemClass *item_class;
   GimpImage     *image;
+  gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
@@ -1516,8 +1572,13 @@ gimp_item_rotate (GimpItem         *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   image = gimp_item_get_image (item);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                               item_class->rotate_desc);
+  push_undo = gimp_item_is_attached (item);
+
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+                                 item_class->rotate_desc);
+
+  gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1526,7 +1587,10 @@ gimp_item_rotate (GimpItem         *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_image_undo_group_end (image);
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 }
 
 void
@@ -1540,6 +1604,7 @@ gimp_item_transform (GimpItem               *item,
 {
   GimpItemClass *item_class;
   GimpImage     *image;
+  gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));
@@ -1550,8 +1615,13 @@ gimp_item_transform (GimpItem               *item,
   item_class = GIMP_ITEM_GET_CLASS (item);
   image = gimp_item_get_image (item);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                               item_class->transform_desc);
+  push_undo = gimp_item_is_attached (item);
+
+  if (push_undo)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+                                 item_class->transform_desc);
+
+  gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1560,7 +1630,10 @@ gimp_item_transform (GimpItem               *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_image_undo_group_end (image);
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
+    gimp_image_undo_group_end (image);
 }
 
 gboolean
