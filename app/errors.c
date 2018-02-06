@@ -395,23 +395,16 @@ static gchar *
 gimp_get_stack_trace (void)
 {
   gchar   *trace  = NULL;
-#ifndef G_OS_WIN32
-  gchar   *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
-                       full_prog_name, NULL, NULL };
-  gchar   *gdb_stdout;
-  gchar    pid[16];
-#endif
-
-  /* Though we should theoretically ask with GIMP_STACK_TRACE_QUERY, we
-   * just assume yes right now. TODO: improve this!
-   */
-  if (stack_trace_mode == GIMP_STACK_TRACE_NEVER)
-    return NULL;
 
   /* This works only on UNIX systems. On Windows, we'll have to find
    * another method, probably with DrMingW.
    */
 #ifndef G_OS_WIN32
+  gchar *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
+                     full_prog_name, NULL, NULL };
+  gchar *gdb_stdout;
+  gchar  pid[16];
+
   g_snprintf (pid, 16, "%u", (guint) getpid ());
   args[5] = pid;
 
