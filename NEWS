@@ -53,6 +53,7 @@ Core:
     version information on GIMP and its main dependencies, as well as
     the error message and backtraces, and encouraging people to make bug
     reports.
+  - Support layer masks on layer groups.
 
 Libgimp:
 
