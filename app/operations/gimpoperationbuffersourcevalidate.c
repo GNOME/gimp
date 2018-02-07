@@ -180,7 +180,7 @@ gimp_operation_buffer_source_validate_set_property (GObject      *object,
 
         if (buffer_source_validate->buffer)
           {
-            g_signal_connect (
+            gegl_buffer_signal_connect (
               buffer_source_validate->buffer,
               "changed",
               G_CALLBACK (gimp_operation_buffer_source_validate_buffer_changed),
