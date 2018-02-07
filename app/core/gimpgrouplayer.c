@@ -207,6 +207,7 @@ static void
 static void            gimp_group_layer_flush        (GimpGroupLayer  *group);
 static void            gimp_group_layer_update       (GimpGroupLayer  *group);
 static void            gimp_group_layer_update_size  (GimpGroupLayer  *group);
+static void        gimp_group_layer_update_mask_size (GimpGroupLayer  *group);
 static void      gimp_group_layer_update_source_node (GimpGroupLayer  *group);
 static void        gimp_group_layer_update_mode_node (GimpGroupLayer  *group);
 
@@ -608,6 +609,8 @@ gimp_group_layer_start_move (GimpItem *item,
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
 
+  g_return_if_fail (private->suspend_mask == 0);
+
   private->moving++;
 
   if (GIMP_ITEM_CLASS (parent_class)->start_move)
@@ -620,10 +623,16 @@ gimp_group_layer_end_move (GimpItem *item,
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
 
+  g_return_if_fail (private->suspend_mask == 0);
+  g_return_if_fail (private->moving > 0);
+
   if (GIMP_ITEM_CLASS (parent_class)->end_move)
     GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
 
   private->moving--;
+
+  if (private->moving == 0)
+    gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
 }
 
 static void
@@ -1715,6 +1724,8 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
 {
   GimpGroupLayerPrivate *private    = GET_PRIVATE (group);
   GimpItem              *item       = GIMP_ITEM (group);
+  GimpLayer             *layer      = GIMP_LAYER (group);
+  GimpItem              *mask       = GIMP_ITEM (gimp_layer_get_mask (layer));
   gint                   old_x      = gimp_item_get_offset_x (item);
   gint                   old_y      = gimp_item_get_offset_y (item);
   gint                   old_width  = gimp_item_get_width  (item);
@@ -1725,7 +1736,7 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
   gint                   height     = 1;
   gboolean               first      = TRUE;
   gboolean               size_changed;
-  gboolean               resize_mask ;
+  gboolean               resize_mask;
   GList                 *list;
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
@@ -1770,85 +1781,16 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                   width  != old_width ||
                   height != old_height);
 
-  resize_mask = gimp_layer_get_mask (GIMP_LAYER (group)) && size_changed;
+  resize_mask = mask && size_changed;
 
   /* if we show the mask, invalidate the old mask area */
-  if (resize_mask && gimp_layer_get_show_mask (GIMP_LAYER (group)))
+  if (resize_mask && gimp_layer_get_show_mask (layer))
     {
-      GimpItem *mask = GIMP_ITEM (gimp_layer_get_mask (GIMP_LAYER (group)));
-
       gimp_drawable_update (GIMP_DRAWABLE (group),
                             gimp_item_get_offset_x (mask) - old_x,
                             gimp_item_get_offset_y (mask) - old_y,
                             gimp_item_get_width    (mask),
                             gimp_item_get_height   (mask));
-    }
-
-  /* resize the mask if not moving (in which case, GimpLayer takes care of the
-   * mask)
-   */
-  if (resize_mask && ! private->moving)
-    {
-      GimpItem      *mask = GIMP_ITEM (gimp_layer_get_mask (GIMP_LAYER (group)));
-      GeglBuffer    *buffer;
-      GeglBuffer    *mask_buffer;
-      GeglRectangle  mask_bounds;
-      GeglRectangle  copy_bounds;
-      gboolean       intersect;
-
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                gimp_drawable_get_format (GIMP_DRAWABLE (mask)));
-
-      if (private->suspended_mask_buffer)
-        {
-          /* copy the suspended mask into the new mask */
-          mask_buffer = private->suspended_mask_buffer;
-          mask_bounds = private->suspended_mask_bounds;
-        }
-      else
-        {
-          /* copy the old mask into the new mask */
-          mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-          mask_bounds.x      = gimp_item_get_offset_x (mask);
-          mask_bounds.y      = gimp_item_get_offset_y (mask);
-          mask_bounds.width  = gimp_item_get_width    (mask);
-          mask_bounds.height = gimp_item_get_height   (mask);
-        }
-
-      intersect = gimp_rectangle_intersect (mask_bounds.x,
-                                            mask_bounds.y,
-                                            mask_bounds.width,
-                                            mask_bounds.height,
-                                            x,
-                                            y,
-                                            width,
-                                            height,
-                                            &copy_bounds.x,
-                                            &copy_bounds.y,
-                                            &copy_bounds.width,
-                                            &copy_bounds.height);
-
-      if (intersect)
-        {
-          gegl_buffer_copy (mask_buffer,
-                            GEGL_RECTANGLE (copy_bounds.x - mask_bounds.x,
-                                            copy_bounds.y - mask_bounds.y,
-                                            copy_bounds.width,
-                                            copy_bounds.height),
-                            GEGL_ABYSS_NONE,
-                            buffer,
-                            GEGL_RECTANGLE (copy_bounds.x - x,
-                                            copy_bounds.y - y,
-                                            copy_bounds.width,
-                                            copy_bounds.height));
-        }
-
-      gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
-                                     FALSE, NULL,
-                                     buffer, x, y);
-
-      g_object_unref (buffer);
     }
 
   if (private->reallocate_projection || size_changed)
@@ -1911,17 +1853,102 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
     }
 
-  /* if we show the mask, invalidate the new mask area */
-  if (resize_mask && gimp_layer_get_show_mask (GIMP_LAYER (group)))
-    {
-      GimpItem *mask = GIMP_ITEM (gimp_layer_get_mask (GIMP_LAYER (group)));
+  /* resize the mask if not moving (in which case, GimpLayer takes care of the
+   * mask)
+   */
+  if (resize_mask && ! private->moving)
+    gimp_group_layer_update_mask_size (group);
 
+  /* if we show the mask, invalidate the new mask area */
+  if (resize_mask && gimp_layer_get_show_mask (layer))
+    {
       gimp_drawable_update (GIMP_DRAWABLE (group),
                             gimp_item_get_offset_x (mask) - x,
                             gimp_item_get_offset_y (mask) - y,
                             gimp_item_get_width    (mask),
                             gimp_item_get_height   (mask));
     }
+}
+
+static void
+gimp_group_layer_update_mask_size (GimpGroupLayer *group)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+  GimpItem              *item    = GIMP_ITEM (group);
+  GimpItem              *mask;
+  GeglBuffer            *buffer;
+  GeglBuffer            *mask_buffer;
+  GeglRectangle          bounds;
+  GeglRectangle          mask_bounds;
+  GeglRectangle          copy_bounds;
+  gboolean               intersect;
+
+  mask = GIMP_ITEM (gimp_layer_get_mask (GIMP_LAYER (group)));
+
+  if (! mask)
+    return;
+
+  bounds.x           = gimp_item_get_offset_x (item);
+  bounds.y           = gimp_item_get_offset_y (item);
+  bounds.width       = gimp_item_get_width    (item);
+  bounds.height      = gimp_item_get_height   (item);
+
+  mask_bounds.x      = gimp_item_get_offset_x (mask);
+  mask_bounds.y      = gimp_item_get_offset_y (mask);
+  mask_bounds.width  = gimp_item_get_width    (mask);
+  mask_bounds.height = gimp_item_get_height   (mask);
+
+  if (gegl_rectangle_equal (&bounds, &mask_bounds))
+    return;
+
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, bounds.width, bounds.height),
+                            gimp_drawable_get_format (GIMP_DRAWABLE (mask)));
+
+  if (private->suspended_mask_buffer)
+    {
+      /* copy the suspended mask into the new mask */
+      mask_buffer = private->suspended_mask_buffer;
+      mask_bounds = private->suspended_mask_bounds;
+    }
+  else
+    {
+      /* copy the old mask into the new mask */
+      mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+    }
+
+  intersect = gimp_rectangle_intersect (bounds.x,
+                                        bounds.y,
+                                        bounds.width,
+                                        bounds.height,
+                                        mask_bounds.x,
+                                        mask_bounds.y,
+                                        mask_bounds.width,
+                                        mask_bounds.height,
+                                        &copy_bounds.x,
+                                        &copy_bounds.y,
+                                        &copy_bounds.width,
+                                        &copy_bounds.height);
+
+  if (intersect)
+    {
+      gegl_buffer_copy (mask_buffer,
+                        GEGL_RECTANGLE (copy_bounds.x - mask_bounds.x,
+                                        copy_bounds.y - mask_bounds.y,
+                                        copy_bounds.width,
+                                        copy_bounds.height),
+                        GEGL_ABYSS_NONE,
+                        buffer,
+                        GEGL_RECTANGLE (copy_bounds.x - bounds.x,
+                                        copy_bounds.y - bounds.y,
+                                        copy_bounds.width,
+                                        copy_bounds.height));
+    }
+
+  gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
+                                 FALSE, NULL,
+                                 buffer, bounds.x, bounds.y);
+
+  g_object_unref (buffer);
 }
 
 static void
