@@ -113,7 +113,7 @@ enum
   PROP_EXPORT_METADATA_EXIF,
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
-  PROP_GENERATE_BACKTRACE,
+  PROP_DEBUG_POLICY,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -655,16 +655,17 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GENERATE_BACKTRACE,
-                            "generate-backtrace",
-                            "Try generating backtrace upon errors",
-                            GENERATE_BACKTRACE_BLURB,
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEBUG_POLICY,
+                         "debug-policy",
+                         "Try generating backtrace upon errors",
+                         GENERATE_BACKTRACE_BLURB,
+                         GIMP_TYPE_DEBUG_POLICY,
 #ifdef GIMP_UNSTABLE
-                            TRUE,
+                         GIMP_DEBUG_POLICY_WARNING,
 #else
-                            FALSE,
+                         GIMP_DEBUG_POLICY_CRITICAL,
 #endif
-                            GIMP_PARAM_STATIC_STRINGS);
+                         GIMP_PARAM_STATIC_STRINGS);
 
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
@@ -968,8 +969,8 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_EXPORT_METADATA_IPTC:
       core_config->export_metadata_iptc = g_value_get_boolean (value);
       break;
-    case PROP_GENERATE_BACKTRACE:
-      core_config->generate_backtrace = g_value_get_boolean (value);
+    case PROP_DEBUG_POLICY:
+      core_config->debug_policy = g_value_get_enum (value);
       break;
 
     case PROP_INSTALL_COLORMAP:
@@ -1167,8 +1168,8 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_EXPORT_METADATA_IPTC:
       g_value_set_boolean (value, core_config->export_metadata_iptc);
       break;
-    case PROP_GENERATE_BACKTRACE:
-      g_value_set_boolean (value, core_config->generate_backtrace);
+    case PROP_DEBUG_POLICY:
+      g_value_set_enum (value, core_config->debug_policy);
       break;
 
     case PROP_INSTALL_COLORMAP:

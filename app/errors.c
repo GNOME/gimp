@@ -143,10 +143,9 @@ errors_init (Gimp               *gimp,
 
   for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
     g_log_set_handler (log_domains[i],
-#ifdef GIMP_UNSTABLE
                        G_LOG_LEVEL_WARNING |
-#endif
-                       G_LOG_LEVEL_MESSAGE | G_LOG_LEVEL_CRITICAL,
+                       G_LOG_LEVEL_MESSAGE |
+                       G_LOG_LEVEL_CRITICAL,
                        gimp_message_log_func, gimp);
 
   g_log_set_handler ("GEGL",
@@ -212,33 +211,49 @@ gimp_message_log_func (const gchar    *log_domain,
 {
   static gint          n_traces;
   GimpMessageSeverity  severity = GIMP_MESSAGE_WARNING;
-  Gimp                *gimp = data;
-  gchar               *trace = NULL;
-  GimpCoreConfig      *config = gimp->config;
-  gboolean             generate_backtrace = FALSE;
+  Gimp                *gimp   = data;
+  gchar               *trace  = NULL;
+  const gchar         *reason;
 
-  g_object_get (G_OBJECT (config),
-                "generate-backtrace", &generate_backtrace,
-                NULL);
-
-  if (generate_backtrace &&
-      (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING)))
+  if (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING))
     {
-      severity = (flags & G_LOG_LEVEL_CRITICAL) ?
-                 GIMP_MESSAGE_ERROR : GIMP_MESSAGE_WARNING;
+      GimpCoreConfig  *config = gimp->config;
+      GimpDebugPolicy  debug_policy;
 
-      if (n_traces < MAX_TRACES)
+      g_object_get (G_OBJECT (config),
+                    "debug-policy", &debug_policy,
+                    NULL);
+
+      if ((debug_policy == GIMP_DEBUG_POLICY_CRITICAL &&
+           (flags & G_LOG_LEVEL_CRITICAL)) ||
+          debug_policy == GIMP_DEBUG_POLICY_WARNING)
         {
-          /* Getting debug traces is time-expensive, and worse, some
-           * critical errors have the bad habit to create more errors
-           * (the first ones are therefore usually the most useful).
-           * This is why we keep track of how many times we made traces
-           * and stop doing them after a while.
-           * Hence when this happens, critical errors are simply processed as
-           * lower level errors.
+          severity = (flags & G_LOG_LEVEL_CRITICAL) ?
+            GIMP_MESSAGE_ERROR : GIMP_MESSAGE_WARNING;
+
+          if (n_traces < MAX_TRACES)
+            {
+              /* Getting debug traces is time-expensive, and worse, some
+               * critical errors have the bad habit to create more errors
+               * (the first ones are therefore usually the most useful).
+               * This is why we keep track of how many times we made traces
+               * and stop doing them after a while.
+               * Hence when this happens, critical errors are simply processed as
+               * lower level errors.
+               */
+              gimp_print_stack_trace (NULL, &trace);
+              n_traces++;
+            }
+        }
+      if (! trace)
+        {
+          /* Since we overrided glib default's WARNING and CRITICAL
+           * handler, if we decide not to handle this error in the end,
+           * let's just print it in terminal in a similar fashion as
+           * glib's default handler (though without the fancy terminal
+           * colors right now).
            */
-          gimp_print_stack_trace (NULL, &trace);
-          n_traces++;
+          goto print_to_stderr;
         }
     }
 
@@ -249,8 +264,23 @@ gimp_message_log_func (const gchar    *log_domain,
     }
   else
     {
-      g_printerr ("%s: %s\n\n",
-                  gimp_filename_to_utf8 (full_prog_name), message);
+print_to_stderr:
+      switch (flags & G_LOG_LEVEL_MASK)
+        {
+        case G_LOG_LEVEL_WARNING:
+          reason = "WARNING";
+          break;
+        case G_LOG_LEVEL_CRITICAL:
+          reason = "CRITICAL";
+          break;
+        default:
+          reason = "MESSAGE";
+          break;
+        }
+
+      g_printerr ("%s: %s-%s: %s\n",
+                  gimp_filename_to_utf8 (full_prog_name),
+                  log_domain, reason, message);
       if (trace)
         g_printerr ("Back trace:\n%s\n\n", trace);
     }
@@ -274,7 +304,7 @@ gimp_eek (const gchar *reason,
           gboolean     use_handler)
 {
   GimpCoreConfig *config             = the_errors_gimp->config;
-  gboolean        generate_backtrace = FALSE;
+  GimpDebugPolicy debug_policy;
   gboolean        eek_handled        = FALSE;
 
   /* GIMP has 2 ways to handle termination signals and fatal errors: one
@@ -286,7 +316,7 @@ gimp_eek (const gchar *reason,
    * The GUI backtrace has priority if it is set.
    */
   g_object_get (G_OBJECT (config),
-                "generate-backtrace", &generate_backtrace,
+                "debug-policy", &debug_policy,
                 NULL);
 
   /* Let's just always output on stdout at least so that there is a
@@ -299,7 +329,8 @@ gimp_eek (const gchar *reason,
   if (use_handler)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
-      if (generate_backtrace && ! the_errors_gimp->no_interface)
+      if (debug_policy != GIMP_DEBUG_POLICY_NEVER &&
+          ! the_errors_gimp->no_interface)
         {
           FILE     *fd;
           gboolean  has_backtrace = TRUE;

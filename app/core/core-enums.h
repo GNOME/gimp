@@ -300,6 +300,18 @@ typedef enum  /*< pdb-skip >*/
   GIMP_THUMBNAIL_SIZE_LARGE   = 256   /*< desc="Large (256x256)"  >*/
 } GimpThumbnailSize;
 
+#define GIMP_TYPE_DEBUG_POLICY (gimp_debug_policy_get_type ())
+
+GType gimp_debug_policy_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_DEBUG_POLICY_WARNING,    /*< desc="Debug warnings, critical errors and crashes" >*/
+  GIMP_DEBUG_POLICY_CRITICAL,   /*< desc="Debug critical errors and crashes"           >*/
+  GIMP_DEBUG_POLICY_FATAL,      /*< desc="Debug crashes only"                          >*/
+  GIMP_DEBUG_POLICY_NEVER       /*< desc="Never debug GIMP"                            >*/
+} GimpDebugPolicy;
+
 
 #define GIMP_TYPE_UNDO_MODE (gimp_undo_mode_get_type ())
 

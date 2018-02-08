@@ -655,6 +655,39 @@ gimp_thumbnail_size_get_type (void)
 }
 
 GType
+gimp_debug_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DEBUG_POLICY_WARNING, "GIMP_DEBUG_POLICY_WARNING", "warning" },
+    { GIMP_DEBUG_POLICY_CRITICAL, "GIMP_DEBUG_POLICY_CRITICAL", "critical" },
+    { GIMP_DEBUG_POLICY_FATAL, "GIMP_DEBUG_POLICY_FATAL", "fatal" },
+    { GIMP_DEBUG_POLICY_NEVER, "GIMP_DEBUG_POLICY_NEVER", "never" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DEBUG_POLICY_WARNING, NC_("debug-policy", "Debug warnings, critical errors and crashes"), NULL },
+    { GIMP_DEBUG_POLICY_CRITICAL, NC_("debug-policy", "Debug critical errors and crashes"), NULL },
+    { GIMP_DEBUG_POLICY_FATAL, NC_("debug-policy", "Debug crashes only"), NULL },
+    { GIMP_DEBUG_POLICY_NEVER, NC_("debug-policy", "Never debug GIMP"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDebugPolicy", values);
+      gimp_type_set_translation_context (type, "debug-policy");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_undo_mode_get_type (void)
 {
   static const GEnumValue values[] =

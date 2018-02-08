@@ -1257,9 +1257,13 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Bug Reporting"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  button = prefs_check_button_add (object, "generate-backtrace",
-                                   _("Try generating debug data for bug reporting when appropriate"),
-                                   GTK_BOX (vbox2));
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  button = prefs_enum_combo_box_add (object, "debug-policy", 0, 0,
+                                     _("Try generating debug data for bug reporting when appropriate"),
+                                     GTK_TABLE (table), 0, size_group);
+
   gtk_widget_set_sensitive (button, FALSE);
 
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
