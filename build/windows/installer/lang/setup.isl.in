@@ -1,11 +1,20 @@
 ; to generate the language-specific .setup.isl files,
 ; configure with --enable-windows-installer, and run make.
 
+; untuk menghasilkan file spesifik .setup.isl,
+; konfigurasikan dengan --enable-windows-installer, dan jalankan make.
+
 [Messages]
 ;InfoBefore page is used instead of license page because the GPL only concerns distribution, not use, and as such doesn't have to be accepted
 _WizardInfoBefore=License Agreement
 _AboutSetupNote=Setup built by Jernej Simonèiè, jernej-gimp@ena.si
 _WinVersionTooLowError=This version of GIMP requires Windows XP with Service Pack 3, or a newer version of Windows.
+
+[Pesan]
+; Halaman InfoBefore digunakan sebagai pengganti halaman lisensi karena GPL hanya menyangkut distribusi, tidak digunakan, dan karena itu tidak harus diterima
+_WizardInfoBefore = Perjanjian Lisensi
+_AboutSetupNote = Setup yang dibuat oleh Jernej Simonèiè, jernej-gimp@ena.si
+_WinVersionTooLowError = Versi GIMP ini memerlukan Windows XP dengan Service Pack 3, atau versi Windows yang lebih baru.
 
 [CustomMessages]
 ;shown before the wizard starts on development versions of GIMP
@@ -14,22 +23,46 @@ _DevelopmentWarning=This is a development version of GIMP where some features ma
 _DevelopmentButtonContinue=&Continue
 _DevelopmentButtonExit=Exit
 
+[CustomMessages]
+; ditampilkan sebelum wizard dimulai pada versi pengembangan GIMP
+_DevelopmentWarningTitle = Versi pengembangan
+_DevelopmentWarning = Ini adalah versi pengembangan GIMP dimana beberapa fitur mungkin tidak selesai, atau mungkin tidak stabil.% N Versi GIMP ini tidak dimaksudkan untuk pekerjaan sehari-hari karena mungkin tidak stabil, dan Anda bisa kehilangan pekerjaan Anda. .% nJika Anda mengalami masalah, pertama verifikasi bahwa mereka belum selesai di GIT sebelum menghubungi pengembang atau melaporkannya di bugzilla GIMP:% n_https: //bugzilla.gnome.org/enter_bug.cgi? product = GIMP % n% nApakah Anda ingin melanjutkan pemasangan?
+_DevelopmentButtonContinue = & Lanjutkan
+_DevelopmentButtonExit = Keluar
+
 ;XPSP3Recommended=Warning: you are running an unsupported version of Windows. Please update to at least Windows XP with Service Pack 3 before reporting any problems.
 _SSERequired=This version of GIMP requires a processor that supports SSE instructions.
+
+; XPSP3Recommended = Warning: Anda menjalankan Windows yang tidak didukung. Silakan update ke setidaknya Windows XP dengan Service Pack 3 sebelum melaporkan adanya masalah.
+_SSERequired = Versi GIMP ini membutuhkan prosesor yang mendukung instruksi SSE.
 
 _Require32BPPTitle=Display settings problem
 _Require32BPP=Setup has detected that your Windows is not running in 32 bits-per-pixel display mode. This has been known to cause stability problems with GIMP, so it's recommended to change the display colour depth to 32BPP before continuing.
 _Require32BPPContinue=&Continue
 _Require32BPPExit=E&xit
 
+_Require32BPPTitle = Tampilkan pengaturan masalah
+_Require32BPP = Setup telah mendeteksi bahwa Windows Anda tidak berjalan dalam mode tampilan 32 bit per piksel. Hal ini telah diketahui menyebabkan masalah stabilitas dengan GIMP, jadi disarankan untuk mengubah tampilan kedalaman warna menjadi 32BPP sebelum melanjutkan.
+_Require32BPPContinue = & Lanjutkan
+_Require32BPPExit = E & xit
+
 _InstallOrCustomize=GIMP is now ready to be installed. Click the Install now button to install using the default settings, or click the Customize button if you'd like to have more control over what gets installed.
 _Install=&Install
 _Customize=&Customize
+
+_InstallOrCustomize = GIMP sekarang siap untuk diinstal. Klik tombol Install now untuk menginstal menggunakan pengaturan default, atau klik tombol Customize jika Anda ingin memiliki kontrol lebih terhadap apa yang terinstal.
+_Install = & Install
+_Customize = & Sesuaikan
 
 ;setup types
 _TypeCompact=Compact installation
 _TypeCustom=Custom installation
 _TypeFull=Full installation
+
+; tipe setup
+_TypeCompact = Pemasangan yang kompak
+_TypeCustom = Instalasi kustom
+_TypeFull = Instalasi penuh
 
 ;text above component description
 _ComponentsDescription=Description
@@ -54,12 +87,42 @@ _ComponentsGhostscriptDescription=Allow GIMP to load PostScript files
 _ComponentsGimp32=Support for 32-bit plug-ins
 _ComponentsGimp32Description=Include files necessary for using 32-bit plug-ins.%nRequired for Python support.
 
+; teks di atas deskripsi komponen
+_ComponentsDescription = Deskripsi
+; komponen
+_ComponentsGimp = GIMP
+_ComponentsGimpDescription = GIMP dan semua plug-in default
+_ComponentsDeps = Pustaka run-time
+_ComponentsDepsDescription = Pustaka run-time yang digunakan oleh GIMP, termasuk lingkungan GTK + Run-time
+_ComponentsGtkWimp = mesin MS-Windows untuk GTK +
+_ComponentsGtkWimpDescription = Windows Asli mencari GIMP
+_ComponentsCompat = Dukungan untuk plug-in lama
+_ComponentsCompatDescription = Instal perpustakaan yang dibutuhkan oleh plug-in pihak ketiga yang tua
+_ComponentsTranslations = Translations
+_ComponentsTranslationsDescription = Terjemahan
+_ComponentsPython = scripting Python
+_ComponentsPythonDescription = Memungkinkan Anda untuk menggunakan plugin GIMP yang ditulis dengan bahasa scripting Python.
+_ComponentsMyPaint = sikat MyPaint
+_ComponentsMyPaintDescription = Instal set default sikat MyPaint
+_ComponentsGhostscript = Dukungan PostScript
+_ComponentsGhostscriptDescription = Izinkan GIMP memuat file PostScript
+; hanya saat menginstal di x64 Windows
+_ComponentsGimp32 = Dukungan untuk plug-in 32-bit
+_ComponentsGimp32Description = Sertakan file yang diperlukan untuk menggunakan plug-in 32-bit.% N Diperlukan untuk dukungan Python.
+
 ;additional installation tasks
 _AdditionalIcons=Additional icons:
 _AdditionalIconsDesktop=Create a &desktop icon
 _AdditionalIconsQuickLaunch=Create a &Quick Launch icon
 
+; tugas instalasi tambahan
+_AdditionalIcons = Ikon tambahan:
+_AdditionalIconsDesktop = Buat ikon & desktop
+_AdditionalIconsQuickLaunch = Buat ikon Quick Launch
+
 _RemoveOldGIMP=Remove previous GIMP version
+
+_RemoveOldGIMP = Hapus versi GIMP sebelumnya
 
 ;%1 is replaced by file name; these messages should never appear (unless user runs out of disk space at the exact right moment)
 _ErrorChangingEnviron=There was a problem updating GIMP's environment in %1. If you get any errors loading the plug-ins, try uninstalling and re-installing GIMP.
@@ -69,8 +132,19 @@ _ErrorUpdatingMyPaint=Error updating MyPaint brushes info.
 _ErrorReadingGimpRC=There was an error updating %1.
 _ErrorUpdatingGimpRC=There was an error updating GIMP's configuration file %1.
 
+;% 1 diganti dengan nama file; pesan ini tidak boleh muncul (kecuali pengguna kehabisan ruang disk pada saat yang tepat)
+_ErrorChangingEnviron = Terjadi masalah saat memperbarui lingkungan GIMP di% 1. Jika Anda mengalami kesalahan saat memuat plugin, coba copot pemasangan dan pasang ulang GIMP.
+_ErrorExtractingTemp = Kesalahan mengekstrak data sementara.
+_ErrorUpdatingPython = Kesalahan memperbarui informasi juru bahasa Python.
+_ErrorUpdatingMyPaint = Kesalahan memperbarui sikat MyPaint info.
+_ErrorReadingGimpRC = Terjadi kesalahan saat memutakhirkan% 1.
+_ErrorUpdatingGimpRC = Ada kesalahan saat memperbarui file konfigurasi GIMP% 1.
+
 ;displayed in Explorer's right-click menu
 _OpenWithGimp=Edit with GIMP
+
+; ditampilkan di menu klik kanan Explorer
+_OpenWithGimp = Edit dengan GIMP
 
 ;file associations page
 _SelectAssociationsCaption=Select file associations
@@ -81,8 +155,20 @@ _SelectAssociationsSelectAll=Select &All
 _SelectAssociationsUnselectAll=Unselect &All
 _SelectAssociationsSelectUnused=Select &Unused
 
+; halaman asosiasi file
+_SelectAssociationsCaption = Pilih asosiasi file
+_SelectAssociationsExtensions = Ekstensi:
+_SelectAssociationsInfo1 = Pilih jenis file yang ingin Anda kaitkan dengan GIMP
+_SelectAssociationsInfo2 = Ini akan membuat file terpilih terbuka di GIMP saat Anda mengklik dua kali di Explorer.
+_SelectAssociationsSelectAll = Pilih & Semua
+_SelectAssociationsUnselectAll = batalkan pilihan & semua
+_SelectAssociationsSelectUnused = Pilih & Tidak Digunakan
+
 ;shown on summary screen just before starting the install
 _ReadyMemoAssociations=File types to associate with GIMP:
+
+; ditampilkan pada layar ringkasan sebelum memulai pemasangan
+_ReadyMemoAssociations = Jenis file untuk diasosiasikan dengan GIMP:
 
 _RemovingOldVersion=Removing previous version of GIMP:
 ;%1 = version, %2 = installation directory
@@ -90,6 +176,13 @@ _RemovingOldVersion=Removing previous version of GIMP:
 _RemovingOldVersionFailed=GIMP %1 cannot be installed over your currently installed GIMP version, and the automatic uninstall of old version has failed.%n%nPlease remove the previous version of GIMP yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.
 ;couldn't find an uninstaller, or found several uninstallers
 _RemovingOldVersionCantUninstall=GIMP %1 cannot be installed over your currently installed GIMP version, and Setup couldn't determine how to remove the old version automatically.%n%nPlease remove the previous version of GIMP and any add-ons yourself before installing this version in %2, or choose a Custom install, and select a different installation folder.%n%nThe Setup will now exit.
+
+_RemovingOldVersion = Melepaskan versi GIMP sebelumnya:
+;% 1 = versi,% 2 = direktori instalasi
+; menjalankan uninstaller, tapi mengembalikan kesalahan, atau tidak menghapus semuanya
+_RemovingOldVersionFailed = GIMP% 1 tidak dapat diinstal di atas versi GIMP yang Anda instal saat ini, dan penghapusan otomatis versi lama telah gagal.% N% nHapus versi GIMP sebelumnya sebelum menginstal versi ini di% 2, atau pilih pemasangan Khusus, dan pilih folder instalasi yang berbeda.% n% nThe Setup sekarang akan keluar.
+, tidak dapat menemukan uninstaller, atau menemukan beberapa uninstaller
+_RemovingOldVersionCantUninstall = GIMP% 1 tidak dapat diinstal di atas versi GIMP yang Anda instal saat ini, dan Setup tidak dapat menentukan cara menghapus versi lama secara otomatis.% N% nHapus versi GIMP sebelumnya dan add-on sendiri sebelum menginstal versi ini di % 2, atau pilih Custom install, dan pilih folder instalasi yang berbeda.% N% nThe Setup sekarang akan keluar.
 
 _RebootRequiredFirst=Previous GIMP version was removed successfully, but Windows has to be restarted before the Setup can continue.%n%nAfter restarting your computer, Setup will continue next time an administrator logs in.
 
@@ -117,3 +210,30 @@ _InternalError=Internal error (%1).
 
 ;used by installer for add-ons (currently only help)
 _DirNotGimp=GIMP does not appear to be installed in the selected directory. Continue anyway?
+
+_RebootRequiredFirst = Versi GIMP sebelumnya telah berhasil dihapus, namun Windows harus di-restart sebelum Setup dapat dilanjutkan.% N% nSetelah me-restart komputer Anda, Setup akan berlanjut saat administrator masuk.
+
+; ditampilkan jika setting restart tidak bisa dibaca, atau jika setup tidak bisa dijalankan ulang sendiri
+_ErrorRestartingSetup = Terjadi kesalahan saat me-restart Setup. (% 1)
+
+; ditampilkan saat file sedang diekstraksi; perhatikan kapitalisasi!
+_Billboard1 = Ingat: GIMP adalah Perangkat Lunak Bebas.% N% nHarap kunjungi
+; www.gimp.org (ditampilkan antara Billboard1 dan Billboard2)
+_Billboard2 = untuk update gratis.
+
+_SettingUpAssociations = Menyiapkan kumpulan file ...
+_SettingUpPyGimp = Menyiapkan lingkungan untuk ekstensi Python GIMP ...
+_SettingUpMyPaint = Menyiapkan sikat MyPaint ...
+_SettingUpEnvironment = Menyiapkan lingkungan GIMP ...
+_SettingUpGimpRC = Menyiapkan konfigurasi GIMP untuk dukungan plug-in 32-bit ...
+
+; ditampilkan di halaman terakhir
+_LaunchGimp = Luncurkan GIMP
+
+; ditampilkan saat uninstall saat menghapus add-on
+_UninstallingAddOnCaption = Melepaskan add-on
+
+_InternalError = Kesalahan internal (% 1).
+
+; digunakan oleh installer untuk add-on (saat ini hanya membantu)
+_DirNotGimp = GIMP tidak muncul untuk dipasang di direktori yang dipilih. Terus sih?
