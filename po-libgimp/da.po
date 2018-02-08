@@ -1,5 +1,5 @@
 # Danish translation for GIMP libgimp.
-# Copyright (C) 1999, 2000, 01, 02, 03, 04, 05 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 01, 02, 03, 04, 05, 18 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
 # http://wiki.dansk-gruppen.dk/index.php/GIMP
@@ -11,124 +11,128 @@
 # Per Kongstad <p_kongstad@op.pl>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2011, 2015.
 # scootergrisen, 2015, 2016.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed).
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-16 07:09+0000\n"
-"PO-Revision-Date: 2016-02-26 00:00+0200\n"
-"Last-Translator: scootergrisen\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-12-31 16:55+0000\n"
+"PO-Revision-Date: 2018-02-07 19:38+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: \n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1136
+#: ../libgimp/gimp.c:1206
 msgid "success"
 msgstr "gennemført"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1140
+#: ../libgimp/gimp.c:1210
 msgid "execution error"
 msgstr "kørselsfejl"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1144
+#: ../libgimp/gimp.c:1214
 msgid "calling error"
 msgstr "fejl i kald"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1148
+#: ../libgimp/gimp.c:1218
 msgid "cancelled"
 msgstr "afbrudt"
 
-#: ../libgimp/gimpbrushselectbutton.c:178
+#: ../libgimp/gimpbrushselectbutton.c:179
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: ../libgimp/gimpbrushselectbutton.c:927
-#: ../libgimp/gimppatternselectbutton.c:725
+#: ../libgimp/gimpbrushselectbutton.c:928
+#: ../libgimp/gimppatternselectbutton.c:726
 msgid "_Browse..."
-msgstr "_Gennemse..."
+msgstr "G_ennemse …"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:287
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Pluginet %s kan ikke håndtere lag"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere lag"
 
-#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
 msgid "Merge Visible Layers"
 msgstr "Forén synlige lag"
 
-#: ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Pluginet %s kan ikke håndtere lagforskydning, størrelse eller opacitet"
+msgstr ""
+"Udvidelsesmodulet %s kan ikke håndtere lagforskydning, størrelse eller "
+"uigennemsigtighed"
 
-#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Pluginet %s kan kun håndtere lag som animationsbilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere lag som animationsbilleder"
 
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
 msgid "Save as Animation"
 msgstr "Gem som animation"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:297
 msgid "Flatten Image"
-msgstr "Fladgør billede"
+msgstr "Forén billedets lag (bevar gennemsigtighed)"
 
-#: ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:296
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Pluginet %s kan ikke håndtere gennemsigtighed"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere gennemsigtighed"
 
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:305
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Pluginet %s kan ikke håndtere lagmasker"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere lagmasker"
 
-#: ../libgimp/gimpexport.c:298
-msgid "Apply Layer Masks"
-msgstr "Anvend lagmasker"
-
+# Fra GIMP
 #: ../libgimp/gimpexport.c:306
+msgid "Apply Layer Masks"
+msgstr "Påfør lagmasker"
+
+#: ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Pluginet %s kan kun håndtere RGB-billeder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere RGB-billeder"
 
-#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:362
 msgid "Convert to RGB"
 msgstr "Konvertér til RGB"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:323
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Pluginet %s kan kun håndtere gråtonebilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere gråtonebilleder"
 
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:366
+#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:374
 msgid "Convert to Grayscale"
-msgstr "Konvertér til gråtone"
+msgstr "Konvertér til gråtoner"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:332
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Pluginet %s kan kun håndtere indekserede billeder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere indekserede billeder"
 
-#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
-#: ../libgimp/gimpexport.c:364
+#: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
+#: ../libgimp/gimpexport.c:372
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -136,12 +140,13 @@ msgstr ""
 "Konvertér til indekseret vha. standardindstillingerne\n"
 "(gør det manuelt for at finindstille resultatet)"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:342
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Pluginet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
+msgstr ""
+"Udvidelsesmodulet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:343
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -149,52 +154,63 @@ msgstr ""
 "Konvertér til indekseret vha. bitmap-standardindstillingerne\n"
 "(gør det manuelt for at finindstille resultatet)"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:352
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Pluginet %s kan kun håndtere RGB- eller gråtonebilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller gråtonebilleder"
 
-#: ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:361
 #, c-format
-msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "Pluginet %s kan kun håndtere RGB- eller indekserede billeder"
+msgid "%s plug-in can only handle RGB or indexed images"
+msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller indekserede billeder"
 
-#: ../libgimp/gimpexport.c:363
+#: ../libgimp/gimpexport.c:371
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Pluginet %s kan kun håndtere gråtone- eller indekserede billeder"
+msgstr ""
+"Udvidelsesmodulet %s kan kun håndtere gråtone- eller indekserede billeder"
 
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:382
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "Pluginet %s kræver en alfa-kanal"
+msgstr "Udvidelsesmodulet %s kræver en alfa-kanal"
 
-#: ../libgimp/gimpexport.c:375
+#: ../libgimp/gimpexport.c:383
 msgid "Add Alpha Channel"
 msgstr "Tilføj alfa-kanal"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:442
 msgid "Confirm Save"
-msgstr "Bekræft gemning"
+msgstr "Bekræft gem"
 
-#: ../libgimp/gimpexport.c:436
-msgid "Confirm"
-msgstr "Bekræft"
+#: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
+#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+msgid "_Cancel"
+msgstr "_Annullér"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:448
+msgid "C_onfirm"
+msgstr "_Bekræft"
+
+#: ../libgimp/gimpexport.c:524
 msgid "Export File"
 msgstr "Eksportér fil"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:528
 msgid "_Ignore"
 msgstr "_Ignorér"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
 msgid "_Export"
 msgstr "_Eksportér"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libgimp/gimpexport.c:560
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -204,11 +220,11 @@ msgstr ""
 "årsager:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:634
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre dit originale billede."
 
-#: ../libgimp/gimpexport.c:729
+#: ../libgimp/gimpexport.c:741
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -217,7 +233,7 @@ msgstr ""
 "Du er ved at gemme en lagmaske som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: ../libgimp/gimpexport.c:735
+#: ../libgimp/gimpexport.c:747
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -226,108 +242,145 @@ msgstr ""
 "Du er ved at gemme en kanal (gemt markering) som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: ../libgimp/gimpexport.c:1004
+#: ../libgimp/gimpexport.c:1015
 msgid "Export Image as "
 msgstr "Eksportér billede som "
 
-#: ../libgimp/gimpfontselectbutton.c:138
+#: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
 msgstr "Skrifttypevalg"
 
-#: ../libgimp/gimpfontselectbutton.c:153
-msgid "Sans"
-msgstr "Sans"
-
-#: ../libgimp/gimpgradientselectbutton.c:156
+#: ../libgimp/gimpgradientselectbutton.c:157
 msgid "Gradient Selection"
 msgstr "Farveovergangsvalg"
+
+#: ../libgimp/gimpimagemetadata.c:477
+msgid "GIMP 2.9/2.10"
+msgstr "GIMP 2.9/2.10"
+
+#: ../libgimp/gimpimagemetadata.c:661
+msgid "Background"
+msgstr "Baggrund"
+
+#: ../libgimp/gimpimagemetadata.c:850
+#, c-format
+msgid "Rotate %s?"
+msgstr "Rotér %s?"
+
+#: ../libgimp/gimpimagemetadata.c:856
+msgid "_Keep Original"
+msgstr "_Behold oprindelig"
+
+#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:271
+msgid "_Rotate"
+msgstr "_Rotér"
+
+#: ../libgimp/gimpimagemetadata.c:898
+msgid "Original"
+msgstr "Oprindelig"
+
+#: ../libgimp/gimpimagemetadata.c:914
+msgid "Rotated"
+msgstr "Roteret"
+
+#: ../libgimp/gimpimagemetadata.c:932
+msgid "This image contains Exif orientation metadata."
+msgstr "Dette billede indeholder Exif-metadata om rotation."
+
+#: ../libgimp/gimpimagemetadata.c:950
+msgid "Would you like to rotate the image?"
+msgstr "Vil du rotere billedet?"
+
+#: ../libgimp/gimpimagemetadata.c:962
+msgid "_Don't ask me again"
+msgstr "S_pørg mig ikke igen"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:253
 msgid "(Empty)"
 msgstr "(tom)"
 
-#: ../libgimp/gimppaletteselectbutton.c:138
+#: ../libgimp/gimppaletteselectbutton.c:139
 msgid "Palette Selection"
 msgstr "Paletvalg"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Mønstervalg"
 
-#: ../libgimp/gimpprocbrowserdialog.c:149
+#: ../libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "efter navn"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: ../libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "efter beskrivelse"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "efter hjælp"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libgimp/gimpprocbrowserdialog.c:153
 msgid "by author"
 msgstr "efter forfatter"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
+#: ../libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "efter ophavsret"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "efter dato"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "efter type"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
 msgid "No matches"
 msgstr "Ingen fundet"
 
-#: ../libgimp/gimpprocbrowserdialog.c:397
+#: ../libgimp/gimpprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
 msgstr "Søgebetingelse er ugyldig eller ufuldstændig"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
 msgstr "Søgning"
 
-#: ../libgimp/gimpprocbrowserdialog.c:417
+#: ../libgimp/gimpprocbrowserdialog.c:418
 msgid "Searching by name"
 msgstr "Søgning efter navn"
 
-#: ../libgimp/gimpprocbrowserdialog.c:438
+#: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching by description"
 msgstr "Søgning efter beskrivelse"
 
-#: ../libgimp/gimpprocbrowserdialog.c:445
+#: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by help"
 msgstr "Søgning efter hjælp"
 
-#: ../libgimp/gimpprocbrowserdialog.c:452
+#: ../libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by author"
 msgstr "Søgning efter forfatter"
 
-#: ../libgimp/gimpprocbrowserdialog.c:459
+#: ../libgimp/gimpprocbrowserdialog.c:460
 msgid "Searching by copyright"
 msgstr "Søgning efter ophavsret"
 
-#: ../libgimp/gimpprocbrowserdialog.c:466
+#: ../libgimp/gimpprocbrowserdialog.c:467
 msgid "Searching by date"
 msgstr "Søgning efter dato"
 
-#: ../libgimp/gimpprocbrowserdialog.c:473
+#: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "Searching by type"
 msgstr "Søgning efter type"
 
-#: ../libgimp/gimpprocbrowserdialog.c:483
+#: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -335,39 +388,39 @@ msgstr[0] "%d procedure"
 msgstr[1] "%d procedurer"
 
 # "for your query" er lidt svær og sådan set overflødig
-#: ../libgimp/gimpprocbrowserdialog.c:492
+#: ../libgimp/gimpprocbrowserdialog.c:493
 msgid "No matches for your query"
 msgstr "Ingen fundet"
 
 # "for your query" er lidt svær og sådan set overflødig
-#: ../libgimp/gimpprocbrowserdialog.c:496
+#: ../libgimp/gimpprocbrowserdialog.c:497
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d procedure fundet"
 msgstr[1] "%d procedurer fundet"
 
-#: ../libgimp/gimpprocview.c:172
+#: ../libgimp/gimpprocview.c:173
 msgid "Parameters"
 msgstr "Parametre"
 
-#: ../libgimp/gimpprocview.c:185
+#: ../libgimp/gimpprocview.c:186
 msgid "Return Values"
 msgstr "Returværdier"
 
-#: ../libgimp/gimpprocview.c:198
+#: ../libgimp/gimpprocview.c:199
 msgid "Additional Information"
 msgstr "Yderligere oplysninger"
 
-#: ../libgimp/gimpprocview.c:238
+#: ../libgimp/gimpprocview.c:240
 msgid "Author:"
 msgstr "Forfatter:"
 
-#: ../libgimp/gimpprocview.c:250
+#: ../libgimp/gimpprocview.c:253
 msgid "Date:"
 msgstr "Dato:"
 
-#: ../libgimp/gimpprocview.c:262
+#: ../libgimp/gimpprocview.c:266
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
@@ -378,7 +431,7 @@ msgstr "procent"
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "_Hvid (fuld opacitet)"
+msgstr "_Hvid (fuld uigennemsigtighed)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
 msgctxt "add-mask-type"
@@ -430,492 +483,1084 @@ msgstr "Fg. til gennemsigtig"
 #: ../libgimpbase/gimpbaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "Tilpasset overgang"
+msgstr "Tilpasset farveovergang"
 
 #: ../libgimpbase/gimpbaseenums.c:98
+msgctxt "brush-generated-shape"
+msgid "Circle"
+msgstr "Cirkel"
+
+#: ../libgimpbase/gimpbaseenums.c:99
+msgctxt "brush-generated-shape"
+msgid "Square"
+msgstr "Kvadrat"
+
+#: ../libgimpbase/gimpbaseenums.c:100
+msgctxt "brush-generated-shape"
+msgid "Diamond"
+msgstr "Diamant"
+
+#: ../libgimpbase/gimpbaseenums.c:130
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "Fg. farveudfyldning"
 
-#: ../libgimpbase/gimpbaseenums.c:99
+#: ../libgimpbase/gimpbaseenums.c:131
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "Bg. farveudfyldning"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: ../libgimpbase/gimpbaseenums.c:132
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Mønsterudfyldning"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+# Photoshop: https://helpx.adobe.com/dk/photoshop/using/modify-shapes.html
+#: ../libgimpbase/gimpbaseenums.c:162
+msgctxt "cap-style"
+msgid "Butt"
+msgstr "Flad"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgctxt "cap-style"
+msgid "Round"
+msgstr "Rund"
+
+#: ../libgimpbase/gimpbaseenums.c:164
+msgctxt "cap-style"
+msgid "Square"
+msgstr "Kvadrat"
+
+#: ../libgimpbase/gimpbaseenums.c:195
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Føj til den aktuelle markering"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libgimpbase/gimpbaseenums.c:196
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Træk fra den aktuelle markering"
 
-#: ../libgimpbase/gimpbaseenums.c:133
+#: ../libgimpbase/gimpbaseenums.c:197
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Erstat den aktuelle markering"
 
-#: ../libgimpbase/gimpbaseenums.c:134
+#: ../libgimpbase/gimpbaseenums.c:198
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr "Kryds med den aktuelle markering"
+msgstr "Gennemskær med den aktuelle markering"
 
-#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libgimpbase/gimpbaseenums.c:231
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Rød"
 
-#: ../libgimpbase/gimpbaseenums.c:168
+#: ../libgimpbase/gimpbaseenums.c:232
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Grøn"
 
-#: ../libgimpbase/gimpbaseenums.c:169
+#: ../libgimpbase/gimpbaseenums.c:233
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Blå"
 
-#: ../libgimpbase/gimpbaseenums.c:170
+#: ../libgimpbase/gimpbaseenums.c:234
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Grå"
 
-#: ../libgimpbase/gimpbaseenums.c:171
+#: ../libgimpbase/gimpbaseenums.c:235
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indekseret"
 
-#: ../libgimpbase/gimpbaseenums.c:172
+#: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libgimpbase/gimpbaseenums.c:266
 msgctxt "check-size"
 msgid "Small"
 msgstr "Små"
 
-#: ../libgimpbase/gimpbaseenums.c:203
+#: ../libgimpbase/gimpbaseenums.c:267
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Medium"
 
-#: ../libgimpbase/gimpbaseenums.c:204
+#: ../libgimpbase/gimpbaseenums.c:268
 msgctxt "check-size"
 msgid "Large"
 msgstr "Store"
 
 # http://docs.gimp.org/en/plug-in-checkerboard.html
-#: ../libgimpbase/gimpbaseenums.c:237
+#: ../libgimpbase/gimpbaseenums.c:301
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Lyse tern"
 
 # http://docs.gimp.org/en/plug-in-checkerboard.html
-#: ../libgimpbase/gimpbaseenums.c:238
+#: ../libgimpbase/gimpbaseenums.c:302
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr "Mellemtone tern"
+msgstr "Mellemtonetern"
 
 # http://docs.gimp.org/en/plug-in-checkerboard.html
-#: ../libgimpbase/gimpbaseenums.c:239
+#: ../libgimpbase/gimpbaseenums.c:303
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Mørke tern"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: ../libgimpbase/gimpbaseenums.c:304
 msgctxt "check-type"
 msgid "White only"
 msgstr "Kun hvid"
 
-#: ../libgimpbase/gimpbaseenums.c:241
+#: ../libgimpbase/gimpbaseenums.c:305
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Kun grå"
 
-#: ../libgimpbase/gimpbaseenums.c:242
+#: ../libgimpbase/gimpbaseenums.c:306
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Kun sort"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libgimpbase/gimpbaseenums.c:335
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Billede"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libgimpbase/gimpbaseenums.c:336
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Mønster"
 
-#: ../libgimpbase/gimpbaseenums.c:302
-msgctxt "desaturate-mode"
-msgid "Lightness"
-msgstr "Lysstyrke"
+#: ../libgimpbase/gimpbaseenums.c:372
+msgctxt "color-tag"
+msgid "None"
+msgstr "Ingen"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libgimpbase/gimpbaseenums.c:373
+msgctxt "color-tag"
+msgid "Blue"
+msgstr "Blå"
+
+#: ../libgimpbase/gimpbaseenums.c:374
+msgctxt "color-tag"
+msgid "Green"
+msgstr "Grøn"
+
+#: ../libgimpbase/gimpbaseenums.c:375
+msgctxt "color-tag"
+msgid "Yellow"
+msgstr "Gul"
+
+#: ../libgimpbase/gimpbaseenums.c:376
+msgctxt "color-tag"
+msgid "Orange"
+msgstr "Orange"
+
+#: ../libgimpbase/gimpbaseenums.c:377
+msgctxt "color-tag"
+msgid "Brown"
+msgstr "Brun"
+
+#: ../libgimpbase/gimpbaseenums.c:378
+msgctxt "color-tag"
+msgid "Red"
+msgstr "Rød"
+
+#: ../libgimpbase/gimpbaseenums.c:379
+msgctxt "color-tag"
+msgid "Violet"
+msgstr "Violet"
+
+#: ../libgimpbase/gimpbaseenums.c:380
+msgctxt "color-tag"
+msgid "Gray"
+msgstr "Grå"
+
+#: ../libgimpbase/gimpbaseenums.c:413
+msgctxt "component-type"
+msgid "8-bit integer"
+msgstr "8 bit heltal"
+
+#: ../libgimpbase/gimpbaseenums.c:414
+msgctxt "component-type"
+msgid "16-bit integer"
+msgstr "16 bit heltal"
+
+#: ../libgimpbase/gimpbaseenums.c:415
+msgctxt "component-type"
+msgid "32-bit integer"
+msgstr "32 bit heltal"
+
+#: ../libgimpbase/gimpbaseenums.c:416
+msgctxt "component-type"
+msgid "16-bit floating point"
+msgstr "16 bit flydende tal"
+
+#: ../libgimpbase/gimpbaseenums.c:417
+msgctxt "component-type"
+msgid "32-bit floating point"
+msgstr "32 bit flydende tal"
+
+#: ../libgimpbase/gimpbaseenums.c:418
+msgctxt "component-type"
+msgid "64-bit floating point"
+msgstr "64 bit flydende tal"
+
+#: ../libgimpbase/gimpbaseenums.c:449
+msgctxt "convert-palette-type"
+msgid "Generate optimum palette"
+msgstr "Opret optimal palet"
+
+#: ../libgimpbase/gimpbaseenums.c:450
+msgctxt "convert-palette-type"
+msgid "Use web-optimized palette"
+msgstr "Brug palet optimeret til web"
+
+#: ../libgimpbase/gimpbaseenums.c:451
+msgctxt "convert-palette-type"
+msgid "Use black and white (1-bit) palette"
+msgstr "Brug sort og hvid (1 bit) palet"
+
+#: ../libgimpbase/gimpbaseenums.c:452
+msgctxt "convert-palette-type"
+msgid "Use custom palette"
+msgstr "Brug tilpasset palet"
+
+#: ../libgimpbase/gimpbaseenums.c:481
+msgctxt "convolve-type"
+msgid "Blur"
+msgstr "Sløring"
+
+#: ../libgimpbase/gimpbaseenums.c:482
+msgctxt "convolve-type"
+msgid "Sharpen"
+msgstr "Skærp"
+
+#: ../libgimpbase/gimpbaseenums.c:514
 msgctxt "desaturate-mode"
-msgid "Luminosity"
+msgid "Lightness (HSL)"
+msgstr "Lyshed (HSL)"
+
+#: ../libgimpbase/gimpbaseenums.c:515
+msgctxt "desaturate-mode"
+msgid "Luma"
+msgstr "Luma"
+
+#: ../libgimpbase/gimpbaseenums.c:516
+msgctxt "desaturate-mode"
+msgid "Average (HSI Intensity)"
+msgstr "Gennemsnit (HSI-intensitet)"
+
+#: ../libgimpbase/gimpbaseenums.c:517
+msgctxt "desaturate-mode"
+msgid "Luminance"
 msgstr "Luminans"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "desaturate-mode"
-msgid "Average"
-msgstr "Gennemsnit"
+msgid "Value (HSV)"
+msgstr "Lyshed (HSV)"
 
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
-#: ../libgimpbase/gimpbaseenums.c:333
+#: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Lysne"
 
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
-#: ../libgimpbase/gimpbaseenums.c:334
+#: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Mørkne"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:580
+msgctxt "fill-type"
+msgid "Foreground color"
+msgstr "Forgrundsfarve"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+msgctxt "fill-type"
+msgid "Background color"
+msgstr "Baggrundsfarve"
+
+#: ../libgimpbase/gimpbaseenums.c:582
+msgctxt "fill-type"
+msgid "White"
+msgstr "Hvid"
+
+#: ../libgimpbase/gimpbaseenums.c:583
+msgctxt "fill-type"
+msgid "Transparency"
+msgstr "Gennemsigtighed"
+
+#: ../libgimpbase/gimpbaseenums.c:584
+msgctxt "fill-type"
+msgid "Pattern"
+msgstr "Mønster"
+
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "gradient-segment-color"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:645
+msgctxt "gradient-segment-color"
+msgid "HSV (counter-clockwise hue)"
+msgstr "HSV (farvetone mod uret)"
+
+# http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
+#. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:648
+#| msgctxt "gradient-type"
+#| msgid "Spiral (ccw)"
+msgctxt "gradient-segment-color"
+msgid "HSV (ccw)"
+msgstr "HSV (↺)"
+
+#: ../libgimpbase/gimpbaseenums.c:649
+msgctxt "gradient-segment-color"
+msgid "HSV (clockwise hue)"
+msgstr "HSV (farvetone med uret)"
+
+#. Translators: this is an abbreviated version of "HSV (clockwise hue)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:652
+msgctxt "gradient-segment-color"
+msgid "HSV (cw)"
+msgstr "HSV (↻)"
+
+#: ../libgimpbase/gimpbaseenums.c:684
+msgctxt "gradient-segment-type"
+msgid "Linear"
+msgstr "Lineær"
+
+#: ../libgimpbase/gimpbaseenums.c:685
+msgctxt "gradient-segment-type"
+msgid "Curved"
+msgstr "Buet"
+
+#: ../libgimpbase/gimpbaseenums.c:686
+msgctxt "gradient-segment-type"
+msgid "Sinusoidal"
+msgstr "Bølgelignende"
+
+#: ../libgimpbase/gimpbaseenums.c:687
+msgctxt "gradient-segment-type"
+msgid "Spherical (increasing)"
+msgstr "Sfærisk (voksende)"
+
+#. Translators: this is an abbreviated version of "Spherical (increasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:690
+msgctxt "gradient-segment-type"
+msgid "Spherical (inc)"
+msgstr "Sfærisk (voks)"
+
+#: ../libgimpbase/gimpbaseenums.c:691
+msgctxt "gradient-segment-type"
+msgid "Spherical (decreasing)"
+msgstr "Sfærisk (aftagende)"
+
+#. Translators: this is an abbreviated version of "Spherical (decreasing)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:694
+msgctxt "gradient-segment-type"
+msgid "Spherical (dec)"
+msgstr "Sfærisk (aft)"
+
+#: ../libgimpbase/gimpbaseenums.c:732
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineær"
 
-#: ../libgimpbase/gimpbaseenums.c:401
+#: ../libgimpbase/gimpbaseenums.c:733
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bilineær"
 
-#: ../libgimpbase/gimpbaseenums.c:402
+#: ../libgimpbase/gimpbaseenums.c:734
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:403
+#: ../libgimpbase/gimpbaseenums.c:735
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Kvadratisk"
 
-#: ../libgimpbase/gimpbaseenums.c:404
+#: ../libgimpbase/gimpbaseenums.c:736
+msgctxt "gradient-type"
+msgid "Conical (symmetric)"
+msgstr "Konisk (symmetrisk)"
+
+#. Translators: this is an abbreviated version of "Conical (symmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:739
 msgctxt "gradient-type"
 msgid "Conical (sym)"
-msgstr "Konisk (sym.)"
+msgstr "Konisk (sym)"
 
-#: ../libgimpbase/gimpbaseenums.c:405
+#: ../libgimpbase/gimpbaseenums.c:740
+msgctxt "gradient-type"
+msgid "Conical (asymmetric)"
+msgstr "Konisk (asymmetrisk)"
+
+#. Translators: this is an abbreviated version of "Conical (asymmetric)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:743
 msgctxt "gradient-type"
 msgid "Conical (asym)"
-msgstr "Konisk (asym.)"
+msgstr "Konisk (asym)"
 
-#: ../libgimpbase/gimpbaseenums.c:406
+#: ../libgimpbase/gimpbaseenums.c:744
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Formet (vinklet)"
 
-#: ../libgimpbase/gimpbaseenums.c:407
+#: ../libgimpbase/gimpbaseenums.c:745
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Formet (sfærisk)"
 
-#: ../libgimpbase/gimpbaseenums.c:408
+#: ../libgimpbase/gimpbaseenums.c:746
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Formet (forsænket)"
 
-#: ../libgimpbase/gimpbaseenums.c:409
+# http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
+#: ../libgimpbase/gimpbaseenums.c:747
 msgctxt "gradient-type"
-msgid "Spiral (cw)"
+msgid "Spiral (clockwise)"
 msgstr "Spiral (med uret)"
 
-# http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
-#: ../libgimpbase/gimpbaseenums.c:410
+#. Translators: this is an abbreviated version of "Spiral (clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:750
 msgctxt "gradient-type"
-msgid "Spiral (ccw)"
+msgid "Spiral (cw)"
+msgstr "Spiral (↻)"
+
+# http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
+#: ../libgimpbase/gimpbaseenums.c:751
+msgctxt "gradient-type"
+msgid "Spiral (counter-clockwise)"
 msgstr "Spiral (mod uret)"
 
-#: ../libgimpbase/gimpbaseenums.c:442
+# http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
+#. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
+#. Keep it short.
+#: ../libgimpbase/gimpbaseenums.c:754
+msgctxt "gradient-type"
+msgid "Spiral (ccw)"
+msgstr "Spiral (↺)"
+
+#: ../libgimpbase/gimpbaseenums.c:786
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Kryds (prikker)"
 
-#: ../libgimpbase/gimpbaseenums.c:443
+#: ../libgimpbase/gimpbaseenums.c:787
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Kryds (sigtekorn)"
 
-#: ../libgimpbase/gimpbaseenums.c:444
+#: ../libgimpbase/gimpbaseenums.c:788
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Stiplet"
 
-#: ../libgimpbase/gimpbaseenums.c:445
+#: ../libgimpbase/gimpbaseenums.c:789
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Dobbeltstiplet"
 
-#: ../libgimpbase/gimpbaseenums.c:446
+#: ../libgimpbase/gimpbaseenums.c:790
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Ensfarvet"
 
-#: ../libgimpbase/gimpbaseenums.c:476
+#: ../libgimpbase/gimpbaseenums.c:860
 msgctxt "icon-type"
-msgid "Stock ID"
-msgstr "Lager-id"
+msgid "Icon name"
+msgstr "Ikonnavn"
 
-#: ../libgimpbase/gimpbaseenums.c:477
+#: ../libgimpbase/gimpbaseenums.c:861
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "Indlejret pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:478
+#: ../libgimpbase/gimpbaseenums.c:862
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Billedfil"
 
-#: ../libgimpbase/gimpbaseenums.c:508
+#: ../libgimpbase/gimpbaseenums.c:892
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB-farve"
 
-#: ../libgimpbase/gimpbaseenums.c:509
+#: ../libgimpbase/gimpbaseenums.c:893
 msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr "Gråtone"
+msgstr "Gråtoner"
 
-#: ../libgimpbase/gimpbaseenums.c:510
+#: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indekseret farve"
 
-#: ../libgimpbase/gimpbaseenums.c:543
+#: ../libgimpbase/gimpbaseenums.c:927
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:544
+#: ../libgimpbase/gimpbaseenums.c:928
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:545
+#: ../libgimpbase/gimpbaseenums.c:929
 msgctxt "image-type"
 msgid "Grayscale"
-msgstr "Gråtone"
+msgstr "Gråtoner"
 
-#: ../libgimpbase/gimpbaseenums.c:546
+#: ../libgimpbase/gimpbaseenums.c:930
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Gråtone-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:547
+#: ../libgimpbase/gimpbaseenums.c:931
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indekseret"
 
-#: ../libgimpbase/gimpbaseenums.c:548
+#: ../libgimpbase/gimpbaseenums.c:932
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indekseret-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:579
+#: ../libgimpbase/gimpbaseenums.c:962
+msgctxt "ink-blob-type"
+msgid "Circle"
+msgstr "Cirkel"
+
+#: ../libgimpbase/gimpbaseenums.c:963
+msgctxt "ink-blob-type"
+msgid "Square"
+msgstr "Kvadrat"
+
+#: ../libgimpbase/gimpbaseenums.c:964
+msgctxt "ink-blob-type"
+msgid "Diamond"
+msgstr "Diamant"
+
+#: ../libgimpbase/gimpbaseenums.c:996
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Ingen"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libgimpbase/gimpbaseenums.c:997
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Lineær"
 
-#: ../libgimpbase/gimpbaseenums.c:581
+#: ../libgimpbase/gimpbaseenums.c:998
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kubisk"
 
-#: ../libgimpbase/gimpbaseenums.c:582
+#: ../libgimpbase/gimpbaseenums.c:999
 msgctxt "interpolation-type"
-msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3)"
+msgid "NoHalo"
+msgstr "IngenHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:611
+#: ../libgimpbase/gimpbaseenums.c:1000
+msgctxt "interpolation-type"
+msgid "LoHalo"
+msgstr "LidtHalo"
+
+# Photoshop: https://helpx.adobe.com/dk/photoshop/using/modify-shapes.html
+#: ../libgimpbase/gimpbaseenums.c:1030
+msgctxt "join-style"
+msgid "Miter"
+msgstr "Spids"
+
+#: ../libgimpbase/gimpbaseenums.c:1031
+msgctxt "join-style"
+msgid "Round"
+msgstr "Rund"
+
+#: ../libgimpbase/gimpbaseenums.c:1032
+msgctxt "join-style"
+msgid "Bevel"
+msgstr "Facet"
+
+#: ../libgimpbase/gimpbaseenums.c:1093
+msgctxt "merge-type"
+msgid "Expanded as necessary"
+msgstr "Udvidet om nødvendigt"
+
+#: ../libgimpbase/gimpbaseenums.c:1094
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "Beskåret til billedet"
+
+#: ../libgimpbase/gimpbaseenums.c:1095
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "Beskåret til det nederste lag"
+
+#: ../libgimpbase/gimpbaseenums.c:1096
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "Forén billedets lag (fjern gennemsigtighed)"
+
+#: ../libgimpbase/gimpbaseenums.c:1188
+msgctxt "orientation-type"
+msgid "Horizontal"
+msgstr "Vandret"
+
+#: ../libgimpbase/gimpbaseenums.c:1189
+msgctxt "orientation-type"
+msgid "Vertical"
+msgstr "Lodret"
+
+#: ../libgimpbase/gimpbaseenums.c:1190
+msgctxt "orientation-type"
+msgid "Unknown"
+msgstr "Ukendt"
+
+#: ../libgimpbase/gimpbaseenums.c:1219
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Konstant"
 
-#: ../libgimpbase/gimpbaseenums.c:612
+#: ../libgimpbase/gimpbaseenums.c:1220
 msgctxt "paint-application-mode"
 msgid "Incremental"
-msgstr "Forøgende"
+msgstr "Trinvis"
 
-#: ../libgimpbase/gimpbaseenums.c:642
-msgctxt "repeat-mode"
-msgid "None"
-msgstr "Ingen"
-
-#: ../libgimpbase/gimpbaseenums.c:643
-msgctxt "repeat-mode"
-msgid "Sawtooth wave"
-msgstr "Savtakket bølge"
-
-#: ../libgimpbase/gimpbaseenums.c:644
-msgctxt "repeat-mode"
-msgid "Triangular wave"
-msgstr "Trekantet bølge"
-
-#: ../libgimpbase/gimpbaseenums.c:674
-msgctxt "run-mode"
-msgid "Run interactively"
-msgstr "Kør interaktivt"
-
-#: ../libgimpbase/gimpbaseenums.c:675
-msgctxt "run-mode"
-msgid "Run non-interactively"
-msgstr "Kør ikke-interaktivt"
-
-#: ../libgimpbase/gimpbaseenums.c:676
-msgctxt "run-mode"
-msgid "Run with last used values"
-msgstr "Kør med sidst brugte værdier"
-
-#: ../libgimpbase/gimpbaseenums.c:705
-msgctxt "size-type"
-msgid "Pixels"
-msgstr "Pixels"
-
-#: ../libgimpbase/gimpbaseenums.c:706
-msgctxt "size-type"
-msgid "Points"
-msgstr "Punkter"
-
-#: ../libgimpbase/gimpbaseenums.c:736
-msgctxt "transfer-mode"
-msgid "Shadows"
-msgstr "Skygger"
-
-#: ../libgimpbase/gimpbaseenums.c:737
-msgctxt "transfer-mode"
-msgid "Midtones"
-msgstr "Mellemtoner"
-
-#: ../libgimpbase/gimpbaseenums.c:738
-msgctxt "transfer-mode"
-msgid "Highlights"
-msgstr "Højlys"
-
-#: ../libgimpbase/gimpbaseenums.c:767
-msgctxt "transform-direction"
-msgid "Normal (Forward)"
-msgstr "Normal (fremad)"
-
-#: ../libgimpbase/gimpbaseenums.c:768
-msgctxt "transform-direction"
-msgid "Corrective (Backward)"
-msgstr "Korrigerende (tilbage)"
-
-#: ../libgimpbase/gimpbaseenums.c:799
-msgctxt "transform-resize"
-msgid "Adjust"
-msgstr "Justér"
-
-#: ../libgimpbase/gimpbaseenums.c:800
-msgctxt "transform-resize"
-msgid "Clip"
-msgstr "Klip"
-
-#: ../libgimpbase/gimpbaseenums.c:801
-msgctxt "transform-resize"
-msgid "Crop to result"
-msgstr "Beskær til resultat"
-
-#: ../libgimpbase/gimpbaseenums.c:802
-msgctxt "transform-resize"
-msgid "Crop with aspect"
-msgstr "Beskær med forhold"
-
-#: ../libgimpbase/gimpbaseenums.c:935
+#: ../libgimpbase/gimpbaseenums.c:1353
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Intern GIMP-procedure"
 
-#: ../libgimpbase/gimpbaseenums.c:936
+#: ../libgimpbase/gimpbaseenums.c:1354
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP-plugin"
+msgstr "GIMP-udvidelsesmodul"
 
-#: ../libgimpbase/gimpbaseenums.c:937
+#: ../libgimpbase/gimpbaseenums.c:1355
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP-udvidelse"
 
-#: ../libgimpbase/gimpbaseenums.c:938
+#: ../libgimpbase/gimpbaseenums.c:1356
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Midlertidig procedure"
 
-#: ../libgimpbase/gimpbaseenums.c:1105
+#: ../libgimpbase/gimpbaseenums.c:1431
+msgctxt "precision"
+msgid "8-bit linear integer"
+msgstr "8 bit heltal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1432
+msgctxt "precision"
+msgid "8-bit gamma integer"
+msgstr "8 bit heltal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1433
+msgctxt "precision"
+msgid "16-bit linear integer"
+msgstr "16 bit heltal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1434
+msgctxt "precision"
+msgid "16-bit gamma integer"
+msgstr "16 bit heltal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1435
+msgctxt "precision"
+msgid "32-bit linear integer"
+msgstr "32 bit heltal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1436
+msgctxt "precision"
+msgid "32-bit gamma integer"
+msgstr "32 bit heltal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1437
+msgctxt "precision"
+msgid "16-bit linear floating point"
+msgstr "16 bit flydende tal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1438
+msgctxt "precision"
+msgid "16-bit gamma floating point"
+msgstr "16 bit flydende tal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1439
+msgctxt "precision"
+msgid "32-bit linear floating point"
+msgstr "32 bit flydende tal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1440
+msgctxt "precision"
+msgid "32-bit gamma floating point"
+msgstr "32 bit flydende tal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1441
+msgctxt "precision"
+msgid "64-bit linear floating point"
+msgstr "64 bit flydende tal (lineær)"
+
+#: ../libgimpbase/gimpbaseenums.c:1442
+msgctxt "precision"
+msgid "64-bit gamma floating point"
+msgstr "64 bit flydende tal (gamma)"
+
+#: ../libgimpbase/gimpbaseenums.c:1511
+msgctxt "repeat-mode"
+msgid "None (extend)"
+msgstr "Ingen (udvid)"
+
+#: ../libgimpbase/gimpbaseenums.c:1512
+msgctxt "repeat-mode"
+msgid "Sawtooth wave"
+msgstr "Savtakket bølge"
+
+#: ../libgimpbase/gimpbaseenums.c:1513
+msgctxt "repeat-mode"
+msgid "Triangular wave"
+msgstr "Trekantet bølge"
+
+#: ../libgimpbase/gimpbaseenums.c:1514
+msgctxt "repeat-mode"
+msgid "Truncate"
+msgstr "Afkort"
+
+#: ../libgimpbase/gimpbaseenums.c:1576
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr "Kør interaktivt"
+
+#: ../libgimpbase/gimpbaseenums.c:1577
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr "Kør ikke-interaktivt"
+
+#: ../libgimpbase/gimpbaseenums.c:1578
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr "Kør med sidst brugte værdier"
+
+#: ../libgimpbase/gimpbaseenums.c:1616
+msgctxt "select-criterion"
+msgid "Composite"
+msgstr "Sammensat"
+
+#: ../libgimpbase/gimpbaseenums.c:1617
+msgctxt "select-criterion"
+msgid "Red"
+msgstr "Rød"
+
+#: ../libgimpbase/gimpbaseenums.c:1618
+msgctxt "select-criterion"
+msgid "Green"
+msgstr "Grøn"
+
+#: ../libgimpbase/gimpbaseenums.c:1619
+msgctxt "select-criterion"
+msgid "Blue"
+msgstr "Blå"
+
+#: ../libgimpbase/gimpbaseenums.c:1620
+msgctxt "select-criterion"
+msgid "Hue (HSV)"
+msgstr "Farvetone (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1621
+msgctxt "select-criterion"
+msgid "Saturation (HSV)"
+msgstr "Mætning (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1622
+msgctxt "select-criterion"
+msgid "Value (HSV)"
+msgstr "Lyshed (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1623
+msgctxt "select-criterion"
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:1624
+msgctxt "select-criterion"
+msgid "Lightness (LCH)"
+msgstr "Lyshed (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1625
+msgctxt "select-criterion"
+msgid "Chroma (LCH)"
+msgstr "Farvestyrke (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1626
+msgctxt "select-criterion"
+msgid "Hue (LCH)"
+msgstr "Farvetone (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1655
+msgctxt "size-type"
+msgid "Pixels"
+msgstr "Pixels"
+
+#: ../libgimpbase/gimpbaseenums.c:1656
+msgctxt "size-type"
+msgid "Points"
+msgstr "Punkter"
+
+#: ../libgimpbase/gimpbaseenums.c:1717
+msgctxt "stroke-method"
+msgid "Stroke line"
+msgstr "Strøglinje"
+
+#: ../libgimpbase/gimpbaseenums.c:1718
+msgctxt "stroke-method"
+msgid "Stroke with a paint tool"
+msgstr "Bestryg med et maleværktøj"
+
+#: ../libgimpbase/gimpbaseenums.c:1747
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Fra venstre mod højre"
 
-#: ../libgimpbase/gimpbaseenums.c:1106
+#: ../libgimpbase/gimpbaseenums.c:1748
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Fra højre mod venstre"
 
-#: ../libgimpbase/gimpbaseenums.c:1137
+#: ../libgimpbase/gimpbaseenums.c:1779
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ingen"
 
-#: ../libgimpbase/gimpbaseenums.c:1138
+#: ../libgimpbase/gimpbaseenums.c:1780
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Let"
 
-#: ../libgimpbase/gimpbaseenums.c:1139
+#: ../libgimpbase/gimpbaseenums.c:1781
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Medium"
 
-#: ../libgimpbase/gimpbaseenums.c:1140
+#: ../libgimpbase/gimpbaseenums.c:1782
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Fuld"
 
-#: ../libgimpbase/gimpbaseenums.c:1171
+#: ../libgimpbase/gimpbaseenums.c:1813
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Venstrestillet"
 
-#: ../libgimpbase/gimpbaseenums.c:1172
+#: ../libgimpbase/gimpbaseenums.c:1814
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Højrestillet"
 
-#: ../libgimpbase/gimpbaseenums.c:1173
+#: ../libgimpbase/gimpbaseenums.c:1815
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centreret"
 
-#: ../libgimpbase/gimpbaseenums.c:1174
+#: ../libgimpbase/gimpbaseenums.c:1816
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Udfyldt"
 
-#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:458
-#: ../modules/color-selector-cmyk-lcms.c:485
-#: ../modules/display-filter-lcms.c:230 ../modules/display-filter-lcms.c:239
+#: ../libgimpbase/gimpbaseenums.c:1846
+msgctxt "transfer-mode"
+msgid "Shadows"
+msgstr "Skygger"
+
+#: ../libgimpbase/gimpbaseenums.c:1847
+msgctxt "transfer-mode"
+msgid "Midtones"
+msgstr "Mellemtoner"
+
+#: ../libgimpbase/gimpbaseenums.c:1848
+msgctxt "transfer-mode"
+msgid "Highlights"
+msgstr "Højlys"
+
+#: ../libgimpbase/gimpbaseenums.c:1877
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr "Normal (fremad)"
+
+#: ../libgimpbase/gimpbaseenums.c:1878
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr "Korrigerende (tilbage)"
+
+#: ../libgimpbase/gimpbaseenums.c:1909
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr "Justér"
+
+#: ../libgimpbase/gimpbaseenums.c:1910
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr "Klip"
+
+#: ../libgimpbase/gimpbaseenums.c:1911
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr "Beskær til resultat"
+
+#: ../libgimpbase/gimpbaseenums.c:1912
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr "Beskær med forhold"
+
+#: ../libgimpbase/gimpmetadata.c:840
+#, c-format
+msgid "Can load metadata only from local files"
+msgstr "Kan kun indlæse metadata fra lokale filer"
+
+#: ../libgimpbase/gimpmetadata.c:900
+#, c-format
+msgid "Can save metadata only to local files"
+msgstr "Kan kun gemme metadata til lokale filer"
+
+#: ../libgimpbase/gimpmetadata.c:976
+#, c-format
+msgid "Parsing Exif data failed."
+msgstr "Fortolkning af Exif-data mislykkedes."
+
+#: ../libgimpbase/gimpmetadata.c:1027
+#, c-format
+msgid "Parsing IPTC data failed."
+msgstr "Fortolkning af IPTC-data mislykkedes."
+
+#: ../libgimpbase/gimpmetadata.c:1076
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr "Fortolkning af XMP-data mislykkedes."
+
+#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
 msgid "(invalid UTF-8 string)"
 msgstr "(ugyldig UTF-8-streng)"
 
-# Farvehåndtering
+#: ../libgimpbase/gimputils.c:367
+msgid "File path is NULL"
+msgstr "Filstien er NULL"
+
+# Har det et dansk navn: https://en.wikipedia.org/wiki/Wide_character
+#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+msgid "Error converting UTF-8 filename to wide char"
+msgstr "Fejl ved konvertering af filnavn i UTF-8 til \"wide character\""
+
+#: ../libgimpbase/gimputils.c:395
+msgid "ILCreateFromPath() failed"
+msgstr "ILCreateFromPath() mislykkedes"
+
+#: ../libgimpbase/gimputils.c:432
+#, c-format
+msgid "Cannot convert '%s' into a valid NSURL."
+msgstr "Kan ikke konvertere \"%s\" til en gyldig NSURL."
+
+#: ../libgimpbase/gimputils.c:460
+msgid "Connecting to org.freedesktop.FileManager1 failed: "
+msgstr "Kunne ikke forbinde til org.freedesktop.FileManager1: "
+
+#: ../libgimpbase/gimputils.c:484
+msgid "Calling ShowItems failed: "
+msgstr "Kunne ikke kalde ShowItems: "
+
+#: ../libgimpcolor/gimpcolorprofile.c:263
+#, c-format
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr "Det lader ikke til, at \"%s\" er en ICC-farveprofil"
+
+#: ../libgimpcolor/gimpcolorprofile.c:309
+msgid "Data does not appear to be an ICC color profile"
+msgstr "Det lader ikke til, at data er en ICC-farveprofil"
+
+#: ../libgimpcolor/gimpcolorprofile.c:366
+msgid "Could not save color profile to memory"
+msgstr "Kunne ikke gemme farveprofilen i hukommelsen"
+
+#: ../libgimpcolor/gimpcolorprofile.c:583
+msgid "(unnamed profile)"
+msgstr "(unavngivet profil)"
+
+#: ../libgimpcolor/gimpcolorprofile.c:625
+#, c-format
+msgid "Model: %s"
+msgstr "Model: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:634
+#, c-format
+msgid "Manufacturer: %s"
+msgstr "Producent: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:643
+#, c-format
+msgid "Copyright: %s"
+msgstr "Ophavsret: %s"
+
+# Ingen farvehåndtering ?
+#: ../libgimpconfig/gimpconfigenums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr "Ingen farvestyring"
+
+# Farvehåndteret ?
+#: ../libgimpconfig/gimpconfigenums.c:25
+msgctxt "color-management-mode"
+msgid "Color-managed display"
+msgstr "Farvestyret skærm"
+
+#: ../libgimpconfig/gimpconfigenums.c:26
+msgctxt "color-management-mode"
+msgid "Soft-proofing"
+msgstr "Skærmkorrektur"
+
+# Opfattelse?
+#: ../libgimpconfig/gimpconfigenums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr "Sanselig"
+
+# http://www.ordbogen.com/opslag.php?word=colorimetric&dict=a000#daen
+# http://www.denstoredanske.dk./It,_teknik_og_naturvidenskab/Kemi/Analytisk_kemi/kolorimetri?highlight=kolorimetrisk
+#: ../libgimpconfig/gimpconfigenums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "Relativ kolorimetrisk"
+
+#: ../libgimpconfig/gimpconfigenums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "Mætning"
+
+#: ../libgimpconfig/gimpconfigenums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr "Absolut kolorimetrisk"
+
 #. *
 #. * SECTION: gimpcolorconfig
 #. * @title: GimpColorConfig
@@ -924,235 +1569,305 @@ msgstr "(ugyldig UTF-8-streng)"
 #. * Color management settings.
 #. *
 #: ../libgimpconfig/gimpcolorconfig.c:52
-msgid "Mode of operation for color management."
-msgstr "Tilstanden for farvestyring."
+msgid "How images are displayed on screen."
+msgstr "Hvordan billeder vises på skærmen."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:55
 msgid "The color profile of your (primary) monitor."
 msgstr "Farveprofilen for den (primære) skærm."
 
 # vinduessystemet til grafiske miljø (GUI)
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Hvis aktiveret vil GIMP'en forsøge at bruge farveprofilen for skærmen fra "
+"Hvis aktiveret vil GIMP forsøge at bruge farveprofilen for skærmen fra "
 "vinduessystemet. Den konfigurerede skærmprofil bliver så kun brugt som "
 "nødplan."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
-msgid "The default RGB working space color profile."
-msgstr "Standardfarveprofil for RGB-arbejdsområde."
+#: ../libgimpconfig/gimpcolorconfig.c:63
+msgid ""
+"The preferred RGB working space color profile. It will be offered next to "
+"the built-in RGB profile when a color profile can be chosen."
+msgstr ""
+"Den foretrukne farveprofil for RGB-arbejdsområdet. Den vil blive tilbudt ved "
+"siden af den indbyggede RGB-profil ved valg af farveprofil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libgimpconfig/gimpcolorconfig.c:67
+msgid ""
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
+msgstr ""
+"Den foretrukne farveprofil for gråtonearbejdsområdet. Den vil blive tilbudt "
+"ved siden af den indbyggede gråtoneprofil ved valg af farveprofil."
+
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Den CMYK-farveprofil som bruges til at konvertere mellem RGB og CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
-msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"Den farveprofil som bruges til at simulere en udskrevet udgave (softproof)."
-
-#: ../libgimpconfig/gimpcolorconfig.c:66
-msgid "Sets how colors are mapped for your display."
-msgstr "Angiver hvordan farver afbildes på din skærm."
-
-#: ../libgimpconfig/gimpcolorconfig.c:68
+#: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
-"Sets how colors are converted from RGB working space to the print simulation "
-"device."
+"The color profile to use for soft-proofing from your image's color space to "
+"some other color space, including soft-proofing to a printer or other output "
+"device profile. "
 msgstr ""
-"Angiver hvordan farver konverteres fra RGB-arbejdsområde til "
-"udskriftssimuleringsenheden."
+"Farveprofilen der skal anvendes til skærmkorrektur fra dit billedes farverum "
+"til et andet farverum inklusive skærmkorrektur til en printer eller en anden "
+"outputenheds profil."
 
-# Er ikke sikker
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
-"When enabled, the print simulation will mark colors which can not be "
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
+msgstr ""
+"Hvordan farver konverteres fra dit billedes farverum til skærmens. Relativ "
+"kolorimetrisk er oftest det bedste valg. Med mindre du bruger en LUT-"
+"skærmprofil (de fleste skærmprofiler er matrix), vil sanselig "
+"gengivelsesmetode i virkeligheden være det samme som relativ kolorimetrisk."
+
+#: ../libgimpconfig/gimpcolorconfig.c:86
+msgid ""
+"Do use black point compensation (unless you know you have a reason not to)."
+msgstr ""
+"Brug sortpunktskompensation (med mindre du har en god grund til ikke at gøre "
+"det)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:90
+msgid ""
+"When disabled, image display might be of better quality at the cost of speed."
+msgstr ""
+"Når deaktiveret vil kvaliteten af det viste være bedre på bekostning af "
+"hastighed."
+
+# Simulation lader til at være overflødig
+#: ../libgimpconfig/gimpcolorconfig.c:94
+msgid ""
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best. "
+msgstr ""
+"Hvordan farver konverteres fra dit billedes farverum til outputenheden "
+"(sædvanligvis din skærm). Prøv dem alle og vælg den, der ser bedst ud."
+
+#: ../libgimpconfig/gimpcolorconfig.c:99
+msgid ""
+"Try with and without black point compensation and choose what looks best. "
+msgstr "Prøv med og uden sortpunktskompensation og vælg det, der ser bedst ud."
+
+#: ../libgimpconfig/gimpcolorconfig.c:103
+msgid ""
+"When disabled, soft-proofing might be of better quality at the cost of speed."
+msgstr ""
+"Når deaktiveret vil kvaliteten af skærmkorrekturen være bedre på bekostning "
+"af hastighed."
+
+#: ../libgimpconfig/gimpcolorconfig.c:107
+msgid ""
+"When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Når aktiveret vil printsimuleringen markere farver som ikke kan gengives i "
+"Når aktiveret vil skærmkorrekturen markere farver, som ikke kan gengives i "
 "målfarverummet."
 
 # # color gamut » farveskala
 # # colour gamut » farvespektrum
 # # color gamut » farvespektrum
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "Farven der skal bruges som for markering af farver, som er udenfor "
 "farveskala."
 
-# Ingen farvehåndtering ?
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
-msgctxt "color-management-mode"
-msgid "No color management"
-msgstr "Ingen farvestyring"
+#: ../libgimpconfig/gimpcolorconfig.c:199
+msgid "Mode of operation"
+msgstr "Virkemåde"
 
-# Farvehåndteret ?
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
-msgctxt "color-management-mode"
-msgid "Color managed display"
-msgstr "Farvestyret skærm"
+#: ../libgimpconfig/gimpcolorconfig.c:207
+msgid "Preferred RGB profile"
+msgstr "Foretrukken RGB-profil"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
-msgctxt "color-management-mode"
-msgid "Print simulation"
-msgstr "Udskriftssimulering"
+#: ../libgimpconfig/gimpcolorconfig.c:214
+msgid "Preferred grayscale profile"
+msgstr "Foretrukken gråtoneprofil"
 
-# Opfattelse?
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
-msgctxt "color-rendering-intent"
-msgid "Perceptual"
-msgstr "Sanselig"
+#: ../libgimpconfig/gimpcolorconfig.c:221
+msgid "CMYK profile"
+msgstr "CMYK-profil"
 
-# http://www.ordbogen.com/opslag.php?word=colorimetric&dict=a000#daen
-# http://www.denstoredanske.dk./It,_teknik_og_naturvidenskab/Kemi/Analytisk_kemi/kolorimetri?highlight=kolorimetrisk
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
-msgctxt "color-rendering-intent"
-msgid "Relative colorimetric"
-msgstr "Relativ farvemåling"
+#: ../libgimpconfig/gimpcolorconfig.c:228
+msgid "Monitor profile"
+msgstr "Skærmprofil"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
-msgctxt "color-rendering-intent"
-msgid "Saturation"
-msgstr "Mætning"
+#: ../libgimpconfig/gimpcolorconfig.c:235
+msgid "Use the system monitor profile"
+msgstr "Brug systemets skærmprofil"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
-msgctxt "color-rendering-intent"
-msgid "Absolute colorimetric"
-msgstr "Absolut farvemåling"
+#: ../libgimpconfig/gimpcolorconfig.c:243
+msgid "Simulation profile for soft-proofing"
+msgstr "Simuleringsprofil til skærmkorrektur"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:109
+#: ../libgimpconfig/gimpcolorconfig.c:250
+msgid "Display rendering intent"
+msgstr "Gengivelsesmetode for skærmen"
+
+#: ../libgimpconfig/gimpcolorconfig.c:258
+msgid "Use black point compensation for the display"
+msgstr "Brug sortpunktskompensation til skærmen"
+
+#: ../libgimpconfig/gimpcolorconfig.c:265
+msgid "Optimize display color transformations"
+msgstr "Optimér skærmens farvetransformationer"
+
+#: ../libgimpconfig/gimpcolorconfig.c:272
+msgid "Soft-proofing rendering intent"
+msgstr "Gengivelsesmetode for skærmkorrektur"
+
+#: ../libgimpconfig/gimpcolorconfig.c:280
+msgid "Use black point compensation for soft-proofing"
+msgstr "Brug sortpunktskompensation til skærmkorrektur"
+
+#: ../libgimpconfig/gimpcolorconfig.c:287
+msgid "Optimize soft-proofing color transformations"
+msgstr "Optimér skærmkorrekturens farvetransformationer"
+
+#: ../libgimpconfig/gimpcolorconfig.c:294
+msgid "Mark out of gamut colors"
+msgstr "Markér farver uden for farveskalaen"
+
+#: ../libgimpconfig/gimpcolorconfig.c:301
+msgid "Out of gamut warning color"
+msgstr "Advarselsfarve for farver uden for farveskalaen"
+
+#: ../libgimpconfig/gimpcolorconfig.c:660
+#: ../libgimpconfig/gimpcolorconfig.c:844
+#, c-format
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Farveprofilen \"%s\" er ikke til RGB-farverummet."
+
+#: ../libgimpconfig/gimpcolorconfig.c:702
+#: ../libgimpconfig/gimpcolorconfig.c:894
+#, c-format
+msgid "Color profile '%s' is not for GRAY color space."
+msgstr "Farveprofilen \"%s\" er ikke til gråtonefarverummet."
+
+#: ../libgimpconfig/gimpcolorconfig.c:744
+#: ../libgimpconfig/gimpcolorconfig.c:944
+#, c-format
+msgid "Color profile '%s' is not for CMYK color space."
+msgstr "Farveprofilen \"%s\" er ikke til CMYK-farverummet."
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "værdi for symbolet %s er ikke en gyldig UTF-8-streng"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:451
+#: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "forventede \"yes\" eller \"no\" for boolesk symbol %s, fik \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:525
+#: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig værdi \"%s\" for symbolet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:540
+#: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig værdi \"%ld\" for symbolet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:609
+#: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under fortolkning af symbolet \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
-#: ../libgimpconfig/gimpscanner.c:641
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libgimpconfig/gimpconfig-iface.c:658
+#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:742
+#: ../libgimpconfig/gimpscanner.c:824
+#: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "fatal fortolkningsfejl"
 
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path representation"
+msgstr "Filen har ikke nogen stirepræsentation"
+
 # Skal vi nok bede om yderligere forklaring fra udvikler
-#: ../libgimpconfig/gimpconfig-path.c:389
+#: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Kan ikke udfolde ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:87
-#: ../libgimpconfig/gimpconfigwriter.c:728
+#: ../libgimpconfig/gimpconfigwriter.c:88
+#: ../libgimpconfig/gimpconfigwriter.c:658
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fejl under skrivning til \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:145
+#: ../libgimpconfig/gimpconfigwriter.c:184
 #, c-format
-msgid "Could not create temporary file for '%s': %s"
-msgstr "Kunne ikke oprette midlertidig fil for \"%s\": %s"
+msgid "Could not create temporary file for '%s': "
+msgstr "Kunne ikke oprette midlertidig fil for \"%s\": "
 
-#: ../libgimpconfig/gimpconfigwriter.c:158
+#: ../libgimpconfig/gimpconfigwriter.c:761
 #, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Kunne ikke åbne \"%s\" for skrivning: %s"
+msgid "Error writing '%s': %s"
+msgstr "Fejl under skrivning af \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:689
-#: ../libgimpconfig/gimpconfigwriter.c:709
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"The original file has not been touched."
-msgstr ""
-"Fejl under skrivning til midlertidig fil for \"%s\": %s\n"
-"Den originale fil er ikke blevet rørt."
-
-#: ../libgimpconfig/gimpconfigwriter.c:717
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"No file has been created."
-msgstr ""
-"Fejl under skrivning til midlertidig fil for \"%s\": %s\n"
-"Ingen fil er blevet oprettet."
-
-#: ../libgimpconfig/gimpconfigwriter.c:741
-#, c-format
-msgid "Could not create '%s': %s"
-msgstr "Kunne ikke oprette \"%s\": %s"
-
-#: ../libgimpconfig/gimpscanner.c:268
+#: ../libgimpconfig/gimpscanner.c:408
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "ugyldig UTF-8-streng"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:431
+#: ../libgimpconfig/gimpscanner.c:617
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "forventede \"yes\" eller \"no\" for boolesk symbol, fik \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:668
+#: ../libgimpconfig/gimpscanner.c:851
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fejl under fortolkning af \"%s\" i linje %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
-#: ../libgimpmodule/gimpmodule.c:443
+#: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
+#: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
+#: ../libgimpmodule/gimpmodule.c:442
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Indlæsningsfejl for modul \"%s\": %s"
+msgstr "Indlæsningsfejl for modulet \"%s\": %s"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
 msgstr "Modulfejl"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Loaded"
 msgstr "Indlæst"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Load failed"
-msgstr "Indlæsning fejlede"
+msgstr "Indlæsning mislykkedes"
 
-#: ../libgimpmodule/gimpmodule.c:388
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Not loaded"
 msgstr "Ikke indlæst"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
-"Cannot determine a valid home directory.\n"
+"Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Kunne ikke finde en gyldig hjemmemappe.\n"
+"Kunne ikke finde en gyldig mappe til miniaturer.\n"
 "Miniaturer vil blive gemt i mappen til midlertidige filer (%s) i stedet."
 
-#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
+#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunne ikke oprette miniaturemappen \"%s\"."
@@ -1167,48 +1882,108 @@ msgstr "Miniature indeholder ikke et Thumb::URI-mærkat"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunne ikke oprette miniature for %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:112
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
 msgstr "_Søg:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:135
+#: ../libgimpwidgets/gimpcolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "_Forgrundsfarve"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:139
+#: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
 msgstr "_Baggrundsfarve"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:143
+#: ../libgimpwidgets/gimpcolorbutton.c:160
 msgid "Blac_k"
 msgstr "_Sort"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: ../libgimpwidgets/gimpcolorbutton.c:164
 msgid "_White"
 msgstr "_Hvid"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:146
-msgid "Select color profile from disk..."
-msgstr "Vælg farveprofil fra disk..."
+#: ../libgimpwidgets/gimpcolorbutton.c:571 ../libgimpwidgets/gimpicons.c:68
+msgid "_Reset"
+msgstr "_Nulstil"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libgimpwidgets/gimpcolorbutton.c:573
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+msgid "_OK"
+msgstr "_OK"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
+msgid "All files (*.*)"
+msgstr "Alle filer (*.*)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC-farveprofil (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+msgid "_Save"
+msgstr "_Gem"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+msgid "_Open"
+msgstr "_Åbn"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
+#: ../libgimpwidgets/gimppatheditor.c:270
+msgid "Folder"
+msgstr "Mappe"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:330
+msgid "Not a regular file."
+msgstr "Ikke en almindelig fil."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:147
+msgid "Select color profile from disk..."
+msgstr "Vælg farveprofil fra disken …"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:315
 msgctxt "profile"
 msgid "None"
 msgstr "Ingen"
 
-#: ../libgimpwidgets/gimpcolorscales.c:108
+#: ../libgimpwidgets/gimpcolorprofileview.c:170
+msgid "Manufacturer: "
+msgstr "Producent: "
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:182
+msgid "Copyright: "
+msgstr "Ophavsret: "
+
+#: ../libgimpwidgets/gimpcolorscales.c:201
 msgid "Scales"
 msgstr "Skalaer"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorscales.c:435
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpcolorscales.c:437
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpcolorscales.c:458
+msgid "0..100"
+msgstr "0..100"
+
+#: ../libgimpwidgets/gimpcolorscales.c:460
+msgid "0..255"
+msgstr "0..255"
+
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "Nuværende:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Tidligere:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libgimpwidgets/gimpcolorselection.c:316
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1216,235 +1991,262 @@ msgstr ""
 "Hexadecimal farvenotation ligesom i HTML og CSS. Dette felt virker også med "
 "CSS-farvenavne."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:322
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
 
-#: ../libgimpwidgets/gimpfileentry.c:200
+#: ../libgimpwidgets/gimpdialog.c:182
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: ../libgimpwidgets/gimpfileentry.c:152
+msgid "Show file location in the file manager"
+msgstr "Vis placering af filen i filhåndtering"
+
+#: ../libgimpwidgets/gimpfileentry.c:223
 msgid "Open a file selector to browse your folders"
 msgstr "Åbn en filvælger for at gennemse dine mapper"
 
-#: ../libgimpwidgets/gimpfileentry.c:201
+#: ../libgimpwidgets/gimpfileentry.c:224
 msgid "Open a file selector to browse your files"
 msgstr "Åbn en filvælger for at gennemse dine filer"
 
-#: ../libgimpwidgets/gimpfileentry.c:361
+#: ../libgimpwidgets/gimpfileentry.c:236
+msgid "Indicates whether or not the folder exists"
+msgstr "Angiver om mappen eksisterer eller ej"
+
+#: ../libgimpwidgets/gimpfileentry.c:237
+msgid "Indicates whether or not the file exists"
+msgstr "Angiver om filen eksisterer eller ej"
+
+#: ../libgimpwidgets/gimpfileentry.c:397
+#, c-format
+msgid "Can't show file in file manager: %s"
+msgstr "Kan ikke vise filen i filhåndtering: %s"
+
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select Folder"
 msgstr "Vælg mappe"
 
-#: ../libgimpwidgets/gimpfileentry.c:363
+#: ../libgimpwidgets/gimpfileentry.c:426
 msgid "Select File"
 msgstr "Vælg fil"
 
-#: ../libgimpwidgets/gimphelpui.c:432
+#: ../libgimpwidgets/gimphelpui.c:433
 msgid "Press F1 for more help"
 msgstr "Tryk på F1 for yderligere hjælp"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libgimpwidgets/gimpicons.c:62
+msgid "Anchor"
+msgstr "Anker"
+
+#: ../libgimpwidgets/gimpicons.c:63
+msgid "C_enter"
+msgstr "C_entrér"
+
+# Måske duplikér
+#: ../libgimpwidgets/gimpicons.c:64
+msgid "_Duplicate"
+msgstr "_Kopiér"
+
+#: ../libgimpwidgets/gimpicons.c:65
+msgid "Linked"
+msgstr "Sammenkædet"
+
+#: ../libgimpwidgets/gimpicons.c:66
+msgid "Paste as New"
+msgstr "Indsæt som ny"
+
+#: ../libgimpwidgets/gimpicons.c:67
+msgid "Paste Into"
+msgstr "Indsæt i"
+
+#: ../libgimpwidgets/gimpicons.c:69
+msgid "Visible"
+msgstr "Synlig"
+
+#: ../libgimpwidgets/gimpicons.c:105 ../libgimpwidgets/gimpicons.c:109
+msgid "_Stroke"
+msgstr "_Bestryg"
+
+#: ../libgimpwidgets/gimpicons.c:121
+msgid "L_etter Spacing"
+msgstr "_Bogstavmellemrum"
+
+#: ../libgimpwidgets/gimpicons.c:122
+msgid "L_ine Spacing"
+msgstr "_Linjemellemrum"
+
+#: ../libgimpwidgets/gimpicons.c:139
+#| msgid "_Resize"
+msgid "Re_size"
+msgstr "_Tilpas"
+
+#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
+msgid "_Scale"
+msgstr "_Skalér"
+
+#: ../libgimpwidgets/gimpicons.c:247
+msgid "Cr_op"
+msgstr "_Beskær"
+
+#: ../libgimpwidgets/gimpicons.c:255
+msgid "_Select"
+msgstr "_Markér"
+
+#: ../libgimpwidgets/gimpicons.c:267
+msgid "_Transform"
+msgstr "_Transformér"
+
+#: ../libgimpwidgets/gimpicons.c:273
+msgid "_Shear"
+msgstr "_Vrid"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:219
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1067
+#: ../libgimpwidgets/gimppageselector.c:274
+#: ../libgimpwidgets/gimppageselector.c:1070
 msgid "Nothing selected"
 msgstr "Intet valgt"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libgimpwidgets/gimppageselector.c:292
 msgid "Select _All"
 msgstr "Vælg _alle"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libgimpwidgets/gimppageselector.c:312
 msgid "Select _range:"
 msgstr "Vælg _interval:"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libgimpwidgets/gimppageselector.c:324
 msgid "Open _pages as"
 msgstr "Åbn _sider som"
 
-#: ../libgimpwidgets/gimppageselector.c:449
-#: ../libgimpwidgets/gimppageselector.c:647
+#: ../libgimpwidgets/gimppageselector.c:452
+#: ../libgimpwidgets/gimppageselector.c:650
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1072
+#: ../libgimpwidgets/gimppageselector.c:1075
 msgid "One page selected"
 msgstr "En side valgt"
 
-#: ../libgimpwidgets/gimppageselector.c:1079
-#: ../libgimpwidgets/gimppageselector.c:1083
+#: ../libgimpwidgets/gimppageselector.c:1082
+#: ../libgimpwidgets/gimppageselector.c:1086
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d side valgt"
 msgstr[1] "Alle %d sider valgt"
 
+#: ../libgimpwidgets/gimppatheditor.c:181
+msgid "Add a new folder"
+msgstr "Tilføj en ny mappe"
+
+#: ../libgimpwidgets/gimppatheditor.c:199
+msgid "Move the selected folder up"
+msgstr "Flyt den valgte mappe op"
+
+#: ../libgimpwidgets/gimppatheditor.c:217
+msgid "Move the selected folder down"
+msgstr "Flyt den valgte mappe ned"
+
+#: ../libgimpwidgets/gimppatheditor.c:235
+msgid "Remove the selected folder from the list"
+msgstr "Fjern den valgte mappe fra listen"
+
 # Skrivbar ?
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libgimpwidgets/gimppatheditor.c:261
 msgid "Writable"
 msgstr "Skrivbar"
 
-#: ../libgimpwidgets/gimppatheditor.c:248
-msgid "Folder"
-msgstr "Mappe"
-
-#: ../libgimpwidgets/gimppickbutton.c:130
+# Eyedropper findes ikke mere og er erstattet af color picker
+#: ../libgimpwidgets/gimppickbutton.c:112
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Klik på pipetten og klik derefter et vilkårligt på skærmen for at vælge den "
-"pågældende farve."
+"Klik på farvevælgeren og klik derefter et vilkårligt sted på skærmen for at "
+"vælge den pågældende farve."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:290
+#: ../libgimpwidgets/gimppreview.c:293
 msgid "_Preview"
 msgstr "_Forhåndsvisning"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
 msgstr "Ternstørrelse"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libgimpwidgets/gimppreviewarea.c:134
 msgid "Check Style"
 msgstr "Ternstil"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1878
+#: ../libgimpwidgets/gimppropwidgets.c:2143
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Dette felt til tekstindtastning er begrænset til %d tegn."
 msgstr[1] "Dette felt til tekstindtastning er begrænset til %d tegn."
 
-#: ../libgimpwidgets/gimpstock.c:127
-msgid "Anchor"
-msgstr "Anker"
-
-#: ../libgimpwidgets/gimpstock.c:128
-msgid "C_enter"
-msgstr "C_entrér"
-
-# Måske duplikér
-#: ../libgimpwidgets/gimpstock.c:129
-msgid "_Duplicate"
-msgstr "_Kopiér"
-
-#: ../libgimpwidgets/gimpstock.c:130
-msgid "_Edit"
-msgstr "_Redigér"
-
-#: ../libgimpwidgets/gimpstock.c:131
-msgid "Linked"
-msgstr "Sammenkædet"
-
-#: ../libgimpwidgets/gimpstock.c:132
-msgid "Paste as New"
-msgstr "Indsæt som ny"
-
-#: ../libgimpwidgets/gimpstock.c:133
-msgid "Paste Into"
-msgstr "Indsæt i"
-
-#: ../libgimpwidgets/gimpstock.c:134
-msgid "_Reset"
-msgstr "_Nulstil"
-
-#: ../libgimpwidgets/gimpstock.c:135
-msgid "Visible"
-msgstr "Synlig"
-
-#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
-msgid "_Stroke"
-msgstr "_Bestryg"
-
-#: ../libgimpwidgets/gimpstock.c:187
-msgid "L_etter Spacing"
-msgstr "_Bogstavmellemrum"
-
-#: ../libgimpwidgets/gimpstock.c:188
-msgid "L_ine Spacing"
-msgstr "_Linjemellemrum"
-
-#: ../libgimpwidgets/gimpstock.c:204
-msgid "_Resize"
-msgstr "_Tilpas"
-
-#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
-msgid "_Scale"
-msgstr "_Skalér"
-
-#: ../libgimpwidgets/gimpstock.c:315
-msgid "Cr_op"
-msgstr "_Beskær"
-
-#: ../libgimpwidgets/gimpstock.c:335
-msgid "_Transform"
-msgstr "_Transformér"
-
-#: ../libgimpwidgets/gimpstock.c:339
-msgid "_Rotate"
-msgstr "_Rotér"
-
-#: ../libgimpwidgets/gimpstock.c:341
-msgid "_Shear"
-msgstr "T_rapezér"
-
-#: ../libgimpwidgets/gimpunitmenu.c:264
+#: ../libgimpwidgets/gimpunitmenu.c:261
 msgid "More..."
-msgstr "Flere..."
+msgstr "Flere …"
 
-#: ../libgimpwidgets/gimpunitmenu.c:490
+#: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
 msgstr "Enhedsvalg"
 
-#: ../libgimpwidgets/gimpunitmenu.c:539
+#: ../libgimpwidgets/gimpunitmenu.c:536
 msgid "Unit"
 msgstr "Enhed"
 
-#: ../libgimpwidgets/gimpunitmenu.c:543
+#: ../libgimpwidgets/gimpunitmenu.c:540
 msgid "Factor"
 msgstr "Faktor"
 
-#: ../libgimpwidgets/gimpwidgets.c:516
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Benyt denne værdi som startværdi til generatoren af tilfældige tal - dette "
+"Benyt denne værdi som basistal til generatoren af tilfældige tal - dette "
 "tillader dig at gentage en given \"tilfældig\" handling"
 
-#: ../libgimpwidgets/gimpwidgets.c:520
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
-msgstr "_Ny startværdi"
+msgstr "_Nyt basistal til tilfældighedsgeneratoren"
 
-#: ../libgimpwidgets/gimpwidgets.c:533
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
 
-#: ../libgimpwidgets/gimpwidgets.c:537
+#: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
-msgstr "_Tilfældiggør"
+msgstr "_Tilfældig"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:49
+#: ../libgimpwidgets/gimpwidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Deaktiveret"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Skærm"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Vindue"
@@ -1464,293 +2266,290 @@ msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Liggende"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
-msgid "Hue"
-msgstr "Farvetone"
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "HSV Hue"
+msgstr "Farvetone (HSV)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
-msgid "Saturation"
-msgstr "Mætning"
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgid "HSV Saturation"
+msgstr "Mætning (HSV)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
-msgid "Value"
-msgstr "Værdi"
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgid "HSV Value"
+msgstr "Lyshed (HSV)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgid "Red"
 msgstr "Rød"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Green"
 msgstr "Grøn"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Blue"
 msgstr "Blå"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:161
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgctxt "color-selector-channel"
+msgid "_L"
+msgstr "_L"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
+msgid "LCH Lightness"
+msgstr "Lyshed (LCH)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgctxt "color-selector-channel"
+msgid "_C"
+msgstr "_C"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
+msgid "LCH Chroma"
+msgstr "Farvestyrke (LCH)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCH Hue"
+msgstr "Farvetone (LCH)"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:167
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Lag"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:162
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Billeder"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:223
+#: ../libgimpwidgets/gimpwidgetsenums.c:229
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Forstør"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:224
+#: ../libgimpwidgets/gimpwidgetsenums.c:230
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Formindsk"
 
-#: ../modules/color-selector-cmyk-lcms.c:91
+#: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-farvevælger (bruger farveprofil)"
 
-#: ../modules/color-selector-cmyk-lcms.c:154
-#: ../modules/color-selector-cmyk.c:101
+#: ../modules/color-selector-cmyk.c:116
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:175
-#: ../modules/color-selector-cmyk.c:124
+#: ../modules/color-selector-cmyk.c:138
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:177
-#: ../modules/color-selector-cmyk.c:126
+#: ../modules/color-selector-cmyk.c:140
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:179
-#: ../modules/color-selector-cmyk.c:128
+#: ../modules/color-selector-cmyk.c:142
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:181
-#: ../modules/color-selector-cmyk.c:130
+#: ../modules/color-selector-cmyk.c:144
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:185
-#: ../modules/color-selector-cmyk.c:134
+#: ../modules/color-selector-cmyk.c:148
 msgid "Cyan"
 msgstr "Cyan"
 
-#: ../modules/color-selector-cmyk-lcms.c:186
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk.c:149
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/color-selector-cmyk-lcms.c:187
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk.c:150
 msgid "Yellow"
 msgstr "Gul"
 
-#: ../modules/color-selector-cmyk-lcms.c:188
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk.c:151
 msgid "Black"
 msgstr "Sort"
 
-#: ../modules/color-selector-cmyk-lcms.c:425
+#: ../modules/color-selector-cmyk.c:380
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
-#: ../modules/color-selector-cmyk-lcms.c:488
+#: ../modules/color-selector-cmyk.c:392
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
 
-#: ../modules/color-selector-cmyk.c:70
-msgid "CMYK color selector"
-msgstr "CMYK-farvevælger"
-
-#: ../modules/color-selector-cmyk.c:171
-msgid "Black _pullout:"
-msgstr "Sort _udtræk:"
-
-#: ../modules/color-selector-cmyk.c:188
-msgid "The percentage of black to pull out of the colored inks."
-msgstr "Den procentdel sort der skal trækkes ud af det farvede blæk."
-
-#: ../modules/color-selector-water.c:81
+#: ../modules/color-selector-water.c:96
 msgid "Watercolor style color selector"
 msgstr "Vandfarvestil-farvevælger"
 
-#: ../modules/color-selector-water.c:117
+#: ../modules/color-selector-water.c:130
 msgid "Watercolor"
 msgstr "Vandfarve"
 
-#: ../modules/color-selector-water.c:185
+#: ../modules/color-selector-water.c:200
 msgid "Pressure"
 msgstr "Tryk"
 
 # http://en.wikipedia.org/wiki/HSL_color_space
-#: ../modules/color-selector-wheel.c:69
+#: ../modules/color-selector-wheel.c:72
 msgid "HSV color wheel"
 msgstr "HSV-farvehjul"
 
-#: ../modules/color-selector-wheel.c:101
+#: ../modules/color-selector-wheel.c:104
 msgid "Wheel"
 msgstr "Hjul"
 
-#: ../modules/controller-dx-dinput.c:155
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput-hændelsesstyreenhed"
 
-#: ../modules/controller-dx-dinput.c:195
-#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Enhed:"
 
-#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "Enheden der skal læses DirectInput-hændelser fra."
 
-#: ../modules/controller-dx-dinput.c:205
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:418
+#: ../modules/controller-dx-dinput.c:419
 #, c-format
 msgid "Button %d"
 msgstr "Knap %d"
 
-#: ../modules/controller-dx-dinput.c:421
+#: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
 msgstr "Knap %d tryk"
 
-#: ../modules/controller-dx-dinput.c:424
+#: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
 msgstr "Knap %d slip"
 
-#: ../modules/controller-dx-dinput.c:441
-#: ../modules/controller-linux-input.c:89
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
 msgid "X Move Left"
-msgstr "X flyt venstre"
+msgstr "x flyt venstre"
 
-#: ../modules/controller-dx-dinput.c:444
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
 msgid "X Move Right"
-msgstr "X flyt højre"
+msgstr "x flyt højre"
 
-#: ../modules/controller-dx-dinput.c:450
+#: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
-msgstr "Y flyt væk"
+msgstr "y flyt væk"
 
-#: ../modules/controller-dx-dinput.c:453
+#: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
-msgstr "Y flyt tættere"
+msgstr "y flyt tættere"
 
-#: ../modules/controller-dx-dinput.c:459
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
-msgstr "Z flyt op"
+msgstr "z flyt op"
 
-#: ../modules/controller-dx-dinput.c:462
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
-msgstr "Z flyt ned"
+msgstr "z flyt ned"
 
-#: ../modules/controller-dx-dinput.c:468
+#: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
-msgstr "X-akse hæld væk"
+msgstr "x-akse hæld væk"
 
-#: ../modules/controller-dx-dinput.c:471
+#: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
-msgstr "X-akse hæld tættere"
+msgstr "x-akse hæld tættere"
 
-#: ../modules/controller-dx-dinput.c:477
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
-msgstr "Y-akse hæld højre"
+msgstr "y-akse hæld højre"
 
-#: ../modules/controller-dx-dinput.c:480
-#: ../modules/controller-linux-input.c:99
-msgid "Y Axis Tilt Left"
-msgstr "Y-akse hæld venstre"
-
-#: ../modules/controller-dx-dinput.c:486
+#: ../modules/controller-dx-dinput.c:481
 #: ../modules/controller-linux-input.c:100
-msgid "Z Axis Turn Left"
-msgstr "Z-akse drej venstre"
+msgid "Y Axis Tilt Left"
+msgstr "y-akse hæld venstre"
 
-#: ../modules/controller-dx-dinput.c:489
+#: ../modules/controller-dx-dinput.c:487
 #: ../modules/controller-linux-input.c:101
-msgid "Z Axis Turn Right"
-msgstr "Z-akse drej højre"
+msgid "Z Axis Turn Left"
+msgstr "z-akse drej venstre"
 
-#: ../modules/controller-dx-dinput.c:500
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
+msgid "Z Axis Turn Right"
+msgstr "z-akse drej højre"
+
+#: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Skyder %d forøg"
 
-#: ../modules/controller-dx-dinput.c:503
+#: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Skyder %d formindsk"
 
-#: ../modules/controller-dx-dinput.c:513
+#: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d x-visning"
 
-#: ../modules/controller-dx-dinput.c:516
+#: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d y-visning"
 
-#: ../modules/controller-dx-dinput.c:519
+#: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d returnér"
@@ -1760,193 +2559,193 @@ msgid "DirectInput Events"
 msgstr "DirectInput-hændelser"
 
 #: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
+#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Ingen enhed konfigureret"
 
 #: ../modules/controller-dx-dinput.c:1117
-#: ../modules/controller-linux-input.c:587
+#: ../modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Enhed ikke tilgængelig"
 
-#: ../modules/controller-linux-input.c:57
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Knap 0"
 
-#: ../modules/controller-linux-input.c:58
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Knap 1"
 
-#: ../modules/controller-linux-input.c:59
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Knap 2"
 
-#: ../modules/controller-linux-input.c:60
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Knap 3"
 
-#: ../modules/controller-linux-input.c:61
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Knap 4"
 
-#: ../modules/controller-linux-input.c:62
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Knap 5"
 
-#: ../modules/controller-linux-input.c:63
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Knap 6"
 
-#: ../modules/controller-linux-input.c:64
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Knap 7"
 
-#: ../modules/controller-linux-input.c:65
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Knap 8"
 
-#: ../modules/controller-linux-input.c:66
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Knap 9"
 
-#: ../modules/controller-linux-input.c:67
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Knap mus"
 
-#: ../modules/controller-linux-input.c:68
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Knap venstre"
 
-#: ../modules/controller-linux-input.c:69
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Knap højre"
 
-#: ../modules/controller-linux-input.c:70
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Knap mellem"
 
-#: ../modules/controller-linux-input.c:71
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Knap side"
 
-#: ../modules/controller-linux-input.c:72
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Knap ekstra"
 
-#: ../modules/controller-linux-input.c:73
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Knap fremad"
 
-#: ../modules/controller-linux-input.c:74
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Knap tilbage"
 
-#: ../modules/controller-linux-input.c:75
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Knap opgave"
 
-#: ../modules/controller-linux-input.c:77
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Knap hjul"
 
-#: ../modules/controller-linux-input.c:80
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Knap gear ned"
 
-#: ../modules/controller-linux-input.c:83
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Knap gear op"
 
-#: ../modules/controller-linux-input.c:91
-msgid "Y Move Forward"
-msgstr "Y flyt frem"
-
 #: ../modules/controller-linux-input.c:92
-msgid "Y Move Back"
-msgstr "Y flyt tilbage"
+msgid "Y Move Forward"
+msgstr "y flyt frem"
 
-#: ../modules/controller-linux-input.c:96
-msgid "X Axis Tilt Forward"
-msgstr "X-akse hæld fremad"
+#: ../modules/controller-linux-input.c:93
+msgid "Y Move Back"
+msgstr "y flyt tilbage"
 
 #: ../modules/controller-linux-input.c:97
-msgid "X Axis Tilt Back"
-msgstr "X-akse hæld tilbage"
+msgid "X Axis Tilt Forward"
+msgstr "x-akse hæld fremad"
 
-#: ../modules/controller-linux-input.c:103
+#: ../modules/controller-linux-input.c:98
+msgid "X Axis Tilt Back"
+msgstr "x-akse hæld tilbage"
+
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Vandret hjul drej tilbage"
 
-#: ../modules/controller-linux-input.c:104
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Vandret hjul drej fremad"
 
-#: ../modules/controller-linux-input.c:105
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Drejeskive drej venstre"
 
-#: ../modules/controller-linux-input.c:106
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Drejeskive drej højre"
 
-#: ../modules/controller-linux-input.c:107
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Hjul drej venstre"
 
-#: ../modules/controller-linux-input.c:108
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Hjul drej højre"
 
-#: ../modules/controller-linux-input.c:177
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Styreenhed til Linux-inputhændelser"
 
-#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr "Navnet på enhed der skal læses Linux-inputhændelser fra."
+msgstr "Navnet på enheden der skal læses Linux-inputhændelser fra."
 
-#: ../modules/controller-linux-input.c:229
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linux-input"
 
-#: ../modules/controller-linux-input.c:512
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Linux-inputhændelser"
 
-#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
-#: ../modules/controller-midi.c:479
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Læser fra %s"
 
-#: ../modules/controller-linux-input.c:568
-#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
-#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
-msgstr "Enhed ikke tilgængelig: %s"
+msgstr "Enheden ikke tilgængelig: %s"
 
-#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
-msgstr "Fil slut"
+msgstr "Filen slut"
 
-#: ../modules/controller-midi.c:163
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI-hændelsesstyreenhed"
 
-#: ../modules/controller-midi.c:202
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Navnet på enheden der skal læses MIDI-hændelser fra."
 
-#: ../modules/controller-midi.c:205
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Indtast \"alsa\" for at bruge ALSA-sequenceren."
 
-#: ../modules/controller-midi.c:220
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller-midi.c:221
+#: ../modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1954,153 +2753,275 @@ msgstr ""
 "Den MIDI-kanal der skal læses hændelser fra. Vælg -1 for at læse fra alle "
 "MIDI-kanaler."
 
-#: ../modules/controller-midi.c:225
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller-midi.c:354
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Node %02x til"
 
-#: ../modules/controller-midi.c:357
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Node %02x fra"
 
-#: ../modules/controller-midi.c:360
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Styreenhed %03d"
 
-#: ../modules/controller-midi.c:407
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI-hændelser"
 
-#: ../modules/controller-midi.c:425
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller-midi.c:427
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI-inputstyreenhed"
 
-#: ../modules/display-filter-color-blind.c:67
+# Over-/undereksponerede områder indikeres med en farve
+# Adobe bruger klipning: https://helpx.adobe.com/dk/creative-suite/using/make-color-tonal-adjustments-camera.html, men denne brug af klipning fremgår ikke af Den Danske Ordbog
+# Nok bedst at kalde det over-/undereksponering for ikke at forveksle med Cut - Warning er overflødigt (fremgår af navnet Clip Warning)
+#: ../modules/display-filter-clip-warning.c:120
+msgid "Clip warning color display filter"
+msgstr "Filter til visning af over-/undereksponerede områder med farve"
+
+#: ../modules/display-filter-clip-warning.c:157
+msgid "Show shadows"
+msgstr "Vis skygger"
+
+#: ../modules/display-filter-clip-warning.c:158
+msgid "Show warning for pixels with a negative component"
+msgstr "Vis advarsel for pixels med en negativ komponent"
+
+#: ../modules/display-filter-clip-warning.c:164
+msgid "Shadows color"
+msgstr "Farve for undereksponeret"
+
+#: ../modules/display-filter-clip-warning.c:165
+msgid "Shadows warning color"
+msgstr "Advarselsfarve for undereksponerede områder"
+
+#: ../modules/display-filter-clip-warning.c:177
+msgid "Show highlights"
+msgstr "Vis overeksponerede"
+
+#: ../modules/display-filter-clip-warning.c:178
+msgid "Show warning for pixels with a component greater than one"
+msgstr "Vis advarsel for pixels med en komponent større end en"
+
+#: ../modules/display-filter-clip-warning.c:184
+msgid "Highlights color"
+msgstr "Farve for overeksponeret"
+
+#: ../modules/display-filter-clip-warning.c:185
+msgid "Highlights warning color"
+msgstr "Advarselsfarve for overeksponerede områder"
+
+#: ../modules/display-filter-clip-warning.c:197
+msgid "Show bogus"
+msgstr "Vis falske"
+
+#: ../modules/display-filter-clip-warning.c:198
+msgid "Show warning for pixels with an infinite or NaN component"
+msgstr "Vis advarsel for pixels med NaN eller uendelig komponent"
+
+#: ../modules/display-filter-clip-warning.c:204
+msgid "Bogus color"
+msgstr "Farve for falske"
+
+#: ../modules/display-filter-clip-warning.c:205
+msgid "Bogus warning color"
+msgstr "Advarselsfarve for falske pixels"
+
+#: ../modules/display-filter-clip-warning.c:217
+msgid "Include alpha component"
+msgstr "Medtag alfa-komponenten"
+
+#: ../modules/display-filter-clip-warning.c:218
+msgid "Include alpha component in the warning"
+msgstr "Medtag alfa-komponenten i advarslen"
+
+#: ../modules/display-filter-clip-warning.c:224
+msgid "Include transparent pixels"
+msgstr "Medtag gennemsigtige pixels"
+
+#: ../modules/display-filter-clip-warning.c:225
+msgid "Include fully transparent pixels in the warning"
+msgstr "Medtag fuldt gennemsigtige pixels i advarslen"
+
+#: ../modules/display-filter-clip-warning.c:229
+msgid "Clip Warning"
+msgstr "Over-/undereksponeringsadvarsel"
+
+#: ../modules/display-filter-color-blind.c:68
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (kan ikke se rød)"
 
-#: ../modules/display-filter-color-blind.c:69
+#: ../modules/display-filter-color-blind.c:70
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (kan ikke se grøn)"
 
-#: ../modules/display-filter-color-blind.c:71
+#: ../modules/display-filter-color-blind.c:72
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (kan ikke se blå)"
 
 # simulering er svært at stoppe ind og vist overflødigt
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Farveblindhedsfilter (Brettel-Vienot-Mollon-algoritmen)"
+msgstr "Farveblindhedsfilter (Brettel–Vienot–Mollon-algoritmen)"
 
-#: ../modules/display-filter-color-blind.c:257
+#: ../modules/display-filter-color-blind.c:253
+msgid "Type"
+msgstr "Type"
+
+#: ../modules/display-filter-color-blind.c:254
+msgid "Color vision deficiency type"
+msgstr "Farveblindhedstype"
+
+#: ../modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
-msgstr "Farveblindt syn"
-
-#: ../modules/display-filter-color-blind.c:486
-msgid "Color _deficiency type:"
-msgstr "Farve_blindhedstype:"
+msgstr "Farveblindhed"
 
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Filter til gammafarvevisning"
 
-#: ../modules/display-filter-gamma.c:125
+#: ../modules/display-filter-gamma.c:123 ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gamma"
-
-#: ../modules/display-filter-gamma.c:237
-msgid "_Gamma:"
-msgstr "_Gamma:"
 
 #: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "Filter til højkontrast-farvevisning"
 
-#: ../modules/display-filter-high-contrast.c:125
+#: ../modules/display-filter-high-contrast.c:123
+msgid "Contrast cycles"
+msgstr "Kontrastcyklusser"
+
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/display-filter-high-contrast.c:237
-msgid "Contrast c_ycles:"
-msgstr "Kontrastc_yklusser:"
+#~ msgid "Sans"
+#~ msgstr "Sans"
 
-# Farvehåndteringsfilter
-#: ../modules/display-filter-lcms.c:104
-msgid "Color management display filter using ICC color profiles"
-msgstr "Farvestyringsfilter til skærm med ICC-farveprofiler"
+#~ msgctxt "desaturate-mode"
+#~ msgid "Luminosity"
+#~ msgstr "Luminans"
+
+#~ msgctxt "desaturate-mode"
+#~ msgid "Average"
+#~ msgstr "Gennemsnit"
+
+#~ msgctxt "icon-type"
+#~ msgid "Stock ID"
+#~ msgstr "Lager-id"
+
+#~ msgctxt "interpolation-type"
+#~ msgid "Sinc (Lanczos3)"
+#~ msgstr "Sinc (Lanczos3)"
+
+#~ msgctxt "repeat-mode"
+#~ msgid "None"
+#~ msgstr "Ingen"
 
 # Farvehåndtering
-#: ../modules/display-filter-lcms.c:136
-msgid "Color Management"
-msgstr "Farvestyring"
+#~ msgid "Mode of operation for color management."
+#~ msgstr "Tilstanden for farvestyring."
 
-#: ../modules/display-filter-lcms.c:265 ../modules/display-filter-lcms.c:267
-msgid "None"
-msgstr "Ingen"
+#~ msgid "The default RGB working space color profile."
+#~ msgstr "Standardfarveprofil for RGB-arbejdsområde."
+
+#~ msgid "The color profile used for simulating a printed version (softproof)."
+#~ msgstr ""
+#~ "Den farveprofil som bruges til at simulere en udskrevet udgave "
+#~ "(softproof)."
+
+#~ msgid "Sets how colors are mapped for your display."
+#~ msgstr "Angiver hvordan farver afbildes på din skærm."
+
+#~ msgid ""
+#~ "Sets how colors are converted from RGB working space to the print "
+#~ "simulation device."
+#~ msgstr ""
+#~ "Angiver hvordan farver konverteres fra RGB-arbejdsområde til "
+#~ "udskriftssimuleringsenheden."
+
+#~ msgctxt "color-management-mode"
+#~ msgid "Print simulation"
+#~ msgstr "Udskriftssimulering"
+
+#~ msgid "Could not open '%s' for writing: %s"
+#~ msgstr "Kunne ikke åbne \"%s\" for skrivning: %s"
+
+#~ msgid ""
+#~ "Error writing to temporary file for '%s': %s\n"
+#~ "The original file has not been touched."
+#~ msgstr ""
+#~ "Fejl under skrivning til midlertidig fil for \"%s\": %s\n"
+#~ "Den originale fil er ikke blevet rørt."
+
+#~ msgid ""
+#~ "Error writing to temporary file for '%s': %s\n"
+#~ "No file has been created."
+#~ msgstr ""
+#~ "Fejl under skrivning til midlertidig fil for \"%s\": %s\n"
+#~ "Ingen fil er blevet oprettet."
+
+#~ msgid "Could not create '%s': %s"
+#~ msgstr "Kunne ikke oprette \"%s\": %s"
+
+#~ msgid "_Edit"
+#~ msgstr "_Redigér"
+
+#~ msgid "Hue"
+#~ msgstr "Farvetone"
+
+#~ msgid "CMYK color selector"
+#~ msgstr "CMYK-farvevælger"
+
+#~ msgid "Black _pullout:"
+#~ msgstr "Sort _udtræk:"
+
+#~ msgid "The percentage of black to pull out of the colored inks."
+#~ msgstr "Den procentdel sort der skal trækkes ud af det farvede blæk."
+
+#~ msgid "_Gamma:"
+#~ msgstr "_Gamma:"
+
+# Farvehåndteringsfilter
+#~ msgid "Color management display filter using ICC color profiles"
+#~ msgstr "Farvestyringsfilter til skærm med ICC-farveprofiler"
+
+# Farvehåndtering
+#~ msgid "Color Management"
+#~ msgstr "Farvestyring"
 
 # evt farvehåndteringssektionen
-#: ../modules/display-filter-lcms.c:289
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr ""
-"Dette filter får sine indstillinger fra farvestyringssektionen i "
-"indstillingerne."
+#~ msgid ""
+#~ "This filter takes its configuration from the Color Management section in "
+#~ "the Preferences dialog."
+#~ msgstr ""
+#~ "Dette filter får sine indstillinger fra farvestyringssektionen i "
+#~ "indstillingerne."
 
-#: ../modules/display-filter-lcms.c:303
-msgid "Mode of operation:"
-msgstr "Tilstand:"
+#~ msgid "Print simulation profile:"
+#~ msgstr "Profil til udskriftssimulering:"
 
-#: ../modules/display-filter-lcms.c:310
-msgid "Image profile:"
-msgstr "Billedprofil:"
+#~ msgid "Color Proof"
+#~ msgstr "Farveprøve"
 
-#: ../modules/display-filter-lcms.c:318
-msgid "Monitor profile:"
-msgstr "Skærmprofil:"
+#~ msgid "Choose an ICC Color Profile"
+#~ msgstr "Vælg en ICC-farveprofil"
 
-#: ../modules/display-filter-lcms.c:326
-msgid "Print simulation profile:"
-msgstr "Profil til udskriftssimulering:"
+#~ msgid "_Profile:"
+#~ msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:98
-msgid "Color proof filter using ICC color profile"
-msgstr "Farveprøvefilter vha. ICC-farveprofil"
-
-#: ../modules/display-filter-proof.c:146
-msgid "Color Proof"
-msgstr "Farveprøve"
-
-#: ../modules/display-filter-proof.c:381
-msgid "Choose an ICC Color Profile"
-msgstr "Vælg en ICC-farveprofil"
-
-#: ../modules/display-filter-proof.c:408
-msgid "All files (*.*)"
-msgstr "Alle filer (*.*)"
-
-#: ../modules/display-filter-proof.c:413
-msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC-farveprofil (*.icc, *.icm)"
-
-#: ../modules/display-filter-proof.c:471
-msgid "_Profile:"
-msgstr "_Profil:"
-
-#: ../modules/display-filter-proof.c:477
-msgid "_Intent:"
-msgstr "_Formål:"
-
-#: ../modules/display-filter-proof.c:482
-msgid "_Black Point Compensation"
-msgstr "_Kompensér for sortpunkt"
+#~ msgid "_Intent:"
+#~ msgstr "_Formål:"
