@@ -133,12 +133,19 @@ static void   prefs_help_language_change_callback  (GtkComboBox  *combo,
                                                     Gimp         *gimp);
 static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
                                                     GtkContainer *box);
+
+#ifndef HAVE_EXECINFO_H
 static void   prefs_sensitive_debug_on_success     (GPid          pid,
                                                     gint          status,
                                                     GtkWidget    *widget);
 static void   prefs_notify_sensitive_debug         (GtkWidget    *button,
                                                     GParamSpec   *pspec,
                                                     GtkWidget    *label);
+#else
+static void   prefs_hide_widget_on_success         (GPid          pid,
+                                                    gint          status,
+                                                    GtkWidget    *widget);
+#endif
 
 /*  private variables  */
 
@@ -841,13 +848,14 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
   g_list_free (children);
 }
 
+#ifndef HAVE_EXECINFO_H
 static void
 prefs_sensitive_debug_on_success (GPid       pid,
                                   gint       status,
                                   GtkWidget *widget)
 {
-  if (g_spawn_check_exit_status (status, NULL))
-    gtk_widget_set_sensitive (widget, TRUE);
+  gtk_widget_set_sensitive (widget,
+                            g_spawn_check_exit_status (status, NULL));
 
   g_spawn_close_pid (pid);
 }
@@ -860,6 +868,18 @@ prefs_notify_sensitive_debug (GtkWidget  *button,
   gtk_widget_set_visible (label,
                           ! gtk_widget_is_sensitive (button));
 }
+#else
+static void
+prefs_hide_widget_on_success (GPid       pid,
+                              gint       status,
+                              GtkWidget *widget)
+{
+  gtk_widget_set_visible (widget,
+                          ! g_spawn_check_exit_status (status, NULL));
+
+  g_spawn_close_pid (pid);
+}
+#endif
 
 static void
 prefs_format_string_select_callback (GtkTreeSelection *sel,
@@ -1264,18 +1284,23 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Try generating debug data for bug reporting when appropriate"),
                                      GTK_TABLE (table), 0, size_group);
 
-  gtk_widget_set_sensitive (button, FALSE);
-
+#ifndef HAVE_EXECINFO_H
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                              _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
+  gtk_widget_set_sensitive (button, FALSE);
   g_signal_connect (button, "notify::sensitive",
                     G_CALLBACK (prefs_notify_sensitive_debug),
                     hbox);
+#else
+  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                             _("This feature is more efficient with \"gdb\" or \"lldb\" installed on your system."));
+#endif /* ! HAVE_EXECINFO_H */
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
   /* Check existence of gdb or lldb to activate the preference, as a
-   * good hint of its prerequisite.
+   * good hint of its prerequisite, unless backtrace() API exists, in
+   * which case the feature is always available.
    */
     {
       gchar *args[3] = { "gdb", "--version", NULL};
@@ -1286,9 +1311,15 @@ prefs_dialog_new (Gimp       *gimp,
                          G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
                          NULL, NULL, &pid, NULL))
         {
+#ifndef HAVE_EXECINFO_H
           g_child_watch_add (pid,
                              (GChildWatchFunc) prefs_sensitive_debug_on_success,
                              button);
+#else
+          g_child_watch_add (pid,
+                             (GChildWatchFunc) prefs_hide_widget_on_success,
+                             hbox);
+#endif
         }
       else
         {
@@ -1298,14 +1329,20 @@ prefs_dialog_new (Gimp       *gimp,
                              G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
                              NULL, NULL, &pid, NULL))
             {
+#ifndef HAVE_EXECINFO_H
               g_child_watch_add (pid,
                                  (GChildWatchFunc) prefs_sensitive_debug_on_success,
                                  button);
+#else
+              g_child_watch_add (pid,
+                                 (GChildWatchFunc) prefs_hide_widget_on_success,
+                                 hbox);
+#endif
             }
         }
     }
 
-#endif
+#endif /* ! G_OS_WIN32 */
 
   /**********************/
   /*  Color Management  */
