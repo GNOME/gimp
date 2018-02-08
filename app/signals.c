@@ -53,18 +53,23 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   gchar  *filename;
   gchar  *dir;
 
+#ifdef G_OS_WIN32
   /* This has to be the non-roaming directory (i.e., the local
      directory) as backtraces correspond to the binaries on this
      system. */
   dir = g_build_filename (g_get_user_data_dir (),
                           GIMPDIR, GIMP_USER_VERSION, "CrashLog",
                           NULL);
+#else
+  dir = g_build_filename (gimp_directory (), "CrashLog", NULL);
+#endif
+
   /* Ensure the path exists. */
   g_mkdir_with_parents (dir, 0700);
 
   time (&t);
   filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                              g_get_prgname (), t);
+                              PACKAGE_NAME, t);
   *backtrace_file = g_build_filename (dir, filename, NULL);
   g_free (filename);
   g_free (dir);
