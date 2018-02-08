@@ -16,16 +16,13 @@
  */
 
 /*
- * GimpDebug simply runs a debugger on a given executable and PID and
- * displays a dialog proposing to create a bug report. The reason why it
+ * GimpDebug simply displays a dialog with debug data (backtraces,
+ * version, etc.), proposing to create a bug report. The reason why it
  * is a separate executable is simply that when the program crashed,
  * even though some actions are possible before exit() by catching fatal
- * errors and signals, it may not be possible anymore to allocate memory
- * anymore. Therefore creating a new dialog, or even just allocating a
- * string with the contents of the debugger are impossible actions.
+ * errors and signals, it may not be possible to allocate memory
+ * anymore. Therefore creating a new dialog is an impossible action.
  * So we call instead a separate program, then exit.
- *
- * Note: this initial version does not handle Windows yet.
  */
 
 #include <stdlib.h>
@@ -43,10 +40,6 @@
 #include "app/widgets/gimpcriticaldialog.h"
 
 
-static gchar * gimp_debug_get_stack_trace (const gchar *full_prog_name,
-                                           const gchar *pid);
-
-
 
 int
 main (int    argc,
@@ -61,10 +54,9 @@ main (int    argc,
   gchar       *error;
   GtkWidget   *dialog;
 
-  if (argc != 5 && argc != 6)
+  if (argc != 6)
     {
-      g_print ("Usage: gimpdebug-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n\n"
-               "Note: the backtrace file is optional and only used in Windows.\n");
+      g_print ("Usage: gimpdebug-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n");
       exit (EXIT_FAILURE);
     }
 
@@ -75,15 +67,8 @@ main (int    argc,
 
   error   = g_strdup_printf ("%s: %s", reason, message);
 
-  if (argc == 6)
-    {
-      bt_file = argv[5];
-      g_file_get_contents (bt_file, &trace, NULL, NULL);
-    }
-  else
-    {
-      trace = gimp_debug_get_stack_trace (program, pid);
-    }
+  bt_file = argv[5];
+  g_file_get_contents (bt_file, &trace, NULL, NULL);
 
   if (trace == NULL || strlen (trace) == 0)
     exit (EXIT_FAILURE);
@@ -104,34 +89,4 @@ main (int    argc,
   gtk_main ();
 
   exit (EXIT_SUCCESS);
-}
-
-
-static gchar *
-gimp_debug_get_stack_trace (const gchar *full_prog_name,
-                            const gchar *pid)
-{
-  gchar   *trace  = NULL;
-
-  /* This works only on UNIX systems. On Windows, we'll have to find
-   * another method, probably with DrMingW.
-   */
-#if defined(G_OS_UNIX)
-  const gchar *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
-                       full_prog_name, pid, NULL };
-  gchar       *gdb_stdout;
-
-  if (g_spawn_sync (NULL, (gchar **) args, NULL,
-                    G_SPAWN_SEARCH_PATH | G_SPAWN_STDERR_TO_DEV_NULL,
-                    NULL, NULL, &gdb_stdout, NULL, NULL, NULL))
-    {
-      trace = g_strdup (gdb_stdout);
-    }
-  else if (gdb_stdout)
-    {
-      g_free (gdb_stdout);
-    }
-#endif
-
-  return trace;
 }

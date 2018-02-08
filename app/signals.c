@@ -49,26 +49,9 @@ static void         gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
 void
 gimp_init_signal_handlers (gchar **backtrace_file)
 {
-#ifdef G_OS_WIN32
-  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. Do
-   * nothing otherwise on Win32.
-   * The user won't get any stack trace from glib anyhow.
-   * Without Dr. MinGW, It's better to let Windows inform about the
-   * program error, and offer debugging (if the user has installed MSVC
-   * or some other compiler that knows how to install itself as a
-   * handler for program errors).
-   */
-#ifdef HAVE_EXCHNDL
   time_t  t;
   gchar  *filename;
   gchar  *dir;
-
-  /* Order is very important here. We need to add our signal handler
-   * first, then run ExcHndlInit() which will add its own handler, so
-   * that ExcHnl's handler runs first since that's in FILO order.
-   */
-  if (! g_prevExceptionFilter)
-    g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
 
   /* This has to be the non-roaming directory (i.e., the local
      directory) as backtraces correspond to the binaries on this
@@ -81,10 +64,28 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 
   time (&t);
   filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
-                              g_get_prgname(), t);
+                              g_get_prgname (), t);
   *backtrace_file = g_build_filename (dir, filename, NULL);
   g_free (filename);
   g_free (dir);
+
+#ifdef G_OS_WIN32
+  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. Do
+   * nothing otherwise on Win32.
+   * The user won't get any stack trace from glib anyhow.
+   * Without Dr. MinGW, It's better to let Windows inform about the
+   * program error, and offer debugging (if the user has installed MSVC
+   * or some other compiler that knows how to install itself as a
+   * handler for program errors).
+   */
+
+#ifdef HAVE_EXCHNDL
+  /* Order is very important here. We need to add our signal handler
+   * first, then run ExcHndlInit() which will add its own handler, so
+   * that ExcHnl's handler runs first since that's in FILO order.
+   */
+  if (! g_prevExceptionFilter)
+    g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
 
   ExcHndlInit ();
   ExcHndlSetLogFileNameA (*backtrace_file);
