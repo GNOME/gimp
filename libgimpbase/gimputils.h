@@ -75,6 +75,11 @@ const gchar   * gimp_flags_value_get_help      (GFlagsClass  *flags_class,
 const gchar   * gimp_flags_value_get_abbrev    (GFlagsClass  *flags_class,
                                                 GFlagsValue  *flags_value);
 
+gboolean        gimp_print_stack_trace         (const gchar  *prog_name,
+                                                gpointer      fd,
+                                                gchar       **trace);
+void            gimp_on_error_query            (const gchar  *prog_name);
+
 
 G_END_DECLS
 

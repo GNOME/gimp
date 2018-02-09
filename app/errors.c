@@ -25,15 +25,7 @@
 #include <unistd.h>
 #endif
 
-#include <sys/wait.h>
-
-#ifdef HAVE_EXECINFO_H
-/* Allowing backtrace() API. */
-#include <execinfo.h>
-#endif
-
 #include <gio/gio.h>
-#include <glib/gprintf.h>
 #include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -77,10 +69,6 @@ static void    gimp_error_log_func               (const gchar        *domain,
 static G_GNUC_NORETURN void  gimp_eek            (const gchar        *reason,
                                                   const gchar        *message,
                                                   gboolean            use_handler);
-
-static gboolean  gimp_print_stack_trace          (FILE               *file,
-                                                  gchar            **trace);
-static void      gimp_on_error_query             (void);
 
 
 /*  public functions  */
@@ -241,7 +229,8 @@ gimp_message_log_func (const gchar    *log_domain,
                * Hence when this happens, critical errors are simply processed as
                * lower level errors.
                */
-              gimp_print_stack_trace (NULL, &trace);
+              gimp_print_stack_trace ((const gchar *) full_prog_name,
+                                      NULL, &trace);
               n_traces++;
             }
         }
@@ -358,7 +347,8 @@ gimp_eek (const gchar *reason,
            * and is waiting for us in a text file.
            */
           fd = g_fopen (backtrace_file, "w");
-          has_backtrace = gimp_print_stack_trace (fd, NULL);
+          has_backtrace = gimp_print_stack_trace ((const gchar *) full_prog_name,
+                                                  fd, NULL);
           fclose (fd);
 #endif
 
@@ -392,7 +382,7 @@ gimp_eek (const gchar *reason,
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  gimp_on_error_query ();
+                  gimp_on_error_query ((const gchar *) full_prog_name);
                 }
               break;
 
@@ -403,7 +393,8 @@ gimp_eek (const gchar *reason,
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  gimp_print_stack_trace (stdout, NULL);
+                  gimp_print_stack_trace ((const gchar *) full_prog_name,
+                                          stdout, NULL);
                 }
               break;
 
@@ -423,190 +414,4 @@ gimp_eek (const gchar *reason,
 #endif
 
   exit (EXIT_FAILURE);
-}
-
-/* In some error cases (e.g. segmentation fault), trying to allocate
- * more memory will trigger more segmentation faults and therefore loop
- * our error handling (which is just wrong). Therefore printing to a
- * file description is an implementation without any memory allocation.
- * On the other hand, if trace is not #NULL, a newly-allocated string
- * will be returned.
- */
-static gboolean
-gimp_print_stack_trace (FILE   *file,
-                        gchar **trace)
-{
-  gboolean stack_printed = FALSE;
-
-  /* This works only on UNIX systems. */
-#ifndef G_OS_WIN32
-  GString *gtrace = NULL;
-  gchar    gimp_pid[16];
-  pid_t    pid;
-  gchar    buffer[256];
-  ssize_t  read_n;
-  int      out_fd[2];
-
-  g_snprintf (gimp_pid, 16, "%u", (guint) getpid ());
-
-  if (pipe (out_fd) == -1)
-    {
-      return FALSE;
-    }
-
-  pid = fork ();
-  if (pid == 0)
-    {
-      /* Child process. */
-      gchar *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
-                         full_prog_name, NULL, NULL };
-
-      args[5] = gimp_pid;
-
-      /* Redirect the debugger output. */
-      dup2 (out_fd[1], STDOUT_FILENO);
-      close (out_fd[0]);
-      close (out_fd[1]);
-
-      /* Run GDB. */
-      if (execvp (args[0], args) == -1)
-        {
-          /* LLDB as alternative. */
-          gchar *args_lldb[11] = { "lldb", "--attach-pid", NULL, "--batch",
-                                   "--one-line", "bt",
-                                   "--one-line-on-crash", "bt",
-                                   "--one-line-on-crash", "quit", NULL };
-
-          args_lldb[2] = gimp_pid;
-
-          execvp (args_lldb[0], args_lldb);
-        }
-
-      _exit (0);
-    }
-  else if (pid > 0)
-    {
-      /* Main process */
-      int status;
-
-      waitpid (pid, &status, 0);
-
-      /* It is important to close the writing side of the pipe, otherwise
-       * the read() will wait forever without getting the information that
-       * writing is finished.
-       */
-      close (out_fd[1]);
-
-      while ((read_n = read (out_fd[0], buffer, 256)) > 0)
-        {
-          /* It's hard to know if the debugger was found since it
-           * happened in the child. Let's just assume that any output
-           * means it succeeded.
-           */
-          stack_printed = TRUE;
-
-          buffer[read_n] = '\0';
-          if (file)
-            g_fprintf (file, "%s", buffer);
-          if (trace)
-            {
-              if (! gtrace)
-                gtrace = g_string_new (NULL);
-              g_string_append (gtrace, (const gchar *) buffer);
-            }
-        }
-      close (out_fd[0]);
-    }
-  else if (pid == (pid_t) -1)
-    {
-      /* Fork failed. */
-      return FALSE;
-    }
-
-#ifdef HAVE_EXECINFO_H
-  if (! stack_printed)
-    {
-      /* As a last resort, try using the backtrace() Linux API. It is a bit
-       * less fancy than gdb or lldb, which is why it is not given priority.
-       */
-      void  *bt_buf[100];
-      char **symbols;
-      int    n_symbols;
-      int    i;
-
-      n_symbols = backtrace (bt_buf, 100);
-      symbols = backtrace_symbols (bt_buf, n_symbols);
-      if (symbols)
-        {
-          stack_printed = TRUE;
-
-          for (i = 0; i < n_symbols; i++)
-            {
-              if (file)
-                g_fprintf (file, "%s\n", (const gchar *) symbols[i]);
-              if (trace)
-                {
-                  if (! gtrace)
-                    gtrace = g_string_new (NULL);
-                  g_string_append (gtrace,
-                                   (const gchar *) symbols[i]);
-                  g_string_append_c (gtrace, '\n');
-                }
-            }
-          free (symbols);
-        }
-    }
-#endif /* HAVE_EXECINFO_H */
-
-  if (trace)
-    {
-      if (gtrace)
-        *trace = g_string_free (gtrace, FALSE);
-      else
-        *trace = NULL;
-    }
-#endif /* G_OS_WIN32 */
-
-  return stack_printed;
-}
-
-/* This is mostly the same as g_on_error_query() except that we use our
- * own backtrace function, much more complete.
- */
-static void
-gimp_on_error_query (void)
-{
-#ifndef G_OS_WIN32
-  gchar buf[16];
-
- retry:
-
-  g_fprintf (stdout,
-             "%s (pid:%u): %s: ",
-             full_prog_name,
-             (guint) getpid (),
-             "[E]xit, show [S]tack trace or [P]roceed");
-  fflush (stdout);
-
-  if (isatty(0) && isatty(1))
-    fgets (buf, 8, stdin);
-  else
-    strcpy (buf, "E\n");
-
-  if ((buf[0] == 'E' || buf[0] == 'e')
-      && buf[1] == '\n')
-    _exit (0);
-  else if ((buf[0] == 'P' || buf[0] == 'p')
-           && buf[1] == '\n')
-    return;
-  else if ((buf[0] == 'S' || buf[0] == 's')
-           && buf[1] == '\n')
-    {
-      if (! gimp_print_stack_trace (stdout, NULL))
-        g_fprintf (stderr, "%s\n", "Stack trace not available on your system.");
-      goto retry;
-    }
-  else
-    goto retry;
-#endif
 }
