@@ -1917,7 +1917,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
-            g_on_error_query (progname);
+            gimp_on_error_query (progname);
           }
           break;
 
@@ -1927,7 +1927,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
-            g_on_error_stack_trace (progname);
+            gimp_print_stack_trace (progname, stdout, NULL);
           }
           break;
         }
