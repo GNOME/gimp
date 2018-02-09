@@ -444,307 +444,307 @@ static gboolean
 gimp_meter_expose_event (GtkWidget      *widget,
                           GdkEventExpose *event)
 {
-  GimpMeter *meter = GIMP_METER (widget);
+  GimpMeter     *meter = GIMP_METER (widget);
+  GtkAllocation  allocation;
+  gint           size  = meter->priv->size;
+  GtkStyle      *style = gtk_widget_get_style (widget);
+  GtkStateType   state = gtk_widget_get_state (widget);
+  cairo_t       *cr;
+  gint           i;
+  gint           j;
+  gint           k;
 
-  if (gtk_widget_is_drawable (widget))
+  if (! gtk_widget_is_drawable (widget))
+    return FALSE;
+
+  g_mutex_lock (&meter->priv->mutex);
+
+  cr = gdk_cairo_create (event->window);
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  /* translate to allocation top-left */
+  cairo_translate (cr, allocation.x, allocation.y);
+
+  cairo_save (cr);
+
+  /* translate to gauge center */
+  cairo_translate (cr,
+                   0.5 * BORDER_WIDTH +       0.5 * size,
+                   1.5 * BORDER_WIDTH + 2.0 / 3.0 * (allocation.height - 4.0 * BORDER_WIDTH));
+
+  cairo_save (cr);
+
+  /* paint led */
+  if (meter->priv->led_active)
     {
-      GtkAllocation  allocation;
-      gint           size  = meter->priv->size;
-      GtkStyle      *style = gtk_widget_get_style (widget);
-      GtkStateType   state = gtk_widget_get_state (widget);
-      cairo_t       *cr;
-      gint           i;
-      gint           j;
-      gint           k;
+      cairo_arc (cr,
+                 0.0, 0.0,
+                 0.06 * size,
+                 0.0 * REV, 1.0 * REV);
 
-      g_mutex_lock (&meter->priv->mutex);
+      gimp_cairo_set_source_rgba (cr, &meter->priv->led_color);
+      cairo_fill (cr);
+    }
 
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
+  /* clip to gauge interior */
+  cairo_arc          (cr,
+                      0.0, 0.0,
+                      0.5 * size,
+                      5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
+  cairo_arc_negative (cr,
+                      0.0, 0.0,
+                      0.1 * size,
+                      1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
+  cairo_close_path (cr);
+  cairo_clip (cr);
 
-      gtk_widget_get_allocation (widget, &allocation);
+  /* paint gauge background */
+  gdk_cairo_set_source_color (cr, &style->light[state]);
+  cairo_paint (cr);
 
-      /* translate to allocation top-left */
-      cairo_translate (cr, allocation.x, allocation.y);
-
-      cairo_save (cr);
-
-      /* translate to gauge center */
-      cairo_translate (cr,
-                       0.5 * BORDER_WIDTH +       0.5 * size,
-                       1.5 * BORDER_WIDTH + 2.0 / 3.0 * (allocation.height - 4.0 * BORDER_WIDTH));
-
-      cairo_save (cr);
-
-      /* paint led */
-      if (meter->priv->led_active)
+  /* paint values of last sample */
+  if (meter->priv->range_min < meter->priv->range_max)
+    {
+      for (i = 0; i < meter->priv->n_values; i++)
         {
+          gdouble v = VALUE (0, i);
+
+          if (! meter->priv->values[i].active ||
+              ! meter->priv->values[i].show_in_gauge)
+            {
+              continue;
+            }
+
+          gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
+          cairo_move_to (cr, 0.0, 0.0);
           cairo_arc (cr,
                      0.0, 0.0,
-                     0.06 * size,
-                     0.0 * REV, 1.0 * REV);
 
-          gimp_cairo_set_source_rgba (cr, &meter->priv->led_color);
+                     0.5 * size,
+                     5.0 / 12.0 * REV, (5.0 / 12.0 + 2.0 / 3.0 * v) * REV);
+          cairo_line_to (cr, 0.0, 0.0);
+          cairo_close_path (cr);
           cairo_fill (cr);
         }
+    }
 
-      /* clip to gauge interior */
-      cairo_arc          (cr,
-                          0.0, 0.0,
-                          0.5 * size,
-                          5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
+  cairo_restore (cr);
+
+  /* paint gauge border */
+  gdk_cairo_set_source_color (cr, &style->fg[state]);
+  cairo_set_line_width (cr, BORDER_WIDTH);
+  cairo_arc          (cr,
+                      0.0, 0.0,
+                      0.5 * size,
+                      5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
+  cairo_arc_negative (cr,
+                      0.0, 0.0,
+                      0.1 * size,
+                      1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
+  cairo_close_path (cr);
+  cairo_stroke (cr);
+
+  /* history */
+  if (meter->priv->history_visible)
+    {
+      gdouble a1, a2;
+      gdouble history_x1, history_y1;
+      gdouble history_x2, history_y2;
+
+      cairo_save (cr);
+
+      a1 = +asin (0.25 / 0.6);
+      a2 = -asin (0.50 / 0.6);
+
+      /* clip to history interior */
       cairo_arc_negative (cr,
                           0.0, 0.0,
-                          0.1 * size,
-                          1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
+                          0.6 * size,
+                          a1, a2);
+      cairo_line_to (cr,
+                     allocation.width - BORDER_WIDTH - 0.5 * size,
+                     -0.50 * size);
+      cairo_line_to (cr,
+                     allocation.width - BORDER_WIDTH - 0.5 * size,
+                     0.25 * size);
       cairo_close_path (cr);
       cairo_clip (cr);
 
-      /* paint gauge background */
+      cairo_clip_extents (cr,
+                          &history_x1, &history_y1,
+                          &history_x2, &history_y2);
+
+      history_x1 = floor (history_x1);
+      history_y1 = floor (history_y1);
+      history_x2 = ceil  (history_x2);
+      history_y2 = ceil  (history_y2);
+
+      /* paint history background */
       gdk_cairo_set_source_color (cr, &style->light[state]);
       cairo_paint (cr);
 
-      /* paint values of last sample */
+      /* history graph */
       if (meter->priv->range_min < meter->priv->range_max)
         {
+          gdouble sample_width = (history_x2 - history_x1) /
+                                 (meter->priv->n_samples - 4);
+          gdouble dx           = 1.0 / sample_width;
+
+          cairo_save (cr);
+
+          /* translate to history bottom-right, and scale so that the
+           * x-axis points left, and has a length of one sample, and
+           * the y-axis points up, and has a length of the history
+           * window.
+           */
+          cairo_translate (cr, history_x2, history_y2);
+          cairo_scale (cr, -sample_width, -(history_y2 - history_y1));
+          cairo_translate (cr,
+                           (gdouble) (meter->priv->current_time     -
+                                      meter->priv->last_sample_time *
+                                      meter->priv->sample_duration) /
+                           meter->priv->sample_duration             -
+                           2.0,
+                           0.0);
+
+          /* paint history graph for each value */
           for (i = 0; i < meter->priv->n_values; i++)
             {
-              gdouble v = VALUE (0, i);
+              gdouble y;
 
               if (! meter->priv->values[i].active ||
-                  ! meter->priv->values[i].show_in_gauge)
+                  ! meter->priv->values[i].show_in_history)
                 {
                   continue;
                 }
 
               gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
               cairo_move_to (cr, 0.0, 0.0);
-              cairo_arc (cr,
-                         0.0, 0.0,
 
-                         0.5 * size,
-                         5.0 / 12.0 * REV, (5.0 / 12.0 + 2.0 / 3.0 * v) * REV);
-              cairo_line_to (cr, 0.0, 0.0);
+              switch (meter->priv->values[i].interpolation)
+                {
+                case GIMP_INTERPOLATION_NONE:
+                  {
+                    for (j = 1; j < meter->priv->n_samples - 2; j++)
+                      {
+                        gdouble y0 = VALUE (j - 1, i);
+                        gdouble y1 = VALUE (j,     i);
+
+                        cairo_line_to (cr, j, y0);
+                        cairo_line_to (cr, j, y1);
+                      }
+                  }
+                  break;
+
+                case GIMP_INTERPOLATION_LINEAR:
+                  {
+                    for (j = 1; j < meter->priv->n_samples - 2; j++)
+                      {
+                        gdouble y = VALUE (j, i);
+
+                        cairo_line_to (cr, j, y);
+                      }
+                  }
+                  break;
+
+                case GIMP_INTERPOLATION_CUBIC:
+                default:
+                  {
+                    for (j = 1; j < meter->priv->n_samples - 2; j++)
+                      {
+                        gdouble y[4];
+                        gdouble t[2];
+                        gdouble c[4];
+                        gdouble x;
+
+                        for (k = 0; k < 4; k++)
+                          y[k] = VALUE (j + k - 1, i);
+
+                        for (k = 0; k < 2; k++)
+                          {
+                            t[k] = (y[k + 2] - y[k]) / 2.0;
+                            t[k] = CLAMP (t[k], y[k + 1] - 1.0, y[k + 1]);
+                            t[k] = CLAMP (t[k], -y[k + 1], 1.0 - y[k + 1]);
+                          }
+
+                        c[0] = y[1];
+                        c[1] = t[0];
+                        c[2] = 3 * (y[2] - y[1]) - 2 * t[0] - t[1];
+                        c[3] = t[0] + t[1] - 2 * (y[2] - y[1]);
+
+                        for (x = 0.0; x < 1.0; x += dx)
+                          {
+                            gdouble y = ((c[3] * x + c[2]) * x + c[1]) * x + c[0];
+
+                            cairo_line_to (cr, j + x, y);
+                          }
+                      }
+                  }
+                  break;
+                }
+
+              y = VALUE (j, i);
+
+              cairo_line_to (cr, meter->priv->n_samples - 2, y);
+              cairo_line_to (cr, meter->priv->n_samples - 2, 0.0);
               cairo_close_path (cr);
               cairo_fill (cr);
             }
-        }
-
-      cairo_restore (cr);
-
-      /* paint gauge border */
-      gdk_cairo_set_source_color (cr, &style->fg[state]);
-      cairo_set_line_width (cr, BORDER_WIDTH);
-      cairo_arc          (cr,
-                          0.0, 0.0,
-                          0.5 * size,
-                          5.0 / 12.0 * REV, 1.0 / 12.0 * REV);
-      cairo_arc_negative (cr,
-                          0.0, 0.0,
-                          0.1 * size,
-                          1.0 / 12.0 * REV, 5.0 / 12.0 * REV);
-      cairo_close_path (cr);
-      cairo_stroke (cr);
-
-      /* history */
-      if (meter->priv->history_visible)
-        {
-          gdouble a1, a2;
-          gdouble history_x1, history_y1;
-          gdouble history_x2, history_y2;
-
-          cairo_save (cr);
-
-          a1 = +asin (0.25 / 0.6);
-          a2 = -asin (0.50 / 0.6);
-
-          /* clip to history interior */
-          cairo_arc_negative (cr,
-                              0.0, 0.0,
-                              0.6 * size,
-                              a1, a2);
-          cairo_line_to (cr,
-                         allocation.width - BORDER_WIDTH - 0.5 * size,
-                         -0.50 * size);
-          cairo_line_to (cr,
-                         allocation.width - BORDER_WIDTH - 0.5 * size,
-                         0.25 * size);
-          cairo_close_path (cr);
-          cairo_clip (cr);
-
-          cairo_clip_extents (cr,
-                              &history_x1, &history_y1,
-                              &history_x2, &history_y2);
-
-          history_x1 = floor (history_x1);
-          history_y1 = floor (history_y1);
-          history_x2 = ceil  (history_x2);
-          history_y2 = ceil  (history_y2);
-
-          /* paint history background */
-          gdk_cairo_set_source_color (cr, &style->light[state]);
-          cairo_paint (cr);
-
-          /* history graph */
-          if (meter->priv->range_min < meter->priv->range_max)
-            {
-              gdouble sample_width = (history_x2 - history_x1) /
-                                     (meter->priv->n_samples - 4);
-              gdouble dx           = 1.0 / sample_width;
-
-              cairo_save (cr);
-
-              /* translate to history bottom-right, and scale so that the
-               * x-axis points left, and has a length of one sample, and the
-               * y-axis points up, and has a length of the history window.
-               */
-              cairo_translate (cr, history_x2, history_y2);
-              cairo_scale (cr, -sample_width, -(history_y2 - history_y1));
-              cairo_translate (cr,
-                               (gdouble) (meter->priv->current_time     -
-                                          meter->priv->last_sample_time *
-                                          meter->priv->sample_duration) /
-                               meter->priv->sample_duration             -
-                               2.0,
-                               0.0);
-
-              /* paint history graph for each value */
-              for (i = 0; i < meter->priv->n_values; i++)
-                {
-                  gdouble y;
-
-                  if (! meter->priv->values[i].active ||
-                      ! meter->priv->values[i].show_in_history)
-                    {
-                      continue;
-                    }
-
-                  gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
-                  cairo_move_to (cr, 0.0, 0.0);
-
-                  switch (meter->priv->values[i].interpolation)
-                    {
-                    case GIMP_INTERPOLATION_NONE:
-                      {
-                        for (j = 1; j < meter->priv->n_samples - 2; j++)
-                          {
-                            gdouble y0 = VALUE (j - 1, i);
-                            gdouble y1 = VALUE (j,     i);
-
-                            cairo_line_to (cr, j, y0);
-                            cairo_line_to (cr, j, y1);
-                          }
-                      }
-                      break;
-
-                    case GIMP_INTERPOLATION_LINEAR:
-                      {
-                        for (j = 1; j < meter->priv->n_samples - 2; j++)
-                          {
-                            gdouble y = VALUE (j, i);
-
-                            cairo_line_to (cr, j, y);
-                          }
-                      }
-                      break;
-
-                    case GIMP_INTERPOLATION_CUBIC:
-                    default:
-                      {
-                        for (j = 1; j < meter->priv->n_samples - 2; j++)
-                          {
-                            gdouble y[4];
-                            gdouble t[2];
-                            gdouble c[4];
-                            gdouble x;
-
-                            for (k = 0; k < 4; k++)
-                              y[k] = VALUE (j + k - 1, i);
-
-                            for (k = 0; k < 2; k++)
-                              {
-                                t[k] = (y[k + 2] - y[k]) / 2.0;
-                                t[k] = CLAMP (t[k], y[k + 1] - 1.0, y[k + 1]);
-                                t[k] = CLAMP (t[k], -y[k + 1], 1.0 - y[k + 1]);
-                              }
-
-                            c[0] = y[1];
-                            c[1] = t[0];
-                            c[2] = 3 * (y[2] - y[1]) - 2 * t[0] - t[1];
-                            c[3] = t[0] + t[1] - 2 * (y[2] - y[1]);
-
-                            for (x = 0.0; x < 1.0; x += dx)
-                              {
-                                gdouble y = ((c[3] * x + c[2]) * x + c[1]) * x + c[0];
-
-                                cairo_line_to (cr, j + x, y);
-                              }
-                          }
-                      }
-                      break;
-                    }
-
-                  y = VALUE (j, i);
-
-                  cairo_line_to (cr, meter->priv->n_samples - 2, y);
-                  cairo_line_to (cr, meter->priv->n_samples - 2, 0.0);
-                  cairo_close_path (cr);
-                  cairo_fill (cr);
-                }
-
-              cairo_restore (cr);
-            }
-
-          /* paint history grid */
-          cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
-          cairo_set_source_rgba (cr,
-                                 (gdouble) style->fg[state].red   / 0xffff,
-                                 (gdouble) style->fg[state].green / 0xffff,
-                                 (gdouble) style->fg[state].blue  / 0xffff,
-                                 0.3);
-
-          for (i = 1; i < 4; i++)
-            {
-              cairo_move_to (cr,
-                             history_x1,
-                             history_y1 + i / 4.0 * (history_y2 - history_y1));
-              cairo_rel_line_to (cr, history_x2 - history_x1, 0.0);
-              cairo_stroke (cr);
-            }
-
-          for (i = 1; i < 6; i++)
-            {
-              cairo_move_to (cr,
-                             history_x1 + i / 6.0 * (history_x2 - history_x1),
-                             history_y1);
-              cairo_rel_line_to (cr, 0.0, history_y2 - history_y1);
-              cairo_stroke (cr);
-            }
 
           cairo_restore (cr);
+        }
 
-          /* paint history border */
-          cairo_arc_negative (cr,
-                              0.0, 0.0,
-                              0.6 * size,
-                              a1, a2);
-          cairo_line_to (cr,
-                         allocation.width - BORDER_WIDTH - 0.5 * size,
-                         -0.50 * size);
-          cairo_line_to (cr,
-                         allocation.width - BORDER_WIDTH - 0.5 * size,
-                         0.25 * size);
-          cairo_close_path (cr);
+      /* paint history grid */
+      cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
+      cairo_set_source_rgba (cr,
+                             (gdouble) style->fg[state].red   / 0xffff,
+                             (gdouble) style->fg[state].green / 0xffff,
+                             (gdouble) style->fg[state].blue  / 0xffff,
+                             0.3);
+
+      for (i = 1; i < 4; i++)
+        {
+          cairo_move_to (cr,
+                         history_x1,
+                         history_y1 + i / 4.0 * (history_y2 - history_y1));
+          cairo_rel_line_to (cr, history_x2 - history_x1, 0.0);
+          cairo_stroke (cr);
+        }
+
+      for (i = 1; i < 6; i++)
+        {
+          cairo_move_to (cr,
+                         history_x1 + i / 6.0 * (history_x2 - history_x1),
+                         history_y1);
+          cairo_rel_line_to (cr, 0.0, history_y2 - history_y1);
           cairo_stroke (cr);
         }
 
       cairo_restore (cr);
 
-      cairo_destroy (cr);
-
-      g_mutex_unlock (&meter->priv->mutex);
+      /* paint history border */
+      cairo_arc_negative (cr,
+                          0.0, 0.0,
+                          0.6 * size,
+                          a1, a2);
+      cairo_line_to (cr,
+                     allocation.width - BORDER_WIDTH - 0.5 * size,
+                     -0.50 * size);
+      cairo_line_to (cr,
+                     allocation.width - BORDER_WIDTH - 0.5 * size,
+                     0.25 * size);
+      cairo_close_path (cr);
+      cairo_stroke (cr);
     }
+
+  cairo_restore (cr);
+
+  cairo_destroy (cr);
+
+  g_mutex_unlock (&meter->priv->mutex);
 
   return FALSE;
 }
