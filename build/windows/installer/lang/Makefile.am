@@ -18,6 +18,7 @@ languages = \
 	eu:[eu]:WINDOWS-1252		\
 	fr:[fr]:WINDOWS-1252		\
 	hu:[hu]:WINDOWS-1250		\
+	id:[id]:ISO-8859-1		\
 	is:[is]:WINDOWS-1252		\
 	it:[it]:WINDOWS-1252		\
 	nl:[nl]:WINDOWS-1252		\
