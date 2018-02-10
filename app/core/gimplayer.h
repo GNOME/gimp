@@ -53,6 +53,8 @@ struct _GimpLayer
   gboolean                edit_mask;                  /*  edit mask or layer?               */
   gboolean                show_mask;                  /*  show mask or layer?               */
 
+  GSList                 *move_stack;                 /*  ancestors affected by move        */
+
   GeglNode               *layer_offset_node;
   GeglNode               *mask_offset_node;
 

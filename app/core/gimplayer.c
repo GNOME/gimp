@@ -1060,11 +1060,26 @@ static void
 gimp_layer_start_move (GimpItem *item,
                        gboolean  push_undo)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
+  GimpLayer *layer     = GIMP_LAYER (item);
+  GimpLayer *ancestor  = layer;
+  GSList    *ancestors = NULL;
 
   /* suspend mask cropping for all of the layer's ancestors */
-  while ((layer = gimp_layer_get_parent (layer)))
-    gimp_group_layer_suspend_mask (GIMP_GROUP_LAYER (layer), push_undo);
+  while ((ancestor = gimp_layer_get_parent (ancestor)))
+    {
+      gimp_group_layer_suspend_mask (GIMP_GROUP_LAYER (ancestor), push_undo);
+
+      ancestors = g_slist_prepend (ancestors, g_object_ref (ancestor));
+    }
+
+  /* we keep the ancestor list around, so that we can resume mask cropping for
+   * the same set of groups in gimp_layer_end_move().  note that
+   * gimp_image_remove_layer() calls start_move() before removing the layer,
+   * while it's still part of the layer tree, and end_move() afterwards, when
+   * it's no longer part of the layer tree, and hence we can't use get_parent()
+   * in end_move() to get the same set of ancestors.
+   */
+  layer->move_stack = g_slist_prepend (layer->move_stack, ancestors);
 
   if (GIMP_ITEM_CLASS (parent_class)->start_move)
     GIMP_ITEM_CLASS (parent_class)->start_move (item, push_undo);
@@ -1075,13 +1090,27 @@ gimp_layer_end_move (GimpItem *item,
                      gboolean  push_undo)
 {
   GimpLayer *layer = GIMP_LAYER (item);
+  GSList    *ancestors;
+  GSList    *iter;
 
   if (GIMP_ITEM_CLASS (parent_class)->end_move)
     GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
 
+  ancestors = layer->move_stack->data;
+
+  layer->move_stack = g_slist_remove (layer->move_stack, ancestors);
+
   /* resume mask cropping for all of the layer's ancestors */
-  while ((layer = gimp_layer_get_parent (layer)))
-    gimp_group_layer_resume_mask (GIMP_GROUP_LAYER (layer), push_undo);
+  for (iter = ancestors; iter; iter = g_slist_next (iter))
+    {
+      GimpGroupLayer *ancestor = iter->data;
+
+      gimp_group_layer_resume_mask (ancestor, push_undo);
+
+      g_object_unref (ancestor);
+    }
+
+  g_slist_free (ancestors);
 }
 
 static void
