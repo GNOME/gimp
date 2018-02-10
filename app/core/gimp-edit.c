@@ -233,7 +233,9 @@ gimp_edit_paste_get_layer (GimpImage     *image,
       switch (*paste_type)
         {
         case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
         case GIMP_PASTE_TYPE_FLOATING_INTO:
+        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
           /*  when pasting as floating selection, force creation of a
            *  plain layer, so gimp_item_convert() will collapse a
            *  group layer
@@ -242,6 +244,7 @@ gimp_edit_paste_get_layer (GimpImage     *image,
           break;
 
         case GIMP_PASTE_TYPE_NEW_LAYER:
+        case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
           layer_type = G_TYPE_FROM_INSTANCE (layer);
           break;
 
