@@ -1382,14 +1382,18 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
                        gint          offset_x,
                        gint          offset_y)
 {
-  gboolean old_linear = gimp_drawable_get_linear (drawable);
+  GeglBuffer *old_buffer = gimp_drawable_get_buffer (drawable);
+  gint        old_linear = -1;
+
+  if (old_buffer)
+    old_linear = gimp_drawable_get_linear (drawable);
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
                                                   buffer,
                                                   offset_x, offset_y);
 
-  if (gimp_filter_peek_node (GIMP_FILTER (drawable)))
+  if (old_linear >= 0 && gimp_filter_peek_node (GIMP_FILTER (drawable)))
     {
       gboolean new_linear = gimp_drawable_get_linear (drawable);
 

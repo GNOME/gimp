@@ -438,12 +438,12 @@ gimp_drawable_duplicate (GimpItem *item,
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
+      GeglBuffer    *new_buffer;
 
-      if (new_drawable->private->buffer)
-        g_object_unref (new_drawable->private->buffer);
+      new_buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
-      new_drawable->private->buffer =
-        gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
+      gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
+      g_object_unref (new_buffer);
     }
 
   return new_item;
@@ -770,10 +770,8 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                                gint          offset_x,
                                gint          offset_y)
 {
-  GimpItem *item = GIMP_ITEM (drawable);
-  gboolean  old_has_alpha;
-
-  old_has_alpha = gimp_drawable_has_alpha (drawable);
+  GimpItem *item          = GIMP_ITEM (drawable);
+  gint      old_has_alpha = -1;
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
@@ -787,7 +785,11 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
   g_object_ref (buffer);
 
   if (drawable->private->buffer)
-    g_object_unref (drawable->private->buffer);
+    {
+      old_has_alpha = gimp_drawable_has_alpha (drawable);
+
+      g_object_unref (drawable->private->buffer);
+    }
 
   drawable->private->buffer = buffer;
 
@@ -801,7 +803,8 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                       gegl_buffer_get_width  (buffer),
                       gegl_buffer_get_height (buffer));
 
-  if (old_has_alpha != gimp_drawable_has_alpha (drawable))
+  if (old_has_alpha >= 0 &&
+      old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
 
   g_object_notify (G_OBJECT (drawable), "buffer");
@@ -894,6 +897,7 @@ gimp_drawable_new (GType          type,
                    const Babl    *format)
 {
   GimpDrawable *drawable;
+  GeglBuffer   *buffer;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_DRAWABLE), NULL);
@@ -905,9 +909,10 @@ gimp_drawable_new (GType          type,
                                            offset_x, offset_y,
                                            width, height));
 
-  drawable->private->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                               width, height),
-                                               format);
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height), format);
+
+  gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+  g_object_unref (buffer);
 
   return drawable;
 }
