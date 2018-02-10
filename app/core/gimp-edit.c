@@ -258,7 +258,9 @@ gimp_edit_paste_get_layer (GimpImage     *image,
       switch (*paste_type)
         {
         case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
         case GIMP_PASTE_TYPE_FLOATING_INTO:
+        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
           /*  when pasting as floating selection, get rid of the layer mask,
            *  and make sure the layer has the right format
            */
