@@ -689,6 +689,8 @@ gimp_tool_control (GimpTool       *tool,
        */
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
       GIMP_TOOL_GET_CLASS (tool)->control (tool, GIMP_TOOL_ACTION_HALT, display);
+
+      gimp_tool_clear_status (tool);
       break;
     }
 }
