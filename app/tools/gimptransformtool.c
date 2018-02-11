@@ -317,7 +317,8 @@ gimp_transform_tool_control (GimpTool       *tool,
      break;
 
     case GIMP_TOOL_ACTION_COMMIT:
-      gimp_transform_tool_commit (tr_tool);
+      if (tool->display)
+        gimp_transform_tool_commit (tr_tool);
       break;
     }
 
