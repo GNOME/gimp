@@ -584,6 +584,7 @@ gimp_spin_scale_get_target (GtkWidget *widget,
 
 static void
 gimp_spin_scale_update_target (GtkWidget *widget,
+                               GdkWindow *window,
                                gdouble    x,
                                gdouble    y)
 {
@@ -595,7 +596,6 @@ gimp_spin_scale_update_target (GtkWidget *widget,
   if (target != private->target)
     {
       GdkDisplay *display = gtk_widget_get_display (widget);
-      GdkWindow  *window  = gtk_entry_get_text_window (GTK_ENTRY (widget));
       GdkCursor  *cursor  = NULL;
 
       private->target = target;
@@ -628,14 +628,13 @@ gimp_spin_scale_update_target (GtkWidget *widget,
 }
 
 static void
-gimp_spin_scale_clear_target (GtkWidget *widget)
+gimp_spin_scale_clear_target (GtkWidget *widget,
+                              GdkWindow *window)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
 
   if (private->target != TARGET_NONE)
     {
-      GdkWindow *window = gtk_entry_get_text_window (GTK_ENTRY (widget));
-
       private->target = TARGET_NONE;
 
       gdk_window_set_cursor (window, NULL);
@@ -740,7 +739,8 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      gimp_spin_scale_update_target (widget, event->x, event->y);
+      gimp_spin_scale_update_target (widget, event->window,
+                                     event->x, event->y);
 
       gtk_widget_queue_draw (widget);
 
@@ -804,9 +804,10 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
         }
 
       if (private->hover)
-        gimp_spin_scale_update_target (widget, event->x, event->y);
+        gimp_spin_scale_update_target (widget, event->window,
+                                       event->x, event->y);
       else
-        gimp_spin_scale_clear_target (widget);
+        gimp_spin_scale_clear_target (widget, event->window);
 
       gtk_widget_queue_draw (widget);
 
@@ -941,7 +942,8 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
          (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
       private->hover)
     {
-      gimp_spin_scale_update_target (widget, event->x, event->y);
+      gimp_spin_scale_update_target (widget, event->window,
+                                     event->x, event->y);
     }
 
   return FALSE;
@@ -960,7 +962,7 @@ gimp_spin_scale_leave_notify (GtkWidget        *widget,
       if (! (event->state &
              (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
         {
-          gimp_spin_scale_clear_target (widget);
+          gimp_spin_scale_clear_target (widget, event->window);
         }
     }
 
