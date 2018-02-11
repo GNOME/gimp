@@ -110,6 +110,7 @@ EXPORTS
 	gimp_micro_version
 	gimp_minor_version
 	gimp_offset_type_get_type
+	gimp_on_error_query
 	gimp_orientation_type_get_type
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
@@ -149,6 +150,7 @@ EXPORTS
 	gimp_plug_in_directory
 	gimp_plug_in_directory_file
 	gimp_precision_get_type
+	gimp_print_stack_trace
 	gimp_progress_command_get_type
 	gimp_rectangle_intersect
 	gimp_rectangle_union
