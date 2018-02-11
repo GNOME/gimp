@@ -53,6 +53,8 @@ echo "Start date: $prev_date - End date: $cur_date"
 echo "Between $PREV and $CUR, $contribs_n people contributed $commits_n commits to GIMP."
 echo "This is an average of $commits_rate commits a day."
 echo
+echo "Statistics on all files:" `git diff --shortstat $PREV..$CUR 2>/dev/null`
+echo
 echo "Total contributor list:"
 printf "$contribs"
 
