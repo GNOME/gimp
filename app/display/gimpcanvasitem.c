@@ -184,7 +184,7 @@ gimp_canvas_item_constructed (GObject *object)
 {
   GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
 
-  g_assert (GIMP_IS_DISPLAY_SHELL (item->private->shell));
+  gimp_assert (GIMP_IS_DISPLAY_SHELL (item->private->shell));
 
   item->private->change_count = 0; /* undo hack from init() */
 

@@ -438,7 +438,7 @@ gimp_gegl_apply_border (GeglBuffer             *src_buffer,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,

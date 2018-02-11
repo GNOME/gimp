@@ -220,7 +220,7 @@ gimp_device_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (private->gimp));
+  gimp_assert (GIMP_IS_GIMP (private->gimp));
 
   devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 

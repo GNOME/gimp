@@ -226,8 +226,8 @@ gimp_container_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_CONTAINER (editor->priv->container));
-  g_assert (GIMP_IS_CONTEXT (editor->priv->context));
+  gimp_assert (GIMP_IS_CONTAINER (editor->priv->container));
+  gimp_assert (GIMP_IS_CONTEXT (editor->priv->context));
 
   switch (editor->priv->view_type)
     {
@@ -256,7 +256,7 @@ gimp_container_editor_constructed (GObject *object)
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   if (GIMP_IS_LIST (editor->priv->container))

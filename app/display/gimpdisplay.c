@@ -220,12 +220,6 @@ gimp_display_set_property (GObject      *object,
       }
       break;
 
-    case PROP_ID:
-    case PROP_IMAGE:
-    case PROP_SHELL:
-      g_assert_not_reached ();
-      break;
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

@@ -301,10 +301,10 @@ gimp_text_style_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (editor->gimp));
-  g_assert (GIMP_IS_FONT_LIST (editor->fonts));
-  g_assert (GIMP_IS_TEXT (editor->text));
-  g_assert (GIMP_IS_TEXT_BUFFER (editor->buffer));
+  gimp_assert (GIMP_IS_GIMP (editor->gimp));
+  gimp_assert (GIMP_IS_FONT_LIST (editor->fonts));
+  gimp_assert (GIMP_IS_TEXT (editor->text));
+  gimp_assert (GIMP_IS_TEXT_BUFFER (editor->buffer));
 
   editor->context = gimp_context_new (editor->gimp, "text style editor", NULL);
 

@@ -169,7 +169,7 @@ gimp_image_prop_view_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (view->image != NULL);
+  gimp_assert (view->image != NULL);
 
   g_signal_connect_object (view->image, "name-changed",
                            G_CALLBACK (gimp_image_prop_view_file_update),

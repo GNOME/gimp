@@ -364,8 +364,8 @@ gimp_item_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_return_if_fail (GIMP_IS_IMAGE (private->image));
-  g_return_if_fail (private->ID != 0);
+  gimp_assert (GIMP_IS_IMAGE (private->image));
+  gimp_assert (private->ID != 0);
 }
 
 static void

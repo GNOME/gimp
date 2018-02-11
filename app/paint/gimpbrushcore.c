@@ -228,7 +228,7 @@ gimp_brush_core_init (GimpBrushCore *core)
                                                     BRUSH_CORE_JITTER_LUTSIZE));
     }
 
-  g_assert (BRUSH_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
+  gimp_assert (BRUSH_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
     {

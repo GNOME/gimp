@@ -1048,7 +1048,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
       g_object_unref (filter_tool->filter);
     }
 
-  g_assert (filter_tool->operation);
+  gimp_assert (filter_tool->operation);
 
   filter_tool->filter = gimp_drawable_filter_new (tool->drawable,
                                                   gimp_tool_get_undo_desc (tool),

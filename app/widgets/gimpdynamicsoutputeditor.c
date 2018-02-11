@@ -181,7 +181,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
+  gimp_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
 
   private->curve_view = gimp_curve_view_new ();
   g_object_set (private->curve_view,

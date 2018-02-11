@@ -402,7 +402,7 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           break;
 
         default:
-          g_assert_not_reached ();
+          gimp_assert_not_reached ();
         }
 
       cairo_restore (cr);

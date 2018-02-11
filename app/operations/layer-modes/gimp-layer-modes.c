@@ -1107,7 +1107,7 @@ gimp_layer_modes_init (void)
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_infos); i++)
     {
-      g_assert ((GimpLayerMode) i == layer_mode_infos[i].layer_mode);
+      gimp_assert ((GimpLayerMode) i == layer_mode_infos[i].layer_mode);
     }
 }
 

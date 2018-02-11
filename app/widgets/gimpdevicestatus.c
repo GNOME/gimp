@@ -157,7 +157,7 @@ gimp_device_status_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (status->gimp));
+  gimp_assert (GIMP_IS_GIMP (status->gimp));
 
   devices = GIMP_CONTAINER (gimp_devices_get_manager (status->gimp));
 

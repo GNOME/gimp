@@ -103,7 +103,7 @@ gimp_text_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item));
+  gimp_assert (GIMP_IS_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item));
 
   layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item);
 
@@ -112,7 +112,7 @@ gimp_text_undo_constructed (GObject *object)
     case GIMP_UNDO_TEXT_LAYER:
       if (text_undo->pspec)
         {
-          g_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
+          gimp_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
 
           text_undo->value = g_slice_new0 (GValue);
 
@@ -135,7 +135,7 @@ gimp_text_undo_constructed (GObject *object)
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 }
 
@@ -282,7 +282,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 }
 

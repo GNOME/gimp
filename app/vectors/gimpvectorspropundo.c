@@ -63,14 +63,14 @@ gimp_vectors_prop_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
 
   /* vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item); */
 
   switch (GIMP_UNDO (object)->undo_type)
     {
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 }
 
@@ -89,6 +89,6 @@ gimp_vectors_prop_undo_pop (GimpUndo            *undo,
   switch (undo->undo_type)
     {
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 }

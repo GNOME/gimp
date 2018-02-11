@@ -592,7 +592,7 @@ gimp_procedure_get_return_values (GimpProcedure *procedure,
               break;
 
             default:
-              g_assert_not_reached ();
+              gimp_assert_not_reached ();
             }
         }
       else

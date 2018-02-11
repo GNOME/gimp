@@ -273,7 +273,7 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
    * gradients, so this is not a big concern, but if we save more expensive
    * data in the future, we should fix this.
    */
-  g_return_val_if_fail (GIMP_DATA_GET_CLASS (data)->save, FALSE);
+  gimp_assert (GIMP_DATA_GET_CLASS (data)->save);
   success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
 
   g_object_unref (output);

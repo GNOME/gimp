@@ -151,7 +151,7 @@ gimp_pickable_button_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_CONTEXT (button->private->context));
+  gimp_assert (GIMP_IS_CONTEXT (button->private->context));
 
   button->private->view =
     gimp_view_new_by_types (button->private->context,

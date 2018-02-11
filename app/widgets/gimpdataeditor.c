@@ -200,8 +200,8 @@ gimp_data_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
-  g_assert (GIMP_IS_CONTEXT (editor->context));
+  gimp_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
+  gimp_assert (GIMP_IS_CONTEXT (editor->context));
 
   gimp_data_editor_set_edit_active (editor, TRUE);
 }

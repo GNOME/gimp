@@ -313,7 +313,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   stm = g_strdup_printf ("%d", plug_in->manager->gimp->stack_trace_mode);

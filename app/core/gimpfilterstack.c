@@ -83,8 +83,8 @@ gimp_filter_stack_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_return_if_fail (g_type_is_a (gimp_container_get_children_type (container),
-                                 GIMP_TYPE_FILTER));
+  gimp_assert (g_type_is_a (gimp_container_get_children_type (container),
+                            GIMP_TYPE_FILTER));
 
   gimp_container_add_handler (container, "active-changed",
                               G_CALLBACK (gimp_filter_stack_filter_active),

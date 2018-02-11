@@ -69,8 +69,8 @@ rtree_node_create (RTree      *rtree,
 {
   RTreeNode *node;
 
-  g_assert (x >= 0 && x+w <= rtree->root.w);
-  g_assert (y >= 0 && y+h <= rtree->root.h);
+  gimp_assert (x >= 0 && x+w <= rtree->root.w);
+  gimp_assert (y >= 0 && y+h <= rtree->root.h);
 
   node = g_slice_alloc (sizeof (*node));
   if (node == NULL)
@@ -271,8 +271,8 @@ gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
 {
   RTreeNode *node;
 
-  g_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH &&
-            h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+  gimp_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH &&
+               h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
   node = rtree_insert (&xfer->rtree, w, h);
   if (node == NULL)
@@ -282,7 +282,7 @@ gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
       rtree_reset (&xfer->rtree);
       cairo_surface_mark_dirty (xfer->render_surface[xfer->page]); /* XXX */
       node = rtree_insert (&xfer->rtree, w, h);
-      g_assert (node != NULL);
+      gimp_assert (node != NULL);
     }
 
   *src_x = node->x;

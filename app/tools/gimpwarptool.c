@@ -1051,7 +1051,7 @@ gimp_warp_tool_free_op (GeglNode *op)
 
   parent = gegl_node_get_parent (op);
 
-  g_assert (parent != NULL);
+  gimp_assert (parent != NULL);
 
   gegl_node_remove_child (parent, op);
 }

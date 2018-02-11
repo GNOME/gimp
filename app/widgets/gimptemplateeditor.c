@@ -167,8 +167,8 @@ gimp_template_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (private->gimp != NULL);
-  g_assert (private->template != NULL);
+  gimp_assert (private->gimp != NULL);
+  gimp_assert (private->template != NULL);
 
   template = private->template;
 

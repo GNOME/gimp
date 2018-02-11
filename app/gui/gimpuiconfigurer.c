@@ -409,7 +409,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     }
   else
     {
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   gtk_window_parse_geometry (GTK_WINDOW (dock_window), geometry);

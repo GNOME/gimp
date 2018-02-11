@@ -111,7 +111,7 @@ gimp_brush_clipboard_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_return_if_fail (GIMP_IS_GIMP (brush->gimp));
+  gimp_assert (GIMP_IS_GIMP (brush->gimp));
 
   g_signal_connect_object (brush->gimp, "clipboard-changed",
                            G_CALLBACK (gimp_brush_clipboard_changed),

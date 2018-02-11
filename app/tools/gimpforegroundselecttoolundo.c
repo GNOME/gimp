@@ -93,7 +93,7 @@ gimp_foreground_select_tool_undo_constructed (GObject *object)
 
   fg_select_tool_undo = GIMP_FOREGROUND_SELECT_TOOL_UNDO (object);
 
-  g_assert (GIMP_IS_FOREGROUND_SELECT_TOOL (fg_select_tool_undo->foreground_select_tool));
+  gimp_assert (GIMP_IS_FOREGROUND_SELECT_TOOL (fg_select_tool_undo->foreground_select_tool));
 
   g_object_add_weak_pointer (G_OBJECT (fg_select_tool_undo->foreground_select_tool),
                              (gpointer) &fg_select_tool_undo->foreground_select_tool);

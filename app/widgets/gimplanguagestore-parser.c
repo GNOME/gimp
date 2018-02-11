@@ -507,7 +507,8 @@ iso_codes_parser_start_unknown (IsoCodesParser *parser)
 static void
 iso_codes_parser_end_unknown (IsoCodesParser *parser)
 {
-  g_assert (parser->unknown_depth > 0 && parser->state == ISO_CODES_IN_UNKNOWN);
+  gimp_assert (parser->unknown_depth > 0 &&
+               parser->state == ISO_CODES_IN_UNKNOWN);
 
   parser->unknown_depth--;
 

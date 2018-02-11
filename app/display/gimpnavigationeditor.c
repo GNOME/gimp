@@ -581,7 +581,7 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
           break;
         }
 
-      g_assert (adj != NULL);
+      gimp_assert (adj != NULL);
 
       value = gtk_adjustment_get_value (adj);
 

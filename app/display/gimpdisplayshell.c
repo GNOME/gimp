@@ -397,8 +397,8 @@ gimp_display_shell_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_UI_MANAGER (shell->popup_manager));
-  g_assert (GIMP_IS_DISPLAY (shell->display));
+  gimp_assert (GIMP_IS_UI_MANAGER (shell->popup_manager));
+  gimp_assert (GIMP_IS_DISPLAY (shell->display));
 
   config = shell->display->config;
   image  = gimp_display_get_image (shell->display);

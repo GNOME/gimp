@@ -382,7 +382,7 @@ static void
 tips_parser_end_markup (TipsParser  *parser,
                         const gchar *markup_name)
 {
-  g_assert (parser->markup_depth > 0);
+  gimp_assert (parser->markup_depth > 0);
 
   parser->markup_depth--;
   g_string_append_printf (parser->value, "</%s>", markup_name);
@@ -401,7 +401,7 @@ tips_parser_start_unknown (TipsParser *parser)
 static void
 tips_parser_end_unknown (TipsParser *parser)
 {
-  g_assert (parser->unknown_depth > 0 && parser->state == TIPS_IN_UNKNOWN);
+  gimp_assert (parser->unknown_depth > 0 && parser->state == TIPS_IN_UNKNOWN);
 
   parser->unknown_depth--;
 

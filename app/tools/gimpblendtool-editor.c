@@ -257,7 +257,7 @@ gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine  *line,
         {
           /* see comment in gimp_blend_tool_editor_delete_stop() */
 
-          g_assert (info->gradient != NULL);
+          gimp_assert (info->gradient != NULL);
 
           tentative_gradient = g_object_ref (info->gradient);
         }
@@ -595,7 +595,7 @@ gimp_blend_tool_editor_endpoint_se_value_changed (GimpSizeEntry *se,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   gimp_blend_tool_editor_unblock_handlers (blend_tool);
@@ -843,7 +843,7 @@ gimp_blend_tool_editor_handle_get_segment (GimpBlendTool *blend_tool,
         sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
                                               &n_sliders);
 
-        g_assert (handle >= 0 && handle < n_sliders);
+        gimp_assert (handle >= 0 && handle < n_sliders);
 
         seg_i = GPOINTER_TO_INT (sliders[handle].data);
 
@@ -862,7 +862,7 @@ gimp_blend_tool_editor_block_handlers (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_editor_unblock_handlers (GimpBlendTool *blend_tool)
 {
-  g_assert (blend_tool->block_handlers_count > 0);
+  gimp_assert (blend_tool->block_handlers_count > 0);
 
   blend_tool->block_handlers_count--;
 }
@@ -886,7 +886,7 @@ gimp_blend_tool_editor_freeze_gradient (GimpBlendTool *blend_tool)
 
   if (blend_tool->gradient == custom || options->modify_active)
     {
-      g_assert (gimp_blend_tool_editor_is_gradient_editable (blend_tool));
+      gimp_assert (gimp_blend_tool_editor_is_gradient_editable (blend_tool));
 
       gimp_data_freeze (GIMP_DATA (blend_tool->gradient));
     }
@@ -901,8 +901,8 @@ gimp_blend_tool_editor_freeze_gradient (GimpBlendTool *blend_tool)
 
       gimp_context_set_gradient (GIMP_CONTEXT (options), custom);
 
-      g_assert (blend_tool->gradient == custom);
-      g_assert (gimp_blend_tool_editor_is_gradient_editable (blend_tool));
+      gimp_assert (blend_tool->gradient == custom);
+      gimp_assert (gimp_blend_tool_editor_is_gradient_editable (blend_tool));
     }
 
   if (blend_tool->edit_count > 0)
@@ -963,7 +963,7 @@ gimp_blend_tool_editor_delete_stop (GimpBlendTool *blend_tool,
 {
   BlendInfo *info;
 
-  g_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool, slider));
+  gimp_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool, slider));
 
   gimp_blend_tool_editor_start_edit (blend_tool);
   gimp_blend_tool_editor_freeze_gradient (blend_tool);
@@ -982,7 +982,7 @@ gimp_blend_tool_editor_delete_stop (GimpBlendTool *blend_tool,
        * way during the action, which is ugly, but currently always true.
        */
 
-      g_assert (info->gradient != NULL);
+      gimp_assert (info->gradient != NULL);
 
       gimp_data_copy (GIMP_DATA (blend_tool->gradient),
                       GIMP_DATA (info->gradient));
@@ -1013,7 +1013,7 @@ gimp_blend_tool_editor_midpoint_to_stop (GimpBlendTool *blend_tool,
 {
   const GimpControllerSlider *sliders;
 
-  g_assert (gimp_blend_tool_editor_handle_is_midpoint (blend_tool, slider));
+  gimp_assert (gimp_blend_tool_editor_handle_is_midpoint (blend_tool, slider));
 
   sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
                                         NULL);
@@ -1631,7 +1631,7 @@ gimp_blend_tool_editor_update_endpoint_gui (GimpBlendTool *blend_tool,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   /* swap the endpoint handles, if necessary */
@@ -1670,7 +1670,7 @@ gimp_blend_tool_editor_update_endpoint_gui (GimpBlendTool *blend_tool,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   gimp_tool_gui_set_title (blend_tool->gui, title);
@@ -1930,8 +1930,8 @@ gimp_blend_tool_editor_blend_info_apply (GimpBlendTool   *blend_tool,
 {
   gint selection;
 
-  g_assert (blend_tool->widget   != NULL);
-  g_assert (blend_tool->gradient != NULL);
+  gimp_assert (blend_tool->widget   != NULL);
+  gimp_assert (blend_tool->gradient != NULL);
 
   /* pick the handle to select */
   if (info->gradient)
@@ -1946,7 +1946,7 @@ gimp_blend_tool_editor_blend_info_apply (GimpBlendTool   *blend_tool,
       else if (info->added_handle != GIMP_TOOL_LINE_HANDLE_NONE)
         {
           /* we're undoing a stop addition operation */
-          g_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool,
+          gimp_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool,
                                                            info->added_handle));
 
           selection =
@@ -2380,8 +2380,8 @@ gimp_blend_tool_editor_undo (GimpBlendTool *blend_tool)
   BlendInfo *info;
   BlendInfo *new_info;
 
-  g_assert (blend_tool->undo_stack != NULL);
-  g_assert (blend_tool->edit_count == 0);
+  gimp_assert (blend_tool->undo_stack != NULL);
+  gimp_assert (blend_tool->edit_count == 0);
 
   info = blend_tool->undo_stack->data;
 
@@ -2419,8 +2419,8 @@ gimp_blend_tool_editor_redo (GimpBlendTool *blend_tool)
   BlendInfo *info;
   BlendInfo *new_info;
 
-  g_assert (blend_tool->redo_stack != NULL);
-  g_assert (blend_tool->edit_count == 0);
+  gimp_assert (blend_tool->redo_stack != NULL);
+  gimp_assert (blend_tool->edit_count == 0);
 
   info = blend_tool->redo_stack->data;
 

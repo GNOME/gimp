@@ -91,7 +91,7 @@ gimp_transform_tool_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_TRANSFORM_TOOL (transform_tool_undo->transform_tool));
+  gimp_assert (GIMP_IS_TRANSFORM_TOOL (transform_tool_undo->transform_tool));
 
   transform_tool = transform_tool_undo->transform_tool;
 

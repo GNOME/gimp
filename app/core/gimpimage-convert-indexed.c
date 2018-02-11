@@ -1910,12 +1910,12 @@ update_box_rgb (const CFHistogram histogram,
   /*
   fprintf(stderr, " %d,%d", dummyqo.cmap[0].blue, boxp->Bmax);
 
-  g_assert(boxp->Rhalferror >= boxp->Rmin);
-  g_assert(boxp->Rhalferror < boxp->Rmax);
-  g_assert(boxp->Ghalferror >= boxp->Gmin);
-  g_assert(boxp->Ghalferror < boxp->Gmax);
-  g_assert(boxp->Bhalferror >= boxp->Bmin);
-  g_assert(boxp->Bhalferror < boxp->Bmax);*/
+  gimp_assert (boxp->Rhalferror >= boxp->Rmin);
+  gimp_assert (boxp->Rhalferror < boxp->Rmax);
+  gimp_assert (boxp->Ghalferror >= boxp->Gmin);
+  gimp_assert (boxp->Ghalferror < boxp->Gmax);
+  gimp_assert (boxp->Bhalferror >= boxp->Bmin);
+  gimp_assert (boxp->Bhalferror < boxp->Bmax);*/
 
   /*boxp->error = (sqrt((double)(boxp->error/ccount)));*/
   /*  boxp->rerror = (sqrt((double)((boxp->rerror)/ccount)));

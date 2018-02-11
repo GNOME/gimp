@@ -160,7 +160,7 @@ gimp_pickable_popup_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_CONTEXT (popup->priv->context));
+  gimp_assert (GIMP_IS_CONTEXT (popup->priv->context));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);

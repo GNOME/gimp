@@ -542,7 +542,7 @@ gimp_dialog_config_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (priv->gimp));
+  gimp_assert (GIMP_IS_GIMP (priv->gimp));
 
   context = gimp_get_user_context (priv->gimp);
 

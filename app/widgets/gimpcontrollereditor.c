@@ -177,7 +177,7 @@ gimp_controller_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_CONTROLLER_INFO (editor->info));
+  gimp_assert (GIMP_IS_CONTROLLER_INFO (editor->info));
 
   info             = editor->info;
   controller       = info->controller;

@@ -183,9 +183,9 @@ gimp_pdb_dialog_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_PDB (dialog->pdb));
-  g_assert (GIMP_IS_CONTEXT (dialog->caller_context));
-  g_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
+  gimp_assert (GIMP_IS_PDB (dialog->pdb));
+  gimp_assert (GIMP_IS_CONTEXT (dialog->caller_context));
+  gimp_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
 
   dialog->context = gimp_context_new (dialog->caller_context->gimp,
                                       G_OBJECT_TYPE_NAME (object),

@@ -198,8 +198,8 @@ gimp_data_factory_view_constructor (GType                  type,
 
   factory_view = GIMP_DATA_FACTORY_VIEW (object);
 
-  g_assert (GIMP_IS_DATA_FACTORY (factory_view->priv->factory));
-  g_assert (factory_view->priv->action_group != NULL);
+  gimp_assert (GIMP_IS_DATA_FACTORY (factory_view->priv->factory));
+  gimp_assert (factory_view->priv->action_group != NULL);
 
   factory_view->priv->tagged_container =
     gimp_tagged_container_new (gimp_data_factory_get_container (factory_view->priv->factory));

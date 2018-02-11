@@ -571,8 +571,8 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
 
   if (blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
     {
-      g_assert (composite_space >= 1 && composite_space < 4);
-      g_assert (blend_space     >= 1 && blend_space     < 4);
+      gimp_assert (composite_space >= 1 && composite_space < 4);
+      gimp_assert (blend_space     >= 1 && blend_space     < 4);
 
       composite_to_blend_fish = gimp_layer_color_space_fish [composite_space - 1]
                                                             [blend_space     - 1];
