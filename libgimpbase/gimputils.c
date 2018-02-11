@@ -1110,7 +1110,7 @@ gimp_print_stack_trace (const gchar *prog_name,
                         gpointer     fd,
                         gchar      **trace)
 {
-  gboolean  stack_printed = FALSE;
+  gboolean stack_printed = FALSE;
 
   /* This works only on UNIX systems. */
 #ifndef G_OS_WIN32
@@ -1191,11 +1191,10 @@ gimp_print_stack_trace (const gchar *prog_name,
         }
       close (out_fd[0]);
     }
-  else if (pid == (pid_t) -1)
-    {
-      /* Fork failed. */
-      return FALSE;
-    }
+  /* else if (pid == (pid_t) -1)
+   * Fork failed!
+   * Just continue, maybe the backtrace() API will succeed.
+   */
 
 #ifdef HAVE_EXECINFO_H
   if (! stack_printed)
@@ -1203,32 +1202,43 @@ gimp_print_stack_trace (const gchar *prog_name,
       /* As a last resort, try using the backtrace() Linux API. It is a bit
        * less fancy than gdb or lldb, which is why it is not given priority.
        */
-      void  *bt_buf[100];
-      char **symbols;
-      int    n_symbols;
-      int    i;
+      void *bt_buf[100];
+      int   n_symbols;
 
       n_symbols = backtrace (bt_buf, 100);
-      symbols = backtrace_symbols (bt_buf, n_symbols);
-      if (symbols)
+      if (trace && n_symbols)
         {
-          stack_printed = TRUE;
+          char **symbols;
+          int    i;
 
-          for (i = 0; i < n_symbols; i++)
+          symbols = backtrace_symbols (bt_buf, n_symbols);
+          if (symbols)
             {
-              if (fd)
-                g_fprintf (fd, "%s\n", (const gchar *) symbols[i]);
-              if (trace)
+              for (i = 0; i < n_symbols; i++)
                 {
-                  if (! gtrace)
-                    gtrace = g_string_new (NULL);
-                  g_string_append (gtrace,
-                                   (const gchar *) symbols[i]);
-                  g_string_append_c (gtrace, '\n');
+                  if (fd)
+                    g_fprintf (fd, "%s\n", (const gchar *) symbols[i]);
+                  if (trace)
+                    {
+                      if (! gtrace)
+                        gtrace = g_string_new (NULL);
+                      g_string_append (gtrace,
+                                       (const gchar *) symbols[i]);
+                      g_string_append_c (gtrace, '\n');
+                    }
                 }
+              free (symbols);
             }
-          free (symbols);
         }
+      else if (n_symbols)
+        {
+          /* This allows to generate traces without memory allocation.
+           * In some cases, this is necessary, especially during
+           * segfault-type crashes.
+           */
+          backtrace_symbols_fd (bt_buf, n_symbols, fileno (fd));
+        }
+      stack_printed = (n_symbols > 0);
     }
 #endif /* HAVE_EXECINFO_H */
 
