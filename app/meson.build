@@ -62,7 +62,7 @@ libapp = static_library('app',
   include_directories: [ rootInclude, rootAppInclude, configInclude, ],
   c_args: app_cflags,
   dependencies: [
-    gegl, gdk_pixbuf, gtk2,
+    gegl, gdk_pixbuf, gtk3,
   ],
 )
 
@@ -109,7 +109,7 @@ app_gui_links = [
 ]
 
 app_deps = [
-  gio, gtk2, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw,
+  gio, gtk3, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw,
 ]
 
 # Executables

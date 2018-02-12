@@ -1,7 +1,6 @@
 
 libgimpmath_sources = [
   'gimpmatrix.c',
-  'gimpmd5.c',
   'gimpvector.c',
 ]
 
@@ -9,7 +8,6 @@ libgimpmath_headers = [
   'gimpmath.h',
   'gimpmathtypes.h',
   'gimpmatrix.h',
-  'gimpmd5.h',
   'gimpvector.h',
 ]
 

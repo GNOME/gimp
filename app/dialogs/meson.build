@@ -62,6 +62,6 @@ libappdialogs = static_library('appdialogs',
     '-DG_LOG_DOMAIN="Gimp-Dialogs"',
   ],
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )

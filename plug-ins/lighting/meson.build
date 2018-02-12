@@ -28,7 +28,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, include_directories('.'), ],
   dependencies: [
-    gtk2, gegl, math,
+    gtk3, gegl, math,
   ],
   link_with: [
     libgimp,

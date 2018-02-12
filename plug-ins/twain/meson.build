@@ -27,7 +27,7 @@ twain = executable(plugin_name,
   plugin_twain_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
-    glib, gtk2, gegl,
+    glib, gtk3, gegl,
   ],
   link_with: [
     libgimp,

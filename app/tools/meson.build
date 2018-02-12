@@ -121,6 +121,6 @@ libapptools = static_library('apptools',
     '-DG_LOG_DOMAIN="Gimp-Tools"',
   ],
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )

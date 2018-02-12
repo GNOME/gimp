@@ -31,7 +31,7 @@ libappgui = static_library('appgui',
     '-DG_LOG_DOMAIN="Gimp-GUI"',
   ],
   dependencies: [
-    cairo, dbus_glib, gegl, gdk_pixbuf, gio_specific, gtk2
+    cairo, dbus_glib, gegl, gdk_pixbuf, gio_specific, gtk3
   ],
   install: false,
 )

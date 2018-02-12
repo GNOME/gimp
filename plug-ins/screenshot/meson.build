@@ -15,7 +15,7 @@ screenshot = executable('screenshot',
   plugin_screenshot_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl,
+    gtk3, gegl,
     x11, xmu, xext, xfixes,
   ],
   link_with: [

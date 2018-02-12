@@ -34,7 +34,7 @@ plugin_selection_to_path_link = [
   libgimpwidgets,
 ]
 plugin_selection_to_path_deps = [
-  gegl, gtk2, math,
+  gegl, gtk3, math,
 ]
 
 selection_to_path = executable(plugin_name,
