@@ -1,0 +1,132 @@
+# Maintainer: Iru Cai <mytbk920423@gmail.com>
+# Maintainer: Alexander Hunziker <alex.hunziker@gmail.com>
+# Contributor: Alessio Biancalana <dottorblaster@gmail.com>
+# Contributor: Salamandar <felix@piedallu.me>
+
+_pkgname='gimp'
+pkgname="${MINGW_PACKAGE_PREFIX}-${_pkgname}-git"
+epoch=1
+pkgver=2ca726dd32
+pkgrel=1
+pkgdesc='GNU Image Manipulation Program'
+arch=('i686' 'x86_64')
+url='http://www.gimp.org'
+license=('GPL' 'LGPL')
+depends=(
+  "${MINGW_PACKAGE_PREFIX}-babl>=0.1.27"
+  "${MINGW_PACKAGE_PREFIX}-dbus-glib"
+  "${MINGW_PACKAGE_PREFIX}-desktop-file-utils"
+  "${MINGW_PACKAGE_PREFIX}-gegl-git>=0.3.15"
+  "${MINGW_PACKAGE_PREFIX}-gtk-doc"
+  "${MINGW_PACKAGE_PREFIX}-lcms2>=2.2"
+  "${MINGW_PACKAGE_PREFIX}-libart_lgpl>=2.3.19"
+  "${MINGW_PACKAGE_PREFIX}-libexif>=0.6.15"
+  "${MINGW_PACKAGE_PREFIX}-gexiv2"
+  "${MINGW_PACKAGE_PREFIX}-libmng"
+  "${MINGW_PACKAGE_PREFIX}-libmypaint>=1.3.0"
+  "${MINGW_PACKAGE_PREFIX}-librsvg>=2.16.1"
+  "${MINGW_PACKAGE_PREFIX}-libwmf>=0.2.8"
+  "${MINGW_PACKAGE_PREFIX}-openexr>=1.6.1"
+  "${MINGW_PACKAGE_PREFIX}-python2-pygtk"
+)
+makedepends=(
+  # "${MINGW_PACKAGE_PREFIX}-alsa-lib>=1.0.0"
+  "git"
+  "${MINGW_PACKAGE_PREFIX}-glib-networking"
+  # "${MINGW_PACKAGE_PREFIX}-gnome-python>=2.16.2"
+  # "${MINGW_PACKAGE_PREFIX}-gutenprint>=5.0.0"
+  "${MINGW_PACKAGE_PREFIX}-libxslt"
+  "${MINGW_PACKAGE_PREFIX}-poppler>=0.12.4"
+)
+optdepends=(
+  # "${MINGW_PACKAGE_PREFIX}-alsa-lib: for MIDI event controller module"
+  "${MINGW_PACKAGE_PREFIX}-curl: for URI support"
+  "${MINGW_PACKAGE_PREFIX}-ghostscript: for postscript support"
+  # "${MINGW_PACKAGE_PREFIX}-gutenprint: for sophisticated printing only as gimp has built-in cups print support"
+  "${MINGW_PACKAGE_PREFIX}-poppler-glib: for pdf support"
+)
+options=('!libtool')
+provides=("${MINGW_PACKAGE_PREFIX}-${_pkgname}")
+conflicts=("${MINGW_PACKAGE_PREFIX}-${_pkgname}")
+
+_gitname='gimp'
+source=(
+  'git://git.gnome.org/gimp#branch=meson'
+  'linux.gpl'
+)
+md5sums=(
+  'SKIP'
+  'bb27bc214261d36484093e857f015f38'
+)
+
+
+pkgver() {
+    cd $_gitname
+    git describe --always | sed -e 's/GIMP_//' -e 's/[_-]/./g'
+}
+
+prepare() {
+  cd "${srcdir}/${_gitname}"
+
+  if [[ -f /usr/lib/pkgconfig/libmypaint-1.3.pc ]]; then
+    sed -i 's|libmypaint |libmypaint-1.3 |g' configure.ac
+    sed -i "s|'libmypaint'|'libmypaint-1.3'|g" meson.build
+  fi
+}
+
+build() {
+  mesonOptions=(
+    --prefix=/${MINGW_PREFIX}
+    --sysconfdir=/${MINGW_PREFIX}/etc
+    --buildtype=release
+    --strip
+    -Db_lto=true
+
+    -Dwith-aa=false
+    -Dwith-webkit=false
+    -Dwith-xvfb-run=false
+
+    # MingW specific
+    -Dwith-alsa=false
+    -Dwith-appdata-test=false
+    -Dwith-docs=false
+    -Dwith-graphviz=false
+    -Dwith-gtk-doc=false
+    -Dwith-gudev=false
+    -Dwith-libv4l=false
+    -Dwith-libv4l2=false
+    -Dwith-linux-input=false
+    -Dwith-mrg=false
+    -Dwith-print=false
+    -Dwith-screenshot=false
+    -Dwith-vala=false
+    -Dwith-wmf=false
+    -Dwith-xcursor=false
+    -Dwith-xpm=false
+  )
+
+  meson    "${srcdir}/build" "${srcdir}/${_gitname}" "${mesonOptions[@]}"
+  ninja -C "${srcdir}/build"
+}
+
+package() {
+  DESTDIR="${pkgdir}" ninja -C "${srcdir}/build" install
+
+  # Python compilation (was handled by Autotools, not Meson)
+  "${srcdir}/${_gitname}/plug-ins/pygimp/py-compile" \
+    --basedir "${pkgdir}/usr/lib/gimp/2.0/python" \
+    gimpenums.py  \
+    gimpfu.py     \
+    gimpplugin.py \
+    gimpshelf.py  \
+    gimpui.py
+
+  # Meson does not handle creating empty directories
+  mkdir -p "${pkgdir}/usr/share/gimp/2.0/fonts/"
+
+  install -D -m644 "${srcdir}/linux.gpl" "${pkgdir}/usr/share/gimp/2.0/palettes/Linux.gpl"
+
+  ln -s gimp-2.9          "${pkgdir}/usr/bin/gimp"
+  ln -s gimptool-2.0      "${pkgdir}/usr/bin/gimptool"
+  ln -s gimp-console-2.9  "${pkgdir}/usr/bin/gimp-console"
+}
