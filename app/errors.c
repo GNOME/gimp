@@ -209,20 +209,10 @@ gimp_message_log_func (const gchar    *log_domain,
     }
   else
     {
-      const gchar *reason;
+      const gchar *reason = "Message";
 
-      switch (flags & G_LOG_LEVEL_MASK)
-        {
-        case G_LOG_LEVEL_WARNING:
-          reason = "WARNING";
-          break;
-        case G_LOG_LEVEL_CRITICAL:
-          reason = "CRITICAL";
-          break;
-        default:
-          reason = "MESSAGE";
-          break;
-        }
+      gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+                           NULL, NULL, &reason, NULL);
 
       g_printerr ("%s: %s-%s: %s\n",
                   gimp_filename_to_utf8 (full_prog_name),
