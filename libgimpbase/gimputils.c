@@ -25,7 +25,9 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
 
 #ifdef PLATFORM_OSX
 #include <AppKit/AppKit.h>
