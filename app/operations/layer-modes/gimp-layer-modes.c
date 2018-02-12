@@ -22,8 +22,11 @@
 #include "config.h"
 
 #include <glib-object.h>
+#include <gegl.h>
 
 #include "../operations-types.h"
+
+#include "gegl/gimp-babl.h"
 
 #include "gimpoperationlayermode.h"
 #include "gimpoperationlayermode-blend.h"
@@ -1410,18 +1413,13 @@ gimp_layer_mode_get_format (GimpLayerMode        mode,
   switch (composite_space)
     {
     case GIMP_LAYER_COLOR_SPACE_AUTO:
-      /* compositing is color-space agnostic.  try to return the preferred
-       * format, and fall back to linear.
+      /* compositing is color-space agnostic.  return a format that has a fast
+       * conversion path to/from the preferred format.
        */
-      if (preferred_format == babl_format ("RGBA float") ||
-          preferred_format == babl_format ("R'G'B'A float"))
-        {
-          return preferred_format;
-        }
+      if (gimp_babl_format_get_linear (preferred_format))
+        return babl_format ("RGBA float");
       else
-        {
-          return babl_format ("RGBA float");
-        }
+        return babl_format ("R'G'B'A float");
 
     case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
       return babl_format ("RGBA float");
