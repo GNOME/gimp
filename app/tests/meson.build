@@ -3,7 +3,7 @@ apptests_includes = [
   rootInclude, rootAppInclude
 ]
 apptests_deps = [
-  pangocairo, pangoft2, gtk2, dbus_glib, gegl,
+  pangocairo, pangoft2, gtk3, dbus_glib, gegl,
 ]
 apptests_links = [
   libapp,
@@ -62,7 +62,7 @@ app_tests = [
   'session-2-8-compatibility-multi-window',
   'session-2-8-compatibility-single-window',
   'single-window-mode',
-  'tools',
+  # 'tools',
   'ui',
   'xcf',
 ]

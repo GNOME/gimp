@@ -22,7 +22,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, libpng,
+    gtk3, gegl, libpng,
   ],
   link_with: [
     libgimp,

@@ -24,7 +24,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, cairo, gio, gdk_pixbuf,
+    gtk3, gegl, cairo, gio, gdk_pixbuf,
   ],
   link_with: [
     libgimp,
