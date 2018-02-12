@@ -545,6 +545,8 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   gint           i;
   GimpCagePoint *point;
 
+  g_return_val_if_fail (coef_buf != NULL, result);
+
   gegl_buffer_sample (coef_buf, coords.x, coords.y, NULL, coef, format_coef,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
