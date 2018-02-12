@@ -1084,10 +1084,10 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  * @trace: location to store a newly allocated string of the trace.
  *
  * Attempts to generate a stack trace at current code position in
- * @prog_name. @prog_name is mostly a helper, but it has to be the
- * program name of the current program. This function is not meant to
- * generate stack trace for third-party programs, and will attach the
- * current process id only.
+ * @prog_name. @prog_name is mostly a helper and can be set to NULL.
+ * Nevertheless if set, it has to be the current program name (argv[0]).
+ * This function is not meant to generate stack trace for third-party
+ * programs, and will attach the current process id only.
  * Internally, this function uses `gdb` or `lldb` if they are available,
  * or the stacktrace() API on platforms where it is available. It always
  * fails on Win32.
@@ -1134,6 +1134,9 @@ gimp_print_stack_trace (const gchar *prog_name,
       /* Child process. */
       gchar *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
                          (gchar *) prog_name, NULL, NULL };
+
+      if (prog_name == NULL)
+        args[4] = "-p";
 
       args[5] = gimp_pid;
 
@@ -1255,11 +1258,12 @@ gimp_print_stack_trace (const gchar *prog_name,
 }
 
 /**
- * gimp_print_stack_trace:
+ * gimp_on_error_query:
  * @prog_name: the program to attach to.
  *
  * This is mostly the same as g_on_error_query() except that we use our
  * own backtrace function, much more complete.
+ * @prog_name must be the current program name (argv[0]).
  * It does nothing on Win32.
  *
  * Since: 2.10
