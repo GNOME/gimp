@@ -25,8 +25,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <sys/wait.h>
-
 #ifdef PLATFORM_OSX
 #include <AppKit/AppKit.h>
 #endif
@@ -47,7 +45,10 @@
 #undef DATADIR
 #include <windows.h>
 #include <shlobj.h>
-#endif
+#else /* G_OS_WIN32 */
+/* For waitpid() */
+#include <sys/wait.h>
+#endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
 #include "gimputils.h"
