@@ -1,10 +1,11 @@
 
 theme_names = [
-  [ 'Lighter',  '00-Lighter' ],
-  [ 'Light',    '01-Light' ],
-  [ 'Gray',     '02-Gray' ],
-  [ 'Dark',     '03-Dark' ],
-  [ 'Darker',   '04-Darker' ],
+  # [ 'Lighter',  '00-Lighter' ],
+  # [ 'Light',    '01-Light' ],
+  # [ 'Gray',     '02-Gray' ],
+  # [ 'Dark',     '03-Dark' ],
+  # [ 'Darker',   '04-Darker' ],
+  [ 'Small',    'Small' ],
   [ 'System',   'System' ],
 ]
 
@@ -12,7 +13,7 @@ foreach theme : theme_names
   theme_srcdir = theme[0]
   theme_bindir = theme[1]
   install_data(
-    join_paths(theme_srcdir, 'gtkrc'),
+    join_paths(theme_srcdir, 'gimp.css'),
     install_dir: join_paths(gimpdatadir, 'themes', theme_bindir)
   )
 
