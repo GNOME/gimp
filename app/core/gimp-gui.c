@@ -159,10 +159,9 @@ gimp_show_message (Gimp                *gimp,
                    GObject             *handler,
                    GimpMessageSeverity  severity,
                    const gchar         *domain,
-                   const gchar         *message,
-                   const gchar         *trace)
+                   const gchar         *message)
 {
-  const gchar *desc = trace ? "Error" : "Message";
+  const gchar *desc = (severity == GIMP_MESSAGE_ERROR) ? "Error" : "Message";
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (handler == NULL || G_IS_OBJECT (handler));
@@ -176,7 +175,7 @@ gimp_show_message (Gimp                *gimp,
       if (gimp->gui.show_message)
         {
           gimp->gui.show_message (gimp, handler, severity,
-                                  domain, message, trace);
+                                  domain, message);
           return;
         }
       else if (GIMP_IS_PROGRESS (handler) &&
@@ -191,8 +190,6 @@ gimp_show_message (Gimp                *gimp,
   gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
                        NULL, NULL, &desc, NULL);
   g_printerr ("%s-%s: %s\n\n", domain, desc, message);
-  if (trace)
-    g_printerr ("Back trace:\n%s\n\n", trace);
 }
 
 void

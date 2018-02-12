@@ -56,7 +56,6 @@ typedef struct
   Gimp                *gimp;
   gchar               *domain;
   gchar               *message;
-  gchar               *trace;
   GObject             *handler;
   GimpMessageSeverity  severity;
 } GimpLogMessageData;
@@ -66,18 +65,15 @@ static gboolean  gui_message_idle          (gpointer             user_data);
 static gboolean  gui_message_error_console (Gimp                *gimp,
                                             GimpMessageSeverity  severity,
                                             const gchar         *domain,
-                                            const gchar         *message,
-                                            const gchar         *trace);
+                                            const gchar         *message);
 static gboolean  gui_message_error_dialog  (Gimp                *gimp,
                                             GObject             *handler,
                                             GimpMessageSeverity  severity,
                                             const gchar         *domain,
-                                            const gchar         *message,
-                                            const gchar         *trace);
+                                            const gchar         *message);
 static void      gui_message_console       (GimpMessageSeverity  severity,
                                             const gchar         *domain,
-                                            const gchar         *message,
-                                            const gchar         *trace);
+                                            const gchar         *message);
 static gchar *   gui_message_format        (GimpMessageSeverity  severity,
                                             const gchar         *domain,
                                             const gchar         *message);
@@ -88,13 +84,12 @@ gui_message (Gimp                *gimp,
              GObject             *handler,
              GimpMessageSeverity  severity,
              const gchar         *domain,
-             const gchar         *message,
-             const gchar         *trace)
+             const gchar         *message)
 {
   switch (gimp->message_handler)
     {
     case GIMP_ERROR_CONSOLE:
-      if (gui_message_error_console (gimp, severity, domain, message, trace))
+      if (gui_message_error_console (gimp, severity, domain, message))
         return;
 
       gimp->message_handler = GIMP_MESSAGE_BOX;
@@ -113,7 +108,6 @@ gui_message (Gimp                *gimp,
           data->gimp     = gimp;
           data->domain   = g_strdup (domain);
           data->message  = g_strdup (message);
-          data->trace    = trace ? g_strdup (trace) : NULL;
           data->handler  = handler? g_object_ref (handler) : NULL;
           data->severity = severity;
 
@@ -123,14 +117,14 @@ gui_message (Gimp                *gimp,
           return;
         }
       if (gui_message_error_dialog (gimp, handler, severity,
-                                    domain, message, trace))
+                                    domain, message))
         return;
 
       gimp->message_handler = GIMP_CONSOLE;
       /*  fallthru  */
 
     case GIMP_CONSOLE:
-      gui_message_console (severity, domain, message, trace);
+      gui_message_console (severity, domain, message);
       break;
     }
 }
@@ -144,18 +138,14 @@ gui_message_idle (gpointer user_data)
                                   data->handler,
                                   data->severity,
                                   data->domain,
-                                  data->message,
-                                  data->trace))
+                                  data->message))
     {
       gui_message_console (data->severity,
                            data->domain,
-                           data->message,
-                           data->trace);
+                           data->message);
     }
   g_free (data->domain);
   g_free (data->message);
-  if (data->trace)
-    g_free (data->trace);
   if (data->handler)
     g_object_unref (data->handler);
 
@@ -166,12 +156,9 @@ static gboolean
 gui_message_error_console (Gimp                *gimp,
                            GimpMessageSeverity  severity,
                            const gchar         *domain,
-                           const gchar         *message,
-                           const gchar         *trace)
+                           const gchar         *message)
 {
   GtkWidget *dockable;
-
-  /* TODO: right now the error console does nothing with the trace. */
 
   dockable = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
                                               "gimp-error-console");
@@ -293,8 +280,7 @@ gui_message_error_dialog (Gimp                *gimp,
                           GObject             *handler,
                           GimpMessageSeverity  severity,
                           const gchar         *domain,
-                          const gchar         *message,
-                          const gchar         *trace)
+                          const gchar         *message)
 {
   GtkWidget      *dialog;
   GtkMessageType  type   = GTK_MESSAGE_ERROR;
@@ -306,23 +292,47 @@ gui_message_error_dialog (Gimp                *gimp,
     case GIMP_MESSAGE_ERROR:   type = GTK_MESSAGE_ERROR;   break;
     }
 
-  if (trace)
+  if (severity == GIMP_MESSAGE_ERROR)
     {
-      /* Process differently when traces are included.
+      /* Process differently errors.
        * The reason is that this will take significant place, and cannot
        * be processed as a progress message or in the global dialog. It
        * will require its own dedicated dialog which will encourage
        * people to report the bug.
        */
-      gchar *text;
-
       dialog = global_critical_dialog ();
-      text = gui_message_format (severity, domain, message);
-      gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
-      g_free (text);
-      gtk_widget_show (dialog);
 
-      return TRUE;
+      if (gimp_critical_dialog_want_errors (dialog))
+        {
+          gchar *text;
+          gchar *trace = NULL;
+
+          if (gimp_critical_dialog_want_traces (dialog))
+            gimp_print_stack_trace (NULL, NULL, &trace);
+
+          text = gui_message_format (severity, domain, message);
+          gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
+
+          gtk_widget_show (dialog);
+
+          g_free (text);
+          if (trace)
+            g_free (trace);
+
+          return TRUE;
+        }
+      else
+        {
+          /* Since we overrided glib default's WARNING and CRITICAL
+           * handler, if we decide not to handle this error in the end,
+           * let's just print it in terminal in a similar fashion as
+           * glib's default handler (though without the fancy terminal
+           * colors right now).
+           */
+          g_printerr ("%s-ERROR: %s\n", domain, message);
+
+          return TRUE;
+        }
     }
   else if (GIMP_IS_PROGRESS (handler))
     {
@@ -376,17 +386,13 @@ gui_message_error_dialog (Gimp                *gimp,
 static void
 gui_message_console (GimpMessageSeverity  severity,
                      const gchar         *domain,
-                     const gchar         *message,
-                     const gchar         *trace)
+                     const gchar         *message)
 {
   gchar *formatted_message;
 
   formatted_message = gui_message_format (severity, domain, message);
   g_printerr ("%s\n\n", formatted_message);
   g_free (formatted_message);
-
-  if (trace)
-    g_printerr ("Stack trace:\n%s\n\n", trace);
 }
 
 static gchar *

@@ -54,6 +54,8 @@
 #define BUTTON1_TEXT _("Copy Bug Information")
 #define BUTTON2_TEXT _("Open Bug Tracker")
 
+#define MAX_TRACES 3
+#define MAX_ERRORS 10
 
 static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
@@ -184,8 +186,10 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_widget_show (dialog->details);
   gtk_container_add (GTK_CONTAINER (widget), dialog->details);
 
-  dialog->pid     = 0;
-  dialog->program = NULL;
+  dialog->pid      = 0;
+  dialog->program  = NULL;
+  dialog->n_errors = 0;
+  dialog->n_traces = 0;
 }
 
 static void
@@ -392,7 +396,7 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
   GtkTextIter         end;
   gchar              *text;
 
-  if (! GIMP_IS_CRITICAL_DIALOG (dialog) || ! message || ! trace)
+  if (! GIMP_IS_CRITICAL_DIALOG (dialog) || ! message)
     {
       /* This is a bit hackish. We usually should use
        * g_return_if_fail(). But I don't want to end up in a critical
@@ -403,6 +407,14 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
       return;
     }
   critical = GIMP_CRITICAL_DIALOG (dialog);
+
+  if (critical->n_errors > MAX_ERRORS ||
+      (trace && critical->n_traces > MAX_TRACES))
+    return;
+
+  critical->n_errors++;
+  if (trace)
+    critical->n_traces++;
 
   /* The user text, which should be localized. */
   if (is_fatal)
@@ -461,7 +473,10 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
    */
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
   gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
-  text = g_strdup_printf ("\n\n> %s\n\nStack trace:\n%s", message, trace);
+  if (trace)
+    text = g_strdup_printf ("\n> %s\n\nStack trace:\n%s", message, trace);
+  else
+    text = g_strdup_printf ("\n> %s\n", message);
   gtk_text_buffer_insert (buffer, &end, text, -1);
   g_free (text);
 
@@ -476,4 +491,16 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
       critical->program = g_strdup (program);
       critical->pid     = pid;
     }
+}
+
+gboolean
+gimp_critical_dialog_want_traces (GtkWidget *dialog)
+{
+  return (GIMP_CRITICAL_DIALOG (dialog)->n_traces <= MAX_TRACES);
+}
+
+gboolean
+gimp_critical_dialog_want_errors (GtkWidget *dialog)
+{
+  return (GIMP_CRITICAL_DIALOG (dialog)->n_errors <= MAX_ERRORS);
 }

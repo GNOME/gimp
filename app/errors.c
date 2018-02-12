@@ -40,8 +40,6 @@
 #include <windows.h>
 #endif
 
-#define MAX_TRACES 3
-
 /*  private variables  */
 
 static Gimp                *the_errors_gimp   = NULL;
@@ -183,7 +181,7 @@ gimp_third_party_message_log_func (const gchar    *log_domain,
        * messages.
        */
       gimp_show_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                         log_domain, message, NULL);
+                         log_domain, message);
     }
   else
     {
@@ -197,11 +195,8 @@ gimp_message_log_func (const gchar    *log_domain,
                        const gchar    *message,
                        gpointer        data)
 {
-  static gint          n_traces;
+  Gimp                *gimp     = data;
   GimpMessageSeverity  severity = GIMP_MESSAGE_WARNING;
-  Gimp                *gimp   = data;
-  gchar               *trace  = NULL;
-  const gchar         *reason;
 
   if (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING))
     {
@@ -216,44 +211,18 @@ gimp_message_log_func (const gchar    *log_domain,
            (flags & G_LOG_LEVEL_CRITICAL)) ||
           debug_policy == GIMP_DEBUG_POLICY_WARNING)
         {
-          severity = (flags & G_LOG_LEVEL_CRITICAL) ?
-            GIMP_MESSAGE_ERROR : GIMP_MESSAGE_WARNING;
-
-          if (n_traces < MAX_TRACES)
-            {
-              /* Getting debug traces is time-expensive, and worse, some
-               * critical errors have the bad habit to create more errors
-               * (the first ones are therefore usually the most useful).
-               * This is why we keep track of how many times we made traces
-               * and stop doing them after a while.
-               * Hence when this happens, critical errors are simply processed as
-               * lower level errors.
-               */
-              gimp_print_stack_trace ((const gchar *) full_prog_name,
-                                      NULL, &trace);
-              n_traces++;
-            }
-        }
-      if (! trace)
-        {
-          /* Since we overrided glib default's WARNING and CRITICAL
-           * handler, if we decide not to handle this error in the end,
-           * let's just print it in terminal in a similar fashion as
-           * glib's default handler (though without the fancy terminal
-           * colors right now).
-           */
-          goto print_to_stderr;
+          severity = GIMP_MESSAGE_ERROR;
         }
     }
 
   if (gimp)
     {
-      gimp_show_message (gimp, NULL, severity,
-                         NULL, message, trace);
+      gimp_show_message (gimp, NULL, severity, NULL, message);
     }
   else
     {
-print_to_stderr:
+      const gchar *reason;
+
       switch (flags & G_LOG_LEVEL_MASK)
         {
         case G_LOG_LEVEL_WARNING:
@@ -270,12 +239,7 @@ print_to_stderr:
       g_printerr ("%s: %s-%s: %s\n",
                   gimp_filename_to_utf8 (full_prog_name),
                   log_domain, reason, message);
-      if (trace)
-        g_printerr ("Back trace:\n%s\n\n", trace);
     }
-
-  if (trace)
-    g_free (trace);
 }
 
 static void

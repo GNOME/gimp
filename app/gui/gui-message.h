@@ -23,8 +23,7 @@ void gui_message (Gimp                *gimp,
                   GObject             *handler,
                   GimpMessageSeverity  severity,
                   const gchar         *domain,
-                  const gchar         *message,
-                  const gchar         *trace);
+                  const gchar         *message);
 
 
 #endif /* __GUI_VTABLE_H__ */
