@@ -66,6 +66,7 @@ Libgimp:
      procedures. If for instance, a second-level plug-in is interrupted
      interactively, we don't want to process this as an error but as a
      cancellation.
+   - New gimp_print_stack_trace() and gimp_on_error_query() for debug.
 
 GUI and Usability:
 
@@ -156,8 +157,8 @@ Translations:
   - Windows installer now localized with gettext.
   - String freeze has started and GIMP received updates from:
     Basque, Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish,
-    Esperanto, French, German, Icelandic, Italian, Polish, Russian,
-    Serbian, Slovenian, Swedish, Turkish.
+    Esperanto, French, German, Greek, Icelandic, Italian, Polish,
+    Rusian, Russian, Serbian, Slovenian, Spanish, Swedish, Turkish.
 
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
