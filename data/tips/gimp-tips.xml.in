@@ -35,9 +35,9 @@
   </tip>
   <tip level="beginner" help="gimp-file-save">
     <_thetip>
-      When you save an image to work on it again later, try using XCF,
-      GIMP's native file format (use the file extension <tt>.xcf</tt>).
-      This preserves the layers and many aspects of your work-in-progress.
+      Saving an image uses XCF, GIMP's native file format (file extension
+      <tt>.xcf</tt>). This preserves the layers and many aspects of your
+      work-in-progress, allowing to work on it again later.
       Once a project is completed, you can export it as JPEG, PNG, GIF, etc.
     </_thetip>
   </tip>
