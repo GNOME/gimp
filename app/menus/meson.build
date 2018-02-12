@@ -17,6 +17,6 @@ libappmenus = static_library('appmenus',
     '-DG_LOG_DOMAIN="Gimp-Menus"',
   ],
   dependencies: [
-    gegl, gtk2
+    gegl, gtk3
   ],
 )

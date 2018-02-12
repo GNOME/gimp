@@ -1,6 +1,6 @@
 # Makefile.am for gimp/m4macros
 
-installed_m4 = gimp-2.0.m4
+installed_m4 = gimp-3.0.m4
 
 uninstalled_m4 = \
 	alsa.m4				\
