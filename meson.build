@@ -1,7 +1,7 @@
 # Meson build file
 
 # http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
-project('gimp', ['c', 'cpp'], version: '2.9.9',
+project('gimp', ['c', 'cpp'], version: '2.99.0',
   meson_version: '>=0.44.0',
   default_options: [
     'sysconfdir=/etc',
@@ -36,16 +36,16 @@ minor_version = version[1].to_int()
 micro_version = version[2].to_int()
 interface_age = 0
 
-api_version   = '@0@.0'  .format(major_version)
-app_version   = '@0@.@1@'.format(major_version, minor_version)
-user_version  = '@0@.@1@'.format(major_version, minor_version)
-gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
+api_version   = '3.0'
+app_version   = '2.99'
+user_version  = '3.0'
+gimp_version  = meson.project_version()
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
-package_string  = prettyname + ' ' + gimp_version
+package_string= prettyname + ' ' + gimp_version
 
-gettext_package = 'gimp20'
+gettext_package= 'gimp30'
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
 
@@ -232,7 +232,7 @@ endif
 
 math              = cc.find_library('m')
 
-atk               = dependency('atk',                version: '>=2.2.0')
+atk               = dependency('atk',                version: '>=2.4.0')
 
 babl_minver       = '>=0.1.42'
 babl              = dependency('babl',               version: babl_minver)
@@ -265,8 +265,8 @@ glib              = dependency('glib-2.0',           version: '>=2.54.2')
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk2_minver       = '>=2.24.32'
-gtk2              = dependency('gtk+-2.0',           version: gtk2_minver)
+gtk3_minver       = '>=3.16.10'
+gtk3              = dependency('gtk+-3.0',           version: gtk3_minver)
 
 harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
 lcms              = dependency('lcms2',              version: '>=2.8')
@@ -369,7 +369,7 @@ conf.set('HAVE_EXCHNDL', drmingw.found())
 ################################################################################
 # Check for x11 support
 
-x11_target = gtk2.get_pkgconfig_variable('target') == 'x11'
+x11_target = gtk3.get_pkgconfig_variable('targets').contains('x11')
 
 x11   = x11_target ? dependency('x11')    : dependency('', required: false)
 xmu   = x11_target ? dependency('xmu')    : dependency('', required: false)
@@ -522,7 +522,7 @@ endif
 
 
 if get_option('with-webkit')
-  webkit = dependency('webkit-1.0', version: '>=1.6.1')
+  webkit = dependency('webkit2gtk-4.0', version: '>=2.0.0')
 else
   webkit = dependency('', required: false)
 endif
@@ -709,15 +709,15 @@ have_scriptfu = get_option('with-script-fu')
 
 
 # Check for GTK Mac Integration
-if platform_osx and (gtk2.get_pkgconfig_variable('target') == 'xquartz')
-  gtk2_macos = dependency('gtk-mac-integration-gtk2', version: '>=2.0.0',
+if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('xquartz'))
+  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=2.0.0',
     required: false
   )
-  if not gtk2_macos.found()
-    gtk2_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
+  if not gtk3_macos.found()
+    gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
   endif
 else
-  gtk2_macos = dependency('', required: false)
+  gtk3_macos = dependency('', required: false)
 endif
 
 # Check for XML tools
@@ -794,28 +794,28 @@ add_project_arguments([
   language: 'c',
 )
 
-if glib.version().version_compare('>=2.43')
-  add_project_arguments([
-    '-DG_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if gtk2.version().version_compare('>=2.26')
-  add_project_arguments([
-    '-DGDK_DISABLE_DEPRECATED',
-    '-DGTK_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if glib.version().version_compare('>=1.32')
-  add_project_arguments([
-    '-DPANGO_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
+# if glib.version().version_compare('>=2.43')
+#   add_project_arguments([
+#     '-DG_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
+# if gtk3.version().version_compare('>=2.26')
+#   add_project_arguments([
+#     '-DGDK_DISABLE_DEPRECATED',
+#     '-DGTK_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
+# if glib.version().version_compare('>=1.32')
+#   add_project_arguments([
+#     '-DPANGO_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
 
 
 # Require multihead safe API
@@ -928,6 +928,7 @@ warning_cflags = [
 ]
 add_project_arguments(cc .get_supported_arguments(warning_cflags), language: 'c')
 add_project_arguments(cxx.get_supported_arguments(warning_cflags), language: 'cpp')
+
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
@@ -1223,7 +1224,7 @@ install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
 install_conf.set('GLIB_REQUIRED_VERSION',         glib        .version())
-install_conf.set('GTK_REQUIRED_VERSION',          gtk2        .version())
+install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
 install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms        .version())
@@ -1305,7 +1306,7 @@ pkgconfig.generate(filebase: 'gimpui-' + api_version,
   version: gimp_version,
   requires: [
     'gimp-' + api_version + ' >= ' + app_version,
-    'gtk+-2.0 ' + gtk2_minver,
+    'gtk+-3.0 ' + gtk3_minver,
   ],
   libraries: [
     '-L${libdir}',

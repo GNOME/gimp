@@ -2,7 +2,7 @@ install_data(
   [
     'controllerrc',
     'gimprc',
-    'gtkrc',
+    'gimp.css',
     'menurc',
     'sessionrc',
     'templaterc',

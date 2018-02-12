@@ -33,7 +33,7 @@ python_so_libs = [
       'pygimp-tile.c',
       'pygimp-vectors.c',
     ],
-    [ pycairo, cairo, gtk2, ],
+    [ pycairo, cairo, gtk3, ],
     [
       libgimp,
       libgimpbase,
@@ -43,14 +43,14 @@ python_so_libs = [
   ],
   [ '_gimpenums',
     [ 'gimpenumsmodule.c', ],
-    [ gobject, cairo, gtk2, ],
+    [ gobject, cairo, gtk3, ],
     [
       libgimp,libgimpbase
     ],
   ],
   [ '_gimpui',
     [ 'gimpuimodule.c',    pygtk_generator.process('gimpui.defs'), ],
-    [ pygtk2, pycairo, gtk2, ],
+    [ pygtk2, pycairo, gtk3, ],
     [
       libgimp,
       libgimpbase,

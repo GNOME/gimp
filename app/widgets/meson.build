@@ -42,7 +42,6 @@ libappwidgets_sources = [
   'gimpcontainercombobox.c',
   'gimpcontainereditor.c',
   'gimpcontainerentry.c',
-  'gimpcontainergridview.c',
   'gimpcontainericonview.c',
   'gimpcontainerpopup.c',
   'gimpcontainertreestore.c',
@@ -220,8 +219,6 @@ libappwidgets_sources = [
   'gimpwidgets-utils.c',
   'gimpwindow.c',
   'gimpwindowstrategy.c',
-  'gtkhwrapbox.c',
-  'gtkwrapbox.c',
   appwidgetsenums,
   appcoremarshal,
 ]
@@ -234,6 +231,6 @@ libappwidgets = static_library('appwidgets',
     '-DG_LOG_DOMAIN="Gimp-Widgets"',
   ],
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )

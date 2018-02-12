@@ -60,11 +60,9 @@ libgimpwidgets_sources = [
   'gimpmemsizeentry.c',
   'gimpnumberpairentry.c',
   'gimpoffsetarea.c',
-  'gimpoldwidgets.c',
   'gimppageselector.c',
   'gimppatheditor.c',
   'gimppickbutton.c',
-  'gimppixmap.c',
   'gimppreview.c',
   'gimppreviewarea.c',
   'gimppropwidgets.c',
@@ -75,7 +73,6 @@ libgimpwidgets_sources = [
   'gimpsizeentry.c',
   'gimpstringcombobox.c',
   'gimpunitcombobox.c',
-  'gimpunitmenu.c',
   'gimpunitstore.c',
   'gimpwidgets-error.c',
   'gimpwidgets-private.c',
@@ -126,11 +123,9 @@ libgimpwidgets_headers = [
   'gimpmemsizeentry.h',
   'gimpnumberpairentry.h',
   'gimpoffsetarea.h',
-  'gimpoldwidgets.h',
   'gimppageselector.h',
   'gimppatheditor.h',
   'gimppickbutton.h',
-  'gimppixmap.h',
   'gimppreview.h',
   'gimppreviewarea.h',
   'gimppropwidgets.h',
@@ -141,7 +136,6 @@ libgimpwidgets_headers = [
   'gimpsizeentry.h',
   'gimpstringcombobox.h',
   'gimpunitcombobox.h',
-  'gimpunitmenu.h',
   'gimpunitstore.h',
   'gimpwidgets-error.h',
   'gimpwidgets.h',
@@ -157,7 +151,7 @@ libgimpwidgets_cflags = [
   '-DGIMP_WIDGETS_COMPILATION',
 ]
 
-if gtk2_macos.found()
+if gtk3_macos.found()
   libgimpwidgets_sources += [
     'gimppickbutton-quartz.c',
   ]
@@ -172,7 +166,7 @@ libgimpwidgets = library('gimpwidgets-'+ api_version,
   libgimpwidgets_sources,
   include_directories: rootInclude,
   dependencies: [
-    gegl, gtk2, lcms, math
+    gegl, gtk3, lcms, math
   ],
   c_args:     [ libgimpwidgets_cflags, ],
   link_with:  [
@@ -197,7 +191,7 @@ test_preview_area = executable('test-preview-area',
   'test-preview-area.c',
   include_directories: rootInclude,
   dependencies: [
-    gtk2,
+    gtk3,
   ],
   c_args:     [ libgimpwidgets_cflags, ],
   link_with:  [ libgimpwidgets, ],
@@ -209,7 +203,7 @@ test_eevl = executable('test-eevl',
   'test-eevl.c',
   include_directories: rootInclude,
   dependencies: [
-    glib, gtk2,
+    glib, gtk3,
   ],
   c_args:     [ libgimpwidgets_cflags, ],
   link_with:  [ libgimpwidgets, ],

@@ -41,7 +41,7 @@ executable(plugin_name,
   plugin_scriptfu_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
-    gegl, gtk2, math, winsock,
+    gegl, gtk3, math, winsock,
   ],
   c_args: [
     '-DSTANDALONE=0',

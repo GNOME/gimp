@@ -3,7 +3,7 @@ apptests_includes = [
   rootInclude, rootAppInclude
 ]
 apptests_deps = [
-  pangocairo, pangoft2, gtk2, dbus_glib, gegl,
+  pangocairo, pangoft2, gtk3, dbus_glib, gegl,
 ]
 apptests_links = [
   libapp,

@@ -276,7 +276,7 @@ libgimp = library('gimp-'+ api_version,
   libgimp_top_sources,
   include_directories: rootInclude,
   dependencies: [
-    gegl, gexiv2, gtk2, drmingw,
+    gegl, gexiv2, gtk3, drmingw,
   ],
   c_args:     [ libgimp_top_cflags, ],
   link_with:  [
@@ -294,7 +294,7 @@ libgimpui = library('gimpui-'+ api_version,
   libgimpui_sources,
   include_directories: rootInclude,
   dependencies: [
-    gegl, gexiv2, gtk2,
+    gegl, gexiv2, gtk3,
   ],
   c_args:     [ libgimp_top_cflags, ],
   link_with:  [

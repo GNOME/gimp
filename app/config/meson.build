@@ -34,7 +34,7 @@ libappconfig = static_library('appconfig',
     mypaint_args,
   ],
   dependencies: [
-    cairo, gegl, gdk_pixbuf, gio, gio_specific, gtk2, libmypaint, mypaint_brushes,
+    cairo, gegl, gdk_pixbuf, gio, gio_specific, gtk3, libmypaint, mypaint_brushes,
   ],
 )
 
