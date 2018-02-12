@@ -495,9 +495,11 @@ GType gimp_message_severity_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_MESSAGE_INFO,     /*< desc="Message" >*/
-  GIMP_MESSAGE_WARNING,  /*< desc="Warning" >*/
-  GIMP_MESSAGE_ERROR     /*< desc="Error"   >*/
+  GIMP_MESSAGE_INFO,        /*< desc="Message"  >*/
+  GIMP_MESSAGE_WARNING,     /*< desc="Warning"  >*/
+  GIMP_MESSAGE_ERROR,       /*< desc="Error"    >*/
+  GIMP_MESSAGE_BUG_WARNING, /*< desc="WARNING"  >*/
+  GIMP_MESSAGE_BUG_CRITICAL /*< desc="CRITICAL" >*/
 } GimpMessageSeverity;
 
 

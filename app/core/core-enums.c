@@ -1066,6 +1066,8 @@ gimp_message_severity_get_type (void)
     { GIMP_MESSAGE_INFO, "GIMP_MESSAGE_INFO", "info" },
     { GIMP_MESSAGE_WARNING, "GIMP_MESSAGE_WARNING", "warning" },
     { GIMP_MESSAGE_ERROR, "GIMP_MESSAGE_ERROR", "error" },
+    { GIMP_MESSAGE_BUG_WARNING, "GIMP_MESSAGE_BUG_WARNING", "bug-warning" },
+    { GIMP_MESSAGE_BUG_CRITICAL, "GIMP_MESSAGE_BUG_CRITICAL", "bug-critical" },
     { 0, NULL, NULL }
   };
 
@@ -1074,6 +1076,8 @@ gimp_message_severity_get_type (void)
     { GIMP_MESSAGE_INFO, NC_("message-severity", "Message"), NULL },
     { GIMP_MESSAGE_WARNING, NC_("message-severity", "Warning"), NULL },
     { GIMP_MESSAGE_ERROR, NC_("message-severity", "Error"), NULL },
+    { GIMP_MESSAGE_BUG_WARNING, NC_("message-severity", "WARNING"), NULL },
+    { GIMP_MESSAGE_BUG_CRITICAL, NC_("message-severity", "CRITICAL"), NULL },
     { 0, NULL, NULL }
   };
 

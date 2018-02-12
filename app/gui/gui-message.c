@@ -113,7 +113,7 @@ gui_message (Gimp                *gimp,
       /*  fallthru  */
 
     case GIMP_MESSAGE_BOX:
-      if (severity == GIMP_MESSAGE_ERROR)
+      if (severity >= GIMP_MESSAGE_BUG_WARNING)
         {
           g_mutex_lock (&mutex);
           /* Trace creation can be time consuming so don't block the
@@ -305,18 +305,28 @@ gui_message_error_dialog (Gimp                *gimp,
 
   switch (severity)
     {
-    case GIMP_MESSAGE_INFO:    type = GTK_MESSAGE_INFO;    break;
-    case GIMP_MESSAGE_WARNING: type = GTK_MESSAGE_WARNING; break;
-    case GIMP_MESSAGE_ERROR:   type = GTK_MESSAGE_ERROR;   break;
+    case GIMP_MESSAGE_INFO:
+      type = GTK_MESSAGE_INFO;
+      break;
+    case GIMP_MESSAGE_WARNING:
+      type = GTK_MESSAGE_WARNING;
+      break;
+    case GIMP_MESSAGE_ERROR:
+      type = GTK_MESSAGE_ERROR;
+      break;
+    case GIMP_MESSAGE_BUG_WARNING:
+    case GIMP_MESSAGE_BUG_CRITICAL:
+      type = GTK_MESSAGE_OTHER;
+      break;
     }
 
-  if (severity == GIMP_MESSAGE_ERROR)
+  if (severity >= GIMP_MESSAGE_BUG_WARNING)
     {
-      /* Process differently errors.
-       * The reason is that this will take significant place, and cannot
-       * be processed as a progress message or in the global dialog. It
-       * will require its own dedicated dialog which will encourage
-       * people to report the bug.
+      /* Process differently programming errors.
+       * The reason is that we will generate traces, which will take
+       * significant place, and cannot be processed as a progress
+       * message or in the global dialog. It will require its own
+       * dedicated dialog which will encourage people to report the bug.
        */
       gboolean gui_error = FALSE;
 

@@ -171,8 +171,10 @@ gimp_message_log_func (const gchar    *log_domain,
                        gpointer        data)
 {
   Gimp                *gimp       = data;
+  GimpCoreConfig      *config     = gimp->config;
   const gchar         *msg_domain = NULL;
   GimpMessageSeverity  severity   = GIMP_MESSAGE_WARNING;
+  GimpDebugPolicy      debug_policy;
 
   /* All GIMP messages are processed under the same domain, but
    * we need to keep the log domain information for third party
@@ -182,21 +184,23 @@ gimp_message_log_func (const gchar    *log_domain,
       ! g_str_has_prefix (log_domain, "LibGimp"))
     msg_domain = log_domain;
 
-  if (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING))
+  /* If debug policy requires it, WARNING and CRITICAL errors must be
+   * routed for appropriate debugging.
+   */
+  g_object_get (G_OBJECT (config),
+                "debug-policy", &debug_policy,
+                NULL);
+
+  switch (flags & G_LOG_LEVEL_MASK)
     {
-      GimpCoreConfig  *config = gimp->config;
-      GimpDebugPolicy  debug_policy;
-
-      g_object_get (G_OBJECT (config),
-                    "debug-policy", &debug_policy,
-                    NULL);
-
-      if ((debug_policy == GIMP_DEBUG_POLICY_CRITICAL &&
-           (flags & G_LOG_LEVEL_CRITICAL)) ||
-          debug_policy == GIMP_DEBUG_POLICY_WARNING)
-        {
-          severity = GIMP_MESSAGE_ERROR;
-        }
+    case G_LOG_LEVEL_WARNING:
+      if (debug_policy == GIMP_DEBUG_POLICY_WARNING)
+        severity = GIMP_MESSAGE_BUG_WARNING;
+      break;
+    case G_LOG_LEVEL_CRITICAL:
+      if (debug_policy <= GIMP_DEBUG_POLICY_CRITICAL)
+        severity = GIMP_MESSAGE_BUG_CRITICAL;
+      break;
     }
 
   if (gimp)
