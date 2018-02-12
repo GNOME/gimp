@@ -50,33 +50,47 @@
 
 #include "gimp-intl.h"
 
+#define MAX_TRACES 3
+#define MAX_ERRORS 10
+
+static GMutex mutex;
+static gint   n_traces = 0;
+static gint   n_errors = 0;
 
 typedef struct
 {
   Gimp                *gimp;
   gchar               *domain;
   gchar               *message;
+  gchar               *trace;
   GObject             *handler;
   GimpMessageSeverity  severity;
 } GimpLogMessageData;
 
 
-static gboolean  gui_message_idle          (gpointer             user_data);
-static gboolean  gui_message_error_console (Gimp                *gimp,
-                                            GimpMessageSeverity  severity,
-                                            const gchar         *domain,
-                                            const gchar         *message);
-static gboolean  gui_message_error_dialog  (Gimp                *gimp,
-                                            GObject             *handler,
-                                            GimpMessageSeverity  severity,
-                                            const gchar         *domain,
-                                            const gchar         *message);
-static void      gui_message_console       (GimpMessageSeverity  severity,
-                                            const gchar         *domain,
-                                            const gchar         *message);
-static gchar *   gui_message_format        (GimpMessageSeverity  severity,
-                                            const gchar         *domain,
-                                            const gchar         *message);
+static gboolean  gui_message_idle           (gpointer             user_data);
+static gboolean  gui_message_error_console  (Gimp                *gimp,
+                                             GimpMessageSeverity  severity,
+                                             const gchar         *domain,
+                                             const gchar         *message);
+static gboolean  gui_message_error_dialog   (Gimp                *gimp,
+                                             GObject             *handler,
+                                             GimpMessageSeverity  severity,
+                                             const gchar         *domain,
+                                             const gchar         *message,
+                                             const gchar         *trace);
+static void      gui_message_console        (GimpMessageSeverity  severity,
+                                             const gchar         *domain,
+                                             const gchar         *message);
+static gchar *   gui_message_format         (GimpMessageSeverity  severity,
+                                             const gchar         *domain,
+                                             const gchar         *message);
+
+static GtkWidget * global_error_dialog      (void);
+static GtkWidget * global_critical_dialog   (void);
+
+static void        gui_message_reset_errors (GtkObject           *object,
+                                             gpointer             user_data);
 
 
 void
@@ -86,6 +100,9 @@ gui_message (Gimp                *gimp,
              const gchar         *domain,
              const gchar         *message)
 {
+  gchar    *trace     = NULL;
+  gboolean  gen_trace = FALSE;
+
   switch (gimp->message_handler)
     {
     case GIMP_ERROR_CONSOLE:
@@ -96,6 +113,30 @@ gui_message (Gimp                *gimp,
       /*  fallthru  */
 
     case GIMP_MESSAGE_BOX:
+      if (severity == GIMP_MESSAGE_ERROR)
+        {
+          g_mutex_lock (&mutex);
+          /* Trace creation can be time consuming so don't block the
+           * mutex for too long and only increment and set a boolean
+           * here.
+           */
+          if (n_traces < MAX_TRACES)
+            {
+              gen_trace = TRUE;
+              n_traces++;
+            }
+          g_mutex_unlock (&mutex);
+        }
+      if (gen_trace)
+        {
+          /* We need to create the trace here because for multi-thread
+           * errors (i.e. non-GIMP ones), the backtrace after a idle
+           * function will simply be useless. It needs to happen in the
+           * buggy thread to be meaningful.
+           */
+          gimp_print_stack_trace (NULL, NULL, &trace);
+        }
+
       if (g_strcmp0 (GIMP_ACRONYM, domain) != 0)
         {
           /* Handle non-GIMP messages in a multi-thread safe way,
@@ -108,6 +149,7 @@ gui_message (Gimp                *gimp,
           data->gimp     = gimp;
           data->domain   = g_strdup (domain);
           data->message  = g_strdup (message);
+          data->trace    = trace;
           data->handler  = handler? g_object_ref (handler) : NULL;
           data->severity = severity;
 
@@ -117,8 +159,8 @@ gui_message (Gimp                *gimp,
           return;
         }
       if (gui_message_error_dialog (gimp, handler, severity,
-                                    domain, message))
-        return;
+                                    domain, message, trace))
+        break;
 
       gimp->message_handler = GIMP_CONSOLE;
       /*  fallthru  */
@@ -127,6 +169,8 @@ gui_message (Gimp                *gimp,
       gui_message_console (severity, domain, message);
       break;
     }
+  if (trace)
+    g_free (trace);
 }
 
 static gboolean
@@ -138,7 +182,8 @@ gui_message_idle (gpointer user_data)
                                   data->handler,
                                   data->severity,
                                   data->domain,
-                                  data->message))
+                                  data->message,
+                                  data->trace))
     {
       gui_message_console (data->severity,
                            data->domain,
@@ -146,6 +191,8 @@ gui_message_idle (gpointer user_data)
     }
   g_free (data->domain);
   g_free (data->message);
+  if (data->trace)
+    g_free (data->trace);
   if (data->handler)
     g_object_unref (data->handler);
 
@@ -245,42 +292,13 @@ progress_error_dialog (GimpProgress *progress)
   return dialog;
 }
 
-static GtkWidget *
-global_error_dialog (void)
-{
-  GdkScreen *screen;
-  gint       monitor;
-
-  monitor = gimp_get_monitor_at_pointer (&screen);
-
-  return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                         screen, monitor,
-                                         NULL /*ui_manager*/,
-                                         "gimp-error-dialog", -1,
-                                         FALSE);
-}
-
-static GtkWidget *
-global_critical_dialog (void)
-{
-  GdkScreen *screen;
-  gint       monitor;
-
-  monitor = gimp_get_monitor_at_pointer (&screen);
-
-  return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                         screen, monitor,
-                                         NULL /*ui_manager*/,
-                                         "gimp-critical-dialog", -1,
-                                         FALSE);
-}
-
 static gboolean
 gui_message_error_dialog (Gimp                *gimp,
                           GObject             *handler,
                           GimpMessageSeverity  severity,
                           const gchar         *domain,
-                          const gchar         *message)
+                          const gchar         *message,
+                          const gchar         *trace)
 {
   GtkWidget      *dialog;
   GtkMessageType  type   = GTK_MESSAGE_ERROR;
@@ -300,15 +318,21 @@ gui_message_error_dialog (Gimp                *gimp,
        * will require its own dedicated dialog which will encourage
        * people to report the bug.
        */
-      dialog = global_critical_dialog ();
+      gboolean gui_error = FALSE;
 
-      if (gimp_critical_dialog_want_errors (dialog))
+      g_mutex_lock (&mutex);
+      if (n_errors < MAX_ERRORS)
+        {
+          gui_error = TRUE;
+          n_errors++;
+        }
+      g_mutex_unlock (&mutex);
+
+      if (gui_error || trace)
         {
           gchar *text;
-          gchar *trace = NULL;
 
-          if (gimp_critical_dialog_want_traces (dialog))
-            gimp_print_stack_trace (NULL, NULL, &trace);
+          dialog = global_critical_dialog ();
 
           text = gui_message_format (severity, domain, message);
           gimp_critical_dialog_add (dialog, text, trace, FALSE, NULL, 0);
@@ -316,8 +340,6 @@ gui_message_error_dialog (Gimp                *gimp,
           gtk_widget_show (dialog);
 
           g_free (text);
-          if (trace)
-            g_free (trace);
 
           return TRUE;
         }
@@ -409,4 +431,52 @@ gui_message_format (GimpMessageSeverity  severity,
   formatted_message = g_strdup_printf ("%s-%s: %s", domain, desc, message);
 
   return formatted_message;
+}
+
+static GtkWidget *
+global_error_dialog (void)
+{
+  GdkScreen *screen;
+  gint       monitor;
+
+  monitor = gimp_get_monitor_at_pointer (&screen);
+
+  return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+                                         screen, monitor,
+                                         NULL /*ui_manager*/,
+                                         "gimp-error-dialog", -1,
+                                         FALSE);
+}
+
+static GtkWidget *
+global_critical_dialog (void)
+{
+  GtkWidget *dialog;
+  GdkScreen *screen;
+  gint       monitor;
+
+  monitor = gimp_get_monitor_at_pointer (&screen);
+
+  dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
+                                           screen, monitor,
+                                           NULL /*ui_manager*/,
+                                           "gimp-critical-dialog", -1,
+                                           FALSE);
+  g_signal_handlers_disconnect_by_func (dialog,
+                                        gui_message_reset_errors,
+                                        NULL);
+  g_signal_connect (dialog, "destroy",
+                    G_CALLBACK (gui_message_reset_errors),
+                    NULL);
+  return dialog;
+}
+
+static void
+gui_message_reset_errors (GtkObject *object,
+                          gpointer   user_data)
+{
+  g_mutex_lock (&mutex);
+  n_errors = 0;
+  n_traces = 0;
+  g_mutex_unlock (&mutex);
 }

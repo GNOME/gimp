@@ -54,9 +54,6 @@
 #define BUTTON1_TEXT _("Copy Bug Information")
 #define BUTTON2_TEXT _("Open Bug Tracker")
 
-#define MAX_TRACES 3
-#define MAX_ERRORS 10
-
 static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
                                               gint         response_id);
@@ -188,8 +185,6 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 
   dialog->pid      = 0;
   dialog->program  = NULL;
-  dialog->n_errors = 0;
-  dialog->n_traces = 0;
 }
 
 static void
@@ -408,14 +403,6 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
     }
   critical = GIMP_CRITICAL_DIALOG (dialog);
 
-  if (critical->n_errors > MAX_ERRORS ||
-      (trace && critical->n_traces > MAX_TRACES))
-    return;
-
-  critical->n_errors++;
-  if (trace)
-    critical->n_traces++;
-
   /* The user text, which should be localized. */
   if (is_fatal)
     {
@@ -491,16 +478,4 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
       critical->program = g_strdup (program);
       critical->pid     = pid;
     }
-}
-
-gboolean
-gimp_critical_dialog_want_traces (GtkWidget *dialog)
-{
-  return (GIMP_CRITICAL_DIALOG (dialog)->n_traces <= MAX_TRACES);
-}
-
-gboolean
-gimp_critical_dialog_want_errors (GtkWidget *dialog)
-{
-  return (GIMP_CRITICAL_DIALOG (dialog)->n_errors <= MAX_ERRORS);
 }
