@@ -850,12 +850,12 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       format = gimp_layer_mode_get_format (paint_mode,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
-                                           NULL);
+                                           gimp_drawable_get_format (drawable));
 
       if (paint_core->paint_buffer                                       &&
           gegl_buffer_get_width  (paint_core->paint_buffer) == (x2 - x1) &&
           gegl_buffer_get_height (paint_core->paint_buffer) == (y2 - y1) &&
-          gegl_buffer_get_format (paint_core->paint_buffer) == format )
+          gegl_buffer_get_format (paint_core->paint_buffer) == format)
         {
           *paint_buffer_x = x1;
           *paint_buffer_y = y1;

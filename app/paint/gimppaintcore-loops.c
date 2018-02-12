@@ -322,7 +322,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   iterator_format = gimp_layer_mode_get_format (paint_mode,
                                                 layer_mode.composite_space,
                                                 layer_mode.blend_space,
-                                                gegl_buffer_get_format (src_buffer));
+                                                gimp_temp_buf_get_format (paint_buf));
 
   roi.x = x_offset;
   roi.y = y_offset;
