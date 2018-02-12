@@ -40,19 +40,19 @@ minor_version = version[1].to_int()
 micro_version = version[2].to_int()
 interface_age = 0
 
-api_version   = '@0@.0'  .format(major_version)
-app_version   = '@0@.@1@'.format(major_version, minor_version)
-user_version  = '@0@.@1@'.format(major_version, minor_version)
-gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
+api_version   = '3.0'
+app_version   = '2.99'
+user_version  = '3.0'
+gimp_version  = meson.project_version()
 
 # Override for Release-candidates
 gimp_version  = gimp_version
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
-package_string  = prettyname + ' ' + gimp_version
+package_string= prettyname + ' ' + gimp_version
 
-gettext_package = 'gimp20'
+gettext_package= 'gimp30'
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
 
@@ -239,7 +239,7 @@ endif
 
 math              = cc.find_library('m')
 
-atk               = dependency('atk',                version: '>=2.2.0')
+atk               = dependency('atk',                version: '>=2.4.0')
 
 babl              = dependency('babl',               version: '>=0.1.50')
 
@@ -276,7 +276,7 @@ endif
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk2              = dependency('gtk+-2.0',           version: '>=2.24.32')
+gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
 
 harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
 lcms              = dependency('lcms2',              version: '>=2.8')
@@ -385,7 +385,7 @@ conf.set('HAVE_EXCHNDL', drmingw.found())
 ################################################################################
 # Check for x11 support
 
-x11_target = gtk2.get_pkgconfig_variable('target') == 'x11'
+x11_target = gtk3.get_pkgconfig_variable('targets').contains('x11')
 
 x11   = x11_target ? dependency('x11')    : dependency('', required: false)
 xmu   = x11_target ? dependency('xmu')    : dependency('', required: false)
@@ -547,7 +547,7 @@ else
 endif
 
 if get_option('with-webkit')
-  webkit = dependency('webkit-1.0', version: '>=1.6.1')
+  webkit = dependency('webkit2gtk-4.0', version: '>=2.0.0')
 else
   webkit = dependency('', required: false)
 endif
@@ -720,25 +720,24 @@ if have_python
   python2 = find_program('python2')
 
   libpython2= dependency('python2',       version: '>=2.5.0')
-  pygobject = dependency('pygobject-2.0', version: '>=2.10.4')
-  pygtk2    = dependency('pygtk-2.0',     version: '>=2.10.4')
-  pycairo   = dependency('pycairo',       version: '>=1.0.2')
+  py2gobject= dependency('pygobject-3.0', version: '>=2.10.4')
+  py2cairo  = dependency('pycairo',       version: '>=1.0.2')
 
-  pygobjectcodegen = find_program('pygobject-codegen-2.0')
-  pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
+  # pygobjectcodegen = find_program('pygobject-codegen-2.0')
+  # pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
 endif
 
 
 # Check for GTK Mac Integration
-if platform_osx and (gtk2.get_pkgconfig_variable('target') == 'xquartz')
-  gtk2_macos = dependency('gtk-mac-integration-gtk2', version: '>=2.0.0',
+if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('xquartz'))
+  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=2.0.0',
     required: false
   )
-  if not gtk2_macos.found()
-    gtk2_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
+  if not gtk3_macos.found()
+    gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
   endif
 else
-  gtk2_macos = dependency('', required: false)
+  gtk3_macos = dependency('', required: false)
 endif
 
 # Check for XML tools
@@ -852,37 +851,28 @@ add_project_arguments([
   language: 'c',
 )
 
-if glib.version().version_compare('>=2.43')
-  add_project_arguments([
-    '-DG_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if gtk2.version().version_compare('>=2.26')
-  add_project_arguments([
-    '-DGDK_DISABLE_DEPRECATED',
-    '-DGTK_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if glib.version().version_compare('>=1.32')
-  add_project_arguments([
-    '-DPANGO_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-
-
-# Require multihead safe API
-add_project_arguments([
-  '-DGDK_MULTIHEAD_SAFE',
-  '-DGTK_MULTIHEAD_SAFE',
-  ],
-  language: 'c',
-)
+# if glib.version().version_compare('>=2.43')
+#   add_project_arguments([
+#     '-DG_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
+# if gtk3.version().version_compare('>=2.26')
+#   add_project_arguments([
+#     '-DGDK_DISABLE_DEPRECATED',
+#     '-DGTK_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
+# if glib.version().version_compare('>=1.32')
+#   add_project_arguments([
+#     '-DPANGO_DISABLE_DEPRECATED',
+#     ],
+#     language: 'c',
+#   )
+# endif
 
 
 # Check for internal tools
@@ -997,6 +987,7 @@ add_project_arguments(
   cxx.get_supported_arguments(warning_cflags_common + warning_cflags_cpp),
   language: 'cpp'
 )
+
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
@@ -1297,7 +1288,7 @@ install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
 install_conf.set('GLIB_REQUIRED_VERSION',         glib        .version())
-install_conf.set('GTK_REQUIRED_VERSION',          gtk2        .version())
+install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
 install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms        .version())
@@ -1328,69 +1319,6 @@ configure_file(
 )
 
 
-pkgconfig.generate(filebase: 'gimp-' + api_version,
-  name: prettyname,
-  description: 'GIMP Library',
-  version: gimp_version,
-  requires: [
-    gdk_pixbuf,
-    cairo,
-    gegl,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimp-'       + api_version,
-    '-lgimpmath-'   + api_version,
-    '-lgimpconfig-' + api_version,
-    '-lgimpcolor-'  + api_version,
-    '-lgimpbase-'   + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
-  variables: [
-    'datarootdir='    +'${prefix}/'+ get_option('datadir'),
-    'gimpdatadir='    +'${prefix}/'+ gimpdatadir,
-    'gimplibdir='     +'${prefix}/'+ gimpplugindir,
-    'gimpsysconfdir=' + gimpsysconfdir,
-    'gimplocaledir='  +'${prefix}/'+ localedir,
-  ],
-)
-
-pkgconfig.generate(filebase: 'gimpthumb-' + api_version,
-  name: 'GIMP Thumb',
-  description: 'GIMP Thumbnail Library',
-  version: gimp_version,
-  requires: [
-    gdk_pixbuf,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimpthumb-'  + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
-)
-
-pkgconfig.generate(filebase: 'gimpui-' + api_version,
-  name: 'GIMP UI',
-  description: 'GIMP User Interface Library',
-  version: gimp_version,
-  requires: [
-    'gimp-' + api_version + ' >= ' + app_version,
-    gtk2,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimpui-'  + api_version,
-    '-lgimpwidgets-' + api_version,
-    '-lgimpmodule-'  + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
-)
 
 
 ################################################################################
@@ -1444,7 +1372,7 @@ if xmllint.found()
   )
 endif
 
-if python2.found()
+if have_python
   # TODO this python script is waiting for autotools directory/files structure
   custom_target('check-defs',
     input : [ ],
@@ -1531,6 +1459,70 @@ subdir('app-tools')
 # Docs
 subdir('devel-docs')
 subdir('docs')
+
+
+
+
+pkgconfig.generate(libgimp,
+  filebase: 'gimp-' + api_version,
+  name: prettyname,
+  description: 'GIMP Library',
+  version: gimp_version,
+  requires: [
+    gdk_pixbuf,
+    cairo,
+    gegl,
+  ],
+  libraries: [
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+  variables: [
+    'datarootdir='    +'${prefix}/'+ get_option('datadir'),
+    'gimpdatadir='    +'${prefix}/'+ gimpdatadir,
+    'gimplibdir='     +'${prefix}/'+ gimpplugindir,
+    'gimpsysconfdir=' + gimpsysconfdir,
+    'gimplocaledir='  +'${prefix}/'+ localedir,
+  ],
+)
+
+pkgconfig.generate(libgimpthumb,
+  filebase: 'gimpthumb-' + api_version,
+  name: 'GIMP Thumb',
+  description: 'GIMP Thumbnail Library',
+  version: gimp_version,
+  requires: [
+    libgimp,
+    gdk_pixbuf,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+)
+
+pkgconfig.generate(libgimpui,
+  filebase: 'gimpui-' + api_version,
+  name: 'GIMP UI',
+  description: 'GIMP User Interface Library',
+  version: gimp_version,
+  requires: [
+    libgimp,
+    gtk3,
+  ],
+  libraries: [
+    libgimpwidgets,
+    libgimpmodule,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+)
+
 
 
 ################################################################################
