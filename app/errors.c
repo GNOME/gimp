@@ -51,10 +51,6 @@ static gchar               *backtrace_file    = NULL;
 
 /*  local function prototypes  */
 
-static void    gimp_third_party_message_log_func (const gchar        *log_domain,
-                                                  GLogLevelFlags      flags,
-                                                  const gchar        *message,
-                                                  gpointer            data);
 static void    gimp_message_log_func             (const gchar        *log_domain,
                                                   GLogLevelFlags      flags,
                                                   const gchar        *message,
@@ -135,8 +131,10 @@ errors_init (Gimp               *gimp,
                        gimp_message_log_func, gimp);
 
   g_log_set_handler ("GEGL",
-                     G_LOG_LEVEL_MESSAGE,
-                     gimp_third_party_message_log_func, gimp);
+                     G_LOG_LEVEL_WARNING |
+                     G_LOG_LEVEL_MESSAGE |
+                     G_LOG_LEVEL_CRITICAL,
+                     gimp_message_log_func, gimp);
   g_log_set_handler (NULL,
                      G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
                      gimp_error_log_func, gimp);
@@ -167,36 +165,22 @@ gimp_terminate (const gchar *message)
 /*  private functions  */
 
 static void
-gimp_third_party_message_log_func (const gchar    *log_domain,
-                                   GLogLevelFlags  flags,
-                                   const gchar    *message,
-                                   gpointer        data)
-{
-  Gimp *gimp = data;
-
-  if (gimp)
-    {
-      /* Whereas all GIMP messages are processed under the same domain,
-       * we need to keep the log domain information for third party
-       * messages.
-       */
-      gimp_show_message (gimp, NULL, GIMP_MESSAGE_WARNING,
-                         log_domain, message);
-    }
-  else
-    {
-      g_printerr ("%s: %s\n\n", log_domain, message);
-    }
-}
-
-static void
 gimp_message_log_func (const gchar    *log_domain,
                        GLogLevelFlags  flags,
                        const gchar    *message,
                        gpointer        data)
 {
-  Gimp                *gimp     = data;
-  GimpMessageSeverity  severity = GIMP_MESSAGE_WARNING;
+  Gimp                *gimp       = data;
+  const gchar         *msg_domain = NULL;
+  GimpMessageSeverity  severity   = GIMP_MESSAGE_WARNING;
+
+  /* All GIMP messages are processed under the same domain, but
+   * we need to keep the log domain information for third party
+   * messages.
+   */
+  if (! g_str_has_prefix (log_domain, "Gimp") &&
+      ! g_str_has_prefix (log_domain, "LibGimp"))
+    msg_domain = log_domain;
 
   if (flags & (G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING))
     {
@@ -217,7 +201,7 @@ gimp_message_log_func (const gchar    *log_domain,
 
   if (gimp)
     {
-      gimp_show_message (gimp, NULL, severity, NULL, message);
+      gimp_show_message (gimp, NULL, severity, msg_domain, message);
     }
   else
     {
