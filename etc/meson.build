@@ -10,7 +10,7 @@ install_data(
       output: 'gimprc',
       configuration: etcconf,
     ),
-    'gtkrc',
+    'gimp.css',
     'menurc',
     'sessionrc',
     'templaterc',
