@@ -545,20 +545,8 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   gint           i;
   GimpCagePoint *point;
 
-  /* When Gegl bug #645810 will be solved, this should be a good optimisation */
-  #ifdef GEGL_BUG_645810_SOLVED
-    gegl_buffer_sample (coef_buf, coords.x, coords.y, 1.0, coef, format_coef, GEGL_INTERPOLATION_NEAREST);
-  #else
-    GeglRectangle  rect;
-
-    rect.height = 1;
-    rect.width  = 1;
-    rect.x      = coords.x;
-    rect.y      = coords.y;
-
-    gegl_buffer_get (coef_buf, &rect, 1.0, format_coef, coef,
-                     GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-  #endif
+  gegl_buffer_sample (coef_buf, coords.x, coords.y, NULL, coef, format_coef,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   for (i = 0; i < n_cage_vertices; i++)
     {
