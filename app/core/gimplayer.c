@@ -1090,27 +1090,31 @@ gimp_layer_end_move (GimpItem *item,
                      gboolean  push_undo)
 {
   GimpLayer *layer = GIMP_LAYER (item);
-  GSList    *ancestors;
-  GSList    *iter;
 
   if (GIMP_ITEM_CLASS (parent_class)->end_move)
     GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
 
-  ancestors = layer->move_stack->data;
-
-  layer->move_stack = g_slist_remove (layer->move_stack, ancestors);
-
-  /* resume mask cropping for all of the layer's ancestors */
-  for (iter = ancestors; iter; iter = g_slist_next (iter))
+  if (layer->move_stack)
     {
-      GimpGroupLayer *ancestor = iter->data;
+      GSList *ancestors;
+      GSList *iter;
 
-      gimp_group_layer_resume_mask (ancestor, push_undo);
+      ancestors = layer->move_stack->data;
 
-      g_object_unref (ancestor);
+      layer->move_stack = g_slist_remove (layer->move_stack, ancestors);
+
+      /* resume mask cropping for all of the layer's ancestors */
+      for (iter = ancestors; iter; iter = g_slist_next (iter))
+        {
+          GimpGroupLayer *ancestor = iter->data;
+
+          gimp_group_layer_resume_mask (ancestor, push_undo);
+
+          g_object_unref (ancestor);
+        }
+
+      g_slist_free (ancestors);
     }
-
-  g_slist_free (ancestors);
 }
 
 static void
