@@ -83,14 +83,22 @@ typedef struct
   G_TYPE_INSTANCE_GET_PRIVATE (ruler, GIMP_TYPE_RULER, GimpRulerPrivate)
 
 
-static const struct
+typedef struct
 {
   const gdouble  ruler_scale[16];
   const gint     subdivide[5];
-} ruler_metric =
+} RulerMetric;
+
+static const RulerMetric ruler_metric_decimal =
 {
   { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
   { 1, 5, 10, 50, 100 }
+};
+
+static const RulerMetric ruler_metric_inches =
+{
+  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 4, 8, 16, 12 * 16 }
 };
 
 
@@ -127,9 +135,10 @@ static void          gimp_ruler_queue_pos_redraw      (GimpRuler      *ruler);
 static void          gimp_ruler_draw_pos              (GimpRuler      *ruler,
                                                        cairo_t        *cr);
 static void          gimp_ruler_make_pixmap           (GimpRuler      *ruler);
-
 static PangoLayout * gimp_ruler_get_layout            (GtkWidget      *widget,
                                                        const gchar    *text);
+static const RulerMetric *
+                     gimp_ruler_get_metric            (GimpUnit        unit);
 
 
 G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
@@ -961,28 +970,29 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GtkStyle         *style  = gtk_widget_get_style (widget);
-  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
-  GtkStateType      state  = gtk_widget_get_state (widget);
-  GtkAllocation     allocation;
-  cairo_t          *cr;
-  gint              i;
-  gint              width, height;
-  gint              xthickness;
-  gint              ythickness;
-  gint              length, ideal_length;
-  gdouble           lower, upper;  /* Upper and lower limits, in ruler units */
-  gdouble           increment;     /* Number of pixels per unit */
-  gint              scale;         /* Number of units per major unit */
-  gdouble           start, end, cur;
-  gchar             unit_str[32];
-  gint              digit_height;
-  gint              digit_offset;
-  gint              text_size;
-  gint              pos;
-  gdouble           max_size;
-  GimpUnit          unit;
-  PangoLayout      *layout;
-  PangoRectangle    logical_rect, ink_rect;
+  GimpRulerPrivate  *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkStateType       state  = gtk_widget_get_state (widget);
+  GtkAllocation      allocation;
+  cairo_t           *cr;
+  gint               i;
+  gint               width, height;
+  gint               xthickness;
+  gint               ythickness;
+  gint               length, ideal_length;
+  gdouble            lower, upper;  /* Upper and lower limits, in ruler units */
+  gdouble            increment;     /* Number of pixels per unit */
+  gint               scale;         /* Number of units per major unit */
+  gdouble            start, end, cur;
+  gchar              unit_str[32];
+  gint               digit_height;
+  gint               digit_offset;
+  gint               text_size;
+  gint               pos;
+  gdouble            max_size;
+  GimpUnit           unit;
+  PangoLayout       *layout;
+  PangoRectangle     logical_rect, ink_rect;
+  const RulerMetric *ruler_metric;
 
   if (! gtk_widget_is_drawable (widget))
     return;
@@ -1064,18 +1074,20 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   g_snprintf (unit_str, sizeof (unit_str), "%d", scale);
   text_size = strlen (unit_str) * digit_height + 1;
 
-  for (scale = 0; scale < G_N_ELEMENTS (ruler_metric.ruler_scale); scale++)
-    if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_size)
+  unit = gimp_ruler_get_unit (ruler);
+
+  ruler_metric = gimp_ruler_get_metric (unit);
+
+  for (scale = 0; scale < G_N_ELEMENTS (ruler_metric->ruler_scale); scale++)
+    if (ruler_metric->ruler_scale[scale] * fabs (increment) > 2 * text_size)
       break;
 
-  if (scale == G_N_ELEMENTS (ruler_metric.ruler_scale))
-    scale = G_N_ELEMENTS (ruler_metric.ruler_scale) - 1;
-
-  unit = gimp_ruler_get_unit (ruler);
+  if (scale == G_N_ELEMENTS (ruler_metric->ruler_scale))
+    scale = G_N_ELEMENTS (ruler_metric->ruler_scale) - 1;
 
   /* drawing starts here */
   length = 0;
-  for (i = G_N_ELEMENTS (ruler_metric.subdivide) - 1; i >= 0; i--)
+  for (i = G_N_ELEMENTS (ruler_metric->subdivide) - 1; i >= 0; i--)
     {
       gdouble subd_incr;
 
@@ -1083,8 +1095,8 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
       if (unit == GIMP_UNIT_PIXEL && scale == 1 && i == 1)
         subd_incr = 1.0;
       else
-        subd_incr = ((gdouble) ruler_metric.ruler_scale[scale] /
-                     (gdouble) ruler_metric.subdivide[i]);
+        subd_incr = ((gdouble) ruler_metric->ruler_scale[scale] /
+                     (gdouble) ruler_metric->subdivide[i]);
 
       if (subd_incr * fabs (increment) <= MINIMUM_INCR)
         continue;
@@ -1415,4 +1427,15 @@ gimp_ruler_get_layout (GtkWidget   *widget,
   priv->layout = gimp_ruler_create_layout (widget, text);
 
   return priv->layout;
+}
+
+static const RulerMetric *
+gimp_ruler_get_metric (GimpUnit unit)
+{
+#if 0
+  if (unit == GIMP_UNIT_INCH)
+    return  &ruler_metric_inches;
+#endif
+
+  return &ruler_metric_decimal;
 }
