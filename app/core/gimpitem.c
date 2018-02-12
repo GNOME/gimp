@@ -1190,9 +1190,6 @@ gimp_item_start_move (GimpItem *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (! gimp_item_is_attached (item))
-    push_undo = FALSE;
-
   if (GIMP_ITEM_GET_CLASS (item)->start_move)
     GIMP_ITEM_GET_CLASS (item)->start_move (item, push_undo);
 }
@@ -1202,9 +1199,6 @@ gimp_item_end_move (GimpItem *item,
                     gboolean  push_undo)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
-
-  if (! gimp_item_is_attached (item))
-    push_undo = FALSE;
 
   if (GIMP_ITEM_GET_CLASS (item)->end_move)
     GIMP_ITEM_GET_CLASS (item)->end_move (item, push_undo);
