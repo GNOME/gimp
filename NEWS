@@ -54,6 +54,8 @@ Core:
     the error message and backtraces, and encouraging people to make bug
     reports.
   - Support layer masks on layer groups.
+  - GIMP now attempts to backup images in the config directory when it
+    crashes.
 
 Libgimp:
 
