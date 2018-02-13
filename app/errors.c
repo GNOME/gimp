@@ -190,10 +190,11 @@ gimp_message_log_func (const gchar    *log_domain,
                        const gchar    *message,
                        gpointer        data)
 {
-  Gimp                *gimp       = data;
-  GimpCoreConfig      *config     = gimp->config;
-  const gchar         *msg_domain = NULL;
-  GimpMessageSeverity  severity   = GIMP_MESSAGE_WARNING;
+  Gimp                *gimp        = data;
+  GimpCoreConfig      *config      = gimp->config;
+  const gchar         *msg_domain  = NULL;
+  GimpMessageSeverity  severity    = GIMP_MESSAGE_WARNING;
+  gboolean             gui_message = TRUE;
   GimpDebugPolicy      debug_policy;
 
   /* All GIMP messages are processed under the same domain, but
@@ -214,16 +215,18 @@ gimp_message_log_func (const gchar    *log_domain,
   switch (flags & G_LOG_LEVEL_MASK)
     {
     case G_LOG_LEVEL_WARNING:
-      if (debug_policy == GIMP_DEBUG_POLICY_WARNING)
-        severity = GIMP_MESSAGE_BUG_WARNING;
+      severity = GIMP_MESSAGE_BUG_WARNING;
+      if (debug_policy > GIMP_DEBUG_POLICY_WARNING)
+        gui_message = FALSE;
       break;
     case G_LOG_LEVEL_CRITICAL:
-      if (debug_policy <= GIMP_DEBUG_POLICY_CRITICAL)
-        severity = GIMP_MESSAGE_BUG_CRITICAL;
+      severity = GIMP_MESSAGE_BUG_CRITICAL;
+      if (debug_policy > GIMP_DEBUG_POLICY_CRITICAL)
+        gui_message = FALSE;
       break;
     }
 
-  if (gimp)
+  if (gimp && gui_message)
     {
       gimp_show_message (gimp, NULL, severity, msg_domain, message);
     }
