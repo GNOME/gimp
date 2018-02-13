@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-11 16:54+0100\n"
-"PO-Revision-Date: 2018-02-11 16:55+0100\n"
+"POT-Creation-Date: 2018-02-13 18:44+0100\n"
+"PO-Revision-Date: 2018-02-13 18:45+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -11612,112 +11612,122 @@ msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "Tło (przezr.)"
 
-#: ../app/core/core-enums.c:1074
+#: ../app/core/core-enums.c:1076
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Komunikat"
 
-#: ../app/core/core-enums.c:1075
+#: ../app/core/core-enums.c:1077
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: ../app/core/core-enums.c:1076
+#: ../app/core/core-enums.c:1078
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Błąd"
 
-#: ../app/core/core-enums.c:1105
+#: ../app/core/core-enums.c:1079
+msgctxt "message-severity"
+msgid "WARNING"
+msgstr "OSTRZEŻENIE"
+
+#: ../app/core/core-enums.c:1080
+msgctxt "message-severity"
+msgid "CRITICAL"
+msgstr "KRYTYCZNE"
+
+#: ../app/core/core-enums.c:1109
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Pytanie, co zrobić"
 
-#: ../app/core/core-enums.c:1106
+#: ../app/core/core-enums.c:1110
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Zachowanie osadzonego profilu"
 
-#: ../app/core/core-enums.c:1107
+#: ../app/core/core-enums.c:1111
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Konwertowanie do preferowanego profilu kolorów RGB"
 
-#: ../app/core/core-enums.c:1144
+#: ../app/core/core-enums.c:1148
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Krycie"
 
-#: ../app/core/core-enums.c:1145
+#: ../app/core/core-enums.c:1149
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/core/core-enums.c:1146
+#: ../app/core/core-enums.c:1150
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Kąt"
 
-#: ../app/core/core-enums.c:1147
+#: ../app/core/core-enums.c:1151
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Kolor"
 
-#: ../app/core/core-enums.c:1148
+#: ../app/core/core-enums.c:1152
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Twardość"
 
-#: ../app/core/core-enums.c:1149
+#: ../app/core/core-enums.c:1153
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/core/core-enums.c:1150
+#: ../app/core/core-enums.c:1154
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporcje"
 
-#: ../app/core/core-enums.c:1151
+#: ../app/core/core-enums.c:1155
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/core/core-enums.c:1152
+#: ../app/core/core-enums.c:1156
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Tempo"
 
-#: ../app/core/core-enums.c:1153
+#: ../app/core/core-enums.c:1157
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/core/core-enums.c:1154
+#: ../app/core/core-enums.c:1158
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Drganie"
 
-#: ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1186
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Użycie zaznaczenia jako wejścia"
 
-#: ../app/core/core-enums.c:1183
+#: ../app/core/core-enums.c:1187
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Użycie całej warstwy jako wejścia"
 
-#: ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1216
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Twardy"
 
-#: ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1217
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Wygładzony"
 
-#: ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1218
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Zmiękczony"
@@ -13103,17 +13113,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:2028
+#: ../app/core/gimpitem.c:2022
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2038
+#: ../app/core/gimpitem.c:2032
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:2089 ../app/core/gimpitem.c:2096
+#: ../app/core/gimpitem.c:2083 ../app/core/gimpitem.c:2090
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -13207,7 +13217,7 @@ msgstr "Nie można bardziej podnieść warstwy."
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:742 ../app/core/gimplayer.c:1812
+#: ../app/core/gimplayer.c:742 ../app/core/gimplayer.c:1814
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
@@ -13222,60 +13232,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1718
+#: ../app/core/gimplayer.c:1720
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1729
+#: ../app/core/gimplayer.c:1731
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1735
+#: ../app/core/gimplayer.c:1737
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1863
+#: ../app/core/gimplayer.c:1865
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:2019
+#: ../app/core/gimplayer.c:2021
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:2020
+#: ../app/core/gimplayer.c:2022
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:2122
+#: ../app/core/gimplayer.c:2124
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2123
+#: ../app/core/gimplayer.c:2125
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2199
+#: ../app/core/gimplayer.c:2201
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2272
+#: ../app/core/gimplayer.c:2274
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2307
+#: ../app/core/gimplayer.c:2309
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2328
+#: ../app/core/gimplayer.c:2330
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -14141,7 +14151,7 @@ msgid ""
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
 #: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:190
-#: ../app/gui/gui-message.c:233
+#: ../app/gui/gui-message.c:267
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
 
@@ -14403,7 +14413,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1851
 #: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:651
 #: ../app/widgets/gimpcontrollerlist.c:640
-#: ../app/widgets/gimpcriticaldialog.c:98 ../app/widgets/gimppdbdialog.c:175
+#: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
 msgstr "Za_mknij"
@@ -20737,12 +20747,12 @@ msgid "Type  (%s)"
 msgstr "Typ  (%s)"
 
 #: ../app/tools/gimpeditselectiontool.c:449
-#: ../app/tools/gimpeditselectiontool.c:621
+#: ../app/tools/gimpeditselectiontool.c:623
 msgid "Move: "
 msgstr "Przesunięcie: "
 
-#: ../app/tools/gimpeditselectiontool.c:877
-#: ../app/tools/gimpeditselectiontool.c:1136
+#: ../app/tools/gimpeditselectiontool.c:879
+#: ../app/tools/gimpeditselectiontool.c:1138
 msgid "Move Floating Selection"
 msgstr "Przesunięcie oderwanego zaznaczenia"
 
@@ -21582,7 +21592,7 @@ msgstr "Opcje zanikania"
 msgid "Color Options"
 msgstr "Opcje kolorów"
 
-#: ../app/tools/gimppaintoptions-gui.c:621
+#: ../app/tools/gimppaintoptions-gui.c:622
 msgid "Link to brush default"
 msgstr "Wiąże z domyślną wartością pędzla"
 
@@ -23376,36 +23386,36 @@ msgstr "Skopiuj informacje o błędzie"
 msgid "Open Bug Tracker"
 msgstr "Otwórz system śledzenia błędów"
 
-#: ../app/widgets/gimpcriticaldialog.c:133
-#: ../app/widgets/gimpcriticaldialog.c:444
+#: ../app/widgets/gimpcriticaldialog.c:132
+#: ../app/widgets/gimpcriticaldialog.c:443
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
 "Za pomocą tych prostych kroków można zgłosić błąd, pomagając nam ulepszać "
 "program GIMP:"
 
-#: ../app/widgets/gimpcriticaldialog.c:135
-#: ../app/widgets/gimpcriticaldialog.c:446
+#: ../app/widgets/gimpcriticaldialog.c:134
+#: ../app/widgets/gimpcriticaldialog.c:445
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Skopiuj informacje o błędzie do schowka klikając: "
 
-#: ../app/widgets/gimpcriticaldialog.c:137
-#: ../app/widgets/gimpcriticaldialog.c:448
+#: ../app/widgets/gimpcriticaldialog.c:136
+#: ../app/widgets/gimpcriticaldialog.c:447
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Otwórz system śledzenia błędów w przeglądarce klikając: "
 
-#: ../app/widgets/gimpcriticaldialog.c:139
-#: ../app/widgets/gimpcriticaldialog.c:450
+#: ../app/widgets/gimpcriticaldialog.c:138
+#: ../app/widgets/gimpcriticaldialog.c:449
 msgid "Create a login if you don't have one yet."
 msgstr "Utwórz konto, jeśli jeszcze go nie masz."
 
-#: ../app/widgets/gimpcriticaldialog.c:140
-#: ../app/widgets/gimpcriticaldialog.c:451
+#: ../app/widgets/gimpcriticaldialog.c:139
+#: ../app/widgets/gimpcriticaldialog.c:450
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Wklej tekst ze schowka do nowego zgłoszenia błędu."
 
-#: ../app/widgets/gimpcriticaldialog.c:141
-#: ../app/widgets/gimpcriticaldialog.c:452
+#: ../app/widgets/gimpcriticaldialog.c:140
+#: ../app/widgets/gimpcriticaldialog.c:451
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -23413,7 +23423,7 @@ msgstr ""
 "Dodaj ważne informacje po angielsku w zgłoszeniu błędu, wyjaśniając, co "
 "robiono, kiedy wystąpił błąd."
 
-#: ../app/widgets/gimpcriticaldialog.c:143
+#: ../app/widgets/gimpcriticaldialog.c:142
 msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
@@ -23421,7 +23431,7 @@ msgstr ""
 "Ten błąd mógł pozostawić program GIMP w niespójnym stanie. Zalecane jest "
 "zapisanie pracy i ponowne uruchomienie programu."
 
-#: ../app/widgets/gimpcriticaldialog.c:154
+#: ../app/widgets/gimpcriticaldialog.c:153
 msgid ""
 "You can also close the dialog directly but reporting bugs is the best way to "
 "make your software awesome."
@@ -23429,77 +23439,77 @@ msgstr ""
 "Można także zamknąć to okno od razu, ale zgłaszanie błędów to najlepszy "
 "sposób, aby przyczynić się do ulepszania używanego oprogramowania."
 
-#: ../app/widgets/gimpcriticaldialog.c:227
+#: ../app/widgets/gimpcriticaldialog.c:226
 msgid "The operating system is out of memory or resources."
 msgstr "Za mało pamięci lub zasobów w systemie operacyjnym."
 
-#: ../app/widgets/gimpcriticaldialog.c:230
+#: ../app/widgets/gimpcriticaldialog.c:229
 msgid "The specified file was not found."
 msgstr "Nie odnaleziono podanego pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:233
+#: ../app/widgets/gimpcriticaldialog.c:232
 msgid "The specified path was not found."
 msgstr "Nie odnaleziono podanej ścieżki."
 
-#: ../app/widgets/gimpcriticaldialog.c:236
+#: ../app/widgets/gimpcriticaldialog.c:235
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Plik .exe jest nieprawidłowy (nie jest plikiem .exe typu Microsoft Win32 lub "
 "w obrazie .exe jest błąd)."
 
-#: ../app/widgets/gimpcriticaldialog.c:239
+#: ../app/widgets/gimpcriticaldialog.c:238
 msgid "The operating system denied access to the specified file."
 msgstr "System operacyjny odmówił dostępu do podanego pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:242
+#: ../app/widgets/gimpcriticaldialog.c:241
 msgid "The file name association is incomplete or invalid."
 msgstr "Powiązanie nazwy pliku jest niepełne lub nieprawidłowe."
 
-#: ../app/widgets/gimpcriticaldialog.c:245
+#: ../app/widgets/gimpcriticaldialog.c:244
 msgid "DDE transaction busy"
 msgstr "Transakcja DDE jest zajęta"
 
-#: ../app/widgets/gimpcriticaldialog.c:248
+#: ../app/widgets/gimpcriticaldialog.c:247
 msgid "The DDE transaction failed."
 msgstr "Transakcja DDE się nie powiodła."
 
-#: ../app/widgets/gimpcriticaldialog.c:251
+#: ../app/widgets/gimpcriticaldialog.c:250
 msgid "The DDE transaction timed out."
 msgstr "Transakcja DDE przekroczyła czas oczekiwania."
 
-#: ../app/widgets/gimpcriticaldialog.c:254
+#: ../app/widgets/gimpcriticaldialog.c:253
 msgid "The specified DLL was not found."
 msgstr "Nie odnaleziono podanego pliku DDL."
 
-#: ../app/widgets/gimpcriticaldialog.c:257
+#: ../app/widgets/gimpcriticaldialog.c:256
 msgid "There is no application associated with the given file name extension."
 msgstr "Nie ma programu powiązanego z podanym rozszerzeniem pliku."
 
-#: ../app/widgets/gimpcriticaldialog.c:260
+#: ../app/widgets/gimpcriticaldialog.c:259
 msgid "There was not enough memory to complete the operation."
 msgstr "Za mało pamięci, aby ukończyć działanie."
 
-#: ../app/widgets/gimpcriticaldialog.c:263
+#: ../app/widgets/gimpcriticaldialog.c:262
 msgid "A sharing violation occurred."
 msgstr "Wystąpiło naruszenie współdzielenia."
 
-#: ../app/widgets/gimpcriticaldialog.c:266
+#: ../app/widgets/gimpcriticaldialog.c:265
 msgid "Unknown Microsoft Windows error."
 msgstr "Nieznany błąd systemu Microsoft Windows."
 
-#: ../app/widgets/gimpcriticaldialog.c:269
+#: ../app/widgets/gimpcriticaldialog.c:268
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Otwarcie „%s” się nie powiodło: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:410
+#: ../app/widgets/gimpcriticaldialog.c:409
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "Program GIMP uległ awarii z błędem krytycznym: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:417
+#: ../app/widgets/gimpcriticaldialog.c:416
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "Wystąpił błąd programu GIMP: %s"
@@ -23507,12 +23517,12 @@ msgstr "Wystąpił błąd programu GIMP: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:425
+#: ../app/widgets/gimpcriticaldialog.c:424
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "Wystąpiło kilka krytycznych błędów programu GIMP."
 
-#: ../app/widgets/gimpcriticaldialog.c:474
+#: ../app/widgets/gimpcriticaldialog.c:476
 msgid "_Restart GIMP"
 msgstr "_Uruchom program GIMP ponownie"
 
@@ -24775,22 +24785,22 @@ msgstr "%s (%s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (%s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1654
+#: ../app/widgets/gimpwidgets-utils.c:1658
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Wbudowany profil odcieni szarości (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1661
+#: ../app/widgets/gimpwidgets-utils.c:1665
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Wbudowany profil RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1678
+#: ../app/widgets/gimpwidgets-utils.c:1682
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Preferowany profil odcieni szarości (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1685
+#: ../app/widgets/gimpwidgets-utils.c:1689
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Preferowany profil RGB (%s)"

@@ -1,18 +1,18 @@
 # Polish translation for gimp-tips.
-# Copyright © 2002-2017 the gimp authors.
+# Copyright © 2002-2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 2002-2005.
 # Artur Polaczyński <artii@o2.pl>, 2002-2003.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2018.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 21:21+0200\n"
-"PO-Revision-Date: 2017-03-26 21:22+0200\n"
+"POT-Creation-Date: 2018-02-13 18:44+0100\n"
+"PO-Revision-Date: 2018-02-13 18:45+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -51,16 +51,16 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and many aspects of your work-in-progress. Once a project is "
-"completed, you can export it as JPEG, PNG, GIF, etc."
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Jeśli obraz jest zapisywany w celu ponowienia nad nim pracy w późniejszym "
-"czasie, to można spróbować użyć formatu XCF, własnego formatu programu GIMP "
-"(rozszerzenie <tt>.xcf</tt>). Pozwoli to na zapisanie warstw, zaznaczeń oraz "
-"wielu innych rzeczy dotyczących danego projektu. Po ukończeniu pracy można "
-"wyeksportować obraz do docelowego formatu, takiego jak JPEG, PNG, GIF itp."
+"Zapisywanie obrazu używa formatu XCF, własnego formatu programu GIMP "
+"(rozszerzenie <tt>.xcf</tt>). Zachowuje to warstwy i wielu innych rzeczy "
+"dotyczących danego projektu, umożliwiając wznowienie nad nim pracy "
+"w późniejszym czasie. Po ukończeniu pracy można wyeksportować obraz do "
+"docelowego formatu, takiego jak JPEG, PNG, GIF itp."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
