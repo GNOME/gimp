@@ -1395,11 +1395,11 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
                                                   buffer,
                                                   offset_x, offset_y);
 
-  if (old_linear >= 0 && gimp_filter_peek_node (GIMP_FILTER (drawable)))
+  if (buffer && gimp_filter_peek_node (GIMP_FILTER (drawable)))
     {
       gboolean new_linear = gimp_drawable_get_linear (drawable);
 
-      if (old_linear != new_linear)
+      if (new_linear != old_linear)
         gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
 }

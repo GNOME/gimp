@@ -772,17 +772,22 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
 {
   GimpItem *item          = GIMP_ITEM (drawable);
   gint      old_has_alpha = -1;
+  gint      width         = 0;
+  gint      height        = 0;
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
   gimp_drawable_invalidate_boundary (drawable);
 
   if (push_undo)
-    gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
-                                       drawable, FALSE);
+    {
+      gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
+                                         drawable, FALSE);
+    }
 
   /*  ref new before unrefing old, they might be the same  */
-  g_object_ref (buffer);
+  if (buffer)
+    g_object_ref (buffer);
 
   if (drawable->private->buffer)
     {
@@ -798,14 +803,22 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
 
-  gimp_item_set_offset (item, offset_x, offset_y);
-  gimp_item_set_size (item,
-                      gegl_buffer_get_width  (buffer),
-                      gegl_buffer_get_height (buffer));
+  if (buffer)
+    {
+      width  = gegl_buffer_get_width  (buffer);
+      height = gegl_buffer_get_height (buffer);
+    }
 
-  if (old_has_alpha >= 0 &&
-      old_has_alpha != gimp_drawable_has_alpha (drawable))
-    gimp_drawable_alpha_changed (drawable);
+  gimp_item_set_offset (item, offset_x, offset_y);
+  gimp_item_set_size (item, width, height);
+
+  if (buffer)
+    {
+      gboolean new_has_alpha = gimp_drawable_has_alpha (drawable);
+
+      if (new_has_alpha != old_has_alpha)
+        gimp_drawable_alpha_changed (drawable);
+    }
 
   g_object_notify (G_OBJECT (drawable), "buffer");
 
@@ -1127,6 +1140,11 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
   return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
 }
 
+/* note:  you may pass a NULL buffer to gimp_drawable_set_buffer() and
+ * gimp_drawable_set_buffer_full(), in order to clear the drawable's current
+ * buffer, however, push_undo must be FALSE in that case, and you may only use
+ * the drawable in a very limited way while it has no buffer.
+ */
 void
 gimp_drawable_set_buffer (GimpDrawable *drawable,
                           gboolean      push_undo,
@@ -1136,7 +1154,8 @@ gimp_drawable_set_buffer (GimpDrawable *drawable,
   gint offset_x, offset_y;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer == NULL || GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer != NULL || ! push_undo);
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
@@ -1156,18 +1175,27 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
                                gint          offset_y)
 {
   GimpItem *item;
+  gint      width  = 0;
+  gint      height = 0;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer == NULL || GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (buffer != NULL || ! push_undo);
 
   item = GIMP_ITEM (drawable);
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  if (gimp_item_get_width  (item)   != gegl_buffer_get_width (buffer)  ||
-      gimp_item_get_height (item)   != gegl_buffer_get_height (buffer) ||
-      gimp_item_get_offset_x (item) != offset_x                        ||
+  if (buffer)
+    {
+      width  = gegl_buffer_get_width  (buffer);
+      height = gegl_buffer_get_height (buffer);
+    }
+
+  if (gimp_item_get_width  (item)   != width    ||
+      gimp_item_get_height (item)   != height   ||
+      gimp_item_get_offset_x (item) != offset_x ||
       gimp_item_get_offset_y (item) != offset_y)
     {
       gimp_drawable_update (drawable, 0, 0, -1, -1);
@@ -1182,7 +1210,8 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
 
   g_object_thaw_notify (G_OBJECT (drawable));
 
-  gimp_drawable_update (drawable, 0, 0, -1, -1);
+  if (buffer)
+    gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 GeglNode *

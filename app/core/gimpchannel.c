@@ -1009,22 +1009,25 @@ gimp_channel_set_buffer (GimpDrawable *drawable,
                                                   buffer,
                                                   offset_x, offset_y);
 
-  gegl_buffer_signal_connect (buffer, "changed",
-                              G_CALLBACK (gimp_channel_buffer_changed),
-                              channel);
-
-  if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+  if (buffer)
     {
-      const Babl *color_format;
+      gegl_buffer_signal_connect (buffer, "changed",
+                                  G_CALLBACK (gimp_channel_buffer_changed),
+                                  channel);
 
-      if (gimp_drawable_get_linear (drawable))
-        color_format = babl_format ("RGBA float");
-      else
-        color_format = babl_format ("R'G'B'A float");
+      if (gimp_filter_peek_node (GIMP_FILTER (channel)))
+        {
+          const Babl *color_format;
 
-      gegl_node_set (channel->color_node,
-                     "format", color_format,
-                     NULL);
+          if (gimp_drawable_get_linear (drawable))
+            color_format = babl_format ("RGBA float");
+          else
+            color_format = babl_format ("R'G'B'A float");
+
+          gegl_node_set (channel->color_node,
+                         "format", color_format,
+                         NULL);
+        }
     }
 }
 
