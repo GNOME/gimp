@@ -1353,8 +1353,6 @@ xcf_load_channel_props (XcfInfo      *info,
                                         GIMP_DRAWABLE (*channel));
             g_object_unref (*channel);
             *channel = mask;
-            (*channel)->boundary_known = FALSE;
-            (*channel)->bounds_known   = FALSE;
 
             /* Don't restore info->active_channel because the
              * selection can't be the active channel
