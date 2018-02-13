@@ -1214,6 +1214,27 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
     gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
+void
+gimp_drawable_steal_buffer (GimpDrawable *drawable,
+                            GimpDrawable *src_drawable)
+{
+  GeglBuffer *buffer;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_DRAWABLE (src_drawable));
+
+  buffer = gimp_drawable_get_buffer (src_drawable);
+
+  if (buffer)
+    g_object_ref (buffer);
+
+  gimp_drawable_set_buffer (src_drawable, FALSE, NULL, NULL);
+  gimp_drawable_set_buffer (drawable,     FALSE, NULL, buffer);
+
+  if (buffer)
+    g_object_unref (buffer);
+}
+
 GeglNode *
 gimp_drawable_get_source_node (GimpDrawable *drawable)
 {

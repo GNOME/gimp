@@ -189,6 +189,9 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   gint                offset_x,
                                                   gint                offset_y);
 
+void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
+                                                  GimpDrawable       *src_drawable);
+
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 
