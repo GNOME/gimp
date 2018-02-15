@@ -753,7 +753,7 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
                                   G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
                                   rect_tool);
 
-  gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
+  gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
