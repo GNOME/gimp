@@ -1081,7 +1081,7 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
 /**
  * gimp_print_stack_trace:
  * @prog_name: the program to attach to.
- * @fd: a #FILE * file descriptor.
+ * @stream: a #FILE * stream.
  * @trace: location to store a newly allocated string of the trace.
  *
  * Attempts to generate a stack trace at current code position in
@@ -1093,7 +1093,7 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  * or the stacktrace() API on platforms where it is available. It always
  * fails on Win32.
  *
- * The stack trace, once generated, will either be printed to @fd or
+ * The stack trace, once generated, will either be printed to @stream or
  * returned as a newly allocated string in @trace, if not #NULL.
  *
  * In some error cases (e.g. segmentation fault), trying to allocate
@@ -1108,7 +1108,7 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  **/
 gboolean
 gimp_print_stack_trace (const gchar *prog_name,
-                        gpointer     fd,
+                        gpointer     stream,
                         gchar      **trace)
 {
   gboolean stack_printed = FALSE;
@@ -1184,8 +1184,8 @@ gimp_print_stack_trace (const gchar *prog_name,
           stack_printed = TRUE;
 
           buffer[read_n] = '\0';
-          if (fd)
-            g_fprintf (fd, "%s", buffer);
+          if (stream)
+            g_fprintf (stream, "%s", buffer);
           if (trace)
             {
               if (! gtrace)
@@ -1220,8 +1220,8 @@ gimp_print_stack_trace (const gchar *prog_name,
             {
               for (i = 0; i < n_symbols; i++)
                 {
-                  if (fd)
-                    g_fprintf (fd, "%s\n", (const gchar *) symbols[i]);
+                  if (stream)
+                    g_fprintf (stream, "%s\n", (const gchar *) symbols[i]);
                   if (trace)
                     {
                       if (! gtrace)
@@ -1240,7 +1240,7 @@ gimp_print_stack_trace (const gchar *prog_name,
            * In some cases, this is necessary, especially during
            * segfault-type crashes.
            */
-          backtrace_symbols_fd (bt_buf, n_symbols, fileno ((FILE *) fd));
+          backtrace_symbols_fd (bt_buf, n_symbols, fileno ((FILE *) stream));
         }
       stack_printed = (n_symbols > 0);
     }
