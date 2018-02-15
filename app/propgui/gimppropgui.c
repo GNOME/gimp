@@ -442,7 +442,7 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_hue_saturation },
   { "GimpGegl-gegl-color-rotate-config",
     _gimp_prop_gui_new_color_rotate },
-  { "GimpGegl-gegl-color-to-alpha-plus-config",
+  { "GimpGegl-gegl-color-to-alpha-config",
     _gimp_prop_gui_new_color_to_alpha },
   { "GimpGegl-gegl-convolution-matrix-config",
     _gimp_prop_gui_new_convolution_matrix },
