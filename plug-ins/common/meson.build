@@ -10,11 +10,11 @@ common_exes_list = [
     [ 'animation-optimize.c', ],
     [ gtk3, gegl, gdk_pixbuf, cairo ],
   ],
-  [
-    'animation-play',
-    [ 'animation-play.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
+  # [
+  #   'animation-play',
+  #   [ 'animation-play.c', ],
+  #   [ gtk3, gegl, gdk_pixbuf, ],
+  # ],
   [
     'blinds',
     [ 'blinds.c', ],
@@ -85,11 +85,11 @@ common_exes_list = [
     [ 'crop-zealous.c', ],
     [ gtk3, gegl, gdk_pixbuf, cairo, ],
   ],
-  [
-    'curve-bend',
-    [ 'curve-bend.c', ],
-    [ gtk3, gegl, gdk_pixbuf, ],
-  ],
+  # [
+  #   'curve-bend',
+  #   [ 'curve-bend.c', ],
+  #   [ gtk3, gegl, gdk_pixbuf, ],
+  # ],
   [
     'decompose',
     [ 'decompose.c', ],

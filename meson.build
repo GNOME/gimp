@@ -1371,7 +1371,7 @@ if xmllint.found()
   )
 endif
 
-if python2.found()
+if have_python
   # TODO this python script is waiting for autotools directory/files structure
   custom_target('check-defs',
     input : [ ],
