@@ -1240,7 +1240,7 @@ gimp_print_stack_trace (const gchar *prog_name,
            * In some cases, this is necessary, especially during
            * segfault-type crashes.
            */
-          backtrace_symbols_fd (bt_buf, n_symbols, fileno (fd));
+          backtrace_symbols_fd (bt_buf, n_symbols, fileno ((FILE *) fd));
         }
       stack_printed = (n_symbols > 0);
     }
