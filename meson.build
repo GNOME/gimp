@@ -922,9 +922,9 @@ warning_cflags = [
 
   # You can uncomment this to debug with less warning outputs
   # '-Wno-deprecated-declarations',
+  '-Wno-strict-prototypes',
 
   '-Werror=implicit-function-declaration',
-  '-Werror=strict-prototypes',
 ]
 add_project_arguments(cc .get_supported_arguments(warning_cflags), language: 'c')
 add_project_arguments(cxx.get_supported_arguments(warning_cflags), language: 'cpp')
