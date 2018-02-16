@@ -695,12 +695,11 @@ if have_python
   python2 = find_program('python2')
 
   libpython2= dependency('python2',       version: '>=2.5.0')
-  pygobject = dependency('pygobject-2.0', version: '>=2.10.4')
-  pygtk2    = dependency('pygtk-2.0',     version: '>=2.10.4')
-  pycairo   = dependency('pycairo',       version: '>=1.0.2')
+  py2gobject= dependency('pygobject-3.0', version: '>=2.10.4')
+  py2cairo  = dependency('pycairo',       version: '>=1.0.2')
 
-  pygobjectcodegen = find_program('pygobject-codegen-2.0')
-  pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
+  # pygobjectcodegen = find_program('pygobject-codegen-2.0')
+  # pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
 endif
 
 

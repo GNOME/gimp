@@ -3,21 +3,21 @@ if have_python
 subdir('doc')
 subdir('plug-ins')
 
-pwd = meson.current_source_dir()
-pygtk_generator = generator(pygobjectcodegen,
-  arguments: [
-      '--override', join_paths(pwd, '@BASENAME@.override'),
-      '--register', join_paths(pygtk_defsdir, 'gdk-types.defs'),
-      '--register', join_paths(pygtk_defsdir, 'gtk-types.defs'),
-      '--register', join_paths(pwd, 'gimp-types.defs'),
-      '--register', join_paths(pwd, 'gimpcolor-types.defs'),
-      '--register', join_paths(pwd, 'gimpenums-types.defs'),
-      '--prefix', '@BASENAME@',
-      '@INPUT@',
-  ],
-  output: '@BASENAME@.c',
-  capture: true,
-)
+# pwd = meson.current_source_dir()
+# pygtk_generator = generator(pygobjectcodegen,
+#   arguments: [
+#       '--override', join_paths(pwd, '@BASENAME@.override'),
+#       '--register', join_paths(pygtk_defsdir, 'gdk-types.defs'),
+#       '--register', join_paths(pygtk_defsdir, 'gtk-types.defs'),
+#       '--register', join_paths(pwd, 'gimp-types.defs'),
+#       '--register', join_paths(pwd, 'gimpcolor-types.defs'),
+#       '--register', join_paths(pwd, 'gimpenums-types.defs'),
+#       '--prefix', '@BASENAME@',
+#       '@INPUT@',
+#   ],
+#   output: '@BASENAME@.c',
+#   capture: true,
+# )
 
 
 python_so_libs = [
@@ -33,7 +33,11 @@ python_so_libs = [
       'pygimp-tile.c',
       'pygimp-vectors.c',
     ],
-    [ pycairo, cairo, gtk3, ],
+    [
+      py2cairo,
+      cairo,
+      gtk3,
+    ],
     [
       libgimp,
       libgimpbase,
@@ -42,15 +46,27 @@ python_so_libs = [
     ],
   ],
   [ '_gimpenums',
-    [ 'gimpenumsmodule.c', ],
-    [ gobject, cairo, gtk3, ],
+    [
+      'gimpenumsmodule.c',
+    ],
+    [
+      gobject,
+      cairo,
+      gtk3,
+    ],
     [
       libgimp,libgimpbase
     ],
   ],
   [ '_gimpui',
-    [ 'gimpuimodule.c',    pygtk_generator.process('gimpui.defs'), ],
-    [ pygtk2, pycairo, gtk3, ],
+    [
+      'gimpuimodule.c',
+      # pygtk_generator.process('gimpui.defs'),
+    ],
+    [
+      py2cairo,
+      gtk3,
+    ],
     [
       libgimp,
       libgimpbase,
@@ -61,14 +77,26 @@ python_so_libs = [
     ],
   ],
   [ 'gimpcolor',
-    [ 'gimpcolormodule.c', 'pygimp-colors.c', ],
-    [cairo],
-    [ libgimpcolor, ],
+    [
+      'gimpcolormodule.c',
+      'pygimp-colors.c',
+    ],
+    [
+      cairo
+    ],
+    [
+      libgimpcolor,
+    ],
   ],
   [ 'gimpthumb',
-    [ 'gimpthumbmodule.c', pygtk_generator.process('gimpthumb.defs'), ],
+    [
+      'gimpthumbmodule.c',
+      # pygtk_generator.process('gimpthumb.defs'),
+    ],
     [],
-    [ libgimpthumb, ],
+    [
+      libgimpthumb,
+    ],
   ],
 ]
 
@@ -77,7 +105,7 @@ foreach pylib : python_so_libs
     pylib[1],
     include_directories: [ rootInclude, ],
     dependencies: pylib[2] + [
-      libpython2, pygobject,
+      libpython2, py2gobject,
       gdk_pixbuf, gegl,
     ],
     link_with: pylib[3],
