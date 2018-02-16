@@ -557,11 +557,7 @@ gimp_sysconf_directory (void)
                                      GIMP_SYSCONF_VERSION,
                                      NULL);
 
-<<<<<<< HEAD
-      gimp_sysconf_dir = gimp_env_get_dir ("GIMP3_SYSCONFDIR", SYSCONFDIR, tmp);
-=======
-      gimp_sysconf_dir = gimp_env_get_dir ("GIMP2_SYSCONFDIR", GIMPSYSCONFDIR, tmp);
->>>>>>> meson
+      gimp_sysconf_dir = gimp_env_get_dir ("GIMP3_SYSCONFDIR", GIMPSYSCONFDIR, tmp);
       g_free (tmp);
     }
 
