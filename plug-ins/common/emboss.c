@@ -355,7 +355,7 @@ emboss (GimpDrawable *drawable,
     {
       if (! gimp_drawable_mask_intersect (drawable->drawable_id,
                                           &x1, &y1, &width, &height))
-	return;
+        return;
 
       /* expand the bounds a little */
       x1 = MAX (0, x1 - evals.depth);
