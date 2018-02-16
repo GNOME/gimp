@@ -515,8 +515,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               /* Other cool things to be added:
                * %r = xresolution
                * %R = yresolution
-               * %ø = image's fractal dimension
-               * %þ = the answer to everything - (implemented)
+               * %Ã¸ = image's fractal dimension
+               * %Ã¾ = the answer to everything - (implemented)
                */
 
             default:

@@ -47,8 +47,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef MESON_BUILD
+#include "pagecurl-icons.h"
+#else
 #include "pagecurl-icons.c"
-
+#endif
 
 #define PLUG_IN_PROC    "plug-in-pagecurl"
 #define PLUG_IN_BINARY  "pagecurl"
