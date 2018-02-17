@@ -121,16 +121,12 @@ action_search_history_and_actions (GimpSearchPopup *popup,
 
           name = gtk_action_get_name (action);
 
-          /* The action search dialog don't show any non-historized
-           * action, with the exception of "plug-in-repeat/reshow"
-           * actions.
-           * Logging them is meaningless (they may mean a different
-           * actual action each time), but they are still interesting
-           * as a search result.
+          /* The action search dialog doesn't show any non-historized
+           * actions, with a few exceptions.  See the difference between
+           * gimp_action_history_is_blacklisted_action() and
+           * gimp_action_history_is_excluded_action().
            */
-          if (gimp_action_history_excluded_action (name) &&
-              g_strcmp0 (name, "filters-repeat") != 0    &&
-              g_strcmp0 (name, "filters-reshow") != 0)
+          if (gimp_action_history_is_blacklisted_action (name))
             continue;
 
           if (! gtk_action_is_sensitive (action) &&

@@ -138,7 +138,7 @@ gimp_action_history_init (Gimp *gimp)
                   break;
                 }
 
-              if (! gimp_action_history_excluded_action (action_name))
+              if (! gimp_action_history_is_excluded_action (action_name))
                 {
                   history.items =
                     g_list_insert_sorted (history.items,
@@ -287,12 +287,13 @@ gimp_action_history_search (Gimp                *gimp,
   return g_list_reverse (result);
 }
 
-/* gimp_action_history_excluded_action:
+/* gimp_action_history_is_blacklisted_action:
  *
- * Returns whether an action should be excluded from history.
+ * Returns whether an action should be excluded from both
+ * history and search results.
  */
 gboolean
-gimp_action_history_excluded_action (const gchar *action_name)
+gimp_action_history_is_blacklisted_action (const gchar *action_name)
 {
   if (gimp_action_is_gui_blacklisted (action_name))
     return TRUE;
@@ -301,9 +302,25 @@ gimp_action_history_excluded_action (const gchar *action_name)
           g_str_has_suffix (action_name, "-accel")          ||
           g_str_has_prefix (action_name, "context-")        ||
           g_str_has_prefix (action_name, "filters-recent-") ||
-          g_strcmp0 (action_name, "filters-repeat") == 0    ||
-          g_strcmp0 (action_name, "filters-reshow") == 0    ||
           g_strcmp0 (action_name, "dialogs-action-search") == 0);
+}
+
+/* gimp_action_history_is_excluded_action:
+ *
+ * Returns whether an action should be excluded from history.
+ *
+ * Some actions should not be logged in the history, but should
+ * otherwise appear in the search results, since they correspond
+ * to different functions at different times.
+ */
+gboolean
+gimp_action_history_is_excluded_action (const gchar *action_name)
+{
+  if (gimp_action_history_is_blacklisted_action (action_name))
+    return TRUE;
+
+  return (g_strcmp0 (action_name, "filters-repeat") == 0 ||
+          g_strcmp0 (action_name, "filters-reshow") == 0);
 }
 
 /* Callback run on the `activate` signal of an action.
@@ -320,7 +337,7 @@ gimp_action_history_activate_callback (GtkAction *action,
   action_name = gtk_action_get_name (action);
 
   /* Some specific actions are of no log interest. */
-  if (gimp_action_history_excluded_action (action_name))
+  if (gimp_action_history_is_excluded_action (action_name))
     return;
 
   for (actions = history.items; actions; actions = g_list_next (actions))

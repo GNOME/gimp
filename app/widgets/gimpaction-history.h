@@ -28,19 +28,20 @@ typedef gboolean (* GimpActionMatchFunc) (GtkAction   *action,
                                           Gimp        *gimp);
 
 
-void       gimp_action_history_init              (Gimp                *gimp);
-void       gimp_action_history_exit              (Gimp                *gimp);
+void       gimp_action_history_init                  (Gimp                *gimp);
+void       gimp_action_history_exit                  (Gimp                *gimp);
 
-void       gimp_action_history_clear             (Gimp                *gimp);
+void       gimp_action_history_clear                 (Gimp                *gimp);
 
-GList    * gimp_action_history_search            (Gimp                *gimp,
-                                                  GimpActionMatchFunc  match_func,
-                                                  const gchar         *keyword);
+GList    * gimp_action_history_search                (Gimp                *gimp,
+                                                      GimpActionMatchFunc  match_func,
+                                                      const gchar         *keyword);
 
-gboolean   gimp_action_history_excluded_action   (const gchar         *action_name);
+gboolean   gimp_action_history_is_blacklisted_action (const gchar         *action_name);
+gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
 
-void       gimp_action_history_activate_callback (GtkAction           *action,
-                                                  gpointer             user_data);
+void       gimp_action_history_activate_callback     (GtkAction           *action,
+                                                      gpointer             user_data);
 
 
 #endif  /* __GIMP_ACTION_HISTORY_H__ */
