@@ -311,7 +311,9 @@ gimp_action_history_is_blacklisted_action (const gchar *action_name)
  *
  * Some actions should not be logged in the history, but should
  * otherwise appear in the search results, since they correspond
- * to different functions at different times.
+ * to different functions at different times, or since their
+ * label may interfere with more relevant, but less frequent,
+ * actions.
  */
 gboolean
 gimp_action_history_is_excluded_action (const gchar *action_name)
@@ -319,7 +321,11 @@ gimp_action_history_is_excluded_action (const gchar *action_name)
   if (gimp_action_history_is_blacklisted_action (action_name))
     return TRUE;
 
-  return (g_strcmp0 (action_name, "filters-repeat") == 0 ||
+  return (g_strcmp0 (action_name, "edit-undo") == 0        ||
+          g_strcmp0 (action_name, "edit-strong-undo") == 0 ||
+          g_strcmp0 (action_name, "edit-redo") == 0        ||
+          g_strcmp0 (action_name, "edit-strong-redo") == 0 ||
+          g_strcmp0 (action_name, "filters-repeat") == 0   ||
           g_strcmp0 (action_name, "filters-reshow") == 0);
 }
 
