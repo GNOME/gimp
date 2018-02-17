@@ -41,7 +41,7 @@
 
 #define GIMP_ACTION_HISTORY_FILENAME "action-history"
 
-/* History items are stored in a queue, ordered by frequency (number of times
+/* History items are stored in a queue, sorted by frequency (number of times
  * the action was activated), from most frequent to least frequent.  Each item,
  * in addition to the corresponding action name and its index in the queue,
  * stores a "delta": the difference in frequency between it, and the next item
@@ -52,18 +52,16 @@
  * and the maximal delta of each subsequent item is the maximal delta of the
  * previous item, times MAX_DELTA_FALLOFF.
  *
- * When an action is activated, its frequency rises by 1, meaning that the
+ * When an action is activated, its frequency grows by 1, meaning that the
  * delta of the corresponding item is incremented (if below the maximum), and
  * the delta of the previous item is decremented (if above 0).  If the delta of
- * the previous item is already 0, the current item is moved before it in the
- * queue.  To speed up the climbing of items in the queue, instead of moving
- * the item just one position up in the queue, we count the number of items, n,
- * before the current item having a delta of 0, and move the item
- * 'ceil (n * PLATEAU_SPEED)' places up.
+ * the previous item is already 0, then, before the above, the current and
+ * previous items swap frequencies, and the current item is moved up the queue
+ * until the preceding item's frequency is greater than 0 (or until it reaches
+ * the front of the queue).
  */
-#define MAX_DELTA         10
-#define MAX_DELTA_FALLOFF 0.9
-#define PLATEAU_SPEED     0.5
+#define MAX_DELTA         5
+#define MAX_DELTA_FALLOFF 0.95
 
 
 enum
@@ -361,6 +359,9 @@ gimp_action_history_activate_callback (GtkAction *action,
   GList                 *link;
   GimpActionHistoryItem *item;
 
+  if (config->action_history_size == 0)
+    return;
+
   action_name = gtk_action_get_name (action);
 
   /* Some specific actions are of no log interest. */
@@ -371,113 +372,95 @@ gimp_action_history_activate_callback (GtkAction *action,
 
   /* Remove excessive items. */
   while (g_queue_get_length (history.items) > config->action_history_size)
-    gimp_action_history_item_free (g_queue_pop_tail (history.items));
+    {
+      item = g_queue_pop_tail (history.items);
+
+      g_hash_table_remove (history.links, item->action_name);
+
+      gimp_action_history_item_free (item);
+    }
 
   /* Look up the action in the history. */
   link = g_hash_table_lookup (history.links, action_name);
 
-  /* Update the history, according to the logic described
-   * in the comment at the beginning of the file.
+  /* If the action is not in the history, insert it
+   * at the back of the hisory queue, possibly
+   * replacing the last item.
    */
-  if (link)
+  if (! link)
     {
-      item = link->data;
-
-      if (item->delta < gimp_action_history_item_max_delta (item->index))
-        item->delta++;
-
-      if (item->index > 0)
+      if (g_queue_get_length (history.items) == config->action_history_size)
         {
-          GList                 *prev_link = g_list_previous (link);
-          GimpActionHistoryItem *prev_item = prev_link->data;
+          item = g_queue_pop_tail (history.items);
 
-          if (prev_item->delta > 0)
-            {
-              prev_item->delta--;
-            }
-          else
-            {
-              gint n = 1;
+          g_hash_table_remove (history.links, item->action_name);
 
-              prev_item->delta = item->delta;
-              item->delta      = 0;
-
-              for (prev_link = g_list_previous (prev_link);
-                   prev_link;
-                   prev_link = g_list_previous (prev_link))
-                {
-                  prev_item = prev_link->data;
-
-                  if (prev_item->delta > 0)
-                    break;
-
-                  n++;
-                }
-
-              prev_link = link;
-
-              for (n = ceil (n * PLATEAU_SPEED); n; n--)
-                {
-                  prev_link = g_list_previous (prev_link);
-                  prev_item = prev_link->data;
-
-                  prev_item->index++;
-                  item->index--;
-                }
-
-              g_queue_unlink (history.items, link);
-
-              link->next = prev_link;
-
-              if (prev_link->prev)
-                {
-                  link->prev       = prev_link->prev;
-                  link->prev->next = link;
-                }
-              else
-                {
-                  history.items->head = link;
-                }
-
-              prev_link->prev = link;
-
-              history.items->length++;
-            }
+          gimp_action_history_item_free (item);
         }
+
+      item = gimp_action_history_item_new (
+        action_name,
+        g_queue_get_length (history.items),
+        0);
+
+      g_queue_push_tail (history.items, item);
+      link = g_queue_peek_tail_link (history.items);
+
+      g_hash_table_insert (history.links, item->action_name, link);
     }
   else
     {
-      item = g_queue_peek_tail (history.items);
+      item = link->data;
+    }
 
-      if (item)
+  /* Update the history, according to the logic described
+   * in the comment at the beginning of the file.
+   */
+  if (item->index > 0)
+    {
+      GList                 *prev_link = g_list_previous (link);
+      GimpActionHistoryItem *prev_item = prev_link->data;
+
+      if (prev_item->delta == 0)
         {
-          if (item->delta > 0)
+          for (; prev_link; prev_link = g_list_previous (prev_link))
             {
-              item->delta--;
+              prev_item = prev_link->data;
+
+              if (prev_item->delta > 0)
+                break;
+
+              prev_item->index++;
+              item->index--;
+
+              prev_item->delta = item->delta;
+              item->delta      = 0;
+            }
+
+          g_queue_unlink (history.items, link);
+
+          if (prev_link)
+            {
+              link->prev = prev_link;
+              link->next = prev_link->next;
+
+              link->prev->next = link;
+              link->next->prev = link;
+
+              history.items->length++;
             }
           else
             {
-              g_hash_table_remove (history.links, item->action_name);
-
-              g_free (item->action_name);
-              item->action_name = g_strdup (action_name);
-
-              g_hash_table_insert (history.links,
-                                   item->action_name,
-                                   g_queue_peek_tail_link (history.items));
+              g_queue_push_head_link (history.items, link);
             }
         }
-      else if (config->action_history_size > 0)
-        {
-          item = gimp_action_history_item_new (action_name, 0, 0);
 
-          g_queue_push_tail (history.items, item);
-
-          g_hash_table_insert (history.links,
-                               item->action_name,
-                               g_queue_peek_tail_link (history.items));
-        }
+      if (item->index > 0)
+        prev_item->delta--;
     }
+
+  if (item->delta < gimp_action_history_item_max_delta (item->index))
+    item->delta++;
 }
 
 
