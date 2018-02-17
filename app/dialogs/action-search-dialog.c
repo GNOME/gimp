@@ -192,26 +192,43 @@ action_search_match_keyword (GtkAction   *action,
   label_tokens = g_str_tokenize_and_fold (tmp, gimp->config->language, &label_alternates);
   g_free (tmp);
 
-  /* If keyword is two characters, then match them with first letters
-   * of first and second word in the labels.  For instance 'gb' will
-   * list 'Gaussian Blur...'
+  /* Try to match the keyword as an initialism of the action's label.
+   * For instance 'gb' will match 'Gaussian Blur...'
    */
-  if (g_strv_length (key_tokens) == 1 && g_utf8_strlen (key_tokens[0], -1) == 2)
+  if (g_strv_length (key_tokens) == 1)
     {
-      gunichar c1 = g_utf8_get_char (key_tokens[0]);
-      gunichar c2 = g_utf8_get_char (g_utf8_find_next_char (key_tokens[0], NULL));
+      gchar **search_tokens[] = {label_tokens, label_alternates};
+      gint    i;
 
-      if ((g_strv_length   (label_tokens) > 1          &&
-           g_utf8_get_char (label_tokens[0]) == c1     &&
-           g_utf8_get_char (label_tokens[1]) == c2)    ||
-          (g_strv_length   (label_alternates) > 1      &&
-           g_utf8_get_char (label_alternates[0]) == c1 &&
-           g_utf8_get_char (label_alternates[1]) == c2))
+      for (i = 0; i < G_N_ELEMENTS (search_tokens); i++)
         {
-          matched = TRUE;
-          if (section)
+          const gchar  *key_token;
+          gchar       **label_tokens;
+
+          for (key_token = key_tokens[0], label_tokens = search_tokens[i];
+               *key_token && *label_tokens;
+               key_token = g_utf8_find_next_char (key_token, NULL), label_tokens++)
             {
-              *section = 1;
+              gunichar key_char   = g_utf8_get_char (key_token);
+              gunichar label_char = g_utf8_get_char (*label_tokens);
+
+              if (key_char != label_char)
+                break;
+            }
+
+          if (! *key_token)
+            {
+              matched = TRUE;
+
+              if (section)
+                {
+                  /* full match is better than a partial match */
+                  *section = ! *label_tokens ? 1 : 4;
+                }
+              else
+                {
+                  break;
+                }
             }
         }
     }
@@ -324,7 +341,7 @@ one_tooltip_matched:
                * But if the match is mixed on tooltip and label (there are
                * no match for *only* label or *only* tooltip), this is
                * section 5. */
-              *section = mixed_match ? 5 : 4;
+              *section = mixed_match ? 6 : 5;
             }
         }
       g_strfreev (tooltip_tokens);
