@@ -326,7 +326,7 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "tools-mypaint-brush-hardness-",
       "tools-foreground-select-brush-size-",
       "tools-transform-preview-opacity-",
-      "tools-warp-effect-size-"
+      "tools-warp-effect-size-",
       "tools-warp-effect-hardness-"
     };
 
