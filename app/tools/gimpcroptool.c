@@ -45,6 +45,7 @@
 
 
 static void      gimp_crop_tool_constructed                (GObject              *object);
+static void      gimp_crop_tool_dispose                    (GObject              *object);
 
 static void      gimp_crop_tool_control                    (GimpTool             *tool,
                                                             GimpToolAction        action,
@@ -129,6 +130,7 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->constructed  = gimp_crop_tool_constructed;
+  object_class->dispose      = gimp_crop_tool_dispose;
 
   tool_class->control        = gimp_crop_tool_control;
   tool_class->button_press   = gimp_crop_tool_button_press;
@@ -180,6 +182,17 @@ gimp_crop_tool_constructed (GObject *object)
   gimp_crop_tool_image_changed (crop_tool,
                                 gimp_context_get_image (context),
                                 context);
+}
+
+static void
+gimp_crop_tool_dispose (GObject *object)
+{
+  GimpCropTool *crop_tool = GIMP_CROP_TOOL (object);
+
+  /* Clean up current_image and current_layer. */
+  gimp_crop_tool_image_changed (crop_tool, NULL, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -614,12 +627,18 @@ gimp_crop_tool_image_changed (GimpCropTool *crop_tool,
       g_signal_handlers_disconnect_by_func (crop_tool->current_image,
                                             gimp_crop_tool_image_active_layer_changed,
                                             NULL);
+
+      g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_image),
+                                    (gpointer) &crop_tool->current_image);
     }
 
   crop_tool->current_image = image;
 
   if (crop_tool->current_image)
     {
+      g_object_add_weak_pointer (G_OBJECT (crop_tool->current_image),
+                                 (gpointer) &crop_tool->current_image);
+
       g_signal_connect_object (crop_tool->current_image, "size-changed",
                                G_CALLBACK (gimp_crop_tool_image_size_changed),
                                crop_tool,
@@ -652,6 +671,9 @@ gimp_crop_tool_image_active_layer_changed (GimpCropTool *crop_tool)
       g_signal_handlers_disconnect_by_func (crop_tool->current_layer,
                                             gimp_crop_tool_layer_size_changed,
                                             NULL);
+
+      g_object_remove_weak_pointer (G_OBJECT (crop_tool->current_layer),
+                                    (gpointer) &crop_tool->current_layer);
     }
 
   if (crop_tool->current_image)
@@ -666,6 +688,9 @@ gimp_crop_tool_image_active_layer_changed (GimpCropTool *crop_tool)
 
   if (crop_tool->current_layer)
     {
+      g_object_add_weak_pointer (G_OBJECT (crop_tool->current_layer),
+                                 (gpointer) &crop_tool->current_layer);
+
       g_signal_connect_object (crop_tool->current_layer, "size-changed",
                                G_CALLBACK (gimp_crop_tool_layer_size_changed),
                                crop_tool,
