@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 17:04+0100\n"
-"PO-Revision-Date: 2018-01-21 17:05+0100\n"
+"POT-Creation-Date: 2018-02-18 21:40+0100\n"
+"PO-Revision-Date: 2018-02-18 21:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -455,7 +455,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1816 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1043,8 +1043,8 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1584
+#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1608
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -2291,8 +2291,8 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1555
+#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -3082,10 +3082,10 @@ msgstr "PDF"
 #.
 #: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
-"Dokument PDF „%1$s” ma jedną stronę. %2$d. strona jest spoza zakresu."
+"Dokument PDF „%1$s” ma %3$d stronę. %2$d. strona jest spoza zakresu."
 msgstr[1] ""
 "Dokument PDF „%1$s” ma %3$d strony. %2$d. strona jest spoza zakresu."
 msgstr[2] "Dokument PDF „%1$s” ma %3$d stron. %2$d. strona jest spoza zakresu."
@@ -7251,32 +7251,32 @@ msgstr "Nieobsługiwana lub nieprawidłowa szerokość maski warstwy: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary maski warstwy: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1791
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nieobsługiwany tryb kompresji: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1887
+#: ../plug-ins/file-psd/psd-load.c:1892
 msgid "Extra"
 msgstr "Dodatkowe"
 
-#: ../plug-ins/file-psd/psd-load.c:2066
+#: ../plug-ins/file-psd/psd-load.c:2071
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary kanału"
 
-#: ../plug-ins/file-psd/psd-load.c:2135
+#: ../plug-ins/file-psd/psd-load.c:2140
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Dekompresja danych się nie powiodła"
 
-#: ../plug-ins/file-psd/psd-save.c:462
+#: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1548
+#: ../plug-ins/file-psd/psd-save.c:1572
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7285,7 +7285,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1569
+#: ../plug-ins/file-psd/psd-save.c:1593
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
