@@ -501,7 +501,7 @@ run (const gchar      *name,
                                                 * second is out-of-range page number, third is
                                                 * number of pages. Specify order as in English if needed.
                                                 */
-                                               ngettext ("PDF document '%1$s' has a single page. Page %2$d is out of range.",
+                                               ngettext ("PDF document '%1$s' has %3$d page. Page %2$d is out of range.",
                                                          "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
                                                          doc_n_pages),
                                                param[1].data.d_string,
