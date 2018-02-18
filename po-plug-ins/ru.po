@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Plug-Ins 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-17 12:18+0300\n"
-"PO-Revision-Date: 2018-02-17 12:23+0300\n"
+"POT-Creation-Date: 2018-02-18 13:27+0300\n"
+"PO-Revision-Date: 2018-02-18 14:29+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -317,7 +317,7 @@ msgstr "Перемотать назад"
 
 #: ../plug-ins/common/animation-play.c:604
 msgid "Reload the image"
-msgstr ""
+msgstr "Перезагрузить изображение"
 
 #: ../plug-ins/common/animation-play.c:622
 msgid "Faster"
@@ -532,9 +532,8 @@ msgid "Simulate a cartoon by enhancing edges"
 msgstr "Создать эффект мультяшного изображения путем обводки контуров"
 
 #: ../plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon (legacy)..."
-msgstr "_Комикс..."
+msgstr "_Комикс (устар.)…"
 
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
 #: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
@@ -560,9 +559,8 @@ msgid "Create a checkerboard pattern"
 msgstr "Создать текстуру в виде шахматной доски"
 
 #: ../plug-ins/common/checkerboard.c:94
-#, fuzzy
 msgid "_Checkerboard (legacy)..."
-msgstr "_Шахматная доска..."
+msgstr "_Шахматная доска (устар.)…"
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
@@ -1160,9 +1158,8 @@ msgid "Stretch color saturation to cover maximum possible range"
 msgstr "Предельно увеличить насыщенность цвета"
 
 #: ../plug-ins/common/color-enhance.c:80
-#, fuzzy
 msgid "_Color Enhance (legacy)"
-msgstr "У_силить цвета"
+msgstr "У_силить цвета (устар.)"
 
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
@@ -2060,9 +2057,8 @@ msgid "Edge detection with control of edge thickness"
 msgstr "Обводит контуры изображения с учетом толщины линий"
 
 #: ../plug-ins/common/edge-dog.c:142
-#, fuzzy
 msgid "_Difference of Gaussians (legacy)..."
-msgstr "_Разница по Гауссу..."
+msgstr "_Разница по Гауссу (устар.)…"
 
 #: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
@@ -2089,9 +2085,8 @@ msgid "Simulate the glowing boundary of a neon light"
 msgstr "Создать светящийся неоновый контур"
 
 #: ../plug-ins/common/edge-neon.c:140
-#, fuzzy
 msgid "_Neon (legacy)..."
-msgstr "_Неон..."
+msgstr "_Неон (устар.)…"
 
 #: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
@@ -2110,9 +2105,8 @@ msgid "Simulate an image created by embossing"
 msgstr "Придать изображению вид барельефа"
 
 #: ../plug-ins/common/emboss.c:131
-#, fuzzy
 msgid "_Emboss (legacy)..."
-msgstr "_Барельеф..."
+msgstr "_Барельеф (устар.)…"
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -2468,9 +2462,8 @@ msgid "Spacing:"
 msgstr "Интервал: "
 
 #: ../plug-ins/common/file-gegl.c:73
-#, fuzzy
 msgid "Radiance RGBE"
-msgstr "Радианы"
+msgstr "Radiance RGBE"
 
 #: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
@@ -2549,11 +2542,10 @@ msgstr ""
 "7-разрядном ASCII. Комментарий не сохранён."
 
 #: ../plug-ins/common/file-gif-save.c:838
-#, fuzzy
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Невозможно сохранить изображение в формате RGB. Преобразуйте его в "
+"Невозможно экспортировать изображение в формате RGB. Преобразуйте его в "
 "индексированный формат или в градации серого."
 
 #: ../plug-ins/common/file-gif-save.c:1035
@@ -2563,26 +2555,23 @@ msgstr ""
 "анимацией"
 
 #: ../plug-ins/common/file-gif-save.c:1084
-#, fuzzy
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Изображение, которое вы пытаетесь сохранить как GIF содержит слои, выходящие "
-"за действительные границы изображения."
+"Изображение содержит слои, выходящие за действительные границы изображения."
 
 #: ../plug-ins/common/file-gif-save.c:1090
 msgid "Cr_op"
-msgstr ""
+msgstr "О_брезать"
 
 #: ../plug-ins/common/file-gif-save.c:1101
-#, fuzzy
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
 msgstr ""
 "Это недопустимо в GIF. Вы можете или обрезать все слои по границе "
-"изображения, или отменить это сохранение."
+"изображения, или отменить экспорт."
 
 #: ../plug-ins/common/file-gif-save.c:1235
 msgid "GIF"
@@ -3067,9 +3056,8 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Необычный вид файла PCX. Выход."
 
 #: ../plug-ins/common/file-pcx.c:809 ../plug-ins/common/file-pnm.c:1242
-#, fuzzy
 msgid "Cannot export images with alpha channel."
-msgstr "Невозможно сохранить изображения с альфа-каналом."
+msgstr "Невозможно экспортировать изображения с альфа-каналом."
 
 #: ../plug-ins/common/file-pcx.c:827
 #, c-format
@@ -3111,11 +3099,17 @@ msgstr "Portable Document Format"
 #.
 #: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
+"В PDF-документе '%1$s' доступна %3$d страница. Страница %2$d находится вне "
+"диапазона."
 msgstr[1] ""
+"В PDF-документе '%1$s' доступно %3$d страницы. Страница %2$d находится вне "
+"диапазона."
 msgstr[2] ""
+"В PDF-документе '%1$s' доступно %3$d страниц. Страница %2$d находится вне "
+"диапазона."
 
 #: ../plug-ins/common/file-pdf-load.c:679
 #: ../plug-ins/common/file-pdf-load.c:749
@@ -3125,7 +3119,7 @@ msgstr "Не удалось загрузить '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:694
 msgid "PDF is password protected, please input the password:"
-msgstr ""
+msgstr "Файл PDF закрыт на пароль, введите его:"
 
 #: ../plug-ins/common/file-pdf-load.c:704
 msgid "Encrypted PDF"
@@ -3133,7 +3127,7 @@ msgstr "Зашифрованный PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
-msgstr ""
+msgstr "Неправильный пароль! Введите пароль заново:"
 
 #: ../plug-ins/common/file-pdf-load.c:1077
 #, c-format
@@ -3157,15 +3151,15 @@ msgstr "_Импортировать"
 
 #: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
-msgstr ""
+msgstr "Ошиюка при получении количества страниц из файла PDF."
 
 #: ../plug-ins/common/file-pdf-load.c:1352
 msgid "_Width (pixels):"
-msgstr "_Ширина (пикселов):"
+msgstr "_Ширина (пиксели):"
 
 #: ../plug-ins/common/file-pdf-load.c:1353
 msgid "_Height (pixels):"
-msgstr "_Высота (пикселов):"
+msgstr "_Высота (пиксели):"
 
 #: ../plug-ins/common/file-pdf-load.c:1355
 msgid "_Resolution:"
@@ -3181,7 +3175,7 @@ msgstr "_Использовать сглаживание"
 #: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
-msgstr "точек растра/%a"
+msgstr "пикселей/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:370
 msgid "_Create multipage PDF..."
@@ -3264,7 +3258,7 @@ msgstr "Для сохранения файла нужно добавить хо�
 #: ../plug-ins/common/file-pdf-save.c:1372
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
-msgstr ""
+msgstr "Невозможно обработать размер (ширину или высоту) изображения."
 
 #: ../plug-ins/common/file-pix.c:143 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -4453,15 +4447,16 @@ msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Ширина и/или высота кадра '%s' равны нулю!"
 
 #: ../plug-ins/common/file-xmc.c:1602
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Не удалось сохранить курсор, потому что горячая точка не находится в '%s'.\n"
-"Попробуйте изменить положение горячей точки, геометрию слоя или сохраните "
-"без автокадрирования."
+"Не удалось экспортировать курсор, потому что горячая точка не находится в "
+"кадре '%s'.\n"
+"Попробуйте изменить положение горячей точки, геометрию слоя или "
+"экспортируйте без автокадрирования."
 
 #: ../plug-ins/common/file-xmc.c:1765
 #, c-format
@@ -4513,8 +4508,8 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
-"Это расширение не может иметь дело с курсором, имеющим более %i разных "
-"номинальных размеров."
+"Этот плагин обрабатывает только курсоры, где более %i разных номинальных "
+"размеров."
 
 #: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
 msgid "X PixMap image"
@@ -4566,6 +4561,8 @@ msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
+"'%s':\n"
+"Количество записей в цветовой карте меньше количества цветов"
 
 #: ../plug-ins/common/file-xwd.c:518
 msgid "Can't read color entries"
@@ -4582,9 +4579,8 @@ msgstr ""
 "В настоящее время это не поддерживается."
 
 #: ../plug-ins/common/file-xwd.c:636
-#, fuzzy
 msgid "Cannot export images with alpha channels."
-msgstr "Невозможно сохранить изображения с альфа-каналами."
+msgstr "Невозможно экспортировать изображения с альфа-каналом."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4910,9 +4906,8 @@ msgid "Transform image with the Mandelbrot Fractal"
 msgstr "Преобразует изображение с помощью фрактала Мандельброта"
 
 #: ../plug-ins/common/fractal-trace.c:121
-#, fuzzy
 msgid "_Fractal Trace (legacy)..."
-msgstr "_Фрактальный след..."
+msgstr "_Фрактальный след (устар.)…"
 
 #: ../plug-ins/common/fractal-trace.c:471
 #: ../plug-ins/common/fractal-trace.c:707
@@ -4993,9 +4988,8 @@ msgid "Draw a grid on the image"
 msgstr "Рисует сетку поверх изображения"
 
 #: ../plug-ins/common/grid.c:148
-#, fuzzy
 msgid "_Grid (legacy)..."
-msgstr "_Сетка..."
+msgstr "_Сетка (устар.)…"
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
@@ -5414,9 +5408,8 @@ msgid "Smear colors to simulate an oil painting"
 msgstr "Размыть цвета так, чтобы создать эффект рисования маслом"
 
 #: ../plug-ins/common/oilify.c:125
-#, fuzzy
 msgid "Oili_fy (legacy)..."
-msgstr "_Масляная краска..."
+msgstr "_Масляная краска (устар.)…"
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
@@ -5461,9 +5454,8 @@ msgstr ""
 "Создать эффект искажения цвета, имитирующий работу копировальной машины"
 
 #: ../plug-ins/common/photocopy.c:158
-#, fuzzy
 msgid "_Photocopy (legacy)..."
-msgstr "_Фотокопия..."
+msgstr "_Фотокопия (устар.)…"
 
 #: ../plug-ins/common/photocopy.c:836
 msgid "Photocopy"
@@ -5788,9 +5780,8 @@ msgid "Simulate glow by making highlights intense and fuzzy"
 msgstr "Создать свечение, повышая яркость на светлых участках и размывая их"
 
 #: ../plug-ins/common/softglow.c:139
-#, fuzzy
 msgid "_Softglow (legacy)..."
-msgstr "_Рассеянный свет..."
+msgstr "_Рассеянный свет (устар.)…"
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
@@ -6367,9 +6358,8 @@ msgid "The most widely useful method for sharpening an image"
 msgstr "Наиболее удобный метод для повышения резкости изображения"
 
 #: ../plug-ins/common/unsharp-mask.c:142
-#, fuzzy
 msgid "_Unsharp Mask (legacy)..."
-msgstr "_Нерезкая маска..."
+msgstr "_Нерезкая маска (устар.)…"
 
 #: ../plug-ins/common/unsharp-mask.c:694
 msgid "Merging"
@@ -6792,10 +6782,9 @@ msgid "The bitmap ends unexpectedly."
 msgstr "Данные изображения неожиданно закончились."
 
 #: ../plug-ins/file-bmp/bmp-save.c:182 ../plug-ins/file-bmp/bmp-save.c:215
-#, fuzzy
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
-"Невозможно сохранить полупрозрачное индексированное изображение в файл "
+"Невозможно экспортировать полупрозрачное индексированное изображение в файл "
 "формата BMP."
 
 #: ../plug-ins/file-bmp/bmp-save.c:184 ../plug-ins/file-bmp/bmp-save.c:217
@@ -6944,9 +6933,9 @@ msgid "Frame (%i)"
 msgstr "Кадр (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:714
-#, fuzzy
 msgid "Sorry, I can export only INDEXED and GRAY images."
-msgstr "Можно сохранить только индексированное или серое изображение."
+msgstr ""
+"Можно сохранить только индексированное изображение или градации серого."
 
 #: ../plug-ins/file-fli/fli-gimp.c:866
 msgid "GFLI 1.3 - Load framestack"
@@ -9410,7 +9399,7 @@ msgstr "Если задержка между кадрами не указана,
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "GIF supports hundredths of a second precision."
-msgstr ""
+msgstr "GIF поддерживает точность в сотые доли секунды."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Frame disposal where unspecified:"
@@ -9869,7 +9858,7 @@ msgstr "Адрес эл. почты"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
 msgid "Web Address"
-msgstr ""
+msgstr "Веб-адрес"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
 msgid "Property Release Identifier"
@@ -11956,15 +11945,15 @@ msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitised from a negative on film"
-msgstr ""
+msgstr "Оцифровано с негативной плёнки"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
 msgid "Digitised from a positive on film"
-msgstr ""
+msgstr "Оцифровано с позитивной плёнки"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
 msgid "Digitised from a print on non-transparent medium"
-msgstr ""
+msgstr "Оцифровано с отпечатка на непрозрачном носителе"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
 msgid "Created by software"
@@ -12357,9 +12346,8 @@ msgid "Delay"
 msgstr "Задержка"
 
 #: ../plug-ins/screenshot/screenshot.c:681
-#, fuzzy
 msgid "Selection delay: "
-msgstr "Выделенную часть"
+msgstr "Задержка для выбора:"
 
 #. translators: this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:700
@@ -12397,9 +12385,8 @@ msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:788
-#, fuzzy
 msgid "After the delay, the active window will be captured."
-msgstr "После задержки делается снимок"
+msgstr "После задержки будет сделан снимок активного окна."
 
 #: ../plug-ins/screenshot/screenshot.c:795
 msgid "Color Profile"

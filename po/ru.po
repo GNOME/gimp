@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-17 12:05+0300\n"
-"PO-Revision-Date: 2018-02-17 12:13+0300\n"
+"PO-Revision-Date: 2018-02-18 14:21+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -71,57 +71,58 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
-#, fuzzy
 msgid "On-canvas gradient editing"
-msgstr "Открыть редактор градиентов"
+msgstr "Редактирование градиентов на холсте"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Notification when an image is over/underexposed"
-msgstr ""
+msgstr "Уведомление о пере- и недоэкспонированности изображения"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-#, fuzzy
 msgid "Better and faster color management"
-msgstr "Обнулить параметры управления цветом"
+msgstr "Ускоренное и улучшенное управление цветом"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
-#, fuzzy
 msgid "Paste in place feature"
-msgstr "Вставить на место"
+msgstr "Вставка на место"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Many usability improvements"
-msgstr ""
+msgstr "Улучшения в юзабилити"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Manual can be displayed in the user's preferred language"
 msgstr ""
+"Руководство пользователя может быть показано на языке, выбранном "
+"пользователем"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Improvements for the Wavelet Decompose filter"
-msgstr ""
+msgstr "Улучшения в фильтре частотного разбора"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Improved compatibility with Photoshop .psd files"
-msgstr ""
+msgstr "Улучшенная поддержка файлов Adobe Photoshop"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "New support for password-protected PDF"
-msgstr ""
+msgstr "Поддержка файлов PDF, закрытых на пароль"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New support for HGT format (Digital Elevation Model data)"
-msgstr ""
+msgstr "Поддержка формата HGT (данные Digital Elevation Model)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
 msgstr ""
+"Подробности читайте здесь: https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
+"released/"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:1
 msgid "Extra files for GIMP"
@@ -4802,7 +4803,7 @@ msgstr "_Синус..."
 #: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
-msgstr ""
+msgstr "_Простой линейный итеративный кластеринг…"
 
 #: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
@@ -5686,6 +5687,9 @@ msgid ""
 "to assigning a built-in sRGB color profile. Better leave color management "
 "enabled."
 msgstr ""
+"Включено ли управление цветом для этого изображения. Если его отключить, это "
+"будет равносильно назначению профиля sRGB. Лучше отставить управление цветом "
+"включённым."
 
 #: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:444
 msgctxt "image-convert-action"
@@ -6069,7 +6073,7 @@ msgstr "Режим с_лоя"
 #: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr ""
+msgstr "Действие редактирования по умолчанию"
 
 #: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
@@ -7969,37 +7973,37 @@ msgstr "Повернуть на произвольный угол"
 #: ../app/actions/tools-actions.c:151
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
-msgstr "Аэрограф"
+msgstr "Аэрограф, частота: установить"
 
 #: ../app/actions/tools-actions.c:155
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
-msgstr ""
+msgstr "Аэрограф, частота: сделать минимальной"
 
 #: ../app/actions/tools-actions.c:159
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
-msgstr ""
+msgstr "Аэрограф, частота: сделать максимальной"
 
 #: ../app/actions/tools-actions.c:163
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
-msgstr ""
+msgstr "Аэрограф, частота: уменьшить на 1"
 
 #: ../app/actions/tools-actions.c:167
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr ""
+msgstr "Аэрограф, частота: увеличить на 1"
 
 #: ../app/actions/tools-actions.c:171
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
-msgstr ""
+msgstr "Аэрограф, частота: уменьшить на 10"
 
 #: ../app/actions/tools-actions.c:175
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr ""
+msgstr "Аэрограф, частота: увеличить на 10"
 
 #: ../app/actions/tools-actions.c:183
 msgctxt "tools-action"
@@ -8009,72 +8013,72 @@ msgstr "Аэрограф"
 #: ../app/actions/tools-actions.c:187
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
-msgstr ""
+msgstr "Аэрограф, поток: сделать минимальным"
 
 #: ../app/actions/tools-actions.c:191
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
-msgstr ""
+msgstr "Аэрограф, поток: сделать максимальным"
 
 #: ../app/actions/tools-actions.c:195
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
-msgstr ""
+msgstr "Аэрограф, поток: уменьшить на 1"
 
 #: ../app/actions/tools-actions.c:199
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr ""
+msgstr "Аэрограф, поток: увеличить на 1"
 
 #: ../app/actions/tools-actions.c:203
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
-msgstr ""
+msgstr "Аэрограф, поток: уменьшить на 10"
 
 #: ../app/actions/tools-actions.c:207
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr ""
+msgstr "Аэрограф, поток: увеличить на 10"
 
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr ""
+msgstr "Инструмент, непрозрачность: установить"
 
 #: ../app/actions/tools-actions.c:268
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "_Восстановить исходные параметры инструментов"
+msgstr "Инструмент, непрозрачность: восстановить значение по умолчанию"
 
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr ""
+msgstr "Инструмент, непрозрачность: сделать минимальной"
 
 #: ../app/actions/tools-actions.c:276
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr ""
+msgstr "Инструмент, непрозрачность: сделать максимальной"
 
 #: ../app/actions/tools-actions.c:280
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr ""
+msgstr "Инструмент, непрозрачность: уменьшить на 1"
 
 #: ../app/actions/tools-actions.c:284
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr ""
+msgstr "Инструмент, непрозрачность: увеличить на 1"
 
 #: ../app/actions/tools-actions.c:288
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr ""
+msgstr "Инструмент, непрозрачность: уменьшить на 10"
 
 #: ../app/actions/tools-actions.c:292
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr ""
+msgstr "Инструмент, непрозрачность: увеличить на 10"
 
 #: ../app/actions/tools-actions.c:296
 msgctxt "tools-action"
@@ -8089,42 +8093,42 @@ msgstr ""
 #: ../app/actions/tools-actions.c:308
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
-msgstr ""
+msgstr "Инструмент, размер: установить"
 
 #: ../app/actions/tools-actions.c:312
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
-msgstr "Восстановить значения по умолчанию"
+msgstr "Инструмент, непрозрачность: восстановить значение по умолчанию"
 
 #: ../app/actions/tools-actions.c:316
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
-msgstr ""
+msgstr "Инструмент, размер: сделать минимальным"
 
 #: ../app/actions/tools-actions.c:320
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
-msgstr ""
+msgstr "Инструмент, размер: сделать максимальным"
 
 #: ../app/actions/tools-actions.c:324
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
-msgstr ""
+msgstr "Инструмент, размер: уменьшить на 1"
 
 #: ../app/actions/tools-actions.c:328
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
-msgstr ""
+msgstr "Инструмент, размер: увеличить на 1"
 
 #: ../app/actions/tools-actions.c:332
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
-msgstr ""
+msgstr "Инструмент, размер: уменьшить на 10"
 
 #: ../app/actions/tools-actions.c:336
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
-msgstr ""
+msgstr "Инструмент, размер: увеличить на 10"
 
 #: ../app/actions/tools-actions.c:340
 msgctxt "tools-action"
@@ -8399,12 +8403,12 @@ msgstr "Цветовая метка"
 #: ../app/actions/vectors-actions.c:54
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
-msgstr "Изменить кисть MyPaint"
+msgstr "Изменить _контур"
 
 #: ../app/actions/vectors-actions.c:55
 msgctxt "vectors-action"
 msgid "Edit the active path"
-msgstr "Экспортировать текущий контур"
+msgstr "Изменить текущий контур"
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
@@ -17038,12 +17042,13 @@ msgstr "В доступе отказано"
 #: ../app/file/file-open.c:257
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "Расширение %s успешно закончило работу, но не возвратило изображение."
+msgstr ""
+"Расширение «%s» успешно закончило работу, но не возвратило изображение."
 
 #: ../app/file/file-open.c:268
 #, c-format
 msgid "%s plug-In could not open image"
-msgstr "Расширение %s не может открыть изображение"
+msgstr "Расширение «%s» не может открыть изображение"
 
 #: ../app/file/file-open.c:658
 msgid "Image doesn't contain any layers"
@@ -17085,7 +17090,7 @@ msgstr "Закачано %s данных изображения"
 #: ../app/file/file-save.c:278
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr "Расширение %s не может сохранить изображение"
+msgstr "Расширение «%s» не может сохранить изображение"
 
 #: ../app/file/file-utils.c:65
 #, c-format
@@ -23680,7 +23685,7 @@ msgstr "Сообщения перенаправлены в stderr."
 #: ../app/widgets/gimperrordialog.c:196
 #, c-format
 msgid "%s Message"
-msgstr "%s Сообщение"
+msgstr "Сообщение от «%s»"
 
 #: ../app/widgets/gimpexportdialog.c:69
 msgid "Export Image"
