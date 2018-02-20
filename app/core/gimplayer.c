@@ -2116,7 +2116,7 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
     {
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-      if (push_undo)
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         gimp_image_undo_push_layer_mask_apply (image,
                                                apply ?
                                                C_("undo-type", "Enable Layer Mask") :
