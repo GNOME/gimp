@@ -252,6 +252,7 @@ gimp_histogram_editor_set_property (GObject      *object,
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
+          editor->valid = FALSE;
           gimp_histogram_view_set_histogram (view, NULL);
         }
 
@@ -349,6 +350,7 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
+          editor->valid = FALSE;
           gimp_histogram_view_set_histogram (view, NULL);
         }
 
@@ -394,6 +396,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
       if (editor->histogram)
         {
           g_clear_object (&editor->histogram);
+          editor->valid = FALSE;
           gimp_histogram_view_set_histogram (view, NULL);
         }
 
