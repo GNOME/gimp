@@ -256,16 +256,16 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
                   if (HAS_KEY (pspec, "axis", "x"))
                     {
-                      gint min = MAX (lower, off_x);
-                      gint max = MIN (upper, off_x + area->width);
+                      gdouble min = MAX (lower, off_x);
+                      gdouble max = MIN (upper, off_x + area->width);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
                                                         min, max);
                     }
                   else if (HAS_KEY (pspec, "axis","y"))
                     {
-                      gint min = MAX (lower, off_y);
-                      gint max = MIN (upper, off_y + area->height);
+                      gdouble min = MAX (lower, off_y);
+                      gdouble max = MIN (upper, off_y + area->height);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
                                                         min, max);
