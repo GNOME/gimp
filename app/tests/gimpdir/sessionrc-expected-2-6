@@ -98,11 +98,19 @@
 (session-info "toplevel"
     (factory-entry "gimp-empty-image-window")
     (position 140 30)
-    (size 610 190)
-    (open-on-exit))
+    (size 610 190))
+(session-info "toplevel"
+    (factory-entry "gimp-single-image-window")
+    (position 525 470)
+    (size 235 80)
+    (open-on-exit)
+    (aux-info
+        (left-docks-width "1")
+        (right-docks-width "3")
+        (maximized "no")))
 
 (hide-docks no)
-(single-window-mode no)
+(single-window-mode yes)
 (tabs-position 0)
 (last-tip-shown 0)
 
