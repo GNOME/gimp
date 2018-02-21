@@ -894,7 +894,9 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
 
   if (input)
     {
-      data_list = loader->load_func (context, file, input, &error);
+      GInputStream *buffered = g_buffered_input_stream_new (input);
+
+      data_list = loader->load_func (context, file, buffered, &error);
 
       if (error)
         {
@@ -909,6 +911,7 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
                        gimp_file_get_utf8_name (file));
         }
 
+      g_object_unref (buffered);
       g_object_unref (input);
     }
   else
