@@ -248,9 +248,6 @@ app_run (const gchar         *full_prog_name,
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
-  errors_init (gimp, full_prog_name, use_debug_handler,
-               stack_trace_mode, backtrace_file);
-
   /*  Check if the user's gimp_directory exists
    */
   gimpdir = gimp_directory_file (NULL);
@@ -274,6 +271,16 @@ app_run (const gchar         *full_prog_name,
     }
 
   g_object_unref (gimpdir);
+
+  /* Initialize the error handling after creating/migrating the config
+   * directory because it will create some folders for backup and crash
+   * logs in advance. Therefore running this before
+   * gimp_user_install_new() would break migration as well as initial
+   * folder creations.
+   */
+  errors_init (gimp, full_prog_name, use_debug_handler,
+               stack_trace_mode, backtrace_file);
+
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 

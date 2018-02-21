@@ -64,9 +64,6 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   dir = g_build_filename (gimp_directory (), "CrashLog", NULL);
 #endif
 
-  /* Ensure the path exists. */
-  g_mkdir_with_parents (dir, 0700);
-
   time (&t);
   filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
                               PACKAGE_NAME, t);

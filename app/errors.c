@@ -131,8 +131,14 @@ errors_init (Gimp               *gimp,
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
-  backtrace_file    = g_strdup (_backtrace_file);
+
+  /* Create parent directories for both the crash and backup files. */
+  backtrace_file    = g_path_get_dirname (_backtrace_file);
   backup_path       = g_build_filename (gimp_directory (), "backups", NULL);
+
+  g_mkdir_with_parents (backtrace_file, S_IRUSR | S_IWUSR | S_IXUSR);
+  g_free (backtrace_file);
+  backtrace_file = g_strdup (_backtrace_file);
 
   g_mkdir_with_parents (backup_path, S_IRUSR | S_IWUSR | S_IXUSR);
   g_free (backup_path);
@@ -287,7 +293,8 @@ gimp_eek (const gchar *reason,
     {
 #ifndef GIMP_CONSOLE_COMPILATION
       if (debug_policy != GIMP_DEBUG_POLICY_NEVER &&
-          ! the_errors_gimp->no_interface)
+          ! the_errors_gimp->no_interface         &&
+          backtrace_file)
         {
           FILE     *fd;
           gboolean  has_backtrace = TRUE;
@@ -390,42 +397,44 @@ gimp_eek (const gchar *reason,
    * Nevertheless in various test cases, I had successful backups XCF of
    * the work in progress. Yeah!
    */
-
-  /* The index of 'XXX' in backup_path string. */
-  num_idx = strlen (backup_path) - 7;
-
-  iter = gimp_get_image_iter (the_errors_gimp);
-  for (; iter && i < 1000; iter = iter->next)
+  if (backup_path)
     {
-      GimpImage *image = iter->data;
-      GimpItem  *item;
+      /* The index of 'XXX' in backup_path string. */
+      num_idx = strlen (backup_path) - 7;
 
-      if (! gimp_image_is_dirty (image))
-        continue;
+      iter = gimp_get_image_iter (the_errors_gimp);
+      for (; iter && i < 1000; iter = iter->next)
+        {
+          GimpImage *image = iter->data;
+          GimpItem  *item;
 
-      item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+          if (! gimp_image_is_dirty (image))
+            continue;
 
-      /* This is a trick because we want to avoid any memory
-       * allocation when the process is abnormally terminated.
-       * We just assume that you'll never have more than 1000 images
-       * open (which is already far fetched).
-       */
-      backup_path[num_idx + 2] = '0' + (i % 10);
-      backup_path[num_idx + 1] = '0' + ((i/10) % 10);
-      backup_path[num_idx]     = '0' + ((i/100) % 10);
+          item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-      /* Saving. */
-      gimp_pdb_execute_procedure_by_name (the_errors_gimp->pdb,
-                                          gimp_get_user_context (the_errors_gimp),
-                                          NULL, NULL,
-                                          "gimp-xcf-save",
-                                          GIMP_TYPE_INT32, 0,
-                                          GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
-                                          GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (item),
-                                          G_TYPE_STRING,         backup_path,
-                                          G_TYPE_STRING,         backup_path,
-                                          G_TYPE_NONE);
-      i++;
+          /* This is a trick because we want to avoid any memory
+           * allocation when the process is abnormally terminated.
+           * We just assume that you'll never have more than 1000 images
+           * open (which is already far fetched).
+           */
+          backup_path[num_idx + 2] = '0' + (i % 10);
+          backup_path[num_idx + 1] = '0' + ((i/10) % 10);
+          backup_path[num_idx]     = '0' + ((i/100) % 10);
+
+          /* Saving. */
+          gimp_pdb_execute_procedure_by_name (the_errors_gimp->pdb,
+                                              gimp_get_user_context (the_errors_gimp),
+                                              NULL, NULL,
+                                              "gimp-xcf-save",
+                                              GIMP_TYPE_INT32, 0,
+                                              GIMP_TYPE_IMAGE_ID,    gimp_image_get_ID (image),
+                                              GIMP_TYPE_DRAWABLE_ID, gimp_item_get_ID (item),
+                                              G_TYPE_STRING,         backup_path,
+                                              G_TYPE_STRING,         backup_path,
+                                              G_TYPE_NONE);
+          i++;
+        }
     }
 
   exit (EXIT_FAILURE);
