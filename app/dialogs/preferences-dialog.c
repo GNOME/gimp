@@ -1079,7 +1079,6 @@ prefs_dialog_new (Gimp       *gimp,
   GimpCoreConfig    *core_config;
   GimpDisplayConfig *display_config;
   GList             *manuals;
-  gchar             *text;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
@@ -1245,22 +1244,17 @@ prefs_dialog_new (Gimp       *gimp,
    * which case the feature is always available.
    */
   hbox = NULL;
-  if (! (text = g_find_program_in_path ("gdb")))
+  if (! gimp_utils_backtrace_available (TRUE))
     {
-      if (! (text = g_find_program_in_path ("lldb")))
-        {
 #ifndef HAVE_EXECINFO_H
-          hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
-                                     _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
-          gtk_widget_set_sensitive (button, FALSE);
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                                 _("This feature requires \"gdb\" or \"lldb\" installed on your system."));
+      gtk_widget_set_sensitive (button, FALSE);
 #else
-          hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
-                                     _("This feature is more efficient with \"gdb\" or \"lldb\" installed on your system."));
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                                 _("This feature is more efficient with \"gdb\" or \"lldb\" installed on your system."));
 #endif /* ! HAVE_EXECINFO_H */
-        }
     }
-  if (text)
-    g_free (text);
   if (hbox)
     gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
