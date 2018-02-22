@@ -7,14 +7,14 @@
 # Helgi Þormar Þorbjörnsson  <helgi@trance.is>, 2004.
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
 # Sveinn í Felli <sveinki@nett.is>, 2009.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-12-21 11:55+0000\n"
-"PO-Revision-Date: 2017-12-23 08:16+0000\n"
+"POT-Creation-Date: 2018-02-11 14:13+0000\n"
+"PO-Revision-Date: 2018-02-22 06:53+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -4595,7 +4595,7 @@ msgstr "Opna textaskjal (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:450
 #: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
 #: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
@@ -7478,28 +7478,33 @@ msgstr "Banvæn þáttunarvilla í pensilskránni '%s': Óþekkt litadýpt %d."
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Banvæn þáttunarvilla í pensilskránni '%s': Óþekkt útgáfa %d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
-#: ../app/core/gimpbrush-load.c:626 ../app/core/gimpbrush-load.c:700
-#: ../app/core/gimpbrush-load.c:763 ../app/core/gimpbrush-load.c:779
-#: ../app/core/gimpbrush-load.c:822
+#: ../app/core/gimpbrush-load.c:266
+#, c-format
+msgid "Unsupported brush format"
+msgstr "Óstutt pensilsnið"
+
+#: ../app/core/gimpbrush-load.c:280 ../app/core/gimpbrush-load.c:417
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:707
+#: ../app/core/gimpbrush-load.c:770 ../app/core/gimpbrush-load.c:786
+#: ../app/core/gimpbrush-load.c:829
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s'. Virðist vanta enda á skrána."
 
-#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ógildur UTF-8-strengur í pensilskránni '%s'."
 
-#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:295 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Ónefnt"
 
-#: ../app/core/gimpbrush-load.c:354
+#: ../app/core/gimpbrush-load.c:361
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7512,7 +7517,7 @@ msgstr ""
 "Þetta gæti verið úrelt GIMP pensilskrá, prófaðu að hlaða henni inn sem mynd "
 "og vista hana aftur."
 
-#: ../app/core/gimpbrush-load.c:399
+#: ../app/core/gimpbrush-load.c:406
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7521,7 +7526,7 @@ msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s': Óstudd %d litadýpt pensils\n"
 "GIMP penslar verða að vera GRÁTÓNA eða RGBA."
 
-#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
+#: ../app/core/gimpbrush-load.c:478 ../app/core/gimpbrush-load.c:916
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7529,7 +7534,7 @@ msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s': tókst ekki að afkóða snið abr "
 "útgáfa %d."
 
-#: ../app/core/gimpbrush-load.c:647
+#: ../app/core/gimpbrush-load.c:654
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8217,34 +8222,40 @@ msgstr "Fletja mynd"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Ekki er hægt að fletja mynd án nokkurra sýnilegra laga."
 
-#: ../app/core/gimpimage-merge.c:260
+#: ../app/core/gimpimage-merge.c:242
+#| msgctxt "select-action"
+#| msgid "Create a floating selection"
+msgid "Cannot merge down a floating selection."
+msgstr "Get ekki sameinað niður fljótandi val."
+
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down to a layer group."
 msgstr "Get ekki sameinað niður í lagahóp."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:274
 msgid "The layer to merge down to is locked."
 msgstr "Lagið sem á að sameina niður í er læst."
 
-#: ../app/core/gimpimage-merge.c:279
+#: ../app/core/gimpimage-merge.c:286
 msgid "There is no visible layer to merge down to."
 msgstr "Það er ekkert sýnilegt lag sem hægt væri að sameina niður í."
 
-#: ../app/core/gimpimage-merge.c:289
+#: ../app/core/gimpimage-merge.c:296
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Sameina niður"
 
-#: ../app/core/gimpimage-merge.c:317
+#: ../app/core/gimpimage-merge.c:324
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Sameina lagahóp"
 
-#: ../app/core/gimpimage-merge.c:370
+#: ../app/core/gimpimage-merge.c:377
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Sameina sýnilega ferla"
 
-#: ../app/core/gimpimage-merge.c:406
+#: ../app/core/gimpimage-merge.c:413
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Ekki nógu margir ferlar til að sameina. Þeir verða að vera a.m.k. tveir."
