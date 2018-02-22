@@ -79,6 +79,7 @@ gboolean        gimp_print_stack_trace         (const gchar  *prog_name,
                                                 gpointer      stream,
                                                 gchar       **trace);
 void            gimp_on_error_query            (const gchar  *prog_name);
+gboolean        gimp_utils_backtrace_available (gboolean      optimal);
 
 
 G_END_DECLS

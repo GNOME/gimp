@@ -64,6 +64,13 @@
  * Utilities of general interest
  **/
 
+static gboolean gimp_utils_generic_available (const gchar *program,
+                                              gint         major,
+                                              gint         minor);
+static gboolean gimp_utils_gdb_available     (gint         major,
+                                              gint         minor);
+static gboolean gimp_utils_lldb_available    (gint         major,
+                                              gint         minor);
 
 /**
  * gimp_utf8_strtrim:
@@ -1146,10 +1153,17 @@ gimp_print_stack_trace (const gchar *prog_name,
       close (out_fd[0]);
       close (out_fd[1]);
 
-      /* Run GDB. */
-      if (execvp (args[0], args) == -1)
+      /* Run GDB if version 7.0 or over. Why I do such a check is that
+       * it turns out older versions may not only fail, but also have
+       * very undesirable side effects like terminating the debugged
+       * program, at least on FreeBSD where GDB 6.1 is apparently
+       * installed by default on the stable release at day of writing.
+       * See bug 793514. */
+      if (! gimp_utils_gdb_available (7, 0) ||
+          execvp (args[0], args) == -1)
         {
-          /* LLDB as alternative. */
+          /* LLDB as alternative if the GDB call failed or if it was in
+           * a too-old version. */
           gchar *args_lldb[11] = { "lldb", "--attach-pid", NULL, "--batch",
                                    "--one-line", "bt",
                                    "--one-line-on-crash", "bt",
@@ -1305,4 +1319,168 @@ gimp_on_error_query (const gchar *prog_name)
   else
     goto retry;
 #endif
+}
+
+/**
+ * gimp_utils_backtrace_available:
+ * @optimal: whether we get optimal traces.
+ *
+ * Returns #TRUE if we have dependencies to generate backtraces. If
+ * @optimal is #TRUE, the function will return #TRUE only when we
+ * are able to generate optimal traces (i.e. with GDB or LLDB);
+ * otherwise we return #TRUE even if only backtrace() API is available.
+ *
+ * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_utils_backtrace_available (gboolean optimal)
+{
+#ifndef G_OS_WIN32
+  if (gimp_utils_gdb_available (7, 0) ||
+      gimp_utils_lldb_available (0, 0))
+    return TRUE;
+#ifdef HAVE_EXECINFO_H
+  if (! optimal)
+    return TRUE;
+#endif
+#else /* G_OS_WIN32 */
+#ifdef HAVE_EXCHNDL
+  return TRUE;
+#endif
+#endif /* G_OS_WIN32 */
+  return FALSE;
+}
+
+/* Private functions. */
+
+static gboolean
+gimp_utils_generic_available (const gchar *program,
+                              gint         major,
+                              gint         minor)
+{
+#ifndef G_OS_WIN32
+  pid_t pid;
+  int   out_fd[2];
+
+  if (pipe (out_fd) == -1)
+    {
+      return FALSE;
+    }
+
+  /* XXX: I don't use g_spawn_sync() or similar glib functions because
+   * to read the contents of the stdout, these functions would allocate
+   * memory dynamically. As we know, when debugging crashes, this is a
+   * definite blocker. So instead I simply use a buffer on the stack
+   * with a lower level fork() call.
+   */
+  pid = fork ();
+  if (pid == 0)
+    {
+      /* Child process. */
+      gchar *args[3] = { (gchar *) program, "--version", NULL };
+
+      /* Redirect the debugger output. */
+      dup2 (out_fd[1], STDOUT_FILENO);
+      close (out_fd[0]);
+      close (out_fd[1]);
+
+      /* Run version check. */
+      execvp (args[0], args);
+      _exit (-1);
+    }
+  else if (pid > 0)
+    {
+      /* Main process */
+      gchar    buffer[256];
+      ssize_t  read_n;
+      int      status;
+      gint     installed_major = 0;
+      gint     installed_minor = 0;
+      gboolean major_reading = FALSE;
+      gboolean minor_reading = FALSE;
+      gint     i;
+      gchar    c;
+
+      waitpid (pid, &status, 0);
+
+      if (! WIFEXITED (status) || WEXITSTATUS (status) != 0)
+        return FALSE;
+
+      /* It is important to close the writing side of the pipe, otherwise
+       * the read() will wait forever without getting the information that
+       * writing is finished.
+       */
+      close (out_fd[1]);
+
+      /* I could loop forever until EOL, but I am pretty sure the
+       * version information is stored on the first line and one call to
+       * read() with 256 characters should be more than enough.
+       */
+      read_n = read (out_fd[0], buffer, 256);
+
+      /* This is quite a very stupid parser. I only look for the first
+       * numbers and consider them as version information. This works
+       * fine for both GDB and LLDB as far as I can see for the output
+       * of `${program} --version` but this should obviously not be
+       * considered as a *really* generic version test.
+       */
+      for (i = 0; i < read_n; i++)
+        {
+          c = buffer[i];
+          if (c >= '0' && c <= '9')
+            {
+              if (minor_reading)
+                {
+                  installed_minor = 10 * installed_minor + (c - '0');
+                }
+              else
+                {
+                  major_reading = TRUE;
+                  installed_major = 10 * installed_major + (c - '0');
+                }
+            }
+          else if (c == '.')
+            {
+              if (major_reading)
+                {
+                  minor_reading = TRUE;
+                  major_reading = FALSE;
+                }
+              else if (minor_reading)
+                {
+                  break;
+                }
+            }
+          else if (c == '\n')
+            {
+              /* Version information should be in the first line. */
+              break;
+            }
+        }
+      close (out_fd[0]);
+
+      return (installed_major > 0 &&
+              (installed_major > major ||
+               (installed_major == major && installed_minor >= minor)));
+    }
+#endif
+
+  /* Fork failed, or Win32. */
+  return FALSE;
+}
+
+static gboolean
+gimp_utils_gdb_available (gint major,
+                          gint minor)
+{
+  return gimp_utils_generic_available ("gdb", major, minor);
+}
+
+static gboolean
+gimp_utils_lldb_available (gint major,
+                           gint minor)
+{
+  return gimp_utils_generic_available ("lldb", major, minor);
 }
