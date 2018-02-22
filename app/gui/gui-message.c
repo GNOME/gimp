@@ -127,6 +127,7 @@ gui_message (Gimp                *gimp,
             }
           g_mutex_unlock (&mutex);
         }
+
       if (gen_trace)
         {
           /* We need to create the trace here because for multi-thread
@@ -134,7 +135,7 @@ gui_message (Gimp                *gimp,
            * function will simply be useless. It needs to happen in the
            * buggy thread to be meaningful.
            */
-          gimp_print_stack_trace (NULL, NULL, &trace);
+          gimp_stack_trace_print (NULL, NULL, &trace);
         }
 
       if (g_strcmp0 (GIMP_ACRONYM, domain) != 0)

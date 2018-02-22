@@ -322,7 +322,7 @@ gimp_eek (const gchar *reason,
            * and is waiting for us in a text file.
            */
           fd = g_fopen (backtrace_file, "w");
-          has_backtrace = gimp_print_stack_trace ((const gchar *) full_prog_name,
+          has_backtrace = gimp_stack_trace_print ((const gchar *) full_prog_name,
                                                   fd, NULL);
           fclose (fd);
 #endif
@@ -357,7 +357,7 @@ gimp_eek (const gchar *reason,
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  gimp_on_error_query ((const gchar *) full_prog_name);
+                  gimp_stack_trace_query ((const gchar *) full_prog_name);
                 }
               break;
 
@@ -368,7 +368,7 @@ gimp_eek (const gchar *reason,
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
-                  gimp_print_stack_trace ((const gchar *) full_prog_name,
+                  gimp_stack_trace_print ((const gchar *) full_prog_name,
                                           stdout, NULL);
                 }
               break;

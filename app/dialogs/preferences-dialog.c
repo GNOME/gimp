@@ -1244,7 +1244,7 @@ prefs_dialog_new (Gimp       *gimp,
    * which case the feature is always available.
    */
   hbox = NULL;
-  if (! gimp_utils_backtrace_available (TRUE))
+  if (! gimp_stack_trace_available (TRUE))
     {
 #ifndef HAVE_EXECINFO_H
       hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,

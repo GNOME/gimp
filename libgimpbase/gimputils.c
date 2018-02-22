@@ -1086,7 +1086,39 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
 }
 
 /**
- * gimp_print_stack_trace:
+ * gimp_stack_trace_available:
+ * @optimal: whether we get optimal traces.
+ *
+ * Returns #TRUE if we have dependencies to generate backtraces. If
+ * @optimal is #TRUE, the function will return #TRUE only when we
+ * are able to generate optimal traces (i.e. with GDB or LLDB);
+ * otherwise we return #TRUE even if only backtrace() API is available.
+ *
+ * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_stack_trace_available (gboolean optimal)
+{
+#ifndef G_OS_WIN32
+  if (gimp_utils_gdb_available (7, 0) ||
+      gimp_utils_lldb_available (0, 0))
+    return TRUE;
+#ifdef HAVE_EXECINFO_H
+  if (! optimal)
+    return TRUE;
+#endif
+#else /* G_OS_WIN32 */
+#ifdef HAVE_EXCHNDL
+  return TRUE;
+#endif
+#endif /* G_OS_WIN32 */
+  return FALSE;
+}
+
+/**
+ * gimp_stack_trace_print:
  * @prog_name: the program to attach to.
  * @stream: a #FILE * stream.
  * @trace: location to store a newly allocated string of the trace.
@@ -1114,7 +1146,7 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  * Since: 2.10
  **/
 gboolean
-gimp_print_stack_trace (const gchar *prog_name,
+gimp_stack_trace_print (const gchar *prog_name,
                         gpointer     stream,
                         gchar      **trace)
 {
@@ -1273,7 +1305,7 @@ gimp_print_stack_trace (const gchar *prog_name,
 }
 
 /**
- * gimp_on_error_query:
+ * gimp_stack_trace_query:
  * @prog_name: the program to attach to.
  *
  * This is mostly the same as g_on_error_query() except that we use our
@@ -1284,7 +1316,7 @@ gimp_print_stack_trace (const gchar *prog_name,
  * Since: 2.10
  **/
 void
-gimp_on_error_query (const gchar *prog_name)
+gimp_stack_trace_query (const gchar *prog_name)
 {
 #ifndef G_OS_WIN32
   gchar buf[16];
@@ -1312,7 +1344,7 @@ gimp_on_error_query (const gchar *prog_name)
   else if ((buf[0] == 'S' || buf[0] == 's')
            && buf[1] == '\n')
     {
-      if (! gimp_print_stack_trace (prog_name, stdout, NULL))
+      if (! gimp_stack_trace_print (prog_name, stdout, NULL))
         g_fprintf (stderr, "%s\n", "Stack trace not available on your system.");
       goto retry;
     }
@@ -1321,37 +1353,6 @@ gimp_on_error_query (const gchar *prog_name)
 #endif
 }
 
-/**
- * gimp_utils_backtrace_available:
- * @optimal: whether we get optimal traces.
- *
- * Returns #TRUE if we have dependencies to generate backtraces. If
- * @optimal is #TRUE, the function will return #TRUE only when we
- * are able to generate optimal traces (i.e. with GDB or LLDB);
- * otherwise we return #TRUE even if only backtrace() API is available.
- *
- * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
- *
- * Since: 2.10
- **/
-gboolean
-gimp_utils_backtrace_available (gboolean optimal)
-{
-#ifndef G_OS_WIN32
-  if (gimp_utils_gdb_available (7, 0) ||
-      gimp_utils_lldb_available (0, 0))
-    return TRUE;
-#ifdef HAVE_EXECINFO_H
-  if (! optimal)
-    return TRUE;
-#endif
-#else /* G_OS_WIN32 */
-#ifdef HAVE_EXCHNDL
-  return TRUE;
-#endif
-#endif /* G_OS_WIN32 */
-  return FALSE;
-}
 
 /* Private functions. */
 

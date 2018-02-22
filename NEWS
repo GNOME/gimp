@@ -68,7 +68,8 @@ Libgimp:
      procedures. If for instance, a second-level plug-in is interrupted
      interactively, we don't want to process this as an error but as a
      cancellation.
-   - New gimp_print_stack_trace() and gimp_on_error_query() for debug.
+   - New gimp_stack_trace_available(), gimp_stack_trace_print() and
+     gimp_stack_trace_query() for debugging.
 
 GUI and Usability:
 
