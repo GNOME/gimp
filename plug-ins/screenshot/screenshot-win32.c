@@ -407,7 +407,7 @@ primDoWindowCapture (HDC  hdcWindow,
    */
   if (!BitBlt(hdcCompat, 0,0,
               width, height,
-              hdcWindow, 0,0,
+              hdcWindow, rect.left, rect.top,
               SRCCOPY))
     {
       formatWindowsError (buffer, sizeof buffer);
@@ -433,7 +433,6 @@ doCapture (HWND selectedHwnd)
 {
   HDC     hdcSrc;
   HDC     hdcCompat;
-  HRGN    capRegion;
   HWND    oldForeground;
   RECT    rect;
   HBITMAP hbm;
@@ -443,10 +442,17 @@ doCapture (HWND selectedHwnd)
    */
   Sleep (500 + winsnapvals.delay * 1000);
 
+  /* Get the device context for the whole screen
+   * even if we just want to capture a window.
+   * this will allow to capture applications that
+   * don't render to their main window's device
+   * context (e.g. browsers).
+  */
+  hdcSrc = CreateDC (TEXT("DISPLAY"), NULL, NULL, NULL);
+
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd)
     {
-
       /* Set to foreground window */
       oldForeground = GetForegroundWindow ();
       SetForegroundWindow (selectedHwnd);
@@ -456,27 +462,10 @@ doCapture (HWND selectedHwnd)
 
       /* Build a region for the capture */
       GetWindowRect (selectedHwnd, &rect);
-      capRegion = CreateRectRgn (rect.left, rect.top,
-                                 rect.right, rect.bottom);
-      if (!capRegion)
-        {
-          formatWindowsError (buffer, sizeof buffer);
-          g_error ("Error creating region: %s", buffer);
-          return FALSE;
-        }
 
-      /* Get the device context for the selected
-       * window.  Create a memory DC to use for the
-       * Bit copy.
-       */
-      hdcSrc = GetDCEx (selectedHwnd, capRegion,
-                        DCX_WINDOW | DCX_PARENTCLIP | DCX_INTERSECTRGN);
     }
   else
     {
-      /* Get the device context for the whole screen */
-      hdcSrc = CreateDC ("DISPLAY", NULL, NULL, NULL);
-
       /* Get the screen's rectangle */
       rect.top = 0;
       rect.bottom = GetDeviceCaps (hdcSrc, VERTRES);
