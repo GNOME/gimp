@@ -13,7 +13,7 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    viewBox="0 0 1411.4984 384.2294"
    sodipodi:docname="color-scalable.svg"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    id="svg"
    height="384.2294"
    width="1411.4984"
@@ -59,15 +59,15 @@
      showborder="false"
      inkscape:current-layer="stock"
      inkscape:window-maximized="1"
-     inkscape:window-y="-1"
-     inkscape:window-x="-1"
-     inkscape:cy="-71.494627"
-     inkscape:cx="468.61269"
-     inkscape:zoom="2"
+     inkscape:window-y="27"
+     inkscape:window-x="0"
+     inkscape:cy="73.909107"
+     inkscape:cx="1269.1218"
+     inkscape:zoom="4"
      showgrid="false"
      id="namedview88"
-     inkscape:window-height="1147"
-     inkscape:window-width="1920"
+     inkscape:window-height="741"
+     inkscape:window-width="1366"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      guidetolerance="10"
@@ -51008,6 +51008,79 @@
          d="M 0,0 V 16 H 16 V 0 Z M 1,1 H 15 V 15 H 1 Z"
          style="color:#000000;overflow:visible;opacity:1;fill:#505050;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round"
          inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="translate(0.16402896,0.0094475)"
+       style="display:inline"
+       id="gimp-attach-12"
+       inkscape:label="gimp-attach-12"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Color/12/gimp-attach.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <g
+         transform="matrix(1.0008752,0,0,1,-80.602729,39.207051)"
+         id="g6189">
+        <path
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 699.9902,139.2929 h -9.99125 l 4.99573,8.00001 z"
+           id="path6175"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cccc" />
+        <path
+           sodipodi:nodetypes="ccccc"
+           style="fill:#555753;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="m 689.99894,148.2929 -10e-5,-2 h 9.99135 v 2 z"
+           id="path6173"
+           inkscape:connector-curvature="0" />
+      </g>
+      <rect
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         y="176.99995"
+         x="609.00006"
+         height="12"
+         width="12"
+         id="rect11899-9-8"
+         style="display:inline;fill:none;stroke:none;stroke-width:0.75" />
+    </g>
+    <g
+       style="display:inline"
+       id="gimp-detach-12"
+       transform="matrix(1.0008752,0,0,1,-1.4334363,0.7165075)"
+       inkscape:label="gimp-detach-12"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Color/24/gimp-detach.png"
+       inkscape:export-xdpi="192"
+       inkscape:export-ydpi="192">
+      <g
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/detach12.png"
+         transform="translate(-91.924803,16.999992)"
+         id="g6185">
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="path6179"
+           d="m 703.9867,143.2929 h 7.99301 l -3.99662,-7 z"
+           style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="ccccc"
+           inkscape:connector-curvature="0"
+           id="path6181"
+           d="m 702.98758,146.2929 -10e-5,2 h 9.99135 v -2 z"
+           style="fill:#555753;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <rect
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         y="153.29289"
+         x="610.0636"
+         height="12"
+         width="11.989507"
+         id="rect11899-9-8-7"
+         style="display:inline;fill:none;stroke:none;stroke-width:0.749672" />
     </g>
   </g>
   <g
