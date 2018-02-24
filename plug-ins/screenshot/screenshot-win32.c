@@ -467,10 +467,10 @@ doCapture (HWND selectedHwnd)
   else
     {
       /* Get the screen's rectangle */
-      rect.top = 0;
-      rect.bottom = GetDeviceCaps (hdcSrc, VERTRES);
-      rect.left = 0;
-      rect.right = GetDeviceCaps (hdcSrc, HORZRES);
+      rect.top    = GetSystemMetrics (SM_YVIRTUALSCREEN);
+      rect.bottom = GetSystemMetrics (SM_YVIRTUALSCREEN) + GetSystemMetrics (SM_CYVIRTUALSCREEN);
+      rect.left   = GetSystemMetrics (SM_XVIRTUALSCREEN);
+      rect.right  = GetSystemMetrics (SM_XVIRTUALSCREEN) + GetSystemMetrics (SM_CXVIRTUALSCREEN);
     }
 
   if (!hdcSrc)
