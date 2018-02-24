@@ -33,7 +33,8 @@ G_BEGIN_DECLS
 
 /*  random actions that don't fit in any category  */
 
-#define GIMP_ICON_DETACH                    "gtk-convert"
+#define GIMP_ICON_ATTACH                    "gimp-attach"
+#define GIMP_ICON_DETACH                    "gimp-detach"
 #define GIMP_ICON_INVERT                    "gimp-invert"
 #define GIMP_ICON_RESET                     "gimp-reset"
 #define GIMP_ICON_SHRED                     "gimp-shred"

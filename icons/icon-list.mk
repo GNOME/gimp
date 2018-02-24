@@ -61,7 +61,8 @@ scalable_images = \
 	scalable/gtk-yes.svg					\
 	\
 	scalable/gimp-anchor.svg				\
-	scalable/gimp-business-card.svg			\
+	scalable/gimp-attach.svg				\
+	scalable/gimp-business-card.svg				\
 	scalable/gimp-cap-butt.svg				\
 	scalable/gimp-cap-round.svg				\
 	scalable/gimp-cap-square.svg				\
@@ -101,8 +102,9 @@ scalable_images = \
 	scalable/gimp-curve-smooth.svg				\
 	scalable/gimp-dashboard.svg				\
 	scalable/gimp-default-colors.svg			\
+	scalable/gimp-detach.svg				\
 	scalable/gimp-device-status.svg				\
-	scalable/gimp-display.svg					\
+	scalable/gimp-display.svg				\
 	scalable/gimp-display-filter-clip-warning.svg		\
 	scalable/gimp-display-filter-colorblind.svg		\
 	scalable/gimp-display-filter-contrast.svg		\
@@ -493,8 +495,10 @@ vector24_images = \
 	24/gimp-wilber.svg
 
 icons12_images = \
+	12/gimp-attach.png					\
 	12/gimp-close.png					\
 	12/gimp-default-colors.png				\
+	12/gimp-detach.png					\
 	12/gimp-linked.png					\
 	12/gimp-menu-left.png					\
 	12/gimp-menu-right.png					\
@@ -852,7 +856,8 @@ icons24_images = \
 	\
 	24/gtk-select-color.png					\
 	\
-	24/gimp-business-card.png			\
+	24/gimp-attach.png					\
+	24/gimp-business-card.png				\
 	24/gimp-center.png					\
 	24/gimp-channel-alpha.png				\
 	24/gimp-channel-blue.png				\
@@ -873,6 +878,7 @@ icons24_images = \
 	24/gimp-controller.png					\
 	24/gimp-cursor.png					\
 	24/gimp-dashboard.png					\
+	24/gimp-detach.png					\
 	24/gimp-device-status.png				\
 	24/gimp-display.png					\
 	24/gimp-display-filter-clip-warning.png			\
