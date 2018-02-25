@@ -54,7 +54,7 @@ m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
-m4_define([fontconfig_win32_recommended_version], [2.11.1])
+m4_define([fontconfig_win32_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
@@ -150,7 +150,7 @@ LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-FONTCONFIG_WIN32_RECOMMENDED_VERSION=fontconfig_win32_recommended_version
+FONTCONFIG_WIN32_REQUIRED_VERSION=fontconfig_win32_required_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 WEBKIT_REQUIRED_VERSION=webkit_required_version
@@ -820,25 +820,20 @@ PKG_CHECK_MODULES(PANGOCAIRO,
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
-PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
-                 [add_deps_error([fontconfig >= fontconfig_required_version])])
-
 # Windows platform had a few bugs fixed in earlier fontconfig.
-# Display a warning when compiling with a flawed fontconfig.
-# See bugs 708110 and 703331.
-have_recommended_fontconfig=""
+# The bugs are serious enough (for instance very slow startups at each
+# GIMP start, but also slowness when closing, broken font features,
+# etc.) that we should bump the requirement for Win32.
+# See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
+# (2.12.4).
 if test "x$platform_win32" = "xyes"; then
-    PKG_CHECK_MODULES(RECOMMENDED_WIN32_FONTCONFIG, fontconfig >= fontconfig_win32_recommended_version,
-                      have_recommended_fontconfig="yes", have_recommended_fontconfig="no")
-
-    if test "x$have_recommended_fontconfig" = xno; then
-        have_recommended_fontconfig="
-WARNING: Your fontconfig version is `$PKG_CONFIG --modversion fontconfig`.
-         The recommended fontconfig version under Windows is $FONTCONFIG_WIN32_RECOMMENDED_VERSION or over.
-         If you continue without updating fontconfig, your build may have partially broken font processing."
-    else
-        have_recommended_fontconfig=""
-    fi
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_win32_required_version,,
+                    [add_deps_error([fontconfig >= fontconfig_win32_required_version],
+                                    [The required fontconfig version under Windows is $FONTCONFIG_WIN32_REQUIRED_VERSION or over,
+                                     Older versions have partially broken font processing and broken cache update.])])
+else
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
+                   [add_deps_error([fontconfig >= fontconfig_required_version])])
 fi
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
@@ -2770,7 +2765,7 @@ Optional Modules:
 Tests:
   Use xvfb-run         $have_xvfb_run
   Test appdata         $have_appstream_util
-$have_recommended_xgettext$have_recommended_fontconfig$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
