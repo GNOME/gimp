@@ -895,20 +895,13 @@ gimp_number_pair_entry_events (GtkWidget *widget,
                                                      left_value,
                                                      right_value);
 
-                  priv->user_override = TRUE;
-                  g_object_notify (G_OBJECT (entry), "user-override");
+                  gimp_number_pair_entry_set_user_override (entry, TRUE);
                 }
             }
             break;
 
           case PARSE_CLEAR:
-
-            gimp_number_pair_entry_set_values (entry,
-                                               priv->default_left_number,
-                                               priv->default_right_number);
-
-            priv->user_override = FALSE;
-            g_object_notify (G_OBJECT (entry), "user-override");
+            gimp_number_pair_entry_set_user_override (entry, FALSE);
             break;
 
           default:
