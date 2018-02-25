@@ -741,19 +741,19 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
       private->bindings = g_list_prepend (private->bindings, binding);
     }
 
-  g_signal_connect (widget, "response",
-                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
-                    rect_tool);
-  g_signal_connect (widget, "change-complete",
-                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_change_complete),
-                    rect_tool);
-
   gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
                                   gimp_display_get_image (shell->display),
                                   G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
                                   rect_tool);
 
   gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
+
+  g_signal_connect (widget, "response",
+                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
+                    rect_tool);
+  g_signal_connect (widget, "change-complete",
+                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_change_complete),
+                    rect_tool);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }

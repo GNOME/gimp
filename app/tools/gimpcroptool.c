@@ -398,16 +398,6 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
       crop_tool->bindings = g_list_prepend (crop_tool->bindings, binding);
     }
 
-  g_signal_connect (widget, "changed",
-                    G_CALLBACK (gimp_crop_tool_rectangle_changed),
-                    crop_tool);
-  g_signal_connect (widget, "response",
-                    G_CALLBACK (gimp_crop_tool_rectangle_response),
-                    crop_tool);
-  g_signal_connect (widget, "change-complete",
-                    G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
-                    crop_tool);
-
   gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
                                   gimp_display_get_image (shell->display),
                                   G_CALLBACK (gimp_crop_tool_auto_shrink),
@@ -417,6 +407,16 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
                                       gimp_crop_tool_get_constraint (crop_tool));
 
   gimp_crop_tool_update_option_defaults (crop_tool, TRUE);
+
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_crop_tool_rectangle_changed),
+                    crop_tool);
+  g_signal_connect (widget, "response",
+                    G_CALLBACK (gimp_crop_tool_rectangle_response),
+                    crop_tool);
+  g_signal_connect (widget, "change-complete",
+                    G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
+                    crop_tool);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
