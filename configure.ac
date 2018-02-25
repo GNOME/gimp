@@ -53,8 +53,7 @@ m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
-m4_define([fontconfig_required_version], [2.2.0])
-m4_define([fontconfig_win32_required_version], [2.12.4])
+m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
@@ -150,7 +149,6 @@ LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-FONTCONFIG_WIN32_REQUIRED_VERSION=fontconfig_win32_required_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 WEBKIT_REQUIRED_VERSION=webkit_required_version
@@ -180,7 +178,6 @@ AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_WIN32_REQUIRED_VERSION)
 AC_SUBST(FREETYPE2_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(WEBKIT_REQUIRED_VERSION)
@@ -826,15 +823,8 @@ CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 # etc.) that we should bump the requirement for Win32.
 # See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
 # (2.12.4).
-if test "x$platform_win32" = "xyes"; then
-  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_win32_required_version,,
-                    [add_deps_error([fontconfig >= fontconfig_win32_required_version],
-                                    [The required fontconfig version under Windows is $FONTCONFIG_WIN32_REQUIRED_VERSION or over,
-                                     Older versions have partially broken font processing and broken cache update.])])
-else
-  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
-                   [add_deps_error([fontconfig >= fontconfig_required_version])])
-fi
+PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
+                  [add_deps_error([fontconfig >= fontconfig_required_version])])
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
 if $PKG_CONFIG --atleast-version=1.32.0 pango; then
