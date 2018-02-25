@@ -1,16 +1,23 @@
 # Hungarian translation for gimp-windows-installer.
-# Copyright (C) 2017 the gimp authors.
+# Copyright (C) 2017, 2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 #
+# Balázs Úr <urbalazs at gmail dot com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 02:30+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2018-02-25 16:50+0000\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"PO-Revision-Date: 2018-02-25 18:00+0100\n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -18,7 +25,7 @@ msgstr "Licencmegállapodás"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr ""
+msgstr "A beállítást összeállította: Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
@@ -35,16 +42,21 @@ msgstr "Fejlesztői verzió"
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
 msgid ""
-"This is a development version of GIMP installer. It hasn't been tested as "
-"much as the stable installer, which can result in GIMP not working properly. "
-"Please report any problems you encounter in the GIMP bugzilla (Installer "
-"component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-"you wish to continue with installation anyway?"
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP bugzilla:"
+"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
+"continue with installation anyway?"
 msgstr ""
-"Ez a GIMP telepítőjének fejlesztői verziója. Nincs annyira tesztelve, mint a "
-"stabil telepítő, emiatt a GIMP hibásan működhet. A tapasztalt hibákat a GIMP "
-"Bugzillába jelentse (az Installer összetevő alá):%n_https://bugzilla.gnome."
-"org/enter_bug.cgi?product=GIMP%n%nMindenképp folytatja a telepítést?"
+"Ez a GIMP fejlesztői verziója, amelyben néhány funkció még nem készült el, "
+"vagy instabil lehet.%nA GIMP ezen verziója nem ajánlott a mindennapi "
+"munkavégzéshez, mivel instabil lehet, és a munkája elvesztését okozhatja.%nHa "
+"bármilyen problémával találkozik, akkor először ellenőrizze, hogy nem "
+"javították-e még ki a GIT-en, mielőtt kapcsolatba lépne a fejlesztőkkel, vagy "
+"a GIMP bugzilla oldalán jelentené:%n_https://bugzilla.gnome.org/enter_bug."
+"cgi?product=GIMP%n%nMindenképp folytatni szeretné a telepítést?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -160,11 +172,11 @@ msgstr "Lehetővé teszi Python nyelven írt GIMP bővítmények használatát."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "MyPaint brushes"
-msgstr ""
+msgstr "MyPaint ecsetek"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Install the default set of MyPaint brushes"
-msgstr ""
+msgstr "MyPaint ecsetek alapértelmezett készletének telepítése"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "PostScript support"
@@ -222,9 +234,8 @@ msgid "Error updating Python interpreter info."
 msgstr "Hiba a Python értelmező információinak frissítésekor."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
-#, fuzzy
 msgid "Error updating MyPaint brushes info."
-msgstr "Hiba a Python értelmező információinak frissítésekor."
+msgstr "Hiba a MyPaint ecsetek információinak frissítésekor."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 #, no-c-format
@@ -336,24 +347,23 @@ msgstr "oldalt."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:72
 msgid "Setting up file associations..."
-msgstr "Fájltársítások beállítása..."
+msgstr "Fájltársítások beállítása…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:73
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "Környezet beállítása a GIMP Python kiterjesztéséhez..."
+msgstr "Környezet beállítása a GIMP Python kiterjesztéséhez…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
-#, fuzzy
 msgid "Setting up MyPaint brushes..."
-msgstr "A GIMP környezetének beállítása..."
+msgstr "MyPaint ecsetek beállítása…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up GIMP environment..."
-msgstr "A GIMP környezetének beállítása..."
+msgstr "A GIMP környezetének beállítása…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "A GIMP beállítása a 32 bites bővítmények támogatásához..."
+msgstr "A GIMP beállítása a 32-bites bővítmények támogatásához…"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Launch GIMP"
@@ -374,11 +384,3 @@ msgid ""
 "anyway?"
 msgstr "A GIMP nem található a kijelölt könyvtárban. Mindenképp folytatja?"
 
-#~ msgid ""
-#~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "
-#~ "page of Setup by Alexia_Death%nImage on closing page of Setup by Jakub "
-#~ "Steiner"
-#~ msgstr ""
-#~ "A telepítőt Jernej Simoncic, jernej-gimp@ena.si készítette%n%nA telepítő "
-#~ "kezdőlapján látható képet Alexia_Death készítette%nA telepítő utolsó "
-#~ "lapján látható képet Jakub Steiner készítette"
