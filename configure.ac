@@ -50,7 +50,7 @@ m4_define([cairo_required_version], [1.10.2])
 m4_define([cairo_pdf_required_version], [1.10.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
-m4_define([fontconfig_win32_recommended_version], [2.11.1])
+m4_define([fontconfig_win32_required_version], [2.12.4])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.6.1])
 m4_define([alsa_required_version], [1.0.0])
@@ -128,13 +128,13 @@ GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
-FONTCONFIG_WIN32_RECOMMENDED_VERSION=fontconfig_win32_recommended_version
+FONTCONFIG_WIN32_REQUIRED_VERSION=fontconfig_win32_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_WIN32_RECOMMENDED_VERSION)
+AC_SUBST(FONTCONFIG_WIN32_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -621,24 +621,16 @@ PKG_CHECK_MODULES(PANGOCAIRO,
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
-PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
-
 # Windows platform had a few bugs fixed in earlier fontconfig.
-# Display a warning when compiling with a flawed fontconfig.
-# See bugs 708110 and 703331.
-have_recommended_fontconfig=""
+# The bugs are serious enough (for instance very slow startups at each
+# GIMP start, but also slowness when closing, broken font features,
+# etc.) that we should bump the requirement for Win32.
+# See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
+# (2.12.4).
 if test "x$platform_win32" = "xyes"; then
-    PKG_CHECK_MODULES(RECOMMENDED_WIN32_FONTCONFIG, fontconfig >= fontconfig_win32_recommended_version,
-                      have_recommended_fontconfig="yes", have_recommended_fontconfig="no")
-
-    if test "x$have_recommended_fontconfig" = xno; then
-        have_recommended_fontconfig="
-WARNING: Your fontconfig version is `$PKG_CONFIG --modversion fontconfig`.
-         The recommended fontconfig version under Windows is $FONTCONFIG_WIN32_RECOMMENDED_VERSION or over.
-         If you continue without updating fontconfig, your build may have partially broken font processing."
-    else
-        have_recommended_fontconfig=""
-    fi
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_win32_required_version)
+else
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 fi
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
@@ -2528,5 +2520,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext$have_recommended_fontconfig$warning_glib_networking
+$have_recommended_xgettext$warning_glib_networking
 ]);
