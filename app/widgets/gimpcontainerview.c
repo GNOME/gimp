@@ -290,6 +290,10 @@ gimp_container_view_private_finalize (GimpContainerViewPrivate *private)
       g_hash_table_destroy (private->item_hash);
       private->item_hash = NULL;
     }
+  g_clear_pointer (&private->name_changed_handler,
+                   gimp_tree_handler_disconnect);
+  g_clear_pointer (&private->expanded_changed_handler,
+                   gimp_tree_handler_disconnect);
 
   g_slice_free (GimpContainerViewPrivate, private);
 }
