@@ -73,9 +73,10 @@ Libgimp:
 
 GUI and Usability:
 
-  - New icons: "gimp-color-space-linear", "gimp-color-space-perceptual",
-    "gimp-tool-color-temperature", "gimp-tool-exposure",
-    "gimp-tool-shadows-highlights".
+  - New icons: "gimp-attach", "gimp-color-space-linear",
+    "gimp-color-space-perceptual", "gimp-color-temperature",
+    "gimp-dashboard", "gimp-detach", "gimp-tool-desaturate",
+    "gimp-tool-exposure", "gimp-tool-shadows-highlights".
   - Switching between linear and perceptual (gamma-corrected) spaces
     in the Histogram dialog is easier now: two buttons instead of one
     two-way button where current state was difficult to understand.
@@ -84,6 +85,11 @@ GUI and Usability:
     and split coordinates on 2 lines.
   - We now switch to "Huge" icons by default when the display pixel
     density is over 250 PPI (used to be 300 PPI).
+  - Improve action history sorting: items climb up the list faster,
+    while top items retain their relative position longer.
+  - Extend action search "initialism": Extend initialism-based search
+    (e.g.: "gb" for "Gaussian Blur"), by matching arbitrarily-long
+    initialisms, and by allowing partial matches (with lesser priority).
 
 Configurability:
 
@@ -125,6 +131,8 @@ Plug-ins:
     blindness), at least it is now possible to create a custom theme
     adapted to one's needs.
   - PSD export now happens with progress bar update for feedback.
+  - Win32 Screenshot improved to handle hardware-rendered software and
+    multi-monitor displays.
 
 File formats:
 
@@ -154,14 +162,19 @@ Building:
     available at installation.
   - AppStream ID renamed from gimp.desktop to org.gimp.GIMP following
     current convention.
+  - Require fontconfig >= 2.12.4. Lower versions are particularly a
+    problem on Win32, where many cache update failure were reported to
+    us, resulting in very slow startup and close-up (and not only the
+    first time, but every time).
 
 Translations:
 
   - Windows installer now localized with gettext.
   - String freeze has started and GIMP received updates from:
     Basque, Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish,
-    Esperanto, French, German, Greek, Icelandic, Italian, Polish,
-    Rusian, Russian, Serbian, Slovenian, Spanish, Swedish, Turkish.
+    Esperanto, French, German, Greek, Hungarian, Icelandic, Italian,
+    Latvian, Polish, Russian, Serbian, Slovenian, Spanish, Swedish,
+    Turkish.
 
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
