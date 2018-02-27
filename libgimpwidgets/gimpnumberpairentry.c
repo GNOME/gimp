@@ -979,6 +979,8 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_number_pair_entry_changed, NULL);
+
+  gimp_number_pair_entry_modify_font (entry, ! priv->user_override);
 }
 
 static gboolean
