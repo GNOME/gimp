@@ -1016,11 +1016,19 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
   gboolean  simplify = FALSE;
   gchar    *end;
 
+  /* skip over whitespace */
+  while (g_unichar_isspace (g_utf8_get_char (text)))
+    text = g_utf8_next_char (text);
+
+  /* check if clear */
+  if (! *text)
+    return PARSE_CLEAR;
+
   /* try to parse a number */
   new_left_number = strtod (text, &end);
 
   if (end == text)
-    return PARSE_CLEAR;
+    return PARSE_INVALID;
   else
     text = end;
 
