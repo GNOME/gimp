@@ -101,6 +101,18 @@ static const RulerMetric ruler_metric_inches =
   { 1, 4, 8, 16, 12 * 16 }
 };
 
+static const RulerMetric ruler_metric_feet =
+{
+  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 3, 6, 12, 12 * 8 }
+};
+
+static const RulerMetric ruler_metric_yards =
+{
+  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 3, 6, 12, 12 * 12 }
+};
+
 
 static void          gimp_ruler_dispose               (GObject        *object);
 static void          gimp_ruler_set_property          (GObject        *object,
@@ -1429,11 +1441,27 @@ gimp_ruler_get_layout (GtkWidget   *widget,
   return priv->layout;
 }
 
+#define FACTOR_EPSILON  0.0000001
+#define FACTOR_EQUAL(u, f) (ABS (f - gimp_unit_get_factor (u)) < FACTOR_EPSILON)
+
 static const RulerMetric *
 gimp_ruler_get_metric (GimpUnit unit)
 {
-  if (FALSE) /* unit == GIMP_UNIT_INCH */
-    return  &ruler_metric_inches;
+  /*  not enabled until we double checked the metrics  */
+  return &ruler_metric_decimal;
+
+  if (unit == GIMP_UNIT_INCH)
+    {
+      return  &ruler_metric_inches;
+    }
+  else if (FACTOR_EQUAL (unit, 0.083333))
+    {
+      return  &ruler_metric_feet;
+    }
+  else if (FACTOR_EQUAL (unit, 0.027778))
+    {
+      return  &ruler_metric_yards;
+    }
 
   return &ruler_metric_decimal;
 }
