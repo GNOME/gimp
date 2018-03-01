@@ -22,12 +22,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "tools-types.h"
 
 #include "core/gimpitem.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolline.h"
+#include "display/gimptooltransformgrid.h"
 
 #include "gimpfilteroptions.h"
 #include "gimpfiltertool.h"
@@ -48,25 +51,31 @@ struct _Controller
 
 /*  local function prototypes  */
 
-static void   gimp_filter_tool_set_line            (Controller                 *controller,
-                                                    GeglRectangle              *area,
-                                                    gdouble                     x1,
-                                                    gdouble                     y1,
-                                                    gdouble                     x2,
-                                                    gdouble                     y2);
-static void   gimp_filter_tool_line_changed        (GimpToolWidget             *widget,
-                                                    Controller                 *controller);
+static void   gimp_filter_tool_set_line               (Controller                 *controller,
+                                                       GeglRectangle              *area,
+                                                       gdouble                     x1,
+                                                       gdouble                     y1,
+                                                       gdouble                     x2,
+                                                       gdouble                     y2);
+static void   gimp_filter_tool_line_changed           (GimpToolWidget             *widget,
+                                                       Controller                 *controller);
 
-static void   gimp_filter_tool_set_slider_line     (Controller                 *controller,
-                                                    GeglRectangle              *area,
-                                                    gdouble                     x1,
-                                                    gdouble                     y1,
-                                                    gdouble                     x2,
-                                                    gdouble                     y2,
-                                                    const GimpControllerSlider *sliders,
-                                                    gint                        n_sliders);
-static void   gimp_filter_tool_slider_line_changed (GimpToolWidget             *widget,
-                                                    Controller                 *controller);
+static void   gimp_filter_tool_set_slider_line        (Controller                 *controller,
+                                                       GeglRectangle              *area,
+                                                       gdouble                     x1,
+                                                       gdouble                     y1,
+                                                       gdouble                     x2,
+                                                       gdouble                     y2,
+                                                       const GimpControllerSlider *sliders,
+                                                       gint                        n_sliders);
+static void   gimp_filter_tool_slider_line_changed    (GimpToolWidget             *widget,
+                                                       Controller                 *controller);
+
+static void   gimp_filter_tool_set_transform_grid     (Controller                 *controller,
+                                                       GeglRectangle              *area,
+                                                       const GimpMatrix3          *matrix);
+static void   gimp_filter_tool_transform_grid_changed (GimpToolWidget             *widget,
+                                                       Controller                 *controller);
 
 
 /*  public functions  */
@@ -129,6 +138,47 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
 
       *set_func      = (GCallback) gimp_filter_tool_set_slider_line;
       *set_func_data = controller;
+      break;
+
+    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRID:
+      {
+        GimpMatrix3   transform;
+        gint          off_x, off_y;
+        GeglRectangle area;
+        gdouble       x1, y1;
+        gdouble       x2, y2;
+
+        gimp_matrix3_identity (&transform);
+
+        gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+        x1 = off_x + area.x;
+        y1 = off_y + area.y;
+        x2 = x1 + area.width;
+        y2 = y1 + area.height;
+
+        controller->widget = gimp_tool_transform_grid_new (shell, &transform,
+                                                           x1, y1, x2, y2);
+
+        g_object_set (controller->widget,
+                      "pivot-x",                 (x1 + x2) / 2.0,
+                      "pivot-y",                 (y1 + y2) / 2.0,
+                      "inside-function",         GIMP_TRANSFORM_FUNCTION_MOVE,
+                      "outside-function",        GIMP_TRANSFORM_FUNCTION_ROTATE,
+                      "use-corner-handles",      TRUE,
+                      "use-perspective-handles", TRUE,
+                      "use-side-handles",        TRUE,
+                      "use-shear-handles",       TRUE,
+                      "use-pivot-handle",        TRUE,
+                      NULL);
+
+        g_signal_connect (controller->widget, "changed",
+                          G_CALLBACK (gimp_filter_tool_transform_grid_changed),
+                          controller);
+
+        *set_func      = (GCallback) gimp_filter_tool_set_transform_grid;
+        *set_func_data = controller;
+      }
       break;
     }
 
@@ -289,4 +339,82 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
 
   slider_line_callback (controller->creator_data,
                         &area, x1, y1, x2, y2, sliders, n_sliders);
+}
+
+static void
+gimp_filter_tool_set_transform_grid (Controller        *controller,
+                                     GeglRectangle     *area,
+                                     const GimpMatrix3 *transform)
+{
+  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
+  GimpDrawable *drawable = tool->drawable;
+  gdouble       x1       = area->x;
+  gdouble       y1       = area->y;
+  gdouble       x2       = area->x + area->width;
+  gdouble       y2       = area->y + area->height;
+  GimpMatrix3   matrix;
+
+  if (drawable)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x1 += off_x;
+      y1 += off_y;
+      x2 += off_x;
+      y2 += off_y;
+    }
+
+  gimp_matrix3_identity (&matrix);
+  gimp_matrix3_translate (&matrix, -x1, -y1);
+  gimp_matrix3_mult (transform, &matrix);
+  gimp_matrix3_translate (&matrix, +x1, +y1);
+
+  g_signal_handlers_block_by_func (controller->widget,
+                                   gimp_filter_tool_transform_grid_changed,
+                                   controller);
+
+  g_object_set (controller->widget,
+                "transform", &matrix,
+                "x1",        x1,
+                "y1",        y1,
+                "x2",        x2,
+                "y2",        y2,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (controller->widget,
+                                     gimp_filter_tool_transform_grid_changed,
+                                     controller);
+}
+
+static void
+gimp_filter_tool_transform_grid_changed (GimpToolWidget *widget,
+                                         Controller     *controller)
+{
+  GimpFilterTool                      *filter_tool = controller->filter_tool;
+  GimpControllerTransformGridCallback  transform_grid_callback;
+  gint                                 off_x, off_y;
+  GeglRectangle                        area;
+  GimpMatrix3                         *transform;
+  GimpMatrix3                          matrix;
+
+  transform_grid_callback =
+    (GimpControllerTransformGridCallback) controller->creator_callback;
+
+  g_object_get (widget,
+                "transform", &transform,
+                NULL);
+
+  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+  gimp_matrix3_identity (&matrix);
+  gimp_matrix3_translate (&matrix, +(off_x + area.x), +(off_y + area.y));
+  gimp_matrix3_mult (transform, &matrix);
+  gimp_matrix3_translate (&matrix, -(off_x + area.x), -(off_y + area.y));
+
+  transform_grid_callback (controller->creator_data,
+                           &area, &matrix);
+
+  g_free (transform);
 }
