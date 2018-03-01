@@ -383,6 +383,7 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-recursive-transform.c
 app/propgui/gimppropgui-shadows-highlights.c
 app/propgui/gimppropgui-spiral.c
 app/propgui/gimppropgui-supernova.c

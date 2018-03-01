@@ -37,6 +37,8 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-generic.h			\
 	gimppropgui-hue-saturation.c		\
 	gimppropgui-hue-saturation.h		\
+	gimppropgui-recursive-transform.c	\
+	gimppropgui-recursive-transform.h	\
 	gimppropgui-shadows-highlights.c	\
 	gimppropgui-shadows-highlights.h	\
 	gimppropgui-spiral.c			\
