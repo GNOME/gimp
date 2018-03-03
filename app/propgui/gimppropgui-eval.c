@@ -882,7 +882,7 @@ gimp_prop_eval_parse_reference (GObject      *config,
 
   if (*error)
     {
-      g_free (ref_key);
+      g_free (*ref_key);
 
       return FALSE;
     }
