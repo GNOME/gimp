@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-12 21:09+0000\n"
-"PO-Revision-Date: 2018-01-12 23:10+0100\n"
+"POT-Creation-Date: 2018-02-25 16:49+0000\n"
+"PO-Revision-Date: 2018-03-03 13:07+0100\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -444,7 +444,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:427 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
@@ -456,7 +456,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1816 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1049,8 +1049,8 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1581
+#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1608
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -2194,7 +2194,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:311
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
@@ -2293,8 +2293,8 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1552
+#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2458,11 +2458,11 @@ msgstr "Mellanrum:"
 msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
-#: ../plug-ins/common/file-gegl.c:86 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "OpenEXR-bild"
 
-#: ../plug-ins/common/file-gegl.c:335
+#: ../plug-ins/common/file-gegl.c:336
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Kunde inte öppna ”%s”"
@@ -3081,10 +3081,10 @@ msgstr "Portable Document Format"
 #.
 #: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
-"PDF-dokumentet ”%1$s” har en enda sida. Sida %2$d är utanför intervallet."
+"PDF-dokumentet ”%1$s” har %3$d sida. Sida %2$d är utanför intervallet."
 msgstr[1] ""
 "PDF-dokumentet ”%1$s” har %3$d sidor. Sida %2$d är utanför intervallet."
 
@@ -7234,30 +7234,30 @@ msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1791
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1887
+#: ../plug-ins/file-psd/psd-load.c:1892
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2066
+#: ../plug-ins/file-psd/psd-load.c:2071
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: ../plug-ins/file-psd/psd-load.c:2135
+#: ../plug-ins/file-psd/psd-load.c:2140
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
 
-#: ../plug-ins/file-psd/psd-save.c:462
+#: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fel: Kan inte konvertera GIMP-basbildtyp till PSD-läge"
 
-#: ../plug-ins/file-psd/psd-save.c:1545
+#: ../plug-ins/file-psd/psd-save.c:1572
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7266,7 +7266,7 @@ msgstr ""
 "Kunde inte exportera ”%s”. Filformatet PSD har inte stöd för bilder som är "
 "högre eller bredare än 30000 bildpunkter."
 
-#: ../plug-ins/file-psd/psd-save.c:1566
+#: ../plug-ins/file-psd/psd-save.c:1593
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
