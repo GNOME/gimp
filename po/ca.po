@@ -5670,7 +5670,7 @@ msgstr "Canvia la mida del contingut de la imatge"
 #: ../app/actions/image-actions.c:142
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "Es_capça la selecció"
+msgstr "Es_capça a la selecció"
 
 #: ../app/actions/image-actions.c:143
 msgctxt "image-action"
@@ -6368,7 +6368,7 @@ msgstr "Canvia la mida del contingut de la capa"
 #: ../app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "Es_capça la selecció"
+msgstr "Es_capça a la selecció"
 
 #: ../app/actions/layers-actions.c:236
 msgctxt "layers-action"
@@ -19309,7 +19309,7 @@ msgstr "Mosaic de paper"
 #: ../app/pdb/plug-in-compat-cmds.c:2927 ../app/pdb/plug-in-compat-cmds.c:2970
 msgctxt "undo-type"
 msgid "Pixelize"
-msgstr "Pixelitza"
+msgstr "Pixela"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3021
 msgctxt "undo-type"
