@@ -913,26 +913,30 @@ load_image (const gchar  *filename,
         }
     }
 
-  if(image->color_space == OPJ_CLRSPC_GRAY)
+  num_components = image->numcomps;
+
+  if (image->color_space == OPJ_CLRSPC_GRAY)
     {
-      base_type = GIMP_GRAY;
+      base_type  = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
+
+      if (num_components == 2)
+        image_type = GIMP_GRAYA_IMAGE;
+    }
+  else if (image->color_space == OPJ_CLRSPC_SRGB)
+    {
+      base_type  = GIMP_RGB;
+      image_type = GIMP_RGB_IMAGE;
+
+      if (num_components == 4)
+        image_type = GIMP_RGBA_IMAGE;
     }
   else
     {
-      base_type = GIMP_RGB;
-      image_type = GIMP_RGB_IMAGE;
-    }
-
-  num_components = image->numcomps;
-
-  if(num_components == 2)
-    {
-      image_type = GIMP_GRAYA_IMAGE;
-    }
-  else if(num_components == 4)
-    {
-      image_type = GIMP_RGBA_IMAGE;
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Couldn't decode JP2 image in '%s'."),
+                   gimp_filename_to_utf8 (filename));
+      goto out;
     }
 
   /* FIXME */
@@ -963,35 +967,34 @@ load_image (const gchar  *filename,
 
   for (i = 0; i < height; i++)
     {
-      for( j = 0; j < num_components; j++)
+      for (j = 0; j < num_components; j++)
         {
-          const int channel_prec = 8;
-
+          const int  channel_prec   = 8;
           OPJ_UINT32 component_prec = image->comps[j].prec;
 
-          if(component_prec >= channel_prec)
+          if (component_prec >= channel_prec)
             {
               int shift = component_prec - channel_prec;
 
-              for( k = 0; k < width; k++)
+              for (k = 0; k < width; k++)
                 {
-                  pixels[k * num_components + j] = image->comps[j].data[i * width + k] >> shift; 
+                  pixels[k * num_components + j] = image->comps[j].data[i * width + k] >> shift;
                 }
             }
           else
             {
               int mult = 1 << (channel_prec - component_prec);
 
-              for( k = 0; k < width; k++)
+              for (k = 0; k < width; k++)
                 {
-                  pixels[k* num_components + j] = image->comps[j].data[i * width + k ] * mult; 
+                  pixels[k * num_components + j] = image->comps[j].data[i * width + k ] * mult;
                 }
 
             }
         }
 
         gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
-                       NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+                         NULL, pixels, GEGL_AUTO_ROWSTRIDE);
     }
 
 #if 0
