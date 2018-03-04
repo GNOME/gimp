@@ -913,27 +913,30 @@ load_image (const gchar  *filename,
         }
     }
 
+  num_components = image->numcomps;
+
   if (image->color_space == OPJ_CLRSPC_GRAY)
     {
       base_type  = GIMP_GRAY;
       image_type = GIMP_GRAY_IMAGE;
+
+      if (num_components == 2)
+        image_type = GIMP_GRAYA_IMAGE;
     }
-  else
+  else if (image->color_space == OPJ_CLRSPC_SRGB)
     {
       base_type  = GIMP_RGB;
       image_type = GIMP_RGB_IMAGE;
 
+      if (num_components == 4)
+        image_type = GIMP_RGBA_IMAGE;
     }
-
-  num_components = image->numcomps;
-
-  if (num_components == 2)
+  else
     {
-      image_type = GIMP_GRAYA_IMAGE;
-    }
-  else if (num_components == 4)
-    {
-      image_type = GIMP_RGBA_IMAGE;
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Couldn't decode JP2 image in '%s'."),
+                   gimp_filename_to_utf8 (filename));
+      goto out;
     }
 
   /* FIXME */
