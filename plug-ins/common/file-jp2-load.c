@@ -141,7 +141,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "jp2",
+                                    "jp2,jpc,jpx,j2k,jpf",
                                     "",
                                     "4,string,jP,0,string,\xff\x4f\xff\x51\x00");
 
@@ -913,16 +913,36 @@ load_image (const gchar  *filename,
         }
     }
 
+  if(image->color_space == OPJ_CLRSPC_GRAY)
+    {
+      base_type = GIMP_GRAY;
+      image_type = GIMP_GRAY_IMAGE;
+    }
+  else
+    {
+      base_type = GIMP_RGB;
+      image_type = GIMP_RGB_IMAGE;
+    }
+
   num_components = image->numcomps;
 
+  if(num_components == 2)
+    {
+      image_type = GIMP_GRAYA_IMAGE;
+    }
+  else if(num_components == 4)
+    {
+      image_type = GIMP_RGBA_IMAGE;
+    }
+
   /* FIXME */
-  base_type = GIMP_GRAY;
+/*  base_type = GIMP_GRAY;
   base_type = GIMP_RGB;
   image_type = GIMP_GRAYA_IMAGE;
   image_type = GIMP_GRAY_IMAGE;
   image_type = GIMP_RGBA_IMAGE;
   image_type = GIMP_RGB_IMAGE;
-
+*/
   width = image->comps[0].w;
   height = image->comps[0].h;
 
@@ -940,6 +960,40 @@ load_image (const gchar  *filename,
   buffer = gimp_drawable_get_buffer (layer_ID);
 
   pixels = malloc (width * num_components);
+
+  for (i = 0; i < height; i++)
+    {
+      for( j = 0; j < num_components; j++)
+        {
+          const int channel_prec = 8;
+
+          OPJ_UINT32 component_prec = image->comps[j].prec;
+
+          if(component_prec >= channel_prec)
+            {
+              int shift = component_prec - channel_prec;
+
+              for( k = 0; k < width; k++)
+                {
+                  pixels[k * num_components + j] = image->comps[j].data[i * width + k] >> shift; 
+                }
+            }
+          else
+            {
+              int mult = 1 << (channel_prec - component_prec);
+
+              for( k = 0; k < width; k++)
+                {
+                  pixels[k* num_components + j] = image->comps[j].data[i * width + k ] * mult; 
+                }
+
+            }
+        }
+
+        gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
+                       NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+    }
+
 #if 0
   matrix = jas_matrix_create (1, width);
 
