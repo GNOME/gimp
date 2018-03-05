@@ -36,6 +36,8 @@
 #include "gimp-intl.h"
 
 
+#ifdef HAVE_VFORK
+
 /* copied from glib */
 static gint
 exec_err_to_g_error (gint en)
@@ -143,6 +145,8 @@ exec_err_to_g_error (gint en)
       break;
     }
 }
+
+#endif /* HAVE_VFORK */
 
 gboolean
 gimp_spawn_async (gchar       **argv,
