@@ -54,6 +54,8 @@ libappcore_a_sources = \
 	gimp-palettes.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
+	gimp-spawn.c				\
+	gimp-spawn.h				\
 	gimp-tags.c				\
 	gimp-tags.h				\
 	gimp-templates.c			\

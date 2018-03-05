@@ -960,6 +960,11 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
     AC_DEFINE(HAVE_RINT)])])
 
 
+# check for vfork
+AC_CHECK_FUNCS(vfork, ,)
+AC_SUBST(HAVE_VFORK)
+
+
 ##############################
 # Check for attributes we need
 ##############################

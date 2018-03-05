@@ -110,6 +110,7 @@ app/core/gimp-gui.c
 app/core/gimp-internal-data.c
 app/core/gimp-modules.c
 app/core/gimp-palettes.c
+app/core/gimp-spawn.c
 app/core/gimp-tags.c
 app/core/gimp-units.c
 app/core/gimp-user-install.c
