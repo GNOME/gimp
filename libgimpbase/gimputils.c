@@ -48,6 +48,12 @@
 #else /* G_OS_WIN32 */
 /* For waitpid() */
 #include <sys/wait.h>
+#include <unistd.h>
+#include <errno.h>
+
+#ifdef HAVE_SYS_PRCTL_H
+#include <sys/prctl.h>
+#endif
 #endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
@@ -1159,12 +1165,21 @@ gimp_stack_trace_print (const gchar *prog_name,
   pid_t    pid;
   gchar    buffer[256];
   ssize_t  read_n;
+  int      sync_fd[2];
   int      out_fd[2];
 
   g_snprintf (gimp_pid, 16, "%u", (guint) getpid ());
 
+  if (pipe (sync_fd) == -1)
+    {
+      return FALSE;
+    }
+
   if (pipe (out_fd) == -1)
     {
+      close (sync_fd[0]);
+      close (sync_fd[1]);
+
       return FALSE;
     }
 
@@ -1179,6 +1194,15 @@ gimp_stack_trace_print (const gchar *prog_name,
         args[4] = "-p";
 
       args[5] = gimp_pid;
+
+      /* Wait until the parent enabled us to ptrace it. */
+      {
+        gchar dummy;
+
+        close (sync_fd[1]);
+        while (read (sync_fd[0], &dummy, 1) < 0 && errno == EINTR);
+        close (sync_fd[0]);
+      }
 
       /* Redirect the debugger output. */
       dup2 (out_fd[1], STDOUT_FILENO);
@@ -1213,13 +1237,20 @@ gimp_stack_trace_print (const gchar *prog_name,
       /* Main process */
       int status;
 
-      waitpid (pid, &status, 0);
+      /* Allow the child to ptrace us, and signal it to start. */
+      close (sync_fd[0]);
+#ifdef PR_SET_PTRACER
+      prctl (PR_SET_PTRACER, pid, 0, 0, 0);
+#endif
+      close (sync_fd[1]);
 
       /* It is important to close the writing side of the pipe, otherwise
        * the read() will wait forever without getting the information that
        * writing is finished.
        */
       close (out_fd[1]);
+
+      waitpid (pid, &status, 0);
 
       while ((read_n = read (out_fd[0], buffer, 256)) > 0)
         {
