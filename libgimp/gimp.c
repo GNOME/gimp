@@ -253,6 +253,20 @@ gimp_main (const GimpPlugInInfo *info,
            gint                  argc,
            gchar                *argv[])
 {
+  enum
+  {
+    ARG_PROGNAME,
+    ARG_GIMP,
+    ARG_READ_FD,
+    ARG_WRITE_FD,
+    ARG_PARENT_READ_FD,
+    ARG_PARENT_WRITE_FD,
+    ARG_MODE,
+    ARG_STACK_TRACE_MODE,
+
+    N_ARGS
+  };
+
   gchar       *basename;
   const gchar *env_string;
   gchar       *debug_string;
@@ -376,7 +390,7 @@ gimp_main (const GimpPlugInInfo *info,
                */
               GString *s;
 
-              s = g_string_new (argv[0]);
+              s = g_string_new (argv[ARG_PROGNAME]);
 
               for (j = 1; j <= i; j++)
                 {
@@ -384,7 +398,7 @@ gimp_main (const GimpPlugInInfo *info,
                   s = g_string_append (s, argv[j]);
                 }
 
-              argv[0] = s->str;
+              argv[ARG_PROGNAME] = s->str;
 
               /* Move rest of argv down */
               for (j = 1; j < argc - i; j++)
@@ -403,16 +417,16 @@ gimp_main (const GimpPlugInInfo *info,
 
   PLUG_IN_INFO = *info;
 
-  if ((argc != 6) || (strcmp (argv[1], "-gimp") != 0))
+  if ((argc != N_ARGS) || (strcmp (argv[ARG_GIMP], "-gimp") != 0))
     {
       g_printerr ("%s is a GIMP plug-in and must be run by GIMP to be used\n",
-                  argv[0]);
+                  argv[ARG_PROGNAME]);
       return 1;
     }
 
   gimp_env_init (TRUE);
 
-  progname = argv[0];
+  progname = argv[ARG_PROGNAME];
 
   basename = g_path_get_basename (progname);
 
@@ -461,7 +475,7 @@ gimp_main (const GimpPlugInInfo *info,
 
   g_free (basename);
 
-  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
+  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[ARG_STACK_TRACE_MODE]),
                                                  GIMP_STACK_TRACE_NEVER,
                                                  GIMP_STACK_TRACE_ALWAYS);
 
@@ -487,11 +501,15 @@ gimp_main (const GimpPlugInInfo *info,
 #endif
 
 #ifdef G_OS_WIN32
-  _readchannel  = g_io_channel_win32_new_fd (atoi (argv[2]));
-  _writechannel = g_io_channel_win32_new_fd (atoi (argv[3]));
+  _readchannel  = g_io_channel_win32_new_fd (atoi (argv[ARG_READ_FD]));
+  _writechannel = g_io_channel_win32_new_fd (atoi (argv[ARG_WRITE_FD]));
 #else
-  _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
-  _writechannel = g_io_channel_unix_new (atoi (argv[3]));
+  _readchannel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
+  _writechannel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
+
+  /* Close parent end of pipes */
+  close (atoi (argv[ARG_PARENT_READ_FD]));
+  close (atoi (argv[ARG_PARENT_WRITE_FD]));
 #endif
 
   g_io_channel_set_encoding (_readchannel, NULL, NULL);
@@ -577,7 +595,7 @@ gimp_main (const GimpPlugInInfo *info,
       g_log_set_always_fatal (fatal_mask);
     }
 
-  if (strcmp (argv[4], "-query") == 0)
+  if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
       if (PLUG_IN_INFO.init_proc)
         gp_has_init_write (_writechannel, NULL);
@@ -593,7 +611,7 @@ gimp_main (const GimpPlugInInfo *info,
       return EXIT_SUCCESS;
     }
 
-  if (strcmp (argv[4], "-init") == 0)
+  if (strcmp (argv[ARG_MODE], "-init") == 0)
     {
       if (gimp_debug_flags & GIMP_DEBUG_INIT)
         gimp_debug_stop ();
