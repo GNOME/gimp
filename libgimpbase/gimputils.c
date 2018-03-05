@@ -1250,13 +1250,6 @@ gimp_stack_trace_print (const gchar *prog_name,
        */
       close (out_fd[1]);
 
-      waitpid (pid, &status, 0);
-
-#ifdef PR_SET_PTRACER
-      /* Clear ptrace permission set above */
-      prctl (PR_SET_PTRACER, 0, 0, 0, 0);
-#endif
-
       while ((read_n = read (out_fd[0], buffer, 256)) > 0)
         {
           /* It's hard to know if the debugger was found since it
@@ -1276,6 +1269,13 @@ gimp_stack_trace_print (const gchar *prog_name,
             }
         }
       close (out_fd[0]);
+
+#ifdef PR_SET_PTRACER
+      /* Clear ptrace permission set above */
+      prctl (PR_SET_PTRACER, 0, 0, 0, 0);
+#endif
+
+      waitpid (pid, &status, 0);
     }
   /* else if (pid == (pid_t) -1)
    * Fork failed!
