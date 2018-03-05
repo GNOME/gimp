@@ -218,7 +218,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gint          my_read[2];
   gint          my_write[2];
   gchar       **envp;
-  const gchar  *args[9];
+  const gchar  *args[11];
   gchar       **argv;
   gint          argc;
   gchar        *interp, *interp_arg;
