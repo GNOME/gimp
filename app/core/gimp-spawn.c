@@ -155,6 +155,8 @@ gimp_spawn_async (gchar       **argv,
                   GPid         *child_pid,
                   GError      **error)
 {
+  g_return_val_if_fail (argv != NULL, FALSE);
+
 #ifdef HAVE_VFORK
   if (flags == (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                 G_SPAWN_DO_NOT_REAP_CHILD      |
