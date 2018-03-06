@@ -22,11 +22,13 @@
 #define __GIMP_SPAWN_H__
 
 
-gboolean   gimp_spawn_async (gchar       **argv,
-                             gchar       **envp,
-                             GSpawnFlags   flags,
-                             GPid         *child_pid,
-                             GError      **error);
+gboolean   gimp_spawn_async       (gchar       **argv,
+                                   gchar       **envp,
+                                   GSpawnFlags   flags,
+                                   GPid         *child_pid,
+                                   GError      **error);
+
+void       gimp_spawn_set_cloexec (gint          fd);
 
 
 #endif /* __GIMP_SPAWN_H__ */

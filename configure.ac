@@ -562,7 +562,7 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_TIME
 
-AC_CHECK_HEADERS(execinfo.h sys/param.h sys/prctl.h sys/time.h sys/times.h sys/wait.h unistd.h)
+AC_CHECK_HEADERS(execinfo.h fcntl.h sys/param.h sys/prctl.h sys/time.h sys/times.h sys/wait.h unistd.h)
 AC_CHECK_FUNCS(backtrace, , AC_CHECK_LIB(execinfo, backtrace))
 
 AC_TYPE_PID_T

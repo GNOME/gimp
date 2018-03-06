@@ -27,6 +27,14 @@
 #include <errno.h>
 #endif
 
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include <glib-object.h>
 
 #include "core-types.h"
@@ -225,4 +233,16 @@ gimp_spawn_async (gchar       **argv,
 #endif /* HAVE_VFORK */
 
   return g_spawn_async (NULL, argv, envp, flags, NULL, NULL, child_pid, error);
+}
+
+void
+gimp_spawn_set_cloexec (gint fd)
+{
+#if defined (G_OS_WIN32)
+  SetHandleInformation ((HANDLE) _get_osfhandle (fd), HANDLE_FLAG_INHERIT, 0);
+#elif defined (HAVE_FCNTL_H)
+  fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
+#elif defined (__GNUC__)
+#warning gimp_spawn_set_cloexec() is not implemented for the target platform
+#endif
 }
