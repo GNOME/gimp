@@ -218,12 +218,11 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gint          my_read[2];
   gint          my_write[2];
   gchar       **envp;
-  const gchar  *args[11];
+  const gchar  *args[9];
   gchar       **argv;
   gint          argc;
   gchar        *interp, *interp_arg;
   gchar        *his_read_fd, *his_write_fd;
-  gchar        *my_read_fd, *my_write_fd;
   const gchar  *mode;
   gchar        *stm;
   GError       *error = NULL;
@@ -254,11 +253,11 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   setmode (my_write[1], _O_BINARY);
 #endif
 
-#ifdef G_OS_WIN32
-  /* Prevent the plug-in from inheriting our ends of the pipes */
-  SetHandleInformation ((HANDLE) _get_osfhandle (my_read[0]), HANDLE_FLAG_INHERIT, 0);
-  SetHandleInformation ((HANDLE) _get_osfhandle (my_write[1]), HANDLE_FLAG_INHERIT, 0);
+  /* Prevent the plug-in from inheriting our end of the pipes */
+  gimp_spawn_set_cloexec (my_read[0]);
+  gimp_spawn_set_cloexec (my_write[1]);
 
+#ifdef G_OS_WIN32
   plug_in->my_read   = g_io_channel_win32_new_fd (my_read[0]);
   plug_in->my_write  = g_io_channel_win32_new_fd (my_write[1]);
   plug_in->his_read  = g_io_channel_win32_new_fd (my_write[0]);
@@ -291,11 +290,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
                                   g_io_channel_unix_get_fd (plug_in->his_read));
   his_write_fd = g_strdup_printf ("%d",
                                   g_io_channel_unix_get_fd (plug_in->his_write));
-
-  my_read_fd   = g_strdup_printf ("%d",
-                                  g_io_channel_unix_get_fd (plug_in->my_read));
-  my_write_fd  = g_strdup_printf ("%d",
-                                  g_io_channel_unix_get_fd (plug_in->my_write));
 
   switch (call_mode)
     {
@@ -337,8 +331,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   args[argc++] = "-gimp";
   args[argc++] = his_read_fd;
   args[argc++] = his_write_fd;
-  args[argc++] = my_read_fd;
-  args[argc++] = my_write_fd;
   args[argc++] = mode;
   args[argc++] = stm;
   args[argc++] = NULL;
@@ -411,8 +403,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
 
   g_free (his_read_fd);
   g_free (his_write_fd);
-  g_free (my_read_fd);
-  g_free (my_write_fd);
   g_free (stm);
   g_free (interp);
   g_free (interp_arg);

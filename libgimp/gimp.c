@@ -259,8 +259,6 @@ gimp_main (const GimpPlugInInfo *info,
     ARG_GIMP,
     ARG_READ_FD,
     ARG_WRITE_FD,
-    ARG_PARENT_READ_FD,
-    ARG_PARENT_WRITE_FD,
     ARG_MODE,
     ARG_STACK_TRACE_MODE,
 
@@ -506,10 +504,6 @@ gimp_main (const GimpPlugInInfo *info,
 #else
   _readchannel  = g_io_channel_unix_new (atoi (argv[ARG_READ_FD]));
   _writechannel = g_io_channel_unix_new (atoi (argv[ARG_WRITE_FD]));
-
-  /* Close parent end of pipes */
-  close (atoi (argv[ARG_PARENT_READ_FD]));
-  close (atoi (argv[ARG_PARENT_WRITE_FD]));
 #endif
 
   g_io_channel_set_encoding (_readchannel, NULL, NULL);
