@@ -32,11 +32,13 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
 #include "core/gimptreehandler.h"
@@ -930,7 +932,8 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
 
   gimp_highlightable_button_set_highlight (
     GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_new_button (item_view)),
-    floating_sel != NULL);
+    floating_sel != NULL &&
+    ! GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (floating_sel)));
   gimp_highlightable_button_set_highlight (
     GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_delete_button (item_view)),
     floating_sel != NULL);
