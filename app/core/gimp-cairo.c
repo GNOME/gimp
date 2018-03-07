@@ -35,6 +35,9 @@
 #include "gimp-cairo.h"
 
 
+#define REV (2.0 * G_PI)
+
+
 static cairo_user_data_key_t surface_data_key = { 0, };
 
 
@@ -122,6 +125,63 @@ gimp_cairo_arc (cairo_t *cr,
                  - start_angle,
                  - start_angle - slice_angle);
     }
+}
+
+void
+gimp_cairo_rounded_rectangle (cairo_t *cr,
+                              gdouble  x,
+                              gdouble  y,
+                              gdouble  width,
+                              gdouble  height,
+                              gdouble  corner_radius)
+{
+  g_return_if_fail (cr != NULL);
+
+  if (width < 0.0)
+    {
+      x     += width;
+      width  = -width;
+    }
+
+  if (height < 0.0)
+    {
+      y      += height;
+      height  = -height;
+    }
+
+  corner_radius = CLAMP (corner_radius, 0.0, MIN (width, height) / 2.0);
+
+  cairo_new_sub_path (cr);
+
+  cairo_arc     (cr,
+                 x + corner_radius, y + corner_radius,
+                 corner_radius,
+                 0.50 * REV, 0.75 * REV);
+  cairo_line_to (cr,
+                 x + width - corner_radius, y);
+
+  cairo_arc     (cr,
+                 x + width - corner_radius, y + corner_radius,
+                 corner_radius,
+                 0.75 * REV, 1.00 * REV);
+  cairo_line_to (cr,
+                 x + width, y + height - corner_radius);
+
+  cairo_arc     (cr,
+                 x + width - corner_radius, y + height - corner_radius,
+                 corner_radius,
+                 0.00 * REV, 0.25 * REV);
+  cairo_line_to (cr,
+                 x + corner_radius, y + height);
+
+  cairo_arc     (cr,
+                 x + corner_radius, y + height - corner_radius,
+                 corner_radius,
+                 0.25 * REV, 0.50 * REV);
+  cairo_line_to (cr,
+                 x, y + corner_radius);
+
+  cairo_close_path (cr);
 }
 
 void

@@ -37,6 +37,12 @@ void              gimp_cairo_arc                    (cairo_t         *cr,
                                                      gdouble          radius,
                                                      gdouble          start_angle,
                                                      gdouble          slice_angle);
+void              gimp_cairo_rounded_rectangle      (cairo_t         *cr,
+                                                     gdouble          x,
+                                                     gdouble          y,
+                                                     gdouble          width,
+                                                     gdouble          height,
+                                                     gdouble          corner_radius);
 void              gimp_cairo_segments               (cairo_t         *cr,
                                                      GimpSegment     *segs,
                                                      gint             n_segs);
