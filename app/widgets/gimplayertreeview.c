@@ -51,6 +51,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimphighlightablebutton.h"
 #include "gimplayermodebox.h"
 #include "gimplayertreeview.h"
 #include "gimpspinscale.h"
@@ -61,11 +62,16 @@
 #include "gimp-intl.h"
 
 
+#define HIGHLIGHT_COLOR_GREEN {0.20, 0.70, 0.20, 0.65}
+#define HIGHLIGHT_COLOR_RED   {0.80, 0.20, 0.20, 0.65}
+
+
 struct _GimpLayerTreeViewPriv
 {
   GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
   GtkWidget       *lock_alpha_toggle;
+  GtkWidget       *anchor_button;
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
@@ -335,10 +341,18 @@ static void
 gimp_layer_tree_view_constructed (GObject *object)
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (object);
+  GimpItemTreeView      *item_view  = GIMP_ITEM_TREE_VIEW (object);
   GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (object);
   GtkWidget             *button;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_highlightable_button_set_highlight_color (
+    GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_new_button (item_view)),
+    &(GimpRGB) HIGHLIGHT_COLOR_GREEN);
+  gimp_highlightable_button_set_highlight_color (
+    GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_delete_button (item_view)),
+    &(GimpRGB) HIGHLIGHT_COLOR_RED);
 
   layer_view->priv->mask_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
@@ -380,6 +394,10 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
+  layer_view->priv->anchor_button = button;
+  gimp_highlightable_button_set_highlight_color (
+    GIMP_HIGHLIGHTABLE_BUTTON (button),
+    &(GimpRGB) HIGHLIGHT_COLOR_GREEN);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
@@ -868,6 +886,7 @@ static void
 gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
                                                  GimpLayerTreeView *layer_view)
 {
+  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (layer_view);
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GimpContainerView     *view      = GIMP_CONTAINER_VIEW (layer_view);
   GimpLayer             *floating_sel;
@@ -908,6 +927,16 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
 
       g_list_free (all_layers);
     }
+
+  gimp_highlightable_button_set_highlight (
+    GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_new_button (item_view)),
+    floating_sel != NULL);
+  gimp_highlightable_button_set_highlight (
+    GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_delete_button (item_view)),
+    floating_sel != NULL);
+  gimp_highlightable_button_set_highlight (
+    GIMP_HIGHLIGHTABLE_BUTTON (layer_view->priv->anchor_button),
+    floating_sel != NULL);
 }
 
 
