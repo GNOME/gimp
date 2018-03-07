@@ -151,6 +151,13 @@ gimp_cairo_rounded_rectangle (cairo_t *cr,
 
   corner_radius = CLAMP (corner_radius, 0.0, MIN (width, height) / 2.0);
 
+  if (corner_radius == 0.0)
+    {
+      cairo_rectangle (cr, x, y, width, height);
+
+      return;
+    }
+
   cairo_new_sub_path (cr);
 
   cairo_arc     (cr,
