@@ -25,19 +25,19 @@
 #define __APP_GIMP_CAIRO_H__
 
 
-cairo_pattern_t * gimp_cairo_stipple_pattern_create (const GimpRGB   *fg,
+cairo_pattern_t * gimp_cairo_pattern_create_stipple (const GimpRGB   *fg,
                                                      const GimpRGB   *bg,
                                                      gint             index,
                                                      gdouble          offset_x,
                                                      gdouble          offset_y);
 
-void              gimp_cairo_add_arc                (cairo_t         *cr,
+void              gimp_cairo_arc                    (cairo_t         *cr,
                                                      gdouble          center_x,
                                                      gdouble          center_y,
                                                      gdouble          radius,
                                                      gdouble          start_angle,
                                                      gdouble          slice_angle);
-void              gimp_cairo_add_segments           (cairo_t         *cr,
+void              gimp_cairo_segments               (cairo_t         *cr,
                                                      GimpSegment     *segs,
                                                      gint             n_segs);
 

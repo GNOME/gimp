@@ -425,9 +425,9 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           cairo_set_dash (cr, dashes, 2, dashes[0] / 2.0);
         }
 
-      gimp_cairo_add_arc (cr, x, y, private->width / 2,
-                          private->start_angle,
-                          private->slice_angle);
+      gimp_cairo_arc (cr, x, y, private->width / 2,
+                      private->start_angle,
+                      private->slice_angle);
 
       _gimp_canvas_item_stroke (item, cr);
 
@@ -438,9 +438,9 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
     case GIMP_HANDLE_FILLED_CIRCLE:
       cairo_move_to (cr, x, y);
 
-      gimp_cairo_add_arc (cr, x, y, (gdouble) private->width / 2.0,
-                          private->start_angle,
-                          private->slice_angle);
+      gimp_cairo_arc (cr, x, y, (gdouble) private->width / 2.0,
+                      private->start_angle,
+                      private->slice_angle);
 
       _gimp_canvas_item_fill (item, cr);
       break;

@@ -311,7 +311,7 @@ gimp_canvas_boundary_draw (GimpCanvasItem *item,
 
   gimp_canvas_boundary_transform (item, segs, &n_segs);
 
-  gimp_cairo_add_segments (cr, segs, n_segs);
+  gimp_cairo_segments (cr, segs, n_segs);
 
   _gimp_canvas_item_stroke (item, cr);
 

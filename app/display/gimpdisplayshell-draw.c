@@ -60,7 +60,7 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
   gimp_canvas_set_selection_out_style (shell->canvas, cr,
                                        shell->offset_x, shell->offset_y);
 
-  gimp_cairo_add_segments (cr, segs, n_segs);
+  gimp_cairo_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
