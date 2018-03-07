@@ -33,6 +33,7 @@
 
 #ifdef G_OS_WIN32
 #include <windows.h>
+#include <io.h>
 #endif
 
 #include <glib-object.h>
@@ -164,6 +165,7 @@ gimp_spawn_async (gchar       **argv,
                   GError      **error)
 {
   g_return_val_if_fail (argv != NULL, FALSE);
+  g_return_val_if_fail (argv[0] != NULL, FALSE);
 
 #ifdef HAVE_VFORK
   if (flags == (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
