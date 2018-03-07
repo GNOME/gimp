@@ -177,6 +177,7 @@ gimp_highlightable_button_expose_event (GtkWidget      *widget,
           GtkAllocation  allocation;
           gboolean       border;
           gdouble        lightness;
+          gdouble        opacity;
           gdouble        x;
           gdouble        y;
           gdouble        width;
@@ -190,12 +191,16 @@ gimp_highlightable_button_expose_event (GtkWidget      *widget,
              state                                       == GTK_STATE_PRELIGHT ||
              gtk_button_get_relief (GTK_BUTTON (button)) == GTK_RELIEF_NORMAL);
 
-          if (state == GTK_STATE_ACTIVE)
-            lightness = 0.80;
-          else if (state == GTK_STATE_PRELIGHT)
-            lightness = 1.25;
-          else
-            lightness = 1.00;
+          lightness = 1.00;
+          opacity   = 1.00;
+
+          switch (state)
+            {
+            case GTK_STATE_ACTIVE:      lightness = 0.80; break;
+            case GTK_STATE_PRELIGHT:    lightness = 1.25; break;
+            case GTK_STATE_INSENSITIVE: opacity   = 0.50; break;
+            default:                                      break;
+            }
 
           x      = allocation.x      +       PADDING;
           y      = allocation.y      +       PADDING;
@@ -218,7 +223,7 @@ gimp_highlightable_button_expose_event (GtkWidget      *widget,
                                  button->priv->highlight_color.r * lightness,
                                  button->priv->highlight_color.g * lightness,
                                  button->priv->highlight_color.b * lightness,
-                                 button->priv->highlight_color.a);
+                                 button->priv->highlight_color.a * opacity);
 
           gimp_cairo_rounded_rectangle (cr,
                                         x, y, width, height, CORNER_RADIUS);
