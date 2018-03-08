@@ -365,7 +365,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      gimp_prop_gui_bind_tooltip (widget, button);
+      gimp_prop_gui_bind_tooltip (button, widget);
 
       if (create_picker_func)
         {
