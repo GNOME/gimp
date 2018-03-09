@@ -88,18 +88,20 @@
 #include <openjpeg.h>
 
 
-#define LOAD_PROC      "file-jp2-load"
-#define PLUG_IN_BINARY "file-jp2-load"
+#define LOAD_JP2_PROC      "file-jp2-load"
+#define LOAD_J2K_PROC      "file-j2k-load"
+#define PLUG_IN_BINARY     "file-jp2-load"
 
 
 static void     query             (void);
-static void     run               (const gchar      *name,
-                                   gint              nparams,
-                                   const GimpParam  *param,
-                                   gint             *nreturn_vals,
-                                   GimpParam       **return_vals);
-static gint32   load_image        (const gchar      *filename,
-                                   GError          **error);
+static void     run               (const gchar       *name,
+                                   gint               nparams,
+                                   const GimpParam   *param,
+                                   gint              *nreturn_vals,
+                                   GimpParam        **return_vals);
+static gint32   load_image        (const gchar       *filename,
+                                   OPJ_CODEC_FORMAT   format,
+                                   GError           **error);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -127,11 +129,11 @@ query (void)
     { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
 
-  gimp_install_procedure (LOAD_PROC,
+  gimp_install_procedure (LOAD_JP2_PROC,
                           "Loads JPEG 2000 images.",
                           "The JPEG 2000 image loader.",
-                          "Aurimas Juška",
-                          "Aurimas Juška, Florian Traverse",
+                          "Mukund Sivaraman",
+                          "Mukund Sivaraman",
                           "2009",
                           N_("JPEG 2000 image"),
                           NULL,
@@ -139,13 +141,37 @@ query (void)
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
-
-  gimp_register_magic_load_handler (LOAD_PROC,
-                                    "jp2,jpc,jpx,j2k,jpf",
+  /*
+   * XXX: more complete magic number would be:
+   * "0,string,\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A"
+   * But the '\0' character makes problem in a 0-terminated string
+   * obviously, as well as some other space characters, it would seem.
+   * The below smaller version seems ok and not interfering with other
+   * formats.
+   */
+  gimp_register_magic_load_handler (LOAD_JP2_PROC,
+                                    "jp2",
                                     "",
-                                    "4,string,jP,0,string,\xff\x4f\xff\x51\x00");
+                                   "3,string,\x0CjP");
+  gimp_register_file_handler_mime (LOAD_JP2_PROC, "image/jp2");
 
-  gimp_register_file_handler_mime (LOAD_PROC, "image/jp2");
+  gimp_install_procedure (LOAD_J2K_PROC,
+                          "Loads JPEG 2000 codestream.",
+                          "The JPEG 2000 codestream loader.",
+                          "Jehan",
+                          "Jehan",
+                          "2009",
+                          N_("JPEG 2000 codestream"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
+  gimp_register_magic_load_handler (LOAD_J2K_PROC,
+                                    "j2k,j2c",
+                                    "",
+                                    "0,string,\xff\x4f\xff\x51\x00");
+  gimp_register_file_handler_mime (LOAD_J2K_PROC, "image/x-jp2-codestream");
 }
 
 static void
@@ -172,7 +198,8 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  if (strcmp (name, LOAD_JP2_PROC) == 0 ||
+      strcmp (name, LOAD_J2K_PROC) == 0)
     {
       gboolean interactive;
 
@@ -188,7 +215,10 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, &error);
+      if (strcmp (name, LOAD_JP2_PROC) == 0)
+        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2, &error);
+      else /* strcmp (name, LOAD_J2K_PROC) == 0 */
+        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K, &error);
 
       if (image_ID != -1)
         {
@@ -798,8 +828,9 @@ color_esycc_to_rgb (opj_image_t *image)
 }
 
 static gint32
-load_image (const gchar  *filename,
-            GError      **error)
+load_image (const gchar       *filename,
+            OPJ_CODEC_FORMAT   format,
+            GError           **error)
 {
   opj_stream_t      *stream;
   opj_codec_t       *codec;
@@ -836,7 +867,7 @@ load_image (const gchar  *filename,
       goto out;
     }
 
-  codec = opj_create_decompress (OPJ_CODEC_JP2);
+  codec = opj_create_decompress (format);
 
   opj_set_default_decoder_parameters (&parameters);
   if (opj_setup_decoder (codec, &parameters) != OPJ_TRUE)
