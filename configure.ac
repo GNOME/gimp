@@ -742,7 +742,7 @@ AC_MSG_RESULT($have_glib_2_43)
 
 AC_PATH_PROG(GEGL, gegl, no)
 if test "x$GEGL" = xno; then
-  add_deps_error([gegl], [Could not find gegl in your PATH.])
+  add_deps_error([gegl], [Could not find native gegl executable in your PATH.])
 fi
 
 
