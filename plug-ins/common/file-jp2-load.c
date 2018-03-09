@@ -865,7 +865,7 @@ load_image (const gchar  *filename,
   if (opj_end_decompress (codec, stream) != OPJ_TRUE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Couldn't decode JP2 image in '%s'."),
+                   _("Couldn't decompress JP2 image in '%s'."),
                    gimp_filename_to_utf8 (filename));
       goto out;
     }
@@ -887,7 +887,7 @@ load_image (const gchar  *filename,
       if (! color_sycc_to_rgb (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't decode JP2 image in '%s'."),
+                       _("Couldn't convert YUV JP2 image '%s' to RGB."),
                        gimp_filename_to_utf8 (filename));
           goto out;
         }
@@ -897,7 +897,7 @@ load_image (const gchar  *filename,
       if (! color_cmyk_to_rgb (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't decode JP2 image in '%s'."),
+                       _("Couldn't convert CMYK JP2 image in '%s' to RGB."),
                        gimp_filename_to_utf8 (filename));
           goto out;
         }
@@ -907,7 +907,7 @@ load_image (const gchar  *filename,
       if (! color_esycc_to_rgb (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't decode JP2 image in '%s'."),
+                       _("Couldn't convert YCC JP2 image in '%s' to RGB."),
                        gimp_filename_to_utf8 (filename));
           goto out;
         }
@@ -934,7 +934,7 @@ load_image (const gchar  *filename,
   else
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Couldn't decode JP2 image in '%s'."),
+                   _("Unsupported color space in JP2 image '%s'."),
                    gimp_filename_to_utf8 (filename));
       goto out;
     }
