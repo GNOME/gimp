@@ -805,6 +805,7 @@ load_image (const gchar  *filename,
   opj_codec_t       *codec;
   opj_dparameters_t  parameters;
   opj_image_t       *image;
+  GimpColorProfile  *profile = NULL;
   gint32             image_ID;
   gint32             layer_ID;
   GimpImageType      image_type;
@@ -868,6 +869,42 @@ load_image (const gchar  *filename,
                    _("Couldn't decompress JP2 image in '%s'."),
                    gimp_filename_to_utf8 (filename));
       goto out;
+    }
+
+  if (image->icc_profile_buf)
+    {
+      if (image->icc_profile_len)
+        {
+          profile = gimp_color_profile_new_from_icc_profile (image->icc_profile_buf,
+                                                             image->icc_profile_len,
+                                                             error);
+          if (! profile)
+            goto out;
+
+          if (image->color_space == OPJ_CLRSPC_UNSPECIFIED)
+            {
+              if (gimp_color_profile_is_rgb (profile))
+                image->color_space = OPJ_CLRSPC_SRGB;
+              else if (gimp_color_profile_is_gray (profile))
+                image->color_space = OPJ_CLRSPC_GRAY;
+              else if (gimp_color_profile_is_cmyk (profile))
+                image->color_space = OPJ_CLRSPC_CMYK;
+            }
+
+          gimp_image_set_color_profile (image_ID, profile);
+          g_object_unref (profile);
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Couldn't decode CIELAB JP2 image in '%s'."),
+                       gimp_filename_to_utf8 (filename));
+          goto out;
+        }
+
+      free (image->icc_profile_buf);
+      image->icc_profile_buf = NULL;
+      image->icc_profile_len = 0;
     }
 
   if ((image->color_space != OPJ_CLRSPC_SYCC) &&
@@ -1060,34 +1097,6 @@ load_image (const gchar  *filename,
   free (pixels);
 
   g_object_unref (buffer);
-
-  if (image->icc_profile_buf)
-    {
-      if (image->icc_profile_len)
-        {
-          GimpColorProfile *profile;
-
-          profile = gimp_color_profile_new_from_icc_profile
-            (image->icc_profile_buf, image->icc_profile_len, error);
-          if (! profile)
-            goto out;
-
-          gimp_image_set_color_profile (image_ID, profile);
-          g_object_unref (profile);
-        }
-      else
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't decode CIELAB JP2 image in '%s'."),
-                       gimp_filename_to_utf8 (filename));
-          goto out;
-        }
-
-      free (image->icc_profile_buf);
-      image->icc_profile_buf = NULL;
-      image->icc_profile_len = 0;
-    }
-
   gimp_progress_update (1.0);
 
  out:
