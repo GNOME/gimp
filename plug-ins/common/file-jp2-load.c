@@ -933,10 +933,33 @@ load_image (const gchar  *filename,
     }
   else
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Unsupported color space in JP2 image '%s'."),
-                   gimp_filename_to_utf8 (filename));
-      goto out;
+      /* Sometimes the color space is not set at this point, which
+       * sucks. It seems to happen in particular with codestream images
+       * (.j2c or .j2k) which, if I understand well, are meant to be
+       * embedded by other files. So maybe that means that the color
+       * space information is in this container file?
+       * For now, let's just assume RGB/RGBA space when this happens,
+       * but this is not ideal. We should instead pop-up a dialog asking
+       * one to specify the color space in interactive mode (and add a
+       * parameter for the API.
+       * TODO!
+       */
+      base_type  = GIMP_RGB;
+      if (num_components == 3)
+        {
+          image_type = GIMP_RGB_IMAGE;
+        }
+      else if (num_components == 4)
+        {
+          image_type = GIMP_RGBA_IMAGE;
+        }
+      else
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported color space in JP2 image '%s'."),
+                       gimp_filename_to_utf8 (filename));
+          goto out;
+        }
     }
 
   /* FIXME */
