@@ -83,6 +83,7 @@ EXTRA_DIST = \
 	authors.xsl		\
 	config.h.win32		\
 	gimp-zip.in		\
+	git-version.h		\
 	gtk-doc.make
 
 
@@ -125,14 +126,14 @@ $(srcdir)/ChangeLog:
 	fi
 .PHONY: $(srcdir)/ChangeLog
 
-libapp_generated_sources = \
+generated_sources = \
 	git-version.h
 
 # Build git-version.h before anything in the subdirs as this is needed
 # in the about and debug dialog (app/) and in the debug tool (tools/).
-BUILT_SOURCES = $(libapp_generated_sources)
+BUILT_SOURCES = $(generated_sources)
 
-CLEANFILES = $(libapp_generated_sources)
+CLEANFILES = $(generated_sources)
 
 # If git is available, always check if git-version.h should be
 # updated. If git is not available, don't do anything if git-version.h
