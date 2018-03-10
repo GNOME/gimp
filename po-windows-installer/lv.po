@@ -25,7 +25,7 @@ msgstr "Licences nosacījumi"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Instalatoru izveidoja Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Instalatoru izveidoja Jernej Simoncic, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
