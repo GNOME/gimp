@@ -912,7 +912,8 @@ load_image (const gchar       *filename,
           if (! profile)
             goto out;
 
-          if (image->color_space == OPJ_CLRSPC_UNSPECIFIED)
+          if (image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
+              image->color_space == OPJ_CLRSPC_UNKNOWN)
             {
               if (gimp_color_profile_is_rgb (profile))
                 image->color_space = OPJ_CLRSPC_SRGB;
@@ -921,9 +922,6 @@ load_image (const gchar       *filename,
               else if (gimp_color_profile_is_cmyk (profile))
                 image->color_space = OPJ_CLRSPC_CMYK;
             }
-
-          gimp_image_set_color_profile (image_ID, profile);
-          g_object_unref (profile);
         }
       else
         {
@@ -1012,7 +1010,7 @@ load_image (const gchar       *filename,
        * parameter for the API.
        * TODO!
        */
-      base_type  = GIMP_RGB;
+      base_type = GIMP_RGB;
       if (num_components == 3)
         {
           image_type = GIMP_RGB_IMAGE;
@@ -1043,6 +1041,9 @@ load_image (const gchar       *filename,
 
   image_ID = gimp_image_new (width, height, base_type);
   gimp_image_set_filename (image_ID, filename);
+
+  if (profile)
+    gimp_image_set_color_profile (image_ID, profile);
 
   layer_ID = gimp_layer_new (image_ID,
                              _("Background"),
@@ -1131,6 +1132,8 @@ load_image (const gchar       *filename,
   gimp_progress_update (1.0);
 
  out:
+  if (profile)
+    g_object_unref (profile);
   if (image)
     opj_image_destroy (image);
   if (codec)
