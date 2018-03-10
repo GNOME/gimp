@@ -836,7 +836,7 @@ load_image (const gchar       *filename,
   opj_codec_t       *codec;
   opj_dparameters_t  parameters;
   opj_image_t       *image;
-  GimpColorProfile  *profile = NULL;
+  GimpColorProfile  *profile;
   gint32             image_ID;
   gint32             layer_ID;
   GimpImageType      image_type;
@@ -850,9 +850,10 @@ load_image (const gchar       *filename,
   guchar            *pixels;
   gint               components[4];
 
-  stream = NULL;
-  codec = NULL;
-  image = NULL;
+  stream   = NULL;
+  codec    = NULL;
+  image    = NULL;
+  profile  = NULL;
   image_ID = -1;
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -1028,14 +1029,6 @@ load_image (const gchar       *filename,
         }
     }
 
-  /* FIXME */
-/*  base_type = GIMP_GRAY;
-  base_type = GIMP_RGB;
-  image_type = GIMP_GRAYA_IMAGE;
-  image_type = GIMP_GRAY_IMAGE;
-  image_type = GIMP_RGBA_IMAGE;
-  image_type = GIMP_RGB_IMAGE;
-*/
   width = image->comps[0].w;
   height = image->comps[0].h;
 
@@ -1088,43 +1081,6 @@ load_image (const gchar       *filename,
         gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
                          NULL, pixels, GEGL_AUTO_ROWSTRIDE);
     }
-
-#if 0
-  matrix = jas_matrix_create (1, width);
-
-  for (i = 0; i < height; i++)
-    {
-      for (j = 0; j < num_components; j++)
-        {
-          const int channel_prec = 8;
-
-          jas_image_readcmpt (image, components[j], 0, i, width, 1, matrix);
-
-          if (jas_image_cmptprec (image, components[j]) >= channel_prec)
-            {
-              int shift = MAX (jas_image_cmptprec (image, components[j]) - channel_prec, 0);
-
-              for (k = 0; k < width; k++)
-                {
-                  pixels[k * num_components + j] = jas_matrix_get (matrix, 0, k) >> shift;
-                }
-            }
-          else
-            {
-              int mul = 1 << (channel_prec - jas_image_cmptprec (image, components[j]));
-
-              for (k = 0; k < width; k++)
-                {
-                  pixels[k * num_components + j] = jas_matrix_get (matrix, 0, k) * mul;
-                }
-
-            }
-        }
-
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
-                       NULL, pixels, GEGL_AUTO_ROWSTRIDE);
-    }
-#endif
 
   free (pixels);
 
