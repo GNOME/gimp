@@ -56,7 +56,7 @@ main (int    argc,
 
   if (argc != 6)
     {
-      g_print ("Usage: gimpdebug-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n");
+      g_print ("Usage: gimp-debug-tool-2.0 [PROGRAM] [PID] [REASON] [MESSAGE] [BT_FILE]\n");
       exit (EXIT_FAILURE);
     }
 
