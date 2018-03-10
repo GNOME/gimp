@@ -21,6 +21,7 @@ languages = \
 	id:[id]:ISO-8859-1		\
 	is:[is]:WINDOWS-1252		\
 	it:[it]:WINDOWS-1252		\
+	lv:[lv]:ISO-8859-13		\
 	nl:[nl]:WINDOWS-1252		\
 	pl:[pl]:WINDOWS-1250		\
 	pt_BR:[pt_BR]:WINDOWS-1252	\
