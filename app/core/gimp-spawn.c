@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <glib-object.h>
+
 #ifdef HAVE_VFORK
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -35,8 +37,6 @@
 #include <windows.h>
 #include <io.h>
 #endif
-
-#include <glib-object.h>
 
 #include "core-types.h"
 
