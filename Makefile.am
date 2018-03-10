@@ -32,6 +32,7 @@ SUBDIRS = \
 	libgimpwidgets		\
 	libgimp			\
 	app			\
+	app-tools		\
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	etc			\

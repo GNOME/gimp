@@ -2538,6 +2538,7 @@ app/tests/gimpdir/Makefile
 app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
+app-tools/Makefile
 build/Makefile
 build/windows/Makefile
 build/windows/gimp.rc
