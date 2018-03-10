@@ -16,35 +16,35 @@ msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-06 04:43+0000\n"
-"PO-Revision-Date: 2018-01-08 22:35+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2018-03-03 12:11+0000\n"
+"PO-Revision-Date: 2018-03-10 23:00+0100\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1206
+#: ../libgimp/gimp.c:1209
 msgid "success"
 msgstr "Erfolg"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1210
+#: ../libgimp/gimp.c:1213
 msgid "execution error"
 msgstr "Ausführungsfehler"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1214
+#: ../libgimp/gimp.c:1217
 msgid "calling error"
 msgstr "Aufruffehler"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1218
+#: ../libgimp/gimp.c:1221
 msgid "cancelled"
 msgstr "abgebrochen"
 
@@ -251,44 +251,44 @@ msgstr "Schriftenauswahl"
 msgid "Gradient Selection"
 msgstr "Farbverlaufsauswahl"
 
-#: ../libgimp/gimpimagemetadata.c:477
+#: ../libgimp/gimpimagemetadata.c:487
 msgid "GIMP 2.9/2.10"
 msgstr "GIMP 2.9/2.10"
 
-#: ../libgimp/gimpimagemetadata.c:661
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../libgimp/gimpimagemetadata.c:850
+#: ../libgimp/gimpimagemetadata.c:860
 #, c-format
 msgid "Rotate %s?"
 msgstr "%s drehen?"
 
-#: ../libgimp/gimpimagemetadata.c:856
+#: ../libgimp/gimpimagemetadata.c:866
 msgid "_Keep Original"
 msgstr "Original _beibehalten"
 
-#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:908
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:914
+#: ../libgimp/gimpimagemetadata.c:924
 msgid "Rotated"
 msgstr "Gedreht"
 
-#: ../libgimp/gimpimagemetadata.c:932
+#: ../libgimp/gimpimagemetadata.c:942
 msgid "This image contains Exif orientation metadata."
 msgstr "Dieses Bild enthält Exif-Metadaten zur Ausrichtung."
 
-#: ../libgimp/gimpimagemetadata.c:950
+#: ../libgimp/gimpimagemetadata.c:960
 msgid "Would you like to rotate the image?"
 msgstr "Wollen Sie dieses Bild drehen?"
 
-#: ../libgimp/gimpimagemetadata.c:962
+#: ../libgimp/gimpimagemetadata.c:972
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -1414,57 +1414,57 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Auf Seitenverhältnis beschneiden"
 
-#: ../libgimpbase/gimpmetadata.c:840
+#: ../libgimpbase/gimpmetadata.c:845
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metadaten können nur aus lokalen Dateien geladen werden"
 
-#: ../libgimpbase/gimpmetadata.c:900
+#: ../libgimpbase/gimpmetadata.c:905
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadaten können nur in lokalen Dateien gespeichert werden"
 
-#: ../libgimpbase/gimpmetadata.c:976
+#: ../libgimpbase/gimpmetadata.c:981
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Auswerten der Exif-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimpmetadata.c:1027
+#: ../libgimpbase/gimpmetadata.c:1032
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Auswerten der IPTC-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimpmetadata.c:1076
+#: ../libgimpbase/gimpmetadata.c:1081
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Auswerten der XMP-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libgimpbase/gimputils.c:209 ../libgimpbase/gimputils.c:214
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültige UTF-8-Zeichenkette)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libgimpbase/gimputils.c:384
 msgid "File path is NULL"
 msgstr "Dateipfad ist NULL"
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libgimpbase/gimputils.c:393 ../libgimpbase/gimputils.c:404
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fehler bei der Umwandlung eines UTF-8-Dateinamens in breites Zeichen"
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libgimpbase/gimputils.c:412
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() fehlgeschlagen"
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "»%s« kann nicht eine gültige NSURL umgewandelt werden."
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Verbindung zu org.freedesktop.FileManager1 ist fehlgeschlagen: "
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "Aufruf von ShowItems ist fehlgeschlagen: "
 
@@ -1930,23 +1930,29 @@ msgstr "Hersteller: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:201
+#: ../libgimpwidgets/gimpcolorscales.c:204
 msgid "Scales"
 msgstr "Schieberegler"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:383
+#| msgctxt "gradient-segment-color"
+#| msgid "RGB"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpcolorscales.c:416
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:441
+#: ../libgimpwidgets/gimpcolorscales.c:418
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:444
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:464
+#: ../libgimpwidgets/gimpcolorscales.c:453
 msgid "HSV"
 msgstr "HSV"
 
@@ -2164,7 +2170,7 @@ msgstr "Schachbrettgröße"
 msgid "Check Style"
 msgstr "Schachbrettmuster"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2143
+#: ../libgimpwidgets/gimppropwidgets.c:2177
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2323,22 +2329,49 @@ msgstr "LCH-Sättigung"
 msgid "LCH Hue"
 msgstr "LCH-Farbton"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "RGB-Farbmodell"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "CIELCh-Farbmodell"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "HSV-Farbmodell"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Ebenen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Bilder"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Vergrößern"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Verkleinern"
