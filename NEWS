@@ -56,6 +56,8 @@ Core:
   - Support layer masks on layer groups.
   - GIMP now attempts to backup images in the config directory when it
     crashes.
+  - New gimp_spawn_async() function uses vfork() to help avoid hanging
+    during a fork process, currently used for plug-ins.
 
 Libgimp:
 
@@ -90,6 +92,13 @@ GUI and Usability:
   - Extend action search "initialism": Extend initialism-based search
     (e.g.: "gb" for "Gaussian Blur"), by matching arbitrarily-long
     initialisms, and by allowing partial matches (with lesser priority).
+  - Values in the GimpNumberPairEntry widgets can now be cleared by clicking
+    an icon.
+  - Transform Grid controller is now available for custom UIs of GEGL
+    operations (currently used for Recursive Transform op).
+  - New GimpHighlightableButton widget is used to draw attention to buttons
+    in certain cases. Currently used for anchoring and removing floating
+    selections.
 
 Configurability:
 
@@ -147,6 +156,7 @@ File formats:
     default choice regarding metadata handling.
   - Fix GIH brushes using different-sized layers.
   - RGBE (Radiance HDR) format files can now be imported and exported.
+  - JPEG2000 loading now done via OpenJPEG library.
 
 Building:
 
@@ -173,8 +183,8 @@ Translations:
   - String freeze has started and GIMP received updates from:
     Basque, Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish,
     Esperanto, French, German, Greek, Hungarian, Icelandic, Italian,
-    Latvian, Polish, Russian, Serbian, Slovenian, Spanish, Swedish,
-    Turkish.
+    Japanese, Latvian, Polish, Russian, Serbian, Slovenian, Spanish,
+    Swedish, Turkish.
 
 
 Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
