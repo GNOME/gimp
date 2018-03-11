@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-04 16:32+0100\n"
-"PO-Revision-Date: 2018-03-04 16:33+0100\n"
+"POT-Creation-Date: 2018-03-11 16:55+0100\n"
+"PO-Revision-Date: 2018-03-11 16:57+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1114,7 +1114,7 @@ msgstr "Kolor nowego kanału"
 #: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:670
 #: ../app/widgets/gimpchanneltreeview.c:258
-#: ../app/widgets/gimplayertreeview.c:784
+#: ../app/widgets/gimplayertreeview.c:805
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopia kanału %s"
@@ -2511,7 +2511,7 @@ msgstr "240 sekund"
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
 #: ../app/display/gimpdisplayshell-dnd.c:614
-#: ../app/widgets/gimplayertreeview.c:744 ../app/widgets/gimptoolbox.c:805
+#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox.c:805
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
 msgid ""
@@ -6846,7 +6846,7 @@ msgstr "Modyfikacja atrybutów warstwy"
 
 #: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:403
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#: ../app/widgets/gimplayertreeview.c:846
+#: ../app/widgets/gimplayertreeview.c:882
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
@@ -11838,6 +11838,16 @@ msgstr "Kolor pierwszoplanowy na kolor tła (barwa HSV prawoskrętnie)"
 msgid "FG to Transparent"
 msgstr "Kolor pierwszoplanowy na przezroczystość"
 
+#: ../app/core/gimp-spawn.c:186
+#, c-format
+msgid "Failed to fork (%s)"
+msgstr "Rozdzielenie procesu się nie powiodło (%s)"
+
+#: ../app/core/gimp-spawn.c:223
+#, c-format
+msgid "Failed to execute child process “%s” (%s)"
+msgstr "Wykonanie procesu potomnego „%s” się nie powiodło (%s)"
+
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
 #. * C in it according to the name of the po file used for
@@ -12279,7 +12289,7 @@ msgstr "Kolor tła"
 
 #: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
 #: ../app/dialogs/fade-dialog.c:158 ../app/widgets/gimpbrushselect.c:175
-#: ../app/widgets/gimplayertreeview.c:286
+#: ../app/widgets/gimplayertreeview.c:295
 msgid "Opacity"
 msgstr "Krycie"
 
@@ -14235,7 +14245,7 @@ msgstr "_Zanikanie"
 #: ../app/dialogs/fade-dialog.c:151
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:119 ../app/widgets/gimpdeviceinfo.c:132
-#: ../app/widgets/gimplayertreeview.c:270
+#: ../app/widgets/gimplayertreeview.c:279
 msgid "Mode"
 msgstr "Tryb"
 
@@ -16784,13 +16794,13 @@ msgid "Drop color to layer"
 msgstr "Upuszczenie koloru do warstwy"
 
 #: ../app/display/gimpdisplayshell-dnd.c:569
-#: ../app/widgets/gimplayertreeview.c:735
+#: ../app/widgets/gimplayertreeview.c:756
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
 #: ../app/display/gimpdisplayshell-dnd.c:706
 #: ../app/display/gimpdisplayshell-dnd.c:724
-#: ../app/widgets/gimplayertreeview.c:810 ../app/widgets/gimptoolbox-dnd.c:272
+#: ../app/widgets/gimplayertreeview.c:831 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
 
@@ -19444,7 +19454,7 @@ msgstr "Błędny interpreter dowiązany w pliku do interpretowania %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Błędny format ciągu binarnego w pliku do interpretowania %s"
 
-#: ../app/plug-in/gimpplugin.c:629
+#: ../app/plug-in/gimpplugin.c:622
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -22836,7 +22846,7 @@ msgid "Percentage of width of brush"
 msgstr "Procent szerokości pędzla"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:758
+#: ../app/widgets/gimpeditor.c:759
 msgid "(None)"
 msgstr "(Brak)"
 
@@ -24268,7 +24278,7 @@ msgstr "Język systemowy"
 msgid "Switch to another group of modes"
 msgstr "Przełącza na inną grupę trybów"
 
-#: ../app/widgets/gimplayertreeview.c:310
+#: ../app/widgets/gimplayertreeview.c:319
 msgid "Lock alpha channel"
 msgstr "Blokuje kanał alfa"
 
@@ -25047,7 +25057,7 @@ msgstr ""
 "Błąd podczas zapisywania pliku XCF: nieobsługiwane BPC podczas zapisywania "
 "piksela: %d"
 
-#: ../tools/gimp-debug-tool.c:78
+#: ../app-tools/gimp-debug-tool.c:78
 msgid "GIMP Crash Debug"
 msgstr "Debugowanie awarii programu GIMP"
 

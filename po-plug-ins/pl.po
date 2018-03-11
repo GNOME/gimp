@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-18 21:40+0100\n"
-"PO-Revision-Date: 2018-02-18 21:42+0100\n"
+"POT-Creation-Date: 2018-03-11 17:00+0100\n"
+"PO-Revision-Date: 2018-03-11 17:01+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -444,7 +444,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-jp2-load.c:1042 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
@@ -1065,9 +1065,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
-#: ../plug-ins/common/file-gif-load.c:361
-#: ../plug-ins/common/file-jp2-load.c:234
-#: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
+#: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
@@ -2194,7 +2192,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
+#: ../plug-ins/common/file-jp2-load.c:859 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2787,79 +2785,63 @@ msgstr "Odstęp międ_zy komórkami:"
 msgid "The amount of cell spacing."
 msgstr "Odstęp między komórkami."
 
-#: ../plug-ins/common/file-jp2-load.c:98
+#: ../plug-ins/common/file-jp2-load.c:138
 msgid "JPEG 2000 image"
 msgstr "Obraz JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:252
-#, c-format
-msgid "Couldn't decode '%s'."
-msgstr "Nie można dekodować „%s”."
+#: ../plug-ins/common/file-jp2-load.c:164
+msgid "JPEG 2000 codestream"
+msgstr "Strumień kodowy JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:275
+#: ../plug-ins/common/file-jp2-load.c:866 ../plug-ins/common/file-wmf.c:965
 #, c-format
-msgid "The image '%s' is in grayscale but does not contain any gray component."
-msgstr ""
-"Obraz „%s” jest w skali szarości, ale nie zawiera żadnych szarych składowych."
+msgid "Could not open '%s' for reading"
+msgstr "Nie można otworzyć pliku „%s” do odczytania"
 
-#: ../plug-ins/common/file-jp2-load.c:302
+#: ../plug-ins/common/file-jp2-load.c:877
 #, c-format
-msgid "The image '%s' is in RGB, but is missing some of the components."
-msgstr "Obraz „%s” jest w formacie RGB, ale brakuje mu części składowych."
+msgid "Couldn't set parameters on decoder for '%s'."
+msgstr "Nie można ustawić parametrów dekodera dla „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:328
+#: ../plug-ins/common/file-jp2-load.c:885
 #, c-format
-msgid ""
-"The image '%s' is in the CIEXYZ color space, but there is no code in place "
-"to convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów CIEXYZ, ale brakuje kodu do "
-"konwertowania do RGB."
+msgid "Couldn't read JP2 header from '%s'."
+msgstr "Nie można odczytać nagłówka JP2 z „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:335
+#: ../plug-ins/common/file-jp2-load.c:893
 #, c-format
-msgid ""
-"The image '%s' is in the CIELAB color space, but there is no code in place "
-"to convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów CIELAB, ale brakuje kodu do "
-"konwertowania do RGB."
+msgid "Couldn't decode JP2 image in '%s'."
+msgstr "Nie można dekodować obrazu JP2 w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:342
+#: ../plug-ins/common/file-jp2-load.c:901
 #, c-format
-msgid ""
-"The image '%s' is in the YCbCr color space, but there is no code in place to "
-"convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów YCbCr, ale brakuje kodu do "
-"konwertowania do RGB."
+msgid "Couldn't decompress JP2 image in '%s'."
+msgstr "Nie można dekompresować obrazu JP2 w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:350
+#: ../plug-ins/common/file-jp2-load.c:930
 #, c-format
-msgid "The image '%s' is in an unknown color space."
-msgstr "Obraz „%s” jest w nieznanej przestrzeni kolorów."
+msgid "Couldn't decode CIELAB JP2 image in '%s'."
+msgstr "Nie można dekodować obrazu JP2 CIELAB w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:364
+#: ../plug-ins/common/file-jp2-load.c:957
 #, c-format
-msgid ""
-"Image component %d of image '%s' does not have the same size as the image. "
-"This is currently not supported."
-msgstr ""
-"Składowa obrazu %d obrazu „%s” nie ma tego samego rozmiaru co obraz. Nie "
-"jest to obecnie obsługiwane."
+msgid "Couldn't convert YUV JP2 image '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 YUV „%s” do RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:375
+#: ../plug-ins/common/file-jp2-load.c:967
 #, c-format
-msgid "Image component %d of image '%s' does not have both a hstep and vstep."
-msgstr "Składowa obrazu %d obrazu „%s” nie ma hstep i vstep."
+msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 CMYK w „%s” do RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:384
+#: ../plug-ins/common/file-jp2-load.c:977
 #, c-format
-msgid ""
-"Image component %d of image '%s' is signed. This is currently not supported."
-msgstr ""
-"Składowa obrazu %d obrazu „%s” jest podpisana. Nie jest to obecnie "
-"obsługiwane."
+msgid "Couldn't convert YCC JP2 image in '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 YCC w „%s” do RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1026
+#, c-format
+msgid "Unsupported color space in JP2 image '%s'."
+msgstr "Nieobsługiwana przestrzeń kolorów w obrazie JP2 „%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -4141,11 +4123,6 @@ msgstr ""
 #: ../plug-ins/common/file-wmf.c:501
 msgid "Render Windows Metafile"
 msgstr "Renderowanie plików WMF (Windows Metafile)"
-
-#: ../plug-ins/common/file-wmf.c:965
-#, c-format
-msgid "Could not open '%s' for reading"
-msgstr "Nie można otworzyć pliku „%s” do odczytania"
 
 #: ../plug-ins/common/file-wmf.c:998
 msgid "Rendered WMF"
