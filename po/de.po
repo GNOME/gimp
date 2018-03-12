@@ -14,22 +14,23 @@
 # Daniel Winzen <d@winzen4.de>, 2013.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011, 2012, 2013.
 # Sven Claussner <sclaussner@src.gnome.org>, 2013, 2014.
+# Tim Sabsch <tim@sabsch.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-01-10 15:36+0000\n"
-"PO-Revision-Date: 2017-01-13 12:34+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"POT-Creation-Date: 2018-03-01 07:37+0000\n"
+"PO-Revision-Date: 2018-03-12 10:46+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #: ../app/about.h:23
@@ -3090,7 +3091,7 @@ msgstr "Die Druckauflösung anpassen"
 #: ../app/actions/image-actions.c:97
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Bild _skalieren"
+msgstr "Bild _skalieren …"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -3935,11 +3936,11 @@ msgstr "Ver_kleinern"
 msgid "Zoom _All"
 msgstr "_Alles anzeigen"
 
-#: ../app/actions/palette-editor-commands.c:68
+#: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
 msgstr "Palettenfarbe bearbeiten"
 
-#: ../app/actions/palette-editor-commands.c:70
+#: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
 msgstr "Palettenfarbeintrag bearbeiten"
 
@@ -4639,7 +4640,7 @@ msgstr "Textdatei (UTF-8) öffnen"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:450
 #: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
 #: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
@@ -7572,29 +7573,34 @@ msgstr ""
 "Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte Version "
 "%d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
-#: ../app/core/gimpbrush-load.c:626 ../app/core/gimpbrush-load.c:700
-#: ../app/core/gimpbrush-load.c:763 ../app/core/gimpbrush-load.c:779
-#: ../app/core/gimpbrush-load.c:822
+#: ../app/core/gimpbrush-load.c:266
+#, c-format
+msgid "Unsupported brush format"
+msgstr "Nicht unterstütztes Pinselformat"
+
+#: ../app/core/gimpbrush-load.c:280 ../app/core/gimpbrush-load.c:417
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:707
+#: ../app/core/gimpbrush-load.c:770 ../app/core/gimpbrush-load.c:786
+#: ../app/core/gimpbrush-load.c:829
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Datei ist "
 "anscheinend unvollständig."
 
-#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ungültige UTF-8-Zeichenkette in Pinseldatei »%s«."
 
-#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:295 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Unbenannt"
 
-#: ../app/core/gimpbrush-load.c:354
+#: ../app/core/gimpbrush-load.c:361
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7608,7 +7614,7 @@ msgstr ""
 "Dies könnte eine veraltete GIMP-Pinseldatei sein. Versuchen Sie sie als Bild "
 "zu laden und dann wieder zu speichern."
 
-#: ../app/core/gimpbrush-load.c:399
+#: ../app/core/gimpbrush-load.c:406
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7618,7 +7624,7 @@ msgstr ""
 "Farbtiefe %d\n"
 "GIMP-Pinsel müssen in Graustufen oder RGB vorliegen."
 
-#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
+#: ../app/core/gimpbrush-load.c:478 ../app/core/gimpbrush-load.c:916
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7626,7 +7632,7 @@ msgstr ""
 "Schwerwiegender Fehler in Pinseldatei »%s«: abr-Formatversion %d ist "
 "unbekannt."
 
-#: ../app/core/gimpbrush-load.c:647
+#: ../app/core/gimpbrush-load.c:654
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8332,34 +8338,38 @@ msgstr "Bild zusammenfügen"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Ein Bild ohne sichtbare Ebene kann nicht zusammengeführt werden."
 
-#: ../app/core/gimpimage-merge.c:260
+#: ../app/core/gimpimage-merge.c:242
+msgid "Cannot merge down a floating selection."
+msgstr "Schwebende Auswahl kann nicht nach unten vereint werden."
+
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down to a layer group."
 msgstr "Ebenengruppe kann nicht nach unten vereint werden."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:274
 msgid "The layer to merge down to is locked."
 msgstr "Die Ebene zum Vereinen nach unten ist gesperrt."
 
-#: ../app/core/gimpimage-merge.c:279
+#: ../app/core/gimpimage-merge.c:286
 msgid "There is no visible layer to merge down to."
 msgstr "Es gibt keine sichtbare Ebene, die nach unten vereint werden kann."
 
-#: ../app/core/gimpimage-merge.c:289
+#: ../app/core/gimpimage-merge.c:296
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Nach unten vereinen"
 
-#: ../app/core/gimpimage-merge.c:317
+#: ../app/core/gimpimage-merge.c:324
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Ebenengruppe vereinen"
 
-#: ../app/core/gimpimage-merge.c:370
+#: ../app/core/gimpimage-merge.c:377
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Sichtbare Pfade vereinen"
 
-#: ../app/core/gimpimage-merge.c:406
+#: ../app/core/gimpimage-merge.c:413
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Es sind nicht genügend Pfade als »Sichtbar« markiert, um den Vorgang "
@@ -8406,15 +8416,15 @@ msgstr "%s konnte nicht rückgängig gemacht werden"
 
 #: ../app/core/gimpimage.c:1784
 msgid " (exported)"
-msgstr "(exportiert)"
+msgstr " (exportiert)"
 
 #: ../app/core/gimpimage.c:1788
 msgid " (overwritten)"
-msgstr "(überschrieben)"
+msgstr " (überschrieben)"
 
 #: ../app/core/gimpimage.c:1797
 msgid " (imported)"
-msgstr "(importiert)"
+msgstr " (importiert)"
 
 #: ../app/core/gimpimage.c:1939
 msgctxt "undo-type"
@@ -9022,7 +9032,8 @@ msgstr ""
 "Ulf-D. Ehlert\n"
 "Christian Kirbach\n"
 "Mario Blättermann\n"
-"Daniel Winzen"
+"Daniel Winzen\n"
+"Tim Sabsch"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -10542,7 +10553,7 @@ msgstr "Ebenengröße"
 
 #: ../app/dialogs/resize-dialog.c:295
 msgid "Resize _layers:"
-msgstr "Ebenengrößen _ändern"
+msgstr "Ebenengrößen _ändern:"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -10783,23 +10794,23 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "_Vereinigung prüfen"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Auf das Bildmenü zugreifen"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 msgid "Zoom image when window size changes"
 msgstr "Bild vergrößern, wenn die Fenstergröße sich ändert"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 msgid "Toggle Quick Mask"
 msgstr "Schnellmaske umschalten"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Navigate the image display"
 msgstr "In der Bildansicht navigieren"
 
-#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
 #: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Ziehen Sie Bilddateien hierher, um sie zu öffnen"
@@ -14028,7 +14039,7 @@ msgstr ""
 "Sie können die Ebene bearbeiten oder eine neue Text-Ebene mit denselben "
 "Textattributen erstellen."
 
-#: ../app/tools/gimptexttool-editor.c:1236
+#: ../app/tools/gimptexttool-editor.c:1228
 msgid "GIMP Text Editor"
 msgstr "GIMP-Texteditor"
 
@@ -16280,6 +16291,11 @@ msgstr "Bildeditor"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Bilder erstellen und Fotografien bearbeiten"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr "GIMP;Grafik;Design;Illustration;Zeichnen;"
 
 #~ msgid "Move Layer"
 #~ msgstr "Ebene bewegen"
