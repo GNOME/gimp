@@ -88,6 +88,10 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
   operation_class->prepare                 = gimp_operation_shapeburst_prepare;
   operation_class->get_required_for_output = gimp_operation_shapeburst_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_shapeburst_get_cached_region;
+  /* This operation is currently broken when multi-threaded.
+   * Cf. bug 781621. FIXME.
+   */
+  operation_class->threaded                = FALSE;
 
   filter_class->process                    = gimp_operation_shapeburst_process;
 
