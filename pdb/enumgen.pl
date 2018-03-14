@@ -253,8 +253,8 @@ $code =~ s/,\n$/\n/s;
 
 foreach ($header, $code, $footer) { s/^://mg }
 
-$outfile = "$builddir/tools/pdbgen/enums.pl$FILE_EXT";
+$outfile = "$builddir/pdb/enums.pl$FILE_EXT";
 open OUTFILE, "> $outfile";
 print OUTFILE $header, $code, $footer;
 close OUTFILE;
-&write_file($outfile, "$destdir/tools/pdbgen");
+&write_file($outfile, "$destdir/pdb");
