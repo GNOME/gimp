@@ -291,6 +291,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (blend_options_gradient_type_notify),
                     combo);
+  blend_options_gradient_type_notify (options, NULL, combo);
 
   /*  the offset scale  */
   scale = gimp_prop_spin_scale_new (config, "offset", NULL,
@@ -374,5 +375,6 @@ blend_options_gradient_type_notify (GimpBlendOptions *options,
                                     GParamSpec       *pspec,
                                     GtkWidget        *repeat_combo)
 {
-  gtk_widget_set_sensitive (repeat_combo, options->gradient_type < 6);
+  gtk_widget_set_sensitive (repeat_combo,
+                            options->gradient_type < GIMP_GRADIENT_SHAPEBURST_ANGULAR);
 }
