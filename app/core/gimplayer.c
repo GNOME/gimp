@@ -2635,7 +2635,7 @@ gimp_layer_get_composite_mode (GimpLayer *layer)
 GimpLayerCompositeMode
 gimp_layer_get_real_composite_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COMPOSITE_SRC_OVER);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COMPOSITE_UNION);
 
   if (layer->composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
     return gimp_layer_mode_get_composite_mode (layer->mode);

@@ -40,11 +40,11 @@ GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LAYER_COMPOSITE_AUTO,      /*< desc="Auto"             >*/
-  GIMP_LAYER_COMPOSITE_SRC_OVER,  /*< desc="Source over"      >*/
-  GIMP_LAYER_COMPOSITE_SRC_ATOP,  /*< desc="Source atop"      >*/
-  GIMP_LAYER_COMPOSITE_DST_ATOP,  /*< desc="Destination atop" >*/
-  GIMP_LAYER_COMPOSITE_SRC_IN     /*< desc="Source in"        >*/
+  GIMP_LAYER_COMPOSITE_AUTO,             /*< desc="Auto"             >*/
+  GIMP_LAYER_COMPOSITE_UNION,            /*< desc="Union"            >*/
+  GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP, /*< desc="Clip to backdrop" >*/
+  GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER,    /*< desc="Clip to layer"    >*/
+  GIMP_LAYER_COMPOSITE_INTERSECTION      /*< desc="Intersection"     >*/
 } GimpLayerCompositeMode;
 
 

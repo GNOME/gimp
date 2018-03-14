@@ -746,7 +746,7 @@ psd_to_gimp_blend_mode (const gchar   *psd_mode,
    */
   mode_info->blend_space     = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
   mode_info->composite_space = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
-  mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_SRC_OVER;
+  mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_UNION;
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
     {
@@ -803,11 +803,11 @@ gimp_to_psd_blend_mode (const LayerModeInfo *mode_info)
     }
 
   if (mode_info->composite_mode != GIMP_LAYER_COMPOSITE_AUTO &&
-      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_SRC_OVER)
+      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_UNION)
     {
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported composite mode: %s. "
-                   "Composite mode reverts to src-over",
+                   "Composite mode reverts to union",
                    get_enum_value_nick (GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                         mode_info->composite_mode));
     }

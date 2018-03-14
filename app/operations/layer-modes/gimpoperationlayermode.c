@@ -120,15 +120,15 @@ G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
 
 static const Babl *gimp_layer_color_space_fish[3 /* from */][3 /* to */];
 
-static CompositeFunc composite_src_over     = gimp_operation_layer_mode_composite_src_over;
-static CompositeFunc composite_src_atop     = gimp_operation_layer_mode_composite_src_atop;
-static CompositeFunc composite_dst_atop     = gimp_operation_layer_mode_composite_dst_atop;
-static CompositeFunc composite_src_in       = gimp_operation_layer_mode_composite_src_in;
+static CompositeFunc composite_union                = gimp_operation_layer_mode_composite_union;
+static CompositeFunc composite_clip_to_backdrop     = gimp_operation_layer_mode_composite_clip_to_backdrop;
+static CompositeFunc composite_clip_to_layer        = gimp_operation_layer_mode_composite_clip_to_layer;
+static CompositeFunc composite_intersection         = gimp_operation_layer_mode_composite_intersection;
 
-static CompositeFunc composite_src_over_sub = gimp_operation_layer_mode_composite_src_over_sub;
-static CompositeFunc composite_src_atop_sub = gimp_operation_layer_mode_composite_src_atop_sub;
-static CompositeFunc composite_dst_atop_sub = gimp_operation_layer_mode_composite_dst_atop_sub;
-static CompositeFunc composite_src_in_sub   = gimp_operation_layer_mode_composite_src_in_sub;
+static CompositeFunc composite_union_sub            = gimp_operation_layer_mode_composite_union_sub;
+static CompositeFunc composite_clip_to_backdrop_sub = gimp_operation_layer_mode_composite_clip_to_backdrop_sub;
+static CompositeFunc composite_clip_to_layer_sub    = gimp_operation_layer_mode_composite_clip_to_layer_sub;
+static CompositeFunc composite_intersection_sub     = gimp_operation_layer_mode_composite_intersection_sub;
 
 
 static void
@@ -188,7 +188,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                    g_param_spec_enum ("composite-mode",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                                                      GIMP_LAYER_COMPOSITE_SRC_OVER,
+                                                      GIMP_LAYER_COMPOSITE_UNION,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -221,7 +221,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
-    composite_src_atop = gimp_operation_layer_mode_composite_src_atop_sse2;
+    composite_clip_to_backdrop = gimp_operation_layer_mode_composite_clip_to_backdrop_sse2;
 #endif
 }
 
@@ -312,6 +312,14 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
 
   self->real_composite_mode = self->composite_mode;
 
+  if (self->real_composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
+    {
+      self->real_composite_mode =
+        gimp_layer_mode_get_composite_mode (self->layer_mode);
+
+      g_warn_if_fail (self->real_composite_mode != GIMP_LAYER_COMPOSITE_AUTO);
+    }
+
   self->function       = gimp_layer_mode_get_function       (self->layer_mode);
   self->blend_function = gimp_layer_mode_get_blend_function (self->layer_mode);
 
@@ -325,7 +333,7 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
       preferred_format = gegl_operation_get_source_format (operation, "input");
     }
   /* otherwise, we're the last node (corresponding to the bottom layer).
-   * in this case, we render the layer (as if) using src-over mode.
+   * in this case, we render the layer (as if) using UNION mode.
    */
   else
     {
@@ -340,11 +348,11 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
           self->function = process_last_node;
         }
       /* otherwise, use the original process function, but force the
-       * composite mode to SRC_OVER.
+       * composite mode to UNION.
        */
       else
         {
-          self->real_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER;
+          self->real_composite_mode = GIMP_LAYER_COMPOSITE_UNION;
         }
 
       preferred_format = gegl_operation_get_source_format (operation, "aux");
@@ -562,8 +570,8 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
     }
 
   composite_needs_in_color =
-    composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-    composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP;
+    composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
+    composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP;
 
   blend_in    = in;
   blend_layer = layer;
@@ -701,25 +709,25 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
     {
       switch (composite_mode)
         {
-        case GIMP_LAYER_COMPOSITE_SRC_ATOP:
-        default:
-          composite_src_atop (in, layer, blend_out, mask, opacity,
-                              out, samples);
+        case GIMP_LAYER_COMPOSITE_UNION:
+        case GIMP_LAYER_COMPOSITE_AUTO:
+          composite_union (in, layer, blend_out, mask, opacity,
+                           out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_OVER:
-          composite_src_over (in, layer, blend_out, mask, opacity,
-                              out, samples);
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+          composite_clip_to_backdrop (in, layer, blend_out, mask, opacity,
+                                      out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_DST_ATOP:
-          composite_dst_atop (in, layer, blend_out, mask, opacity,
-                              out, samples);
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+          composite_clip_to_layer (in, layer, blend_out, mask, opacity,
+                                   out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_IN:
-          composite_src_in (in, layer, blend_out, mask, opacity,
-                            out, samples);
+        case GIMP_LAYER_COMPOSITE_INTERSECTION:
+          composite_intersection (in, layer, blend_out, mask, opacity,
+                                  out, samples);
           break;
         }
     }
@@ -727,25 +735,25 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
     {
       switch (composite_mode)
         {
-        case GIMP_LAYER_COMPOSITE_SRC_ATOP:
-        default:
-          composite_src_atop_sub (in, layer, blend_out, mask, opacity,
-                                  out, samples);
+        case GIMP_LAYER_COMPOSITE_UNION:
+        case GIMP_LAYER_COMPOSITE_AUTO:
+          composite_union_sub (in, layer, blend_out, mask, opacity,
+                               out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_OVER:
-          composite_src_over_sub (in, layer, blend_out, mask, opacity,
-                                  out, samples);
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+          composite_clip_to_backdrop_sub (in, layer, blend_out, mask, opacity,
+                                          out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_DST_ATOP:
-          composite_dst_atop_sub (in, layer, blend_out, mask, opacity,
-                                  out, samples);
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+          composite_clip_to_layer_sub (in, layer, blend_out, mask, opacity,
+                                       out, samples);
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_IN:
-          composite_src_in_sub (in, layer, blend_out, mask, opacity,
-                                out, samples);
+        case GIMP_LAYER_COMPOSITE_INTERSECTION:
+          composite_intersection_sub (in, layer, blend_out, mask, opacity,
+                                      out, samples);
           break;
         }
     }

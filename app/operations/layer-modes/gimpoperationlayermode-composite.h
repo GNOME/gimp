@@ -24,73 +24,73 @@
 #define __GIMP_OPERATION_LAYER_MODE_COMPOSITE_H__
 
 
-void gimp_operation_layer_mode_composite_src_over      (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_src_atop      (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_dst_atop      (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_src_in        (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
+void gimp_operation_layer_mode_composite_union                 (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_clip_to_backdrop      (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_clip_to_layer         (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_intersection          (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
 
-void gimp_operation_layer_mode_composite_src_over_sub  (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_src_atop_sub  (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_dst_atop_sub  (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
-void gimp_operation_layer_mode_composite_src_in_sub    (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
+void gimp_operation_layer_mode_composite_union_sub             (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_clip_to_backdrop_sub  (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_clip_to_layer_sub     (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
+void gimp_operation_layer_mode_composite_intersection_sub      (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
 
 #if COMPILE_SSE2_INTRINISICS
 
-void gimp_operation_layer_mode_composite_src_atop_sse2 (const gfloat        *in,
-                                                        const gfloat        *layer,
-                                                        const gfloat        *comp,
-                                                        const gfloat        *mask,
-                                                        gfloat               opacity,
-                                                        gfloat              *out,
-                                                        gint                 samples);
+void gimp_operation_layer_mode_composite_clip_to_backdrop_sse2 (const gfloat        *in,
+                                                                const gfloat        *layer,
+                                                                const gfloat        *comp,
+                                                                const gfloat        *mask,
+                                                                gfloat               opacity,
+                                                                gfloat              *out,
+                                                                gint                 samples);
 
 #endif /* COMPILE_SSE2_INTRINISICS */
 

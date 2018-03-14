@@ -64,7 +64,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
 
       switch (layer_mode->real_composite_mode)
         {
-        case GIMP_LAYER_COMPOSITE_SRC_OVER:
+        case GIMP_LAYER_COMPOSITE_UNION:
         case GIMP_LAYER_COMPOSITE_AUTO:
           while (samples--)
             {
@@ -121,7 +121,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;
@@ -168,7 +168,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_DST_ATOP:
+        case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;
@@ -210,7 +210,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *op,
             }
           break;
 
-        case GIMP_LAYER_COMPOSITE_SRC_IN:
+        case GIMP_LAYER_COMPOSITE_INTERSECTION:
           while (samples--)
             {
               __v4sf rgba_in, rgba_layer, alpha;

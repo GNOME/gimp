@@ -1128,8 +1128,8 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
        *     - the group has a single active child; or,
        *
        *     - the effective mode of all the active children is normal, their
-       *       effective composite mode is src-over, and their effective
-       *       blend and composite spaces are equal;
+       *       effective composite mode is UNION, and their effective blend and
+       *       composite spaces are equal;
        *
        *   - and,
        *
@@ -1178,7 +1178,7 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
               GimpLayerCompositeMode other_composite_mode;
 
               if (*mode           != GIMP_LAYER_MODE_NORMAL ||
-                  *composite_mode != GIMP_LAYER_COMPOSITE_SRC_OVER)
+                  *composite_mode != GIMP_LAYER_COMPOSITE_UNION)
                 {
                   reduce = FALSE;
 

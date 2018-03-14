@@ -120,8 +120,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = in[1];
               out[2] = in[2];
 
-              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
+                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
                 {
                   out[3] = in[3];
                 }
@@ -136,8 +136,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = layer[1];
               out[2] = layer[2];
 
-              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
+              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
+                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER)
                 {
                   out[3] = 1.0f;
                 }

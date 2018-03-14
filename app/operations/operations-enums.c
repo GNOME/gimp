@@ -47,20 +47,20 @@ gimp_layer_composite_mode_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_LAYER_COMPOSITE_AUTO, "GIMP_LAYER_COMPOSITE_AUTO", "auto" },
-    { GIMP_LAYER_COMPOSITE_SRC_OVER, "GIMP_LAYER_COMPOSITE_SRC_OVER", "src-over" },
-    { GIMP_LAYER_COMPOSITE_SRC_ATOP, "GIMP_LAYER_COMPOSITE_SRC_ATOP", "src-atop" },
-    { GIMP_LAYER_COMPOSITE_DST_ATOP, "GIMP_LAYER_COMPOSITE_DST_ATOP", "dst-atop" },
-    { GIMP_LAYER_COMPOSITE_SRC_IN, "GIMP_LAYER_COMPOSITE_SRC_IN", "src-in" },
+    { GIMP_LAYER_COMPOSITE_UNION, "GIMP_LAYER_COMPOSITE_UNION", "union" },
+    { GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP, "GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP", "clip-to-backdrop" },
+    { GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER, "GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER", "clip-to-layer" },
+    { GIMP_LAYER_COMPOSITE_INTERSECTION, "GIMP_LAYER_COMPOSITE_INTERSECTION", "intersection" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
     { GIMP_LAYER_COMPOSITE_AUTO, NC_("layer-composite-mode", "Auto"), NULL },
-    { GIMP_LAYER_COMPOSITE_SRC_OVER, NC_("layer-composite-mode", "Source over"), NULL },
-    { GIMP_LAYER_COMPOSITE_SRC_ATOP, NC_("layer-composite-mode", "Source atop"), NULL },
-    { GIMP_LAYER_COMPOSITE_DST_ATOP, NC_("layer-composite-mode", "Destination atop"), NULL },
-    { GIMP_LAYER_COMPOSITE_SRC_IN, NC_("layer-composite-mode", "Source in"), NULL },
+    { GIMP_LAYER_COMPOSITE_UNION, NC_("layer-composite-mode", "Union"), NULL },
+    { GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP, NC_("layer-composite-mode", "Clip to backdrop"), NULL },
+    { GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER, NC_("layer-composite-mode", "Clip to layer"), NULL },
+    { GIMP_LAYER_COMPOSITE_INTERSECTION, NC_("layer-composite-mode", "Intersection"), NULL },
     { 0, NULL, NULL }
   };
 
