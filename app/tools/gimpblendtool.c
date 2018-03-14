@@ -519,6 +519,15 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
 
       gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
+  else if (blend_tool->render_node                    &&
+           gimp_blend_tool_is_shapeburst (blend_tool) &&
+           g_strcmp0 (pspec->name, "distance-metric") == 0)
+    {
+      g_clear_object (&blend_tool->dist_buffer);
+      gimp_blend_tool_precalc_shapeburst (blend_tool);
+      gimp_blend_tool_update_graph (blend_tool);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
+    }
   else if (blend_tool->filter &&
            ! strcmp (pspec->name, "opacity"))
     {
@@ -742,8 +751,9 @@ gimp_blend_tool_line_response (GimpToolWidget *widget,
 static void
 gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
 {
-  GimpTool *tool = GIMP_TOOL (blend_tool);
-  gint      x, y, width, height;
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpTool         *tool    = GIMP_TOOL (blend_tool);
+  gint              x, y, width, height;
 
   if (blend_tool->dist_buffer || ! tool->drawable)
     return;
@@ -753,7 +763,7 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
     return;
 
   blend_tool->dist_buffer =
-    gimp_drawable_blend_shapeburst_distmap (tool->drawable, FALSE,
+    gimp_drawable_blend_shapeburst_distmap (tool->drawable, options->distance_metric,
                                             GEGL_RECTANGLE (x, y, width, height),
                                             GIMP_PROGRESS (blend_tool));
 

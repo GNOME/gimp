@@ -37,22 +37,23 @@ struct _GimpBlendOptions
 {
   GimpPaintOptions  paint_options;
 
-  gdouble           offset;
-  GimpGradientType  gradient_type;
+  gdouble            offset;
+  GimpGradientType   gradient_type;
+  GimpDistanceMetric distance_metric;
 
-  gboolean          supersample;
-  gint              supersample_depth;
-  gdouble           supersample_threshold;
+  gboolean           supersample;
+  gint               supersample_depth;
+  gdouble            supersample_threshold;
 
-  gboolean          dither;
+  gboolean           dither;
 
-  gboolean          instant;
-  gboolean          modify_active;
+  gboolean           instant;
+  gboolean           modify_active;
 
   /*  options gui  */
-  GtkWidget        *instant_toggle;
-  GtkWidget        *modify_active_frame;
-  GtkWidget        *modify_active_hint;
+  GtkWidget         *instant_toggle;
+  GtkWidget         *modify_active_frame;
+  GtkWidget         *modify_active_hint;
 };
 
 

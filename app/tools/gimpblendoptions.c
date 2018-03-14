@@ -44,6 +44,7 @@ enum
   PROP_0,
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
+  PROP_DISTANCE_METRIC,
   PROP_GRADIENT_REPEAT,  /*  overrides a GimpPaintOptions property  */
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
@@ -54,18 +55,21 @@ enum
 };
 
 
-static void   gimp_blend_options_set_property    (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void   gimp_blend_options_get_property    (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
+static void   gimp_blend_options_set_property           (GObject          *object,
+                                                         guint             property_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
+static void   gimp_blend_options_get_property           (GObject          *object,
+                                                         guint             property_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
 
-static void   blend_options_gradient_type_notify (GimpBlendOptions *options,
-                                                  GParamSpec       *pspec,
-                                                  GtkWidget        *repeat_combo);
+static void   blend_options_repeat_gradient_type_notify (GimpBlendOptions *options,
+                                                         GParamSpec       *pspec,
+                                                         GtkWidget        *repeat_combo);
+static void   blend_options_metric_gradient_type_notify (GimpBlendOptions *options,
+                                                         GParamSpec       *pspec,
+                                                         GtkWidget        *repeat_combo);
 
 
 G_DEFINE_TYPE (GimpBlendOptions, gimp_blend_options, GIMP_TYPE_PAINT_OPTIONS)
@@ -91,6 +95,13 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                          NULL,
                          GIMP_TYPE_GRADIENT_TYPE,
                          GIMP_GRADIENT_LINEAR,
+                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
+                         "distance-metric",
+                         _("Metric"),
+                         _("Metric to use for the distance calculation"),
+                         GIMP_TYPE_DISTANCE_METRIC,
+                         GIMP_DISTANCE_METRIC_EUCLIDEAN,
                          GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                          "gradient-repeat",
@@ -162,6 +173,9 @@ gimp_blend_options_set_property (GObject      *object,
     case PROP_GRADIENT_TYPE:
       options->gradient_type = g_value_get_enum (value);
       break;
+    case PROP_DISTANCE_METRIC:
+      options->distance_metric = g_value_get_enum (value);
+      break;
     case PROP_GRADIENT_REPEAT:
       GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat =
         g_value_get_enum (value);
@@ -209,6 +223,9 @@ gimp_blend_options_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_TYPE:
       g_value_set_enum (value, options->gradient_type);
+      break;
+    case PROP_DISTANCE_METRIC:
+      g_value_set_enum (value, options->distance_metric);
       break;
     case PROP_GRADIENT_REPEAT:
       g_value_set_enum (value,
@@ -281,6 +298,18 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
+  /*  the distance metric menu  */
+  combo = gimp_prop_enum_combo_box_new (config, "distance-metric", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Metric"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  g_signal_connect (config, "notify::gradient-type",
+                    G_CALLBACK (blend_options_metric_gradient_type_notify),
+                    combo);
+  blend_options_metric_gradient_type_notify (options, NULL, combo);
+
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Repeat"));
@@ -289,9 +318,9 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
-                    G_CALLBACK (blend_options_gradient_type_notify),
+                    G_CALLBACK (blend_options_repeat_gradient_type_notify),
                     combo);
-  blend_options_gradient_type_notify (options, NULL, combo);
+  blend_options_repeat_gradient_type_notify (options, NULL, combo);
 
   /*  the offset scale  */
   scale = gimp_prop_spin_scale_new (config, "offset", NULL,
@@ -371,10 +400,20 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 }
 
 static void
-blend_options_gradient_type_notify (GimpBlendOptions *options,
-                                    GParamSpec       *pspec,
-                                    GtkWidget        *repeat_combo)
+blend_options_repeat_gradient_type_notify (GimpBlendOptions *options,
+                                           GParamSpec       *pspec,
+                                           GtkWidget        *repeat_combo)
 {
   gtk_widget_set_sensitive (repeat_combo,
                             options->gradient_type < GIMP_GRADIENT_SHAPEBURST_ANGULAR);
+}
+
+static void
+blend_options_metric_gradient_type_notify (GimpBlendOptions *options,
+                                           GParamSpec       *pspec,
+                                           GtkWidget        *repeat_combo)
+{
+  gtk_widget_set_sensitive (repeat_combo,
+                            options->gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
+                            options->gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED);
 }

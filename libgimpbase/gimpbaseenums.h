@@ -290,6 +290,16 @@ typedef enum
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDesaturateMode;
 
+#define GIMP_TYPE_DISTANCE_METRIC (gimp_distance_metric_get_type ())
+
+GType gimp_distance_metric_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DISTANCE_METRIC_EUCLIDEAN,  /*< desc="Euclidean"  >*/
+  GIMP_DISTANCE_METRIC_MANHATTAN,  /*< desc="Manhattan"  >*/
+  GIMP_DISTANCE_METRIC_CHESSBOARD  /*< desc="Chessboard" >*/
+} GimpDistanceMetric;
 
 #define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
 

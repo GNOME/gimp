@@ -85,8 +85,11 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
       gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
     {
+      /* Legacy blend used "manhattan" metric to compute distance.
+       * API needs to stay compatible.
+       */
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable, TRUE,
+        gimp_drawable_blend_shapeburst_distmap (drawable, GIMP_DISTANCE_METRIC_MANHATTAN,
                                                 GEGL_RECTANGLE (x, y, width, height),
                                                 progress);
     }
@@ -136,7 +139,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
 GeglBuffer *
 gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        gboolean             legacy_shapeburst,
+                                        GimpDistanceMetric   metric,
                                         const GeglRectangle *region,
                                         GimpProgress        *progress)
 {
@@ -203,12 +206,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
   shapeburst = gegl_node_new_child (NULL,
                                     "operation", "gegl:distance-transform",
                                     "normalize", TRUE,
-                                    /* Legacy blend used "manhattan"
-                                     * metric to compute distance, vs.
-                                     * "euclidean". API needs to stay
-                                     * compatible.
-                                     */
-                                    "metric",    legacy_shapeburst ? 1 : 0,
+                                    "metric",    metric,
                                     NULL);
 
   if (progress)

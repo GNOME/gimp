@@ -40,7 +40,7 @@ void   gimp_drawable_blend (GimpDrawable     *drawable,
 
 GeglBuffer *
 gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        gboolean             legacy_shapeburst,
+                                        GimpDistanceMetric   metric,
                                         const GeglRectangle *region,
                                         GimpProgress        *progress);
 

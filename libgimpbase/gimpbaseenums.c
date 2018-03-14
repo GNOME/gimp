@@ -533,6 +533,38 @@ gimp_desaturate_mode_get_type (void)
 }
 
 GType
+gimp_distance_metric_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DISTANCE_METRIC_EUCLIDEAN, "GIMP_DISTANCE_METRIC_EUCLIDEAN", "euclidean" },
+    { GIMP_DISTANCE_METRIC_MANHATTAN, "GIMP_DISTANCE_METRIC_MANHATTAN", "manhattan" },
+    { GIMP_DISTANCE_METRIC_CHESSBOARD, "GIMP_DISTANCE_METRIC_CHESSBOARD", "chessboard" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DISTANCE_METRIC_EUCLIDEAN, NC_("distance-metric", "Euclidean"), NULL },
+    { GIMP_DISTANCE_METRIC_MANHATTAN, NC_("distance-metric", "Manhattan"), NULL },
+    { GIMP_DISTANCE_METRIC_CHESSBOARD, NC_("distance-metric", "Chessboard"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDistanceMetric", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "distance-metric");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_dodge_burn_type_get_type (void)
 {
   static const GEnumValue values[] =
