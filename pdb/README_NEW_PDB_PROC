@@ -58,7 +58,7 @@ Since adding a function to the PDB can be tedious (you would need to
 modify 3 or more different source files), a scripting framework was
 developed to add functions to the PDB by writing them once. To see how
 function are implemented in the PDB, take a look in
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb[tools/pdbgen/pdb].
+http://git.gnome.org/browse/gimp/tree/pdb/groups[pdb/groups].
 
 You can see many files with the .pdb suffix - these are special template
 files which include the actual source of the PDB functions. Let's take a
@@ -207,9 +207,9 @@ a description. The name will be used later in our code and it should be
 meaningful and be a valid name for a variable in C.
 
 The type is one of the types listed in
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb.pl[tools/pdbgen/pdb.pl]
+http://git.gnome.org/browse/gimp/tree/pdb/pdb.pl[pdb/pdb.pl]
 inside the +%arg_types+ array. In
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb.pl[tools/pdbgen/pdb.pl]
+http://git.gnome.org/browse/gimp/tree/pdb/pdb.pl[pdb/pdb.pl]
 you can see the corresponding C type for each of the types we specify.
 For example, +layer+ type (inside the .pdb file) becomes a variable with
 the C type of +GimpLayer *+, and +string+ becomes +gchar *+.
@@ -502,6 +502,6 @@ before working on a new function like this, since you need to see if the
 developers agree that it's needed!).
 
 Don't forget to include the functions inside the right files! Under
-http://git.gnome.org/browse/gimp/tree/tools/pdbgen/pdb[tools/pdbgen/pdb]
+http://git.gnome.org/browse/gimp/tree/pdb/groups[pdb/groups]
 you can see many files (fonts.pdb, brush.pdb, layer.pdb, etc.) - *make
 sure you add your function in the place which logically suites it!*
