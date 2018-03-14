@@ -70,8 +70,6 @@ libappoperations_a_sources = \
 	gimpoperationsemiflatten.h		\
 	gimpoperationsetalpha.c			\
 	gimpoperationsetalpha.h			\
-	gimpoperationshapeburst.c		\
-	gimpoperationshapeburst.h		\
 	gimpoperationshrink.c			\
 	gimpoperationshrink.h			\
 	gimpoperationthresholdalpha.c		\

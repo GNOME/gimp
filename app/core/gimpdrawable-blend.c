@@ -200,16 +200,16 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
         }
     }
 
-  if (legacy_shapeburst)
-    shapeburst = gegl_node_new_child (NULL,
-                                      "operation", "gimp:shapeburst",
-                                      "normalize", TRUE,
-                                      NULL);
-  else
-    shapeburst = gegl_node_new_child (NULL,
-                                      "operation", "gegl:distance-transform",
-                                      "normalize", TRUE,
-                                      NULL);
+  shapeburst = gegl_node_new_child (NULL,
+                                    "operation", "gegl:distance-transform",
+                                    "normalize", TRUE,
+                                    /* Legacy blend used "manhattan"
+                                     * metric to compute distance, vs.
+                                     * "euclidean". API needs to stay
+                                     * compatible.
+                                     */
+                                    "metric",    legacy_shapeburst ? 1 : 0,
+                                    NULL);
 
   if (progress)
     gimp_gegl_progress_connect (shapeburst, progress,
