@@ -165,6 +165,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_DESATURATE_LUMINANCE => '3',
 		       GIMP_DESATURATE_VALUE => '4' }
 	},
+    GimpDistanceMetric =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_DISTANCE_METRIC_EUCLIDEAN
+			  GIMP_DISTANCE_METRIC_MANHATTAN
+			  GIMP_DISTANCE_METRIC_CHESSBOARD) ],
+	  mapping => { GIMP_DISTANCE_METRIC_EUCLIDEAN => '0',
+		       GIMP_DISTANCE_METRIC_MANHATTAN => '1',
+		       GIMP_DISTANCE_METRIC_CHESSBOARD => '2' }
+	},
     GimpDodgeBurnType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
