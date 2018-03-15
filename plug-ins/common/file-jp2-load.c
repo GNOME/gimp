@@ -826,6 +826,42 @@ color_esycc_to_rgb (opj_image_t *image)
   image->color_space = OPJ_CLRSPC_SRGB;
   return TRUE;
 }
+/*
+ * get_valid_precision() converts given precision to standard precision
+ * of gimp i.e. 8, 16, 32
+ * e.g 12-bit to 16-bit , 24-bit to 32-bit
+*/
+static gint
+get_valid_precision (gint precision_actual)
+{
+  if (precision_actual <= 8)
+    return 8;
+  else if (precision_actual <= 16)
+    return 16;
+  else 
+    return 32;
+}
+
+static GimpPrecision
+get_image_precision (gint     precision,
+                     gboolean linear)
+{
+  switch (precision)
+    {
+      case 32:
+        if (linear)
+          return GIMP_PRECISION_U32_LINEAR;
+        return GIMP_PRECISION_U32_GAMMA;
+      case 16:
+        if (linear)
+          return GIMP_PRECISION_U16_LINEAR;
+        return GIMP_PRECISION_U16_GAMMA;
+      default:
+         if (linear)
+          return GIMP_PRECISION_U8_LINEAR;
+        return GIMP_PRECISION_U8_GAMMA;
+    }
+}
 
 static gint32
 load_image (const gchar       *filename,
@@ -846,15 +882,23 @@ load_image (const gchar       *filename,
   gint               num_components;
   gint               colorspace_family;
   GeglBuffer        *buffer;
-  gint               i, j, k;
+  gint               i, j, k, it;
   guchar            *pixels;
-  gint               components[4];
+  const Babl        *file_format;
+  gint               bpp;
+  GimpPrecision      image_precision;
+  gint               precision_actual, precision_scaled;
+  gint               temp;
+  gboolean           linear;
+  unsigned char      *c; 
 
   stream   = NULL;
   codec    = NULL;
   image    = NULL;
   profile  = NULL;
   image_ID = -1;
+  linear   = FALSE;
+  c        = NULL;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -1031,10 +1075,20 @@ load_image (const gchar       *filename,
 
   width = image->comps[0].w;
   height = image->comps[0].h;
+  
+  if (profile)
+    linear = gimp_color_profile_is_linear (profile);
 
-  image_ID = gimp_image_new (width, height, base_type);
+  precision_actual = image->comps[0].prec;
+
+  precision_scaled = get_valid_precision (precision_actual);
+  image_precision = get_image_precision (precision_scaled, linear);
+
+  image_ID = gimp_image_new_with_precision (width, height,
+                                         base_type, image_precision);
+
   gimp_image_set_filename (image_ID, filename);
-
+  
   if (profile)
     gimp_image_set_color_profile (image_ID, profile);
 
@@ -1046,43 +1100,38 @@ load_image (const gchar       *filename,
                              gimp_image_get_default_new_layer_mode (image_ID));
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  file_format = gimp_drawable_get_format (layer_ID);
+  bpp = babl_format_get_bytes_per_pixel (file_format);
 
-  pixels = malloc (width * num_components);
+  buffer = gimp_drawable_get_buffer (layer_ID);
+  pixels = g_new0 (guchar, width * bpp);
 
   for (i = 0; i < height; i++)
     {
       for (j = 0; j < num_components; j++)
         {
-          const int  channel_prec   = 8;
-          OPJ_UINT32 component_prec = image->comps[j].prec;
+          int shift = precision_scaled - precision_actual;
 
-          if (component_prec >= channel_prec)
+          for (k = 0; k < width; k++)
             {
-              int shift = component_prec - channel_prec;
+              if (shift >= 0)
+                temp = image->comps[j].data[i * width + k] << shift; 
+              else
+                 temp = image->comps[j].data[i * width + k] >> (- shift);    /*precision_actual > 32*/
 
-              for (k = 0; k < width; k++)
-                {
-                  pixels[k * num_components + j] = image->comps[j].data[i * width + k] >> shift;
-                }
-            }
-          else
-            {
-              int mult = 1 << (channel_prec - component_prec);
-
-              for (k = 0; k < width; k++)
-                {
-                  pixels[k * num_components + j] = image->comps[j].data[i * width + k ] * mult;
-                }
-
+              c = (unsigned char *)&temp;
+              for (it =0; it< (precision_scaled / 8); it++)
+                { 
+                  pixels[k * bpp + j * (precision_scaled / 8) + it] =  c[it];
+                }                                 
             }
         }
 
         gegl_buffer_set (buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
-                         NULL, pixels, GEGL_AUTO_ROWSTRIDE);
+                         file_format, pixels, GEGL_AUTO_ROWSTRIDE);
     }
 
-  free (pixels);
+  g_free (pixels);
 
   g_object_unref (buffer);
   gimp_progress_update (1.0);
