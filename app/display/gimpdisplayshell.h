@@ -189,7 +189,6 @@ struct _GimpDisplayShell
 
   gboolean           inferior_ignore_mode;
 
-  gboolean           space_pressed;
   gboolean           space_release_pending;
   const gchar       *space_shaded_tool;
 

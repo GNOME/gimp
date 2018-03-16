@@ -161,7 +161,7 @@ gimp_display_shell_events (GtkWidget        *widget,
         if (gimp->busy)
           return TRUE;
 
-        /*  do not process any key events while BUTTON1 is down. We do this
+        /*  do not process most key events while BUTTON1 is down. We do this
          *  so tools keep the modifier state they were in when BUTTON1 was
          *  pressed and to prevent accelerators from being invoked.
          */
@@ -174,28 +174,11 @@ gimp_display_shell_events (GtkWidget        *widget,
                 kevent->keyval == GDK_KEY_Alt_L     ||
                 kevent->keyval == GDK_KEY_Alt_R     ||
                 kevent->keyval == GDK_KEY_Meta_L    ||
-                kevent->keyval == GDK_KEY_Meta_R)
+                kevent->keyval == GDK_KEY_Meta_R    ||
+                kevent->keyval == GDK_KEY_space     ||
+                kevent->keyval == GDK_KEY_KP_Space)
               {
                 break;
-              }
-
-            if (event->type == GDK_KEY_PRESS)
-              {
-                if ((kevent->keyval == GDK_KEY_space ||
-                     kevent->keyval == GDK_KEY_KP_Space) && shell->space_release_pending)
-                  {
-                    shell->space_pressed         = TRUE;
-                    shell->space_release_pending = FALSE;
-                  }
-              }
-            else
-              {
-                if ((kevent->keyval == GDK_KEY_space ||
-                     kevent->keyval == GDK_KEY_KP_Space) && shell->space_pressed)
-                  {
-                    shell->space_pressed         = FALSE;
-                    shell->space_release_pending = TRUE;
-                  }
               }
 
             return TRUE;
@@ -222,7 +205,7 @@ gimp_display_shell_events (GtkWidget        *widget,
             break;
 
           default:
-            if (shell->space_pressed || shell->scrolling)
+            if (shell->space_release_pending || shell->scrolling)
               return TRUE;
             break;
           }
@@ -762,7 +745,7 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
             if (! gimp_display_shell_pointer_grab (shell, NULL, 0))
               return TRUE;
 
-            if (! shell->space_pressed && ! shell->space_release_pending)
+            if (! shell->space_release_pending)
               if (! gimp_display_shell_keyboard_grab (shell, event))
                 {
                   gimp_display_shell_pointer_ungrab (shell, NULL);
@@ -875,7 +858,7 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
             if (! shell->pointer_grabbed || shell->scrolling)
               return TRUE;
 
-            if (! shell->space_pressed && ! shell->space_release_pending)
+            if (! shell->space_release_pending)
               gimp_display_shell_keyboard_ungrab (shell, event);
 
             if (active_tool &&
@@ -904,9 +887,6 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
                                                &image_coords, 0);
 
             gimp_display_shell_pointer_ungrab (shell, NULL);
-
-            if (shell->space_release_pending)
-              gimp_display_shell_space_released (shell, event, &image_coords);
           }
         else if (bevent->button == 2)
           {
@@ -1197,27 +1177,27 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
 
         if (state & GDK_BUTTON1_MASK)
           {
-            switch (kevent->keyval)
+            if (kevent->keyval == GDK_KEY_Alt_L     ||
+                kevent->keyval == GDK_KEY_Alt_R     ||
+                kevent->keyval == GDK_KEY_Shift_L   ||
+                kevent->keyval == GDK_KEY_Shift_R   ||
+                kevent->keyval == GDK_KEY_Control_L ||
+                kevent->keyval == GDK_KEY_Control_R ||
+                kevent->keyval == GDK_KEY_Meta_L    ||
+                kevent->keyval == GDK_KEY_Meta_R)
               {
-              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
-              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
-              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
-              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
-                {
-                  GdkModifierType key;
+                GdkModifierType key;
 
-                  key = gimp_display_shell_key_to_state (kevent->keyval);
-                  state |= key;
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state |= key;
 
-                  if (active_tool                                        &&
-                      gimp_tool_control_is_active (active_tool->control) &&
-                      ! gimp_image_is_empty (image))
-                    {
-                      tool_manager_active_modifier_state_active (gimp, state,
-                                                                 display);
-                    }
-                }
-                break;
+                if (active_tool                                        &&
+                    gimp_tool_control_is_active (active_tool->control) &&
+                    ! gimp_image_is_empty (image))
+                  {
+                    tool_manager_active_modifier_state_active (gimp, state,
+                                                               display);
+                  }
               }
           }
         else
@@ -1326,29 +1306,32 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        if (state & GDK_BUTTON1_MASK)
+        if ((state & GDK_BUTTON1_MASK)      &&
+            (! shell->space_release_pending ||
+             (kevent->keyval != GDK_KEY_space &&
+              kevent->keyval != GDK_KEY_KP_Space)))
           {
-            switch (kevent->keyval)
+            if (kevent->keyval == GDK_KEY_Alt_L     ||
+                kevent->keyval == GDK_KEY_Alt_R     ||
+                kevent->keyval == GDK_KEY_Shift_L   ||
+                kevent->keyval == GDK_KEY_Shift_R   ||
+                kevent->keyval == GDK_KEY_Control_L ||
+                kevent->keyval == GDK_KEY_Control_R ||
+                kevent->keyval == GDK_KEY_Meta_L    ||
+                kevent->keyval == GDK_KEY_Meta_R)
               {
-              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
-              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
-              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
-              case GDK_KEY_Meta_L:    case GDK_KEY_Meta_R:
-                {
-                  GdkModifierType key;
+                GdkModifierType key;
 
-                  key = gimp_display_shell_key_to_state (kevent->keyval);
-                  state &= ~key;
+                key = gimp_display_shell_key_to_state (kevent->keyval);
+                state &= ~key;
 
-                  if (active_tool                                        &&
-                      gimp_tool_control_is_active (active_tool->control) &&
-                      ! gimp_image_is_empty (image))
-                    {
-                      tool_manager_active_modifier_state_active (gimp, state,
-                                                                 display);
-                    }
-                }
-                break;
+                if (active_tool                                        &&
+                    gimp_tool_control_is_active (active_tool->control) &&
+                    ! gimp_image_is_empty (image))
+                  {
+                    tool_manager_active_modifier_state_active (gimp, state,
+                                                               display);
+                  }
               }
           }
         else
@@ -1597,7 +1580,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
-  if (shell->space_pressed)
+  if (shell->space_release_pending)
     return;
 
   if (! gimp_display_shell_keyboard_grab (shell, event))
@@ -1651,7 +1634,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       break;
     }
 
-  shell->space_pressed = TRUE;
+  shell->space_release_pending = TRUE;
 }
 
 static void
@@ -1661,7 +1644,7 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
-  if (! shell->space_pressed && ! shell->space_release_pending)
+  if (! shell->space_release_pending)
     return;
 
   switch (shell->display->config->space_bar_action)
@@ -1701,7 +1684,6 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
   gimp_display_shell_keyboard_ungrab (shell, event);
 
-  shell->space_pressed         = FALSE;
   shell->space_release_pending = FALSE;
 }
 
