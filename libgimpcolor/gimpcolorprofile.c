@@ -1545,9 +1545,7 @@ gimp_color_profile_get_lcms_format (const Babl *format,
     }
   else if (format == babl_format ("cairo-ARGB32"))
     {
-      *lcms_format = TYPE_RGBA_8;
-
-      return babl_format ("R'G'B'A u8");
+      rgb = TRUE;
     }
   else if (model == babl_model ("RGB")  ||
            model == babl_model ("RGBA") ||
@@ -1629,121 +1627,76 @@ gimp_color_profile_get_lcms_format (const Babl *format,
 
   *lcms_format = 0;
 
+  #define FIND_FORMAT_FOR_TYPE(babl_t, lcms_t)                                 \
+    do                                                                         \
+      {                                                                        \
+        if (has_alpha)                                                         \
+          {                                                                    \
+            if (rgb)                                                           \
+              {                                                                \
+                *lcms_format = TYPE_RGBA_##lcms_t;                             \
+                                                                               \
+                if (linear)                                                    \
+                  output_format = babl_format ("RGBA " babl_t);                \
+                else                                                           \
+                  output_format = babl_format ("R'G'B'A " babl_t);             \
+              }                                                                \
+            else if (gray)                                                     \
+              {                                                                \
+                *lcms_format = TYPE_GRAYA_##lcms_t;                            \
+                                                                               \
+                if (linear)                                                    \
+                  output_format = babl_format ("YA " babl_t);                  \
+                else                                                           \
+                  output_format = babl_format ("Y'A " babl_t);                 \
+              }                                                                \
+            else if (cmyk)                                                     \
+              {                                                                \
+                *lcms_format = TYPE_CMYKA_##lcms_t;                            \
+                                                                               \
+                output_format = format;                                        \
+              }                                                                \
+          }                                                                    \
+        else                                                                   \
+          {                                                                    \
+            if (rgb)                                                           \
+              {                                                                \
+                *lcms_format = TYPE_RGB_##lcms_t;                              \
+                                                                               \
+                if (linear)                                                    \
+                  output_format = babl_format ("RGB " babl_t);                 \
+                else                                                           \
+                  output_format = babl_format ("R'G'B' " babl_t);              \
+              }                                                                \
+            else if (gray)                                                     \
+              {                                                                \
+                *lcms_format = TYPE_GRAY_##lcms_t;                             \
+                                                                               \
+                if (linear)                                                    \
+                  output_format = babl_format ("Y " babl_t);                   \
+                else                                                           \
+                  output_format = babl_format ("Y' " babl_t);                  \
+              }                                                                \
+            else if (cmyk)                                                     \
+              {                                                                \
+                *lcms_format = TYPE_CMYK_##lcms_t;                             \
+                                                                               \
+                output_format = format;                                        \
+              }                                                                \
+          }                                                                    \
+      }                                                                        \
+    while (FALSE)
+
   if (type == babl_type ("u8"))
-    {
-      if (has_alpha)
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGBA_8;
-          else if (gray)
-            *lcms_format = TYPE_GRAYA_8;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYKA_8;
-        }
-      else
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGB_8;
-          else if (gray)
-            *lcms_format = TYPE_GRAY_8;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYK_8;
-        }
-
-      output_format = format;
-    }
+    FIND_FORMAT_FOR_TYPE ("u8", 8);
   else if (type == babl_type ("u16"))
-    {
-      if (has_alpha)
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGBA_16;
-          else if (gray)
-            *lcms_format = TYPE_GRAYA_16;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYKA_16;
-        }
-      else
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGB_16;
-          else if (gray)
-            *lcms_format = TYPE_GRAY_16;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYK_16;
-        }
-
-      output_format = format;
-    }
+    FIND_FORMAT_FOR_TYPE ("u16", 16);
   else if (type == babl_type ("half")) /* 16-bit floating point (half) */
-    {
-      if (has_alpha)
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGBA_HALF_FLT;
-          else if (gray)
-            *lcms_format = TYPE_GRAYA_HALF_FLT;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYKA_HALF_FLT;
-        }
-      else
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGB_HALF_FLT;
-          else if (gray)
-            *lcms_format = TYPE_GRAY_HALF_FLT;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYK_HALF_FLT;
-        }
-
-      output_format = format;
-    }
+    FIND_FORMAT_FOR_TYPE ("half", HALF_FLT);
   else if (type == babl_type ("float"))
-    {
-      if (has_alpha)
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGBA_FLT;
-          else if (gray)
-            *lcms_format = TYPE_GRAYA_FLT;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYKA_FLT;
-        }
-      else
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGB_FLT;
-          else if (gray)
-            *lcms_format = TYPE_GRAY_FLT;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYK_FLT;
-        }
-
-      output_format = format;
-    }
+    FIND_FORMAT_FOR_TYPE ("float", FLT);
   else if (type == babl_type ("double"))
-    {
-      if (has_alpha)
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGBA_DBL;
-          else if (gray)
-            *lcms_format = TYPE_GRAYA_DBL;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYKA_DBL;
-        }
-      else
-        {
-          if (rgb)
-            *lcms_format = TYPE_RGB_DBL;
-          else if (gray)
-            *lcms_format = TYPE_GRAY_DBL;
-          else if (cmyk)
-            *lcms_format = TYPE_CMYK_DBL;
-        }
-
-      output_format = format;
-    }
+    FIND_FORMAT_FOR_TYPE ("double", DBL);
 
   if (*lcms_format == 0)
     {
@@ -1751,49 +1704,14 @@ gimp_color_profile_get_lcms_format (const Babl *format,
                   "falling back to float\n",
                   G_STRFUNC, babl_get_name (format));
 
-      if (has_alpha)
-        {
-          if (gray)
-            {
-              *lcms_format = TYPE_GRAYA_FLT;
+      rgb = ! gray;
 
-              if (linear)
-                output_format = babl_format ("YA float");
-              else
-                output_format = babl_format ("Y'A float");
-            }
-          else
-            {
-              *lcms_format = TYPE_RGBA_FLT;
+      FIND_FORMAT_FOR_TYPE ("float", FLT);
 
-              if (linear)
-                output_format = babl_format ("RGBA float");
-              else
-                output_format = babl_format ("R'G'B'A float");
-            }
-        }
-      else
-        {
-          if (gray)
-            {
-             *lcms_format = TYPE_GRAY_FLT;
-
-              if (linear)
-                output_format = babl_format ("Y float");
-              else
-                output_format = babl_format ("Y' float");
-            }
-          else
-            {
-              *lcms_format = TYPE_RGB_FLT;
-
-              if (linear)
-                output_format = babl_format ("RGB float");
-              else
-                output_format = babl_format ("R'G'B' float");
-            }
-        }
+      g_return_val_if_fail (output_format != NULL, NULL);
     }
+
+  #undef FIND_FORMAT_FOR_TYPE
 
   return output_format;
 }
