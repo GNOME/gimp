@@ -155,11 +155,13 @@
 
 - (void)pickColor:(NSEvent *)event
 {
-  CGImageRef    root_image_ref;
-  CFDataRef     pixel_data;
-  const guchar *data;
-  GimpRGB       rgb;
-  NSPoint       point;
+  CGImageRef        root_image_ref;
+  CFDataRef         pixel_data;
+  const guchar     *data;
+  GimpRGB           rgb;
+  NSPoint           point;
+  GimpColorProfile *profile     = NULL;
+  CGColorSpaceRef   color_space = NULL;
 
   /* The event gives us a point in Cocoa window coordinates. The function
    * CGWindowListCreateImage expects a rectangle in screen coordinates
@@ -182,7 +184,60 @@
   pixel_data = CGDataProviderCopyData (CGImageGetDataProvider (root_image_ref));
   data = CFDataGetBytePtr (pixel_data);
 
+  color_space = CGImageGetColorSpace (root_image_ref);
+  if (color_space)
+    {
+      CFDataRef icc_data = NULL;
+
+      icc_data = CGColorSpaceCopyICCData (color_space);
+      if (icc_data)
+        {
+          UInt8 *buffer = g_malloc (CFDataGetLength (icc_data));
+
+          CFDataGetBytes (icc_data, CFRangeMake (0, CFDataGetLength (icc_data)),
+                          buffer);
+
+          profile = gimp_color_profile_new_from_icc_profile (buffer,
+                                                             CFDataGetLength (icc_data),
+                                                             NULL);
+          g_free (buffer);
+          CFRelease (icc_data);
+        }
+      CFRelease (color_space);
+    }
+
   gimp_rgba_set_uchar (&rgb, data[2], data[1], data[0], 255);
+  if (profile)
+    {
+      GimpColorProfile        *srgb_profile;
+      GimpColorTransform      *transform;
+      const Babl              *format;
+      GimpColorTransformFlags  flags = 0;
+
+      format = babl_format ("R'G'B'A double");
+
+      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+
+      srgb_profile = gimp_color_profile_new_rgb_srgb ();
+      transform = gimp_color_transform_new (profile,      format,
+                                            srgb_profile, format,
+                                            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                            flags);
+
+      if (transform)
+        {
+          gimp_color_transform_process_pixels (transform,
+                                               format, &rgb,
+                                               format, &rgb,
+                                               1);
+          gimp_rgb_clamp (&rgb);
+
+          g_object_unref (transform);
+        }
+      g_object_unref (srgb_profile);
+      g_object_unref (profile);
+    }
 
   CGImageRelease (root_image_ref);
   CFRelease (pixel_data);
