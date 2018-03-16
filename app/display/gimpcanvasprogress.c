@@ -37,8 +37,10 @@
 #include "gimpdisplayshell.h"
 
 
-#define BORDER   5
-#define RADIUS  20
+#define BORDER                5
+#define RADIUS               20
+
+#define MIN_UPDATE_INTERVAL  50000 /* microseconds */
 
 
 enum
@@ -60,6 +62,8 @@ struct _GimpCanvasProgressPrivate
 
   gchar            *text;
   gdouble           value;
+
+  guint64           last_update_time;
 };
 
 #define GET_PRIVATE(progress) \
@@ -350,7 +354,11 @@ gimp_canvas_progress_start (GimpProgress *progress,
                             gboolean      cancellable,
                             const gchar  *message)
 {
+  GimpCanvasProgressPrivate *private = GET_PRIVATE (progress);
+
   gimp_canvas_progress_set_text (progress, message);
+
+  private->last_update_time = g_get_monotonic_time ();
 
   return progress;
 }
@@ -399,15 +407,22 @@ gimp_canvas_progress_set_value (GimpProgress *progress,
 
   if (percentage != private->value)
     {
-      cairo_region_t *region;
+      guint64 time = g_get_monotonic_time ();
 
       private->value = percentage;
 
-      region = gimp_canvas_item_get_extents (GIMP_CANVAS_ITEM (progress));
+      if (time - private->last_update_time >= MIN_UPDATE_INTERVAL)
+        {
+          cairo_region_t *region;
 
-      _gimp_canvas_item_update (GIMP_CANVAS_ITEM (progress), region);
+          private->last_update_time = time;
 
-      cairo_region_destroy (region);
+          region = gimp_canvas_item_get_extents (GIMP_CANVAS_ITEM (progress));
+
+          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (progress), region);
+
+          cairo_region_destroy (region);
+        }
     }
 }
 
