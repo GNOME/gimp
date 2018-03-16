@@ -1580,7 +1580,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
-  if (shell->space_release_pending)
+  if (shell->space_release_pending || shell->scrolling)
     return;
 
   if (! gimp_display_shell_keyboard_grab (shell, event))
