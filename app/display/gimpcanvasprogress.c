@@ -72,38 +72,38 @@ struct _GimpCanvasProgressPrivate
 
 static void             gimp_canvas_progress_iface_init   (GimpProgressInterface *iface);
 
-static void             gimp_canvas_progress_finalize     (GObject          *object);
-static void             gimp_canvas_progress_set_property (GObject          *object,
-                                                           guint             property_id,
-                                                           const GValue     *value,
-                                                           GParamSpec       *pspec);
-static void             gimp_canvas_progress_get_property (GObject          *object,
-                                                           guint             property_id,
-                                                           GValue           *value,
-                                                           GParamSpec       *pspec);
-static void             gimp_canvas_progress_draw         (GimpCanvasItem   *item,
-                                                           cairo_t          *cr);
-static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);
-static gboolean         gimp_canvas_progress_hit          (GimpCanvasItem   *item,
-                                                                                                                                             gdouble           x,
-                                                                                                                                             gdouble           y);
+static void             gimp_canvas_progress_finalize     (GObject               *object);
+static void             gimp_canvas_progress_set_property (GObject               *object,
+                                                           guint                  property_id,
+                                                           const GValue          *value,
+                                                           GParamSpec            *pspec);
+static void             gimp_canvas_progress_get_property (GObject               *object,
+                                                           guint                  property_id,
+                                                           GValue                *value,
+                                                           GParamSpec            *pspec);
+static void             gimp_canvas_progress_draw         (GimpCanvasItem        *item,
+                                                           cairo_t               *cr);
+static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem        *item);
+static gboolean         gimp_canvas_progress_hit          (GimpCanvasItem        *item,
+                                                           gdouble                x,
+                                                           gdouble                y);
 
-static GimpProgress   * gimp_canvas_progress_start        (GimpProgress      *progress,
-                                                           gboolean           cancellable,
-                                                           const gchar       *message);
-static void             gimp_canvas_progress_end          (GimpProgress      *progress);
-static gboolean         gimp_canvas_progress_is_active    (GimpProgress      *progress);
-static void             gimp_canvas_progress_set_text     (GimpProgress      *progress,
-                                                           const gchar       *message);
-static void             gimp_canvas_progress_set_value    (GimpProgress      *progress,
-                                                           gdouble            percentage);
-static gdouble          gimp_canvas_progress_get_value    (GimpProgress      *progress);
-static void             gimp_canvas_progress_pulse        (GimpProgress      *progress);
-static gboolean         gimp_canvas_progress_message      (GimpProgress      *progress,
-                                                           Gimp              *gimp,
-                                                           GimpMessageSeverity severity,
-                                                           const gchar       *domain,
-                                                           const gchar       *message);
+static GimpProgress   * gimp_canvas_progress_start        (GimpProgress          *progress,
+                                                           gboolean               cancellable,
+                                                           const gchar           *message);
+static void             gimp_canvas_progress_end          (GimpProgress          *progress);
+static gboolean         gimp_canvas_progress_is_active    (GimpProgress          *progress);
+static void             gimp_canvas_progress_set_text     (GimpProgress          *progress,
+                                                           const gchar           *message);
+static void             gimp_canvas_progress_set_value    (GimpProgress          *progress,
+                                                           gdouble                percentage);
+static gdouble          gimp_canvas_progress_get_value    (GimpProgress          *progress);
+static void             gimp_canvas_progress_pulse        (GimpProgress          *progress);
+static gboolean         gimp_canvas_progress_message      (GimpProgress          *progress,
+                                                           Gimp                  *gimp,
+                                                           GimpMessageSeverity    severity,
+                                                           const gchar           *domain,
+                                                           const gchar           *message);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCanvasProgress, gimp_canvas_progress,
