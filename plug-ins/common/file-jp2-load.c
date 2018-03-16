@@ -826,6 +826,7 @@ color_esycc_to_rgb (opj_image_t *image)
   image->color_space = OPJ_CLRSPC_SRGB;
   return TRUE;
 }
+
 /*
  * get_valid_precision() converts given precision to standard precision
  * of gimp i.e. 8, 16, 32
@@ -838,7 +839,7 @@ get_valid_precision (gint precision_actual)
     return 8;
   else if (precision_actual <= 16)
     return 16;
-  else 
+  else
     return 32;
 }
 
@@ -880,7 +881,6 @@ load_image (const gchar       *filename,
   gint               width;
   gint               height;
   gint               num_components;
-  gint               colorspace_family;
   GeglBuffer        *buffer;
   gint               i, j, k, it;
   guchar            *pixels;
@@ -890,7 +890,7 @@ load_image (const gchar       *filename,
   gint               precision_actual, precision_scaled;
   gint               temp;
   gboolean           linear;
-  unsigned char      *c; 
+  unsigned char     *c;
 
   stream   = NULL;
   codec    = NULL;
@@ -1075,7 +1075,7 @@ load_image (const gchar       *filename,
 
   width = image->comps[0].w;
   height = image->comps[0].h;
-  
+
   if (profile)
     linear = gimp_color_profile_is_linear (profile);
 
@@ -1085,10 +1085,10 @@ load_image (const gchar       *filename,
   image_precision = get_image_precision (precision_scaled, linear);
 
   image_ID = gimp_image_new_with_precision (width, height,
-                                         base_type, image_precision);
+                                            base_type, image_precision);
 
   gimp_image_set_filename (image_ID, filename);
-  
+
   if (profile)
     gimp_image_set_color_profile (image_ID, profile);
 
@@ -1115,15 +1115,15 @@ load_image (const gchar       *filename,
           for (k = 0; k < width; k++)
             {
               if (shift >= 0)
-                temp = image->comps[j].data[i * width + k] << shift; 
-              else
-                 temp = image->comps[j].data[i * width + k] >> (- shift);    /*precision_actual > 32*/
+                temp = image->comps[j].data[i * width + k] << shift;
+              else /* precision_actual > 32 */
+                temp = image->comps[j].data[i * width + k] >> (- shift);
 
-              c = (unsigned char *)&temp;
-              for (it =0; it< (precision_scaled / 8); it++)
-                { 
+              c = (unsigned char *) &temp;
+              for (it = 0; it < (precision_scaled / 8); it++)
+                {
                   pixels[k * bpp + j * (precision_scaled / 8) + it] =  c[it];
-                }                                 
+                }
             }
         }
 
