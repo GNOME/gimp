@@ -58,6 +58,7 @@ Core:
     crashes.
   - New gimp_spawn_async() function uses vfork() to help avoid hanging
     during a fork process, currently used for plug-ins.
+  - Dock color picker is now color-managed on macOS.
 
 Libgimp:
 
@@ -72,6 +73,9 @@ Libgimp:
      cancellation.
    - New gimp_stack_trace_available(), gimp_stack_trace_print() and
      gimp_stack_trace_query() for debugging.
+   - Use gegl:distance-transform in gimp_edit_blend() implementation
+     making it much faster for all GRADIENT_SHAPEBURST_* gradient types.
+     Legacy gimp:shapeburst operation has been deleted.
 
 GUI and Usability:
 
@@ -99,6 +103,11 @@ GUI and Usability:
   - New GimpHighlightableButton widget is used to draw attention to buttons
     in certain cases. Currently used for anchoring and removing floating
     selections.
+  - Composite modes were renamed to be more descriptive, as follows:
+    Source Over       =>  Union
+    Source Atop       =>  Clip to Backdrop
+    Destination Atop  =>  Clip to Layer
+    Source In         =>  Intersection
 
 Configurability:
 
@@ -119,6 +128,9 @@ Tools:
   - Levels and Curves can now work on linear light data, the toggles are
     at the top of respective dialogs, right next to linear/log toggles
     for the histogram.
+  - Blend tool now has a distance metric option to determine how
+    distances are computed (Euclidean, Manhattan or Chebyshev
+    distances).
 
 Filters:
 
@@ -156,7 +168,10 @@ File formats:
     default choice regarding metadata handling.
   - Fix GIH brushes using different-sized layers.
   - RGBE (Radiance HDR) format files can now be imported and exported.
-  - JPEG2000 loading now done via OpenJPEG library.
+  - JPEG2000 loading now done via OpenJPEG library and supports any bit
+    depth (over 32-bit per channel will be clamped to 32-bit and
+    non-multiple of 8-bit will be promoted, for instance 12-bit will end
+    up as 16-bit per channel in GIMP).
 
 Building:
 
