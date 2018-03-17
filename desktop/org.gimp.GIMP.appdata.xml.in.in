@@ -82,10 +82,13 @@
         </_p>
         <ul>
           <_li>
-            Up to 32-bit per color channel
+            High bit depth color processing (16/32-bit per color channel)
           </_li>
           <_li>
-            On-canvas effect previews
+            Core color management
+          </_li>
+          <_li>
+            On-canvas effect preview
           </_li>
           <_li>
             Multi-threaded and hardware-accelerated rendering and
@@ -95,20 +98,21 @@
             New and improved tools
           </_li>
           <_li>
-            Color-management improvements
+            Many image format support improved, in particular better PSD import
           </_li>
           <_li>
-            Many file format improvements and new formats:
-            OpenEXR, WebP, HGT, RGBE…
-          </_li>
-          <_li>
-            Metadata viewing and editing
+            Newly supported image formats: OpenEXR, WebP, HGT, RGBE…
           </_li>
           <_li>
             Improved digital painting: canvas rotation and
             flipping, symmetry painting, MyPaint brushes…
           </_li>
-            Basic HiDPI support.
+          <_li>
+            Metadata viewing and editing
+          </_li>
+          <_li>
+            Basic HiDPI support
+          </_li>
           <_li>
             And much, much more…
           </_li>
