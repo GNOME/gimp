@@ -101,7 +101,7 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                          _("Metric"),
                          _("Metric to use for the distance calculation"),
                          GEGL_TYPE_DISTANCE_METRIC,
-                         GEGL_DISTANCE_EUCLIDEAN,
+                         GEGL_DISTANCE_METRIC_EUCLIDEAN,
                          GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                          "gradient-repeat",
