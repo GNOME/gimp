@@ -3398,3 +3398,68 @@ gimp_context_set_ink_blob_angle (gdouble angle)
 
   return success;
 }
+
+/**
+ * gimp_context_get_distance_metric:
+ *
+ * Get the distance metric used in some computations.
+ *
+ * This procedure returns the distance metric in the current context.
+ * See gimp_context_set_distance_metric() to know more about its usage.
+ *
+ * Returns: The distance metric.
+ *
+ * Since: 2.10
+ **/
+GeglDistanceMetric
+gimp_context_get_distance_metric (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GeglDistanceMetric metric = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-distance-metric",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    metric = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return metric;
+}
+
+/**
+ * gimp_context_set_distance_metric:
+ * @metric: The distance metric.
+ *
+ * Set the distance metric used in some computations.
+ *
+ * This procedure modifies the distance metric used in some
+ * computations, such as gimp_edit_blend(). In particular, it does not
+ * change the metric used in generic distance computation on canvas, as
+ * in the Measure tool.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_distance_metric (GeglDistanceMetric metric)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-distance-metric",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, metric,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

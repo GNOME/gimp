@@ -55,7 +55,8 @@ enum
   PROP_DIAGONAL_NEIGHBORS,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
-  PROP_TRANSFORM_RESIZE
+  PROP_TRANSFORM_RESIZE,
+  PROP_DISTANCE_METRIC
 };
 
 
@@ -181,6 +182,22 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                          GIMP_TYPE_TRANSFORM_RESIZE,
                          GIMP_TRANSFORM_RESIZE_ADJUST,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  /* Legacy blend used "manhattan" metric to compute distance.
+   * API needs to stay compatible, hence the default value for this
+   * property.
+   * Nevertheless Euclidean distance since to render better; for GIMP 3
+   * API, we might therefore want to change the defaults to
+   * GEGL_DISTANCE_METRIC_EUCLIDEAN. FIXME.
+   */
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
+                         "distance-metric",
+                         _("Distance metric"),
+                         NULL,
+                         GEGL_TYPE_DISTANCE_METRIC,
+                         GEGL_DISTANCE_METRIC_MANHATTAN,
+                         GIMP_PARAM_STATIC_STRINGS);
+
 }
 
 static void
@@ -324,6 +341,10 @@ gimp_pdb_context_set_property (GObject      *object,
       options->transform_resize = g_value_get_enum (value);
       break;
 
+    case PROP_DISTANCE_METRIC:
+      options->distance_metric = g_value_get_enum (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -386,6 +407,10 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_TRANSFORM_RESIZE:
       g_value_set_enum (value, options->transform_resize);
+      break;
+
+    case PROP_DISTANCE_METRIC:
+      g_value_set_enum (value, options->distance_metric);
       break;
 
     default:

@@ -3032,6 +3032,59 @@ CODE
     );
 }
 
+sub context_get_distance_metric {
+    $blurb = 'Get the distance metric used in some computations.';
+
+    $help = <<'HELP';
+This procedure returns the distance metric in the current context.
+See gimp_context_set_distance_metric() to know more about its usage.
+HELP
+
+    &ejs_pdb_misc('2018', '2.10');
+
+    @outargs = (
+        { name => 'metric', type => 'enum GeglDistanceMetric',
+          desc => 'The distance metric' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "distance-metric", &metric,
+		NULL);
+}
+CODE
+    );
+}
+
+sub context_set_distance_metric {
+    $blurb = 'Set the distance metric used in some computations.';
+
+    $help = <<'HELP';
+This procedure modifies the distance metric used in some computations,
+such as gimp_edit_blend(). In particular, it does not change the metric used
+in generic distance computation on canvas, as in the Measure tool.
+HELP
+
+    &ejs_pdb_misc('2018', '2.10');
+
+    @inargs = (
+        { name => 'metric', type => 'enum GeglDistanceMetric',
+          desc => 'The distance metric' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "distance-metric", metric,
+		NULL);
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpdashpattern.h"
@@ -3099,7 +3152,8 @@ CODE
             context_get_ink_speed_sensitivity context_set_ink_speed_sensitivity
             context_get_ink_blob_type context_set_ink_blob_type
             context_get_ink_blob_aspect_ratio context_set_ink_blob_aspect_ratio
-            context_get_ink_blob_angle context_set_ink_blob_angle);
+            context_get_ink_blob_angle context_set_ink_blob_angle
+            context_get_distance_metric context_set_distance_metric);
 
 %exports = (app => [@procs], lib => [@procs]);
 

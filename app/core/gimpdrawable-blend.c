@@ -40,24 +40,25 @@
 /*  public functions  */
 
 void
-gimp_drawable_blend (GimpDrawable     *drawable,
-                     GimpContext      *context,
-                     GimpGradient     *gradient,
-                     GimpLayerMode     paint_mode,
-                     GimpGradientType  gradient_type,
-                     gdouble           opacity,
-                     gdouble           offset,
-                     GimpRepeatMode    repeat,
-                     gboolean          reverse,
-                     gboolean          supersample,
-                     gint              max_depth,
-                     gdouble           threshold,
-                     gboolean          dither,
-                     gdouble           startx,
-                     gdouble           starty,
-                     gdouble           endx,
-                     gdouble           endy,
-                     GimpProgress     *progress)
+gimp_drawable_blend (GimpDrawable       *drawable,
+                     GimpContext        *context,
+                     GimpGradient       *gradient,
+                     GeglDistanceMetric  metric,
+                     GimpLayerMode       paint_mode,
+                     GimpGradientType    gradient_type,
+                     gdouble             opacity,
+                     gdouble             offset,
+                     GimpRepeatMode      repeat,
+                     gboolean            reverse,
+                     gboolean            supersample,
+                     gint                max_depth,
+                     gdouble             threshold,
+                     gboolean            dither,
+                     gdouble             startx,
+                     gdouble             starty,
+                     gdouble             endx,
+                     gdouble             endy,
+                     GimpProgress       *progress)
 {
   GimpImage  *image;
   GeglBuffer *buffer;
@@ -85,12 +86,8 @@ gimp_drawable_blend (GimpDrawable     *drawable,
   if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
       gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
     {
-      /* Legacy blend used "manhattan" metric to compute distance.
-       * API needs to stay compatible.
-       */
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable,
-                                                GEGL_DISTANCE_METRIC_MANHATTAN,
+        gimp_drawable_blend_shapeburst_distmap (drawable, metric,
                                                 GEGL_RECTANGLE (x, y, width, height),
                                                 progress);
     }

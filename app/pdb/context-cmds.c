@@ -2764,6 +2764,51 @@ context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+context_get_distance_metric_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 metric = 0;
+
+  g_object_get (context,
+                "distance-metric", &metric,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), metric);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_distance_metric_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 metric;
+
+  metric = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_set (context,
+                    "distance-metric", metric,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_context_procs (GimpPDB *pdb)
 {
@@ -5176,6 +5221,54 @@ register_context_procs (GimpPDB *pdb)
                                                     "ink blob angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-distance-metric
+   */
+  procedure = gimp_procedure_new (context_get_distance_metric_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-distance-metric");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-distance-metric",
+                                     "Get the distance metric used in some computations.",
+                                     "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("metric",
+                                                      "metric",
+                                                      "The distance metric",
+                                                      GEGL_TYPE_DISTANCE_METRIC,
+                                                      GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-distance-metric
+   */
+  procedure = gimp_procedure_new (context_set_distance_metric_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-distance-metric");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-distance-metric",
+                                     "Set the distance metric used in some computations.",
+                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-edit-blend'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.",
+                                     "Ed Swartz",
+                                     "Ed Swartz",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("metric",
+                                                  "metric",
+                                                  "The distance metric",
+                                                  GEGL_TYPE_DISTANCE_METRIC,
+                                                  GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

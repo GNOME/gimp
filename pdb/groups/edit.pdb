@@ -899,6 +899,7 @@ HELP
       gimp_drawable_blend (drawable,
                            context,
                            gradient,
+                           GIMP_PDB_CONTEXT (context)->distance_metric,
                            paint_mode,
                            gradient_type,
                            opacity / 100.0,
