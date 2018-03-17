@@ -66,6 +66,7 @@ EXTRA_DIST = \
 	enumcode.pl		\
 	enumgen.pl		\
 	enums.pl		\
+	enums-external.pl	\
 	groups.pl		\
 	lib.pl			\
 	pdb.pl			\
@@ -112,7 +113,7 @@ DISTCLEANFILES = $(stamp_files)
 
 $(srcdir)/enums.pl: stamp-enums
 	@:
-stamp-enums: $(srcdir)/enumgen.pl $(enum_headers) Makefile.am
+stamp-enums: $(srcdir)/enumgen.pl $(enum_headers) enums-external.pl Makefile.am
 	rootme=`pwd`; \
 	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
 	builddir=`cd $(top_builddir) && pwd`; export builddir; \

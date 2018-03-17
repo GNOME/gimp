@@ -57,6 +57,14 @@ my $header = <<'HEADER';
 :%enums = (
 HEADER
 
+my $external;
+open my $EXTERNAL, "enums-external.pl";
+{
+    local $/;
+    $external = <$EXTERNAL>;
+}
+close $EXTERNAL;
+
 my $footer = <<'FOOTER';
 :);
 :
@@ -255,6 +263,6 @@ foreach ($header, $code, $footer) { s/^://mg }
 
 $outfile = "$builddir/pdb/enums.pl$FILE_EXT";
 open OUTFILE, "> $outfile";
-print OUTFILE $header, $code, $footer;
+print OUTFILE $header, $external, $code, $footer;
 close OUTFILE;
 &write_file($outfile, "$destdir/pdb");
