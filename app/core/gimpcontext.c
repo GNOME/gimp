@@ -277,6 +277,10 @@ static void gimp_context_template_list_thaw  (GimpContainer    *container,
 static void gimp_context_real_set_template   (GimpContext      *context,
                                               GimpTemplate     *template);
 
+/*  distance metric */
+static void gimp_context_distance_metric_changed  (GimpContext        *context);
+static void gimp_context_real_set_distance_metric (GimpContext        *context,
+                                                   GeglDistanceMetric  metric);
 
 /*  utilities  */
 static gpointer gimp_context_find_object     (GimpContext      *context,
@@ -318,6 +322,7 @@ enum
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   TEMPLATE_CHANGED,
+  DISTANCE_METRIC_CHANGED,
   PROP_NAME_CHANGED,
   LAST_SIGNAL
 };
@@ -344,7 +349,8 @@ static const gchar * const gimp_context_prop_names[] =
   "font",
   "buffer",
   "imagefile",
-  "template"
+  "template",
+  "distance-metric"
 };
 
 static GType gimp_context_prop_types[] =
@@ -359,6 +365,7 @@ static GType gimp_context_prop_types[] =
   G_TYPE_NONE,
   G_TYPE_NONE,
   G_TYPE_NONE,
+  0,
   0,
   0,
   0,
@@ -583,6 +590,16 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_TEMPLATE);
 
+  gimp_context_signals[DISTANCE_METRIC_CHANGED] =
+    g_signal_new ("distance-metric-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, distance_metric_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__DOUBLE,
+                  G_TYPE_NONE, 1,
+                  GEGL_TYPE_DISTANCE_METRIC);
+
   gimp_context_signals[PROP_NAME_CHANGED] =
     g_signal_new ("prop-name-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -622,20 +639,21 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->template_changed        = NULL;
   klass->prop_name_changed       = NULL;
 
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]       = GIMP_TYPE_IMAGE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]        = GIMP_TYPE_TOOL_INFO;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PAINT_INFO]  = GIMP_TYPE_PAINT_INFO;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]       = GIMP_TYPE_BRUSH;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_DYNAMICS]    = GIMP_TYPE_DYNAMICS;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_MYBRUSH]     = GIMP_TYPE_MYBRUSH;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]     = GIMP_TYPE_PATTERN;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]    = GIMP_TYPE_GRADIENT;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]     = GIMP_TYPE_PALETTE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL_PRESET] = GIMP_TYPE_TOOL_PRESET;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]        = GIMP_TYPE_FONT;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]      = GIMP_TYPE_BUFFER;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE]   = GIMP_TYPE_IMAGEFILE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]    = GIMP_TYPE_TEMPLATE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]           = GIMP_TYPE_IMAGE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]            = GIMP_TYPE_TOOL_INFO;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PAINT_INFO]      = GIMP_TYPE_PAINT_INFO;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BRUSH]           = GIMP_TYPE_BRUSH;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_DYNAMICS]        = GIMP_TYPE_DYNAMICS;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_MYBRUSH]         = GIMP_TYPE_MYBRUSH;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]         = GIMP_TYPE_PATTERN;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]        = GIMP_TYPE_GRADIENT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]         = GIMP_TYPE_PALETTE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL_PRESET]     = GIMP_TYPE_TOOL_PRESET;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]            = GIMP_TYPE_FONT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]          = GIMP_TYPE_BUFFER;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE]       = GIMP_TYPE_IMAGEFILE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]        = GIMP_TYPE_TEMPLATE;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_DISTANCE_METRIC] = GEGL_TYPE_DISTANCE_METRIC;
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -772,6 +790,13 @@ gimp_context_class_init (GimpContextClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_TEMPLATE,
                                                         GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_DISTANCE_METRIC,
+                                   g_param_spec_enum (gimp_context_prop_names[GIMP_CONTEXT_PROP_DISTANCE_METRIC],
+                                                      NULL, NULL,
+                                                      GEGL_TYPE_DISTANCE_METRIC,
+                                                      GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -1081,6 +1106,9 @@ gimp_context_set_property (GObject      *object,
     case GIMP_CONTEXT_PROP_TEMPLATE:
       gimp_context_set_template (context, g_value_get_object (value));
       break;
+    case GIMP_CONTEXT_PROP_DISTANCE_METRIC:
+      gimp_context_set_distance_metric (context, g_value_get_enum (value));
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -1166,6 +1194,9 @@ gimp_context_get_property (GObject    *object,
       break;
     case GIMP_CONTEXT_PROP_TEMPLATE:
       g_value_set_object (value, gimp_context_get_template (context));
+      break;
+    case GIMP_CONTEXT_PROP_DISTANCE_METRIC:
+      g_value_set_enum (value, gimp_context_get_distance_metric (context));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -1705,6 +1736,10 @@ gimp_context_copy_property (GimpContext         *src,
 
     case GIMP_CONTEXT_PROP_TEMPLATE:
       gimp_context_real_set_template (dest, src->template);
+      break;
+
+    case GIMP_CONTEXT_PROP_DISTANCE_METRIC:
+      gimp_context_real_set_distance_metric (dest, src->distance_metric);
       break;
 
     default:
@@ -3887,6 +3922,49 @@ gimp_context_real_set_template (GimpContext  *context,
   gimp_context_template_changed (context);
 }
 
+/*****************************************************************************/
+/*  distance metric **********************************************************/
+
+GeglDistanceMetric
+gimp_context_get_distance_metric (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GEGL_DISTANCE_METRIC_EUCLIDEAN);
+
+  return context->distance_metric;
+}
+
+void
+gimp_context_set_distance_metric (GimpContext        *context,
+                                  GeglDistanceMetric  metric)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  context_find_defined (context, GIMP_CONTEXT_PROP_DISTANCE_METRIC);
+
+  gimp_context_real_set_distance_metric (context, metric);
+}
+
+static void
+gimp_context_distance_metric_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+                 gimp_context_signals[DISTANCE_METRIC_CHANGED], 0,
+                 context->distance_metric);
+}
+
+static void
+gimp_context_real_set_distance_metric (GimpContext        *context,
+                                       GeglDistanceMetric  metric)
+{
+  if (context->distance_metric == metric)
+    return;
+
+  context->distance_metric = metric;
+
+  g_object_notify (G_OBJECT (context), "distance-metric");
+  gimp_context_distance_metric_changed (context);
+}
 
 /*****************************************************************************/
 /*  utility functions  *******************************************************/

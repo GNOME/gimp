@@ -102,52 +102,56 @@ struct _GimpContext
 
   GimpTemplate         *template;
   gchar                *template_name;
+
+  GeglDistanceMetric    distance_metric;
 };
 
 struct _GimpContextClass
 {
   GimpViewableClass  parent_class;
 
-  void (* image_changed)      (GimpContext          *context,
-                               GimpImage            *image);
-  void (* display_changed)    (GimpContext          *context,
-                               gpointer              display);
+  void (* image_changed)           (GimpContext          *context,
+                                    GimpImage            *image);
+  void (* display_changed)         (GimpContext          *context,
+                                    gpointer              display);
 
-  void (* tool_changed)       (GimpContext          *context,
-                               GimpToolInfo         *tool_info);
-  void (* paint_info_changed) (GimpContext          *context,
-                               GimpPaintInfo        *paint_info);
+  void (* tool_changed)            (GimpContext          *context,
+                                    GimpToolInfo         *tool_info);
+  void (* paint_info_changed)      (GimpContext          *context,
+                                    GimpPaintInfo        *paint_info);
 
-  void (* foreground_changed) (GimpContext          *context,
-                               GimpRGB              *color);
-  void (* background_changed) (GimpContext          *context,
-                               GimpRGB              *color);
-  void (* opacity_changed)    (GimpContext          *context,
-                               gdouble               opacity);
-  void (* paint_mode_changed) (GimpContext          *context,
-                               GimpLayerMode         paint_mode);
-  void (* brush_changed)      (GimpContext          *context,
-                               GimpBrush            *brush);
-  void (* dynamics_changed)   (GimpContext          *context,
-                               GimpDynamics         *dynamics);
-  void (* mybrush_changed)    (GimpContext          *context,
-                               GimpMybrush          *brush);
-  void (* pattern_changed)    (GimpContext          *context,
-                               GimpPattern          *pattern);
-  void (* gradient_changed)   (GimpContext          *context,
-                               GimpGradient         *gradient);
-  void (* palette_changed)    (GimpContext          *context,
-                               GimpPalette          *palette);
-  void (* tool_preset_changed)(GimpContext          *context,
-                               GimpToolPreset       *tool_preset);
-  void (* font_changed)       (GimpContext          *context,
-                               GimpFont             *font);
-  void (* buffer_changed)     (GimpContext          *context,
-                               GimpBuffer           *buffer);
-  void (* imagefile_changed)  (GimpContext          *context,
-                               GimpImagefile        *imagefile);
-  void (* template_changed)   (GimpContext          *context,
-                               GimpTemplate         *template);
+  void (* foreground_changed)      (GimpContext          *context,
+                                    GimpRGB              *color);
+  void (* background_changed)      (GimpContext          *context,
+                                    GimpRGB              *color);
+  void (* opacity_changed)         (GimpContext          *context,
+                                    gdouble               opacity);
+  void (* paint_mode_changed)      (GimpContext          *context,
+                                    GimpLayerMode         paint_mode);
+  void (* brush_changed)           (GimpContext          *context,
+                                    GimpBrush            *brush);
+  void (* dynamics_changed)        (GimpContext          *context,
+                                    GimpDynamics         *dynamics);
+  void (* mybrush_changed)         (GimpContext          *context,
+                                    GimpMybrush          *brush);
+  void (* pattern_changed)         (GimpContext          *context,
+                                    GimpPattern          *pattern);
+  void (* gradient_changed)        (GimpContext          *context,
+                                    GimpGradient         *gradient);
+  void (* palette_changed)         (GimpContext          *context,
+                                    GimpPalette          *palette);
+  void (* tool_preset_changed)     (GimpContext          *context,
+                                    GimpToolPreset       *tool_preset);
+  void (* font_changed)            (GimpContext          *context,
+                                    GimpFont             *font);
+  void (* buffer_changed)          (GimpContext          *context,
+                                    GimpBuffer           *buffer);
+  void (* imagefile_changed)       (GimpContext          *context,
+                                    GimpImagefile        *imagefile);
+  void (* template_changed)        (GimpContext          *context,
+                                    GimpTemplate         *template);
+  void (* distance_metric_changed) (GimpContext          *context,
+                                    GeglDistanceMetric    metric);
 
   void (* prop_name_changed)  (GimpContext          *context,
                                GimpContextPropType   prop);
@@ -356,5 +360,10 @@ void             gimp_context_set_template        (GimpContext     *context,
                                                    GimpTemplate    *template);
 void             gimp_context_template_changed    (GimpContext     *context);
 
+/*  distance metric  */
+GeglDistanceMetric
+                 gimp_context_get_distance_metric (GimpContext     *context);
+void             gimp_context_set_distance_metric (GimpContext     *context,
+                                                   GeglDistanceMetric metric);
 
 #endif /* __GIMP_CONTEXT_H__ */

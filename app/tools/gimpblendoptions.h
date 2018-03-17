@@ -39,7 +39,6 @@ struct _GimpBlendOptions
 
   gdouble            offset;
   GimpGradientType   gradient_type;
-  GeglDistanceMetric distance_metric;
 
   gboolean           supersample;
   gint               supersample_depth;

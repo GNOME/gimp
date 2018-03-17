@@ -44,7 +44,6 @@ enum
   PROP_0,
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
-  PROP_DISTANCE_METRIC,
   PROP_GRADIENT_REPEAT,  /*  overrides a GimpPaintOptions property  */
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
@@ -95,13 +94,6 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                          NULL,
                          GIMP_TYPE_GRADIENT_TYPE,
                          GIMP_GRADIENT_LINEAR,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DISTANCE_METRIC,
-                         "distance-metric",
-                         _("Metric"),
-                         _("Metric to use for the distance calculation"),
-                         GEGL_TYPE_DISTANCE_METRIC,
-                         GEGL_DISTANCE_METRIC_EUCLIDEAN,
                          GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                          "gradient-repeat",
@@ -173,9 +165,6 @@ gimp_blend_options_set_property (GObject      *object,
     case PROP_GRADIENT_TYPE:
       options->gradient_type = g_value_get_enum (value);
       break;
-    case PROP_DISTANCE_METRIC:
-      options->distance_metric = g_value_get_enum (value);
-      break;
     case PROP_GRADIENT_REPEAT:
       GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat =
         g_value_get_enum (value);
@@ -223,9 +212,6 @@ gimp_blend_options_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_TYPE:
       g_value_set_enum (value, options->gradient_type);
-      break;
-    case PROP_DISTANCE_METRIC:
-      g_value_set_enum (value, options->distance_metric);
       break;
     case PROP_GRADIENT_REPEAT:
       g_value_set_enum (value,
@@ -299,7 +285,8 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  the distance metric menu  */
-  combo = gimp_prop_enum_combo_box_new (config, "distance-metric", 0, 0);
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (context),
+                                        "distance-metric", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Metric"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
