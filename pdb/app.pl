@@ -444,6 +444,7 @@ CODE
 	$enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
 	$enum_type =~ tr/[a-z]/[A-Z]/;
 	$enum_type =~ s/^GIMP/GIMP_TYPE/;
+	$enum_type =~ s/^GEGL/GEGL_TYPE/;
 	$default = exists $arg->{default} ? $arg->{default} : $enums{$typeinfo[0]}->{symbols}[0];
 
 	my ($foo, $bar, @remove) = &arg_parse($arg->{type});
