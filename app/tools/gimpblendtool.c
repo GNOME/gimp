@@ -792,7 +792,6 @@ static void
 gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
 {
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
-  GimpContext      *context = GIMP_CONTEXT (options);
   GimpTool         *tool    = GIMP_TOOL (blend_tool);
   gint              x, y, width, height;
 
@@ -804,7 +803,7 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
     return;
 
   blend_tool->dist_buffer =
-    gimp_drawable_blend_shapeburst_distmap (tool->drawable, context->distance_metric,
+    gimp_drawable_blend_shapeburst_distmap (tool->drawable, options->distance_metric,
                                             GEGL_RECTANGLE (x, y, width, height),
                                             GIMP_PROGRESS (blend_tool));
 
