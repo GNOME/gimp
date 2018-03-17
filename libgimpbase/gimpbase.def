@@ -36,7 +36,6 @@ EXPORTS
 	gimp_desaturate_mode_get_type
 	gimp_directory
 	gimp_directory_file
-	gimp_distance_metric_get_type
 	gimp_dodge_burn_type_compat_get_type
 	gimp_dodge_burn_type_get_type
 	gimp_enum_get_desc

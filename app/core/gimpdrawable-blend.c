@@ -89,7 +89,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
        * API needs to stay compatible.
        */
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable, GIMP_DISTANCE_METRIC_MANHATTAN,
+        gimp_drawable_blend_shapeburst_distmap (drawable, GEGL_DISTANCE_MANHATTAN,
                                                 GEGL_RECTANGLE (x, y, width, height),
                                                 progress);
     }
@@ -139,7 +139,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
 GeglBuffer *
 gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        GimpDistanceMetric   metric,
+                                        GeglDistanceMetric   metric,
                                         const GeglRectangle *region,
                                         GimpProgress        *progress)
 {
