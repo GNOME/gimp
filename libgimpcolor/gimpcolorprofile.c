@@ -1581,8 +1581,10 @@ gimp_color_profile_get_lcms_format (const Babl *format,
     {
       cmyk = TRUE;
     }
-  else if (model == babl_model ("CIE Lab") ||
-           model == babl_model ("CIE Lab alpha"))
+  else if (model == babl_model ("CIE Lab")       ||
+           model == babl_model ("CIE Lab alpha") ||
+           model == babl_model ("CIE LCH(ab)")   ||
+           model == babl_model ("CIE LCH(ab) alpha"))
     {
       if (has_alpha)
         {
