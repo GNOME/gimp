@@ -1470,7 +1470,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-blend",
                                      "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
-                                     "This tool requires information on the paint application mode, the blend mode, and the gradient type. It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
+                                     "This tool requires information on the paint application mode, the blend mode, and the gradient type. It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type. For shapeburst gradient types, the context's distance metric is also relevant and can be updated with 'gimp-context-set-distance-metric'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
