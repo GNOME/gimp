@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-11 16:55+0100\n"
-"PO-Revision-Date: 2018-03-11 16:57+0100\n"
+"POT-Creation-Date: 2018-03-18 17:49+0100\n"
+"PO-Revision-Date: 2018-03-18 17:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -6504,43 +6504,43 @@ msgstr "Tryb mieszania warstwy: automatyczny"
 
 #: ../app/actions/layers-actions.c:389
 msgctxt "layers-action"
-msgid "Source Over"
-msgstr "Źródło nad"
+msgid "Union"
+msgstr "Suma"
 
 #: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
-msgid "Layer Composite Mode: Source Over"
-msgstr "Tryb mieszania warstwy: źródło nad"
+msgid "Layer Composite Mode: Union"
+msgstr "Tryb mieszania warstwy: suma"
 
 #: ../app/actions/layers-actions.c:395
 msgctxt "layers-action"
-msgid "Source Atop"
-msgstr "Źródło na"
+msgid "Clip to Backdrop"
+msgstr "Przycięcie do tła"
 
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
-msgid "Layer Composite Mode: Source Atop"
-msgstr "Tryb mieszania warstwy: źródło na"
+msgid "Layer Composite Mode: Clip to Backdrop"
+msgstr "Tryb mieszania warstwy: przycięcie do tła"
 
 #: ../app/actions/layers-actions.c:401
 msgctxt "layers-action"
-msgid "Source In"
-msgstr "Źródło w"
+msgid "Clip to Layer"
+msgstr "Przycięcie do warstwy"
 
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
-msgid "Layer Composite Mode: Source In"
-msgstr "Tryb mieszania warstwy: źródło w"
+msgid "Layer Composite Mode: Clip to Layer"
+msgstr "Tryb mieszania warstwy: przycięcie do warstwy"
 
 #: ../app/actions/layers-actions.c:407
 msgctxt "layers-action"
-msgid "Destination Atop"
-msgstr "Cel na"
+msgid "Intersection"
+msgstr "Część wspólna"
 
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
-msgid "Layer Composite Mode: Destination Atop"
-msgstr "Tryb mieszania warstwy: cel na"
+msgid "Layer Composite Mode: Intersection"
+msgstr "Tryb mieszania warstwy: część wspólna"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -12317,7 +12317,7 @@ msgid "Pattern"
 msgstr "Deseń"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:266 ../app/tools/gimppaintoptions-gui.c:374
+#: ../app/tools/gimpblendoptions.c:283 ../app/tools/gimppaintoptions-gui.c:374
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -12425,12 +12425,12 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:123 ../app/tools/gimpblendtool.c:965
+#: ../app/core/gimpdrawable-blend.c:124 ../app/tools/gimpblendtool.c:1015
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/core/gimpdrawable-blend.c:216
+#: ../app/core/gimpdrawable-blend.c:212
 msgid "Calculating distance map"
 msgstr "Obliczanie mapy odległości"
 
@@ -12504,7 +12504,7 @@ msgstr "Typ wyjścia"
 msgid "Style"
 msgstr "Styl"
 
-#: ../app/core/gimpfilloptions.c:111 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:111 ../app/pdb/gimppdbcontext.c:100
 #: ../app/tools/gimpbucketfilloptions.c:132
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:134
 msgid "Antialiasing"
@@ -12913,7 +12913,7 @@ msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 #: ../app/core/gimpimage-convert-precision.c:298
 #: ../app/dialogs/convert-indexed-dialog.c:236
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpblendoptions.c:124
+#: ../app/tools/gimpblendoptions.c:135
 msgid "Dithering"
 msgstr "Dithering"
 
@@ -14702,7 +14702,7 @@ msgstr "Przesunięcie kanału"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:84
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:88
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Przesunięcie"
@@ -17382,23 +17382,23 @@ msgstr "Autom."
 
 #: ../app/operations/operations-enums.c:60
 msgctxt "layer-composite-mode"
-msgid "Source over"
-msgstr "Źródło nad"
+msgid "Union"
+msgstr "Suma"
 
 #: ../app/operations/operations-enums.c:61
 msgctxt "layer-composite-mode"
-msgid "Source atop"
-msgstr "Źródło na"
+msgid "Clip to backdrop"
+msgstr "Przycięcie do tła"
 
 #: ../app/operations/operations-enums.c:62
 msgctxt "layer-composite-mode"
-msgid "Destination atop"
-msgstr "Cel na"
+msgid "Clip to layer"
+msgstr "Przycięcie do warstwy"
 
 #: ../app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
-msgid "Source in"
-msgstr "Źródło w"
+msgid "Intersection"
+msgstr "Część wspólna"
 
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
@@ -18260,8 +18260,8 @@ msgid "Tilt"
 msgstr "Nachylenie"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:90
-#: ../app/tools/gimpblendoptions.c:277 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:94
+#: ../app/tools/gimpblendoptions.c:294 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Kształt"
 
@@ -18442,8 +18442,8 @@ msgstr "Odwrócenie"
 msgid "Reverse direction of fading"
 msgstr "Odwrócony kierunek zanikania"
 
-#: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:97
-#: ../app/tools/gimpblendoptions.c:286 ../app/tools/gimppaintoptions-gui.c:356
+#: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:108
+#: ../app/tools/gimpblendoptions.c:315 ../app/tools/gimppaintoptions-gui.c:356
 msgid "Repeat"
 msgstr "Okresowość"
 
@@ -18516,7 +18516,7 @@ msgstr "Należy najpierw wybrać źródło obrazu."
 msgid "Alignment"
 msgstr "Wyrównanie"
 
-#: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:127
+#: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
 #: ../app/tools/gimpbucketfilloptions.c:117 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
@@ -18951,52 +18951,56 @@ msgstr ""
 "Procedura „%s” została wywołana z błędnym typem %d. parametru. Oczekiwano "
 "%s, otrzymano %s."
 
-#: ../app/pdb/gimppdbcontext.c:100 ../app/tools/gimpselectionoptions.c:81
+#: ../app/pdb/gimppdbcontext.c:101 ../app/tools/gimpselectionoptions.c:81
 msgid "Smooth edges"
 msgstr "Wygładza brzegi"
 
-#: ../app/pdb/gimppdbcontext.c:106
+#: ../app/pdb/gimppdbcontext.c:107
 msgid "Feather"
 msgstr "Zmiękcz"
 
-#: ../app/pdb/gimppdbcontext.c:113
+#: ../app/pdb/gimppdbcontext.c:114
 msgid "Feather radius X"
 msgstr "Poziomy promień zmiękczania"
 
-#: ../app/pdb/gimppdbcontext.c:120
+#: ../app/pdb/gimppdbcontext.c:121
 msgid "Feather radius Y"
 msgstr "Pionowy promień zmiękczania"
 
-#: ../app/pdb/gimppdbcontext.c:134
+#: ../app/pdb/gimppdbcontext.c:135
 msgid "Sample criterion"
 msgstr "Kryterium próbki"
 
-#: ../app/pdb/gimppdbcontext.c:142
+#: ../app/pdb/gimppdbcontext.c:143
 msgid "Sample threshold"
 msgstr "Progowanie próbki"
 
-#: ../app/pdb/gimppdbcontext.c:149
+#: ../app/pdb/gimppdbcontext.c:150
 msgid "Sample transparent"
 msgstr "Przezroczysta próbka"
 
-#: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:124
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Sąsiedzi po przekątnej"
 
-#: ../app/pdb/gimppdbcontext.c:163 ../app/tools/gimptransformoptions.c:124
+#: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:124
 #: ../app/tools/gimptransformoptions.c:440 ../app/tools/gimpwarpoptions.c:119
 #: ../app/tools/gimpwarpoptions.c:322
 msgid "Interpolation"
 msgstr "Interpolacja"
 
-#: ../app/pdb/gimppdbcontext.c:171
+#: ../app/pdb/gimppdbcontext.c:172
 msgid "Transform direction"
 msgstr "Kierunek przekształcenia"
 
-#: ../app/pdb/gimppdbcontext.c:179
+#: ../app/pdb/gimppdbcontext.c:180
 msgid "Transform resize"
 msgstr "Zmiana rozmiaru przekształcenia"
+
+#: ../app/pdb/gimppdbcontext.c:195
+msgid "Distance metric"
+msgstr "Metryka odległości"
 
 #: ../app/pdb/gimpprocedure.c:467 ../app/plug-in/gimppluginprocframe.c:191
 #, c-format
@@ -19692,7 +19696,7 @@ msgstr "Ostre krawędzie"
 msgid "Other Options"
 msgstr "Inne opcje"
 
-#: ../app/propgui/gimppropgui-generic.c:177
+#: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
 msgstr "Proszę pobrać współrzędne z obrazu"
 
@@ -20107,47 +20111,55 @@ msgstr "Kliknięcie wybierze pierwszą ścieżkę"
 msgid "Click to add this path to the list"
 msgstr "Kliknięcie doda tę ścieżkę do listy"
 
-#: ../app/tools/gimpblendoptions.c:105
+#: ../app/tools/gimpblendoptions.c:101 ../app/tools/gimpblendoptions.c:303
+msgid "Metric"
+msgstr "Metryka"
+
+#: ../app/tools/gimpblendoptions.c:102
+msgid "Metric to use for the distance calculation"
+msgstr "Metryka używana do obliczania odległości"
+
+#: ../app/tools/gimpblendoptions.c:116
 msgid "Adaptive Supersampling"
 msgstr "Nadpróbkowanie adaptatywne"
 
-#: ../app/tools/gimpblendoptions.c:111
+#: ../app/tools/gimpblendoptions.c:122
 msgid "Max depth"
 msgstr "Maksymalna głębia"
 
-#: ../app/tools/gimpblendoptions.c:117 ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpblendoptions.c:128 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:87
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpblendoptions.c:131
+#: ../app/tools/gimpblendoptions.c:142
 msgid "Instant mode"
 msgstr "Tryb natychmiastowy"
 
-#: ../app/tools/gimpblendoptions.c:132
+#: ../app/tools/gimpblendoptions.c:143
 msgid "Commit gradient instantly"
 msgstr "Od razu zatwierdza gradient"
 
-#: ../app/tools/gimpblendoptions.c:138
+#: ../app/tools/gimpblendoptions.c:149
 msgid "Modify active gradient"
 msgstr "Modyfikuj aktywny gradient"
 
-#: ../app/tools/gimpblendoptions.c:139
+#: ../app/tools/gimpblendoptions.c:150
 msgid "Modify the active gradient in-place"
 msgstr "Modyfikuje aktywny gradient na płótnie"
 
-#: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:379
+#: ../app/tools/gimpblendoptions.c:288 ../app/tools/gimppaintoptions-gui.c:379
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
 #. the instant toggle
-#: ../app/tools/gimpblendoptions.c:326
+#: ../app/tools/gimpblendoptions.c:356
 #, c-format
 msgid "Instant mode  (%s)"
 msgstr "Tryb natychmiastowy  (%s)"
 
-#: ../app/tools/gimpblendoptions.c:346
+#: ../app/tools/gimpblendoptions.c:376
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
@@ -20182,7 +20194,7 @@ msgstr "Aktywna warstwa jest niewidoczna."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:571
+#: ../app/tools/gimpblendtool.c:614
 msgid "Blend: "
 msgstr "Gradient: "
 
@@ -21085,7 +21097,7 @@ msgid "Fuzzy Select"
 msgstr "Różdżka"
 
 #: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:539
-#: ../app/tools/gimpgegltool.c:540 ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:540 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -21093,7 +21105,7 @@ msgstr "Działanie biblioteki GEGL"
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:136
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
@@ -21542,18 +21554,18 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "_Zniekształcanie za pomocą wielu punktów"
 
-#: ../app/tools/gimpoperationtool.c:132
+#: ../app/tools/gimpoperationtool.c:135
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Działanie: wykonuje wybrane działanie biblioteki GEGL"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:536
+#: ../app/tools/gimpoperationtool.c:547
 #, c-format
 msgid "Aux Input"
 msgstr "Wejście Aux"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:542
+#: ../app/tools/gimpoperationtool.c:553
 #, c-format
 msgid "Aux%d Input"
 msgstr "Wejście Aux%d"
