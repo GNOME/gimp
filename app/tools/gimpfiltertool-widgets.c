@@ -189,6 +189,68 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
   return controller->widget;
 }
 
+void
+gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
+                               GimpToolWidget *widget)
+{
+  Controller *controller;
+
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  controller = g_object_get_data (G_OBJECT (filter_tool->widget),
+                                  "controller");
+
+  g_return_if_fail (controller != NULL);
+
+  switch (controller->controller_type)
+    {
+    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRID:
+      {
+        GimpMatrix3   *transform;
+        gint           off_x, off_y;
+        GeglRectangle  area;
+        gdouble        x1, y1;
+        gdouble        x2, y2;
+        gdouble        pivot_x, pivot_y;
+
+        g_object_get (controller->widget,
+                      "transform", &transform,
+                      NULL);
+
+        gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+        x1 = off_x + area.x;
+        y1 = off_y + area.y;
+        x2 = x1 + area.width;
+        y2 = y1 + area.height;
+
+        gimp_matrix3_transform_point (transform,
+                                      (x1 + x2) / 2.0, (y1 + y2) / 2.0,
+                                      &pivot_x, &pivot_y);
+
+        g_signal_handlers_block_by_func (controller->widget,
+                                         gimp_filter_tool_transform_grid_changed,
+                                         controller);
+
+        g_object_set (controller->widget,
+                      "pivot-x", pivot_x,
+                      "pivot-y", pivot_y,
+                      NULL);
+
+        g_signal_handlers_unblock_by_func (controller->widget,
+                                           gimp_filter_tool_transform_grid_changed,
+                                           controller);
+
+        g_free (transform);
+      }
+      break;
+
+    default:
+      break;
+    }
+}
+
 
 /*  private functions  */
 

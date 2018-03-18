@@ -1034,6 +1034,9 @@ gimp_filter_tool_reset (GimpFilterTool *filter_tool)
 
   if (filter_tool->config)
     g_object_thaw_notify (filter_tool->config);
+
+  if (filter_tool->widget)
+    gimp_filter_tool_reset_widget (filter_tool, filter_tool->widget);
 }
 
 static void
@@ -1453,6 +1456,9 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
   g_return_if_fail (GIMP_IS_SETTINGS (config));
 
   GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->set_config (filter_tool, config);
+
+  if (filter_tool->widget)
+    gimp_filter_tool_reset_widget (filter_tool, filter_tool->widget);
 }
 
 void
