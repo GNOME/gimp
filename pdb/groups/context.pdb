@@ -3040,7 +3040,7 @@ This procedure returns the distance metric in the current context.
 See gimp_context_set_distance_metric() to know more about its usage.
 HELP
 
-    &ejs_pdb_misc('2018', '2.10');
+    &jehan_pdb_misc('2018', '2.10');
 
     @outargs = (
         { name => 'metric', type => 'enum GeglDistanceMetric',
@@ -3067,7 +3067,7 @@ such as gimp_edit_blend(). In particular, it does not change the metric used
 in generic distance computation on canvas, as in the Measure tool.
 HELP
 
-    &ejs_pdb_misc('2018', '2.10');
+    &jehan_pdb_misc('2018', '2.10');
 
     @inargs = (
         { name => 'metric', type => 'enum GeglDistanceMetric',

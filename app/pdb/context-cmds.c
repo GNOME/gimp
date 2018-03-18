@@ -5234,8 +5234,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-get-distance-metric",
                                      "Get the distance metric used in some computations.",
                                      "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
-                                     "Ed Swartz",
-                                     "Ed Swartz",
+                                     "Jehan",
+                                     "Jehan",
                                      "2018",
                                      NULL);
   gimp_procedure_add_return_value (procedure,
@@ -5258,8 +5258,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-distance-metric",
                                      "Set the distance metric used in some computations.",
                                      "This procedure modifies the distance metric used in some computations, such as 'gimp-edit-blend'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.",
-                                     "Ed Swartz",
-                                     "Ed Swartz",
+                                     "Jehan",
+                                     "Jehan",
                                      "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,

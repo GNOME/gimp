@@ -89,6 +89,10 @@ sub jay_pdb_misc {
     contrib_pdb_misc('Jay Cox', '', @_);
 }
 
+sub jehan_pdb_misc {
+    contrib_pdb_misc('Jehan', '', @_);
+}
+
 sub joao_pdb_misc {
     contrib_pdb_misc('Jo\xc3\xa3o S. O. Bueno', '', @_);
 }
