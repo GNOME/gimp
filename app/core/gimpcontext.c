@@ -954,6 +954,9 @@ gimp_context_constructed (GObject *object)
   g_signal_connect_object (gimp->templates, "thaw",
                            G_CALLBACK (gimp_context_template_list_thaw),
                            object, 0);
+
+  gimp_context_set_paint_info (GIMP_CONTEXT (object),
+                               gimp_paint_info_get_standard (gimp));
 }
 
 static void
