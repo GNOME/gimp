@@ -76,6 +76,9 @@ Libgimp:
    - Use gegl:distance-transform in gimp_edit_blend() implementation
      making it much faster for all GRADIENT_SHAPEBURST_* gradient types.
      Legacy gimp:shapeburst operation has been deleted.
+   - New gimp_context_get_distance_metric() and
+     gimp_context_set_distance_metric() for distance metric used in
+     gimp_edit_blend() (and future usage).
 
 GUI and Usability:
 
