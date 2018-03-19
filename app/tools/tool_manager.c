@@ -390,7 +390,8 @@ tool_manager_focus_display_active (Gimp        *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
     {
       gimp_tool_set_focus_display (tool_manager->active_tool,
                                    display);
@@ -448,7 +449,8 @@ tool_manager_oper_update_active (Gimp             *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
     {
       gimp_tool_oper_update (tool_manager->active_tool,
                              coords, state, proximity,
@@ -468,7 +470,8 @@ tool_manager_cursor_update_active (Gimp             *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
     {
       gimp_tool_cursor_update (tool_manager->active_tool,
                                coords, state,
