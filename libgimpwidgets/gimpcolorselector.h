@@ -73,7 +73,6 @@ struct _GimpColorSelector
   GimpRGB                   rgb;
   GimpHSV                   hsv;
 
-  GimpColorSelectorModel    model;
   GimpColorSelectorChannel  channel;
 };
 
@@ -117,12 +116,14 @@ struct _GimpColorSelectorClass
   const gchar *icon_name;
 
   /*  another virtual function  */
-  void (* set_model)             (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model);
+  void (* set_model_visible)     (GimpColorSelector        *selector,
+                                  GimpColorSelectorModel    model,
+                                  gboolean                  visible);
 
   /*  another signal  */
-  void (* model_changed)         (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model);
+  void (* model_visible_changed) (GimpColorSelector        *selector,
+                                  GimpColorSelectorModel    model,
+                                  gboolean                  visible);
 };
 
 
@@ -155,13 +156,17 @@ void     gimp_color_selector_set_channel           (GimpColorSelector *selector,
                                                     GimpColorSelectorChannel  channel);
 GimpColorSelectorChannel
          gimp_color_selector_get_channel           (GimpColorSelector *selector);
-void     gimp_color_selector_set_model             (GimpColorSelector *selector,
-                                                    GimpColorSelectorModel  model);
-GimpColorSelectorModel
-         gimp_color_selector_get_model             (GimpColorSelector *selector);
+
+void     gimp_color_selector_set_model_visible     (GimpColorSelector *selector,
+                                                    GimpColorSelectorModel model,
+                                                    gboolean           visible);
+gboolean gimp_color_selector_get_model_visible     (GimpColorSelector *selector,
+                                                    GimpColorSelectorModel model);
 
 void     gimp_color_selector_color_changed         (GimpColorSelector *selector);
 void     gimp_color_selector_channel_changed       (GimpColorSelector *selector);
+void     gimp_color_selector_model_visible_changed (GimpColorSelector *selector,
+                                                    GimpColorSelectorModel model);
 
 void     gimp_color_selector_set_config            (GimpColorSelector *selector,
                                                     GimpColorConfig   *config);

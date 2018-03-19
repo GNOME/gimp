@@ -157,17 +157,17 @@ gimp_color_selector_model_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_COLOR_SELECTOR_RGB, "GIMP_COLOR_SELECTOR_RGB", "rgb" },
-    { GIMP_COLOR_SELECTOR_LCH, "GIMP_COLOR_SELECTOR_LCH", "lch" },
-    { GIMP_COLOR_SELECTOR_HSV, "GIMP_COLOR_SELECTOR_HSV", "hsv" },
+    { GIMP_COLOR_SELECTOR_MODEL_RGB, "GIMP_COLOR_SELECTOR_MODEL_RGB", "rgb" },
+    { GIMP_COLOR_SELECTOR_MODEL_LCH, "GIMP_COLOR_SELECTOR_MODEL_LCH", "lch" },
+    { GIMP_COLOR_SELECTOR_MODEL_HSV, "GIMP_COLOR_SELECTOR_MODEL_HSV", "hsv" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_SELECTOR_RGB, NC_("color-selector-model", "RGB"), N_("RGB color model") },
-    { GIMP_COLOR_SELECTOR_LCH, NC_("color-selector-model", "LCH"), N_("CIELCh color model") },
-    { GIMP_COLOR_SELECTOR_HSV, NC_("color-selector-model", "HSV"), N_("HSV color model") },
+    { GIMP_COLOR_SELECTOR_MODEL_RGB, NC_("color-selector-model", "RGB"), N_("RGB color model") },
+    { GIMP_COLOR_SELECTOR_MODEL_LCH, NC_("color-selector-model", "LCH"), N_("CIELCh color model") },
+    { GIMP_COLOR_SELECTOR_MODEL_HSV, NC_("color-selector-model", "HSV"), N_("HSV color model") },
     { 0, NULL, NULL }
   };
 
