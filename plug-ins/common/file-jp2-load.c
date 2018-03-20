@@ -91,17 +91,24 @@
 #define LOAD_JP2_PROC      "file-jp2-load"
 #define LOAD_J2K_PROC      "file-j2k-load"
 #define PLUG_IN_BINARY     "file-jp2-load"
+#define PLUG_IN_ROLE       "gimp-file-jp2-load"
 
 
-static void     query             (void);
-static void     run               (const gchar       *name,
-                                   gint               nparams,
-                                   const GimpParam   *param,
-                                   gint              *nreturn_vals,
-                                   GimpParam        **return_vals);
-static gint32   load_image        (const gchar       *filename,
-                                   OPJ_CODEC_FORMAT   format,
-                                   GError           **error);
+static void           query        (void);
+static void           run          (const gchar       *name,
+                                    gint               nparams,
+                                    const GimpParam   *param,
+                                    gint              *nreturn_vals,
+                                    GimpParam        **return_vals);
+static gint32         load_image   (const gchar       *filename,
+                                    OPJ_CODEC_FORMAT   format,
+                                    gboolean           interactive,
+                                    GError           **error);
+
+static OPJ_COLOR_SPACE open_dialog (const gchar      *filename,
+                                    OPJ_CODEC_FORMAT  format,
+                                    gint              num_components,
+                                    GError          **error);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -216,9 +223,11 @@ run (const gchar      *name,
         }
 
       if (strcmp (name, LOAD_JP2_PROC) == 0)
-        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2, &error);
+        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2,
+                               interactive, &error);
       else /* strcmp (name, LOAD_J2K_PROC) == 0 */
-        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K, &error);
+        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K,
+                               interactive, &error);
 
       if (image_ID != -1)
         {
@@ -245,9 +254,13 @@ run (const gchar      *name,
           values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
-      else
+      else if (error)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
+        }
+      else
+        {
+          status = GIMP_PDB_CANCEL;
         }
     }
   else
@@ -864,9 +877,113 @@ get_image_precision (gint     precision,
     }
 }
 
+static OPJ_COLOR_SPACE
+open_dialog (const gchar      *filename,
+             OPJ_CODEC_FORMAT  format,
+             gint              num_components,
+             GError          **error)
+{
+  const gchar     *title;
+  GtkWidget       *dialog;
+  GtkWidget       *main_vbox;
+  GtkWidget       *table;
+  GtkWidget       *combo       = NULL;
+  OPJ_COLOR_SPACE  color_space = OPJ_CLRSPC_SRGB;
+
+  if (format == OPJ_CODEC_J2K)
+    /* Not having color information is expected. */
+    title = "Opening JPEG 2000 codestream";
+  else
+    /* Unexpected, but let's be a bit flexible and ask. */
+    title = "JPEG 2000 image with no color space";
+
+  gimp_ui_init (PLUG_IN_BINARY, TRUE);
+
+  dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
+                            NULL, 0,
+                            gimp_standard_help_func,
+                            (format == OPJ_CODEC_J2K) ?  LOAD_J2K_PROC : LOAD_JP2_PROC,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Open"),   GTK_RESPONSE_OK,
+
+                            NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
+  table = gtk_table_new (4, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (main_vbox), table);
+  gtk_widget_show (table);
+
+  if (num_components == 3)
+    {
+      /* Can be RGB, YUC and YCC. */
+      combo = gimp_int_combo_box_new (_("RGB"),   OPJ_CLRSPC_SRGB,
+                                      _("YUC"),   OPJ_CLRSPC_SYCC,
+                                      _("e-YCC"), OPJ_CLRSPC_EYCC,
+                                      NULL);
+    }
+  else if (num_components == 4)
+    {
+      /* Can be RGB, YUC and YCC with alpha or CMYK. */
+      combo = gimp_int_combo_box_new (_("RGB"),   OPJ_CLRSPC_SRGB,
+                                      _("YUC"),   OPJ_CLRSPC_SYCC,
+                                      _("e-YCC"), OPJ_CLRSPC_EYCC,
+                                      _("CMYK"),  OPJ_CLRSPC_CMYK,
+                                      NULL);
+    }
+  else
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported JPEG 2000%s '%s' with %d components."),
+                   (format == OPJ_CODEC_J2K) ? " codestream" : "",
+                   gimp_filename_to_utf8 (filename), num_components);
+      color_space = OPJ_CLRSPC_UNKNOWN;
+    }
+
+  if (combo)
+    {
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                 _("Color space:"), 0.0, 0.5,
+                                 combo, 2, FALSE);
+      gtk_widget_show (combo);
+
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &color_space);
+
+      /* By default, RGB is active. */
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), OPJ_CLRSPC_SRGB);
+
+      gtk_widget_show (dialog);
+
+      if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
+        {
+          /* Do not set an error here. The import was simply canceled.
+           * No error occured. */
+          color_space = OPJ_CLRSPC_UNKNOWN;
+        }
+    }
+
+  gtk_widget_destroy (dialog);
+
+  return color_space;
+}
+
 static gint32
 load_image (const gchar       *filename,
             OPJ_CODEC_FORMAT   format,
+            gboolean           interactive,
             GError           **error)
 {
   opj_stream_t      *stream;
@@ -981,16 +1098,63 @@ load_image (const gchar       *filename,
       image->icc_profile_len = 0;
     }
 
-  if ((image->color_space != OPJ_CLRSPC_SYCC) &&
-      (image->numcomps == 3) &&
-      (image->comps[0].dx == image->comps[0].dy) &&
-      (image->comps[1].dx != 1))
+  num_components = image->numcomps;
+
+  if (image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
+      image->color_space == OPJ_CLRSPC_UNKNOWN)
     {
-      image->color_space = OPJ_CLRSPC_SYCC;
-    }
-  else if (image->numcomps <= 2)
-    {
-      image->color_space = OPJ_CLRSPC_GRAY;
+      /* Sometimes the color space is not set at this point, which
+       * sucks. This happens always with codestream images (.j2c or
+       * .j2k) which are meant to be embedded by other files.
+       *
+       * It might also happen with JP2 in case the header does not have
+       * color space and the ICC profile is absent (though this may mean
+       * that the JP2 is broken, but let's be flexible and allow manual
+       * fallback).
+       * Assuming RGB/RGBA space is bogus since this format can handle
+       * so much more. Therefore we instead pop-up a dialog asking one
+       * to specify the color space in interactive mode.
+       */
+      if (num_components == 1 || num_components == 2)
+        {
+          /* Only possibility is gray. */
+          image->color_space = OPJ_CLRSPC_GRAY;
+        }
+      else if (num_components == 5)
+        {
+          /* Can only be CMYK with Alpha. */
+          image->color_space = OPJ_CLRSPC_CMYK;
+        }
+      else if (interactive)
+        {
+          image->color_space = open_dialog (filename, format,
+                                            num_components, error);
+
+          if (image->color_space == OPJ_CLRSPC_UNKNOWN)
+            goto out;
+        }
+      else /* ! interactive */
+        {
+          /* Assume RGB/RGBA for now.
+           * TODO: ADD API parameter.
+           */
+          base_type = GIMP_RGB;
+          if (num_components == 3)
+            {
+              image_type = GIMP_RGB_IMAGE;
+            }
+          else if (num_components == 4)
+            {
+              image_type = GIMP_RGBA_IMAGE;
+            }
+          else
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Unsupported color space in JP2 image '%s'."),
+                           gimp_filename_to_utf8 (filename));
+              goto out;
+            }
+        }
     }
 
   if (image->color_space == OPJ_CLRSPC_SYCC)
@@ -1024,8 +1188,7 @@ load_image (const gchar       *filename,
         }
     }
 
-  num_components = image->numcomps;
-
+  /* At this point, the image should be converted to Gray or RGB. */
   if (image->color_space == OPJ_CLRSPC_GRAY)
     {
       base_type  = GIMP_GRAY;
@@ -1044,33 +1207,11 @@ load_image (const gchar       *filename,
     }
   else
     {
-      /* Sometimes the color space is not set at this point, which
-       * sucks. It seems to happen in particular with codestream images
-       * (.j2c or .j2k) which, if I understand well, are meant to be
-       * embedded by other files. So maybe that means that the color
-       * space information is in this container file?
-       * For now, let's just assume RGB/RGBA space when this happens,
-       * but this is not ideal. We should instead pop-up a dialog asking
-       * one to specify the color space in interactive mode (and add a
-       * parameter for the API.
-       * TODO!
-       */
-      base_type = GIMP_RGB;
-      if (num_components == 3)
-        {
-          image_type = GIMP_RGB_IMAGE;
-        }
-      else if (num_components == 4)
-        {
-          image_type = GIMP_RGBA_IMAGE;
-        }
-      else
-        {
-          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Unsupported color space in JP2 image '%s'."),
-                       gimp_filename_to_utf8 (filename));
-          goto out;
-        }
+      /* If not gray or RGB, this is an image we cannot handle. */
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unsupported color space in JP2 image '%s'."),
+                   gimp_filename_to_utf8 (filename));
+      goto out;
     }
 
   width = image->comps[0].w;
