@@ -102,6 +102,7 @@ static void           run          (const gchar       *name,
                                     GimpParam        **return_vals);
 static gint32         load_image   (const gchar       *filename,
                                     OPJ_CODEC_FORMAT   format,
+                                    OPJ_COLOR_SPACE    color_space,
                                     gboolean           interactive,
                                     GError           **error);
 
@@ -124,11 +125,19 @@ MAIN ()
 static void
 query (void)
 {
-  static const GimpParamDef load_args[] =
+  static const GimpParamDef jp2_load_args[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
     { GIMP_PDB_STRING, "raw-filename", "The name entered" },
+  };
+
+  static const GimpParamDef j2k_load_args[] =
+  {
+    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered" },
+    { GIMP_PDB_INT32,  "colorspace",   "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YUV (4), YCC (5) }" },
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -145,9 +154,9 @@ query (void)
                           N_("JPEG 2000 image"),
                           NULL,
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (jp2_load_args),
                           G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
+                          jp2_load_args, load_return_vals);
   /*
    * XXX: more complete magic number would be:
    * "0,string,\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A"
@@ -164,16 +173,21 @@ query (void)
 
   gimp_install_procedure (LOAD_J2K_PROC,
                           "Loads JPEG 2000 codestream.",
-                          "The JPEG 2000 codestream loader.",
+                          "Loads JPEG 2000 codestream. "
+                          "If the color space is set to UNKNOWN (0), "
+                          "we will try to guess, which is only possible "
+                          "for few spaces (such as grayscale). Most "
+                          "such calls will fail. You are rather "
+                          "expected to know the color space of your data.",
                           "Jehan",
                           "Jehan",
                           "2009",
                           N_("JPEG 2000 codestream"),
                           NULL,
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (j2k_load_args),
                           G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
+                          j2k_load_args, load_return_vals);
   gimp_register_magic_load_handler (LOAD_J2K_PROC,
                                     "j2k,j2c,jpc",
                                     "",
@@ -208,7 +222,8 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_JP2_PROC) == 0 ||
       strcmp (name, LOAD_J2K_PROC) == 0)
     {
-      gboolean interactive;
+      OPJ_COLOR_SPACE color_space = OPJ_CLRSPC_UNKNOWN;
+      gboolean        interactive;
 
       switch (run_mode)
         {
@@ -218,16 +233,44 @@ run (const gchar      *name,
           interactive = TRUE;
           break;
         default:
+          if (strcmp (name, LOAD_J2K_PROC) == 0)
+            {
+              /* Order is not the same as OpenJPEG enum on purpose,
+               * since it's better to not rely on a given order or
+               * on enum values.
+               */
+              switch (param[3].data.d_int32)
+                {
+                case 1:
+                  color_space = OPJ_CLRSPC_GRAY;
+                  break;
+                case 2:
+                  color_space = OPJ_CLRSPC_SRGB;
+                  break;
+                case 3:
+                  color_space = OPJ_CLRSPC_CMYK;
+                  break;
+                case 4:
+                  color_space = OPJ_CLRSPC_SYCC;
+                  break;
+                case 5:
+                  color_space = OPJ_CLRSPC_EYCC;
+                  break;
+                default:
+                  /* Stays unknown. */
+                  break;
+                }
+            }
           interactive = FALSE;
           break;
         }
 
       if (strcmp (name, LOAD_JP2_PROC) == 0)
         image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2,
-                               interactive, &error);
+                               color_space, interactive, &error);
       else /* strcmp (name, LOAD_J2K_PROC) == 0 */
         image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K,
-                               interactive, &error);
+                               color_space, interactive, &error);
 
       if (image_ID != -1)
         {
@@ -983,6 +1026,7 @@ open_dialog (const gchar      *filename,
 static gint32
 load_image (const gchar       *filename,
             OPJ_CODEC_FORMAT   format,
+            OPJ_COLOR_SPACE    color_space,
             gboolean           interactive,
             GError           **error)
 {
@@ -1100,6 +1144,10 @@ load_image (const gchar       *filename,
 
   num_components = image->numcomps;
 
+  if ((image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
+       image->color_space == OPJ_CLRSPC_UNKNOWN) && ! interactive)
+      image->color_space = color_space;
+
   if (image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
       image->color_space == OPJ_CLRSPC_UNKNOWN)
     {
@@ -1135,25 +1183,15 @@ load_image (const gchar       *filename,
         }
       else /* ! interactive */
         {
-          /* Assume RGB/RGBA for now.
-           * TODO: ADD API parameter.
+          /* API call where color space was set to UNKNOWN. We don't
+           * want to guess or assume anything. It is much better to just
+           * fail. It is the responsibility of the developer to know its
+           * data when loading it in a script.
            */
-          base_type = GIMP_RGB;
-          if (num_components == 3)
-            {
-              image_type = GIMP_RGB_IMAGE;
-            }
-          else if (num_components == 4)
-            {
-              image_type = GIMP_RGBA_IMAGE;
-            }
-          else
-            {
-              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("Unsupported color space in JP2 image '%s'."),
-                           gimp_filename_to_utf8 (filename));
-              goto out;
-            }
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unknown color space in JP2 codestream '%s'."),
+                       gimp_filename_to_utf8 (filename));
+          goto out;
         }
     }
 
