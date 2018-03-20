@@ -137,7 +137,7 @@ query (void)
     { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_STRING, "filename",     "The name of the file to load." },
     { GIMP_PDB_STRING, "raw-filename", "The name entered" },
-    { GIMP_PDB_INT32,  "colorspace",   "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YUV (4), YCC (5) }" },
+    { GIMP_PDB_INT32,  "colorspace",   "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), CMYK (3), YCbCr (4), xvYCC (5) }" },
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -970,18 +970,18 @@ open_dialog (const gchar      *filename,
 
   if (num_components == 3)
     {
-      /* Can be RGB, YUC and YCC. */
-      combo = gimp_int_combo_box_new (_("RGB"),   OPJ_CLRSPC_SRGB,
-                                      _("YUC"),   OPJ_CLRSPC_SYCC,
-                                      _("e-YCC"), OPJ_CLRSPC_EYCC,
+      /* Can be RGB, YUV and YCC. */
+      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+                                      _("YCbCr"), OPJ_CLRSPC_SYCC,
+                                      _("xvYCC"), OPJ_CLRSPC_EYCC,
                                       NULL);
     }
   else if (num_components == 4)
     {
-      /* Can be RGB, YUC and YCC with alpha or CMYK. */
-      combo = gimp_int_combo_box_new (_("RGB"),   OPJ_CLRSPC_SRGB,
-                                      _("YUC"),   OPJ_CLRSPC_SYCC,
-                                      _("e-YCC"), OPJ_CLRSPC_EYCC,
+      /* Can be RGB, YUV and YCC with alpha or CMYK. */
+      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+                                      _("YCbCr"), OPJ_CLRSPC_SYCC,
+                                      _("xvYCC"), OPJ_CLRSPC_EYCC,
                                       _("CMYK"),  OPJ_CLRSPC_CMYK,
                                       NULL);
     }
@@ -1200,7 +1200,7 @@ load_image (const gchar       *filename,
       if (! color_sycc_to_rgb (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't convert YUV JP2 image '%s' to RGB."),
+                       _("Couldn't convert YCbCr JP2 image '%s' to RGB."),
                        gimp_filename_to_utf8 (filename));
           goto out;
         }
@@ -1220,7 +1220,7 @@ load_image (const gchar       *filename,
       if (! color_esycc_to_rgb (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Couldn't convert YCC JP2 image in '%s' to RGB."),
+                       _("Couldn't convert xvYCC JP2 image in '%s' to RGB."),
                        gimp_filename_to_utf8 (filename));
           goto out;
         }
