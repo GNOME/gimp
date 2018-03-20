@@ -174,7 +174,11 @@ File formats:
   - JPEG2000 loading now done via OpenJPEG library and supports any bit
     depth (over 32-bit per channel will be clamped to 32-bit and
     non-multiple of 8-bit will be promoted, for instance 12-bit will end
-    up as 16-bit per channel in GIMP).
+    up as 16-bit per channel in GIMP). JPEG 2000 codestream also
+    supported and displays a dialog asking for the color space (whereas
+    JPEG 2000 image color space are auto-detected).
+    JPEG 2000 images or codestream in YCbCr, xvYCC and CMYK color spaces
+    are converted to sRGB images upon loading.
 
 Building:
 
