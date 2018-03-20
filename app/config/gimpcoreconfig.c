@@ -663,7 +663,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 #ifdef GIMP_UNSTABLE
                          GIMP_DEBUG_POLICY_WARNING,
 #else
-                         GIMP_DEBUG_POLICY_CRITICAL,
+                         GIMP_DEBUG_POLICY_FATAL,
 #endif
                          GIMP_PARAM_STATIC_STRINGS);
 
