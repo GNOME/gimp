@@ -168,7 +168,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
   gimp_register_magic_load_handler (LOAD_J2K_PROC,
-                                    "j2k,j2c",
+                                    "j2k,j2c,jpc",
                                     "",
                                     "0,string,\xff\x4f\xff\x51\x00");
   gimp_register_file_handler_mime (LOAD_J2K_PROC, "image/x-jp2-codestream");
