@@ -111,8 +111,8 @@ gimp_palettes_get_color_history (Gimp *gimp)
 }
 
 void
-gimp_palettes_add_color_history (Gimp    *gimp,
-                                 GimpRGB *color)
+gimp_palettes_add_color_history (Gimp          *gimp,
+                                 const GimpRGB *color)
 {
   GimpPalette *history;
 
