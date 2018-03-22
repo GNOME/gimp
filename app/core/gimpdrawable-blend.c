@@ -112,7 +112,8 @@ gimp_drawable_blend (GimpDrawable       *drawable,
 
   gimp_gegl_apply_operation (shapeburst, progress, NULL,
                              render,
-                             buffer, GEGL_RECTANGLE (x, y, width, height));
+                             buffer, GEGL_RECTANGLE (x, y, width, height),
+                             FALSE);
 
   g_object_unref (render);
 
@@ -213,7 +214,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
 
   gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,
-                             dist_buffer, region);
+                             dist_buffer, region, FALSE);
 
   g_object_unref (shapeburst);
 

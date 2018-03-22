@@ -63,7 +63,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
   gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
                              progress, undo_desc,
                              operation,
-                             dest_buffer, &rect);
+                             dest_buffer, &rect, FALSE);
 
   gimp_drawable_merge_shadow_buffer (drawable, TRUE, undo_desc);
   gimp_drawable_free_shadow_buffer (drawable);

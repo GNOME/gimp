@@ -194,7 +194,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                             progress, undo_desc,
                                             gimp_filter_get_node (filter),
                                             gimp_drawable_get_buffer (drawable),
-                                            &rect,
+                                            &rect, FALSE,
                                             cache, rects, n_rects,
                                             cancellable))
         {

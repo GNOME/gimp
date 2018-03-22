@@ -31,7 +31,8 @@ void       gimp_gegl_apply_operation        (GeglBuffer          *src_buffer,
                                              const gchar         *undo_desc,
                                              GeglNode            *operation,
                                              GeglBuffer          *dest_buffer,
-                                             const GeglRectangle *dest_rect);
+                                             const GeglRectangle *dest_rect,
+                                             gboolean             crop_input);
 
 gboolean   gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                              GimpProgress        *progress,
@@ -39,6 +40,7 @@ gboolean   gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                              GeglNode            *operation,
                                              GeglBuffer          *dest_buffer,
                                              const GeglRectangle *dest_rect,
+                                             gboolean             crop_input,
                                              GeglBuffer          *cache,
                                              const GeglRectangle *valid_rects,
                                              gint                 n_valid_rects,

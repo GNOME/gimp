@@ -1144,7 +1144,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
                                  _("Frame"),
                                  wt->graph,
                                  gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                                 NULL);
+                                 NULL, FALSE);
 
       gimp_image_add_layer (image, layer, NULL, 0, FALSE);
     }

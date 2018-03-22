@@ -43,13 +43,15 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
                            const gchar         *undo_desc,
                            GeglNode            *operation,
                            GeglBuffer          *dest_buffer,
-                           const GeglRectangle *dest_rect)
+                           const GeglRectangle *dest_rect,
+                           gboolean             crop_input)
 {
   gimp_gegl_apply_cached_operation (src_buffer,
                                     progress, undo_desc,
                                     operation,
                                     dest_buffer,
                                     dest_rect,
+                                    crop_input,
                                     NULL, NULL, 0,
                                     FALSE);
 }
@@ -68,6 +70,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                   GeglNode            *operation,
                                   GeglBuffer          *dest_buffer,
                                   const GeglRectangle *dest_rect,
+                                  gboolean             crop_input,
                                   GeglBuffer          *cache,
                                   const GeglRectangle *valid_rects,
                                   gint                 n_valid_rects,
@@ -123,6 +126,24 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                       NULL);
 
       g_object_unref (src_buffer);
+
+      if (crop_input)
+        {
+          GeglNode *crop_node;
+
+          crop_node = gegl_node_new_child (gegl,
+                                           "operation", "gegl:crop",
+                                           "x",         (gdouble) rect.x,
+                                           "y",         (gdouble) rect.y,
+                                           "width",     (gdouble) rect.width,
+                                           "height",    (gdouble) rect.height,
+                                           NULL);
+
+          gegl_node_connect_to (src_node,  "output",
+                                crop_node, "input");
+
+          src_node = crop_node;
+        }
 
       operation_src_node = gegl_node_get_producer (operation, "input", NULL);
 
@@ -306,7 +327,7 @@ gimp_gegl_apply_dither (GeglBuffer   *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -328,7 +349,7 @@ gimp_gegl_apply_flatten (GeglBuffer          *src_buffer,
   node = gimp_gegl_create_flatten_node (background, composite_space);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -442,7 +463,7 @@ gimp_gegl_apply_border (GeglBuffer             *src_buffer,
     }
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect);
+                             node, dest_buffer, dest_rect, FALSE);
   g_object_unref (node);
 }
 
@@ -468,7 +489,7 @@ gimp_gegl_apply_grow (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect);
+                             node, dest_buffer, dest_rect, FALSE);
   g_object_unref (node);
 }
 
@@ -496,7 +517,7 @@ gimp_gegl_apply_shrink (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect);
+                             node, dest_buffer, dest_rect, FALSE);
   g_object_unref (node);
 }
 
@@ -518,7 +539,7 @@ gimp_gegl_apply_flood (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect);
+                             node, dest_buffer, dest_rect, FALSE);
   g_object_unref (node);
 }
 
@@ -544,7 +565,7 @@ gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect);
+                             node, dest_buffer, dest_rect, FALSE);
   g_object_unref (node);
 }
 
@@ -565,7 +586,7 @@ gimp_gegl_apply_invert_gamma (GeglBuffer    *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -586,7 +607,7 @@ gimp_gegl_apply_invert_linear (GeglBuffer    *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -613,7 +634,7 @@ gimp_gegl_apply_opacity (GeglBuffer    *src_buffer,
                                               opacity);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -642,7 +663,7 @@ gimp_gegl_apply_scale (GeglBuffer            *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -665,7 +686,7 @@ gimp_gegl_apply_set_alpha (GeglBuffer    *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -688,7 +709,7 @@ gimp_gegl_apply_threshold (GeglBuffer    *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
 
@@ -715,6 +736,6 @@ gimp_gegl_apply_transform (GeglBuffer            *src_buffer,
   gimp_gegl_node_set_matrix (node, transform);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, NULL, FALSE);
   g_object_unref (node);
 }
