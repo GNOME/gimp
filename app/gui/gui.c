@@ -307,6 +307,51 @@ gui_init (Gimp     *gimp,
   return status_callback;
 }
 
+/*
+ * gui_recover:
+ * @n_recoveries: number of recovered files.
+ *
+ * Query the user interactively if files were saved from a previous
+ * crash, asking whether to try and recover or discard them.
+ *
+ * Returns: TRUE if answer is to try and recover, FALSE otherwise.
+ */
+gboolean
+gui_recover (gint n_recoveries)
+{
+  GtkWidget *dialog;
+  GtkWidget *box;
+  gboolean   recover;
+
+  dialog = gimp_dialog_new (_("Images recovery"), "gimp-recovery",
+                            NULL, GTK_DIALOG_MODAL, NULL, NULL,
+                            _("_Discard"), GTK_RESPONSE_CANCEL,
+                            _("_Recover"), GTK_RESPONSE_OK,
+                            NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                   GTK_RESPONSE_OK);
+
+  box = gimp_message_box_new (GIMP_ICON_WILBER_EEK);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      box, TRUE, TRUE, 0);
+  gtk_widget_show (box);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+                                     _("Eeek! It looks like GIMP recovered from a crash!"));
+
+  gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+                             ngettext ("An image was salvaged from the crash. "
+                                       "Do you want to try and recover it?",
+                                       "%d images were salvaged from the crash. "
+                                       "Do you want to try and recover them?",
+                                       n_recoveries), n_recoveries);
+
+  recover = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  gtk_widget_destroy (dialog);
+
+  return recover;
+}
+
 gint
 gui_get_initial_monitor (Gimp       *gimp,
                          GdkScreen **screen)

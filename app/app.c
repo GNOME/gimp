@@ -30,8 +30,11 @@
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
 #include <gio/gio.h>
 #include <gegl.h>
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
 #include <windows.h>
@@ -53,6 +56,7 @@
 #include "core/gimp.h"
 #include "core/gimp-batch.h"
 #include "core/gimp-user-install.h"
+#include "core/gimpimage.h"
 
 #include "file/file-open.h"
 
@@ -330,8 +334,60 @@ app_run (const gchar         *full_prog_name,
                           G_CALLBACK (app_exit_after_callback),
                           &run_loop);
 
-  /*  Load the images given on the command-line.
-   */
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (run_loop && ! no_interface)
+    {
+      /* Before opening images from command line, check for salvaged images
+       * and query interactively to know if we should recover or discard
+       * them.
+       */
+      GList *recovered_files;
+      GList *iter;
+
+      recovered_files = errors_recovered ();
+      if (recovered_files &&
+          gui_recover (g_list_length (recovered_files)))
+        {
+          for (iter = recovered_files; iter; iter = iter->next)
+            {
+              GFile             *file;
+              GimpImage         *image;
+              GError            *error = NULL;
+              GimpPDBStatusType  status;
+
+              file = g_file_new_for_path (iter->data);
+              image = file_open_with_display (gimp,
+                                              gimp_get_user_context (gimp),
+                                              NULL,
+                                              file, as_new,
+                                              initial_screen,
+                                              initial_monitor,
+                                              &status, &error);
+              if (image)
+                {
+                  /* Break ties with the backup directory. */
+                  gimp_image_set_file (image, NULL);
+                  /* One of the rare exceptions where we should call
+                   * gimp_image_dirty() directly instead of creating
+                   * an undo. We want the image to be dirty from
+                   * scratch, without anything to undo.
+                   */
+                  gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
+                }
+
+              g_object_unref (file);
+            }
+        }
+      /* Delete backup XCF images. */
+      for (iter = recovered_files; iter; iter = iter->next)
+        {
+          g_unlink (iter->data);
+        }
+      g_list_free_full (recovered_files, g_free);
+    }
+#endif
+
+  /*  Load the images given on the command-line. */
   if (filenames)
     {
       gint i;

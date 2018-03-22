@@ -175,6 +175,47 @@ errors_exit (void)
     g_free (backup_path);
 }
 
+GList *
+errors_recovered (void)
+{
+  GList *recovered   = NULL;
+  gchar *backup_path = g_build_filename (gimp_directory (), "backups", NULL);
+  GDir  *backup_dir  = NULL;
+
+  if ((backup_dir = g_dir_open (backup_path, 0, NULL)))
+    {
+      const gchar *file;
+
+      while ((file = g_dir_read_name (backup_dir)))
+        {
+          if (g_str_has_suffix (file, ".xcf"))
+            {
+              gchar *path = g_build_filename (backup_path, file, NULL);
+
+              if (g_file_test (path, G_FILE_TEST_IS_REGULAR) &&
+                  ! g_file_test (path, G_FILE_TEST_IS_SYMLINK))
+                {
+                  /* A quick basic security check. It is not foolproof,
+                   * but better than nothing to make sure we are not
+                   * trying to read, then delete a folder or a symlink
+                   * to a file outside the backup directory.
+                   */
+                  recovered = g_list_append (recovered, path);
+                }
+              else
+                {
+                  g_free (path);
+                }
+            }
+        }
+
+      g_dir_close (backup_dir);
+    }
+  g_free (backup_path);
+
+  return recovered;
+}
+
 void
 gimp_fatal_error (const gchar *message)
 {
