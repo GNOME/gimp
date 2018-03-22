@@ -463,7 +463,7 @@ gimp_gegl_apply_border (GeglBuffer             *src_buffer,
     }
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect, FALSE);
+                             node, dest_buffer, dest_rect, TRUE);
   g_object_unref (node);
 }
 
@@ -489,7 +489,7 @@ gimp_gegl_apply_grow (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect, FALSE);
+                             node, dest_buffer, dest_rect, TRUE);
   g_object_unref (node);
 }
 
@@ -517,7 +517,7 @@ gimp_gegl_apply_shrink (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect, FALSE);
+                             node, dest_buffer, dest_rect, TRUE);
   g_object_unref (node);
 }
 
@@ -539,7 +539,7 @@ gimp_gegl_apply_flood (GeglBuffer          *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, dest_rect, FALSE);
+                             node, dest_buffer, dest_rect, TRUE);
   g_object_unref (node);
 }
 
