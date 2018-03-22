@@ -34,9 +34,9 @@ Core:
   - GIMP doesn't warn anymore for unknown darktable XMP metadata. We now
     registers the corresponding namespace.
   - Adding settings for metadata export handling in "Image Import &
-    Export" page of Preferences. In particular, metadata are not
-    exported anymore as a default. This is indeed a privacy hazard since
-    metadata often contain a lot of sensitive information.
+    Export" page of Preferences. By default, the settings are checked,
+    but you can uncheck them (in particular since metadata can often
+    contain a lot of sensitive information).
   - Splash image now scaled down to maximum 2/3 of the screen area. This
     will allow to ship a big splash image which will be visible on all
     type of screens, whichever low or high resolution. Vector splash

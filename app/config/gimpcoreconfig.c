@@ -638,21 +638,21 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             "export-metadata-exif",
                             "Export Exif metadata",
                             EXPORT_METADATA_EXIF_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_XMP,
                             "export-metadata-xmp",
                             "Export XMP metadata",
                             EXPORT_METADATA_XMP_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_IPTC,
                             "export-metadata-iptc",
                             "Export IPTC metadata",
                             EXPORT_METADATA_IPTC_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEBUG_POLICY,
