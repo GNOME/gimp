@@ -340,7 +340,7 @@ gui_recover (gint n_recoveries)
                                      _("Eeek! It looks like GIMP recovered from a crash!"));
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
-                             ngettext ("An image was salvaged from the crash. "
+                             ngettext ("%d image was salvaged from the crash. "
                                        "Do you want to try and recover it?",
                                        "%d images were salvaged from the crash. "
                                        "Do you want to try and recover them?",
