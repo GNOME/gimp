@@ -363,8 +363,8 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   gint              width, height;
   gint              off_x, off_y;
   gdouble           opacity;
-  GimpLayerMode     mode;
   GimpDialogConfig *config;
+
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -387,7 +387,6 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       width   = gimp_item_get_width  (GIMP_ITEM (template));
       height  = gimp_item_get_height (GIMP_ITEM (template));
       opacity = gimp_layer_get_opacity (template);
-      mode    = gimp_layer_get_mode (template);
     }
   else
     {
@@ -396,7 +395,6 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       off_x   = 0;
       off_y   = 0;
       opacity = 1.0;
-      mode    = gimp_image_get_default_new_layer_mode (image);
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
@@ -405,7 +403,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   new_layer = gimp_layer_new (image, width, height,
                               gimp_image_get_layer_format (image, TRUE),
                               config->layer_new_name,
-                              opacity, mode);
+                              opacity, config->layer_new_mode);
 
   gimp_drawable_fill (GIMP_DRAWABLE (new_layer),
                       action_data_get_context (data),
