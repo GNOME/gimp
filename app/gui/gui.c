@@ -323,7 +323,7 @@ gui_recover (gint n_recoveries)
   GtkWidget *box;
   gboolean   recover;
 
-  dialog = gimp_dialog_new (_("Images recovery"), "gimp-recovery",
+  dialog = gimp_dialog_new (_("Image Recovery"), "gimp-recovery",
                             NULL, GTK_DIALOG_MODAL, NULL, NULL,
                             _("_Discard"), GTK_RESPONSE_CANCEL,
                             _("_Recover"), GTK_RESPONSE_OK,
