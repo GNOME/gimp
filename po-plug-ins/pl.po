@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-11 17:00+0100\n"
-"PO-Revision-Date: 2018-03-11 17:01+0100\n"
+"POT-Creation-Date: 2018-03-23 20:04+0100\n"
+"PO-Revision-Date: 2018-03-23 20:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -51,6 +51,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
@@ -100,8 +101,8 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
 #: ../plug-ins/metadata/metadata-editor.c:765
-#: ../plug-ins/metadata/metadata-editor.c:5644
-#: ../plug-ins/metadata/metadata-editor.c:5679
+#: ../plug-ins/metadata/metadata-editor.c:5648
+#: ../plug-ins/metadata/metadata-editor.c:5683
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -444,7 +445,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:1042 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
@@ -823,6 +824,7 @@ msgstr "Losowe ziarno"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
+#: ../plug-ins/common/file-jp2-load.c:950
 #: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
@@ -1374,6 +1376,7 @@ msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/file-jp2-load.c:985
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2192,7 +2195,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:859 ../plug-ins/common/file-pat.c:336
+#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2785,60 +2788,91 @@ msgstr "Odstęp międ_zy komórkami:"
 msgid "The amount of cell spacing."
 msgstr "Odstęp między komórkami."
 
-#: ../plug-ins/common/file-jp2-load.c:138
+#: ../plug-ins/common/file-jp2-load.c:154
 msgid "JPEG 2000 image"
 msgstr "Obraz JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:164
+#: ../plug-ins/common/file-jp2-load.c:185
 msgid "JPEG 2000 codestream"
 msgstr "Strumień kodowy JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:866 ../plug-ins/common/file-wmf.c:965
+#. Can be RGB, YUV and YCC.
+#. Can be RGB, YUV and YCC with alpha or CMYK.
+#: ../plug-ins/common/file-jp2-load.c:974
+#: ../plug-ins/common/file-jp2-load.c:982
+msgid "sRGB"
+msgstr "sRGB"
+
+#: ../plug-ins/common/file-jp2-load.c:975
+#: ../plug-ins/common/file-jp2-load.c:983
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/file-jp2-load.c:984
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: ../plug-ins/common/file-jp2-load.c:991
+#, c-format
+msgid "Unsupported JPEG 2000%s '%s' with %d components."
+msgstr "Nieobsługiwany %s JPEG 2000 „%s” z liczbą składowych: %d."
+
+#: ../plug-ins/common/file-jp2-load.c:1000
+msgid "Color space:"
+msgstr "Przestrzeń kolorów:"
+
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Nie można otworzyć pliku „%s” do odczytania"
 
-#: ../plug-ins/common/file-jp2-load.c:877
+#: ../plug-ins/common/file-jp2-load.c:1082
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Nie można ustawić parametrów dekodera dla „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:885
+#: ../plug-ins/common/file-jp2-load.c:1090
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Nie można odczytać nagłówka JP2 z „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:893
+#: ../plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Nie można dekodować obrazu JP2 w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:901
+#: ../plug-ins/common/file-jp2-load.c:1106
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Nie można dekompresować obrazu JP2 w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:930
+#: ../plug-ins/common/file-jp2-load.c:1135
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Nie można dekodować obrazu JP2 CIELAB w „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:957
+#: ../plug-ins/common/file-jp2-load.c:1192
 #, c-format
-msgid "Couldn't convert YUV JP2 image '%s' to RGB."
-msgstr "Nie można konwertować obrazu JP2 YUV „%s” do RGB."
+msgid "Unknown color space in JP2 codestream '%s'."
+msgstr "Nieznana przestrzeń kolorów w strumieniu kodowym JP2 „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:967
+#: ../plug-ins/common/file-jp2-load.c:1203
+#, c-format
+msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 YCbCr „%s” do RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Nie można konwertować obrazu JP2 CMYK w „%s” do RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:977
+#: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
-msgid "Couldn't convert YCC JP2 image in '%s' to RGB."
-msgstr "Nie można konwertować obrazu JP2 YCC w „%s” do RGB."
+msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 xvYCC w „%s” do RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:1026
+#: ../plug-ins/common/file-jp2-load.c:1250
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nieobsługiwana przestrzeń kolorów w obrazie JP2 „%s”."
@@ -3106,7 +3140,7 @@ msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5645
+#: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "Za_importuj"
 
@@ -11867,19 +11901,19 @@ msgstr "Data kalendarzowa:"
 msgid "Set Date"
 msgstr "Ustaw datę"
 
-#: ../plug-ins/metadata/metadata-editor.c:1616
+#: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
 msgstr "Bez oceny"
 
-#: ../plug-ins/metadata/metadata-editor.c:5641
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"
 msgstr "Import pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5676
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "Export Metadata File"
 msgstr "Eksport pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5680
+#: ../plug-ins/metadata/metadata-editor.c:5684
 msgid "_Export"
 msgstr "Wy_eksportuj"
 

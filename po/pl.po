@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-18 17:49+0100\n"
-"PO-Revision-Date: 2018-03-18 17:50+0100\n"
+"POT-Creation-Date: 2018-03-23 20:11+0100\n"
+"PO-Revision-Date: 2018-03-23 20:12+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -88,59 +88,116 @@ msgstr "Obróbka zdjęć w GIMP-ie"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10 RC1 is the first release candidate before GIMP 2.10 stable "
+"release, with a focus on debugging and stability. Other than the many bug "
+"fixes, most notable improvements are:"
+msgstr ""
+"GIMP 2.10 RC1 to pierwsze wydanie kandydackie przed stabilnym wydaniem GIMP "
+"2.10, skupiające się na debugowaniu i stabilności. Oprócz wielu poprawek "
+"błędów najważniejsze ulepszenia to:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "New dashboard dockable to monitor GIMP resource usage"
+msgstr ""
+"Nowy panel wydajności do monitorowania użycia zasobów przez program GIMP"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"New debug dialog to produce back traces and other debug data, encouraging to "
+"report bugs"
+msgstr ""
+"Nowe okno debugowania do generowania wyjątków i innych danych debugowania, "
+"zachęcające do zgłaszania błędów"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid "Unsaved images can now be recovered after a crash"
+msgstr "Po awarii można teraz odzyskać niezapisane obrazy"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "Layer masks on layer groups"
+msgstr "Maski warstw w grupach warstw"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "JPEG 2000 support improved for high bit depth and various color spaces"
+msgstr ""
+"Ulepszona obsługa formatu JPEG 2000 o głębię wysokobitową i różne "
+"przestrzenie kolorów"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "Screenshot and color picking improved on various platforms"
+msgstr "Ulepszenia zrzutów ekranu i wyboru kolorów na różnych platformach"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "Metadata defaults preferences now available"
+msgstr "Preferencje domyślnego zachowania metadanych są teraz dostępne"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid "Various GUI polishing"
+msgstr "Różne poprawki interfejsu"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid ""
+"For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-"
+"released/"
+msgstr ""
+"https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-released/ zawiera więcej "
+"informacji (w języku angielskim)."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
 "GIMP 2.9.8 dodaje modyfikowanie gradientów na obszarze rysowania oraz różne "
 "ulepszenia, jednocześnie skupiając się na poprawkach błędów i stabilności."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "On-canvas gradient editing"
 msgstr "Modyfikowanie gradientów na obszarze rysowania"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Notification when an image is over/underexposed"
 msgstr "Powiadomienie, kiedy obraz jest prześwietlony/niedoświetlony"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Better and faster color management"
 msgstr "Lepsze i szybsze zarządzania kolorami"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Wybieranie kolorów i wykonywanie zrzutów ekranu w środowisku KDE Plasma "
 "używającym technologii Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Paste in place feature"
 msgstr "Wklejanie w tym samym miejscu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Many usability improvements"
 msgstr "Wiele ulepszeń użyteczności"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Podręcznik może być wyświetlany w preferowanym języku użytkownika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Ulepszenia filtru rozkład falki"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Ulepszona zgodność z plikami .psd programu Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "New support for password-protected PDF"
 msgstr "Obsługa plików PDF chronionych hasłem"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Obsługa formatu HGT (dane cyfrowego modelu wysokościowego)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -575,7 +632,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:310
-#: ../app/gui/gui.c:499
+#: ../app/gui/gui.c:544
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -3268,7 +3325,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1581
+#: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1591
 #: ../app/tools/gimptransformtool.c:1201 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -5924,7 +5981,7 @@ msgstr "Odbijanie"
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:802
+#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:800
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
@@ -5974,7 +6031,7 @@ msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1592
+#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1590
 #: ../app/dialogs/preferences-dialog.c:1602
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -6836,7 +6893,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1441
+#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1439
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
@@ -6844,7 +6901,7 @@ msgstr "Atrybuty warstwy"
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:403
+#: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:401
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:882
 msgid "New Layer"
@@ -6854,31 +6911,31 @@ msgstr "Nowa warstwa"
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:443 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:441 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:708
+#: ../app/actions/layers-commands.c:706
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:770
+#: ../app/actions/layers-commands.c:768
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/actions/layers-commands.c:812
+#: ../app/actions/layers-commands.c:810
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:842
+#: ../app/actions/layers-commands.c:840
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:855
+#: ../app/actions/layers-commands.c:853
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie ma zawartości."
 
-#: ../app/actions/layers-commands.c:862
+#: ../app/actions/layers-commands.c:860
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
@@ -7677,7 +7734,7 @@ msgstr "_Otwórz"
 #: ../app/core/gimppalette-import.c:510 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:233
 #: ../app/tools/gimpfiltertool-settings.c:170
-#: ../app/widgets/gimptextbuffer.c:1647
+#: ../app/widgets/gimptextbuffer.c:1674
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nie można otworzyć „%s” do odczytania: %s"
@@ -12425,12 +12482,12 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:124 ../app/tools/gimpblendtool.c:1015
+#: ../app/core/gimpdrawable-blend.c:125 ../app/tools/gimpblendtool.c:1015
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/core/gimpdrawable-blend.c:212
+#: ../app/core/gimpdrawable-blend.c:213
 msgid "Calculating distance map"
 msgstr "Obliczanie mapy odległości"
 
@@ -18147,10 +18204,36 @@ msgstr ""
 msgid "default:LTR"
 msgstr "default:LTR"
 
+#: ../app/gui/gui.c:326
+msgid "Images recovery"
+msgstr "Odzyskiwanie obrazów"
+
+#: ../app/gui/gui.c:328
+msgid "_Discard"
+msgstr "_Odrzuć"
+
+#: ../app/gui/gui.c:329
+msgid "_Recover"
+msgstr "O_dzyskaj"
+
+#: ../app/gui/gui.c:340
+msgid "Eeek! It looks like GIMP recovered from a crash!"
+msgstr "GIMP został otwarty po awarii."
+
+#: ../app/gui/gui.c:343
+#, c-format
+msgid ""
+"An image was salvaged from the crash. Do you want to try and recover it?"
+msgid_plural ""
+"%d images were salvaged from the crash. Do you want to try and recover them?"
+msgstr[0] "Obraz został uratowany z awarii. Spróbować go odzyskać?"
+msgstr[1] "%d obrazy zostały uratowane z awarii. Spróbować je odzyskać?"
+msgstr[2] "%d obrazów zostało uratowanych z awarii. Spróbować je odzyskać?"
+
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:543
+#: ../app/gui/gui.c:588
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -19887,7 +19970,7 @@ msgstr ""
 "Pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1462
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1472
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -20872,12 +20955,12 @@ msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1295 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1298 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1297 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -22128,39 +22211,39 @@ msgstr "Pole:"
 msgid "Language:"
 msgstr "Język:"
 
-#: ../app/tools/gimptexttool.c:197
+#: ../app/tools/gimptexttool.c:203
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/tools/gimptexttool.c:198
+#: ../app/tools/gimptexttool.c:204
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekst: tworzy i modyfikuje warstwy tekstowe"
 
-#: ../app/tools/gimptexttool.c:199
+#: ../app/tools/gimptexttool.c:205
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:944
+#: ../app/tools/gimptexttool.c:953
 msgid "Text box: "
 msgstr "Pole tekstowe: "
 
-#: ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1084
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
-#: ../app/tools/gimptexttool.c:1573 ../app/tools/gimptexttool.c:1576
+#: ../app/tools/gimptexttool.c:1583 ../app/tools/gimptexttool.c:1586
 msgid "Confirm Text Editing"
 msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: ../app/tools/gimptexttool.c:1580
+#: ../app/tools/gimptexttool.c:1590
 msgid "Create _New Layer"
 msgstr "Utwórz _nową warstwę"
 
-#: ../app/tools/gimptexttool.c:1582
+#: ../app/tools/gimptexttool.c:1592
 msgid "_Edit"
 msgstr "_Modyfikuj"
 
-#: ../app/tools/gimptexttool.c:1604
+#: ../app/tools/gimptexttool.c:1614
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24551,20 +24634,20 @@ msgstr "Atrybut „%s” jest nieprawidłowy dla elementu <%s> w tym kontekści
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Zewnętrzny element w tekście musi być <markup>, a nie <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1684
+#: ../app/widgets/gimptextbuffer.c:1711
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr "Plik wejściowy „%s” jest ucięty: %s"
 
-#: ../app/widgets/gimptextbuffer.c:1702
+#: ../app/widgets/gimptextbuffer.c:1729
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Nieprawidłowe dane UTF-8 w pliku „%s”."
 
-#: ../app/widgets/gimptextbuffer.c:1751
+#: ../app/widgets/gimptextbuffer.c:1778
 #, c-format
-msgid "Writing palette file '%s' failed: %s"
-msgstr "Zapisane pliku z deseniami „%s” się nie powiodło: %s"
+msgid "Writing text file '%s' failed: %s"
+msgstr "Zapisane pliku tekstowego „%s” się nie powiodło: %s"
 
 #: ../app/widgets/gimptexteditor.c:220
 msgid "_Use selected font"
