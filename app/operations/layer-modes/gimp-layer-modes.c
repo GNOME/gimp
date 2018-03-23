@@ -1416,7 +1416,7 @@ gimp_layer_mode_get_format (GimpLayerMode        mode,
       /* compositing is color-space agnostic.  return a format that has a fast
        * conversion path to/from the preferred format.
        */
-      if (gimp_babl_format_get_linear (preferred_format))
+      if (! preferred_format || gimp_babl_format_get_linear (preferred_format))
         return babl_format ("RGBA float");
       else
         return babl_format ("R'G'B'A float");
