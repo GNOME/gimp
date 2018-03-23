@@ -121,6 +121,29 @@
     </release>
     -->
 
+    <release version="2.10 RC1" date="2018-03-23" type="development">
+      <description>
+        <_p>
+        GIMP 2.10 RC1 is the first release candidate before GIMP 2.10
+        stable release, with a focus on debugging and stability.
+        Other than the many bug fixes, most notable improvements are:
+        </_p>
+        <ul>
+          <_li>New dashboard dockable to monitor GIMP resource usage</_li>
+          <_li>New debug dialog to produce back traces and other debug
+          data, encouraging to report bugs</_li>
+          <_li>Unsaved images can now be recovered after a crash</_li>
+          <_li>Layer masks on layer groups</_li>
+          <_li>JPEG 2000 support improved for high bit depth and various
+          color spaces</_li>
+          <_li>Screenshot and color picking improved on various platforms</_li>
+          <_li>Metadata defaults preferences now available</_li>
+          <_li>Various GUI polishing</_li>
+        </ul>
+        <_p>For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-released/</_p>
+      </description>
+    </release>
+
     <release version="2.9.8" date="2017-12-12" type="development">
       <description>
         <_p>GIMP 2.9.8 introduces on-canvas gradient
