@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 20:11+0100\n"
-"PO-Revision-Date: 2018-03-23 20:15+0100\n"
+"POT-Creation-Date: 2018-03-23 20:53+0100\n"
+"PO-Revision-Date: 2018-03-23 20:54+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -18205,8 +18205,8 @@ msgid "default:LTR"
 msgstr "default:LTR"
 
 #: ../app/gui/gui.c:326
-msgid "Images recovery"
-msgstr "Odzyskiwanie obrazów"
+msgid "Image Recovery"
+msgstr "Odzyskiwanie obrazu"
 
 #: ../app/gui/gui.c:328
 msgid "_Discard"
