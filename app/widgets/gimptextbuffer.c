@@ -1775,7 +1775,7 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
                                        NULL, NULL, &my_error))
         {
           g_set_error (error, my_error->domain, my_error->code,
-                       _("Writing palette file '%s' failed: %s"),
+                       _("Writing text file '%s' failed: %s"),
                        gimp_file_get_utf8_name (file), my_error->message);
           g_clear_error (&my_error);
           g_free (text_contents);
