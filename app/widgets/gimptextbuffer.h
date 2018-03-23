@@ -60,6 +60,9 @@ struct _GimpTextBuffer
 struct _GimpTextBufferClass
 {
   GtkTextBufferClass  parent_class;
+
+  void (* color_applied) (GimpTextBuffer *buffer,
+                          const GimpRGB  *color);
 };
 
 

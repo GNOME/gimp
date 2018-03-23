@@ -38,6 +38,13 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  COLOR_APPLIED,
+  LAST_SIGNAL
+};
+
+
 /*  local function prototypes  */
 
 static void   gimp_text_buffer_constructed (GObject           *object);
@@ -53,6 +60,8 @@ G_DEFINE_TYPE (GimpTextBuffer, gimp_text_buffer, GTK_TYPE_TEXT_BUFFER)
 
 #define parent_class gimp_text_buffer_parent_class
 
+static guint buffer_signals[LAST_SIGNAL] = { 0, };
+
 
 static void
 gimp_text_buffer_class_init (GimpTextBufferClass *klass)
@@ -65,6 +74,16 @@ gimp_text_buffer_class_init (GimpTextBufferClass *klass)
   object_class->finalize    = gimp_text_buffer_finalize;
 
   buffer_class->mark_set    = gimp_text_buffer_mark_set;
+
+  buffer_signals[COLOR_APPLIED] =
+    g_signal_new ("color-applied",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpTextBufferClass, color_applied),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__BOXED,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_RGB);
 }
 
 static void
@@ -928,7 +947,7 @@ gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (color)
-            gimp_text_tag_get_color (tag, color);
+            gimp_text_tag_get_fg_color (tag, color);
 
           return tag;
         }
@@ -956,7 +975,7 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
 
       tag = list->data;
 
-      gimp_text_tag_get_color (tag, &tag_color);
+      gimp_text_tag_get_fg_color (tag, &tag_color);
 
       gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
 
@@ -1014,6 +1033,8 @@ gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
 
       gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
                                  start, end);
+
+      g_signal_emit (buffer, buffer_signals[COLOR_APPLIED], 0, color);
     }
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
@@ -1038,7 +1059,7 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
 
       tag = list->data;
 
-      gimp_text_tag_get_color (tag, &tag_color);
+      gimp_text_tag_get_fg_color (tag, &tag_color);
 
       gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
 
@@ -1276,7 +1297,7 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
           GimpRGB color;
           guchar  r, g, b;
 
-          gimp_text_tag_get_color (tag, &color);
+          gimp_text_tag_get_fg_color (tag, &color);
           gimp_rgb_get_uchar (&color, &r, &g, &b);
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
@@ -1297,7 +1318,7 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
           GimpRGB color;
           guchar  r, g, b;
 
-          gimp_text_tag_get_color (tag, &color);
+          gimp_text_tag_get_fg_color (tag, &color);
           gimp_rgb_get_uchar (&color, &r, &g, &b);
 
           *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
@@ -1436,6 +1457,7 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
   GList       *insert_tags;
   GList       *remove_tags;
   GSList      *tags_off = NULL;
+  GimpRGB      color;
 
   g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
 
@@ -1503,6 +1525,11 @@ gimp_text_buffer_insert (GimpTextBuffer *buffer,
 
   g_list_free (remove_tags);
   g_list_free (insert_tags);
+
+  if (gimp_text_buffer_get_iter_color (buffer, &start, &color))
+    {
+      g_signal_emit (buffer, buffer_signals[COLOR_APPLIED], 0, &color);
+    }
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
