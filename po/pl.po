@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-03-23 20:11+0100\n"
-"PO-Revision-Date: 2018-03-23 20:12+0100\n"
+"PO-Revision-Date: 2018-03-23 20:15+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -24647,7 +24647,7 @@ msgstr "Nieprawidłowe dane UTF-8 w pliku „%s”."
 #: ../app/widgets/gimptextbuffer.c:1778
 #, c-format
 msgid "Writing text file '%s' failed: %s"
-msgstr "Zapisane pliku tekstowego „%s” się nie powiodło: %s"
+msgstr "Zapisanie pliku tekstowego „%s” się nie powiodło: %s"
 
 #: ../app/widgets/gimptexteditor.c:220
 msgid "_Use selected font"
