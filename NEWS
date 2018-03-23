@@ -54,8 +54,9 @@ Core:
     the error message and backtraces, and encouraging people to make bug
     reports.
   - Support layer masks on layer groups.
-  - GIMP now attempts to backup images in the config directory when it
-    crashes.
+  - GIMP now attempts to backup unsaved images when it crashes. Then at
+    next startup, it will propose and recover the salvaged images. Image
+    recovery is not 100% guaranteed.
   - New gimp_spawn_async() function uses vfork() to help avoid hanging
     during a fork process, currently used for plug-ins.
   - Dock color picker is now color-managed on macOS.
