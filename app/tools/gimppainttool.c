@@ -575,7 +575,7 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
 
-  /*  reset old stuff here so we are not interferring with the modifiers
+  /*  reset old stuff here so we are not interfering with the modifiers
    *  set by our subclasses
    */
   gimp_tool_control_set_cursor_modifier        (tool->control,

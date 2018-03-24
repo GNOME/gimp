@@ -237,7 +237,7 @@ gui_init (Gimp     *gimp,
     /* Normally this should have been taken care of during command line
      * parsing as a post-parse hook of gtk_get_option_group(), using the
      * system locales.
-     * But user config may have overriden the language, therefore we must
+     * But user config may have overridden the language, therefore we must
      * check the widget directions again.
      */
     gtk_widget_set_default_direction (GTK_TEXT_DIR_RTL);

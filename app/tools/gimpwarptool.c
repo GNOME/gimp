@@ -815,7 +815,7 @@ static void
 gimp_warp_tool_create_graph (GimpWarpTool *wt)
 {
   GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GeglNode        *graph;           /* Wraper to be returned */
+  GeglNode        *graph;           /* Wrapper to be returned */
   GeglNode        *input, *output;  /* Proxy nodes */
   GeglNode        *coords, *render; /* Render nodes */
 

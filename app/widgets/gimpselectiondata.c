@@ -384,7 +384,7 @@ gimp_selection_data_get_xcf (GtkSelectionData *selection,
     }
   else
     {
-      g_warning ("Recieved invalid XCF data: %s", error->message);
+      g_warning ("Received invalid XCF data: %s", error->message);
       g_clear_error (&error);
     }
 

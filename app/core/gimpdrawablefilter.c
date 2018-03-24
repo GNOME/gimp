@@ -18,7 +18,7 @@
 /* This file contains the code necessary for generating on canvas
  * previews, by connecting a specified GEGL operation to do the
  * processing. It uses drawable filters that allow for non-destructive
- * manupulation of drawable data, with live preview on screen.
+ * manipulation of drawable data, with live preview on screen.
  *
  * To create a tool that uses this, see app/tools/gimpfiltertool.c for
  * the interface and e.g. app/tools/gimpcolorbalancetool.c for an

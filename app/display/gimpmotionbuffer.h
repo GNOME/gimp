@@ -50,7 +50,7 @@ struct _GimpMotionBuffer
 
   GArray     *event_history;
   GArray     *event_queue;
-  gboolean    event_delay;      /* TRUE if theres an unsent event in
+  gboolean    event_delay;      /* TRUE if there's an unsent event in
                                  *  the history buffer
                                  */
 

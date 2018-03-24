@@ -334,7 +334,7 @@ gui_unique_quartz_init (Gimp *gimp)
                     G_CALLBACK (gui_unique_quartz_nsopen_file_callback),
                     gimp);
 
-  /* Using the event handler is a hack, it is neccesary becuase
+  /* Using the event handler is a hack, it is necessary because
    * gtkosx_application will drop the file open events if any
    * event processing is done before gtkosx_application_ready is
    * called, which we unfortuantly can't avoid doing right now.

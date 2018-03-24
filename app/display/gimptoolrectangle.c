@@ -1445,7 +1445,7 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
        * what coordinates the "other side" should have. If we are
        * creating a rectangle, use the current mouse coordinates as
        * the coordinate of the "other side", otherwise use the
-       * immidiate "other side" for that.
+       * immediate "other side" for that.
        */
       private->other_side_x = snapped_x;
       private->other_side_y = snapped_y;
@@ -1868,7 +1868,7 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
   if (key == gimp_get_extend_selection_mask ())
     {
 #if 0
-      /* Here we want to handle manualy when to update the rectangle, so we
+      /* Here we want to handle manually when to update the rectangle, so we
        * don't want gimp_tool_rectangle_options_notify to do anything.
        */
       g_signal_handlers_block_by_func (options,
@@ -2299,7 +2299,7 @@ gimp_tool_rectangle_check_function (GimpToolRectangle *rectangle)
 /**
  * gimp_tool_rectangle_coord_outside:
  *
- * Returns: %TRUE if the coord is outside the rectange bounds
+ * Returns: %TRUE if the coord is outside the rectangle bounds
  *          including any outside handles.
  */
 static gboolean
@@ -3695,7 +3695,7 @@ gimp_tool_rectangle_get_constraints (GimpToolRectangle       *rectangle,
  * gimp_tool_rectangle_handle_general_clamping:
  * @rectangle: A #GimpToolRectangle.
  *
- * Make sure that contraints are applied to the rectangle, either by
+ * Make sure that constraints are applied to the rectangle, either by
  * manually doing it, or by looking at the rectangle tool options and
  * concluding it will be done later.
  */

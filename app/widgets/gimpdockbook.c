@@ -999,7 +999,7 @@ gimp_dockbook_add (GimpDockbook *dockbook,
  * @identifiers: The dockable identifier(s)
  * @position:    The insert position
  *
- * Add a dockable from the dialog factory associated wth the dockbook.
+ * Add a dockable from the dialog factory associated with the dockbook.
  **/
 GtkWidget *
 gimp_dockbook_add_from_dialog_factory (GimpDockbook *dockbook,

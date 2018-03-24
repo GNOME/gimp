@@ -2021,7 +2021,7 @@ xcf_save_old_paths (XcfInfo    *info,
 
       /* if no points are generated because of a faulty path we should
        * skip saving the path - this is unfortunately impossible, because
-       * we already saved the number of paths and I wont start seeking
+       * we already saved the number of paths and I won't start seeking
        * around to fix that cruft  */
 
       name     = (gchar *) gimp_object_get_name (vectors);

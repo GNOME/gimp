@@ -231,7 +231,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
                              const GeglRectangle *roi,
                              gint                 level)
 {
-  /* Any bugs in this fuction are probably also in thin_region.
+  /* Any bugs in this function are probably also in thin_region.
    * Blame all bugs in this function on jaycox@gimp.org
    */
   GimpOperationGrow *self          = GIMP_OPERATION_GROW (operation);

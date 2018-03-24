@@ -243,7 +243,7 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * tilt values, to allow for even more dynamic brushes. Calculated
  * distance to last event is stored in GimpCoords because its a
  * sideproduct of velocity calculation and is currently calculated in
- * each tool. If they were to use this distance, more resouces on
+ * each tool. If they were to use this distance, more resources on
  * recalculating the same value would be saved.
  *
  * Return value: %TRUE if the motion was significant enough to be

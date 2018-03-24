@@ -589,7 +589,7 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
 }
 
 
-/*  public funcions  */
+/*  public functions  */
 
 GtkWidget *
 gimp_histogram_view_new (gboolean range)

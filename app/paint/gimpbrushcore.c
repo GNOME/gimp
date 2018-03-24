@@ -505,7 +505,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       gimp_paint_core_paint (paint_core, drawable, paint_options,
                              GIMP_PAINT_STATE_MOTION, time);
 
-      paint_core->pixel_dist = pixel_initial + pixel_dist; /* Dont forget to update pixel distance*/
+      paint_core->pixel_dist = pixel_initial + pixel_dist; /* Don't forget to update pixel distance*/
 
       return;
     }
@@ -659,7 +659,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
         {
           /*  Exception A: If the first stripe's brush position is
            *  EXTRApolated into a different pixel square than the
-           *  ideal starting point, dont't plot it.
+           *  ideal starting point, don't plot it.
            */
           s0 += direction;
         }
@@ -1219,7 +1219,7 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
 
           /* Zero aspect ratio is special cased to half of all ar range,
            * to force dynamics to have any effect. Forcing to full results
-           * in disapearing stamp if applied to maximum.
+           * in disappearing stamp if applied to maximum.
            */
           if (core->aspect_ratio == 0.0)
             core->aspect_ratio = 10.0 * dyn_aspect;
@@ -1360,7 +1360,7 @@ gimp_brush_core_paint_line_pixmap_mask (const Babl        *fish,
   pixmap_format = gimp_temp_buf_get_format (pixmap_mask);
   pixmap_bytes  = babl_format_get_bytes_per_pixel (pixmap_format);
 
-  /* Point to the approriate scanline */
+  /* Point to the appropriate scanline */
   b = (gimp_temp_buf_get_data (pixmap_mask) +
        y * pixmap_width * pixmap_bytes);
 

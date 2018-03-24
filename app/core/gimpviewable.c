@@ -848,7 +848,7 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
  * method, and executes it, caching the result.  If everything fails,
  * #NULL is returned.
  *
- * Returns: A #GimpTempBuf containg the preview image, or #NULL if
+ * Returns: A #GimpTempBuf containing the preview image, or #NULL if
  *          none can be found or created.
  **/
 GimpTempBuf *
@@ -911,7 +911,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
  * then if that fails for a "get_preview" method.  This function does
  * not look for a cached preview.
  *
- * Returns: A #GimpTempBuf containg the preview image, or #NULL if
+ * Returns: A #GimpTempBuf containing the preview image, or #NULL if
  *          none can be found or created.
  **/
 GimpTempBuf *

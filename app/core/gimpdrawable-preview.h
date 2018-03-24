@@ -20,7 +20,7 @@
 
 
 /*
- *  virtual functions of GimpDrawable -- dont't call directly
+ *  virtual functions of GimpDrawable -- don't call directly
  */
 GimpTempBuf * gimp_drawable_get_new_preview    (GimpViewable *viewable,
                                                 GimpContext  *context,

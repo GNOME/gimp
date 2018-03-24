@@ -776,7 +776,7 @@ gimp_display_shell_constructed (GObject *object)
       gimp_display_shell_connect (shell);
 
       /* After connecting to the image we want to center it. Since we
-       * not even finnished creating the display shell, we can safely
+       * not even finished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
       gimp_display_shell_scroll_center_image_on_size_allocate (shell,
