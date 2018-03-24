@@ -1236,7 +1236,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   button = prefs_enum_combo_box_add (object, "debug-policy", 0, 0,
-                                     _("Try generating debug data for bug reporting when appropriate"),
+                                     _("Debug Policy"),
                                      GTK_TABLE (table), 0, size_group);
 
   /* Check existence of gdb or lldb to activate the preference, as a
