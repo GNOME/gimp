@@ -759,7 +759,7 @@ gimp_dock_temp_add (GimpDock  *dock,
  * @dock:
  * @child:
  *
- * Removes a temporarly child added with gimp_dock_temp_add().
+ * Removes a temporary child added with gimp_dock_temp_add().
  **/
 void
 gimp_dock_temp_remove (GimpDock  *dock,

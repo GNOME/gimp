@@ -61,7 +61,7 @@ struct _GimpCageTool
   GeglBuffer     *coef; /* Gegl buffer where the coefficient of the transformation are stored */
   gboolean        dirty_coef; /* Indicate if the coef are still valid */
 
-  GeglNode       *render_node; /* Gegl node graph to render the transfromation */
+  GeglNode       *render_node; /* Gegl node graph to render the transformation */
   GeglNode       *cage_node; /* Gegl node that compute the cage transform */
   GeglNode       *coef_node; /* Gegl node that read in the coef buffer */
 

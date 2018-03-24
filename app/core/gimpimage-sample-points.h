@@ -27,7 +27,7 @@ GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
                                                       gboolean          push_undo);
 
 /*  internal sample point adding API, does not check the sample
- *  point's position and is publically declared only to be used from
+ *  point's position and is publicly declared only to be used from
  *  undo
  */
 void              gimp_image_add_sample_point        (GimpImage       *image,

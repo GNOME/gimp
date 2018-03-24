@@ -20,7 +20,7 @@
 
 
 /*
- *  virtual function of GimpVectors -- dont't call directly
+ *  virtual function of GimpVectors -- don't call directly
  */
 
 GimpTempBuf * gimp_vectors_get_new_preview (GimpViewable *viewable,

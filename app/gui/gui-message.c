@@ -361,7 +361,7 @@ gui_message_error_dialog (Gimp                *gimp,
           gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
                                NULL, NULL, &reason, NULL);
 
-          /* Since we overrided glib default's WARNING and CRITICAL
+          /* Since we overridden glib default's WARNING and CRITICAL
            * handler, if we decide not to handle this error in the end,
            * let's just print it in terminal in a similar fashion as
            * glib's default handler (though without the fancy terminal

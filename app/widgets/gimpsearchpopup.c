@@ -458,7 +458,7 @@ gimp_search_popup_size_allocate (GtkWidget     *widget,
       GdkScreen *screen = gdk_screen_get_default ();
 
       /* Save the window height when results are shown so that resizes
-       * by the user are saved accross searches.
+       * by the user are saved across searches.
        */
       window_height = MAX (gdk_screen_get_height (screen) / 4,
                            allocation->height);

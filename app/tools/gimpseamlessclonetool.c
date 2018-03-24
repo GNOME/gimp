@@ -267,10 +267,10 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
  * @display: The display to initialize the tool for
  *
  * A utility function to initialize a tool for working on a given
- * display. At the begining of each function, we can check if the event's
+ * display. At the beginning of each function, we can check if the event's
  * display is the same as the tool's one, and if not call this. This is
  * not required by the gimptool interface or anything like that, but
- * this is a convinient way to do all the initialization work in one
+ * this is a convenient way to do all the initialization work in one
  * place, and this is how the base class (GimpDrawTool) does that
  */
 static void
@@ -632,7 +632,7 @@ gimp_seamless_clone_tool_draw (GimpDrawTool *draw_tool)
 
 /**
  * gimp_seamless_clone_tool_create_render_node:
- * @sc: The GimpSeamlessCloneTool to intialize
+ * @sc: The GimpSeamlessCloneTool to initialize
  *
  * This function creates a Gegl node graph of the composition which is
  * needed to render the drawable. The graph should have an "input" pad

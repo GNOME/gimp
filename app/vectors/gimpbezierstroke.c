@@ -2108,7 +2108,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
 
   if (lambda < 0.00001)
     {
-      /* dont bother with it - endpoint is too close to startpoint */
+      /* don't bother with it - endpoint is too close to startpoint */
       return;
     }
 

@@ -436,7 +436,7 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
               if (a > 0.0f)
                 {
                   /* By definition the ratio between each color[] and pixel[] component in a non-pre-multipled blend always sums to 1.0f.
-                   * Originaly this would have been "(color[n] * alpha * color_a + pixel[n] * dst_alpha * (1.0f - alpha)) / a",
+                   * Originally this would have been "(color[n] * alpha * color_a + pixel[n] * dst_alpha * (1.0f - alpha)) / a",
                    * instead we only calculate the cheaper term. */
                   float src_term = (alpha * color_a) / a;
                   float dst_term = 1.0f - src_term;

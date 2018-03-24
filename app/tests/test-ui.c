@@ -433,7 +433,7 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
 #warning FIXME test disabled until we depend on GTK+ >= 2.24.11
 #endif
 #if 0
-  /* Restore the (only avaiable) closed dock and make sure the session
+  /* Restore the (only available) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
   gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),

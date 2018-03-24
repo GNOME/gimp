@@ -534,7 +534,7 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
 {
   GimpDynamicsOutputPrivate *private = GET_PRIVATE (output);
   gdouble                    total   = 0.0;
-  gdouble                    result  = 0.0; /* angles are additive, so we retun zero for no change. */
+  gdouble                    result  = 0.0; /* angles are additive, so we return zero for no change. */
   gint                       factors = 0;
 
   if (private->use_pressure)

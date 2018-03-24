@@ -146,7 +146,7 @@ static void       simplify_subdivide  (const GimpBoundSeg  *segs,
  * outlines along pixel value @threahold, optionally within specified
  * bounds instead of the whole region.
  *
- * The @maskPR paramater can be any PixelRegion.  If the region has
+ * The @maskPR parameter can be any PixelRegion.  If the region has
  * more than 1 bytes/pixel, the last byte of each pixel is used to
  * determine the boundary outline.
  *
@@ -394,7 +394,7 @@ gimp_boundary_offset (GimpBoundSeg *segs,
 
   for (i = 0; i < num_segs; i++)
     {
-      /* dont offset sorting sentinels */
+      /* don't offset sorting sentinels */
       if (!(segs[i].x1 == -1 &&
             segs[i].y1 == -1 &&
             segs[i].x2 == -1 &&

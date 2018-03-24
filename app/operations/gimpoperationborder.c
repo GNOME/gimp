@@ -451,7 +451,7 @@ gimp_operation_border_process (GeglOperation       *operation,
 
       g_free (transition);
 
-      /* Finnished handling the radius = 1 special case, return here. */
+      /* Finished handling the radius = 1 special case, return here. */
       return TRUE;
     }
 

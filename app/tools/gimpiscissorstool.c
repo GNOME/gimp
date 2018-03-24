@@ -335,7 +335,7 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
       direction_value[i][3] = abs (63 - i) * 2;
     }
 
-  /*  set the 256th index of the direction_values to the hightest cost  */
+  /*  set the 256th index of the direction_values to the highest cost  */
   direction_value[255][0] = 255;
   direction_value[255][1] = 255;
   direction_value[255][2] = 255;

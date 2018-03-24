@@ -419,7 +419,7 @@ gimp_palette_view_select_entry (GimpPaletteView  *view,
 }
 
 
-/*  private funcions  */
+/*  private functions  */
 
 static GimpPaletteEntry *
 gimp_palette_view_find_entry (GimpPaletteView *view,

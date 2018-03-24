@@ -242,7 +242,7 @@ paint_mask_to_paint_buffer (const GimpTempBuf  *paint_mask,
   int iy, ix;
   gfloat *paint_pixel = (gfloat *)gimp_temp_buf_get_data (paint_buf);
 
-  /* Validate that the paint buffer is withing the bounds of the paint mask */
+  /* Validate that the paint buffer is within the bounds of the paint mask */
   g_return_if_fail (width <= gimp_temp_buf_get_width (paint_mask) - mask_x_offset);
   g_return_if_fail (height <= gimp_temp_buf_get_height (paint_mask) - mask_y_offset);
 

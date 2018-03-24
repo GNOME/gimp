@@ -1158,7 +1158,7 @@ gimp_dnd_uri_list_dest_add (GtkWidget              *widget,
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  /*  Set a default drag dest if not already done. Explicitely set
+  /*  Set a default drag dest if not already done. Explicitly set
    *  COPY and MOVE for file drag destinations. Some file managers
    *  such as Konqueror only offer MOVE by default.
    */

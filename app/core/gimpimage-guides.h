@@ -29,7 +29,7 @@ GimpGuide * gimp_image_add_vguide     (GimpImage *image,
                                        gboolean   push_undo);
 
 /*  internal guide adding API, does not check the guide's position and
- *  is publically declared only to be used from undo
+ *  is publicly declared only to be used from undo
  */
 void        gimp_image_add_guide      (GimpImage *image,
                                        GimpGuide *guide,
