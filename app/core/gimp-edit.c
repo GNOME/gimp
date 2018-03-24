@@ -197,6 +197,25 @@ gimp_edit_copy_visible (GimpImage    *image,
   return NULL;
 }
 
+static gboolean
+gimp_edit_paste_is_in_place (GimpPasteType paste_type)
+{
+  switch (paste_type)
+    {
+    case GIMP_PASTE_TYPE_FLOATING:
+    case GIMP_PASTE_TYPE_FLOATING_INTO:
+    case GIMP_PASTE_TYPE_NEW_LAYER:
+      return FALSE;
+
+    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+      return TRUE;
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 static GimpLayer *
 gimp_edit_paste_get_layer (GimpImage     *image,
                            GimpDrawable  *drawable,
@@ -213,7 +232,10 @@ gimp_edit_paste_get_layer (GimpImage     *image,
       gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
-      *paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
+      if (gimp_edit_paste_is_in_place (*paste_type))
+        *paste_type = GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
+      else
+        *paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
     }
 
   /*  floating pastes always have the pasted-to drawable's format with
@@ -546,11 +568,14 @@ gimp_edit_paste (GimpImage     *image,
   if (! layer)
     return NULL;
 
-  switch (paste_type)
+  if (gimp_edit_paste_is_in_place (paste_type))
     {
-    case GIMP_PASTE_TYPE_FLOATING:
-    case GIMP_PASTE_TYPE_FLOATING_INTO:
-    case GIMP_PASTE_TYPE_NEW_LAYER:
+      gimp_edit_paste_get_paste_offset (image, drawable, paste,
+                                        &offset_x,
+                                        &offset_y);
+    }
+  else
+    {
       gimp_edit_paste_get_viewport_offset (image, drawable, GIMP_OBJECT (layer),
                                            viewport_x,
                                            viewport_y,
@@ -558,15 +583,6 @@ gimp_edit_paste (GimpImage     *image,
                                            viewport_height,
                                            &offset_x,
                                            &offset_y);
-      break;
-
-    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
-      gimp_edit_paste_get_paste_offset (image, drawable, paste,
-                                        &offset_x,
-                                        &offset_y);
-      break;
     }
 
   return gimp_edit_paste_paste (image, drawable, layer, paste_type,
