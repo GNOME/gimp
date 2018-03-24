@@ -18071,7 +18071,7 @@ msgstr "Ох, кажется, GIMP в прошлый раз упал!"
 #: ../app/gui/gui.c:343
 #, c-format
 msgid ""
-"%d image was salvaged from the crash. Do you want to try and recover it?"
+"An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
 "%d images were salvaged from the crash. Do you want to try and recover them?"
 msgstr[0] "%d изображение было спасено после падения. Попробовать восстановить?"

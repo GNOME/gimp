@@ -340,7 +340,13 @@ gui_recover (gint n_recoveries)
                                      _("Eeek! It looks like GIMP recovered from a crash!"));
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
-                             ngettext ("%d image was salvaged from the crash. "
+                             /* TRANSLATORS: even if English singular form does
+                              * not use %d, you can use %d for translation in
+                              * any singular/plural form of your language if
+                              * suited. It will just work and be replaced by the
+                              * number of images as expected.
+                              */
+                             ngettext ("An image was salvaged from the crash. "
                                        "Do you want to try and recover it?",
                                        "%d images were salvaged from the crash. "
                                        "Do you want to try and recover them?",
