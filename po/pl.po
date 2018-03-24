@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 21:23+0100\n"
-"PO-Revision-Date: 2018-03-23 21:24+0100\n"
+"POT-Creation-Date: 2018-03-24 01:40+0100\n"
+"PO-Revision-Date: 2018-03-24 01:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -15089,9 +15089,8 @@ msgid "Bug Reporting"
 msgstr "Zgłaszanie błędów"
 
 #: ../app/dialogs/preferences-dialog.c:1239
-msgid "Try generating debug data for bug reporting when appropriate"
-msgstr ""
-"Tworzenie danych debugowania w celu zgłaszania błędów, kiedy to możliwe"
+msgid "Debug Policy"
+msgstr "Zachowanie debugowania"
 
 #: ../app/dialogs/preferences-dialog.c:1251
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
