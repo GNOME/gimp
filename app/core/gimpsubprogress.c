@@ -25,9 +25,24 @@
 #include "core/gimpprogress.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_PROGRESS
+};
+
+
 static void           gimp_sub_progress_iface_init    (GimpProgressInterface *iface);
 
 static void           gimp_sub_progress_finalize      (GObject             *object);
+static void           gimp_sub_progress_set_property  (GObject             *object,
+                                                       guint                property_id,
+                                                       const GValue        *value,
+                                                       GParamSpec          *pspec);
+static void           gimp_sub_progress_get_property  (GObject             *object,
+                                                       guint                property_id,
+                                                       GValue              *value,
+                                                       GParamSpec          *pspec);
 
 static GimpProgress * gimp_sub_progress_start         (GimpProgress        *progress,
                                                        gboolean             cancellable,
@@ -60,7 +75,16 @@ gimp_sub_progress_class_init (GimpSubProgressClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_sub_progress_finalize;
+  object_class->finalize     = gimp_sub_progress_finalize;
+  object_class->set_property = gimp_sub_progress_set_property;
+  object_class->get_property = gimp_sub_progress_get_property;
+
+  g_object_class_install_property (object_class, PROP_PROGRESS,
+                                   g_param_spec_object ("progress",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_PROGRESS,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -93,6 +117,47 @@ gimp_sub_progress_iface_init (GimpProgressInterface *iface)
   iface->pulse         = gimp_sub_progress_pulse;
   iface->get_window_id = gimp_sub_progress_get_window_id;
   iface->message       = gimp_sub_progress_message;
+}
+
+static void
+gimp_sub_progress_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
+
+  switch (property_id)
+    {
+    case PROP_PROGRESS:
+      g_return_if_fail (sub->progress == NULL);
+      sub->progress = g_value_dup_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_sub_progress_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
+
+  switch (property_id)
+    {
+    case PROP_PROGRESS:
+      g_value_set_object (value, sub->progress);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static GimpProgress *
@@ -205,10 +270,9 @@ gimp_sub_progress_new (GimpProgress *progress)
 
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
-  sub = g_object_new (GIMP_TYPE_SUB_PROGRESS, NULL);
-
-  if (progress)
-    sub->progress = g_object_ref (progress);
+  sub = g_object_new (GIMP_TYPE_SUB_PROGRESS,
+                      "progress", progress,
+                      NULL);
 
   return GIMP_PROGRESS (sub);
 }
