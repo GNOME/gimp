@@ -53,7 +53,9 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
+#include "gimpobjectqueue.h"
 #include "gimppickable.h"
+#include "gimpprogress.h"
 
 #include "gimp-intl.h"
 
@@ -1148,17 +1150,47 @@ gimp_layer_scale (GimpItem              *item,
                   GimpInterpolationType  interpolation_type,
                   GimpProgress          *progress)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
+  GimpLayer       *layer = GIMP_LAYER (item);
+  GimpObjectQueue *queue = NULL;
+
+  if (progress && layer->mask)
+    {
+      GimpLayerMask *mask;
+
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      /* temporarily set layer->mask to NULL, so that its size won't be counted
+       * when pushing the layer to the queue.
+       */
+      mask        = layer->mask;
+      layer->mask = NULL;
+
+      gimp_object_queue_push (queue, layer);
+      gimp_object_queue_push (queue, mask);
+
+      layer->mask = mask;
+    }
+
+  if (queue)
+    gimp_object_queue_pop (queue);
 
   GIMP_LAYER_GET_CLASS (layer)->scale (layer, new_width, new_height,
                                        new_offset_x, new_offset_y,
                                        interpolation_type, progress);
 
   if (layer->mask)
-    gimp_item_scale (GIMP_ITEM (layer->mask),
-                     new_width, new_height,
-                     new_offset_x, new_offset_y,
-                     interpolation_type, progress);
+    {
+      if (queue)
+        gimp_object_queue_pop (queue);
+
+      gimp_item_scale (GIMP_ITEM (layer->mask),
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type, progress);
+    }
+
+  g_clear_object (&queue);
 }
 
 static void
@@ -1226,7 +1258,30 @@ gimp_layer_transform (GimpItem               *item,
                       GimpTransformResize     clip_result,
                       GimpProgress           *progress)
 {
-  GimpLayer *layer = GIMP_LAYER (item);
+  GimpLayer       *layer = GIMP_LAYER (item);
+  GimpObjectQueue *queue = NULL;
+
+  if (progress && layer->mask)
+    {
+      GimpLayerMask *mask;
+
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      /* temporarily set layer->mask to NULL, so that its size won't be counted
+       * when pushing the layer to the queue.
+       */
+      mask        = layer->mask;
+      layer->mask = NULL;
+
+      gimp_object_queue_push (queue, layer);
+      gimp_object_queue_push (queue, mask);
+
+      layer->mask = mask;
+    }
+
+  if (queue)
+    gimp_object_queue_pop (queue);
 
   GIMP_LAYER_GET_CLASS (layer)->transform (layer, context, matrix, direction,
                                            interpolation_type,
@@ -1234,10 +1289,17 @@ gimp_layer_transform (GimpItem               *item,
                                            progress);
 
   if (layer->mask)
-    gimp_item_transform (GIMP_ITEM (layer->mask), context,
-                         matrix, direction,
-                         interpolation_type,
-                         clip_result, progress);
+    {
+      if (queue)
+        gimp_object_queue_pop (queue);
+
+      gimp_item_transform (GIMP_ITEM (layer->mask), context,
+                           matrix, direction,
+                           interpolation_type,
+                           clip_result, progress);
+    }
+
+  g_clear_object (&queue);
 }
 
 static void
@@ -1300,25 +1362,56 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                          gboolean          push_undo,
                          GimpProgress     *progress)
 {
-  GimpLayer *layer = GIMP_LAYER (drawable);
+  GimpLayer       *layer = GIMP_LAYER (drawable);
+  GimpObjectQueue *queue = NULL;
+  gboolean         convert_mask;
+
+  convert_mask = layer->mask &&
+                 gimp_babl_format_get_precision (new_format) !=
+                 gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask));
+
+  if (progress && convert_mask)
+    {
+      GimpLayerMask *mask;
+
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      /* temporarily set layer->mask to NULL, so that its size won't be counted
+       * when pushing the layer to the queue.
+       */
+      mask        = layer->mask;
+      layer->mask = NULL;
+
+      gimp_object_queue_push (queue, layer);
+      gimp_object_queue_push (queue, mask);
+
+      layer->mask = mask;
+    }
+
+  if (queue)
+    gimp_object_queue_pop (queue);
 
   GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, new_format,
                                               dest_profile, layer_dither_type,
                                               mask_dither_type, push_undo,
                                               progress);
 
-  if (layer->mask &&
-      gimp_babl_format_get_precision (new_format) !=
-      gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
+  if (convert_mask)
     {
+      if (queue)
+        gimp_object_queue_pop (queue);
+
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
                                   GIMP_GRAY,
                                   gimp_babl_format_get_precision (new_format),
                                   gimp_drawable_has_alpha (GIMP_DRAWABLE (layer->mask)),
                                   NULL,
                                   layer_dither_type, mask_dither_type,
-                                  push_undo, NULL);
+                                  push_undo, progress);
     }
+
+  g_clear_object (&queue);
 }
 
 static void

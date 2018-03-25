@@ -38,7 +38,9 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayerstack.h"
+#include "gimpobjectqueue.h"
 #include "gimppickable.h"
+#include "gimpprogress.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
 
@@ -780,6 +782,7 @@ gimp_group_layer_scale (GimpLayer             *layer,
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GimpItem              *item    = GIMP_ITEM (layer);
+  GimpObjectQueue       *queue   = NULL;
   GList                 *list;
   gdouble                width_factor;
   gdouble                height_factor;
@@ -791,6 +794,14 @@ gimp_group_layer_scale (GimpLayer             *layer,
 
   old_offset_x = gimp_item_get_offset_x (item);
   old_offset_y = gimp_item_get_offset_y (item);
+
+  if (progress)
+    {
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      gimp_object_queue_push_container (queue, private->children);
+    }
 
   gimp_group_layer_suspend_resize (group, TRUE);
 
@@ -805,6 +816,9 @@ gimp_group_layer_scale (GimpLayer             *layer,
       gint      child_offset_y;
 
       list = g_list_next (list);
+
+      if (queue)
+        gimp_object_queue_pop (queue);
 
       child_width    = ROUND (width_factor  * gimp_item_get_width  (child));
       child_height   = ROUND (height_factor * gimp_item_get_height (child));
@@ -836,6 +850,8 @@ gimp_group_layer_scale (GimpLayer             *layer,
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
+
+  g_clear_object (&queue);
 }
 
 static void
@@ -902,7 +918,16 @@ gimp_group_layer_transform (GimpLayer              *layer,
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  GimpObjectQueue       *queue   = NULL;
   GList                 *list;
+
+  if (progress)
+    {
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      gimp_object_queue_push_container (queue, private->children);
+    }
 
   gimp_group_layer_suspend_resize (group, TRUE);
 
@@ -912,6 +937,9 @@ gimp_group_layer_transform (GimpLayer              *layer,
     {
       GimpItem *child = list->data;
 
+      if (queue)
+        gimp_object_queue_pop (queue);
+
       gimp_item_transform (child, context,
                            matrix, direction,
                            interpolation_type,
@@ -919,6 +947,8 @@ gimp_group_layer_transform (GimpLayer              *layer,
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
+
+  g_clear_object (&queue);
 }
 
 static const Babl *

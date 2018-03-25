@@ -47,8 +47,8 @@
 #include "gimpimage-private.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpobjectqueue.h"
 #include "gimpprogress.h"
-#include "gimpsubprogress.h"
 
 #include "gimp-intl.h"
 
@@ -676,36 +676,26 @@ gimp_image_convert_profile_layers (GimpImage                *image,
                                    gboolean                  bpc,
                                    GimpProgress             *progress)
 {
-  GList *layers;
-  GList *list;
-  gint   n_drawables  = 0;
-  gint   nth_drawable = 0;
+  GimpObjectQueue *queue;
+  GList           *layers;
+  GList           *list;
+  GimpDrawable    *drawable;
+
+  queue    = gimp_object_queue_new (progress);
+  progress = GIMP_PROGRESS (queue);
 
   layers = gimp_image_get_layer_list (image);
 
   for (list = layers; list; list = g_list_next (list))
     {
       if (! gimp_viewable_get_children (list->data))
-        n_drawables++;
+        gimp_object_queue_push (queue, list->data);
     }
 
-  for (list = layers; list; list = g_list_next (list))
+  g_list_free (layers);
+
+  while ((drawable = gimp_object_queue_pop (queue)))
     {
-      GimpDrawable *drawable     = list->data;
-      GimpProgress *sub_progress = NULL;
-
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-        continue;
-
-      if (progress)
-        {
-          sub_progress = gimp_sub_progress_new (progress);
-          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                      nth_drawable, n_drawables);
-        }
-
-      nth_drawable++;
-
       gimp_drawable_push_undo (drawable, NULL, NULL,
                                0, 0,
                                gimp_item_get_width  (GIMP_ITEM (drawable)),
@@ -718,15 +708,12 @@ gimp_image_convert_profile_layers (GimpImage                *image,
                                        NULL,
                                        dest_profile,
                                        intent, bpc,
-                                       sub_progress);
+                                       progress);
 
       gimp_drawable_update (drawable, 0, 0, -1, -1);
-
-      if (sub_progress)
-        g_object_unref (sub_progress);
     }
 
-  g_list_free (layers);
+  g_object_unref (queue);
 }
 
 static void

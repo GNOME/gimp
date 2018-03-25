@@ -30,6 +30,7 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpimage.h"
@@ -37,8 +38,8 @@
 #include "gimpimage-convert-precision.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpobjectqueue.h"
 #include "gimpprogress.h"
-#include "gimpsubprogress.h"
 
 #include "text/gimptextlayer.h"
 
@@ -57,25 +58,16 @@ gimp_image_convert_precision (GimpImage        *image,
   GimpColorProfile *new_profile = NULL;
   const Babl       *old_format;
   const Babl       *new_format;
-  GList            *all_drawables;
-  GList            *list;
+  GimpObjectQueue  *queue;
+  GList            *layers;
+  GimpDrawable     *drawable;
   const gchar      *undo_desc    = NULL;
-  GimpProgress     *sub_progress = NULL;
-  gint              nth_drawable, n_drawables;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (precision != gimp_image_get_precision (image));
   g_return_if_fail (precision == GIMP_PRECISION_U8_GAMMA ||
                     gimp_image_get_base_type (image) != GIMP_INDEXED);
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-
-  all_drawables = g_list_concat (gimp_image_get_layer_list (image),
-                                 gimp_image_get_channel_list (image));
-
-  n_drawables = g_list_length (all_drawables) + 1 /* + selection */;
-
-  if (progress)
-    sub_progress = gimp_sub_progress_new (progress);
 
   switch (precision)
     {
@@ -119,6 +111,16 @@ gimp_image_convert_precision (GimpImage        *image,
 
   if (progress)
     gimp_progress_start (progress, FALSE, "%s", undo_desc);
+
+  queue    = gimp_object_queue_new (progress);
+  progress = GIMP_PROGRESS (queue);
+
+  layers = gimp_image_get_layer_list (image);
+  gimp_object_queue_push_list (queue, layers);
+  g_list_free (layers);
+
+  gimp_object_queue_push (queue, gimp_image_get_mask (image));
+  gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
 
   g_object_freeze_notify (G_OBJECT (image));
 
@@ -172,33 +174,46 @@ gimp_image_convert_precision (GimpImage        *image,
         new_profile = g_object_ref (old_profile);
     }
 
-  for (list = all_drawables, nth_drawable = 0;
-       list;
-       list = g_list_next (list), nth_drawable++)
+  while ((drawable = gimp_object_queue_pop (queue)))
     {
-      GimpDrawable *drawable = list->data;
-      gint          dither_type;
+      if (drawable == GIMP_DRAWABLE (gimp_image_get_mask (image)))
+        {
+          GeglBuffer *buffer;
 
-      if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
-        dither_type = text_layer_dither_type;
+          gimp_image_undo_push_mask_precision (image, NULL,
+                                               GIMP_CHANNEL (drawable));
+
+          buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                    gimp_image_get_width  (image),
+                                                    gimp_image_get_height (image)),
+                                    gimp_image_get_mask_format (image));
+
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                            GEGL_ABYSS_NONE,
+                            buffer, NULL);
+
+          gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+          g_object_unref (buffer);
+        }
       else
-        dither_type = layer_dither_type;
+        {
+          gint dither_type;
 
-      if (sub_progress)
-        gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                    nth_drawable, n_drawables);
+          if (gimp_item_is_text_layer (GIMP_ITEM (drawable)))
+            dither_type = text_layer_dither_type;
+          else
+            dither_type = layer_dither_type;
 
-      gimp_drawable_convert_type (drawable, image,
-                                  gimp_drawable_get_base_type (drawable),
-                                  precision,
-                                  gimp_drawable_has_alpha (drawable),
-                                  new_profile,
-                                  dither_type,
-                                  mask_dither_type,
-                                  TRUE, sub_progress);
+          gimp_drawable_convert_type (drawable, image,
+                                      gimp_drawable_get_base_type (drawable),
+                                      precision,
+                                      gimp_drawable_has_alpha (drawable),
+                                      new_profile,
+                                      dither_type,
+                                      mask_dither_type,
+                                      TRUE, progress);
+        }
     }
-
-  g_list_free (all_drawables);
 
   if (new_profile)
     {
@@ -208,42 +223,12 @@ gimp_image_convert_precision (GimpImage        *image,
       g_object_unref (new_profile);
     }
 
-  /*  convert the selection mask  */
-  {
-    GimpChannel *mask = gimp_image_get_mask (image);
-    GeglBuffer  *buffer;
-
-    if (sub_progress)
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                  nth_drawable, n_drawables);
-
-    gimp_image_undo_push_mask_precision (image, NULL, mask);
-
-    buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                              gimp_image_get_width  (image),
-                                              gimp_image_get_height (image)),
-                              gimp_image_get_mask_format (image));
-
-    gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)), NULL,
-                      GEGL_ABYSS_NONE,
-                      buffer, NULL);
-
-    gimp_drawable_set_buffer (GIMP_DRAWABLE (mask), FALSE, NULL, buffer);
-    g_object_unref (buffer);
-
-    nth_drawable++;
-  }
-
-  if (sub_progress)
-    gimp_progress_set_value (sub_progress, 1.0);
-
   gimp_image_undo_group_end (image);
 
   gimp_image_precision_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
 
-  if (sub_progress)
-    g_object_unref (sub_progress);
+  g_object_unref (queue);
 
   if (progress)
     gimp_progress_end (progress);
@@ -270,37 +255,41 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
 
   if (dither)
     {
-      GList *drawables;
-      GList *list;
+      GimpObjectQueue *queue;
+      GList           *layers;
+      GList           *list;
+      GimpDrawable    *drawable;
 
-      drawables = gimp_image_get_layer_list (image);
+      if (progress)
+        gimp_progress_start (progress, FALSE, "%s", _("Dithering"));
 
-      for (list = drawables; list; list = g_list_next (list))
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      layers = gimp_image_get_layer_list (image);
+
+      for (list = layers; list; list = g_list_next (list))
         {
           if (! gimp_viewable_get_children (list->data) &&
               ! gimp_item_is_text_layer (list->data))
             {
-              gimp_drawable_apply_operation (list->data, progress,
-                                             _("Dithering"),
-                                             dither);
+              gimp_object_queue_push (queue, list->data);
             }
         }
 
-      g_list_free (drawables);
+      g_list_free (layers);
 
-      drawables = gimp_image_get_channel_list (image);
+      gimp_object_queue_push (queue, gimp_image_get_mask (image));
+      gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
 
-      for (list = drawables; list; list = g_list_next (list))
+      while ((drawable = gimp_object_queue_pop (queue)))
         {
-          if (! gimp_viewable_get_children (list->data))
-            {
-              gimp_drawable_apply_operation (list->data, progress,
-                                             _("Dithering"),
-                                             dither);
-            }
+          gimp_drawable_apply_operation (drawable, progress,
+                                         _("Dithering"),
+                                         dither);
         }
 
-      g_list_free (drawables);
+      g_object_unref (queue);
 
       g_object_unref (dither);
     }

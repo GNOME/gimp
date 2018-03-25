@@ -33,10 +33,10 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
+#include "gimpobjectqueue.h"
 #include "gimpprogress.h"
 #include "gimpprojection.h"
 #include "gimpsamplepoint.h"
-#include "gimpsubprogress.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -49,19 +49,15 @@ gimp_image_scale (GimpImage             *image,
                   GimpInterpolationType  interpolation_type,
                   GimpProgress          *progress)
 {
-  GimpProgress *sub_progress;
-  GList        *all_layers;
-  GList        *all_channels;
-  GList        *all_vectors;
-  GList        *list;
-  gint          old_width;
-  gint          old_height;
-  gint          offset_x;
-  gint          offset_y;
-  gdouble       img_scale_w      = 1.0;
-  gdouble       img_scale_h      = 1.0;
-  gint          progress_steps;
-  gint          progress_current = 0;
+  GimpObjectQueue *queue;
+  GimpItem        *item;
+  GList           *list;
+  gint             old_width;
+  gint             old_height;
+  gint             offset_x;
+  gint             offset_y;
+  gdouble          img_scale_w = 1.0;
+  gdouble          img_scale_h = 1.0;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -69,16 +65,13 @@ gimp_image_scale (GimpImage             *image,
 
   gimp_set_busy (image->gimp);
 
-  sub_progress = gimp_sub_progress_new (progress);
+  queue    = gimp_object_queue_new (progress);
+  progress = GIMP_PROGRESS (queue);
 
-  all_layers   = gimp_image_get_layer_list (image);
-  all_channels = gimp_image_get_channel_list (image);
-  all_vectors  = gimp_image_get_vectors_list (image);
-
-  progress_steps = (g_list_length (all_layers)   +
-                    g_list_length (all_channels) +
-                    g_list_length (all_vectors)  +
-                    1 /* selection */);
+  gimp_object_queue_push_container (queue, gimp_image_get_layers (image));
+  gimp_object_queue_push (queue, gimp_image_get_mask (image));
+  gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
+  gimp_object_queue_push_container (queue, gimp_image_get_vectors (image));
 
   g_object_freeze_notify (G_OBJECT (image));
 
@@ -110,72 +103,22 @@ gimp_image_scale (GimpImage             *image,
                 "height", new_height,
                 NULL);
 
-  /*  Scale all channels  */
-  for (list = all_channels; list; list = g_list_next (list))
+  /*  Scale all layers, channels (including selection mask), and vectors  */
+  while ((item = gimp_object_queue_pop (queue)))
     {
-      GimpItem *item = list->data;
-
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                  progress_current++, progress_steps);
-
-      gimp_item_scale (item,
-                       new_width, new_height, 0, 0,
-                       interpolation_type, sub_progress);
-    }
-
-  /*  Scale all vectors  */
-  for (list = all_vectors; list; list = g_list_next (list))
-    {
-      GimpItem *item = list->data;
-
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                  progress_current++, progress_steps);
-
-      gimp_item_scale (item,
-                       new_width, new_height, 0, 0,
-                       interpolation_type, sub_progress);
-    }
-
-  /*  Don't forget the selection mask!  */
-  gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                              progress_current++, progress_steps);
-
-  gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (image)),
-                   new_width, new_height, 0, 0,
-                   interpolation_type, sub_progress);
-
-  /*  Scale all layers  */
-  for (list = all_layers; list; list = g_list_next (list))
-    {
-      GimpItem *item = list->data;
-
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
-                                  progress_current++, progress_steps);
-
-      /*  group layers are updated automatically  */
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
-        {
-          gimp_group_layer_suspend_resize (GIMP_GROUP_LAYER (item), FALSE);
-          continue;
-        }
-
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
-                                        interpolation_type, sub_progress))
+                                        interpolation_type, progress))
         {
           /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
            * vanishing scaled layer dimensions. Implicit delete implemented
            * here. Upstream warning implemented in resize_check_layer_scaling(),
            * which offers the user the chance to bail out.
            */
+          g_return_if_fail (GIMP_IS_LAYER (item));
           gimp_image_remove_layer (image, GIMP_LAYER (item), TRUE, NULL);
         }
     }
-
-  for (list = all_layers; list; list = g_list_next (list))
-    if (gimp_viewable_get_children (list->data))
-      gimp_group_layer_resume_resize (list->data, FALSE);
-
 
   /*  Scale all Guides  */
   for (list = gimp_image_get_guides (image);
@@ -223,11 +166,7 @@ gimp_image_scale (GimpImage             *image,
 
   gimp_image_undo_group_end (image);
 
-  g_list_free (all_layers);
-  g_list_free (all_channels);
-  g_list_free (all_vectors);
-
-  g_object_unref (sub_progress);
+  g_object_unref (queue);
 
   gimp_image_size_changed_detailed (image,
                                     -offset_x,
