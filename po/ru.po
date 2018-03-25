@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.9\n"
+"Project-Id-Version: GIMP 2.10rc1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-23 22:59+0300\n"
-"PO-Revision-Date: 2018-03-24 01:38+0300\n"
+"POT-Creation-Date: 2018-03-25 17:53+0300\n"
+"PO-Revision-Date: 2018-03-25 23:27+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -66,14 +66,14 @@ msgstr "Редактирование фотографий в GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
-"GIMP 2.10 RC1 is the first release candidate before GIMP 2.10 stable "
+"GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "New dashboard dockable to monitor GIMP resource usage"
-msgstr ""
+msgstr "Новая панель GIMP, показывающая расход системных ресурсов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
@@ -107,7 +107,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Various GUI polishing"
-msgstr ""
+msgstr "Различные улучшения в пользовательском интерфейсе"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 #, fuzzy
@@ -598,7 +598,7 @@ msgid "Text Editor"
 msgstr "Редактор текста"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:310
-#: ../app/gui/gui.c:544
+#: ../app/gui/gui.c:550
 msgid "Tool Options"
 msgstr "Параметры инструментов"
 
@@ -1103,7 +1103,7 @@ msgid "Select the channel below the current channel"
 msgstr "Перейти на канал ниже текущего"
 
 #: ../app/actions/channels-commands.c:111
-#: ../app/actions/channels-commands.c:537
+#: ../app/actions/channels-commands.c:517
 msgid "Channel Attributes"
 msgstr "Атрибуты канала"
 
@@ -1121,7 +1121,6 @@ msgid "_Fill opacity:"
 msgstr "_Непрозрачность заливки:"
 
 #: ../app/actions/channels-commands.c:156
-#: ../app/actions/channels-commands.c:209
 #: ../app/widgets/gimpchanneltreeview.c:327
 msgid "New Channel"
 msgstr "Создать канал"
@@ -1134,7 +1133,7 @@ msgstr "Создать канал"
 msgid "New Channel Color"
 msgstr "Цвет нового канала"
 
-#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
+#: ../app/actions/channels-commands.c:274 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:670
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:805
@@ -3878,7 +3877,7 @@ msgstr "Скопировать из буфера с именем"
 msgid "Copy Visible Named "
 msgstr "Скопировать видимое с именем"
 
-#: ../app/actions/edit-commands.c:569 ../app/display/gimpdisplayshell-dnd.c:479
+#: ../app/actions/edit-commands.c:571 ../app/display/gimpdisplayshell-dnd.c:479
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено как новый слой, потому что цель — группа слоёв."
 
@@ -5950,7 +5949,7 @@ msgstr "Производится отражение..."
 msgid "Rotating"
 msgstr "Производится вращение..."
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:800
+#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:779
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -6005,7 +6004,7 @@ msgid "Scale Image"
 msgstr "Изменить размер изображения"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1590
+#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1569
 #: ../app/dialogs/preferences-dialog.c:1602
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -6538,13 +6537,12 @@ msgstr "Режим совмещения"
 #: ../app/actions/layers-actions.c:389
 msgctxt "layers-action"
 msgid "Union"
-msgstr ""
+msgstr "Объединение"
 
 #: ../app/actions/layers-actions.c:390
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr "Режим совмещения"
+msgstr "Режим совмещения слоёв: объединение"
 
 #: ../app/actions/layers-actions.c:395
 #, fuzzy
@@ -6571,16 +6569,14 @@ msgid "Layer Composite Mode: Clip to Layer"
 msgstr "Режим совмещения"
 
 #: ../app/actions/layers-actions.c:407
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersection"
 msgstr "Пересечение"
 
 #: ../app/actions/layers-actions.c:408
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr "Режим совмещения"
+msgstr "Режим совмещения слоёв: пересечение"
 
 #: ../app/actions/layers-actions.c:416
 msgctxt "layers-action"
@@ -6876,7 +6872,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "В _новый слой"
 
-#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1439
+#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1418
 msgid "Layer Attributes"
 msgstr "Атрибуты слоя"
 
@@ -6884,7 +6880,7 @@ msgstr "Атрибуты слоя"
 msgid "Edit Layer Attributes"
 msgstr "Правка атрибутов слоя"
 
-#: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:401
+#: ../app/actions/layers-commands.c:328
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:882
 msgid "New Layer"
@@ -6894,33 +6890,33 @@ msgstr "Новый слой"
 msgid "Create a New Layer"
 msgstr "Создать новый слой"
 
-#: ../app/actions/layers-commands.c:441 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:420 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Видимое"
 
-#: ../app/actions/layers-commands.c:706
+#: ../app/actions/layers-commands.c:685
 msgid "Set Layer Boundary Size"
 msgstr "Изменить границы слоя"
 
-#: ../app/actions/layers-commands.c:768
+#: ../app/actions/layers-commands.c:747
 msgid "Scale Layer"
 msgstr "Изменить размер слоя"
 
-#: ../app/actions/layers-commands.c:810
+#: ../app/actions/layers-commands.c:789
 msgid "Crop Layer to Selection"
 msgstr "Обрезать по выделению"
 
-#: ../app/actions/layers-commands.c:840
+#: ../app/actions/layers-commands.c:819
 msgid "Crop Layer to Content"
 msgstr "Обрезать до содержимого"
 
-#: ../app/actions/layers-commands.c:853
+#: ../app/actions/layers-commands.c:832
 msgid "Cannot crop because the active layer has no content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/layers-commands.c:860
+#: ../app/actions/layers-commands.c:839
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -11269,12 +11265,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прицепить плавающее выделение"
 
-#: ../app/core/core-enums.c:889 ../app/core/gimp-edit.c:479
+#: ../app/core/core-enums.c:889 ../app/core/gimp-edit.c:501
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставить"
 
-#: ../app/core/core-enums.c:890 ../app/core/gimp-edit.c:813
+#: ../app/core/core-enums.c:890 ../app/core/gimp-edit.c:829
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вырезать"
@@ -11568,12 +11564,12 @@ msgstr "Ошибка"
 #: ../app/core/core-enums.c:1079
 msgctxt "message-severity"
 msgid "WARNING"
-msgstr ""
+msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
 #: ../app/core/core-enums.c:1080
 msgctxt "message-severity"
 msgid "CRITICAL"
-msgstr ""
+msgstr "КРИТИЧЕСКАЯ ОШИБКА"
 
 #: ../app/core/core-enums.c:1109
 msgctxt "color-profile-policy"
@@ -11740,16 +11736,16 @@ msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Текстовый слой"
 
-#: ../app/core/gimp-edit.c:291 ../app/core/gimpimage-new.c:325
+#: ../app/core/gimp-edit.c:313 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Вставленный слой"
 
-#: ../app/core/gimp-edit.c:708
+#: ../app/core/gimp-edit.c:724
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Очистка"
 
-#: ../app/core/gimp-edit.c:830
+#: ../app/core/gimp-edit.c:846
 msgid "Global Buffer"
 msgstr "Глобальный буфер"
 
@@ -14934,8 +14930,8 @@ msgid "Bug Reporting"
 msgstr "Отчёты об ошибках"
 
 #: ../app/dialogs/preferences-dialog.c:1239
-msgid "Try generating debug data for bug reporting when appropriate"
-msgstr "Попробовать создать данные отладки для отчёта об ошибке"
+msgid "Debug Policy"
+msgstr "Параметры отладки"
 
 #: ../app/dialogs/preferences-dialog.c:1251
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
@@ -17288,7 +17284,7 @@ msgstr "Авто"
 #: ../app/operations/operations-enums.c:60
 msgctxt "layer-composite-mode"
 msgid "Union"
-msgstr ""
+msgstr "Объединение"
 
 #: ../app/operations/operations-enums.c:61
 #, fuzzy
@@ -17303,7 +17299,6 @@ msgid "Clip to layer"
 msgstr "Отразить текстовый слой"
 
 #: ../app/operations/operations-enums.c:63
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Intersection"
 msgstr "Пересечение"
@@ -18068,20 +18063,29 @@ msgstr "_Восстановить"
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Ох, кажется, GIMP в прошлый раз упал!"
 
-#: ../app/gui/gui.c:343
+#. TRANSLATORS: even if English singular form does
+#. * not use %d, you can use %d for translation in
+#. * any singular/plural form of your language if
+#. * suited. It will just work and be replaced by the
+#. * number of images as expected.
+#.
+#: ../app/gui/gui.c:349
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
 "%d images were salvaged from the crash. Do you want to try and recover them?"
-msgstr[0] "%d изображение было спасено после падения. Попробовать восстановить?"
-msgstr[1] "%d изображения было спасено после падения. Попробовать восстановить?"
-msgstr[2] "%d изображений было спасено после падения. Попробовать восстановить?"
+msgstr[0] ""
+"%d изображение было спасено после падения. Попробовать восстановить?"
+msgstr[1] ""
+"%d изображения было спасено после падения. Попробовать восстановить?"
+msgstr[2] ""
+"%d изображений было спасено после падения. Попробовать восстановить?"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:588
+#: ../app/gui/gui.c:594
 msgid "Documents"
 msgstr "Документы"
 
@@ -20039,7 +20043,7 @@ msgstr "Щёлкните, чтобы добавить этот контур в �
 
 #: ../app/tools/gimpblendoptions.c:101 ../app/tools/gimpblendoptions.c:303
 msgid "Metric"
-msgstr ""
+msgstr "Метрика"
 
 #: ../app/tools/gimpblendoptions.c:102
 msgid "Metric to use for the distance calculation"
@@ -20974,7 +20978,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:1210
 msgid "Paint mask"
-msgstr ""
+msgstr "Рисуемая маска"
 
 #: ../app/tools/gimpfreeselecttool.c:129
 msgid ""
@@ -23311,7 +23315,6 @@ msgid "Copy Bug Information"
 msgstr "Скопировать информацию об ошибке"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
-#, fuzzy
 msgid "Open Bug Tracker"
 msgstr "Открыть трекер ошибок"
 
@@ -24958,7 +24961,6 @@ msgstr ""
 "Ошибка записи XCF: неподдерживаемая разрядность цвета при записи данных: %d"
 
 #: ../app-tools/gimp-debug-tool.c:78
-#, fuzzy
 msgid "GIMP Crash Debug"
 msgstr "Отладка GIMP"
 
@@ -24970,6 +24972,9 @@ msgstr "круглые"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушеванные"
+
+#~ msgid "Try generating debug data for bug reporting when appropriate"
+#~ msgstr "Попробовать создать данные отладки для отчёта об ошибке"
 
 #~ msgctxt "layers-action"
 #~ msgid "Layer Composite Mode: Source In"
