@@ -1261,22 +1261,32 @@ gimp_item_check_scaling (GimpItem *item,
                          gint      new_width,
                          gint      new_height)
 {
-  GimpImage *image;
-  gdouble    img_scale_w;
-  gdouble    img_scale_h;
-  gint       new_item_width;
-  gint       new_item_height;
+  GimpItemPrivate *private;
+  GimpImage       *image;
+  gdouble          img_scale_w;
+  gdouble          img_scale_h;
+  gint             new_item_offset_x;
+  gint             new_item_offset_y;
+  gint             new_item_width;
+  gint             new_item_height;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  image = gimp_item_get_image (item);
+  private = GET_PRIVATE (item);
+  image   = gimp_item_get_image (item);
 
-  img_scale_w     = ((gdouble) new_width /
-                     (gdouble) gimp_image_get_width (image));
-  img_scale_h     = ((gdouble) new_height /
-                     (gdouble) gimp_image_get_height (image));
-  new_item_width  = ROUND (img_scale_w * (gdouble) gimp_item_get_width  (item));
-  new_item_height = ROUND (img_scale_h * (gdouble) gimp_item_get_height (item));
+  img_scale_w       = ((gdouble) new_width /
+                       (gdouble) gimp_image_get_width (image));
+  img_scale_h       = ((gdouble) new_height /
+                       (gdouble) gimp_image_get_height (image));
+  new_item_offset_x = SIGNED_ROUND (img_scale_w * private->offset_x);
+  new_item_offset_y = SIGNED_ROUND (img_scale_h * private->offset_y);
+  new_item_width    = SIGNED_ROUND (img_scale_w * (private->offset_x +
+                                                   gimp_item_get_width (item))) -
+                      new_item_offset_x;
+  new_item_height   = SIGNED_ROUND (img_scale_h * (private->offset_y +
+                                                   gimp_item_get_height (item))) -
+                      new_item_offset_y;
 
   return (new_item_width > 0 && new_item_height > 0);
 }
@@ -1360,6 +1370,41 @@ gimp_item_scale_by_factors (GimpItem              *item,
                             GimpInterpolationType  interpolation,
                             GimpProgress          *progress)
 {
+  return gimp_item_scale_by_factors_with_origin (item,
+                                                 w_factor, h_factor,
+                                                 0, 0, 0, 0,
+                                                 interpolation, progress);
+}
+
+/**
+ * gimp_item_scale_by_factors:
+ * @item:         Item to be transformed by explicit width and height factors.
+ * @w_factor:     scale factor to apply to width and horizontal offset
+ * @h_factor:     scale factor to apply to height and vertical offset
+ * @origin_x:     x-coordinate of the transformation input origin
+ * @origin_y:     y-coordinate of the transformation input origin
+ * @new_origin_x: x-coordinate of the transformation output origin
+ * @new_origin_y: y-coordinate of the transformation output origin
+ * @interpolation:
+ * @progress:
+ *
+ * Same as gimp_item_scale_by_factors(), but with the option to specify
+ * custom input and output points of origin for the transformation.
+ *
+ * Returns: #TRUE, if the scaled item has positive dimensions
+ *          #FALSE if the scaled item has at least one zero dimension
+ **/
+gboolean
+gimp_item_scale_by_factors_with_origin (GimpItem              *item,
+                                        gdouble                w_factor,
+                                        gdouble                h_factor,
+                                        gint                   origin_x,
+                                        gint                   origin_y,
+                                        gint                   new_origin_x,
+                                        gint                   new_origin_y,
+                                        GimpInterpolationType  interpolation,
+                                        GimpProgress          *progress)
+{
   GimpItemPrivate *private;
   gint             new_width, new_height;
   gint             new_offset_x, new_offset_y;
@@ -1369,18 +1414,26 @@ gimp_item_scale_by_factors (GimpItem              *item,
 
   private = GET_PRIVATE (item);
 
-  if (w_factor == 0.0 || h_factor == 0.0)
+  if (w_factor <= 0.0 || h_factor <= 0.0)
     {
-      g_warning ("%s: requested width or height scale equals zero", G_STRFUNC);
+      g_warning ("%s: requested width or height scale is non-positive",
+                 G_STRFUNC);
       return FALSE;
     }
 
-  new_offset_x = SIGNED_ROUND (w_factor * (gdouble) private->offset_x);
-  new_offset_y = SIGNED_ROUND (h_factor * (gdouble) private->offset_y);
-  new_width    = ROUND (w_factor * (gdouble) gimp_item_get_width  (item));
-  new_height   = ROUND (h_factor * (gdouble) gimp_item_get_height (item));
+  new_offset_x = SIGNED_ROUND (w_factor * (private->offset_x - origin_x));
+  new_offset_y = SIGNED_ROUND (h_factor * (private->offset_y - origin_y));
+  new_width    = SIGNED_ROUND (w_factor * (private->offset_x - origin_x +
+                                           gimp_item_get_width (item))) -
+                 new_offset_x;
+  new_height   = SIGNED_ROUND (h_factor * (private->offset_y - origin_y +
+                                           gimp_item_get_height (item))) -
+                 new_offset_y;
 
-  if (new_width != 0 && new_height != 0)
+  new_offset_x += new_origin_x;
+  new_offset_y += new_origin_y;
+
+  if (new_width > 0 && new_height > 0)
     {
       gimp_item_scale (item,
                        new_width, new_height,

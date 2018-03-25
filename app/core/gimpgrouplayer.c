@@ -810,42 +810,30 @@ gimp_group_layer_scale (GimpLayer             *layer,
   while (list)
     {
       GimpItem *child = list->data;
-      gint      child_width;
-      gint      child_height;
-      gint      child_offset_x;
-      gint      child_offset_y;
 
       list = g_list_next (list);
 
       if (queue)
         gimp_object_queue_pop (queue);
 
-      child_width    = ROUND (width_factor  * gimp_item_get_width  (child));
-      child_height   = ROUND (height_factor * gimp_item_get_height (child));
-      child_offset_x = ROUND (width_factor  * (gimp_item_get_offset_x (child) -
-                                               old_offset_x));
-      child_offset_y = ROUND (height_factor * (gimp_item_get_offset_y (child) -
-                                               old_offset_y));
-
-      child_offset_x += new_offset_x;
-      child_offset_y += new_offset_y;
-
-      if (child_width > 0 && child_height > 0)
+      if (! gimp_item_scale_by_factors_with_origin (child,
+                                                    width_factor, height_factor,
+                                                    old_offset_x, old_offset_y,
+                                                    new_offset_x, new_offset_y,
+                                                    interpolation_type,
+                                                    progress))
         {
-          gimp_item_scale (child,
-                           child_width, child_height,
-                           child_offset_x, child_offset_y,
-                           interpolation_type, progress);
-        }
-      else if (gimp_item_is_attached (item))
-        {
-          gimp_image_remove_layer (gimp_item_get_image (item),
-                                   GIMP_LAYER (child),
-                                   TRUE, NULL);
-        }
-      else
-        {
-          gimp_container_remove (private->children, GIMP_OBJECT (child));
+          /* new width or height are 0; remove item */
+          if (gimp_item_is_attached (item))
+            {
+              gimp_image_remove_layer (gimp_item_get_image (item),
+                                       GIMP_LAYER (child),
+                                       TRUE, NULL);
+            }
+          else
+            {
+              gimp_container_remove (private->children, GIMP_OBJECT (child));
+            }
         }
     }
 
