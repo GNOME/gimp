@@ -327,6 +327,8 @@ libappcore_a_sources = \
 	gimpmybrush-private.h			\
 	gimpobject.c				\
 	gimpobject.h				\
+	gimpobjectqueue.c			\
+	gimpobjectqueue.h			\
 	gimppaintinfo.c				\
 	gimppaintinfo.h				\
 	gimppattern.c				\
