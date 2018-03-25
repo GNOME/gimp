@@ -124,8 +124,8 @@
     <release version="2.10.0-rc1" date="2018-03-25" type="development">
       <description>
         <_p>
-        GIMP 2.10 RC1 is the first release candidate before GIMP 2.10
-        stable release, with a focus on debugging and stability.
+        GIMP 2.10.0-RC1 is the first release candidate before GIMP
+        2.10.0 stable release, with a focus on debugging and stability.
         Other than the many bug fixes, most notable improvements are:
         </_p>
         <ul>
