@@ -21,14 +21,19 @@
      Mac OS and flatpak of the upcoming release so they have some time
      to sort out issues with their builds.
 
- ( ) If this is a stable release, make sure we have a <release> tag
-     inside desktop/org.gimp.GIMP.appdata.xml.in for this upcoming version.
+ ( ) Make sure we have a <release> tag inside
+     desktop/org.gimp.GIMP.appdata.xml.in for this upcoming version,
+     with type="development" for development or RC releases (set
+     type="stable", or just no type for stable releases).
+
      Some installers may feature more prominently software with recent
      releases if the appropriate tag was set (e.g. GNOME Software has a
      "Recent Releases" category).
+
      If a description is added, it may be featured in installers and
      will be translatable (use <_p> or <_li> tags to make the strings
-     localizable).
+     localizable). So it is better to prepare the description text as
+     early as possible.
 
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
@@ -61,6 +66,10 @@
          of the main display when too bug; but they won't be scaled up.
          Therefore anything smaller than fullHD will look tiny and
          unsuited on a 4K or higher res display).
+
+ ( ) If ever the actual release date evolved and is different from the
+     planned date, update the "date" in the <release> tag of the appdata
+     in: desktop/org.gimp.GIMP.appdata.xml.in
 
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
