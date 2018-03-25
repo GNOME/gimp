@@ -82,6 +82,8 @@ gimp_group_layer_undo_constructed (GObject *object)
     case GIMP_UNDO_GROUP_LAYER_SUSPEND_RESIZE:
     case GIMP_UNDO_GROUP_LAYER_RESUME_RESIZE:
     case GIMP_UNDO_GROUP_LAYER_SUSPEND_MASK:
+    case GIMP_UNDO_GROUP_LAYER_START_MOVE:
+    case GIMP_UNDO_GROUP_LAYER_END_MOVE:
       break;
 
     case GIMP_UNDO_GROUP_LAYER_RESUME_MASK:
@@ -187,6 +189,25 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                 group_layer_undo->mask_buffer,
                 &group_layer_undo->mask_bounds);
             }
+        }
+      break;
+
+    case GIMP_UNDO_GROUP_LAYER_START_MOVE:
+    case GIMP_UNDO_GROUP_LAYER_END_MOVE:
+      if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+           undo->undo_type == GIMP_UNDO_GROUP_LAYER_START_MOVE) ||
+          (undo_mode       == GIMP_UNDO_MODE_REDO &&
+           undo->undo_type == GIMP_UNDO_GROUP_LAYER_END_MOVE))
+        {
+          /*  end group layer move operation  */
+
+          _gimp_group_layer_end_move (group, FALSE);
+        }
+      else
+        {
+          /*  start group layer move operation  */
+
+          _gimp_group_layer_start_move (group, FALSE);
         }
       break;
 

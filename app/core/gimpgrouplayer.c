@@ -607,11 +607,7 @@ static void
 gimp_group_layer_start_move (GimpItem *item,
                              gboolean  push_undo)
 {
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-
-  g_return_if_fail (private->suspend_mask == 0);
-
-  private->moving++;
+  _gimp_group_layer_start_move (GIMP_GROUP_LAYER (item), push_undo);
 
   if (GIMP_ITEM_CLASS (parent_class)->start_move)
     GIMP_ITEM_CLASS (parent_class)->start_move (item, push_undo);
@@ -621,18 +617,10 @@ static void
 gimp_group_layer_end_move (GimpItem *item,
                            gboolean  push_undo)
 {
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-
-  g_return_if_fail (private->suspend_mask == 0);
-  g_return_if_fail (private->moving > 0);
-
   if (GIMP_ITEM_CLASS (parent_class)->end_move)
     GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
 
-  private->moving--;
-
-  if (private->moving == 0)
-    gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
+  _gimp_group_layer_end_move (GIMP_GROUP_LAYER (item), push_undo);
 }
 
 static void
@@ -1607,6 +1595,58 @@ _gimp_group_layer_get_suspended_mask (GimpGroupLayer *group,
     }
 
   return NULL;
+}
+
+void
+_gimp_group_layer_start_move (GimpGroupLayer *group,
+                              gboolean        push_undo)
+{
+  GimpGroupLayerPrivate *private;
+  GimpItem              *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+
+  private = GET_PRIVATE (group);
+  item    = GIMP_ITEM (group);
+
+  g_return_if_fail (private->suspend_mask == 0);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_start_move (gimp_item_get_image (item),
+                                                 NULL, group);
+
+  private->moving++;
+}
+
+void
+_gimp_group_layer_end_move (GimpGroupLayer *group,
+                            gboolean        push_undo)
+{
+  GimpGroupLayerPrivate *private;
+  GimpItem              *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+
+  private = GET_PRIVATE (group);
+  item    = GIMP_ITEM (group);
+
+  g_return_if_fail (private->suspend_mask == 0);
+  g_return_if_fail (private->moving > 0);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_end_move (gimp_item_get_image (item),
+                                               NULL, group);
+
+  private->moving--;
+
+  if (private->moving == 0)
+    gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
 }
 
 
