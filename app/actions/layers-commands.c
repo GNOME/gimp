@@ -358,11 +358,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
 {
   GimpImage        *image;
   GtkWidget        *widget;
-  GimpLayer        *floating_sel;
-  GimpLayer        *new_layer;
-  gint              width, height;
-  gint              off_x, off_y;
-  gdouble           opacity;
+  GimpLayer        *layer;
   GimpDialogConfig *config;
 
   return_if_no_image (image, data);
@@ -373,48 +369,31 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
    */
-  if ((floating_sel = gimp_image_get_floating_selection (image)))
+  if (gimp_image_get_floating_selection (image))
     {
       layers_new_cmd_callback (action, data);
       return;
     }
 
-  if (GIMP_IS_LAYER (GIMP_ACTION (action)->viewable))
-    {
-      GimpLayer *template = GIMP_LAYER (GIMP_ACTION (action)->viewable);
+  layer = gimp_layer_new (image,
+                          gimp_image_get_width  (image),
+                          gimp_image_get_height (image),
+                          gimp_image_get_layer_format (image, TRUE),
+                          config->layer_new_name,
+                          config->layer_new_opacity,
+                          config->layer_new_mode);
 
-      gimp_item_get_offset (GIMP_ITEM (template), &off_x, &off_y);
-      width   = gimp_item_get_width  (GIMP_ITEM (template));
-      height  = gimp_item_get_height (GIMP_ITEM (template));
-      opacity = gimp_layer_get_opacity (template);
-    }
-  else
-    {
-      width   = gimp_image_get_width (image);
-      height  = gimp_image_get_height (image);
-      off_x   = 0;
-      off_y   = 0;
-      opacity = 1.0;
-    }
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("New Layer"));
-
-  new_layer = gimp_layer_new (image, width, height,
-                              gimp_image_get_layer_format (image, TRUE),
-                              config->layer_new_name,
-                              opacity, config->layer_new_mode);
-
-  gimp_drawable_fill (GIMP_DRAWABLE (new_layer),
+  gimp_drawable_fill (GIMP_DRAWABLE (layer),
                       action_data_get_context (data),
                       config->layer_new_fill_type);
-  gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
+  gimp_layer_set_blend_space (layer,
+                              config->layer_new_blend_space, FALSE);
+  gimp_layer_set_composite_space (layer,
+                                  config->layer_new_composite_space, FALSE);
+  gimp_layer_set_composite_mode (layer,
+                                 config->layer_new_composite_mode, FALSE);
 
-  gimp_image_add_layer (image, new_layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
-  gimp_image_undo_group_end (image);
-
+  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 

@@ -182,44 +182,24 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
   GimpImage        *image;
-  GimpChannel      *new_channel;
-  gint              width, height;
-  GimpRGB           color;
+  GimpChannel      *channel;
   GimpDialogConfig *config;
   return_if_no_image (image, data);
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (GIMP_IS_CHANNEL (GIMP_ACTION (action)->viewable))
-    {
-      GimpChannel *template = GIMP_CHANNEL (GIMP_ACTION (action)->viewable);
+  channel = gimp_channel_new (image,
+                              gimp_image_get_width (image),
+                              gimp_image_get_height (image),
+                              config->channel_new_name,
+                              &config->channel_new_color);
 
-      width  = gimp_item_get_width  (GIMP_ITEM (template));
-      height = gimp_item_get_height (GIMP_ITEM (template));
-      color  = template->color;
-    }
-  else
-    {
-      width  = gimp_image_get_width (image);
-      height = gimp_image_get_height (image);
-      color  = config->channel_new_color;
-    }
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("New Channel"));
-
-  new_channel = gimp_channel_new (image, width, height,
-                                  config->channel_new_name, &color);
-
-  gimp_drawable_fill (GIMP_DRAWABLE (new_channel),
+  gimp_drawable_fill (GIMP_DRAWABLE (channel),
                       action_data_get_context (data),
                       GIMP_FILL_TRANSPARENT);
 
-  gimp_image_add_channel (image, new_channel,
+  gimp_image_add_channel (image, channel,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
-  gimp_image_undo_group_end (image);
-
   gimp_image_flush (image);
 }
 
