@@ -121,7 +121,7 @@
     </release>
     -->
 
-    <release version="2.10 RC1" date="2018-03-23" type="development">
+    <release version="2.10 RC1" date="2018-03-25" type="development">
       <description>
         <_p>
         GIMP 2.10 RC1 is the first release candidate before GIMP 2.10
