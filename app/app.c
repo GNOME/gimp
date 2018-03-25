@@ -276,17 +276,20 @@ app_run (const gchar         *full_prog_name,
 
   g_object_unref (gimpdir);
 
+  gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
+
   /* Initialize the error handling after creating/migrating the config
    * directory because it will create some folders for backup and crash
    * logs in advance. Therefore running this before
    * gimp_user_install_new() would break migration as well as initial
    * folder creations.
+   *
+   * It also needs to be run after gimp_load_config() because error
+   * handling is based on Preferences. It means that early loading code
+   * is not handled by our debug code, but that's not a big deal.
    */
   errors_init (gimp, full_prog_name, use_debug_handler,
                stack_trace_mode, backtrace_file);
-
-
-  gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
   /*  run the late-stage sanity check.  it's important that this check is run
    *  after the call to language_init() (see comment in sanity_check_late().)
