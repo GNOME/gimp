@@ -52,6 +52,16 @@
 
  ( ) Does the splash screen need to be changed?
 
+     Splash requirements:
+
+     [ ] Accepted license: a libre license, such as CC 0, CC by, CC
+         by-sa or Free Art.
+     [ ] XCF file must be provided.
+     [ ] Minimum size: full HD (splash images will be scaled down to 2/3
+         of the main display when too bug; but they won't be scaled up.
+         Therefore anything smaller than fullHD will look tiny and
+         unsuited on a 4K or higher res display).
+
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
      release you are about to make. Releases always have even micro
