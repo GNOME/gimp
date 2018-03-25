@@ -11,6 +11,7 @@ endif
 imagedata_DATA = \
 	$(GIMP_LOGO)	\
 	gimp-splash.png	\
+	gimp-splash.xcf \
 	wilber.png
 
 EXTRA_DIST = $(imagedata_DATA)
