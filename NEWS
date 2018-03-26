@@ -31,13 +31,13 @@ Core:
   - Mark legacy plug-ins and scripts in menus.
   - Enable "save-tool-options" and "save-device-status" by default,
     it's the expected behavior these days.
-  - GIMP doesn't warn anymore for unknown darktable XMP metadata. We now
-    registers the corresponding namespace.
+  - GIMP doesn't warn any more for unknown darktable XMP metadata. We now
+    register the corresponding namespace.
   - Adding settings for metadata export handling in "Image Import &
     Export" page of Preferences. By default, the settings are checked,
     but you can uncheck them (in particular since metadata can often
     contain a lot of sensitive information).
-  - Splash image now scaled down to maximum 2/3 of the screen area. This
+  - Splash image now scaled down to maximum 1/2 of the screen area. This
     will allow to ship a big splash image which will be visible on all
     type of screens, whichever low or high resolution. Vector splash
     images are scaled both up or down to have them always at ideal size.
@@ -47,7 +47,7 @@ Core:
     were already in our history from before the exclusion).
   - Use GEGL for transform-tools preview, allowing faster and more
     accurate previews.
-  - Arrange color models in the Color dock (WIP).
+  - Re-arrange color models in the Color dock (WIP).
   - New debug tool and infrastructure to handle WARNING and CRITICAL
     errors, as well as fatal errors (crashes), raising a pop-up with all
     version information on GIMP and its main dependencies, as well as
@@ -55,7 +55,7 @@ Core:
     reports.
   - Support layer masks on layer groups.
   - GIMP now attempts to backup unsaved images when it crashes. Then at
-    next startup, it will propose and recover the salvaged images. Image
+    next startup, it will suggest to recover the salvaged images. Image
     recovery is not 100% guaranteed.
   - New gimp_spawn_async() function uses vfork() to help avoid hanging
     during a fork process, currently used for plug-ins.
@@ -68,7 +68,7 @@ Libgimp:
      for metadata export (as set in the Preferences).
    - GIMP Protocol version incremented.
    - New gimp_get_pdb_status() to return the status of the last PDB
-     call. This is needed for plug-ins which depends on other plug-in's
+     call. This is needed for plug-ins which depend on other plug-ins'
      procedures. If for instance, a second-level plug-in is interrupted
      interactively, we don't want to process this as an error but as a
      cancellation.
@@ -151,7 +151,7 @@ Plug-ins:
   - Colors for the standard output and standard error texts in the
     Python console are now themeable, mapping respectively to normal
     text and insensitive text colors for the "python-fu-console" widget.
-    We updated a bit these default colors for our themes. If this is not
+    We updated the default colors a bit for our themes. If this is not
     good enough (for instance, if one has a specific type of color
     blindness), at least it is now possible to create a custom theme
     adapted to one's needs.
