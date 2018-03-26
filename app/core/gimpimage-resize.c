@@ -90,6 +90,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                C_("undo-type", "Resize Image"));
 
+  resize_layers = gimp_image_item_list_get_list (image,
+                                                 GIMP_ITEM_TYPE_LAYERS,
+                                                 layer_set);
+
   old_width  = gimp_image_get_width  (image);
   old_height = gimp_image_get_height (image);
 
@@ -116,10 +120,6 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
   queue    = gimp_object_queue_new (progress);
   progress = GIMP_PROGRESS (queue);
-
-  resize_layers = gimp_image_item_list_get_list (image,
-                                                 GIMP_ITEM_TYPE_LAYERS,
-                                                 layer_set);
 
   for (list = resize_layers; list; list = g_list_next (list))
     {
