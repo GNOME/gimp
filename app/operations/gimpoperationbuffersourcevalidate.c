@@ -284,7 +284,8 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
                    */
                   if (overlap == CAIRO_REGION_OVERLAP_PART)
                     {
-                      cairo_region_t *region;
+                      cairo_region_t        *region;
+                      cairo_rectangle_int_t  intersection;
 
                       /* ... intersect it with region and use the result's
                        * bounds
@@ -292,15 +293,15 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
                       region = cairo_region_copy (validate_handler->dirty_region);
 
                       cairo_region_intersect_rectangle (region, &rect);
-                      cairo_region_get_extents (region, &rect);
+                      cairo_region_get_extents (region, &intersection);
 
                       cairo_region_destroy (region);
 
                       /* realign the rectangle to the tile grid */
-                      rect.x      = (gint) floor ((gdouble) (result->x                  + shift_x) / tile_width)  * tile_width;
-                      rect.y      = (gint) floor ((gdouble) (result->y                  + shift_y) / tile_height) * tile_height;
-                      rect.width  = (gint) ceil  ((gdouble) (result->x + result->width  + shift_x) / tile_width)  * tile_width  - rect.x;
-                      rect.height = (gint) ceil  ((gdouble) (result->y + result->height + shift_y) / tile_height) * tile_height - rect.y;
+                      rect.x      = (gint) floor ((gdouble) (intersection.x                      ) / tile_width)  * tile_width;
+                      rect.y      = (gint) floor ((gdouble) (intersection.y                      ) / tile_height) * tile_height;
+                      rect.width  = (gint) ceil  ((gdouble) (intersection.x + intersection.width ) / tile_width)  * tile_width  - rect.x;
+                      rect.height = (gint) ceil  ((gdouble) (intersection.y + intersection.height) / tile_height) * tile_height - rect.y;
                     }
 
                   rect.x -= shift_x;
