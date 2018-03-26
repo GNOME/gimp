@@ -189,7 +189,7 @@
     {
       CFDataRef icc_data = NULL;
 
-      icc_data = CGColorSpaceCopyICCData (color_space);
+      icc_data = CGColorSpaceCopyICCProfile (color_space);
       if (icc_data)
         {
           UInt8 *buffer = g_malloc (CFDataGetLength (icc_data));
