@@ -182,12 +182,46 @@ gimp_gradient_load (GimpContext   *context,
             {
             case 4:
               seg->left_color_type  = (GimpGradientColor) left_color_type;
+              if (seg->left_color_type < GIMP_GRADIENT_COLOR_FIXED ||
+                  seg->left_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+                {
+                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                               _("Corrupt segment %d."), i);
+                  g_free (line);
+                  goto failed;
+                }
+
               seg->right_color_type = (GimpGradientColor) right_color_type;
+              if (seg->right_color_type < GIMP_GRADIENT_COLOR_FIXED ||
+                  seg->right_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+                {
+                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                               _("Corrupt segment %d."), i);
+                  g_free (line);
+                  goto failed;
+                }
               /* fall thru */
 
             case 2:
               seg->type  = (GimpGradientSegmentType) type;
+              if (seg->type < GIMP_GRADIENT_SEGMENT_LINEAR ||
+                  seg->type > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
+                {
+                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                               _("Corrupt segment %d."), i);
+                  g_free (line);
+                  goto failed;
+                }
+
               seg->color = (GimpGradientSegmentColor) color;
+              if (seg->color < GIMP_GRADIENT_SEGMENT_RGB ||
+                  seg->color > GIMP_GRADIENT_SEGMENT_HSV_CW)
+                {
+                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                               _("Corrupt segment %d."), i);
+                  g_free (line);
+                  goto failed;
+                }
               break;
 
             default:
