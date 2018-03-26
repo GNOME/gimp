@@ -1,0 +1,20 @@
+## GIMP's Operating System Support
+
+GIMP is available on a wide range of operating systems.
+As a general rule, we should stop supporting a platform as soon as the
+publisher stops supporting it, or if it is nearly not used anymore.
+
+There is no accurate rule though, and it also mostly depends on what the
+developers maintaining GIMP for this platform will decide.
+
+### GNU/Linux, *BSD…
+
+Minimum dependency versions can be bumped if available in Debian Testing.
+
+### macOS
+
+Compatibility with 10.9 and over.
+
+### Windows
+
+Windows 7 and over.
