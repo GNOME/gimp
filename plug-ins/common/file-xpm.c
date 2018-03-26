@@ -408,6 +408,9 @@ parse_colors (XpmImage  *xpm_image)
 #ifndef XPM_NO_X
   /* open the display and get the default color map */
   display  = XOpenDisplay (NULL);
+  if (display == NULL)
+    g_printerr ("Could not open display\n");
+
   colormap = DefaultColormap (display, DefaultScreen (display));
 #endif
 

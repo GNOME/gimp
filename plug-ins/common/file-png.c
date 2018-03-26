@@ -888,6 +888,13 @@ load_image (const gchar  *filename,
     }
 
   info = png_create_info_struct (pp);
+  if (! info)
+    {
+      g_set_error (error, 0, 0,
+                   _("Error while reading '%s'. Could not create PNG header info structure."),
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+    }
 
   if (setjmp (png_jmpbuf (pp)))
     {
@@ -1537,6 +1544,13 @@ save_image (const gchar  *filename,
     }
 
   info = png_create_info_struct (pp);
+  if (! info)
+    {
+      g_set_error (error, 0, 0,
+                   _("Error while exporting '%s'. Could not create PNG header info structure."),
+                   gimp_filename_to_utf8 (filename));
+      return FALSE;
+    }
 
   if (setjmp (png_jmpbuf (pp)))
     {

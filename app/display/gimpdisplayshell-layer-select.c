@@ -75,9 +75,10 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
                                       gint              move,
                                       guint32           time)
 {
-  LayerSelect *layer_select;
-  GimpImage   *image;
-  GimpLayer   *layer;
+  LayerSelect   *layer_select;
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GdkGrabStatus  status;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -97,7 +98,9 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   gtk_widget_show (layer_select->window);
 
-  gdk_keyboard_grab (gtk_widget_get_window (layer_select->window), FALSE, time);
+  status = gdk_keyboard_grab (gtk_widget_get_window (layer_select->window), FALSE, time);
+  if (status != GDK_GRAB_SUCCESS)
+    g_printerr ("gdk_keyboard_grab failed with status %d\n", status);
 }
 
 
