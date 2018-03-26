@@ -203,7 +203,6 @@
           g_free (buffer);
           CFRelease (icc_data);
         }
-      CFRelease (color_space);
     }
 
   gimp_rgba_set_uchar (&rgb, data[2], data[1], data[0], 255);
