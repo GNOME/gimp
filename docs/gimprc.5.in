@@ -60,7 +60,7 @@ Sets how many threads GIMP should use for operations that support it.  This is
 an integer value.
 
 .TP
-(tile-cache-size 6118478k)
+(tile-cache-size 6115246k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -142,7 +142,7 @@ search.
 This is a colon-separated list of folders to search.
 
 .TP
-(mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
+(mypaint-brush-path "/local/head/share/mypaint-data/1.0/brushes:~/.mypaint/brushes")
 
 Sets the brush search path.  This is a colon-separated list of folders to
 search.
@@ -283,8 +283,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 2001)
-    (height 1984)
+    (width 1920)
+    (height 1080)
     (unit pixels)
     (xresolution 300.000000)
     (yresolution 300.000000)
@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1566330368)
+(undo-size 1565502976)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -430,6 +430,27 @@ Which plug-in to use for importing raw digital camera files.  This is a single
 filename.
 
 .TP
+(export-metadata-exif yes)
+
+Export Exif metadata by default.  Possible values are yes and no.
+
+.TP
+(export-metadata-xmp yes)
+
+Export XMP metadata by default.  Possible values are yes and no.
+
+.TP
+(export-metadata-iptc yes)
+
+Export IPTC metadata by default.  Possible values are yes and no.
+
+.TP
+(debug-policy fatal)
+
+Try generating debug data for bug reporting when appropriate.  Possible values
+are warning, critical, fatal and never.
+
+.TP
 (transparency-size medium-checks)
 
 Sets the size of the checkerboard used to display transparency.  Possible
@@ -482,7 +503,7 @@ opened, otherwise it will be displayed with a scale of 1:1.  Possible values
 are yes and no.
 
 .TP
-(cursor-mode tool-icon)
+(cursor-mode tool-crosshair)
 
 Sets the type of mouse pointers to use.  Possible values are tool-icon,
 tool-crosshair and crosshair.
@@ -766,7 +787,7 @@ When enabled, GIMP will not save an image if it has not been changed since it
 was opened.  Possible values are yes and no.
 
 .TP
-(save-device-status no)
+(save-device-status yes)
 
 Remember the current tool, pattern, color, and brush across GIMP sessions. 
 Possible values are yes and no.
@@ -798,7 +819,7 @@ before.  When disabled, windows will appear on the currently used monitor.
 Possible values are yes and no.
 
 .TP
-(save-tool-options no)
+(save-tool-options yes)
 
 Save the tool options when GIMP exits.  Possible values are yes and no.
 
@@ -944,7 +965,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.9")
+(user-manual-online-uri "http://docs.gimp.org/2.10")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.
@@ -977,6 +998,11 @@ Enable the Seamless Clone tool.  Possible values are yes and no.
 
 How to handle embedded color profiles when opening a file.  Possible values
 are ask, keep and convert.
+
+.TP
+
+Sets the default folder path for all color profile file dialogs.  This is a
+single filename.
 
 .TP
 (image-convert-profile-intent relative-colorimetric)
@@ -1106,7 +1132,7 @@ are auto, rgb-linear, rgb-perceptual and lab.
 (layer-new-composite-mode auto)
 
 Sets the default composite mode for the 'New Layer' dialog.  Possible values
-are auto, src-over, src-atop, dst-atop and src-in.
+are auto, union, clip-to-backdrop, clip-to-layer and intersection.
 
 .TP
 (layer-new-opacity 1.000000)
