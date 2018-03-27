@@ -59,6 +59,7 @@ gimp_image_convert_precision (GimpImage        *image,
   const Babl       *old_format;
   const Babl       *new_format;
   GimpObjectQueue  *queue;
+  GimpProgress     *sub_progress;
   GList            *layers;
   GimpDrawable     *drawable;
   const gchar      *undo_desc    = NULL;
@@ -112,8 +113,8 @@ gimp_image_convert_precision (GimpImage        *image,
   if (progress)
     gimp_progress_start (progress, FALSE, "%s", undo_desc);
 
-  queue    = gimp_object_queue_new (progress);
-  progress = GIMP_PROGRESS (queue);
+  queue        = gimp_object_queue_new (progress);
+  sub_progress = GIMP_PROGRESS (queue);
 
   layers = gimp_image_get_layer_list (image);
   gimp_object_queue_push_list (queue, layers);
@@ -211,7 +212,7 @@ gimp_image_convert_precision (GimpImage        *image,
                                       new_profile,
                                       dither_type,
                                       mask_dither_type,
-                                      TRUE, progress);
+                                      TRUE, sub_progress);
         }
     }
 
