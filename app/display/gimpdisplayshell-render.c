@@ -66,7 +66,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint             mask_src_y = 0;
   gint             cairo_stride;
   guchar          *cairo_data;
-  GeglBuffer      *cairo_buffer;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -89,11 +88,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_data   = cairo_image_surface_get_data (xfer) +
                  xfer_src_y * cairo_stride + xfer_src_x * 4;
 
-  cairo_buffer = gegl_buffer_linear_new_from_data (cairo_data,
-                                                   babl_format ("cairo-ARGB32"),
-                                                   GEGL_RECTANGLE (0, 0, w, h),
-                                                   cairo_stride,
-                                                   NULL, NULL);
 
   if (shell->profile_transform ||
       gimp_display_shell_has_filter (shell))
@@ -234,14 +228,22 @@ gimp_display_shell_render (GimpDisplayShell *shell,
             }
           else
             {
+              GeglBuffer *buffer = gegl_buffer_linear_new_from_data (
+                                                   cairo_data,
+                                                   babl_format ("cairo-ARGB32"),
+                                                   GEGL_RECTANGLE (0, 0, w, h),
+                                                   cairo_stride,
+                                                   NULL, NULL);
+
               /*  otherwise, convert the profile_buffer directly into
                *  the cairo_buffer
                */
               gimp_color_transform_process_buffer (shell->profile_transform,
                                                    shell->profile_buffer,
                                                    GEGL_RECTANGLE (0, 0, w, h),
-                                                   cairo_buffer,
+                                                   buffer,
                                                    GEGL_RECTANGLE (0, 0, w, h));
+              g_object_unref (buffer);
             }
         }
 
@@ -277,7 +279,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 #endif
     }
 
-  g_object_unref (cairo_buffer);
 
 #ifdef USE_NODE_BLIT
   gimp_projectable_end_render (GIMP_PROJECTABLE (image));
