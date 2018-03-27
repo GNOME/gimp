@@ -88,7 +88,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   cairo_data   = cairo_image_surface_get_data (xfer) +
                  xfer_src_y * cairo_stride + xfer_src_x * 4;
 
-
   if (shell->profile_transform ||
       gimp_display_shell_has_filter (shell))
     {
@@ -228,12 +227,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
             }
           else
             {
-              GeglBuffer *buffer = gegl_buffer_linear_new_from_data (
-                                                   cairo_data,
-                                                   babl_format ("cairo-ARGB32"),
-                                                   GEGL_RECTANGLE (0, 0, w, h),
-                                                   cairo_stride,
-                                                   NULL, NULL);
+              GeglBuffer *buffer =
+                gegl_buffer_linear_new_from_data (cairo_data,
+                                                  babl_format ("cairo-ARGB32"),
+                                                  GEGL_RECTANGLE (0, 0, w, h),
+                                                  cairo_stride,
+                                                  NULL, NULL);
 
               /*  otherwise, convert the profile_buffer directly into
                *  the cairo_buffer
@@ -278,7 +277,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                       GEGL_BLIT_CACHE);
 #endif
     }
-
 
 #ifdef USE_NODE_BLIT
   gimp_projectable_end_render (GIMP_PROJECTABLE (image));
