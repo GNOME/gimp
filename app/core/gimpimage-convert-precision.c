@@ -195,6 +195,8 @@ gimp_image_convert_precision (GimpImage        *image,
 
           gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
           g_object_unref (buffer);
+
+          gimp_progress_set_value (sub_progress, 1.0);
         }
       else
         {
