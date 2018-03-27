@@ -16,7 +16,7 @@
     'compose' => { ui => 1, gegl => 1 },
     'contrast-normalize' => {},
     'contrast-retinex' => { ui => 1 },
-    'crop-zealous' => { gegl => 1 },
+    'crop-zealous' => { ui => 1, gegl => 1 },
     'curve-bend' => { ui => 1 },
     'decompose' => { ui => 1, gegl => 1 },
     'depth-merge' => { ui => 1 },

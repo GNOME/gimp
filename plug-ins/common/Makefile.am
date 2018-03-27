@@ -461,6 +461,9 @@ crop_zealous_SOURCES = \
 	crop-zealous.c
 
 crop_zealous_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
@@ -468,6 +471,7 @@ crop_zealous_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
