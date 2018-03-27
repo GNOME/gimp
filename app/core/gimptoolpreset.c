@@ -397,7 +397,7 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             g_scanner_error (scanner,
                              "unable to determine type of '%s'",
                              type_name);
-            *expected = G_TOKEN_STRING;
+            *expected = G_TOKEN_NONE;
             g_free (type_name);
             break;
           }
@@ -407,7 +407,7 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             g_scanner_error (scanner,
                              "'%s' is not a subclass of GimpToolOptions",
                              type_name);
-            *expected = G_TOKEN_STRING;
+            *expected = G_TOKEN_NONE;
             g_free (type_name);
             break;
           }
