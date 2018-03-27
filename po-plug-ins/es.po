@@ -15,6 +15,7 @@
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2017, 2018.
+# Sergio Jiménez Herena <sergio.jimenez.herena@gmail.com>, 2018
 # Rodrigo <rodhos92@gmail.com>, 2000-2002, 2018.
 #
 msgid ""
@@ -57,6 +58,7 @@ msgstr "Alinear capas visibles"
 #: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
 #: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1076
 #: ../plug-ins/common/contrast-retinex.c:289
+#: ../plug-ins/common/crop-zealous.c:722
 #: ../plug-ins/common/curve-bend.c:1227 ../plug-ins/common/curve-bend.c:2065
 #: ../plug-ins/common/curve-bend.c:2100 ../plug-ins/common/decompose.c:822
 #: ../plug-ins/common/depth-merge.c:655 ../plug-ins/common/despeckle.c:445
@@ -124,6 +126,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/checkerboard.c:351 ../plug-ins/common/cml-explorer.c:1190
 #: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:622
 #: ../plug-ins/common/compose.c:1077 ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/crop-zealous.c:724
 #: ../plug-ins/common/curve-bend.c:1228 ../plug-ins/common/decompose.c:823
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
@@ -1588,21 +1591,37 @@ msgstr "Di_námico:"
 msgid "Retinex: filtering"
 msgstr "Retinex: filtrado"
 
-#: ../plug-ins/common/crop-zealous.c:69
+#: ../plug-ins/common/crop-zealous.c:114
 msgid "Autocrop unused space from edges and middle"
-msgstr "Auto-recortar el espacio sin utilizar de los bordes y el medio"
+msgstr "Auto recortar el espacio sin utilizar de los bordes y el medio"
 
-#: ../plug-ins/common/crop-zealous.c:74
-msgid "_Zealous Crop"
-msgstr "Recorte _Zealous"
+#: ../plug-ins/common/crop-zealous.c:124
+msgid "_Zealous Crop..."
+msgstr "Recorte _Zealous..."
 
-#: ../plug-ins/common/crop-zealous.c:123
+#: ../plug-ins/common/crop-zealous.c:193
 msgid "Zealous cropping"
 msgstr "Recorte Zealous"
 
-#: ../plug-ins/common/crop-zealous.c:255
+#: ../plug-ins/common/crop-zealous.c:391
+msgid "The active element must be a normal layer, a layer mask or a channel."
+msgstr "El elemento activo debe ser una capa normal, una mascara de capa o un canal."
+
+#: ../plug-ins/common/crop-zealous.c:504
 msgid "Nothing to crop."
-msgstr "Nada para recortar."
+msgstr "Nada que recortar."
+
+#: ../plug-ins/common/crop-zealous.c:716
+msgid "Zealous Crop"
+msgstr "Recorte Zealous"
+
+#: ../plug-ins/common/crop-zealous.c:749
+msgid "Padding"
+msgstr "Relleno"
+
+#: ../plug-ins/common/crop-zealous.c:769
+msgid "_Process all elements"
+msgstr "_Procesar todos los elementos"
 
 #: ../plug-ins/common/curve-bend.c:526
 msgid "Bend the image using two control curves"
