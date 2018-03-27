@@ -4,7 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
-"PO-Revision-Date: 2018-01-09 12:05+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-27 12:17+0200\n"
+"PO-Revision-Date: 2018-03-27 12:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -36,17 +38,14 @@ msgstr "Versione di sviluppo"
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
 msgid ""
-"This is a development version of GIMP installer. It hasn't been tested as "
-"much as the stable installer, which can result in GIMP not working properly. "
-"Please report any problems you encounter in the GIMP bugzilla (Installer "
-"component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-"you wish to continue with installation anyway?"
-msgstr ""
-"Questa è una versione di sviluppo dell'installatore di GIMP. Non è stata "
-"verificata come la versione stabile e ciò potrebbe rendere il funzionamento "
-"di GIMP instabile. Segnalare ogni eventuale problema riscontrato sul sito "
-"bugzilla di GIMP (Installer component):%n_https://bugzilla.gnome.org/"
-"enter_bug.cgi?product=GIMP%n%nContinuare ugualmente con l'installazione?"
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP bugzilla:"
+"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
+"continue with installation anyway?"
+msgstr "Questa è una versione di sviluppo di GIMP ed alcune caratteristiche potrebbero non essere complete o stabili.%nQuesta versione di GIMP non è intesa per il normale lavoro quotidiano dato che potrebbe essere instabile e può comportare la perdita di dati.%nSe si riscontra qualche problema, prima controllare che questo non sia già stato sistemato su GIT prima di contattare gli sviluppatori o riportarlo sul bugzilla di GIMP:%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nContinuare ugualmente con l'installazione?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -227,7 +226,8 @@ msgstr "Errore aggiornando i dati dell'interprete Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
 msgid "Error updating MyPaint brushes info."
-msgstr "Errore durante l'aggiornamento delle informazioni dei pennelli MyPaint."
+msgstr ""
+"Errore durante l'aggiornamento delle informazioni dei pennelli MyPaint."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 #, no-c-format
