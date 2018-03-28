@@ -282,9 +282,6 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
 
       g_list_free (layers);
 
-      gimp_object_queue_push (queue, gimp_image_get_mask (image));
-      gimp_object_queue_push_container (queue, gimp_image_get_channels (image));
-
       while ((drawable = gimp_object_queue_pop (queue)))
         {
           gimp_drawable_apply_operation (drawable, progress,
