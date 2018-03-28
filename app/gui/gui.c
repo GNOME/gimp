@@ -974,9 +974,9 @@ gui_compare_accelerator (gpointer         data,
   if (accel->key == accel_key && accel->mods == accel_mods &&
       g_strcmp0 (accel->path, accel_path))
     {
-      g_warning ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
-                 "Disable the accelerator on \"%s\".",
-                 accel->path, accel_path, accel_path);
+      g_printerr ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
+                  "  Disabling the accelerator on \"%s\".\n",
+                  accel->path, accel_path, accel_path);
       gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
     }
 }
