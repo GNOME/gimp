@@ -10,7 +10,7 @@ This file describes how GimpContexts are used in GIMP.
 Overview
 --------
 
-One imporant context is the so called "user context",
+One important context is the so called "user context",
 gimp_get_user_context(). This context keeps track on what image the
 user currently has active, for example. Dock windows have their own
 context which does not necessarily mirror the user context. A dock
