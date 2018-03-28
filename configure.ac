@@ -863,13 +863,8 @@ if test "x$fontconfig_ok" = xno; then
 fi
 
 
-AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
-if test "x$FREETYPE_CONFIG" != "xno" ; then
-  AC_MSG_CHECKING([for freetype libraries])
-  FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
-  AC_MSG_RESULT($FREETYPE_LIBS)
-fi
-AC_SUBST(FREETYPE_LIBS)
+PKG_CHECK_MODULES(FONTCONFIG, freetype2 >= freetype2_required_version,,
+                  [add_deps_error([freetype2_required_version >= freetype2_required_version])])
 
 PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
                  [add_deps_error([harfbuzz >= harfbuzz_required_version])])
