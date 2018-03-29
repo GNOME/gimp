@@ -72,9 +72,10 @@ rtree_node_create (RTree      *rtree,
   gimp_assert (x >= 0 && x+w <= rtree->root.w);
   gimp_assert (y >= 0 && y+h <= rtree->root.h);
 
-  node = g_slice_alloc (sizeof (*node));
-  if (node == NULL)
+  if (w <= 0 || h <= 0)
     return NULL;
+
+  node = g_slice_alloc (sizeof (*node));
 
   node->children[0] = NULL;
   node->children[1] = NULL;
@@ -147,10 +148,6 @@ rtree_insert (RTree *rtree,
               gint   h)
 {
   RTreeNode *node, **prev;
-
-  for (prev = &rtree->available; (node = *prev); prev = &node->next)
-    if (node->w >= w && w < 2 * node->w && node->h >= h && h < 2 * node->h)
-      return rtree_node_insert (rtree, prev, node, w, h);
 
   for (prev = &rtree->available; (node = *prev); prev = &node->next)
     if (node->w >= w && node->h >= h)
