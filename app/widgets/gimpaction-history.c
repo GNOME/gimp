@@ -294,8 +294,9 @@ gimp_action_history_search (Gimp                *gimp,
       if (action == NULL)
         continue;
 
-      if (! gtk_action_is_sensitive (action) &&
-          ! config->search_show_unavailable)
+      if (! gtk_action_is_visible (action)    ||
+          (! gtk_action_is_sensitive (action) &&
+           ! config->search_show_unavailable))
         continue;
 
       if (match_func (action, keyword, NULL, gimp))
