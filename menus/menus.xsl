@@ -38,12 +38,6 @@
     <xsl:apply-templates />
   </xsl:template>
 
-  <xsl:template match="menu[@action='debug-menu']">
-    <xsl:if test="$unstable-menus='yes'">
-      <xsl:call-template name="identity" />
-    </xsl:if>
-  </xsl:template>
-
   <!-- need to strip the XInclude namespace declaration from the ui element -->
   <xsl:template match="ui">
     <ui>

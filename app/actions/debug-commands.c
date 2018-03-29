@@ -49,8 +49,6 @@
 #include "debug-commands.h"
 
 
-#ifdef ENABLE_DEBUG_MENU
-
 /*  local function prototypes  */
 
 static gboolean  debug_benchmark_projection    (GimpDisplay *display);
@@ -425,6 +423,3 @@ debug_accel_find_func (GtkAccelKey *key,
 {
   return (GClosure *) data == closure;
 }
-
-
-#endif /* ENABLE_DEBUG_MENU */

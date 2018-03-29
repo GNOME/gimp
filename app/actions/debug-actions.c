@@ -32,8 +32,6 @@
 #include "debug-commands.h"
 
 
-#ifdef ENABLE_DEBUG_MENU
-
 static const GimpActionEntry debug_actions[] =
 {
   { "debug-menu", NULL, "_Debug" },
@@ -78,16 +76,22 @@ static const GimpActionEntry debug_actions[] =
     NULL }
 };
 
-#endif
-
 void
 debug_actions_setup (GimpActionGroup *group)
 {
-#ifdef ENABLE_DEBUG_MENU
+  gint i;
+
   gimp_action_group_add_actions (group, NULL,
                                  debug_actions,
                                  G_N_ELEMENTS (debug_actions));
-#endif
+
+#define SET_VISIBLE(action,condition) \
+        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+
+  for (i = 0; i < G_N_ELEMENTS (debug_actions); i++)
+    SET_VISIBLE (debug_actions[i].name, group->gimp->show_debug_menu);
+
+#undef SET_VISIBLE
 }
 
 void

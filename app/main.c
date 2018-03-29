@@ -139,10 +139,12 @@ static gboolean            use_debug_handler = FALSE;
 
 #ifdef GIMP_UNSTABLE
 static gboolean            show_playground   = TRUE;
+static gboolean            show_debug_menu   = TRUE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_WARN;
 #else
 static gboolean            show_playground   = FALSE;
+static gboolean            show_debug_menu   = FALSE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
 #endif
@@ -281,6 +283,11 @@ static const GOptionEntry main_entries[] =
     "show-playground", 0, G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_NONE, &show_playground,
     N_("Show a preferences page with experimental features"), NULL
+  },
+  {
+    "show-debug-menu", 0, G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_NONE, &show_debug_menu,
+    N_("Show an image submenu with debug actions"), NULL
   },
   {
     G_OPTION_REMAINING, 0, 0,
@@ -532,6 +539,7 @@ main (int    argc,
            console_messages,
            use_debug_handler,
            show_playground,
+           show_debug_menu,
            stack_trace_mode,
            pdb_compat_mode,
            backtrace_file);
