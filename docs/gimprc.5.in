@@ -142,7 +142,7 @@ search.
 This is a colon-separated list of folders to search.
 
 .TP
-(mypaint-brush-path "/local/head/share/mypaint-data/1.0/brushes:~/.mypaint/brushes")
+(mypaint-brush-path "@mypaint_brushes_dir@:~/.mypaint/brushes")
 
 Sets the brush search path.  This is a colon-separated list of folders to
 search.

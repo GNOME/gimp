@@ -1667,6 +1667,10 @@ PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
 PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
 
+# We need an autoconf variable for man page construction.
+mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
+AC_SUBST(mypaint_brushes_dir)
+
 ##################
 # Check for webkit
 ##################
