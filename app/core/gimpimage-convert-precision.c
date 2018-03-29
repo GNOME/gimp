@@ -248,12 +248,11 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
 
   dither = gegl_node_new_child (NULL,
                                 "operation", "gegl:noise-rgb",
-                                "red",      1.0 / 256.0,
-                                "green",    1.0 / 256.0,
-                                "blue",     1.0 / 256.0,
-                                "alpha",    1.0 / 256.0,
-                                "linear",   FALSE,
-                                "gaussian", FALSE,
+                                "red",       1.0 / 256.0,
+                                "green",     1.0 / 256.0,
+                                "blue",      1.0 / 256.0,
+                                "linear",    FALSE,
+                                "gaussian",  FALSE,
                                 NULL);
 
   if (dither)
