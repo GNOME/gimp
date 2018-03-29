@@ -259,6 +259,7 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
   if (dither)
     {
       GimpObjectQueue *queue;
+      GimpProgress    *sub_progress;
       GList           *layers;
       GList           *list;
       GimpDrawable    *drawable;
@@ -266,8 +267,8 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
       if (progress)
         gimp_progress_start (progress, FALSE, "%s", _("Dithering"));
 
-      queue    = gimp_object_queue_new (progress);
-      progress = GIMP_PROGRESS (queue);
+      queue        = gimp_object_queue_new (progress);
+      sub_progress = GIMP_PROGRESS (queue);
 
       layers = gimp_image_get_layer_list (image);
 
@@ -284,12 +285,15 @@ gimp_image_convert_dither_u8 (GimpImage    *image,
 
       while ((drawable = gimp_object_queue_pop (queue)))
         {
-          gimp_drawable_apply_operation (drawable, progress,
+          gimp_drawable_apply_operation (drawable, sub_progress,
                                          _("Dithering"),
                                          dither);
         }
 
       g_object_unref (queue);
+
+      if (progress)
+        gimp_progress_end (progress);
 
       g_object_unref (dither);
     }
