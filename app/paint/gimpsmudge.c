@@ -27,6 +27,7 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "core/gimp-palettes.h"
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -141,6 +142,29 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
 
   switch (paint_state)
     {
+    case GIMP_PAINT_STATE_INIT:
+      {
+        GimpContext       *context    = GIMP_CONTEXT (paint_options);
+        GimpSmudgeOptions *options    = GIMP_SMUDGE_OPTIONS (paint_options);
+        GimpBrushCore     *brush_core = GIMP_BRUSH_CORE (paint_core);
+        GimpDynamics      *dynamics   = gimp_context_get_dynamics (context);
+
+        /* Don't add to color history when
+         * 1. pure smudging (flow=0)
+         * 2. color is from gradient or pixmap brushes
+         */
+        if (options->flow > 0.0 &&
+            ! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
+            ! (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush)))
+          {
+            GimpRGB foreground;
+
+            gimp_context_get_foreground (context, &foreground);
+            gimp_palettes_add_color_history (context->gimp, &foreground);
+          }
+      }
+      break;
+
     case GIMP_PAINT_STATE_MOTION:
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
