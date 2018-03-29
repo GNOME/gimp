@@ -863,7 +863,7 @@ if test "x$fontconfig_ok" = xno; then
 fi
 
 
-PKG_CHECK_MODULES(FONTCONFIG, freetype2 >= freetype2_required_version,,
+PKG_CHECK_MODULES(FREETYPE, freetype2 >= freetype2_required_version,,
                   [add_deps_error([freetype2_required_version >= freetype2_required_version])])
 
 PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
