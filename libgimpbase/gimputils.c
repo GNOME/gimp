@@ -40,7 +40,14 @@
 #if defined(G_OS_WIN32)
 # include <windows.h>
 # include <shlobj.h>
-#endif
+#else /* G_OS_WIN32 */
+  /* For waitpid() */
+# include <sys/wait.h>
+# include <unistd.h>
+# include <errno.h>
+# ifdef HAVE_SYS_PRCTL_H
+#   include <sys/prctl.h>
+# endif
 #endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
