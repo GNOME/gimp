@@ -772,6 +772,14 @@ gimp_item_tree_view_get_new_button (GimpItemTreeView *view)
   return view->priv->new_button;
 }
 
+GtkWidget *
+gimp_item_tree_view_get_delete_button (GimpItemTreeView *view)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
+
+  return view->priv->delete_button;
+}
+
 gint
 gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
                                     GimpViewable             *dest_viewable,

@@ -26,6 +26,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-cairo.h"
+
 #include "gimpoverlayframe.h"
 #include "gimpwidgets-utils.h"
 
@@ -134,47 +136,12 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
   gtk_widget_get_allocation (widget, &allocation);
   border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-  if (rgba && border_width > 0)
+  if (rgba)
     {
-#define DEG_TO_RAD(deg) ((deg) * (G_PI / 180.0))
-
-      cairo_arc (cr,
-                 border_width,
-                 border_width,
-                 border_width,
-                 DEG_TO_RAD (180),
-                 DEG_TO_RAD (270));
-      cairo_line_to (cr,
-                     allocation.width - border_width,
-                     0);
-
-      cairo_arc (cr,
-                 allocation.width - border_width,
-                 border_width,
-                 border_width,
-                 DEG_TO_RAD (270),
-                 DEG_TO_RAD (0));
-      cairo_line_to (cr,
-                     allocation.width,
-                     allocation.height - border_width);
-
-      cairo_arc (cr,
-                 allocation.width  - border_width,
-                 allocation.height - border_width,
-                 border_width,
-                 DEG_TO_RAD (0),
-                 DEG_TO_RAD (90));
-      cairo_line_to (cr,
-                     border_width,
-                     allocation.height);
-
-      cairo_arc (cr,
-                 border_width,
-                 allocation.height - border_width,
-                 border_width,
-                 DEG_TO_RAD (90),
-                 DEG_TO_RAD (180));
-      cairo_close_path (cr);
+      gimp_cairo_rounded_rectangle (cr,
+                                    0.0,              0.0,
+                                    allocation.width, allocation.height,
+                                    border_width);
     }
   else
     {

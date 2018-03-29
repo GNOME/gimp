@@ -200,7 +200,7 @@ gimp_tool_widget_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
+  gimp_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
 
   private->item = gimp_canvas_group_new (private->shell);
 }

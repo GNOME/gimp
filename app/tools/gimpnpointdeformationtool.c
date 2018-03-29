@@ -1004,7 +1004,7 @@ gimp_n_point_deformation_tool_apply_deformation (GimpNPointDeformationTool *npd_
   gimp_gegl_apply_operation (NULL, NULL, _("N-Point Deformation"),
                              npd_tool->npd_node,
                              gimp_drawable_get_buffer (tool->drawable),
-                             NULL);
+                             NULL, FALSE);
 
   gimp_drawable_update (tool->drawable,
                         0, 0, width, height);

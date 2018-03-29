@@ -1101,7 +1101,7 @@ gimp_tool_line_get_slider (GimpToolLine *line,
 {
   GimpToolLinePrivate *private = line->private;
 
-  g_assert (slider >= 0 && slider < private->sliders->len);
+  gimp_assert (slider >= 0 && slider < private->sliders->len);
 
   return &g_array_index (private->sliders, GimpControllerSlider, slider);
 }
@@ -1124,8 +1124,8 @@ gimp_tool_line_get_handle (GimpToolLine *line,
       return private->end_handle;
 
     default:
-      g_assert (handle >= 0 &&
-                handle <  (gint) private->slider_handles->len);
+      gimp_assert (handle >= 0 &&
+                   handle <  (gint) private->slider_handles->len);
 
       return g_array_index (private->slider_handles,
                             GimpCanvasItem *, handle);
@@ -1198,7 +1198,7 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
   switch (private->selection)
     {
     case GIMP_TOOL_LINE_HANDLE_NONE:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
 
     case GIMP_TOOL_LINE_HANDLE_START:
       if (constrain)

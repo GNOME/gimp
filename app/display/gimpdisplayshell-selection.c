@@ -299,9 +299,9 @@ selection_render_mask (Selection *selection)
   if (selection->shell->rotate_transform)
     cairo_transform (cr, selection->shell->rotate_transform);
 
-  gimp_cairo_add_segments (cr,
-                           selection->segs_in,
-                           selection->n_segs_in);
+  gimp_cairo_segments (cr,
+                       selection->segs_in,
+                       selection->n_segs_in);
   cairo_stroke (cr);
 
   selection->segs_in_mask = cairo_pattern_create_for_surface (surface);

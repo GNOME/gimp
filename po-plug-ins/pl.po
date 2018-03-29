@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-21 17:04+0100\n"
-"PO-Revision-Date: 2018-01-21 17:05+0100\n"
+"POT-Creation-Date: 2018-03-26 23:54+0200\n"
+"PO-Revision-Date: 2018-03-26 23:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -51,6 +51,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
@@ -100,8 +101,8 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
 #: ../plug-ins/metadata/metadata-editor.c:765
-#: ../plug-ins/metadata/metadata-editor.c:5644
-#: ../plug-ins/metadata/metadata-editor.c:5679
+#: ../plug-ins/metadata/metadata-editor.c:5648
+#: ../plug-ins/metadata/metadata-editor.c:5683
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -444,9 +445,9 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1079 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -455,7 +456,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1816 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -823,6 +824,7 @@ msgstr "Losowe ziarno"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
+#: ../plug-ins/common/file-jp2-load.c:950
 #: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
@@ -1037,14 +1039,14 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1582
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1584
+#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1608
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1065,10 +1067,8 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
-#: ../plug-ins/common/file-gif-load.c:361
-#: ../plug-ins/common/file-jp2-load.c:234
-#: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
+#: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:927
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -1376,6 +1376,7 @@ msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/file-jp2-load.c:985
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2194,9 +2195,9 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
+#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2286,13 +2287,13 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1555
+#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2787,83 +2788,98 @@ msgstr "Odstęp międ_zy komórkami:"
 msgid "The amount of cell spacing."
 msgstr "Odstęp między komórkami."
 
-#: ../plug-ins/common/file-jp2-load.c:98
+#: ../plug-ins/common/file-jp2-load.c:154
 msgid "JPEG 2000 image"
 msgstr "Obraz JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:252
-#, c-format
-msgid "Couldn't decode '%s'."
-msgstr "Nie można dekodować „%s”."
+#: ../plug-ins/common/file-jp2-load.c:185
+msgid "JPEG 2000 codestream"
+msgstr "Strumień kodowy JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:275
-#, c-format
-msgid "The image '%s' is in grayscale but does not contain any gray component."
-msgstr ""
-"Obraz „%s” jest w skali szarości, ale nie zawiera żadnych szarych składowych."
+#. Can be RGB, YUV and YCC.
+#. Can be RGB, YUV and YCC with alpha or CMYK.
+#: ../plug-ins/common/file-jp2-load.c:974
+#: ../plug-ins/common/file-jp2-load.c:982
+msgid "sRGB"
+msgstr "sRGB"
 
-#: ../plug-ins/common/file-jp2-load.c:302
-#, c-format
-msgid "The image '%s' is in RGB, but is missing some of the components."
-msgstr "Obraz „%s” jest w formacie RGB, ale brakuje mu części składowych."
+#: ../plug-ins/common/file-jp2-load.c:975
+#: ../plug-ins/common/file-jp2-load.c:983
+msgid "YCbCr"
+msgstr "YCbCr"
 
-#: ../plug-ins/common/file-jp2-load.c:328
-#, c-format
-msgid ""
-"The image '%s' is in the CIEXYZ color space, but there is no code in place "
-"to convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów CIEXYZ, ale brakuje kodu do "
-"konwertowania do RGB."
+#: ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/file-jp2-load.c:984
+msgid "xvYCC"
+msgstr "xvYCC"
 
-#: ../plug-ins/common/file-jp2-load.c:335
+#: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
-msgid ""
-"The image '%s' is in the CIELAB color space, but there is no code in place "
-"to convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów CIELAB, ale brakuje kodu do "
-"konwertowania do RGB."
+msgid "Unsupported JPEG 2000%s '%s' with %d components."
+msgstr "Nieobsługiwany %s JPEG 2000 „%s” z liczbą składowych: %d."
 
-#: ../plug-ins/common/file-jp2-load.c:342
-#, c-format
-msgid ""
-"The image '%s' is in the YCbCr color space, but there is no code in place to "
-"convert it to RGB."
-msgstr ""
-"Obraz „%s” jest w przestrzeni kolorów YCbCr, ale brakuje kodu do "
-"konwertowania do RGB."
+#: ../plug-ins/common/file-jp2-load.c:1000
+msgid "Color space:"
+msgstr "Przestrzeń kolorów:"
 
-#: ../plug-ins/common/file-jp2-load.c:350
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
 #, c-format
-msgid "The image '%s' is in an unknown color space."
-msgstr "Obraz „%s” jest w nieznanej przestrzeni kolorów."
+msgid "Could not open '%s' for reading"
+msgstr "Nie można otworzyć pliku „%s” do odczytania"
 
-#: ../plug-ins/common/file-jp2-load.c:364
+#: ../plug-ins/common/file-jp2-load.c:1082
 #, c-format
-msgid ""
-"Image component %d of image '%s' does not have the same size as the image. "
-"This is currently not supported."
-msgstr ""
-"Składowa obrazu %d obrazu „%s” nie ma tego samego rozmiaru co obraz. Nie "
-"jest to obecnie obsługiwane."
+msgid "Couldn't set parameters on decoder for '%s'."
+msgstr "Nie można ustawić parametrów dekodera dla „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:375
+#: ../plug-ins/common/file-jp2-load.c:1090
 #, c-format
-msgid "Image component %d of image '%s' does not have both a hstep and vstep."
-msgstr "Składowa obrazu %d obrazu „%s” nie ma hstep i vstep."
+msgid "Couldn't read JP2 header from '%s'."
+msgstr "Nie można odczytać nagłówka JP2 z „%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:384
+#: ../plug-ins/common/file-jp2-load.c:1098
 #, c-format
-msgid ""
-"Image component %d of image '%s' is signed. This is currently not supported."
-msgstr ""
-"Składowa obrazu %d obrazu „%s” jest podpisana. Nie jest to obecnie "
-"obsługiwane."
+msgid "Couldn't decode JP2 image in '%s'."
+msgstr "Nie można dekodować obrazu JP2 w „%s”."
+
+#: ../plug-ins/common/file-jp2-load.c:1106
+#, c-format
+msgid "Couldn't decompress JP2 image in '%s'."
+msgstr "Nie można dekompresować obrazu JP2 w „%s”."
+
+#: ../plug-ins/common/file-jp2-load.c:1135
+#, c-format
+msgid "Couldn't decode CIELAB JP2 image in '%s'."
+msgstr "Nie można dekodować obrazu JP2 CIELAB w „%s”."
+
+#: ../plug-ins/common/file-jp2-load.c:1192
+#, c-format
+msgid "Unknown color space in JP2 codestream '%s'."
+msgstr "Nieznana przestrzeń kolorów w strumieniu kodowym JP2 „%s”."
+
+#: ../plug-ins/common/file-jp2-load.c:1203
+#, c-format
+msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 YCbCr „%s” do RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1213
+#, c-format
+msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 CMYK w „%s” do RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1223
+#, c-format
+msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
+msgstr "Nie można konwertować obrazu JP2 xvYCC w „%s” do RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1250
+#, c-format
+msgid "Unsupported color space in JP2 image '%s'."
+msgstr "Nieobsługiwana przestrzeń kolorów w obrazie JP2 „%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2285
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nie można bezstratnie zapisać przezroczystości, zapisano zamiast tego krycie."
@@ -2897,7 +2913,7 @@ msgid "Save creation time"
 msgstr "Zapis czasu powstania"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2343
 msgid "PNG"
 msgstr "PNG"
 
@@ -3082,10 +3098,10 @@ msgstr "PDF"
 #.
 #: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
-"Dokument PDF „%1$s” ma jedną stronę. %2$d. strona jest spoza zakresu."
+"Dokument PDF „%1$s” ma %3$d stronę. %2$d. strona jest spoza zakresu."
 msgstr[1] ""
 "Dokument PDF „%1$s” ma %3$d strony. %2$d. strona jest spoza zakresu."
 msgstr[2] "Dokument PDF „%1$s” ma %3$d stron. %2$d. strona jest spoza zakresu."
@@ -3124,7 +3140,7 @@ msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5645
+#: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "Za_importuj"
 
@@ -3262,22 +3278,29 @@ msgid "Error creating PNG read struct while exporting '%s'."
 msgstr ""
 "Błąd podczas tworzenia struktur odczytu PNG podczas eksportowania „%s”."
 
-#: ../plug-ins/common/file-png.c:895
+#: ../plug-ins/common/file-png.c:894
+#, c-format
+msgid "Error while reading '%s'. Could not create PNG header info structure."
+msgstr ""
+"Błąd podczas odczytywania pliku „%s”. Nie można utworzyć struktury "
+"informacji nagłówka PNG."
+
+#: ../plug-ins/common/file-png.c:902
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Błąd podczas odczytywania pliku „%s”. Plik może być uszkodzony."
 
-#: ../plug-ins/common/file-png.c:1050
+#: ../plug-ins/common/file-png.c:1057
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nieznany model kolorów w pliku PNG „%s”."
 
-#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Nie można utworzyć nowego obrazu dla „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1119
+#: ../plug-ins/common/file-png.c:1126
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3285,19 +3308,19 @@ msgstr ""
 "Plik PNG określa przesunięcie, które powoduje umieszczenie zawartości "
 "warstwy poza obrazem."
 
-#: ../plug-ins/common/file-png.c:1396
+#: ../plug-ins/common/file-png.c:1403
 msgid "Apply PNG Offset"
 msgstr "Zastosowanie przesunięcia PNG"
 
-#: ../plug-ins/common/file-png.c:1400
+#: ../plug-ins/common/file-png.c:1407
 msgid "Ignore PNG offset"
 msgstr "Ignorowanie przesunięcia PNG"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG offset to layer"
 msgstr "Zastosowanie przesunięcia PNG do warstwy"
 
-#: ../plug-ins/common/file-png.c:1426
+#: ../plug-ins/common/file-png.c:1433
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3306,23 +3329,30 @@ msgstr ""
 "Importowany obraz PNG określa przesunięcie %d, %d. Zastosować to "
 "przesunięcie do warstwy?"
 
-#: ../plug-ins/common/file-png.c:1534
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s”."
 
-#: ../plug-ins/common/file-png.c:1544
+#: ../plug-ins/common/file-png.c:1550
+#, c-format
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgstr ""
+"Błąd podczas eksportowania pliku „%s”. Nie można utworzyć struktury "
+"informacji nagłówka PNG."
+
+#: ../plug-ins/common/file-png.c:1558
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Nieznany błąd"
@@ -3482,7 +3512,7 @@ msgstr "Czarno-biały"
 msgid "Gray"
 msgstr "Szary"
 
-#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:483
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -4142,11 +4172,6 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Renderowanie plików WMF (Windows Metafile)"
 
-#: ../plug-ins/common/file-wmf.c:965
-#, c-format
-msgid "Could not open '%s' for reading"
-msgstr "Nie można otworzyć pliku „%s” do odczytania"
-
 #: ../plug-ins/common/file-wmf.c:998
 msgid "Rendered WMF"
 msgstr "Wyrenderowany plik WMF"
@@ -4516,25 +4541,25 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "Obraz X PixMap"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:797
+#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Błąd podczas otwierania pliku „%s”"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:803
+#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
 msgid "XPM file invalid"
 msgstr "Nieprawidłowy plik XPM"
 
-#: ../plug-ins/common/file-xpm.c:650
+#: ../plug-ins/common/file-xpm.c:653
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Nieobsługiwany typ obszaru rysowania"
 
-#: ../plug-ins/common/file-xpm.c:829
+#: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:839
+#: ../plug-ins/common/file-xpm.c:842
 msgid "_Alpha threshold:"
 msgstr "_Próg alfa:"
 
@@ -7251,32 +7276,32 @@ msgstr "Nieobsługiwana lub nieprawidłowa szerokość maski warstwy: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary maski warstwy: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1791
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nieobsługiwany tryb kompresji: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1887
+#: ../plug-ins/file-psd/psd-load.c:1892
 msgid "Extra"
 msgstr "Dodatkowe"
 
-#: ../plug-ins/file-psd/psd-load.c:2066
+#: ../plug-ins/file-psd/psd-load.c:2071
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary kanału"
 
-#: ../plug-ins/file-psd/psd-load.c:2135
+#: ../plug-ins/file-psd/psd-load.c:2140
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Dekompresja danych się nie powiodła"
 
-#: ../plug-ins/file-psd/psd-save.c:462
+#: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1548
+#: ../plug-ins/file-psd/psd-save.c:1572
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7285,7 +7310,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1569
+#: ../plug-ins/file-psd/psd-save.c:1593
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -11890,19 +11915,19 @@ msgstr "Data kalendarzowa:"
 msgid "Set Date"
 msgstr "Ustaw datę"
 
-#: ../plug-ins/metadata/metadata-editor.c:1616
+#: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
 msgstr "Bez oceny"
 
-#: ../plug-ins/metadata/metadata-editor.c:5641
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"
 msgstr "Import pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5676
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "Export Metadata File"
 msgstr "Eksport pliku metadanych"
 
-#: ../plug-ins/metadata/metadata-editor.c:5680
+#: ../plug-ins/metadata/metadata-editor.c:5684
 msgid "_Export"
 msgstr "Wy_eksportuj"
 

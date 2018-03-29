@@ -15,7 +15,7 @@
    width="1322.0306"
    height="388.46494"
    id="svg7384"
-   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
    sodipodi:docname="symbolic-scalable.svg"
    viewBox="0 0 1322.0306 388.46493">
   <metadata
@@ -45,15 +45,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1147"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="4"
-     inkscape:cx="383.55427"
-     inkscape:cy="-29.806806"
-     inkscape:window-x="-1"
-     inkscape:window-y="-1"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="1207.5593"
+     inkscape:cy="86.772172"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="stock"
      showborder="false"
@@ -39222,7 +39222,7 @@
          transform="scale(0.26458333)"
          id="path13729"
          d="M 4.4804688,0 C 3.0635732,0 2,1.3290061 2,2.8632812 V 8.9082031 C 1.0941794,9.6428239 0.5019531,10.751617 0.50195312,12.003906 c -2e-8,2.203359 1.79859518,4 4.00195308,4 2.2552563,0 4,-1.806963 4,-4 C 8.5039062,10.740794 7.9153446,9.6246285 7,8.890625 V 2.8632812 C 7,1.329006 5.9344735,0 4.5175781,0 Z m 0,1.0039062 h 0.037109 C 5.2933556,1.0039062 6,1.7782989 6,2.8632812 V 6.6015625 H 6.00195 L 6,9.6210938 C 6.8402412,10.152895 7.5,10.93115 7.5,12.003906 7.5,13.666825 6.1668247,15 4.5039062,15 2.8409884,15 1.4980468,13.666825 1.4980469,12.003906 1.4980468,10.930413 2.1559055,10.152699 3,9.6210938 L 2.9960938,6.6269531 H 3 V 2.8632812 C 3,1.7782988 3.7046917,1.0039063 4.4804688,1.0039062 Z"
-         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
     </g>
     <g
        transform="matrix(3.7762226,0,0,3.7795275,-342.09777,-883.22676)"
@@ -39269,11 +39269,95 @@
          d="m 3.96875,291.70832 v 0.79375 H 3.175 v 0.52916 h 0.79375 v 0.79375 h 0.5291667 v -0.79375 h 0.79375 v -0.52916 h -0.79375 v -0.79375 z"
          style="opacity:1;fill:#bebebe;fill-opacity:1;stroke-width:0.26458335" />
     </g>
+    <g
+       style="display:inline"
+       id="gimp-attach-12"
+       transform="translate(0.08811033,-2.9999967)"
+       inkscape:label="gimp-attach-12"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-attach.png"
+       inkscape:export-xdpi="192"
+       inkscape:export-ydpi="192">
+      <g
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         transform="translate(-0.00518497,-2.5439453e-6)"
+         id="g6983">
+        <g
+           id="g6970"
+           transform="translate(-78.930922,36.999995)">
+          <g
+             id="g6189">
+            <path
+               sodipodi:nodetypes="ccccc"
+               style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="m 689.99894,148.2929 -10e-5,-2 h 9.99135 v 2 z"
+               id="path6173"
+               inkscape:connector-curvature="0" />
+            <path
+               style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="m 699.9902,139.2929 h -9.99125 l 4.99573,8.00001 z"
+               id="path6175"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="cccc" />
+          </g>
+        </g>
+      </g>
+      <rect
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         y="174.79289"
+         x="610.06366"
+         height="12"
+         width="11.989507"
+         id="rect11899-9-8"
+         style="display:inline;fill:none;stroke:none;stroke-width:0.749672" />
+    </g>
+    <g
+       style="display:inline"
+       id="gimp-detach-12"
+       transform="translate(0.08817137,-2.9999967)"
+       inkscape:label="gimp-detach-12"
+       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-detach.png"
+       inkscape:export-xdpi="192"
+       inkscape:export-ydpi="192">
+      <g
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/detach12.png"
+         transform="translate(-91.924803,16.999992)"
+         id="g6185">
+        <path
+           sodipodi:nodetypes="cccc"
+           inkscape:connector-curvature="0"
+           id="path6179"
+           d="m 703.9867,143.2929 h 7.99301 l -3.99662,-7 z"
+           style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        <path
+           sodipodi:nodetypes="ccccc"
+           inkscape:connector-curvature="0"
+           id="path6181"
+           d="m 702.98758,146.2929 -10e-5,2 h 9.99135 v -2 z"
+           style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.99956268px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      </g>
+      <rect
+         inkscape:export-ydpi="95.916092"
+         inkscape:export-xdpi="95.916092"
+         inkscape:export-filename="/home/aryeom/Desktop/Projects/GIMP-icon-attach_detach/attach12.png"
+         y="153.29289"
+         x="610.0636"
+         height="12"
+         width="11.989507"
+         id="rect11899-9-8-7"
+         style="display:inline;fill:none;stroke:none;stroke-width:0.749672" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer1"
-     inkscape:label="Freedesktop">
+     inkscape:label="Freedesktop"
+     style="display:inline">
     <text
        transform="scale(1.0004375,0.99956269)"
        xml:space="preserve"

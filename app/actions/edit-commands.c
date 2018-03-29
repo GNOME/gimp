@@ -560,7 +560,9 @@ edit_paste (GimpDisplay   *display,
       gint              x, y;
       gint              width, height;
 
-      if (drawable)
+      if (drawable                                &&
+          paste_type != GIMP_PASTE_TYPE_NEW_LAYER &&
+          paste_type != GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE)
         {
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             {
@@ -568,8 +570,6 @@ edit_paste (GimpDisplay   *display,
                                     GIMP_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target is a layer group."));
-
-              paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
             }
           else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
             {
@@ -577,9 +577,9 @@ edit_paste (GimpDisplay   *display,
                                     GIMP_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target's pixels are locked."));
-
-              paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
             }
+
+          /* the actual paste-type conversion happens in gimp_edit_paste() */
         }
 
       gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);

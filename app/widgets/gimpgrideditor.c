@@ -129,7 +129,7 @@ gimp_grid_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (editor->grid != NULL);
+  gimp_assert (editor->grid != NULL);
 
   frame = gimp_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);

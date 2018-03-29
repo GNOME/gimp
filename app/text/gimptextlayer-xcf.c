@@ -195,8 +195,7 @@ gimp_text_layer_from_layer (GimpLayer *layer,
 
   drawable = GIMP_DRAWABLE (text_layer);
 
-  drawable->private->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  GIMP_DRAWABLE (layer)->private->buffer = NULL;
+  gimp_drawable_steal_buffer (drawable, GIMP_DRAWABLE (layer));
 
   gimp_layer_set_opacity         (GIMP_LAYER (text_layer),
                                   gimp_layer_get_opacity (layer), FALSE);

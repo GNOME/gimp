@@ -19,6 +19,16 @@
 package Gimp::CodeGen::enums;
 
 %enums = (
+    GeglDistanceMetric =>
+	{ contig => 1,
+	  external => 1,
+	  symbols => [ qw(GEGL_DISTANCE_METRIC_EUCLIDEAN
+			  GEGL_DISTANCE_METRIC_MANHATTAN
+			  GEGL_DISTANCE_METRIC_CHEBYSHEV) ],
+	  mapping => { GEGL_DISTANCE_METRIC_EUCLIDEAN => '0',
+		       GEGL_DISTANCE_METRIC_MANHATTAN => '1',
+		       GEGL_DISTANCE_METRIC_CHEBYSHEV => '2' }
+	},
     GimpAddMaskType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -692,15 +702,15 @@ package Gimp::CodeGen::enums;
 	{ contig => 1,
 	  header => 'operations/operations-enums.h',
 	  symbols => [ qw(GIMP_LAYER_COMPOSITE_AUTO
-			  GIMP_LAYER_COMPOSITE_SRC_OVER
-			  GIMP_LAYER_COMPOSITE_SRC_ATOP
-			  GIMP_LAYER_COMPOSITE_DST_ATOP
-			  GIMP_LAYER_COMPOSITE_SRC_IN) ],
+			  GIMP_LAYER_COMPOSITE_UNION
+			  GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP
+			  GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER
+			  GIMP_LAYER_COMPOSITE_INTERSECTION) ],
 	  mapping => { GIMP_LAYER_COMPOSITE_AUTO => '0',
-		       GIMP_LAYER_COMPOSITE_SRC_OVER => '1',
-		       GIMP_LAYER_COMPOSITE_SRC_ATOP => '2',
-		       GIMP_LAYER_COMPOSITE_DST_ATOP => '3',
-		       GIMP_LAYER_COMPOSITE_SRC_IN => '4' }
+		       GIMP_LAYER_COMPOSITE_UNION => '1',
+		       GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP => '2',
+		       GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER => '3',
+		       GIMP_LAYER_COMPOSITE_INTERSECTION => '4' }
 	},
     GimpLayerMode =>
 	{ contig => 1,

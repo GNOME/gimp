@@ -61,7 +61,8 @@ scalable_images = \
 	scalable/gtk-yes.svg					\
 	\
 	scalable/gimp-anchor.svg				\
-	scalable/gimp-business-card.svg			\
+	scalable/gimp-attach.svg				\
+	scalable/gimp-business-card.svg				\
 	scalable/gimp-cap-butt.svg				\
 	scalable/gimp-cap-round.svg				\
 	scalable/gimp-cap-square.svg				\
@@ -84,8 +85,8 @@ scalable_images = \
 	scalable/gimp-color-picker-white.svg			\
 	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-cmyk.svg				\
-	scalable/gimp-color-space-linear.svg		\
-	scalable/gimp-color-space-perceptual.svg	\
+	scalable/gimp-color-space-linear.svg			\
+	scalable/gimp-color-space-perceptual.svg		\
 	scalable/gimp-color-triangle.svg			\
 	scalable/gimp-color-water.svg				\
 	scalable/gimp-controller-keyboard.svg			\
@@ -101,8 +102,9 @@ scalable_images = \
 	scalable/gimp-curve-smooth.svg				\
 	scalable/gimp-dashboard.svg				\
 	scalable/gimp-default-colors.svg			\
+	scalable/gimp-detach.svg				\
 	scalable/gimp-device-status.svg				\
-	scalable/gimp-display.svg					\
+	scalable/gimp-display.svg				\
 	scalable/gimp-display-filter-clip-warning.svg		\
 	scalable/gimp-display-filter-colorblind.svg		\
 	scalable/gimp-display-filter-contrast.svg		\
@@ -246,7 +248,7 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg				\
 	scalable/gimp-shape-square.svg				\
 	scalable/gimp-shred.svg					\
-	scalable/gimp-smartphone.svg			\
+	scalable/gimp-smartphone.svg				\
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
@@ -266,14 +268,14 @@ scalable_images = \
 	scalable/gimp-tool-color-balance.svg			\
 	scalable/gimp-tool-colorize.svg				\
 	scalable/gimp-tool-color-picker.svg			\
-	scalable/gimp-tool-color-temperature.svg			\
+	scalable/gimp-tool-color-temperature.svg		\
 	scalable/gimp-tool-crop.svg				\
 	scalable/gimp-tool-curves.svg				\
 	scalable/gimp-tool-desaturate.svg			\
 	scalable/gimp-tool-dodge.svg				\
 	scalable/gimp-tool-ellipse-select.svg			\
 	scalable/gimp-tool-eraser.svg				\
-	scalable/gimp-tool-exposure.svg			\
+	scalable/gimp-tool-exposure.svg				\
 	scalable/gimp-tool-flip.svg				\
 	scalable/gimp-tool-foreground-select.svg		\
 	scalable/gimp-tool-free-select.svg			\
@@ -333,7 +335,7 @@ vector24_images = \
 	\
 	24/gtk-select-color.svg					\
 	\
-	24/gimp-business-card.svg			\
+	24/gimp-business-card.svg				\
 	24/gimp-center.svg					\
 	24/gimp-channel.svg					\
 	24/gimp-channel-alpha.svg				\
@@ -345,8 +347,8 @@ vector24_images = \
 	24/gimp-channels.svg					\
 	24/gimp-char-picker.svg					\
 	24/gimp-colormap.svg					\
-	24/gimp-color-space-linear.svg			\
-	24/gimp-color-space-perceptual.svg		\
+	24/gimp-color-space-linear.svg				\
+	24/gimp-color-space-perceptual.svg			\
 	24/gimp-controller.svg					\
 	24/gimp-controller-keyboard.svg				\
 	24/gimp-controller-linux-input.svg			\
@@ -354,7 +356,7 @@ vector24_images = \
 	24/gimp-controller-wheel.svg				\
 	24/gimp-cursor.svg					\
 	24/gimp-device-status.svg				\
-	24/gimp-display.svg						\
+	24/gimp-display.svg					\
 	24/gimp-display-filter.svg				\
 	24/gimp-display-filter-clip-warning.svg			\
 	24/gimp-display-filter-colorblind.svg			\
@@ -493,8 +495,10 @@ vector24_images = \
 	24/gimp-wilber.svg
 
 icons12_images = \
+	12/gimp-attach.png					\
 	12/gimp-close.png					\
 	12/gimp-default-colors.png				\
+	12/gimp-detach.png					\
 	12/gimp-linked.png					\
 	12/gimp-menu-left.png					\
 	12/gimp-menu-right.png					\
@@ -562,7 +566,7 @@ icons16_images = \
 	16/gtk-yes.png						\
 	\
 	16/gimp-anchor.png					\
-	16/gimp-business-card.png			\
+	16/gimp-business-card.png				\
 	16/gimp-cap-butt.png					\
 	16/gimp-cap-round.png					\
 	16/gimp-cap-square.png					\
@@ -584,8 +588,8 @@ icons16_images = \
 	16/gimp-color-triangle.png				\
 	16/gimp-color-water.png					\
 	16/gimp-colormap.png					\
-	16/gimp-color-space-linear.png			\
-	16/gimp-color-space-perceptual.png		\
+	16/gimp-color-space-linear.png				\
+	16/gimp-color-space-perceptual.png			\
 	16/gimp-controller-keyboard.png				\
 	16/gimp-controller-linux-input.png			\
 	16/gimp-controller-midi.png				\
@@ -708,7 +712,7 @@ icons16_images = \
 	16/gimp-shape-diamond.png				\
 	16/gimp-shape-square.png				\
 	16/gimp-shred.png					\
-	16/gimp-smartphone.png				\
+	16/gimp-smartphone.png					\
 	16/gimp-symmetry.png					\
 	16/gimp-template.png					\
 	16/gimp-text-layer.png					\
@@ -852,7 +856,8 @@ icons24_images = \
 	\
 	24/gtk-select-color.png					\
 	\
-	24/gimp-business-card.png			\
+	24/gimp-attach.png					\
+	24/gimp-business-card.png				\
 	24/gimp-center.png					\
 	24/gimp-channel-alpha.png				\
 	24/gimp-channel-blue.png				\
@@ -863,8 +868,8 @@ icons24_images = \
 	24/gimp-channel.png					\
 	24/gimp-channels.png					\
 	24/gimp-colormap.png					\
-	24/gimp-color-space-linear.png			\
-	24/gimp-color-space-perceptual.png		\
+	24/gimp-color-space-linear.png				\
+	24/gimp-color-space-perceptual.png			\
 	24/gimp-tool-color-temperature.png			\
 	24/gimp-controller-keyboard.png				\
 	24/gimp-controller-linux-input.png			\
@@ -873,6 +878,7 @@ icons24_images = \
 	24/gimp-controller.png					\
 	24/gimp-cursor.png					\
 	24/gimp-dashboard.png					\
+	24/gimp-detach.png					\
 	24/gimp-device-status.png				\
 	24/gimp-display.png					\
 	24/gimp-display-filter-clip-warning.png			\
@@ -911,7 +917,7 @@ icons24_images = \
 	24/gimp-sample-point.png				\
 	24/gimp-scale.png					\
 	24/gimp-selection.png					\
-	24/gimp-smartphone.png				\
+	24/gimp-smartphone.png					\
 	24/gimp-symmetry.png					\
 	24/gimp-template.png					\
 	24/gimp-text-dir-ltr.png				\
@@ -1098,8 +1104,8 @@ icons24_DATA = \
 	$(vector24_images)
 
 icons64_DATA = \
-	$(icons64_system_images)	\
-	64/gimp-frame.png			\
+	$(icons64_system_images)				\
+	64/gimp-frame.png					\
 	64/gimp-texture.png
 
 scalable_DATA = \

@@ -1654,7 +1654,7 @@ msgstr "Foscor de l'ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:400
 msgid "Shadow depth"
-msgstr "Profunditat de l’ombra"
+msgstr "Profunditat de l'ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:401
 msgid "Thread length"
@@ -1695,7 +1695,7 @@ msgstr "Realçament del color"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "Realçament de l’opacitat"
+msgstr "Realçament de l'opacitat"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"

@@ -1051,7 +1051,7 @@ gimp_warp_tool_free_op (GeglNode *op)
 
   parent = gegl_node_get_parent (op);
 
-  g_assert (parent != NULL);
+  gimp_assert (parent != NULL);
 
   gegl_node_remove_child (parent, op);
 }
@@ -1144,7 +1144,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
                                  _("Frame"),
                                  wt->graph,
                                  gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
-                                 NULL);
+                                 NULL, FALSE);
 
       gimp_image_add_layer (image, layer, NULL, 0, FALSE);
     }

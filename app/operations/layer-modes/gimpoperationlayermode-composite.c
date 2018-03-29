@@ -39,13 +39,13 @@
 
 
 void
-gimp_operation_layer_mode_composite_src_over (const gfloat *in,
-                                              const gfloat *layer,
-                                              const gfloat *comp,
-                                              const gfloat *mask,
-                                              gfloat        opacity,
-                                              gfloat       *out,
-                                              gint          samples)
+gimp_operation_layer_mode_composite_union (const gfloat *in,
+                                           const gfloat *layer,
+                                           const gfloat *comp,
+                                           const gfloat *mask,
+                                           gfloat        opacity,
+                                           gfloat       *out,
+                                           gint          samples)
 {
   while (samples--)
     {
@@ -92,13 +92,13 @@ gimp_operation_layer_mode_composite_src_over (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_src_atop (const gfloat *in,
-                                              const gfloat *layer,
-                                              const gfloat *comp,
-                                              const gfloat *mask,
-                                              gfloat        opacity,
-                                              gfloat       *out,
-                                              gint          samples)
+gimp_operation_layer_mode_composite_clip_to_backdrop (const gfloat *in,
+                                                      const gfloat *layer,
+                                                      const gfloat *comp,
+                                                      const gfloat *mask,
+                                                      gfloat        opacity,
+                                                      gfloat       *out,
+                                                      gint          samples)
 {
   while (samples--)
     {
@@ -133,13 +133,13 @@ gimp_operation_layer_mode_composite_src_atop (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_dst_atop (const gfloat *in,
-                                              const gfloat *layer,
-                                              const gfloat *comp,
-                                              const gfloat *mask,
-                                              gfloat        opacity,
-                                              gfloat       *out,
-                                              gint          samples)
+gimp_operation_layer_mode_composite_clip_to_layer (const gfloat *in,
+                                                   const gfloat *layer,
+                                                   const gfloat *comp,
+                                                   const gfloat *mask,
+                                                   gfloat        opacity,
+                                                   gfloat       *out,
+                                                   gint          samples)
 {
   while (samples--)
     {
@@ -181,13 +181,13 @@ gimp_operation_layer_mode_composite_dst_atop (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_src_in (const gfloat *in,
-                                            const gfloat *layer,
-                                            const gfloat *comp,
-                                            const gfloat *mask,
-                                            gfloat        opacity,
-                                            gfloat       *out,
-                                            gint          samples)
+gimp_operation_layer_mode_composite_intersection (const gfloat *in,
+                                                  const gfloat *layer,
+                                                  const gfloat *comp,
+                                                  const gfloat *mask,
+                                                  gfloat        opacity,
+                                                  gfloat       *out,
+                                                  gint          samples)
 {
   while (samples--)
     {
@@ -228,13 +228,13 @@ gimp_operation_layer_mode_composite_src_in (const gfloat *in,
  */
 
 void
-gimp_operation_layer_mode_composite_src_over_sub (const gfloat *in,
-                                                  const gfloat *layer,
-                                                  const gfloat *comp,
-                                                  const gfloat *mask,
-                                                  gfloat        opacity,
-                                                  gfloat       *out,
-                                                  gint          samples)
+gimp_operation_layer_mode_composite_union_sub (const gfloat *in,
+                                               const gfloat *layer,
+                                               const gfloat *comp,
+                                               const gfloat *mask,
+                                               gfloat        opacity,
+                                               gfloat       *out,
+                                               gint          samples)
 {
   while (samples--)
     {
@@ -284,13 +284,13 @@ gimp_operation_layer_mode_composite_src_over_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_src_atop_sub (const gfloat *in,
-                                                  const gfloat *layer,
-                                                  const gfloat *comp,
-                                                  const gfloat *mask,
-                                                  gfloat        opacity,
-                                                  gfloat       *out,
-                                                  gint          samples)
+gimp_operation_layer_mode_composite_clip_to_backdrop_sub (const gfloat *in,
+                                                          const gfloat *layer,
+                                                          const gfloat *comp,
+                                                          const gfloat *mask,
+                                                          gfloat        opacity,
+                                                          gfloat       *out,
+                                                          gint          samples)
 {
   while (samples--)
     {
@@ -335,13 +335,13 @@ gimp_operation_layer_mode_composite_src_atop_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_dst_atop_sub (const gfloat *in,
-                                                  const gfloat *layer,
-                                                  const gfloat *comp,
-                                                  const gfloat *mask,
-                                                  gfloat        opacity,
-                                                  gfloat       *out,
-                                                  gint          samples)
+gimp_operation_layer_mode_composite_clip_to_layer_sub (const gfloat *in,
+                                                       const gfloat *layer,
+                                                       const gfloat *comp,
+                                                       const gfloat *mask,
+                                                       gfloat        opacity,
+                                                       gfloat       *out,
+                                                       gint          samples)
 {
   while (samples--)
     {
@@ -393,13 +393,13 @@ gimp_operation_layer_mode_composite_dst_atop_sub (const gfloat *in,
 }
 
 void
-gimp_operation_layer_mode_composite_src_in_sub (const gfloat *in,
-                                                const gfloat *layer,
-                                                const gfloat *comp,
-                                                const gfloat *mask,
-                                                gfloat        opacity,
-                                                gfloat       *out,
-                                                gint          samples)
+gimp_operation_layer_mode_composite_intersection_sub (const gfloat *in,
+                                                      const gfloat *layer,
+                                                      const gfloat *comp,
+                                                      const gfloat *mask,
+                                                      gfloat        opacity,
+                                                      gfloat       *out,
+                                                      gint          samples)
 {
   while (samples--)
     {

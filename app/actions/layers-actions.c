@@ -385,28 +385,28 @@ static const GimpRadioActionEntry layers_composite_mode_actions[] =
     GIMP_LAYER_COMPOSITE_AUTO,
     NULL },
 
-  { "layers-composite-mode-src-over", NULL,
-    NC_("layers-action", "Source Over"), NULL,
-    NC_("layers-action", "Layer Composite Mode: Source Over"),
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
+  { "layers-composite-mode-union", NULL,
+    NC_("layers-action", "Union"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Union"),
+    GIMP_LAYER_COMPOSITE_UNION,
     NULL },
 
-  { "layers-composite-mode-src-atop", NULL,
-    NC_("layers-action", "Source Atop"), NULL,
-    NC_("layers-action", "Layer Composite Mode: Source Atop"),
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+  { "layers-composite-mode-clip-to-backdrop", NULL,
+    NC_("layers-action", "Clip to Backdrop"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Clip to Backdrop"),
+    GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     NULL },
 
-  { "layers-composite-mode-src-in", NULL,
-    NC_("layers-action", "Source In"), NULL,
-    NC_("layers-action", "Layer Composite Mode: Source In"),
-    GIMP_LAYER_COMPOSITE_SRC_IN,
+  { "layers-composite-mode-clip-to-layer", NULL,
+    NC_("layers-action", "Clip to Layer"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Clip to Layer"),
+    GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER,
     NULL },
 
-  { "layers-composite-mode-dst-atop", NULL,
-    NC_("layers-action", "Destination Atop"), NULL,
-    NC_("layers-action", "Layer Composite Mode: Destination Atop"),
-    GIMP_LAYER_COMPOSITE_DST_ATOP,
+  { "layers-composite-mode-intersection", NULL,
+    NC_("layers-action", "Intersection"), NULL,
+    NC_("layers-action", "Layer Composite Mode: Intersection"),
+    GIMP_LAYER_COMPOSITE_INTERSECTION,
     NULL }
 };
 
@@ -823,14 +823,14 @@ layers_actions_update (GimpActionGroup *group,
             {
             case GIMP_LAYER_COMPOSITE_AUTO:
               action = "layers-composite-mode-auto"; break;
-            case GIMP_LAYER_COMPOSITE_SRC_OVER:
-              action = "layers-composite-mode-src-over"; break;
-            case GIMP_LAYER_COMPOSITE_SRC_ATOP:
-              action = "layers-composite-mode-src-atop"; break;
-            case GIMP_LAYER_COMPOSITE_SRC_IN:
-              action = "layers-composite-mode-src-in"; break;
-            case GIMP_LAYER_COMPOSITE_DST_ATOP:
-              action = "layers-composite-mode-dst-atop"; break;
+            case GIMP_LAYER_COMPOSITE_UNION:
+              action = "layers-composite-mode-union"; break;
+            case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+              action = "layers-composite-mode-clip-to-backdrop"; break;
+            case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+              action = "layers-composite-mode-clip-to-layer"; break;
+            case GIMP_LAYER_COMPOSITE_INTERSECTION:
+              action = "layers-composite-mode-intersection"; break;
             }
 
           gimp_action_group_set_action_active (group, action, TRUE);
@@ -969,11 +969,11 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-composite-space-rgb-linear",     layer && cs_mutable);
   SET_SENSITIVE ("layers-composite-space-rgb-perceptual", layer && cs_mutable);
 
-  SET_SENSITIVE ("layers-composite-mode-auto",     layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-src-over", layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-src-atop", layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-src-in",   layer && cm_mutable);
-  SET_SENSITIVE ("layers-composite-mode-dst-atop", layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-auto",             layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-union",            layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-backdrop", layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-clip-to-layer",    layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-intersection",     layer && cm_mutable);
 
   SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask);
   SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac);

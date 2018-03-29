@@ -426,6 +426,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_LAYER_RESUME_RESIZE,/*< desc="Resume group layer resize"   >*/
   GIMP_UNDO_GROUP_LAYER_SUSPEND_MASK, /*< desc="Suspend group layer mask"    >*/
   GIMP_UNDO_GROUP_LAYER_RESUME_MASK,  /*< desc="Resume group layer mask"     >*/
+  GIMP_UNDO_GROUP_LAYER_START_MOVE,   /*< desc="Start moving group layer"    >*/
+  GIMP_UNDO_GROUP_LAYER_END_MOVE,     /*< desc="End moving group layer"      >*/
   GIMP_UNDO_GROUP_LAYER_CONVERT,      /*< desc="Convert group layer"         >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text layer"                  >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text layer modification"     >*/
@@ -495,9 +497,11 @@ GType gimp_message_severity_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_MESSAGE_INFO,     /*< desc="Message" >*/
-  GIMP_MESSAGE_WARNING,  /*< desc="Warning" >*/
-  GIMP_MESSAGE_ERROR     /*< desc="Error"   >*/
+  GIMP_MESSAGE_INFO,        /*< desc="Message"  >*/
+  GIMP_MESSAGE_WARNING,     /*< desc="Warning"  >*/
+  GIMP_MESSAGE_ERROR,       /*< desc="Error"    >*/
+  GIMP_MESSAGE_BUG_WARNING, /*< desc="WARNING"  >*/
+  GIMP_MESSAGE_BUG_CRITICAL /*< desc="CRITICAL" >*/
 } GimpMessageSeverity;
 
 

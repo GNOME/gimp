@@ -236,6 +236,16 @@ gboolean        gimp_item_scale_by_factors   (GimpItem           *item,
                                               gdouble             h_factor,
                                               GimpInterpolationType interpolation,
                                               GimpProgress       *progress);
+gboolean
+      gimp_item_scale_by_factors_with_origin (GimpItem           *item,
+                                              gdouble             w_factor,
+                                              gdouble             h_factor,
+                                              gint                origin_x,
+                                              gint                origin_y,
+                                              gint                new_origin_x,
+                                              gint                new_origin_y,
+                                              GimpInterpolationType interpolation,
+                                              GimpProgress       *progress);
 void            gimp_item_scale_by_origin    (GimpItem           *item,
                                               gint                new_width,
                                               gint                new_height,

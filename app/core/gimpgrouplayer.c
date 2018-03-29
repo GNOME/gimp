@@ -38,7 +38,9 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayerstack.h"
+#include "gimpobjectqueue.h"
 #include "gimppickable.h"
+#include "gimpprogress.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
 
@@ -607,11 +609,7 @@ static void
 gimp_group_layer_start_move (GimpItem *item,
                              gboolean  push_undo)
 {
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-
-  g_return_if_fail (private->suspend_mask == 0);
-
-  private->moving++;
+  _gimp_group_layer_start_move (GIMP_GROUP_LAYER (item), push_undo);
 
   if (GIMP_ITEM_CLASS (parent_class)->start_move)
     GIMP_ITEM_CLASS (parent_class)->start_move (item, push_undo);
@@ -621,18 +619,10 @@ static void
 gimp_group_layer_end_move (GimpItem *item,
                            gboolean  push_undo)
 {
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-
-  g_return_if_fail (private->suspend_mask == 0);
-  g_return_if_fail (private->moving > 0);
-
   if (GIMP_ITEM_CLASS (parent_class)->end_move)
     GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
 
-  private->moving--;
-
-  if (private->moving == 0)
-    gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
+  _gimp_group_layer_end_move (GIMP_GROUP_LAYER (item), push_undo);
 }
 
 static void
@@ -792,6 +782,7 @@ gimp_group_layer_scale (GimpLayer             *layer,
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GimpItem              *item    = GIMP_ITEM (layer);
+  GimpObjectQueue       *queue   = NULL;
   GList                 *list;
   gdouble                width_factor;
   gdouble                height_factor;
@@ -804,6 +795,14 @@ gimp_group_layer_scale (GimpLayer             *layer,
   old_offset_x = gimp_item_get_offset_x (item);
   old_offset_y = gimp_item_get_offset_y (item);
 
+  if (progress)
+    {
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      gimp_object_queue_push_container (queue, private->children);
+    }
+
   gimp_group_layer_suspend_resize (group, TRUE);
 
   list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
@@ -811,43 +810,36 @@ gimp_group_layer_scale (GimpLayer             *layer,
   while (list)
     {
       GimpItem *child = list->data;
-      gint      child_width;
-      gint      child_height;
-      gint      child_offset_x;
-      gint      child_offset_y;
 
       list = g_list_next (list);
 
-      child_width    = ROUND (width_factor  * gimp_item_get_width  (child));
-      child_height   = ROUND (height_factor * gimp_item_get_height (child));
-      child_offset_x = ROUND (width_factor  * (gimp_item_get_offset_x (child) -
-                                               old_offset_x));
-      child_offset_y = ROUND (height_factor * (gimp_item_get_offset_y (child) -
-                                               old_offset_y));
+      if (queue)
+        gimp_object_queue_pop (queue);
 
-      child_offset_x += new_offset_x;
-      child_offset_y += new_offset_y;
-
-      if (child_width > 0 && child_height > 0)
+      if (! gimp_item_scale_by_factors_with_origin (child,
+                                                    width_factor, height_factor,
+                                                    old_offset_x, old_offset_y,
+                                                    new_offset_x, new_offset_y,
+                                                    interpolation_type,
+                                                    progress))
         {
-          gimp_item_scale (child,
-                           child_width, child_height,
-                           child_offset_x, child_offset_y,
-                           interpolation_type, progress);
-        }
-      else if (gimp_item_is_attached (item))
-        {
-          gimp_image_remove_layer (gimp_item_get_image (item),
-                                   GIMP_LAYER (child),
-                                   TRUE, NULL);
-        }
-      else
-        {
-          gimp_container_remove (private->children, GIMP_OBJECT (child));
+          /* new width or height are 0; remove item */
+          if (gimp_item_is_attached (item))
+            {
+              gimp_image_remove_layer (gimp_item_get_image (item),
+                                       GIMP_LAYER (child),
+                                       TRUE, NULL);
+            }
+          else
+            {
+              gimp_container_remove (private->children, GIMP_OBJECT (child));
+            }
         }
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
+
+  g_clear_object (&queue);
 }
 
 static void
@@ -914,7 +906,16 @@ gimp_group_layer_transform (GimpLayer              *layer,
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  GimpObjectQueue       *queue   = NULL;
   GList                 *list;
+
+  if (progress)
+    {
+      queue    = gimp_object_queue_new (progress);
+      progress = GIMP_PROGRESS (queue);
+
+      gimp_object_queue_push_container (queue, private->children);
+    }
 
   gimp_group_layer_suspend_resize (group, TRUE);
 
@@ -924,6 +925,9 @@ gimp_group_layer_transform (GimpLayer              *layer,
     {
       GimpItem *child = list->data;
 
+      if (queue)
+        gimp_object_queue_pop (queue);
+
       gimp_item_transform (child, context,
                            matrix, direction,
                            interpolation_type,
@@ -931,6 +935,8 @@ gimp_group_layer_transform (GimpLayer              *layer,
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
+
+  g_clear_object (&queue);
 }
 
 static const Babl *
@@ -1128,8 +1134,8 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
        *     - the group has a single active child; or,
        *
        *     - the effective mode of all the active children is normal, their
-       *       effective composite mode is src-over, and their effective
-       *       blend and composite spaces are equal;
+       *       effective composite mode is UNION, and their effective blend and
+       *       composite spaces are equal;
        *
        *   - and,
        *
@@ -1178,7 +1184,7 @@ gimp_group_layer_get_effective_mode (GimpLayer              *layer,
               GimpLayerCompositeMode other_composite_mode;
 
               if (*mode           != GIMP_LAYER_MODE_NORMAL ||
-                  *composite_mode != GIMP_LAYER_COMPOSITE_SRC_OVER)
+                  *composite_mode != GIMP_LAYER_COMPOSITE_UNION)
                 {
                   reduce = FALSE;
 
@@ -1607,6 +1613,58 @@ _gimp_group_layer_get_suspended_mask (GimpGroupLayer *group,
     }
 
   return NULL;
+}
+
+void
+_gimp_group_layer_start_move (GimpGroupLayer *group,
+                              gboolean        push_undo)
+{
+  GimpGroupLayerPrivate *private;
+  GimpItem              *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+
+  private = GET_PRIVATE (group);
+  item    = GIMP_ITEM (group);
+
+  g_return_if_fail (private->suspend_mask == 0);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_start_move (gimp_item_get_image (item),
+                                                 NULL, group);
+
+  private->moving++;
+}
+
+void
+_gimp_group_layer_end_move (GimpGroupLayer *group,
+                            gboolean        push_undo)
+{
+  GimpGroupLayerPrivate *private;
+  GimpItem              *item;
+
+  g_return_if_fail (GIMP_IS_GROUP_LAYER (group));
+
+  private = GET_PRIVATE (group);
+  item    = GIMP_ITEM (group);
+
+  g_return_if_fail (private->suspend_mask == 0);
+  g_return_if_fail (private->moving > 0);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_group_layer_end_move (gimp_item_get_image (item),
+                                               NULL, group);
+
+  private->moving--;
+
+  if (private->moving == 0)
+    gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
 }
 
 

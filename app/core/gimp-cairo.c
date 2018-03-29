@@ -35,11 +35,14 @@
 #include "gimp-cairo.h"
 
 
+#define REV (2.0 * G_PI)
+
+
 static cairo_user_data_key_t surface_data_key = { 0, };
 
 
 cairo_pattern_t *
-gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
+gimp_cairo_pattern_create_stipple (const GimpRGB *fg,
                                    const GimpRGB *bg,
                                    gint           index,
                                    gdouble        offset_x,
@@ -101,12 +104,12 @@ gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
 }
 
 void
-gimp_cairo_add_arc (cairo_t *cr,
-                    gdouble  center_x,
-                    gdouble  center_y,
-                    gdouble  radius,
-                    gdouble  start_angle,
-                    gdouble  slice_angle)
+gimp_cairo_arc (cairo_t *cr,
+                gdouble  center_x,
+                gdouble  center_y,
+                gdouble  radius,
+                gdouble  start_angle,
+                gdouble  slice_angle)
 {
   g_return_if_fail (cr != NULL);
 
@@ -125,9 +128,73 @@ gimp_cairo_add_arc (cairo_t *cr,
 }
 
 void
-gimp_cairo_add_segments (cairo_t     *cr,
-                         GimpSegment *segs,
-                         gint         n_segs)
+gimp_cairo_rounded_rectangle (cairo_t *cr,
+                              gdouble  x,
+                              gdouble  y,
+                              gdouble  width,
+                              gdouble  height,
+                              gdouble  corner_radius)
+{
+  g_return_if_fail (cr != NULL);
+
+  if (width < 0.0)
+    {
+      x     += width;
+      width  = -width;
+    }
+
+  if (height < 0.0)
+    {
+      y      += height;
+      height  = -height;
+    }
+
+  corner_radius = CLAMP (corner_radius, 0.0, MIN (width, height) / 2.0);
+
+  if (corner_radius == 0.0)
+    {
+      cairo_rectangle (cr, x, y, width, height);
+
+      return;
+    }
+
+  cairo_new_sub_path (cr);
+
+  cairo_arc     (cr,
+                 x + corner_radius, y + corner_radius,
+                 corner_radius,
+                 0.50 * REV, 0.75 * REV);
+  cairo_line_to (cr,
+                 x + width - corner_radius, y);
+
+  cairo_arc     (cr,
+                 x + width - corner_radius, y + corner_radius,
+                 corner_radius,
+                 0.75 * REV, 1.00 * REV);
+  cairo_line_to (cr,
+                 x + width, y + height - corner_radius);
+
+  cairo_arc     (cr,
+                 x + width - corner_radius, y + height - corner_radius,
+                 corner_radius,
+                 0.00 * REV, 0.25 * REV);
+  cairo_line_to (cr,
+                 x + corner_radius, y + height);
+
+  cairo_arc     (cr,
+                 x + corner_radius, y + height - corner_radius,
+                 corner_radius,
+                 0.25 * REV, 0.50 * REV);
+  cairo_line_to (cr,
+                 x, y + corner_radius);
+
+  cairo_close_path (cr);
+}
+
+void
+gimp_cairo_segments (cairo_t     *cr,
+                     GimpSegment *segs,
+                     gint         n_segs)
 {
   gint i;
 

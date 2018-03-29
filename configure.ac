@@ -10,8 +10,8 @@ AC_PREREQ(2.54)
 # devel-docs/libtool-instructions.txt
 
 m4_define([gimp_major_version], [2])
-m4_define([gimp_minor_version], [9])
-m4_define([gimp_micro_version], [9])
+m4_define([gimp_minor_version], [10])
+m4_define([gimp_micro_version], [0])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
@@ -20,20 +20,20 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-# m4_define([gimp_version], [2.9.1])
+m4_define([gimp_version], [2.10.0-RC1])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.9])
+m4_define([gimp_app_version], [2.10])
 m4_define([gimp_plugin_version], [2.0])
 m4_define([gimp_tool_version], [2.0])
 m4_define([gimp_pkgconfig_version], [2.0])
 m4_define([gimp_data_version], [2.0])
 m4_define([gimp_sysconf_version], [2.0])
-m4_define([gimp_user_version], [2.9])
+m4_define([gimp_user_version], [2.10])
 
 m4_define([gimp_unstable],
           m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.42])
-m4_define([gegl_required_version], [0.3.29])
+m4_define([babl_required_version], [0.1.44])
+m4_define([gegl_required_version], [0.3.30])
 m4_define([glib_required_version], [2.54.2])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -53,8 +53,7 @@ m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
-m4_define([fontconfig_required_version], [2.2.0])
-m4_define([fontconfig_win32_recommended_version], [2.11.1])
+m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
@@ -73,6 +72,7 @@ m4_define([lcms_required_version], [2.8])
 m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
+m4_define([openjpeg_required_version], [2.1.0])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([perl_required_version], [5.10.0])
@@ -150,7 +150,6 @@ LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-FONTCONFIG_WIN32_RECOMMENDED_VERSION=fontconfig_win32_recommended_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 WEBKIT_REQUIRED_VERSION=webkit_required_version
@@ -180,7 +179,6 @@ AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_WIN32_RECOMMENDED_VERSION)
 AC_SUBST(FREETYPE2_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(WEBKIT_REQUIRED_VERSION)
@@ -564,7 +562,7 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_TIME
 
-AC_CHECK_HEADERS(execinfo.h sys/param.h sys/time.h sys/times.h sys/wait.h unistd.h)
+AC_CHECK_HEADERS(execinfo.h fcntl.h sys/param.h sys/prctl.h sys/time.h sys/times.h sys/wait.h unistd.h)
 AC_CHECK_FUNCS(backtrace, , AC_CHECK_LIB(execinfo, backtrace))
 
 AC_TYPE_PID_T
@@ -744,7 +742,7 @@ AC_MSG_RESULT($have_glib_2_43)
 
 AC_PATH_PROG(GEGL, gegl, no)
 if test "x$GEGL" = xno; then
-  add_deps_error([gegl], [Could not find gegl in your PATH.])
+  add_deps_error([gegl], [Could not find native gegl executable in your PATH.])
 fi
 
 
@@ -820,26 +818,14 @@ PKG_CHECK_MODULES(PANGOCAIRO,
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
-PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
-                 [add_deps_error([fontconfig >= fontconfig_required_version])])
-
 # Windows platform had a few bugs fixed in earlier fontconfig.
-# Display a warning when compiling with a flawed fontconfig.
-# See bugs 708110 and 703331.
-have_recommended_fontconfig=""
-if test "x$platform_win32" = "xyes"; then
-    PKG_CHECK_MODULES(RECOMMENDED_WIN32_FONTCONFIG, fontconfig >= fontconfig_win32_recommended_version,
-                      have_recommended_fontconfig="yes", have_recommended_fontconfig="no")
-
-    if test "x$have_recommended_fontconfig" = xno; then
-        have_recommended_fontconfig="
-WARNING: Your fontconfig version is `$PKG_CONFIG --modversion fontconfig`.
-         The recommended fontconfig version under Windows is $FONTCONFIG_WIN32_RECOMMENDED_VERSION or over.
-         If you continue without updating fontconfig, your build may have partially broken font processing."
-    else
-        have_recommended_fontconfig=""
-    fi
-fi
+# The bugs are serious enough (for instance very slow startups at each
+# GIMP start, but also slowness when closing, broken font features,
+# etc.) that we should bump the requirement for Win32.
+# See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
+# (2.12.4).
+PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
+                  [add_deps_error([fontconfig >= fontconfig_required_version])])
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
 if $PKG_CONFIG --atleast-version=1.32.0 pango; then
@@ -877,13 +863,8 @@ if test "x$fontconfig_ok" = xno; then
 fi
 
 
-AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
-if test "x$FREETYPE_CONFIG" != "xno" ; then
-  AC_MSG_CHECKING([for freetype libraries])
-  FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
-  AC_MSG_RESULT($FREETYPE_LIBS)
-fi
-AC_SUBST(FREETYPE_LIBS)
+PKG_CHECK_MODULES(FONTCONFIG, freetype2 >= freetype2_required_version,,
+                  [add_deps_error([freetype2_required_version >= freetype2_required_version])])
 
 PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
                  [add_deps_error([harfbuzz >= harfbuzz_required_version])])
@@ -972,6 +953,11 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
                               [Define to 1 if you have the rint function.]), [
   AC_CHECK_LIB(m, rint, [
     AC_DEFINE(HAVE_RINT)])])
+
+
+# check for vfork
+AC_CHECK_FUNCS(vfork, ,)
+AC_SUBST(HAVE_VFORK)
 
 
 ##############################
@@ -1798,30 +1784,27 @@ AC_SUBST(WMF_LIBS)
 AC_SUBST(WMF_CFLAGS)
 
 
-#####################
-# Check for libjasper
-#####################
+####################
+# Check for OpenJPEG
+####################
 
-AC_ARG_WITH(libjasper,  [  --without-libjasper     build without JPEG-2000 support])
+AC_ARG_WITH(jpeg2000, [  --without-jpeg2000      build without JPEG 2000 support])
 
-have_jp2=no
-if test "x$with_libjasper" != xno && test -z "$JASPER_LIBS"; then
-  have_jp2=yes
-  AC_CHECK_LIB(jasper, jas_init,
-    FILE_JP2_LOAD='file-jp2-load$(EXEEXT)' ; JP2_LIBS=-ljasper,
-    [have_jp2="no (JasPer library not found)"
-    AC_MSG_WARN(*** JP2 plug-in will not be built (JasPer library not found) ***)])
-else
-   have_jp2="no (JasPer support disabled)"
+have_openjpeg=no
+if test "x$with_jpeg2000" != xno; then
+  have_openjpeg=yes
+  PKG_CHECK_MODULES(OPENJPEG, libopenjp2 >= openjpeg_required_version,
+    FILE_JP2_LOAD='file-jp2-load$(EXEEXT)'
+    have_openjpeg=yes,
+    have_openjpeg="no (OpenJPEG not found)")
 fi
 
-if test "x$have_jp2" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/jp2;image/jpeg2000;image/jpx"
+if test "x$have_openjpeg" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/jp2"
 fi
 
-AM_CONDITIONAL(BUILD_JP2, test "x$have_jp2" = xyes)
+AM_CONDITIONAL(HAVE_OPENJPEG, test "x$have_openjpeg" = xyes)
 AC_SUBST(FILE_JP2_LOAD)
-AC_SUBST(JP2_LIBS)
 
 
 ################
@@ -2550,6 +2533,7 @@ app/tests/gimpdir/Makefile
 app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
+app-tools/Makefile
 build/Makefile
 build/windows/Makefile
 build/windows/gimp.rc
@@ -2747,7 +2731,7 @@ Optional Plug-Ins:
   Ascii Art:           $have_libaa
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
-  JPEG 2000:           $have_jp2
+  JPEG 2000:           $have_openjpeg
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
   WebP:                $have_webp
@@ -2770,7 +2754,7 @@ Optional Modules:
 Tests:
   Use xvfb-run         $have_xvfb_run
   Test appdata         $have_appstream_util
-$have_recommended_xgettext$have_recommended_fontconfig$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT

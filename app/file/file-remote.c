@@ -362,7 +362,7 @@ file_remote_progress_callback (goffset  current_num_bytes,
           break;
 
         default:
-          g_assert_not_reached ();
+          gimp_assert_not_reached ();
         }
 
       gimp_progress_set_text (progress->progress, format, done, total);
@@ -389,7 +389,7 @@ file_remote_progress_callback (goffset  current_num_bytes,
           break;
 
         default:
-          g_assert_not_reached ();
+          gimp_assert_not_reached ();
         }
 
       gimp_progress_set_text (progress->progress, format, done);

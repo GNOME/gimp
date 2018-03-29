@@ -118,7 +118,7 @@ gimp_stroke_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
+  gimp_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
 
   options = GIMP_STROKE_OPTIONS (fill_editor->options);
 

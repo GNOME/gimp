@@ -75,6 +75,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-spawn.h"
 #include "core/gimpprogress.h"
 
 #include "pdb/gimppdbcontext.h"
@@ -108,11 +109,6 @@ static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
                                               GIOCondition  cond,
                                               gpointer      data);
 
-#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
-static void       gimp_plug_in_prep_for_exec (gpointer      data);
-#else
-#define           gimp_plug_in_prep_for_exec  NULL
-#endif
 
 
 G_DEFINE_TYPE (GimpPlugIn, gimp_plug_in, GIMP_TYPE_OBJECT)
@@ -226,7 +222,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gchar       **argv;
   gint          argc;
   gchar        *interp, *interp_arg;
-  gchar        *read_fd, *write_fd;
+  gchar        *his_read_fd, *his_write_fd;
   const gchar  *mode;
   gchar        *stm;
   GError       *error = NULL;
@@ -257,11 +253,11 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   setmode (my_write[1], _O_BINARY);
 #endif
 
-#ifdef G_OS_WIN32
-  /* Prevent the plug-in from inheriting our ends of the pipes */
-  SetHandleInformation ((HANDLE) _get_osfhandle (my_read[0]), HANDLE_FLAG_INHERIT, 0);
-  SetHandleInformation ((HANDLE) _get_osfhandle (my_write[1]), HANDLE_FLAG_INHERIT, 0);
+  /* Prevent the plug-in from inheriting our end of the pipes */
+  gimp_spawn_set_cloexec (my_read[0]);
+  gimp_spawn_set_cloexec (my_write[1]);
 
+#ifdef G_OS_WIN32
   plug_in->my_read   = g_io_channel_win32_new_fd (my_read[0]);
   plug_in->my_write  = g_io_channel_win32_new_fd (my_write[1]);
   plug_in->his_read  = g_io_channel_win32_new_fd (my_write[0]);
@@ -290,10 +286,10 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
 
   /* Remember the file descriptors for the pipes.
    */
-  read_fd  = g_strdup_printf ("%d",
-                              g_io_channel_unix_get_fd (plug_in->his_read));
-  write_fd = g_strdup_printf ("%d",
-                              g_io_channel_unix_get_fd (plug_in->his_write));
+  his_read_fd  = g_strdup_printf ("%d",
+                                  g_io_channel_unix_get_fd (plug_in->his_read));
+  his_write_fd = g_strdup_printf ("%d",
+                                  g_io_channel_unix_get_fd (plug_in->his_write));
 
   switch (call_mode)
     {
@@ -313,7 +309,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 
   stm = g_strdup_printf ("%d", plug_in->manager->gimp->stack_trace_mode);
@@ -333,8 +329,8 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
 
   args[argc++] = progname;
   args[argc++] = "-gimp";
-  args[argc++] = read_fd;
-  args[argc++] = write_fd;
+  args[argc++] = his_read_fd;
+  args[argc++] = his_write_fd;
   args[argc++] = mode;
   args[argc++] = stm;
   args[argc++] = NULL;
@@ -364,10 +360,7 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   /* Fork another process. We'll remember the process id so that we
    * can later use it to kill the filter if necessary.
    */
-  if (! g_spawn_async (NULL, argv, envp, spawn_flags,
-                       gimp_plug_in_prep_for_exec, plug_in,
-                       &plug_in->pid,
-                       &error))
+  if (! gimp_spawn_async (argv, envp, spawn_flags, &plug_in->pid, &error))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Unable to run plug-in \"%s\"\n(%s)\n\n%s",
@@ -408,8 +401,8 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   if (debug)
     g_free (argv);
 
-  g_free (read_fd);
-  g_free (write_fd);
+  g_free (his_read_fd);
+  g_free (his_write_fd);
   g_free (stm);
   g_free (interp);
   g_free (interp_arg);
@@ -727,19 +720,6 @@ gimp_plug_in_flush (GIOChannel *channel,
 
   return TRUE;
 }
-
-#if !defined(G_OS_WIN32) && !defined (G_WITH_CYGWIN)
-
-static void
-gimp_plug_in_prep_for_exec (gpointer data)
-{
-  GimpPlugIn *plug_in = data;
-
-  g_clear_pointer (&plug_in->my_read,  g_io_channel_unref);
-  g_clear_pointer (&plug_in->my_write, g_io_channel_unref);
-}
-
-#endif
 
 GimpPlugInProcFrame *
 gimp_plug_in_get_proc_frame (GimpPlugIn *plug_in)

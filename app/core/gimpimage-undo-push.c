@@ -672,6 +672,38 @@ gimp_image_undo_push_group_layer_resume_mask (GimpImage      *image,
 }
 
 GimpUndo *
+gimp_image_undo_push_group_layer_start_move (GimpImage      *image,
+                                             const gchar    *undo_desc,
+                                             GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_START_MOVE, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_group_layer_end_move (GimpImage      *image,
+                                           const gchar    *undo_desc,
+                                           GimpGroupLayer *group)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_GROUP_LAYER_UNDO,
+                               GIMP_UNDO_GROUP_LAYER_END_MOVE, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item",  group,
+                               NULL);
+}
+
+GimpUndo *
 gimp_image_undo_push_group_layer_convert (GimpImage      *image,
                                           const gchar    *undo_desc,
                                           GimpGroupLayer *group)

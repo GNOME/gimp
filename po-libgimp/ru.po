@@ -5,14 +5,14 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015, 2016, 2017.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2015, 2016, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-12 17:04+0300\n"
-"PO-Revision-Date: 2017-11-12 17:36+0300\n"
+"PO-Revision-Date: 2018-03-24 01:38+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -1173,7 +1173,7 @@ msgstr ""
 #: ../libgimpbase/gimpbaseenums.c:1487
 msgctxt "repeat-mode"
 msgid "None (extend)"
-msgstr ""
+msgstr "Нет, расширить"
 
 #: ../libgimpbase/gimpbaseenums.c:1488
 msgctxt "repeat-mode"
@@ -1188,7 +1188,7 @@ msgstr "Треугольная волна"
 #: ../libgimpbase/gimpbaseenums.c:1490
 msgctxt "repeat-mode"
 msgid "Truncate"
-msgstr ""
+msgstr "Обрезать"
 
 #: ../libgimpbase/gimpbaseenums.c:1552
 msgctxt "run-mode"

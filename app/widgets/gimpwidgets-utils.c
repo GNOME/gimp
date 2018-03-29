@@ -1154,6 +1154,10 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
 
     case GIMP_MESSAGE_ERROR:
       return GIMP_ICON_DIALOG_ERROR;
+
+    case GIMP_MESSAGE_BUG_WARNING:
+    case GIMP_MESSAGE_BUG_CRITICAL:
+      return GIMP_ICON_WILBER_EEK;
     }
 
   g_return_val_if_reached (GIMP_ICON_DIALOG_WARNING);

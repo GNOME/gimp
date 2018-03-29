@@ -29,7 +29,8 @@
 typedef enum
 {
   GIMP_CONTROLLER_TYPE_LINE,
-  GIMP_CONTROLLER_TYPE_SLIDER_LINE
+  GIMP_CONTROLLER_TYPE_SLIDER_LINE,
+  GIMP_CONTROLLER_TYPE_TRANSFORM_GRID
 } GimpControllerType;
 
 
@@ -75,43 +76,46 @@ typedef struct
 
 /*  function types  */
 
-typedef void (* GimpPickerCallback)               (gpointer                    data,
-                                                   gpointer                    identifier,
-                                                   gdouble                     x,
-                                                   gdouble                     y,
-                                                   const Babl                 *sample_format,
-                                                   const GimpRGB              *color);
+typedef void (* GimpPickerCallback)                  (gpointer                    data,
+                                                      gpointer                    identifier,
+                                                      gdouble                     x,
+                                                      gdouble                     y,
+                                                      const Babl                 *sample_format,
+                                                      const GimpRGB              *color);
 
-typedef void (* GimpControllerLineCallback)       (gpointer                    data,
-                                                   GeglRectangle              *area,
-                                                   gdouble                     x1,
-                                                   gdouble                     y1,
-                                                   gdouble                     x2,
-                                                   gdouble                     y2);
-typedef void (* GimpControllerSliderLineCallback) (gpointer                    data,
-                                                   GeglRectangle              *area,
-                                                   gdouble                     x1,
-                                                   gdouble                     y1,
-                                                   gdouble                     x2,
-                                                   gdouble                     y2,
-                                                   const GimpControllerSlider *sliders,
-                                                   gint                        n_sliders);
+typedef void (* GimpControllerLineCallback)          (gpointer                    data,
+                                                      GeglRectangle              *area,
+                                                      gdouble                     x1,
+                                                      gdouble                     y1,
+                                                      gdouble                     x2,
+                                                      gdouble                     y2);
+typedef void (* GimpControllerSliderLineCallback)    (gpointer                    data,
+                                                      GeglRectangle              *area,
+                                                      gdouble                     x1,
+                                                      gdouble                     y1,
+                                                      gdouble                     x2,
+                                                      gdouble                     y2,
+                                                      const GimpControllerSlider *sliders,
+                                                      gint                        n_sliders);
+typedef void (* GimpControllerTransformGridCallback) (gpointer                    data,
+                                                      GeglRectangle              *area,
+                                                      const GimpMatrix3          *transform);
 
 
-typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,
-                                                  const gchar        *property_name,
-                                                  const gchar        *icon_name,
-                                                  const gchar        *tooltip,
-                                                  gboolean            pick_abyss,
-                                                  GimpPickerCallback  callback,
-                                                  gpointer            callback_data);
+typedef GtkWidget * (* GimpCreatePickerFunc)         (gpointer            creator,
+                                                      const gchar        *property_name,
+                                                      const gchar        *icon_name,
+                                                      const gchar        *tooltip,
+                                                      gboolean            pick_abyss,
+                                                      GimpPickerCallback  callback,
+                                                      gpointer            callback_data);
 
-typedef GCallback   (* GimpCreateControllerFunc) (gpointer            creator,
-                                                  GimpControllerType  controller_type,
-                                                  const gchar        *status_title,
-                                                  GCallback           callback,
-                                                  gpointer            callback_data,
-                                                  gpointer           *set_func_data);
+typedef GCallback   (* GimpCreateControllerFunc)     (gpointer            creator,
+                                                      GimpControllerType  controller_type,
+                                                      const gchar        *status_title,
+                                                      GCallback           callback,
+                                                      gpointer            callback_data,
+                                                      gpointer           *set_func_data);
 
 
 #endif /* __PROPGUI_TYPES_H__ */

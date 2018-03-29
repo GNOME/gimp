@@ -10,4 +10,5 @@ GIMPAPPRC = $(top_builddir)/build/windows/gimp.rc
 		--define TOP_SRCDIR="`echo $(top_srcdir) | sed 's*//*/*'`" \
 		-I"`echo $(top_srcdir)/app | sed 's%/\+%/%'`" \
 		-I"`echo $(top_builddir)/app | sed 's%/\+%/%'`"\
+		-I"`echo $(top_builddir) | sed 's%/\+%/%'`"\
 		$(GIMPAPPRC) $@

@@ -273,8 +273,8 @@ gimp_canvas_arc_draw (GimpCanvasItem *item,
   cairo_save (cr);
   cairo_translate (cr, center_x, center_y);
   cairo_scale (cr, radius_x, radius_y);
-  gimp_cairo_add_arc (cr, 0.0, 0.0, 1.0,
-                      private->start_angle, private->slice_angle);
+  gimp_cairo_arc (cr, 0.0, 0.0, 1.0,
+                  private->start_angle, private->slice_angle);
   cairo_restore (cr);
 
   if (private->filled)

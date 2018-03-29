@@ -1349,14 +1349,10 @@ xcf_load_channel_props (XcfInfo      *info,
                                   gimp_item_get_height (GIMP_ITEM (*channel)));
             gimp_image_take_mask (image, mask);
 
-            g_object_unref (GIMP_DRAWABLE (mask)->private->buffer);
-            GIMP_DRAWABLE (mask)->private->buffer =
-              GIMP_DRAWABLE (*channel)->private->buffer;
-            GIMP_DRAWABLE (*channel)->private->buffer = NULL;
+            gimp_drawable_steal_buffer (GIMP_DRAWABLE (mask),
+                                        GIMP_DRAWABLE (*channel));
             g_object_unref (*channel);
             *channel = mask;
-            (*channel)->boundary_known = FALSE;
-            (*channel)->bounds_known   = FALSE;
 
             /* Don't restore info->active_channel because the
              * selection can't be the active channel

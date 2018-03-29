@@ -123,6 +123,8 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
   switch (severity)
     {
     case GIMP_MESSAGE_ERROR:
+    case GIMP_MESSAGE_BUG_WARNING:
+    case GIMP_MESSAGE_BUG_CRITICAL:
       /* error messages are never handled here */
       break;
 

@@ -112,8 +112,8 @@ splash_create (gboolean   be_verbose,
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  max_width  = gdk_screen_get_width (screen) * 2 / 3;
-  max_height = gdk_screen_get_height (screen) * 2 / 3;
+  max_width  = gdk_screen_get_width (screen) / 2;
+  max_height = gdk_screen_get_height (screen) / 2;
   pixbuf = splash_image_load (max_width, max_height, be_verbose);
 
   if (! pixbuf)

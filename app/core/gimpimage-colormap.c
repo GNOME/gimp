@@ -326,10 +326,10 @@ gimp_image_add_colormap_entry (GimpImage     *image,
                       &private->colormap[private->n_colors * 3 + 1],
                       &private->colormap[private->n_colors * 3 + 2]);
 
+  private->n_colors++;
+
   if (private->palette)
     gimp_image_colormap_set_palette_entry (image, private->n_colors - 1);
-
-  private->n_colors++;
 
   gimp_image_colormap_changed (image, -1);
 }

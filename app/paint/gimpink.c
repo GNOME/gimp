@@ -262,7 +262,7 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       format = gimp_layer_mode_get_format (paint_mode,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
-                                           NULL);
+                                           gimp_drawable_get_format (drawable));
 
       temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
                                     format);

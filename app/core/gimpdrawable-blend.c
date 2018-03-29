@@ -40,24 +40,25 @@
 /*  public functions  */
 
 void
-gimp_drawable_blend (GimpDrawable     *drawable,
-                     GimpContext      *context,
-                     GimpGradient     *gradient,
-                     GimpLayerMode     paint_mode,
-                     GimpGradientType  gradient_type,
-                     gdouble           opacity,
-                     gdouble           offset,
-                     GimpRepeatMode    repeat,
-                     gboolean          reverse,
-                     gboolean          supersample,
-                     gint              max_depth,
-                     gdouble           threshold,
-                     gboolean          dither,
-                     gdouble           startx,
-                     gdouble           starty,
-                     gdouble           endx,
-                     gdouble           endy,
-                     GimpProgress     *progress)
+gimp_drawable_blend (GimpDrawable       *drawable,
+                     GimpContext        *context,
+                     GimpGradient       *gradient,
+                     GeglDistanceMetric  metric,
+                     GimpLayerMode       paint_mode,
+                     GimpGradientType    gradient_type,
+                     gdouble             opacity,
+                     gdouble             offset,
+                     GimpRepeatMode      repeat,
+                     gboolean            reverse,
+                     gboolean            supersample,
+                     gint                max_depth,
+                     gdouble             threshold,
+                     gboolean            dither,
+                     gdouble             startx,
+                     gdouble             starty,
+                     gdouble             endx,
+                     gdouble             endy,
+                     GimpProgress       *progress)
 {
   GimpImage  *image;
   GeglBuffer *buffer;
@@ -86,7 +87,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
       gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
     {
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable, TRUE,
+        gimp_drawable_blend_shapeburst_distmap (drawable, metric,
                                                 GEGL_RECTANGLE (x, y, width, height),
                                                 progress);
     }
@@ -111,7 +112,8 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
   gimp_gegl_apply_operation (shapeburst, progress, NULL,
                              render,
-                             buffer, GEGL_RECTANGLE (x, y, width, height));
+                             buffer, GEGL_RECTANGLE (x, y, width, height),
+                             FALSE);
 
   g_object_unref (render);
 
@@ -136,7 +138,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
 GeglBuffer *
 gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        gboolean             legacy_shapeburst,
+                                        GeglDistanceMetric   metric,
                                         const GeglRectangle *region,
                                         GimpProgress        *progress)
 {
@@ -200,16 +202,11 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
         }
     }
 
-  if (legacy_shapeburst)
-    shapeburst = gegl_node_new_child (NULL,
-                                      "operation", "gimp:shapeburst",
-                                      "normalize", TRUE,
-                                      NULL);
-  else
-    shapeburst = gegl_node_new_child (NULL,
-                                      "operation", "gegl:distance-transform",
-                                      "normalize", TRUE,
-                                      NULL);
+  shapeburst = gegl_node_new_child (NULL,
+                                    "operation", "gegl:distance-transform",
+                                    "normalize", TRUE,
+                                    "metric",    metric,
+                                    NULL);
 
   if (progress)
     gimp_gegl_progress_connect (shapeburst, progress,
@@ -217,7 +214,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
 
   gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,
-                             dist_buffer, region);
+                             dist_buffer, region, FALSE);
 
   g_object_unref (shapeburst);
 

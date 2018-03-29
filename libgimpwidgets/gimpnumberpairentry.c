@@ -33,6 +33,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpicons.h"
 #include "gimpnumberpairentry.h"
 
 
@@ -139,6 +140,7 @@ static void         gimp_number_pair_entry_get_property      (GObject           
                                                               GValue              *value,
                                                               GParamSpec          *pspec);
 static void         gimp_number_pair_entry_changed           (GimpNumberPairEntry *entry);
+static void         gimp_number_pair_entry_icon_press        (GimpNumberPairEntry *entry);
 static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widget,
                                                               GdkEvent            *event);
 
@@ -326,6 +328,9 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_number_pair_entry_changed),
                     NULL);
+  g_signal_connect (entry, "icon-press",
+                    G_CALLBACK (gimp_number_pair_entry_icon_press),
+                    NULL);
   g_signal_connect (entry, "focus-out-event",
                     G_CALLBACK (gimp_number_pair_entry_events),
                     NULL);
@@ -334,6 +339,10 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
                     NULL);
 
   gtk_widget_set_direction (GTK_WIDGET (entry), GTK_TEXT_DIR_LTR);
+
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     GIMP_ICON_EDIT_CLEAR);
 }
 
 static void
@@ -773,6 +782,10 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
 
   gtk_widget_modify_style (GTK_WIDGET (entry), rc_style);
 
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
+                                GTK_ENTRY_ICON_SECONDARY,
+                                ! italic);
+
   priv->font_italic = italic;
 }
 
@@ -839,6 +852,14 @@ gimp_number_pair_entry_changed (GimpNumberPairEntry *entry)
   gimp_number_pair_entry_modify_font (entry, FALSE);
 }
 
+static void
+gimp_number_pair_entry_icon_press (GimpNumberPairEntry *entry)
+{
+  gimp_number_pair_entry_set_user_override (entry, FALSE);
+
+  gtk_editable_set_position (GTK_EDITABLE (entry), -1);
+}
+
 static gboolean
 gimp_number_pair_entry_events (GtkWidget *widget,
                                GdkEvent  *event)
@@ -895,20 +916,13 @@ gimp_number_pair_entry_events (GtkWidget *widget,
                                                      left_value,
                                                      right_value);
 
-                  priv->user_override = TRUE;
-                  g_object_notify (G_OBJECT (entry), "user-override");
+                  gimp_number_pair_entry_set_user_override (entry, TRUE);
                 }
             }
             break;
 
           case PARSE_CLEAR:
-
-            gimp_number_pair_entry_set_values (entry,
-                                               priv->default_left_number,
-                                               priv->default_right_number);
-
-            priv->user_override = FALSE;
-            g_object_notify (G_OBJECT (entry), "user-override");
+            gimp_number_pair_entry_set_user_override (entry, FALSE);
             break;
 
           default:
@@ -986,6 +1000,8 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_number_pair_entry_changed, NULL);
+
+  gimp_number_pair_entry_modify_font (entry, ! priv->user_override);
 }
 
 static gboolean
@@ -1023,11 +1039,19 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
   gboolean  simplify = FALSE;
   gchar    *end;
 
+  /* skip over whitespace */
+  while (g_unichar_isspace (g_utf8_get_char (text)))
+    text = g_utf8_next_char (text);
+
+  /* check if clear */
+  if (! *text)
+    return PARSE_CLEAR;
+
   /* try to parse a number */
   new_left_number = strtod (text, &end);
 
   if (end == text)
-    return PARSE_CLEAR;
+    return PARSE_INVALID;
   else
     text = end;
 

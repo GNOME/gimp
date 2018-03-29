@@ -87,7 +87,7 @@ gimp_paint_core_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
+  gimp_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
 
   paint_core_undo->last_coords = paint_core_undo->paint_core->start_coords;
 

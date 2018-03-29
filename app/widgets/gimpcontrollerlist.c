@@ -327,7 +327,7 @@ gimp_controller_list_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (list->gimp));
+  gimp_assert (GIMP_IS_GIMP (list->gimp));
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (list->dest),
                                      gimp_controllers_get_list (list->gimp));

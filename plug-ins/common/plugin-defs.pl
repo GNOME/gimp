@@ -38,7 +38,7 @@
     'file-glob' => {},
     'file-header' => { ui => 1, gegl => 1 },
     'file-html-table' => { ui => 1, gegl => 1 },
-    'file-jp2-load' => { ui => 1, optional => 1, gegl => 1, libs => 'JP2_LIBS' },
+    'file-jp2-load' => { ui => 1, optional => 1, gegl => 1, libs => 'OPENJPEG_LIBS', cflags => 'OPENJPEG_CFLAGS' },
     'file-mng' => { ui => 1, gegl => 1, optional => 1, libs => 'MNG_LIBS', cflags => 'MNG_CFLAGS' },
     'file-pat' => { ui => 1, gegl => 1 },
     'file-pcx' => { ui => 1, gegl => 1 },

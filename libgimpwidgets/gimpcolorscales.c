@@ -104,6 +104,8 @@ struct _GimpColorScales
 
   gboolean           show_rgb_u8;
 
+  GtkWidget         *lch_group;
+  GtkWidget         *hsv_group;
   GtkWidget         *rgb_percent_group;
   GtkWidget         *rgb_u8_group;
   GtkWidget         *alpha_percent_group;
@@ -143,6 +145,10 @@ static void   gimp_color_scales_set_color      (GimpColorSelector *selector,
                                                 const GimpHSV     *hsv);
 static void   gimp_color_scales_set_channel    (GimpColorSelector *selector,
                                                 GimpColorSelectorChannel  channel);
+static void   gimp_color_scales_set_model_visible
+                                               (GimpColorSelector *selector,
+                                                GimpColorSelectorModel  model,
+                                                gboolean           visible);
 static void   gimp_color_scales_set_config     (GimpColorSelector *selector,
                                                 GimpColorConfig   *config);
 
@@ -153,13 +159,8 @@ static void   gimp_color_scales_toggle_changed (GtkWidget         *widget,
                                                 GimpColorScales   *scales);
 static void   gimp_color_scales_scale_changed  (GtkAdjustment     *adjustment,
                                                 GimpColorScales   *scales);
-static void   gimp_color_scales_switch_page    (GtkNotebook       *notebook,
-                                                GtkWidget         *page,
-                                                gint               num,
+static void   gimp_color_scales_toggle_lch_hsv (GtkToggleButton   *toggle,
                                                 GimpColorScales   *scales);
-static void   gimp_color_scales_model_changed  (GimpColorSelector *selector,
-                                                GimpColorSelectorModel  model,
-                                                GtkNotebook            *notebook);
 
 
 G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR)
@@ -209,6 +210,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
   selector_class->set_show_alpha        = gimp_color_scales_set_show_alpha;
   selector_class->set_color             = gimp_color_scales_set_color;
   selector_class->set_channel           = gimp_color_scales_set_channel;
+  selector_class->set_model_visible     = gimp_color_scales_set_model_visible;
   selector_class->set_config            = gimp_color_scales_set_config;
 
   g_object_class_install_property (object_class, PROP_SHOW_RGB_U8,
@@ -220,9 +222,9 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
                                                          G_PARAM_CONSTRUCT));
 
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
-                               babl_format ("CIE LCH(ab) double"));
-  fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) double"),
-                               babl_format ("R'G'B' double"));
+                               babl_format ("CIE LCH(ab) alpha double"));
+  fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) alpha double"),
+                               babl_format ("R'G'B'A double"));
 }
 
 static GtkWidget *
@@ -354,9 +356,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   GtkSizeGroup      *size_group0;
   GtkSizeGroup      *size_group1;
   GtkSizeGroup      *size_group2;
-  GtkWidget         *notebook;
   GtkWidget         *hbox;
-  GtkWidget         *vbox;
   GtkWidget         *radio1;
   GtkWidget         *radio2;
   GtkWidget         *table;
@@ -366,21 +366,15 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   gtk_box_set_spacing (GTK_BOX (scales), 5);
 
-  /*  don't needs the toggles for our own operation  */
+  /*  don't need the toggles for our own operation  */
   selector->toggles_visible = FALSE;
 
-  notebook = gtk_notebook_new ();
-  gtk_widget_show (notebook);
-  gtk_box_pack_start (GTK_BOX (scales), notebook, 0, 0, FALSE);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_pack_start (GTK_BOX (scales), hbox, 0, 0, FALSE);
+  gtk_widget_show (hbox);
 
   main_group = NULL;
   u8_group   = NULL;
-
-  /* RGB page. */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_widget_show (vbox);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
-  gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (notebook), vbox, _("RGB"));
 
   scales->dummy_u8_toggle = gtk_radio_button_new (NULL);
   g_object_ref_sink (scales->dummy_u8_toggle);
@@ -395,21 +389,48 @@ gimp_color_scales_init (GimpColorScales *scales)
                           size_group0, size_group1, size_group2,
                           GIMP_COLOR_SELECTOR_RED,
                           GIMP_COLOR_SELECTOR_BLUE);
-  gtk_widget_show (table);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
 
   scales->rgb_u8_group =
     table = create_group (scales, &u8_group,
                           size_group0, size_group1, size_group2,
                           GIMP_COLOR_SELECTOR_RED_U8,
                           GIMP_COLOR_SELECTOR_BLUE_U8);
-  gtk_widget_show (table);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
 
-  /* U8/percent buttons. */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, 0, 0, FALSE);
-  gtk_widget_show (hbox);
+  scales->lch_group =
+    table = create_group (scales, &main_group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
+                          GIMP_COLOR_SELECTOR_LCH_HUE);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+ scales->hsv_group =
+    table = create_group (scales, &main_group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_HUE,
+                          GIMP_COLOR_SELECTOR_VALUE);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+  scales->alpha_percent_group =
+    table = create_group (scales, &main_group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_ALPHA,
+                          GIMP_COLOR_SELECTOR_ALPHA);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+  scales->alpha_u8_group =
+    table = create_group (scales, &u8_group,
+                          size_group0, size_group1, size_group2,
+                          GIMP_COLOR_SELECTOR_ALPHA_U8,
+                          GIMP_COLOR_SELECTOR_ALPHA_U8);
+  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+
+  g_object_unref (size_group0);
+  g_object_unref (size_group1);
+  g_object_unref (size_group2);
+
+  gimp_color_scales_update_visible (scales);
 
   radio_group = NULL;
 
@@ -434,55 +455,28 @@ gimp_color_scales_init (GimpColorScales *scales)
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
 
-  /* LCH page. */
-  table = create_group (scales, &main_group,
-                        size_group0, size_group1, size_group2,
-                        GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
-                        GIMP_COLOR_SELECTOR_LCH_HUE);
-  gtk_widget_show (table);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, NULL);
-  gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (notebook), table, _("LCH"));
+  radio_group = NULL;
 
-  /* HSV page. */
-  table = create_group (scales, &main_group,
-                        size_group0, size_group1, size_group2,
-                        GIMP_COLOR_SELECTOR_HUE,
-                        GIMP_COLOR_SELECTOR_VALUE);
-  gtk_widget_show (table);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, NULL);
-  gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (notebook), table, _("HSV"));
+  radio1      = gtk_radio_button_new_with_label (NULL,  _("LCH"));
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1));
+  radio2      = gtk_radio_button_new_with_label (radio_group, _("HSV"));
 
-  scales->alpha_percent_group =
-    table = create_group (scales, &main_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_ALPHA,
-                          GIMP_COLOR_SELECTOR_ALPHA);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio1), FALSE);
+  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio2), FALSE);
 
-  scales->alpha_u8_group =
-    table = create_group (scales, &u8_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_ALPHA_U8,
-                          GIMP_COLOR_SELECTOR_ALPHA_U8);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), radio2, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), radio1, FALSE, FALSE, 0);
 
-  g_object_unref (size_group0);
-  g_object_unref (size_group1);
-  g_object_unref (size_group2);
+  gtk_widget_show (radio1);
+  gtk_widget_show (radio2);
 
-  /* This works because we ordered the notebook tabs in the same order
-   * as the GimpColorSelectorModel enum.
-   */
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
-                                 (gint) gimp_color_selector_get_model (selector));
-  g_signal_connect (notebook, "switch-page",
-                    G_CALLBACK (gimp_color_scales_switch_page),
+  if (gimp_color_selector_get_model_visible (selector,
+                                             GIMP_COLOR_SELECTOR_MODEL_HSV))
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
+
+  g_signal_connect (radio1, "toggled",
+                    G_CALLBACK (gimp_color_scales_toggle_lch_hsv),
                     scales);
-  g_signal_connect (scales, "model-changed",
-                    G_CALLBACK (gimp_color_scales_model_changed),
-                    notebook);
-
-  gimp_color_scales_update_visible (scales);
 }
 
 static void
@@ -598,6 +592,14 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
 }
 
 static void
+gimp_color_scales_set_model_visible (GimpColorSelector      *selector,
+                                     GimpColorSelectorModel  model,
+                                     gboolean                visible)
+{
+  gimp_color_scales_update_visible (GIMP_COLOR_SCALES (selector));
+}
+
+static void
 gimp_color_scales_set_config (GimpColorSelector *selector,
                               GimpColorConfig   *config)
 {
@@ -614,7 +616,6 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
 
 
 /*  public functions  */
-
 
 void
 gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
@@ -650,11 +651,25 @@ gimp_color_scales_update_visible (GimpColorScales *scales)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
   gboolean           show_alpha;
+  gboolean           rgb_visible;
+  gboolean           lch_visible;
+  gboolean           hsv_visible;
 
-  show_alpha = gimp_color_selector_get_show_alpha (selector);
+  show_alpha  = gimp_color_selector_get_show_alpha (selector);
+  rgb_visible = gimp_color_selector_get_model_visible (selector,
+                                                       GIMP_COLOR_SELECTOR_MODEL_RGB);
+  lch_visible = gimp_color_selector_get_model_visible (selector,
+                                                       GIMP_COLOR_SELECTOR_MODEL_LCH);
+  hsv_visible = gimp_color_selector_get_model_visible (selector,
+                                                       GIMP_COLOR_SELECTOR_MODEL_HSV);
 
-  gtk_widget_set_visible (scales->rgb_percent_group, ! scales->show_rgb_u8);
-  gtk_widget_set_visible (scales->rgb_u8_group,        scales->show_rgb_u8);
+  gtk_widget_set_visible (scales->rgb_percent_group,
+                          rgb_visible && ! scales->show_rgb_u8);
+  gtk_widget_set_visible (scales->rgb_u8_group,
+                          rgb_visible &&   scales->show_rgb_u8);
+
+  gtk_widget_set_visible (scales->lch_group, lch_visible);
+  gtk_widget_set_visible (scales->hsv_group, hsv_visible);
 
   gtk_widget_set_visible (scales->alpha_percent_group,
                           show_alpha && ! scales->show_rgb_u8);
@@ -843,25 +858,27 @@ gimp_color_scales_scale_changed (GtkAdjustment   *adjustment,
 }
 
 static void
-gimp_color_scales_switch_page (GtkNotebook     *notebook,
-                               GtkWidget       *page,
-                               gint             num,
-                               GimpColorScales *scales)
+gimp_color_scales_toggle_lch_hsv (GtkToggleButton *toggle,
+                                  GimpColorScales *scales)
 {
-  /* This works because we ordered the notebook tabs in the same order
-   * as the GimpColorSelectorModel enum.
-   */
-  gimp_color_selector_set_model (GIMP_COLOR_SELECTOR (scales),
-                                 (GimpColorSelectorModel) num);
-}
+  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
 
-static void
-gimp_color_scales_model_changed (GimpColorSelector      *selector,
-                                 GimpColorSelectorModel  model,
-                                 GtkNotebook            *notebook)
-{
-  if (gtk_notebook_get_current_page (notebook) != (gint) model)
+  if (gtk_toggle_button_get_active (toggle))
     {
-      gtk_notebook_set_current_page (notebook, (gint) model);
+      gimp_color_selector_set_model_visible (selector,
+                                             GIMP_COLOR_SELECTOR_MODEL_LCH,
+                                             TRUE);
+      gimp_color_selector_set_model_visible (selector,
+                                             GIMP_COLOR_SELECTOR_MODEL_HSV,
+                                             FALSE);
+    }
+  else
+    {
+      gimp_color_selector_set_model_visible (selector,
+                                             GIMP_COLOR_SELECTOR_MODEL_LCH,
+                                             FALSE);
+      gimp_color_selector_set_model_visible (selector,
+                                             GIMP_COLOR_SELECTOR_MODEL_HSV,
+                                             TRUE);
     }
 }

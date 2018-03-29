@@ -209,7 +209,7 @@ gimp_tool_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
+  gimp_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
 
   g_signal_connect_object (gimp_tool_get_options (tool), "notify",
                            G_CALLBACK (gimp_tool_options_notify),

@@ -3,6 +3,7 @@ typedef GType (* GimpGetTypeFunc) (void);
 
 static const GimpGetTypeFunc get_type_funcs[] =
 {
+  gegl_distance_metric_get_type,
   gimp_add_mask_type_get_type,
   gimp_blend_mode_get_type,
   gimp_brush_application_mode_get_type,
@@ -69,6 +70,7 @@ static const GimpGetTypeFunc get_type_funcs[] =
 
 static const gchar * const type_names[] =
 {
+  "GeglDistanceMetric",
   "GimpAddMaskType",
   "GimpBlendMode",
   "GimpBrushApplicationMode",

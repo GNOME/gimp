@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6118478k)
+# (tile-cache-size 6115246k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -108,7 +108,7 @@
 # Sets the brush search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
+# (mypaint-brush-path "/local/head/share/mypaint-data/1.0/brushes:~/.mypaint/brushes")
 
 # This is a colon-separated list of folders to search.
 # 
@@ -223,8 +223,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 2001)
-#     (height 1984)
+#     (width 1920)
+#     (height 1080)
 #     (unit pixels)
 #     (xresolution 300.000000)
 #     (yresolution 300.000000)
@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1566330368)
+# (undo-size 1565502976)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -351,6 +351,23 @@
 # 
 # (import-raw-plug-in "")
 
+# Export Exif metadata by default.  Possible values are yes and no.
+# 
+# (export-metadata-exif yes)
+
+# Export XMP metadata by default.  Possible values are yes and no.
+# 
+# (export-metadata-xmp yes)
+
+# Export IPTC metadata by default.  Possible values are yes and no.
+# 
+# (export-metadata-iptc yes)
+
+# Try generating debug data for bug reporting when appropriate.  Possible
+# values are warning, critical, fatal and never.
+# 
+# (debug-policy fatal)
+
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
 # 
@@ -399,7 +416,7 @@
 # Sets the type of mouse pointers to use.  Possible values are tool-icon,
 # tool-crosshair and crosshair.
 # 
-# (cursor-mode tool-icon)
+# (cursor-mode tool-crosshair)
 
 # Context-dependent mouse pointers are helpful.  They are enabled by default.
 #  However, they require overhead that you may want to do without.  Possible
@@ -599,7 +616,7 @@
 # Remember the current tool, pattern, color, and brush across GIMP sessions. 
 # Possible values are yes and no.
 # 
-# (save-device-status no)
+# (save-device-status yes)
 
 # When enabled, the same tool and tool options will be used for all input
 # devices. No tool switching will occur when the input device changes. 
@@ -625,7 +642,7 @@
 
 # Save the tool options when GIMP exits.  Possible values are yes and no.
 # 
-# (save-tool-options no)
+# (save-tool-options yes)
 
 # Show a tooltip when the pointer hovers over an item.  Possible values are
 # yes and no.
@@ -749,7 +766,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "http://docs.gimp.org/2.9")
+# (user-manual-online-uri "http://docs.gimp.org/2.10")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these
@@ -774,6 +791,11 @@
 # are ask, keep and convert.
 # 
 # (color-profile-policy ask)
+
+# Sets the default folder path for all color profile file dialogs.  This is a
+# single filename.
+# 
+# 
 
 # Sets the default rendering intent for the 'Convert to Color Profile'
 # dialog.  Possible values are perceptual, relative-colorimetric, saturation
@@ -882,7 +904,7 @@
 # (layer-new-composite-space auto)
 
 # Sets the default composite mode for the 'New Layer' dialog.  Possible
-# values are auto, src-over, src-atop, dst-atop and src-in.
+# values are auto, union, clip-to-backdrop, clip-to-layer and intersection.
 # 
 # (layer-new-composite-mode auto)
 

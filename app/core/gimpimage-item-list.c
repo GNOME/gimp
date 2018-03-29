@@ -29,6 +29,7 @@
 #include "gimpimage-item-list.h"
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
+#include "gimpobjectqueue.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -228,7 +229,16 @@ gimp_image_item_list_transform (GimpImage              *image,
 
   if (list)
     {
-      GList *l;
+      GimpObjectQueue *queue = NULL;
+      GList           *l;
+
+      if (progress)
+        {
+          queue    = gimp_object_queue_new (progress);
+          progress = GIMP_PROGRESS (queue);
+
+          gimp_object_queue_push_list (queue, list);
+        }
 
       if (list->next)
         {
@@ -240,10 +250,15 @@ gimp_image_item_list_transform (GimpImage              *image,
         }
 
       for (l = list; l; l = g_list_next (l))
-        gimp_item_transform (GIMP_ITEM (l->data), context,
-                             matrix, direction,
-                             interpolation_type,
-                             clip_result, progress);
+        {
+          if (queue)
+            gimp_object_queue_pop (queue);
+
+          gimp_item_transform (GIMP_ITEM (l->data), context,
+                               matrix, direction,
+                               interpolation_type,
+                               clip_result, progress);
+        }
 
       if (list->next)
         {
@@ -252,6 +267,8 @@ gimp_image_item_list_transform (GimpImage              *image,
 
           gimp_image_undo_group_end (image);
         }
+
+      g_clear_object (&queue);
     }
 }
 

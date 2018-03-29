@@ -49,4 +49,11 @@ typedef struct _GimpGrid             GimpGrid;
 typedef struct _GimpTemplate         GimpTemplate;
 
 
+/* for now these are defines, but can be turned into something
+ * fancier for nicer debugging
+ */
+#define gimp_assert             g_assert
+#define gimp_assert_not_reached g_assert_not_reached
+
+
 #endif /* __CONFIG_TYPES_H__ */

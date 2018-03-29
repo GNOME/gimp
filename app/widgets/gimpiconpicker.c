@@ -172,7 +172,7 @@ gimp_icon_picker_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (private->gimp));
+  gimp_assert (GIMP_IS_GIMP (private->gimp));
 
   /* Set up the icon picker */
   private->icon_name_container = gimp_list_new (GIMP_TYPE_TEMPLATE, FALSE);

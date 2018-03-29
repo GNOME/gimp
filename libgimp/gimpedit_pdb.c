@@ -644,7 +644,9 @@ gimp_edit_bucket_fill_full (gint32              drawable_ID,
  * This tool requires information on the paint application mode, the
  * blend mode, and the gradient type. It creates the specified variety
  * of blend using the starting and ending coordinates as defined for
- * each gradient type.
+ * each gradient type. For shapeburst gradient types, the context's
+ * distance metric is also relevant and can be updated with
+ * gimp_context_set_distance_metric().
  *
  * Returns: TRUE on success.
  **/

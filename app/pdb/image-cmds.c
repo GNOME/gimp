@@ -1655,7 +1655,7 @@ image_thumbnail_invoker (GimpProcedure         *procedure,
       GimpTempBuf *buf;
       gint         dwidth, dheight;
 
-      g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+      gimp_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
       /* Adjust the width/height ratio */
       dwidth  = gimp_image_get_width  (image);

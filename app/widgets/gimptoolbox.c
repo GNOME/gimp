@@ -198,7 +198,7 @@ gimp_toolbox_constructed (GObject *object)
   GdkDisplay    *display;
   GList         *list;
 
-  g_assert (GIMP_IS_CONTEXT (toolbox->p->context));
+  gimp_assert (GIMP_IS_CONTEXT (toolbox->p->context));
 
   config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 

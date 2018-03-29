@@ -55,6 +55,8 @@ struct _GimpPDBContext
 
   GimpContainer          *paint_options_list;
   GimpStrokeOptions      *stroke_options;
+
+  GeglDistanceMetric      distance_metric;
 };
 
 struct _GimpPDBContextClass

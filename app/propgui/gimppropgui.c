@@ -54,6 +54,7 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-recursive-transform.h"
 #include "gimppropgui-shadows-highlights.h"
 #include "gimppropgui-spiral.h"
 #include "gimppropgui-supernova.h"
@@ -256,16 +257,16 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
                   if (HAS_KEY (pspec, "axis", "x"))
                     {
-                      gint min = MAX (lower, off_x);
-                      gint max = MIN (upper, off_x + area->width);
+                      gdouble min = MAX (lower, off_x);
+                      gdouble max = MIN (upper, off_x + area->width);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
                                                         min, max);
                     }
                   else if (HAS_KEY (pspec, "axis","y"))
                     {
-                      gint min = MAX (lower, off_y);
-                      gint max = MIN (upper, off_y + area->height);
+                      gdouble min = MAX (lower, off_y);
+                      gdouble max = MIN (upper, off_y + area->height);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
                                                         min, max);
@@ -364,7 +365,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      gimp_prop_gui_bind_tooltip (widget, button);
+      gimp_prop_gui_bind_tooltip (button, widget);
 
       if (create_picker_func)
         {
@@ -442,7 +443,7 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_hue_saturation },
   { "GimpGegl-gegl-color-rotate-config",
     _gimp_prop_gui_new_color_rotate },
-  { "GimpGegl-gegl-color-to-alpha-plus-config",
+  { "GimpGegl-gegl-color-to-alpha-config",
     _gimp_prop_gui_new_color_to_alpha },
   { "GimpGegl-gegl-convolution-matrix-config",
     _gimp_prop_gui_new_convolution_matrix },
@@ -450,6 +451,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-recursive-transform-config",
+    _gimp_prop_gui_new_recursive_transform },
   { "GimpGegl-gegl-shadows-highlights-config",
     _gimp_prop_gui_new_shadows_highlights },
   { "GimpGegl-gegl-spiral-config",

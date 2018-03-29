@@ -290,7 +290,6 @@ typedef enum
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDesaturateMode;
 
-
 #define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
 
 GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;

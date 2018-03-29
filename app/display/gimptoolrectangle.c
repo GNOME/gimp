@@ -3662,20 +3662,27 @@ gimp_tool_rectangle_get_constraints (GimpToolRectangle       *rectangle,
   switch (constraint)
     {
     case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
-      *min_x = 0;
-      *min_y = 0;
-      *max_x = gimp_image_get_width  (image);
-      *max_y = gimp_image_get_height (image);
+      if (image)
+        {
+          *min_x = 0;
+          *min_y = 0;
+          *max_x = gimp_image_get_width  (image);
+          *max_y = gimp_image_get_height (image);
+        }
       break;
 
     case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
-      {
-        GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+      if (image)
+        {
+          GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-        gimp_item_get_offset (item, min_x, min_y);
-        *max_x = *min_x + gimp_item_get_width  (item);
-        *max_y = *min_y + gimp_item_get_height (item);
-      }
+          if (item)
+            {
+              gimp_item_get_offset (item, min_x, min_y);
+              *max_x = *min_x + gimp_item_get_width  (item);
+              *max_y = *min_y + gimp_item_get_height (item);
+            }
+        }
       break;
 
     default:

@@ -159,6 +159,7 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
     }
 
   g_free (filename);
+  filename = NULL;
 
   retval = g_dbus_proxy_call_sync (proxy, method, args,
                                    G_DBUS_CALL_FLAGS_NONE,

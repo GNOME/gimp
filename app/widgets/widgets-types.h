@@ -190,6 +190,7 @@ typedef struct _GimpFileProcView             GimpFileProcView;
 typedef struct _GimpFillEditor               GimpFillEditor;
 typedef struct _GimpGridEditor               GimpGridEditor;
 typedef struct _GimpHandleBar                GimpHandleBar;
+typedef struct _GimpHighlightableButton      GimpHighlightableButton;
 typedef struct _GimpHistogramBox             GimpHistogramBox;
 typedef struct _GimpHistogramView            GimpHistogramView;
 typedef struct _GimpIconPicker               GimpIconPicker;

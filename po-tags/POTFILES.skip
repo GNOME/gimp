@@ -1,4 +1,5 @@
 app
+app-tools
 build/windows/installer/lang/setup.isl.in
 data/tips
 desktop

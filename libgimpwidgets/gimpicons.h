@@ -33,7 +33,8 @@ G_BEGIN_DECLS
 
 /*  random actions that don't fit in any category  */
 
-#define GIMP_ICON_DETACH                    "gtk-convert"
+#define GIMP_ICON_ATTACH                    "gimp-attach"
+#define GIMP_ICON_DETACH                    "gimp-detach"
 #define GIMP_ICON_INVERT                    "gimp-invert"
 #define GIMP_ICON_RESET                     "gimp-reset"
 #define GIMP_ICON_SHRED                     "gimp-shred"
@@ -130,8 +131,8 @@ G_BEGIN_DECLS
 #define GIMP_ICON_COLOR_SELECTOR_TRIANGLE   "gimp-color-triangle"
 #define GIMP_ICON_COLOR_SELECTOR_WATER      "gimp-color-water"
 
-#define GIMP_ICON_COLOR_SPACE_LINEAR		"gimp-color-space-linear"
-#define GIMP_ICON_COLOR_SPACE_PERCEPTUAL	"gimp-color-space-perceptual"
+#define GIMP_ICON_COLOR_SPACE_LINEAR        "gimp-color-space-linear"
+#define GIMP_ICON_COLOR_SPACE_PERCEPTUAL    "gimp-color-space-perceptual"
 
 #define GIMP_ICON_COLORS_DEFAULT            "gimp-default-colors"
 #define GIMP_ICON_COLORS_SWAP               "gimp-swap-colors"

@@ -476,8 +476,8 @@ gimp_dial_draw_segment (cairo_t  *cr,
   else
     slice = gimp_dial_normalize_angle (beta - alpha);
 
-  gimp_cairo_add_arc (cr, radius, radius, segment_dist,
-                      alpha, slice);
+  gimp_cairo_arc (cr, radius, radius, segment_dist,
+                  alpha, slice);
 }
 
 static void

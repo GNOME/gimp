@@ -4,7 +4,7 @@
     "base": "org.gimp.BaseApp",
     "base-version": "stable",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.24",
+    "runtime-version": "3.28",
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.9",
     "rename-desktop-file": "gimp.desktop",
@@ -81,7 +81,21 @@
                     "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
                 }
             ]
-	},
+        },
+        {
+            "name": "openjpeg",
+            "cmake": true,
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
+                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
+                }
+            ]
+        },
         {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],

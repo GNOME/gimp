@@ -840,6 +840,8 @@ file_html_table_LDADD = \
 	$(INTLLIBS)		\
 	$(file_html_table_RC)
 
+file_jp2_load_CFLAGS = $(OPENJPEG_CFLAGS)
+
 file_jp2_load_SOURCES = \
 	file-jp2-load.c
 
@@ -854,7 +856,7 @@ file_jp2_load_LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
-	$(JP2_LIBS)		\
+	$(OPENJPEG_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jp2_load_RC)

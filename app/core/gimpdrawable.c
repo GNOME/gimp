@@ -803,8 +803,7 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                       gegl_buffer_get_width  (buffer),
                       gegl_buffer_get_height (buffer));
 
-  if (old_has_alpha >= 0 &&
-      old_has_alpha != gimp_drawable_has_alpha (drawable))
+  if (gimp_drawable_has_alpha (drawable) != old_has_alpha)
     gimp_drawable_alpha_changed (drawable);
 
   g_object_notify (G_OBJECT (drawable), "buffer");
@@ -1183,6 +1182,32 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
   g_object_thaw_notify (G_OBJECT (drawable));
 
   gimp_drawable_update (drawable, 0, 0, -1, -1);
+}
+
+void
+gimp_drawable_steal_buffer (GimpDrawable *drawable,
+                            GimpDrawable *src_drawable)
+{
+  GeglBuffer *buffer;
+  GeglBuffer *replacement_buffer;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_DRAWABLE (src_drawable));
+
+  buffer = gimp_drawable_get_buffer (src_drawable);
+
+  g_return_if_fail (buffer != NULL);
+
+  g_object_ref (buffer);
+
+  replacement_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, 1, 1),
+                                        gegl_buffer_get_format (buffer));
+
+  gimp_drawable_set_buffer (src_drawable, FALSE, NULL, replacement_buffer);
+  gimp_drawable_set_buffer (drawable,     FALSE, NULL, buffer);
+
+  g_object_unref (replacement_buffer);
+  g_object_unref (buffer);
 }
 
 GeglNode *

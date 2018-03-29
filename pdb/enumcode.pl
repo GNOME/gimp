@@ -68,7 +68,8 @@ G_BEGIN_DECLS
 HEADER
 
 foreach (sort keys %enums) {
-    if (! ($enums{$_}->{header} =~ /libgimp/)) {
+    if (! ($enums{$_}->{header} =~ /libgimp/) &&
+	! $enums{$_}->{external}) {
         my $gtype = $func = $_;
 
 	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U$1\E_/g; s/_$// }
@@ -125,11 +126,18 @@ foreach (sort keys %enums) {
     if (! ($_ =~ /GimpUnit/)) {
 	my $enum = $enums{$_};
 	my $func = $_;
+	my $gegl_enum = ($func =~ /Gegl/);
 
-	for ($func) { s/Gimp//; s/PDB/Pdb/; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
+	for ($func) { s/Gimp//; s/Gegl//; s/PDB/Pdb/;
+		      s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE ",\n" unless $first;
-	print ENUMFILE "  gimp_$func\_get_type";
+
+	if ($gegl_enum) {
+	    print ENUMFILE "  gegl_$func\_get_type";
+	} else {
+	    print ENUMFILE "  gimp_$func\_get_type";
+	}
 
 	$first = 0;
     }

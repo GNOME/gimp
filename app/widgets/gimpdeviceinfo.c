@@ -192,8 +192,8 @@ gimp_device_info_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert ((info->device == NULL         && info->display == NULL) ||
-            (GDK_IS_DEVICE (info->device) && GDK_IS_DISPLAY (info->display)));
+  gimp_assert ((info->device == NULL         && info->display == NULL) ||
+               (GDK_IS_DEVICE (info->device) && GDK_IS_DISPLAY (info->display)));
 
   gimp = GIMP_CONTEXT (object)->gimp;
 

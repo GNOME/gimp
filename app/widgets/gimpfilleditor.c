@@ -107,7 +107,7 @@ gimp_fill_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_FILL_OPTIONS (editor->options));
+  gimp_assert (GIMP_IS_FILL_OPTIONS (editor->options));
 
   box = gimp_prop_enum_radio_box_new (G_OBJECT (editor->options), "style",
                                       0, 0);

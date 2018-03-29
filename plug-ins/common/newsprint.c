@@ -1805,7 +1805,7 @@ newsprint (GimpDrawable *drawable,
 
       if (! gimp_drawable_mask_intersect (drawable->drawable_id,
                                           &x1, &y1, &w, &h))
-	return;
+        return;
 
       x2 = x1 + w;
       y2 = y1 + h;

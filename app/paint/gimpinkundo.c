@@ -69,7 +69,7 @@ gimp_ink_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core));
+  gimp_assert (GIMP_IS_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core));
 
   ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
 

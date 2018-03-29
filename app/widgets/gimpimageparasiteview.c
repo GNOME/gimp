@@ -123,8 +123,8 @@ gimp_image_parasite_view_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (view->parasite != NULL);
-  g_assert (view->image != NULL);
+  gimp_assert (view->parasite != NULL);
+  gimp_assert (view->image != NULL);
 
   g_signal_connect_object (view->image, "parasite-attached",
                            G_CALLBACK (gimp_image_parasite_view_parasite_changed),

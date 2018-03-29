@@ -877,28 +877,29 @@ hasPropertyReleaseTagData (GtkBuilder *builder)
 gboolean
 hasCreatorTagData (GtkBuilder *builder)
 {
-  gint loop;
+  gboolean has_data = FALSE;
+  gint     loop;
 
   for (loop = 0; loop < creatorContactInfoHeader.size; loop++)
     {
-      GObject     *object;
-      const gchar *text;
+      GObject *object;
 
       object = gtk_builder_get_object (builder, default_metadata_tags[loop].tag);
 
-      if (! strcmp (creatorContactInfoTags[loop].mode, "single"))
+      if (GTK_IS_ENTRY (object))
         {
-          text = gtk_entry_get_text (GTK_ENTRY (object));
+          const gchar *text = gtk_entry_get_text (GTK_ENTRY (object));
 
           if (text && *text)
-            return TRUE;
+            has_data = TRUE;
         }
-      else if (! strcmp (creatorContactInfoTags[loop].mode, "multi"))
+      else if (GTK_IS_TEXT_VIEW (object))
         {
           GtkTextView   *text_view = GTK_TEXT_VIEW (object);
           GtkTextBuffer *buffer    = gtk_text_view_get_buffer (text_view);
           GtkTextIter    start;
           GtkTextIter    end;
+          gchar         *text;
 
           gtk_text_buffer_get_start_iter (buffer, &start);
           gtk_text_buffer_get_end_iter (buffer, &end);
@@ -906,11 +907,14 @@ hasCreatorTagData (GtkBuilder *builder)
           text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
 
           if (text && *text)
-            return TRUE;
+            has_data = TRUE;
+
+          if (text)
+            g_free (text);
         }
     }
 
-  return FALSE;
+  return has_data;
 }
 
 /* ============================================================================

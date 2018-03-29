@@ -910,7 +910,7 @@ gimp_unescape_uri_string (const char *escaped,
       *out++ = c;
     }
 
-  g_assert (out - result <= len);
+  gimp_assert (out - result <= len);
   *out = '\0';
 
   if (in != in_end)

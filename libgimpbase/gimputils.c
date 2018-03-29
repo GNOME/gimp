@@ -25,10 +25,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
-#endif
-
 #ifdef PLATFORM_OSX
 #include <AppKit/AppKit.h>
 #endif
@@ -45,6 +41,7 @@
 # include <windows.h>
 # include <shlobj.h>
 #endif
+#endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
 #include "gimputils.h"
@@ -60,6 +57,13 @@
  * Utilities of general interest
  **/
 
+static gboolean gimp_utils_generic_available (const gchar *program,
+                                              gint         major,
+                                              gint         minor);
+static gboolean gimp_utils_gdb_available     (gint         major,
+                                              gint         minor);
+static gboolean gimp_utils_lldb_available    (gint         major,
+                                              gint         minor);
 
 /**
  * gimp_utf8_strtrim:
@@ -1075,21 +1079,53 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
 }
 
 /**
- * gimp_print_stack_trace:
+ * gimp_stack_trace_available:
+ * @optimal: whether we get optimal traces.
+ *
+ * Returns #TRUE if we have dependencies to generate backtraces. If
+ * @optimal is #TRUE, the function will return #TRUE only when we
+ * are able to generate optimal traces (i.e. with GDB or LLDB);
+ * otherwise we return #TRUE even if only backtrace() API is available.
+ *
+ * On Win32, we return TRUE if Dr. Mingw is built-in, FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_stack_trace_available (gboolean optimal)
+{
+#ifndef G_OS_WIN32
+  if (gimp_utils_gdb_available (7, 0) ||
+      gimp_utils_lldb_available (0, 0))
+    return TRUE;
+#ifdef HAVE_EXECINFO_H
+  if (! optimal)
+    return TRUE;
+#endif
+#else /* G_OS_WIN32 */
+#ifdef HAVE_EXCHNDL
+  return TRUE;
+#endif
+#endif /* G_OS_WIN32 */
+  return FALSE;
+}
+
+/**
+ * gimp_stack_trace_print:
  * @prog_name: the program to attach to.
- * @fd: a #FILE * file descriptor.
+ * @stream: a #FILE * stream.
  * @trace: location to store a newly allocated string of the trace.
  *
  * Attempts to generate a stack trace at current code position in
- * @prog_name. @prog_name is mostly a helper, but it has to be the
- * program name of the current program. This function is not meant to
- * generate stack trace for third-party programs, and will attach the
- * current process id only.
+ * @prog_name. @prog_name is mostly a helper and can be set to NULL.
+ * Nevertheless if set, it has to be the current program name (argv[0]).
+ * This function is not meant to generate stack trace for third-party
+ * programs, and will attach the current process id only.
  * Internally, this function uses `gdb` or `lldb` if they are available,
  * or the stacktrace() API on platforms where it is available. It always
  * fails on Win32.
  *
- * The stack trace, once generated, will either be printed to @fd or
+ * The stack trace, once generated, will either be printed to @stream or
  * returned as a newly allocated string in @trace, if not #NULL.
  *
  * In some error cases (e.g. segmentation fault), trying to allocate
@@ -1103,11 +1139,11 @@ gimp_flags_value_get_abbrev (GFlagsClass *flags_class,
  * Since: 2.10
  **/
 gboolean
-gimp_print_stack_trace (const gchar *prog_name,
-                        gpointer     fd,
+gimp_stack_trace_print (const gchar *prog_name,
+                        gpointer     stream,
                         gchar      **trace)
 {
-  gboolean  stack_printed = FALSE;
+  gboolean stack_printed = FALSE;
 
   /* This works only on UNIX systems. */
 #ifndef G_OS_WIN32
@@ -1116,12 +1152,21 @@ gimp_print_stack_trace (const gchar *prog_name,
   pid_t    pid;
   gchar    buffer[256];
   ssize_t  read_n;
+  int      sync_fd[2];
   int      out_fd[2];
 
   g_snprintf (gimp_pid, 16, "%u", (guint) getpid ());
 
+  if (pipe (sync_fd) == -1)
+    {
+      return FALSE;
+    }
+
   if (pipe (out_fd) == -1)
     {
+      close (sync_fd[0]);
+      close (sync_fd[1]);
+
       return FALSE;
     }
 
@@ -1132,17 +1177,36 @@ gimp_print_stack_trace (const gchar *prog_name,
       gchar *args[7] = { "gdb", "-batch", "-ex", "backtrace full",
                          (gchar *) prog_name, NULL, NULL };
 
+      if (prog_name == NULL)
+        args[4] = "-p";
+
       args[5] = gimp_pid;
+
+      /* Wait until the parent enabled us to ptrace it. */
+      {
+        gchar dummy;
+
+        close (sync_fd[1]);
+        while (read (sync_fd[0], &dummy, 1) < 0 && errno == EINTR);
+        close (sync_fd[0]);
+      }
 
       /* Redirect the debugger output. */
       dup2 (out_fd[1], STDOUT_FILENO);
       close (out_fd[0]);
       close (out_fd[1]);
 
-      /* Run GDB. */
-      if (execvp (args[0], args) == -1)
+      /* Run GDB if version 7.0 or over. Why I do such a check is that
+       * it turns out older versions may not only fail, but also have
+       * very undesirable side effects like terminating the debugged
+       * program, at least on FreeBSD where GDB 6.1 is apparently
+       * installed by default on the stable release at day of writing.
+       * See bug 793514. */
+      if (! gimp_utils_gdb_available (7, 0) ||
+          execvp (args[0], args) == -1)
         {
-          /* LLDB as alternative. */
+          /* LLDB as alternative if the GDB call failed or if it was in
+           * a too-old version. */
           gchar *args_lldb[11] = { "lldb", "--attach-pid", NULL, "--batch",
                                    "--one-line", "bt",
                                    "--one-line-on-crash", "bt",
@@ -1160,7 +1224,12 @@ gimp_print_stack_trace (const gchar *prog_name,
       /* Main process */
       int status;
 
-      waitpid (pid, &status, 0);
+      /* Allow the child to ptrace us, and signal it to start. */
+      close (sync_fd[0]);
+#ifdef PR_SET_PTRACER
+      prctl (PR_SET_PTRACER, pid, 0, 0, 0);
+#endif
+      close (sync_fd[1]);
 
       /* It is important to close the writing side of the pipe, otherwise
        * the read() will wait forever without getting the information that
@@ -1177,8 +1246,8 @@ gimp_print_stack_trace (const gchar *prog_name,
           stack_printed = TRUE;
 
           buffer[read_n] = '\0';
-          if (fd)
-            g_fprintf (fd, "%s", buffer);
+          if (stream)
+            g_fprintf (stream, "%s", buffer);
           if (trace)
             {
               if (! gtrace)
@@ -1187,12 +1256,18 @@ gimp_print_stack_trace (const gchar *prog_name,
             }
         }
       close (out_fd[0]);
+
+#ifdef PR_SET_PTRACER
+      /* Clear ptrace permission set above */
+      prctl (PR_SET_PTRACER, 0, 0, 0, 0);
+#endif
+
+      waitpid (pid, &status, 0);
     }
-  else if (pid == (pid_t) -1)
-    {
-      /* Fork failed. */
-      return FALSE;
-    }
+  /* else if (pid == (pid_t) -1)
+   * Fork failed!
+   * Just continue, maybe the backtrace() API will succeed.
+   */
 
 #ifdef HAVE_EXECINFO_H
   if (! stack_printed)
@@ -1200,32 +1275,43 @@ gimp_print_stack_trace (const gchar *prog_name,
       /* As a last resort, try using the backtrace() Linux API. It is a bit
        * less fancy than gdb or lldb, which is why it is not given priority.
        */
-      void  *bt_buf[100];
-      char **symbols;
-      int    n_symbols;
-      int    i;
+      void *bt_buf[100];
+      int   n_symbols;
 
       n_symbols = backtrace (bt_buf, 100);
-      symbols = backtrace_symbols (bt_buf, n_symbols);
-      if (symbols)
+      if (trace && n_symbols)
         {
-          stack_printed = TRUE;
+          char **symbols;
+          int    i;
 
-          for (i = 0; i < n_symbols; i++)
+          symbols = backtrace_symbols (bt_buf, n_symbols);
+          if (symbols)
             {
-              if (fd)
-                g_fprintf (fd, "%s\n", (const gchar *) symbols[i]);
-              if (trace)
+              for (i = 0; i < n_symbols; i++)
                 {
-                  if (! gtrace)
-                    gtrace = g_string_new (NULL);
-                  g_string_append (gtrace,
-                                   (const gchar *) symbols[i]);
-                  g_string_append_c (gtrace, '\n');
+                  if (stream)
+                    g_fprintf (stream, "%s\n", (const gchar *) symbols[i]);
+                  if (trace)
+                    {
+                      if (! gtrace)
+                        gtrace = g_string_new (NULL);
+                      g_string_append (gtrace,
+                                       (const gchar *) symbols[i]);
+                      g_string_append_c (gtrace, '\n');
+                    }
                 }
+              free (symbols);
             }
-          free (symbols);
         }
+      else if (n_symbols)
+        {
+          /* This allows to generate traces without memory allocation.
+           * In some cases, this is necessary, especially during
+           * segfault-type crashes.
+           */
+          backtrace_symbols_fd (bt_buf, n_symbols, fileno ((FILE *) stream));
+        }
+      stack_printed = (n_symbols > 0);
     }
 #endif /* HAVE_EXECINFO_H */
 
@@ -1242,17 +1328,18 @@ gimp_print_stack_trace (const gchar *prog_name,
 }
 
 /**
- * gimp_print_stack_trace:
+ * gimp_stack_trace_query:
  * @prog_name: the program to attach to.
  *
  * This is mostly the same as g_on_error_query() except that we use our
  * own backtrace function, much more complete.
+ * @prog_name must be the current program name (argv[0]).
  * It does nothing on Win32.
  *
  * Since: 2.10
  **/
 void
-gimp_on_error_query (const gchar *prog_name)
+gimp_stack_trace_query (const gchar *prog_name)
 {
 #ifndef G_OS_WIN32
   gchar buf[16];
@@ -1280,11 +1367,144 @@ gimp_on_error_query (const gchar *prog_name)
   else if ((buf[0] == 'S' || buf[0] == 's')
            && buf[1] == '\n')
     {
-      if (! gimp_print_stack_trace (prog_name, stdout, NULL))
+      if (! gimp_stack_trace_print (prog_name, stdout, NULL))
         g_fprintf (stderr, "%s\n", "Stack trace not available on your system.");
       goto retry;
     }
   else
     goto retry;
 #endif
+}
+
+
+/* Private functions. */
+
+static gboolean
+gimp_utils_generic_available (const gchar *program,
+                              gint         major,
+                              gint         minor)
+{
+#ifndef G_OS_WIN32
+  pid_t pid;
+  int   out_fd[2];
+
+  if (pipe (out_fd) == -1)
+    {
+      return FALSE;
+    }
+
+  /* XXX: I don't use g_spawn_sync() or similar glib functions because
+   * to read the contents of the stdout, these functions would allocate
+   * memory dynamically. As we know, when debugging crashes, this is a
+   * definite blocker. So instead I simply use a buffer on the stack
+   * with a lower level fork() call.
+   */
+  pid = fork ();
+  if (pid == 0)
+    {
+      /* Child process. */
+      gchar *args[3] = { (gchar *) program, "--version", NULL };
+
+      /* Redirect the debugger output. */
+      dup2 (out_fd[1], STDOUT_FILENO);
+      close (out_fd[0]);
+      close (out_fd[1]);
+
+      /* Run version check. */
+      execvp (args[0], args);
+      _exit (-1);
+    }
+  else if (pid > 0)
+    {
+      /* Main process */
+      gchar    buffer[256];
+      ssize_t  read_n;
+      int      status;
+      gint     installed_major = 0;
+      gint     installed_minor = 0;
+      gboolean major_reading = FALSE;
+      gboolean minor_reading = FALSE;
+      gint     i;
+      gchar    c;
+
+      waitpid (pid, &status, 0);
+
+      if (! WIFEXITED (status) || WEXITSTATUS (status) != 0)
+        return FALSE;
+
+      /* It is important to close the writing side of the pipe, otherwise
+       * the read() will wait forever without getting the information that
+       * writing is finished.
+       */
+      close (out_fd[1]);
+
+      /* I could loop forever until EOL, but I am pretty sure the
+       * version information is stored on the first line and one call to
+       * read() with 256 characters should be more than enough.
+       */
+      read_n = read (out_fd[0], buffer, 256);
+
+      /* This is quite a very stupid parser. I only look for the first
+       * numbers and consider them as version information. This works
+       * fine for both GDB and LLDB as far as I can see for the output
+       * of `${program} --version` but this should obviously not be
+       * considered as a *really* generic version test.
+       */
+      for (i = 0; i < read_n; i++)
+        {
+          c = buffer[i];
+          if (c >= '0' && c <= '9')
+            {
+              if (minor_reading)
+                {
+                  installed_minor = 10 * installed_minor + (c - '0');
+                }
+              else
+                {
+                  major_reading = TRUE;
+                  installed_major = 10 * installed_major + (c - '0');
+                }
+            }
+          else if (c == '.')
+            {
+              if (major_reading)
+                {
+                  minor_reading = TRUE;
+                  major_reading = FALSE;
+                }
+              else if (minor_reading)
+                {
+                  break;
+                }
+            }
+          else if (c == '\n')
+            {
+              /* Version information should be in the first line. */
+              break;
+            }
+        }
+      close (out_fd[0]);
+
+      return (installed_major > 0 &&
+              (installed_major > major ||
+               (installed_major == major && installed_minor >= minor)));
+    }
+#endif
+
+  /* Fork failed, or Win32. */
+  return FALSE;
+}
+
+static gboolean
+gimp_utils_gdb_available (gint major,
+                          gint minor)
+{
+  return gimp_utils_generic_available ("gdb", major, minor);
+}
+
+static gboolean
+gimp_utils_lldb_available (gint major,
+                           gint minor)
+{
+  return gimp_utils_generic_available ("lldb", major, minor);
 }

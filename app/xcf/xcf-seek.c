@@ -46,7 +46,7 @@ xcf_seek_pos (XcfInfo  *info,
           return FALSE;
         }
 
-      g_assert (info->cp == g_seekable_tell (info->seekable));
+      gimp_assert (info->cp == g_seekable_tell (info->seekable));
     }
 
   return TRUE;

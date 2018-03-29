@@ -118,7 +118,7 @@ G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selection_parent_class
 
-static guint selection_signals[LAST_SIGNAL] = { 0 };
+static guint selection_signals[LAST_SIGNAL] = { 0, };
 
 
 static void

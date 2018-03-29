@@ -82,10 +82,13 @@
         </_p>
         <ul>
           <_li>
-            Up to 32-bit per color channel
+            High bit depth color processing (16/32-bit per color channel)
           </_li>
           <_li>
-            On-canvas effect previews
+            Core color management
+          </_li>
+          <_li>
+            On-canvas effect preview
           </_li>
           <_li>
             Multi-threaded and hardware-accelerated rendering and
@@ -95,20 +98,21 @@
             New and improved tools
           </_li>
           <_li>
-            Color-management improvements
+            Many image format support improved, in particular better PSD import
           </_li>
           <_li>
-            Many file format improvements and new formats:
-            OpenEXR, WebP, HGT, RGBE…
-          </_li>
-          <_li>
-            Metadata viewing and editing
+            Newly supported image formats: OpenEXR, WebP, HGT, RGBE…
           </_li>
           <_li>
             Improved digital painting: canvas rotation and
             flipping, symmetry painting, MyPaint brushes…
           </_li>
-            Basic HiDPI support.
+          <_li>
+            Metadata viewing and editing
+          </_li>
+          <_li>
+            Basic HiDPI support
+          </_li>
           <_li>
             And much, much more…
           </_li>
@@ -116,6 +120,29 @@
       </description>
     </release>
     -->
+
+    <release version="2.10.0-rc1" date="2018-03-26" type="development">
+      <description>
+        <_p>
+        GIMP 2.10.0-RC1 is the first release candidate before GIMP
+        2.10.0 stable release, with a focus on debugging and stability.
+        Other than the many bug fixes, most notable improvements are:
+        </_p>
+        <ul>
+          <_li>New dashboard dockable to monitor GIMP resource usage</_li>
+          <_li>New debug dialog to produce back traces and other debug
+          data, encouraging to report bugs</_li>
+          <_li>Unsaved images can now be recovered after a crash</_li>
+          <_li>Layer masks on layer groups</_li>
+          <_li>JPEG 2000 support improved for high bit depth and various
+          color spaces</_li>
+          <_li>Screenshot and color picking improved on various platforms</_li>
+          <_li>Metadata defaults preferences now available</_li>
+          <_li>Various GUI polishing</_li>
+        </ul>
+        <_p>For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-released/</_p>
+      </description>
+    </release>
 
     <release version="2.9.8" date="2017-12-12" type="development">
       <description>
@@ -141,7 +168,9 @@
     <release version="2.9.6" date="2017-08-24" type="development" />
     <release version="2.9.4" date="2016-07-13" type="development" />
     <release version="2.9.2" date="2015-11-27" type="development" />
+  </releases>
 
+  <releases>
     <release version="2.8.22" date="2017-05-11"/>
     <release version="2.8.20" date="2017-02-01"/>
     <release version="2.8.18" date="2016-07-14"/>

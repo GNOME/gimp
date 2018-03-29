@@ -125,7 +125,7 @@ gimp_brush_tool_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
+  gimp_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
 
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),

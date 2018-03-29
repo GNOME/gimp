@@ -140,7 +140,7 @@ gimp_device_manager_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (private->gimp));
+  gimp_assert (GIMP_IS_GIMP (private->gimp));
 
   disp_manager = gdk_display_manager_get ();
 

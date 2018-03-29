@@ -110,6 +110,7 @@ app/core/gimp-gui.c
 app/core/gimp-internal-data.c
 app/core/gimp-modules.c
 app/core/gimp-palettes.c
+app/core/gimp-spawn.c
 app/core/gimp-tags.c
 app/core/gimp-units.c
 app/core/gimp-user-install.c
@@ -383,6 +384,7 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-recursive-transform.c
 app/propgui/gimppropgui-shadows-highlights.c
 app/propgui/gimppropgui-spiral.c
 app/propgui/gimppropgui-supernova.c
@@ -610,6 +612,6 @@ app/xcf/xcf-save.c
 app/xcf/xcf-seek.c
 app/xcf/xcf-write.c
 
-tools/gimp-debug-tool.c
+app-tools/gimp-debug-tool.c
 
 data/tags/gimp-tags-default.xml.in

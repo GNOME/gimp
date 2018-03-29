@@ -192,6 +192,10 @@ static void   gimp_color_select_set_color       (GimpColorSelector  *selector,
                                                  const GimpHSV      *hsv);
 static void   gimp_color_select_set_channel     (GimpColorSelector  *selector,
                                                  GimpColorSelectorChannel  channel);
+static void   gimp_color_select_set_model_visible
+                                                (GimpColorSelector  *selector,
+                                                 GimpColorSelectorModel  model,
+                                                 gboolean            visible);
 static void   gimp_color_select_set_config      (GimpColorSelector  *selector,
                                                  GimpColorConfig    *config);
 
@@ -270,13 +274,6 @@ static void   gimp_color_select_notify_config      (GimpColorConfig  *config,
                                                     const GParamSpec *pspec,
                                                     GimpColorSelect  *select);
 
-static void   gimp_color_select_switch_page        (GtkNotebook       *notebook,
-                                                    GtkWidget         *page,
-                                                    gint               num,
-                                                    GimpColorSelect   *select);
-static void   gimp_color_select_model_changed      (GimpColorSelector *selector,
-                                                    GimpColorSelectorModel  model,
-                                                    GtkNotebook       *color_model_notebook);
 
 G_DEFINE_TYPE (GimpColorSelect, gimp_color_select, GIMP_TYPE_COLOR_SELECTOR)
 
@@ -330,6 +327,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_toggles_sensitive = gimp_color_select_togg_sensitive;
   selector_class->set_color             = gimp_color_select_set_color;
   selector_class->set_channel           = gimp_color_select_set_channel;
+  selector_class->set_model_visible     = gimp_color_select_set_model_visible;
   selector_class->set_config            = gimp_color_select_set_config;
 
   fish_rgb_to_lch    = babl_fish (babl_format ("R'G'B'A double"),
@@ -346,11 +344,12 @@ gimp_color_select_init (GimpColorSelect *select)
   GimpColorSelector      *selector = GIMP_COLOR_SELECTOR (select);
   GtkWidget              *hbox;
   GtkWidget              *frame;
-  GtkWidget              *notebook;
+  GtkWidget              *vbox;
   GEnumClass             *model_class;
   GEnumClass             *channel_class;
   GimpEnumDesc           *enum_desc;
   GimpColorSelectorModel  model;
+  GSList                 *group = NULL;
 
   /* Default values. */
   select->z_color_fill  = COLOR_SELECT_HUE;
@@ -419,99 +418,82 @@ gimp_color_select_init (GimpColorSelect *select)
                     G_CALLBACK (gimp_color_select_z_events),
                     select);
 
-  notebook = gtk_notebook_new ();
-  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_RIGHT);
-  gtk_widget_show (notebook);
-  gtk_box_pack_start (GTK_BOX (hbox), notebook, FALSE, FALSE, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   model_class   = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_MODEL);
   channel_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
 
-  for (model = GIMP_COLOR_SELECTOR_RGB;
-       model <= GIMP_COLOR_SELECTOR_HSV;
+  for (model = GIMP_COLOR_SELECTOR_MODEL_RGB;
+       model <= GIMP_COLOR_SELECTOR_MODEL_HSV;
        model++)
     {
-      GtkWidget *label;
-
       enum_desc = gimp_enum_get_desc (model_class, model);
 
       select->toggle_box[model] = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-      gtk_widget_show (select->toggle_box[model]);
+      gtk_box_pack_start (GTK_BOX (vbox), select->toggle_box[model],
+                          FALSE, FALSE, 0);
 
-      label = gtk_label_new (gettext (enum_desc->value_desc));
-      gtk_label_set_angle (GTK_LABEL (label), 270.0);
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                select->toggle_box[model],
-                                label);
-      gimp_help_set_help_data (gtk_notebook_get_tab_label (GTK_NOTEBOOK (notebook),
-                                                           select->toggle_box[model]),
-                               gettext (enum_desc->value_help), NULL);
+      if (gimp_color_selector_get_model_visible (selector, model))
+        gtk_widget_show (select->toggle_box[model]);
 
       /*  channel toggles  */
-        {
-          GimpColorSelectorChannel  channel = GIMP_COLOR_SELECTOR_RED;
-          GimpColorSelectorChannel  end_channel;
-          GSList                   *group = NULL;
+      {
+        GimpColorSelectorChannel  channel = GIMP_COLOR_SELECTOR_RED;
+        GimpColorSelectorChannel  end_channel;
 
-          switch (model)
-            {
-            case GIMP_COLOR_SELECTOR_RGB:
-              channel = GIMP_COLOR_SELECTOR_RED;
-              break;
-            case GIMP_COLOR_SELECTOR_LCH:
-              channel = GIMP_COLOR_SELECTOR_LCH_LIGHTNESS;
-              break;
-            case GIMP_COLOR_SELECTOR_HSV:
-              channel = GIMP_COLOR_SELECTOR_HUE;
-              break;
-            default:
-              /* Should not happen. */
-              g_return_if_reached ();
-              break;
-            }
-          end_channel = channel + 3;
+        switch (model)
+          {
+          case GIMP_COLOR_SELECTOR_MODEL_RGB:
+            channel = GIMP_COLOR_SELECTOR_RED;
+            break;
+          case GIMP_COLOR_SELECTOR_MODEL_LCH:
+            channel = GIMP_COLOR_SELECTOR_LCH_LIGHTNESS;
+            break;
+          case GIMP_COLOR_SELECTOR_MODEL_HSV:
+            channel = GIMP_COLOR_SELECTOR_HUE;
+            break;
+          default:
+            /* Should not happen. */
+            g_return_if_reached ();
+            break;
+          }
 
-          for (; channel < end_channel; channel++)
-            {
-              GtkWidget *button;
+        end_channel = channel + 3;
 
-              enum_desc = gimp_enum_get_desc (channel_class, channel);
+        for (; channel < end_channel; channel++)
+          {
+            GtkWidget *button;
 
-              button = gtk_radio_button_new_with_mnemonic (group,
-                                                           gettext (enum_desc->value_desc));
-              group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-              gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-              gtk_box_pack_start (GTK_BOX (select->toggle_box[model]), button,
-                                  TRUE, TRUE, 0);
-              gtk_widget_show (button);
+            enum_desc = gimp_enum_get_desc (channel_class, channel);
 
-              g_object_set_data (G_OBJECT (button), "channel",
-                                 GINT_TO_POINTER (channel));
+            button = gtk_radio_button_new_with_mnemonic (group,
+                                                         gettext (enum_desc->value_desc));
+            group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+            gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+            gtk_box_pack_start (GTK_BOX (select->toggle_box[model]), button,
+                                TRUE, TRUE, 0);
+            gtk_widget_show (button);
 
-              if (channel == gimp_color_selector_get_channel (selector))
-                gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+            g_object_set_data (G_OBJECT (button), "channel",
+                               GINT_TO_POINTER (channel));
 
-              gimp_help_set_help_data (button, gettext (enum_desc->value_help), NULL);
+            if (channel == gimp_color_selector_get_channel (selector))
+              gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-              g_signal_connect (button, "toggled",
-                                G_CALLBACK (gimp_color_select_channel_toggled),
-                                select);
-            }
+            gimp_help_set_help_data (button, gettext (enum_desc->value_help),
+                                     NULL);
 
-        }
+            g_signal_connect (button, "toggled",
+                              G_CALLBACK (gimp_color_select_channel_toggled),
+                              select);
+          }
+      }
     }
 
   g_type_class_unref (model_class);
   g_type_class_unref (channel_class);
-
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook),
-                                 (gint) gimp_color_selector_get_model (selector));
-  g_signal_connect (notebook, "switch-page",
-                    G_CALLBACK (gimp_color_select_switch_page),
-                    select);
-  g_signal_connect (select, "model-changed",
-                    G_CALLBACK (gimp_color_select_model_changed),
-                    notebook);
 }
 
 static void
@@ -628,6 +610,16 @@ gimp_color_select_set_channel (GimpColorSelector        *selector,
 
   gimp_color_select_update (select,
                             UPDATE_POS | UPDATE_Z_COLOR | UPDATE_XY_COLOR);
+}
+
+static void
+gimp_color_select_set_model_visible (GimpColorSelector      *selector,
+                                     GimpColorSelectorModel  model,
+                                     gboolean                visible)
+{
+  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
+
+  gtk_widget_set_visible (select->toggle_box[model], visible);
 }
 
 static void
@@ -2014,32 +2006,4 @@ gimp_color_select_notify_config (GimpColorConfig  *config,
                       select->oog_color + 2);
   select->xy_needs_render = TRUE;
   select->z_needs_render  = TRUE;
-}
-
-static void
-gimp_color_select_switch_page (GtkNotebook     *notebook,
-                               GtkWidget       *page,
-                               gint             num,
-                               GimpColorSelect *select)
-{
-  gimp_color_selector_set_model (GIMP_COLOR_SELECTOR (select),
-                                 (GimpColorSelectorModel) num);
-}
-
-static void
-gimp_color_select_model_changed (GimpColorSelector      *selector,
-                                 GimpColorSelectorModel  model,
-                                 GtkNotebook            *color_model_notebook)
-{
-  GimpColorSelect *select = GIMP_COLOR_SELECT (selector);
-  GList           *children;
-  GtkButton       *button;
-
-  /* Select the first channel. */
-  children = gtk_container_get_children (GTK_CONTAINER (select->toggle_box[model]));
-  button = children->data;
-  g_list_free (children);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-  gtk_notebook_set_current_page (color_model_notebook, (gint) model);
 }

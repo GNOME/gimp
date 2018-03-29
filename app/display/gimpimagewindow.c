@@ -378,8 +378,8 @@ gimp_image_window_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (private->gimp));
-  g_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
+  gimp_assert (GIMP_IS_GIMP (private->gimp));
+  gimp_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
 
   menu_factory = gimp_dialog_factory_get_menu_factory (private->dialog_factory);
 
@@ -1904,7 +1904,7 @@ gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  g_assert (private->active_shell != NULL);
+  gimp_assert (private->active_shell != NULL);
 
   gimp_ui_manager_update (private->menubar_manager,
                           private->active_shell->display);

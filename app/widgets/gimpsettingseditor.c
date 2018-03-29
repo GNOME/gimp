@@ -164,9 +164,9 @@ gimp_settings_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (private->gimp));
-  g_assert (GIMP_IS_CONFIG (private->config));
-  g_assert (GIMP_IS_CONTAINER (private->container));
+  gimp_assert (GIMP_IS_GIMP (private->gimp));
+  gimp_assert (GIMP_IS_CONFIG (private->config));
+  gimp_assert (GIMP_IS_CONTAINER (private->container));
 
   private->view = gimp_container_tree_view_new (private->container,
                                                 gimp_get_user_context (private->gimp),

@@ -81,7 +81,7 @@ gimp_operation_erase_process (GeglOperation       *op,
 
   switch (layer_mode->real_composite_mode)
     {
-    case GIMP_LAYER_COMPOSITE_SRC_OVER:
+    case GIMP_LAYER_COMPOSITE_UNION:
       while (samples--)
         {
           gfloat layer_alpha;
@@ -125,7 +125,7 @@ gimp_operation_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+    case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
     case GIMP_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
@@ -156,7 +156,7 @@ gimp_operation_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_DST_ATOP:
+    case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
           gfloat        layer_alpha;
@@ -192,7 +192,7 @@ gimp_operation_erase_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_SRC_IN:
+    case GIMP_LAYER_COMPOSITE_INTERSECTION:
       while (samples--)
         {
           gint b;

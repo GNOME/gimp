@@ -180,7 +180,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   editor->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
                                               &rgb, &hsv,
-                                              GIMP_COLOR_SELECTOR_HUE);
+                                              GIMP_COLOR_SELECTOR_RED);
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (editor->notebook),
                                       FALSE);
   gtk_box_pack_start (GTK_BOX (editor), editor->notebook,

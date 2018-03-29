@@ -103,7 +103,7 @@ gimp_brush_cache_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_return_if_fail (cache->data_destroy != NULL);
+  gimp_assert (cache->data_destroy != NULL);
 }
 
 static void

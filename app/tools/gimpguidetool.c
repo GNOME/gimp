@@ -175,7 +175,7 @@ gimp_guide_tool_button_release (GimpTool              *tool,
                   break;
 
                 default:
-                  g_assert_not_reached ();
+                  gimp_assert_not_reached ();
                 }
             }
         }

@@ -33,6 +33,21 @@ down in a debugger (for instance GDB), by running GIMP with:
 
 > gimp-2.9 --g-fatal-warnings
 
+Note that if all you want is a stacktrace, it is not necessary anymore
+to use a debugger and --g-fatal-warnings. In Preferences > Debugging,
+make sure that all type of errors are debugged, and that you have either
+gdb or lldb installed. Then a graphical dialog will automatically appear
+upon encountering any WARNING or CRITICAL with backtraces and variable
+contents.
+
+Alternatively running GIMP with the CLI option --stack-trace-mode to
+values "query" or "always" will output a stacktrace too on terminal.
+But this happens only for crashes, so it still requires to use
+--g-fatal-warnings for WARNINGs and CRITICALs.
+
+Note: on Windows, even the debugging GUI happens only for crashes and
+requires that you built with Dr. Mingw dependency.
+
 ## Debugging GEGL code ##
 
 You may encounter this kind of warning upon exiting GIMP:

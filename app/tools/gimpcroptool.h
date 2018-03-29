@@ -40,6 +40,7 @@ struct _GimpCropTool
   GimpDrawTool    parent_instance;
 
   GimpImage      *current_image;
+  GimpLayer      *current_layer;
 
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;

@@ -81,32 +81,42 @@ gimp_text_tag_get_font (GtkTextTag *tag)
   return font;
 }
 
-void
-gimp_text_tag_get_color (GtkTextTag *tag,
-                         GimpRGB    *color)
+gboolean
+gimp_text_tag_get_fg_color (GtkTextTag *tag,
+                            GimpRGB    *color)
 {
   GdkColor *gdk_color;
+  gboolean  set;
 
   g_object_get (tag,
-                GIMP_TEXT_PROP_NAME_COLOR, &gdk_color,
+                "foreground-set",             &set,
+                GIMP_TEXT_PROP_NAME_FG_COLOR, &gdk_color,
                 NULL);
 
-  gimp_rgb_set_gdk_color (color, gdk_color);
+  if (set)
+    gimp_rgb_set_gdk_color (color, gdk_color);
 
   gdk_color_free (gdk_color);
+
+  return set;
 }
 
-void
+gboolean
 gimp_text_tag_get_bg_color (GtkTextTag *tag,
                             GimpRGB    *color)
 {
   GdkColor *gdk_color;
+  gboolean  set;
 
   g_object_get (tag,
+                "background-set",             &set,
                 GIMP_TEXT_PROP_NAME_BG_COLOR, &gdk_color,
                 NULL);
 
-  gimp_rgb_set_gdk_color (color, gdk_color);
+  if (set)
+    gimp_rgb_set_gdk_color (color, gdk_color);
 
   gdk_color_free (gdk_color);
+
+  return set;
 }

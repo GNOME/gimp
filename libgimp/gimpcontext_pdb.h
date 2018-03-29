@@ -142,6 +142,8 @@ gdouble                gimp_context_get_ink_blob_aspect_ratio  (void);
 gboolean               gimp_context_set_ink_blob_aspect_ratio  (gdouble                   aspect);
 gdouble                gimp_context_get_ink_blob_angle         (void);
 gboolean               gimp_context_set_ink_blob_angle         (gdouble                   angle);
+GeglDistanceMetric     gimp_context_get_distance_metric        (void);
+gboolean               gimp_context_set_distance_metric        (GeglDistanceMetric        metric);
 
 
 G_END_DECLS

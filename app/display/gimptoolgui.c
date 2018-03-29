@@ -160,6 +160,9 @@ gimp_tool_gui_dispose (GObject *object)
   if (private->shell)
     gimp_tool_gui_set_shell (GIMP_TOOL_GUI (object), NULL);
 
+  if (private->viewable)
+    gimp_tool_gui_set_viewable (GIMP_TOOL_GUI (object), NULL);
+
   g_clear_object (&private->vbox);
 
   if (private->dialog)
@@ -419,14 +422,22 @@ gimp_tool_gui_set_viewable (GimpToolGui  *gui,
   GimpToolGuiPrivate *private;
 
   g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   private = GET_PRIVATE (gui);
 
   if (private->viewable == viewable)
     return;
 
+  if (private->viewable)
+    g_object_remove_weak_pointer (G_OBJECT (private->viewable),
+                                  (gpointer) &private->viewable);
+
   private->viewable = viewable;
+
+  if (private->viewable)
+    g_object_add_weak_pointer (G_OBJECT (private->viewable),
+                               (gpointer) &private->viewable);
 
   gimp_tool_gui_update_viewable (gui);
 }
@@ -883,9 +894,13 @@ gimp_tool_gui_update_viewable (GimpToolGui *gui)
 
   if (! private->overlay)
     {
+      GimpContext *context = NULL;
+
+      if (private->tool_info)
+        context = GIMP_CONTEXT (private->tool_info->tool_options);
+
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (private->dialog),
-                                         private->viewable,
-                                         GIMP_CONTEXT (private->tool_info->tool_options));
+                                         private->viewable, context);
     }
 }
 

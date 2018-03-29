@@ -22,14 +22,14 @@
 #define __GIMP_PALETTES__
 
 
-void          gimp_palettes_init              (Gimp    *gimp);
+void          gimp_palettes_init              (Gimp          *gimp);
 
-void          gimp_palettes_load              (Gimp    *gimp);
-void          gimp_palettes_save              (Gimp    *gimp);
+void          gimp_palettes_load              (Gimp          *gimp);
+void          gimp_palettes_save              (Gimp          *gimp);
 
-GimpPalette * gimp_palettes_get_color_history (Gimp    *gimp);
-void          gimp_palettes_add_color_history (Gimp    *gimp,
-                                               GimpRGB *color);
+GimpPalette * gimp_palettes_get_color_history (Gimp          *gimp);
+void          gimp_palettes_add_color_history (Gimp          *gimp,
+                                               const GimpRGB *color);
 
 
 #endif /* __GIMP_PALETTES__ */

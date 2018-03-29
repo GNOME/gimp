@@ -633,7 +633,7 @@ compute_lum_threshold (GimpDrawable *drawable,
   gboolean     has_alpha;
   gint         i;
   gint         x1, y1;
-  gint	       width, height;
+  gint         width, height;
 
   /*  zero out the luminosity values array  */
   memset (values, 0, sizeof (gint) * 256);
@@ -720,7 +720,7 @@ sparkle (GimpDrawable *drawable,
     {
       if (! gimp_drawable_mask_intersect (drawable->drawable_id,
                                           &x1, &y1, &width, &height))
-	return;
+        return;
 
       x2 = x1 + width;
       y2 = y1 + height;

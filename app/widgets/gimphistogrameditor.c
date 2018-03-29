@@ -448,7 +448,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
     }
   else if (editor->histogram)
     {
-      editor->valid = FALSE;
+      editor->recompute = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (editor->box));
     }
 
@@ -459,7 +459,7 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
 static gboolean
 gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 {
-  if (! editor->valid)
+  if (editor->recompute || ! editor->histogram)
     {
       if (editor->drawable)
         {
@@ -476,19 +476,16 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
                                              editor->histogram,
                                              TRUE);
         }
-      else
+      else if (editor->histogram)
         {
-          if (editor->histogram)
-            gimp_histogram_clear_values (editor->histogram);
+          gimp_histogram_clear_values (editor->histogram);
         }
 
       gimp_histogram_editor_info_update (editor);
-
-      if (editor->histogram)
-        editor->valid = TRUE;
+      editor->recompute = FALSE;
     }
 
-  return editor->valid;
+  return (editor->histogram != NULL);
 }
 
 static void
@@ -549,11 +546,10 @@ gimp_histogram_editor_idle_update (GimpHistogramEditor *editor)
 {
   editor->idle_id = 0;
 
-  /* Mark the histogram as invalid and queue a redraw.
+  /* Mark the histogram for recomputation and queue a redraw.
    * We will then recalculate the histogram when the view is exposed.
    */
-
-  editor->valid = FALSE;
+  editor->recompute = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (editor->box));
 
   return FALSE;

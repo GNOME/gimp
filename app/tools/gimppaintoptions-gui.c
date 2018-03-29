@@ -394,6 +394,7 @@ jitter_options_gui (GimpPaintOptions *paint_options,
 
   scale = gimp_prop_spin_scale_new (config, "jitter-amount", NULL,
                                     0.01, 1.0, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 5.0);
 
   frame = gimp_prop_expanding_frame_new (config, "use-jitter", NULL,
                                          scale, NULL);

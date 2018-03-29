@@ -1429,7 +1429,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
           this = 3; left = 2; right = 1; opposite = 0;
         }
       else
-        g_assert_not_reached ();
+        gimp_assert_not_reached ();
 
       /* when the keep aspect transformation constraint is enabled,
        * the translation shall only be along the diagonal that runs
@@ -1533,7 +1533,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
           this_l = 0; this_r = 2;
         }
       else
-        g_assert_not_reached ();
+        gimp_assert_not_reached ();
 
       opp_l = 3 - this_r; opp_r = 3 - this_l;
 
@@ -1619,7 +1619,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
           this_l = 3; this_r = 1;
         }
       else
-        g_assert_not_reached ();
+        gimp_assert_not_reached ();
 
       if (private->constrain_shear)
         {
@@ -1670,7 +1670,7 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
           this = 3; left = 2; right = 1; opposite = 0;
         }
       else
-        g_assert_not_reached ();
+        gimp_assert_not_reached ();
 
       if (private->constrain_perspective)
         {
@@ -1781,7 +1781,7 @@ get_friendly_operation_name (GimpTransformHandle handle)
     case GIMP_TRANSFORM_HANDLE_ROTATION:
       return _("Click-Drag to rotate");
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
     }
 }
 
@@ -2157,7 +2157,7 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
             flip = TRUE;
           break;
         default:
-          g_assert_not_reached ();
+          gimp_assert_not_reached ();
         }
 
       if (flip)

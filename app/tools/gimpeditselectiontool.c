@@ -600,6 +600,8 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
           edit_select->live_items = g_list_prepend (NULL, active_item);
 
+          gimp_item_start_move (active_item, TRUE);
+
           /*  fallthru  */
 
         case GIMP_TRANSLATE_MODE_FLOATING_SEL:

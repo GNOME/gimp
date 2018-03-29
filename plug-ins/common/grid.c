@@ -397,7 +397,7 @@ grid (gint32        image_ID,
 
       if (! gimp_drawable_mask_intersect (drawable->drawable_id,
                                           &sx1, &sy1, &w, &h))
-	return;
+        return;
 
       sx2 = sx1 + w;
       sy2 = sy1 + h;

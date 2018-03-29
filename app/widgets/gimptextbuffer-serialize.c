@@ -293,9 +293,9 @@ parse_tag_element (GMarkupParseContext  *context,
   const gchar *attribute_name  = NULL;
   const gchar *attribute_value = NULL;
 
-  g_assert (peek_state (info) == STATE_MARKUP ||
-            peek_state (info) == STATE_TAG    ||
-            peek_state (info) == STATE_UNKNOWN);
+  gimp_assert (peek_state (info) == STATE_MARKUP ||
+               peek_state (info) == STATE_TAG    ||
+               peek_state (info) == STATE_UNKNOWN);
 
   if (attribute_names)
     attribute_name = attribute_names[0];
@@ -359,7 +359,7 @@ start_element_handler (GMarkupParseContext  *context,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
       break;
     }
 }
@@ -376,16 +376,16 @@ end_element_handler (GMarkupParseContext  *context,
     {
     case STATE_UNKNOWN:
       pop_state (info);
-      g_assert (peek_state (info) == STATE_UNKNOWN ||
-                peek_state (info) == STATE_TAG     ||
-                peek_state (info) == STATE_MARKUP);
+      gimp_assert (peek_state (info) == STATE_UNKNOWN ||
+                   peek_state (info) == STATE_TAG     ||
+                   peek_state (info) == STATE_MARKUP);
       break;
 
     case STATE_TAG:
       pop_state (info);
-      g_assert (peek_state (info) == STATE_UNKNOWN ||
-                peek_state (info) == STATE_TAG     ||
-                peek_state (info) == STATE_MARKUP);
+      gimp_assert (peek_state (info) == STATE_UNKNOWN ||
+                   peek_state (info) == STATE_TAG     ||
+                   peek_state (info) == STATE_MARKUP);
 
       /* Pop tag */
       info->tag_stack = g_slist_delete_link (info->tag_stack,
@@ -394,13 +394,13 @@ end_element_handler (GMarkupParseContext  *context,
 
     case STATE_MARKUP:
       pop_state (info);
-      g_assert (peek_state (info) == STATE_START);
+      gimp_assert (peek_state (info) == STATE_START);
 
       info->spans = g_list_reverse (info->spans);
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
       break;
     }
 }
@@ -442,7 +442,7 @@ text_handler (GMarkupParseContext  *context,
   switch (peek_state (info))
     {
     case STATE_START:
-      g_assert_not_reached (); /* gmarkup shouldn't do this */
+      gimp_assert_not_reached (); /* gmarkup shouldn't do this */
       break;
 
     case STATE_MARKUP:
@@ -459,7 +459,7 @@ text_handler (GMarkupParseContext  *context,
       break;
 
     default:
-      g_assert_not_reached ();
+      gimp_assert_not_reached ();
       break;
     }
 }

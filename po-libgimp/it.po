@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-09 11:38+0100\n"
-"PO-Revision-Date: 2018-01-09 11:54+0100\n"
+"POT-Creation-Date: 2018-03-27 12:12+0200\n"
+"PO-Revision-Date: 2018-03-27 12:12+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -43,22 +43,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1206
+#: ../libgimp/gimp.c:1221
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1210
+#: ../libgimp/gimp.c:1225
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1214
+#: ../libgimp/gimp.c:1229
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1218
+#: ../libgimp/gimp.c:1233
 msgid "cancelled"
 msgstr "annullato"
 
@@ -264,44 +264,44 @@ msgstr "Selezione tipo di carattere"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:477
+#: ../libgimp/gimpimagemetadata.c:487
 msgid "GIMP 2.9/2.10"
 msgstr "GIMP 2.9/2.10"
 
-#: ../libgimp/gimpimagemetadata.c:661
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpimagemetadata.c:850
+#: ../libgimp/gimpimagemetadata.c:860
 #, c-format
 msgid "Rotate %s?"
 msgstr "_Ruota %s?"
 
-#: ../libgimp/gimpimagemetadata.c:856
+#: ../libgimp/gimpimagemetadata.c:866
 msgid "_Keep Original"
 msgstr "_Mantieni l'originale"
 
-#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:908
 msgid "Original"
 msgstr "Originale"
 
-#: ../libgimp/gimpimagemetadata.c:914
+#: ../libgimp/gimpimagemetadata.c:924
 msgid "Rotated"
 msgstr "Ruotato"
 
-#: ../libgimp/gimpimagemetadata.c:932
+#: ../libgimp/gimpimagemetadata.c:942
 msgid "This image contains Exif orientation metadata."
 msgstr "Questa immagine contiene metadati Exif di orientamento."
 
-#: ../libgimp/gimpimagemetadata.c:950
+#: ../libgimp/gimpimagemetadata.c:960
 msgid "Would you like to rotate the image?"
 msgstr "Volete ruotare l'immagine?"
 
-#: ../libgimp/gimpimagemetadata.c:962
+#: ../libgimp/gimpimagemetadata.c:972
 msgid "_Don't ask me again"
 msgstr "Non chie_dere più"
 
@@ -1439,57 +1439,57 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
 
-#: ../libgimpbase/gimpmetadata.c:840
+#: ../libgimpbase/gimpmetadata.c:845
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "È possibile caricare i metadati solo da file locali"
 
-#: ../libgimpbase/gimpmetadata.c:900
+#: ../libgimpbase/gimpmetadata.c:905
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:976
+#: ../libgimpbase/gimpmetadata.c:981
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1027
+#: ../libgimpbase/gimpmetadata.c:1032
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fallita l'analisi dei dati IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1076
+#: ../libgimpbase/gimpmetadata.c:1081
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libgimpbase/gimputils.c:215 ../libgimpbase/gimputils.c:220
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libgimpbase/gimputils.c:390
 msgid "File path is NULL"
 msgstr "Il percorso file è NULL"
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libgimpbase/gimputils.c:399 ../libgimpbase/gimputils.c:410
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Errore durante la conversione di un nome file UTF-8 in wide char"
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libgimpbase/gimputils.c:418
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() è fallita"
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libgimpbase/gimputils.c:455
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Impossibile convertire \"%s\" in un valido NSURL."
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libgimpbase/gimputils.c:483
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Connessione a org.freedesktop.FileManager1 fallita: "
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libgimpbase/gimputils.c:507
 msgid "Calling ShowItems failed: "
 msgstr "Chiamata a ShowItems fallita: "
 
@@ -1952,23 +1952,23 @@ msgstr "Produttore: "
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:201
+#: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
 msgstr "Scale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:437
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:441
+#: ../libgimpwidgets/gimpcolorscales.c:439
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:460
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:464
+#: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
 msgstr "HSV"
 
@@ -2191,7 +2191,7 @@ msgstr "Dimensione scacchi"
 msgid "Check Style"
 msgstr "Stile scacchi"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2143
+#: ../libgimpwidgets/gimppropwidgets.c:2177
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2350,22 +2350,49 @@ msgstr "Croma LCH"
 msgid "LCH Hue"
 msgstr "Tonalità LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "Modello colore RGB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "Modello colore CIELCh"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "Modello colore HSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Livelli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Immagini"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Aumenta ingrandimento"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Riduci ingrandimento"
@@ -2813,7 +2840,8 @@ msgstr "Mostra alteluci"
 
 #: ../modules/display-filter-clip-warning.c:178
 msgid "Show warning for pixels with a component greater than one"
-msgstr "Mostra un avvertimento per i pixel con una componente più grande di uno"
+msgstr ""
+"Mostra un avvertimento per i pixel con una componente più grande di uno"
 
 #: ../modules/display-filter-clip-warning.c:184
 msgid "Highlights color"
@@ -2829,7 +2857,8 @@ msgstr "Mostra falso"
 
 #: ../modules/display-filter-clip-warning.c:198
 msgid "Show warning for pixels with an infinite or NaN component"
-msgstr "Mostra un avvertimento per i pixel con una componente infinita o non numerica"
+msgstr ""
+"Mostra un avvertimento per i pixel con una componente infinita o non numerica"
 
 #: ../modules/display-filter-clip-warning.c:204
 msgid "Bogus color"

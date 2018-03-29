@@ -179,7 +179,7 @@ gimp_image_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_IMAGE_GRID:
-      g_return_if_fail (GIMP_IS_GRID (image_undo->grid));
+      gimp_assert (GIMP_IS_GRID (image_undo->grid));
       break;
 
     case GIMP_UNDO_IMAGE_COLORMAP:
@@ -199,7 +199,7 @@ gimp_image_undo_constructed (GObject *object)
 
     case GIMP_UNDO_PARASITE_ATTACH:
     case GIMP_UNDO_PARASITE_REMOVE:
-      g_return_if_fail (image_undo->parasite_name != NULL);
+      gimp_assert (image_undo->parasite_name != NULL);
 
       image_undo->parasite = gimp_parasite_copy
         (gimp_image_parasite_find (image, image_undo->parasite_name));

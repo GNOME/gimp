@@ -22,7 +22,8 @@
 #   NONE        deprecated alias for VOID
 #   BOOL        deprecated alias for BOOLEAN
 
-VOID: INT
+VOID: ENUM
+VOID: ENUM, BOOLEAN
 VOID: INT, INT 
 VOID: OBJECT
 VOID: OBJECT, INT

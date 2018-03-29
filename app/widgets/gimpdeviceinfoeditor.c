@@ -337,7 +337,7 @@ gimp_device_info_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_DEVICE_INFO (private->info));
+  gimp_assert (GIMP_IS_DEVICE_INFO (private->info));
 
   /*  the mode menu  */
 

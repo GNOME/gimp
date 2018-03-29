@@ -68,6 +68,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 {
   GtkWidget    *main_vbox;
   GtkSizeGroup *label_group;
+  GList        *chains = NULL;
   gint          i;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -154,6 +155,13 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
               g_object_set_data (G_OBJECT (chain), "binding", binding);
             }
+
+          g_object_set_data_full (G_OBJECT (chain), "x-property",
+                                  g_strdup (pspec->name), g_free);
+          g_object_set_data_full (G_OBJECT (chain), "y-property",
+                                  g_strdup (next_pspec->name), g_free);
+
+          chains = g_list_prepend (chains, chain);
 
           g_signal_connect (chain, "toggled",
                             G_CALLBACK (gimp_prop_gui_chain_toggled),
@@ -254,6 +262,9 @@ _gimp_prop_gui_new_generic (GObject                  *config,
     }
 
   g_object_unref (label_group);
+
+  g_object_set_data_full (G_OBJECT (main_vbox), "chains", chains,
+                          (GDestroyNotify) g_list_free);
 
   return main_vbox;
 }

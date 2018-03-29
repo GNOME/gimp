@@ -136,7 +136,7 @@ gimp_action_group_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (group->gimp));
+  gimp_assert (GIMP_IS_GIMP (group->gimp));
 
   name = gtk_action_group_get_name (GTK_ACTION_GROUP (object));
 

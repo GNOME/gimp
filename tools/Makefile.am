@@ -11,8 +11,7 @@ endif
 if OS_WIN32
 
 bin_PROGRAMS = \
-	gimptool-@GIMP_TOOL_VERSION@		\
-	gimp-debug-tool-@GIMP_TOOL_VERSION@	\
+	gimptool-@GIMP_TOOL_VERSION@	\
 	gimp-debug-resume
 
 gimp_debug_resume_SOURCES = gimp-debug-resume.c
@@ -21,41 +20,12 @@ else
 
 bin_PROGRAMS = gimptool-@GIMP_TOOL_VERSION@
 
-if PLATFORM_OSX
-bin_PROGRAMS += gimp-debug-tool-@GIMP_TOOL_VERSION@
-else
-libexec_PROGRAMS = gimp-debug-tool-@GIMP_TOOL_VERSION@
-endif
-
 endif
 
 noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
 	kernelgen
-
-gimp_debug_tool_@GIMP_TOOL_VERSION@_SOURCES = \
-	gimp-debug-tool.c			\
-	../app/widgets/gimpcriticaldialog.h	\
-	../app/widgets/gimpcriticaldialog.c	\
-	../app/gimp-version.h			\
-	../app/gimp-version.c
-
-gimp_debug_tool_@GIMP_TOOL_VERSION@_CPPFLAGS = \
-	-DCC_VERSION=\""$(CC_VERSION)"\"	\
-	-I$(top_srcdir)/app			\
-	-I$(top_builddir)/app			\
-	$(AM_CPPFLAGS)				\
-	$(GIO_CFLAGS)				\
-	$(GEGL_CFLAGS)				\
-	$(GTK_CFLAGS)				\
-	$(FONTCONFIG_CFLAGS)
-
-gimp_debug_tool_@GIMP_TOOL_VERSION@_LDADD = \
-	$(GIO_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(GTK_LIBS)		\
-	$(FONTCONFIG_LIBS)
 
 
 gimptool_@GIMP_TOOL_VERSION@_SOURCES = gimptool.c

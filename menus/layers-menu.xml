@@ -17,10 +17,10 @@
     </menu>
     <menu action="layers-composite-mode-menu" name="Composite Mode">
       <menuitem action="layers-composite-mode-auto" />
-      <menuitem action="layers-composite-mode-src-over" />
-      <menuitem action="layers-composite-mode-src-atop" />
-      <menuitem action="layers-composite-mode-src-in" />
-      <menuitem action="layers-composite-mode-dst-atop" />
+      <menuitem action="layers-composite-mode-union" />
+      <menuitem action="layers-composite-mode-clip-to-backdrop" />
+      <menuitem action="layers-composite-mode-clip-to-layer" />
+      <menuitem action="layers-composite-mode-intersection" />
     </menu>
     <menu action="layers-color-tag-menu" name="Color Tags">
       <menuitem action="layers-color-tag-none" />

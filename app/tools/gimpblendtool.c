@@ -511,12 +511,55 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
 
       if (! strcmp (pspec->name, "gradient-type"))
         {
+          GimpRepeatMode   gradient_repeat;
+          GimpRepeatMode   node_repeat;
+          GimpGradientType gradient_type;
+
+          gradient_repeat = GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat;
+          gradient_type   = GIMP_BLEND_OPTIONS (options)->gradient_type;
+          gegl_node_get (blend_tool->render_node,
+                         "gradient-repeat", &node_repeat,
+                         NULL);
+
+          if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR)
+            {
+              /* These gradient types are only meant to work with repeat
+               * value of "none" so these are the only ones where we
+               * don't keep the render node and the blend options in
+               * sync.
+               * We could instead reset the "gradient-repeat" value on
+               * GimpBlendOptions, but I assume one would want to revert
+               * back to the last set value if changing back the
+               * gradient type. So instead we just make the option
+               * insensitive (both in GUI and in render).
+               */
+              if (node_repeat != GIMP_REPEAT_NONE)
+                gegl_node_set (blend_tool->render_node,
+                               "gradient-repeat", GIMP_REPEAT_NONE,
+                               NULL);
+            }
+          else if (node_repeat != gradient_repeat)
+            {
+              gegl_node_set (blend_tool->render_node,
+                             "gradient-repeat", gradient_repeat,
+                             NULL);
+            }
+
           if (gimp_blend_tool_is_shapeburst (blend_tool))
             gimp_blend_tool_precalc_shapeburst (blend_tool);
 
           gimp_blend_tool_update_graph (blend_tool);
         }
 
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
+    }
+  else if (blend_tool->render_node                    &&
+           gimp_blend_tool_is_shapeburst (blend_tool) &&
+           g_strcmp0 (pspec->name, "distance-metric") == 0)
+    {
+      g_clear_object (&blend_tool->dist_buffer);
+      gimp_blend_tool_precalc_shapeburst (blend_tool);
+      gimp_blend_tool_update_graph (blend_tool);
       gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
   else if (blend_tool->filter &&
@@ -592,6 +635,12 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
   /* Initially sync all of the properties */
   gimp_operation_config_sync_node (G_OBJECT (options),
                                    blend_tool->render_node);
+
+  /* We don't allow repeat values for some shapes. */
+  if (options->gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR)
+    gegl_node_set (blend_tool->render_node,
+                   "gradient-repeat", GIMP_REPEAT_NONE,
+                   NULL);
 
   /* Connect signal handlers for the gradient */
   gimp_blend_tool_set_gradient (blend_tool, context->gradient);
@@ -742,8 +791,9 @@ gimp_blend_tool_line_response (GimpToolWidget *widget,
 static void
 gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
 {
-  GimpTool *tool = GIMP_TOOL (blend_tool);
-  gint      x, y, width, height;
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpTool         *tool    = GIMP_TOOL (blend_tool);
+  gint              x, y, width, height;
 
   if (blend_tool->dist_buffer || ! tool->drawable)
     return;
@@ -753,7 +803,7 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
     return;
 
   blend_tool->dist_buffer =
-    gimp_drawable_blend_shapeburst_distmap (tool->drawable, FALSE,
+    gimp_drawable_blend_shapeburst_distmap (tool->drawable, options->distance_metric,
                                             GEGL_RECTANGLE (x, y, width, height),
                                             GIMP_PROGRESS (blend_tool));
 

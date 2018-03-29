@@ -71,7 +71,7 @@ gimp_vectors_mod_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
+  gimp_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
 
   vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (object)->item);
 
