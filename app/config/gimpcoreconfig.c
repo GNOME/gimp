@@ -151,10 +151,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
-#if 0
-  gchar        *dir1;
-  gchar        *dir2;
-#endif
   GimpRGB       red          = { 1.0, 0, 0, 0.5 };
   guint64       undo_size;
 
