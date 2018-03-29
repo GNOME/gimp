@@ -1,7 +1,7 @@
 # Meson build file
 
 # http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
-project('gimp', ['c', 'cpp'], version: '2.9.9',
+project('gimp', ['c', 'cpp'], version: '2.10.0',
   meson_version: '>=0.44.0',
   default_options: [
     'sysconfdir=/etc',
@@ -40,6 +40,9 @@ api_version   = '@0@.0'  .format(major_version)
 app_version   = '@0@.@1@'.format(major_version, minor_version)
 user_version  = '@0@.@1@'.format(major_version, minor_version)
 gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
+
+# Override for Release-candidates
+gimp_version  = gimp_version + '-RC1'
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
@@ -234,7 +237,7 @@ math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.2.0')
 
-babl_minver       = '>=0.1.42'
+babl_minver       = '>=0.1.44'
 babl              = dependency('babl',               version: babl_minver)
 
 cairo_minver      = '>=1.12.2'
@@ -242,7 +245,7 @@ cairo             = dependency('cairo',              version: cairo_minver)
 
 dbus_glib         = dependency('dbus-glib-1')
 
-fontconfig_minver = platform_win32 ? '>=2.11.1'         : '>=2.2.0'
+fontconfig_minver = '>=2.12.4'
 # fontconfig_name   = platform_win32 ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
 fontconfig        = dependency(fontconfig_name,      version: fontconfig_minver)
@@ -252,7 +255,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 gdk_pixbuf_minver = '>=2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: gdk_pixbuf_minver)
 
-gegl_minver       = '>=0.3.29'
+gegl_minver       = '>=0.3.30'
 gegl              = dependency('gegl-0.3',           version: gegl_minver)
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
@@ -560,11 +563,11 @@ else
 endif
 
 
-if get_option('with-jasper')
-  jasper = cc.find_library('jasper')
+if get_option('with-jpeg2000')
+  openjpeg = dependency('libopenjp2', version: '>=2.1.0')
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
 else
-  jasper =
+  openjpeg = dependency('', required: false)
 endif
 
 
@@ -989,6 +992,7 @@ foreach fn : [
     'isfinite',
     'mmap',
     'rint',
+    'vfork',
     'vprintf',
   ]
   macro_name = 'HAVE_' + fn.to_upper().underscorify()
@@ -1001,6 +1005,7 @@ foreach header : [
     'alloca.h',
     'dlfcn.h',
     'execinfo.h',
+    'fcntl.h',
     'ieeefp.h',
     'inttypes.h',
     'locale.h',
@@ -1014,6 +1019,7 @@ foreach header : [
     'string.h',
     'strings.h',
     'sys/param.h',
+    # 'sys/prctl.h',
     'sys/select.h',
     'sys/stat.h',
     'sys/time.h',
@@ -1452,6 +1458,7 @@ subdir('modules')
 subdir('plug-ins')
 subdir('app')
 subdir('pdb')
+subdir('app-tools')
 
 # Docs
 subdir('devel-docs')
@@ -1473,7 +1480,7 @@ Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''
   Ghostscript:         @0@'''.format(ghostscript.found()) +'''
   Help Browser:        @0@'''.format(webkit.found()) +'''
-  JPEG 2000:           @0@'''.format(jasper.found()) +'''
+  JPEG 2000:           @0@'''.format(openjpeg.found()) +'''
   MNG:                 @0@'''.format(libmng.found()) +'''
   OpenEXR:             @0@'''.format(openexr.found()) +'''
   WebP:                @0@'''.format(webp.found()) +'''
