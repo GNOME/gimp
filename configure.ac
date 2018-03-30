@@ -1667,9 +1667,24 @@ PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
 PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
 
-# We need an autoconf variable for man page construction.
-mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
+AC_MSG_CHECKING([whether to treat MyPaint brushes as bundled])
+AC_ARG_ENABLE(bundled-mypaint-brushes,
+              [  --enable-bundled-mypaint-brushes
+                          treat MyPaint brushes as bundled in the install prefix
+                          (default=no)],,
+              enable_bundled_mypaint_brushes=no)
+
+if test "x$enable_bundled_mypaint_brushes" != xno; then
+  AC_DEFINE(ENABLE_BUNDLED_MYPAINT_BRUSHES, 1,
+            [Define to 1 to if MyPaint brushes are bundled with GIMP])
+  mypaint_brushes_dir='${gimp_installation_dir}/share/mypaint-data/1.0/brushes'
+else
+  mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
+fi
+
+AC_MSG_RESULT([$enable_bundled_mypaint_brushes])
 AC_SUBST(mypaint_brushes_dir)
+
 
 ##################
 # Check for webkit
@@ -2725,40 +2740,41 @@ generate_po_makefile([po-windows-installer])
 # Print a summary of features enabled/disabled:
 optional_deps="
 Extra Binaries:
-  gimp-console:        $enable_gimp_console
+  gimp-console:            $enable_gimp_console
 
 Optional Features:
-  Language selection:  $have_iso_codes
-  Vector icons:        $enable_vector_icons
-  Dr. Mingw (Win32):   $enable_drmingw
+  Language selection:      $have_iso_codes
+  Vector icons:            $enable_vector_icons
+  Dr. Mingw (Win32):       $enable_drmingw
+  Bundled MyPaint Brushes: $enable_bundled_mypaint_brushes (at $mypaint_brushes_dir)
 
 Optional Plug-Ins:
-  Ascii Art:           $have_libaa
-  Ghostscript:         $have_gs
-  Help Browser:        $have_webkit
-  JPEG 2000:           $have_openjpeg
-  MNG:                 $have_libmng
-  OpenEXR:             $have_openexr
-  WebP:                $have_webp
-  PDF (export):        $have_cairo_pdf
-  Print:               $enable_print
-  Python 2:            $enable_python
-  Script-Fu:           $have_script_fu
-  TWAIN (Win32):       $os_win32
-  Webpage:             $have_webkit
-  WMF:                 $have_libwmf
-  X11 Mouse Cursor:    $have_xmc
-  XPM:                 $have_libxpm
-  Email:               $have_email
+  Ascii Art:               $have_libaa
+  Ghostscript:             $have_gs
+  Help Browser:            $have_webkit
+  JPEG 2000:               $have_openjpeg
+  MNG:                     $have_libmng
+  OpenEXR:                 $have_openexr
+  WebP:                    $have_webp
+  PDF (export):            $have_cairo_pdf
+  Print:                   $enable_print
+  Python 2:                $enable_python
+  Script-Fu:               $have_script_fu
+  TWAIN (Win32):           $os_win32
+  Webpage:                 $have_webkit
+  WMF:                     $have_libwmf
+  X11 Mouse Cursor:        $have_xmc
+  XPM:                     $have_libxpm
+  Email:                   $have_email
 
 Optional Modules:
-  ALSA (MIDI Input):   $have_alsa
-  Linux Input:         $have_linux_input (GUdev support: $have_libgudev)
-  DirectInput (Win32): $have_dx_dinput
+  ALSA (MIDI Input):       $have_alsa
+  Linux Input:             $have_linux_input (GUdev support: $have_libgudev)
+  DirectInput (Win32):     $have_dx_dinput
 
 Tests:
-  Use xvfb-run         $have_xvfb_run
-  Test appdata         $have_appstream_util
+  Use xvfb-run             $have_xvfb_run
+  Test appdata             $have_appstream_util
 $have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then

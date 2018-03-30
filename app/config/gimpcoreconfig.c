@@ -262,7 +262,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
 
-#if defined G_OS_WIN32 || defined PLATFORM_OSX
+#ifdef ENABLE_BUNDLED_MYPAINT_BRUSHES
   mypaint_brushes = g_build_filename ("${gimp_installation_dir}",
                                       "share", "mypaint-data",
                                       "1.0", "brushes", NULL);
