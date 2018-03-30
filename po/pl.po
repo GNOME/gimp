@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-25 20:44+0200\n"
-"PO-Revision-Date: 2018-03-25 20:45+0200\n"
+"POT-Creation-Date: 2018-03-30 21:59+0200\n"
+"PO-Revision-Date: 2018-03-30 22:00+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -284,110 +284,114 @@ msgstr "Używa %s w wersji %s (skompilowano z wersją %s)"
 msgid "%s version %s"
 msgstr "%s w wersji %s"
 
-#: ../app/main.c:155
+#: ../app/main.c:157
 msgid "Show version information and exit"
 msgstr "Wyświetla informację o wersji i kończy działanie"
 
-#: ../app/main.c:160
+#: ../app/main.c:162
 msgid "Show license information and exit"
 msgstr "Wyświetla informację o licencji i kończy działanie"
 
-#: ../app/main.c:165
+#: ../app/main.c:167
 msgid "Be more verbose"
 msgstr "Wyświetla więcej informacji"
 
-#: ../app/main.c:170
+#: ../app/main.c:172
 msgid "Start a new GIMP instance"
 msgstr "Uruchamia nowe wystąpienie programu GIMP"
 
-#: ../app/main.c:175
+#: ../app/main.c:177
 msgid "Open images as new"
 msgstr "Otwiera obraz jako nowy"
 
-#: ../app/main.c:180
+#: ../app/main.c:182
 msgid "Run without a user interface"
 msgstr "Uruchamia bez interfejsu użytkownika"
 
-#: ../app/main.c:185
+#: ../app/main.c:187
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Nie wczytuje pędzli, gradientów, deseni itp."
 
-#: ../app/main.c:190
+#: ../app/main.c:192
 msgid "Do not load any fonts"
 msgstr "Nie wczytuje żadnych czcionek"
 
-#: ../app/main.c:195
+#: ../app/main.c:197
 msgid "Do not show a splash screen"
 msgstr "Nie wyświetla ekranu powitalnego"
 
-#: ../app/main.c:200
+#: ../app/main.c:202
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Nie wykorzystuje pamięci dzielonej pomiędzy programem GIMP a wtyczkami"
 
-#: ../app/main.c:205
+#: ../app/main.c:207
 msgid "Do not use special CPU acceleration functions"
 msgstr ""
 "Nie wykorzystuje specjalnych instrukcji procesora przyśpieszających działanie"
 
-#: ../app/main.c:210
+#: ../app/main.c:212
 msgid "Use an alternate sessionrc file"
 msgstr "Używa alternatywnego pliku sessionrc"
 
-#: ../app/main.c:215
+#: ../app/main.c:217
 msgid "Use an alternate user gimprc file"
 msgstr "Używa alternatywnego pliku gimprc użytkownika"
 
-#: ../app/main.c:220
+#: ../app/main.c:222
 msgid "Use an alternate system gimprc file"
 msgstr "Używa alternatywnego systemowego plik gimprc"
 
-#: ../app/main.c:225
+#: ../app/main.c:227
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Polecenie wsadowe do uruchomienia (może być używane wielokrotnie)"
 
-#: ../app/main.c:230
+#: ../app/main.c:232
 msgid "The procedure to process batch commands with"
 msgstr "Procedura, za pomocą której przetwarzać polecenia wsadowe"
 
-#: ../app/main.c:235
+#: ../app/main.c:237
 msgid "Send messages to console instead of using a dialog"
 msgstr "Wyświetla komunikaty w konsoli zamiast w oknie dialogowym"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:241
+#: ../app/main.c:243
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Tryb kompatybilności PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:247
+#: ../app/main.c:249
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debuguje w przypadku awarii programu (never|query|always)"
 
-#: ../app/main.c:252
+#: ../app/main.c:254
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Włącza obsługę debugowania niekrytycznych sygnałów"
 
-#: ../app/main.c:257
+#: ../app/main.c:259
 msgid "Make all warnings fatal"
 msgstr "Traktuje wszystkie ostrzeżenia jako krytyczne"
 
-#: ../app/main.c:262
+#: ../app/main.c:264
 msgid "Output a gimprc file with default settings"
 msgstr "Wypisuje plik gimprc z domyślnymi ustawieniami"
 
-#: ../app/main.c:278
+#: ../app/main.c:280
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Wypisuje uporządkowaną listę przestarzałych procedur w PDB"
 
-#: ../app/main.c:283
+#: ../app/main.c:285
 msgid "Show a preferences page with experimental features"
 msgstr "Wyświetla stronę preferencji z eksperymentalnymi funkcjami"
 
-#: ../app/main.c:459
+#: ../app/main.c:290
+msgid "Show an image submenu with debug actions"
+msgstr "Wyświetla podmenu obrazu z działaniami debugowania"
+
+#: ../app/main.c:466
 msgid "[FILE|URI...]"
 msgstr "[PLIK|URI…]"
 
-#: ../app/main.c:477
+#: ../app/main.c:484
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -395,20 +399,20 @@ msgstr ""
 "Program GIMP nie może zainicjować interfejsu graficznego.\n"
 "Proszę się upewnić, że ustawienia środowiska wyświetlania są poprawne."
 
-#: ../app/main.c:496
+#: ../app/main.c:503
 msgid "Another GIMP instance is already running."
 msgstr "Inne wystąpienie programu GIMP jest już uruchomione."
 
-#: ../app/main.c:586
+#: ../app/main.c:594
 msgid "GIMP output. Type any character to close this window."
 msgstr "Wyjście programu GIMP. Wpisanie dowolnego znaku zamknie to okno."
 
-#: ../app/main.c:587
+#: ../app/main.c:595
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Wpisanie dowolnego znaku zamknie to okno)\n"
 
-#: ../app/main.c:604
+#: ../app/main.c:612
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Wyjście programu GIMP. Można zminimalizować to okno, ale nie należy go "
@@ -618,7 +622,7 @@ msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:795
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:797
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Szablony"
@@ -11809,20 +11813,20 @@ msgid "Internal Procedures"
 msgstr "Wewnętrzne procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:781
+#: ../app/core/gimp.c:783
 msgid "Looking for data files"
 msgstr "Wyszukiwanie plików z danymi"
 
-#: ../app/core/gimp.c:781
+#: ../app/core/gimp.c:783
 msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
-#: ../app/core/gimp.c:790
+#: ../app/core/gimp.c:792
 msgid "Fonts (this may take a while)"
 msgstr "Czcionki (może to zająć kilka minut)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:799 ../app/dialogs/preferences-dialog.c:3112
+#: ../app/core/gimp.c:801 ../app/dialogs/preferences-dialog.c:3112
 msgid "Modules"
 msgstr "Moduły"
 
@@ -12621,22 +12625,24 @@ msgstr "Nieprawidłowy ciąg UTF-8 w pliku „%s” z gradientem."
 msgid "File is corrupt."
 msgstr "Plik jest uszkodzony."
 
-#: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
+#: ../app/core/gimpgradient-load.c:189 ../app/core/gimpgradient-load.c:199
+#: ../app/core/gimpgradient-load.c:211 ../app/core/gimpgradient-load.c:221
+#: ../app/core/gimpgradient-load.c:229 ../app/core/gimpgradient-load.c:237
 #, c-format
 msgid "Corrupt segment %d."
 msgstr "Uszkodzony fragment %d."
 
-#: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
+#: ../app/core/gimpgradient-load.c:248 ../app/core/gimpgradient-load.c:258
 #, c-format
 msgid "Segments do not span the range 0-1."
 msgstr "Segmenty nie zawierają się w zakresie 0-1."
 
-#: ../app/core/gimpgradient-load.c:239
+#: ../app/core/gimpgradient-load.c:273
 #, c-format
 msgid "In line %d of gradient file: "
 msgstr "W %d. wierszu pliku z gradientem: "
 
-#: ../app/core/gimpgradient-load.c:315
+#: ../app/core/gimpgradient-load.c:349
 #, c-format
 msgid "No linear gradients found."
 msgstr "Nie odnaleziono gradientów liniowych."
@@ -12911,71 +12917,71 @@ msgstr "Konwertowanie do kolorów indeksowanych (2. poziom)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konwertowanie do kolorów indeksowanych (3. poziom)"
 
-#: ../app/core/gimpimage-convert-precision.c:75
+#: ../app/core/gimpimage-convert-precision.c:76
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
 msgstr "Konwersja obrazu do trybu 8-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:78
+#: ../app/core/gimpimage-convert-precision.c:79
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 8-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:81
+#: ../app/core/gimpimage-convert-precision.c:82
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
 msgstr "Konwersja obrazu do trybu 16-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:84
+#: ../app/core/gimpimage-convert-precision.c:85
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 16-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:87
+#: ../app/core/gimpimage-convert-precision.c:88
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
 msgstr "Konwersja obrazu do trybu 32-bitowego (liniowego, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:90
+#: ../app/core/gimpimage-convert-precision.c:91
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Konwersja obrazu do trybu 32-bitowego (gamma, stałoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:93
+#: ../app/core/gimpimage-convert-precision.c:94
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 16-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:96
+#: ../app/core/gimpimage-convert-precision.c:97
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 16-bitowego (gamma, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:99
+#: ../app/core/gimpimage-convert-precision.c:100
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 32-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:102
+#: ../app/core/gimpimage-convert-precision.c:103
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 32-bitowego (gamma, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:105
+#: ../app/core/gimpimage-convert-precision.c:106
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
 msgstr ""
 "Konwersja obrazu do trybu 64-bitowego (liniowego, zmiennoprzecinkowego)"
 
-#: ../app/core/gimpimage-convert-precision.c:108
+#: ../app/core/gimpimage-convert-precision.c:109
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:264
+#: ../app/core/gimpimage-convert-precision.c:267
 #: ../app/core/gimpimage-convert-precision.c:288
 #: ../app/dialogs/convert-indexed-dialog.c:236
 #: ../app/dialogs/convert-precision-dialog.c:221
@@ -16887,7 +16893,7 @@ msgstr "Zapisano obraz do „%s”"
 msgid "Image exported to '%s'"
 msgstr "Wyeksportowano obraz do „%s”"
 
-#: ../app/display/gimpdisplayshell-layer-select.c:125
+#: ../app/display/gimpdisplayshell-layer-select.c:128
 msgid "Layer Select"
 msgstr "Wybór warstwy"
 
@@ -18272,11 +18278,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:394
+#: ../app/paint/gimpbrushcore.c:393
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:401
+#: ../app/paint/gimpbrushcore.c:400
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
