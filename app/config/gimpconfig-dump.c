@@ -159,7 +159,31 @@ dump_gimprc_system (GimpConfig       *rc,
       gimp_config_writer_comment_mode (writer, TRUE);
       gimp_config_writer_linefeed (writer);
 
-      gimp_config_serialize_property (rc, prop_spec, writer);
+      if (! strcmp (prop_spec->name, "num-processors"))
+        {
+          gimp_config_writer_open (writer, "num-processors");
+          gimp_config_writer_printf (writer, "1");
+          gimp_config_writer_close (writer);
+        }
+      else if (! strcmp (prop_spec->name, "tile-cache-size"))
+        {
+          gimp_config_writer_open (writer, "tile-cache-size");
+          gimp_config_writer_printf (writer, "2g");
+          gimp_config_writer_close (writer);
+        }
+      else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
+        {
+          gimp_config_writer_open (writer, "mypaint-brush-path");
+          gimp_config_writer_printf (writer,
+                                     "\"@mypaint_brushes_dir@%s"
+                                     "~/.mypaint/brushes\"",
+                                     G_SEARCHPATH_SEPARATOR_S);
+          gimp_config_writer_close (writer);
+        }
+      else
+        {
+          gimp_config_serialize_property (rc, prop_spec, writer);
+        }
 
       gimp_config_writer_comment_mode (writer, FALSE);
       gimp_config_writer_linefeed (writer);
@@ -273,6 +297,7 @@ dump_gimprc_manpage (GimpConfig       *rc,
     {
       GParamSpec *prop_spec = property_specs[i];
       gchar      *desc;
+      gboolean    success;
 
       if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
@@ -283,7 +308,39 @@ dump_gimprc_manpage (GimpConfig       *rc,
       g_output_stream_printf (output, NULL, NULL, NULL,
                               ".TP\n");
 
-      if (gimp_config_serialize_property (rc, prop_spec, writer))
+      if (! strcmp (prop_spec->name, "num-processors"))
+        {
+          gimp_config_writer_open (writer, "num-processors");
+          gimp_config_writer_printf (writer, "1");
+          gimp_config_writer_close (writer);
+
+          success = TRUE;
+        }
+      else if (! strcmp (prop_spec->name, "tile-cache-size"))
+        {
+          gimp_config_writer_open (writer, "tile-cache-size");
+          gimp_config_writer_printf (writer, "2g");
+          gimp_config_writer_close (writer);
+
+          success = TRUE;
+        }
+      else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
+        {
+          gimp_config_writer_open (writer, "mypaint-brush-path");
+          gimp_config_writer_printf (writer,
+                                     "\"@mypaint_brushes_dir@%s"
+                                     "~/.mypaint/brushes\"",
+                                     G_SEARCHPATH_SEPARATOR_S);
+          gimp_config_writer_close (writer);
+
+          success = TRUE;
+        }
+      else
+        {
+          success = gimp_config_serialize_property (rc, prop_spec, writer);
+        }
+
+      if (success)
         {
           g_output_stream_printf (output, NULL, NULL, NULL,
                                   "\n");

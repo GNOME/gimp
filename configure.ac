@@ -2668,6 +2668,7 @@ desktop/Makefile
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
 etc/Makefile
+etc/gimprc
 m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
