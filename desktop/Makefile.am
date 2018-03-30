@@ -1,9 +1,14 @@
 ## Makefile.am for gimp/desktop
 
-desktop_in_files = gimp.desktop.in.in
+desktop_in_files = \
+	gimp.desktop.in.in
+
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
-appstream_in_files = org.gimp.GIMP.appdata.xml.in gimp-data-extras.metainfo.xml.in
+appstream_in_files = \
+	org.gimp.GIMP.appdata.xml.in	\
+	gimp-data-extras.metainfo.xml.in
+
 appstream_files = $(appstream_in_files:.xml.in=.xml)
 
 if DESKTOP_DATADIR
