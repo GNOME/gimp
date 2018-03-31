@@ -25,6 +25,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -47,6 +48,10 @@
 /*  chunk size for one iteration of the chunk renderer  */
 static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;
 static gint GIMP_PROJECTION_CHUNK_HEIGHT = 128;
+
+/*  chunk size for area updates  */
+static gint GIMP_PROJECTION_UPDATE_CHUNK_WIDTH  = 32;
+static gint GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT = 32;
 
 /*  how much time, in seconds, do we allow chunk rendering to take,
  *  aiming for 15fps
@@ -678,6 +683,17 @@ gimp_projection_add_update_area (GimpProjection *proj,
    */
   x -= off_x;
   y -= off_y;
+
+  /*  align the rectangle to the UPDATE_CHUNK_WIDTH x UPDATE_CHUNK_HEIGHT grid,
+   *  to decrease the complexity of the update area.
+   */
+  w = ceil  ((gdouble) (x + w) / GIMP_PROJECTION_UPDATE_CHUNK_WIDTH ) * GIMP_PROJECTION_UPDATE_CHUNK_WIDTH;
+  h = ceil  ((gdouble) (y + h) / GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT) * GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT;
+  x = floor ((gdouble) x       / GIMP_PROJECTION_UPDATE_CHUNK_WIDTH ) * GIMP_PROJECTION_UPDATE_CHUNK_WIDTH;
+  y = floor ((gdouble) y       / GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT) * GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT;
+
+  w -= x;
+  h -= y;
 
   if (gimp_rectangle_intersect (x, y, w, h,
                                 0, 0, width, height,
