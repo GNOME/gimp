@@ -20,7 +20,7 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-m4_define([gimp_version], [2.10.0-RC1])
+m4_define([gimp_version], [2.10.0-RC1-git])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.44])
-m4_define([gegl_required_version], [0.3.30])
+m4_define([babl_required_version], [0.1.45])
+m4_define([gegl_required_version], [0.3.31])
 m4_define([glib_required_version], [2.54.2])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
