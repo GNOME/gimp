@@ -95,6 +95,9 @@ typedef enum
   VARIABLE_CPU_ACTIVE_TIME,
 #endif
 
+  /* misc */
+  VARIABLE_MIPMAPED,
+
 
   N_VARIABLES,
 
@@ -120,6 +123,7 @@ typedef enum
 #ifdef HAVE_CPU_GROUP
   GROUP_CPU,
 #endif
+  GROUP_MISC,
 
   N_GROUPS
 } Group;
@@ -458,8 +462,20 @@ static const VariableInfo variables[] =
     .color            = {0.8, 0.7, 0.2, 0.4},
     .sample_func      = gimp_dashboard_sample_cpu_active_time,
     .reset_func       = gimp_dashboard_reset_cpu_active_time
-  }
+  },
 #endif /* HAVE_CPU_GROUP */
+
+
+  /* misc variables */
+
+  [VARIABLE_MIPMAPED] =
+  { .name             = "mipmapped",
+    .title            = NC_("dashboard-variable", "Mipmapped"),
+    .description      = N_("Total size of processed mipmapped data"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "zoom-total"
+  },
 };
 
 static const GroupInfo groups[] =
@@ -558,8 +574,26 @@ static const GroupInfo groups[] =
 
                           {}
                         }
-  }
+  },
 #endif /* HAVE_CPU_GROUP */
+
+  /* misc group */
+  [GROUP_MISC] =
+  { .name             = "misc",
+    .title            = NC_("dashboard-group", "Misc"),
+    .description      = N_("Miscellaneous information"),
+    .default_active   = FALSE,
+    .default_expanded = FALSE,
+    .has_meter        = FALSE,
+    .fields           = (const FieldInfo[])
+                        {
+                          { .variable       = VARIABLE_MIPMAPED,
+                            .default_active = TRUE
+                          },
+
+                          {}
+                        }
+  },
 };
 
 
