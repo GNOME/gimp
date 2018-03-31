@@ -162,10 +162,6 @@ file_open_location_response (GtkDialog *dialog,
     }
 
   entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
-
-  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
-  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
-
   text = gtk_entry_get_text (GTK_ENTRY (entry));
 
   if (text && strlen (text))
@@ -204,6 +200,9 @@ file_open_location_response (GtkDialog *dialog,
 
           gtk_widget_show (box);
 
+          gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
+
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
@@ -212,6 +211,9 @@ file_open_location_response (GtkDialog *dialog,
                                                    G_OBJECT (gtk_widget_get_screen (entry)),
                                                    gimp_widget_get_monitor (entry),
                                                    &status, &error);
+
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
+          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
 
           g_object_unref (entered_file);
 
@@ -231,9 +233,6 @@ file_open_location_response (GtkDialog *dialog,
                         _("Opening '%s' failed:\n\n%s"),
                         text, error->message);
           g_clear_error (&error);
-
-          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
-          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
 
           return;
         }
