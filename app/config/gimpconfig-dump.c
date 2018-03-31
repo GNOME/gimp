@@ -173,12 +173,15 @@ dump_gimprc_system (GimpConfig       *rc,
         }
       else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
         {
+          gchar *path = g_strdup_printf ("@mypaint_brushes_dir@%s"
+                                         "~/.mypaint/brushes",
+                                         G_SEARCHPATH_SEPARATOR_S);
+
           gimp_config_writer_open (writer, "mypaint-brush-path");
-          gimp_config_writer_printf (writer,
-                                     "\"@mypaint_brushes_dir@%s"
-                                     "~/.mypaint/brushes\"",
-                                     G_SEARCHPATH_SEPARATOR_S);
+          gimp_config_writer_string (writer, path);
           gimp_config_writer_close (writer);
+
+          g_free (path);
         }
       else
         {
@@ -326,12 +329,15 @@ dump_gimprc_manpage (GimpConfig       *rc,
         }
       else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
         {
+          gchar *path = g_strdup_printf ("@mypaint_brushes_dir@%s"
+                                         "~/.mypaint/brushes",
+                                         G_SEARCHPATH_SEPARATOR_S);
+
           gimp_config_writer_open (writer, "mypaint-brush-path");
-          gimp_config_writer_printf (writer,
-                                     "\"@mypaint_brushes_dir@%s"
-                                     "~/.mypaint/brushes\"",
-                                     G_SEARCHPATH_SEPARATOR_S);
+          gimp_config_writer_string (writer, path);
           gimp_config_writer_close (writer);
+
+          g_free (path);
 
           success = TRUE;
         }
