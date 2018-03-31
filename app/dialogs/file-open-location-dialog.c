@@ -226,6 +226,12 @@ file_open_location_response (GtkDialog *dialog,
             }
 
           g_object_unref (file);
+
+          if (image != NULL)
+            {
+              gtk_widget_destroy (GTK_WIDGET (dialog));
+              return;
+            }
         }
       else
         {
@@ -233,12 +239,8 @@ file_open_location_response (GtkDialog *dialog,
                         _("Opening '%s' failed:\n\n%s"),
                         text, error->message);
           g_clear_error (&error);
-
-          return;
         }
     }
-
-  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static gboolean
