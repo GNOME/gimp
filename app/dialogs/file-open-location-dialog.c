@@ -149,10 +149,10 @@ file_open_location_response (GtkDialog *dialog,
   GtkWidget   *box;
   const gchar *text = NULL;
 
+  box = g_object_get_data (G_OBJECT (dialog), "progress-box");
+
   if (response_id != GTK_RESPONSE_OK)
     {
-      box = g_object_get_data (G_OBJECT (dialog), "progress-box");
-
       if (box && GIMP_PROGRESS_BOX (box)->active)
         gimp_progress_cancel (GIMP_PROGRESS (box));
       else
@@ -188,12 +188,15 @@ file_open_location_response (GtkDialog *dialog,
           file = file_utils_filename_to_file (gimp, text, &error);
         }
 
-      box = gimp_progress_box_new ();
-      gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-      gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                        box, FALSE, FALSE, 0);
+      if (!box)
+        {
+          box = gimp_progress_box_new ();
+          gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+          gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                            box, FALSE, FALSE, 0);
 
-      g_object_set_data (G_OBJECT (dialog), "progress-box", box);
+          g_object_set_data (G_OBJECT (dialog), "progress-box", box);
+        }
 
       if (file)
         {
