@@ -30,6 +30,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "operations/gimp-operation-config.h"
 
 #include "core/gimp.h"
@@ -276,7 +278,9 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   run_mode = g_value_get_int    (gimp_value_array_index (args, 0));
   settings = g_value_get_object (gimp_value_array_index (args, 3));
 
-  if (! settings)
+  if (! settings &&
+      (run_mode != GIMP_RUN_INTERACTIVE ||
+       GIMP_GUI_CONFIG (gimp->config)->filter_tool_use_last_settings))
     {
       /*  if we didn't get settings passed, get the last used settings  */
 

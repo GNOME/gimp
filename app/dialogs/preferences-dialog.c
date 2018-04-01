@@ -477,6 +477,7 @@ prefs_dialog_defaults_reset (GtkWidget *widget,
     }
 
   gimp_config_reset_property (config, "filter-tool-max-recent");
+  gimp_config_reset_property (config, "filter-tool-use-last-settings");
   gimp_config_reset_property (config, "filter-tool-show-color-options");
 
   g_object_thaw_notify (config);
@@ -2175,6 +2176,9 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Keep recent settings:"),
                          GTK_TABLE (table), 1, size_group);
 
+  button = prefs_check_button_add (object, "filter-tool-use-last-settings",
+                                   _("Default to the last used settings"),
+                                   GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "filter-tool-show-color-options",
                                    _("Show advanced color options"),
                                    GTK_BOX (vbox2));
