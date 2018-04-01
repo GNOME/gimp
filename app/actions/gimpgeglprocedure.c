@@ -119,12 +119,11 @@ gimp_gegl_procedure_finalize (GObject *object)
 {
   GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (object);
 
-  if (proc->default_settings)
-    g_object_unref (proc->default_settings);
+  g_clear_object (&proc->default_settings);
 
-  g_free (proc->menu_label);
-  g_free (proc->label);
-  g_free (proc->help_id);
+  g_clear_pointer (&proc->menu_label, g_free);
+  g_clear_pointer (&proc->label,      g_free);
+  g_clear_pointer (&proc->help_id,    g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
