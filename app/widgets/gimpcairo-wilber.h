@@ -25,18 +25,21 @@
 #define __GIMP_CAIRO_WILBER_H__
 
 
-void  gimp_cairo_draw_toolbox_wilber    (GtkWidget *widget,
-                                         cairo_t   *cr);
-void  gimp_cairo_draw_drop_wilber       (GtkWidget *widget,
-                                         cairo_t   *cr,
-                                         gboolean   blink);
+void   gimp_cairo_wilber_toggle_pointer_eyes (void);
 
-void  gimp_cairo_wilber                 (cairo_t   *cr,
-                                         gdouble    x,
-                                         gdouble    y);
-void  gimp_cairo_wilber_get_size        (cairo_t   *cr,
-                                         gdouble   *width,
-                                         gdouble   *height);
+
+void   gimp_cairo_draw_toolbox_wilber        (GtkWidget *widget,
+                                              cairo_t   *cr);
+void   gimp_cairo_draw_drop_wilber           (GtkWidget *widget,
+                                              cairo_t   *cr,
+                                              gboolean   blink);
+
+void   gimp_cairo_wilber                     (cairo_t   *cr,
+                                              gdouble    x,
+                                              gdouble    y);
+void   gimp_cairo_wilber_get_size            (cairo_t   *cr,
+                                              gdouble   *width,
+                                              gdouble   *height);
 
 
 #endif /* __GIMP_CAIRO_WILBER_H__ */

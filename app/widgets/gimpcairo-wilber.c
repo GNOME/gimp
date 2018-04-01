@@ -48,8 +48,25 @@ static void   gimp_cairo_eyes            (GtkWidget *widget,
                                           gdouble    max_eye_angle);
 
 
-static gboolean pointer_eyes = TRUE;
+static gboolean  pointer_eyes         = FALSE;
+static GSList   *cairo_wilber_widgets = NULL;
 
+
+void
+gimp_cairo_wilber_toggle_pointer_eyes (void)
+{
+  GSList *iter;
+
+  pointer_eyes = ! pointer_eyes;
+
+  for (iter = cairo_wilber_widgets; iter; iter = g_slist_next (iter))
+    {
+      if (pointer_eyes)
+        g_object_set_data (G_OBJECT (iter->data), "wilber-eyes-state", NULL);
+
+      gtk_widget_queue_draw (GTK_WIDGET (iter->data));
+    }
+}
 
 void
 gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
@@ -207,6 +224,13 @@ gimp_cairo_wilber (cairo_t *cr,
 }
 
 static void
+gimp_cairo_wilber_weak_notify (gpointer  data,
+                               GObject  *widget)
+{
+  cairo_wilber_widgets = g_slist_remove (cairo_wilber_widgets, widget);
+}
+
+static void
 gimp_cairo_wilber_internal (GtkWidget *widget,
                             cairo_t   *cr,
                             gdouble    x,
@@ -224,6 +248,14 @@ gimp_cairo_wilber_internal (GtkWidget *widget,
   cairo_restore (cr);
 
   gimp_cairo_eyes (widget, cr, x, y, factor, max_eye_angle);
+
+  if (widget && ! g_slist_find (cairo_wilber_widgets, widget))
+    {
+      cairo_wilber_widgets = g_slist_prepend (cairo_wilber_widgets, widget);
+
+      g_object_weak_ref (G_OBJECT (widget),
+                         gimp_cairo_wilber_weak_notify, NULL);
+    }
 }
 
 typedef struct
