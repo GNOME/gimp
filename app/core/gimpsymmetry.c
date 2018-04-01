@@ -52,6 +52,7 @@ enum
   PROP_0,
   PROP_IMAGE,
   PROP_ACTIVE,
+  PROP_VERSION,
 };
 
 
@@ -74,6 +75,7 @@ static GeglNode * gimp_symmetry_real_get_op         (GimpSymmetry *sym,
                                                      gint          stroke,
                                                      gint          paint_width,
                                                      gint          paint_height);
+static gboolean   gimp_symmetry_real_update_version (GimpSymmetry *sym);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSymmetry, gimp_symmetry, GIMP_TYPE_OBJECT,
@@ -133,6 +135,7 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
   klass->update_strokes      = gimp_symmetry_real_update_strokes;
   klass->get_operation       = gimp_symmetry_real_get_op;
   klass->active_changed      = NULL;
+  klass->update_version      = gimp_symmetry_real_update_version;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
@@ -146,6 +149,13 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                             _("Activate symmetry painting"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_VERSION,
+                        "version",
+                        "Symmetry version",
+                        "Version of the symmetry object",
+                        -1, G_MAXINT, 0,
+                        GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -186,6 +196,9 @@ gimp_symmetry_set_property (GObject      *object,
       g_signal_emit (sym, gimp_symmetry_signals[ACTIVE_CHANGED], 0,
                      sym->active);
       break;
+    case PROP_VERSION:
+      sym->version = g_value_get_int (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -207,6 +220,9 @@ gimp_symmetry_get_property (GObject    *object,
       break;
     case PROP_ACTIVE:
       g_value_set_boolean (value, sym->active);
+      break;
+    case PROP_VERSION:
+      g_value_set_int (value, sym->version);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -235,6 +251,24 @@ gimp_symmetry_real_get_op (GimpSymmetry *sym,
   return NULL;
 }
 
+static gboolean
+gimp_symmetry_real_update_version (GimpSymmetry *symmetry)
+{
+  /* Currently all symmetries are at version 0. So all this check has to
+   * do is verify that we are at version 0.
+   * If one of the child symmetry bumps its version, it will have to
+   * override the update_version() virtual function and do any necessary
+   * update there (for instance new properties, modified properties, or
+   * whatnot).
+   */
+  gint version;
+
+  g_object_get (symmetry,
+                "version", &version,
+                NULL);
+
+  return (version == 0);
+}
 
 /***** Public Functions *****/
 
@@ -401,6 +435,10 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
 
   symmetry = gimp_image_symmetry_new (image, type);
 
+  g_object_set (symmetry,
+                "version", -1,
+                NULL);
+
   if (! gimp_config_deserialize_string (GIMP_CONFIG (symmetry),
                                         str,
                                         gimp_parasite_data_size (parasite),
@@ -409,6 +447,32 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
     {
       g_warning ("Failed to deserialize symmetry parasite: %s", error->message);
       g_error_free (error);
+
+      g_object_unref (symmetry);
+      symmetry = NULL;
+    }
+
+  if (symmetry)
+    {
+      gint version;
+
+      g_object_get (symmetry,
+                    "version", &version,
+                    NULL);
+      if (version == -1)
+        {
+          /* If version has not been updated, let's assume this parasite was
+           * not representing symmetry settings.
+           */
+          g_object_unref (symmetry);
+          symmetry = NULL;
+        }
+      else if (GIMP_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry) &&
+               ! GIMP_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry))
+        {
+          g_object_unref (symmetry);
+          symmetry = NULL;
+        }
     }
 
   return symmetry;
