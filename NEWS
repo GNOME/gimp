@@ -10,9 +10,46 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0
+=======================================================
 
-Overview of Changes from GIMP 2.9.8 to GIMP 2.10 RC1
-====================================================
+Core:
+
+  - Symmetries are saved as image parasites.
+  - New runtime option --show-debug-menu in order to make the File >
+    Debug menu visible.
+  - Do not show invisible actions in search dialog.
+  - Do not dither image mask and channels for imported images.
+  - Various optimization for painting and display (WIP).
+
+Configurability:
+
+  - In Preferences > Dialog Defaults, new section "Filter Dialogs"
+    created to customize various common features of filters, such as
+    recent settings and advanced color options.
+  - Do not default to last used filter settings, but allow this behavior
+    in Preferences > Dialog Defaults, with checkbox "Default to the last
+    used settings".
+
+Tools:
+
+  - Color used in the Smudge tool is now added to the color history.
+
+Assets / Resources:
+
+  - Adding 4K UHD in document templates (and fixing 4K DCI).
+
+Building:
+
+  - New --enable-bundled-mypaint-brushes option in configure to decide
+    whether to use the configure-time installation path of MyPaint
+    brushes, or use a path relative to GIMP installation prefix
+    (typically for bundled binaries, such as on Windows or macOS).
+  - Detect freetype2 using pkg-config (`freetype-config` is on its way
+    out in various distributions apparently).
+
+Overview of Changes from GIMP 2.9.8 to GIMP 2.10.0 RC1
+======================================================
 
 Core:
 
