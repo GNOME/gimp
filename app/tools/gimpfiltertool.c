@@ -1489,7 +1489,7 @@ gimp_filter_tool_edit_as (GimpFilterTool *filter_tool,
 
   new_tool = tool_manager_get_active (display->gimp);
 
-  GIMP_FILTER_TOOL (new_tool)->default_config = g_object_ref (config);
+  GIMP_FILTER_TOOL (new_tool)->default_config = g_object_ref (G_OBJECT (config));
 
   gimp_filter_tool_reset (GIMP_FILTER_TOOL (new_tool));
 }
