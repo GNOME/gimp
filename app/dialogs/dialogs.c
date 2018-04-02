@@ -324,7 +324,7 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_cursor_view_new, 0, TRUE),
   DOCKABLE ("gimp-dashboard",
             N_("Dashboard"), N_("Dashboard"), GIMP_ICON_DIALOG_DASHBOARD,
-            GIMP_HELP_ERRORS_DIALOG,
+            GIMP_HELP_DASHBOARD_DIALOG,
             dialogs_dashboard_new, 0, TRUE),
 
   /*  list & grid views  */
