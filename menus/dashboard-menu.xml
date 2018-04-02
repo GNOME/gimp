@@ -3,14 +3,17 @@
 
 <ui>
   <popup action="dashboard-popup">
-    <menu action="dashboard-update-interval">
+    <menu action="dashboard-groups" name="Groups">
+      <placeholder name="Groups" />
+    </menu>
+    <menu action="dashboard-update-interval" name="Update Interval">
       <menuitem action="dashboard-update-interval-0-25-sec" />
       <menuitem action="dashboard-update-interval-0-5-sec" />
       <menuitem action="dashboard-update-interval-1-sec" />
       <menuitem action="dashboard-update-interval-2-sec" />
       <menuitem action="dashboard-update-interval-4-sec" />
     </menu>
-    <menu action="dashboard-history-duration">
+    <menu action="dashboard-history-duration" name="History Duration">
       <menuitem action="dashboard-history-duration-15-sec" />
       <menuitem action="dashboard-history-duration-30-sec" />
       <menuitem action="dashboard-history-duration-60-sec" />
