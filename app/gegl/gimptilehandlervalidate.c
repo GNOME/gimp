@@ -313,8 +313,7 @@ gimp_tile_handler_validate_command (GeglTileSource  *source,
                                     gint             z,
                                     gpointer         data)
 {
-  GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (source);
-  gpointer                 retval;
+  gpointer retval;
 
   retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
 
