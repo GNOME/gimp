@@ -43,7 +43,8 @@ enum
   PROP_HAS_NUMBER,
   PROP_NUMBER,
   PROP_HAS_COLOR_AREA,
-  PROP_HAS_COORDS
+  PROP_HAS_COORDS,
+  PROP_ELLIPSIZE,
 };
 
 
@@ -122,6 +123,13 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_ELLIPSIZE,
+                                   g_param_spec_enum ("ellipsize",
+                                                      NULL, NULL,
+                                                      PANGO_TYPE_ELLIPSIZE_MODE,
+                                                      PANGO_ELLIPSIZE_NONE,
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -182,7 +190,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
       gtk_label_set_selectable (GTK_LABEL (frame->value_labels[i]), TRUE);
       gtk_label_set_xalign (GTK_LABEL (frame->value_labels[i]), 1.0);
       gtk_box_pack_end (GTK_BOX (hbox), frame->value_labels[i],
-                        FALSE, FALSE, 0);
+                        TRUE, TRUE, 0);
       gtk_widget_show (frame->value_labels[i]);
     }
 
@@ -249,6 +257,10 @@ gimp_color_frame_get_property (GObject    *object,
       g_value_set_enum (value, frame->frame_mode);
       break;
 
+    case PROP_ELLIPSIZE:
+      g_value_set_enum (value, frame->ellipsize);
+      break;
+
     case PROP_HAS_NUMBER:
       g_value_set_boolean (value, frame->has_number);
       break;
@@ -283,6 +295,10 @@ gimp_color_frame_set_property (GObject      *object,
     {
     case PROP_MODE:
       gimp_color_frame_set_mode (frame, g_value_get_enum (value));
+      break;
+
+    case PROP_ELLIPSIZE:
+      gimp_color_frame_set_ellipsize (frame, g_value_get_enum (value));
       break;
 
     case PROP_HAS_NUMBER:
@@ -415,6 +431,27 @@ gimp_color_frame_set_mode (GimpColorFrame     *frame,
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (frame->menu), mode);
+}
+
+void
+gimp_color_frame_set_ellipsize (GimpColorFrame     *frame,
+                                PangoEllipsizeMode  ellipsize)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+
+  if (ellipsize != frame->ellipsize)
+    {
+      frame->ellipsize = ellipsize;
+
+      for (i = 0; i < GIMP_COLOR_FRAME_ROWS; i++)
+        {
+          if (frame->value_labels[i])
+            gtk_label_set_ellipsize (GTK_LABEL (frame->value_labels[i]),
+                                     ellipsize);
+        }
+    }
 }
 
 void

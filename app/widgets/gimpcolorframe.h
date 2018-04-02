@@ -46,6 +46,8 @@ struct _GimpColorFrame
 
   GimpColorFrameMode  frame_mode;
 
+  PangoEllipsizeMode  ellipsize;
+
   gboolean            has_number;
   gint                number;
 
@@ -79,6 +81,9 @@ GtkWidget * gimp_color_frame_new                (void);
 
 void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
                                                  GimpColorFrameMode  mode);
+
+void        gimp_color_frame_set_ellipsize      (GimpColorFrame     *frame,
+                                                 PangoEllipsizeMode  ellipsize);
 
 void        gimp_color_frame_set_has_number     (GimpColorFrame     *frame,
                                                  gboolean            has_number);
