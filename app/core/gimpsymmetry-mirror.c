@@ -520,20 +520,24 @@ gimp_mirror_remove_guide (GimpMirror          *mirror,
   guide = (orientation == GIMP_ORIENTATION_HORIZONTAL) ?
     mirror->horizontal_guide : mirror->vertical_guide;
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
-                                        gimp_mirror_guide_removed_cb,
-                                        mirror);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
-                                        gimp_mirror_guide_position_cb,
-                                        mirror);
+  /* The guide may have already been removed, for instance from GUI. */
+  if (guide)
+    {
+      g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
+                                            gimp_mirror_guide_removed_cb,
+                                            mirror);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
+                                            gimp_mirror_guide_position_cb,
+                                            mirror);
 
-  gimp_image_remove_guide (image, guide, FALSE);
-  g_object_unref (guide);
+      gimp_image_remove_guide (image, guide, FALSE);
+      g_object_unref (guide);
 
-  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
-    mirror->horizontal_guide = NULL;
-  else
-    mirror->vertical_guide = NULL;
+      if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+        mirror->horizontal_guide = NULL;
+      else
+        mirror->vertical_guide = NULL;
+    }
 }
 
 static void
@@ -554,8 +558,12 @@ gimp_mirror_guide_removed_cb (GObject    *object,
       g_object_unref (mirror->horizontal_guide);
       mirror->horizontal_guide    = NULL;
 
-      mirror->horizontal_mirror   = FALSE;
-      mirror->point_symmetry      = FALSE;
+      g_object_set (mirror,
+                    "horizontal-symmetry", FALSE,
+                    NULL);
+      g_object_set (mirror,
+                    "point-symmetry", FALSE,
+                    NULL);
       g_object_set (mirror,
                     "mirror-position-y", 0.0,
                     NULL);
@@ -581,8 +589,12 @@ gimp_mirror_guide_removed_cb (GObject    *object,
       g_object_unref (mirror->vertical_guide);
       mirror->vertical_guide    = NULL;
 
-      mirror->vertical_mirror   = FALSE;
-      mirror->point_symmetry    = FALSE;
+      g_object_set (mirror,
+                    "vertical-symmetry", FALSE,
+                    NULL);
+      g_object_set (mirror,
+                    "point-symmetry", FALSE,
+                    NULL);
       g_object_set (mirror,
                     "mirror-position-x", 0.0,
                     NULL);
