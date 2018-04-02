@@ -243,7 +243,7 @@ gimp_mirror_set_property (GObject      *object,
       break;
 
     case PROP_MIRROR_POSITION_X:
-      if (g_value_get_double (value) > 0.0 &&
+      if (g_value_get_double (value) >= 0.0 &&
           g_value_get_double (value) < (gdouble) gimp_image_get_width (image))
         {
           mirror->mirror_position_x = g_value_get_double (value);
@@ -264,7 +264,7 @@ gimp_mirror_set_property (GObject      *object,
       break;
 
     case PROP_MIRROR_POSITION_Y:
-      if (g_value_get_double (value) > 0.0 &&
+      if (g_value_get_double (value) >= 0.0 &&
           g_value_get_double (value) < (gdouble) gimp_image_get_height (image))
         {
           mirror->mirror_position_y = g_value_get_double (value);
