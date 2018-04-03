@@ -126,8 +126,8 @@ GimpChannel * gimp_channel_new                (GimpImage         *image,
                                                gint               height,
                                                const gchar       *name,
                                                const GimpRGB     *color);
-GimpChannel * gimp_channel_new_from_buffer    (GeglBuffer        *buffer,
-                                               GimpImage         *image,
+GimpChannel * gimp_channel_new_from_buffer    (GimpImage         *image,
+                                               GeglBuffer        *buffer,
                                                const gchar       *name,
                                                const GimpRGB     *color);
 GimpChannel * gimp_channel_new_from_alpha     (GimpImage         *image,
