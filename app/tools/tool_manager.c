@@ -413,7 +413,8 @@ tool_manager_modifier_state_active (Gimp            *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  if (tool_manager->active_tool)
+  if (tool_manager->active_tool &&
+      ! gimp_tool_control_is_active (tool_manager->active_tool->control))
     {
       gimp_tool_set_modifier_state (tool_manager->active_tool,
                                     state,
