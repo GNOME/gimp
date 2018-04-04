@@ -1942,6 +1942,7 @@ gimp_fatal_func (const gchar    *log_domain,
   g_printerr ("%s: %s: %s\n",
               progname, level, message);
 
+#ifndef G_OS_WIN32
   switch (stack_trace_mode)
     {
     case GIMP_STACK_TRACE_NEVER:
@@ -1967,8 +1968,12 @@ gimp_fatal_func (const gchar    *log_domain,
         }
       break;
     }
+#endif
 
-  gimp_quit ();
+  /* Do not end with gimp_quit().
+   * We want the plug-in to continue its normal crash course, otherwise
+   * we won't get the "Plug-in crashed" error in GIMP.
+   */
 }
 
 #ifndef G_OS_WIN32
@@ -2019,7 +2024,10 @@ gimp_plugin_sigfatal_handler (gint sig_num)
       break;
     }
 
-  gimp_quit ();
+  /* Do not end with gimp_quit().
+   * We want the plug-in to continue its normal crash course, otherwise
+   * we won't get the "Plug-in crashed" error in GIMP.
+   */
 }
 #endif
 
