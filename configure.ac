@@ -237,6 +237,7 @@ AM_PROG_CC_C_O
 
 # Determine a C++ compiler to use
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX([11], , [mandatory])
 
 # Initialize libtool
 LT_PREREQ([2.2])
