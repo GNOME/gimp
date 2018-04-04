@@ -20,10 +20,13 @@ Core:
     Debug menu visible.
   - Do not show invisible actions in search dialog.
   - Do not dither image mask and channels for imported images.
-  - Various optimization for painting and display (WIP).
+  - Various optimizations for painting and display (WIP), including
+    parallelized painting code.
   - New "Misc" group to the Dashboard dock, with currently only a
     "Mipmapped" field showing the total size of processed mipmapped
     data.
+  - Plug-ins debugging on crashes through --stack-trace-mode CLI option
+    improved to handle more case.
 
 Configurability:
 
@@ -50,11 +53,12 @@ Building:
     (typically for bundled binaries, such as on Windows or macOS).
   - Detect freetype2 using pkg-config (`freetype-config` is on its way
     out in various distributions apparently).
+  - Appdata now installed to $PREFIX/share/metainfo/
 
 Translations:
 
-  - 5 translations were updated: Arabic, Catalan, Italian, Polish,
-    Swedish.
+  - 6 translations were updated: Arabic, Catalan, French, Italian,
+    Polish, Swedish.
 
 Overview of Changes from GIMP 2.9.8 to GIMP 2.10.0 RC1
 ======================================================
