@@ -52,6 +52,8 @@ libappcore_a_sources = \
 	gimp-modules.h				\
 	gimp-palettes.c				\
 	gimp-palettes.h				\
+	gimp-parallel.cc			\
+	gimp-parallel.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
 	gimp-spawn.c				\

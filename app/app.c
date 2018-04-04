@@ -427,6 +427,8 @@ app_run (const gchar         *full_prog_name,
 
   g_main_loop_unref (loop);
 
+  gimp_gegl_exit (gimp);
+
   g_object_unref (gimp);
 
   gimp_debug_instances ();
