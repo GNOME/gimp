@@ -154,6 +154,10 @@ static void       gimp_message_func            (const gchar    *log_domain,
                                                 GLogLevelFlags  log_level,
                                                 const gchar    *message,
                                                 gpointer        data);
+static void       gimp_fatal_func              (const gchar    *log_domain,
+                                                GLogLevelFlags  flags,
+                                                const gchar    *message,
+                                                gpointer        data);
 #ifndef G_OS_WIN32
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
 #endif
@@ -589,6 +593,17 @@ gimp_main (const GimpPlugInInfo *info,
       fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
       fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
       g_log_set_always_fatal (fatal_mask);
+
+      g_log_set_handler (NULL,
+                         G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL |
+                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                         gimp_fatal_func, NULL);
+    }
+  else
+    {
+      g_log_set_handler (NULL,
+                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                         gimp_fatal_func, NULL);
     }
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
@@ -1898,6 +1913,62 @@ gimp_message_func (const gchar    *log_domain,
                    gpointer        data)
 {
   gimp_message (message);
+}
+
+static void
+gimp_fatal_func (const gchar    *log_domain,
+                 GLogLevelFlags  flags,
+                 const gchar    *message,
+                 gpointer        data)
+{
+  const gchar *level;
+
+  switch (flags & G_LOG_LEVEL_MASK)
+    {
+    case G_LOG_LEVEL_WARNING:
+      level = "WARNING";
+      break;
+    case G_LOG_LEVEL_CRITICAL:
+      level = "CRITICAL";
+      break;
+    case G_LOG_LEVEL_ERROR:
+      level = "ERROR";
+      break;
+    default:
+      level = "FATAL";
+      break;
+    }
+
+  g_printerr ("%s: %s: %s\n",
+              progname, level, message);
+
+  switch (stack_trace_mode)
+    {
+    case GIMP_STACK_TRACE_NEVER:
+      break;
+
+    case GIMP_STACK_TRACE_QUERY:
+        {
+          sigset_t sigset;
+
+          sigemptyset (&sigset);
+          sigprocmask (SIG_SETMASK, &sigset, NULL);
+          gimp_stack_trace_query (progname);
+        }
+      break;
+
+    case GIMP_STACK_TRACE_ALWAYS:
+        {
+          sigset_t sigset;
+
+          sigemptyset (&sigset);
+          sigprocmask (SIG_SETMASK, &sigset, NULL);
+          gimp_stack_trace_print (progname, stdout, NULL);
+        }
+      break;
+    }
+
+  gimp_quit ();
 }
 
 #ifndef G_OS_WIN32
