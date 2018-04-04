@@ -1644,7 +1644,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 
   curr_usage = tms.tms_utime + tms.tms_stime;
 
-  if (prev_clock)
+  if (prev_clock && curr_clock != prev_clock)
     {
       variable_data->available         = TRUE;
       variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
@@ -1701,7 +1701,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
   curr_usage += ((guint64) process_user_time.dwHighDateTime << 32) |
                  (guint64) process_user_time.dwLowDateTime;
 
-  if (prev_time)
+  if (prev_time && curr_time != prev_time)
     {
       variable_data->available         = TRUE;
       variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
