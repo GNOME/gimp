@@ -30,6 +30,9 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
+extern "C"
+{
+
 #include "gimp-gegl-types.h"
 
 #include "gimp-babl.h"
@@ -91,7 +94,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
 
   /* Get source pixel data */
   src_rowstride = src_components * src_rect->width;
-  src = g_malloc (sizeof(gfloat) * src_rowstride * src_rect->height);
+  src = g_new (gfloat, src_rowstride * src_rect->height);
   gegl_buffer_get (src_buffer, src_rect, 1.0, src_format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
@@ -100,7 +103,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
       /*  Convolve the src image using the convolution kernel, writing
        *  to dest Convolve is not tile-enabled--use accordingly
        */
-      gfloat       *dest        = dest_iter->data[0];
+      gfloat       *dest        = (gfloat *) dest_iter->data[0];
       const gint    components  = src_components;
       const gint    a_component = components - 1;
       const gint    margin      = kernel_size / 2;
@@ -262,8 +265,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src   = iter->data[0];
-          gfloat *dest  = iter->data[1];
+          gfloat *src   = (gfloat *) iter->data[0];
+          gfloat *dest  = (gfloat *) iter->data[1];
           gint    count = iter->length;
 
           while (count--)
@@ -285,8 +288,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src   = iter->data[0];
-          gfloat *dest  = iter->data[1];
+          gfloat *src   = (gfloat *) iter->data[0];
+          gfloat *dest  = (gfloat *) iter->data[1];
           gint    count = iter->length;
 
           while (count--)
@@ -308,8 +311,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *src   = iter->data[0];
-          gfloat *dest  = iter->data[1];
+          gfloat *src   = (gfloat *) iter->data[0];
+          gfloat *dest  = (gfloat *) iter->data[1];
           gint    count = iter->length;
 
           while (count--)
@@ -481,9 +484,9 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat       *accum      = iter->data[0];
-      const gfloat *canvas     = iter->data[1];
-      gfloat       *paint      = iter->data[2];
+      gfloat       *accum      = (gfloat *)       iter->data[0];
+      const gfloat *canvas     = (const gfloat *) iter->data[1];
+      gfloat       *paint      = (gfloat *)       iter->data[2];
       gint          count      = iter->length;
 
 #if COMPILE_SSE2_INTRINISICS
@@ -529,8 +532,8 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask  = iter->data[0];
-      gfloat       *dest  = iter->data[1];
+      const gfloat *mask  = (const gfloat *) iter->data[0];
+      gfloat       *dest  = (gfloat *)       iter->data[1];
       gint          count = iter->length;
 
       while (count--)
@@ -562,8 +565,8 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask  = iter->data[0];
-      gfloat       *dest  = iter->data[1];
+      const gfloat *mask  = (const gfloat *) iter->data[0];
+      gfloat       *dest  = (gfloat *)       iter->data[1];
       gint          count = iter->length;
 
       while (count--)
@@ -596,8 +599,8 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *mask  = iter->data[0];
-      gfloat       *dest  = iter->data[1];
+      const gfloat *mask  = (const gfloat *) iter->data[0];
+      gfloat       *dest  = (gfloat *)       iter->data[1];
       gint          count = iter->length;
 
       if (stipple)
@@ -656,10 +659,10 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *top    = iter->data[0];
-      const gfloat *bottom = iter->data[1];
-      const gfloat *mask   = iter->data[2];
-      gfloat       *dest   = iter->data[3];
+      const gfloat *top    = (const gfloat *) iter->data[0];
+      const gfloat *bottom = (const gfloat *) iter->data[1];
+      const gfloat *mask   = (const gfloat *) iter->data[2];
+      gfloat       *dest   = (gfloat *)       iter->data[3];
       gint          count  = iter->length;
 
       while (count--)
@@ -750,8 +753,8 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *indexed = iter->data[0];
-      gfloat       *mask    = iter->data[1];
+      const guchar *indexed = (const guchar *) iter->data[0];
+      gfloat       *mask    = (gfloat *)       iter->data[1];
       gint          count   = iter->length;
 
       while (count--)
@@ -778,10 +781,10 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  gboolean                  bpc,
                                  GimpProgress             *progress)
 {
-  GimpColorTransform      *transform;
-  GimpColorTransformFlags  flags = 0;
-  const Babl              *src_format;
-  const Babl              *dest_format;
+  GimpColorTransform *transform;
+  guint               flags = 0;
+  const Babl         *src_format;
+  const Babl         *dest_format;
 
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
@@ -793,7 +796,8 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
 
   transform = gimp_color_transform_new (src_profile,  src_format,
                                         dest_profile, dest_format,
-                                        intent, flags);
+                                        intent,
+                                        (GimpColorTransformFlags) flags);
 
   if (transform)
     {
@@ -821,3 +825,5 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
         gimp_progress_set_value (progress, 1.0);
     }
 }
+
+} /* extern "C" */
