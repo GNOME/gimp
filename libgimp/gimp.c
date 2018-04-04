@@ -167,7 +167,11 @@ static void       gimp_fatal_func              (const gchar    *log_domain,
                                                 GLogLevelFlags  flags,
                                                 const gchar    *message,
                                                 gpointer        data);
-#ifndef G_OS_WIN32
+#ifdef G_OS_WIN32
+#ifdef HAVE_EXCHNDL
+static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+#endif
+#else
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
 #endif
 static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
@@ -193,8 +197,13 @@ static void       gimp_set_pdb_error           (const GimpParam *return_vals,
                                                 gint             n_return_vals);
 
 
-static GIOChannel *_readchannel  = NULL;
-GIOChannel *_writechannel = NULL;
+#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
+static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
+static gchar                         *plug_in_backtrace_path = NULL;
+#endif
+
+static GIOChannel                   *_readchannel            = NULL;
+GIOChannel                          *_writechannel           = NULL;
 
 #ifdef USE_WIN32_SHM
 static HANDLE shm_handle;
@@ -332,10 +341,9 @@ gimp_main (const GimpPlugInInfo *info,
 #ifdef HAVE_EXCHNDL
   /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
   {
-    time_t t;
-    gchar *filename;
-    gchar *dir;
-    gchar *path;
+    time_t  t;
+    gchar  *filename;
+    gchar  *dir;
 
     /* This has to be the non-roaming directory (i.e., the local
        directory) as backtraces correspond to the binaries on this
@@ -349,14 +357,18 @@ gimp_main (const GimpPlugInInfo *info,
     time (&t);
     filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
                                 g_get_prgname(), t);
-    path = g_build_filename (dir, filename, NULL);
+    plug_in_backtrace_path = g_build_filename (dir, filename, NULL);
     g_free (filename);
     g_free (dir);
 
-    ExcHndlInit ();
-    ExcHndlSetLogFileNameA (path);
+    /* Similar to core crash handling in app/signals.c, the order here
+     * is very important!
+     */
+    if (! _prevExceptionFilter)
+      _prevExceptionFilter = SetUnhandledExceptionFilter (gimp_plugin_sigfatal_handler);
 
-    g_free (path);
+    ExcHndlInit ();
+    ExcHndlSetLogFileNameA (plug_in_backtrace_path);
   }
 #endif
 
@@ -671,6 +683,11 @@ void
 gimp_quit (void)
 {
   gimp_close ();
+
+#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
+  if (plug_in_backtrace_path)
+    g_free (plug_in_backtrace_path);
+#endif
 
   exit (EXIT_SUCCESS);
 }
@@ -1986,7 +2003,46 @@ gimp_fatal_func (const gchar    *log_domain,
    */
 }
 
-#ifndef G_OS_WIN32
+#ifdef G_OS_WIN32
+
+#ifdef HAVE_EXCHNDL
+static LONG WINAPI
+gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
+{
+  g_printerr ("%s: fatal error\n", progname);
+
+  SetUnhandledExceptionFilter (_prevExceptionFilter);
+
+  /* For simplicity, do not make a difference between QUERY and ALWAYS
+   * on Windows (at least not for now).
+   */
+  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER &&
+      g_file_test (plug_in_backtrace_path, G_FILE_TEST_IS_REGULAR))
+    {
+      FILE   *stream;
+      guchar  buffer[256];
+      size_t  read_len;
+
+      stream = fopen (plug_in_backtrace_path, "r");
+      do
+        {
+          /* Just read and output directly the file content. */
+          read_len = fread (buffer, 1, sizeof (buffer) - 1, stream);
+          buffer[read_len] = '\0';
+          g_printerr ("%s", buffer);
+        }
+      while (read_len);
+      fclose (stream);
+    }
+
+  if (_prevExceptionFilter && _prevExceptionFilter != gimp_plugin_sigfatal_handler)
+    return _prevExceptionFilter (pExceptionInfo);
+  else
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+#endif
+
+#else
 static void
 gimp_plugin_sigfatal_handler (gint sig_num)
 {
