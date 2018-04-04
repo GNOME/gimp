@@ -848,6 +848,17 @@ gimp_metadata_load_from_file (GFile   *file,
 
 #ifdef G_OS_WIN32
   filename = g_win32_locale_filename_from_utf8 (path);
+  /* FIXME!
+   * This call can return NULL, which later crashes the call to
+   * gexiv2_metadata_open_path().
+   * See bug 794949.
+   */
+  if (! filename)
+    {
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
+                   _("Conversion of the filename to system codepage failed."));
+      return NULL;
+    }
 #else
   filename = g_strdup (path);
 #endif
