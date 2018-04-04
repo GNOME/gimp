@@ -26,12 +26,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+extern "C"
+{
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
-
-extern "C"
-{
 
 #include "gimp-gegl-types.h"
 
@@ -39,8 +39,21 @@ extern "C"
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-loops-sse2.h"
 
+#include "core/gimp-parallel.h"
 #include "core/gimp-utils.h"
 #include "core/gimpprogress.h"
+
+
+#define MIN_PARALLEL_SUB_SIZE 64
+#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+
+#define SHIFTED_AREA(dest, src)                                                \
+  const GeglRectangle dest##_area_ = {                                         \
+    src##_area->x + (dest##_rect->x - src##_rect->x),                          \
+    src##_area->y + (dest##_rect->y - src##_rect->y),                          \
+    src##_area->width, src##_area->height                                      \
+  };                                                                           \
+  const GeglRectangle * const dest##_area = &dest##_area_
 
 
 void
@@ -54,14 +67,14 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     GimpConvolutionType  mode,
                     gboolean             alpha_weighting)
 {
-  GeglBufferIterator *dest_iter;
-  gfloat             *src;
-  gint                src_rowstride;
+  gfloat     *src;
+  gint        src_rowstride;
 
-  const Babl         *src_format;
-  const Babl         *dest_format;
-  gint                src_components;
-  gint                dest_components;
+  const Babl *src_format;
+  const Babl *dest_format;
+  gint        src_components;
+  gint        dest_components;
+  gfloat      offset;
 
   src_format = gegl_buffer_get_format (src_buffer);
 
@@ -88,138 +101,143 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   src_components  = babl_format_get_n_components (src_format);
   dest_components = babl_format_get_n_components (dest_format);
 
-  /* Set up dest iterator */
-  dest_iter = gegl_buffer_iterator_new (dest_buffer, dest_rect, 0, dest_format,
-                                        GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
   /* Get source pixel data */
   src_rowstride = src_components * src_rect->width;
   src = g_new (gfloat, src_rowstride * src_rect->height);
   gegl_buffer_get (src_buffer, src_rect, 1.0, src_format, src,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  while (gegl_buffer_iterator_next (dest_iter))
+  /*  If the mode is NEGATIVE_CONVOL, the offset should be 0.5  */
+  if (mode == GIMP_NEGATIVE_CONVOL)
     {
-      /*  Convolve the src image using the convolution kernel, writing
-       *  to dest Convolve is not tile-enabled--use accordingly
-       */
-      gfloat       *dest        = (gfloat *) dest_iter->data[0];
-      const gint    components  = src_components;
-      const gint    a_component = components - 1;
-      const gint    margin      = kernel_size / 2;
-      const gint    x1          = 0;
-      const gint    y1          = 0;
-      const gint    x2          = src_rect->width  - 1;
-      const gint    y2          = src_rect->height - 1;
-      const gint    dest_x1     = dest_iter->roi[0].x;
-      const gint    dest_y1     = dest_iter->roi[0].y;
-      const gint    dest_x2     = dest_iter->roi[0].x + dest_iter->roi[0].width;
-      const gint    dest_y2     = dest_iter->roi[0].y + dest_iter->roi[0].height;
-      gint          x, y;
-      gfloat        offset;
+      offset = 0.5;
+      mode = GIMP_NORMAL_CONVOL;
+    }
+  else
+    {
+      offset = 0.0;
+    }
 
-      /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
-      if (mode == GIMP_NEGATIVE_CONVOL)
-        {
-          offset = 0.5;
-          mode = GIMP_NORMAL_CONVOL;
-        }
-      else
-        {
-          offset = 0.0;
-        }
+  gimp_parallel_distribute_area (dest_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *dest_area)
+    {
+      const gint          components  = src_components;
+      const gint          a_component = components - 1;
+      const gint          margin      = kernel_size / 2;
+      GeglBufferIterator *dest_iter;
 
-      for (y = dest_y1; y < dest_y2; y++)
-        {
-          gfloat *d = dest;
+      /* Set up dest iterator */
+      dest_iter = gegl_buffer_iterator_new (dest_buffer, dest_area, 0, dest_format,
+                                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
-          if (alpha_weighting)
+      while (gegl_buffer_iterator_next (dest_iter))
+        {
+          /*  Convolve the src image using the convolution kernel, writing
+           *  to dest Convolve is not tile-enabled--use accordingly
+           */
+          gfloat     *dest    = (gfloat *) dest_iter->data[0];
+          const gint  x1      = 0;
+          const gint  y1      = 0;
+          const gint  x2      = src_rect->width  - 1;
+          const gint  y2      = src_rect->height - 1;
+          const gint  dest_x1 = dest_iter->roi[0].x;
+          const gint  dest_y1 = dest_iter->roi[0].y;
+          const gint  dest_x2 = dest_iter->roi[0].x + dest_iter->roi[0].width;
+          const gint  dest_y2 = dest_iter->roi[0].y + dest_iter->roi[0].height;
+          gint        x, y;
+
+          for (y = dest_y1; y < dest_y2; y++)
             {
-              for (x = dest_x1; x < dest_x2; x++)
+              gfloat *d = dest;
+
+              if (alpha_weighting)
                 {
-                  const gfloat *m                = kernel;
-                  gdouble       total[4]         = { 0.0, 0.0, 0.0, 0.0 };
-                  gdouble       weighted_divisor = 0.0;
-                  gint          i, j, b;
-
-                  for (j = y - margin; j <= y + margin; j++)
+                  for (x = dest_x1; x < dest_x2; x++)
                     {
-                      for (i = x - margin; i <= x + margin; i++, m++)
+                      const gfloat *m                = kernel;
+                      gdouble       total[4]         = { 0.0, 0.0, 0.0, 0.0 };
+                      gdouble       weighted_divisor = 0.0;
+                      gint          i, j, b;
+
+                      for (j = y - margin; j <= y + margin; j++)
                         {
-                          gint          xx = CLAMP (i, x1, x2);
-                          gint          yy = CLAMP (j, y1, y2);
-                          const gfloat *s  = src + yy * src_rowstride + xx * components;
-                          const gfloat  a  = s[a_component];
-
-                          if (a)
+                          for (i = x - margin; i <= x + margin; i++, m++)
                             {
-                              gdouble mult_alpha = *m * a;
+                              gint          xx = CLAMP (i, x1, x2);
+                              gint          yy = CLAMP (j, y1, y2);
+                              const gfloat *s  = src + yy * src_rowstride + xx * components;
+                              const gfloat  a  = s[a_component];
 
-                              weighted_divisor += mult_alpha;
+                              if (a)
+                                {
+                                  gdouble mult_alpha = *m * a;
 
-                              for (b = 0; b < a_component; b++)
-                                total[b] += mult_alpha * s[b];
+                                  weighted_divisor += mult_alpha;
 
-                              total[a_component] += mult_alpha;
+                                  for (b = 0; b < a_component; b++)
+                                    total[b] += mult_alpha * s[b];
+
+                                  total[a_component] += mult_alpha;
+                                }
                             }
                         }
-                    }
 
-                  if (weighted_divisor == 0.0)
-                    weighted_divisor = divisor;
+                      if (weighted_divisor == 0.0)
+                        weighted_divisor = divisor;
 
-                  for (b = 0; b < a_component; b++)
-                    total[b] /= weighted_divisor;
+                      for (b = 0; b < a_component; b++)
+                        total[b] /= weighted_divisor;
 
-                  total[a_component] /= divisor;
+                      total[a_component] /= divisor;
 
-                  for (b = 0; b < components; b++)
-                    {
-                      total[b] += offset;
-
-                      if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
-                        total[b] = - total[b];
-
-                      *d++ = CLAMP (total[b], 0.0, 1.0);
-                    }
-                }
-            }
-          else
-            {
-              for (x = dest_x1; x < dest_x2; x++)
-                {
-                  const gfloat *m        = kernel;
-                  gdouble       total[4] = { 0.0, 0.0, 0.0, 0.0 };
-                  gint          i, j, b;
-
-                  for (j = y - margin; j <= y + margin; j++)
-                    {
-                      for (i = x - margin; i <= x + margin; i++, m++)
+                      for (b = 0; b < components; b++)
                         {
-                          gint          xx = CLAMP (i, x1, x2);
-                          gint          yy = CLAMP (j, y1, y2);
-                          const gfloat *s  = src + yy * src_rowstride + xx * components;
+                          total[b] += offset;
 
-                          for (b = 0; b < components; b++)
-                            total[b] += *m * s[b];
+                          if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                            total[b] = - total[b];
+
+                          *d++ = CLAMP (total[b], 0.0, 1.0);
                         }
                     }
-
-                  for (b = 0; b < components; b++)
+                }
+              else
+                {
+                  for (x = dest_x1; x < dest_x2; x++)
                     {
-                      total[b] = total[b] / divisor + offset;
+                      const gfloat *m        = kernel;
+                      gdouble       total[4] = { 0.0, 0.0, 0.0, 0.0 };
+                      gint          i, j, b;
 
-                      if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
-                        total[b] = - total[b];
+                      for (j = y - margin; j <= y + margin; j++)
+                        {
+                          for (i = x - margin; i <= x + margin; i++, m++)
+                            {
+                              gint          xx = CLAMP (i, x1, x2);
+                              gint          yy = CLAMP (j, y1, y2);
+                              const gfloat *s  = src + yy * src_rowstride + xx * components;
 
-                      *d++ = CLAMP (total[b], 0.0, 1.0);
+                              for (b = 0; b < components; b++)
+                                total[b] += *m * s[b];
+                            }
+                        }
+
+                      for (b = 0; b < components; b++)
+                        {
+                          total[b] = total[b] / divisor + offset;
+
+                          if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                            total[b] = - total[b];
+
+                          *d++ = CLAMP (total[b], 0.0, 1.0);
+                        }
                     }
                 }
-            }
 
-          dest += dest_iter->roi[0].width * dest_components;
+              dest += dest_iter->roi[0].width * dest_components;
+            }
         }
-    }
+    });
 
   g_free (src);
 }
@@ -243,116 +261,122 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
                      GimpDodgeBurnType    type,
                      GimpTransferMode     mode)
 {
-  GeglBufferIterator *iter;
-
   if (type == GIMP_DODGE_BURN_TYPE_BURN)
     exposure = -exposure;
 
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                   babl_format ("R'G'B'A float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("R'G'B'A float"),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  switch (mode)
+  gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *src_area)
     {
-      gfloat factor;
+      GeglBufferIterator *iter;
 
-    case GIMP_TRANSFER_HIGHLIGHTS:
-      factor = 1.0 + exposure * (0.333333);
+      SHIFTED_AREA (dest, src);
 
-      while (gegl_buffer_iterator_next (iter))
+      iter = gegl_buffer_iterator_new (src_buffer, src_area, 0,
+                                       babl_format ("R'G'B'A float"),
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
+                                babl_format ("R'G'B'A float"),
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+      switch (mode)
         {
-          gfloat *src   = (gfloat *) iter->data[0];
-          gfloat *dest  = (gfloat *) iter->data[1];
-          gint    count = iter->length;
+          gfloat factor;
 
-          while (count--)
+        case GIMP_TRANSFER_HIGHLIGHTS:
+          factor = 1.0 + exposure * (0.333333);
+
+          while (gegl_buffer_iterator_next (iter))
             {
-              *dest++ = *src++ * factor;
-              *dest++ = *src++ * factor;
-              *dest++ = *src++ * factor;
+              gfloat *src   = (gfloat *) iter->data[0];
+              gfloat *dest  = (gfloat *) iter->data[1];
+              gint    count = iter->length;
 
-              *dest++ = *src++;
-            }
-        }
-      break;
-
-    case GIMP_TRANSFER_MIDTONES:
-      if (exposure < 0)
-        factor = 1.0 - exposure * (0.333333);
-      else
-        factor = 1.0 / (1.0 + exposure);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat *src   = (gfloat *) iter->data[0];
-          gfloat *dest  = (gfloat *) iter->data[1];
-          gint    count = iter->length;
-
-          while (count--)
-            {
-              *dest++ = odd_powf (*src++, factor);
-              *dest++ = odd_powf (*src++, factor);
-              *dest++ = odd_powf (*src++, factor);
-
-              *dest++ = *src++;
-            }
-        }
-      break;
-
-    case GIMP_TRANSFER_SHADOWS:
-      if (exposure >= 0)
-        factor = 0.333333 * exposure;
-      else
-        factor = -0.333333 * exposure;
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat *src   = (gfloat *) iter->data[0];
-          gfloat *dest  = (gfloat *) iter->data[1];
-          gint    count = iter->length;
-
-          while (count--)
-            {
-              if (exposure >= 0)
+              while (count--)
                 {
-                  gfloat s;
+                  *dest++ = *src++ * factor;
+                  *dest++ = *src++ * factor;
+                  *dest++ = *src++ * factor;
 
-                  s = *src++; *dest++ = factor + s - factor * s;
-                  s = *src++; *dest++ = factor + s - factor * s;
-                  s = *src++; *dest++ = factor + s - factor * s;
+                  *dest++ = *src++;
                 }
-              else
+            }
+          break;
+
+        case GIMP_TRANSFER_MIDTONES:
+          if (exposure < 0)
+            factor = 1.0 - exposure * (0.333333);
+          else
+            factor = 1.0 / (1.0 + exposure);
+
+          while (gegl_buffer_iterator_next (iter))
+            {
+              gfloat *src   = (gfloat *) iter->data[0];
+              gfloat *dest  = (gfloat *) iter->data[1];
+              gint    count = iter->length;
+
+              while (count--)
                 {
-                  gfloat s;
+                  *dest++ = odd_powf (*src++, factor);
+                  *dest++ = odd_powf (*src++, factor);
+                  *dest++ = odd_powf (*src++, factor);
 
-                  s = *src++;
-                  if (s < factor)
-                    *dest++ = 0;
-                  else /* factor <= value <=1 */
-                    *dest++ = (s - factor) / (1.0 - factor);
-
-                  s = *src++;
-                  if (s < factor)
-                    *dest++ = 0;
-                  else /* factor <= value <=1 */
-                    *dest++ = (s - factor) / (1.0 - factor);
-
-                  s = *src++;
-                  if (s < factor)
-                    *dest++ = 0;
-                  else /* factor <= value <=1 */
-                    *dest++ = (s - factor) / (1.0 - factor);
+                  *dest++ = *src++;
                 }
+            }
+          break;
 
-              *dest++ = *src++;
-           }
+        case GIMP_TRANSFER_SHADOWS:
+          if (exposure >= 0)
+            factor = 0.333333 * exposure;
+          else
+            factor = -0.333333 * exposure;
+
+          while (gegl_buffer_iterator_next (iter))
+            {
+              gfloat *src   = (gfloat *) iter->data[0];
+              gfloat *dest  = (gfloat *) iter->data[1];
+              gint    count = iter->length;
+
+              while (count--)
+                {
+                  if (exposure >= 0)
+                    {
+                      gfloat s;
+
+                      s = *src++; *dest++ = factor + s - factor * s;
+                      s = *src++; *dest++ = factor + s - factor * s;
+                      s = *src++; *dest++ = factor + s - factor * s;
+                    }
+                  else
+                    {
+                      gfloat s;
+
+                      s = *src++;
+                      if (s < factor)
+                        *dest++ = 0;
+                      else /* factor <= value <=1 */
+                        *dest++ = (s - factor) / (1.0 - factor);
+
+                      s = *src++;
+                      if (s < factor)
+                        *dest++ = 0;
+                      else /* factor <= value <=1 */
+                        *dest++ = (s - factor) / (1.0 - factor);
+
+                      s = *src++;
+                      if (s < factor)
+                        *dest++ = 0;
+                      else /* factor <= value <=1 */
+                        *dest++ = (s - factor) / (1.0 - factor);
+                    }
+
+                  *dest++ = *src++;
+               }
+            }
+          break;
         }
-      break;
-    }
+    });
 }
 
 /* helper function of gimp_gegl_smudge_with_paint_process()
@@ -449,7 +473,6 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                              gdouble              flow,
                              gdouble              rate)
 {
-  GeglBufferIterator *iter;
   gfloat              brush_color_float[4];
   gfloat              brush_a = flow;
   GeglAccessMode      paint_buffer_access_mode = (brush_color ?
@@ -457,18 +480,6 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                                                   GEGL_ACCESS_READWRITE);
   gboolean            sse2 = (gimp_cpu_accel_get_support () &
                               GIMP_CPU_ACCEL_X86_SSE2);
-
-  iter = gegl_buffer_iterator_new (accum_buffer, accum_rect, 0,
-                                   babl_format ("RGBA float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, canvas_buffer, canvas_rect, 0,
-                            babl_format ("RGBA float"),
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, paint_buffer, GEGL_RECTANGLE (0, 0, 0, 0), 0,
-                            babl_format ("RGBA float"),
-                            paint_buffer_access_mode, GEGL_ABYSS_NONE);
 
   /* convert brush color from double to float */
   if (brush_color)
@@ -482,35 +493,55 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
       brush_a *= brush_color_ptr[3];
     }
 
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (accum_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *accum_area)
     {
-      gfloat       *accum      = (gfloat *)       iter->data[0];
-      const gfloat *canvas     = (const gfloat *) iter->data[1];
-      gfloat       *paint      = (gfloat *)       iter->data[2];
-      gint          count      = iter->length;
+      GeglBufferIterator *iter;
+
+      SHIFTED_AREA (canvas, accum);
+
+      iter = gegl_buffer_iterator_new (accum_buffer, accum_area, 0,
+                                       babl_format ("RGBA float"),
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, canvas_buffer, canvas_area, 0,
+                                babl_format ("RGBA float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, paint_buffer, GEGL_RECTANGLE (0, 0, 0, 0), 0,
+                                babl_format ("RGBA float"),
+                                paint_buffer_access_mode, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gfloat       *accum      = (gfloat *)       iter->data[0];
+          const gfloat *canvas     = (const gfloat *) iter->data[1];
+          gfloat       *paint      = (gfloat *)       iter->data[2];
+          gint          count      = iter->length;
 
 #if COMPILE_SSE2_INTRINISICS
-      if (sse2 && ((guintptr) accum                                     |
-                   (guintptr) canvas                                    |
-                   (guintptr) (brush_color ? brush_color_float : paint) |
-                   (guintptr) paint) % 16 == 0)
-        {
-          gimp_gegl_smudge_with_paint_process_sse2 (accum, canvas, paint, count,
-                                                    brush_color ? brush_color_float :
-                                                                  NULL,
-                                                    brush_a,
-                                                    no_erasing, flow, rate);
-        }
-      else
+          if (sse2 && ((guintptr) accum                                     |
+                       (guintptr) canvas                                    |
+                       (guintptr) (brush_color ? brush_color_float : paint) |
+                       (guintptr) paint) % 16 == 0)
+            {
+              gimp_gegl_smudge_with_paint_process_sse2 (accum, canvas, paint, count,
+                                                        brush_color ? brush_color_float :
+                                                                      NULL,
+                                                        brush_a,
+                                                        no_erasing, flow, rate);
+            }
+          else
 #endif
-        {
-          gimp_gegl_smudge_with_paint_process (accum, canvas, paint, count,
-                                               brush_color ? brush_color_float :
-                                                             NULL,
-                                               brush_a,
-                                               no_erasing, flow, rate);
+            {
+              gimp_gegl_smudge_with_paint_process (accum, canvas, paint, count,
+                                                   brush_color ? brush_color_float :
+                                                                 NULL,
+                                                   brush_a,
+                                                   no_erasing, flow, rate);
+            }
         }
-    }
+    });
 }
 
 void
@@ -520,30 +551,36 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
                       const GeglRectangle *dest_rect,
                       gdouble              opacity)
 {
-  GeglBufferIterator *iter;
-
-  iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
-                                   babl_format ("Y float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("RGBA float"),
-                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *mask_area)
     {
-      const gfloat *mask  = (const gfloat *) iter->data[0];
-      gfloat       *dest  = (gfloat *)       iter->data[1];
-      gint          count = iter->length;
+      GeglBufferIterator *iter;
 
-      while (count--)
+      SHIFTED_AREA (dest, mask);
+
+      iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
+                                       babl_format ("Y float"),
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
+                                babl_format ("RGBA float"),
+                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          dest[3] *= *mask * opacity;
+          const gfloat *mask  = (const gfloat *) iter->data[0];
+          gfloat       *dest  = (gfloat *)       iter->data[1];
+          gint          count = iter->length;
 
-          mask += 1;
-          dest += 4;
+          while (count--)
+            {
+              dest[3] *= *mask * opacity;
+
+              mask += 1;
+              dest += 4;
+            }
         }
-    }
+    });
 }
 
 void
@@ -553,30 +590,36 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
                         const GeglRectangle *dest_rect,
                         gdouble              opacity)
 {
-  GeglBufferIterator *iter;
-
-  iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
-                                   babl_format ("Y float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("Y float"),
-                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *mask_area)
     {
-      const gfloat *mask  = (const gfloat *) iter->data[0];
-      gfloat       *dest  = (gfloat *)       iter->data[1];
-      gint          count = iter->length;
+      GeglBufferIterator *iter;
 
-      while (count--)
+      SHIFTED_AREA (dest, mask);
+
+      iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
+                                       babl_format ("Y float"),
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          *dest *= *mask * opacity;
+          const gfloat *mask  = (const gfloat *) iter->data[0];
+          gfloat       *dest  = (gfloat *)       iter->data[1];
+          gint          count = iter->length;
 
-          mask += 1;
-          dest += 1;
+          while (count--)
+            {
+              *dest *= *mask * opacity;
+
+              mask += 1;
+              dest += 1;
+            }
         }
-    }
+    });
 }
 
 void
@@ -587,44 +630,50 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
                               gdouble              opacity,
                               gboolean             stipple)
 {
-  GeglBufferIterator *iter;
-
-  iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
-                                   babl_format ("Y float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("Y float"),
-                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *mask_area)
     {
-      const gfloat *mask  = (const gfloat *) iter->data[0];
-      gfloat       *dest  = (gfloat *)       iter->data[1];
-      gint          count = iter->length;
+      GeglBufferIterator *iter;
 
-      if (stipple)
+      SHIFTED_AREA (dest, mask);
+
+      iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
+                                       babl_format ("Y float"),
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          while (count--)
-            {
-              dest[0] += (1.0 - dest[0]) * *mask * opacity;
+          const gfloat *mask  = (const gfloat *) iter->data[0];
+          gfloat       *dest  = (gfloat *)       iter->data[1];
+          gint          count = iter->length;
 
-              mask += 1;
-              dest += 1;
+          if (stipple)
+            {
+              while (count--)
+                {
+                  dest[0] += (1.0 - dest[0]) * *mask * opacity;
+
+                  mask += 1;
+                  dest += 1;
+                }
+            }
+          else
+            {
+              while (count--)
+                {
+                  if (opacity > dest[0])
+                    dest[0] += (opacity - dest[0]) * *mask * opacity;
+
+                  mask += 1;
+                  dest += 1;
+                }
             }
         }
-      else
-        {
-          while (count--)
-            {
-              if (opacity > dest[0])
-                dest[0] += (opacity - dest[0]) * *mask * opacity;
-
-              mask += 1;
-              dest += 1;
-            }
-        }
-    }
+    });
 }
 
 void
@@ -639,98 +688,106 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
                    gdouble              opacity,
                    const gboolean      *affect)
 {
-  GeglBufferIterator *iter;
-
-  iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
-                                   babl_format ("RGBA float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
-                            babl_format ("RGBA float"),
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
-                            babl_format ("Y float"),
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                            babl_format ("RGBA float"),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (top_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *top_area)
     {
-      const gfloat *top    = (const gfloat *) iter->data[0];
-      const gfloat *bottom = (const gfloat *) iter->data[1];
-      const gfloat *mask   = (const gfloat *) iter->data[2];
-      gfloat       *dest   = (gfloat *)       iter->data[3];
-      gint          count  = iter->length;
+      GeglBufferIterator *iter;
 
-      while (count--)
+      SHIFTED_AREA (bottom, top);
+      SHIFTED_AREA (mask, top);
+      SHIFTED_AREA (dest, top);
+
+      iter = gegl_buffer_iterator_new (top_buffer, top_area, 0,
+                                       babl_format ("RGBA float"),
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, bottom_buffer, bottom_area, 0,
+                                babl_format ("RGBA float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, mask_buffer, mask_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
+                                babl_format ("RGBA float"),
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          gint    b;
-          gdouble mask_val = *mask * opacity;
+          const gfloat *top    = (const gfloat *) iter->data[0];
+          const gfloat *bottom = (const gfloat *) iter->data[1];
+          const gfloat *mask   = (const gfloat *) iter->data[2];
+          gfloat       *dest   = (gfloat *)       iter->data[3];
+          gint          count  = iter->length;
 
-          /* calculate new alpha first. */
-          gfloat   s1_a  = bottom[3];
-          gfloat   s2_a  = top[3];
-          gdouble  a_val = s1_a + mask_val * (s2_a - s1_a);
-
-          if (a_val == 0.0)
+          while (count--)
             {
-              /* In any case, write out versions of the blending
-               * function that result when combinations of s1_a, s2_a,
-               * and mask_val --> 0 (or mask_val -->1)
-               */
+              gint    b;
+              gdouble mask_val = *mask * opacity;
 
-              /* 1: s1_a, s2_a, AND mask_val all approach 0+: */
-              /* 2: s1_a AND s2_a both approach 0+, regardless of mask_val: */
-              if (s1_a + s2_a == 0.0)
+              /* calculate new alpha first. */
+              gfloat   s1_a  = bottom[3];
+              gfloat   s2_a  = top[3];
+              gdouble  a_val = s1_a + mask_val * (s2_a - s1_a);
+
+              if (a_val == 0.0)
                 {
+                  /* In any case, write out versions of the blending
+                   * function that result when combinations of s1_a, s2_a,
+                   * and mask_val --> 0 (or mask_val -->1)
+                   */
+
+                  /* 1: s1_a, s2_a, AND mask_val all approach 0+: */
+                  /* 2: s1_a AND s2_a both approach 0+, regardless of mask_val: */
+                  if (s1_a + s2_a == 0.0)
+                    {
+                      for (b = 0; b < 3; b++)
+                        {
+                          gfloat new_val;
+
+                          new_val = bottom[b] + mask_val * (top[b] - bottom[b]);
+
+                          dest[b] = affect[b] ? new_val : bottom[b];
+                        }
+                    }
+
+                  /* 3: mask_val AND s1_a both approach 0+, regardless of s2_a  */
+                  else if (s1_a + mask_val == 0.0)
+                    {
+                      for (b = 0; b < 3; b++)
+                        dest[b] = bottom[b];
+                    }
+
+                  /* 4: mask_val -->1 AND s2_a -->0, regardless of s1_a */
+                  else if (1.0 - mask_val + s2_a == 0.0)
+                    {
+                      for (b = 0; b < 3; b++)
+                        dest[b] = affect[b] ? top[b] : bottom[b];
+                    }
+                }
+              else
+                {
+                  gdouble a_recip = 1.0 / a_val;
+
+                  /* possible optimization: fold a_recip into s1_a and s2_a */
                   for (b = 0; b < 3; b++)
                     {
-                      gfloat new_val;
-
-                      new_val = bottom[b] + mask_val * (top[b] - bottom[b]);
-
+                      gfloat new_val = a_recip * (bottom[b] * s1_a + mask_val *
+                                                  (top[b] * s2_a - bottom[b] * s1_a));
                       dest[b] = affect[b] ? new_val : bottom[b];
                     }
                 }
 
-              /* 3: mask_val AND s1_a both approach 0+, regardless of s2_a  */
-              else if (s1_a + mask_val == 0.0)
-                {
-                  for (b = 0; b < 3; b++)
-                    dest[b] = bottom[b];
-                }
+              dest[3] = affect[3] ? a_val : s1_a;
 
-              /* 4: mask_val -->1 AND s2_a -->0, regardless of s1_a */
-              else if (1.0 - mask_val + s2_a == 0.0)
-                {
-                  for (b = 0; b < 3; b++)
-                    dest[b] = affect[b] ? top[b] : bottom[b];
-                }
+              top    += 4;
+              bottom += 4;
+              mask   += 1;
+              dest   += 4;
             }
-          else
-            {
-              gdouble a_recip = 1.0 / a_val;
-
-              /* possible optimization: fold a_recip into s1_a and s2_a */
-              for (b = 0; b < 3; b++)
-                {
-                  gfloat new_val = a_recip * (bottom[b] * s1_a + mask_val *
-                                              (top[b] * s2_a - bottom[b] * s1_a));
-                  dest[b] = affect[b] ? new_val : bottom[b];
-                }
-            }
-
-          dest[3] = affect[3] ? a_val : s1_a;
-
-          top    += 4;
-          bottom += 4;
-          mask   += 1;
-          dest   += 4;
         }
-    }
+    });
 }
 
 void
@@ -741,33 +798,39 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
                          const GeglRectangle *mask_rect,
                          gint                 index)
 {
-  GeglBufferIterator *iter;
-
-  iter = gegl_buffer_iterator_new (indexed_buffer, indexed_rect, 0,
-                                   indexed_format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
-                            babl_format ("Y float"),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gimp_parallel_distribute_area (indexed_rect, MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *indexed_area)
     {
-      const guchar *indexed = (const guchar *) iter->data[0];
-      gfloat       *mask    = (gfloat *)       iter->data[1];
-      gint          count   = iter->length;
+      GeglBufferIterator *iter;
 
-      while (count--)
+      SHIFTED_AREA (mask, indexed);
+
+      iter = gegl_buffer_iterator_new (indexed_buffer, indexed_area, 0,
+                                       indexed_format,
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, mask_buffer, mask_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          if (*indexed == index)
-            *mask = 1.0;
-          else
-            *mask = 0.0;
+          const guchar *indexed = (const guchar *) iter->data[0];
+          gfloat       *mask    = (gfloat *)       iter->data[1];
+          gint          count   = iter->length;
 
-          indexed++;
-          mask++;
+          while (count--)
+            {
+              if (*indexed == index)
+                *mask = 1.0;
+              else
+                *mask = 0.0;
+
+              indexed++;
+              mask++;
+            }
         }
-    }
+    });
 }
 
 void
@@ -808,9 +871,15 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
 
       GIMP_TIMER_START ();
 
-      gimp_color_transform_process_buffer (transform,
-                                           src_buffer,  src_rect,
-                                           dest_buffer, dest_rect);
+      gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
+                                     [=] (const GeglRectangle *src_area)
+        {
+          SHIFTED_AREA (dest, src);
+
+          gimp_color_transform_process_buffer (transform,
+                                               src_buffer,  src_area,
+                                               dest_buffer, dest_area);
+        });
 
       GIMP_TIMER_END ("converting buffer");
 
