@@ -876,13 +876,13 @@ load_image (const gchar  *filename,
   struct read_error_data error_data;
 
   pp = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  if (!pp)
+  if (! pp)
     {
       /* this could happen if the compile time and run-time libpng
          versions do not match. */
 
       g_set_error (error, 0, 0,
-                   _("Error creating PNG read struct while exporting '%s'."),
+                   _("Error creating PNG read struct while loading '%s'."),
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
