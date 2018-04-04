@@ -20,6 +20,9 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+extern "C"
+{
+
 #include "paint-types.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
@@ -436,3 +439,5 @@ mask_components_onto (GeglBuffer        *src_buffer,
         }
     }
 }
+
+} /* extern "C" */

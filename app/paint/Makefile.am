@@ -60,7 +60,7 @@ libapppaint_a_sources = \
 	gimpmybrushsurface.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
-	gimppaintcore-loops.c		\
+	gimppaintcore-loops.cc		\
 	gimppaintcore-loops.h		\
 	gimppaintcore-stroke.c		\
 	gimppaintcore-stroke.h		\
