@@ -24,6 +24,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+extern "C"
+{
+
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
@@ -123,8 +126,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gint          dest_height;
   gint          blur_radius;
   gint          x, y;
-  gdouble       blx, brx, tlx, trx;
-  gdouble       bly, bry, tly, try;
+  gdouble       b_lx, b_rx, t_lx, t_rx;
+  gdouble       b_ly, b_ry, t_ly, t_ry;
   gdouble       src_tl_to_tr_delta_x;
   gdouble       src_tl_to_tr_delta_y;
   gdouble       src_tl_to_bl_delta_x;
@@ -238,23 +241,23 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       return result;
     }*/
 
-  gimp_matrix3_transform_point (&matrix, 0,          0,           &tlx, &tly);
-  gimp_matrix3_transform_point (&matrix, dest_width, 0,           &trx, &try);
-  gimp_matrix3_transform_point (&matrix, 0,          dest_height, &blx, &bly);
-  gimp_matrix3_transform_point (&matrix, dest_width, dest_height, &brx, &bry);
+  gimp_matrix3_transform_point (&matrix, 0,          0,           &t_lx, &t_ly);
+  gimp_matrix3_transform_point (&matrix, dest_width, 0,           &t_rx, &t_ry);
+  gimp_matrix3_transform_point (&matrix, 0,          dest_height, &b_lx, &b_ly);
+  gimp_matrix3_transform_point (&matrix, dest_width, dest_height, &b_rx, &b_ry);
 
 
   /* in image space, calc U (what was horizontal originally)
    * note: double precision
    */
-  src_tl_to_tr_delta_x = trx - tlx;
-  src_tl_to_tr_delta_y = try - tly;
+  src_tl_to_tr_delta_x = t_rx - t_lx;
+  src_tl_to_tr_delta_y = t_ry - t_ly;
 
   /* in image space, calc V (what was vertical originally)
    * note: double precision
    */
-  src_tl_to_bl_delta_x = blx - tlx;
-  src_tl_to_bl_delta_y = bly - tly;
+  src_tl_to_bl_delta_x = b_lx - t_lx;
+  src_tl_to_bl_delta_y = b_ly - t_ly;
 
   /* speed optimized, note conversion to int precision */
   src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)  * int_multiple);
@@ -265,12 +268,12 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   /* initialize current position in source space to the start position (tl)
    * speed optimized, note conversion to int precision
    */
-  src_space_cur_pos_x_i   = (gint) (tlx* int_multiple);
-  src_space_cur_pos_y_i   = (gint) (tly* int_multiple);
+  src_space_cur_pos_x_i   = (gint) (t_lx* int_multiple);
+  src_space_cur_pos_y_i   = (gint) (t_ly* int_multiple);
   src_space_cur_pos_x     = (gint) (src_space_cur_pos_x_i >> fraction_bits);
   src_space_cur_pos_y     = (gint) (src_space_cur_pos_y_i >> fraction_bits);
-  src_space_row_start_x_i = (gint) (tlx* int_multiple);
-  src_space_row_start_y_i = (gint) (tly* int_multiple);
+  src_space_row_start_x_i = (gint) (t_lx* int_multiple);
+  src_space_row_start_y_i = (gint) (t_ly* int_multiple);
 
 
   for (y = 0; y < dest_height; y++)
@@ -416,8 +419,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          dest_height;
   gint          blur_radius;
   gint          x, y;
-  gdouble       blx, brx, tlx, trx;
-  gdouble       bly, bry, tly, try;
+  gdouble       b_lx, b_rx, t_lx, t_rx;
+  gdouble       b_ly, b_ry, t_ly, t_ry;
   gdouble       src_tl_to_tr_delta_x;
   gdouble       src_tl_to_tr_delta_y;
   gdouble       src_tl_to_bl_delta_x;
@@ -523,23 +526,23 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
 
-  gimp_matrix3_transform_point (&matrix, 0,          0,           &tlx, &tly);
-  gimp_matrix3_transform_point (&matrix, dest_width, 0,           &trx, &try);
-  gimp_matrix3_transform_point (&matrix, 0,          dest_height, &blx, &bly);
-  gimp_matrix3_transform_point (&matrix, dest_width, dest_height, &brx, &bry);
+  gimp_matrix3_transform_point (&matrix, 0,          0,           &t_lx, &t_ly);
+  gimp_matrix3_transform_point (&matrix, dest_width, 0,           &t_rx, &t_ry);
+  gimp_matrix3_transform_point (&matrix, 0,          dest_height, &b_lx, &b_ly);
+  gimp_matrix3_transform_point (&matrix, dest_width, dest_height, &b_rx, &b_ry);
 
 
   /* in image space, calc U (what was horizontal originally)
    * note: double precision
    */
-  src_tl_to_tr_delta_x = trx - tlx;
-  src_tl_to_tr_delta_y = try - tly;
+  src_tl_to_tr_delta_x = t_rx - t_lx;
+  src_tl_to_tr_delta_y = t_ry - t_ly;
 
   /* in image space, calc V (what was vertical originally)
    * note: double precision
    */
-  src_tl_to_bl_delta_x = blx - tlx;
-  src_tl_to_bl_delta_y = bly - tly;
+  src_tl_to_bl_delta_x = b_lx - t_lx;
+  src_tl_to_bl_delta_y = b_ly - t_ly;
 
   /* speed optimized, note conversion to int precision */
   src_walk_ux_i = (gint) ((src_tl_to_tr_delta_x / dest_width)* int_multiple);
@@ -550,12 +553,12 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   /* initialize current position in source space to the start position (tl)
    * speed optimized, note conversion to int precision
    */
-  src_space_cur_pos_x_i    = (gint) (tlx* int_multiple);
-  src_space_cur_pos_y_i    = (gint) (tly* int_multiple);
+  src_space_cur_pos_x_i    = (gint) (t_lx* int_multiple);
+  src_space_cur_pos_y_i    = (gint) (t_ly* int_multiple);
   src_space_cur_pos_x      = (gint) (src_space_cur_pos_x_i >> fraction_bits);
   src_space_cur_pos_y      = (gint) (src_space_cur_pos_y_i >> fraction_bits);
-  src_space_row_start_x_i  = (gint) (tlx* int_multiple);
-  src_space_row_start_y_i  = (gint) (tly* int_multiple);
+  src_space_row_start_x_i  = (gint) (t_lx* int_multiple);
+  src_space_row_start_y_i  = (gint) (t_ly* int_multiple);
 
 
   for (y = 0; y < dest_height; y++)
@@ -952,3 +955,5 @@ gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
                           (1.0 - scale) * width  / 2.0,
                           (1.0 - scale) * height / 2.0);
 }
+
+} /* extern "C" */
