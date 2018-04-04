@@ -54,12 +54,13 @@
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"
 
+#else
+
 #ifdef HAVE_EXCHNDL
 #include <time.h>
 #include <exchndl.h>
 #endif
 
-#else
 #include <signal.h>
 #endif
 
@@ -93,8 +94,16 @@
 #endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
+#  ifdef STRICT
+#  undef STRICT
+#  endif
 #  define STRICT
+
+#  ifdef _WIN32_WINNT
+#  undef _WIN32_WINNT
+#  endif
 #  define _WIN32_WINNT 0x0601
+
 #  include <windows.h>
 #  include <tlhelp32.h>
 #  undef RGB
@@ -281,8 +290,8 @@ gimp_main (const GimpPlugInInfo *info,
     typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
-    p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-                                         "SetDllDirectoryA");
+    p_SetDllDirectoryA = (t_SetDllDirectoryA) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+                                                              "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
@@ -368,8 +377,8 @@ gimp_main (const GimpPlugInInfo *info,
     typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
     t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
 
-    p_SetCurrentProcessExplicitAppUserModelID = GetProcAddress (GetModuleHandle ("shell32.dll"),
-                                                                "SetCurrentProcessExplicitAppUserModelID");
+    p_SetCurrentProcessExplicitAppUserModelID = (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
+                                                                                                            "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
   }
@@ -1869,8 +1878,9 @@ gimp_debug_stop (void)
   THREADENTRY32 te32        = { 0 };
   pid_t         opid        = getpid ();
 
-  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging (restart externally): %d",
-         opid);
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
+         "Debugging (restart externally): %ld",
+         (long int) opid);
 
   hThreadSnap = CreateToolhelp32Snapshot (TH32CS_SNAPTHREAD, 0);
   if (hThreadSnap == INVALID_HANDLE_VALUE)
@@ -2272,13 +2282,13 @@ gimp_config (GPConfig *config)
           /* Verify that we mapped our view */
           if (!_shm_addr)
             {
-              g_error ("MapViewOfFile error: %d... " ERRMSG_SHM_FAILED,
+              g_error ("MapViewOfFile error: %lu... " ERRMSG_SHM_FAILED,
                        GetLastError ());
             }
         }
       else
         {
-          g_error ("OpenFileMapping error: %d... " ERRMSG_SHM_FAILED,
+          g_error ("OpenFileMapping error: %lu... " ERRMSG_SHM_FAILED,
                    GetLastError ());
         }
 
