@@ -215,7 +215,7 @@ canvas_buffer_to_paint_buf_alpha (GimpTempBuf  *paint_buf,
     {
       GeglBufferIterator *iter;
 
-      iter = gegl_buffer_iterator_new (canvas_buffer, &roi, 0,
+      iter = gegl_buffer_iterator_new (canvas_buffer, area, 0,
                                        babl_format ("Y float"),
                                        GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
@@ -350,7 +350,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   g_return_if_fail (gimp_temp_buf_get_format (paint_buf) == iterator_format);
 
   gimp_parallel_distribute_area (&roi, MIN_PARALLEL_SUB_AREA,
-                                [=] (const GeglRectangle *area)
+                                 [=] (const GeglRectangle *area)
     {
       GeglBufferIterator     *iter;
       GeglRectangle           mask_area = *area;
