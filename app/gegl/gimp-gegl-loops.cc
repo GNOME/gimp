@@ -473,13 +473,13 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                              gdouble              flow,
                              gdouble              rate)
 {
-  gfloat              brush_color_float[4];
-  gfloat              brush_a = flow;
-  GeglAccessMode      paint_buffer_access_mode = (brush_color ?
-                                                  GEGL_ACCESS_WRITE :
-                                                  GEGL_ACCESS_READWRITE);
-  gboolean            sse2 = (gimp_cpu_accel_get_support () &
-                              GIMP_CPU_ACCEL_X86_SSE2);
+  gfloat         brush_color_float[4];
+  gfloat         brush_a = flow;
+  GeglAccessMode paint_buffer_access_mode = (brush_color ?
+                                             GEGL_ACCESS_WRITE :
+                                             GEGL_ACCESS_READWRITE);
+  gboolean       sse2 = (gimp_cpu_accel_get_support () &
+                         GIMP_CPU_ACCEL_X86_SSE2);
 
   /* convert brush color from double to float */
   if (brush_color)
@@ -508,16 +508,20 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                                 babl_format ("RGBA float"),
                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
-      gegl_buffer_iterator_add (iter, paint_buffer, GEGL_RECTANGLE (0, 0, 0, 0), 0,
+      gegl_buffer_iterator_add (iter, paint_buffer,
+                                GEGL_RECTANGLE (accum_area->x - accum_rect->x,
+                                                accum_area->y - accum_rect->y,
+                                                0, 0),
+                                0,
                                 babl_format ("RGBA float"),
                                 paint_buffer_access_mode, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *accum      = (gfloat *)       iter->data[0];
-          const gfloat *canvas     = (const gfloat *) iter->data[1];
-          gfloat       *paint      = (gfloat *)       iter->data[2];
-          gint          count      = iter->length;
+          gfloat       *accum  = (gfloat *)       iter->data[0];
+          const gfloat *canvas = (const gfloat *) iter->data[1];
+          gfloat       *paint  = (gfloat *)       iter->data[2];
+          gint          count  = iter->length;
 
 #if COMPILE_SSE2_INTRINISICS
           if (sse2 && ((guintptr) accum                                     |
