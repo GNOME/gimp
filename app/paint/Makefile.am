@@ -25,6 +25,8 @@ libapppaint_a_sources = \
 	gimpairbrushoptions.h		\
 	gimpbrushcore.c			\
 	gimpbrushcore.h			\
+	gimpbrushcore-loops.cc		\
+	gimpbrushcore-loops.h		\
 	gimpbrushcore-kernels.h		\
 	gimpclone.c			\
 	gimpclone.h			\
