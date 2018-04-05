@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
