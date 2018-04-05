@@ -27,11 +27,16 @@ extern "C"
 
 #include "paint-types.h"
 
+#include "core/gimp-parallel.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-loops.h"
 #include "gimpbrushcore-kernels.h"
+
+
+#define MIN_PARALLEL_SUB_SIZE 64
+#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
 
 
 static inline void
@@ -55,33 +60,20 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
                                 gdouble            x,
                                 gdouble            y)
 {
-  GimpTempBuf  *dest;
-  gdouble       left;
-  const guchar *m;
-  guchar       *d;
-  const gint   *k;
-  gint          index1;
-  gint          index2;
-  gint          dest_offset_x = 0;
-  gint          dest_offset_y = 0;
-  const gint   *kernel;
-  gint          i, j;
-  gint          r, s;
-  gulong       *accum[KERNEL_HEIGHT];
-  gint          offs;
-  gint          mask_width  = gimp_temp_buf_get_width  (mask);
-  gint          mask_height = gimp_temp_buf_get_height (mask);
-  gint          dest_width;
-  gint          dest_height;
-
-  while (x < 0)
-    x += mask_width;
+  GimpTempBuf *dest;
+  gdouble      left;
+  gint         index1;
+  gint         index2;
+  gint         dest_offset_x = 0;
+  gint         dest_offset_y = 0;
+  const gint  *kernel;
+  gint         mask_width  = gimp_temp_buf_get_width  (mask);
+  gint         mask_height = gimp_temp_buf_get_height (mask);
+  gint         dest_width;
+  gint         dest_height;
 
   left = x - floor (x);
   index1 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
-
-  while (y < 0)
-    y += mask_height;
 
   left = y - floor (y);
   index2 = (gint) (left * (gdouble) (KERNEL_SUBSAMPLE + 1));
@@ -109,7 +101,6 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
         }
     }
 
-
   kernel = subsample[index2][index1];
 
   if (mask == core->last_subsample_brush_mask &&
@@ -120,6 +111,8 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
     }
   else
     {
+      gint i, j;
+
       for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
           g_clear_pointer (&core->subsample_brushes[i][j], gimp_temp_buf_unref);
@@ -136,51 +129,88 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
   dest_width  = gimp_temp_buf_get_width  (dest);
   dest_height = gimp_temp_buf_get_height (dest);
 
-  /* Allocate and initialize the accum buffer */
-  for (i = 0; i < KERNEL_HEIGHT ; i++)
-    accum[i] = g_new0 (gulong, dest_width + 1);
-
   core->subsample_brushes[index2][index1] = dest;
 
-  m = gimp_temp_buf_get_data (mask);
-  for (i = 0; i < mask_height; i++)
+  gimp_parallel_distribute_range (mask_height, MIN_PARALLEL_SUB_SIZE,
+                                  [=] (gint y, gint height)
     {
-      for (j = 0; j < mask_width; j++)
+      const guchar *m;
+      guchar       *d;
+      const gint   *k;
+      gint          y0;
+      gint          i, j;
+      gint          r, s;
+      gint          offs;
+      gulong       *accum[KERNEL_HEIGHT];
+
+      /* Allocate and initialize the accum buffer */
+      for (i = 0; i < KERNEL_HEIGHT ; i++)
+        accum[i] = g_new0 (gulong, dest_width + 1);
+
+      y0 = MAX (y - (KERNEL_HEIGHT - 1), 0);
+
+      m = gimp_temp_buf_get_data (mask) + y0 * mask_width;
+
+      for (i = y0; i < y; i++)
         {
-          k = kernel;
-          for (r = 0; r < KERNEL_HEIGHT; r++)
+          for (j = 0; j < mask_width; j++)
             {
-              offs = j + dest_offset_x;
-              s = KERNEL_WIDTH;
-              while (s--)
-                accum[r][offs++] += *m * *k++;
+              k = kernel + KERNEL_WIDTH * (y - i);
+              for (r = y - i; r < KERNEL_HEIGHT; r++)
+                {
+                  offs = j + dest_offset_x;
+                  s = KERNEL_WIDTH;
+                  while (s--)
+                    accum[r][offs++] += *m * *k++;
+                }
+              m++;
             }
-          m++;
+
+          rotate_pointers (accum, KERNEL_HEIGHT);
         }
 
-      /* store the accum buffer into the destination mask */
-      d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest_width;
-      for (j = 0; j < dest_width; j++)
-        *d++ = (accum[0][j] + 127) / KERNEL_SUM;
+      for (i = y; i < y + height; i++)
+        {
+          for (j = 0; j < mask_width; j++)
+            {
+              k = kernel;
+              for (r = 0; r < KERNEL_HEIGHT; r++)
+                {
+                  offs = j + dest_offset_x;
+                  s = KERNEL_WIDTH;
+                  while (s--)
+                    accum[r][offs++] += *m * *k++;
+                }
+              m++;
+            }
 
-      rotate_pointers (accum, KERNEL_HEIGHT);
+          /* store the accum buffer into the destination mask */
+          d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest_width;
+          for (j = 0; j < dest_width; j++)
+            *d++ = (accum[0][j] + 127) / KERNEL_SUM;
 
-      memset (accum[KERNEL_HEIGHT - 1], 0, sizeof (gulong) * dest_width);
-    }
+          rotate_pointers (accum, KERNEL_HEIGHT);
 
-  /* store the rest of the accum buffer into the dest mask */
-  while (i + dest_offset_y < dest_height)
-    {
-      d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest_width;
-      for (j = 0; j < dest_width; j++)
-        *d++ = (accum[0][j] + (KERNEL_SUM / 2)) / KERNEL_SUM;
+          memset (accum[KERNEL_HEIGHT - 1], 0, sizeof (gulong) * dest_width);
+        }
 
-      rotate_pointers (accum, KERNEL_HEIGHT);
-      i++;
-    }
+      if (y + height == mask_height)
+        {
+          /* store the rest of the accum buffer into the dest mask */
+          while (i + dest_offset_y < dest_height)
+            {
+              d = gimp_temp_buf_get_data (dest) + (i + dest_offset_y) * dest_width;
+              for (j = 0; j < dest_width; j++)
+                *d++ = (accum[0][j] + (KERNEL_SUM / 2)) / KERNEL_SUM;
 
-  for (i = 0; i < KERNEL_HEIGHT ; i++)
-    g_free (accum[i]);
+              rotate_pointers (accum, KERNEL_HEIGHT);
+              i++;
+            }
+        }
+
+      for (i = 0; i < KERNEL_HEIGHT ; i++)
+        g_free (accum[i]);
+    });
 
   return dest;
 }
@@ -195,8 +225,6 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
                                  gdouble            pressure)
 {
   static guchar      mapi[256];
-  const guchar      *source;
-  guchar            *dest;
   const GimpTempBuf *subsample_mask;
   gint               i;
 
@@ -292,14 +320,21 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
   /* Now convert the brush */
 
-  source = gimp_temp_buf_get_data (subsample_mask);
-  dest   = gimp_temp_buf_get_data (core->pressure_brush);
+  gimp_parallel_distribute_range (gimp_temp_buf_get_width  (subsample_mask) *
+                                  gimp_temp_buf_get_height (subsample_mask),
+                                  MIN_PARALLEL_SUB_AREA,
+                                  [=] (gint offset, gint size)
+    {
+      const guchar *source;
+      guchar       *dest;
+      gint          i;
 
-  i = gimp_temp_buf_get_width  (subsample_mask) *
-      gimp_temp_buf_get_height (subsample_mask);
+      source = gimp_temp_buf_get_data (subsample_mask)       + offset;
+      dest   = gimp_temp_buf_get_data (core->pressure_brush) + offset;
 
-  while (i--)
-    *dest++ = mapi[(*source++)];
+      for (i = 0; i < size; i++)
+        *dest++ = mapi[(*source++)];
+    });
 
   return core->pressure_brush;
 }
@@ -311,13 +346,10 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
                                gdouble            y)
 {
   GimpTempBuf  *dest;
-  const guchar *m;
-  gfloat       *d;
   gint          dest_offset_x     = 0;
   gint          dest_offset_y     = 0;
   gint          brush_mask_width  = gimp_temp_buf_get_width  (brush_mask);
   gint          brush_mask_height = gimp_temp_buf_get_height (brush_mask);
-  gint          i, j;
 
   if ((brush_mask_width % 2) == 0)
     {
@@ -345,6 +377,8 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
     }
   else
     {
+      gint i, j;
+
       for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
           g_clear_pointer (&core->solid_brushes[i][j], gimp_temp_buf_unref);
@@ -360,18 +394,32 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 
-  m = gimp_temp_buf_get_data (brush_mask);
-  d = ((gfloat *) gimp_temp_buf_get_data (dest) +
-       ((dest_offset_y + 1) * gimp_temp_buf_get_width (dest) +
-        (dest_offset_x + 1)));
-
-  for (i = 0; i < brush_mask_height; i++)
+  gimp_parallel_distribute_area (GEGL_RECTANGLE (0,
+                                                 0,
+                                                 brush_mask_width,
+                                                 brush_mask_height),
+                                 MIN_PARALLEL_SUB_AREA,
+                                 [=] (const GeglRectangle *area)
     {
-      for (j = 0; j < brush_mask_width; j++)
-        *d++ = (*m++) ? 1.0 : 0.0;
+      const guchar *m;
+      gfloat       *d;
+      gint          i, j;
 
-      d += 2;
-    }
+      m = gimp_temp_buf_get_data (brush_mask) +
+          area->y * brush_mask_width + area->x;
+      d = ((gfloat *) gimp_temp_buf_get_data (dest) +
+           ((dest_offset_y + 1 + area->y) * gimp_temp_buf_get_width (dest) +
+            (dest_offset_x + 1 + area->x)));
+
+      for (i = 0; i < area->height; i++)
+        {
+          for (j = 0; j < area->width; j++)
+            *d++ = (*m++) ? 1.0 : 0.0;
+
+          m += brush_mask_width     - area->width;
+          d += brush_mask_width + 2 - area->width;
+        }
+    });
 
   return dest;
 }
