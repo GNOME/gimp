@@ -15,7 +15,7 @@ Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0
 
 Core:
 
-  - Symmetries are saved as image parasites.
+  - Symmetries are now preserved in XCF files (saved as image parasites).
   - New runtime option --show-debug-menu in order to make the File >
     Debug menu visible.
   - Do not show invisible actions in search dialog.
@@ -27,6 +27,11 @@ Core:
     data.
   - Plug-ins debugging on crashes through --stack-trace-mode CLI option
     improved to handle more case.
+
+User interface:
+
+  - Lighter and Grey themes remove for now, Dark theme rewritten from
+    scratch to get rid of various usability issues and glitches.
 
 Configurability:
 
