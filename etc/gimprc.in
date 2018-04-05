@@ -709,7 +709,7 @@
 
 # The name of the theme to use.  This is a string value.
 # 
-# (theme "03-Dark")
+# (theme "Dark")
 
 # Sets the icon theme search path.  This is a colon-separated list of folders
 # to search.

@@ -2,7 +2,7 @@
 #
 # Dark GIMP Theme
 #
-# Version 0.1.6
+# Version 0.2
 #
 # Copyright 2015-2016, Benoit Touchette
 #
@@ -67,7 +67,7 @@ style "gimp-dark-default-style"
 {
 #  font_name = "Sans 11"
 
-  color["clr1"]  = "#EEEEEE"
+  color["clr1"]  = "#DDDDDD"
   color["clr2"]  = "#FFFFFF"
   color["clr3"]  = "#C1C1C1"
   color["clr4"]  = "#383838"
@@ -75,7 +75,8 @@ style "gimp-dark-default-style"
   color["clr6"]  = "#828282"
   color["clr7"]  = "#3B3B3B"
   color["clr8"]  = "#383838"
-  color["clr9"]  = "#4D4D4D"
+  color["clr9"]  = "#454545"
+  color["clrA"]  = "#303030"
 
   fg[NORMAL] = @clr1
   fg[PRELIGHT] = @clr2
@@ -83,13 +84,13 @@ style "gimp-dark-default-style"
   fg[SELECTED] = @clr1
   fg[INSENSITIVE] = @clr3
 
-  bg[NORMAL] = @clr4
-  bg[PRELIGHT] = @clr4
+  bg[NORMAL] = @clr9
+  bg[PRELIGHT] = @clr7
   bg[ACTIVE] = @clr4
   bg[SELECTED] = @clr5
   bg[INSENSITIVE] = @clr5
 
-  base[NORMAL] = @clr6
+  base[NORMAL] = @clrA
   base[PRELIGHT] = @clr7
   base[ACTIVE] = @clr7
   base[SELECTED] = @clr7
@@ -436,81 +437,10 @@ style "gimp-dark-tooltips-style" = "gimp-dark-default-style"
 
   bg[NORMAL] = "#383838"
   bg[SELECTED] = "#828282"
-  fg[NORMAL] = "#CBCBCB"
+  fg[NORMAL] = @clr1
 }
 
 widget "gtk-tooltip*" style "gimp-dark-tooltips-style"
-
-###########################################################
-
-style "gimp-dark-treeview" = "gimp-dark-default-style"
-{
-  xthickness = 2
-  ythickness = 0
-
-  GtkTreeView::odd_row_color = "#828282"
-  GtkTreeView::even_row_color = "#828282"
-
-  #
-  # set custom text color here
-  #
-
-  #text[NORMAL] = "#0F0"
-  #text[PRELIGHT] = "#0F0"
-  #text[SELECTED] = "#0F0"
-  #text[INSENSITIVE] = "#0F0"
-  #text[ACTIVE] = "#0F0"
-
-  engine  "pixmap"
-    {
-      image
-        {
-          function = FLAT_BOX
-          state = ACTIVE
-          file = "ui/null.png"
-          border = {1,1,1,1}
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = FLAT_BOX
-          state = PRELIGHT
-          file = "ui/null.png"
-          border = {1,1,1,1}
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = FLAT_BOX
-          state = NORMAL
-          file = "ui/null.png"
-          border = {1,1,1,1}
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = FLAT_BOX
-          state = INSENSITIVE
-          file = "ui/null.png"
-          border = {1,1,1,1}
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = FLAT_BOX
-          state = SELECTED
-          file = "ui/menuitem.png"
-          border = {1,1,1,1}
-          stretch = TRUE
-        }
-    }
-}
-
-class "GtkTreeView" style "gimp-dark-treeview"
 
 ###########################################################
 
@@ -519,8 +449,8 @@ style "gimp-dark-list-header-style"
   #Comment out the ythickness setting below for thicker column headers.
   #ythickness = 0
 
-  GtkTreeView::odd_row_color = "#828282"
-  GtkTreeView::even_row_color = "#828282"
+  GtkTreeView::odd_row_color = "#1f1f1f"
+  GtkTreeView::even_row_color = "#1f1f1f"
 
   #
   # set custom header text color here
@@ -1830,7 +1760,8 @@ class "GtkRange" style "gimp-dark-range-style"
 
 style "gimp-dark-spin-scale-style"
 {
-  bg[NORMAL] = "#828282"
+  fg[NORMAL] = "#131313"
+  bg[NORMAL] = "#1f1f1f"
 
   engine "pixmap"
     {
@@ -2194,7 +2125,7 @@ style "kde_hack_1"
   GtkComboBoxEntry::appears-as-list = 0
   GtkComboBoxText::appears-as-list = 0
 
-  color["clr1"]  = "#EEEEEE"
+  color["clr1"]  = "#DDDDDD"
   color["clr2"]  = "#FFFFFF"
   color["clr3"]  = "#c1c1c1"
   color["clr4"]  = "#383838"
@@ -2203,6 +2134,7 @@ style "kde_hack_1"
   color["clr7"]  = "#3b3b3b"
   color["clr8"]  = "#383838"
   color["clr9"]  = "#4D4D4D"
+  color["clrA"]  = "#303030"
 
   fg[NORMAL] = @clr1
   fg[PRELIGHT] = @clr2
@@ -2210,7 +2142,7 @@ style "kde_hack_1"
   fg[SELECTED] = @clr1
   fg[INSENSITIVE] = @clr3
 
-  base[NORMAL] = @clr6
+  base[NORMAL] = @clrA
   base[PRELIGHT] = @clr7
   base[ACTIVE] = @clr7
   base[SELECTED] = @clr7
@@ -2482,5 +2414,173 @@ style "dark-python-console"
 }
 
 widget "python-fu-console" style "dark-python-console"
+
+###########################################################
+
+style "gimp-dark-spin-scale-style"
+{
+  engine "pixmap"
+    {
+      image
+        {
+          function = FLAT_BOX
+          detail = "entry_bg"
+          state = NORMAL
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          detail = "entry_bg"
+          state = ACTIVE
+        }
+
+      image
+        {
+          function = BOX
+          state = NORMAL
+          detail = "spinbutton_up"
+          overlay_file = "ui/arrow-up-small.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = PRELIGHT
+          detail = "spinbutton_up"
+          overlay_file = "ui/arrow-up-small-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = ACTIVE
+          detail = "spinbutton_up"
+          overlay_file = "ui/arrow-up-small-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = INSENSITIVE
+          detail = "spinbutton_up"
+          overlay_file = "ui/arrow-up-small-insens.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = NORMAL
+          detail = "spinbutton_down"
+          overlay_file = "ui/arrow-down-small.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = PRELIGHT
+          detail = "spinbutton_down"
+          overlay_file = "ui/arrow-down-small-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = ACTIVE
+          detail = "spinbutton_down"
+          overlay_file = "ui/arrow-down-small-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = BOX
+          state = INSENSITIVE
+          detail = "spinbutton_down"
+          overlay_file = "ui/arrow-down-small-insens.png"
+          overlay_stretch = FALSE
+        }
+    }
+}
+
+class "GimpSpinScale" style "gimp-dark-spin-scale-style"
+
+###########################################################
+
+style "gimp-dark-treeview" = "gimp-dark-default-style"
+{
+  xthickness = 2
+  ythickness = 0
+
+  GtkTreeView::odd_row_color = "#383838"
+  GtkTreeView::even_row_color = "#383838"
+
+  #
+  # set custom text color here
+  #
+
+  #text[NORMAL] = "#C1C1C1"
+  #text[NORMAL] = "#C1C1C1"
+  #text[PRELIGHT] = "#0F0"
+  #text[SELECTED] = "#0F0"
+  #text[INSENSITIVE] = "#0F0"
+  #text[ACTIVE] = "#0F0"
+
+  engine  "pixmap"
+    {
+      image
+        {
+          function = FLAT_BOX
+          state = ACTIVE
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = PRELIGHT
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = NORMAL
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = INSENSITIVE
+          file = "ui/null.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+
+      image
+        {
+          function = FLAT_BOX
+          state = SELECTED
+          file = "ui/menuitem.png"
+          border = {1,1,1,1}
+          stretch = TRUE
+        }
+    }
+}
+
+class "GtkTreeView" style "gimp-dark-treeview"
 
 # EOF

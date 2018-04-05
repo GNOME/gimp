@@ -24,7 +24,7 @@
 #include "config/gimpdisplayconfig.h"
 
 
-#define GIMP_CONFIG_DEFAULT_THEME          "03-Dark"
+#define GIMP_CONFIG_DEFAULT_THEME          "Dark"
 #define GIMP_CONFIG_DEFAULT_ICON_THEME     "Symbolic"
 
 
