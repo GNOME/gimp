@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-themedatadir = $(gimpdatadir)/themes/01-Light
-themeuidir   = $(gimpdatadir)/themes/01-Light/ui
+themedatadir = $(gimpdatadir)/themes/Light
+themeuidir   = $(gimpdatadir)/themes/Light/ui
 
 themedata_DATA = gtkrc
 
