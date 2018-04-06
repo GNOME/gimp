@@ -6,7 +6,7 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.28",
     "sdk": "org.gnome.Sdk",
-    "command": "gimp-2.9",
+    "command": "gimp-2.10",
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--socket=x11", "--share=network",
@@ -25,10 +25,7 @@
     "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig",
                 "/share/aclocal", "/man", "/share/man", "/share/gtk-doc",
                 "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
-                "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0",
-
-                "/share/glib-2.0/codegen", "/bin/gdbus-codegen", "/bin/glib-*",
-                "/bin/gobject-query", "/bin/gresource", "/bin/gtester*"],
+                "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
         {
             "name": "mypaint-brushes",
