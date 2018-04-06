@@ -1903,7 +1903,7 @@ xcf_load_buffer (XcfInfo    *info,
   xcf_read_int32 (info, (guint32 *) &bpp,    1);
 
   /* make sure the values in the file correspond to the values
-   *  calculated when the TileManager was created.
+   *  calculated when the GeglBuffer was created.
    */
   if (width  != gegl_buffer_get_width (buffer)  ||
       height != gegl_buffer_get_height (buffer) ||
@@ -2017,7 +2017,7 @@ xcf_load_level (XcfInfo    *info,
           return FALSE;
         }
 
-      /* get the tile from the tile manager */
+      /* get buffer rectangle to write to */
       gimp_gegl_buffer_get_tile_rect (buffer,
                                       XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
                                       i, &rect);
@@ -2028,17 +2028,17 @@ xcf_load_level (XcfInfo    *info,
       switch (info->compression)
         {
         case COMPRESS_NONE:
-          if (!xcf_load_tile (info, buffer, &rect, format))
+          if (! xcf_load_tile (info, buffer, &rect, format))
             fail = TRUE;
           break;
         case COMPRESS_RLE:
-          if (!xcf_load_tile_rle (info, buffer, &rect, format,
-                                  offset2 - offset))
+          if (! xcf_load_tile_rle (info, buffer, &rect, format,
+                                   offset2 - offset))
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
-          if (!xcf_load_tile_zlib (info, buffer, &rect, format,
-                                   offset2 - offset))
+          if (! xcf_load_tile_zlib (info, buffer, &rect, format,
+                                    offset2 - offset))
             fail = TRUE;
           break;
         case COMPRESS_FRACTAL:
