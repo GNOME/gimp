@@ -11,13 +11,15 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
 	-I$(top_srcdir)/app			\
-	$(xobjective_c)				\
 	$(GIO_UNIX_CFLAGS)			\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	$(GTK_MAC_INTEGRATION_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)			\
 	-I$(includedir)
+
+AM_CFLAGS = \
+	$(xobjective_c)
 
 noinst_LIBRARIES = libappgui.a
 

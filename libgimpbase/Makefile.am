@@ -64,7 +64,9 @@ AM_CPPFLAGS = \
 	$(GIO_CFLAGS)						\
 	$(GEXIV2_CFLAGS)					\
 	$(BINRELOC_CFLAGS)					\
-	-I$(includedir)						\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
 
 AM_CCASFLAGS = \

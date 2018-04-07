@@ -12,7 +12,9 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/app		\
 	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
 
 noinst_LIBRARIES = libappdisplay.a

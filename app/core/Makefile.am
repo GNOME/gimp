@@ -18,7 +18,9 @@ AM_CPPFLAGS = \
 	$(GDK_PIXBUF_CFLAGS)				\
 	$(LIBMYPAINT_CFLAGS)				\
 	$(GEXIV2_CFLAGS)				\
-	-I$(includedir)					\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
 
 noinst_LIBRARIES = libappcore.a

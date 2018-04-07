@@ -31,14 +31,14 @@ endif
 AM_CFLAGS = \
 	-DSTANDALONE=0		\
 	-DUSE_INTERFACE=1	\
-	-DUSE_STRLWR=0
+	-DUSE_STRLWR=0		\
+	$(xobjective_c)
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)	\
-	-I$(includedir)	\
-	$(xobjective_c)
+	-I$(includedir)
 
 AM_LDFLAGS = \
 	$(mwindows)	\

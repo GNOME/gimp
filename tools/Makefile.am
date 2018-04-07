@@ -87,7 +87,9 @@ AM_CPPFLAGS = \
 	-DGIMP_PLUGIN_VERSION=\""$(GIMP_PLUGIN_VERSION)"\"	\
 	-I$(top_srcdir)						\
 	$(GTK_CFLAGS)						\
-	-I$(includedir)						\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
 
 EXTRA_DIST = \

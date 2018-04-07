@@ -58,7 +58,9 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	$(LCMS_CFLAGS)				\
-	-I$(includedir)				\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
