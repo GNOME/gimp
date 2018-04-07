@@ -837,6 +837,14 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
     });
 }
 
+static void
+gimp_gegl_convert_color_profile_progress (GimpProgress *progress,
+                                          gdouble       value)
+{
+  if (gegl_is_main_thread ())
+    gimp_progress_set_value (progress, value);
+}
+
 void
 gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  const GeglRectangle      *src_rect,
@@ -866,12 +874,21 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                         intent,
                                         (GimpColorTransformFlags) flags);
 
+  if (! src_rect)
+    src_rect = gegl_buffer_get_extent (src_buffer);
+
+  if (! dest_rect)
+    dest_rect = gegl_buffer_get_extent (dest_buffer);
+
   if (transform)
     {
       if (progress)
-        g_signal_connect_swapped (transform, "progress",
-                                  G_CALLBACK (gimp_progress_set_value),
-                                  progress);
+        {
+          g_signal_connect_swapped (
+            transform, "progress",
+            G_CALLBACK (gimp_gegl_convert_color_profile_progress),
+            progress);
+        }
 
       GIMP_TIMER_START ();
 
