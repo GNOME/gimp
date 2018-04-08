@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-28 20:01+0100\n"
-"PO-Revision-Date: 2018-01-28 20:02+0100\n"
+"POT-Creation-Date: 2018-04-08 22:14+0200\n"
+"PO-Revision-Date: 2018-04-08 22:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21,22 +21,22 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1209
+#: ../libgimp/gimp.c:1264
 msgid "success"
 msgstr "powodzenie"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1213
+#: ../libgimp/gimp.c:1268
 msgid "execution error"
 msgstr "błąd wykonania"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1217
+#: ../libgimp/gimp.c:1272
 msgid "calling error"
 msgstr "błąd wywołania"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1221
+#: ../libgimp/gimp.c:1276
 msgid "cancelled"
 msgstr "anulowano"
 
@@ -1409,52 +1409,57 @@ msgstr "Kadrowanie z proporcjami"
 msgid "Can load metadata only from local files"
 msgstr "Można wczytywać metadane tylko z plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:905
+#: ../libgimpbase/gimpmetadata.c:859
+#, c-format
+msgid "Conversion of the filename to system codepage failed."
+msgstr "Konwersja nazwy pliku na stronę kodową systemu się nie powiodła."
+
+#: ../libgimpbase/gimpmetadata.c:916
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Można zapisywać metadane tylko do plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:981
+#: ../libgimpbase/gimpmetadata.c:992
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Przetworzenie danych Exif się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:1032
+#: ../libgimpbase/gimpmetadata.c:1043
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Przetworzenie danych IPTC się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:1081
+#: ../libgimpbase/gimpmetadata.c:1092
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Przetworzenie danych XMP się nie powiodło."
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libgimpbase/gimputils.c:215 ../libgimpbase/gimputils.c:220
 msgid "(invalid UTF-8 string)"
 msgstr "(nieprawidłowy tekst UTF-8)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libgimpbase/gimputils.c:390
 msgid "File path is NULL"
 msgstr "Ścieżka do pliku wynosi NULL"
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libgimpbase/gimputils.c:399 ../libgimpbase/gimputils.c:410
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Błąd podczas konwertowania nazwy pliku UTF-8 do szerokich znaków"
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libgimpbase/gimputils.c:418
 msgid "ILCreateFromPath() failed"
 msgstr "„ILCreateFromPath()” się nie powiodło"
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libgimpbase/gimputils.c:455
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Nie można konwertować „%s” na prawidłowe NSURL."
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libgimpbase/gimputils.c:483
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Połączenie z „org.freedesktop.FileManager1” się nie powiodło: "
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libgimpbase/gimputils.c:507
 msgid "Calling ShowItems failed: "
 msgstr "Wywołanie „ShowItems” się nie powiodło: "
 
@@ -1915,27 +1920,23 @@ msgstr "Producent: "
 msgid "Copyright: "
 msgstr "Prawa autorskie: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:204
+#: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
 msgstr "Skale"
 
-#: ../libgimpwidgets/gimpcolorscales.c:383
-msgid "RGB"
-msgstr "RGB"
-
-#: ../libgimpwidgets/gimpcolorscales.c:416
+#: ../libgimpwidgets/gimpcolorscales.c:437
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:418
+#: ../libgimpwidgets/gimpcolorscales.c:439
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:444
+#: ../libgimpwidgets/gimpcolorscales.c:460
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:453
+#: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
 msgstr "HSV"
 
@@ -2154,7 +2155,7 @@ msgstr "Rozmiar szachownicy"
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2143
+#: ../libgimpwidgets/gimppropwidgets.c:2177
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
