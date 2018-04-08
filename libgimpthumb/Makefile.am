@@ -6,6 +6,8 @@ endif
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 framework_cocoa = -framework Cocoa
 endif
 
@@ -55,6 +57,12 @@ AM_CPPFLAGS = \
 AM_CFLAGS = \
 	$(xobjective_c)
 
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
+
 EXTRA_DIST = \
 	gimpthumb.def
 
@@ -84,7 +92,8 @@ libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpthumb_export_symbols)		\
-	$(framework_cocoa)
+	$(framework_cocoa)			\
+	$(xnone)
 
 libgimpthumb_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\

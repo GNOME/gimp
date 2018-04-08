@@ -2,6 +2,8 @@
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 endif
 
 AM_CPPFLAGS = \
@@ -18,6 +20,12 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = \
 	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 noinst_LIBRARIES = libappwidgets.a
 

@@ -13,6 +13,8 @@ endif
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 framework_cocoa = -framework Cocoa
 endif
 
@@ -79,6 +81,12 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = \
 	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 lib_LTLIBRARIES = libgimp-@GIMP_API_VERSION@.la libgimpui-@GIMP_API_VERSION@.la
 
@@ -395,7 +403,8 @@ libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimp_export_symbols)		\
-	$(framework_cocoa)
+	$(framework_cocoa)			\
+	$(xnone)
 
 EXTRA_libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimp_def)
 
@@ -413,7 +422,8 @@ libgimpui_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpui_export_symbols)		\
-	$(framework_cocoa)
+	$(framework_cocoa)			\
+	$(xnone)
 
 EXTRA_libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
 

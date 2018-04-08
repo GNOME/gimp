@@ -6,6 +6,8 @@ endif
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 framework_cocoa = -framework Cocoa
 endif
 
@@ -69,9 +71,15 @@ AM_CPPFLAGS = \
 AM_CFLAGS = \
 	$(xobjective_c)
 
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 EXTRA_DIST = \
 	gimpbase.def
@@ -165,7 +173,8 @@ libgimpbase_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
 	$(libgimpbase_export_symbols)		\
-	$(framework_cocoa)
+	$(framework_cocoa)			\
+	$(xnone)
 
 EXTRA_libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 
