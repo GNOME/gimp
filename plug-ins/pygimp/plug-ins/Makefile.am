@@ -6,11 +6,11 @@ source_scripts = \
 	colorxhtml.py					\
 	file-openraster.py				\
 	foggify.py						\
+	gradient-from-palette.py		\
 	gradients-save-as-css.py		\
 	histogram-export.py     		\
 	palette-offset.py				\
 	palette-sort.py					\
-	palette-to-gradient.py			\
 	py-slice.py						\
 	python-eval.py					\
 									\
@@ -20,17 +20,21 @@ source_scripts = \
 	sphere.py						\
 	whirlpinch.py
 
+#	palette-to-gradient.py
+
 scripts = \
 	colorxhtml/colorxhtml.py						\
 	file-openraster/file-openraster.py				\
 	foggify/foggify.py								\
+	gradient-from-palette/gradient-from-palette.py  \
 	gradients-save-as-css/gradients-save-as-css.py	\
 	histogram-export/histogram-export.py     		\
 	palette-offset/palette-offset.py				\
 	palette-sort/palette-sort.py					\
-	palette-to-gradient/palette-to-gradient.py		\
 	py-slice/py-slice.py							\
 	python-eval/python-eval.py
+
+#	palette-to-gradient/palette-to-gradient.py
 
 test_scripts = \
 	benchmark-foreground-extract/benchmark-foreground-extract.py	\
