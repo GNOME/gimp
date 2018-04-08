@@ -10,6 +10,7 @@
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 #
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2015.
+# Sergio Jiménez Herena <sergio.jimenez.herena@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
@@ -106,6 +107,117 @@ msgstr "Ta_maño de la tipografía en píxeles"
 msgid "_Write a separate CSS file"
 msgstr "E_scribir un archivo CSS separado"
 
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:41
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:190
+msgid "Normal"
+msgstr "Normal"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:41
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:191
+msgid "Cyclic"
+msgstr "Cíclico"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:41
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:192
+msgid "Discrete"
+msgstr "Discreto"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:43
+msgid ", inverted"
+msgstr ", invertido"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:48
+msgid ", ordered by luminance"
+msgstr ", ordenado por luminancia"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:50
+msgid ", ordered by lightness (HSL)"
+msgstr ", ordenado por luminosidad (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:52
+msgid ", ordered by value (HSV)"
+msgstr ", ordenado por valor (HSV)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:54
+msgid ", ordered by hue"
+msgstr ", ordenado por tono"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:56
+msgid ", ordered by saturation"
+msgstr ", ordenado por saturación"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:58
+msgid ", ordered by red component"
+msgstr ", ordenado por componente rojo"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:60
+msgid ", ordered by green component"
+msgstr ", ordenado por componente verde"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:62
+msgid ", ordered by blue component"
+msgstr ", ordenado por componente azul"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:69
+msgid "The palette is empty."
+msgstr "La paleta esta vacía."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:82
+msgid "The gradient must contain at least two colors."
+msgstr "El degradado ha de contener al menos dos colores."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:170
+msgid "Create a gradient using a range of the palette colors."
+msgstr "Crea un degradado utilizando una gama de colores de la paleta."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:182
+msgid "Palette range to gradient..."
+msgstr "Gama de paleta a gradiente..."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:186
+msgid "_First index"
+msgstr "_Primer indice"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:187
+msgid "_Last index"
+msgstr "Ú_ltimo indice"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:188
+msgid "_Type"
+msgstr "_Tipo"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:195
+msgid "_Sort colors"
+msgstr "Reordenar colore_s"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:197
+msgid "Do not sort"
+msgstr "No reordenar"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:198
+msgid "Luminance"
+msgstr "Luminancia"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:200
+msgid "Value (HSV)"
+msgstr "Valor (HSV)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:203
+msgid "Red component"
+msgstr "Componente rojo"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:204
+msgid "Green component"
+msgstr "Componente verde"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:205
+msgid "Blue component"
+msgstr "Componente azul"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:208
+msgid "_Invert"
+msgstr "_Invertir"
+
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "Degradado que usar"
@@ -196,8 +308,6 @@ msgstr "_Desplazar paleta…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
@@ -222,10 +332,12 @@ msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:201
 msgid "Hue"
 msgstr "Tono"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:202
 msgid "Saturation"
 msgstr "Saturación"
 
@@ -238,6 +350,7 @@ msgid "Saturation (HSL)"
 msgstr "Saturación (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:199
 msgid "Lightness (HSL)"
 msgstr "Luminosidad (HSL)"
 
@@ -328,18 +441,22 @@ msgid "Partition q_uantization"
 msgstr "C_uantización del particionado"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:235
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Crear un degradado que se repite, utilizando los colores de la paleta"
+msgstr "Crea un degradado que se repite, utilizando los colores de la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:241
 msgid "Palette to _Repeating Gradient"
 msgstr "Paleta a degradado _repetido"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:218
 msgid "Create a gradient using colors from the palette"
 msgstr "Crea un degradado usando los colores de la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:224
 msgid "Palette to _Gradient"
 msgstr "Paleta a _degradado"
 
