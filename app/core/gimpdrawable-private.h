@@ -33,6 +33,11 @@ struct _GimpDrawablePrivate
   GimpApplicator *fs_applicator;
 
   GeglNode       *mode_node;
+
+  gint            paint_count;
+  GeglBuffer     *paint_buffer;
+  cairo_region_t *paint_copy_region;
+  cairo_region_t *paint_update_region;
 };
 
 #endif /* __GIMP_DRAWABLE_PRIVATE_H__ */

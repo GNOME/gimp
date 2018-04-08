@@ -228,5 +228,9 @@ gint              gimp_drawable_get_component_index  (GimpDrawable    *drawable,
 
 const guchar    * gimp_drawable_get_colormap         (GimpDrawable    *drawable);
 
+void              gimp_drawable_start_paint          (GimpDrawable    *drawable);
+gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
+gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
+
 
 #endif /* __GIMP_DRAWABLE_H__ */

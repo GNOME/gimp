@@ -23,6 +23,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -52,6 +53,13 @@
 #include "gimp-log.h"
 
 #include "gimp-intl.h"
+
+
+#define PAINT_COPY_CHUNK_WIDTH    128
+#define PAINT_COPY_CHUNK_HEIGHT   128
+
+#define PAINT_UPDATE_CHUNK_WIDTH   32
+#define PAINT_UPDATE_CHUNK_HEIGHT  32
 
 
 enum
@@ -311,6 +319,9 @@ static void
 gimp_drawable_finalize (GObject *object)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
+
+  while (drawable->private->paint_count)
+    gimp_drawable_end_paint (drawable);
 
   g_clear_object (&drawable->private->buffer);
 
@@ -944,8 +955,59 @@ gimp_drawable_update (GimpDrawable *drawable,
   if (height == -1)
     height = gimp_item_get_height (GIMP_ITEM (drawable));
 
-  g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
-                 x, y, width, height);
+  if (drawable->private->paint_count == 0)
+    {
+      g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
+                     x, y, width, height);
+    }
+  else
+    {
+      GeglRectangle rect;
+
+      rect.x      = floor ((gdouble) x            / PAINT_COPY_CHUNK_WIDTH)  * PAINT_COPY_CHUNK_WIDTH;
+      rect.y      = floor ((gdouble) y            / PAINT_COPY_CHUNK_HEIGHT) * PAINT_COPY_CHUNK_HEIGHT;
+      rect.width  = ceil  ((gdouble) (x + width)  / PAINT_COPY_CHUNK_WIDTH)  * PAINT_COPY_CHUNK_WIDTH  - rect.x;
+      rect.height = ceil  ((gdouble) (y + height) / PAINT_COPY_CHUNK_HEIGHT) * PAINT_COPY_CHUNK_HEIGHT - rect.y;
+
+      if (gegl_rectangle_intersect (
+            &rect,
+            &rect,
+            GEGL_RECTANGLE (0, 0,
+                            gimp_item_get_width  (GIMP_ITEM (drawable)),
+                            gimp_item_get_height (GIMP_ITEM (drawable)))))
+        {
+          if (drawable->private->paint_copy_region)
+            {
+              cairo_region_union_rectangle (
+                drawable->private->paint_copy_region,
+                (const cairo_rectangle_int_t *) &rect);
+            }
+          else
+            {
+              drawable->private->paint_copy_region =
+                cairo_region_create_rectangle (
+                  (const cairo_rectangle_int_t *) &rect);
+            }
+
+            rect.x      = floor ((gdouble) x            / PAINT_UPDATE_CHUNK_WIDTH)  * PAINT_UPDATE_CHUNK_WIDTH;
+            rect.y      = floor ((gdouble) y            / PAINT_UPDATE_CHUNK_HEIGHT) * PAINT_UPDATE_CHUNK_HEIGHT;
+            rect.width  = ceil  ((gdouble) (x + width)  / PAINT_UPDATE_CHUNK_WIDTH)  * PAINT_UPDATE_CHUNK_WIDTH  - rect.x;
+            rect.height = ceil  ((gdouble) (y + height) / PAINT_UPDATE_CHUNK_HEIGHT) * PAINT_UPDATE_CHUNK_HEIGHT - rect.y;
+
+            if (drawable->private->paint_update_region)
+              {
+                cairo_region_union_rectangle (
+                  drawable->private->paint_update_region,
+                  (const cairo_rectangle_int_t *) &rect);
+              }
+            else
+              {
+                drawable->private->paint_update_region =
+                  cairo_region_create_rectangle (
+                    (const cairo_rectangle_int_t *) &rect);
+              }
+        }
+    }
 }
 
 void
@@ -1123,7 +1185,10 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
+  if (drawable->private->paint_count == 0)
+    return GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
+  else
+    return drawable->private->paint_buffer;
 }
 
 void
@@ -1505,4 +1570,102 @@ gimp_drawable_get_colormap (GimpDrawable *drawable)
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   return image ? gimp_image_get_colormap (image) : NULL;
+}
+
+void
+gimp_drawable_start_paint (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (drawable->private->paint_count == 0)
+    {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+
+      g_return_if_fail (buffer != NULL);
+      g_return_if_fail (drawable->private->paint_buffer == NULL);
+      g_return_if_fail (drawable->private->paint_copy_region == NULL);
+      g_return_if_fail (drawable->private->paint_update_region == NULL);
+
+      drawable->private->paint_buffer = gegl_buffer_dup (buffer);
+    }
+
+  drawable->private->paint_count++;
+}
+
+gboolean
+gimp_drawable_end_paint (GimpDrawable *drawable)
+{
+  gboolean result = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (drawable->private->paint_count > 0, FALSE);
+
+  if (drawable->private->paint_count == 1)
+    {
+      result = gimp_drawable_flush_paint (drawable);
+
+      g_clear_object (&drawable->private->paint_buffer);
+    }
+
+  drawable->private->paint_count--;
+
+  return result;
+}
+
+gboolean
+gimp_drawable_flush_paint (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (drawable->private->paint_count > 0, FALSE);
+
+  if (drawable->private->paint_copy_region)
+    {
+      GeglBuffer *buffer;
+      gint        n_rects;
+      gint        i;
+
+      buffer = GIMP_DRAWABLE_GET_CLASS (drawable)->get_buffer (drawable);
+
+      g_return_val_if_fail (buffer != NULL, FALSE);
+      g_return_val_if_fail (drawable->private->paint_buffer != NULL, FALSE);
+
+      n_rects = cairo_region_num_rectangles (
+        drawable->private->paint_copy_region);
+
+      for (i = 0; i < n_rects; i++)
+        {
+          GeglRectangle rect;
+
+          cairo_region_get_rectangle (drawable->private->paint_copy_region,
+                                      i, (cairo_rectangle_int_t *) &rect);
+
+          gegl_buffer_copy (
+            drawable->private->paint_buffer, &rect, GEGL_ABYSS_NONE,
+            buffer, NULL);
+        }
+
+      g_clear_pointer (&drawable->private->paint_copy_region,
+                       cairo_region_destroy);
+
+      n_rects = cairo_region_num_rectangles (
+        drawable->private->paint_update_region);
+
+      for (i = 0; i < n_rects; i++)
+        {
+          GeglRectangle rect;
+
+          cairo_region_get_rectangle (drawable->private->paint_update_region,
+                                      i, (cairo_rectangle_int_t *) &rect);
+
+          g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
+                         rect.x, rect.y, rect.width, rect.height);
+        }
+
+      g_clear_pointer (&drawable->private->paint_update_region,
+                       cairo_region_destroy);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
