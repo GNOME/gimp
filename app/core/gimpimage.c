@@ -1836,11 +1836,18 @@ gimp_image_get_layer_format (GimpImage *image,
 const Babl *
 gimp_image_get_channel_format (GimpImage *image)
 {
+  GimpPrecision precision;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_image_get_format (image, GIMP_GRAY,
-                                gimp_image_get_precision (image),
-                                FALSE);
+  precision = gimp_image_get_precision (image);
+
+  if (precision == GIMP_PRECISION_U8_GAMMA)
+    return gimp_image_get_format (image, GIMP_GRAY,
+                                  gimp_image_get_precision (image),
+                                  FALSE);
+
+  return gimp_babl_mask_format (precision);
 }
 
 const Babl *
