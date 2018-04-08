@@ -10,6 +10,7 @@
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 #
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2015.
+# Sergio Jiménez Herena <sergio.jimenez.herena@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
@@ -105,6 +106,113 @@ msgstr "Ta_maño de la tipografía en píxeles"
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "E_scribir un archivo CSS separado"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:44
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:189
+msgid "Normal"
+msgstr "Normal"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:45
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:190
+msgid "Cyclic"
+msgstr "Cíclico"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:46
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:191
+msgid "Discrete"
+msgstr "Discreto"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:51
+msgid ", inverted "
+msgstr ", invertido "
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:55
+msgid ", ordered by lightness"
+msgstr ", ordenado por luminosidad"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:56
+msgid ", ordered by value"
+msgstr ", ordenado por valor"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:57
+msgid ", ordered by hue"
+msgstr ", ordenado por tono"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:58
+msgid ", ordered by saturation"
+msgstr ", ordenado por saturacion"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:59
+msgid ", ordered by red"
+msgstr ", ordenado por rojos"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:60
+msgid ", ordered by green"
+msgstr ", ordenado por verdes"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:61
+msgid ", ordered by blue"
+msgstr ", ordenado por azules"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:74
+msgid "The palette is empty."
+msgstr "La paleta esta vacía."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:87
+msgid "The gradient must contain at least two colors."
+msgstr "El degradado ha de contener al menos dos colores."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:166
+msgid "Generate a new gradient using colors from a palette."
+msgstr "Genera un nuevo gradiente usando colores de una paleta."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:172
+msgid "Gradient from palette..."
+msgstr "Gradiente desde paleta..."
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:176
+msgid "_First index"
+msgstr "_Primer indice"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:177
+msgid "_Last index"
+msgstr "Ú_ltimo indice"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:178
+msgid "Gradient _type"
+msgstr "_Tipo de degradado"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:185
+msgid "_Sort colors\t\t"
+msgstr "Reordenar colore_s\t\t"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:187
+msgid "Do not sort"
+msgstr "No reordenar"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:189
+msgid "Value (HSV)"
+msgstr "Valor (HSV)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:190
+msgid "Hue (HSL)"
+msgstr "Tono (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:192
+msgid "Red (RGB)"
+msgstr "Rojo (RGB)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:193
+msgid "Green (RGB)"
+msgstr "Verde (RGB)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:194
+msgid "Blue (RGB)"
+msgstr "Azul (RGB)"
+
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:197
+msgid "_Invert"
+msgstr "_Invertir"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
@@ -234,10 +342,12 @@ msgid "Value"
 msgstr "Valor"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:191
 msgid "Saturation (HSL)"
 msgstr "Saturación (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+#: ../plug-ins/pygimp/plug-ins/gradient-from-palette.py:188
 msgid "Lightness (HSL)"
 msgstr "Luminosidad (HSL)"
 
