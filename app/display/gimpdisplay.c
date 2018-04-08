@@ -50,7 +50,10 @@
 #include "gimp-intl.h"
 
 
-#define FLUSH_NOW_INTERVAL 20000 /* 20 ms in microseconds */
+#define FLUSH_NOW_INTERVAL      20000 /* 20 ms in microseconds */
+
+#define PAINT_AREA_CHUNK_WIDTH  32
+#define PAINT_AREA_CHUNK_HEIGHT 32
 
 
 enum
@@ -901,6 +904,14 @@ gimp_display_paint_area (GimpDisplay *display,
   y1 = floor (y1_f - 0.5);
   x2 = ceil (x2_f + 0.5);
   y2 = ceil (y2_f + 0.5);
+
+  /*  align transformed area to a coarse grid, to simplify the
+   *  invalidated area
+   */
+  x1 = floor ((gdouble) x1 / PAINT_AREA_CHUNK_WIDTH)  * PAINT_AREA_CHUNK_WIDTH;
+  y1 = floor ((gdouble) y1 / PAINT_AREA_CHUNK_HEIGHT) * PAINT_AREA_CHUNK_HEIGHT;
+  x2 = ceil  ((gdouble) x2 / PAINT_AREA_CHUNK_WIDTH)  * PAINT_AREA_CHUNK_WIDTH;
+  y2 = ceil  ((gdouble) y2 / PAINT_AREA_CHUNK_HEIGHT) * PAINT_AREA_CHUNK_HEIGHT;
 
   gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
 }
