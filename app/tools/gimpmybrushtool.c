@@ -84,9 +84,10 @@ gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  tool_class->options_notify    = gimp_mybrush_tool_options_notify;
+  tool_class->options_notify         = gimp_mybrush_tool_options_notify;
 
-  paint_tool_class->get_outline = gimp_mybrush_tool_get_outline;
+  paint_tool_class->get_outline      = gimp_mybrush_tool_get_outline;
+  paint_tool_class->use_paint_thread = FALSE;
 }
 
 static void

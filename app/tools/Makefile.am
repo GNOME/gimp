@@ -150,6 +150,8 @@ libapptools_a_sources = \
 	gimppaintoptions-gui.h		\
 	gimppainttool.c			\
 	gimppainttool.h			\
+	gimppainttool-paint.c		\
+	gimppainttool-paint.h		\
 	gimppenciltool.c		\
 	gimppenciltool.h		\
 	gimpperspectiveclonetool.c	\

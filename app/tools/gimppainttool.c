@@ -49,6 +49,7 @@
 
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
+#include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -132,6 +133,8 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->oper_update    = gimp_paint_tool_oper_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
+
+  klass->use_paint_thread    = TRUE;
 }
 
 static void
@@ -372,6 +375,9 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   gimp_draw_tool_start (draw_tool, display);
 
   gimp_tool_control_activate (tool->control);
+
+  if (! paint_tool->draw_line)
+    gimp_paint_tool_paint_start (paint_tool);
 }
 
 static void
@@ -396,6 +402,9 @@ gimp_paint_tool_button_release (GimpTool              *tool,
                                                       display);
       return;
     }
+
+  if (! paint_tool->draw_line)
+    gimp_paint_tool_paint_end (paint_tool);
 
   gimp_tool_control_halt (tool->control);
 
@@ -454,15 +463,7 @@ gimp_paint_tool_motion (GimpTool         *tool,
       return;
     }
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  gimp_paint_core_interpolate (core, drawable, paint_options,
-                               &curr_coords, time);
-
-  gimp_projection_flush_now (gimp_image_get_projection (image));
-  gimp_display_flush_now (display);
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  gimp_paint_tool_paint_interpolate (paint_tool, &curr_coords, time);
 }
 
 static void
