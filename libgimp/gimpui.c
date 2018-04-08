@@ -18,6 +18,9 @@
 
 #include "config.h"
 
+#ifdef GDK_DISABLE_DEPRECATED
+#undef GDK_DISABLE_DEPRECATED
+#endif
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
@@ -57,13 +60,26 @@
 
 /*  local function prototypes  */
 
-static void      gimp_ui_help_func              (const gchar *help_id,
-                                                 gpointer     help_data);
+static void      gimp_ui_help_func              (const gchar   *help_id,
+                                                 gpointer       help_data);
 static void      gimp_ensure_modules            (void);
-static void      gimp_window_transient_realized (GtkWidget   *window,
-                                                 GdkWindow   *parent);
-static gboolean  gimp_window_set_transient_for  (GtkWindow   *window,
-                                                 GdkWindow   *parent);
+static void      gimp_window_transient_realized (GtkWidget     *window,
+                                                 GdkWindow     *parent);
+static gboolean  gimp_window_set_transient_for  (GtkWindow     *window,
+                                                 GdkWindow     *parent);
+
+static void      gimp_ui_theme_changed          (void);
+static void      gimp_ui_fix_pixbuf_style       (void);
+static void      gimp_ui_draw_pixbuf_layout     (GtkStyle      *style,
+                                                 GdkWindow     *window,
+                                                 GtkStateType   state_type,
+                                                 gboolean       use_text,
+                                                 GdkRectangle  *area,
+                                                 GtkWidget     *widget,
+                                                 const gchar   *detail,
+                                                 gint           x,
+                                                 gint           y,
+                                                 PangoLayout   *layout);
 
 
 static gboolean gimp_ui_initialized = FALSE;
@@ -133,6 +149,8 @@ gimp_ui_init (const gchar *prog_name,
   themerc = gimp_personal_rc_file ("themerc");
   gtk_rc_parse (themerc);
 
+  gimp_ui_fix_pixbuf_style ();
+
   file = g_file_new_for_path (themerc);
   g_free (themerc);
 
@@ -140,7 +158,7 @@ gimp_ui_init (const gchar *prog_name,
   g_object_unref (file);
 
   g_signal_connect (rc_monitor, "changed",
-                    G_CALLBACK (gtk_rc_reparse_all),
+                    G_CALLBACK (gimp_ui_theme_changed),
                     NULL);
 
   gdk_set_program_class (gimp_wm_class ());
@@ -390,4 +408,85 @@ gimp_window_set_transient_for (GtkWindow *window,
 #endif
 
   return FALSE;
+}
+
+static void
+gimp_ui_theme_changed (void)
+{
+  gtk_rc_reparse_all ();
+
+  gimp_ui_fix_pixbuf_style ();
+}
+
+static void
+gimp_ui_fix_pixbuf_style (void)
+{
+  /*  Same hack as in app/gui/themes.c, to be removed for GTK+ 3.x  */
+
+  static GtkStyleClass *pixbuf_style_class = NULL;
+
+  if (! pixbuf_style_class)
+    {
+      GType type = g_type_from_name ("PixbufStyle");
+
+      if (type)
+        {
+          pixbuf_style_class = g_type_class_ref (type);
+
+          if (pixbuf_style_class)
+            pixbuf_style_class->draw_layout = gimp_ui_draw_pixbuf_layout;
+        }
+    }
+}
+
+static void
+gimp_ui_draw_pixbuf_layout (GtkStyle      *style,
+                            GdkWindow     *window,
+                            GtkStateType   state_type,
+                            gboolean       use_text,
+                            GdkRectangle  *area,
+                            GtkWidget     *widget,
+                            const gchar   *detail,
+                            gint           x,
+                            gint           y,
+                            PangoLayout   *layout)
+{
+  GdkGC *gc;
+
+  gc = use_text ? style->text_gc[state_type] : style->fg_gc[state_type];
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, area);
+
+  if (state_type == GTK_STATE_INSENSITIVE)
+    {
+      GdkGC       *copy = gdk_gc_new (window);
+      GdkGCValues  orig;
+      GdkColor     fore;
+      guint16      r, g, b;
+
+      gdk_gc_copy (copy, gc);
+      gdk_gc_get_values (gc, &orig);
+
+      r = 0x40 + (((orig.foreground.pixel >> 16) & 0xff) >> 1);
+      g = 0x40 + (((orig.foreground.pixel >>  8) & 0xff) >> 1);
+      b = 0x40 + (((orig.foreground.pixel >>  0) & 0xff) >> 1);
+
+      fore.pixel = (r << 16) | (g << 8) | b;
+      fore.red   = r * 257;
+      fore.green = g * 257;
+      fore.blue  = b * 257;
+
+      gdk_gc_set_foreground (copy, &fore);
+      gdk_draw_layout (window, copy, x, y, layout);
+
+      g_object_unref (copy);
+    }
+  else
+    {
+      gdk_draw_layout (window, gc, x, y, layout);
+    }
+
+  if (area)
+    gdk_gc_set_clip_rectangle (gc, NULL);
 }
