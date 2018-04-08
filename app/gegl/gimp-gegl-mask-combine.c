@@ -377,6 +377,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 {
   GeglBufferIterator *iter;
   GeglRectangle       rect;
+  const Babl         *mask_format;
   const Babl         *add_on_format;
   gint                x, y, w, h;
 
@@ -397,8 +398,17 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
   rect.width  = w;
   rect.height = h;
 
+  /*  See below: this additional hack is only needed for the
+   *  gimp-channel-combine-masks procedure, it's the only place that
+   *  allows to combine arbitrary channels with each other.
+   */
+  if (gimp_babl_format_get_linear (gegl_buffer_get_format (mask)))
+    mask_format = babl_format ("Y float");
+  else
+    mask_format = babl_format ("Y' float");
+
   iter = gegl_buffer_iterator_new (mask, &rect, 0,
-                                   babl_format ("Y float"),
+                                   mask_format,
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   rect.x -= off_x;
