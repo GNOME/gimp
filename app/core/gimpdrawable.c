@@ -1669,3 +1669,11 @@ gimp_drawable_flush_paint (GimpDrawable *drawable)
 
   return FALSE;
 }
+
+gboolean
+gimp_drawable_is_painting (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  return drawable->private->paint_count > 0;
+}

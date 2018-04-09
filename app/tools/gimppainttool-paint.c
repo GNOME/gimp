@@ -68,10 +68,12 @@ typedef struct
 
 /*  local function prototypes  */
 
-static gboolean   gimp_paint_tool_paint_use_thread (GimpPaintTool *paint_tool);
-static gpointer   gimp_paint_tool_paint_thread     (gpointer       data);
+static gboolean   gimp_paint_tool_paint_use_thread     (GimpPaintTool *paint_tool);
+static gpointer   gimp_paint_tool_paint_thread         (gpointer       data);
 
-static gboolean   gimp_paint_tool_paint_timeout    (GimpPaintTool *paint_tool);
+static gboolean   gimp_paint_tool_paint_timeout        (GimpPaintTool *paint_tool);
+
+static void       gimp_paint_tool_paint_update_outline (GimpPaintTool *paint_tool);
 
 
 /*  static variables  */
@@ -180,6 +182,9 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
   update = gimp_drawable_flush_paint (drawable);
 
+  if (update)
+    gimp_paint_tool_paint_update_outline (paint_tool);
+
   paint_timeout_pending = FALSE;
   g_cond_signal (&paint_cond);
 
@@ -200,6 +205,36 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
     }
 
   return G_SOURCE_CONTINUE;
+}
+
+static void
+gimp_paint_tool_paint_update_outline (GimpPaintTool *paint_tool)
+{
+  if (gimp_paint_tool_paint_use_thread (paint_tool))
+    {
+      gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
+
+      if (paint_tool->draw_brush)
+        {
+          GimpPaintCore *core     = paint_tool->core;
+          GimpDisplay   *display  = paint_tool->display;
+          GimpDrawable  *drawable = paint_tool->drawable;
+          gint           off_x, off_y;
+          gdouble        x, y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x = core->cur_coords.x + off_x;
+          y = core->cur_coords.y + off_y;
+
+          if (paint_tool->outline)
+            g_object_unref (paint_tool->outline);
+
+          paint_tool->outline =
+            GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (paint_tool,
+                                                                 display, x, y);
+        }
+    }
 }
 
 
@@ -303,6 +338,9 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
+  /*  Update the brush outline  */
+  gimp_paint_tool_paint_update_outline (paint_tool);
+
   gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (display);
 
@@ -383,6 +421,9 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
     gimp_paint_core_cancel (core, drawable);
   else
     gimp_paint_core_finish (core, drawable, TRUE);
+
+  /*  Clear the brush outline  */
+  g_clear_object (&paint_tool->outline);
 
   /*  Exit paint mode  */
   if (gimp_paint_tool_paint_use_thread (paint_tool))

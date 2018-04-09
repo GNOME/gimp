@@ -39,26 +39,28 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpColorTool  parent_instance;
+  GimpColorTool   parent_instance;
 
-  gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
-  gboolean       draw_line;
+  gboolean        pick_colors;  /*  pick color if ctrl is pressed   */
+  gboolean        draw_line;
 
-  gboolean       show_cursor;
-  gboolean       draw_brush;
-  gboolean       draw_fallback;
-  gint           fallback_size;
-  gboolean       draw_circle;
-  gint           circle_size;
+  gboolean        show_cursor;
+  gboolean        draw_brush;
+  gboolean        draw_fallback;
+  gint            fallback_size;
+  gboolean        draw_circle;
+  gint            circle_size;
 
-  const gchar   *status;       /* status message */
-  const gchar   *status_line;  /* status message when drawing a line */
-  const gchar   *status_ctrl;  /* additional message for the ctrl modifier */
+  const gchar    *status;       /* status message */
+  const gchar    *status_line;  /* status message when drawing a line */
+  const gchar    *status_ctrl;  /* additional message for the ctrl modifier */
 
-  GimpPaintCore *core;
+  GimpPaintCore  *core;
 
-  GimpDisplay   *display;
-  GimpDrawable  *drawable;
+  GimpDisplay    *display;
+  GimpDrawable   *drawable;
+
+  GimpCanvasItem *outline;
 };
 
 struct _GimpPaintToolClass
