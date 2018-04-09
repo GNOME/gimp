@@ -1187,7 +1187,7 @@ gimp_stack_trace_print (const gchar *prog_name,
   if (pid == 0)
     {
       /* Child process. */
-      gchar *args[7] = { "gdb", "-batch", "-ex", "thread apply all backtrace",
+      gchar *args[7] = { "gdb", "-batch", "-ex", "thread apply all backtrace full",
                          (gchar *) prog_name, NULL, NULL };
 
       if (prog_name == NULL)
