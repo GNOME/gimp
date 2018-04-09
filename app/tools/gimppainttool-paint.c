@@ -95,8 +95,7 @@ static volatile gboolean  paint_timeout_pending;
 static gboolean
 gimp_paint_tool_paint_use_thread (GimpPaintTool *paint_tool)
 {
-  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->use_paint_thread &&
-      ! paint_tool->draw_line)
+  if (! paint_tool->draw_line)
     {
       if (! paint_thread)
         {

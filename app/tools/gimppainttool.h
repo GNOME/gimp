@@ -69,8 +69,6 @@ struct _GimpPaintToolClass
                                     GimpDisplay   *display,
                                     gdouble        x,
                                     gdouble        y);
-
-  gboolean use_paint_thread;
 };
 
 

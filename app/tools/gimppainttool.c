@@ -133,8 +133,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->oper_update    = gimp_paint_tool_oper_update;
 
   draw_tool_class->draw      = gimp_paint_tool_draw;
-
-  klass->use_paint_thread    = TRUE;
 }
 
 static void
