@@ -19,12 +19,19 @@
 #define __GIMP_PAINT_TOOL_PAINT_H__
 
 
-void   gimp_paint_tool_paint_start       (GimpPaintTool    *tool);
-void   gimp_paint_tool_paint_end         (GimpPaintTool    *tool);
+gboolean   gimp_paint_tool_paint_start  (GimpPaintTool     *tool,
+                                         GimpDisplay       *display,
+                                         const GimpCoords  *coords,
+                                         guint32            time,
+                                         gboolean           constrain,
+                                         GError           **error);
+void       gimp_paint_tool_paint_end    (GimpPaintTool     *tool,
+                                         guint32            time,
+                                         gboolean           cancel);
 
-void   gimp_paint_tool_paint_interpolate (GimpPaintTool    *tool,
-                                          const GimpCoords *coords,
-                                          guint32           time);
+void       gimp_paint_tool_paint_motion (GimpPaintTool    *tool,
+                                         const GimpCoords *coords,
+                                         guint32           time);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_PAINT_H__  */

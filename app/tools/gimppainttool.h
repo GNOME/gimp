@@ -56,6 +56,9 @@ struct _GimpPaintTool
   const gchar   *status_ctrl;  /* additional message for the ctrl modifier */
 
   GimpPaintCore *core;
+
+  GimpDisplay   *display;
+  GimpDrawable  *drawable;
 };
 
 struct _GimpPaintToolClass
