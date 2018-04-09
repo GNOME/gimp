@@ -1088,7 +1088,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
                                                   babl_format ("Y float"),
                                                   GIMP_BOUNDARY_IGNORE_BOUNDS,
                                                   x1, y1, x2, y2,
-                                                  GIMP_BOUNDARY_HALF_WAY_LINEAR,
+                                                  GIMP_BOUNDARY_HALF_WAY,
                                                   &channel->num_segs_out);
           x1 = MAX (x1, x3);
           y1 = MAX (y1, y3);
@@ -1101,7 +1101,7 @@ gimp_channel_real_boundary (GimpChannel         *channel,
                                                      babl_format ("Y float"),
                                                      GIMP_BOUNDARY_WITHIN_BOUNDS,
                                                      x1, y1, x2, y2,
-                                                     GIMP_BOUNDARY_HALF_WAY_LINEAR,
+                                                     GIMP_BOUNDARY_HALF_WAY,
                                                      &channel->num_segs_in);
             }
           else

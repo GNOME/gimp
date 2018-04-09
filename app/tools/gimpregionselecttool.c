@@ -310,7 +310,7 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
                                                  0, 0,
                                                  gegl_buffer_get_width  (region_sel->region_mask),
                                                  gegl_buffer_get_height (region_sel->region_mask),
-                                                 GIMP_BOUNDARY_HALF_WAY_LINEAR,
+                                                 GIMP_BOUNDARY_HALF_WAY,
                                                  &region_sel->n_segs);
 
         }

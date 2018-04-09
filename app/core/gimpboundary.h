@@ -20,8 +20,7 @@
 
 
 /* half intensity for mask */
-#define GIMP_BOUNDARY_HALF_WAY_PERCEPTUAL  0.5
-#define GIMP_BOUNDARY_HALF_WAY_LINEAR      0.214041
+#define GIMP_BOUNDARY_HALF_WAY 0.5
 
 
 typedef enum
