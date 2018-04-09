@@ -325,8 +325,7 @@ gimp_eek (const gchar *reason,
 
   /* Let's just always output on stdout at least so that there is a
    * trace if the rest fails. */
-  g_printerr ("%s: %s: %s\n", gimp_filename_to_utf8 (full_prog_name),
-              reason, message);
+  g_printerr ("%s: %s: %s\n", full_prog_name, reason, message);
 
 #if ! defined (G_OS_WIN32) || defined (HAVE_EXCHNDL)
 
