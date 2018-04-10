@@ -72,7 +72,6 @@
   </provides>
 
   <releases>
-  <!--
     <release version="2.10.0" date="TODO">
       <description>
         <_p>
@@ -91,11 +90,11 @@
             On-canvas effect preview
           </_li>
           <_li>
-            Multi-threaded and hardware-accelerated rendering and
-            processing
+            Multi-threaded and hardware-accelerated rendering,
+            processing and painting
           </_li>
           <_li>
-            New and improved tools
+            Most tools improved, and several new tools
           </_li>
           <_li>
             Many image format support improved, in particular better PSD import
@@ -114,12 +113,14 @@
             Basic HiDPI support
           </_li>
           <_li>
+            New themes for GIMP: Light, Gray, Dark and System
+          </_li>
+          <_li>
             And much, much more…
           </_li>
         </ul>
       </description>
     </release>
-    -->
 
     <release version="2.10.0-rc1" date="2018-03-26" type="development">
       <description>
