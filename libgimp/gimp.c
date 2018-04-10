@@ -2001,6 +2001,7 @@ gimp_fatal_func (const gchar    *log_domain,
    * We want the plug-in to continue its normal crash course, otherwise
    * we won't get the "Plug-in crashed" error in GIMP.
    */
+  exit (EXIT_FAILURE);
 }
 
 #ifdef G_OS_WIN32
@@ -2094,6 +2095,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
    * We want the plug-in to continue its normal crash course, otherwise
    * we won't get the "Plug-in crashed" error in GIMP.
    */
+  exit (EXIT_FAILURE);
 }
 #endif
 
