@@ -634,59 +634,6 @@ gimp_selection_resume (GimpSelection *selection)
   return selection->suspend_count;
 }
 
-void
-gimp_selection_load (GimpSelection *selection,
-                     GimpChannel   *channel)
-{
-  gint width;
-  gint height;
-
-  g_return_if_fail (GIMP_IS_SELECTION (selection));
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  width  = gimp_item_get_width  (GIMP_ITEM (selection));
-  height = gimp_item_get_height (GIMP_ITEM (selection));
-
-  g_return_if_fail (width  == gimp_item_get_width  (GIMP_ITEM (channel)));
-  g_return_if_fail (height == gimp_item_get_height (GIMP_ITEM (channel)));
-
-  gimp_channel_push_undo (GIMP_CHANNEL (selection),
-                          C_("undo-type", "Channel to Selection"));
-
-  /*  copy the channel to the mask  */
-  gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                    NULL,
-                    GEGL_ABYSS_NONE,
-                    gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
-                    NULL);
-
-  GIMP_CHANNEL (selection)->bounds_known = FALSE;
-
-  gimp_drawable_update (GIMP_DRAWABLE (selection), 0, 0, -1, -1);
-}
-
-GimpChannel *
-gimp_selection_save (GimpSelection *selection)
-{
-  GimpImage   *image;
-  GimpChannel *new_channel;
-
-  g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-
-  image = gimp_item_get_image (GIMP_ITEM (selection));
-
-  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
-                                                   GIMP_TYPE_CHANNEL));
-
-  /*  saved selections are not visible by default  */
-  gimp_item_set_visible (GIMP_ITEM (new_channel), FALSE, FALSE);
-
-  gimp_image_add_channel (image, new_channel,
-                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
-  return new_channel;
-}
-
 GeglBuffer *
 gimp_selection_extract (GimpSelection *selection,
                         GimpPickable  *pickable,

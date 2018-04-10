@@ -386,12 +386,20 @@ void
 select_save_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpImage *image;
-  GtkWidget *widget;
+  GimpImage   *image;
+  GimpChannel *channel;
+  GtkWidget   *widget;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  gimp_selection_save (GIMP_SELECTION (gimp_image_get_mask (image)));
+  channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
+                                               GIMP_TYPE_CHANNEL));
+
+  /*  saved selections are not visible by default  */
+  gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+
+  gimp_image_add_channel (image, channel,
+                          GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (image->gimp)),
