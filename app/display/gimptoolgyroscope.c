@@ -711,7 +711,7 @@ gimp_tool_gyroscope_update_status (GimpToolGyroscope *gyroscope,
       status = gimp_suggest_modifiers (_("Click-Drag to pan"),
                                        (((gimp_get_extend_selection_mask () |
                                           GDK_MOD1_MASK)                    *
-                                         private->mode == MODE_NONE)        |
+                                         (private->mode == MODE_NONE))      |
                                         gimp_get_toggle_behavior_mask  ())  &
                                         ~state,
                                        _("%s to rotate"),
