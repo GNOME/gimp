@@ -207,6 +207,7 @@ static GimpCursor gimp_cursor_modifiers[] =
   { "modifier-intersect.png" },
   { "modifier-move.png" },
   { "modifier-resize.png" },
+  { "modifier-rotate.png" },
   { "modifier-control.png" },
   { "modifier-anchor.png" },
   { "modifier-foreground.png" },

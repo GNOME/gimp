@@ -38,6 +38,7 @@ CURSOR_IMAGES = \
 	modifier-pattern.png			\
 	modifier-plus.png			\
 	modifier-resize.png			\
+	modifier-rotate.png			\
 	modifier-select.png			\
 	\
 	tool-airbrush.png			\
