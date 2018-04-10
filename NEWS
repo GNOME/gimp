@@ -30,8 +30,9 @@ Core:
 
 User interface:
 
-  - Lighter and Grey themes remove for now, Dark theme rewritten from
-    scratch to get rid of various usability issues and glitches.
+  - Lighter and Darker themes removed for now, Light and Dark themes
+    rewritten from scratch to get rid of various usability issues and
+    glitches. Only Gray theme from previous set kept as-is.
   - New GimpToolGyroscope on-canvas control, currently used for
     the Panorama Projection filter. The widget provides on-canvas
     interaction for 3D rotation (yaw, pitch, roll).
