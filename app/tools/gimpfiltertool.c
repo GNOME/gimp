@@ -220,13 +220,15 @@ gimp_filter_tool_init (GimpFilterTool *filter_tool)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
 
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask  (tool->control,
-                                     GIMP_DIRTY_IMAGE           |
-                                     GIMP_DIRTY_IMAGE_STRUCTURE |
-                                     GIMP_DIRTY_DRAWABLE        |
-                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_scroll_lock      (tool->control, TRUE);
+  gimp_tool_control_set_preserve         (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask       (tool->control,
+                                          GIMP_DIRTY_IMAGE           |
+                                          GIMP_DIRTY_IMAGE_STRUCTURE |
+                                          GIMP_DIRTY_DRAWABLE        |
+                                          GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_active_modifiers (tool->control,
+                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
 }
 
 static void

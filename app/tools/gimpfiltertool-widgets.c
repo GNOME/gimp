@@ -29,6 +29,7 @@
 #include "core/gimpitem.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimptoolgyroscope.h"
 #include "display/gimptoolline.h"
 #include "display/gimptooltransformgrid.h"
 
@@ -75,6 +76,16 @@ static void   gimp_filter_tool_set_transform_grid     (Controller               
                                                        GeglRectangle              *area,
                                                        const GimpMatrix3          *matrix);
 static void   gimp_filter_tool_transform_grid_changed (GimpToolWidget             *widget,
+                                                       Controller                 *controller);
+
+static void   gimp_filter_tool_set_gyroscope          (Controller                 *controller,
+                                                       GeglRectangle              *area,
+                                                       gdouble                     yaw,
+                                                       gdouble                     pitch,
+                                                       gdouble                     roll,
+                                                       gdouble                     zoom,
+                                                       gboolean                    invert);
+static void   gimp_filter_tool_gyroscope_changed      (GimpToolWidget             *widget,
                                                        Controller                 *controller);
 
 
@@ -177,6 +188,30 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                           controller);
 
         *set_func      = (GCallback) gimp_filter_tool_set_transform_grid;
+        *set_func_data = controller;
+      }
+      break;
+
+    case GIMP_CONTROLLER_TYPE_GYROSCOPE:
+      {
+        GeglRectangle area;
+        gint          off_x, off_y;
+
+        gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+        controller->widget = gimp_tool_gyroscope_new (shell);
+
+        g_object_set (controller->widget,
+                      "speed",   1.0 / MAX (area.width, area.height),
+                      "pivot-x", off_x + area.x + area.width  / 2.0,
+                      "pivot-y", off_y + area.y + area.height / 2.0,
+                      NULL);
+
+        g_signal_connect (controller->widget, "changed",
+                          G_CALLBACK (gimp_filter_tool_gyroscope_changed),
+                          controller);
+
+        *set_func      = (GCallback) gimp_filter_tool_set_gyroscope;
         *set_func_data = controller;
       }
       break;
@@ -479,4 +514,60 @@ gimp_filter_tool_transform_grid_changed (GimpToolWidget *widget,
                            &area, &matrix);
 
   g_free (transform);
+}
+
+static void
+gimp_filter_tool_set_gyroscope (Controller    *controller,
+                                GeglRectangle *area,
+                                gdouble        yaw,
+                                gdouble        pitch,
+                                gdouble        roll,
+                                gdouble        zoom,
+                                gboolean       invert)
+{
+  g_signal_handlers_block_by_func (controller->widget,
+                                   gimp_filter_tool_gyroscope_changed,
+                                   controller);
+
+  g_object_set (controller->widget,
+                "yaw",    yaw,
+                "pitch",  pitch,
+                "roll",   roll,
+                "zoom",   zoom,
+                "invert", invert,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (controller->widget,
+                                     gimp_filter_tool_gyroscope_changed,
+                                     controller);
+}
+
+static void   gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
+                                                  Controller     *controller)
+{
+  GimpFilterTool                  *filter_tool = controller->filter_tool;
+  GimpControllerGyroscopeCallback  gyroscope_callback;
+  gint                             off_x, off_y;
+  GeglRectangle                    area;
+  gdouble                          yaw;
+  gdouble                          pitch;
+  gdouble                          roll;
+  gdouble                          zoom;
+  gboolean                         invert;
+
+  gyroscope_callback =
+    (GimpControllerGyroscopeCallback) controller->creator_callback;
+
+  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+  g_object_get (widget,
+                "yaw",    &yaw,
+                "pitch",  &pitch,
+                "roll",   &roll,
+                "zoom",   &zoom,
+                "invert", &invert,
+                NULL);
+
+  gyroscope_callback (controller->creator_data,
+                      &area, yaw, pitch, roll, zoom, invert);
 }
