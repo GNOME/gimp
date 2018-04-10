@@ -38,6 +38,7 @@
 #include <glib/gprintf.h>
 
 #if defined(G_OS_WIN32)
+
 /* This is a hack for Windows known directory support.
  * DATADIR (autotools-generated constant) is a type defined in objidl.h
  * so we must #undef it before including shlobj.h in order to avoid a
@@ -45,15 +46,22 @@
 #undef DATADIR
 #include <windows.h>
 #include <shlobj.h>
+
 #else /* G_OS_WIN32 */
+
 /* For waitpid() */
 #include <sys/wait.h>
 #include <unistd.h>
 #include <errno.h>
 
+/* For thread IDs. */
+#include <sys/types.h>
+#include <sys/syscall.h>
+
 #ifdef HAVE_SYS_PRCTL_H
 #include <sys/prctl.h>
 #endif
+
 #endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
@@ -1152,9 +1160,9 @@ gimp_stack_trace_available (gboolean optimal)
  * Since: 2.10
  **/
 gboolean
-gimp_stack_trace_print (const gchar *prog_name,
-                        gpointer     stream,
-                        gchar      **trace)
+gimp_stack_trace_print (const gchar   *prog_name,
+                        gpointer      stream,
+                        gchar       **trace)
 {
   gboolean stack_printed = FALSE;
 
@@ -1162,13 +1170,19 @@ gimp_stack_trace_print (const gchar *prog_name,
 #ifndef G_OS_WIN32
   GString *gtrace = NULL;
   gchar    gimp_pid[16];
-  pid_t    pid;
   gchar    buffer[256];
   ssize_t  read_n;
   int      sync_fd[2];
   int      out_fd[2];
+  pid_t    fork_pid;
+  pid_t    pid = getpid();
+#if defined(G_OS_WIN32)
+  DWORD    tid = GetCurrentThreadId ();
+#else
+  long     tid = syscall (SYS_gettid);
+#endif
 
-  g_snprintf (gimp_pid, 16, "%u", (guint) getpid ());
+  g_snprintf (gimp_pid, 16, "%u", (guint) pid);
 
   if (pipe (sync_fd) == -1)
     {
@@ -1183,17 +1197,19 @@ gimp_stack_trace_print (const gchar *prog_name,
       return FALSE;
     }
 
-  pid = fork ();
-  if (pid == 0)
+  fork_pid = fork ();
+  if (fork_pid == 0)
     {
       /* Child process. */
-      gchar *args[7] = { "gdb", "-batch", "-ex", "thread apply all backtrace full",
+      gchar *args[9] = { "gdb", "-batch",
+                         "-ex", "info threads",
+                         "-ex", "thread apply all backtrace full",
                          (gchar *) prog_name, NULL, NULL };
 
       if (prog_name == NULL)
-        args[4] = "-p";
+        args[6] = "-p";
 
-      args[5] = gimp_pid;
+      args[7] = gimp_pid;
 
       /* Wait until the parent enabled us to ptrace it. */
       {
@@ -1220,8 +1236,10 @@ gimp_stack_trace_print (const gchar *prog_name,
         {
           /* LLDB as alternative if the GDB call failed or if it was in
            * a too-old version. */
-          gchar *args_lldb[11] = { "lldb", "--attach-pid", NULL, "--batch",
-                                   "--one-line", "bt",
+          gchar *args_lldb[15] = { "lldb", "--attach-pid", NULL, "--batch",
+                                   "--one-line", "thread list",
+                                   "--one-line", "thread backtrace all",
+                                   "--one-line", "bt all",
                                    "--one-line-on-crash", "bt",
                                    "--one-line-on-crash", "quit", NULL };
 
@@ -1232,7 +1250,7 @@ gimp_stack_trace_print (const gchar *prog_name,
 
       _exit (0);
     }
-  else if (pid > 0)
+  else if (fork_pid > 0)
     {
       /* Main process */
       int status;
@@ -1240,7 +1258,7 @@ gimp_stack_trace_print (const gchar *prog_name,
       /* Allow the child to ptrace us, and signal it to start. */
       close (sync_fd[0]);
 #ifdef PR_SET_PTRACER
-      prctl (PR_SET_PTRACER, pid, 0, 0, 0);
+      prctl (PR_SET_PTRACER, fork_pid, 0, 0, 0);
 #endif
       close (sync_fd[1]);
 
@@ -1252,6 +1270,20 @@ gimp_stack_trace_print (const gchar *prog_name,
 
       while ((read_n = read (out_fd[0], buffer, 256)) > 0)
         {
+          if (! stack_printed)
+            {
+              if (stream)
+                g_fprintf (stream,
+                           "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
+                           pid, tid);
+              if (trace)
+                {
+                  gtrace = g_string_new (NULL);
+                  g_string_printf (gtrace,
+                                   "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
+                                   pid, tid);
+                }
+            }
           /* It's hard to know if the debugger was found since it
            * happened in the child. Let's just assume that any output
            * means it succeeded.
@@ -1262,11 +1294,7 @@ gimp_stack_trace_print (const gchar *prog_name,
           if (stream)
             g_fprintf (stream, "%s", buffer);
           if (trace)
-            {
-              if (! gtrace)
-                gtrace = g_string_new (NULL);
-              g_string_append (gtrace, (const gchar *) buffer);
-            }
+            g_string_append (gtrace, (const gchar *) buffer);
         }
       close (out_fd[0]);
 
@@ -1275,9 +1303,9 @@ gimp_stack_trace_print (const gchar *prog_name,
       prctl (PR_SET_PTRACER, 0, 0, 0, 0);
 #endif
 
-      waitpid (pid, &status, 0);
+      waitpid (fork_pid, &status, 0);
     }
-  /* else if (pid == (pid_t) -1)
+  /* else if (fork_pid == (pid_t) -1)
    * Fork failed!
    * Just continue, maybe the backtrace() API will succeed.
    */
