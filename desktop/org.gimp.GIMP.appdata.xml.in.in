@@ -84,36 +84,39 @@
             High bit depth color processing (16/32-bit per color channel)
           </_li>
           <_li>
-            Core color management
+	    Color management is a core feature now, most widgets
+	    and preview areas are color-managed
           </_li>
           <_li>
-            On-canvas effect preview
+	    On-canvas effect preview, with split view for before/after
+	    processing pixels
           </_li>
           <_li>
             Multi-threaded and hardware-accelerated rendering,
             processing and painting
           </_li>
           <_li>
-            Most tools improved, and several new tools
+            Most tools improved, several new transformation tools
           </_li>
           <_li>
-            Many image format support improved, in particular better PSD import
+	    Improved support for many image formats, in particular better
+	    PSD importing
           </_li>
           <_li>
-            Newly supported image formats: OpenEXR, WebP, HGT, RGBE…
+            Newly supported image formats: OpenEXR, RGBE, WebP, HGT…
           </_li>
           <_li>
             Improved digital painting: canvas rotation and
             flipping, symmetry painting, MyPaint brushes…
           </_li>
           <_li>
-            Metadata viewing and editing
+	    Metadata viewing and editing for Exif, XMP, IPTC, and DICOM
           </_li>
           <_li>
-            Basic HiDPI support
+            Basic HiDPI support: automatically or user-selected icon size
           </_li>
           <_li>
-            New themes for GIMP: Light, Gray, Dark and System
+            New themes for GIMP: Light, Gray, Dark, and System
           </_li>
           <_li>
             And much, much more…
