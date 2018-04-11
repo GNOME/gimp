@@ -257,7 +257,7 @@ gimp_plug_in_manager_exit (GimpPlugInManager *manager)
   while (manager->open_plug_ins)
     gimp_plug_in_close (manager->open_plug_ins->data, TRUE);
 
-  /*  need to deatch from shared memory, we can't rely on exit()
+  /*  need to detach from shared memory, we can't rely on exit()
    *  cleaning up behind us (see bug #609026)
    */
   if (manager->shm)

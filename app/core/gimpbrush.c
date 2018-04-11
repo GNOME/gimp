@@ -631,7 +631,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
        * This is intentional. Confoliving for each stamp is too expensive.*/
       if (! brush->priv->blured_mask &&
           ! GIMP_IS_BRUSH_GENERATED(brush) &&
-          ! GIMP_IS_BRUSH_PIPE(brush) && /*Cant cache pipes. Sanely anway*/
+          ! GIMP_IS_BRUSH_PIPE(brush) && /*Can't cache pipes. Sanely anyway*/
           hardness < 1.0)
         {
            brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
@@ -724,7 +724,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
 #if 0
      if (! brush->priv->blured_pixmap &&
          ! GIMP_IS_BRUSH_GENERATED(brush) &&
-         ! GIMP_IS_BRUSH_PIPE(brush) /*Cant cache pipes. Sanely anway*/
+         ! GIMP_IS_BRUSH_PIPE(brush) /*Can't cache pipes. Sanely anyway*/
          && hardness < 1.0)
       {
          brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,

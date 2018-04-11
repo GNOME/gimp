@@ -1,9 +1,14 @@
 ## Makefile.am for gimp/desktop
 
-desktop_in_files = gimp.desktop.in.in
+desktop_in_files = \
+	gimp.desktop.in.in
+
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
-appstream_in_files = org.gimp.GIMP.appdata.xml.in gimp-data-extras.metainfo.xml.in
+appstream_in_files = \
+	org.gimp.GIMP.appdata.xml.in	\
+	gimp-data-extras.metainfo.xml.in
+
 appstream_files = $(appstream_in_files:.xml.in=.xml)
 
 if DESKTOP_DATADIR
@@ -11,7 +16,7 @@ if DESKTOP_DATADIR
 applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
-appdatadir = $(DESKTOP_DATADIR)/appdata
+appdatadir = $(DESKTOP_DATADIR)/metainfo
 appdata_DATA = $(appstream_files)
 
 icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps

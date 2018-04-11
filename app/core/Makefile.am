@@ -2,6 +2,8 @@
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 endif
 
 AM_CPPFLAGS = \
@@ -18,8 +20,16 @@ AM_CPPFLAGS = \
 	$(GDK_PIXBUF_CFLAGS)				\
 	$(LIBMYPAINT_CFLAGS)				\
 	$(GEXIV2_CFLAGS)				\
-	-I$(includedir)					\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 noinst_LIBRARIES = libappcore.a
 
@@ -52,6 +62,8 @@ libappcore_a_sources = \
 	gimp-modules.h				\
 	gimp-palettes.c				\
 	gimp-palettes.h				\
+	gimp-parallel.cc			\
+	gimp-parallel.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
 	gimp-spawn.c				\
@@ -82,7 +94,7 @@ libappcore_a_sources = \
 	gimpbrush-load.c			\
 	gimpbrush-load.h			\
 	gimpbrush-private.h			\
-	gimpbrush-transform.c			\
+	gimpbrush-transform.cc			\
 	gimpbrush-transform.h			\
 	gimpbrushcache.c			\
 	gimpbrushcache.h			\

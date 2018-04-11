@@ -335,7 +335,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
             if ((image_undo->base_type            == GIMP_GRAY) ||
                 (gimp_image_get_base_type (image) == GIMP_GRAY))
               {
-                /* in case ther was no profile undo, we need to emit
+                /* in case there was no profile undo, we need to emit
                  * profile-changed anyway
                  */
                 gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));

@@ -15,6 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __GIMP_PAINT_CORE_LOOPS_H__
+#define __GIMP_PAINT_CORE_LOOPS_H__
+
+
 void combine_paint_mask_to_canvas_mask  (const GimpTempBuf *paint_mask,
                                          gint               mask_x_offset,
                                          gint               mask_y_offset,
@@ -52,3 +56,6 @@ void mask_components_onto               (GeglBuffer        *src_buffer,
                                          GeglRectangle     *roi,
                                          GimpComponentMask  mask,
                                          gboolean           linear_mode);
+
+
+#endif /* __GIMP_PAINT_CORE_LOOPS_H__ */

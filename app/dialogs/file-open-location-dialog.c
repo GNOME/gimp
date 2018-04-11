@@ -149,10 +149,10 @@ file_open_location_response (GtkDialog *dialog,
   GtkWidget   *box;
   const gchar *text = NULL;
 
+  box = g_object_get_data (G_OBJECT (dialog), "progress-box");
+
   if (response_id != GTK_RESPONSE_OK)
     {
-      box = g_object_get_data (G_OBJECT (dialog), "progress-box");
-
       if (box && GIMP_PROGRESS_BOX (box)->active)
         gimp_progress_cancel (GIMP_PROGRESS (box));
       else
@@ -162,10 +162,6 @@ file_open_location_response (GtkDialog *dialog,
     }
 
   entry = g_object_get_data (G_OBJECT (dialog), "location-entry");
-
-  gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
-  gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
-
   text = gtk_entry_get_text (GTK_ENTRY (entry));
 
   if (text && strlen (text))
@@ -188,18 +184,24 @@ file_open_location_response (GtkDialog *dialog,
           file = file_utils_filename_to_file (gimp, text, &error);
         }
 
-      box = gimp_progress_box_new ();
-      gtk_container_set_border_width (GTK_CONTAINER (box), 12);
-      gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                        box, FALSE, FALSE, 0);
+      if (!box)
+        {
+          box = gimp_progress_box_new ();
+          gtk_container_set_border_width (GTK_CONTAINER (box), 12);
+          gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                            box, FALSE, FALSE, 0);
 
-      g_object_set_data (G_OBJECT (dialog), "progress-box", box);
+          g_object_set_data (G_OBJECT (dialog), "progress-box", box);
+        }
 
       if (file)
         {
           GFile *entered_file = g_file_new_for_uri (text);
 
           gtk_widget_show (box);
+
+          gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, FALSE);
 
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
@@ -209,6 +211,9 @@ file_open_location_response (GtkDialog *dialog,
                                                    G_OBJECT (gtk_widget_get_screen (entry)),
                                                    gimp_widget_get_monitor (entry),
                                                    &status, &error);
+
+          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
+          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
 
           g_object_unref (entered_file);
 
@@ -221,6 +226,12 @@ file_open_location_response (GtkDialog *dialog,
             }
 
           g_object_unref (file);
+
+          if (image != NULL)
+            {
+              gtk_widget_destroy (GTK_WIDGET (dialog));
+              return;
+            }
         }
       else
         {
@@ -228,15 +239,8 @@ file_open_location_response (GtkDialog *dialog,
                         _("Opening '%s' failed:\n\n%s"),
                         text, error->message);
           g_clear_error (&error);
-
-          gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);
-          gtk_editable_set_editable (GTK_EDITABLE (entry), TRUE);
-
-          return;
         }
     }
-
-  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static gboolean

@@ -260,6 +260,7 @@ app/display/gimpdisplayshell-utils.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
+app/display/gimptoolgyroscope.c
 app/display/gimptoolhandlegrid.c
 app/display/gimptoolline.c
 app/display/gimptoolpath.c
@@ -384,6 +385,7 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-panorama-projection.c
 app/propgui/gimppropgui-recursive-transform.c
 app/propgui/gimppropgui-shadows-highlights.c
 app/propgui/gimppropgui-spiral.c

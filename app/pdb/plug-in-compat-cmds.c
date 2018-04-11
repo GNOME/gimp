@@ -7904,7 +7904,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("blend-power",
                                                     "blend power",
-                                                    "Power used to strech the blend",
+                                                    "Power used to stretch the blend",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

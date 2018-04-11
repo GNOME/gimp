@@ -54,6 +54,7 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-panorama-projection.h"
 #include "gimppropgui-recursive-transform.h"
 #include "gimppropgui-shadows-highlights.h"
 #include "gimppropgui-spiral.h"
@@ -451,6 +452,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-panorama-projection-config",
+    _gimp_prop_gui_new_panorama_projection },
   { "GimpGegl-gegl-recursive-transform-config",
     _gimp_prop_gui_new_recursive_transform },
   { "GimpGegl-gegl-shadows-highlights-config",

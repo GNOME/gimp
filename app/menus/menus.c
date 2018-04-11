@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpactionfactory.h"
+#include "widgets/gimpdashboard.h"
 #include "widgets/gimpmenufactory.h"
 
 #include "dockable-menu.h"
@@ -392,8 +393,7 @@ menus_init (Gimp              *gimp,
                                       "dashboard",
                                       NULL,
                                       "/dashboard-popup",
-                                      "dashboard-menu.xml",
-                                       NULL,
+                                      "dashboard-menu.xml", gimp_dashboard_menu_setup,
                                        NULL);
 }
 

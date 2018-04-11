@@ -25,6 +25,8 @@ libapppaint_a_sources = \
 	gimpairbrushoptions.h		\
 	gimpbrushcore.c			\
 	gimpbrushcore.h			\
+	gimpbrushcore-loops.cc		\
+	gimpbrushcore-loops.h		\
 	gimpbrushcore-kernels.h		\
 	gimpclone.c			\
 	gimpclone.h			\
@@ -60,7 +62,7 @@ libapppaint_a_sources = \
 	gimpmybrushsurface.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
-	gimppaintcore-loops.c		\
+	gimppaintcore-loops.cc		\
 	gimppaintcore-loops.h		\
 	gimppaintcore-stroke.c		\
 	gimppaintcore-stroke.h		\

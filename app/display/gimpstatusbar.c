@@ -46,17 +46,20 @@
 #include "gimp-intl.h"
 
 
-/*  maximal width of the string holding the cursor-coordinates  */
-#define CURSOR_LEN        256
+/*  maximal width of the string holding the cursor-coordinates   */
+#define CURSOR_LEN                      256
 
-/*  the spacing of the hbox                                     */
-#define HBOX_SPACING        1
+/*  the spacing of the hbox                                      */
+#define HBOX_SPACING                      1
 
-/*  spacing between the icon and the statusbar label            */
-#define ICON_SPACING        2
+/*  spacing between the icon and the statusbar label             */
+#define ICON_SPACING                      2
 
-/*  timeout (in milliseconds) for temporary statusbar messages  */
-#define MESSAGE_TIMEOUT  8000
+/*  timeout (in milliseconds) for temporary statusbar messages   */
+#define MESSAGE_TIMEOUT                8000
+
+/*  minimal interval (in microseconds) between progress updates  */
+#define MIN_PROGRESS_UPDATE_INTERVAL  50000
 
 
 typedef struct _GimpStatusbarMsg GimpStatusbarMsg;
@@ -442,8 +445,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
       GtkWidget     *bar = statusbar->progressbar;
       GtkAllocation  allocation;
 
-      statusbar->progress_active = TRUE;
-      statusbar->progress_value  = 0.0;
+      statusbar->progress_active           = TRUE;
+      statusbar->progress_value            = 0.0;
+      statusbar->progress_last_update_time = g_get_monotonic_time ();
 
       gimp_statusbar_push (statusbar, "progress", NULL, "%s", message);
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
@@ -557,21 +561,32 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
 
   if (statusbar->progress_active)
     {
-      GtkWidget     *bar = statusbar->progressbar;
-      GtkAllocation  allocation;
+      guint64 time = g_get_monotonic_time ();
 
-      gtk_widget_get_allocation (bar, &allocation);
-
-      statusbar->progress_value = percentage;
-
-      /* only update the progress bar if this causes a visible change */
-      if (fabs (allocation.width *
-                (percentage -
-                 gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)))) > 1.0)
+      if (time - statusbar->progress_last_update_time >=
+          MIN_PROGRESS_UPDATE_INTERVAL)
         {
-          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), percentage);
+          GtkWidget     *bar = statusbar->progressbar;
+          GtkAllocation  allocation;
+          gdouble        diff;
 
-          gimp_widget_flush_expose (bar);
+          gtk_widget_get_allocation (bar, &allocation);
+
+          statusbar->progress_value = percentage;
+
+          diff = fabs (percentage -
+                       gtk_progress_bar_get_fraction (GTK_PROGRESS_BAR (bar)));
+
+          /* only update the progress bar if this causes a visible change */
+          if (allocation.width * diff >= 1.0)
+            {
+              statusbar->progress_last_update_time = time;
+
+              gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar),
+                                             percentage);
+
+              gimp_widget_flush_expose (bar);
+            }
         }
     }
 }
@@ -594,11 +609,19 @@ gimp_statusbar_progress_pulse (GimpProgress *progress)
 
   if (statusbar->progress_active)
     {
-      GtkWidget *bar = statusbar->progressbar;
+      guint64 time = g_get_monotonic_time ();
 
-      gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
+      if (time - statusbar->progress_last_update_time >=
+          MIN_PROGRESS_UPDATE_INTERVAL)
+        {
+          GtkWidget *bar = statusbar->progressbar;
 
-      gimp_widget_flush_expose (bar);
+          statusbar->progress_last_update_time = time;
+
+          gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
+
+          gimp_widget_flush_expose (bar);
+        }
     }
 }
 

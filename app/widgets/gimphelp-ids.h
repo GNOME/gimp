@@ -665,6 +665,7 @@
 #define GIMP_HELP_SAMPLE_POINT_SAMPLE_MERGED      "gimp-sample-point-sample-merged"
 
 #define GIMP_HELP_DASHBOARD_DIALOG                "gimp-dashboard-dialog"
+#define GIMP_HELP_DASHBOARD_GROUPS                "gimp-dashboard-groups"
 #define GIMP_HELP_DASHBOARD_UPDATE_INTERVAL       "gimp-dashboard-update-interval"
 #define GIMP_HELP_DASHBOARD_HISTORY_DURATION      "gimp-dashboard-history-duration"
 #define GIMP_HELP_DASHBOARD_RESET                 "gimp-dashboard-reset"

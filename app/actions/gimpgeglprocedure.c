@@ -30,6 +30,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "operations/gimp-operation-config.h"
 
 #include "core/gimp.h"
@@ -119,12 +121,11 @@ gimp_gegl_procedure_finalize (GObject *object)
 {
   GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (object);
 
-  if (proc->default_settings)
-    g_object_unref (proc->default_settings);
+  g_clear_object (&proc->default_settings);
 
-  g_free (proc->menu_label);
-  g_free (proc->label);
-  g_free (proc->help_id);
+  g_clear_pointer (&proc->menu_label, g_free);
+  g_clear_pointer (&proc->label,      g_free);
+  g_clear_pointer (&proc->help_id,    g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -277,7 +278,9 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   run_mode = g_value_get_int    (gimp_value_array_index (args, 0));
   settings = g_value_get_object (gimp_value_array_index (args, 3));
 
-  if (! settings)
+  if (! settings &&
+      (run_mode != GIMP_RUN_INTERACTIVE ||
+       GIMP_GUI_CONFIG (gimp->config)->filter_tool_use_last_settings))
     {
       /*  if we didn't get settings passed, get the last used settings  */
 

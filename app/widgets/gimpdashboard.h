@@ -68,5 +68,8 @@ void                           gimp_dashboard_set_low_swap_space_warning (GimpDa
                                                                           gboolean                      low_swap_space_warning);
 gboolean                       gimp_dashboard_get_low_swap_space_warning (GimpDashboard                *dashboard);
 
+void                           gimp_dashboard_menu_setup                 (GimpUIManager                *manager,
+                                                                          const gchar                  *ui_path);
+
 
 #endif  /*  __GIMP_DASHBOARD_H__  */

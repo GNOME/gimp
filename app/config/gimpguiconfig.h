@@ -24,7 +24,7 @@
 #include "config/gimpdisplayconfig.h"
 
 
-#define GIMP_CONFIG_DEFAULT_THEME          "03-Dark"
+#define GIMP_CONFIG_DEFAULT_THEME          "Dark"
 #define GIMP_CONFIG_DEFAULT_ICON_THEME     "Symbolic"
 
 
@@ -43,6 +43,7 @@ struct _GimpGuiConfig
 
   gboolean             move_tool_changes_active;
   gint                 filter_tool_max_recent;
+  gboolean             filter_tool_use_last_settings;
   gboolean             filter_tool_show_color_options;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;

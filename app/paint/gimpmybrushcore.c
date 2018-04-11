@@ -212,6 +212,7 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       gimp_context_get_foreground (context, &fg);
       gimp_palettes_add_color_history (context->gimp, &fg);
+      gimp_symmetry_set_stateful (sym, TRUE);
 
       mybrush->private->surface =
         gimp_mypaint_surface_new (gimp_drawable_get_buffer (drawable),
@@ -233,6 +234,7 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
+      gimp_symmetry_set_stateful (sym, FALSE);
       mypaint_surface_unref ((MyPaintSurface *) mybrush->private->surface);
       mybrush->private->surface = NULL;
 

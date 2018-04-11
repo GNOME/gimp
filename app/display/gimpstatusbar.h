@@ -68,6 +68,7 @@ struct _GimpStatusbar
   gboolean             progress_active;
   gboolean             progress_shown;
   gdouble              progress_value;
+  guint64              progress_last_update_time;
 };
 
 struct _GimpStatusbarClass

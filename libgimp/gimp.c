@@ -54,12 +54,13 @@
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"
 
+#else
+
 #ifdef HAVE_EXCHNDL
 #include <time.h>
 #include <exchndl.h>
 #endif
 
-#else
 #include <signal.h>
 #endif
 
@@ -93,8 +94,16 @@
 #endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
+#  ifdef STRICT
+#  undef STRICT
+#  endif
 #  define STRICT
+
+#  ifdef _WIN32_WINNT
+#  undef _WIN32_WINNT
+#  endif
 #  define _WIN32_WINNT 0x0601
+
 #  include <windows.h>
 #  include <tlhelp32.h>
 #  undef RGB
@@ -154,7 +163,15 @@ static void       gimp_message_func            (const gchar    *log_domain,
                                                 GLogLevelFlags  log_level,
                                                 const gchar    *message,
                                                 gpointer        data);
-#ifndef G_OS_WIN32
+static void       gimp_fatal_func              (const gchar    *log_domain,
+                                                GLogLevelFlags  flags,
+                                                const gchar    *message,
+                                                gpointer        data);
+#ifdef G_OS_WIN32
+#ifdef HAVE_EXCHNDL
+static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+#endif
+#else
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
 #endif
 static gboolean   gimp_plugin_io_error_handler (GIOChannel      *channel,
@@ -180,8 +197,13 @@ static void       gimp_set_pdb_error           (const GimpParam *return_vals,
                                                 gint             n_return_vals);
 
 
-static GIOChannel *_readchannel  = NULL;
-GIOChannel *_writechannel = NULL;
+#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
+static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
+static gchar                         *plug_in_backtrace_path = NULL;
+#endif
+
+static GIOChannel                   *_readchannel            = NULL;
+GIOChannel                          *_writechannel           = NULL;
 
 #ifdef USE_WIN32_SHM
 static HANDLE shm_handle;
@@ -277,8 +299,8 @@ gimp_main (const GimpPlugInInfo *info,
     typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
-    p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-                                         "SetDllDirectoryA");
+    p_SetDllDirectoryA = (t_SetDllDirectoryA) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+                                                              "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
@@ -319,10 +341,9 @@ gimp_main (const GimpPlugInInfo *info,
 #ifdef HAVE_EXCHNDL
   /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
   {
-    time_t t;
-    gchar *filename;
-    gchar *dir;
-    gchar *path;
+    time_t  t;
+    gchar  *filename;
+    gchar  *dir;
 
     /* This has to be the non-roaming directory (i.e., the local
        directory) as backtraces correspond to the binaries on this
@@ -336,14 +357,18 @@ gimp_main (const GimpPlugInInfo *info,
     time (&t);
     filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
                                 g_get_prgname(), t);
-    path = g_build_filename (dir, filename, NULL);
+    plug_in_backtrace_path = g_build_filename (dir, filename, NULL);
     g_free (filename);
     g_free (dir);
 
-    ExcHndlInit ();
-    ExcHndlSetLogFileNameA (path);
+    /* Similar to core crash handling in app/signals.c, the order here
+     * is very important!
+     */
+    if (! _prevExceptionFilter)
+      _prevExceptionFilter = SetUnhandledExceptionFilter (gimp_plugin_sigfatal_handler);
 
-    g_free (path);
+    ExcHndlInit ();
+    ExcHndlSetLogFileNameA (plug_in_backtrace_path);
   }
 #endif
 
@@ -364,8 +389,8 @@ gimp_main (const GimpPlugInInfo *info,
     typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
     t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
 
-    p_SetCurrentProcessExplicitAppUserModelID = GetProcAddress (GetModuleHandle ("shell32.dll"),
-                                                                "SetCurrentProcessExplicitAppUserModelID");
+    p_SetCurrentProcessExplicitAppUserModelID = (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
+                                                                                                            "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
   }
@@ -486,9 +511,11 @@ gimp_main (const GimpPlugInInfo *info,
   gimp_signal_private (SIGHUP,  gimp_plugin_sigfatal_handler, 0);
   gimp_signal_private (SIGINT,  gimp_plugin_sigfatal_handler, 0);
   gimp_signal_private (SIGQUIT, gimp_plugin_sigfatal_handler, 0);
+  gimp_signal_private (SIGTERM, gimp_plugin_sigfatal_handler, 0);
+
+  gimp_signal_private (SIGABRT, gimp_plugin_sigfatal_handler, 0);
   gimp_signal_private (SIGBUS,  gimp_plugin_sigfatal_handler, 0);
   gimp_signal_private (SIGSEGV, gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGTERM, gimp_plugin_sigfatal_handler, 0);
   gimp_signal_private (SIGFPE,  gimp_plugin_sigfatal_handler, 0);
 
   /* Ignore SIGPIPE from crashing Gimp */
@@ -587,6 +614,17 @@ gimp_main (const GimpPlugInInfo *info,
       fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
       fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
       g_log_set_always_fatal (fatal_mask);
+
+      g_log_set_handler (NULL,
+                         G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL |
+                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                         gimp_fatal_func, NULL);
+    }
+  else
+    {
+      g_log_set_handler (NULL,
+                         G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+                         gimp_fatal_func, NULL);
     }
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
@@ -645,6 +683,11 @@ void
 gimp_quit (void)
 {
   gimp_close ();
+
+#if defined G_OS_WIN32 && defined HAVE_EXCHNDL
+  if (plug_in_backtrace_path)
+    g_free (plug_in_backtrace_path);
+#endif
 
   exit (EXIT_SUCCESS);
 }
@@ -1852,8 +1895,9 @@ gimp_debug_stop (void)
   THREADENTRY32 te32        = { 0 };
   pid_t         opid        = getpid ();
 
-  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging (restart externally): %d",
-         opid);
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
+         "Debugging (restart externally): %ld",
+         (long int) opid);
 
   hThreadSnap = CreateToolhelp32Snapshot (TH32CS_SNAPTHREAD, 0);
   if (hThreadSnap == INVALID_HANDLE_VALUE)
@@ -1898,7 +1942,108 @@ gimp_message_func (const gchar    *log_domain,
   gimp_message (message);
 }
 
+static void
+gimp_fatal_func (const gchar    *log_domain,
+                 GLogLevelFlags  flags,
+                 const gchar    *message,
+                 gpointer        data)
+{
+  const gchar *level;
+
+  switch (flags & G_LOG_LEVEL_MASK)
+    {
+    case G_LOG_LEVEL_WARNING:
+      level = "WARNING";
+      break;
+    case G_LOG_LEVEL_CRITICAL:
+      level = "CRITICAL";
+      break;
+    case G_LOG_LEVEL_ERROR:
+      level = "ERROR";
+      break;
+    default:
+      level = "FATAL";
+      break;
+    }
+
+  g_printerr ("%s: %s: %s\n",
+              progname, level, message);
+
 #ifndef G_OS_WIN32
+  switch (stack_trace_mode)
+    {
+    case GIMP_STACK_TRACE_NEVER:
+      break;
+
+    case GIMP_STACK_TRACE_QUERY:
+        {
+          sigset_t sigset;
+
+          sigemptyset (&sigset);
+          sigprocmask (SIG_SETMASK, &sigset, NULL);
+          gimp_stack_trace_query (progname);
+        }
+      break;
+
+    case GIMP_STACK_TRACE_ALWAYS:
+        {
+          sigset_t sigset;
+
+          sigemptyset (&sigset);
+          sigprocmask (SIG_SETMASK, &sigset, NULL);
+          gimp_stack_trace_print (progname, stdout, NULL);
+        }
+      break;
+    }
+#endif
+
+  /* Do not end with gimp_quit().
+   * We want the plug-in to continue its normal crash course, otherwise
+   * we won't get the "Plug-in crashed" error in GIMP.
+   */
+  exit (EXIT_FAILURE);
+}
+
+#ifdef G_OS_WIN32
+
+#ifdef HAVE_EXCHNDL
+static LONG WINAPI
+gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
+{
+  g_printerr ("%s: fatal error\n", progname);
+
+  SetUnhandledExceptionFilter (_prevExceptionFilter);
+
+  /* For simplicity, do not make a difference between QUERY and ALWAYS
+   * on Windows (at least not for now).
+   */
+  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER &&
+      g_file_test (plug_in_backtrace_path, G_FILE_TEST_IS_REGULAR))
+    {
+      FILE   *stream;
+      guchar  buffer[256];
+      size_t  read_len;
+
+      stream = fopen (plug_in_backtrace_path, "r");
+      do
+        {
+          /* Just read and output directly the file content. */
+          read_len = fread (buffer, 1, sizeof (buffer) - 1, stream);
+          buffer[read_len] = '\0';
+          g_printerr ("%s", buffer);
+        }
+      while (read_len);
+      fclose (stream);
+    }
+
+  if (_prevExceptionFilter && _prevExceptionFilter != gimp_plugin_sigfatal_handler)
+    return _prevExceptionFilter (pExceptionInfo);
+  else
+    return EXCEPTION_CONTINUE_SEARCH;
+}
+#endif
+
+#else
 static void
 gimp_plugin_sigfatal_handler (gint sig_num)
 {
@@ -1907,11 +2052,11 @@ gimp_plugin_sigfatal_handler (gint sig_num)
     case SIGHUP:
     case SIGINT:
     case SIGQUIT:
-    case SIGABRT:
     case SIGTERM:
       g_printerr ("%s terminated: %s\n", progname, g_strsignal (sig_num));
       break;
 
+    case SIGABRT:
     case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
@@ -1946,7 +2091,11 @@ gimp_plugin_sigfatal_handler (gint sig_num)
       break;
     }
 
-  gimp_quit ();
+  /* Do not end with gimp_quit().
+   * We want the plug-in to continue its normal crash course, otherwise
+   * we won't get the "Plug-in crashed" error in GIMP.
+   */
+  exit (EXIT_FAILURE);
 }
 #endif
 
@@ -2191,13 +2340,13 @@ gimp_config (GPConfig *config)
           /* Verify that we mapped our view */
           if (!_shm_addr)
             {
-              g_error ("MapViewOfFile error: %d... " ERRMSG_SHM_FAILED,
+              g_error ("MapViewOfFile error: %lu... " ERRMSG_SHM_FAILED,
                        GetLastError ());
             }
         }
       else
         {
-          g_error ("OpenFileMapping error: %d... " ERRMSG_SHM_FAILED,
+          g_error ("OpenFileMapping error: %lu... " ERRMSG_SHM_FAILED,
                    GetLastError ());
         }
 

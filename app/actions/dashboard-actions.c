@@ -40,6 +40,8 @@ static const GimpActionEntry dashboard_actions[] =
     NC_("dashboard-action", "Dashboard Menu"), NULL, NULL, NULL,
     GIMP_HELP_DASHBOARD_DIALOG },
 
+  { "dashboard-groups", NULL,
+    NC_("dashboard-action", "Groups") },
   { "dashboard-update-interval", NULL,
     NC_("dashboard-action", "Update Interval") },
   { "dashboard-history-duration", NULL,

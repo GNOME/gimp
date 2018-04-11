@@ -92,7 +92,7 @@ msgstr "Irudi-editorea"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr "GIMP;irudia;diseinua;ilustrazioa;margotzea"
+msgstr "GIMP;irudia;diseinua;ilustrazioa;margotzea;"
 
 #: ../app/about.h:23
 msgid "GIMP"

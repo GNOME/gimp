@@ -23,6 +23,7 @@
 
 
 void   gimp_gegl_init (Gimp *gimp);
+void   gimp_gegl_exit (Gimp *gimp);
 
 
 #endif /* __GIMP_GEGL_H__ */

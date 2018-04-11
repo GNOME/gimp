@@ -155,7 +155,7 @@ static GimpDisplay *
 gimp_flip_tool_has_image (GimpTool  *tool,
                           GimpImage *image)
 {
-  /* avoid comitting, and hence flipping, when changing tools */
+  /* avoid committing, and hence flipping, when changing tools */
   return NULL;
 }
 
@@ -372,7 +372,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
        *  normal drawable, or the selection
        */
 
-      /*  always clip the selction and unfloated channels
+      /*  always clip the selection and unfloated channels
        *  so they keep their size
        */
       if (GIMP_IS_CHANNEL (active_item) &&

@@ -52,7 +52,8 @@ static void   themes_theme_change_notify (GimpGuiConfig          *config,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
 
-static void   themes_draw_layout         (GtkStyle               *style,
+static void   themes_fix_pixbuf_style    (void);
+static void   themes_draw_pixbuf_layout  (GtkStyle               *style,
                                           GdkWindow              *window,
                                           GtkStateType            state_type,
                                           gboolean                use_text,
@@ -65,8 +66,8 @@ static void   themes_draw_layout         (GtkStyle               *style,
 
 /*  private variables  */
 
-static GHashTable *themes_hash             = NULL;
-static gpointer    pixbuf_style_type_class = NULL;
+static GHashTable    *themes_hash        = NULL;
+static GtkStyleClass *pixbuf_style_class = NULL;
 
 
 /*  public functions  */
@@ -78,23 +79,6 @@ themes_init (Gimp *gimp)
   gchar         *themerc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  /* This is a "quick'n dirty" trick to get appropriate colors for
-   * themes in GTK+2, and in particular dark themes which would display
-   * insensitive items with a barely readable layout.
-   * This piece of code partly duplicates code from GTK+2 (slightly
-   * modified to get readable insensitive items) and will likely have to
-   * be removed for GIMP 3.
-   * See https://bugzilla.gnome.org/show_bug.cgi?id=770424
-   */
-  if (g_type_from_name ("PixbufStyle"))
-    {
-      pixbuf_style_type_class = g_type_class_ref (g_type_from_name ("PixbufStyle"));
-      if (pixbuf_style_type_class)
-        {
-          GTK_STYLE_CLASS (pixbuf_style_type_class)->draw_layout = themes_draw_layout;
-        }
-    }
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
@@ -165,6 +149,8 @@ themes_init (Gimp *gimp)
   gtk_rc_parse (themerc);
   g_free (themerc);
 
+  themes_fix_pixbuf_style ();
+
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
@@ -184,11 +170,8 @@ themes_exit (Gimp *gimp)
       g_hash_table_destroy (themes_hash);
       themes_hash = NULL;
     }
-  if (pixbuf_style_type_class)
-    {
-      g_type_class_unref (pixbuf_style_type_class);
-      pixbuf_style_type_class = NULL;
-    }
+
+  g_clear_pointer (&pixbuf_style_class, g_type_class_unref);
 }
 
 gchar **
@@ -400,19 +383,49 @@ themes_theme_change_notify (GimpGuiConfig *config,
   themes_apply_theme (gimp, config->theme);
 
   gtk_rc_reparse_all ();
+
+  themes_fix_pixbuf_style ();
 }
 
 static void
-themes_draw_layout (GtkStyle      *style,
-                    GdkWindow     *window,
-                    GtkStateType   state_type,
-                    gboolean       use_text,
-                    GdkRectangle  *area,
-                    GtkWidget     *widget,
-                    const gchar   *detail,
-                    gint           x,
-                    gint           y,
-                    PangoLayout   *layout)
+themes_fix_pixbuf_style (void)
+{
+  /* This is a "quick'n dirty" trick to get appropriate colors for
+   * themes in GTK+2, and in particular dark themes which would display
+   * insensitive items with a barely readable layout.
+   *
+   * This piece of code partly duplicates code from GTK+2 (slightly
+   * modified to get readable insensitive items) and will likely have to
+   * be removed for GIMP 3.
+   *
+   * See https://bugzilla.gnome.org/show_bug.cgi?id=770424
+   */
+
+  if (! pixbuf_style_class)
+    {
+      GType type = g_type_from_name ("PixbufStyle");
+
+      if (type)
+        {
+          pixbuf_style_class = g_type_class_ref (type);
+
+          if (pixbuf_style_class)
+            pixbuf_style_class->draw_layout = themes_draw_pixbuf_layout;
+        }
+    }
+}
+
+static void
+themes_draw_pixbuf_layout (GtkStyle      *style,
+                           GdkWindow     *window,
+                           GtkStateType   state_type,
+                           gboolean       use_text,
+                           GdkRectangle  *area,
+                           GtkWidget     *widget,
+                           const gchar   *detail,
+                           gint           x,
+                           gint           y,
+                           PangoLayout   *layout)
 {
   GdkGC *gc;
 

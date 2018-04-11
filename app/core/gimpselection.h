@@ -54,10 +54,6 @@ GimpChannel * gimp_selection_new      (GimpImage     *image,
 gint          gimp_selection_suspend  (GimpSelection *selection);
 gint          gimp_selection_resume   (GimpSelection *selection);
 
-void          gimp_selection_load     (GimpSelection *selection,
-                                       GimpChannel   *channel);
-GimpChannel * gimp_selection_save     (GimpSelection *selection);
-
 GeglBuffer  * gimp_selection_extract  (GimpSelection *selection,
                                        GimpPickable  *pickable,
                                        GimpContext   *context,

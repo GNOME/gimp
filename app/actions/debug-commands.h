@@ -19,13 +19,6 @@
 #define __DEBUG_COMMANDS_H__
 
 
-#ifdef GIMP_UNSTABLE
-#define ENABLE_DEBUG_MENU 1
-#endif
-
-
-#ifdef ENABLE_DEBUG_MENU
-
 void   debug_mem_profile_cmd_callback             (GtkAction *action,
                                                    gpointer   data);
 void   debug_benchmark_projection_cmd_callback    (GtkAction *action,
@@ -42,8 +35,5 @@ void   debug_dump_attached_data_cmd_callback      (GtkAction *action,
                                                    gpointer   data);
 void   debug_benchmark_projection_cmd_callback    (GtkAction *action,
                                                    gpointer   data);
-
-#endif /* ENABLE_DEBUG_MENU */
-
 
 #endif /* __DEBUG_COMMANDS_H__ */

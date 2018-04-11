@@ -313,10 +313,7 @@ gimp_tile_handler_validate_command (GeglTileSource  *source,
                                     gint             z,
                                     gpointer         data)
 {
-  GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (source);
-  gpointer                 retval;
-
-  validate->max_z = MAX (validate->max_z, z);
+  gpointer retval;
 
   retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
 
@@ -382,31 +379,7 @@ gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
   cairo_region_union_rectangle (validate->dirty_region,
                                 (cairo_rectangle_int_t *) rect);
 
-  if (validate->max_z > 0)
-    {
-      GeglTileSource *source  = GEGL_TILE_SOURCE (validate);
-      gint            tile_x1 = rect->x / validate->tile_width;
-      gint            tile_y1 = rect->y / validate->tile_height;
-      gint            tile_x2 = (rect->x + rect->width  - 1) /
-                                validate->tile_width + 1;
-      gint            tile_y2 = (rect->y + rect->height - 1) /
-                                validate->tile_height + 1;
-      gint            tile_x;
-      gint            tile_y;
-      gint            tile_z;
-
-      for (tile_z = 1; tile_z <= validate->max_z; tile_z++)
-        {
-          tile_y1 = tile_y1 / 2;
-          tile_y2 = (tile_y2 + 1) / 2;
-          tile_x1 = tile_x1 / 2;
-          tile_x2 = (tile_x2 + 1) / 2;
-
-          for (tile_y = tile_y1; tile_y < tile_y2; tile_y++)
-            for (tile_x = tile_x1; tile_x < tile_x2; tile_x++)
-              gegl_tile_source_void (source, tile_x, tile_y, tile_z);
-        }
-    }
+  gegl_tile_handler_damage_rect (GEGL_TILE_HANDLER (validate), rect);
 }
 
 void

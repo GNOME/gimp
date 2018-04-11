@@ -42,12 +42,14 @@
 
 #include "core/gimp.h"
 
+#include "gimpactiongroup.h"
 #include "gimpdocked.h"
 #include "gimpdashboard.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpmeter.h"
 #include "gimpsessioninfo-aux.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
@@ -93,6 +95,9 @@ typedef enum
   VARIABLE_CPU_ACTIVE_TIME,
 #endif
 
+  /* misc */
+  VARIABLE_MIPMAPED,
+
 
   N_VARIABLES,
 
@@ -118,6 +123,7 @@ typedef enum
 #ifdef HAVE_CPU_GROUP
   GROUP_CPU,
 #endif
+  GROUP_MISC,
 
   N_GROUPS
 } Group;
@@ -160,6 +166,7 @@ struct _GroupInfo
   const gchar     *name;
   const gchar     *title;
   const gchar     *description;
+  gboolean         default_active;
   gboolean         default_expanded;
   gboolean         has_meter;
   Variable         meter_limit;
@@ -200,19 +207,21 @@ struct _FieldData
 
 struct _GroupData
 {
-  gint         n_fields;
-  gint         n_meter_values;
+  gint             n_fields;
+  gint             n_meter_values;
 
-  gdouble      limit;
+  gboolean         active;
+  gdouble          limit;
 
-  GtkExpander *expander;
-  GtkLabel    *header_values_label;
-  GtkButton   *menu_button;
-  GtkMenu     *menu;
-  GimpMeter   *meter;
-  GtkTable    *table;
+  GtkToggleAction *action;
+  GtkExpander     *expander;
+  GtkLabel        *header_values_label;
+  GtkButton       *menu_button;
+  GtkMenu         *menu;
+  GimpMeter       *meter;
+  GtkTable        *table;
 
-  FieldData   *fields;
+  FieldData       *fields;
 };
 
 struct _GimpDashboardPrivate
@@ -256,7 +265,9 @@ static gboolean   gimp_dashboard_group_expander_button_press (GimpDashboard     
                                                               GdkEventButton      *bevent,
                                                               GtkWidget           *widget);
 
-static void       gimp_dashboard_group_menu_item_toggled     (GimpDashboard       *dashboard,
+static void       gimp_dashboard_group_action_toggled        (GimpDashboard       *dashboard,
+                                                              GtkToggleAction     *action);
+static void       gimp_dashboard_field_menu_item_toggled     (GimpDashboard       *dashboard,
                                                               GtkCheckMenuItem    *item);
 
 static gpointer   gimp_dashboard_sample                      (GimpDashboard       *dashboard);
@@ -302,6 +313,9 @@ static void       gimp_dashboard_update_group                (GimpDashboard     
 static void       gimp_dashboard_update_group_values         (GimpDashboard       *dashboard,
                                                               Group                group);
 
+static void       gimp_dashboard_group_set_active            (GimpDashboard       *dashboard,
+                                                              Group                group,
+                                                              gboolean             active);
 static void       gimp_dashboard_field_set_active            (GimpDashboard       *dashboard,
                                                               Group                group,
                                                               gint                 field,
@@ -448,8 +462,20 @@ static const VariableInfo variables[] =
     .color            = {0.8, 0.7, 0.2, 0.4},
     .sample_func      = gimp_dashboard_sample_cpu_active_time,
     .reset_func       = gimp_dashboard_reset_cpu_active_time
-  }
+  },
 #endif /* HAVE_CPU_GROUP */
+
+
+  /* misc variables */
+
+  [VARIABLE_MIPMAPED] =
+  { .name             = "mipmapped",
+    .title            = NC_("dashboard-variable", "Mipmapped"),
+    .description      = N_("Total size of processed mipmapped data"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "zoom-total"
+  },
 };
 
 static const GroupInfo groups[] =
@@ -459,6 +485,7 @@ static const GroupInfo groups[] =
   { .name             = "cache",
     .title            = NC_("dashboard-group", "Cache"),
     .description      = N_("In-memory tile cache"),
+    .default_active   = TRUE,
     .default_expanded = TRUE,
     .has_meter        = TRUE,
     .meter_limit      = VARIABLE_CACHE_LIMIT,
@@ -495,6 +522,7 @@ static const GroupInfo groups[] =
   { .name             = "swap",
     .title            = NC_("dashboard-group", "Swap"),
     .description      = N_("On-disk tile swap"),
+    .default_active   = TRUE,
     .default_expanded = TRUE,
     .has_meter        = TRUE,
     .meter_limit      = VARIABLE_SWAP_LIMIT,
@@ -524,6 +552,7 @@ static const GroupInfo groups[] =
   { .name             = "cpu",
     .title            = NC_("dashboard-group", "CPU"),
     .description      = N_("CPU usage"),
+    .default_active   = TRUE,
     .default_expanded = FALSE,
     .has_meter        = TRUE,
     .meter_led        = VARIABLE_CPU_ACTIVE,
@@ -545,8 +574,26 @@ static const GroupInfo groups[] =
 
                           {}
                         }
-  }
+  },
 #endif /* HAVE_CPU_GROUP */
+
+  /* misc group */
+  [GROUP_MISC] =
+  { .name             = "misc",
+    .title            = NC_("dashboard-group", "Misc"),
+    .description      = N_("Miscellaneous information"),
+    .default_active   = FALSE,
+    .default_expanded = FALSE,
+    .has_meter        = FALSE,
+    .fields           = (const FieldInfo[])
+                        {
+                          { .variable       = VARIABLE_MIPMAPED,
+                            .default_active = TRUE
+                          },
+
+                          {}
+                        }
+  },
 };
 
 
@@ -655,7 +702,6 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                  group_info->default_expanded);
       gtk_expander_set_label_fill (GTK_EXPANDER (expander), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
-      gtk_widget_show (expander);
 
       g_object_set_data (G_OBJECT (expander),
                          "gimp-dashboard-group", GINT_TO_POINTER (group));
@@ -736,7 +782,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
               g_object_set_data (G_OBJECT (item),
                                  "gimp-dashboard-field", GINT_TO_POINTER (field));
               g_signal_connect_swapped (item, "toggled",
-                                        G_CALLBACK (gimp_dashboard_group_menu_item_toggled),
+                                        G_CALLBACK (gimp_dashboard_field_menu_item_toggled),
                                         dashboard);
 
               gimp_dashboard_field_set_active (dashboard, group, field,
@@ -819,6 +865,8 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
 
+      gimp_dashboard_group_set_active (dashboard, group,
+                                       group_info->default_active);
       gimp_dashboard_update_group (dashboard, group);
     }
 
@@ -847,9 +895,45 @@ gimp_dashboard_docked_iface_init (GimpDockedInterface *iface)
 static void
 gimp_dashboard_constructed (GObject *object)
 {
-  GimpDashboard *dashboard = GIMP_DASHBOARD (object);
+  GimpDashboard        *dashboard = GIMP_DASHBOARD (object);
+  GimpDashboardPrivate *priv = dashboard->priv;
+  GimpUIManager        *ui_manager;
+  GimpActionGroup      *action_group;
+  Group                 group;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
+  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+
+  /* group actions */
+  for (group = FIRST_GROUP; group < N_GROUPS; group++)
+    {
+      const GroupInfo       *group_info = &groups[group];
+      GroupData             *group_data = &priv->groups[group];
+      GimpToggleActionEntry  entry      = {};
+      GtkAction             *action;
+
+      entry.name      = g_strdup_printf ("dashboard-group-%s", group_info->name);
+      entry.label     = g_dpgettext2 (NULL, "dashboard-group", group_info->title);
+      entry.tooltip   = g_dgettext (NULL, group_info->description);
+      entry.help_id   = GIMP_HELP_DASHBOARD_GROUPS;
+      entry.is_active = group_data->active;
+
+      gimp_action_group_add_toggle_actions (action_group, "dashboard-groups",
+                                            &entry, 1);
+
+      action = gimp_ui_manager_find_action (ui_manager, "dashboard", entry.name);
+      group_data->action = GTK_TOGGLE_ACTION (action);
+
+      g_object_set_data (G_OBJECT (action),
+                         "gimp-dashboard-group", GINT_TO_POINTER (group));
+      g_signal_connect_swapped (action, "toggled",
+                                G_CALLBACK (gimp_dashboard_group_action_toggled),
+                                dashboard);
+
+      g_free ((gpointer) entry.name);
+    }
 
   gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
                                  "dashboard-reset", NULL);
@@ -991,6 +1075,20 @@ gimp_dashboard_set_aux_info (GimpDocked *docked,
               const GroupInfo *group_info = &groups[group];
               GroupData       *group_data = &priv->groups[group];
 
+              name = g_strdup_printf ("%s-active", group_info->name);
+
+              if (! strcmp (aux->name, name))
+                {
+                  gboolean active = ! strcmp (aux->value, "yes");
+
+                  gimp_dashboard_group_set_active (dashboard, group, active);
+
+                  g_free (name);
+                  goto next_aux_info;
+                }
+
+              g_free (name);
+
               name = g_strdup_printf ("%s-expanded", group_info->name);
 
               if (! strcmp (aux->name, name))
@@ -1081,7 +1179,17 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
     {
       const GroupInfo *group_info = &groups[group];
       GroupData       *group_data = &priv->groups[group];
+      gboolean         active     = group_data->active;
       gboolean         expanded   = gtk_expander_get_expanded (group_data->expander);
+
+      if (active != group_info->default_active)
+        {
+          name     = g_strdup_printf ("%s-active", group_info->name);
+          value    = active ? "yes" : "no";
+          aux      = gimp_session_info_aux_new (name, value);
+          aux_info = g_list_append (aux_info, aux);
+          g_free (name);
+        }
 
       if (expanded != group_info->default_expanded)
         {
@@ -1161,7 +1269,24 @@ gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
 }
 
 static void
-gimp_dashboard_group_menu_item_toggled (GimpDashboard    *dashboard,
+gimp_dashboard_group_action_toggled (GimpDashboard   *dashboard,
+                                     GtkToggleAction *action)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  Group                 group;
+  GroupData            *group_data;
+
+  group      = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action),
+                                                   "gimp-dashboard-group"));
+  group_data = &priv->groups[group];
+
+  group_data->active = gtk_toggle_action_get_active (action);
+
+  gimp_dashboard_update_group (dashboard, group);
+}
+
+static void
+gimp_dashboard_field_menu_item_toggled (GimpDashboard    *dashboard,
                                         GtkCheckMenuItem *item)
 {
   GimpDashboardPrivate *priv = dashboard->priv;
@@ -1519,7 +1644,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 
   curr_usage = tms.tms_utime + tms.tms_stime;
 
-  if (prev_clock)
+  if (prev_clock && curr_clock != prev_clock)
     {
       variable_data->available         = TRUE;
       variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
@@ -1576,7 +1701,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
   curr_usage += ((guint64) process_user_time.dwHighDateTime << 32) |
                  (guint64) process_user_time.dwLowDateTime;
 
-  if (prev_time)
+  if (prev_time && curr_time != prev_time)
     {
       variable_data->available         = TRUE;
       variable_data->value.percentage  = (gdouble) (curr_usage - prev_usage) /
@@ -1806,6 +1931,12 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
   gboolean              add_separator;
   gint                  field;
 
+  gtk_widget_set_visible (GTK_WIDGET (group_data->expander),
+                          group_data->active);
+
+  if (! group_data->active)
+    return;
+
   n_rows        = 0;
   add_separator = FALSE;
 
@@ -1949,6 +2080,9 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
   GString              *header_values;
   gint                  field;
 
+  if (! group_data->active)
+    return;
+
   if (group_info->has_meter)
     {
       if (group_info->meter_limit)
@@ -2039,6 +2173,33 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
 }
 
 static void
+gimp_dashboard_group_set_active (GimpDashboard *dashboard,
+                                 Group          group,
+                                 gboolean       active)
+{
+  GimpDashboardPrivate *priv       = dashboard->priv;
+  GroupData            *group_data = &priv->groups[group];
+
+  if (active != group_data->active)
+    {
+      group_data->active = active;
+
+      if (group_data->action)
+        {
+          g_signal_handlers_block_by_func (group_data->action,
+                                           gimp_dashboard_group_action_toggled,
+                                           dashboard);
+
+          gtk_toggle_action_set_active (group_data->action, active);
+
+          g_signal_handlers_unblock_by_func (group_data->action,
+                                             gimp_dashboard_group_action_toggled,
+                                             dashboard);
+        }
+    }
+}
+
+static void
 gimp_dashboard_field_set_active (GimpDashboard *dashboard,
                                  Group          group,
                                  gint           field,
@@ -2053,13 +2214,13 @@ gimp_dashboard_field_set_active (GimpDashboard *dashboard,
       field_data->active = active;
 
       g_signal_handlers_block_by_func (field_data->menu_item,
-                                       gimp_dashboard_group_menu_item_toggled,
+                                       gimp_dashboard_field_menu_item_toggled,
                                        dashboard);
 
       gtk_check_menu_item_set_active (field_data->menu_item, active);
 
       g_signal_handlers_unblock_by_func (field_data->menu_item,
-                                         gimp_dashboard_group_menu_item_toggled,
+                                         gimp_dashboard_field_menu_item_toggled,
                                          dashboard);
     }
 }
@@ -2466,4 +2627,35 @@ gimp_dashboard_get_low_swap_space_warning (GimpDashboard *dashboard)
   g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), DEFAULT_LOW_SWAP_SPACE_WARNING);
 
   return dashboard->priv->low_swap_space_warning;
+}
+
+void
+gimp_dashboard_menu_setup (GimpUIManager *manager,
+                           const gchar   *ui_path)
+{
+  guint merge_id;
+  Group group;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (ui_path != NULL);
+
+  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+
+  for (group = FIRST_GROUP; group < N_GROUPS; group++)
+    {
+      const GroupInfo *group_info = &groups[group];
+      gchar           *action_name;
+      gchar           *action_path;
+
+      action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
+      action_path = g_strdup_printf ("%s/Groups/Groups", ui_path);
+
+      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
+                             action_path, action_name, action_name,
+                             GTK_UI_MANAGER_MENUITEM,
+                             FALSE);
+
+      g_free (action_name);
+      g_free (action_path);
+    }
 }

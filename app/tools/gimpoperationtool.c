@@ -254,7 +254,7 @@ gimp_operation_tool_options_notify (GimpTool         *tool,
        * controller to move to a new position, or the operation to
        * change its properties to match the on-canvas controller?
        *
-       * decided to leave the on-canvas controler where it is and
+       * decided to leave the on-canvas controller where it is and
        * pretend it has changed, so the operation is updated
        * accordingly...
        */

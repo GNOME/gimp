@@ -49,8 +49,6 @@
 #include "debug-commands.h"
 
 
-#ifdef ENABLE_DEBUG_MENU
-
 /*  local function prototypes  */
 
 static gboolean  debug_benchmark_projection    (GimpDisplay *display);
@@ -193,7 +191,7 @@ debug_dump_keyboard_shortcuts_cmd_callback (GtkAction *action,
 
   accel_group = gtk_ui_manager_get_accel_group (manager);
 
-  /* Gather formated strings of keyboard shortcuts */
+  /* Gather formatted strings of keyboard shortcuts */
   for (group_it = gtk_ui_manager_get_action_groups (manager);
        group_it;
        group_it = g_list_next (group_it))
@@ -425,6 +423,3 @@ debug_accel_find_func (GtkAccelKey *key,
 {
   return (GClosure *) data == closure;
 }
-
-
-#endif /* ENABLE_DEBUG_MENU */

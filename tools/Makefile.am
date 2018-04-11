@@ -6,6 +6,8 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 endif
 
 if OS_WIN32
@@ -87,8 +89,16 @@ AM_CPPFLAGS = \
 	-DGIMP_PLUGIN_VERSION=\""$(GIMP_PLUGIN_VERSION)"\"	\
 	-I$(top_srcdir)						\
 	$(GTK_CFLAGS)						\
-	-I$(includedir)						\
+	-I$(includedir)
+
+AM_CFLAGS = \
 	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 EXTRA_DIST = \
 	defcheck.py	\

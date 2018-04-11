@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-03-22 12:36+0000\n"
-"PO-Revision-Date: 2018-03-26 19:52+0200\n"
+"POT-Creation-Date: 2018-03-26 23:15+0000\n"
+"PO-Revision-Date: 2018-04-02 16:34+0200\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -448,7 +448,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1079 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -1045,7 +1045,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1582
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
@@ -1074,7 +1074,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:927
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -2199,7 +2199,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2289,10 +2289,10 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
@@ -2878,7 +2878,7 @@ msgstr "JP2-bilden ”%s” har en okänd färgrymd."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2285
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
@@ -2913,7 +2913,7 @@ msgid "Save creation time"
 msgstr "Spara skapad tid"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2343
 msgid "PNG"
 msgstr "PNG"
 
@@ -3277,22 +3277,28 @@ msgstr "Fel vid inläsning av PNG-fil: %s"
 msgid "Error creating PNG read struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG läs-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:895
+#: ../plug-ins/common/file-png.c:894
+#, c-format
+msgid "Error while reading '%s'. Could not create PNG header info structure."
+msgstr ""
+"Fel vid läsning av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
+
+#: ../plug-ins/common/file-png.c:902
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid inläsning av ”%s”. Trasig fil?"
 
-#: ../plug-ins/common/file-png.c:1050
+#: ../plug-ins/common/file-png.c:1057
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-filen ”%s”."
 
-#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunde inte skapa ny bild för ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1119
+#: ../plug-ins/common/file-png.c:1126
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3300,19 +3306,19 @@ msgstr ""
 "PNG-filen angav en position som orsakade att lagret blev placerat utanför "
 "bilden."
 
-#: ../plug-ins/common/file-png.c:1396
+#: ../plug-ins/common/file-png.c:1403
 msgid "Apply PNG Offset"
 msgstr "Tillämpa PNG-kompensation"
 
-#: ../plug-ins/common/file-png.c:1400
+#: ../plug-ins/common/file-png.c:1407
 msgid "Ignore PNG offset"
 msgstr "Ignorera PNG-kompensation"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG offset to layer"
 msgstr "Tillämpa PNG-kompensation på lager"
 
-#: ../plug-ins/common/file-png.c:1426
+#: ../plug-ins/common/file-png.c:1433
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3321,23 +3327,29 @@ msgstr ""
 "PNG-bilden du importerar anger en kompensation på %d, %d. Vill du tillämpa "
 "denna kompensation på lagret?"
 
-#: ../plug-ins/common/file-png.c:1534
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG skriv-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:1544
+#: ../plug-ins/common/file-png.c:1550
+#, c-format
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgstr ""
+"Fel vid export av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
+
+#: ../plug-ins/common/file-png.c:1558
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Fel vid exporterande av ”%s”. Kunde inte exportera bild."
+msgstr "Fel vid export av ”%s”. Kunde inte exportera bild."
 
-#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fel vid inläsning av användargränssnittsfilen ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Okänt fel"
@@ -3499,7 +3511,7 @@ msgstr "S/V"
 msgid "Gray"
 msgstr "Grått"
 
-#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:483
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -4518,25 +4530,25 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "X pixmap-bild"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:797
+#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Fel vid öppnande av filen ”%s”"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:803
+#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
 msgid "XPM file invalid"
 msgstr "XPM-fil är ogiltig"
 
-#: ../plug-ins/common/file-xpm.c:650
+#: ../plug-ins/common/file-xpm.c:653
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Denna typ av rityta stöds inte"
 
-#: ../plug-ins/common/file-xpm.c:829
+#: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:839
+#: ../plug-ins/common/file-xpm.c:842
 msgid "_Alpha threshold:"
 msgstr "_Alfatröskelvärde:"
 
@@ -6398,7 +6410,7 @@ msgstr "_Toning"
 
 #: ../plug-ins/common/van-gogh-lic.c:694
 msgid "Convolve"
-msgstr "Konvolvera"
+msgstr "Falta"
 
 #: ../plug-ins/common/van-gogh-lic.c:699
 msgid "_With white noise"
@@ -12763,7 +12775,7 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgstr "efter"
 
 #~ msgid "Seconds delay"
-#~ msgstr "sekunders fördröjning"
+#~ msgstr "Sekunders fördröjning"
 
 #~ msgid "Include decorations"
 #~ msgstr "Ta med fönsterkanten"
@@ -13007,16 +13019,6 @@ msgstr "Överför data från bildläsare/kamera"
 #~ msgstr "Information om färgprofil"
 
 #~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "Färgprofilen \"%s\" är inte för RGB-färgrymd."
-
-#, fuzzy
-#~| msgid "Error reading file"
-#~ msgid "Error parsing 'icc-profile': "
-#~ msgstr "Fel vid inläsning"
-
-#, fuzzy
-#~| msgid "Color profile '%s' is not for RGB color space."
-#~ msgid "Color profile '%s' is not for RGB color space"
 #~ msgstr "Färgprofilen \"%s\" är inte för RGB-färgrymd."
 
 #~ msgid "Converting from '%s' to '%s'"

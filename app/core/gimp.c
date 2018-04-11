@@ -576,6 +576,7 @@ gimp_new (const gchar       *name,
           gboolean           use_cpu_accel,
           gboolean           console_messages,
           gboolean           show_playground,
+          gboolean           show_debug_menu,
           GimpStackTraceMode stack_trace_mode,
           GimpPDBCompatMode  pdb_compat_mode)
 {
@@ -599,6 +600,7 @@ gimp_new (const gchar       *name,
   gimp->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;
   gimp->show_playground  = show_playground  ? TRUE : FALSE;
+  gimp->show_debug_menu  = show_debug_menu  ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
   gimp->pdb_compat_mode  = pdb_compat_mode;
 

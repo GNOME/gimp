@@ -20,7 +20,7 @@
 
 
 /*
- *  virtual functions of GimpImage -- dont't call directly
+ *  virtual functions of GimpImage -- don't call directly
  */
 
 void          gimp_image_get_preview_size (GimpViewable *viewable,

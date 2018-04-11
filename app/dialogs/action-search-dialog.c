@@ -129,8 +129,9 @@ action_search_history_and_actions (GimpSearchPopup *popup,
           if (gimp_action_history_is_blacklisted_action (name))
             continue;
 
-          if (! gtk_action_is_sensitive (action) &&
-              ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable)
+          if (! gtk_action_is_visible (action)    ||
+              (! gtk_action_is_sensitive (action) &&
+               ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable))
             continue;
 
           if (action_search_match_keyword (action, keyword, &section, gimp))

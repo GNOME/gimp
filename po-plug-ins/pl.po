@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-26 23:54+0200\n"
-"PO-Revision-Date: 2018-03-26 23:55+0200\n"
+"POT-Creation-Date: 2018-04-08 22:14+0200\n"
+"PO-Revision-Date: 2018-04-08 22:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3274,9 +3274,9 @@ msgstr "Błąd podczas wczytywania pliku PNG: %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
+msgid "Error creating PNG read struct while loading '%s'."
 msgstr ""
-"Błąd podczas tworzenia struktur odczytu PNG podczas eksportowania „%s”."
+"Błąd podczas tworzenia struktur odczytu PNG podczas wczytywania pliku „%s”."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format

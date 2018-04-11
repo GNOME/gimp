@@ -22,9 +22,9 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp HEAD\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-01-10 23:51+0000\n"
-"PO-Revision-Date: 2018-01-10 14:51+0100\n"
-"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
+"POT-Creation-Date: 2018-04-01 23:10+0000\n"
+"PO-Revision-Date: 2018-04-02 07:59+0100\n"
+"Last-Translator: julien <jhardlin@orange.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -33,22 +33,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1206
+#: ../libgimp/gimp.c:1221
 msgid "success"
 msgstr "succès"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1210
+#: ../libgimp/gimp.c:1225
 msgid "execution error"
 msgstr "erreur d’exécution"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1214
+#: ../libgimp/gimp.c:1229
 msgid "calling error"
 msgstr "erreur d’appel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1218
+#: ../libgimp/gimp.c:1233
 msgid "cancelled"
 msgstr "annulé"
 
@@ -255,44 +255,44 @@ msgstr "Sélecteur de polices"
 msgid "Gradient Selection"
 msgstr "Sélecteur de dégradé"
 
-#: ../libgimp/gimpimagemetadata.c:480
+#: ../libgimp/gimpimagemetadata.c:487
 msgid "GIMP 2.9/2.10"
 msgstr "GIMP 2.9/2.10"
 
-#: ../libgimp/gimpimagemetadata.c:664
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
 msgstr "Arrière-plan"
 
-#: ../libgimp/gimpimagemetadata.c:853
+#: ../libgimp/gimpimagemetadata.c:860
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotation de %s ?"
 
-#: ../libgimp/gimpimagemetadata.c:859
+#: ../libgimp/gimpimagemetadata.c:866
 msgid "_Keep Original"
 msgstr "_Conserver l’original"
 
-#: ../libgimp/gimpimagemetadata.c:860 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotation"
 
-#: ../libgimp/gimpimagemetadata.c:901
+#: ../libgimp/gimpimagemetadata.c:908
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:917
+#: ../libgimp/gimpimagemetadata.c:924
 msgid "Rotated"
 msgstr "Rotation effectuée"
 
-#: ../libgimp/gimpimagemetadata.c:935
+#: ../libgimp/gimpimagemetadata.c:942
 msgid "This image contains Exif orientation metadata."
 msgstr "Cette image contient des métadonnées d’orientation Exif"
 
-#: ../libgimp/gimpimagemetadata.c:953
+#: ../libgimp/gimpimagemetadata.c:960
 msgid "Would you like to rotate the image?"
 msgstr "Désirez-vous effectuer une rotation de l’image ?"
 
-#: ../libgimp/gimpimagemetadata.c:965
+#: ../libgimp/gimpimagemetadata.c:972
 msgid "_Don't ask me again"
 msgstr "_Ne me posez plus la question"
 
@@ -1445,33 +1445,33 @@ msgstr "L’analyse des données IPTC a échoué."
 msgid "Parsing XMP data failed."
 msgstr "L’analyse des données XMP a échoué."
 
-#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
+#: ../libgimpbase/gimputils.c:215 ../libgimpbase/gimputils.c:220
 msgid "(invalid UTF-8 string)"
 msgstr "(chaîne de caractères UTF-8 non valide)"
 
-#: ../libgimpbase/gimputils.c:367
+#: ../libgimpbase/gimputils.c:390
 msgid "File path is NULL"
 msgstr "Le chemin de fichier est NULL"
 
-#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+#: ../libgimpbase/gimputils.c:399 ../libgimpbase/gimputils.c:410
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 "Erreur lors de la conversion du nom de fichier UTF-8 en caractères larges"
 
-#: ../libgimpbase/gimputils.c:395
+#: ../libgimpbase/gimputils.c:418
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() a échoué"
 
-#: ../libgimpbase/gimputils.c:432
+#: ../libgimpbase/gimputils.c:455
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Impossible de convertir « %s » en un NSURL valide"
 
-#: ../libgimpbase/gimputils.c:460
+#: ../libgimpbase/gimputils.c:483
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "La connexion à org.freedesktop.FileManager1 a échoué :"
 
-#: ../libgimpbase/gimputils.c:484
+#: ../libgimpbase/gimputils.c:507
 msgid "Calling ShowItems failed: "
 msgstr "L’appel à ShowItems a échoué :"
 
@@ -1940,23 +1940,23 @@ msgstr "Fabriquant : "
 msgid "Copyright: "
 msgstr "Copyright : "
 
-#: ../libgimpwidgets/gimpcolorscales.c:201
+#: ../libgimpwidgets/gimpcolorscales.c:205
 msgid "Scales"
 msgstr "Échelles"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:437
 msgid "0..100"
 msgstr "0…100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:441
+#: ../libgimpwidgets/gimpcolorscales.c:439
 msgid "0..255"
 msgstr "0…255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:460
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpcolorscales.c:464
+#: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
 msgstr "TSV"
 
@@ -2174,7 +2174,7 @@ msgstr "Taille du damier"
 msgid "Check Style"
 msgstr "Style du damier"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2143
+#: ../libgimpwidgets/gimppropwidgets.c:2177
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2333,22 +2333,49 @@ msgstr "Chroma LCH"
 msgid "LCH Hue"
 msgstr "Teinte LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:167
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgctxt "color-selector-model"
+msgid "RGB"
+msgstr "RVB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:168
+msgid "RGB color model"
+msgstr "Modèle de couleurs RVB"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgctxt "color-selector-model"
+msgid "LCH"
+msgstr "LCH"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
+msgid "CIELCh color model"
+msgstr "Modèle de couleurs CIELCh"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgctxt "color-selector-model"
+msgid "HSV"
+msgstr "TSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
+msgid "HSV color model"
+msgstr "Modèle de couleurs TSV"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:199
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Calques"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:200
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Images"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:229
+#: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Zoom avant"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:230
+#: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Zoom arrière"

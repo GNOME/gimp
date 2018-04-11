@@ -6,7 +6,7 @@
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.28",
     "sdk": "org.gnome.Sdk",
-    "command": "gimp-2.9",
+    "command": "gimp-2.10",
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--socket=x11", "--share=network",
@@ -28,6 +28,17 @@
                 "/bin/pygtk*", "/bin/pygobject*"],
     "modules": [
         {
+            "name": "mypaint-brushes",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Jehan/mypaint-brushes.git",
+                    "branch": "v1.3.0",
+                    "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
+                }
+            ]
+        },
+        {
             "name": "lcms2",
             "config-opts": [ "--disable-static" ],
             "cleanup": [ "/bin", "/share" ],
@@ -40,14 +51,28 @@
             ]
 	},
         {
+            "name": "openjpeg",
+            "cmake": true,
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
+                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/babl",
-                    "branch": "BABL_0_1_38",
-                    "commit": "04cea9206deb0a6fb52b0a86012d70551b020205"
+                    "branch": "BABL_0_1_44",
+                    "commit": "9e4bfe9f1470a7836f7f885ea95607427ed7997f"
                 }
             ]
         },
@@ -59,8 +84,8 @@
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gegl",
-                    "branch": "GEGL_0_3_24",
-                    "commit": "e647c79dc6c6f1c9a3c12e79a1fd8e77847d61d9"
+                    "branch": "GEGL_0_3_30",
+                    "commit": "6183445f039847814ebf52edb77e861004aa93ab"
                 }
             ]
         },
@@ -72,8 +97,8 @@
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gimp",
-                    "branch": "GIMP_2_9_8",
-                    "commit": "18794a6ba2915ed58b82337edaba794d69f767b7"
+                    "branch": "GIMP_2_10_0_RC1",
+                    "commit": "956ca8e3a39cc93d8fae439a8e5eb073059db011"
                 }
             ],
 	    "post-install": [

@@ -34,7 +34,6 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
-#include "gimpselection.h"
 
 #include "gimp-intl.h"
 
@@ -127,8 +126,9 @@ gimp_image_set_quick_mask_state (GimpImage *image,
               gimp_layer_get_floating_sel_drawable (floating_sel) == GIMP_DRAWABLE (mask))
             floating_sel_anchor (floating_sel);
 
-          gimp_selection_load (GIMP_SELECTION (gimp_image_get_mask (image)),
-                               mask);
+          gimp_item_to_selection (GIMP_ITEM (mask),
+                                  GIMP_CHANNEL_OP_REPLACE,
+                                  TRUE, FALSE, 0.0, 0.0);
           gimp_image_remove_channel (image, mask, TRUE, NULL);
 
           if (! channel_was_active)

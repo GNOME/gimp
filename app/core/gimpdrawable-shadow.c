@@ -19,6 +19,7 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+#include <cairo.h>
 
 #include "core-types.h"
 

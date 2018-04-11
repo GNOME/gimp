@@ -47,8 +47,10 @@ struct _GimpSymmetry
   GimpDrawable *drawable;
   GimpCoords   *origin;
   gboolean      active;
+  gint          version;
 
   GList        *strokes;
+  gboolean      stateful;
 };
 
 struct _GimpSymmetryClass
@@ -66,11 +68,15 @@ struct _GimpSymmetryClass
                                              gint                paint_width,
                                              gint                paint_height);
   void       (* active_changed)             (GimpSymmetry       *symmetry);
+
+  gboolean   (* update_version)             (GimpSymmetry       *symmetry);
 };
 
 
 GType          gimp_symmetry_get_type       (void) G_GNUC_CONST;
 
+void           gimp_symmetry_set_stateful   (GimpSymmetry       *symmetry,
+                                             gboolean            stateful);
 void           gimp_symmetry_set_origin     (GimpSymmetry       *symmetry,
                                              GimpDrawable       *drawable,
                                              GimpCoords         *origin);

@@ -646,6 +646,29 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define TOOL_PRESETS_UPDATE_PATTERN "GimpImageMapOptions"
+
+static gboolean
+user_update_tool_presets (const GMatchInfo *matched_value,
+                          GString          *new_value,
+                          gpointer          data)
+{
+  gchar *match = g_match_info_fetch (matched_value, 0);
+
+  if (g_strcmp0 (match, "GimpImageMapOptions") == 0)
+    {
+      g_string_append (new_value, "GimpFilterOptions");
+    }
+  else
+    {
+      g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
+      g_string_append (new_value, match);
+    }
+
+  g_free (match);
+  return FALSE;
+}
+
 static gboolean
 user_install_dir_copy (GimpUserInstall    *install,
                        gint                level,
@@ -868,6 +891,11 @@ user_install_migrate_files (GimpUserInstall *install)
             {
               update_pattern  = GIMPRESSIONIST_UPDATE_PATTERN;
               update_callback = user_update_gimpressionist;
+            }
+          else if (strcmp (basename, "tool-presets") == 0)
+            {
+              update_pattern  = TOOL_PRESETS_UPDATE_PATTERN;
+              update_callback = user_update_tool_presets;
             }
           user_install_dir_copy (install, 0, source, gimp_directory (),
                                  update_pattern, update_callback);

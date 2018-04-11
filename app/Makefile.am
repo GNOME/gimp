@@ -127,7 +127,9 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
-	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy
+	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
+	-Wl,-u,$(SYMPREFIX)gimp_parallel_init			\
+	-Wl,-u,$(SYMPREFIX)gimp_parallel_exit
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a						\
@@ -245,16 +247,12 @@ endif
 #
 dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 	./$< --dump-gimprc-system > gimprc.tmp	\
-		&& sed -e "s/num-processors [0-9]*/num-processors 1/"	\
-		   gimprc.tmp > gimprc.tmp2				\
-		&& (cmp -s gimprc.tmp2 $(top_srcdir)/etc/gimprc ||	\
-		    cp gimprc.tmp2 $(top_srcdir)/etc/gimprc)		\
-		&& rm gimprc.tmp gimprc.tmp2
+		&& (cmp -s gimprc.tmp $(top_srcdir)/etc/gimprc.in ||	\
+		    cp gimprc.tmp $(top_srcdir)/etc/gimprc.in)		\
+		&& rm gimprc.tmp
 	./$< --dump-gimprc-manpage > gimprc.tmp	\
-		&& sed -e "s/num-processors [0-9]*/num-processors 1/"	\
-		   gimprc.tmp > gimprc.tmp2				\
-		&& (cmp -s gimprc.tmp2 $(top_srcdir)/docs/gimprc.5.in ||\
-		    cp gimprc.tmp2 $(top_srcdir)/docs/gimprc.5.in)	\
-		&& rm gimprc.tmp gimprc.tmp2
+		&& (cmp -s gimprc.tmp $(top_srcdir)/docs/gimprc.5.in ||\
+		    cp gimprc.tmp $(top_srcdir)/docs/gimprc.5.in)	\
+		&& rm gimprc.tmp
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc

@@ -777,7 +777,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
        *  normal drawable, or the selection
        */
 
-      /*  always clip the selction and unfloated channels
+      /*  always clip the selection and unfloated channels
        *  so they keep their size
        */
       if (GIMP_IS_CHANNEL (active_item) &&

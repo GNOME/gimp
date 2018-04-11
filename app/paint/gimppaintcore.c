@@ -678,7 +678,7 @@ gimp_paint_core_get_last_coords (GimpPaintCore *core,
  *
  * Adjusts core->last_coords and core_cur_coords in preparation to
  * drawing a straight line. If @center_pixels is TRUE the endpoints
- * get pushed to the center of the pixels. This avoids artefacts
+ * get pushed to the center of the pixels. This avoids artifacts
  * for e.g. the hard mode. The rounding of the slope to 15 degree
  * steps if ctrl is pressed happens, as does rounding the start and
  * end coordinates (which may be fractional in high zoom modes) to
@@ -1090,7 +1090,7 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
   GArray               *history           = core->stroke_buffer;
 
   if (core->stroke_buffer == NULL)
-    return; /* Paint core has not initalized yet */
+    return; /* Paint core has not initialized yet */
 
   if (smoothing_options->use_smoothing &&
       smoothing_options->smoothing_quality > 0)
@@ -1106,7 +1106,7 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
       g_array_append_val (history, *coords);
 
       if (history->len < 2)
-        return; /* Just dont bother, nothing to do */
+        return; /* Just don't bother, nothing to do */
 
       coords->x = coords->y = 0.0;
 

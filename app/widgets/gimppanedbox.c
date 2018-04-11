@@ -218,7 +218,7 @@ gimp_paned_box_set_widget_drag_handler (GtkWidget    *widget,
    * dock and a toolbox for example, in which case we want to set a
    * drag handler in two ways
    *
-   * We so need to introduce som abstractions here...
+   * We so need to introduce some abstractions here...
    */
 
   if (GIMP_IS_DOCKBOOK (widget))
@@ -573,7 +573,7 @@ gimp_paned_box_add_widget (GimpPanedBox *paned_box,
           parent     = grandparent;
         }
 
-      /* Deatch the widget and bulid up a new hierarchy */
+      /* Detach the widget and build up a new hierarchy */
       g_object_ref (old_widget);
       gtk_container_remove (GTK_CONTAINER (parent), old_widget);
 

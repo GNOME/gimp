@@ -1,13 +1,16 @@
 ## Makefile.am for gimp/etc
 
-gimpsysconf_DATA = \
+gimpsysconf = \
 	controllerrc	\
-	gimprc		\
 	gtkrc		\
 	menurc		\
 	sessionrc	\
 	templaterc	\
 	unitrc
 
+gimpsysconf_DATA = \
+	$(gimpsysconf)	\
+	gimprc
+
 EXTRA_DIST = \
-	$(gimpsysconf_DATA)
+	$(gimpsysconf)

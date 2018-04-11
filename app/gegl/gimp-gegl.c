@@ -30,6 +30,7 @@
 #include "operations/gimp-operations.h"
 
 #include "core/gimp.h"
+#include "core/gimp-parallel.h"
 
 #include "gimp-babl.h"
 #include "gimp-gegl.h"
@@ -66,9 +67,19 @@ gimp_gegl_init (Gimp *gimp)
                     G_CALLBACK (gimp_gegl_notify_use_opencl),
                     NULL);
 
+  gimp_parallel_init (gimp);
+
   gimp_babl_init ();
 
   gimp_operations_init (gimp);
+}
+
+void
+gimp_gegl_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  gimp_parallel_exit (gimp);
 }
 
 static void

@@ -47,7 +47,6 @@ struct _GimpTileHandlerValidate
   const Babl      *format;
   gint             tile_width;
   gint             tile_height;
-  gint             max_z;
   gboolean         whole_tile;
 };
 

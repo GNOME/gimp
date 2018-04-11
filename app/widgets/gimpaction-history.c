@@ -294,8 +294,9 @@ gimp_action_history_search (Gimp                *gimp,
       if (action == NULL)
         continue;
 
-      if (! gtk_action_is_sensitive (action) &&
-          ! config->search_show_unavailable)
+      if (! gtk_action_is_visible (action)    ||
+          (! gtk_action_is_sensitive (action) &&
+           ! config->search_show_unavailable))
         continue;
 
       if (match_func (action, keyword, NULL, gimp))
@@ -384,7 +385,7 @@ gimp_action_history_activate_callback (GtkAction *action,
   link = g_hash_table_lookup (history.links, action_name);
 
   /* If the action is not in the history, insert it
-   * at the back of the hisory queue, possibly
+   * at the back of the history queue, possibly
    * replacing the last item.
    */
   if (! link)

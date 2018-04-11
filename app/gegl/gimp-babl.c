@@ -257,7 +257,7 @@ void
 gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
 {
   /* create a bunch of fishes - to decrease the initial lazy
-   * intialization cost for some interactions
+   * initialization cost for some interactions
    */
   static const struct
   {

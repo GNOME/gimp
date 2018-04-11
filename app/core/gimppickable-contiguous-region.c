@@ -201,7 +201,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
     {
       if (select_transparent)
         {
-          /*  don't select transparancy if "color" isn't fully transparent
+          /*  don't select transparency if "color" isn't fully transparent
            */
           if (start_col[n_components - 1] > 0.0)
             select_transparent = FALSE;

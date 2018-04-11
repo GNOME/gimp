@@ -3747,7 +3747,7 @@ sub plug_in_sinus {
         { name => 'blend', type => '0 <= int32 <= 2',
 	  desc => '0=linear, 1=bilinear, 2=sinusoidal' },
         { name => 'blend_power', type => 'float',
-	  desc => 'Power used to strech the blend' }
+	  desc => 'Power used to stretch the blend' }
     );
 
     %invoke = (

@@ -42,7 +42,7 @@
 
 typedef enum
 {
-  /*  positive values indicate the lenght of a matching magic  */
+  /*  positive values indicate the length of a matching magic  */
 
   FILE_MATCH_NONE = 0,
   FILE_MATCH_SIZE = -1

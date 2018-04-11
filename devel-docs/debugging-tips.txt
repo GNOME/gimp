@@ -81,3 +81,6 @@ particular the environment variable GIMP_ICONS_LIKE_A_BOSS.
 
 See file `devel-docs/debug-plug-ins.txt` for usage of environment
 variable GIMP_PLUGIN_DEBUG.
+
+The CLI option --stack-trace-mode also applies to plug-ins, in order to
+output a back trace on terminal.

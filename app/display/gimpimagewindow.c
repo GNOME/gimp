@@ -478,6 +478,7 @@ gimp_image_window_constructed (GObject *object)
 
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
                    TRUE, TRUE);
+
   g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_image_window_switch_page),
                     window);
@@ -1641,7 +1642,7 @@ gimp_image_window_get_first_dockbook (GimpDockColumns *columns)
  * dockables should be put in single-window mode.
  *
  * Returns: The default dockbook for new dockables, or NULL if no
- *          dockbook were avaialble.
+ *          dockbook were available.
  **/
 GtkWidget *
 gimp_image_window_get_default_dockbook (GimpImageWindow  *window)

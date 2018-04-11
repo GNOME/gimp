@@ -2,6 +2,8 @@
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
 endif
 
 AM_CPPFLAGS = \
@@ -11,13 +13,21 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/app			\
 	-I$(top_srcdir)/app			\
-	$(xobjective_c)				\
 	$(GIO_UNIX_CFLAGS)			\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	$(GTK_MAC_INTEGRATION_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)			\
 	-I$(includedir)
+
+AM_CFLAGS = \
+	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(xnone)
 
 noinst_LIBRARIES = libappgui.a
 

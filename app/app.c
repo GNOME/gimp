@@ -176,6 +176,7 @@ app_run (const gchar         *full_prog_name,
          gboolean             console_messages,
          gboolean             use_debug_handler,
          gboolean             show_playground,
+         gboolean             show_debug_menu,
          GimpStackTraceMode   stack_trace_mode,
          GimpPDBCompatMode    pdb_compat_mode,
          const gchar         *backtrace_file)
@@ -211,7 +212,7 @@ app_run (const gchar         *full_prog_name,
     }
 
   /* Language needs to be determined first, before any GimpContext is
-   * instanciated (which happens when the Gimp object is created)
+   * instantiated (which happens when the Gimp object is created)
    * because its properties need to be properly localized in the
    * settings language (if different from system language). Otherwise we
    * end up with pieces of GUI always using the system language (cf. bug
@@ -244,6 +245,7 @@ app_run (const gchar         *full_prog_name,
                    use_cpu_accel,
                    console_messages,
                    show_playground,
+                   show_debug_menu,
                    stack_trace_mode,
                    pdb_compat_mode);
 
@@ -424,6 +426,8 @@ app_run (const gchar         *full_prog_name,
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   g_main_loop_unref (loop);
+
+  gimp_gegl_exit (gimp);
 
   g_object_unref (gimp);
 

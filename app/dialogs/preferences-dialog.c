@@ -476,6 +476,10 @@ prefs_dialog_defaults_reset (GtkWidget *widget,
         gimp_config_reset_property (config, pspec->name);
     }
 
+  gimp_config_reset_property (config, "filter-tool-max-recent");
+  gimp_config_reset_property (config, "filter-tool-use-last-settings");
+  gimp_config_reset_property (config, "filter-tool-show-color-options");
+
   g_object_thaw_notify (config);
 
   g_free (pspecs);
@@ -1236,7 +1240,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   button = prefs_enum_combo_box_add (object, "debug-policy", 0, 0,
-                                     _("Debug Policy"),
+                                     _("Debug _policy:"),
                                      GTK_TABLE (table), 0, size_group);
 
   /* Check existence of gdb or lldb to activate the preference, as a
@@ -2162,6 +2166,22 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add (object, "image-convert-indexed-dither-text-layers",
                           _("Enable dithering of text layers"),
                           GTK_BOX (vbox2));
+
+  /*  Filter Dialogs  */
+  vbox2 = prefs_frame_new (_("Filter Dialogs"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "filter-tool-max-recent", 1.0, 8.0, 0,
+                         _("Keep recent settings:"),
+                         GTK_TABLE (table), 1, size_group);
+
+  button = prefs_check_button_add (object, "filter-tool-use-last-settings",
+                                   _("Default to the last used settings"),
+                                   GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "filter-tool-show-color-options",
+                                   _("Show advanced color options"),
+                                   GTK_BOX (vbox2));
 
   /*  Canvas Size Dialog  */
   vbox2 = prefs_frame_new (_("Canvas Size Dialog"),

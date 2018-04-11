@@ -291,6 +291,12 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
 
   tool->display = display;
 
+  /*  enable double click for the FreeSelectTool, because it may have been
+   *  disabled if the tool has switched to MATTING_STATE_PAINT_TRIMAP,
+   *  in gimp_foreground_select_tool_set_trimap().
+   */
+  gimp_tool_control_set_wants_double_click (tool->control, TRUE);
+
   fg_select->state = MATTING_STATE_FREE_SELECT;
 
   if (! fg_select->gui)
@@ -1018,6 +1024,9 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   gimp_tool_control_set_toggled (tool->control, FALSE);
+
+  /* disable double click in paint trimap state */
+  gimp_tool_control_set_wants_double_click (tool->control, FALSE);
 
   fg_select->state = MATTING_STATE_PAINT_TRIMAP;
 
