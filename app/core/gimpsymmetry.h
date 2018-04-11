@@ -50,6 +50,7 @@ struct _GimpSymmetry
   gint          version;
 
   GList        *strokes;
+  gboolean      stateful;
 };
 
 struct _GimpSymmetryClass
@@ -74,6 +75,8 @@ struct _GimpSymmetryClass
 
 GType          gimp_symmetry_get_type       (void) G_GNUC_CONST;
 
+void           gimp_symmetry_set_stateful   (GimpSymmetry       *symmetry,
+                                             gboolean            stateful);
 void           gimp_symmetry_set_origin     (GimpSymmetry       *symmetry,
                                              GimpDrawable       *drawable,
                                              GimpCoords         *origin);

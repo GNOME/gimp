@@ -324,45 +324,106 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   width  = gimp_item_get_width (GIMP_ITEM (drawable));
   height = gimp_item_get_height (GIMP_ITEM (drawable));
 
-  if (origin->x > 0 && tiling->max_x == 0 && tiling->interval_x >= 1.0)
-    startx = fmod (origin->x, tiling->interval_x) - tiling->interval_x;
-
-  if (origin->y > 0 && tiling->max_y == 0 && tiling->interval_y >= 1.0)
+  if (sym->stateful)
     {
-      starty = fmod (origin->y, tiling->interval_y) - tiling->interval_y;
+      /* While I can compute exactly the right number of strokes to
+       * paint on-canvas for stateless tools, stateful tools need to
+       * always have the same number and order of strokes. For this
+       * reason, I compute strokes to fill 2 times the width and height.
+       * This makes the symmetry less efficient with stateful tools, but
+       * also weird behavior may happen if you decide to paint out of
+       * canvas and expect tiling to work in-canvas since it won't
+       * actually be infinite (as no new strokes can be added while
+       * painting since we are stateful).
+       */
+      gint i, j;
 
-      if (tiling->shift > 0.0)
-        startx -= tiling->shift * floor (origin->y / tiling->interval_y + 1);
-    }
-
-  for (y_count = 0, y = starty; y < height + tiling->interval_y;
-       y_count++, y += tiling->interval_y)
-    {
-      if (tiling->max_y && y_count >= tiling->max_y)
-        break;
-
-      for (x_count = 0, x = startx; x < width + tiling->interval_x;
-           x_count++, x += tiling->interval_x)
+      if (tiling->interval_x < 1.0)
         {
-          if (tiling->max_x && x_count >= tiling->max_x)
-            break;
-
-          coords = g_memdup (origin, sizeof (GimpCoords));
-          coords->x = x;
-          coords->y = y;
-          strokes = g_list_prepend (strokes, coords);
-
-          if (tiling->interval_x < 1.0)
-            break;
+          x_count = 1;
+        }
+      else if (tiling->max_x == 0)
+        {
+          x_count = (gint) ceil (width / tiling->interval_x);
+          startx -= tiling->interval_x * (gdouble) x_count;
+          x_count = 2 * x_count + 1;
+        }
+      else
+        {
+          x_count = tiling->max_x;
         }
 
-      if (tiling->max_x || startx + tiling->shift <= 0.0)
-        startx = startx + tiling->shift;
-      else
-        startx = startx - tiling->interval_x + tiling->shift;
-
       if (tiling->interval_y < 1.0)
-        break;
+        {
+          y_count = 1;
+        }
+      else if (tiling->max_y == 0)
+        {
+          y_count = (gint) ceil (height / tiling->interval_y);
+          starty -= tiling->interval_y * (gdouble) y_count;
+          y_count = 2 * y_count + 1;
+        }
+      else
+        {
+          y_count = tiling->max_y;
+        }
+
+      for (i = 0, x = startx; i < x_count; i++)
+        {
+          for (j = 0, y = starty; j < y_count; j++)
+            {
+              coords = g_memdup (origin, sizeof (GimpCoords));
+              coords->x = x;
+              coords->y = y;
+              strokes = g_list_prepend (strokes, coords);
+
+              y += tiling->interval_y;
+            }
+          x += tiling->interval_x;
+        }
+    }
+  else
+    {
+      if (origin->x > 0 && tiling->max_x == 0 && tiling->interval_x >= 1.0)
+        startx = fmod (origin->x, tiling->interval_x) - tiling->interval_x;
+
+      if (origin->y > 0 && tiling->max_y == 0 && tiling->interval_y >= 1.0)
+        {
+          starty = fmod (origin->y, tiling->interval_y) - tiling->interval_y;
+
+          if (tiling->shift > 0.0)
+            startx -= tiling->shift * floor (origin->y / tiling->interval_y + 1);
+        }
+
+      for (y_count = 0, y = starty; y < height + tiling->interval_y;
+           y_count++, y += tiling->interval_y)
+        {
+          if (tiling->max_y && y_count >= tiling->max_y)
+            break;
+
+          for (x_count = 0, x = startx; x < width + tiling->interval_x;
+               x_count++, x += tiling->interval_x)
+            {
+              if (tiling->max_x && x_count >= tiling->max_x)
+                break;
+
+              coords = g_memdup (origin, sizeof (GimpCoords));
+              coords->x = x;
+              coords->y = y;
+              strokes = g_list_prepend (strokes, coords);
+
+              if (tiling->interval_x < 1.0)
+                break;
+            }
+
+          if (tiling->max_x || startx + tiling->shift <= 0.0)
+            startx = startx + tiling->shift;
+          else
+            startx = startx - tiling->interval_x + tiling->shift;
+
+          if (tiling->interval_y < 1.0)
+            break;
+        }
     }
 
   sym->strokes = strokes;

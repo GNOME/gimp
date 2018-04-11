@@ -168,6 +168,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
           GimpContext *context = GIMP_CONTEXT (paint_options);
           GimpRGB      foreground;
 
+          gimp_symmetry_set_stateful (sym, TRUE);
           gimp_context_get_foreground (context, &foreground);
           gimp_palettes_add_color_history (context->gimp,
                                            &foreground);
@@ -217,6 +218,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
+      gimp_symmetry_set_stateful (sym, FALSE);
       break;
     }
 }

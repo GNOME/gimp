@@ -273,6 +273,33 @@ gimp_symmetry_real_update_version (GimpSymmetry *symmetry)
 /***** Public Functions *****/
 
 /**
+ * gimp_symmetry_set_stateful:
+ * @sym:      the #GimpSymmetry
+ * @stateful: whether the symmetry should be stateful or stateless.
+ *
+ * By default, symmetry is made stateless, which means in particular
+ * that the size of points can change from one stroke to the next, and
+ * in particular you cannot map the coordinates from a stroke to the
+ * next. I.e. stroke N at time T+1 is not necessarily the continuation
+ * of stroke N at time T.
+ * To obtain corresponding strokes, stateful tools, such as MyPaint
+ * brushes or the ink tool, need to run this function. They should reset
+ * to stateless behavior once finished painting.
+ *
+ * One of the first consequence of being stateful is that the number of
+ * strokes cannot be changed, so more strokes than possible on canvas
+ * may be computed, and oppositely it will be possible to end up in
+ * cases with missing strokes (e.g. a tiling, theoretically infinite,
+ * won't be for the ink tool if one draws too far out of canvas).
+ **/
+void
+gimp_symmetry_set_stateful (GimpSymmetry *symmetry,
+                            gboolean      stateful)
+{
+  symmetry->stateful = stateful;
+}
+
+/**
  * gimp_symmetry_set_origin:
  * @sym:      the #GimpSymmetry
  * @drawable: the #GimpDrawable where painting will happen
