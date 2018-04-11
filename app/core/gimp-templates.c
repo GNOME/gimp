@@ -140,7 +140,7 @@ gimp_templates_migrate_get_child_by_name (GimpContainer *container,
 
           if (dpi)
             {
-              strncpy (dpi, "ppi", 4);
+              memcpy (dpi, "ppi", 3);
 
               g_print ("replaced: %s\n", str1);
 
