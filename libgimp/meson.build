@@ -43,6 +43,7 @@ libgimp_top_pdbwrappers = [
   'gimpdisplay_pdb.c',
   'gimpdrawable_pdb.c',
   'gimpdrawablecolor_pdb.c',
+  'gimpdrawableedit_pdb.c',
   'gimpdrawabletransform_pdb.c',
   'gimpdynamics_pdb.c',
   'gimpedit_pdb.c',
