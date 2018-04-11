@@ -20,6 +20,7 @@ libappinternalprocs_sources = [
   'display-cmds.c',
   'drawable-cmds.c',
   'drawable-color-cmds.c',
+  'drawable-edit-cmds.c',
   'drawable-transform-cmds.c',
   'dynamics-cmds.c',
   'edit-cmds.c',

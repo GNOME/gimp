@@ -4,9 +4,10 @@
 project('gimp', ['c', 'cpp'], version: '2.10.0',
   meson_version: '>=0.44.0',
   default_options: [
+    'cpp_std=gnu++14',
     'sysconfdir=/etc',
     'localstatedir=/var',
-    'sharedstatedir=/var/lib'
+    'sharedstatedir=/var/lib',
   ],
 )
 
@@ -42,7 +43,7 @@ user_version  = '@0@.@1@'.format(major_version, minor_version)
 gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
 
 # Override for Release-candidates
-gimp_version  = gimp_version + '-RC1'
+gimp_version  = gimp_version + '-RC2-git'
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
@@ -237,7 +238,7 @@ math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.2.0')
 
-babl_minver       = '>=0.1.44'
+babl_minver       = '>=0.1.46'
 babl              = dependency('babl',               version: babl_minver)
 
 cairo_minver      = '>=1.12.2'
@@ -255,7 +256,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 gdk_pixbuf_minver = '>=2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: gdk_pixbuf_minver)
 
-gegl_minver       = '>=0.3.30'
+gegl_minver       = '>=0.3.34'
 gegl              = dependency('gegl-0.3',           version: gegl_minver)
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
@@ -276,15 +277,21 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
-libmypaint_brushes= dependency('mypaint-brushes-1.0',required: false)
-# Mypaint-brushes not available on MingW
-# TODO should be removed when MingW adds them
-mypaint_brushes = libmypaint_brushes.found() ? [
-  libmypaint_brushes,
-] : []
-mypaint_args    = libmypaint_brushes.found() ? [] : [
-  '-DMYPAINT_BRUSHES_DIR="/usr/share/mypaint-data/1.0/brushes"',
-]
+
+libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
+conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
+
+if libmypaint_brushes_bundled
+  libmypaint_brushes = dependency('', required: false)
+  libmypaint_brushes_dir = join_paths(
+    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
+  )
+else
+  libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
+  libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
+endif
+conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
+
 
 pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
@@ -908,29 +915,40 @@ if get_option('ansi')
   add_project_arguments('-ansi', '-pedantic', language: [ 'c', 'cpp', ])
 endif
 
-warning_cflags = [
+warning_cflags_common = [
   '-fdiagnostics-show-option',
   '-fno-common',
 
-  '-Wdeclaration-after-statement',
   '-Wformat-security',
   '-Winit-self',
   '-Wlogical-op',
   '-Wmissing-declarations',
   '-Wmissing-format-attribute',
-  '-Wold-style-definition',
   '-Wpointer-arith',
   '-Wreturn-type',
   '-Wtype-limits',
 
   # You can uncomment this to debug with less warning outputs
-  # '-Wno-deprecated-declarations',
-  '-Wno-strict-prototypes',
+  '-Wno-deprecated-declarations',
 
   '-Werror=implicit-function-declaration',
 ]
-add_project_arguments(cc .get_supported_arguments(warning_cflags), language: 'c')
-add_project_arguments(cxx.get_supported_arguments(warning_cflags), language: 'cpp')
+warning_cflags_c = [
+  '-Wdeclaration-after-statement',
+  '-Wold-style-definition',
+  '-Wno-strict-prototypes',
+]
+warning_cflags_cpp = [
+]
+
+add_project_arguments(
+  cc .get_supported_arguments(warning_cflags_common + warning_cflags_c),
+  language: 'c'
+)
+add_project_arguments(
+  cxx.get_supported_arguments(warning_cflags_common + warning_cflags_cpp),
+  language: 'cpp'
+)
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
@@ -1474,7 +1492,7 @@ Optional Features:
   Language selection:  @0@'''.format(isocodes.found()) +'''
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
-
+  Bundled MyPaint Brushes: @0@ (at @1@)'''.format('enable_bundled_mypaint_brushes', libmypaint_brushes_dir)+'''
 Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''
   Ghostscript:         @0@'''.format(ghostscript.found()) +'''

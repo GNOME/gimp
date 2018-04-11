@@ -61,7 +61,7 @@ appdatafile = custom_target(appdatafilename,
     '--cache='+join_paths('@OUTDIR@', 'intltool-merge-cache'),
   ],
   install: true,
-  install_dir: join_paths(get_option('datadir'), 'appdata'),
+  install_dir: join_paths(get_option('datadir'), 'metainfo'),
 )
 
 metainfofilename = 'gimp-data-extras.metainfo.xml'
