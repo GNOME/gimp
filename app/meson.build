@@ -16,6 +16,7 @@ subdir('core')
 subdir('dialogs')
 subdir('display')
 subdir('file')
+subdir('file-data')
 subdir('gegl')
 subdir('gui')
 subdir('menus')
@@ -37,10 +38,6 @@ app_debug_files = files(
 )
 
 # Top-level library
-app_cflags = [
-  '-DG_LOG_DOMAIN="Gimp"',
-  '-DGIMP_APP_GLUE_COMPILATION',
-]
 
 libapp_sources = [
   'app.c',
@@ -60,16 +57,16 @@ libapp_sources = [
 libapp = static_library('app',
   libapp_sources,
   include_directories: [ rootInclude, rootAppInclude, configInclude, ],
-  c_args: app_cflags,
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   dependencies: [
-    gegl, gdk_pixbuf, gtk2,
+    gegl, gdk_pixbuf, gtk3,
   ],
 )
 
 
 # Those subdirs need to link againts the first ones
 subdir('config')
-subdir('tests')
+# subdir('tests')
 
 
 
@@ -77,6 +74,7 @@ app_links = [
   libappconfig,
   libappcore,
   libappfile,
+  libappfiledata,
   libappgegl,
   libappinternalprocs,
   libapplayermodes,
@@ -109,12 +107,12 @@ app_gui_links = [
 ]
 
 app_deps = [
-  gio, gtk2, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw,
+  gio, gtk3, pangocairo, pangoft2, gegl, lcms, gexiv2, drmingw,
 ]
 
 # Executables
 
-rc_name = 'gimp-'+ app_version
+rc_name = 'gimp-'+ user_version
 rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [
@@ -127,16 +125,16 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-gimpconsole_exe = executable('gimp-console-'+app_version,
+gimpconsole_exe = executable('gimp-console-'+user_version,
   libapp_sources + [ 'main.c', rc_file, ],
-  c_args: app_cflags + [ '-DGIMP_CONSOLE_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ] + [ '-DGIMP_CONSOLE_COMPILATION', ],
   include_directories: [ rootInclude, ],
   dependencies: app_deps,
   link_with: app_links,
   install: true,
 )
 
-rc_name = 'gimp-console-'+ app_version
+rc_name = 'gimp-console-'+ user_version
 rc_file = platform_win32 ? windows.compile_resources(
   gimp_app_rc,
   args: [
@@ -149,9 +147,9 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-gimpmain_exe = executable('gimp-'+app_version,
+gimpmain_exe = executable('gimp-'+user_version,
   libapp_sources + [ 'main.c', rc_file, ],
-  c_args: app_cflags + [ ],
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   include_directories: [ rootInclude, ],
   dependencies: app_deps,
   link_with: app_links + app_gui_links,

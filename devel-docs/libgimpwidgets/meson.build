@@ -23,7 +23,7 @@ gnome.gtkdoc(module_name,
   ],
 
   dependencies: [
-    fontconfig, freetype2, gtk2, harfbuzz, pangocairo,
+    fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
   ],
   scanobjs_args: [
     '--type-init-func="do { void babl_init (void); babl_init (); } while (0)"',
