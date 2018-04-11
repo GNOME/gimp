@@ -1,14 +1,17 @@
 # Meson build file
 
-# http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
-project('gimp', ['c', 'cpp'], version: '2.10.0',
-  meson_version: '>=0.44.0',
+project('gimp', ['c', 'cpp'], version: '2.99.1',
+  meson_version: '>=0.50.0',
   default_options: [
+    'cpp_std=gnu++14',
     'sysconfdir=/etc',
     'localstatedir=/var',
-    'sharedstatedir=/var/lib'
+    'sharedstatedir=/var/lib',
   ],
 )
+
+project_url = 'https://gitlab.gnome.org/GNOME/gimp'
+project_url_issues = project_url + '/issues/new'
 
 conf = configuration_data()
 
@@ -21,57 +24,59 @@ conf = configuration_data()
 #       #   #  #    # #    # #      #    #   #        # #   ## #      #    #
 #       #    #  ####   ####  ######  ####    #        # #    # #       ####
 
-
-
 prettyname = 'GIMP'
 full_name  = 'GNU Image Manipulation Program'
 
-# Making releases on the stable branch:
-#   micro_version += 1
-#   interface_age += 1
+version_arr = meson.project_version().split('.')
+version_major = version_arr[0].to_int()
+version_minor = version_arr[1].to_int()
+version_micro = version_arr[2].to_int()
 
-version  = meson.project_version().split('.')
-major_version = version[0].to_int()
-minor_version = version[1].to_int()
-micro_version = version[2].to_int()
-interface_age = 0
+apiversion_major = (version_minor == 99) ? (version_major+1) : (version_major)
+apiversion_minor = (version_minor == 99) ? (              0) : (version_minor)
 
-api_version   = '@0@.0'  .format(major_version)
-app_version   = '@0@.@1@'.format(major_version, minor_version)
-user_version  = '@0@.@1@'.format(major_version, minor_version)
-gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
 
 # Override for Release-candidates
-gimp_version  = gimp_version + '-RC1'
+gimp_version = meson.project_version()
+app_version = '@0@.@1@'.format(   version_major,    version_minor)
+api_version = '@0@.@1@'.format(apiversion_major, apiversion_minor)
+user_version = api_version
+
+
+# See http://sources.redhat.com/autobook/autobook/autobook_91.html#SEC91 for details
+# - If interfaces have been changed or added, but binary compatibility has been preserved, change:
+#      lt_current += 1
+#      lt_revision = 0
+#      lt_age += 1
+# - If binary compatibility has been broken (eg removed or changed interfaces), change:
+#      lt_current += 1
+#      lt_revision = 0
+#      lt_age = 0
+# - If the interface is the same as the previous version, but bugs are fixed, change:
+#      lt_revision += 1
+lt_current = 0
+lt_revision = version_micro
+lt_age = 100*apiversion_minor + 0
+so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
+
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
-package_string  = prettyname + ' ' + gimp_version
+package_string= prettyname + ' ' + gimp_version
 
-gettext_package = 'gimp20'
+gettext_package= 'gimp@0@@1@'.format(apiversion_major, apiversion_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
+conf.set_quoted('GIMP_VERSION', gimp_version)
 
-# TODO cleanup all this versions mess
-binary_age = 100 * minor_version + micro_version
-
-lt_current = 100 * minor_version + micro_version - interface_age
-lt_revision = interface_age
-lt_age = binary_age - interface_age
-lt_version_info = '@0@:@1@:@2@'.format(lt_current, lt_revision, lt_age)
-lt_current_minus_age = lt_current - lt_age
-
-so_version = '@0@.@1@.@2@'.format(lt_revision, lt_current, lt_current_minus_age)
-
-
-stable = (minor_version % 2 == 0)
+stable = (version_minor % 2 == 0)
 conf.set10('GIMP_UNSTABLE', not stable)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
-versionconfig.set('GIMP_MAJOR_VERSION', major_version)
-versionconfig.set('GIMP_MINOR_VERSION', minor_version)
-versionconfig.set('GIMP_MICRO_VERSION', micro_version)
+versionconfig.set('GIMP_MAJOR_VERSION', version_major)
+versionconfig.set('GIMP_MINOR_VERSION', version_minor)
+versionconfig.set('GIMP_MICRO_VERSION', version_micro)
 versionconfig.set('GIMP_VERSION',       gimp_version)
 versionconfig.set('GIMP_API_VERSION',   api_version)
 
@@ -121,6 +126,10 @@ conf.set10('ARCH_PPC64',  arch_ppc64)
 
 host_os = host_machine.system().to_lower()
 message('Host os: ' + host_os)
+
+platform_linux = (
+  host_os.contains('linux')
+)
 
 platform_win32 = (
   host_os.contains('mingw') or
@@ -220,9 +229,6 @@ if (get_option('buildtype') == 'release' or
 
 endif
 
-################################################################################
-# Mandatory Dependencies
-
 ######
 #     # ###### #####  ###### #    # #####  ###### #    #  ####  # ######  ####
 #     # #      #    # #      ##   # #    # #      ##   # #    # # #      #
@@ -231,32 +237,35 @@ endif
 #     # #      #      #      #   ## #    # #      #   ## #    # # #      #    #
 ######  ###### #      ###### #    # #####  ###### #    #  ####  # ######  ####
 
+no_dep = dependency('', required: false)
+
+################################################################################
+# Mandatory Dependencies
+
+relocatable_bundle = get_option('relocatable-bundle')
+conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
+dl                = cc.find_library('dl')
 
-atk               = dependency('atk',                version: '>=2.2.0')
+atk               = dependency('atk',                version: '>=2.4.0')
 
-babl_minver       = '>=0.1.44'
-babl              = dependency('babl',               version: babl_minver)
+babl              = dependency('babl',               version: '>=0.1.66')
 
-cairo_minver      = '>=1.12.2'
-cairo             = dependency('cairo',              version: cairo_minver)
+cairo             = dependency('cairo',              version: '>=1.12.2')
 
 dbus_glib         = dependency('dbus-glib-1')
 
-fontconfig_minver = '>=2.12.4'
 # fontconfig_name   = platform_win32 ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
-fontconfig        = dependency(fontconfig_name,      version: fontconfig_minver)
+fontconfig        = dependency(fontconfig_name,      version: '>=2.12.4')
 
 freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
-gdk_pixbuf_minver = '>=2.30.8'
-gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: gdk_pixbuf_minver)
+gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl_minver       = '>=0.3.30'
-gegl              = dependency('gegl-0.3',           version: gegl_minver)
+gegl              = dependency('gegl-0.4',           version: '>=0.4.17')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -265,31 +274,44 @@ gio_specific_name = platform_win32 ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
 glib              = dependency('glib-2.0',           version: '>=2.54.2')
+# glib 2.56.0 and 2.56.1 have a bad bug on Win32, breaking the file
+# chooser dialogs. This has been fixed, but no release made yet. When
+# 2.56.2 is released, the additional test for these broken versions can
+# be removed and we can bump the requirement to glib 2.56.2.
+if platform_win32 and (glib.version().version_compare('==2.56.0')
+                    or glib.version().version_compare('==2.56.1'))
+  error('GLib2 2.56.0 and 2.56.1 are broken on Windows (bug 795855).')
+endif
+
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk2_minver       = '>=2.24.32'
-gtk2              = dependency('gtk+-2.0',           version: gtk2_minver)
+gtk3              = dependency('gtk+-3.0',           version: '>=3.16.10')
 
 harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
 lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
-libmypaint_brushes= dependency('mypaint-brushes-1.0',required: false)
-# Mypaint-brushes not available on MingW
-# TODO should be removed when MingW adds them
-mypaint_brushes = libmypaint_brushes.found() ? [
-  libmypaint_brushes,
-] : []
-mypaint_args    = libmypaint_brushes.found() ? [] : [
-  '-DMYPAINT_BRUSHES_DIR="/usr/share/mypaint-data/1.0/brushes"',
-]
+
+if relocatable_bundle
+  libmypaint_brushes = no_dep
+  libmypaint_brushes_dir = join_paths(
+    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
+  )
+else
+  libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
+  libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
+endif
+conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
+
 
 pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
+conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
+conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('>=1.43'))
 
 
 ################################################################################
@@ -354,11 +376,49 @@ endif
 libsocket         = cc.find_library('socket', required: false)
 conf.set('HAVE_LIBSOCKET', libsocket.found())
 
+################################################################################
+# Check for extension support
+
+appstream_glib = dependency('appstream-glib',     version: '>=0.7.7')
+
+libarchive = dependency('libarchive')
+
 
 ################################################################################
-# Check for Dr. Mingw
+# Check for debug console (Win32)
 
-drmingw = dependency('', required: false)
+if platform_win32
+  conf.set('ENABLE_WIN32_DEBUG_CONSOLE', get_option('win32-debug-console'))
+endif
+
+################################################################################
+# Check for 32-bit DLLs (Win32 64-bit)
+
+if platform_win32 and arch_x86_64
+  conf.set('WIN32_32BIT_DLL_FOLDER', get_option('win32-32bits-dll-folder'))
+endif
+
+################################################################################
+# Check for detailed backtraces support
+
+## Check for libbacktrace
+
+libbacktrace = ( get_option('libbacktrace')
+  ? cc.find_library('backtrace', has_headers: 'backtrace.h', required: false)
+  : no_dep
+)
+conf.set('HAVE_LIBBACKTRACE', libbacktrace.found())
+
+## Check for libunwind
+libunwind = ( get_option('libunwind')
+  ? dependency('libunwind', version: '>=1.1.0', required: false)
+  : no_dep
+)
+conf.set('HAVE_LIBUNWIND', libunwind.found())
+
+
+## Check for Dr. Mingw
+drmingw = no_dep
 if platform_win32
   exchndl = cc.find_library('exchndl')
   exchndl_fn = cc.has_function('ExcHndlSetLogFileNameA', dependencies: exchndl)
@@ -369,10 +429,16 @@ endif
 conf.set('HAVE_EXCHNDL', drmingw.found())
 
 
+detailed_backtraces = (
+  libbacktrace.found() or
+  libunwind.found() or
+  drmingw.found()
+)
+
 ################################################################################
 # Check for x11 support
 
-x11_target = gtk2.get_pkgconfig_variable('target') == 'x11'
+x11_target = gtk3.get_pkgconfig_variable('targets').contains('x11')
 
 x11   = x11_target ? dependency('x11')    : dependency('', required: false)
 xmu   = x11_target ? dependency('xmu')    : dependency('', required: false)
@@ -401,8 +467,8 @@ conf.set('HAVE_X11_XMU_WINUTIL_H',      cc.has_header('X11/Xmu/WinUtil.h'))
 # Features requiring x11
 
 have_doc_shooter= x11_target
-have_print      = get_option('with-print')
-have_screenshot = get_option('with-screenshot')
+have_screenshot = get_option('screenshot')
+have_print      = get_option('print')
 if have_print and not x11_target
   error('Printing requires x libs')
 endif
@@ -439,161 +505,124 @@ MIMEtypes = [
 
 
 
-libtiff = dependency('libtiff-4', required: false)
+libtiff = dependency('libtiff-4', required: get_option('tiff'))
 if libtiff.found()
   MIMEtypes += 'image/tiff'
 endif
 
 
-libjpeg = dependency('libjpeg', required: false)
+libjpeg = dependency('libjpeg', required: get_option('jpeg'))
+conf.set('HAVE_LIBJPEG', libjpeg.found())
 if libjpeg.found()
   MIMEtypes += 'image/jpeg'
 endif
-conf.set('HAVE_LIBJPEG', libjpeg.found())
 
 
-zlib = dependency('zlib', required: false)
-if zlib.found()
-  MIMEtypes += 'image/x-psp'
-endif
+zlib = dependency('zlib')
+MIMEtypes += 'image/x-psp'
+
+bz2 = cc.find_library('bz2')
+
+liblzma = dependency('liblzma', version: '>=5.0.0')
 
 
-bz2 = cc.find_library('bz2', required: false)
-
-
-liblzma = dependency('liblzma', version: '>=5.0.0', required: false)
-
-
-if get_option('with-ghostscript')
-  ghostscript = cc.find_library('gs')
+ghostscript = cc.find_library('gs', required: get_option('ghostscript'))
+if ghostscript.found()
   MIMEtypes += 'application/postscript'
-else
-  ghostscript = dependency('', required: false)
 endif
 
 
-libpng = dependency('libpng', version: '>=1.6.25', required: false)
+libpng = dependency('libpng', version: '>=1.6.25', required: get_option('png'))
 if libpng.found()
   MIMEtypes += [ 'image/png', 'image/x-icon']
 endif
 
 
-if get_option('with-mng')
-  libmng = cc.find_library('mng')
-else
-  libmng = dependency('', required: false)
-endif
+libmng = cc.find_library('mng', required: get_option('mng'))
 
+libaa = cc.find_library('aa', required: get_option('aa'))
 
-if get_option('with-aa')
-  libaa = cc.find_library('aa')
-else
-  libaa = dependency('', required: false)
-endif
-
-
-if get_option('with-xpm')
-  libxpm = dependency('xpm')
+libxpm = dependency('xpm', required: get_option('xpm'))
+if libxpm.found()
   MIMEtypes += 'image/x-xpixmap'
-else
-  libxpm = dependency('', required: false)
 endif
 
 
-if get_option('with-openexr')
-  openexr = dependency('OpenEXR', version: '>=1.6.1')
+openexr = dependency('OpenEXR', version: '>=1.6.1', required: get_option('openexr'))
+if openexr.found()
   MIMEtypes += 'image/x-exr'
-else
-  openexr = dependency('', required: false)
 endif
 
 
-if get_option('with-webp')
-  webp_deps = [
-    dependency('libwebp',     version: '>=0.6.0'),
-    dependency('libwebpmux',  version: '>=0.6.0'),
-    dependency('libwebpdemux',version: '>=0.6.0'),
-  ]
-  webp = declare_dependency(
-    dependencies: webp_deps,
-    version: webp_deps[0].version(),
-  )
+libwebp      = dependency('libwebp',     version: '>=0.6.0', required: get_option('webp'))
+libwebpmux   = dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp'))
+libwebpdemux = dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp'))
+webp_found = libwebp.found() and libwebpmux.found() and libwebpdemux.found()
+if webp_found
   MIMEtypes += 'image/x-webp'
-else
-  webp = dependency('', required: false)
 endif
 
 
-if get_option('with-webkit')
-  webkit = dependency('webkit-1.0', version: '>=1.6.1')
-else
-  webkit = dependency('', required: false)
+libheif = dependency('libheif', version: '>=1.3.2', required: get_option('heif'))
+conf.set('HAVE_LIBHEIF_4_1_0', libheif.version().version_compare('>=1.4.0'))
+
+if libheif.found()
+  MIMEtypes += [
+    'image/heif',
+    'image/heic',
+  ]
 endif
+
+webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3', required: get_option('webkit'))
 conf.set('HAVE_WEBKIT', webkit.found())
 
 
-if get_option('with-poppler')
+if get_option('poppler')
   # All modern distributions have at least this version and CJK/Cyrillic
   # support should not be considered as "second-zone citizen".
   poppler = [
-    dependency('poppler-glib', version: '>=0.44.0'),
-    dependency('poppler-data', version: '>=0.4.7'),
+    dependency('poppler-glib', version: '>=0.69.0'),
+    dependency('poppler-data', version: '>=0.4.9'),
   ]
 else
   poppler = dependency('', required: false)
 endif
 
 
-if get_option('with-cairo-pdf')
-  cairopdf = dependency('cairo-pdf', version: '>=1.12.2')
-else
-  cairopdf = dependency('', required: false)
-endif
-
+cairopdf = dependency('cairo-pdf', version: '>=1.12.2', required: get_option('cairo-pdf'))
 
 # PDF import support is a granted feature.
 MIMEtypes += 'application/pdf'
 
-
-if get_option('with-wmf')
-  wmf = dependency('libwmf', version: '>=0.2.8')
+wmf = dependency('libwmf', version: '>=0.2.8', required: get_option('wmf'))
+if wmf.found()
   MIMEtypes += [ 'image/x-wmf', ]
-else
-  wmf = dependency('', required: false)
 endif
 
 
-if get_option('with-jpeg2000')
-  openjpeg = dependency('libopenjp2', version: '>=2.1.0')
+openjpeg = dependency('libopenjp2', version: '>=2.1.0', required: get_option('jpeg2000'))
+if openjpeg.found()
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
-else
-  openjpeg = dependency('', required: false)
 endif
 
 
-if get_option('with-xcursor')
-  xmc = dependency('xcursor')
+xmc = dependency('xcursor', required: get_option('xcursor'))
+if xmc.found()
   MIMEtypes += [ 'image/x-xcursor', ]
-else
-  xmc = dependency('', required: false)
 endif
 
 
-if get_option('with-alsa')
-  alsa = dependency('alsa', version: '>=1.0.0')
-else
-  alsa = dependency('', required: false)
-endif
+alsa = dependency('alsa', version: '>=1.0.0', required: get_option('alsa'))
 conf.set('HAVE_ALSA', alsa.found())
 
 
-have_linuxinput = get_option('with-linux-input')
+have_linuxinput = get_option('linux-input')
 if have_linuxinput and not cc.has_header('linux/input.h')
   error('linux/input.h header not found.')
 endif
 
 # DirectX DirectInput
-directx_sdk_path = get_option('with-directx-sdk')
+directx_sdk_path = get_option('directx-sdk-dir')
 if directx_sdk_path != '' and platform_win32
   if directx_sdk_path.contains(' ')
     warning('''
@@ -619,11 +648,7 @@ endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
 
-if get_option('with-gudev')
-  gudev = dependency('gudev-1.0', version: '>=167')
-else
-  gudev = dependency('', required: false)
-endif
+gudev = dependency('gudev-1.0', version: '>=167', required: get_option('gudev'))
 conf.set('HAVE_LIBGUDEV', gudev.found())
 
 
@@ -693,34 +718,29 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 
 # python
-have_python = get_option('with-python')
+have_python = get_option('python')
 if have_python
   python2 = find_program('python2')
 
   libpython2= dependency('python2',       version: '>=2.5.0')
-  pygobject = dependency('pygobject-2.0', version: '>=2.10.4')
-  pygtk2    = dependency('pygtk-2.0',     version: '>=2.10.4')
-  pycairo   = dependency('pycairo',       version: '>=1.0.2')
+  py2gobject= dependency('pygobject-3.0', version: '>=2.10.4')
+  py2cairo  = dependency('pycairo',       version: '>=1.0.2')
 
-  pygobjectcodegen = find_program('pygobject-codegen-2.0')
-  pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
+  # pygobjectcodegen = find_program('pygobject-codegen-2.0')
+  # pygtk_defsdir = pygtk2.get_pkgconfig_variable('defsdir')
 endif
 
 
-# Script-fu
-have_scriptfu = get_option('with-script-fu')
-
-
 # Check for GTK Mac Integration
-if platform_osx and (gtk2.get_pkgconfig_variable('target') == 'xquartz')
-  gtk2_macos = dependency('gtk-mac-integration-gtk2', version: '>=2.0.0',
+if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('xquartz'))
+  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=2.0.0',
     required: false
   )
-  if not gtk2_macos.found()
-    gtk2_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
+  if not gtk3_macos.found()
+    gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
   endif
 else
-  gtk2_macos = dependency('', required: false)
+  gtk3_macos = dependency('', required: false)
 endif
 
 # Check for XML tools
@@ -730,15 +750,11 @@ intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate')
 gdk_pixbuf_csource  = find_program('gdk-pixbuf-csource')
 
-if get_option('with-appdata-test')
-  appstream_util = find_program('appstream-util')
-else
-  appstream_util = dependency('', required: false)
-endif
+appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
 
 # Check for vector icons
-have_vector_icons = get_option('with-vec-icons')
+have_vector_icons = get_option('vec-icons')
 if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
@@ -754,19 +770,49 @@ if have_vector_icons
   endif
 endif
 
-if get_option('with-xvfb-run')
-  xvfb_run = find_program('xvfb-run')
-else
-  xvfb_run = dependency('', required: false)
-endif
+gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', required: true)
+
+xvfb_run = find_program('xvfb-run', required: get_option('xvfb-run'))
 conf.set('HAVE_XVFB_RUN', xvfb_run.found())
 
+# Set bug report URL
 
-if get_option('with-gtk-doc')
-  gtkdoc_scan = find_program('gtkdoc-scan', required : true)
-else
-  gtkdoc_scan = dependency('', required: false)
+# Allowing third-party packagers to set their own bugtracker URL, in
+# order to filter first packaging bugs from core bugs.
+bug_report_url = get_option('bug-report-url')
+
+if bug_report_url == ''
+  message('''
+    NOTE: if you plan on packaging GIMP for distribution, it is recommended
+    to override the bug report URL with option:
+      --with-bug-report-url=https://example.com/
+    so that you can filter packaging bugs from core bugs before reporting upstream.
+  ''')
+
+  bug_report_url = project_url_issues
 endif
+conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
+conf.set_quoted('BUG_REPORT_URL', bug_report_url)
+
+# Default ICC directory #
+
+# This is necessary because some Unix systems may have a different
+# standard path for color profiles. And in particular, sandbox builds
+# might mount the host system at a different root. This is for
+# instance the case of flatpak which mount the host root at /run/host/.
+
+# if not (platform_osx or platform_win32)
+
+icc_directory = get_option('icc-directory')
+if icc_directory == ''
+  icc_directory = '/usr/share/color/icc'
+endif
+conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
+
+# endif
+
+
+gtkdoc_scan = find_program('gtkdoc-scan', required : get_option('gtk-doc'))
 
 enable_default_bin = get_option('enable-default-bin')
 enable_console_bin = get_option('enable-console-bin')
@@ -786,48 +832,6 @@ gimpsysconfdir = join_paths(get_option('sysconfdir'), project_subdir)
 gimpmanpagedir = gimpdir
 localedir      = join_paths(get_option('datadir'), 'locale')
 
-
-
-# Disable deprecated APIs
-add_project_arguments([
-  '-DGIMP_DISABLE_DEPRECATED',
-  '-DBABL_DISABLE_DEPRECATED',
-  '-DGSEAL_ENABLE'
-  ],
-  language: 'c',
-)
-
-if glib.version().version_compare('>=2.43')
-  add_project_arguments([
-    '-DG_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if gtk2.version().version_compare('>=2.26')
-  add_project_arguments([
-    '-DGDK_DISABLE_DEPRECATED',
-    '-DGTK_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-if glib.version().version_compare('>=1.32')
-  add_project_arguments([
-    '-DPANGO_DISABLE_DEPRECATED',
-    ],
-    language: 'c',
-  )
-endif
-
-
-# Require multihead safe API
-add_project_arguments([
-  '-DGDK_MULTIHEAD_SAFE',
-  '-DGTK_MULTIHEAD_SAFE',
-  ],
-  language: 'c',
-)
 
 
 # Check for internal tools
@@ -908,29 +912,41 @@ if get_option('ansi')
   add_project_arguments('-ansi', '-pedantic', language: [ 'c', 'cpp', ])
 endif
 
-warning_cflags = [
+warning_cflags_common = [
   '-fdiagnostics-show-option',
   '-fno-common',
 
-  '-Wdeclaration-after-statement',
   '-Wformat-security',
   '-Winit-self',
   '-Wlogical-op',
   '-Wmissing-declarations',
   '-Wmissing-format-attribute',
-  '-Wold-style-definition',
   '-Wpointer-arith',
   '-Wreturn-type',
   '-Wtype-limits',
 
   # You can uncomment this to debug with less warning outputs
-  # '-Wno-deprecated-declarations',
-  '-Wno-strict-prototypes',
+  '-Wno-deprecated-declarations',
 
   '-Werror=implicit-function-declaration',
 ]
-add_project_arguments(cc .get_supported_arguments(warning_cflags), language: 'c')
-add_project_arguments(cxx.get_supported_arguments(warning_cflags), language: 'cpp')
+warning_cflags_c = [
+  '-Wdeclaration-after-statement',
+  '-Wold-style-definition',
+  '-Wno-strict-prototypes',
+]
+warning_cflags_cpp = [
+]
+
+add_project_arguments(
+  cc .get_supported_arguments(warning_cflags_common + warning_cflags_c),
+  language: 'c'
+)
+add_project_arguments(
+  cxx.get_supported_arguments(warning_cflags_common + warning_cflags_cpp),
+  language: 'cpp'
+)
+
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
@@ -992,6 +1008,7 @@ foreach fn : [
     'isfinite',
     'mmap',
     'rint',
+    'thr_self',
     'vfork',
     'vprintf',
   ]
@@ -1022,6 +1039,7 @@ foreach header : [
     # 'sys/prctl.h',
     'sys/select.h',
     'sys/stat.h',
+    'sys/thr.h',
     'sys/time.h',
     'sys/times.h',
     'sys/types.h',
@@ -1110,61 +1128,58 @@ conf.set('HAVE_FUNC_ATTRIBUTE_DESTRUCTOR',
 #     # #      #      # #   ## #      #    #
 ######  ###### #      # #    # ######  ####
 
+# Compiler
+conf.set_quoted('CC',             cc.get_id())
+conf.set_quoted('CC_VERSION',     cc.version())
+
+# Names
+conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
+conf.set_quoted('PACKAGE_NAME',   meson.project_name())
+conf.set_quoted('PACKAGE_STRING', package_string)
+conf.set_quoted('GIMP_COMMAND',   gimp_command)
+
+# Versions
+conf.set_quoted('GIMP_APP_VERSION_STRING',app_version)
+conf.set_quoted('GIMP_APP_VERSION',       app_version)
+conf.set_quoted('GIMP_DATA_VERSION',      api_version)
+conf.set_quoted('GIMP_PLUGIN_VERSION',    api_version)
+conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
+conf.set_quoted('GIMP_TOOL_VERSION',      api_version)
+conf.set_quoted('GIMP_USER_VERSION',      user_version)
+conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_version)
+
+# Directories
+conf.set_quoted('PREFIX',          prefix)
+conf.set_quoted('EXEC_PREFIX',     prefix)
+conf.set_quoted('GIMPDIR',         gimpdir)
+conf.set_quoted('GIMPSYSCONFDIR',  gimpsysconfdir)
+conf.set_quoted('GIMPDATADIR',     join_paths(prefix, gimpdatadir))
+conf.set_quoted('GIMPPLUGINDIR',   join_paths(prefix, gimpplugindir))
+conf.set_quoted('PLUGINDIR',       join_paths(prefix, gimpplugindir))
+conf.set_quoted('LOCALEDIR',       join_paths(prefix, localedir))
+
+conf.set_quoted('LOCALSTATEDIR',   get_option('localstatedir'))
+# /usr/com?
+conf.set_quoted('SHAREDSTATEDIR',  get_option('sharedstatedir'))
+conf.set_quoted('SYSCONFDIR',      get_option('sysconfdir'))
+conf.set_quoted('BINDIR',          join_paths(prefix, get_option('bindir')))
+conf.set_quoted('DATAROOTDIR',     join_paths(prefix, get_option('datadir')))
+conf.set_quoted('INFODIR',         join_paths(prefix, get_option('infodir')))
+conf.set_quoted('LIBDIR',          join_paths(prefix, get_option('libdir')))
+conf.set_quoted('LIBEXECDIR',      join_paths(prefix, get_option('libexecdir')))
+conf.set_quoted('MANDIR',          join_paths(prefix, get_option('mandir')))
+conf.set_quoted('SBINDIR',         join_paths(prefix, get_option('sbindir')))
+conf.set_quoted('SYSDATADIR',      join_paths(prefix, get_option('datadir')))
+
+# Third-party/Misc
+conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
+conf.set_quoted('ISO_CODES_LOCALEDIR',   isocodes_localedir)
+
+
 # Global arguments
-# Should be moved into config.h someday
-
-config_defines = [
-  # Compiler
-  '-DCC='                   +'"'+ cc.get_id()           +'"',
-  '-DCC_VERSION='           +'"'+ cc.version()          +'"',
-
-  # Names
-  '-DGIMP_PACKAGE='         +'"'+ meson.project_name()  +'"',
-  '-DPACKAGE_NAME='         +'"'+ meson.project_name()  +'"',
-  '-DPACKAGE_STRING='       +'"'+ package_string        +'"',
-  '-DGIMP_COMMAND='         +'"'+ gimp_command          +'"',
-
-  # Versions
-  '-DGIMP_APP_VERSION='     +'"'+ app_version           +'"',
-  '-DGIMP_DATA_VERSION='    +'"'+ api_version           +'"',
-  '-DGIMP_PLUGIN_VERSION='  +'"'+ api_version           +'"',
-  '-DGIMP_TOOL_VERSION='    +'"'+ api_version           +'"',
-
-  '-DGIMP_SYSCONF_VERSION=' +'"'+ api_version           +'"',
-  '-DGIMP_USER_VERSION='    +'"'+ user_version          +'"',
-  '-DGIMP_APP_VERSION_STRING="' + app_version           +'"',
-
-  # Directories
-  '-DPREFIX='         +'"'+ prefix                +'"',
-  '-DEXEC_PREFIX='    +'"'+ prefix                +'"',
-  '-DGIMPDIR='        +'"'+ gimpdir               +'"',
-  '-DGIMPSYSCONFDIR=' +'"'+ gimpsysconfdir        +'"',
-  '-DGIMPDATADIR='    +'"'+ join_paths(prefix, gimpdatadir)    +'"',
-  '-DGIMPPLUGINDIR='  +'"'+ join_paths(prefix, gimpplugindir)  +'"',
-  '-DPLUGINDIR='      +'"'+ join_paths(prefix, gimpplugindir)  +'"',
-  '-DLOCALEDIR='      +'"'+ join_paths(prefix, localedir)      +'"',
-
-  '-DLOCALSTATEDIR='  +'"'+ get_option('localstatedir')        +'"',
-  '-DSHAREDSTATEDIR=' +'"'+ get_option('sharedstatedir')       +'"', # /usr/com?
-  '-DSYSCONFDIR='     +'"'+ get_option('sysconfdir')           +'"',
-  '-DBINDIR='         +'"'+ join_paths(prefix, get_option('bindir'))       +'"',
-  '-DDATAROOTDIR='    +'"'+ join_paths(prefix, get_option('datadir'))      +'"',
-  '-DINFODIR='        +'"'+ join_paths(prefix, get_option('infodir'))      +'"',
-  '-DLIBDIR='         +'"'+ join_paths(prefix, get_option('libdir'))       +'"',
-  '-DLIBEXECDIR='     +'"'+ join_paths(prefix, get_option('libexecdir'))   +'"',
-  '-DMANDIR='         +'"'+ join_paths(prefix, get_option('mandir'))       +'"',
-  '-DSBINDIR='        +'"'+ join_paths(prefix, get_option('sbindir'))      +'"',
-  '-DSYSDATADIR='     +'"'+ join_paths(prefix, get_option('datadir'))      +'"',
-
-  # Third-party/Misc
-  '-DISO_CODES_LOCATION='   +'"'+ isocodes_location  +'"',
-  '-DISO_CODES_LOCALEDIR='  +'"'+ isocodes_localedir +'"',
-
-  '-DHAVE_CONFIG_H',
-]
-
-add_project_arguments(
-  config_defines,
+add_project_arguments([
+    '-DHAVE_CONFIG_H',
+  ],
   language: [ 'c', 'cpp', ],
 )
 
@@ -1218,33 +1233,36 @@ install_conf = configuration_data()
 install_conf.set('GIMP_APP_VERSION', app_version)
 install_conf.set('GIMP_PKGCONFIG_VERSION', gimp_version)
 install_conf.set('GIMP_VERSION', gimp_version)
+install_conf.set('APPSTREAM_GLIB_REQUIRED_VERSION', appstream_glib.version())
 install_conf.set('ATK_REQUIRED_VERSION',          atk         .version())
 install_conf.set('BABL_REQUIRED_VERSION',         babl        .version())
 install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf    .version())
 install_conf.set('CAIRO_REQUIRED_VERSION',        cairo       .version())
 install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig  .version())
-install_conf.set('FONTCONFIG_WIN32_RECOMMENDED_VERSION', fontconfig.version())
 install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
+install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2.version())
 install_conf.set('GLIB_REQUIRED_VERSION',         glib        .version())
-install_conf.set('GTK_REQUIRED_VERSION',          gtk2        .version())
+install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
 install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms        .version())
+install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
 install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma     .version())
 install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint  .version())
 install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng      .version())
 install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr     .version())
+install_conf.set('OPENJPEG_REQUIRED_VERSION',     openjpeg.version())
 install_conf.set('PANGOCAIRO_REQUIRED_VERSION',   pangocairo  .version())
 install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler[1]  .version())
 install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
 install_conf.set('PYTHON2_REQUIRED_VERSION',      '2.5.0')
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
-install_conf.set('WEBKIT_REQUIRED_VERSION',       webkit      .version())
-install_conf.set('WEBP_REQUIRED_VERSION',         webp        .version())
+install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit      .version())
+install_conf.set('WEBP_REQUIRED_VERSION',         libwebp     .version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
-install_conf.set('XGETTEXT_RECOMMENDED_VERSION', '0.19')
+install_conf.set('XGETTEXT_REQUIRED_VERSION', '0.19')
 
 configure_file(
   input : 'INSTALL.in',
@@ -1256,71 +1274,6 @@ configure_file(
 configure_file(
   output: 'config.h',
   configuration: conf
-)
-
-
-pkgconfig.generate(filebase: 'gimp-' + api_version,
-  name: prettyname,
-  description: 'GIMP Library',
-  version: gimp_version,
-  requires: [
-    'gdk-pixbuf-2.0 ' + gdk_pixbuf_minver,
-    'cairo '          + cairo_minver,
-    'gegl-0.3 '       + gegl_minver,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimp-'       + api_version,
-    '-lgimpmath-'   + api_version,
-    '-lgimpconfig-' + api_version,
-    '-lgimpcolor-'  + api_version,
-    '-lgimpbase-'   + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
-  variables: [
-    'datarootdir='    +'${prefix}/'+ get_option('datadir'),
-    'gimpdatadir='    +'${prefix}/'+ gimpdatadir,
-    'gimplibdir='     +'${prefix}/'+ gimpplugindir,
-    'gimpsysconfdir=' + gimpsysconfdir,
-    'gimplocaledir='  +'${prefix}/'+ localedir,
-  ],
-)
-
-pkgconfig.generate(filebase: 'gimpthumb-' + api_version,
-  name: 'GIMP Thumb',
-  description: 'GIMP Thumbnail Library',
-  version: gimp_version,
-  requires: [
-    'gdk-pixbuf-2.0 ' + gdk_pixbuf_minver,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimpthumb-'  + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
-)
-
-pkgconfig.generate(filebase: 'gimpui-' + api_version,
-  name: 'GIMP UI',
-  description: 'GIMP User Interface Library',
-  version: gimp_version,
-  requires: [
-    'gimp-' + api_version + ' >= ' + app_version,
-    'gtk+-2.0 ' + gtk2_minver,
-  ],
-  libraries: [
-    '-L${libdir}',
-    '-lgimpui-'  + api_version,
-    '-lgimpwidgets-' + api_version,
-    '-lgimpmodule-'  + api_version,
-  ],
-  subdirs: [
-    gimp_api_name,
-  ],
 )
 
 
@@ -1375,7 +1328,7 @@ if xmllint.found()
   )
 endif
 
-if python2.found()
+if have_python
   # TODO this python script is waiting for autotools directory/files structure
   custom_target('check-defs',
     input : [ ],
@@ -1460,8 +1413,72 @@ subdir('pdb')
 subdir('app-tools')
 
 # Docs
-subdir('devel-docs')
+# subdir('devel-docs')
 subdir('docs')
+
+
+
+
+pkgconfig.generate(libgimp,
+  filebase: 'gimp-' + api_version,
+  name: prettyname,
+  description: 'GIMP Library',
+  version: gimp_version,
+  requires: [
+    gdk_pixbuf,
+    cairo,
+    gegl,
+  ],
+  libraries: [
+    libgimpbase,
+    libgimpcolor,
+    libgimpconfig,
+    libgimpmath,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+  variables: [
+    'datarootdir='    +'${prefix}/'+ get_option('datadir'),
+    'gimpdatadir='    +'${prefix}/'+ gimpdatadir,
+    'gimplibdir='     +'${prefix}/'+ gimpplugindir,
+    'gimpsysconfdir=' + gimpsysconfdir,
+    'gimplocaledir='  +'${prefix}/'+ localedir,
+  ],
+)
+
+pkgconfig.generate(libgimpthumb,
+  filebase: 'gimpthumb-' + api_version,
+  name: 'GIMP Thumb',
+  description: 'GIMP Thumbnail Library',
+  version: gimp_version,
+  requires: [
+    libgimp,
+    gdk_pixbuf,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+)
+
+pkgconfig.generate(libgimpui,
+  filebase: 'gimpui-' + api_version,
+  name: 'GIMP UI',
+  description: 'GIMP User Interface Library',
+  version: gimp_version,
+  requires: [
+    libgimp,
+    gtk3,
+  ],
+  libraries: [
+    libgimpwidgets,
+    libgimpmodule,
+  ],
+  subdirs: [
+    gimp_api_name,
+  ],
+)
+
 
 
 ################################################################################
@@ -1474,6 +1491,10 @@ Optional Features:
   Language selection:  @0@'''.format(isocodes.found()) +'''
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
+  Relocatable Bundle:  @0@'''.format(relocatable_bundle)+'''
+  Default ICC directory:     @0@'''.format(icc_directory)+'''
+  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder'))+'''
+  Detailed backtraces:       @0@'''.format(detailed_backtraces) +'''
 
 Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''
@@ -1482,11 +1503,11 @@ Optional Plug-Ins:
   JPEG 2000:           @0@'''.format(openjpeg.found()) +'''
   MNG:                 @0@'''.format(libmng.found()) +'''
   OpenEXR:             @0@'''.format(openexr.found()) +'''
-  WebP:                @0@'''.format(webp.found()) +'''
+  WebP:                @0@'''.format(webp_found) +'''
+  Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
   Python 2:            @0@'''.format(have_python) +'''
-  Script-Fu:           @0@'''.format(have_scriptfu) +'''
   TWAIN (Win32):       @0@'''.format(platform_win32) +'''
   Webpage:             @0@'''.format(webkit.found()) +'''
   WMF:                 @0@'''.format(wmf.found()) +'''
@@ -1503,5 +1524,7 @@ Optional Modules:
 Tests:
   Use xvfb-run         @0@'''.format(xvfb_run.found()) +'''
   Test appdata         @0@'''.format(appstream_util.found()) +'''
+
+Bug report URL: @0@'''.format(bug_report_url) +'''
 '''
 )

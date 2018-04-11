@@ -13,10 +13,8 @@ libappmenus_sources = [
 libappmenus = static_library('appmenus',
   libappmenus_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Menus"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Menus"',
   dependencies: [
-    gegl, gtk2
+    gegl, gtk3
   ],
 )

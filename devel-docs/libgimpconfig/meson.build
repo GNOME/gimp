@@ -19,7 +19,7 @@ gnome.gtkdoc(module_name,
   ],
 
   dependencies: [
-    fontconfig, freetype2, gtk2, harfbuzz, pangocairo,
+    fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
   ],
   scanobjs_args: [
   ],

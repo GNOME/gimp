@@ -40,7 +40,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, math,
+    gtk3, gegl, math,
   ],
   link_with: [
     libgimp,
@@ -57,5 +57,5 @@ executable(plugin_name,
                 + '"',
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
