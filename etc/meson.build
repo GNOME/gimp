@@ -1,7 +1,14 @@
+etcconf = configuration_data()
+
+
 install_data(
   [
     'controllerrc',
-    'gimprc',
+    configure_file(
+      input : 'gimprc.in',
+      output: 'gimprc',
+      configuration: etcconf,
+    ),
     'gtkrc',
     'menurc',
     'sessionrc',

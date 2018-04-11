@@ -72,6 +72,7 @@ libapptools_sources = [
   'gimpoperationtool.c',
   'gimppaintbrushtool.c',
   'gimppaintoptions-gui.c',
+  'gimppainttool-paint.c',
   'gimppainttool.c',
   'gimppenciltool.c',
   'gimpperspectiveclonetool.c',
