@@ -1,4 +1,4 @@
-plugin_name = 'flame'
+plugin_name = 'file-dds'
 
 rc_file = platform_win32 ? windows.compile_resources(
   gimp_plugins_rc,
@@ -14,15 +14,19 @@ rc_file = platform_win32 ? windows.compile_resources(
 
 executable(plugin_name,
   [
-    'cmap.c',
-    'flame.c',
-    'libifs.c',
-    'rect.c',
+  	'dds.c',
+  	'color.c',
+  	'ddsread.c',
+  	'ddswrite.c',
+  	'dxt.c',
+  	'mipmap.c',
+  	'misc.c',
+  	'mktables.c',
     rc_file,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, math,
+    gtk3, gegl, gdk_pixbuf, cairo,
   ],
   link_with: [
     libgimp,

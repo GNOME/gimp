@@ -45,19 +45,13 @@ libgimpthumb_headers = [
   'gimpthumbnail.h',
 ]
 
-
-libgimpthumb_cflags = [
-  '-DG_LOG_DOMAIN="LibGimpThumb"',
-  '-DGIMP_THUMB_COMPILATION',
-]
-
 libgimpthumb = library('gimpthumb-'+ api_version,
   libgimpthumb_sources,
   include_directories: rootInclude,
   dependencies: [
     gdk_pixbuf, glib, gio, gobject,
   ],
-  c_args:     [ libgimpthumb_cflags, ],
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpThumb"', '-DGIMP_THUMB_COMPILATION', ],
   link_with:  [
     libgimpbase,
   ],
@@ -79,8 +73,8 @@ gimp_thumbnail_list = executable('gimp-thumbnail-list',
   dependencies: [
     gdk_pixbuf,
   ],
-  c_args:     [ libgimpthumb_cflags, ],
-  link_with:  [
+  c_args: '-DG_LOG_DOMAIN="LibGimpThumb"',
+  link_with: [
     libgimpbase,
     libgimpthumb,
   ],

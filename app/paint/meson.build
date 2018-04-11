@@ -11,6 +11,7 @@ libapppaint_sources = [
   'gimp-paint.c',
   'gimpairbrush.c',
   'gimpairbrushoptions.c',
+  'gimpbrushcore-loops.cc',
   'gimpbrushcore.c',
   'gimpclone.c',
   'gimpcloneoptions.c',
@@ -29,7 +30,7 @@ libapppaint_sources = [
   'gimpmybrushoptions.c',
   'gimpmybrushsurface.c',
   'gimppaintbrush.c',
-  'gimppaintcore-loops.c',
+  'gimppaintcore-loops.cc',
   'gimppaintcore-stroke.c',
   'gimppaintcore.c',
   'gimppaintcoreundo.c',
@@ -49,9 +50,7 @@ libapppaint_sources = [
 libapppaint = static_library('apppaint',
   libapppaint_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Paint"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Paint"',
   dependencies: [
     cairo, gegl, gdk_pixbuf, libmypaint,
   ],

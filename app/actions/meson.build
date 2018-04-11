@@ -39,7 +39,6 @@ libappactions_sources = [
   'filters-actions.c',
   'filters-commands.c',
   'fonts-actions.c',
-  'fonts-commands.c',
   'gimpgeglprocedure.c',
   'gradient-editor-actions.c',
   'gradient-editor-commands.c',
@@ -98,10 +97,8 @@ libappactions_sources = [
 libappactions = static_library('appactions',
   libappactions_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Actions"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Actions"',
   dependencies: [
-    gegl, gdk_pixbuf, gtk2,
+    gegl, gdk_pixbuf, gtk3,
   ],
 )
