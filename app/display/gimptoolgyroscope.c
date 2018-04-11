@@ -483,6 +483,9 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
 
         zoom = (y1 - y2) * shell->scale_y / 128.0;
 
+        if (private->invert)
+          zoom = -zoom;
+
         private->last_zoom *= pow (2.0, zoom);
 
         zoom = log (private->last_zoom / private->zoom) / G_LN2;
@@ -546,6 +549,9 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
           break;
         }
 
+      if (private->invert)
+        zoom = -zoom;
+
       if (zoom)
         {
           g_object_set (gyroscope,
@@ -579,10 +585,14 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
   else
     {
       /* pan */
-      gdouble x0 = 0.0;
-      gdouble y0 = 0.0;
-      gdouble x  = 0.0;
-      gdouble y  = 0.0;
+      gdouble x0     = 0.0;
+      gdouble y0     = 0.0;
+      gdouble x      = 0.0;
+      gdouble y      = 0.0;
+      gdouble factor = 1.0 / private->zoom;
+
+      if (private->invert)
+        factor = 1.0 / factor;
 
       switch (kevent->keyval)
         {
@@ -614,6 +624,7 @@ gimp_tool_gyroscope_key_press (GimpToolWidget *widget,
                         (y - y0) * DEG_TO_RAD,
                         (x - x0) * DEG_TO_RAD,
                         0.0);
+      gimp_vector3_mul (&axis, factor);
     }
 
   gimp_tool_gyroscope_rotate (gyroscope, &axis);
@@ -741,10 +752,10 @@ gimp_tool_gyroscope_restore (GimpToolGyroscope *gyroscope)
   GimpToolGyroscopePrivate *private = gyroscope->private;
 
   g_object_set (gyroscope,
-                "yaw",   private->yaw,
-                "pitch", private->pitch,
-                "roll",  private->roll,
-                "zoom",  private->zoom,
+                "yaw",   private->orig_yaw,
+                "pitch", private->orig_pitch,
+                "roll",  private->orig_roll,
+                "zoom",  private->orig_zoom,
                 NULL);
 }
 
