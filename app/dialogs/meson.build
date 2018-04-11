@@ -9,7 +9,7 @@ libappdialogs_sources = [
   'data-delete-dialog.c',
   'dialogs-constructors.c',
   'dialogs.c',
-  'fade-dialog.c',
+  'extensions-dialog.c',
   'file-open-dialog.c',
   'file-open-location-dialog.c',
   'file-save-dialog.c',
@@ -26,7 +26,6 @@ libappdialogs_sources = [
   'layer-options-dialog.c',
   'lebl-dialog.c',
   'module-dialog.c',
-  'offset-dialog.c',
   'palette-import-dialog.c',
   'preferences-dialog-utils.c',
   'preferences-dialog.c',
@@ -58,10 +57,8 @@ libappdialogs_sources += [
 libappdialogs = static_library('appdialogs',
   libappdialogs_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Dialogs"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Dialogs"',
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )

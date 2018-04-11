@@ -1,6 +1,6 @@
 
 modules_deps = [
-  gtk2, babl, gegl, math,
+  gtk3, babl, gegl, math,
 ]
 
 color_selector_libs = [
@@ -41,6 +41,10 @@ modules = [
   ],
   [ 'display-filter-color-blind',
     [ 'display-filter-color-blind.c', ],
+    [], [ display_filter_libs, ],
+  ],
+  [ 'display-filter-aces-rrt',
+    [ 'display-filter-aces-rrt.c', ],
     [], [ display_filter_libs, ],
   ],
   [ 'display-filter-gamma',
