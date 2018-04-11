@@ -22,7 +22,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, gexiv2,
+    gtk3, gegl, gexiv2,
   ],
   link_with: [
     libgimp,
@@ -34,7 +34,7 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
 
 plugin_name = 'metadata-viewer'
@@ -57,7 +57,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, gexiv2,
+    gtk3, gegl, gexiv2,
   ],
   link_with: [
     libgimp,
@@ -69,5 +69,5 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )

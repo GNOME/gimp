@@ -22,9 +22,7 @@ libapplayermodeslegacy_sources = [
 libapplayermodeslegacy = static_library('applayermodeslegacy',
   libapplayermodeslegacy_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Layer-Modes-Legacy"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Layer-Modes-Legacy"',
   dependencies: [
     cairo, gegl, gdk_pixbuf,
   ],

@@ -1,5 +1,3 @@
-if have_scriptfu
-
 scriptfu_incdir = include_directories('.')
 
 subdir('tinyscheme')
@@ -41,7 +39,7 @@ executable(plugin_name,
   plugin_scriptfu_sources,
   include_directories: [ rootInclude, ],
   dependencies: [
-    gegl, gtk2, math, winsock,
+    gegl, gtk3, math, winsock,
   ],
   c_args: [
     '-DSTANDALONE=0',
@@ -62,7 +60,5 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
-
-endif

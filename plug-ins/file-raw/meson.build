@@ -27,7 +27,7 @@ foreach plugin_name : file_raw_exes
     ],
     include_directories: [ rootInclude, ],
     dependencies: [
-      gtk2, gegl,
+      gtk3, gegl,
     ],
     link_with: [
       libgimp,
@@ -39,7 +39,7 @@ foreach plugin_name : file_raw_exes
       libgimpwidgets,
     ],
     install: true,
-    install_dir: join_paths(gimpplugindir, 'plug-ins'),
+    install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
   )
 endforeach
 
