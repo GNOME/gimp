@@ -8,6 +8,7 @@ option('windows-installer', type: 'boolean', value: false,description: 'Generate
 option('with-aa',           type: 'boolean', value: true, description: 'AA plugin')
 option('with-alsa',         type: 'boolean', value: true, description: 'Alsa support in midi input controller')
 option('with-appdata-test', type: 'boolean', value: true, description: 'Validate the appdata file')
+option('with-bundled-mypaint-brushes', type: 'boolean', value: true, description: 'Treat MyPaint brushes as bundled in the install prefix')
 option('with-cairo-pdf',    type: 'boolean', value: true, description: 'Cairo-pdf support')
 option('with-directx-sdk',  type: 'string',  value: '',   description: 'Prefix where the DirectX SDK is installed(optional)')
 option('with-ghostscript',  type: 'boolean', value: true, description: 'Ghostscript support')

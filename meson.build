@@ -278,14 +278,18 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
 libmypaint_brushes= dependency('mypaint-brushes-1.0',required: false)
-# Mypaint-brushes not available on MingW
-# TODO should be removed when MingW adds them
-mypaint_brushes = libmypaint_brushes.found() ? [
-  libmypaint_brushes,
-] : []
-mypaint_args    = libmypaint_brushes.found() ? [] : [
-  '-DMYPAINT_BRUSHES_DIR="/usr/share/mypaint-data/1.0/brushes"',
-]
+
+libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
+conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
+
+if libmypaint_brushes_bundled
+  libmypaint_brushes_dir = join_paths(
+    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes')
+elif libmypaint_brushes.found()
+  libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
+endif
+conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
+
 
 pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
@@ -1487,7 +1491,7 @@ Optional Features:
   Language selection:  @0@'''.format(isocodes.found()) +'''
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
-
+  Bundled MyPaint Brushes: @0@ (at @1@)'''.format('enable_bundled_mypaint_brushes', libmypaint_brushes_dir)+'''
 Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''
   Ghostscript:         @0@'''.format(ghostscript.found()) +'''

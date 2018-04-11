@@ -1,4 +1,5 @@
 etcconf = configuration_data()
+etcconf.set('mypaint_brushes_dir', libmypaint_brushes_dir)
 
 
 install_data(
