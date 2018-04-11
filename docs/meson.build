@@ -7,6 +7,7 @@ manconf.set('gimplocaledir',  join_paths(prefix, localedir))
 manconf.set('gimpplugindir',  join_paths(prefix, gimpplugindir))
 manconf.set('manpage_gimpdir', '\fB$XDG_CONFIG_HOME\fP/' + join_paths(gimpdir, user_version))
 manconf.set('gimpsysconfdir', gimpsysconfdir)
+manconf.set('mypaint_brushes_dir', libmypaint_brushes_dir)
 
 
 man_files = [
