@@ -54,7 +54,7 @@ gyroscope_callback (GObject       *config,
                 "pan",     -yaw,
                 "tilt",    -pitch,
                 "spin",    -roll,
-                "zoom",    CLAMP (100.0 / zoom, 0.01, 1000.0),
+                "zoom",    CLAMP (100.0 * zoom, 0.01, 1000.0),
                 "inverse", invert,
                 NULL);
 }
@@ -86,7 +86,7 @@ config_notify (GObject          *config,
   set_func (set_data,
             area,
             -pan, -tilt, -spin,
-            100.0 / zoom,
+            zoom / 100.0,
             inverse);
 }
 
