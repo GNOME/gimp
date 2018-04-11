@@ -6,17 +6,17 @@
 _pkgname='gimp'
 pkgname="${_pkgname}-git"
 epoch=1
-pkgver=2.9.8.649.g2ca726dd32
+pkgver=2.10.0.RC1.26.gf0d3c4a7bd
 pkgrel=1
 pkgdesc='GNU Image Manipulation Program'
 arch=('i686' 'x86_64')
 url='http://www.gimp.org'
 license=('GPL' 'LGPL')
 depends=(
-  'babl>=0.1.27'
+  'babl>=0.1.44'
   'dbus-glib'
   'desktop-file-utils'
-  'gegl-git>=0.3.15'
+  'gegl-git>=0.3.30'
   'gtk-doc'
   'lcms2>=2.2'
   'libart-lgpl>=2.3.19'
@@ -88,7 +88,7 @@ build() {
   )
 
   meson    "${srcdir}/build" "${srcdir}/${_gitname}" "${mesonOptions[@]}"
-  ninja -C "${srcdir}/build"
+  ninja -C "${srcdir}/build" -j4
 }
 
 package() {
