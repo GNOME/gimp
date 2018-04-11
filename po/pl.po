@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-08 22:14+0200\n"
-"PO-Revision-Date: 2018-04-08 22:15+0200\n"
+"POT-Creation-Date: 2018-04-11 10:14+0200\n"
+"PO-Revision-Date: 2018-04-11 10:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -88,6 +88,144 @@ msgstr "Obróbka zdjęć w GIMP-ie"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"First release of the 2.10 series which prominently features the port to a "
+"new image processing engine, GEGL. The most outstanding changes are:"
+msgstr ""
+"Pierwsze wydanie z serii 2.10, w której przede wszystkim przeniesiono "
+"program do nowego mechanizmu przetwarzania obrazów, GEGL. Najbardziej "
+"wyróżniające się zmiany:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid "High bit depth color processing (16/32-bit per color channel)"
+msgstr "Przetwarzanie kolorów o wysokiej głębi (16/32 bity na kanał kolorów)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
+"Color management is a core feature now, most widgets and preview areas are "
+"color-managed"
+msgstr ""
+"Zarządzanie kolorami to teraz główna funkcja, większość widżetów i obszarów "
+"podglądu podlega zarządzaniu kolorami"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"On-canvas effect preview, with split view for before/after processing pixels"
+msgstr ""
+"Podgląd efektów na obrazie, z podzielonym widokiem na przed/po przetworzeniu "
+"pikseli"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Multi-threaded and hardware-accelerated rendering, processing and painting"
+msgstr ""
+"Wielowątkowe i przyspieszane sprzętowo renderowanie, przetwarzanie "
+"i malowanie"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Most tools improved, several new transformation tools"
+msgstr ""
+"Ulepszono większość narzędzi, dodano kilka nowych narzędzi przekształceń"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid ""
+"Improved support for many image formats, in particular better PSD importing"
+msgstr ""
+"Ulepszona obsługa wielu formatów obrazów, zwłaszcza lepsze importowanie "
+"obrazów PSD"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
+msgstr "Nowo obsługiwane formaty obrazów: OpenEXR, RGBE, WebP, HGT…"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid ""
+"Improved digital painting: canvas rotation and flipping, symmetry painting, "
+"MyPaint brushes…"
+msgstr ""
+"Ulepszone malowanie cyfrowe: obracanie i odbijanie płótna, malowanie "
+"symetryczne, pędzle programu MyPaint…"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
+msgstr "Przeglądanie i modyfikowanie metadanych Exif, XMP, IPTC i DICOM"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+msgid "Basic HiDPI support: automatically or user-selected icon size"
+msgstr ""
+"Podstawowa obsługa monitorów o wysokiej rozdzielczości: automatyczne lub "
+"wybrane przez użytkownika rozmiary ikon"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+msgid "New themes for GIMP: Light, Gray, Dark, and System"
+msgstr "Nowe motywy programu: jasny, szary, ciemny i systemowy"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+msgid "And much, much more…"
+msgstr "Oraz wiele, wiele więcej…"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+msgid ""
+"In this second release candidate before GIMP 2.10.0, while debugging is "
+"still a prime target, a new focus has been put on speed and optimization in "
+"order to provide a smoother painting experience. Bigger changes are:"
+msgstr ""
+"W drugim wydaniu kandydackim przed GIMP 2.10.0, chociaż debugowanie jest "
+"nadal głównym celem, skupiliśmy się także na prędkości i optymalizacji, aby "
+"rysowanie było płynniejsze. Większe zmiany w tym wydaniu:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+msgid ""
+"Major core optimizations for painting and display, including parallelized "
+"painting code."
+msgstr ""
+"Duże optymalizacje rdzenia programu w zakresie rysowania i wyświetlania, "
+"w tym wielowątkowy kod rysowania."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
+msgstr ""
+"Symetrie w plikach XCF są teraz zachowywane (zapisywane jako dane "
+"pasożytnicze obrazu)."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+msgid ""
+"\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
+"usability issues. \"Lighter\" and \"Darker\" themes removed."
+msgstr ""
+"„Jasny” i „Ciemny” motyw zostały przepisane od zera, aby pozbyć się różnych "
+"problemów z interfejsem. Usunięto motywy „Jaśniejszy” i „Ciemniejszy”."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+msgid ""
+"New GimpToolGyroscope on-canvas control, currently used for the Panorama "
+"Projection filter. The widget provides on-canvas interaction for 3D rotation "
+"(yaw, pitch, roll)."
+msgstr ""
+"Nowe narzędzie sterowania na płótnie GimpToolGyroscope, obecnie używane "
+"przez filtr rzutu panoramy. Ten widżet zapewnia sterowanie obrotem 3D na "
+"płótnie (odchylenie, kąt, walec)."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+msgid ""
+"Plug-in debugging improved to output stack traces from plug-ins with --stack-"
+"trace-mode command line option not only on receiving signals but also on "
+"warnings and critical errors when \"fatal-warnings\" debug key is set."
+msgstr ""
+"Ulepszono debugowanie wtyczek, aby otrzymywać wyjątki za pomocą opcji "
+"wiersza poleceń --stack-trace-mode nie tylko po sygnałach przychodzących, "
+"ale także po ostrzeżeniach i błędach krytycznych, kiedy ustawiony jest klucz "
+"debugowania „fatal-warnings”."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+msgid ""
+"For more information, see https://www.gimp.org/news/2018/04/14/gimp-2-10-rc2-"
+"released/"
+msgstr ""
+"https://www.gimp.org/news/2018/04/14/gimp-2-10-rc2-released/ zawiera więcej "
+"informacji (w języku angielskim)."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
@@ -96,12 +234,12 @@ msgstr ""
 "GIMP 2.10.0, skupiające się na debugowaniu i stabilności. Oprócz wielu "
 "poprawek błędów najważniejsze ulepszenia to:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Nowy panel wydajności do monitorowania użycia zasobów przez program GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -109,33 +247,33 @@ msgstr ""
 "Nowe okno debugowania do generowania wyjątków i innych danych debugowania, "
 "zachęcające do zgłaszania błędów"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Po awarii można teraz odzyskać niezapisane obrazy"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Layer masks on layer groups"
 msgstr "Maski warstw w grupach warstw"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Ulepszona obsługa formatu JPEG 2000 o głębię wysokobitową i różne "
 "przestrzenie kolorów"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Screenshot and color picking improved on various platforms"
 msgstr "Ulepszenia zrzutów ekranu i wyboru kolorów na różnych platformach"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Metadata defaults preferences now available"
 msgstr "Preferencje domyślnego zachowania metadanych są teraz dostępne"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Various GUI polishing"
 msgstr "Różne poprawki interfejsu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-"
 "released/"
@@ -143,7 +281,7 @@ msgstr ""
 "https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-released/ zawiera więcej "
 "informacji (w języku angielskim)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -151,53 +289,53 @@ msgstr ""
 "GIMP 2.9.8 dodaje modyfikowanie gradientów na obszarze rysowania oraz różne "
 "ulepszenia, jednocześnie skupiając się na poprawkach błędów i stabilności."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "On-canvas gradient editing"
 msgstr "Modyfikowanie gradientów na obszarze rysowania"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Notification when an image is over/underexposed"
 msgstr "Powiadomienie, kiedy obraz jest prześwietlony/niedoświetlony"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Better and faster color management"
 msgstr "Lepsze i szybsze zarządzania kolorami"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Wybieranie kolorów i wykonywanie zrzutów ekranu w środowisku KDE Plasma "
 "używającym technologii Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Paste in place feature"
 msgstr "Wklejanie w tym samym miejscu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Many usability improvements"
 msgstr "Wiele ulepszeń użyteczności"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Podręcznik może być wyświetlany w preferowanym języku użytkownika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Ulepszenia filtru rozkład falki"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Ulepszona zgodność z plikami .psd programu Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "New support for password-protected PDF"
 msgstr "Obsługa plików PDF chronionych hasłem"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Obsługa formatu HGT (dane cyfrowego modelu wysokościowego)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -3332,7 +3470,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:321
+#: ../app/tools/gimpfiltertool.c:323
 #: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1591
 #: ../app/tools/gimptransformtool.c:1201 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
@@ -7309,7 +7447,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1200
+#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1200
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Przywróć"
@@ -7592,11 +7730,11 @@ msgstr ""
 "Podczas dodawania obramowania zaznaczone obszary są traktowane tak, jakby "
 "znajdowały się także poza obrazem."
 
-#: ../app/actions/select-commands.c:415
+#: ../app/actions/select-commands.c:423
 msgid "Fill Selection Outline"
 msgstr "Wypełnienie krawędzi zaznaczenia"
 
-#: ../app/actions/select-commands.c:444
+#: ../app/actions/select-commands.c:452
 msgid "Stroke Selection"
 msgstr "Rysowanie wzdłuż zaznaczenia"
 
@@ -9760,7 +9898,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
-#: ../app/tools/gimpfiltertool.c:322 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
 msgid "_OK"
@@ -12251,7 +12389,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Rysowanie wzdłuż kanału"
 
-#: ../app/core/gimpchannel.c:279 ../app/core/gimpselection.c:654
+#: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanał na zaznaczenie"
@@ -12329,25 +12467,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:818
+#: ../app/core/gimpchannel.c:850
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:854
+#: ../app/core/gimpchannel.c:886
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1677
+#: ../app/core/gimpchannel.c:1709
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1728
+#: ../app/core/gimpchannel.c:1760
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1817 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1849 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -13114,12 +13252,12 @@ msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
 "najmniej dwie."
 
-#: ../app/core/gimpimage-quick-mask.c:89
+#: ../app/core/gimpimage-quick-mask.c:88
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Włączenie szybkiej maski"
 
-#: ../app/core/gimpimage-quick-mask.c:121
+#: ../app/core/gimpimage-quick-mask.c:120
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Wyłączenie szybkiej maski"
@@ -13605,20 +13743,20 @@ msgstr "Brak zaznaczenia do wypełnienia."
 msgid "There is no selection to stroke."
 msgstr "Brak zaznaczenia do narysowania."
 
-#: ../app/core/gimpselection.c:749
+#: ../app/core/gimpselection.c:696
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nie można wyciąć lub skopiować, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:867
+#: ../app/core/gimpselection.c:814
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nie można oderwać zaznaczenia, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:874
+#: ../app/core/gimpselection.c:821
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:892
+#: ../app/core/gimpselection.c:839
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
@@ -16858,14 +16996,14 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:243
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:250
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpfiltertool.c:275
-#: ../app/tools/gimppainttool.c:282 ../app/tools/gimpselectiontool.c:432
+#: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpfiltertool.c:277
+#: ../app/tools/gimppainttool.c:277 ../app/tools/gimpselectiontool.c:432
 #: ../app/tools/gimptransformtool.c:1435 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
@@ -17005,6 +17143,45 @@ msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
 msgid "Click-Drag to move all points"
 msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
+#: ../app/display/gimptoolgyroscope.c:691
+msgid "Click-Drag to zoom"
+msgstr "Kliknięcie i przeciągnięcie powiększy"
+
+#: ../app/display/gimptoolgyroscope.c:695
+#, c-format
+msgid "%s for constrained steps"
+msgstr "%s dla wymuszonych kroków"
+
+#: ../app/display/gimptoolgyroscope.c:702
+#: ../app/display/gimptooltransformgrid.c:1782
+msgid "Click-Drag to rotate"
+msgstr "Kliknięcie i przeciągnięcie obróci"
+
+#: ../app/display/gimptoolgyroscope.c:706 ../app/display/gimptoolline.c:1490
+#: ../app/tools/gimppainttool.c:569
+#, c-format
+msgid "%s for constrained angles"
+msgstr "%s dla wymuszonych kątów"
+
+#: ../app/display/gimptoolgyroscope.c:711
+msgid "Click-Drag to pan"
+msgstr "Kliknięcie i przeciągnięcie przesunie"
+
+#: ../app/display/gimptoolgyroscope.c:717
+#, c-format
+msgid "%s to rotate"
+msgstr "%s obróci"
+
+#: ../app/display/gimptoolgyroscope.c:718
+#, c-format
+msgid "%s for a constrained axis"
+msgstr "%s dla wymuszonej osi"
+
+#: ../app/display/gimptoolgyroscope.c:719
+#, c-format
+msgid "%s to zoom"
+msgstr "%s powiększy"
+
 #: ../app/display/gimptoolhandlegrid.c:837
 #: ../app/display/gimptooltransformgrid.c:1773
 msgid "Click-Drag to move"
@@ -17042,11 +17219,6 @@ msgstr "Linia: "
 #: ../app/display/gimptoolline.c:1484
 msgid "Click-Drag to move the endpoint"
 msgstr "Kliknięcie i przeciągnięcie przemieści punkt końcowy"
-
-#: ../app/display/gimptoolline.c:1490 ../app/tools/gimppainttool.c:658
-#, c-format
-msgid "%s for constrained angles"
-msgstr "%s dla wymuszonych kątów"
 
 #: ../app/display/gimptoolline.c:1497
 msgid "Release to remove the slider"
@@ -17281,10 +17453,6 @@ msgstr "Kliknięcie i przeciągnięcie przemieści punkt osi"
 #: ../app/display/gimptooltransformgrid.c:1780
 msgid "Click-Drag to shear"
 msgstr "Kliknięcie i przeciągnięcie nachyli"
-
-#: ../app/display/gimptooltransformgrid.c:1782
-msgid "Click-Drag to rotate"
-msgstr "Kliknięcie i przeciągnięcie obróci"
 
 #: ../app/file/file-open.c:116 ../app/file/file-save.c:114
 msgid "Not a regular file"
@@ -19883,6 +20051,10 @@ msgstr "_Nasycenie"
 msgid "R_eset Color"
 msgstr "P_rzywróć kolor"
 
+#: ../app/propgui/gimppropgui-panorama-projection.c:125
+msgid "Panorama Projection: "
+msgstr "Rzut panoramy: "
+
 #: ../app/propgui/gimppropgui-recursive-transform.c:125
 msgid "Recursive Transform: "
 msgstr "Przekształcenie rekurencyjne: "
@@ -19992,11 +20164,11 @@ msgstr "Wybiera z listy często używanych temperatur kolorów"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/propgui/gimppropgui.c:375
+#: ../app/propgui/gimppropgui.c:376
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/propgui/gimppropgui.c:517
+#: ../app/propgui/gimppropgui.c:520
 msgid "This operation has no editable properties"
 msgstr "To działanie nie ma modyfikowalnych właściwości"
 
@@ -20307,8 +20479,8 @@ msgid "Click-Drag to draw a gradient"
 msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 
 #: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
-#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:289
+#: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:284
+#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:284
 #: ../app/tools/gimptransformtool.c:1443 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
@@ -20651,11 +20823,11 @@ msgstr "Po_branie koloru"
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie w dowolnym obrazie wyświetli jego kolor"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:501
+#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:412
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:507
+#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:418
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
@@ -20957,50 +21129,50 @@ msgid "Color _managed"
 msgstr "_Zarządzanie kolorami"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:371
+#: ../app/tools/gimpfiltertool.c:373
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:390
+#: ../app/tools/gimpfiltertool.c:392
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konwertowanie pikseli do wbudowanej przestrzeni sRGB, aby zastosować filtr "
 "(wolne)"
 
-#: ../app/tools/gimpfiltertool.c:391
+#: ../app/tools/gimpfiltertool.c:393
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Przyjmowanie, że piksele są we wbudowanej przestrzeni sRGB (ignorowanie "
 "prawdziwej przestrzeni kolorów obrazu)"
 
-#: ../app/tools/gimpfiltertool.c:626
+#: ../app/tools/gimpfiltertool.c:628
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:630
+#: ../app/tools/gimpfiltertool.c:632
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:634
+#: ../app/tools/gimpfiltertool.c:636
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przemieści prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:636
+#: ../app/tools/gimpfiltertool.c:638
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:637
+#: ../app/tools/gimpfiltertool.c:639
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1298 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1302 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -21745,24 +21917,24 @@ msgstr "Opcje kolorów"
 msgid "Link to brush default"
 msgstr "Wiąże z domyślną wartością pędzla"
 
-#: ../app/tools/gimppainttool.c:160
+#: ../app/tools/gimppainttool.c:158
 msgid "Click to paint"
 msgstr "Kliknięcie rysuje"
 
-#: ../app/tools/gimppainttool.c:161
+#: ../app/tools/gimppainttool.c:159
 msgid "Click to draw the line"
 msgstr "Kliknięcie rysuje linię"
 
-#: ../app/tools/gimppainttool.c:162
+#: ../app/tools/gimppainttool.c:160
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s wybiera kolor"
 
-#: ../app/tools/gimppainttool.c:275
+#: ../app/tools/gimppainttool.c:270
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:689
+#: ../app/tools/gimppainttool.c:600
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
