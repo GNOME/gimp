@@ -157,7 +157,7 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
                 _("Blend Tool: Fill selected area with a color gradient"),
                 N_("Blen_d"), "L",
                 NULL, GIMP_HELP_TOOL_BLEND,
-                GIMP_ICON_TOOL_BLEND,
+                GIMP_ICON_TOOL_GRADIENT,
                 data);
 }
 
@@ -1014,7 +1014,7 @@ gimp_blend_tool_create_filter (GimpBlendTool *blend_tool,
   blend_tool->filter = gimp_drawable_filter_new (drawable,
                                                  C_("undo-type", "Blend"),
                                                  blend_tool->graph,
-                                                 GIMP_ICON_TOOL_BLEND);
+                                                 GIMP_ICON_TOOL_GRADIENT);
 
   gimp_drawable_filter_set_region (blend_tool->filter,
                                    GIMP_FILTER_REGION_DRAWABLE);

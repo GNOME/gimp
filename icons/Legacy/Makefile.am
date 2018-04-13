@@ -171,7 +171,6 @@ icons16_DATA = \
 	16/gimp-toilet-paper.png			\
 	16/gimp-tool-airbrush.png			\
 	16/gimp-tool-align.png				\
-	16/gimp-tool-blend.png				\
 	16/gimp-tool-blur.png				\
 	16/gimp-tool-brightness-contrast.png		\
 	16/gimp-tool-bucket-fill.png			\
@@ -191,6 +190,7 @@ icons16_DATA = \
 	16/gimp-tool-foreground-select.png		\
 	16/gimp-tool-free-select.png			\
 	16/gimp-tool-fuzzy-select.png			\
+	16/gimp-tool-gradient.png			\
 	16/gimp-tool-handle-transform.png		\
 	16/gimp-tool-heal.png				\
 	16/gimp-tool-hue-saturation.png			\
@@ -289,7 +289,6 @@ tools22_DATA = \
 	22/gimp-gegl.png			\
 	22/gimp-tool-airbrush.png		\
 	22/gimp-tool-align.png			\
-	22/gimp-tool-blend.png			\
 	22/gimp-tool-blur.png			\
 	22/gimp-tool-brightness-contrast.png	\
 	22/gimp-tool-bucket-fill.png		\
@@ -309,6 +308,7 @@ tools22_DATA = \
 	22/gimp-tool-foreground-select.png	\
 	22/gimp-tool-free-select.png		\
 	22/gimp-tool-fuzzy-select.png		\
+	22/gimp-tool-gradient.png		\
 	22/gimp-tool-handle-transform.png	\
 	22/gimp-tool-heal.png			\
 	22/gimp-tool-hue-saturation.png		\

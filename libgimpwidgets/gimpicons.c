@@ -574,6 +574,8 @@ gimp_icons_init (void)
                        "gimp-qmask-off", GIMP_STOCK_QUICK_MASK_OFF);
   register_stock_icon (gimp_stock_factory,
                        "gimp-qmask-on", GIMP_STOCK_QUICK_MASK_ON);
+  register_stock_icon (gimp_stock_factory,
+                       "gimp-tool-blend", GIMP_STOCK_TOOL_BLEND);
 
   gtk_icon_factory_add_default (gimp_stock_factory);
 

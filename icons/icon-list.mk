@@ -258,7 +258,6 @@ scalable_images = \
 	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tool-airbrush.svg				\
 	scalable/gimp-tool-align.svg				\
-	scalable/gimp-tool-blend.svg				\
 	scalable/gimp-tool-blur.svg				\
 	scalable/gimp-tool-brightness-contrast.svg		\
 	scalable/gimp-tool-bucket-fill.svg			\
@@ -280,6 +279,7 @@ scalable_images = \
 	scalable/gimp-tool-foreground-select.svg		\
 	scalable/gimp-tool-free-select.svg			\
 	scalable/gimp-tool-fuzzy-select.svg			\
+	scalable/gimp-tool-gradient.svg				\
 	scalable/gimp-tool-handle-transform.svg			\
 	scalable/gimp-tool-heal.svg				\
 	scalable/gimp-tool-hue-saturation.svg			\
@@ -435,7 +435,6 @@ vector24_images = \
 	24/gimp-text-layer.svg					\
 	24/gimp-tool-airbrush.svg				\
 	24/gimp-tool-align.svg					\
-	24/gimp-tool-blend.svg					\
 	24/gimp-tool-blur.svg					\
 	24/gimp-tool-brightness-contrast.svg			\
 	24/gimp-tool-bucket-fill.svg				\
@@ -456,6 +455,7 @@ vector24_images = \
 	24/gimp-tool-foreground-select.svg			\
 	24/gimp-tool-free-select.svg				\
 	24/gimp-tool-fuzzy-select.svg				\
+	24/gimp-tool-gradient.svg				\
 	24/gimp-tool-handle-transform.svg			\
 	24/gimp-tool-heal.svg					\
 	24/gimp-tool-hue-saturation.svg				\
@@ -719,7 +719,6 @@ icons16_images = \
 	16/gimp-toilet-paper.png				\
 	16/gimp-tool-airbrush.png				\
 	16/gimp-tool-align.png					\
-	16/gimp-tool-blend.png					\
 	16/gimp-tool-blur.png					\
 	16/gimp-tool-brightness-contrast.png			\
 	16/gimp-tool-bucket-fill.png				\
@@ -740,6 +739,7 @@ icons16_images = \
 	16/gimp-tool-foreground-select.png			\
 	16/gimp-tool-free-select.png				\
 	16/gimp-tool-fuzzy-select.png				\
+	16/gimp-tool-gradient.png				\
 	16/gimp-tool-handle-transform.png			\
 	16/gimp-tool-heal.png					\
 	16/gimp-tool-hue-saturation.png				\
@@ -926,7 +926,6 @@ icons24_images = \
 	24/gimp-toilet-paper.png				\
 	24/gimp-tool-airbrush.png				\
 	24/gimp-tool-align.png					\
-	24/gimp-tool-blend.png					\
 	24/gimp-tool-blur.png					\
 	24/gimp-tool-brightness-contrast.png			\
 	24/gimp-tool-bucket-fill.png				\
@@ -947,6 +946,7 @@ icons24_images = \
 	24/gimp-tool-foreground-select.png			\
 	24/gimp-tool-free-select.png				\
 	24/gimp-tool-fuzzy-select.png				\
+	24/gimp-tool-gradient.png				\
 	24/gimp-tool-handle-transform.png			\
 	24/gimp-tool-heal.png					\
 	24/gimp-tool-hue-saturation.png				\

@@ -114,7 +114,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 
   gimp_object_class->get_memsize    = gimp_gradient_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-tool-blend";
+  viewable_class->default_icon_name = "gimp-tool-gradient";
   viewable_class->get_preview_size  = gimp_gradient_get_preview_size;
   viewable_class->get_popup_size    = gimp_gradient_get_popup_size;
   viewable_class->get_new_preview   = gimp_gradient_get_new_preview;
