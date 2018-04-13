@@ -179,7 +179,7 @@ static GimpCursor gimp_tool_cursors[] =
   { "tool-text.png" },
   { "tool-color-picker.png" },
   { "tool-bucket-fill.png" },
-  { "tool-blend.png" },
+  { "tool-gradient.png" },
   { "tool-pencil.png" },
   { "tool-paintbrush.png" },
   { "tool-airbrush.png" },

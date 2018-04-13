@@ -203,7 +203,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   gimp_tool_control_set_precision          (tool->control,
                                             GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_TOOL_CURSOR_BLEND);
+                                            GIMP_TOOL_CURSOR_GRADIENT);
   gimp_tool_control_set_action_opacity     (tool->control,
                                             "context/context-opacity-set");
   gimp_tool_control_set_action_object_1    (tool->control,
