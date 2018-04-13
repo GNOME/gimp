@@ -31,7 +31,7 @@
 #include "operations/gimp-operation-config.h"
 
 #include "core/gimpdrawable.h"
-#include "core/gimpdrawable-blend.h"
+#include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
@@ -803,9 +803,10 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
     return;
 
   blend_tool->dist_buffer =
-    gimp_drawable_blend_shapeburst_distmap (tool->drawable, options->distance_metric,
-                                            GEGL_RECTANGLE (x, y, width, height),
-                                            GIMP_PROGRESS (blend_tool));
+    gimp_drawable_gradient_shapeburst_distmap (tool->drawable,
+                                               options->distance_metric,
+                                               GEGL_RECTANGLE (x, y, width, height),
+                                               GIMP_PROGRESS (blend_tool));
 
   if (blend_tool->dist_node)
     gegl_node_set (blend_tool->dist_node,

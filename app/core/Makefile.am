@@ -150,8 +150,6 @@ libappcore_a_sources = \
 	gimpdocumentlist.h			\
 	gimpdrawable.c				\
 	gimpdrawable.h				\
-	gimpdrawable-blend.c			\
-	gimpdrawable-blend.h			\
 	gimpdrawable-bucket-fill.c		\
 	gimpdrawable-bucket-fill.h		\
 	gimpdrawable-combine.c			\
@@ -166,6 +164,8 @@ libappcore_a_sources = \
 	gimpdrawable-floating-selection.h	\
 	gimpdrawable-foreground-extract.c	\
 	gimpdrawable-foreground-extract.h	\
+	gimpdrawable-gradient.c			\
+	gimpdrawable-gradient.h			\
 	gimpdrawable-histogram.c		\
 	gimpdrawable-histogram.h		\
 	gimpdrawable-levels.c			\

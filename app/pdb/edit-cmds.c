@@ -34,8 +34,8 @@
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
-#include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
+#include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -794,7 +794,7 @@ edit_blend_invoker (GimpProcedure         *procedure,
             paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Blending"));
+            gimp_progress_start (progress, FALSE, _("Gradient"));
 
           switch (blend_mode)
             {
@@ -816,18 +816,18 @@ edit_blend_invoker (GimpProcedure         *procedure,
               break;
             }
 
-          gimp_drawable_blend (drawable,
-                               context,
-                               gradient,
-                               GIMP_PDB_CONTEXT (context)->distance_metric,
-                               paint_mode,
-                               gradient_type,
-                               opacity / 100.0,
-                               offset, repeat, reverse,
-                               supersample, max_depth,
-                               threshold, dither,
-                               x1, y1, x2, y2,
-                               progress);
+          gimp_drawable_gradient (drawable,
+                                  context,
+                                  gradient,
+                                  GIMP_PDB_CONTEXT (context)->distance_metric,
+                                  paint_mode,
+                                  gradient_type,
+                                  opacity / 100.0,
+                                  offset, repeat, reverse,
+                                  supersample, max_depth,
+                                  threshold, dither,
+                                  x1, y1, x2, y2,
+                                  progress);
 
           if (progress)
             gimp_progress_end (progress);

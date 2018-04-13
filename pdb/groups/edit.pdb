@@ -852,7 +852,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-blend.h") ],
+        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-gradient.h") ],
 	code => <<'CODE'
 {
   success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
@@ -876,7 +876,7 @@ HELP
         paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Blending"));
+        gimp_progress_start (progress, FALSE, _("Gradient"));
 
       switch (blend_mode)
         {
@@ -898,18 +898,18 @@ HELP
           break;
         }
 
-      gimp_drawable_blend (drawable,
-                           context,
-                           gradient,
-                           GIMP_PDB_CONTEXT (context)->distance_metric,
-                           paint_mode,
-                           gradient_type,
-                           opacity / 100.0,
-	                   offset, repeat, reverse,
-                           supersample, max_depth,
-                           threshold, dither,
-                           x1, y1, x2, y2,
-	                   progress);
+      gimp_drawable_gradient (drawable,
+                              context,
+                              gradient,
+                              GIMP_PDB_CONTEXT (context)->distance_metric,
+                              paint_mode,
+                              gradient_type,
+                              opacity / 100.0,
+	                      offset, repeat, reverse,
+                              supersample, max_depth,
+                              threshold, dither,
+                              x1, y1, x2, y2,
+	                      progress);
 
       if (progress)
         gimp_progress_end (progress);

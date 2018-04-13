@@ -29,7 +29,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpdrawable-blend.h"
+#include "gimpdrawable-gradient.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
@@ -40,25 +40,25 @@
 /*  public functions  */
 
 void
-gimp_drawable_blend (GimpDrawable       *drawable,
-                     GimpContext        *context,
-                     GimpGradient       *gradient,
-                     GeglDistanceMetric  metric,
-                     GimpLayerMode       paint_mode,
-                     GimpGradientType    gradient_type,
-                     gdouble             opacity,
-                     gdouble             offset,
-                     GimpRepeatMode      repeat,
-                     gboolean            reverse,
-                     gboolean            supersample,
-                     gint                max_depth,
-                     gdouble             threshold,
-                     gboolean            dither,
-                     gdouble             startx,
-                     gdouble             starty,
-                     gdouble             endx,
-                     gdouble             endy,
-                     GimpProgress       *progress)
+gimp_drawable_gradient (GimpDrawable       *drawable,
+                        GimpContext        *context,
+                        GimpGradient       *gradient,
+                        GeglDistanceMetric  metric,
+                        GimpLayerMode       paint_mode,
+                        GimpGradientType    gradient_type,
+                        gdouble             opacity,
+                        gdouble             offset,
+                        GimpRepeatMode      repeat,
+                        gboolean            reverse,
+                        gboolean            supersample,
+                        gint                max_depth,
+                        gdouble             threshold,
+                        gboolean            dither,
+                        gdouble             startx,
+                        gdouble             starty,
+                        gdouble             endx,
+                        gdouble             endy,
+                        GimpProgress       *progress)
 {
   GimpImage  *image;
   GeglBuffer *buffer;
@@ -87,9 +87,9 @@ gimp_drawable_blend (GimpDrawable       *drawable,
       gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
     {
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable, metric,
-                                                GEGL_RECTANGLE (x, y, width, height),
-                                                progress);
+        gimp_drawable_gradient_shapeburst_distmap (drawable, metric,
+                                                   GEGL_RECTANGLE (x, y, width, height),
+                                                   progress);
     }
 
   render = gegl_node_new_child (NULL,
@@ -122,7 +122,7 @@ gimp_drawable_blend (GimpDrawable       *drawable,
 
   gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (x, y, width, height),
-                              TRUE, C_("undo-type", "Blend"),
+                              TRUE, C_("undo-type", "Gradient"),
                               opacity, paint_mode,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
@@ -137,10 +137,10 @@ gimp_drawable_blend (GimpDrawable       *drawable,
 }
 
 GeglBuffer *
-gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        GeglDistanceMetric   metric,
-                                        const GeglRectangle *region,
-                                        GimpProgress        *progress)
+gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
+                                           GeglDistanceMetric   metric,
+                                           const GeglRectangle *region,
+                                           GimpProgress        *progress)
 {
   GimpChannel *mask;
   GimpImage   *image;
