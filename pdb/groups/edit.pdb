@@ -905,11 +905,12 @@ HELP
                               paint_mode,
                               gradient_type,
                               opacity / 100.0,
-	                      offset, repeat, reverse,
+                              offset, repeat, reverse,
+                              GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                               supersample, max_depth,
                               threshold, dither,
                               x1, y1, x2, y2,
-	                      progress);
+                              progress);
 
       if (progress)
         gimp_progress_end (progress);
