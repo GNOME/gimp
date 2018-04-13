@@ -33,7 +33,7 @@
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "gimpblendoptions.h"
+#include "gimpgradientoptions.h"
 #include "gimppaintoptions-gui.h"
 
 #include "gimp-intl.h"
@@ -55,33 +55,34 @@ enum
 };
 
 
-static void   gimp_blend_options_set_property           (GObject          *object,
-                                                         guint             property_id,
-                                                         const GValue     *value,
-                                                         GParamSpec       *pspec);
-static void   gimp_blend_options_get_property           (GObject          *object,
-                                                         guint             property_id,
-                                                         GValue           *value,
-                                                         GParamSpec       *pspec);
+static void   gimp_gradient_options_set_property           (GObject             *object,
+                                                            guint                property_id,
+                                                            const GValue        *value,
+                                                            GParamSpec          *pspec);
+static void   gimp_gradient_options_get_property           (GObject             *object,
+                                                            guint                property_id,
+                                                            GValue              *value,
+                                                            GParamSpec          *pspec);
 
-static void   blend_options_repeat_gradient_type_notify (GimpBlendOptions *options,
-                                                         GParamSpec       *pspec,
-                                                         GtkWidget        *repeat_combo);
-static void   blend_options_metric_gradient_type_notify (GimpBlendOptions *options,
-                                                         GParamSpec       *pspec,
-                                                         GtkWidget        *repeat_combo);
+static void   gradient_options_repeat_gradient_type_notify (GimpGradientOptions *options,
+                                                            GParamSpec          *pspec,
+                                                            GtkWidget           *repeat_combo);
+static void   gradient_options_metric_gradient_type_notify (GimpGradientOptions *options,
+                                                            GParamSpec          *pspec,
+                                                            GtkWidget           *repeat_combo);
 
 
-G_DEFINE_TYPE (GimpBlendOptions, gimp_blend_options, GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (GimpGradientOptions, gimp_gradient_options,
+               GIMP_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
+gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_blend_options_set_property;
-  object_class->get_property = gimp_blend_options_get_property;
+  object_class->set_property = gimp_gradient_options_set_property;
+  object_class->get_property = gimp_gradient_options_get_property;
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET,
                            "offset",
@@ -153,17 +154,17 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
 }
 
 static void
-gimp_blend_options_init (GimpBlendOptions *options)
+gimp_gradient_options_init (GimpGradientOptions *options)
 {
 }
 
 static void
-gimp_blend_options_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+gimp_gradient_options_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
-  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (object);
+  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -209,12 +210,12 @@ gimp_blend_options_set_property (GObject      *object,
 }
 
 static void
-gimp_blend_options_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
+gimp_gradient_options_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
-  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (object);
+  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (object);
 
   switch (property_id)
     {
@@ -260,21 +261,21 @@ gimp_blend_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_blend_options_gui (GimpToolOptions *tool_options)
+gimp_gradient_options_gui (GimpToolOptions *tool_options)
 {
-  GObject          *config  = G_OBJECT (tool_options);
-  GimpContext      *context = GIMP_CONTEXT (tool_options);
-  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (tool_options);
-  GtkWidget        *vbox    = gimp_paint_options_gui (tool_options);
-  GtkWidget        *vbox2;
-  GtkWidget        *frame;
-  GtkWidget        *scale;
-  GtkWidget        *combo;
-  GtkWidget        *button;
-  GtkWidget        *label;
-  gchar            *str;
-  GdkModifierType   extend_mask;
-  GimpGradient     *gradient;
+  GObject             *config  = G_OBJECT (tool_options);
+  GimpContext         *context = GIMP_CONTEXT (tool_options);
+  GimpGradientOptions *options = GIMP_GRADIENT_OPTIONS (tool_options);
+  GtkWidget           *vbox    = gimp_paint_options_gui (tool_options);
+  GtkWidget           *vbox2;
+  GtkWidget           *frame;
+  GtkWidget           *scale;
+  GtkWidget           *combo;
+  GtkWidget           *button;
+  GtkWidget           *label;
+  gchar               *str;
+  GdkModifierType      extend_mask;
+  GimpGradient        *gradient;
 
   extend_mask = gimp_get_extend_selection_mask ();
 
@@ -316,9 +317,9 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
-                    G_CALLBACK (blend_options_metric_gradient_type_notify),
+                    G_CALLBACK (gradient_options_metric_gradient_type_notify),
                     combo);
-  blend_options_metric_gradient_type_notify (options, NULL, combo);
+  gradient_options_metric_gradient_type_notify (options, NULL, combo);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
@@ -328,9 +329,9 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   g_signal_connect (config, "notify::gradient-type",
-                    G_CALLBACK (blend_options_repeat_gradient_type_notify),
+                    G_CALLBACK (gradient_options_repeat_gradient_type_notify),
                     combo);
-  blend_options_repeat_gradient_type_notify (options, NULL, combo);
+  gradient_options_repeat_gradient_type_notify (options, NULL, combo);
 
   /*  the offset scale  */
   scale = gimp_prop_spin_scale_new (config, "offset", NULL,
@@ -410,18 +411,18 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 }
 
 static void
-blend_options_repeat_gradient_type_notify (GimpBlendOptions *options,
-                                           GParamSpec       *pspec,
-                                           GtkWidget        *repeat_combo)
+gradient_options_repeat_gradient_type_notify (GimpGradientOptions *options,
+                                              GParamSpec       *pspec,
+                                              GtkWidget        *repeat_combo)
 {
   gtk_widget_set_sensitive (repeat_combo,
                             options->gradient_type < GIMP_GRADIENT_SHAPEBURST_ANGULAR);
 }
 
 static void
-blend_options_metric_gradient_type_notify (GimpBlendOptions *options,
-                                           GParamSpec       *pspec,
-                                           GtkWidget        *repeat_combo)
+gradient_options_metric_gradient_type_notify (GimpGradientOptions *options,
+                                              GParamSpec       *pspec,
+                                              GtkWidget        *repeat_combo)
 {
   gtk_widget_set_sensitive (repeat_combo,
                             options->gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&

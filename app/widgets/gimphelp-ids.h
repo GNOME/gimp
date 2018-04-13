@@ -287,7 +287,6 @@
 
 #define GIMP_HELP_TOOL_AIRBRUSH                   "gimp-tool-airbrush"
 #define GIMP_HELP_TOOL_ALIGN                      "gimp-tool-align"
-#define GIMP_HELP_TOOL_BLEND                      "gimp-tool-blend"
 #define GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST        "gimp-tool-brightness-contrast"
 #define GIMP_HELP_TOOL_BUCKET_FILL                "gimp-tool-bucket-fill"
 #define GIMP_HELP_TOOL_BY_COLOR_SELECT            "gimp-tool-by-color-select"
@@ -308,6 +307,7 @@
 #define GIMP_HELP_TOOL_FOREGROUND_SELECT          "gimp-tool-foreground-select"
 #define GIMP_HELP_TOOL_FUZZY_SELECT               "gimp-tool-fuzzy-select"
 #define GIMP_HELP_TOOL_GEGL                       "gimp-tool-gegl"
+#define GIMP_HELP_TOOL_GRADIENT                   "gimp-tool-gradient"
 #define GIMP_HELP_TOOL_HANDLE_TRANSFORM           "gimp-tool-handle-transform"
 #define GIMP_HELP_TOOL_HEAL                       "gimp-tool-heal"
 #define GIMP_HELP_TOOL_HUE_SATURATION             "gimp-tool-hue-saturation"

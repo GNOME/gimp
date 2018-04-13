@@ -405,9 +405,6 @@ app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
-app/tools/gimpblendoptions.c
-app/tools/gimpblendtool.c
-app/tools/gimpblendtool-editor.c
 app/tools/gimpbrightnesscontrasttool.c
 app/tools/gimpbucketfilloptions.c
 app/tools/gimpbucketfilltool.c
@@ -439,6 +436,9 @@ app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimpgegltool.c
 app/tools/gimpgenerictransformtool.c
+app/tools/gimpgradientptions.c
+app/tools/gimpgradienttool.c
+app/tools/gimpgradienttool-editor.c
 app/tools/gimpguidetool.c
 app/tools/gimphandletransformoptions.c
 app/tools/gimphandletransformtool.c

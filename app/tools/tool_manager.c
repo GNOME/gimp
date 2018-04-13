@@ -894,7 +894,7 @@ tool_manager_cast_spell (GimpToolInfo *tool_info)
   {
     { .sequence = "gimp-warp-tool\0"
                   "gimp-iscissors-tool\0"
-                  "gimp-blend-tool\0"
+                  "gimp-gradient-tool\0"
                   "gimp-vector-tool\0"
                   "gimp-ellipse-select-tool\0"
                   "gimp-rect-select-tool\0",

@@ -445,7 +445,7 @@ gimp_paint_options_init (GimpPaintOptions *options)
 
   options->jitter_options    = g_slice_new0 (GimpJitterOptions);
   options->fade_options      = g_slice_new0 (GimpFadeOptions);
-  options->gradient_options  = g_slice_new0 (GimpGradientOptions);
+  options->gradient_options  = g_slice_new0 (GimpGradientPaintOptions);
   options->smoothing_options = g_slice_new0 (GimpSmoothingOptions);
 }
 
@@ -468,10 +468,10 @@ gimp_paint_options_finalize (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
-  g_slice_free (GimpJitterOptions,    options->jitter_options);
-  g_slice_free (GimpFadeOptions,      options->fade_options);
-  g_slice_free (GimpGradientOptions,  options->gradient_options);
-  g_slice_free (GimpSmoothingOptions, options->smoothing_options);
+  g_slice_free (GimpJitterOptions,        options->jitter_options);
+  g_slice_free (GimpFadeOptions,          options->fade_options);
+  g_slice_free (GimpGradientPaintOptions, options->gradient_options);
+  g_slice_free (GimpSmoothingOptions,     options->smoothing_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -482,11 +482,11 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions     *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions      *fade_options      = options->fade_options;
-  GimpJitterOptions    *jitter_options    = options->jitter_options;
-  GimpGradientOptions  *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions *smoothing_options = options->smoothing_options;
+  GimpPaintOptions         *options           = GIMP_PAINT_OPTIONS (object);
+  GimpFadeOptions          *fade_options      = options->fade_options;
+  GimpJitterOptions        *jitter_options    = options->jitter_options;
+  GimpGradientPaintOptions *gradient_options  = options->gradient_options;
+  GimpSmoothingOptions     *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -645,11 +645,11 @@ gimp_paint_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions     *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions      *fade_options      = options->fade_options;
-  GimpJitterOptions    *jitter_options    = options->jitter_options;
-  GimpGradientOptions  *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions *smoothing_options = options->smoothing_options;
+  GimpPaintOptions         *options           = GIMP_PAINT_OPTIONS (object);
+  GimpFadeOptions          *fade_options      = options->fade_options;
+  GimpJitterOptions        *jitter_options    = options->jitter_options;
+  GimpGradientPaintOptions *gradient_options  = options->gradient_options;
+  GimpSmoothingOptions     *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -958,8 +958,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR))
     {
-      GimpGradientOptions *gradient_options = paint_options->gradient_options;
-      GimpGradient        *gradient;
+      GimpGradientPaintOptions *gradient_options = paint_options->gradient_options;
+      GimpGradient             *gradient;
 
       gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
 
