@@ -792,6 +792,7 @@ palette_import_make_palette (ImportDialog *private)
         palette = gimp_palette_import_from_gradient (gradient,
                                                      private->context,
                                                      FALSE,
+                                                     GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                      palette_name,
                                                      n_colors);
       }
