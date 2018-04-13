@@ -35,7 +35,7 @@ typedef struct _GimpPaintOptionsClass GimpBlendOptionsClass;
 
 struct _GimpBlendOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions   paint_options;
 
   gdouble            offset;
   GimpGradientType   gradient_type;

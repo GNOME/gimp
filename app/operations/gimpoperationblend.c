@@ -53,6 +53,7 @@ enum
   PROP_GRADIENT_REPEAT,
   PROP_OFFSET,
   PROP_GRADIENT_REVERSE,
+  PROP_GRADIENT_BLEND_COLOR_SPACE,
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -61,24 +62,25 @@ enum
 
 typedef struct
 {
-  GimpGradient        *gradient;
-  gboolean             reverse;
+  GimpGradient                *gradient;
+  gboolean                     reverse;
+  GimpGradientBlendColorSpace  blend_color_space;
 #ifdef USE_GRADIENT_CACHE
-  GimpRGB             *gradient_cache;
-  gint                 gradient_cache_size;
+  GimpRGB                     *gradient_cache;
+  gint                         gradient_cache_size;
 #else
-  GimpGradientSegment *last_seg;
+  GimpGradientSegment         *last_seg;
 #endif
-  gdouble              offset;
-  gdouble              sx, sy;
-  GimpGradientType     gradient_type;
-  gdouble              dist;
-  gdouble              vec[2];
-  GimpRepeatMode       repeat;
-  GimpRGB              leftmost_color;
-  GimpRGB              rightmost_color;
-  GRand               *seed;
-  GeglBuffer          *dist_buffer;
+  gdouble                      offset;
+  gdouble                      sx, sy;
+  GimpGradientType             gradient_type;
+  gdouble                      dist;
+  gdouble                      vec[2];
+  GimpRepeatMode               repeat;
+  GimpRGB                      leftmost_color;
+  GimpRGB                      rightmost_color;
+  GRand                       *seed;
+  GeglBuffer                  *dist_buffer;
 } RenderBlendData;
 
 
@@ -281,6 +283,15 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
+                                   g_param_spec_enum ("gradient-blend-color-space",
+                                                      "Blend Color Space",
+                                                      "Which color space to use when blending RGB gradient segments",
+                                                      GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                      GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SUPERSAMPLE,
                                    g_param_spec_boolean ("supersample",
                                                          "Supersample",
@@ -380,6 +391,10 @@ gimp_operation_blend_get_property (GObject    *object,
       g_value_set_boolean (value, self->gradient_reverse);
       break;
 
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      g_value_set_enum (value, self->gradient_blend_color_space);
+      break;
+
     case PROP_SUPERSAMPLE:
       g_value_set_boolean (value, self->supersample);
       break;
@@ -423,11 +438,7 @@ gimp_operation_blend_set_property (GObject      *object,
       {
         GimpGradient *gradient = g_value_get_object (value);
 
-        if (self->gradient)
-          {
-            g_object_unref (self->gradient);
-            self->gradient = NULL;
-          }
+        g_clear_object (&self->gradient);
 
         if (gradient)
           {
@@ -469,6 +480,10 @@ gimp_operation_blend_set_property (GObject      *object,
 
     case PROP_GRADIENT_REVERSE:
       self->gradient_reverse = g_value_get_boolean (value);
+      break;
+
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      self->gradient_blend_color_space = g_value_get_enum (value);
       break;
 
     case PROP_SUPERSAMPLE:
@@ -928,7 +943,9 @@ gradient_render_pixel (gdouble   x,
 #else
       rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
                                                   rbd->last_seg, factor,
-                                                  rbd->reverse, color);
+                                                  rbd->reverse,
+                                                  rbd->blend_color_space,
+                                                  color);
 #endif
     }
 }
@@ -993,8 +1010,9 @@ gimp_operation_blend_process (GeglOperation       *operation,
 
   RenderBlendData rbd = { 0, };
 
-  rbd.gradient = NULL;
-  rbd.reverse  = self->gradient_reverse;
+  rbd.gradient          = NULL;
+  rbd.reverse           = self->gradient_reverse;
+  rbd.blend_color_space = self->gradient_blend_color_space;
 
   if (self->gradient)
     rbd.gradient = g_object_ref (self->gradient);
@@ -1014,7 +1032,9 @@ gimp_operation_blend_process (GeglOperation       *operation,
         gdouble factor = (gdouble) i / (gdouble) (rbd.gradient_cache_size - 1);
 
         last_seg = gimp_gradient_get_color_at (rbd.gradient, NULL, last_seg,
-                                               factor, rbd.reverse,
+                                               factor,
+                                               rbd.reverse,
+                                               rbd.blend_color_space,
                                                rbd.gradient_cache + i);
       }
   }

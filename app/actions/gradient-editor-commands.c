@@ -539,6 +539,7 @@ gradient_editor_split_midpoint_cmd_callback (GtkAction *action,
                                               data_editor->context,
                                               editor->control_sel_l,
                                               editor->control_sel_r,
+                                              editor->blend_color_space,
                                               &editor->control_sel_l,
                                               &editor->control_sel_r);
 }
@@ -911,6 +912,7 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
                                                  editor->control_sel_l,
                                                  editor->control_sel_r,
                                                  editor->split_parts,
+                                                 editor->blend_color_space,
                                                  &editor->control_sel_l,
                                                  &editor->control_sel_r);
     }

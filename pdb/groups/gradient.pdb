@@ -251,7 +251,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name,
+                                                  GIMP_PDB_DATA_ACCESS_READ,
+                                                  error);
 
   if (gradient)
     {
@@ -269,7 +271,9 @@ HELP
           GimpRGB color;
 
 	  seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                            pos, reverse, &color);
+                                            pos, reverse,
+                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            &color);
 
           *sample++ = color.r;
           *sample++ = color.g;
@@ -321,7 +325,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name,
+                                                  GIMP_PDB_DATA_ACCESS_READ,
+                                                  error);
 
   if (gradient)
     {
@@ -338,7 +344,9 @@ HELP
 
           seg = gimp_gradient_get_color_at (gradient, context,
                                             seg, *positions,
-                                            reverse, &color);
+                                            reverse,
+                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            &color);
 
           *sample++ = color.r;
           *sample++ = color.g;
@@ -385,7 +393,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -429,7 +438,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -470,7 +480,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -511,7 +522,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -553,7 +565,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -594,7 +607,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -635,7 +649,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -682,7 +697,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -729,7 +745,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -776,7 +793,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -819,7 +837,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -861,7 +880,8 @@ HELP
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
 
-  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment, &seg, error);
+  gradient = gradient_get (gimp, name, GIMP_PDB_DATA_ACCESS_READ, segment,
+                           &seg, error);
 
   if (seg)
     {
@@ -1083,6 +1103,7 @@ HELP
     {
       gimp_gradient_segment_range_split_midpoint (gradient, context,
                                                   start_seg, end_seg,
+                                                  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                   NULL, NULL);
     }
   else
@@ -1129,6 +1150,7 @@ HELP
       gimp_gradient_segment_range_split_uniform (gradient, context,
                                                  start_seg, end_seg,
                                                  split_parts,
+                                                 GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                  NULL, NULL);
     }
   else

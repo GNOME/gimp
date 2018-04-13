@@ -68,6 +68,7 @@
 #define DEFAULT_FADE_UNIT               GIMP_UNIT_PIXEL
 
 #define DEFAULT_GRADIENT_REVERSE        FALSE
+#define DEFAULT_GRADIENT_BLEND_SPACE    GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL
 #define DEFAULT_GRADIENT_REPEAT         GIMP_REPEAT_TRIANGULAR
 #define DEFAULT_GRADIENT_LENGTH         100.0
 #define DEFAULT_GRADIENT_UNIT           GIMP_UNIT_PIXEL
@@ -115,6 +116,7 @@ enum
   PROP_FADE_UNIT,
 
   PROP_GRADIENT_REVERSE,
+  PROP_GRADIENT_BLEND_COLOR_SPACE,
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
@@ -335,6 +337,13 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             NULL, NULL,
                             DEFAULT_GRADIENT_REVERSE,
                             GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
+                         "gradient-blend-color-space",
+                         _("Blend Color Space"),
+                         _("Which color space to use when blending RGB gradient segments"),
+                         GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                         DEFAULT_GRADIENT_BLEND_SPACE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
                          "brush-view-type",
@@ -576,6 +585,9 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_GRADIENT_REVERSE:
       gradient_options->gradient_reverse = g_value_get_boolean (value);
       break;
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      gradient_options->gradient_blend_color_space = g_value_get_enum (value);
+      break;
 
     case PROP_BRUSH_VIEW_TYPE:
       options->brush_view_type = g_value_get_enum (value);
@@ -735,6 +747,9 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_GRADIENT_REVERSE:
       g_value_set_boolean (value, gradient_options->gradient_reverse);
+      break;
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      g_value_set_enum (value, gradient_options->gradient_blend_color_space);
       break;
 
     case PROP_BRUSH_VIEW_TYPE:
@@ -951,6 +966,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
                                   gradient_options->gradient_reverse,
+                                  gradient_options->gradient_blend_color_space,
                                   color);
 
       return TRUE;
@@ -1192,16 +1208,19 @@ void
 gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
                                         GimpPaintOptions *dest)
 {
-  gboolean gradient_reverse;
+  gboolean                    gradient_reverse;
+  GimpGradientBlendColorSpace gradient_blend_color_space;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
   g_object_get (src,
-                "gradient-reverse", &gradient_reverse,
+                "gradient-reverse",           &gradient_reverse,
+                "gradient-blend-color-space", &gradient_blend_color_space,
                 NULL);
 
   g_object_set (dest,
-                "gradient-reverse", gradient_reverse,
+                "gradient-reverse",           gradient_reverse,
+                "gradient-blend-color-space", gradient_blend_color_space,
                 NULL);
 }

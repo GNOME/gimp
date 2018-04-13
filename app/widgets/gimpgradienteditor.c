@@ -678,7 +678,9 @@ gradient_editor_drop_color (GtkWidget     *widget,
 
   gimp_gradient_segment_split_midpoint (gradient,
                                         GIMP_DATA_EDITOR (editor)->context,
-                                        seg, &lseg, &rseg);
+                                        seg,
+                                        editor->blend_color_space,
+                                        &lseg, &rseg);
 
   if (lseg)
     {
@@ -948,7 +950,7 @@ view_set_hint (GimpGradientEditor *editor,
 
   gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
                               data_editor->context, NULL,
-                              xpos, FALSE, &rgb);
+                              xpos, FALSE, FALSE, &rgb);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb);
 
@@ -987,7 +989,7 @@ view_pick_color (GimpGradientEditor *editor,
 
   gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
                               data_editor->context, NULL,
-                              xpos, FALSE, &color);
+                              xpos, FALSE, FALSE, &color);
 
   gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &color);
 

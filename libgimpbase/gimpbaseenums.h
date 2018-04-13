@@ -290,6 +290,7 @@ typedef enum
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDesaturateMode;
 
+
 #define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
 
 GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
@@ -337,6 +338,17 @@ typedef enum
   GIMP_FOREGROUND_EXTRACT_SIOX,
   GIMP_FOREGROUND_EXTRACT_MATTING
 } GimpForegroundExtractMode;
+
+
+#define GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE (gimp_gradient_blend_color_space_get_type ())
+
+GType gimp_gradient_blend_color_space_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,  /*< desc="Perceptual RGB", nick=rgb-perceptual >*/
+  GIMP_GRADIENT_BLEND_RGB_LINEAR       /*< desc="Linear RGB",     nick=rgb-linear     >*/
+} GimpGradientBlendColorSpace;
 
 
 #define GIMP_TYPE_GRADIENT_SEGMENT_COLOR (gimp_gradient_segment_color_get_type ())

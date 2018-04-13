@@ -67,6 +67,9 @@ static void   gimp_viewable_box_edit_clicked   (GtkWidget          *widget,
 static void   gimp_gradient_box_reverse_notify (GObject       *object,
                                                 GParamSpec    *pspec,
                                                 GimpView      *view);
+static void   gimp_gradient_box_blend_notify   (GObject       *object,
+                                                GParamSpec    *pspec,
+                                                GimpView      *view);
 
 
 /*  brush boxes  */
@@ -341,6 +344,7 @@ gradient_box_new (GimpContainer *container,
                   GimpViewType   view_type,
                   GimpViewSize   view_size,
                   const gchar   *reverse_prop,
+                  const gchar   *blend_color_space_prop,
                   const gchar   *editor_id,
                   const gchar   *editor_tooltip)
 {
@@ -402,6 +406,24 @@ gradient_box_new (GimpContainer *container,
                                         GIMP_VIEW (view));
     }
 
+  if (blend_color_space_prop)
+    {
+      GtkWidget *view;
+      gchar     *signal_name;
+
+      view = gtk_bin_get_child (GTK_BIN (button));
+
+      signal_name = g_strconcat ("notify::", blend_color_space_prop, NULL);
+      g_signal_connect_object (context, signal_name,
+                               G_CALLBACK (gimp_gradient_box_blend_notify),
+                               G_OBJECT (view), 0);
+      g_free (signal_name);
+
+      gimp_gradient_box_blend_notify (G_OBJECT (context),
+                                      NULL,
+                                      GIMP_VIEW (view));
+    }
+
   return hbox;
 }
 
@@ -410,7 +432,8 @@ gimp_gradient_box_new (GimpContainer *container,
                        GimpContext   *context,
                        const gchar   *label,
                        gint           spacing,
-                       const gchar   *reverse_prop)
+                       const gchar   *reverse_prop,
+                       const gchar   *blend_color_space_prop)
 {
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
@@ -418,7 +441,7 @@ gimp_gradient_box_new (GimpContainer *container,
 
   return gradient_box_new (container, context, label, spacing,
                            GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_LARGE,
-                           reverse_prop,
+                           reverse_prop, blend_color_space_prop,
                            NULL, NULL);
 }
 
@@ -430,6 +453,7 @@ gimp_prop_gradient_box_new (GimpContainer *container,
                             const gchar   *view_type_prop,
                             const gchar   *view_size_prop,
                             const gchar   *reverse_prop,
+                            const gchar   *blend_color_space_prop,
                             const gchar   *editor_id,
                             const gchar   *editor_tooltip)
 {
@@ -448,6 +472,7 @@ gimp_prop_gradient_box_new (GimpContainer *container,
   return view_props_connect (gradient_box_new (container, context, label, spacing,
                                                view_type, view_size,
                                                reverse_prop,
+                                               blend_color_space_prop,
                                                editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
@@ -736,4 +761,22 @@ gimp_gradient_box_reverse_notify (GObject    *object,
   g_object_get (object, "gradient-reverse", &reverse, NULL);
 
   gimp_view_renderer_gradient_set_reverse (rendergrad, reverse);
+}
+
+static void
+gimp_gradient_box_blend_notify (GObject    *object,
+                                GParamSpec *pspec,
+                                GimpView   *view)
+{
+  GimpViewRendererGradient    *rendergrad;
+  GimpGradientBlendColorSpace  blend_color_space;
+
+  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (view->renderer);
+
+  g_object_get (object,
+                "gradient-blend-color-space", &blend_color_space,
+                NULL);
+
+  gimp_view_renderer_gradient_set_blend_color_space (rendergrad,
+                                                     blend_color_space);
 }

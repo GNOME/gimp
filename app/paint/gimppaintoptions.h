@@ -52,8 +52,9 @@ struct _GimpFadeOptions
 
 struct _GimpGradientOptions
 {
-  gboolean        gradient_reverse;
-  GimpRepeatMode  gradient_repeat;
+  gboolean                    gradient_reverse;
+  GimpGradientBlendColorSpace gradient_blend_color_space;
+  GimpRepeatMode              gradient_repeat;
 };
 
 struct _GimpSmoothingOptions

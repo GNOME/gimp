@@ -160,7 +160,9 @@ gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
   while (i--)
     {
       seg = gimp_gradient_get_color_at (gradient, dialog->caller_context,
-                                        seg, pos, FALSE, &color);
+                                        seg, pos, FALSE,
+                                        GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                        &color);
 
       *pv++ = color.r;
       *pv++ = color.g;

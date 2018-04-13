@@ -38,22 +38,23 @@ typedef struct _GimpOperationBlendClass GimpOperationBlendClass;
 
 struct _GimpOperationBlend
 {
-  GeglOperationFilter  parent_instance;
+  GeglOperationFilter           parent_instance;
 
-  GimpContext         *context;
+  GimpContext                  *context;
 
-  GimpGradient        *gradient;
-  gdouble              start_x, start_y, end_x, end_y;
-  GimpGradientType     gradient_type;
-  GimpRepeatMode       gradient_repeat;
-  gdouble              offset;
-  gboolean             gradient_reverse;
+  GimpGradient                 *gradient;
+  gdouble                       start_x, start_y, end_x, end_y;
+  GimpGradientType              gradient_type;
+  GimpRepeatMode                gradient_repeat;
+  gdouble                       offset;
+  gboolean                      gradient_reverse;
+  GimpGradientBlendColorSpace   gradient_blend_color_space;
 
-  gboolean             supersample;
-  gint                 supersample_depth;
-  gdouble              supersample_threshold;
+  gboolean                      supersample;
+  gint                          supersample_depth;
+  gdouble                       supersample_threshold;
 
-  gboolean             dither;
+  gboolean                      dither;
 };
 
 struct _GimpOperationBlendClass

@@ -932,7 +932,8 @@ static gint
 gimp_blend_tool_editor_add_stop (GimpBlendTool *blend_tool,
                                  gdouble        value)
 {
-  GimpBlendOptions    *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpBlendOptions    *options       = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpPaintOptions    *paint_options = GIMP_PAINT_OPTIONS (options);
   GimpGradientSegment *seg;
   gint                 stop;
   BlendInfo           *info;
@@ -941,7 +942,9 @@ gimp_blend_tool_editor_add_stop (GimpBlendTool *blend_tool,
   gimp_blend_tool_editor_freeze_gradient (blend_tool);
 
   gimp_gradient_split_at (blend_tool->gradient,
-                          GIMP_CONTEXT (options), NULL, value, &seg, NULL);
+                          GIMP_CONTEXT (options), NULL, value,
+                          paint_options->gradient_options->gradient_blend_color_space,
+                          &seg, NULL);
 
   stop =
     gimp_gradient_segment_range_get_n_segments (blend_tool->gradient,

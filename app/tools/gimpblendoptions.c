@@ -284,10 +284,20 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                                        "gradient-view-type",
                                        "gradient-view-size",
                                        "gradient-reverse",
+                                       "gradient-blend-color-space",
                                        "gimp-gradient-editor",
                                        _("Edit this gradient"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  /*  the blend color space  */
+  combo = gimp_prop_enum_combo_box_new (config, "gradient-blend-color-space",
+                                        0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo),
+                                _("Blend Color Space"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
