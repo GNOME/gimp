@@ -850,7 +850,7 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 
   blend_tool->render_node =
     gegl_node_new_child (blend_tool->graph,
-                         "operation", "gimp:blend",
+                         "operation", "gimp:gradient",
                          "context", context,
                          NULL);
 

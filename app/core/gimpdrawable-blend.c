@@ -93,7 +93,7 @@ gimp_drawable_blend (GimpDrawable       *drawable,
     }
 
   render = gegl_node_new_child (NULL,
-                                "operation",             "gimp:blend",
+                                "operation",             "gimp:gradient",
                                 "context",               context,
                                 "gradient",              gradient,
                                 "start-x",               startx,

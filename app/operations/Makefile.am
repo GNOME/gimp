@@ -40,8 +40,6 @@ libappoperations_a_sources = \
 	gimplevelsconfig.c			\
 	gimplevelsconfig.h			\
 	\
-	gimpoperationblend.c			\
-	gimpoperationblend.h			\
 	gimpoperationborder.c			\
 	gimpoperationborder.h			\
 	gimpoperationbuffersourcevalidate.c	\
@@ -56,6 +54,8 @@ libappoperations_a_sources = \
 	gimpoperationequalize.h			\
 	gimpoperationflood.c			\
 	gimpoperationflood.h			\
+	gimpoperationgradient.c			\
+	gimpoperationgradient.h			\
 	gimpoperationgrow.c			\
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\
