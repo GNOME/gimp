@@ -49,6 +49,10 @@ Configurability:
 Tools:
 
   - Color used in the Smudge tool is now added to the color history.
+  - "Blend" tool renamed to much more consistent "Gradient" tool.
+    Also it can now work in linear color space, thus making sure you
+    have way more even transitions and getting rid of some bad color
+    interpolation.
 
 Assets / Resources:
 
