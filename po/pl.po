@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-14 10:19+0200\n"
-"PO-Revision-Date: 2018-04-14 10:20+0200\n"
+"POT-Creation-Date: 2018-04-14 21:17+0200\n"
+"PO-Revision-Date: 2018-04-14 21:18+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21389,8 +21389,8 @@ msgstr "Usuń przerwę"
 
 #. the type label
 #: ../app/tools/gimpgradienttool-editor.c:1533
-msgid "Gradienting:"
-msgstr "Typ gradientu:"
+msgid "Blending:"
+msgstr "Mieszanie:"
 
 #. the color label
 #: ../app/tools/gimpgradienttool-editor.c:1555
