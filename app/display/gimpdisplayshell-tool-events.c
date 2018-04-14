@@ -100,7 +100,7 @@ static void       gimp_display_shell_handle_scrolling            (GimpDisplayShe
 
 static void       gimp_display_shell_space_pressed               (GimpDisplayShell   *shell,
                                                                   const GdkEvent     *event);
-static void       gimp_display_shell_space_released              (GimpDisplayShell   *shell,
+static void       gimp_display_shell_released                    (GimpDisplayShell   *shell,
                                                                   const GdkEvent     *event,
                                                                   const GimpCoords   *image_coords);
 
@@ -205,7 +205,9 @@ gimp_display_shell_events (GtkWidget        *widget,
             break;
 
           default:
-            if (shell->space_release_pending || shell->scrolling)
+            if (shell->space_release_pending   ||
+                shell->button1_release_pending ||
+                shell->scrolling)
               return TRUE;
             break;
           }
@@ -679,7 +681,9 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
         GdkModifierType  button_state;
 
         /*  ignore new mouse events  */
-        if (gimp->busy || shell->scrolling || shell->pointer_grabbed)
+        if (gimp->busy || shell->scrolling ||
+            shell->pointer_grabbed         ||
+            shell->button1_release_pending)
           return TRUE;
 
         button_state = gimp_display_shell_button_to_state (bevent->button);
@@ -845,6 +849,12 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
         GimpTool       *active_tool;
 
         gimp_display_shell_autoscroll_stop (shell);
+
+        if (bevent->button == 1 && shell->button1_release_pending)
+          {
+            gimp_display_shell_released (shell, event, NULL);
+            return TRUE;
+          }
 
         if (gimp->busy)
           return TRUE;
@@ -1263,7 +1273,10 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
 
               case GDK_KEY_space:
               case GDK_KEY_KP_Space:
-                gimp_display_shell_space_pressed (shell, event);
+                if (shell->button1_release_pending)
+                  shell->space_release_pending = TRUE;
+                else
+                  gimp_display_shell_space_pressed (shell, event);
                 return_val = TRUE;
                 break;
 
@@ -1364,7 +1377,20 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
               {
               case GDK_KEY_space:
               case GDK_KEY_KP_Space:
-                gimp_display_shell_space_released (shell, event, NULL);
+                if ((state & GDK_BUTTON1_MASK))
+                  {
+                    shell->button1_release_pending = TRUE;
+                    shell->space_release_pending   = FALSE;
+                    /* We need to ungrab the pointer in order to catch
+                     * button release events.
+                     */
+                    if (shell->pointer_grabbed)
+                      gimp_display_shell_pointer_ungrab (shell, event);
+                  }
+                else
+                  {
+                    gimp_display_shell_released (shell, event, NULL);
+                  }
                 return_val = TRUE;
                 break;
 
@@ -1535,7 +1561,11 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->rotate_drag_angle = 0.0;
   shell->scaling           = FALSE;
 
-  gimp_display_shell_pointer_ungrab (shell, event);
+  /* We may have ungrabbed the pointer when space was released while
+   * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
+   */
+  if (shell->pointer_grabbed)
+    gimp_display_shell_pointer_ungrab (shell, event);
 }
 
 static void
@@ -1638,13 +1668,14 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_space_released (GimpDisplayShell *shell,
-                                   const GdkEvent   *event,
-                                   const GimpCoords *image_coords)
+gimp_display_shell_released (GimpDisplayShell *shell,
+                             const GdkEvent   *event,
+                             const GimpCoords *image_coords)
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
-  if (! shell->space_release_pending)
+  if (! shell->space_release_pending &&
+      ! shell->button1_release_pending)
     return;
 
   switch (shell->display->config->space_bar_action)
@@ -1684,7 +1715,8 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
   gimp_display_shell_keyboard_ungrab (shell, event);
 
-  shell->space_release_pending = FALSE;
+  shell->space_release_pending   = FALSE;
+  shell->button1_release_pending = FALSE;
 }
 
 static gboolean
