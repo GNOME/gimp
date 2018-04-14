@@ -235,10 +235,25 @@ gimp_brush_tool_options_notify (GimpTool         *tool,
 static void
 gimp_brush_tool_start_paint (GimpPaintTool *paint_tool)
 {
+  GimpBrushTool        *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
+  GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+  const GimpBezierDesc *boundary;
+
   if (GIMP_PAINT_TOOL_CLASS (parent_class)->start_paint)
     GIMP_PAINT_TOOL_CLASS (parent_class)->start_paint (paint_tool);
 
-  gimp_brush_tool_flush_paint (paint_tool);
+  boundary = gimp_brush_tool_get_boundary (brush_tool,
+                                           &brush_tool->boundary_width,
+                                           &brush_tool->boundary_height);
+
+  if (boundary)
+    brush_tool->boundary = gimp_bezier_desc_copy (boundary);
+
+  brush_tool->boundary_scale        = brush_core->scale;
+  brush_tool->boundary_aspect_ratio = brush_core->aspect_ratio;
+  brush_tool->boundary_angle        = brush_core->angle;
+  brush_tool->boundary_reflect      = brush_core->reflect;
+  brush_tool->boundary_hardness     = brush_core->hardness;
 }
 
 static void
@@ -256,19 +271,33 @@ static void
 gimp_brush_tool_flush_paint (GimpPaintTool *paint_tool)
 {
   GimpBrushTool        *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
+  GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
   const GimpBezierDesc *boundary;
 
   if (GIMP_PAINT_TOOL_CLASS (parent_class)->flush_paint)
     GIMP_PAINT_TOOL_CLASS (parent_class)->flush_paint (paint_tool);
 
-  g_clear_pointer (&brush_tool->boundary, gimp_bezier_desc_free);
+  if (brush_tool->boundary_scale        != brush_core->scale        ||
+      brush_tool->boundary_aspect_ratio != brush_core->aspect_ratio ||
+      brush_tool->boundary_angle        != brush_core->angle        ||
+      brush_tool->boundary_reflect      != brush_core->reflect      ||
+      brush_tool->boundary_hardness     != brush_core->hardness)
+    {
+      g_clear_pointer (&brush_tool->boundary, gimp_bezier_desc_free);
 
-  boundary = gimp_brush_tool_get_boundary (brush_tool,
-                                           &brush_tool->boundary_width,
-                                           &brush_tool->boundary_height);
+      boundary = gimp_brush_tool_get_boundary (brush_tool,
+                                               &brush_tool->boundary_width,
+                                               &brush_tool->boundary_height);
 
-  if (boundary)
-    brush_tool->boundary = gimp_bezier_desc_copy (boundary);
+      if (boundary)
+        brush_tool->boundary = gimp_bezier_desc_copy (boundary);
+
+      brush_tool->boundary_scale        = brush_core->scale;
+      brush_tool->boundary_aspect_ratio = brush_core->aspect_ratio;
+      brush_tool->boundary_angle        = brush_core->angle;
+      brush_tool->boundary_reflect      = brush_core->reflect;
+      brush_tool->boundary_hardness     = brush_core->hardness;
+    }
 }
 
 static GimpCanvasItem *
