@@ -1530,7 +1530,7 @@ gimp_gradient_tool_editor_init_midpoint_gui (GimpGradientTool *gradient_tool)
   row++;
 
   /* the type label */
-  label = gtk_label_new (_("Gradienting:"));
+  label = gtk_label_new (_("Blending:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
