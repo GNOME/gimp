@@ -629,7 +629,6 @@ gimp_viewable_box_new (GimpContainer *container,
   GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *l;
-  GtkWidget *entry_hbox = NULL;
   GtkWidget *entry;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
@@ -661,25 +660,13 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_show (l);
     }
 
-  if (editor_id)
-    {
-      entry_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
-      gtk_box_pack_end (GTK_BOX (vbox), entry_hbox, FALSE, FALSE, 0);
-      gtk_widget_show (entry_hbox);
-    }
-
   entry = gimp_container_entry_new (container, context, view_size, 1);
 
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
-
-  if (entry_hbox)
-    gtk_box_pack_start (GTK_BOX (entry_hbox), entry, TRUE, TRUE, 0);
-  else
-    gtk_box_pack_end (GTK_BOX (vbox), entry, label ? FALSE : TRUE, FALSE, 0);
-
+  gtk_box_pack_end (GTK_BOX (vbox), entry, label ? FALSE : TRUE, FALSE, 0);
   gtk_widget_show (entry);
 
   if (editor_id)
@@ -689,7 +676,7 @@ gimp_viewable_box_new (GimpContainer *container,
 
       edit_button = gtk_button_new ();
       gtk_button_set_relief (GTK_BUTTON (edit_button), GTK_RELIEF_NONE);
-      gtk_box_pack_end (GTK_BOX (entry_hbox), edit_button, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (hbox), edit_button, FALSE, FALSE, 0);
       gtk_widget_show (edit_button);
 
       if (editor_tooltip)
