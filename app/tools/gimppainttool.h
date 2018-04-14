@@ -39,33 +39,35 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpColorTool   parent_instance;
+  GimpColorTool  parent_instance;
 
-  gboolean        pick_colors;  /*  pick color if ctrl is pressed   */
-  gboolean        draw_line;
+  gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
+  gboolean       draw_line;
 
-  gboolean        show_cursor;
-  gboolean        draw_brush;
-  gboolean        draw_fallback;
-  gint            fallback_size;
-  gboolean        draw_circle;
-  gint            circle_size;
+  gboolean       show_cursor;
+  gboolean       draw_brush;
+  gboolean       draw_fallback;
+  gint           fallback_size;
+  gboolean       draw_circle;
+  gint           circle_size;
 
-  const gchar    *status;       /* status message */
-  const gchar    *status_line;  /* status message when drawing a line */
-  const gchar    *status_ctrl;  /* additional message for the ctrl modifier */
+  const gchar   *status;       /* status message */
+  const gchar   *status_line;  /* status message when drawing a line */
+  const gchar   *status_ctrl;  /* additional message for the ctrl modifier */
 
-  GimpPaintCore  *core;
+  GimpPaintCore *core;
 
-  GimpDisplay    *display;
-  GimpDrawable   *drawable;
-
-  GimpCanvasItem *outline;
+  GimpDisplay   *display;
+  GimpDrawable  *drawable;
 };
 
 struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
+
+  void             (* start_paint) (GimpPaintTool *paint_tool);
+  void             (* end_paint)   (GimpPaintTool *paint_tool);
+  void             (* flush_paint) (GimpPaintTool *paint_tool);
 
   GimpCanvasItem * (* get_outline) (GimpPaintTool *paint_tool,
                                     GimpDisplay   *display,
@@ -74,16 +76,20 @@ struct _GimpPaintToolClass
 };
 
 
-GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
+GType      gimp_paint_tool_get_type            (void) G_GNUC_CONST;
 
-void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                             GimpColorPickMode  mode);
+void       gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
+                                                GimpColorPickMode  mode);
 
-void    gimp_paint_tool_set_draw_fallback   (GimpPaintTool     *tool,
-                                             gboolean           draw_fallback,
-                                             gint               fallback_size);
+void       gimp_paint_tool_set_draw_fallback   (GimpPaintTool     *tool,
+                                                gboolean           draw_fallback,
+                                                gint               fallback_size);
 
-void    gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
-                                             gboolean           draw_circle,
-                                             gint               circle_size);
+void       gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
+                                                gboolean           draw_circle,
+                                                gint               circle_size);
+
+gboolean   gimp_paint_tool_is_painting         (GimpPaintTool     *tool);
+
+
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

@@ -672,9 +672,12 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           line_drawn = TRUE;
         }
 
-      outline = gimp_paint_tool_get_outline (paint_tool,
-                                             draw_tool->display,
-                                             cur_x, cur_y);
+      gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
+
+      if (paint_tool->draw_brush)
+        outline = gimp_paint_tool_get_outline (paint_tool,
+                                               draw_tool->display,
+                                               cur_x, cur_y);
 
       if (outline)
         {
@@ -767,22 +770,9 @@ gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
                              gdouble        x,
                              gdouble        y)
 {
-  if (paint_tool->drawable && gimp_drawable_is_painting (paint_tool->drawable))
-    {
-      if (paint_tool->outline)
-        return g_object_ref (paint_tool->outline);
-    }
-  else
-    {
-      gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
-
-      if (paint_tool->draw_brush &&
-          GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline)
-        {
-          return GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (
-            paint_tool, display, x, y);
-        }
-    }
+  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline)
+    return GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (paint_tool,
+                                                                display, x, y);
 
   return NULL;
 }
@@ -852,4 +842,10 @@ gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
 
   tool->draw_circle = draw_circle;
   tool->circle_size = circle_size;
+}
+
+gboolean
+gimp_paint_tool_is_painting (GimpPaintTool *tool)
+{
+  return tool->drawable != NULL && gimp_drawable_is_painting (tool->drawable);
 }
