@@ -155,7 +155,7 @@ gimp_gradient_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-gradient-tool",
                 _("Gradient"),
                 _("Gradient Tool: Fill selected area with a color gradient"),
-                N_("Gra_dient"), "L",
+                N_("Gra_dient"), "G",
                 NULL, GIMP_HELP_TOOL_GRADIENT,
                 GIMP_ICON_TOOL_GRADIENT,
                 data);
