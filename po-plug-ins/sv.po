@@ -13,9 +13,9 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-03-26 23:15+0000\n"
-"PO-Revision-Date: 2018-04-02 16:34+0200\n"
-"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"POT-Creation-Date: 2018-04-04 00:23+0000\n"
+"PO-Revision-Date: 2018-04-14 20:43+0200\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -2232,8 +2232,8 @@ msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
-"ogiltiga bilddimensioner: bredd: %d, horisontell kompensation: %d, höjd: %d, "
-"vertikal kompensation: %d"
+"ogiltiga bilddimensioner: bredd: %d, horisontell förskjutning: %d, höjd: %d, "
+"vertikal förskjutning: %d"
 
 #: ../plug-ins/common/file-cel.c:432
 #, c-format
@@ -2600,7 +2600,7 @@ msgstr "GIMP-pensel (animerad)"
 
 #: ../plug-ins/common/file-gih.c:584
 msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP-penselfilen verkar vara trasig."
+msgstr "GIMP-penselfilen verkar vara skadad."
 
 #: ../plug-ins/common/file-gih.c:915
 msgid "Brush Pipe"
@@ -3274,8 +3274,8 @@ msgstr "Fel vid inläsning av PNG-fil: %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
-msgstr "Fel vid skapande av PNG läs-struct då ”%s” exporterades."
+msgid "Error creating PNG read struct while loading '%s'."
+msgstr "Fel vid skapande av läs-struct för PNG då ”%s” lästes in."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format
@@ -3286,7 +3286,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:902
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "Fel vid inläsning av ”%s”. Trasig fil?"
+msgstr "Fel vid inläsning av ”%s”. Skadad fil?"
 
 #: ../plug-ins/common/file-png.c:1057
 #, c-format
@@ -3308,15 +3308,15 @@ msgstr ""
 
 #: ../plug-ins/common/file-png.c:1403
 msgid "Apply PNG Offset"
-msgstr "Tillämpa PNG-kompensation"
+msgstr "Tillämpa PNG-position"
 
 #: ../plug-ins/common/file-png.c:1407
 msgid "Ignore PNG offset"
-msgstr "Ignorera PNG-kompensation"
+msgstr "Ignorera PNG-position"
 
 #: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG offset to layer"
-msgstr "Tillämpa PNG-kompensation på lager"
+msgstr "Tillämpa PNG-position på lager"
 
 #: ../plug-ins/common/file-png.c:1433
 #, c-format
@@ -3324,8 +3324,8 @@ msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
-"PNG-bilden du importerar anger en kompensation på %d, %d. Vill du tillämpa "
-"denna kompensation på lagret?"
+"PNG-bilden du importerar anger en position på %d, %d. Vill du tillämpa denna "
+"position på lagret?"
 
 #: ../plug-ins/common/file-png.c:1541
 #, c-format
@@ -4609,7 +4609,7 @@ msgstr "Fel vid exportering av ”%s”: "
 #: ../plug-ins/common/file-xwd.c:1753 ../plug-ins/common/file-xwd.c:2151
 #, c-format
 msgid "XWD-file %s is corrupt."
-msgstr "XWD-fil %s är korrupt."
+msgstr "XWD-filen %s är skadad."
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
@@ -5825,11 +5825,11 @@ msgstr "Glittra"
 
 #: ../plug-ins/common/sparkle.c:374
 msgid "Luminosity _threshold:"
-msgstr "_Tröskelvärde för luminans:"
+msgstr "_Tröskelvärde för luminiscens:"
 
 #: ../plug-ins/common/sparkle.c:377
 msgid "Adjust the luminosity threshold"
-msgstr "Justera tröskelvärdet för luminans"
+msgstr "Justera tröskelvärdet för luminiscens"
 
 #: ../plug-ins/common/sparkle.c:387
 msgid "F_lare intensity:"
@@ -5897,11 +5897,11 @@ msgstr "Justera hur mycket mättnaden skall ändras slumpmässigt"
 
 #: ../plug-ins/common/sparkle.c:499
 msgid "_Preserve luminosity"
-msgstr "_Bevara luminans"
+msgstr "_Bevara luminiscens"
 
 #: ../plug-ins/common/sparkle.c:506
 msgid "Should the luminosity be preserved?"
-msgstr "Ska luminansen bevaras?"
+msgstr "Ska luminiscensen bevaras?"
 
 #: ../plug-ins/common/sparkle.c:515
 msgid "In_verse"
@@ -8262,7 +8262,7 @@ msgstr "”%s” är inte en FractalExplorer-fil"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "”%s” är trasig. Alternativsektion på rad %d är felaktig"
+msgstr "”%s” är skadad. Alternativsektion på rad %d är felaktig"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
@@ -8297,7 +8297,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"Filen ”%s” är trasig.\n"
+"Filen ”%s” är skadad.\n"
 "Rad %d alternativsektion är felaktig"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1000
@@ -10400,7 +10400,7 @@ msgstr "Asymmetri:"
 #. Shear
 #: ../plug-ins/ifs-compose/ifs-compose.c:582
 msgid "Shear:"
-msgstr "Lutning:"
+msgstr "Skevning:"
 
 #. Simple color control section
 #: ../plug-ins/ifs-compose/ifs-compose.c:627
@@ -13719,22 +13719,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Cro_p"
 #~ msgstr "Be_skär"
-
-#~ msgid "Apply a generic 5x5 convolution matrix"
-#~ msgstr "Tillämpar en allmän 5x5 konvolveringsmatris"
-
-#~ msgid "_Convolution Matrix..."
-#~ msgstr "_Konvolveringsmatris..."
-
-#~ msgid "Convolution does not work on layers smaller than 3x3 pixels."
-#~ msgstr ""
-#~ "Konvolvering fungerar inte på lager som är mindre än 3x3 bildpunkter."
-
-#~ msgid "Applying convolution"
-#~ msgstr "Tillämpar konvolvering"
-
-#~ msgid "Convolution Matrix"
-#~ msgstr "Konvolveringsmatris"
 
 #~ msgid "Matrix"
 #~ msgstr "Matris"
