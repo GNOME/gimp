@@ -100,6 +100,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA,
 
 static const Babl *fish_srgb_to_linear_rgb = NULL;
 static const Babl *fish_linear_rgb_to_srgb = NULL;
+static const Babl *fish_srgb_to_cie_lab    = NULL;
+static const Babl *fish_cie_lab_a_to_srgb  = NULL;
 
 
 static void
@@ -127,6 +129,10 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   fish_srgb_to_linear_rgb = babl_fish (babl_format ("R'G'B' double"),
                                        babl_format ("RGB double"));
   fish_linear_rgb_to_srgb = babl_fish (babl_format ("RGBA double"),
+                                       babl_format ("R'G'B'A double"));
+  fish_srgb_to_cie_lab    = babl_fish (babl_format ("R'G'B' double"),
+                                       babl_format ("CIE Lab double"));
+  fish_cie_lab_a_to_srgb  = babl_fish (babl_format ("CIE Lab alpha double"),
                                        babl_format ("R'G'B'A double"));
 }
 
@@ -514,22 +520,38 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   if (seg->color == GIMP_GRADIENT_SEGMENT_RGB)
     {
-      if (blend_color_space == GIMP_GRADIENT_BLEND_RGB_LINEAR)
+      switch (blend_color_space)
         {
-          babl_process (fish_srgb_to_linear_rgb,
-                        &left_color, &left_color, 1);
-          babl_process (fish_srgb_to_linear_rgb,
-                        &right_color, &right_color, 1);
+          case GIMP_GRADIENT_BLEND_CIE_LAB:
+            babl_process (fish_srgb_to_cie_lab,
+                          &left_color, &left_color, 1);
+            babl_process (fish_srgb_to_cie_lab,
+                          &right_color, &right_color, 1);
+            break;
+          case GIMP_GRADIENT_BLEND_RGB_LINEAR:
+            babl_process (fish_srgb_to_linear_rgb,
+                          &left_color, &left_color, 1);
+            babl_process (fish_srgb_to_linear_rgb,
+                          &right_color, &right_color, 1);
+          case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+            break;
         }
 
       rgb.r = left_color.r + (right_color.r - left_color.r) * factor;
       rgb.g = left_color.g + (right_color.g - left_color.g) * factor;
       rgb.b = left_color.b + (right_color.b - left_color.b) * factor;
 
-      if (blend_color_space == GIMP_GRADIENT_BLEND_RGB_LINEAR)
+      switch (blend_color_space)
         {
-          babl_process (fish_linear_rgb_to_srgb,
-                        &rgb, &rgb, 1);
+          case GIMP_GRADIENT_BLEND_CIE_LAB:
+            babl_process (fish_cie_lab_a_to_srgb,
+                          &rgb, &rgb, 1);
+            break;
+          case GIMP_GRADIENT_BLEND_RGB_LINEAR:
+            babl_process (fish_linear_rgb_to_srgb,
+                          &rgb, &rgb, 1);
+          case GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL:
+            break;
         }
     }
   else
