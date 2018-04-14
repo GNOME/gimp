@@ -635,6 +635,7 @@ gimp_gradient_blend_color_space_get_type (void)
   {
     { GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL, "GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL", "rgb-perceptual" },
     { GIMP_GRADIENT_BLEND_RGB_LINEAR, "GIMP_GRADIENT_BLEND_RGB_LINEAR", "rgb-linear" },
+    { GIMP_GRADIENT_BLEND_CIE_LAB, "GIMP_GRADIENT_BLEND_CIE_LAB", "cie-lab" },
     { 0, NULL, NULL }
   };
 
@@ -642,6 +643,7 @@ gimp_gradient_blend_color_space_get_type (void)
   {
     { GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL, NC_("gradient-blend-color-space", "Perceptual RGB"), NULL },
     { GIMP_GRADIENT_BLEND_RGB_LINEAR, NC_("gradient-blend-color-space", "Linear RGB"), NULL },
+    { GIMP_GRADIENT_BLEND_CIE_LAB, NC_("gradient-blend-color-space", "CIE Lab"), NULL },
     { 0, NULL, NULL }
   };
 

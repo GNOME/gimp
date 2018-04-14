@@ -347,7 +347,8 @@ GType gimp_gradient_blend_color_space_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,  /*< desc="Perceptual RGB", nick=rgb-perceptual >*/
-  GIMP_GRADIENT_BLEND_RGB_LINEAR       /*< desc="Linear RGB",     nick=rgb-linear     >*/
+  GIMP_GRADIENT_BLEND_RGB_LINEAR,      /*< desc="Linear RGB",     nick=rgb-linear     >*/
+  GIMP_GRADIENT_BLEND_CIE_LAB          /*< desc="CIE Lab",        nick=cie-lab        >*/
 } GimpGradientBlendColorSpace;
 
 
