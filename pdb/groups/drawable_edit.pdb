@@ -1,0 +1,433 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub drawable_edit_clear {
+    $blurb = 'Clear selected area of drawable.';
+
+    $help = <<'HELP';
+This procedure clears the specified drawable. If the drawable has an
+alpha channel, the cleared pixels will become transparent. If the
+drawable does not have an alpha channel, cleared pixels will be set to
+the background color. This procedure only affects regions within a
+selection if there is a selection active.
+
+This procedure is affected by the following context setters:
+gimp_context_set_background().
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to clear from' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+      gimp_edit_clear (image, drawable, context);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_edit_fill {
+    $blurb = 'Fill selected area of drawable.';
+
+    $help = <<'HELP';
+
+This procedure fills the specified drawable according to fill
+mode. This procedure only affects regions within a selection if there
+is a selection active. If you want to fill the whole drawable,
+regardless of the selection, use gimp_drawable_fill().
+
+This procedure is affected by the following context setters:
+gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+gimp_context_set_foreground(), gimp_context_set_background(),
+gimp_context_set_pattern().
+HELP
+
+    &std_pdb_misc;
+    $author .= ' & Raphael Quinet';
+    $date = '1995-2000';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => "The drawable to fill to" },
+	{ name => 'fill_type', type => 'enum GimpFillType',
+	  desc => 'The type of fill' }
+    );
+
+    %invoke = (
+	code => <<CODE
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+
+      gimp_context_set_opacity (GIMP_CONTEXT (options),
+                                gimp_context_get_opacity (context));
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
+                                   gimp_context_get_paint_mode (context));
+
+      if (gimp_fill_options_set_by_fill_type (options, context,
+                                              fill_type, error))
+        {
+          gimp_edit_fill (image, drawable, options, NULL);
+        }
+      else
+        success = FALSE;
+
+      g_object_unref (options);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_edit_bucket_fill {
+    $blurb = <<'BLURB';
+Fill the area by a seed fill starting at the specified coordinates.
+BLURB
+
+    $help = <<'HELP';
+This procedure does a seed fill at the specified coordinates, using
+various parameters from the current context.
+
+In the case of merged sampling, the x and y coordinates are relative
+to the image's origin; otherwise, they are relative to the drawable's
+origin.
+
+This procedure is affected by the following context setters:
+gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+gimp_context_set_foreground(), gimp_context_set_background(),
+gimp_context_set_pattern(), gimp_context_set_sample_threshold(),
+gimp_context_set_sample_merged(), gimp_context_set_sample_criterion(),
+gimp_context_set_diagonal_neighbors(), gimp_context_set_antialias().
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'fill_type', type => 'enum GimpFillType',
+	  desc => 'The type of fill' },
+	{ name => 'x', type => 'float',
+	  desc => "The x coordinate of this bucket fill's application." },
+	{ name => 'y', type => 'float',
+	  desc => "The y coordinate of this bucket fill's application." }
+    );
+
+    %invoke = (
+        headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+
+      gimp_context_set_opacity (GIMP_CONTEXT (options),
+                                gimp_context_get_opacity (context));
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
+                                   gimp_context_get_paint_mode (context));
+
+      gimp_fill_options_set_antialias (options,
+                                       GIMP_PDB_CONTEXT (context)->antialias);
+
+      if (gimp_fill_options_set_by_fill_type (options, context,
+                                              fill_type, error))
+        {
+          gimp_drawable_bucket_fill (drawable, options,
+                                     GIMP_PDB_CONTEXT (context)->sample_transparent,
+                                     GIMP_PDB_CONTEXT (context)->sample_criterion,
+                                     GIMP_PDB_CONTEXT (context)->sample_threshold,
+                                     GIMP_PDB_CONTEXT (context)->sample_merged,
+                                     GIMP_PDB_CONTEXT (context)->diagonal_neighbors,
+                                     x, y);
+        }
+      else
+        success = FALSE;
+
+      g_object_unref (options);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_edit_gradient_fill {
+    $blurb = <<'BLURB';
+Draw a gradient between the starting and ending coordinates with the
+specified gradient type.
+BLURB
+
+    $help = <<'HELP';
+This tool requires information on the gradient type. It creates the
+specified variety of gradient using the starting and ending
+coordinates as defined for each gradient type.  For shapeburst
+gradient types, the context's distance metric is also relevant and can
+be updated with gimp_context_set_distance_metric().
+
+This procedure is affected by the following context setters:
+gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+gimp_context_set_foreground(), gimp_context_set_background(),
+gimp_context_set_gradient() and all gradient property settings,
+gimp_context_set_distance_metric().
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'gradient_type',  type => 'enum GimpGradientType',
+	  desc => 'The type of gradient' },
+	{ name => 'offset', type => '0 <= float',
+	  desc => 'Offset relates to the starting and ending coordinates
+		   specified for the blend. This parameter is mode dependent.' },
+	{ name => 'supersample', type => 'boolean',
+	  desc => 'Do adaptive supersampling' },
+	{ name => 'supersample_max_depth', type => '1 <= int32 <= 9',
+	  no_validate => 1,
+	  desc => 'Maximum recursion levels for supersampling' },
+	{ name => 'supersample_threshold', type => '0 <= float <= 4',
+	  no_validate => 1,
+	  desc => 'Supersampling threshold' },
+	{ name => 'dither', type => 'boolean',
+	  desc => 'Use dithering to reduce banding' },
+	{ name => 'x1', type => 'float',
+	  desc => "The x coordinate of this gradient's starting point" },
+	{ name => 'y1', type => 'float',
+	  desc => "The y coordinate of this gradient's starting point" },
+	{ name => 'x2', type => 'float',
+	  desc => "The x coordinate of this gradient's ending point" },
+	{ name => 'y2', type => 'float',
+	  desc => "The y coordinate of this gradient's ending point" }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-gradient.h") ],
+	code => <<'CODE'
+{
+  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                        GIMP_PDB_ITEM_CONTENT, error) &&
+             gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
+
+  if (success && supersample)
+    {
+      if (supersample_max_depth < 1 || supersample_max_depth > 9)
+        success = FALSE;
+
+      if (supersample_threshold < 0.0 || supersample_threshold > 4.0)
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      /* all options should have the same value, so pick a random one */
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      if (progress)
+        gimp_progress_start (progress, FALSE, _("Gradient"));
+
+      gimp_drawable_gradient (drawable,
+                              context,
+                              gimp_context_get_gradient (context),
+                              GIMP_PDB_CONTEXT (context)->distance_metric,
+                              gimp_context_get_paint_mode (context),
+                              gradient_type,
+                              gimp_context_get_opacity (context),
+	                      offset,
+                              options->gradient_options->gradient_repeat,
+                              options->gradient_options->gradient_reverse,
+                              options->gradient_options->gradient_blend_color_space,
+                              supersample,
+			      supersample_max_depth,
+			      supersample_threshold,
+                              dither,
+                              x1, y1, x2, y2,
+	                      progress);
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+}
+CODE
+    );
+}
+
+sub drawable_edit_stroke_selection {
+    $blurb = 'Stroke the current selection';
+
+    $help = <<'HELP';
+This procedure strokes the current selection, painting along the
+selection boundary with the active paint method and brush, or using a
+plain line with configurable properties. The paint is applied to the
+specified drawable regardless of the active selection.
+
+This procedure is affected by the following context setters:
+gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+gimp_context_set_foreground(),
+gimp_context_set_brush() and all brush property settings,
+gimp_context_set_gradient() and all gradient property settings
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to stroke to' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpstrokeoptions.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpStrokeOptions *options;
+      GimpPaintOptions  *paint_options;
+
+      options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      paint_options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
+      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                                  drawable, context, options, paint_options,
+                                  TRUE, progress, error);
+
+      g_object_unref (paint_options);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_edit_stroke_item {
+    $blurb = 'Stroke the specified item';
+
+    $help = <<'HELP';
+This procedure strokes the specified item, painting along its outline
+(e.g. along a path, or along a channel's boundary), with the active
+paint method and brush, or using a plain line with configurable
+properties.
+
+This procedure is affected by the following context setters:
+gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+gimp_context_set_foreground(),
+gimp_context_set_brush() and all brush property settings,
+gimp_context_set_gradient() and all gradient property settings
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable to stroke to' },
+	{ name => 'item', type => 'item',
+          desc => 'The item to stroke' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpstrokeoptions.h") ],
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
+      gimp_pdb_item_is_attached (item,
+                                 gimp_item_get_image (GIMP_ITEM (drawable)),
+                                 0, error))
+    {
+      GimpStrokeOptions *options;
+      GimpPaintOptions  *paint_options;
+
+      options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      paint_options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
+      success = gimp_item_stroke (item, drawable,
+                                  context, options, paint_options,
+                                  TRUE, progress, error);
+
+      g_object_unref (paint_options);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+@headers = qw("libgimpconfig/gimpconfig.h"
+              "paint/gimppaintoptions.h"
+              "core/gimp.h"
+              "core/gimp-edit.h"
+              "core/gimpbuffer.h"
+              "core/gimpimage.h"
+              "core/gimpprogress.h"
+              "gimppdb-utils.h"
+              "gimppdbcontext.h"
+              "gimp-intl.h");
+
+@procs = qw(drawable_edit_clear
+            drawable_edit_fill
+            drawable_edit_bucket_fill
+            drawable_edit_gradient_fill
+            drawable_edit_stroke_selection
+            drawable_edit_stroke_item);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Drawable edit procedures';
+$doc_title = 'gimpdrawableedit';
+$doc_short_desc = 'Drawable edit functions (clear, fill, gradient, stroke etc.)';
+$doc_long_desc = 'Drawable edit functions (clear, fill, gradient, stroke etc.)';
+
+1;
