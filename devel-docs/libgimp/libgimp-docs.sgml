@@ -44,6 +44,7 @@
       <xi:include href="xml/gimpdisplay.xml" />
       <xi:include href="xml/gimpdrawable.xml" />
       <xi:include href="xml/gimpdrawablecolor.xml" />
+      <xi:include href="xml/gimpdrawableedit.xml" />
       <xi:include href="xml/gimpdrawabletransform.xml" />
       <xi:include href="xml/gimpedit.xml" />
       <xi:include href="xml/gimpfileops.xml" />

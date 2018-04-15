@@ -422,6 +422,16 @@ gimp_drawable_threshold
 </SECTION>
 
 <SECTION>
+<FILE>gimpdrawableedit</FILE>
+gimp_drawable_edit_clear
+gimp_drawable_edit_fill
+gimp_drawable_edit_bucket_fill
+gimp_drawable_edit_gradient_fill
+gimp_drawable_edit_stroke_selection
+gimp_drawable_edit_stroke_item
+</SECTION>
+
+<SECTION>
 <FILE>gimpdrawabletransform</FILE>
 gimp_drawable_transform_flip_simple
 gimp_drawable_transform_flip

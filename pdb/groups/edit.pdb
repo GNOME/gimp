@@ -517,8 +517,6 @@ the background color. This procedure only affects regions within a
 selection if there is a selection active.
 HELP
 
-    &std_pdb_misc;
-
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable to clear from' }

@@ -336,6 +336,7 @@ app/pdb/channel-cmds.c
 app/pdb/color-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
+app/pdb/drawable-edit-cmds.c
 app/pdb/drawable-transform-cmds.c
 app/pdb/edit-cmds.c
 app/pdb/floating-sel-cmds.c

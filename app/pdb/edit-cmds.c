@@ -1272,9 +1272,9 @@ register_edit_procs (GimpPDB *pdb)
                                      "gimp-edit-clear",
                                      "Clear selected area of drawable.",
                                      "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
+                                     "",
+                                     "",
+                                     "",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
