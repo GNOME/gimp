@@ -517,6 +517,10 @@ the background color. This procedure only affects regions within a
 selection if there is a selection active.
 HELP
 
+    &std_pdb_misc;
+
+    $deprecated = 'gimp-drawable-edit-clear';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable to clear from' }
@@ -556,6 +560,8 @@ HELP
     &std_pdb_misc;
     $author .= ' & Raphael Quinet';
     $date = '1995-2000';
+
+    $deprecated = 'gimp-drawable-edit-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -613,6 +619,8 @@ drawable's origin.
 HELP
 
     &std_pdb_misc;
+
+    $deprecated = 'gimp-drawable-edit-bucket-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -711,6 +719,8 @@ drawable's origin.
 HELP
 
     &david_pdb_misc('2006', '2.4');
+
+    $deprecated = 'gimp-drawable-edit-bucket-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -811,6 +821,8 @@ relevant and can be updated with gimp_context_set_distance_metric().
 HELP
 
     &std_pdb_misc;
+
+    $deprecated = 'gimp-drawable-edit-gradient-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -929,6 +941,8 @@ HELP
 
     &std_pdb_misc;
 
+    $deprecated = 'gimp-drawable-edit-stroke-selection';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable to stroke to' }
@@ -974,6 +988,8 @@ path with the active brush and foreground color.
 HELP
 
     &simon_pdb_misc('2006', '2.4');
+
+    $deprecated = 'gimp-drawable-edit-stroke-item';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

@@ -428,6 +428,8 @@ gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
  * to the background color. This procedure only affects regions within
  * a selection if there is a selection active.
  *
+ * Deprecated: Use gimp_drawable_edit_clear() instead.
+ *
  * Returns: TRUE on success.
  **/
 gboolean
@@ -463,6 +465,8 @@ gimp_edit_clear (gint32 drawable_ID)
  * affects regions within a selection if there is a selection active.
  * If you want to fill the whole drawable, regardless of the selection,
  * use gimp_drawable_fill().
+ *
+ * Deprecated: Use gimp_drawable_edit_fill() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -513,6 +517,8 @@ gimp_edit_fill (gint32       drawable_ID,
  * all visible layers. In the case of merged sampling, the x and y
  * coordinates are relative to the image's origin; otherwise, they are
  * relative to the drawable's origin.
+ *
+ * Deprecated: Use gimp_drawable_edit_bucket_fill() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -577,6 +583,8 @@ gimp_edit_bucket_fill (gint32             drawable_ID,
  * all visible layers. In the case of merged sampling, the x and y
  * coordinates are relative to the image's origin; otherwise, they are
  * relative to the drawable's origin.
+ *
+ * Deprecated: Use gimp_drawable_edit_bucket_fill() instead.
  *
  * Returns: TRUE on success.
  *
@@ -648,6 +656,8 @@ gimp_edit_bucket_fill_full (gint32              drawable_ID,
  * distance metric is also relevant and can be updated with
  * gimp_context_set_distance_metric().
  *
+ * Deprecated: Use gimp_drawable_edit_gradient_fill() instead.
+ *
  * Returns: TRUE on success.
  **/
 gboolean
@@ -710,6 +720,8 @@ gimp_edit_blend (gint32           drawable_ID,
  * paint is applied to the specified drawable regardless of the active
  * selection.
  *
+ * Deprecated: Use gimp_drawable_edit_stroke_selection() instead.
+ *
  * Returns: TRUE on success.
  **/
 gboolean
@@ -740,6 +752,8 @@ gimp_edit_stroke (gint32 drawable_ID)
  *
  * This procedure strokes the specified vectors object, painting along
  * the path with the active brush and foreground color.
+ *
+ * Deprecated: Use gimp_drawable_edit_stroke_item() instead.
  *
  * Returns: TRUE on success.
  *

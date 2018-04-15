@@ -1902,10 +1902,17 @@ load_file_chooser_response (GtkFileChooser *chooser,
 void
 paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-  GimpBucketFillMode fill_mode = GIMP_BUCKET_FILL_FG;
+  GimpFillType fill_type = GIMP_FILL_FOREGROUND;
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
+
+  gimp_context_push ();
+
+  gimp_context_set_paint_mode (GIMP_LAYER_MODE_NORMAL_LEGACY);
+  gimp_context_set_opacity (100.0);
+  gimp_context_set_gradient_repeat_mode (GIMP_REPEAT_NONE);
+  gimp_context_set_gradient_reverse (FALSE);
 
   switch (current_style->fill_type)
     {
@@ -1913,71 +1920,54 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
 
     case FILL_COLOR:
-      fill_mode = GIMP_BUCKET_FILL_FG;
+      fill_type = GIMP_FILL_FOREGROUND;
       break;
 
     case FILL_PATTERN:
-      fill_mode = GIMP_BUCKET_FILL_PATTERN;
+      fill_type = GIMP_FILL_PATTERN;
       break;
 
     case FILL_GRADIENT:
-      gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_BLEND_CUSTOM,
-                       GIMP_LAYER_MODE_NORMAL_LEGACY,
-                       GIMP_GRADIENT_SHAPEBURST_DIMPLED,
-                       100.0,             /* opacity            */
-                       0.0,               /* offset             */
-                       GIMP_REPEAT_NONE,
-                       FALSE,             /* reverse            */
-                       FALSE,             /* supersampling      */
-                       0,                 /* max_depth          */
-                       0.0,               /* threshold          */
-                       FALSE,             /* dither             */
-                       0.0, 0.0,          /* (x1, y1) - ignored */
-                       0.0, 0.0);         /* (x2, y2) - ignored */
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+                                        GIMP_GRADIENT_SHAPEBURST_DIMPLED,
+                                        0.0,       /* offset             */
+                                        FALSE,     /* supersampling      */
+                                        0,         /* max_depth          */
+                                        0.0,       /* threshold          */
+                                        FALSE,     /* dither             */
+                                        0.0, 0.0,  /* (x1, y1) - ignored */
+                                        0.0, 0.0); /* (x2, y2) - ignored */
       return;
     case FILL_VERTICAL:
-      gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_BLEND_CUSTOM,
-                       GIMP_LAYER_MODE_NORMAL_LEGACY,
-                       GIMP_GRADIENT_LINEAR,
-                       100.0,
-                       0.0,
-                       GIMP_REPEAT_NONE,
-                       FALSE,
-                       FALSE,
-                       0,
-                       0.0,
-                       FALSE,
-                       x1, y1,
-                       x1, y2);
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+                                        GIMP_GRADIENT_LINEAR,
+                                        0.0,
+                                        FALSE,
+                                        0,
+                                        0.0,
+                                        FALSE,
+                                        x1, y1,
+                                        x1, y2);
       return;
     case FILL_HORIZONTAL:
-      gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_BLEND_CUSTOM,
-                       GIMP_LAYER_MODE_NORMAL_LEGACY,
-                       GIMP_GRADIENT_LINEAR,
-                       100.0,
-                       0.0,
-                       GIMP_REPEAT_NONE,
-                       FALSE,
-                       FALSE,
-                       0,
-                       0.0,
-                       FALSE,
-                       x1, y1,
-                       x2, y1);
+      gimp_drawable_edit_gradient_fill (gfig_context->drawable_id,
+                                        GIMP_GRADIENT_LINEAR,
+                                        0.0,
+                                        FALSE,
+                                        0,
+                                        0.0,
+                                        FALSE,
+                                        x1, y1,
+                                        x2, y1);
       return;
     }
 
-  gimp_edit_bucket_fill (gfig_context->drawable_id,
-                         fill_mode,    /* Fill mode */
-                         GIMP_LAYER_MODE_NORMAL_LEGACY,
-                         current_style->fill_opacity, /* Fill opacity */
-                         0.0,                 /* threshold - ignored */
-                         FALSE,               /* Sample merged - ignored */
-                         0.0,                 /* x - ignored */
-                         0.0);                /* y - ignored */
+  gimp_context_set_opacity (current_style->fill_opacity);
+
+  gimp_drawable_edit_fill (gfig_context->drawable_id,
+                           fill_type);
+
+  gimp_context_pop ();
 }
 
 void

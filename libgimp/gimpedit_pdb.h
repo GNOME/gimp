@@ -48,9 +48,12 @@ gint32   gimp_edit_named_paste              (gint32               drawable_ID,
                                              const gchar         *buffer_name,
                                              gboolean             paste_into);
 gint32   gimp_edit_named_paste_as_new_image (const gchar         *buffer_name);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_clear)
 gboolean gimp_edit_clear                    (gint32               drawable_ID);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_fill)
 gboolean gimp_edit_fill                     (gint32               drawable_ID,
                                              GimpFillType         fill_type);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_bucket_fill)
 gboolean gimp_edit_bucket_fill              (gint32               drawable_ID,
                                              GimpBucketFillMode   fill_mode,
                                              GimpLayerMode        paint_mode,
@@ -59,6 +62,7 @@ gboolean gimp_edit_bucket_fill              (gint32               drawable_ID,
                                              gboolean             sample_merged,
                                              gdouble              x,
                                              gdouble              y);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_bucket_fill)
 gboolean gimp_edit_bucket_fill_full         (gint32               drawable_ID,
                                              GimpBucketFillMode   fill_mode,
                                              GimpLayerMode        paint_mode,
@@ -69,6 +73,7 @@ gboolean gimp_edit_bucket_fill_full         (gint32               drawable_ID,
                                              GimpSelectCriterion  select_criterion,
                                              gdouble              x,
                                              gdouble              y);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_gradient_fill)
 gboolean gimp_edit_blend                    (gint32               drawable_ID,
                                              GimpBlendMode        blend_mode,
                                              GimpLayerMode        paint_mode,
@@ -85,7 +90,9 @@ gboolean gimp_edit_blend                    (gint32               drawable_ID,
                                              gdouble              y1,
                                              gdouble              x2,
                                              gdouble              y2);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_stroke_selection)
 gboolean gimp_edit_stroke                   (gint32               drawable_ID);
+GIMP_DEPRECATED_FOR(gimp_drawable_edit_stroke_item)
 gboolean gimp_edit_stroke_vectors           (gint32               drawable_ID,
                                              gint32               vectors_ID);
 
