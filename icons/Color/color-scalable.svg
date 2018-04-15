@@ -34971,7 +34971,7 @@
          id="tspan6485-0-0-7-1-3-8-2-2">24px</tspan></text>
     <g
        transform="matrix(0.99801113,0,0,1.0000424,-202.65861,-901.6095)"
-       id="gimp-tool-blend-24">
+       id="gimp-tool-gradient-24">
       <rect
          y="1028.8623"
          x="0.50006986"
@@ -35009,7 +35009,7 @@
     </g>
     <g
        transform="matrix(0.99805189,0,0,0.99805286,-360.14003,-899.54753)"
-       id="gimp-tool-blend">
+       id="gimp-tool-gradient">
       <rect
          y="1037.7817"
          x="0.36080682"

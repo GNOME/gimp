@@ -21413,7 +21413,7 @@
     </g>
     <g
        transform="translate(-175.02969,-688.16918)"
-       id="gimp-tool-blend">
+       id="gimp-tool-gradient">
       <rect
          y="1047.3622"
          x="1"
@@ -30285,7 +30285,7 @@
        id="gimp-gradient-linear"
        inkscape:label="gimp-gradient-linear">
       <g
-         inkscape:label="gimp-tool-blend"
+         inkscape:label="gimp-tool-gradient"
          id="g1279"
          style="display:inline"
          transform="translate(20,302)">
@@ -34833,7 +34833,7 @@
     </g>
     <g
        transform="translate(-202.98582,-915.72392)"
-       id="gimp-tool-blend-24"
+       id="gimp-tool-gradient-24"
        style="fill:url(#linearGradient23348);fill-opacity:1">
       <path
          sodipodi:nodetypes="sccccsccccccccccccccccccssccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
