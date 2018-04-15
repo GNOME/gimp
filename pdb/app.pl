@@ -585,11 +585,33 @@ sub generate {
 	my @inargs = @{$proc->{inargs}} if (defined $proc->{inargs});
 	my @outargs = @{$proc->{outargs}} if (defined $proc->{outargs});
 
+	my $blurb = $proc->{blurb};
 	my $help = $proc->{help};
 
 	my $procedure_name;
 
 	local $success = 0;
+
+	if ($proc->{deprecated}) {
+            if ($proc->{deprecated} eq 'NONE') {
+		if (!$blurb) {
+		    $blurb = "Deprecated: There is no replacement for this procedure.";
+		}
+		if ($help) {
+		    $help .= "\n\n";
+		}
+		$help .= "Deprecated: There is no replacement for this procedure.";
+	    }
+	    else {
+		if (!$blurb) {
+		    $blurb = "Deprecated: Use '$proc->{deprecated}' instead.";
+		}
+		if ($help) {
+		    $help .= "\n\n";
+		}
+		$help .= "Deprecated: Use '$proc->{deprecated}' instead.";
+	    }
+	}
 
 	$help =~ s/gimp(\w+)\(\s*\)/"'gimp".canonicalize($1)."'"/ge;
 
@@ -611,7 +633,7 @@ sub generate {
                                "$procedure_name");
   gimp_procedure_set_static_strings (procedure,
                                      "$procedure_name",
-                                     @{[ &quotewrap($proc->{blurb}, 2, 37) ]},
+                                     @{[ &quotewrap($blurb, 2, 37) ]},
                                      @{[ &quotewrap($help,  2, 37) ]},
                                      "$proc->{author}",
                                      "$proc->{copyright}",

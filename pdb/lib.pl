@@ -459,17 +459,31 @@ CODE
 	    $sincedesc = "\n *\n * Since: $proc->{since}";
 	}
 
+	my $procdesc = '';
+
 	if ($proc->{deprecated}) {
             if ($proc->{deprecated} eq 'NONE') {
-		$procdesc = &desc_wrap("Deprecated: There is no replacement " .
-                                       "for this procedure.");
+		if ($proc->{blurb}) {
+		    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
+		}
+		if ($proc->{help}) {
+		    $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
+		}
+		$procdesc .= &desc_wrap("Deprecated: There is no replacement " .
+					"for this procedure.");
 	    }
 	    else {
 		my $underscores = $proc->{deprecated};
 		$underscores =~ s/-/_/g;
 
-		$procdesc = &desc_wrap("Deprecated: " .
-				       "Use $underscores() instead.");
+		if ($proc->{blurb}) {
+		    $procdesc = &desc_wrap($proc->{blurb}) . "\n *\n";
+		}
+		if ($proc->{help}) {
+		    $procdesc .= &desc_wrap($proc->{help}) . "\n *\n";
+		}
+		$procdesc .= &desc_wrap("Deprecated: " .
+					"Use $underscores() instead.");
 	    }
 	}
 	else {
