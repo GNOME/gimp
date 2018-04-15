@@ -777,13 +777,21 @@ edit_blend_invoker (GimpProcedure         *procedure,
                                             GIMP_PDB_ITEM_CONTENT, error) &&
                  gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
 
-      if (success && supersample)
+      if (success)
         {
-          if (max_depth < 1 || max_depth > 9)
-            success = FALSE;
+          if (supersample)
+            {
+              if (max_depth < 1 || max_depth > 9)
+                success = FALSE;
 
-          if (threshold < 0.0 || threshold > 4.0)
-            success = FALSE;
+              if (threshold < 0.0 || threshold > 4.0)
+                success = FALSE;
+            }
+          else
+            {
+              max_depth = CLAMP (max_depth, 1, 9);
+              threshold = CLAMP (threshold, 0.0, 4.0);
+            }
         }
 
       if (success)
