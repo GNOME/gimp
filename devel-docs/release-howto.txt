@@ -66,6 +66,8 @@
          of the main display when too bug; but they won't be scaled up.
          Therefore anything smaller than fullHD will look tiny and
          unsuited on a 4K or higher res display).
+     [ ] Loading text will appear in bottom quarter, so the image must
+         be adapted.
 
  ( ) If ever the actual release date evolved and is different from the
      planned date, update the "date" in the <release> tag of the appdata

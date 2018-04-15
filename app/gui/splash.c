@@ -293,6 +293,7 @@ splash_position_layouts (GimpSplash   *splash,
 {
   PangoRectangle  ink;
   PangoRectangle  logical;
+  gint            text_height = 0;
 
   if (text1)
     {
@@ -305,10 +306,7 @@ splash_position_layouts (GimpSplash   *splash,
       pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
 
       splash->upper_x = (splash->width - logical.width) / 2;
-      splash->upper_y = splash->height - (2 * logical.height + 6);
-
-      if (area)
-        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+      text_height += logical.height;
     }
 
   if (text2)
@@ -322,7 +320,36 @@ splash_position_layouts (GimpSplash   *splash,
       pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
 
       splash->lower_x = (splash->width - logical.width) / 2;
-      splash->lower_y = splash->height - (logical.height + 6);
+      text_height += logical.height;
+    }
+
+  /* For pretty printing, let's say we want at least double space. */
+  text_height *= 2;
+
+  /* The ordinates are computed in 2 steps, because we are first
+   * checking the minimal height needed for text (text_height).
+   *
+   * Ideally we are printing in the bottom quarter of the splash image,
+   * with well centered positions. But if this zone appears to be too
+   * small, we will end up using this previously computed text_height
+   * instead. Since splash images are designed to have text in the lower
+   * quarter, this may end up a bit uglier, but at least top and bottom
+   * texts won't overlay each other.
+   */
+  if (text1)
+    {
+      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
+      splash->upper_y = MIN (splash->height - text_height,
+                             splash->height * 13 / 16 - logical.height / 2);
+
+      if (area)
+        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+    }
+  if (text2)
+    {
+      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
+      splash->lower_y = MIN (splash->height - text_height / 2,
+                             splash->height * 15 / 16 - logical.height / 2);
 
       if (area)
         splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
