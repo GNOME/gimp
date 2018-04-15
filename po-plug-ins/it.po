@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-27 11:58+0200\n"
-"PO-Revision-Date: 2018-03-27 12:10+0200\n"
+"POT-Creation-Date: 2018-04-15 17:51+0200\n"
+"PO-Revision-Date: 2018-04-15 17:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -3104,8 +3104,10 @@ msgstr "Portable Document Format (PDF)"
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
-msgstr[0] "Il documento PDF \"%1$s\" ha %3$d pagina. La pagina %2$d è fuori campo."
-msgstr[1] "Il documento PDF \"%1$s\" ha %3$d pagine. La pagina %2$d è fuori campo."
+msgstr[0] ""
+"Il documento PDF \"%1$s\" ha %3$d pagina. La pagina %2$d è fuori campo."
+msgstr[1] ""
+"Il documento PDF \"%1$s\" ha %3$d pagine. La pagina %2$d è fuori campo."
 
 #: ../plug-ins/common/file-pdf-load.c:679
 #: ../plug-ins/common/file-pdf-load.c:749
@@ -3276,15 +3278,15 @@ msgstr "Errore durante il caricamento del file PNG: %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
-msgstr ""
-"Errore nella creazione delle strutture di lettura del PNG durante "
-"l'esportazione di \"%s\"."
+msgid "Error creating PNG read struct while loading '%s'."
+msgstr "Errore nella creazione delle strutture di lettura del PNG durante il caricamento di \"%s\"."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "Errore durante la lettura di \"%s\". Impossibile creare la struttura dell'intestazione PNG."
+msgstr ""
+"Errore durante la lettura di \"%s\". Impossibile creare la struttura "
+"dell'intestazione PNG."
 
 #: ../plug-ins/common/file-png.c:902
 #, c-format
@@ -3340,7 +3342,9 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1550
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Errore durante l'esportazione di \"%s\". Impossibile creare la struttura dell'intestazione PNG."
+msgstr ""
+"Errore durante l'esportazione di \"%s\". Impossibile creare la struttura "
+"dell'intestazione PNG."
 
 #: ../plug-ins/common/file-png.c:1558
 #, c-format
