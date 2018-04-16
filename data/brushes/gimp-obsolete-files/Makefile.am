@@ -35,6 +35,9 @@ obsoletebrushdata_DATA = \
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
 	Diagonal-Star-25.vbr		\
+	dunes.gbr			\
+	galaxy.gbr			\
+	galaxy-big.gbr			\
 	Grass1.gih			\
 	SketchBrush-16.gih		\
 	SketchBrush-32.gih		\
