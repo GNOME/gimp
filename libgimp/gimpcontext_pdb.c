@@ -1907,6 +1907,130 @@ gimp_context_set_gradient (const gchar *name)
 }
 
 /**
+ * gimp_context_set_gradient_fg_bg_rgb:
+ *
+ * Sets the built-in FG-BG RGB gradient as the active gradient.
+ *
+ * This procedure sets the built-in FG-BG RGB gradient as the active
+ * gradient. The gradient will be used for subsequent gradient
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_gradient_fg_bg_rgb (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-gradient-fg-bg-rgb",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_gradient_fg_bg_hsv_cw:
+ *
+ * Sets the built-in FG-BG HSV (cw) gradient as the active gradient.
+ *
+ * This procedure sets the built-in FG-BG HSV (cw) gradient as the
+ * active gradient. The gradient will be used for subsequent gradient
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_gradient_fg_bg_hsv_cw (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-gradient-fg-bg-hsv-cw",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_gradient_fg_bg_hsv_ccw:
+ *
+ * Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.
+ *
+ * This procedure sets the built-in FG-BG HSV (ccw) gradient as the
+ * active gradient. The gradient will be used for subsequent gradient
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_gradient_fg_bg_hsv_ccw (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-gradient-fg-bg-hsv-ccw",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_gradient_fg_transparent:
+ *
+ * Sets the built-in FG-Transparent gradient as the active gradient.
+ *
+ * This procedure sets the built-in FG-Transparent gradient as the
+ * active gradient. The gradient will be used for subsequent gradient
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_gradient_fg_transparent (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-gradient-fg-transparent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_gradient_blend_color_space:
  *
  * Get the gradient blend color space.

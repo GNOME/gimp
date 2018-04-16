@@ -1692,6 +1692,86 @@ CODE
     );
 }
 
+sub context_set_gradient_fg_bg_rgb {
+    $blurb = 'Sets the built-in FG-BG RGB gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure sets the built-in FG-BG RGB gradient as the active
+gradient. The gradient will be used for subsequent gradient operations.
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_rgb (gimp));
+}
+CODE
+    );
+}
+
+sub context_set_gradient_fg_bg_hsv_cw {
+    $blurb = 'Sets the built-in FG-BG HSV (cw) gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure sets the built-in FG-BG HSV (cw) gradient as the active
+gradient. The gradient will be used for subsequent gradient operations.
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_cw (gimp));
+}
+CODE
+    );
+}
+
+sub context_set_gradient_fg_bg_hsv_ccw {
+    $blurb = 'Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure sets the built-in FG-BG HSV (ccw) gradient as the active
+gradient. The gradient will be used for subsequent gradient operations.
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_ccw (gimp));
+}
+CODE
+    );
+}
+
+sub context_set_gradient_fg_transparent {
+    $blurb = 'Sets the built-in FG-Transparent gradient as the active gradient.';
+
+    $help = <<'HELP';
+This procedure sets the built-in FG-Transparent gradient as the active
+gradient. The gradient will be used for subsequent gradient operations.
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_transparent (gimp));
+}
+CODE
+    );
+}
+
 sub context_set_gradient_blend_color_space {
     $blurb = 'Set the gradient blend color space.';
     $help = 'Set the gradient blend color space for paint tools and the gradient tool.';
@@ -3261,6 +3341,7 @@ CODE
 }
 
 @headers = qw("core/gimp.h"
+              "core/gimp-gradients.h"
               "core/gimpcontainer.h"
               "core/gimpdashpattern.h"
               "core/gimpdatafactory.h"
@@ -3306,6 +3387,10 @@ CODE
             context_get_mypaint_brush context_set_mypaint_brush
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient
+	    context_set_gradient_fg_bg_rgb
+	    context_set_gradient_fg_bg_hsv_cw
+	    context_set_gradient_fg_bg_hsv_ccw
+	    context_set_gradient_fg_transparent
             context_get_gradient_blend_color_space context_set_gradient_blend_color_space
             context_get_gradient_repeat_mode context_set_gradient_repeat_mode
             context_get_gradient_reverse context_set_gradient_reverse

@@ -145,6 +145,10 @@ EXPORTS
 	gimp_context_set_foreground
 	gimp_context_set_gradient
 	gimp_context_set_gradient_blend_color_space
+	gimp_context_set_gradient_fg_bg_rgb
+	gimp_context_set_gradient_fg_bg_hsv_cw
+	gimp_context_set_gradient_fg_bg_hsv_ccw
+	gimp_context_set_gradient_fg_transparent
 	gimp_context_set_gradient_repeat_mode
 	gimp_context_set_gradient_reverse
 	gimp_context_set_ink_angle

@@ -32,6 +32,7 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp-gradients.h"
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdashpattern.h"
@@ -1560,6 +1561,62 @@ context_set_gradient_invoker (GimpProcedure         *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_bg_rgb_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_rgb (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_bg_hsv_cw_invoker (GimpProcedure         *procedure,
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_cw (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_bg_hsv_ccw_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_ccw (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_transparent_invoker (GimpProcedure         *procedure,
+                                             Gimp                  *gimp,
+                                             GimpContext           *context,
+                                             GimpProgress          *progress,
+                                             const GimpValueArray  *args,
+                                             GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_transparent (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static GimpValueArray *
@@ -4316,6 +4373,74 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-bg-rgb
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_rgb_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-rgb");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-rgb",
+                                     "Sets the built-in FG-BG RGB gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG RGB gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-bg-hsv-cw
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_cw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-hsv-cw");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-hsv-cw",
+                                     "Sets the built-in FG-BG HSV (cw) gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG HSV (cw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-bg-hsv-ccw
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_ccw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-hsv-ccw");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-hsv-ccw",
+                                     "Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG HSV (ccw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-transparent
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-transparent",
+                                     "Sets the built-in FG-Transparent gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-Transparent gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
