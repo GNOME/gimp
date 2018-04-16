@@ -25,6 +25,7 @@ gimp_run_procedure2
 gimp_destroy_params
 gimp_destroy_paramdefs
 gimp_get_pdb_error
+gimp_get_pdb_status
 gimp_tile_width
 gimp_tile_height
 gimp_shm_ID
@@ -34,6 +35,9 @@ gimp_install_cmap
 gimp_min_colors
 gimp_show_tool_tips
 gimp_show_help_button
+gimp_export_exif
+gimp_export_iptc
+gimp_export_xmp
 gimp_check_size
 gimp_check_type
 gimp_default_display
@@ -282,6 +286,16 @@ gimp_context_get_pattern
 gimp_context_set_pattern
 gimp_context_get_gradient
 gimp_context_set_gradient
+gimp_context_set_gradient_fg_bg_hsv_ccw
+gimp_context_set_gradient_fg_bg_hsv_cw
+gimp_context_set_gradient_fg_bg_rgb
+gimp_context_set_gradient_fg_transparent
+gimp_context_get_gradient_blend_color_space
+gimp_context_set_gradient_blend_color_space
+gimp_context_get_gradient_repeat_mode
+gimp_context_set_gradient_repeat_mode
+gimp_context_get_gradient_reverse
+gimp_context_set_gradient_reverse
 gimp_context_get_palette
 gimp_context_set_palette
 gimp_context_get_font
@@ -304,6 +318,8 @@ gimp_context_get_sample_transparent
 gimp_context_set_sample_transparent
 gimp_context_get_diagonal_neighbors
 gimp_context_set_diagonal_neighbors
+gimp_context_get_distance_metric
+gimp_context_set_distance_metric
 gimp_context_get_interpolation
 gimp_context_set_interpolation
 gimp_context_get_transform_direction
@@ -610,6 +626,7 @@ gimp_image_delete
 gimp_image_is_valid
 gimp_image_base_type
 gimp_image_get_precision
+gimp_image_get_default_new_layer_mode
 gimp_image_width
 gimp_image_height
 gimp_image_free_shadow
@@ -807,6 +824,8 @@ gimp_item_is_vectors
 gimp_item_is_group
 gimp_item_get_parent
 gimp_item_get_children
+gimp_item_get_expanded
+gimp_item_set_expanded
 gimp_item_get_name
 gimp_item_set_name
 gimp_item_get_visible
