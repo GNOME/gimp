@@ -31,15 +31,23 @@
 
 #include "gimpairbrushtool.h"
 #include "gimppaintoptions-gui.h"
+#include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 
 
-static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions *tool_options);
+static void        gimp_airbrush_tool_constructed      (GObject          *object);
+
+static void        gimp_airbrush_tool_airbrush_timeout (GimpAirbrush     *airbrush,
+                                                        GimpAirbrushTool *airbrush_tool);
+
+static GtkWidget * gimp_airbrush_options_gui           (GimpToolOptions  *tool_options);
 
 
 G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL)
+
+#define parent_class gimp_airbrush_tool_parent_class
 
 
 void
@@ -63,6 +71,9 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructed = gimp_airbrush_tool_constructed;
 }
 
 static void
@@ -71,6 +82,26 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   GimpTool *tool = GIMP_TOOL (airbrush);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_AIRBRUSH);
+}
+
+static void
+gimp_airbrush_tool_constructed (GObject *object)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_signal_connect_object (paint_tool->core, "timeout",
+                           G_CALLBACK (gimp_airbrush_tool_airbrush_timeout),
+                           object, 0);
+}
+
+static void
+gimp_airbrush_tool_airbrush_timeout (GimpAirbrush     *airbrush,
+                                     GimpAirbrushTool *airbrush_tool)
+{
+  gimp_paint_tool_paint_core_paint (GIMP_PAINT_TOOL (airbrush_tool),
+                                    GIMP_PAINT_STATE_MOTION, 0);
 }
 
 

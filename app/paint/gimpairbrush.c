@@ -36,6 +36,13 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  TIMEOUT,
+  LAST_SIGNAL
+};
+
+
 static void       gimp_airbrush_finalize (GObject          *object);
 
 static void       gimp_airbrush_paint    (GimpPaintCore    *paint_core,
@@ -55,6 +62,8 @@ static gboolean   gimp_airbrush_timeout  (gpointer          data);
 G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH)
 
 #define parent_class gimp_airbrush_parent_class
+
+static guint airbrush_signals[LAST_SIGNAL] = { 0 };
 
 
 void
@@ -78,6 +87,15 @@ gimp_airbrush_class_init (GimpAirbrushClass *klass)
   object_class->finalize  = gimp_airbrush_finalize;
 
   paint_core_class->paint = gimp_airbrush_paint;
+
+  airbrush_signals[TIMEOUT] =
+    g_signal_new ("timeout",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpAirbrushClass, timeout),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -95,8 +113,6 @@ gimp_airbrush_finalize (GObject *object)
       g_source_remove (airbrush->timeout_id);
       airbrush->timeout_id = 0;
     }
-
-  g_clear_object (&airbrush->sym);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -142,13 +158,6 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
 
-          airbrush->drawable      = drawable;
-          airbrush->paint_options = paint_options;
-
-          if (airbrush->sym)
-            g_object_unref (airbrush->sym);
-          airbrush->sym = g_object_ref (sym);
-
           /* Base our timeout on the original stroke. */
           coords = gimp_symmetry_get_origin (sym);
 
@@ -171,8 +180,6 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
                                                    paint_options,
                                                    sym,
                                                    paint_state, time);
-
-      g_clear_object (&airbrush->sym);
       break;
     }
 }
@@ -212,13 +219,9 @@ gimp_airbrush_timeout (gpointer data)
 {
   GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
 
-  gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
-                       airbrush->drawable,
-                       airbrush->paint_options,
-                       airbrush->sym,
-                       GIMP_PAINT_STATE_MOTION, 0);
+  airbrush->timeout_id = 0;
 
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));
+  g_signal_emit (airbrush, airbrush_signals[TIMEOUT], 0);
 
   return G_SOURCE_REMOVE;
 }
