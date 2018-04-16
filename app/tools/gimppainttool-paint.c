@@ -43,25 +43,32 @@
 
 typedef enum
 {
-  PAINT_ITEM_TYPE_INTERPOLATE,
+  PAINT_ITEM_TYPE_CORE_PAINT,
+  PAINT_ITEM_TYPE_CORE_INTERPOLATE,
   PAINT_ITEM_TYPE_FINISH
 } PaintItemType;
 
 
 typedef struct
 {
-  PaintItemType      type;
+  PaintItemType         type;
 
   union
   {
     struct
     {
-      GimpPaintTool *paint_tool;
-      GimpCoords     coords;
-      guint32        time;
+      GimpPaintTool    *paint_tool;
+
+      union
+      {
+        GimpPaintState  state;
+        GimpCoords      coords;
+      };
+
+      guint32           time;
     };
 
-    gboolean        *finished;
+    gboolean           *finished;
   };
 } PaintItem;
 
@@ -131,7 +138,28 @@ gimp_paint_tool_paint_thread (gpointer data)
 
       switch (item->type)
         {
-        case PAINT_ITEM_TYPE_INTERPOLATE:
+        case PAINT_ITEM_TYPE_CORE_PAINT:
+          {
+            GimpPaintTool    *paint_tool    = item->paint_tool;
+            GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+            GimpPaintCore    *core          = paint_tool->core;
+            GimpDrawable     *drawable      = paint_tool->drawable;
+
+            g_mutex_unlock (&paint_queue_mutex);
+            g_mutex_lock (&paint_mutex);
+
+            while (paint_timeout_pending)
+              g_cond_wait (&paint_cond, &paint_mutex);
+
+            gimp_paint_core_paint (core, drawable, paint_options,
+                                   item->state, item->time);
+
+            g_mutex_unlock (&paint_mutex);
+            g_mutex_lock (&paint_queue_mutex);
+          }
+          break;
+
+        case PAINT_ITEM_TYPE_CORE_INTERPOLATE:
           {
             GimpPaintTool    *paint_tool    = item->paint_tool;
             GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
@@ -180,8 +208,8 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
   update = gimp_drawable_flush_paint (drawable);
 
-  if (update && GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->flush_paint)
-    GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->flush_paint (paint_tool);
+  if (update && GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush)
+    GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_flush (paint_tool);
 
   paint_timeout_pending = FALSE;
   g_cond_signal (&paint_cond);
@@ -292,9 +320,9 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
 
   /*  Notify subclasses  */
   if (gimp_paint_tool_paint_use_thread (paint_tool) &&
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->start_paint)
+      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start)
     {
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->start_paint (paint_tool);
+      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_start (paint_tool);
     }
 
   /*  Let the specific painting function initialize itself  */
@@ -396,9 +424,9 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
 
   /*  Notify subclasses  */
   if (gimp_paint_tool_paint_use_thread (paint_tool) &&
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->end_paint)
+      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end)
     {
-      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->end_paint (paint_tool);
+      GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->paint_end (paint_tool);
     }
 
   /*  Exit paint mode  */
@@ -408,6 +436,16 @@ gimp_paint_tool_paint_end (GimpPaintTool *paint_tool,
   paint_tool->display  = NULL;
   paint_tool->drawable = NULL;
 }
+
+gboolean
+gimp_paint_tool_paint_is_active (GimpPaintTool *paint_tool)
+{
+  g_return_val_if_fail (GIMP_IS_PAINT_TOOL (paint_tool), FALSE);
+
+  return paint_tool->drawable != NULL &&
+         gimp_drawable_is_painting (paint_tool->drawable);
+}
+
 
 void
 gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
@@ -445,6 +483,16 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
       return;
     }
 
+  gimp_paint_tool_paint_core_interpolate (paint_tool, &curr_coords, time);
+}
+
+void
+gimp_paint_tool_paint_core_paint (GimpPaintTool  *paint_tool,
+                                  GimpPaintState  state,
+                                  guint32         time)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
+
   if (gimp_paint_tool_paint_use_thread (paint_tool))
     {
       PaintItem *item;
@@ -453,9 +501,9 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
 
       item = g_slice_new (PaintItem);
 
-      item->type       = PAINT_ITEM_TYPE_INTERPOLATE;
+      item->type       = PAINT_ITEM_TYPE_CORE_PAINT;
       item->paint_tool = paint_tool;
-      item->coords     = curr_coords;
+      item->state      = state;
       item->time       = time;
 
       g_mutex_lock (&paint_queue_mutex);
@@ -467,16 +515,70 @@ gimp_paint_tool_paint_motion (GimpPaintTool    *paint_tool,
     }
   else
     {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (paint_tool);
-      GimpDisplay  *display   = paint_tool->display;
-      GimpImage    *image     = gimp_display_get_image (display);
+      GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (paint_tool);
+      GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+      GimpPaintCore    *core          = paint_tool->core;
+      GimpDisplay      *display       = paint_tool->display;
+      GimpImage        *image         = gimp_display_get_image (display);
+      GimpDrawable     *drawable      = paint_tool->drawable;
+
+      /*  Paint directly  */
+
+      gimp_draw_tool_pause (draw_tool);
+
+      gimp_paint_core_paint (core,
+                             drawable, paint_options, state, time);
+
+      gimp_projection_flush_now (gimp_image_get_projection (image));
+      gimp_display_flush_now (display);
+
+      gimp_draw_tool_resume (draw_tool);
+    }
+}
+
+void
+gimp_paint_tool_paint_core_interpolate (GimpPaintTool    *paint_tool,
+                                        const GimpCoords *coords,
+                                        guint32           time)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (paint_tool));
+  g_return_if_fail (coords != NULL);
+
+  if (gimp_paint_tool_paint_use_thread (paint_tool))
+    {
+      PaintItem *item;
+
+      /*  Push an item to the queue, to be processed by the paint thread  */
+
+      item = g_slice_new (PaintItem);
+
+      item->type       = PAINT_ITEM_TYPE_CORE_INTERPOLATE;
+      item->paint_tool = paint_tool;
+      item->coords     = *coords;
+      item->time       = time;
+
+      g_mutex_lock (&paint_queue_mutex);
+
+      g_queue_push_tail (&paint_queue, item);
+      g_cond_signal (&paint_queue_cond);
+
+      g_mutex_unlock (&paint_queue_mutex);
+    }
+  else
+    {
+      GimpDrawTool     *draw_tool     = GIMP_DRAW_TOOL (paint_tool);
+      GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+      GimpPaintCore    *core          = paint_tool->core;
+      GimpDisplay      *display       = paint_tool->display;
+      GimpImage        *image         = gimp_display_get_image (display);
+      GimpDrawable     *drawable      = paint_tool->drawable;
 
       /*  Paint directly  */
 
       gimp_draw_tool_pause (draw_tool);
 
       gimp_paint_core_interpolate (core,
-                                   drawable, paint_options, &curr_coords, time);
+                                   drawable, paint_options, coords, time);
 
       gimp_projection_flush_now (gimp_image_get_projection (image));
       gimp_display_flush_now (display);

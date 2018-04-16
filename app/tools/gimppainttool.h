@@ -65,9 +65,9 @@ struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
 
-  void             (* start_paint) (GimpPaintTool *paint_tool);
-  void             (* end_paint)   (GimpPaintTool *paint_tool);
-  void             (* flush_paint) (GimpPaintTool *paint_tool);
+  void             (* paint_start) (GimpPaintTool *paint_tool);
+  void             (* paint_end)   (GimpPaintTool *paint_tool);
+  void             (* paint_flush) (GimpPaintTool *paint_tool);
 
   GimpCanvasItem * (* get_outline) (GimpPaintTool *paint_tool,
                                     GimpDisplay   *display,
@@ -88,8 +88,6 @@ void       gimp_paint_tool_set_draw_fallback   (GimpPaintTool     *tool,
 void       gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
                                                 gboolean           draw_circle,
                                                 gint               circle_size);
-
-gboolean   gimp_paint_tool_is_painting         (GimpPaintTool     *tool);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

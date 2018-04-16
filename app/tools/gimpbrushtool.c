@@ -43,6 +43,7 @@
 #include "display/gimpdisplayshell.h"
 
 #include "gimpbrushtool.h"
+#include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
 
 
@@ -61,9 +62,9 @@ static void   gimp_brush_tool_options_notify  (GimpTool          *tool,
                                                GimpToolOptions   *options,
                                                const GParamSpec  *pspec);
 
-static void   gimp_brush_tool_start_paint     (GimpPaintTool     *paint_tool);
-static void   gimp_brush_tool_end_paint       (GimpPaintTool     *paint_tool);
-static void   gimp_brush_tool_flush_paint     (GimpPaintTool     *paint_tool);
+static void   gimp_brush_tool_paint_start     (GimpPaintTool     *paint_tool);
+static void   gimp_brush_tool_paint_end       (GimpPaintTool     *paint_tool);
+static void   gimp_brush_tool_paint_flush     (GimpPaintTool     *paint_tool);
 static GimpCanvasItem *
               gimp_brush_tool_get_outline     (GimpPaintTool     *paint_tool,
                                                GimpDisplay       *display,
@@ -101,9 +102,9 @@ gimp_brush_tool_class_init (GimpBrushToolClass *klass)
   tool_class->cursor_update     = gimp_brush_tool_cursor_update;
   tool_class->options_notify    = gimp_brush_tool_options_notify;
 
-  paint_tool_class->start_paint = gimp_brush_tool_start_paint;
-  paint_tool_class->end_paint   = gimp_brush_tool_end_paint;
-  paint_tool_class->flush_paint = gimp_brush_tool_flush_paint;
+  paint_tool_class->paint_start = gimp_brush_tool_paint_start;
+  paint_tool_class->paint_end   = gimp_brush_tool_paint_end;
+  paint_tool_class->paint_flush = gimp_brush_tool_paint_flush;
   paint_tool_class->get_outline = gimp_brush_tool_get_outline;
 }
 
@@ -233,14 +234,14 @@ gimp_brush_tool_options_notify (GimpTool         *tool,
 }
 
 static void
-gimp_brush_tool_start_paint (GimpPaintTool *paint_tool)
+gimp_brush_tool_paint_start (GimpPaintTool *paint_tool)
 {
   GimpBrushTool        *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
   GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
   const GimpBezierDesc *boundary;
 
-  if (GIMP_PAINT_TOOL_CLASS (parent_class)->start_paint)
-    GIMP_PAINT_TOOL_CLASS (parent_class)->start_paint (paint_tool);
+  if (GIMP_PAINT_TOOL_CLASS (parent_class)->paint_start)
+    GIMP_PAINT_TOOL_CLASS (parent_class)->paint_start (paint_tool);
 
   boundary = gimp_brush_tool_get_boundary (brush_tool,
                                            &brush_tool->boundary_width,
@@ -257,25 +258,25 @@ gimp_brush_tool_start_paint (GimpPaintTool *paint_tool)
 }
 
 static void
-gimp_brush_tool_end_paint (GimpPaintTool *paint_tool)
+gimp_brush_tool_paint_end (GimpPaintTool *paint_tool)
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
 
   g_clear_pointer (&brush_tool->boundary, gimp_bezier_desc_free);
 
-  if (GIMP_PAINT_TOOL_CLASS (parent_class)->end_paint)
-    GIMP_PAINT_TOOL_CLASS (parent_class)->end_paint (paint_tool);
+  if (GIMP_PAINT_TOOL_CLASS (parent_class)->paint_end)
+    GIMP_PAINT_TOOL_CLASS (parent_class)->paint_end (paint_tool);
 }
 
 static void
-gimp_brush_tool_flush_paint (GimpPaintTool *paint_tool)
+gimp_brush_tool_paint_flush (GimpPaintTool *paint_tool)
 {
   GimpBrushTool        *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
   GimpBrushCore        *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
   const GimpBezierDesc *boundary;
 
-  if (GIMP_PAINT_TOOL_CLASS (parent_class)->flush_paint)
-    GIMP_PAINT_TOOL_CLASS (parent_class)->flush_paint (paint_tool);
+  if (GIMP_PAINT_TOOL_CLASS (parent_class)->paint_flush)
+    GIMP_PAINT_TOOL_CLASS (parent_class)->paint_flush (paint_tool);
 
   if (brush_tool->boundary_scale        != brush_core->scale        ||
       brush_tool->boundary_aspect_ratio != brush_core->aspect_ratio ||
@@ -347,7 +348,7 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
   g_return_val_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
-  if (gimp_paint_tool_is_painting (GIMP_PAINT_TOOL (brush_tool)))
+  if (gimp_paint_tool_paint_is_active (GIMP_PAINT_TOOL (brush_tool)))
     {
       boundary = brush_tool->boundary;
       width    = brush_tool->boundary_width;

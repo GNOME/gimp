@@ -843,9 +843,3 @@ gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
   tool->draw_circle = draw_circle;
   tool->circle_size = circle_size;
 }
-
-gboolean
-gimp_paint_tool_is_painting (GimpPaintTool *tool)
-{
-  return tool->drawable != NULL && gimp_drawable_is_painting (tool->drawable);
-}
