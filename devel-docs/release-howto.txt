@@ -18,8 +18,8 @@
      https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
 
  ( ) Also notify the maintainers of the official builds for Windows,
-     Mac OS and flatpak of the upcoming release so they have some time
-     to sort out issues with their builds.
+     macOS and flatpak of the upcoming release so they have some time to
+     sort out issues with their builds.
 
  ( ) Make sure we have a <release> tag inside
      desktop/org.gimp.GIMP.appdata.xml.in for this upcoming version,
@@ -62,12 +62,12 @@
      [ ] Accepted license: a libre license, such as CC 0, CC by, CC
          by-sa or Free Art.
      [ ] XCF file must be provided.
-     [ ] Minimum size: full HD (splash images will be scaled down to 2/3
-         of the main display when too bug; but they won't be scaled up.
+     [ ] Minimum size: full HD (splash images will be scaled down to 1/2
+         of the main display when too big; but they won't be scaled up.
          Therefore anything smaller than fullHD will look tiny and
          unsuited on a 4K or higher res display).
-     [ ] Loading text will appear in bottom quarter, so the image must
-         be adapted.
+     [ ] Loading text will appear in bottom quarter, so image contents
+         must be adapted.
 
  ( ) If ever the actual release date evolved and is different from the
      planned date, update the "date" in the <release> tag of the appdata
