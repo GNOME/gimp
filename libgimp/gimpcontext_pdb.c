@@ -2940,7 +2940,8 @@ gimp_context_get_diagonal_neighbors (void)
  * region; in contrast, when this setting is FALSE, only the four
  * orthogonal neighbors of each pixel are considered.
  * This setting affects the following procedures:
- * gimp_image_select_contiguous_color().
+ * gimp_image_select_contiguous_color(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
