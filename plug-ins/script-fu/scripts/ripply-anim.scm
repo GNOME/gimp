@@ -22,12 +22,14 @@
                                          100
                                          LAYER-MODE-NORMAL))))
     (gimp-context-push)
+    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
+    (gimp-context-set-opacity 100.0)
     (gimp-image-undo-disable work-image)
 
     ; Create a tile-able displacement map in the first layer
     (gimp-context-set-background '(127 127 127))
     (gimp-image-insert-layer work-image map-layer 0 0)
-    (gimp-edit-fill map-layer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill map-layer FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
     (plug-in-tile RUN-NONINTERACTIVE work-image map-layer (* width 3) (* height 3) FALSE)
     (plug-in-gauss-iir RUN-NONINTERACTIVE work-image map-layer 35 TRUE TRUE)

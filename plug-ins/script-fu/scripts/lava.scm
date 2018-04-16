@@ -79,7 +79,7 @@
           (gimp-image-insert-layer image lava-layer 0 -1)
           (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
           (gimp-selection-none image)
-          (gimp-edit-clear lava-layer)
+          (gimp-drawable-edit-clear lava-layer)
 
           (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
           (gimp-image-set-active-layer image lava-layer)

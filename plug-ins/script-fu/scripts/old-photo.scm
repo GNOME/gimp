@@ -64,7 +64,7 @@
 
              (gimp-image-insert-layer theImage mLayer 0 0)
              (gimp-selection-all theImage)
-             (gimp-edit-clear mLayer)
+             (gimp-drawable-edit-clear mLayer)
              (gimp-selection-none theImage)
              (plug-in-noisify RUN-NONINTERACTIVE theImage mLayer TRUE 0 0 0 0.5)
              (plug-in-gauss-rle RUN-NONINTERACTIVE theImage mLayer 5 TRUE TRUE)

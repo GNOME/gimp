@@ -121,15 +121,13 @@
            (set! greyness (/ (* index 255) thickness))
            (gimp-context-set-background (list greyness greyness greyness))
            ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-           (gimp-edit-bucket-fill bump-layer BUCKET-FILL-BG LAYER-MODE-NORMAL
-                                  100 0 FALSE 0 0)
+           (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
            (gimp-selection-shrink image 1)
            (set! index (+ index 1))
     )
     ; Now the white interior
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-bucket-fill bump-layer BUCKET-FILL-BG LAYER-MODE-NORMAL
-                           100 0 FALSE 0 0)
+    (gimp-drawable-edit-fill bump-layer FILL-BACKGROUND)
 
     ;------------------------------------------------------------
     ;

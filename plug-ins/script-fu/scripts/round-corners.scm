@@ -81,7 +81,7 @@
                     radius radius)
   (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) (- height diam)
                        diam diam)
-  (gimp-edit-clear pic-layer)
+  (gimp-drawable-edit-clear pic-layer)
   (gimp-selection-none image)
 
   ; optionally add a shadow

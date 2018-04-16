@@ -39,7 +39,7 @@
     (gimp-selection-shrink inImage inSize)
     (gimp-selection-invert inImage)
     (gimp-context-set-background inColor)
-    (gimp-edit-fill inLayer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill inLayer FILL-BACKGROUND)
     (gimp-selection-none inImage)
   )
 
@@ -74,7 +74,7 @@
     (gimp-image-insert-layer theImage theLayer 0 0)
 
 
-    (gimp-edit-clear theLayer)
+    (gimp-drawable-edit-clear theLayer)
     (chris-color-edge theImage theLayer inColor inSize)
 
     (gimp-layer-scale theLayer
@@ -92,11 +92,11 @@
 
     (gimp-image-select-item theImage CHANNEL-OP-REPLACE theLayer)
     (gimp-selection-invert theImage)
-    (gimp-edit-clear theLayer)
+    (gimp-drawable-edit-clear theLayer)
     (gimp-selection-invert theImage)
-    (gimp-edit-clear theLayer)
+    (gimp-drawable-edit-clear theLayer)
     (gimp-context-set-background inColor)
-    (gimp-edit-fill theLayer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill theLayer FILL-BACKGROUND)
     (gimp-selection-none inImage)
     (chris-color-edge theImage theLayer inColor 1)
 

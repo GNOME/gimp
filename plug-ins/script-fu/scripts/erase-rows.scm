@@ -7,6 +7,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
+    (gimp-context-set-opacity 100.0)
     (gimp-context-set-feather FALSE)
 
     (gimp-image-undo-group-start img)
@@ -17,8 +19,8 @@
                                (gimp-image-select-rectangle img CHANNEL-OP-REPLACE position-x (+ i position-y) width 1)
                                (gimp-image-select-rectangle img CHANNEL-OP-REPLACE (+ i position-x) position-y 1 height))
                            (if (= type 0)
-                               (gimp-edit-clear drawable)
-                               (gimp-edit-fill drawable FILL-BACKGROUND))
+                               (gimp-drawable-edit-clear drawable)
+                               (gimp-drawable-edit-fill drawable FILL-BACKGROUND))
                            (loop (+ i 2) max))))))
       (loop (if (= which 0)
                 0

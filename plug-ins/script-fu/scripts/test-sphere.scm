@@ -205,7 +205,7 @@
     (gimp-image-insert-layer img drawable 0 0)
     (gimp-context-set-foreground sphere-color)
     (gimp-context-set-background bg-color)
-    (gimp-edit-fill drawable FILL-BACKGROUND)
+    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
     (gimp-context-set-background '(20 20 20))
 
     (if (and
@@ -224,27 +224,32 @@
           (gimp-context-set-feather-radius 7.5 7.5)
           (gimp-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
           (gimp-context-set-pattern pattern)
-          (gimp-edit-bucket-fill drawable BUCKET-FILL-PATTERN LAYER-MODE-MULTIPLY
-                                 100 0 FALSE 0 0)))
+          (gimp-drawable-edit-fill drawable FILL-PATTERN)))
 
     (gimp-context-set-feather FALSE)
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
                                (* 2 radius) (* 2 radius))
 
-    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
-                     GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
-                     FALSE 0 0 TRUE
-                     light-x light-y light-end-x light-end-y)
+    (gimp-context-set-gradient-fg-bg-rgb)
+    (gimp-drawable-edit-gradient-fill drawable
+				      GRADIENT-RADIAL offset
+				      FALSE 0 0
+				      TRUE
+				      light-x light-y
+				      light-end-x light-end-y)
 
     (gimp-selection-none img)
 
-    (gimp-context-set-gradient gradient)
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 10 10 50 50)
 
-    (gimp-edit-blend drawable BLEND-CUSTOM LAYER-MODE-NORMAL
-                     GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
-                     FALSE 0 0 TRUE
-                     10 10 30 60)
+    (gimp-context-set-gradient gradient)
+    (gimp-context-set-gradient-reverse gradient-reverse)
+    (gimp-drawable-edit-gradient-fill drawable
+				      GRADIENT-LINEAR offset
+				      FALSE 0 0
+				      TRUE
+				      10 10
+				      30 60)
 
     (gimp-selection-none img)
 

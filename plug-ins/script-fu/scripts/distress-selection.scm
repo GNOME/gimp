@@ -57,13 +57,13 @@
     (gimp-image-insert-layer theImage theLayer 0 0)
 
     (if (= FALSE (car (gimp-selection-is-empty theImage)))
-        (gimp-edit-fill theLayer FILL-BACKGROUND)
+        (gimp-drawable-edit-fill theLayer FILL-BACKGROUND)
     )
 
     (gimp-selection-invert theImage)
 
     (if (= FALSE (car (gimp-selection-is-empty theImage)))
-        (gimp-edit-clear theLayer)
+        (gimp-drawable-edit-clear theLayer)
     )
 
     (gimp-selection-invert theImage)
