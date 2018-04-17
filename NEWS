@@ -66,9 +66,9 @@ Tools:
 
   - Color used in the Smudge tool is now added to the color history.
   - "Blend" tool renamed to much more consistent "Gradient" tool.
-    Also it can now work in linear color space, thus making sure you
-    have way more even transitions and getting rid of some bad color
-    interpolation.
+    Also it can now work in linear RGB matching capabilities CSS/SVG
+    specification without gamma-errors in color blending and CIE Lab
+    which in addition keeps a perceptual graylevel.
 
 Assets / Resources:
 
