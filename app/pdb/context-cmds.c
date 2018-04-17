@@ -3493,6 +3493,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-width",
                                      "Set the line width setting.",
                                      "This procedure modifies the line width setting for stroking lines.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3542,6 +3543,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-width-unit",
                                      "Set the line width unit setting.",
                                      "This procedure modifies the line width unit setting for stroking lines.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3592,6 +3594,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-cap-style",
                                      "Set the line cap style setting.",
                                      "This procedure modifies the line cap style setting for stroking lines.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3641,6 +3644,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-join-style",
                                      "Set the line join style setting.",
                                      "This procedure modifies the line join style setting for stroking lines.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3690,6 +3694,7 @@ register_context_procs (GimpPDB *pdb)
                                      "Set the line miter limit setting.",
                                      "This procedure modifies the line miter limit setting for stroking lines.\n"
                                      "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3737,6 +3742,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-dash-offset",
                                      "Set the line dash offset setting.",
                                      "This procedure modifies the line dash offset setting for stroking lines.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -3789,7 +3795,9 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-dash-pattern",
                                      "Set the line dash pattern setting.",
                                      "This procedure modifies the line dash pattern setting for stroking lines.\n"
+                                     "\n"
                                      "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection-', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4715,7 +4723,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-antialias",
                                      "Set the antialias setting.",
                                      "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -4762,6 +4771,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-feather",
                                      "Set the feather setting.",
                                      "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4815,6 +4825,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-feather-radius",
                                      "Set the feather radius setting.",
                                      "This procedure modifies the feather radius setting.\n"
+                                     "\n"
                                      "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4868,7 +4879,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-merged",
                                      "Set the sample merged setting.",
                                      "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4916,7 +4928,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-criterion",
                                      "Set the sample criterion setting.",
                                      "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4964,7 +4977,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-threshold",
                                      "Set the sample threshold setting.",
                                      "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -5057,7 +5071,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-transparent",
                                      "Set the sample transparent setting.",
                                      "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -5104,6 +5119,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-diagonal-neighbors",
                                      "Set the diagonal neighbors setting.",
                                      "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Ell",
                                      "Ell",
@@ -5151,7 +5167,9 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-distance-metric",
                                      "Set the distance metric used in some computations.",
-                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.",
+                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
                                      "Jehan",
                                      "Jehan",
                                      "2018",
@@ -5200,6 +5218,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-interpolation",
                                      "Set the interpolation type.",
                                      "This procedure modifies the interpolation setting.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -5249,6 +5268,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-transform-direction",
                                      "Set the transform direction.",
                                      "This procedure modifies the transform direction setting.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -5298,6 +5318,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-transform-resize",
                                      "Set the transform resize type.",
                                      "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",

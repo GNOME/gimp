@@ -387,6 +387,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "gimp-drawable-edit-clear",
                                      "Clear selected area of drawable.",
                                      "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.\n"
+                                     "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-background'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
@@ -411,6 +412,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "gimp-drawable-edit-fill",
                                      "Fill selected area of drawable.",
                                      "This procedure fills the specified drawable according to fill mode. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use 'gimp-drawable-fill'.\n"
+                                     "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-pattern'.",
                                      "Spencer Kimball & Peter Mattis & Raphael Quinet",
                                      "Spencer Kimball & Peter Mattis",
@@ -443,6 +445,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "Fill the area by a seed fill starting at the specified coordinates.",
                                      "This procedure does a seed fill at the specified coordinates, using various parameters from the current context.\n"
                                      "In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.\n"
+                                     "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-pattern', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-diagonal-neighbors', 'gimp-context-set-antialias'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -486,6 +489,7 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "gimp-drawable-edit-gradient-fill",
                                      "Draw a gradient between the starting and ending coordinates with the specified gradient type.",
                                      "This tool requires information on the gradient type. It creates the specified variety of gradient using the starting and ending coordinates as defined for each gradient type. For shapeburst gradient types, the context's distance metric is also relevant and can be updated with 'gimp-context-set-distance-metric'.\n"
+                                     "\n"
                                      "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-distance-metric'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -571,7 +575,8 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "gimp-drawable-edit-stroke-selection",
                                      "Stroke the current selection",
                                      "This procedure strokes the current selection, painting along the selection boundary with the active paint method and brush, or using a plain line with configurable properties. The paint is applied to the specified drawable regardless of the active selection.\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings",
+                                     "\n"
+                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -595,7 +600,8 @@ register_drawable_edit_procs (GimpPDB *pdb)
                                      "gimp-drawable-edit-stroke-item",
                                      "Stroke the specified item",
                                      "This procedure strokes the specified item, painting along its outline (e.g. along a path, or along a channel's boundary), with the active paint method and brush, or using a plain line with configurable properties.\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings",
+                                     "\n"
+                                     "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2018",

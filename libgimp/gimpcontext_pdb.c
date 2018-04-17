@@ -672,6 +672,7 @@ gimp_context_get_line_width (void)
  * Set the line width setting.
  *
  * This procedure modifies the line width setting for stroking lines.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -737,6 +738,7 @@ gimp_context_get_line_width_unit (void)
  *
  * This procedure modifies the line width unit setting for stroking
  * lines.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -802,6 +804,7 @@ gimp_context_get_line_cap_style (void)
  *
  * This procedure modifies the line cap style setting for stroking
  * lines.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -867,6 +870,7 @@ gimp_context_get_line_join_style (void)
  *
  * This procedure modifies the line join style setting for stroking
  * lines.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -935,6 +939,7 @@ gimp_context_get_line_miter_limit (void)
  * A mitered join is converted to a bevelled join if the miter would
  * extend to a distance of more than (miter-limit * line-width) from
  * the actual join point.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -1000,6 +1005,7 @@ gimp_context_get_line_dash_offset (void)
  *
  * This procedure modifies the line dash offset setting for stroking
  * lines.
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -1080,9 +1086,11 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  *
  * This procedure modifies the line dash pattern setting for stroking
  * lines.
+ *
  * The unit of the dash pattern segments is the actual line width used
  * for the stroke operation, in other words a segment length of 1.0
  * results in a square segment shape (or gap shape).
+ *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection_(),
  * gimp_drawable_edit_stroke_item().
@@ -2389,10 +2397,12 @@ gimp_context_get_antialias (void)
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
  * selection is wanted.
+ *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
  * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
- * gimp_image_select_polygon(), gimp_image_select_item().
+ * gimp_image_select_polygon(), gimp_image_select_item(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
@@ -2457,6 +2467,7 @@ gimp_context_get_feather (void)
  * is enabled, selections will be blurred before combining. The blur is
  * a gaussian blur; its radii can be controlled using
  * gimp_context_set_feather_radius().
+ *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
  * gimp_image_select_rectangle(), gimp_image_select_round_rectangle(),
@@ -2535,6 +2546,7 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  * Set the feather radius setting.
  *
  * This procedure modifies the feather radius setting.
+ *
  * This setting affects all procedures that are affected by
  * gimp_context_set_feather().
  *
@@ -2606,8 +2618,10 @@ gimp_context_get_sample_merged (void)
  * pixel data from the composite image ('sample-merged' is TRUE. This
  * is equivalent to sampling for colors after merging all visible
  * layers).
+ *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
@@ -2673,8 +2687,10 @@ gimp_context_get_sample_criterion (void)
  * like when doing a seed fill, this setting controls how color
  * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
  * value.
+ *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
@@ -2741,8 +2757,10 @@ gimp_context_get_sample_threshold (void)
  * \"sufficiently close\" to be considered a similar color. If the
  * sample threshold has not been set explicitly, the default threshold
  * set in gimprc will be used.
+ *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
@@ -2871,8 +2889,10 @@ gimp_context_get_sample_transparent (void)
  * like when doing a seed fill, this setting controls whether
  * transparency is considered to be a unique selectable color. When
  * this setting is TRUE, transparent areas can be selected or filled.
+ *
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_drawable_edit_bucket_fill().
  *
  * Returns: TRUE on success.
  *
@@ -2939,6 +2959,7 @@ gimp_context_get_diagonal_neighbors (void)
  * neighbors of each pixel are considered when calculating the affected
  * region; in contrast, when this setting is FALSE, only the four
  * orthogonal neighbors of each pixel are considered.
+ *
  * This setting affects the following procedures:
  * gimp_image_select_contiguous_color(),
  * gimp_drawable_edit_bucket_fill().
@@ -3008,6 +3029,9 @@ gimp_context_get_distance_metric (void)
  * particular, it does not change the metric used in generic distance
  * computation on canvas, as in the Measure tool.
  *
+ * This setting affects the following procedures:
+ * gimp_drawable_edit_gradient_fill().
+ *
  * Returns: TRUE on success.
  *
  * Since: 2.10
@@ -3072,6 +3096,7 @@ gimp_context_get_interpolation (void)
  * Set the interpolation type.
  *
  * This procedure modifies the interpolation setting.
+ *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
  * gimp_item_transform_rotate(), gimp_item_transform_scale(),
@@ -3141,6 +3166,7 @@ gimp_context_get_transform_direction (void)
  * Set the transform direction.
  *
  * This procedure modifies the transform direction setting.
+ *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
  * gimp_item_transform_rotate(), gimp_item_transform_scale(),
@@ -3212,6 +3238,7 @@ gimp_context_get_transform_resize (void)
  * transforming pixels, if the result of a transform operation has a
  * different size than the original area, this setting determines how
  * the resulting area is sized.
+ *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_flip_simple(),
  * gimp_item_transform_perspective(), gimp_item_transform_rotate(),

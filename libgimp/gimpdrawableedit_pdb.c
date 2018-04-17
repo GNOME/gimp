@@ -45,6 +45,7 @@
  * drawable does not have an alpha channel, cleared pixels will be set
  * to the background color. This procedure only affects regions within
  * a selection if there is a selection active.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_background().
  *
@@ -80,6 +81,7 @@ gimp_drawable_edit_clear (gint32 drawable_ID)
  * This procedure only affects regions within a selection if there is a
  * selection active. If you want to fill the whole drawable, regardless
  * of the selection, use gimp_drawable_fill().
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
  * gimp_context_set_foreground(), gimp_context_set_background(),
@@ -122,6 +124,7 @@ gimp_drawable_edit_fill (gint32       drawable_ID,
  * In the case of merged sampling, the x and y coordinates are relative
  * to the image's origin; otherwise, they are relative to the
  * drawable's origin.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
  * gimp_context_set_foreground(), gimp_context_set_background(),
@@ -181,6 +184,7 @@ gimp_drawable_edit_bucket_fill (gint32       drawable_ID,
  * coordinates as defined for each gradient type. For shapeburst
  * gradient types, the context's distance metric is also relevant and
  * can be updated with gimp_context_set_distance_metric().
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
  * gimp_context_set_foreground(), gimp_context_set_background(),
@@ -240,11 +244,14 @@ gimp_drawable_edit_gradient_fill (gint32           drawable_ID,
  * selection boundary with the active paint method and brush, or using
  * a plain line with configurable properties. The paint is applied to
  * the specified drawable regardless of the active selection.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+ * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
  * gimp_context_set_foreground(), gimp_context_set_brush() and all
  * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings
+ * gradient property settings, gimp_context_set_line_width() and all
+ * line property settings.
  *
  * Returns: TRUE on success.
  **/
@@ -278,11 +285,14 @@ gimp_drawable_edit_stroke_selection (gint32 drawable_ID)
  * outline (e.g. along a path, or along a channel's boundary), with the
  * active paint method and brush, or using a plain line with
  * configurable properties.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
+ * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
  * gimp_context_set_foreground(), gimp_context_set_brush() and all
  * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings
+ * gradient property settings, gimp_context_set_line_width() and all
+ * line property settings.
  *
  * Returns: TRUE on success.
  *
