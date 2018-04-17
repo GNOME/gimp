@@ -776,6 +776,12 @@ How many recent settings to keep around in filter tools.  This is an integer
 value.
 
 .TP
+(filter-tool-use-last-settings no)
+
+Default to the last used settings in filter tools.  Possible values are yes
+and no.
+
+.TP
 (filter-tool-show-color-options no)
 
 Show advanced color options in filter tools.  Possible values are yes and no.

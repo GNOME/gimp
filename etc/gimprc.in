@@ -603,6 +603,11 @@
 # 
 # (filter-tool-max-recent 10)
 
+# Default to the last used settings in filter tools.  Possible values are yes
+# and no.
+# 
+# (filter-tool-use-last-settings no)
+
 # Show advanced color options in filter tools.  Possible values are yes and
 # no.
 # 
