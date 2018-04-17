@@ -55,6 +55,10 @@ struct _GimpOperationGradient
   gdouble                       supersample_threshold;
 
   gboolean                      dither;
+
+  GimpRGB                      *gradient_cache;
+  gint                          gradient_cache_size;
+  gboolean                      gradient_cache_valid;
 };
 
 struct _GimpOperationGradientClass

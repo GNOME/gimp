@@ -91,6 +91,15 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
         gimp_drawable_gradient_shapeburst_distmap (drawable, metric,
                                                    GEGL_RECTANGLE (x, y, width, height),
                                                    progress);
+
+      /*  in shapeburst mode, make sure the "line" is long enough to
+       *  span across the selection, so the operation's cache has the
+       *  right size
+       */
+      startx = x;
+      starty = y;
+      endx   = x + width;
+      endy   = y + height;
     }
 
   render = gegl_node_new_child (NULL,

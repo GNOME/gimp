@@ -909,12 +909,35 @@ gimp_gradient_tool_update_graph (GimpGradientTool *gradient_tool)
   else
 #endif
     {
-      gegl_node_set (gradient_tool->render_node,
-                     "start_x", gradient_tool->start_x - off_x,
-                     "start_y", gradient_tool->start_y - off_y,
-                     "end_x",   gradient_tool->end_x - off_x,
-                     "end_y",   gradient_tool->end_y - off_y,
-                     NULL);
+      if (gimp_gradient_tool_is_shapeburst (gradient_tool))
+        {
+          /*  in shapeburst mode, make sure the "line" is long enough
+           *  to span across the selection, so the operation's cache
+           *  has the right size
+           */
+
+          GimpImage *image = gimp_display_get_image (tool->display);
+          gdouble    x, y, w, h;
+
+          gimp_item_bounds_f (GIMP_ITEM (gimp_image_get_mask (image)),
+                              &x, &y, &w, &h);
+
+          gegl_node_set (gradient_tool->render_node,
+                         "start-x", x,
+                         "start-y", y,
+                         "end-x",   x + w,
+                         "end-y",   y + h,
+                         NULL);
+        }
+      else
+        {
+          gegl_node_set (gradient_tool->render_node,
+                         "start-x", gradient_tool->start_x - off_x,
+                         "start-y", gradient_tool->start_y - off_y,
+                         "end-x",   gradient_tool->end_x - off_x,
+                         "end-y",   gradient_tool->end_y - off_y,
+                         NULL);
+        }
     }
 }
 

@@ -36,8 +36,6 @@
 #include "gimpoperationgradient.h"
 
 
-//#define USE_GRADIENT_CACHE 1
-
 enum
 {
   PROP_0,
@@ -60,25 +58,16 @@ enum
 
 typedef struct
 {
-  GimpGradient                *gradient;
-  gboolean                     reverse;
-  GimpGradientBlendColorSpace  blend_color_space;
-#ifdef USE_GRADIENT_CACHE
-  GimpRGB                     *gradient_cache;
-  gint                         gradient_cache_size;
-#else
-  GimpGradientSegment         *last_seg;
-#endif
-  gdouble                      offset;
-  gdouble                      sx, sy;
-  GimpGradientType             gradient_type;
-  gdouble                      dist;
-  gdouble                      vec[2];
-  GimpRepeatMode               repeat;
-  GimpRGB                      leftmost_color;
-  GimpRGB                      rightmost_color;
-  GRand                       *seed;
-  GeglBuffer                  *dist_buffer;
+  GimpGradient      *gradient;
+  GimpRGB           *gradient_cache;
+  gint               gradient_cache_size;
+  gdouble            offset;
+  gdouble            sx, sy;
+  GimpGradientType   gradient_type;
+  gdouble            dist;
+  gdouble            vec[2];
+  GimpRepeatMode     repeat;
+  GeglBuffer        *dist_buffer;
 } RenderBlendData;
 
 
@@ -335,6 +324,7 @@ gimp_operation_gradient_dispose (GObject *object)
 
   g_clear_object (&self->gradient);
   g_clear_object (&self->context);
+  g_clear_pointer (&self->gradient_cache, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -509,7 +499,23 @@ gimp_operation_gradient_set_property (GObject      *object,
 static void
 gimp_operation_gradient_prepare (GeglOperation *operation)
 {
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
+  gint                   cache_size;
+
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
+
+  cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
+                           SQR (self->start_y - self->end_y))) * 4;
+
+  if (cache_size != self->gradient_cache_size)
+    {
+      g_clear_pointer (&self->gradient_cache, g_free);
+
+      self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+      self->gradient_cache_size = cache_size;
+    }
+
+  self->gradient_cache_valid = FALSE;
 }
 
 static GeglRectangle
@@ -900,7 +906,6 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->repeat)
     {
-    case GIMP_REPEAT_TRUNCATE:
     case GIMP_REPEAT_NONE:
       break;
 
@@ -922,30 +927,21 @@ gradient_render_pixel (gdouble   x,
           factor = 1.0 - factor;
       }
       break;
+
+    case GIMP_REPEAT_TRUNCATE:
+      if (factor < 0.0 || factor > 1.0)
+        {
+          gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
+          return;
+        }
+      break;
     }
 
   /* Blend the colors */
 
-  if (factor <= 0.0)
-    {
-      *color = rbd->leftmost_color;
-    }
-  else if (factor >= 1.0)
-    {
-      *color = rbd->rightmost_color;
-    }
-  else
-    {
-#ifdef USE_GRADIENT_CACHE
-      *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
-#else
-      rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
-                                                  rbd->last_seg, factor,
-                                                  rbd->reverse,
-                                                  rbd->blend_color_space,
-                                                  color);
-#endif
-    }
+  factor = CLAMP (factor, 0.0, 1.0);
+
+  *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
 }
 
 static void
@@ -1008,35 +1004,31 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
   RenderBlendData rbd = { 0, };
 
-  rbd.gradient          = NULL;
-  rbd.reverse           = self->gradient_reverse;
-  rbd.blend_color_space = self->gradient_blend_color_space;
+  if (! self->gradient)
+    return TRUE;
 
-  if (self->gradient)
-    rbd.gradient = g_object_ref (self->gradient);
-  else
-    rbd.gradient = GIMP_GRADIENT (gimp_gradient_new (NULL, "Gradient-Temp"));
+  if (! self->gradient_cache_valid)
+    {
+      GimpGradientSegment *last_seg = NULL;
+      gint                 i;
 
-#ifdef USE_GRADIENT_CACHE
-  {
-    GimpGradientSegment *last_seg = NULL;
-    gint                 i;
+      for (i = 0; i < self->gradient_cache_size; i++)
+        {
+          gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
 
-    rbd.gradient_cache_size = ceil (sqrt (SQR (sx - ex) + SQR (sy - ey)));
-    rbd.gradient_cache      = g_new0 (GimpRGB, rbd.gradient_cache_size);
+          last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
+                                                 factor,
+                                                 self->gradient_reverse,
+                                                 self->gradient_blend_color_space,
+                                                 self->gradient_cache + i);
+        }
 
-    for (i = 0; i < rbd.gradient_cache_size; i++)
-      {
-        gdouble factor = (gdouble) i / (gdouble) (rbd.gradient_cache_size - 1);
+      self->gradient_cache_valid = TRUE;
+    }
 
-        last_seg = gimp_gradient_get_color_at (rbd.gradient, NULL, last_seg,
-                                               factor,
-                                               rbd.reverse,
-                                               rbd.blend_color_space,
-                                               rbd.gradient_cache + i);
-      }
-  }
-#endif
+  rbd.gradient            = self->gradient;
+  rbd.gradient_cache      = self->gradient_cache;
+  rbd.gradient_cache_size = self->gradient_cache_size;
 
   /* Calculate type-specific parameters */
 
@@ -1086,26 +1078,6 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   rbd.gradient_type = self->gradient_type;
   rbd.repeat        = self->gradient_repeat;
 
-  if (rbd.repeat == GIMP_REPEAT_NONE)
-    {
-      gimp_gradient_segment_get_left_flat_color  (rbd.gradient, NULL,
-                                                  rbd.gradient->segments,
-                                                  &rbd.leftmost_color);
-      gimp_gradient_segment_get_right_flat_color (rbd.gradient, NULL,
-                                                  gimp_gradient_segment_get_last (
-                                                    rbd.gradient->segments),
-                                                  &rbd.rightmost_color);
-
-      if (rbd.reverse)
-        {
-          GimpRGB temp;
-
-          temp                = rbd.leftmost_color;
-          rbd.leftmost_color  = rbd.rightmost_color;
-          rbd.rightmost_color = temp;
-        }
-    }
-
   /* Render the gradient! */
 
   if (self->supersample)
@@ -1137,6 +1109,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
     {
       GeglBufferIterator *iter;
       GeglRectangle      *roi;
+      GRand              *seed = NULL;
 
       iter = gegl_buffer_iterator_new (output, result, 0,
                                        babl_format ("R'G'B'A float"),
@@ -1144,7 +1117,7 @@ gimp_operation_gradient_process (GeglOperation       *operation,
       roi = &iter->roi[0];
 
       if (self->dither)
-        rbd.seed = g_rand_new ();
+        seed = g_rand_new ();
 
       while (gegl_buffer_iterator_next (iter))
         {
@@ -1153,9 +1126,9 @@ gimp_operation_gradient_process (GeglOperation       *operation,
           gint    endy = roi->y + roi->height;
           gint    x, y;
 
-          if (rbd.seed)
+          if (seed)
             {
-              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (rbd.seed));
+              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (seed));
 
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
@@ -1201,14 +1174,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
         }
 
       if (self->dither)
-        g_rand_free (rbd.seed);
+        g_rand_free (seed);
     }
-
-#ifdef USE_GRADIENT_CACHE
-  g_free (rbd.gradient_cache);
-#endif
-
-  g_object_unref (rbd.gradient);
 
   return TRUE;
 }
