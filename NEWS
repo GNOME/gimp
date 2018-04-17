@@ -10,6 +10,7 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+
 Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC2
 ===========================================================
 
@@ -27,6 +28,17 @@ Core:
     data.
   - Plug-ins debugging on crashes through --stack-trace-mode CLI option
     improved to handle more case.
+
+Libgimp:
+
+  - New group "drawable_edit" which contains all functions from "edit"
+    that are not cut/copy/paste. The new functions have much less
+    arguments and take them from the context instead. The respective
+    functions in "edit" have been deprecated.
+  - New functions in "context" to configure aspects of gradient
+    drawing, and to set the built-in gradients (the new gradient
+    function in "drawable_edit" doesn't have a parameter for the
+    gradient type any longer).
 
 User interface:
 
@@ -72,6 +84,7 @@ Translations:
 
   - 8 translations were updated: Arabic, Catalan, Chinese, French, Italian,
     Polish, Russian, Swedish.
+
 
 Overview of Changes from GIMP 2.9.8 to GIMP 2.10.0 RC1
 ======================================================
