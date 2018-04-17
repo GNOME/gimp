@@ -511,7 +511,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the grid lines  */
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
 
   gimp_curve_view_draw_grid (view, cr, width, height, border);
 
