@@ -93,13 +93,13 @@ style "gimp-dark-default-style"
   base[NORMAL] = @clrA
   base[PRELIGHT] = @clr7
   base[ACTIVE] = @clr7
-  base[SELECTED] = @clr7
+  base[SELECTED] = @clr1
   base[INSENSITIVE] = @clr8
 
   text[NORMAL] = @clr1
   text[PRELIGHT] = @clr1
   text[ACTIVE] = @clr1
-  text[SELECTED] = @clr1
+  text[SELECTED] = @clr7
   text[INSENSITIVE] = @clr9
 
   GtkOptionMenu::indicator-size = { 5, 11 }
