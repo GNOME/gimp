@@ -28,6 +28,10 @@ Core:
     data.
   - Plug-ins debugging on crashes through --stack-trace-mode CLI option
     improved to handle more case.
+  - Fix selection -> channel -> selection roundtrips by never doing
+    any gamma conversion when converting between an image's selection,
+    channels, masks. Also, make all channels linear in all images with
+    >8bit.
 
 Libgimp:
 
