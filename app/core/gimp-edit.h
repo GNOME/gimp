@@ -57,16 +57,5 @@ const gchar * gimp_edit_named_copy_visible (GimpImage       *image,
                                             GimpContext     *context,
                                             GError         **error);
 
-void          gimp_edit_clear              (GimpImage       *image,
-                                            GimpDrawable    *drawable,
-                                            GimpContext     *context);
-void          gimp_edit_fill               (GimpImage       *image,
-                                            GimpDrawable    *drawable,
-                                            GimpFillOptions *options,
-                                            const gchar     *undo_desc);
-
-gboolean      gimp_edit_fade               (GimpImage       *image,
-                                            GimpContext     *context);
-
 
 #endif  /*  __GIMP_EDIT_H__  */

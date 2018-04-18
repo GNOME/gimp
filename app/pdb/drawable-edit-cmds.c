@@ -29,11 +29,11 @@
 
 #include "pdb-types.h"
 
-#include "core/gimp-edit.h"
 #include "core/gimp-gradients.h"
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpdrawable-bucket-fill.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -71,9 +71,7 @@ drawable_edit_clear_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-          gimp_edit_clear (image, drawable, context);
+          gimp_drawable_edit_clear (drawable, context);
         }
       else
         success = FALSE;
@@ -104,7 +102,6 @@ drawable_edit_fill_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
           gimp_context_set_opacity (GIMP_CONTEXT (options),
@@ -115,7 +112,7 @@ drawable_edit_fill_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             success = FALSE;

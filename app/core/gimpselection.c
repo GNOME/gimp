@@ -29,8 +29,8 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 
 #include "gimp.h"
-#include "gimp-edit.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-edit.h"
 #include "gimpdrawable-private.h"
 #include "gimperror.h"
 #include "gimpimage.h"
@@ -751,7 +751,7 @@ gimp_selection_extract (GimpSelection *selection,
 
       if (cut_image)
         {
-          gimp_edit_clear (image, GIMP_DRAWABLE (pickable), context);
+          gimp_drawable_edit_clear (GIMP_DRAWABLE (pickable), context);
         }
     }
   else if (cut_image)

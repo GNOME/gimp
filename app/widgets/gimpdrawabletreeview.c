@@ -28,8 +28,8 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-edit.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -242,9 +242,9 @@ gimp_drawable_tree_view_drop_viewable (GimpContainerTreeView   *view,
       gimp_context_set_pattern (GIMP_CONTEXT (options),
                                 GIMP_PATTERN (src_viewable));
 
-      gimp_edit_fill (image, GIMP_DRAWABLE (dest_viewable),
-                      options,
-                      C_("undo-type", "Drop pattern to layer"));
+      gimp_drawable_edit_fill (GIMP_DRAWABLE (dest_viewable),
+                               options,
+                               C_("undo-type", "Drop pattern to layer"));
 
       g_object_unref (options);
 
@@ -272,9 +272,9 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
       gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
-      gimp_edit_fill (image, GIMP_DRAWABLE (dest_viewable),
-                      options,
-                      C_("undo-type", "Drop color to layer"));
+      gimp_drawable_edit_fill (GIMP_DRAWABLE (dest_viewable),
+                               options,
+                               C_("undo-type", "Drop color to layer"));
 
       g_object_unref (options);
 
@@ -333,7 +333,7 @@ gimp_drawable_tree_view_new_dropped (GimpItemTreeView *view,
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->new_item (image);
 
   if (item)
-    gimp_edit_fill (image, GIMP_DRAWABLE (item), options, undo_desc);
+    gimp_drawable_edit_fill (GIMP_DRAWABLE (item), options, undo_desc);
 
   gimp_image_undo_group_end (image);
 

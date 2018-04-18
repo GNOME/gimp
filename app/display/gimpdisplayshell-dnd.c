@@ -30,6 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
@@ -385,7 +386,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_edit_fill (image, drawable, options, undo_desc);
+      gimp_drawable_edit_fill (drawable, options, undo_desc);
     }
 
   gimp_display_shell_dnd_flush (shell, image);

@@ -533,9 +533,7 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      gimp_edit_clear (image, drawable, context);
+      gimp_drawable_edit_clear (drawable, context);
     }
   else
     success = FALSE;
@@ -577,13 +575,12 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
       GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
       if (gimp_fill_options_set_by_fill_type (options, context,
                                               fill_type, error))
         {
-          gimp_edit_fill (image, drawable, options, NULL);
+          gimp_drawable_edit_fill (drawable, options, NULL);
         }
       else
         success = FALSE;
@@ -672,7 +669,7 @@ HELP
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             {
@@ -780,7 +777,7 @@ HELP
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             {
@@ -1043,6 +1040,7 @@ CODE
 @headers = qw("libgimpconfig/gimpconfig.h"
               "core/gimp.h"
               "core/gimp-edit.h"
+              "core/gimpdrawable-edit.h"
               "core/gimpbuffer.h"
               "core/gimpimage.h"
               "core/gimpprogress.h"

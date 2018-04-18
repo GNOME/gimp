@@ -32,6 +32,7 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
@@ -480,7 +481,7 @@ edit_clear_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   return_if_no_drawable (image, drawable, data);
 
-  gimp_edit_clear (image, drawable, action_data_get_context (data));
+  gimp_drawable_edit_clear (drawable, action_data_get_context (data));
   gimp_image_flush (image);
 }
 
@@ -504,7 +505,7 @@ edit_fill_cmd_callback (GtkAction *action,
                                           action_data_get_context (data),
                                           fill_type, &error))
     {
-      gimp_edit_fill (image, drawable, options, NULL);
+      gimp_drawable_edit_fill (drawable, options, NULL);
       gimp_image_flush (image);
     }
   else

@@ -35,6 +35,7 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-bucket-fill.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -524,9 +525,7 @@ edit_clear_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-          gimp_edit_clear (image, drawable, context);
+          gimp_drawable_edit_clear (drawable, context);
         }
       else
         success = FALSE;
@@ -557,13 +556,12 @@ edit_fill_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
           if (gimp_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             success = FALSE;
@@ -625,7 +623,7 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
 
               if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 {
-                  gimp_edit_fill (image, drawable, options, NULL);
+                  gimp_drawable_edit_fill (drawable, options, NULL);
                 }
               else
                 {
@@ -702,7 +700,7 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
 
               if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 {
-                  gimp_edit_fill (image, drawable, options, NULL);
+                  gimp_drawable_edit_fill (drawable, options, NULL);
                 }
               else
                 {

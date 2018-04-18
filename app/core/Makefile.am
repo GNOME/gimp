@@ -154,6 +154,8 @@ libappcore_a_sources = \
 	gimpdrawable-bucket-fill.h		\
 	gimpdrawable-combine.c			\
 	gimpdrawable-combine.h			\
+	gimpdrawable-edit.c			\
+	gimpdrawable-edit.h			\
 	gimpdrawable-equalize.c			\
 	gimpdrawable-equalize.h			\
 	gimpdrawable-fill.c			\
@@ -251,6 +253,8 @@ libappcore_a_sources = \
 	gimpimage-crop.h			\
 	gimpimage-duplicate.c			\
 	gimpimage-duplicate.h			\
+	gimpimage-fade.c			\
+	gimpimage-fade.h			\
 	gimpimage-flip.c			\
 	gimpimage-flip.h			\
 	gimpimage-grid.h                	\
