@@ -255,7 +255,7 @@ Global data follows no strict rules.
         as read from the original image.
         where: XXXX is a 4-digit ascii encoded hexadecimal number
                AA is a two character ascii value representing the Dicom
-                 element's Value Represenation (VR)
+                 element's Value Representation (VR)
 
 
 5. KNOWN LAYER/DRAWABLE PARASITES

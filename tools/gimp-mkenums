@@ -164,7 +164,7 @@ sub usage {
     print STDERR "  --dtail <text>             description tail, produced after iterating over enum value descriptions\n";
     print STDERR "  --comments <text>          comment structure\n";
     print STDERR "  -h, --help                 show this help message\n";
-    print STDERR "  -v, --version              print version informations\n";
+    print STDERR "  -v, --version              print version information\n";
     print STDERR "Production text substitutions:\n";
     print STDERR "  \@EnumName\@                 PrefixTheXEnum\n";
     print STDERR "  \@enum_name\@                prefix_the_xenum\n";

@@ -15,10 +15,10 @@ we break API/ABI for 3.x.
 
 - Add user_data to all functions passed to gimp_widgets_init()
 
-- Preferrably make gimp_widgets_init() take a vtable with padding.
+- Preferably make gimp_widgets_init() take a vtable with padding.
 
 - Change GIMP_CONFIG_INSTALL_PROP_FOO() macros to include the nick,
-  or drop them alltogether
+  or drop them altogether
 
 - Change gimp_prop_foo_new() to use the nick as label, or find some
   other way to use the nick.

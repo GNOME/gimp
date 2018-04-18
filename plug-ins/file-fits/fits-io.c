@@ -413,7 +413,7 @@ fits_nan_32 (guchar *v)
   register gulong k;
 
   k = (v[0] << 24) | (v[1] << 16) | (v[2] << 8) | v[3];
-  k &= 0x7fffffff;  /* Dont care about the sign bit */
+  k &= 0x7fffffff;  /* Don't care about the sign bit */
 
   /* See NOST Definition of the Flexible Image Transport System (FITS), */
   /* Appendix F, IEEE special formats. */
@@ -445,7 +445,7 @@ fits_nan_64 (guchar *v)
   register gulong k;
 
   k = (v[0] << 24) | (v[1] << 16) | (v[2] << 8) | v[3];
-  k &= 0x7fffffff;  /* Dont care about the sign bit */
+  k &= 0x7fffffff;  /* Don't care about the sign bit */
 
   /* See NOST Definition of the Flexible Image Transport System (FITS), */
   /* Appendix F, IEEE special formats. */
@@ -1190,7 +1190,7 @@ fits_decode_header (FitsRecordList *hdr,
     }
 
   /* If we have only one dimension, just set the second to size one. */
-  /* So we dont have to check for naxis < 2 in some places. */
+  /* So we don't have to check for naxis < 2 in some places. */
   if (hdulist->naxis < 2)
     hdulist->naxisn[1] = 1;
 

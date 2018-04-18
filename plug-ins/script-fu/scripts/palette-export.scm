@@ -106,7 +106,7 @@
 ; Export utils
 ; -----------------------------------------------------------------------------
 
-; List of charcters that should not appear in file names
+; List of characters that should not appear in file names
 (define illegal-file-name-chars (list #\\ #\/ #\: #\* #\? #\" #\< #\> #\|))
 
 ; A function to filter a list lst by a given predicate pred

@@ -411,7 +411,7 @@ load_image (const gchar  *filename,
               && !(value_rep[0] == ' ' && value_rep[1]))
           )
         {
-          /* Look up type from the dictionary. At the time we dont
+          /* Look up type from the dictionary. At the time we don't
              support this option... */
           gchar element_length_chars[4];
 

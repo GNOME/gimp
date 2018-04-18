@@ -171,7 +171,7 @@ static FilmVals filmvals =
   { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
   "Monospace",     /* Font family for numbering */
   { TRUE, TRUE },  /* Numbering on top and bottom */
-  0,               /* Dont keep max. image height */
+  0,               /* Don't keep max. image height */
   0,               /* Number of images */
   { 0 }            /* Input image list */
 };
@@ -628,7 +628,7 @@ draw_hole_rgb (GimpDrawable *drw,
     return;
   if ((x+width <= 0) || (x >= d_width))
     return;
-  length = width;   /* Check that we dont draw past the image */
+  length = width;   /* Check that we don't draw past the image */
   if ((x+length) >= d_width)
     length = d_width-x;
 
@@ -682,7 +682,7 @@ draw_number (gint32 layer_ID,
   if (max_delta < 1)
     max_delta = 1;
 
-  /* Numbers dont need the descent. Inquire it and move the text down */
+  /* Numbers don't need the descent. Inquire it and move the text down */
   for (k = 0; k < max_delta * 2 + 1; k++)
     {
       /* Try different font sizes if inquire of extent failed */

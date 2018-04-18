@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 /**
  * GimpDatafileData:
  * @filename: the data file's full path.
- * @dirname:  the folder the data file is is.
+ * @dirname:  the folder the data file is in.
  * @basename: the data file's basename.
  * @atime:    the last time the file was accessed for reading.
  * @mtime:    the last time the file was modified.

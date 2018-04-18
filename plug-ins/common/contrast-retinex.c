@@ -469,7 +469,7 @@ retinex_scales_distribution(gfloat* scales, gint nscales, gint mode, gint s)
       scales[0] = (gint) s / 2;
     }
   else if (nscales == 2)
-    { /* For two filters whe choose the median and maximum scale */
+    { /* For two filters we choose the median and maximum scale */
       scales[0] = (gint) s / 2;
       scales[1] = (gint) s;
     }

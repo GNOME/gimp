@@ -26,7 +26,7 @@
 ; If there is a selection, it is bevelled.
 ; Otherwise if there is an alpha channel, the selection is taken from it
 ; and bevelled.
-; Otherwise the part of the layer inside the image boundries is bevelled.
+; Otherwise the part of the layer inside the image boundaries is bevelled.
 ;
 ; The selection is set on exit, so Select->Invert then Edit->Clear will
 ; leave a cut-out.  Then use Sven's add-shadow for that

@@ -179,7 +179,7 @@
 	  <entry><filename>regexrepl</filename></entry>
 	  <entry>
             Code to handle regular expressions in case your C library does not
-            suport them. These files will not be used for most builds since
+            support them. These files will not be used for most builds since
             modern libc implementation have offer support for regular
             expressions.
           </entry>

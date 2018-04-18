@@ -49,7 +49,7 @@ typedef struct
 static const gchar * get_enum_value_nick (GType type,
                                           gint  value);
 
-/*  Local varaibles  */
+/*  Local variables  */
 
 /* mapping table between Photoshop and GIMP modes.  in case a mode matches more
  * than one entry (in either direction), the first entry wins.

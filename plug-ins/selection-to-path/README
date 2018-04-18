@@ -21,7 +21,7 @@ Kathryn Hargreaves      letters@cs.umb.edu
 Please see fontutils-0.6 package for more details. I have included the 
 README from the limn part of the package.
 
-I thank Karl & Kathryn for producing such a well written set of utilites.
+I thank Karl & Kathryn for producing such a well written set of utilities.
 
 I have just added a gimp front-end onto them. 
 
@@ -39,7 +39,7 @@ path.
 An additional function can be obtained by having the "Shift" modifier pressed
 while using the button in the paths dialog. This will pop-up a "power-users"
 menu where the parameters to the underlying algorithms can be modified. 
-WARING:- Some values may cause the plugin to enter extremely long operations.
+WARNING:- Some values may cause the plugin to enter extremely long operations.
 You have been warned. 
 
 Have fun!

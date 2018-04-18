@@ -65,7 +65,7 @@ mingw_tools = {'ADDR2LINE': 'addr2line',
 	'STRINGS': 'strings', 'WINDRES': 'windres',
 	'AR': 'ar', 'RANLIB': 'ranlib', 'STRIP': 'strip'}
 
-#Exporting all as enviroment variables with its prefix
+#Exporting all as environment variables with its prefix
 mingw_tools_args = str()
 for tool in mingw_tools.keys():
 	fullpath_tool = mingw_tool_prefix + mingw_tools[tool]
@@ -83,7 +83,7 @@ os.environ['DISPLAY'] = ''
 #Added another common env var name for windres
 os.environ['RC'] = os.environ['WINDRES']
 
-#Exporting tool flags enviroment variables
+#Exporting tool flags environment variables
 os.environ['LDFLAGS']  = '-L'+searchprefix+'/lib'
 os.environ['CFLAGS']   = '-mms-bitfields -I'+searchprefix+'/include '
 os.environ['CPPFLAGS'] = '-I'+searchprefix+'/include'

@@ -206,7 +206,7 @@ metadata_viewer_dialog (gint32        image_id,
 
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
     {
-      g_printerr ("Error occured while loading UI file!\n");
+      g_printerr ("Error occurred while loading UI file!\n");
       g_printerr ("Message: %s\n", error->message);
       g_clear_error (&error);
       g_free (ui_file);

@@ -57,7 +57,7 @@ X      T_LAST_SYSTEM_TYPE=14
      length. If we couln't reuse existing fields, we could always add other
      alternatives in union _object.
 
-     We then procede to write the function that actually makes a new block.
+     We then proceed to write the function that actually makes a new block.
      For conformance reasons, we name it mk_memblock
 
 >     static pointer mk_memblock(scheme *sc, int len, char fill) {
@@ -107,7 +107,7 @@ X      T_LAST_SYSTEM_TYPE=14
      virtual machine underlying TinyScheme. Since version 1.30, TinyScheme
      uses macros and a single source text to keep the enums and the
      dispatch table in sync. That's where the op-codes are declared. Note
-     that the opdefines.h file uses unusually long lines to accomodate
+     that the opdefines.h file uses unusually long lines to accommodate
      all the information; adjust your editor to handle this. The file has
      six columns: A to Z. they contain:
        - Column A is the name of a routine to handle the scheme function.

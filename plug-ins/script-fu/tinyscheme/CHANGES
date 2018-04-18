@@ -15,10 +15,10 @@ Version 1.41
         #2866196 - Parser does not handle delimiters correctly
         #3395548 - Add a decimal point to inexact numbers in atom2str  (DC)
         #3399331 - Make min/max return inexact when any argument is inexact
-        #3399332 - Compatability fix for expt.
+        #3399332 - Compatibility fix for expt.
         #3399335 - Optional radix for string->number and number->string  (DC)
         #3400202 - Append with one argument should not return a list  (DC)
-        #3400284 - Compatability fix for integer?
+        #3400284 - Compatibility fix for integer?
 
     Other changes:
         - Added flags to makefile for MinGW/MSYS (TC)

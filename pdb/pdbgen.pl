@@ -127,7 +127,7 @@ foreach $file (@groups) {
 
 # Squash whitespace into just single spaces between words.
 # Single new lines are considered as normal spaces, but n > 1 newlines are considered (n - 1) newlines.
-# The sligthly complicated suite of regexp is so that \n\s+\n is still considered a double newline.
+# The slightly complicated suite of regexp is so that \n\s+\n is still considered a double newline.
 sub trimspace { for (${$_[0]}) { s/(\S)[\ \t\r\f]*\n[\ \t\r\f]*(\S)/$1 $2/g; s/[\ \t\r\f]+/ /gs;
     s/\n(([\ \t\r\f]*\n)+)/$1/g; s/[\ \t\r\f]*\n[\ \t\r\f]/\n/g ; s/^\s+//; s/\s+$//; } }
 

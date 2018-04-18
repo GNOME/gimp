@@ -350,7 +350,7 @@ blindsapply (guchar *srow,
   gint     available;
 
   /* Make the row 'shrink' around points along its length */
-  /* The bvals.numsegs determins how many segments to slip it in to */
+  /* The bvals.numsegs determines how many segments to slip it in to */
   /* The angle is the conceptual 'rotation' of each of these segments */
 
   /* Note the row is considered to be made up of a two dim array actual
@@ -636,7 +636,7 @@ apply_blinds (GimpDrawable *drawable)
         }
 
       /* Hmmm. does this work portably? */
-      /* This "swaps the intergers around that are held in in the
+      /* This "swaps" the integers around that are held in in the
        * sr & dr arrays.
        */
       blindsapply ((guchar *) sr, (guchar *) dr,

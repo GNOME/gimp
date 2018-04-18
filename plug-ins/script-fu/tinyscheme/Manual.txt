@@ -86,7 +86,7 @@ Please read accompanying file COPYING.
 
           Directives
      (gc)
-     Performs garbage collection immediatelly.
+     Performs garbage collection immediately.
 
      (gcverbose) (gcverbose <bool>)
      The argument (defaulting to #t) controls whether GC produces

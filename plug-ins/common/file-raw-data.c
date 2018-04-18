@@ -508,7 +508,7 @@ run (const gchar      *name,
               switch (sample_spacing)
                 {
                 case 0:
-                  /* Auto-detection already occured. Let's just check if
+                  /* Auto-detection already occurred. Let's just check if
                    *it was successful.
                    */
                   if (runtime->image_width != 1201 &&

@@ -117,7 +117,7 @@
         ; The strategy is to generate a random number digit by digit.
         ; Here's an example in base 10. Say the input n is 348
         ; (thus requesting a number between 0 and 347). Then the algorithm
-        ; first calls (internal-random 4) to get a digit betweeen 0 and 3,
+        ; first calls (internal-random 4) to get a digit between 0 and 3,
         ; then (internal-random 10) twice to get two more digits between
         ; 0 and 9. Say the result is 366: since it is greater than 347,
         ; it's discarded and the process restarted. When the result is

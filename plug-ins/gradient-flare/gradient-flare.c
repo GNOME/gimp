@@ -266,7 +266,7 @@ typedef struct
  * well, radius and lengths are actual length for CalcParams where
  * they are typically 0 to 100 for GFlares, and angles are G_PI based
  * (radian) for CalcParams where they are degree for GFlares. et cetra.
- * This is because convienience for dialog processing and for calculating.
+ * This is because convenience for dialog processing and for calculating.
  * these conversion is taken place in calc init routines. see below.
  */
 
@@ -2130,8 +2130,8 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
  *
  *  the sflare (second flares) are needed to be rendered one each
  *  sequentially, onto the source image, such as like usual layer
- *  operations. So the function takes src_pix as argment.  glow, rays
- *  routines don't have src_pix as argment, because of convienience.
+ *  operations. So the function takes src_pix as argument.  glow, rays
+ *  routines don't have src_pix as argument, because of convenience.
  *
  *  @JAPANESE
  *  sflare は複数のフレアを順に(レイヤ的に)かぶせながら描画する必要が

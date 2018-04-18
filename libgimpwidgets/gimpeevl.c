@@ -30,7 +30,7 @@
  *
  * It relies on external unit resolving through a callback and does
  * elementary dimensionality constraint check (e.g. "2 mm + 3 px * 4
- * in" is an error, as L + L^2 is a missmatch). It uses setjmp/longjmp
+ * in" is an error, as L + L^2 is a mismatch). It uses setjmp/longjmp
  * for try/catch like pattern on error, it uses g_strtod() for numeric
  * conversions and it's non-destructive in terms of the parameters, and
  * it's reentrant.
@@ -155,7 +155,7 @@ static void             gimp_eevl_error                    (GimpEevl            
  * @string:        The NULL-terminated string to be evaluated.
  * @options:       Evaluations options.
  * @result:        Result of evaluation.
- * @error_pos:     Will point to the positon within the string,
+ * @error_pos:     Will point to the position within the string,
  *                 before which the parse / evaluation error
  *                 occurred. Will be set to null of no error occurred.
  * @error_message: Will point to a static string with a semi-descriptive
@@ -273,7 +273,7 @@ gimp_eevl_expression (GimpEevl *eva)
     {
       GimpEevlQuantity new_term = gimp_eevl_term (eva);
 
-      /* If dimensions missmatch, attempt default unit assignment */
+      /* If dimensions mismatch, attempt default unit assignment */
       if (new_term.dimension != evaluated_terms.dimension)
         {
           GimpEevlQuantity default_unit_factor;
@@ -296,7 +296,7 @@ gimp_eevl_expression (GimpEevl *eva)
             }
           else
             {
-              gimp_eevl_error (eva, "Dimension missmatch during addition");
+              gimp_eevl_error (eva, "Dimension mismatch during addition");
             }
         }
 

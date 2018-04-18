@@ -102,7 +102,7 @@ sub generate {
 	}
 
 	# Find the return argument (defaults to the first arg if not
-	# explicity set
+	# explicitly set
 	my $retarg  = undef; $retvoid = 0;
 	foreach (@outargs) { $retarg = $_, last if exists $_->{retval} }
 	unless ($retarg) {

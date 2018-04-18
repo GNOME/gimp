@@ -401,7 +401,7 @@ var
 
 	Force32bitInstall: Boolean;
 
-	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, exectued at the end)
+	asUninstInf: TArrayOfString; //uninst.inf contents (loaded at start of uninstall, executed at the end)
 
 
 #include "MessageWithURL.isi"
@@ -420,7 +420,7 @@ end;
 #include "utils.isi"
 
 
-//some programs inproperly install libraries to the System32 directory, which then causes problems with plugins
+//some programs improperly install libraries to the System32 directory, which then causes problems with plugins
 //this function checks if such file exists in System32, and lets setup update the file when it exists
 function BadSysDLL(const pFile: String; const pPlatform: Integer): Boolean;
 var	OldRedir: Boolean;

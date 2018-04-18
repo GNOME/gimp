@@ -213,7 +213,7 @@ static void   gimp_prop_enum_check_button_notify   (GObject    *config,
  * @property_name: Name of enum property controlled by checkbutton.
  * @label:         Label to give checkbutton (including mnemonic).
  * @false_value:   Enum value corresponding to unchecked state.
- * @true_value:    Enum value corresonding to checked state.
+ * @true_value:    Enum value corresponding to checked state.
  *
  * Creates a #GtkCheckButton that displays and sets the specified
  * property of type Enum.  Note that this widget only allows two values

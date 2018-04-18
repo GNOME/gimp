@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpwin32-io.h
- * Compatibilty defines, you mostly need this as unistd.h replacement
+ * Compatibility defines, you mostly need this as unistd.h replacement
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

@@ -243,7 +243,7 @@ run (const gchar      *name,
 }
 
 /* This function is written as if it is blurring a row of pixels,
- * even though it can operate on colums, too.  There is no difference
+ * even though it can operate on columns, too.  There is no difference
  * in the processing of the lines, at least to the blur_line function.
  */
 static void
@@ -715,7 +715,7 @@ unsharp_region (GimpPixelRgn *srcPR,
               gint value;
               gint diff = *s - *d;
 
-              /* do tresholding */
+              /* do thresholding */
               if (abs (2 * diff) < threshold)
                 diff = 0;
 
@@ -940,7 +940,7 @@ preview_update (GimpPreview  *preview,
   gimp_preview_get_position (preview, &x, &y);
   gimp_preview_get_size (preview, &width, &height);
 
-  /* enlarge the region to avoid artefacts at the edges of the preview */
+  /* enlarge the region to avoid artifacts at the edges of the preview */
   border = 2.0 * unsharp_params.radius + 0.5;
   x1 = MAX (0, x - border);
   y1 = MAX (0, y - border);

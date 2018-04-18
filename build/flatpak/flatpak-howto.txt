@@ -124,7 +124,7 @@ Or if you already have a build:
   If you want to check build directories even if the builds are successful, add
   `--keep-build-dirs` option to your command.
 
-  If it ends successfuly, this will have built GIMP in new folders,
+  If it ends successfully, this will have built GIMP in new folders,
   `gimp-flatpak-build-x86-64/` and `gimp-flatpak-build-i386/`
   respectively.
 

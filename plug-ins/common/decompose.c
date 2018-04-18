@@ -41,7 +41,7 @@
 #define PLUG_IN_ROLE      "gimp-decompose"
 
 
-/* Descrition of a component */
+/* Description of a component */
 typedef struct
 {
   const gchar    *babl_name;           /* channel's  babl_component name    */
@@ -746,14 +746,14 @@ copy_one_component (GeglBuffer      *src,
   GeglBuffer          *temp;
   const GeglRectangle *extent;
 
-  /* We are working in linear double precison*/
+  /* We are working in linear double precision */
   component_format = babl_format_new (babl_model (model),
                                       babl_type ("double"),
                                       babl_component (component.babl_name),
                                       NULL);
 
   /* We need to enforce linearity here
-   * If the output is "Y'", the ouput of temp is already ok
+   * If the output is "Y'", the output of temp is already ok
    * If the output is "Y" , it will enforce gamma-decoding.
    * A bit tricky and suboptimal...
    */

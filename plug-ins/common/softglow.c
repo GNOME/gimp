@@ -523,7 +523,7 @@ find_constants (gdouble n_p[],
   gdouble constants [8];
   gdouble div;
 
-  /*  The constants used in the implemenation of a casual sequence
+  /*  The constants used in the implementation of a casual sequence
    *  using a 4th order approximation of the gaussian operator
    */
 

@@ -327,7 +327,7 @@ load_image (const gchar  *file,
               file_mark,     /* KiSS file type */
               bpp;           /* Bits per pixel */
   gint        height, width, /* Dimensions of image */
-              offx, offy,    /* Layer offets */
+              offx, offy,    /* Layer offsets */
               colors;       /* Number of colors */
 
   gint32      image,         /* Image */

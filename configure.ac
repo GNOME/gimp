@@ -987,7 +987,7 @@ AC_SUBST(SOCKET_LIBS)
 # Check for Intel vector intrinsics
 ###################################
 intrinsics_save_CFLAGS="$CFLAGS"
-#FIXME: Check the CFLAGS separatly
+#FIXME: Check the CFLAGS separately
 GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
 GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
 SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
@@ -1963,7 +1963,7 @@ have_email="no (xdg-email not found)"
 AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]     use sendmail instead of xdg-email])
 
 have_sendmail=no
-# Sendmail must be explicitely enabled to replace xdg-email implementation.
+# Sendmail must be explicitly enabled to replace xdg-email implementation.
 if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   if test "x$with_sendmail" = "xyes"; then
       sendmail_path=$PATH:/usr/sbin:/usr/lib

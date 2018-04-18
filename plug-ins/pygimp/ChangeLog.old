@@ -250,7 +250,7 @@
 1999-06-22  James Henstridge  <james@daa.com.au>
 
 	* gimpplugin.py: renamed from plugin.py.  This is mainly to reduce
-	namespace polution.
+	namespace pollution.
 	
 	* getvals.py: removed file.  It has been replaced by the much more
 	functional gimpfu module.
