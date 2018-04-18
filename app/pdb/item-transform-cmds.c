@@ -148,8 +148,8 @@ item_transform_flip_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -245,8 +245,8 @@ item_transform_perspective_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -416,8 +416,8 @@ item_transform_rotate_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -510,8 +510,9 @@ item_transform_scale_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = (gimp_pdb_item_is_attached (item, NULL,
-                                                          GIMP_PDB_ITEM_CONTENT |
-                                                          GIMP_PDB_ITEM_POSITION, error) && x0 < x1 && y0 < y1);
+                                            GIMP_PDB_ITEM_CONTENT |
+                                            GIMP_PDB_ITEM_POSITION, error) &&
+                 x0 < x1 && y0 < y1);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -597,8 +598,8 @@ item_transform_shear_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -694,8 +695,8 @@ item_transform_2d_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
@@ -796,8 +797,8 @@ item_transform_matrix_invoker (GimpProcedure         *procedure,
       gint x, y, width, height;
 
       success = gimp_pdb_item_is_attached (item, NULL,
-                                                        GIMP_PDB_ITEM_CONTENT |
-                                                        GIMP_PDB_ITEM_POSITION, error);
+                                           GIMP_PDB_ITEM_CONTENT |
+                                           GIMP_PDB_ITEM_POSITION, error);
 
       if (success &&
           gimp_item_mask_intersect (item, &x, &y, &width, &height))
