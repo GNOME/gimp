@@ -24,6 +24,7 @@
 
 #include "tools-types.h"
 
+#include "paint/gimpairbrush.h"
 #include "paint/gimpairbrushoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -37,12 +38,15 @@
 #include "gimp-intl.h"
 
 
-static void        gimp_airbrush_tool_constructed      (GObject          *object);
+static void        gimp_airbrush_tool_constructed    (GObject          *object);
 
-static void        gimp_airbrush_tool_airbrush_timeout (GimpAirbrush     *airbrush,
-                                                        GimpAirbrushTool *airbrush_tool);
+static void        gimp_airbrush_tool_airbrush_stamp (GimpAirbrush     *airbrush,
+                                                      GimpAirbrushTool *airbrush_tool);
 
-static GtkWidget * gimp_airbrush_options_gui           (GimpToolOptions  *tool_options);
+static void        gimp_airbrush_tool_stamp          (GimpAirbrushTool *airbrush_tool,
+                                                      gpointer          data);
+
+static GtkWidget * gimp_airbrush_options_gui         (GimpToolOptions  *tool_options);
 
 
 G_DEFINE_TYPE (GimpAirbrushTool, gimp_airbrush_tool, GIMP_TYPE_PAINTBRUSH_TOOL)
@@ -91,17 +95,30 @@ gimp_airbrush_tool_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_signal_connect_object (paint_tool->core, "timeout",
-                           G_CALLBACK (gimp_airbrush_tool_airbrush_timeout),
+  g_signal_connect_object (paint_tool->core, "stamp",
+                           G_CALLBACK (gimp_airbrush_tool_airbrush_stamp),
                            object, 0);
 }
 
 static void
-gimp_airbrush_tool_airbrush_timeout (GimpAirbrush     *airbrush,
-                                     GimpAirbrushTool *airbrush_tool)
+gimp_airbrush_tool_airbrush_stamp (GimpAirbrush     *airbrush,
+                                   GimpAirbrushTool *airbrush_tool)
 {
-  gimp_paint_tool_paint_core_paint (GIMP_PAINT_TOOL (airbrush_tool),
-                                    GIMP_PAINT_STATE_MOTION, 0);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (airbrush_tool);
+
+  gimp_paint_tool_paint_push (
+    paint_tool,
+    (GimpPaintToolPaintFunc) gimp_airbrush_tool_stamp,
+    NULL);
+}
+
+static void
+gimp_airbrush_tool_stamp (GimpAirbrushTool *airbrush_tool,
+                          gpointer          data)
+{
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (airbrush_tool);
+
+  gimp_airbrush_stamp (GIMP_AIRBRUSH (paint_tool->core));
 }
 
 

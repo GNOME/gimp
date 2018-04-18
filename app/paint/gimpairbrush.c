@@ -38,7 +38,7 @@
 
 enum
 {
-  TIMEOUT,
+  STAMP,
   LAST_SIGNAL
 };
 
@@ -88,11 +88,11 @@ gimp_airbrush_class_init (GimpAirbrushClass *klass)
 
   paint_core_class->paint = gimp_airbrush_paint;
 
-  airbrush_signals[TIMEOUT] =
-    g_signal_new ("timeout",
+  airbrush_signals[STAMP] =
+    g_signal_new ("stamp",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpAirbrushClass, timeout),
+                  G_STRUCT_OFFSET (GimpAirbrushClass, stamp),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -113,6 +113,8 @@ gimp_airbrush_finalize (GObject *object)
       g_source_remove (airbrush->timeout_id);
       airbrush->timeout_id = 0;
     }
+
+  g_clear_object (&airbrush->sym);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -158,6 +160,13 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
 
+          airbrush->drawable      = drawable;
+          airbrush->paint_options = paint_options;
+
+          if (airbrush->sym)
+            g_object_unref (airbrush->sym);
+          airbrush->sym = g_object_ref (sym);
+
           /* Base our timeout on the original stroke. */
           coords = gimp_symmetry_get_origin (sym);
 
@@ -180,6 +189,8 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
                                                    paint_options,
                                                    sym,
                                                    paint_state, time);
+
+      g_clear_object (&airbrush->sym);
       break;
     }
 }
@@ -221,7 +232,23 @@ gimp_airbrush_timeout (gpointer data)
 
   airbrush->timeout_id = 0;
 
-  g_signal_emit (airbrush, airbrush_signals[TIMEOUT], 0);
+  g_signal_emit (airbrush, airbrush_signals[STAMP], 0);
 
   return G_SOURCE_REMOVE;
+}
+
+
+/*  public functions  */
+
+
+void
+gimp_airbrush_stamp (GimpAirbrush *airbrush)
+{
+  g_return_if_fail (GIMP_IS_AIRBRUSH (airbrush));
+
+  gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
+                       airbrush->drawable,
+                       airbrush->paint_options,
+                       airbrush->sym,
+                       GIMP_PAINT_STATE_MOTION, 0);
 }
