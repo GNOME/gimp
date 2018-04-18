@@ -500,20 +500,8 @@ static void
 gimp_operation_gradient_prepare (GeglOperation *operation)
 {
   GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
-  gint                   cache_size;
 
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
-
-  cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
-                           SQR (self->start_y - self->end_y))) * 4;
-
-  if (cache_size != self->gradient_cache_size)
-    {
-      g_clear_pointer (&self->gradient_cache, g_free);
-
-      self->gradient_cache      = g_new0 (GimpRGB, cache_size);
-      self->gradient_cache_size = cache_size;
-    }
 
   self->gradient_cache_valid = FALSE;
 }
@@ -1010,7 +998,19 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   if (! self->gradient_cache_valid)
     {
       GimpGradientSegment *last_seg = NULL;
+      gint                 cache_size;
       gint                 i;
+
+      cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
+                               SQR (self->start_y - self->end_y))) * 4;
+
+      if (cache_size != self->gradient_cache_size)
+        {
+          g_clear_pointer (&self->gradient_cache, g_free);
+
+          self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+          self->gradient_cache_size = cache_size;
+        }
 
       for (i = 0; i < self->gradient_cache_size; i++)
         {
