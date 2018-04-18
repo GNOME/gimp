@@ -13,9 +13,9 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-13 21:44+0000\n"
-"PO-Revision-Date: 2018-04-14 21:55+0200\n"
-"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"POT-Creation-Date: 2018-04-14 20:02+0000\n"
+"PO-Revision-Date: 2018-04-18 10:43+0200\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -81,61 +81,69 @@ msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
+"Den första utgåvan av 2.10-serien vilken introducerar övergången till en ny "
+"bildbehandlingsmotor, GEGL. De främsta ändringarna är:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "High bit depth color processing (16/32-bit per color channel)"
-msgstr ""
+msgstr "Färgbearbetning med högt bitdjup (16/32-bit per färgkanal)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr ""
+"Färghantering är nu en kärnfunktion, de flesta komponenter och "
+"förhandsgranskningsområden är färghanterade"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
+"Effektförhandsgranskning på ritytan, med delad vy för bildpunkter före/efter "
+"bearbetning"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
-msgstr ""
+msgstr "Flertrådad och hårdvaruaccelererad rendering, bearbetning och målning"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Most tools improved, several new transformation tools"
-msgstr ""
+msgstr "De flesta verktygen har förbättrats, flera nya transformeringsverktyg"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
-msgstr ""
+msgstr "Förbättrat stöd för många bildformat, i synnerhet bättre PSD-import"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
-msgstr ""
+msgstr "Nya bildformat som stöds: OpenEXR, RGBE, WebP, HGT…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
+"Förbättrat digitalt målande: rotation och vändande av rityta, "
+"symmetrimålning, MyPaint-penslar…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
-msgstr ""
+msgstr "Visning och redigering av Exif-, XMP-, IPTC- och DICOM-metadata"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Basic HiDPI support: automatically or user-selected icon size"
-msgstr ""
+msgstr "Grundläggande HiDPI-stöd: automatisk eller användarvald ikonstorlek"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
-msgstr ""
+msgstr "Nya teman för GIMP: Light, Gray, Dark och System"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "And much, much more…"
-msgstr ""
+msgstr "Samt mycket mer…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
@@ -143,22 +151,29 @@ msgid ""
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
+"I denna andra releasekandidat innan GIMP 2.10.0 har, om än felsökning "
+"fortfarande är ett primärt mål, nytt fokus satts på hastighet och optimering "
+"för att tillhandahålla en jämnare målningsupplevelse. Större ändringar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
+"Stora kärnoptimeringar för målning och visning, inklusive parallelliserad "
+"målningskod."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
-msgstr ""
+msgstr "Symmetrier bibehålls nu i XCF-filer (sparade som bildparasiter)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
+"Temana ”Light” och ”Dark” är omskrivna från grunden för att komma åt diverse "
+"användbarhetsproblem. Temana ”Lighter” och ”Darker” har tagits bort."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
@@ -166,6 +181,9 @@ msgid ""
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
+"Ny kontroll direkt på ritytan för GimpToolGyroscope-styrning, används för "
+"närvarande för Panoramaprojiceringsfiltret. Komponenten tillhandahåller "
+"interaktion på ritytan för 3D-rotation (gir, stigning, rullning)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
@@ -173,6 +191,10 @@ msgid ""
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set."
 msgstr ""
+"Felsökning för insticksmoduler förbättrad för att mata ut stackspår från "
+"insticksmoduler med kommandoradsflaggan --stack-trace-mode inte bara då "
+"signaler mottas utan också vid varningar och kritiska fel då "
+"felsökningsnyckeln ”fatal-warnings” har ställts in."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
@@ -188,9 +210,11 @@ msgid ""
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
+"GIMP 2.10.0-RC1 är den första releasekandidaten före den stabila utgåvan "
+"GIMP 2.10.0, med fokus på felsökning och stabilitet. Förutom de många "
+"felfixarna är de mest framstående förbättringarna:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
-#, fuzzy
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Ny dockningsbar panel för att övervaka GIMP:s resursanvändning"
 
@@ -199,10 +223,12 @@ msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
+"En ny felsökningsdialog för att skapa stackspår och annan felsökningsdata, "
+"vilket uppmuntrar till att rapportera fel"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Unsaved images can now be recovered after a crash"
-msgstr ""
+msgstr "Osparade bilder kan nu återskapas efter en krasch"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Layer masks on layer groups"
@@ -210,21 +236,19 @@ msgstr "Lagermasker på lagergrupper"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
-msgstr ""
+msgstr "JPEG 2000-stöd förbättrat för högt bitdjup och diverse färgrymder"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Screenshot and color picking improved on various platforms"
-msgstr ""
+msgstr "Skärmbilder och färgval förbättrat på diverse plattformar"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
-#, fuzzy
-#| msgid "Export XMP metadata by default when available"
 msgid "Metadata defaults preferences now available"
-msgstr "Exportera XMP-metadata som standard när tillgänglig"
+msgstr "Inställningar för metadatastandardvärden finns nu tillgängliga"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Various GUI polishing"
-msgstr ""
+msgstr "Diverse polering av det grafiska användargränssnittet"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
@@ -239,12 +263,12 @@ msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
-"GIMP 2.9.8 introducerar redigering av toningar på duken och diverse "
+"GIMP 2.9.8 introducerar redigering av toningar på ritytan och diverse "
 "förbättringar men fokus ligger på felfixar och stabilitet."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "On-canvas gradient editing"
-msgstr "Gradientredigerare på duken"
+msgstr "Gradientredigerare på ritytan"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Notification when an image is over/underexposed"
@@ -10292,7 +10316,7 @@ msgstr "Hur många nyligen använda filer som ska finnas i filterverktygen."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Default to the last used settings in filter tools."
-msgstr ""
+msgstr "Använd som standard de senast använda inställningarna i filterverktyg."
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "Show advanced color options in filter tools."
@@ -12432,8 +12456,8 @@ msgid "Pattern"
 msgstr "Mönster"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/pdb/edit-cmds.c:797 ../app/tools/gimpblendoptions.c:283
-#: ../app/tools/gimppaintoptions-gui.c:378
+#: ../app/pdb/edit-cmds.c:797 ../app/tools/gimpgradientoptions.c:284
+#: ../app/tools/gimpgradienttool.c:156 ../app/tools/gimppaintoptions-gui.c:378
 msgid "Gradient"
 msgstr "Färgskala"
 
@@ -12568,12 +12592,12 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rendera penseldrag"
 
-#: ../app/core/gimpdrawable-gradient.c:125
+#: ../app/core/gimpdrawable-gradient.c:127 ../app/tools/gimpgradienttool.c:1016
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Toning"
 
-#: ../app/core/gimpdrawable-gradient.c:213
+#: ../app/core/gimpdrawable-gradient.c:215
 msgid "Calculating distance map"
 msgstr "Beräknar avståndskarta"
 
@@ -12826,7 +12850,7 @@ msgstr "Ändra bildenhet"
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
-"”gimp-comment” parasitvalidering misslyckades: kommentar innehåller ogiltig "
+"”gimp-comment”-parasitvalidering misslyckades: kommentar innehåller ogiltig "
 "UTF-8"
 
 #: ../app/core/gimpimage.c:3552
@@ -13024,7 +13048,7 @@ msgstr "Konvertera bild till 64-bit gamma-flyttal"
 #: ../app/core/gimpimage-convert-precision.c:288
 #: ../app/dialogs/convert-indexed-dialog.c:236
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpblendoptions.c:135
+#: ../app/tools/gimpgradientoptions.c:136
 msgid "Dithering"
 msgstr "Färgutjämning"
 
@@ -14526,9 +14550,9 @@ msgstr "Bildegenskaper"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1854
-#: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:651
-#: ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
+#: ../app/tools/gimpgradienttool-editor.c:1854
+#: ../app/tools/gimpmeasuretool.c:651 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
@@ -14808,7 +14832,7 @@ msgstr "Kanalposition"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:88
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:89
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Position"
@@ -16863,17 +16887,19 @@ msgstr "Släpp nytt lager"
 msgid "Drop New Path"
 msgstr "Släpp ny bana"
 
-#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:243
+#: ../app/display/gimpdisplayshell-dnd.c:360
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpgradienttool.c:243
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 
-#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:250
+#: ../app/display/gimpdisplayshell-dnd.c:368
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpfiltertool.c:277
-#: ../app/tools/gimppainttool.c:277 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1449 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimpgradienttool.c:250 ../app/tools/gimppainttool.c:277
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
+#: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Det aktiva lagrets bildpunkter är låsta."
 
@@ -18275,11 +18301,8 @@ msgid "default:LTR"
 msgstr "default:LTR"
 
 #: ../app/gui/gui.c:326
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Image precision"
 msgid "Image Recovery"
-msgstr "Bildprecision"
+msgstr "Bildåterskapande"
 
 #: ../app/gui/gui.c:328
 msgid "_Discard"
@@ -18287,11 +18310,11 @@ msgstr "_Förkasta"
 
 #: ../app/gui/gui.c:329
 msgid "_Recover"
-msgstr ""
+msgstr "Å_terskapa"
 
 #: ../app/gui/gui.c:340
 msgid "Eeek! It looks like GIMP recovered from a crash!"
-msgstr ""
+msgstr "Ajdå! Det verkar som att GIMP återställdes från en krasch!"
 
 #. TRANSLATORS: even if English singular form does
 #. * not use %d, you can use %d for translation in
@@ -18305,8 +18328,8 @@ msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
 "%d images were salvaged from the crash. Do you want to try and recover them?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "En bild räddades från kraschen. Vill du försöka återskapa den?"
+msgstr[1] "%d bilder räddades från kraschen. Vill du försöka återskapa dem?"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
@@ -18421,8 +18444,8 @@ msgid "Tilt"
 msgstr "Lutning"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:94
-#: ../app/tools/gimpblendoptions.c:304 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:95
+#: ../app/tools/gimpgradientoptions.c:305 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Form"
 
@@ -18606,8 +18629,9 @@ msgstr "Omvänd"
 msgid "Reverse direction of fading"
 msgstr "Vänd riktning för uttoning"
 
-#: ../app/paint/gimppaintoptions.c:329 ../app/tools/gimpblendoptions.c:108
-#: ../app/tools/gimpblendoptions.c:325 ../app/tools/gimppaintoptions-gui.c:356
+#: ../app/paint/gimppaintoptions.c:329 ../app/tools/gimpgradientoptions.c:109
+#: ../app/tools/gimpgradientoptions.c:326
+#: ../app/tools/gimppaintoptions-gui.c:356
 msgid "Repeat"
 msgstr "Upprepa"
 
@@ -18615,17 +18639,14 @@ msgstr "Upprepa"
 msgid "How fade is repeated as you paint"
 msgstr "Hur uttoning upprepas medan du målar"
 
-#: ../app/paint/gimppaintoptions.c:342 ../app/tools/gimpblendoptions.c:297
+#: ../app/paint/gimppaintoptions.c:342 ../app/tools/gimpgradientoptions.c:298
 #: ../app/tools/gimppaintoptions-gui.c:392
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Blend Space"
 msgid "Blend Color Space"
-msgstr "Toningsrymd"
+msgstr "Toningsfärgrymd"
 
 #: ../app/paint/gimppaintoptions.c:343
 msgid "Which color space to use when blending RGB gradient segments"
-msgstr ""
+msgstr "Vilken färgrymd som ska användas när RGB-gradientsegment tonas"
 
 #: ../app/paint/gimppaintoptions.c:406
 msgid "Smooth stroke"
@@ -20279,182 +20300,6 @@ msgstr "Klicka för att välja denna bana som första objekt"
 msgid "Click to add this path to the list"
 msgstr "Klicka för att lägga till denna bana till listan"
 
-#: ../app/tools/gimpblendoptions.c:101 ../app/tools/gimpblendoptions.c:313
-msgid "Metric"
-msgstr "Måttenhet"
-
-#: ../app/tools/gimpblendoptions.c:102
-msgid "Metric to use for the distance calculation"
-msgstr "Måttenhet att använda för avståndsberäkning"
-
-#: ../app/tools/gimpblendoptions.c:116
-msgid "Adaptive Supersampling"
-msgstr "Adaptiv supersampling"
-
-#: ../app/tools/gimpblendoptions.c:122
-msgid "Max depth"
-msgstr "Max djup"
-
-#: ../app/tools/gimpblendoptions.c:128 ../app/tools/gimpbucketfilloptions.c:142
-#: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:87
-msgid "Threshold"
-msgstr "Tröskelvärde"
-
-#: ../app/tools/gimpblendoptions.c:142
-msgid "Instant mode"
-msgstr "Direktläge"
-
-#: ../app/tools/gimpblendoptions.c:143
-msgid "Commit gradient instantly"
-msgstr "Bekräfta gradient omedelbart"
-
-#: ../app/tools/gimpblendoptions.c:149
-msgid "Modify active gradient"
-msgstr "Modifiera aktiv gradient"
-
-#: ../app/tools/gimpblendoptions.c:150
-msgid "Modify the active gradient in-place"
-msgstr "Modifiera den aktiva gradienten på plats"
-
-#: ../app/tools/gimpblendoptions.c:289 ../app/tools/gimppaintoptions-gui.c:384
-msgid "Edit this gradient"
-msgstr "Redigera denna gradient"
-
-#. the instant toggle
-#: ../app/tools/gimpblendoptions.c:366
-#, c-format
-msgid "Instant mode  (%s)"
-msgstr "Direktläge  (%s)"
-
-#: ../app/tools/gimpblendoptions.c:386
-msgid ""
-"The active gradient is non-writable and cannot be edited directly. Uncheck "
-"this option to edit a copy of it."
-msgstr ""
-"Den aktiva gradienten är inte skrivbar och kan inte redigeras direkt. Kryssa "
-"ur detta alternativ för att redigera en kopia av den."
-
-#: ../app/tools/gimpblendtool.c:156
-msgid "Blend"
-msgstr "Toning"
-
-#: ../app/tools/gimpblendtool.c:157
-msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Toningsverktyg: Fyll markerat område med en färggradient"
-
-#: ../app/tools/gimpblendtool.c:158
-msgid "Blen_d"
-msgstr "Färgto_ning"
-
-#: ../app/tools/gimpblendtool.c:213
-msgid "Click-Drag to draw a gradient"
-msgstr "Klicka och dra för att rita en gradient"
-
-#: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:284
-#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:284
-#: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
-msgid "The active layer is not visible."
-msgstr "Det aktiva lagret är inte synligt."
-
-#: ../app/tools/gimpblendtool.c:264
-msgid "No gradient available for use with this tool."
-msgstr "Ingen gradient tillgänglig för detta verktyg."
-
-#: ../app/tools/gimpblendtool.c:614
-msgid "Blend: "
-msgstr "Toning: "
-
-#: ../app/tools/gimpblendtool.c:1016
-msgctxt "undo-type"
-msgid "Blend"
-msgstr "Toning"
-
-#. the position labels
-#: ../app/tools/gimpblendtool-editor.c:1283
-msgid "X:"
-msgstr "X:"
-
-#: ../app/tools/gimpblendtool-editor.c:1289
-msgid "Y:"
-msgstr "Y:"
-
-#. the color label
-#: ../app/tools/gimpblendtool-editor.c:1342 ../app/tools/gimptextoptions.c:583
-msgid "Color:"
-msgstr "Färg:"
-
-#: ../app/tools/gimpblendtool-editor.c:1350
-msgid "Change Endpoint Color"
-msgstr "Ändra ändpunktens färg"
-
-#. the position label
-#: ../app/tools/gimpblendtool-editor.c:1388
-#: ../app/tools/gimpblendtool-editor.c:1508
-#: ../app/tools/gimprectangleoptions.c:1031
-msgid "Position:"
-msgstr "Position:"
-
-#. the color labels
-#: ../app/tools/gimpblendtool-editor.c:1413
-msgid "Left color:"
-msgstr "Vänsterfärg:"
-
-#: ../app/tools/gimpblendtool-editor.c:1419
-msgid "Right color:"
-msgstr "Högerfärg:"
-
-#: ../app/tools/gimpblendtool-editor.c:1446
-#: ../app/tools/gimpblendtool-editor.c:1455
-msgid "Change Stop Color"
-msgstr "Ändra stegfärg"
-
-#: ../app/tools/gimpblendtool-editor.c:1477
-msgid "Delete stop"
-msgstr "Ta bort steg"
-
-#. the type label
-#: ../app/tools/gimpblendtool-editor.c:1533
-msgid "Blending:"
-msgstr "Toning:"
-
-#. the color label
-#: ../app/tools/gimpblendtool-editor.c:1555
-msgid "Coloring:"
-msgstr "Färgning:"
-
-#: ../app/tools/gimpblendtool-editor.c:1589
-msgid "New stop at midpoint"
-msgstr "Nytt steg vid mittpunkt"
-
-#: ../app/tools/gimpblendtool-editor.c:1597
-msgid "Center midpoint"
-msgstr "Centrumpunkt"
-
-#: ../app/tools/gimpblendtool-editor.c:1660
-msgid "Start Endpoint"
-msgstr "Startpunkt"
-
-#: ../app/tools/gimpblendtool-editor.c:1668
-msgid "End Endpoint"
-msgstr "Slutpunkt"
-
-#: ../app/tools/gimpblendtool-editor.c:1721
-#, c-format
-msgid "Stop %d"
-msgstr "Steg %d"
-
-#: ../app/tools/gimpblendtool-editor.c:1789
-#, c-format
-msgid "Midpoint %d"
-msgstr "Mittpunkt %d"
-
-#: ../app/tools/gimpblendtool-editor.c:2367
-#: ../app/tools/gimpblendtool-editor.c:2376
-msgid "Blend Step"
-msgstr "Toningssteg"
-
 #: ../app/tools/gimpbrightnesscontrasttool.c:97
 msgid "Brightness-Contrast"
 msgstr "Ljusstyrka-Kontrast"
@@ -20512,6 +20357,13 @@ msgstr ""
 "Grundfyllnadsopacitet vid färgdifferens från den klickade bildpunkten (se "
 "tröskel). Inaktivera kantutjämning för att fylla hela området jämnt."
 
+#: ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpgradientoptions.c:129
+#: ../app/tools/gimpregionselectoptions.c:112
+#: ../app/tools/gimpthresholdtool.c:87
+msgid "Threshold"
+msgstr "Tröskelvärde"
+
 #: ../app/tools/gimpbucketfilloptions.c:143
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
@@ -20561,6 +20413,14 @@ msgstr "Fyllnadsverktyg: Fyll markerat område med en färg eller mönster"
 #: ../app/tools/gimpbucketfilltool.c:89
 msgid "_Bucket Fill"
 msgstr "_Fyll"
+
+#: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
+#: ../app/tools/gimpfiltertool.c:284
+#: ../app/tools/gimpforegroundselecttool.c:288
+#: ../app/tools/gimpgradienttool.c:257 ../app/tools/gimppainttool.c:284
+#: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
+msgid "The active layer is not visible."
+msgstr "Det aktiva lagret är inte synligt."
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -21290,6 +21150,166 @@ msgstr "Transformationsmatris"
 #: ../app/tools/gimpgenerictransformtool.c:114
 msgid "Invalid transform"
 msgstr "Ogiltig transform"
+
+#: ../app/tools/gimpgradientoptions.c:102
+#: ../app/tools/gimpgradientoptions.c:314
+msgid "Metric"
+msgstr "Måttenhet"
+
+#: ../app/tools/gimpgradientoptions.c:103
+msgid "Metric to use for the distance calculation"
+msgstr "Måttenhet att använda för avståndsberäkning"
+
+#: ../app/tools/gimpgradientoptions.c:117
+msgid "Adaptive Supersampling"
+msgstr "Adaptiv supersampling"
+
+#: ../app/tools/gimpgradientoptions.c:123
+msgid "Max depth"
+msgstr "Max djup"
+
+#: ../app/tools/gimpgradientoptions.c:143
+msgid "Instant mode"
+msgstr "Direktläge"
+
+#: ../app/tools/gimpgradientoptions.c:144
+msgid "Commit gradient instantly"
+msgstr "Bekräfta gradient omedelbart"
+
+#: ../app/tools/gimpgradientoptions.c:150
+msgid "Modify active gradient"
+msgstr "Modifiera aktiv gradient"
+
+#: ../app/tools/gimpgradientoptions.c:151
+msgid "Modify the active gradient in-place"
+msgstr "Modifiera den aktiva gradienten på plats"
+
+#: ../app/tools/gimpgradientoptions.c:290
+#: ../app/tools/gimppaintoptions-gui.c:384
+msgid "Edit this gradient"
+msgstr "Redigera denna gradient"
+
+#. the instant toggle
+#: ../app/tools/gimpgradientoptions.c:367
+#, c-format
+msgid "Instant mode  (%s)"
+msgstr "Direktläge  (%s)"
+
+#: ../app/tools/gimpgradientoptions.c:387
+msgid ""
+"The active gradient is non-writable and cannot be edited directly. Uncheck "
+"this option to edit a copy of it."
+msgstr ""
+"Den aktiva gradienten är inte skrivbar och kan inte redigeras direkt. Kryssa "
+"ur detta alternativ för att redigera en kopia av den."
+
+#: ../app/tools/gimpgradienttool.c:157
+msgid "Gradient Tool: Fill selected area with a color gradient"
+msgstr "Gradientverktyg: Fyll markerat område med en färggradient"
+
+#: ../app/tools/gimpgradienttool.c:158
+#| msgid "Gradient"
+msgid "Gra_dient"
+msgstr "Gra_dient"
+
+#: ../app/tools/gimpgradienttool.c:213
+msgid "Click-Drag to draw a gradient"
+msgstr "Klicka och dra för att rita en gradient"
+
+#: ../app/tools/gimpgradienttool.c:264
+msgid "No gradient available for use with this tool."
+msgstr "Ingen gradient tillgänglig för detta verktyg."
+
+#: ../app/tools/gimpgradienttool.c:614
+#| msgid "Gradient"
+msgid "Gradient: "
+msgstr "Gradient: "
+
+#. the position labels
+#: ../app/tools/gimpgradienttool-editor.c:1283
+msgid "X:"
+msgstr "X:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1289
+msgid "Y:"
+msgstr "Y:"
+
+#. the color label
+#: ../app/tools/gimpgradienttool-editor.c:1342
+#: ../app/tools/gimptextoptions.c:583
+msgid "Color:"
+msgstr "Färg:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1350
+msgid "Change Endpoint Color"
+msgstr "Ändra ändpunktens färg"
+
+#. the position label
+#: ../app/tools/gimpgradienttool-editor.c:1388
+#: ../app/tools/gimpgradienttool-editor.c:1508
+#: ../app/tools/gimprectangleoptions.c:1031
+msgid "Position:"
+msgstr "Position:"
+
+#. the color labels
+#: ../app/tools/gimpgradienttool-editor.c:1413
+msgid "Left color:"
+msgstr "Vänsterfärg:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1419
+msgid "Right color:"
+msgstr "Högerfärg:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1446
+#: ../app/tools/gimpgradienttool-editor.c:1455
+msgid "Change Stop Color"
+msgstr "Ändra stegfärg"
+
+#: ../app/tools/gimpgradienttool-editor.c:1477
+msgid "Delete stop"
+msgstr "Ta bort steg"
+
+#. the type label
+#: ../app/tools/gimpgradienttool-editor.c:1533
+msgid "Blending:"
+msgstr "Toning:"
+
+#. the color label
+#: ../app/tools/gimpgradienttool-editor.c:1555
+msgid "Coloring:"
+msgstr "Färgning:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1589
+msgid "New stop at midpoint"
+msgstr "Nytt steg vid mittpunkt"
+
+#: ../app/tools/gimpgradienttool-editor.c:1597
+msgid "Center midpoint"
+msgstr "Centrumpunkt"
+
+#: ../app/tools/gimpgradienttool-editor.c:1660
+msgid "Start Endpoint"
+msgstr "Startpunkt"
+
+#: ../app/tools/gimpgradienttool-editor.c:1668
+msgid "End Endpoint"
+msgstr "Slutpunkt"
+
+#: ../app/tools/gimpgradienttool-editor.c:1721
+#, c-format
+msgid "Stop %d"
+msgstr "Steg %d"
+
+#: ../app/tools/gimpgradienttool-editor.c:1789
+#, c-format
+msgid "Midpoint %d"
+msgstr "Mittpunkt %d"
+
+#: ../app/tools/gimpgradienttool-editor.c:2366
+#: ../app/tools/gimpgradienttool-editor.c:2375
+#| msgid "Gradient"
+msgid "Gradient Step"
+msgstr "Gradientsteg"
 
 #: ../app/tools/gimpguidetool.c:274
 msgid "Remove Guide"
@@ -23086,8 +23106,6 @@ msgstr "Y:"
 # sebras: blir det bättre med "finns ej"?
 #. TRANSLATORS: n/a for Not Available.
 #: ../app/widgets/gimpcolorframe.c:674 ../app/widgets/gimpcolorframe.c:676
-#, fuzzy
-#| msgid "n/a"
 msgctxt "Coordinates"
 msgid "n/a"
 msgstr "-"
@@ -23816,11 +23834,11 @@ msgstr "Total mängd tid som CPU:n har varit aktiv"
 #: ../app/widgets/gimpdashboard.c:473
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr ""
+msgstr "Mipmappad"
 
 #: ../app/widgets/gimpdashboard.c:474
 msgid "Total size of processed mipmapped data"
-msgstr ""
+msgstr "Total storlek för bearbetad mipmappad data"
 
 #: ../app/widgets/gimpdashboard.c:486
 msgctxt "dashboard-group"
@@ -24494,7 +24512,7 @@ msgstr "Identifiera automatiskt"
 
 #: ../app/widgets/gimpoverlaydialog.c:229
 msgid "Detach dialog from canvas"
-msgstr "Koppla loss dialog från duk"
+msgstr "Koppla loss dialog från rityta"
 
 #: ../app/widgets/gimppaletteeditor.c:243
 #: ../app/widgets/gimppaletteeditor.c:720
@@ -25266,6 +25284,22 @@ msgstr "rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "luddig"
+
+#~ msgid "Blend"
+#~ msgstr "Toning"
+
+#~ msgid "Blen_d"
+#~ msgstr "Färgto_ning"
+
+#~ msgid "Blend: "
+#~ msgstr "Toning: "
+
+#~ msgctxt "undo-type"
+#~ msgid "Blend"
+#~ msgstr "Toning"
+
+#~ msgid "Blend Step"
+#~ msgstr "Toningssteg"
 
 #~ msgid "Try generating debug data for bug reporting when appropriate"
 #~ msgstr "Försök generera felsökningsdata för felrapportering när lämpligt"
