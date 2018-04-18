@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-14 20:02+0000\n"
-"PO-Revision-Date: 2018-04-18 10:43+0200\n"
+"POT-Creation-Date: 2018-04-18 18:51+0000\n"
+"PO-Revision-Date: 2018-04-18 22:31+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -10030,12 +10030,12 @@ msgstr "Verktygsikon"
 #: ../app/config/config-enums.c:87
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
-msgstr "Verktygsikon med korshår"
+msgstr "Verktygsikon med hårkors"
 
 #: ../app/config/config-enums.c:88
 msgctxt "cursor-mode"
 msgid "Crosshair only"
-msgstr "Endast korshår"
+msgstr "Endast hårkors"
 
 #: ../app/config/config-enums.c:116
 msgctxt "handedness"
@@ -12456,8 +12456,9 @@ msgid "Pattern"
 msgstr "Mönster"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/pdb/edit-cmds.c:797 ../app/tools/gimpgradientoptions.c:284
-#: ../app/tools/gimpgradienttool.c:156 ../app/tools/gimppaintoptions-gui.c:378
+#: ../app/pdb/drawable-edit-cmds.c:256 ../app/pdb/edit-cmds.c:805
+#: ../app/tools/gimpgradientoptions.c:284 ../app/tools/gimpgradienttool.c:156
+#: ../app/tools/gimppaintoptions-gui.c:378
 msgid "Gradient"
 msgstr "Färgskala"
 
@@ -12592,12 +12593,12 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rendera penseldrag"
 
-#: ../app/core/gimpdrawable-gradient.c:127 ../app/tools/gimpgradienttool.c:1016
+#: ../app/core/gimpdrawable-gradient.c:136 ../app/tools/gimpgradienttool.c:1039
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Toning"
 
-#: ../app/core/gimpdrawable-gradient.c:215
+#: ../app/core/gimpdrawable-gradient.c:224
 msgid "Calculating distance map"
 msgstr "Beräknar avståndskarta"
 
@@ -16896,8 +16897,9 @@ msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 
 #: ../app/display/gimpdisplayshell-dnd.c:368
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpfiltertool.c:277
-#: ../app/tools/gimpgradienttool.c:250 ../app/tools/gimppainttool.c:277
+#: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpeditselectiontool.c:1149
+#: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:250
+#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:277
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
 #: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
@@ -18342,7 +18344,7 @@ msgstr "Dokument"
 msgid "GIMP Startup"
 msgstr "Uppstart av GIMP"
 
-#: ../app/paint/gimpairbrush.c:68 ../app/tools/gimpairbrushtool.c:55
+#: ../app/paint/gimpairbrush.c:77 ../app/tools/gimpairbrushtool.c:67
 msgid "Airbrush"
 msgstr "Färgspruta"
 
@@ -20174,11 +20176,11 @@ msgstr ""
 "Det här verktyget\n"
 "har inga alternativ."
 
-#: ../app/tools/gimpairbrushtool.c:56
+#: ../app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "Färgspruteverktyg: Måla med en pensel, med variabelt tryck"
 
-#: ../app/tools/gimpairbrushtool.c:57
+#: ../app/tools/gimpairbrushtool.c:69
 msgid "_Airbrush"
 msgstr "_Färgspruta"
 
@@ -20806,9 +20808,41 @@ msgid "Move: "
 msgstr "Flytta: "
 
 #: ../app/tools/gimpeditselectiontool.c:879
-#: ../app/tools/gimpeditselectiontool.c:1138
+#: ../app/tools/gimpeditselectiontool.c:1202
 msgid "Move Floating Selection"
 msgstr "Flytta flytande markering"
+
+#: ../app/tools/gimpeditselectiontool.c:1110 ../app/tools/gimpmovetool.c:288
+msgid "The selection is empty."
+msgstr "Markeringen är tom."
+
+#: ../app/tools/gimpeditselectiontool.c:1122 ../app/tools/gimpmovetool.c:262
+msgid "There is no path to move."
+msgstr "Det finns ingen bana att flytta."
+
+#: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
+#: ../app/tools/gimptransformtool.c:1484
+msgid "The active path's position is locked."
+msgstr "Den aktiva banans position är låst."
+
+#: ../app/tools/gimpeditselectiontool.c:1137 ../app/tools/gimpmovetool.c:299
+msgid "There is no layer to move."
+msgstr "Det finns inget lager att flytta."
+
+#: ../app/tools/gimpeditselectiontool.c:1145
+#: ../app/tools/gimpeditselectiontool.c:1171
+#: ../app/tools/gimpeditselectiontool.c:1180 ../app/tools/gimpmovetool.c:306
+#: ../app/tools/gimpmovetool.c:324
+msgid "The active layer's position is locked."
+msgstr "Det aktiva lagrets position är låst."
+
+#: ../app/tools/gimpeditselectiontool.c:1158 ../app/tools/gimpmovetool.c:315
+msgid "The active channel's position is locked."
+msgstr "Den aktiva kanalens position är låst."
+
+#: ../app/tools/gimpeditselectiontool.c:1162 ../app/tools/gimpmovetool.c:317
+msgid "The active channel's pixels are locked."
+msgstr "Den aktiva kanalens bildpunkter är låsta."
 
 #: ../app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -21208,7 +21242,6 @@ msgid "Gradient Tool: Fill selected area with a color gradient"
 msgstr "Gradientverktyg: Fyll markerat område med en färggradient"
 
 #: ../app/tools/gimpgradienttool.c:158
-#| msgid "Gradient"
 msgid "Gra_dient"
 msgstr "Gra_dient"
 
@@ -21221,7 +21254,6 @@ msgid "No gradient available for use with this tool."
 msgstr "Ingen gradient tillgänglig för detta verktyg."
 
 #: ../app/tools/gimpgradienttool.c:614
-#| msgid "Gradient"
 msgid "Gradient: "
 msgstr "Gradient: "
 
@@ -21307,7 +21339,6 @@ msgstr "Mittpunkt %d"
 
 #: ../app/tools/gimpgradienttool-editor.c:2366
 #: ../app/tools/gimpgradienttool-editor.c:2375
-#| msgid "Gradient"
 msgid "Gradient Step"
 msgstr "Gradientsteg"
 
@@ -21647,30 +21678,6 @@ msgstr "Flyttningsverktyg: Flytta lager, markeringar och andra objekt"
 #: ../app/tools/gimpmovetool.c:114
 msgid "_Move"
 msgstr "_Flytta"
-
-#: ../app/tools/gimpmovetool.c:256
-msgid "There is no path to move."
-msgstr "Det finns ingen bana att flytta."
-
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1484
-msgid "The active path's position is locked."
-msgstr "Den aktiva banans position är låst."
-
-#: ../app/tools/gimpmovetool.c:288
-msgid "The selection is empty."
-msgstr "Markeringen är tom."
-
-#: ../app/tools/gimpmovetool.c:296
-msgid "There is no layer to move."
-msgstr "Det finns inget lager att flytta."
-
-#: ../app/tools/gimpmovetool.c:300 ../app/tools/gimpmovetool.c:326
-msgid "The active layer's position is locked."
-msgstr "Det aktiva lagrets position är låst."
-
-#: ../app/tools/gimpmovetool.c:313
-msgid "The active channel's position is locked."
-msgstr "Den aktiva kanalens position är låst."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
