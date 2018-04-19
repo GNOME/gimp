@@ -406,8 +406,6 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
   gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (widget),
                                       gimp_crop_tool_get_constraint (crop_tool));
 
-  gimp_crop_tool_update_option_defaults (crop_tool, TRUE);
-
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_crop_tool_rectangle_changed),
                     crop_tool);
