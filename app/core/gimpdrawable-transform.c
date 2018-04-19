@@ -303,7 +303,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
 
                   memcpy (temp,  left,  bpp);
                   memcpy (left,  right, bpp);
-                  memcpy (right, temp, bpp);
+                  memcpy (right, temp,  bpp);
 
                   left  += bpp;
                   right -= bpp;
