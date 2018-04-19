@@ -34,7 +34,7 @@
 #include "gimpdisplayshell.h"
 
 
-#define GIMP_SAMPLE_POINT_DRAW_SIZE 10
+#define GIMP_SAMPLE_POINT_DRAW_SIZE 14
 
 
 enum
@@ -245,10 +245,10 @@ gimp_canvas_sample_point_draw (GimpCanvasItem *item,
   layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas),
                                    "%d", private->index);
 
-  cairo_move_to (cr, x + 2.5, y + 2.5);
+  cairo_move_to (cr, x + 3, y + 3);
   pango_cairo_show_layout (cr, layout);
 
-  _gimp_canvas_item_fill (item, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
@@ -274,8 +274,8 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
 
   pango_layout_get_extents (layout, &ink, NULL);
 
-  x2 = MAX (x2, 2.5 + ink.width);
-  y2 = MAX (y2, 2.5 + ink.height);
+  x2 = MAX (x2, 3 + ink.width);
+  y2 = MAX (y2, 3 + ink.height);
 
   rectangle.x      = x1 - 1.5;
   rectangle.y      = y1 - 1.5;
@@ -293,6 +293,9 @@ gimp_canvas_sample_point_stroke (GimpCanvasItem *item,
 
   if (private->sample_point_style)
     {
+      gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
+      cairo_stroke_preserve (cr);
+
       gimp_canvas_set_sample_point_style (gimp_canvas_item_get_canvas (item), cr,
                                           gimp_canvas_item_get_highlight (item));
       cairo_stroke (cr);

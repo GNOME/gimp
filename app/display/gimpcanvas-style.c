@@ -36,7 +36,7 @@
 
 /* Styles for common and custom guides. */
 static const GimpRGB guide_normal_fg         = { 0.0, 0.0, 0.0, 1.0 };
-static const GimpRGB guide_normal_bg         = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB guide_normal_bg         = { 0.0, 0.8, 1.0, 1.0 };
 static const GimpRGB guide_active_fg         = { 0.0, 0.0, 0.0, 1.0 };
 static const GimpRGB guide_active_bg         = { 1.0, 0.0, 0.0, 1.0 };
 
@@ -56,7 +56,7 @@ static const GimpRGB guide_split_active_fg   = { 1.0, 0.0, 1.0, 1.0 };
 static const GimpRGB guide_split_active_bg   = { 1.0, 0.0, 0.0, 1.0 };
 
 /* Styles for other canvas items. */
-static const GimpRGB sample_point_normal = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB sample_point_normal = { 0.0, 0.8, 1.0, 1.0 };
 static const GimpRGB sample_point_active = { 1.0, 0.0, 0.0, 1.0 };
 
 static const GimpRGB layer_fg            = { 0.0, 0.0, 0.0, 1.0 };
