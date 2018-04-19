@@ -43,9 +43,6 @@
 #include "gimp-intl.h"
 
 
-#define N_POINTS 4
-
-
 enum
 {
   PROP_0,
@@ -124,10 +121,10 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
 static void
 gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
 {
-  gint content_spacing;
-  gint i;
-  gint row    = 0;
-  gint column = 0;
+  GtkWidget *scrolled_window;
+  GtkWidget *viewport;
+  GtkWidget *vbox;
+  gint       content_spacing;
 
   editor->sample_merged = TRUE;
 
@@ -135,40 +132,41 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
                         "content-spacing", &content_spacing,
                         NULL);
 
-  editor->table = gtk_table_new (2, 2, TRUE);
-  gtk_table_set_row_spacing (GTK_TABLE (editor->table), 0, content_spacing);
-  gtk_table_set_col_spacing (GTK_TABLE (editor->table), 0, content_spacing);
-  gtk_box_pack_start (GTK_BOX (editor), editor->table, FALSE, FALSE, 0);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_NONE);
+  gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 0);
+  gtk_widget_show (scrolled_window);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
+  gtk_widget_show (vbox);
+
+  editor->empty_icon = gtk_image_new_from_icon_name (GIMP_ICON_SAMPLE_POINT,
+                                                     GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->empty_icon, TRUE, TRUE, 0);
+  gtk_widget_show (editor->empty_icon);
+
+  editor->empty_label = gtk_label_new (_("This image\nhas no\nsample points"));
+  gtk_label_set_justify (GTK_LABEL (editor->empty_label), GTK_JUSTIFY_CENTER);
+  gimp_label_set_attributes (GTK_LABEL (editor->empty_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->empty_label, TRUE, TRUE, 0);
+
+  editor->table = gtk_table_new (1, 2, TRUE);
+  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
+  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->table, FALSE, FALSE, 0);
   gtk_widget_show (editor->table);
-
-  for (i = 0; i < N_POINTS; i++)
-    {
-      GtkWidget *frame;
-
-      frame = g_object_new (GIMP_TYPE_COLOR_FRAME,
-                            "mode",           GIMP_COLOR_FRAME_MODE_PIXEL,
-                            "has-number",     TRUE,
-                            "number",         i + 1,
-                            "has-color-area", TRUE,
-                            "has-coords",     TRUE,
-                            "sensitive",      FALSE,
-                            NULL);
-
-      gtk_table_attach (GTK_TABLE (editor->table), frame,
-                        column, column + 1, row, row + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-      gtk_widget_show (frame);
-
-      editor->color_frames[i] = frame;
-
-      column++;
-
-      if (column > 1)
-        {
-          column = 0;
-          row++;
-        }
-    }
 }
 
 static void
@@ -181,6 +179,8 @@ static void
 gimp_sample_point_editor_dispose (GObject *object)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
+
+  g_clear_pointer (&editor->color_frames, g_free);
 
   if (editor->dirty_idle_id)
     {
@@ -205,7 +205,8 @@ gimp_sample_point_editor_set_property (GObject      *object,
       gimp_sample_point_editor_set_sample_merged (editor,
                                                   g_value_get_boolean (value));
       break;
-   default:
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
@@ -224,7 +225,8 @@ gimp_sample_point_editor_get_property (GObject    *object,
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, editor->sample_merged);
       break;
-   default:
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
@@ -243,8 +245,8 @@ gimp_sample_point_editor_style_set (GtkWidget *widget,
                         "content-spacing", &content_spacing,
                         NULL);
 
-  gtk_table_set_row_spacing (GTK_TABLE (editor->table), 0, content_spacing);
-  gtk_table_set_col_spacing (GTK_TABLE (editor->table), 0, content_spacing);
+  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
+  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
 }
 
 static void
@@ -252,8 +254,6 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
                                     GimpImage       *image)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (image_editor);
-  GimpColorConfig       *config = NULL;
-  gint                   i;
 
   if (image_editor->image)
     {
@@ -289,15 +289,10 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect (gimp_image_get_projection (image), "update",
                         G_CALLBACK (gimp_sample_point_editor_proj_update),
                         editor);
-
-      config = image->gimp->config->color_management;
     }
 
-  for (i = 0; i < N_POINTS; i++)
-    {
-      gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (editor->color_frames[i]),
-                                         config);
-    }
+  gtk_widget_set_visible (editor->empty_icon,
+                          image_editor->image == NULL);
 
   gimp_sample_point_editor_points_changed (editor);
 }
@@ -327,12 +322,7 @@ gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
 
   if (editor->sample_merged != sample_merged)
     {
-      gint i;
-
       editor->sample_merged = sample_merged;
-
-      for (i = 0; i < N_POINTS; i++)
-        editor->dirty[i] = TRUE;
 
       gimp_sample_point_editor_dirty (editor, -1);
 
@@ -373,8 +363,7 @@ gimp_sample_point_editor_point_moved (GimpImage             *image,
 {
   gint i = g_list_index (gimp_image_get_sample_points (image), sample_point);
 
-  if (i < N_POINTS)
-    gimp_sample_point_editor_dirty (editor, i);
+  gimp_sample_point_editor_dirty (editor, i);
 }
 
 static void
@@ -394,7 +383,7 @@ gimp_sample_point_editor_proj_update (GimpImage             *image,
 
   sample_points = gimp_image_get_sample_points (image_editor->image);
 
-  n_points = MIN (N_POINTS, g_list_length (sample_points));
+  n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
 
   for (i = 0, list = sample_points;
        i < n_points;
@@ -425,21 +414,59 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
   if (image_editor->image)
     {
       sample_points = gimp_image_get_sample_points (image_editor->image);
-      n_points = MIN (N_POINTS, g_list_length (sample_points));
+      n_points = g_list_length (sample_points);
     }
 
-  for (i = 0; i < n_points; i++)
+  gtk_widget_set_visible (editor->empty_label,
+                          image_editor->image && n_points == 0);
+
+  if (n_points < editor->n_color_frames)
     {
-      gtk_widget_set_sensitive (editor->color_frames[i], TRUE);
-      editor->dirty[i] = TRUE;
+      for (i = n_points; i < editor->n_color_frames; i++)
+        {
+          gtk_widget_destroy (editor->color_frames[i]);
+        }
+
+      editor->color_frames = g_renew (GtkWidget *, editor->color_frames,
+                                      n_points);
+    }
+  else if (n_points > editor->n_color_frames)
+    {
+      GimpColorConfig *config;
+
+      config = image_editor->image->gimp->config->color_management;
+
+      editor->color_frames = g_renew (GtkWidget *, editor->color_frames,
+                                      n_points);
+
+      for (i = editor->n_color_frames; i < n_points; i++)
+        {
+          gint row    = i / 2;
+          gint column = i % 2;
+
+          editor->color_frames[i] =
+            g_object_new (GIMP_TYPE_COLOR_FRAME,
+                          "mode",           GIMP_COLOR_FRAME_MODE_PIXEL,
+                          "has-number",     TRUE,
+                          "number",         i + 1,
+                          "has-color-area", TRUE,
+                          "has-coords",     TRUE,
+                          NULL);
+
+          gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (editor->color_frames[i]),
+                                             config);
+
+          gtk_table_attach (GTK_TABLE (editor->table), editor->color_frames[i],
+                            column, column + 1, row, row + 1,
+                            GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+          gtk_widget_show (editor->color_frames[i]);
+
+          g_object_set_data (G_OBJECT (editor->color_frames[i]),
+                             "dirty", GINT_TO_POINTER (TRUE));
+        }
     }
 
-  for (i = n_points; i < N_POINTS; i++)
-    {
-      gtk_widget_set_sensitive (editor->color_frames[i], FALSE);
-      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (editor->color_frames[i]));
-      editor->dirty[i] = FALSE;
-    }
+  editor->n_color_frames = n_points;
 
   if (n_points > 0)
     gimp_sample_point_editor_dirty (editor, -1);
@@ -450,7 +477,18 @@ gimp_sample_point_editor_dirty (GimpSamplePointEditor *editor,
                                 gint                   index)
 {
   if (index >= 0)
-    editor->dirty[index] = TRUE;
+    {
+      g_object_set_data (G_OBJECT (editor->color_frames[index]),
+                         "dirty", GINT_TO_POINTER (TRUE));
+    }
+  else
+    {
+      gint i;
+
+      for (i = 0; i < editor->n_color_frames; i++)
+        g_object_set_data (G_OBJECT (editor->color_frames[i]),
+                           "dirty", GINT_TO_POINTER (TRUE));
+    }
 
   if (editor->dirty_idle_id)
     g_source_remove (editor->dirty_idle_id);
@@ -476,13 +514,14 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 
   sample_points = gimp_image_get_sample_points (image_editor->image);
 
-  n_points = MIN (N_POINTS, g_list_length (sample_points));
+  n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
 
   for (i = 0, list = sample_points;
        i < n_points;
        i++, list = g_list_next (list))
     {
-      if (editor->dirty[i])
+      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (editor->color_frames[i]),
+                                              "dirty")))
         {
           GimpSamplePoint *sample_point = list->data;
           GimpColorFrame  *color_frame;
@@ -492,7 +531,8 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           gint             x;
           gint             y;
 
-          editor->dirty[i] = FALSE;
+          g_object_set_data (G_OBJECT (editor->color_frames[i]),
+                             "dirty", GINT_TO_POINTER (TRUE));
 
           color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
 
