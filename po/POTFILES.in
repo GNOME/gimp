@@ -575,6 +575,7 @@ app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
+app/widgets/gimpsamplepointeditor.c
 app/widgets/gimpsavedialog.c
 app/widgets/gimpsearchpopup.c
 app/widgets/gimpselectiondata.c
