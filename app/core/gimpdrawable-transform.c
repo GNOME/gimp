@@ -154,15 +154,17 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
                                      gint                *new_offset_x,
                                      gint                *new_offset_y)
 {
-  const Babl    *format;
-  GeglBuffer    *new_buffer;
-  GeglRectangle  src_rect;
-  GeglRectangle  dest_rect;
-  gint           orig_x, orig_y;
-  gint           orig_width, orig_height;
-  gint           new_x, new_y;
-  gint           new_width, new_height;
-  gint           i;
+  const Babl         *format;
+  GeglBuffer         *new_buffer;
+  GeglBufferIterator *iter;
+  GeglRectangle       src_rect;
+  GeglRectangle       dest_rect;
+  gint                bpp;
+  gint                orig_x, orig_y;
+  gint                orig_width, orig_height;
+  gint                new_x, new_y;
+  gint                new_width, new_height;
+  gint                x, y;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -203,6 +205,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
     }
 
   format = gegl_buffer_get_format (orig_buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                 new_width, new_height),
@@ -262,51 +265,92 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
   if (new_width == 0 && new_height == 0)
     return new_buffer;
 
+  dest_rect.x      = new_x;
+  dest_rect.y      = new_y;
+  dest_rect.width  = new_width;
+  dest_rect.height = new_height;
+
+  iter = gegl_buffer_iterator_new (new_buffer, &dest_rect, 0, NULL,
+                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
   switch (flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      src_rect.x      = orig_x;
-      src_rect.y      = orig_y;
-      src_rect.width  = 1;
-      src_rect.height = orig_height;
-
-      dest_rect.x      = new_x + new_width - 1;
-      dest_rect.y      = new_y;
-      dest_rect.width  = 1;
-      dest_rect.height = new_height;
-
-      for (i = 0; i < orig_width; i++)
+      while (gegl_buffer_iterator_next (iter))
         {
-          src_rect.x  = i + orig_x;
-          dest_rect.x = new_x + new_width - i - 1;
+          gint stride = iter->roi[0].width * bpp;
 
-          gegl_buffer_copy (orig_buffer, &src_rect, GEGL_ABYSS_NONE,
-                            new_buffer, &dest_rect);
+          src_rect = iter->roi[0];
+
+          src_rect.x = (orig_x + orig_width)          -
+                       (iter->roi[0].x - dest_rect.x) -
+                       iter->roi[0].width;
+
+          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->data[0],
+                           stride, GEGL_ABYSS_NONE);
+
+          for (y = 0; y < iter->roi[0].height; y++)
+            {
+              guint8 *left  = iter->data[0];
+              guint8 *right = iter->data[0];
+
+              left  += y * stride;
+              right += y * stride + (iter->roi[0].width - 1) * bpp;
+
+              for (x = 0; x < iter->roi[0].width / 2; x++)
+                {
+                  guint8 temp[bpp];
+
+                  memcpy (temp,  left,  bpp);
+                  memcpy (left,  right, bpp);
+                  memcpy (right, temp, bpp);
+
+                  left  += bpp;
+                  right -= bpp;
+                }
+            }
         }
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      src_rect.x      = orig_x;
-      src_rect.y      = orig_y;
-      src_rect.width  = orig_width;
-      src_rect.height = 1;
-
-      dest_rect.x      = new_x;
-      dest_rect.y      = new_y + new_height - 1;
-      dest_rect.width  = new_width;
-      dest_rect.height = 1;
-
-      for (i = 0; i < orig_height; i++)
+      while (gegl_buffer_iterator_next (iter))
         {
-          src_rect.y  = i + orig_y;
-          dest_rect.y = new_y + new_height - i - 1;
+          gint stride = iter->roi[0].width * bpp;
 
-          gegl_buffer_copy (orig_buffer, &src_rect, GEGL_ABYSS_NONE,
-                            new_buffer, &dest_rect);
+          src_rect = iter->roi[0];
+
+          src_rect.y = (orig_y + orig_height)         -
+                       (iter->roi[0].y - dest_rect.y) -
+                       iter->roi[0].height;
+
+          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->data[0],
+                           stride, GEGL_ABYSS_NONE);
+
+          for (x = 0; x < iter->roi[0].width; x++)
+            {
+              guint8 *top    = iter->data[0];
+              guint8 *bottom = iter->data[0];
+
+              top    += x * bpp;
+              bottom += x * bpp + (iter->roi[0].height - 1) * stride;
+
+              for (y = 0; y < iter->roi[0].height / 2; y++)
+                {
+                  guint8 temp[bpp];
+
+                  memcpy (temp,   top,    bpp);
+                  memcpy (top,    bottom, bpp);
+                  memcpy (bottom, temp,   bpp);
+
+                  top    += stride;
+                  bottom -= stride;
+                }
+            }
         }
       break;
 
     case GIMP_ORIENTATION_UNKNOWN:
+      gegl_buffer_iterator_stop (iter);
       break;
     }
 
