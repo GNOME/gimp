@@ -277,15 +277,17 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
-libmypaint_brushes= dependency('mypaint-brushes-1.0',required: false)
 
 libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
 conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
 
 if libmypaint_brushes_bundled
+  libmypaint_brushes = dependency('', required: false)
   libmypaint_brushes_dir = join_paths(
-    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes')
-elif libmypaint_brushes.found()
+    '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
+  )
+else
+  libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
   libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
 endif
 conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
@@ -927,7 +929,7 @@ warning_cflags_common = [
   '-Wtype-limits',
 
   # You can uncomment this to debug with less warning outputs
-  # '-Wno-deprecated-declarations',
+  '-Wno-deprecated-declarations',
 
   '-Werror=implicit-function-declaration',
 ]
