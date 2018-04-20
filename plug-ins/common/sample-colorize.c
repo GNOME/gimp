@@ -97,10 +97,10 @@ typedef struct
   gint32 lvl_out_max;      /* 1 up to 255 */
 
   float  tol_col_err;      /* 0.0% up to 100.0%
-                            * this is used to findout colors of the same
+                            * this is used to find out colors of the same
                             * colortone, while analyzing sample colors,
                             * It does not make much sense for the user to adjust this
-                            * value. (I used a param file to findout a suitable value)
+                            * value. (I used a param file to find out a suitable value)
                             */
 } t_values;
 
@@ -175,7 +175,7 @@ typedef struct
  * Some globals
  */
 
-static t_samp_interface  g_di;  /* global dialog interface varables */
+static t_samp_interface  g_di;  /* global dialog interface variables */
 static t_values          g_values = { -1, -1, 1, 1, 0, 1, 0, 255, 1.0, 0, 255, 5.5 };
 static t_samp_table_elem g_lum_tab[256];
 static guchar            g_lvl_trans_tab[256];
@@ -555,7 +555,7 @@ smp_constrain (gint32   image_id,
   if (image_id < 0)
     return FALSE;
 
-  /* dont accept layers from indexed images */
+  /* don't accept layers from indexed images */
   if (gimp_drawable_is_indexed (drawable_id))
     return FALSE;
 
@@ -2756,7 +2756,7 @@ sample_analyze (t_GDRW *sample_gdrw)
   if (g_Sdebug)
     print_ppm ("sample_color_all.ppm");
 
-  /* findout ideal sample colors for each brightness intensity (lum)
+  /* find out ideal sample colors for each brightness intensity (lum)
    * and set g_sample_color_tab to the ideal colors.
    */
   ideal_samples ();

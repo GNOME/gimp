@@ -81,6 +81,8 @@ struct _GimpGradientEditor
   gdouble                 control_last_gx;      /* Last position (wrt gradient) when dragging */
   gdouble                 control_orig_pos;     /* Original click position when dragging */
 
+  GimpGradientBlendColorSpace  blend_color_space;
+
   /*  Split uniformly dialog  */
   gint          split_parts;
 

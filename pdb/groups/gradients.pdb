@@ -108,7 +108,9 @@ sub gradients_sample_uniform {
   while (num_samples--)
     {
       seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                        pos, reverse, &color);
+                                        pos, reverse,
+                                        GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                        &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -159,7 +161,9 @@ sub gradients_sample_custom {
   while (num_samples--)
     {
       seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                        *positions, reverse, &color);
+                                        *positions, reverse,
+                                        GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                        &color);
 
       *pv++ = color.r;
       *pv++ = color.g;
@@ -227,7 +231,9 @@ sub gradients_get_gradient_data {
       while (sample_size--)
 	{
 	  seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                            pos, reverse, &color);
+                                            pos, reverse,
+                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            &color);
 
 	  *pv++ = color.r;
 	  *pv++ = color.g;

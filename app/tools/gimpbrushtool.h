@@ -34,7 +34,16 @@ typedef struct _GimpBrushToolClass GimpBrushToolClass;
 
 struct _GimpBrushTool
 {
-  GimpPaintTool  parent_instance;
+  GimpPaintTool   parent_instance;
+
+  GimpBezierDesc *boundary;
+  gint            boundary_width;
+  gint            boundary_height;
+  gdouble         boundary_scale;
+  gdouble         boundary_aspect_ratio;
+  gdouble         boundary_angle;
+  gboolean        boundary_reflect;
+  gdouble         boundary_hardness;
 };
 
 struct _GimpBrushToolClass

@@ -78,7 +78,7 @@
           (gimp-image-insert-layer image effect-layer 0 -1)
           (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
           (gimp-selection-none image)
-          (gimp-edit-clear effect-layer)
+          (gimp-drawable-edit-clear effect-layer)
           (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
           (gimp-edit-copy drawable)
 
@@ -107,7 +107,7 @@
          (= separate-layer TRUE))
         (begin
           (gimp-image-select-color image CHANNEL-OP-REPLACE active-layer '(0 0 0))
-          (gimp-edit-clear active-layer)))
+          (gimp-drawable-edit-clear active-layer)))
 
     (if (= keep-selection FALSE)
         (gimp-selection-none image))

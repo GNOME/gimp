@@ -390,7 +390,7 @@ gimp_thumbnail_new (void)
  *
  * Sets the location of the image file associated with the #thumbnail.
  *
- * All informations stored in the #GimpThumbnail are reset.
+ * All information stored in the #GimpThumbnail is reset.
  **/
 void
 gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,

@@ -816,7 +816,7 @@ gimp_preview_invalidate (GimpPreview *preview)
  * @cursor:  a #GdkCursor or %NULL
  *
  * Sets the default mouse cursor for the preview.  Note that this will
- * be overriden by a %GDK_FLEUR if the preview has scrollbars, or by a
+ * be overridden by a %GDK_FLEUR if the preview has scrollbars, or by a
  * %GDK_WATCH when the preview is invalidated.
  *
  * Since: 2.2

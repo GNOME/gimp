@@ -58,7 +58,7 @@
  * Cause @handler to be run when @signum is delivered.  We
  * use sigaction(2) rather than signal(2) so that we can control the
  * signal handler's environment completely via @flags: some signal(2)
- * implementations differ in their sematics, so we need to nail down
+ * implementations differ in their semantics, so we need to nail down
  * exactly what we want. [austin 06.04.2000]
  *
  * Returns: A reference to the signal handling function which was

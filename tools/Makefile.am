@@ -61,7 +61,7 @@ invert-svg$(BUILD_EXEEXT): invert-svg.c
 #compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
 # Build tools which must be built for the host platform.
-all: invert-svg$(BUILD_EXEEXT)
+all-local: invert-svg$(BUILD_EXEEXT)
 
 DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
 endif

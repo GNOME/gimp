@@ -617,12 +617,26 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
     {
       if (tr_tool->preview)
         {
-          gboolean show_preview;
+          GimpDisplay *display;
+          GimpImage   *image;
+          GimpItem    *item;
+          gboolean     show_preview;
 
           show_preview = gimp_transform_options_show_preview (tr_options) &&
                          tr_tool->transform_valid;
 
           gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
+
+          display = tool->display;
+          image   = gimp_display_get_image (display);
+          item    = gimp_transform_tool_check_active_item (tr_tool, image, TRUE, NULL);
+          if (item)
+            {
+              if (show_preview)
+                gimp_transform_tool_hide_active_item (tr_tool, item);
+              else
+                gimp_transform_tool_show_active_item (tr_tool);
+            }
         }
     }
   else if (g_str_has_prefix (pspec->name, "constrain-") ||

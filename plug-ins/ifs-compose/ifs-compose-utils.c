@@ -626,7 +626,7 @@ aff_element_compute_click_boundary (AffElement *elem,
   cth = cos (theta);
 
   /* compute the minimum rectangle at angle theta that bounds the points,
-     1/2 side lenghs left in axis1, axis2, center in xc, yc */
+     1/2 side lengths left in axis1, axis2, center in xc, yc */
 
   axis1max = axis1min = 0.0;
   axis2max = axis2min = 0.0;

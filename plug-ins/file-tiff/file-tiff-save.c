@@ -718,7 +718,7 @@ save_image (GFile        *file,
 #endif
   }
 
-  /* The TIFF spec explicitely says ASCII for the image description. */
+  /* The TIFF spec explicitly says ASCII for the image description. */
   if (image_comment)
     {
       const gchar *c = image_comment;

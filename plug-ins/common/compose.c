@@ -80,7 +80,7 @@ typedef struct
   const gchar         *babl_model;
   const gchar         *compose_type;  /*  Type of composition ("RGB", "RGBA",...)  */
   gint                 num_images;    /*  Number of input images needed            */
-                                      /*  Channel informations                     */
+                                      /*  Channel information                     */
   const COMPONENT_DSC  components[MAX_COMPOSE_IMAGES];
   const gchar         *filename;      /*  Name of new image                        */
 

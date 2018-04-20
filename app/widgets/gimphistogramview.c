@@ -316,7 +316,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the outer border  */
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
   cairo_rectangle (cr, border, border,
                    width - 1, height - 1);
   cairo_stroke (cr);
@@ -373,7 +373,7 @@ gimp_histogram_view_expose (GtkWidget      *widget,
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
-          gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+          gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
 
           cairo_move_to (cr, x + border, border);
           cairo_line_to (cr, x + border, border + height - 1);

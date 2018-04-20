@@ -167,10 +167,10 @@ sub yosh_pdb_misc {
 
 sub std_pdb_deprecated {
     if (@_) {
-        $blurb = $help = "Deprecated: Use '@_' instead.";
+        $blurb = $help = '';
         $deprecated = "@_";
     } else {
-        $blurb = $help = "Deprecated: There is no replacement for this procedure.";
+        $blurb = $help = '';
         $deprecated = "NONE";
     }
     $author = $copyright = $date = '';

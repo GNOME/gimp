@@ -90,7 +90,7 @@ portable to different operating systems.
         Returns the current local time, as a list of integer
         containing:
           (year month day-of-month hour min sec millisec)
-        The year is expressed as an offsett from 1900.
+        The year is expressed as an offset from 1900.
 
 (gettimeofday)
         Returns a list containing the number of seconds from

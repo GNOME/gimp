@@ -1,18 +1,17 @@
-# translation of gimp.po to Russian
+# Translation of GIMP to Russian
 # Copyright (C) 1999-2002,2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 #
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
-# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009, 2010, 2011, 2012.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2015, 2016, 2017, 2018.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2018, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.10rc1\n"
+"Project-Id-Version: GIMP 2.10rc2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-10 21:18+0300\n"
-"PO-Revision-Date: 2018-04-11 01:00+0300\n"
+"POT-Creation-Date: 2018-04-15 03:10+0300\n"
+"PO-Revision-Date: 2018-04-15 17:34+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -143,50 +142,97 @@ msgstr "И многое, многое другое…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
+"In this second release candidate before GIMP 2.10.0, while debugging is "
+"still a prime target, a new focus has been put on speed and optimization in "
+"order to provide a smoother painting experience. Bigger changes are:"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+msgid ""
+"Major core optimizations for painting and display, including parallelized "
+"painting code."
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+msgid ""
+"\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
+"usability issues. \"Lighter\" and \"Darker\" themes removed."
+msgstr ""
+"Светлая и темная темы переписаны с нуля и теперь не содержат прежних проблем"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+msgid ""
+"New GimpToolGyroscope on-canvas control, currently used for the Panorama "
+"Projection filter. The widget provides on-canvas interaction for 3D rotation "
+"(yaw, pitch, roll)."
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+msgid ""
+"Plug-in debugging improved to output stack traces from plug-ins with --stack-"
+"trace-mode command line option not only on receiving signals but also on "
+"warnings and critical errors when \"fatal-warnings\" debug key is set."
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#, fuzzy
+msgid ""
+"For more information, see https://www.gimp.org/news/2018/04/14/gimp-2-10-rc2-"
+"released/"
+msgstr ""
+"Подробности читайте здесь: https://www.gimp.org/news/2018/03/23/gimp-2-10-"
+"rc1-released/"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Новая панель GIMP, показывающая расход системных ресурсов"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 "Несохраненные изображения теперь могут быть восстановлены после падения"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Layer masks on layer groups"
 msgstr "Маски на группах слоев"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Улучшено чтение JPEG2000: поддерживается более высокая разрядность и разные "
 "цветовые пространства"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Улучшено создание снимков экрана и снятие цвета пипеткой на разных платформах"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Metadata defaults preferences now available"
 msgstr "Появился выбор, сохранять или не сохранять по умолчанию метаданные"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Various GUI polishing"
 msgstr "Различные улучшения в пользовательском интерфейсе"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-"
 "released/"
@@ -194,7 +240,7 @@ msgstr ""
 "Подробности читайте здесь: https://www.gimp.org/news/2018/03/23/gimp-2-10-"
 "rc1-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -202,53 +248,53 @@ msgstr ""
 "В GIMP 2.9.8 появилось редактирование градиентов на холсте, а также внесены "
 "различные улучшения. Однако в основном разработчики все же исправляли ошибки."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "On-canvas gradient editing"
 msgstr "Редактирование градиентов на холсте"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Notification when an image is over/underexposed"
 msgstr "Уведомление о пере- и недоэкспонированности изображения"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Better and faster color management"
 msgstr "Ускоренное и улучшенное управление цветом"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Поддержка цветовой пипетки и снятия скриншотов в Wayland на KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Paste in place feature"
 msgstr "Вставка на место"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Many usability improvements"
 msgstr "Улучшения в юзабилити"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Manual can be displayed in the user's preferred language"
 msgstr ""
 "Руководство пользователя может быть показано на языке, выбранном "
 "пользователем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Улучшения в фильтре частотного разбора"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Улучшенная поддержка файлов Adobe Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "New support for password-protected PDF"
 msgstr "Поддержка файлов PDF, закрытых на пароль"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Поддержка формата HGT (данные Digital Elevation Model)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -2634,7 +2680,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1971
-#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:211
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -3337,7 +3383,7 @@ msgstr "Забыть открывавшиеся документы"
 #: ../app/actions/error-console-commands.c:96
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:478
-#: ../app/actions/gradient-editor-commands.c:580
+#: ../app/actions/gradient-editor-commands.c:581
 #: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:180
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
@@ -3378,7 +3424,7 @@ msgstr "Забыть открывавшиеся документы"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
 #: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1591
-#: ../app/tools/gimptransformtool.c:1201 ../app/widgets/gimpactionview.c:669
+#: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
@@ -5422,27 +5468,27 @@ msgstr ""
 "Выбор числа создаваемых\n"
 "копий выделения."
 
-#: ../app/actions/gradient-editor-commands.c:562
+#: ../app/actions/gradient-editor-commands.c:563
 msgid "Split Segment Uniformly"
 msgstr "Равномерно разделить сегмент"
 
-#: ../app/actions/gradient-editor-commands.c:563
+#: ../app/actions/gradient-editor-commands.c:564
 msgid "Split Gradient Segment Uniformly"
 msgstr "Равномерно разделить сегмент градиента"
 
-#: ../app/actions/gradient-editor-commands.c:567
+#: ../app/actions/gradient-editor-commands.c:568
 msgid "Split Segments Uniformly"
 msgstr "Равномерно разделить сегменты"
 
-#: ../app/actions/gradient-editor-commands.c:568
+#: ../app/actions/gradient-editor-commands.c:569
 msgid "Split Gradient Segments Uniformly"
 msgstr "Равномерно разделить сегменты градиента"
 
-#: ../app/actions/gradient-editor-commands.c:581
+#: ../app/actions/gradient-editor-commands.c:582
 msgid "_Split"
 msgstr "_Разделить"
 
-#: ../app/actions/gradient-editor-commands.c:603
+#: ../app/actions/gradient-editor-commands.c:604
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -5450,7 +5496,7 @@ msgstr ""
 "Выберите число равных частей  \n"
 "на которые надо разделить сегмент"
 
-#: ../app/actions/gradient-editor-commands.c:606
+#: ../app/actions/gradient-editor-commands.c:607
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -7366,7 +7412,7 @@ msgstr "Сбросить параметров фильтров"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1200
+#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1214
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "С_бросить"
@@ -7794,7 +7840,7 @@ msgstr "_Открыть"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:510 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:512 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:233
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1674
@@ -12043,7 +12089,7 @@ msgstr ""
 "Неисправимая ошибка разбора файла кисти: повреждены данные кисти, сжатой "
 "методом RLE."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:213
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:215
 msgid "Brush Spacing"
 msgstr "Интервал кисти"
 
@@ -12087,15 +12133,15 @@ msgstr "Радиус кисти"
 msgid "Brush Spikes"
 msgstr "Лучи кисти"
 
-#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:220
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:222
 msgid "Brush Hardness"
 msgstr "Жесткость кисти"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:199
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:201
 msgid "Brush Aspect Ratio"
 msgstr "Соотношение сторон кисти"
 
-#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:206
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:208
 msgid "Brush Angle"
 msgstr "Угол кисти"
 
@@ -12336,7 +12382,8 @@ msgid "Pattern"
 msgstr "Текстура"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:283 ../app/tools/gimppaintoptions-gui.c:374
+#: ../app/pdb/edit-cmds.c:797 ../app/tools/gimpgradientoptions.c:284
+#: ../app/tools/gimpgradienttool.c:156 ../app/tools/gimppaintoptions-gui.c:378
 msgid "Gradient"
 msgstr "Градиент"
 
@@ -12438,15 +12485,6 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштабирование"
 
-#: ../app/core/gimpdrawable-blend.c:125 ../app/tools/gimpblendtool.c:1015
-msgctxt "undo-type"
-msgid "Blend"
-msgstr "Градиентная заливка"
-
-#: ../app/core/gimpdrawable-blend.c:213
-msgid "Calculating distance map"
-msgstr "Рассчитывается карта расстояний"
-
 #: ../app/core/gimpdrawable-bucket-fill.c:180
 msgctxt "undo-type"
 msgid "Bucket Fill"
@@ -12473,6 +12511,16 @@ msgstr "Недостаточно точек для заливки"
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Отрисовка обводки"
+
+#: ../app/core/gimpdrawable-gradient.c:127 ../app/tools/gimpgradienttool.c:1016
+#, fuzzy
+msgctxt "undo-type"
+msgid "Gradient"
+msgstr "Градиент"
+
+#: ../app/core/gimpdrawable-gradient.c:215
+msgid "Calculating distance map"
+msgstr "Рассчитывается карта расстояний"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
@@ -12921,7 +12969,7 @@ msgstr "Преобразовать изображение в индексиро�
 #: ../app/core/gimpimage-convert-precision.c:288
 #: ../app/dialogs/convert-indexed-dialog.c:236
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpblendoptions.c:135
+#: ../app/tools/gimpgradientoptions.c:136
 msgid "Dithering"
 msgstr "Подмешивание шума"
 
@@ -13337,17 +13385,17 @@ msgstr "Применить сохранённую кисть"
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
-#: ../app/core/gimppalette-import.c:210
+#: ../app/core/gimppalette-import.c:212
 #, c-format
 msgid "%s (occurs %u)"
 msgstr "%s (встречается %u раз)"
 
-#: ../app/core/gimppalette-import.c:423
+#: ../app/core/gimppalette-import.c:425
 #, c-format
 msgid "Index %d"
 msgstr "Индекс %d"
 
-#: ../app/core/gimppalette-import.c:545
+#: ../app/core/gimppalette-import.c:547
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Неизвестный тип файла палитры: %s"
@@ -14417,9 +14465,9 @@ msgstr "Свойства изображения"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1851
-#: ../app/tools/gimpcolorpickertool.c:349 ../app/tools/gimpmeasuretool.c:651
-#: ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
+#: ../app/tools/gimpgradienttool-editor.c:1854
+#: ../app/tools/gimpmeasuretool.c:651 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
@@ -14700,7 +14748,7 @@ msgstr "Смещение канала"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:88
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:89
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Смещение"
@@ -16382,7 +16430,7 @@ msgstr "Вертикальная:"
 msgid "Image Size"
 msgstr "Размер изображения"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:403
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:412
 msgid "Quality"
 msgstr "Качество"
 
@@ -16769,17 +16817,19 @@ msgstr "Новый слой извне"
 msgid "Drop New Path"
 msgstr "Новый контур извне"
 
-#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:243
+#: ../app/display/gimpdisplayshell-dnd.c:360
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpgradienttool.c:243
+#: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Невозможно изменять точки растра группы слоёв"
 
-#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:250
+#: ../app/display/gimpdisplayshell-dnd.c:368
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:462 ../app/tools/gimpfiltertool.c:277
-#: ../app/tools/gimppainttool.c:277 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1435 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimpgradienttool.c:250 ../app/tools/gimppainttool.c:277
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
+#: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
@@ -16918,41 +16968,41 @@ msgstr "Нажмите и потащите, чтобы переместить т
 msgid "Click-Drag to move all points"
 msgstr "Щёлкните и потащите, чтобы переместить все точки"
 
-#: ../app/display/gimptoolgyroscope.c:691
+#: ../app/display/gimptoolgyroscope.c:702
 msgid "Click-Drag to zoom"
 msgstr "Щёлкните и потащите, чтобы приблизить или удалить"
 
-#: ../app/display/gimptoolgyroscope.c:695
+#: ../app/display/gimptoolgyroscope.c:706
 #, c-format
 msgid "%s for constrained steps"
 msgstr "%s для ограничения шага"
 
-#: ../app/display/gimptoolgyroscope.c:702
+#: ../app/display/gimptoolgyroscope.c:713
 #: ../app/display/gimptooltransformgrid.c:1782
 msgid "Click-Drag to rotate"
 msgstr "Щёлкните и потащите, чтобы вращать"
 
-#: ../app/display/gimptoolgyroscope.c:706 ../app/display/gimptoolline.c:1490
+#: ../app/display/gimptoolgyroscope.c:717 ../app/display/gimptoolline.c:1490
 #: ../app/tools/gimppainttool.c:569
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для ограничения шага угла"
 
-#: ../app/display/gimptoolgyroscope.c:711
+#: ../app/display/gimptoolgyroscope.c:722
 msgid "Click-Drag to pan"
 msgstr "Щёлкните и потащите, чтобы панорамировать"
 
-#: ../app/display/gimptoolgyroscope.c:717
+#: ../app/display/gimptoolgyroscope.c:728
 #, c-format
 msgid "%s to rotate"
 msgstr "%s для вращения"
 
-#: ../app/display/gimptoolgyroscope.c:718
+#: ../app/display/gimptoolgyroscope.c:729
 #, c-format
 msgid "%s for a constrained axis"
 msgstr "%s для ограничения шага угла"
 
-#: ../app/display/gimptoolgyroscope.c:719
+#: ../app/display/gimptoolgyroscope.c:730
 #, c-format
 msgid "%s to zoom"
 msgstr "%s для масштабирования"
@@ -18311,7 +18361,7 @@ msgid "Ink"
 msgstr "Перо"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:191 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:193 ../app/tools/gimpwarpoptions.c:91
 msgid "Size"
 msgstr "Размер"
 
@@ -18320,7 +18370,7 @@ msgid "Ink Blob Size"
 msgstr "Размер капли Пера"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:205 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:207 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Угол"
 
@@ -18330,8 +18380,8 @@ msgid "Tilt"
 msgstr "Наклон"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:94
-#: ../app/tools/gimpblendoptions.c:294 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:95
+#: ../app/tools/gimpgradientoptions.c:305 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Форма"
 
@@ -18365,7 +18415,7 @@ msgstr "Радиус"
 msgid "Base Opacity"
 msgstr "Базовая непрозрачность"
 
-#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:219
+#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:221
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Жёсткость"
@@ -18390,154 +18440,164 @@ msgstr "Кисть"
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/paint/gimppaintoptions.c:192
+#: ../app/paint/gimppaintoptions.c:194
 msgid "Brush Size"
 msgstr "Размер кисти"
 
-#: ../app/paint/gimppaintoptions.c:198
+#: ../app/paint/gimppaintoptions.c:200
 msgid "Aspect Ratio"
 msgstr "Соотношение сторон"
 
-#: ../app/paint/gimppaintoptions.c:212 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:214 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Интервал"
 
-#: ../app/paint/gimppaintoptions.c:226
+#: ../app/paint/gimppaintoptions.c:228
 msgid "Force"
 msgstr "Сила"
 
-#: ../app/paint/gimppaintoptions.c:227
+#: ../app/paint/gimppaintoptions.c:229
 msgid "Brush Force"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:233
+#: ../app/paint/gimppaintoptions.c:235
 msgid "Link Size"
 msgstr "Связать размер"
 
-#: ../app/paint/gimppaintoptions.c:234
+#: ../app/paint/gimppaintoptions.c:236
 msgid "Link brush size to brush native"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:240
+#: ../app/paint/gimppaintoptions.c:242
 msgid "Link Aspect Ratio"
 msgstr "Связать соотношение сторон"
 
-#: ../app/paint/gimppaintoptions.c:241
+#: ../app/paint/gimppaintoptions.c:243
 msgid "Link brush aspect ratio to brush native"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:247
+#: ../app/paint/gimppaintoptions.c:249
 msgid "Link Angle"
 msgstr "Связать угол"
 
-#: ../app/paint/gimppaintoptions.c:248
+#: ../app/paint/gimppaintoptions.c:250
 msgid "Link brush angle to brush native"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:254
+#: ../app/paint/gimppaintoptions.c:256
 msgid "Link Spacing"
 msgstr "Связать интервал"
 
-#: ../app/paint/gimppaintoptions.c:255
+#: ../app/paint/gimppaintoptions.c:257
 msgid "Link brush spacing to brush native"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:261
+#: ../app/paint/gimppaintoptions.c:263
 msgid "Link Hardness"
 msgstr "Связать жёсткость"
 
-#: ../app/paint/gimppaintoptions.c:262
+#: ../app/paint/gimppaintoptions.c:264
 msgid "Link brush hardness to brush native"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:270
 msgid "Lock brush to view"
 msgstr "Привязать кисть к виду"
 
-#: ../app/paint/gimppaintoptions.c:269
+#: ../app/paint/gimppaintoptions.c:271
 msgid "Keep brush appearance fixed relative to the view"
 msgstr "Привязать размер и поворот кисти к виду холста"
 
-#: ../app/paint/gimppaintoptions.c:275
+#: ../app/paint/gimppaintoptions.c:277
 msgid "Incremental"
 msgstr "Накапливать непрозрачность"
 
-#: ../app/paint/gimppaintoptions.c:276
+#: ../app/paint/gimppaintoptions.c:278
 msgid "Every stamp has its own opacity"
 msgstr "У каждого «штампа» кистью может быть своя или общая непрозрачность"
 
-#: ../app/paint/gimppaintoptions.c:283
+#: ../app/paint/gimppaintoptions.c:285
 msgid "Hard edge"
 msgstr "Жёсткие края"
 
-#: ../app/paint/gimppaintoptions.c:284
+#: ../app/paint/gimppaintoptions.c:286
 msgid "Ignore fuzziness of the current brush"
 msgstr ""
 
-#: ../app/paint/gimppaintoptions.c:290
+#: ../app/paint/gimppaintoptions.c:292
 msgid "Apply Jitter"
 msgstr "Разброс"
 
-#: ../app/paint/gimppaintoptions.c:291
+#: ../app/paint/gimppaintoptions.c:293
 msgid "Scatter brush as you paint"
 msgstr "Разбрасывать мазки кистью в стороны при рисовании"
 
-#: ../app/paint/gimppaintoptions.c:296
+#: ../app/paint/gimppaintoptions.c:298
 msgid "Amount"
 msgstr "Расстояние"
 
-#: ../app/paint/gimppaintoptions.c:297
+#: ../app/paint/gimppaintoptions.c:299
 msgid "Distance of scattering"
 msgstr "Дистанция разброса"
 
-#: ../app/paint/gimppaintoptions.c:303
+#: ../app/paint/gimppaintoptions.c:305
 msgid "Dynamics Options"
 msgstr "Параметры динамики"
 
-#: ../app/paint/gimppaintoptions.c:310
+#: ../app/paint/gimppaintoptions.c:312
 msgid "Fade length"
 msgstr "Длина штриха"
 
-#: ../app/paint/gimppaintoptions.c:311
+#: ../app/paint/gimppaintoptions.c:313
 msgid "Distance over which strokes fade out"
 msgstr "Дистанция, на протяжении которой штрихи угасают"
 
-#: ../app/paint/gimppaintoptions.c:321 ../app/widgets/gimpviewablebox.c:381
+#: ../app/paint/gimppaintoptions.c:323 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Развернуть"
 
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Reverse direction of fading"
 msgstr "Развернуть направление угасания"
 
-#: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:108
-#: ../app/tools/gimpblendoptions.c:315 ../app/tools/gimppaintoptions-gui.c:356
+#: ../app/paint/gimppaintoptions.c:329 ../app/tools/gimpgradientoptions.c:109
+#: ../app/tools/gimpgradientoptions.c:326
+#: ../app/tools/gimppaintoptions-gui.c:356
 msgid "Repeat"
 msgstr "Повтор"
 
-#: ../app/paint/gimppaintoptions.c:328
+#: ../app/paint/gimppaintoptions.c:330
 msgid "How fade is repeated as you paint"
 msgstr "Как угасание повторяется при рисовании"
 
-#: ../app/paint/gimppaintoptions.c:397
+#: ../app/paint/gimppaintoptions.c:342 ../app/tools/gimpgradientoptions.c:298
+#: ../app/tools/gimppaintoptions-gui.c:392
+msgid "Blend Color Space"
+msgstr "Пространство"
+
+#: ../app/paint/gimppaintoptions.c:343
+msgid "Which color space to use when blending RGB gradient segments"
+msgstr "В каком пространстве смешивать сегменты RGB-градиента"
+
+#: ../app/paint/gimppaintoptions.c:406
 msgid "Smooth stroke"
 msgstr "Сглаженные штрихи"
 
-#: ../app/paint/gimppaintoptions.c:398
+#: ../app/paint/gimppaintoptions.c:407
 msgid "Paint smoother strokes"
 msgstr "Рисовать более плавные штрихи"
 
-#: ../app/paint/gimppaintoptions.c:404
+#: ../app/paint/gimppaintoptions.c:413
 msgid "Depth of smoothing"
 msgstr "Глубина сглаживания"
 
-#: ../app/paint/gimppaintoptions.c:409
+#: ../app/paint/gimppaintoptions.c:418
 msgid "Weight"
 msgstr "Вес"
 
-#: ../app/paint/gimppaintoptions.c:410
+#: ../app/paint/gimppaintoptions.c:419
 msgid "Gravity of the pen"
 msgstr "Гравитация пера"
 
@@ -18699,8 +18759,8 @@ msgstr "Инвертирование"
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:270 ../app/pdb/transform-tools-cmds.c:171
 #: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformoptions.c:552
-#: ../app/tools/gimptransformoptions.c:561
+#: ../app/tools/gimptransformoptions.c:560
+#: ../app/tools/gimptransformoptions.c:569
 msgid "Perspective"
 msgstr "Перспектива"
 
@@ -18722,10 +18782,6 @@ msgstr "2D-преобразование"
 #: ../app/pdb/item-transform-cmds.c:825
 msgid "2D Transforming"
 msgstr "2D-преобразование"
-
-#: ../app/pdb/edit-cmds.c:797
-msgid "Blending"
-msgstr "Заливка"
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -19054,7 +19110,7 @@ msgid "Diagonal neighbors"
 msgstr "Соседние по диагонали"
 
 #: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:124
-#: ../app/tools/gimptransformoptions.c:440 ../app/tools/gimpwarpoptions.c:119
+#: ../app/tools/gimptransformoptions.c:448 ../app/tools/gimpwarpoptions.c:119
 #: ../app/tools/gimpwarpoptions.c:322
 msgid "Interpolation"
 msgstr "Интерполяция"
@@ -20178,177 +20234,6 @@ msgstr "Щёлкните, чтобы сделать этот контур пер
 msgid "Click to add this path to the list"
 msgstr "Щёлкните, чтобы добавить этот контур в список"
 
-#: ../app/tools/gimpblendoptions.c:101 ../app/tools/gimpblendoptions.c:303
-msgid "Metric"
-msgstr "Метрика"
-
-#: ../app/tools/gimpblendoptions.c:102
-msgid "Metric to use for the distance calculation"
-msgstr ""
-
-#: ../app/tools/gimpblendoptions.c:116
-msgid "Adaptive Supersampling"
-msgstr "Адаптивная интерполяция"
-
-#: ../app/tools/gimpblendoptions.c:122
-msgid "Max depth"
-msgstr "Макс. глубина"
-
-#: ../app/tools/gimpblendoptions.c:128 ../app/tools/gimpbucketfilloptions.c:142
-#: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:87
-msgid "Threshold"
-msgstr "Порог"
-
-#: ../app/tools/gimpblendoptions.c:142
-msgid "Instant mode"
-msgstr "Немедленное применение"
-
-#: ../app/tools/gimpblendoptions.c:143
-msgid "Commit gradient instantly"
-msgstr "Немедленно применять градиент"
-
-#: ../app/tools/gimpblendoptions.c:149
-msgid "Modify active gradient"
-msgstr "Изменять активный градиент"
-
-#: ../app/tools/gimpblendoptions.c:150
-msgid "Modify the active gradient in-place"
-msgstr "Изменить выбранный градиент на месте"
-
-#: ../app/tools/gimpblendoptions.c:288 ../app/tools/gimppaintoptions-gui.c:379
-msgid "Edit this gradient"
-msgstr "Изменить градиент"
-
-#. the instant toggle
-#: ../app/tools/gimpblendoptions.c:356
-#, c-format
-msgid "Instant mode  (%s)"
-msgstr "Немедленное применение (%s)"
-
-#: ../app/tools/gimpblendoptions.c:376
-msgid ""
-"The active gradient is non-writable and cannot be edited directly. Uncheck "
-"this option to edit a copy of it."
-msgstr ""
-"Выбранный градиент доступен только для чтения и не может быть изменён "
-"напрямую. Выключите эту функцию, чтобы редактировать копию."
-
-#: ../app/tools/gimpblendtool.c:156
-msgid "Blend"
-msgstr "Градиентная заливка"
-
-#: ../app/tools/gimpblendtool.c:157
-msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Градиент: заливка цветным градиентом"
-
-#: ../app/tools/gimpblendtool.c:158
-msgid "Blen_d"
-msgstr "_Градиентная заливка"
-
-#: ../app/tools/gimpblendtool.c:213
-msgid "Click-Drag to draw a gradient"
-msgstr "Щёлкните или щёлкните и потащите для добавления узла"
-
-#: ../app/tools/gimpblendtool.c:257 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:284
-#: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:284
-#: ../app/tools/gimptransformtool.c:1443 ../app/tools/gimpwarptool.c:640
-msgid "The active layer is not visible."
-msgstr "Точки растра активного слоя заблокированы от изменений"
-
-#: ../app/tools/gimpblendtool.c:264
-msgid "No gradient available for use with this tool."
-msgstr "Нет градиентов, доступных для использования с этим инструментом."
-
-#: ../app/tools/gimpblendtool.c:614
-msgid "Blend: "
-msgstr "Градиентная заливка: "
-
-#. the position labels
-#: ../app/tools/gimpblendtool-editor.c:1280
-msgid "X:"
-msgstr "X:"
-
-#: ../app/tools/gimpblendtool-editor.c:1286
-msgid "Y:"
-msgstr "Y:"
-
-#. the color label
-#: ../app/tools/gimpblendtool-editor.c:1339 ../app/tools/gimptextoptions.c:583
-msgid "Color:"
-msgstr "Цвет:"
-
-#: ../app/tools/gimpblendtool-editor.c:1347
-msgid "Change Endpoint Color"
-msgstr "Цвет крайней точки"
-
-#. the position label
-#: ../app/tools/gimpblendtool-editor.c:1385
-#: ../app/tools/gimpblendtool-editor.c:1505
-#: ../app/tools/gimprectangleoptions.c:1031
-msgid "Position:"
-msgstr "Позиция:"
-
-#. the color labels
-#: ../app/tools/gimpblendtool-editor.c:1410
-msgid "Left color:"
-msgstr "Точка слева:"
-
-#: ../app/tools/gimpblendtool-editor.c:1416
-msgid "Right color:"
-msgstr "Точка справа:"
-
-#: ../app/tools/gimpblendtool-editor.c:1443
-#: ../app/tools/gimpblendtool-editor.c:1452
-msgid "Change Stop Color"
-msgstr "Изменить цвет опорной точки"
-
-#: ../app/tools/gimpblendtool-editor.c:1474
-msgid "Delete stop"
-msgstr "Удалить опорную точку"
-
-#. the type label
-#: ../app/tools/gimpblendtool-editor.c:1530
-msgid "Blending:"
-msgstr "Смешивание:"
-
-#. the color label
-#: ../app/tools/gimpblendtool-editor.c:1552
-msgid "Coloring:"
-msgstr "Окрашивание:"
-
-#: ../app/tools/gimpblendtool-editor.c:1586
-msgid "New stop at midpoint"
-msgstr "Создать опорную точку из срединной"
-
-#: ../app/tools/gimpblendtool-editor.c:1594
-msgid "Center midpoint"
-msgstr "Центрировать срединную точку"
-
-#: ../app/tools/gimpblendtool-editor.c:1657
-msgid "Start Endpoint"
-msgstr "Начальная крайняя точка"
-
-#: ../app/tools/gimpblendtool-editor.c:1665
-msgid "End Endpoint"
-msgstr "Конечная крайняя точка"
-
-#: ../app/tools/gimpblendtool-editor.c:1718
-#, c-format
-msgid "Stop %d"
-msgstr "Опорная точка %d"
-
-#: ../app/tools/gimpblendtool-editor.c:1786
-#, c-format
-msgid "Midpoint %d"
-msgstr "Срединная точка %d"
-
-#: ../app/tools/gimpblendtool-editor.c:2364
-#: ../app/tools/gimpblendtool-editor.c:2373
-msgid "Blend Step"
-msgstr "Пространство смешивания"
-
 #: ../app/tools/gimpbrightnesscontrasttool.c:97
 msgid "Brightness-Contrast"
 msgstr "Яркость-Контраст"
@@ -20404,6 +20289,13 @@ msgid ""
 "threshold). Disable antialiasing to fill the entire area uniformly."
 msgstr ""
 
+#: ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpgradientoptions.c:129
+#: ../app/tools/gimpregionselectoptions.c:112
+#: ../app/tools/gimpthresholdtool.c:87
+msgid "Threshold"
+msgstr "Порог"
+
 #: ../app/tools/gimpbucketfilloptions.c:143
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
@@ -20453,6 +20345,14 @@ msgstr "Плоская заливка: заливка цветом или тек
 #: ../app/tools/gimpbucketfilltool.c:89
 msgid "_Bucket Fill"
 msgstr "Плоская _заливка"
+
+#: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
+#: ../app/tools/gimpfiltertool.c:284
+#: ../app/tools/gimpforegroundselecttool.c:288
+#: ../app/tools/gimpgradienttool.c:257 ../app/tools/gimppainttool.c:284
+#: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
+msgid "The active layer is not visible."
+msgstr "Точки растра активного слоя заблокированы от изменений"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -20885,7 +20785,7 @@ msgstr "Пр_едпросмотр"
 
 #: ../app/tools/gimpfilteroptions.c:78
 msgid "Split _view"
-msgstr "_Раздельный предпросмотр"
+msgstr "Сравнение _до/после"
 
 #: ../app/tools/gimpfilteroptions.c:109
 msgid "Color _managed"
@@ -20954,7 +20854,7 @@ msgstr "Тип файла"
 msgid "Direction of flipping"
 msgstr "Направление зеркального отражения"
 
-#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:425
+#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:433
 msgid "Transform:"
 msgstr "Преобразование:"
 
@@ -20965,7 +20865,7 @@ msgid "Direction  (%s)"
 msgstr "Направление (%s)"
 
 #: ../app/tools/gimpflipoptions.c:170 ../app/tools/gimptransformoptions.c:132
-#: ../app/tools/gimptransformoptions.c:447
+#: ../app/tools/gimptransformoptions.c:455
 msgid "Clipping"
 msgstr "Обрезка"
 
@@ -21176,6 +21076,167 @@ msgstr "Матрица преобразования"
 #: ../app/tools/gimpgenerictransformtool.c:114
 msgid "Invalid transform"
 msgstr "Некорректная трансформация"
+
+#: ../app/tools/gimpgradientoptions.c:102
+#: ../app/tools/gimpgradientoptions.c:314
+msgid "Metric"
+msgstr "Метрика"
+
+#: ../app/tools/gimpgradientoptions.c:103
+msgid "Metric to use for the distance calculation"
+msgstr ""
+
+#: ../app/tools/gimpgradientoptions.c:117
+msgid "Adaptive Supersampling"
+msgstr "Адаптивная интерполяция"
+
+#: ../app/tools/gimpgradientoptions.c:123
+msgid "Max depth"
+msgstr "Макс. глубина"
+
+#: ../app/tools/gimpgradientoptions.c:143
+msgid "Instant mode"
+msgstr "Немедленное применение"
+
+#: ../app/tools/gimpgradientoptions.c:144
+msgid "Commit gradient instantly"
+msgstr "Немедленно применять градиент"
+
+#: ../app/tools/gimpgradientoptions.c:150
+msgid "Modify active gradient"
+msgstr "Изменять активный градиент"
+
+#: ../app/tools/gimpgradientoptions.c:151
+msgid "Modify the active gradient in-place"
+msgstr "Изменить выбранный градиент на месте"
+
+#: ../app/tools/gimpgradientoptions.c:290
+#: ../app/tools/gimppaintoptions-gui.c:384
+msgid "Edit this gradient"
+msgstr "Изменить градиент"
+
+#. the instant toggle
+#: ../app/tools/gimpgradientoptions.c:367
+#, c-format
+msgid "Instant mode  (%s)"
+msgstr "Немедленное применение (%s)"
+
+#: ../app/tools/gimpgradientoptions.c:387
+msgid ""
+"The active gradient is non-writable and cannot be edited directly. Uncheck "
+"this option to edit a copy of it."
+msgstr ""
+"Выбранный градиент доступен только для чтения и не может быть изменён "
+"напрямую. Выключите эту функцию, чтобы редактировать копию."
+
+#: ../app/tools/gimpgradienttool.c:157
+#, fuzzy
+msgid "Gradient Tool: Fill selected area with a color gradient"
+msgstr "Градиент: заливка цветным градиентом"
+
+#: ../app/tools/gimpgradienttool.c:158
+#, fuzzy
+msgid "Gra_dient"
+msgstr "Градиент"
+
+#: ../app/tools/gimpgradienttool.c:213
+msgid "Click-Drag to draw a gradient"
+msgstr "Щёлкните или щёлкните и потащите для добавления узла"
+
+#: ../app/tools/gimpgradienttool.c:264
+msgid "No gradient available for use with this tool."
+msgstr "Нет градиентов, доступных для использования с этим инструментом."
+
+#: ../app/tools/gimpgradienttool.c:614
+#, fuzzy
+msgid "Gradient: "
+msgstr "Градиент:"
+
+#. the position labels
+#: ../app/tools/gimpgradienttool-editor.c:1283
+msgid "X:"
+msgstr "X:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1289
+msgid "Y:"
+msgstr "Y:"
+
+#. the color label
+#: ../app/tools/gimpgradienttool-editor.c:1342
+#: ../app/tools/gimptextoptions.c:583
+msgid "Color:"
+msgstr "Цвет:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1350
+msgid "Change Endpoint Color"
+msgstr "Цвет крайней точки"
+
+#. the position label
+#: ../app/tools/gimpgradienttool-editor.c:1388
+#: ../app/tools/gimpgradienttool-editor.c:1508
+#: ../app/tools/gimprectangleoptions.c:1031
+msgid "Position:"
+msgstr "Позиция:"
+
+#. the color labels
+#: ../app/tools/gimpgradienttool-editor.c:1413
+msgid "Left color:"
+msgstr "Точка слева:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1419
+msgid "Right color:"
+msgstr "Точка справа:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1446
+#: ../app/tools/gimpgradienttool-editor.c:1455
+msgid "Change Stop Color"
+msgstr "Изменить цвет опорной точки"
+
+#: ../app/tools/gimpgradienttool-editor.c:1477
+msgid "Delete stop"
+msgstr "Удалить опорную точку"
+
+#. the type label
+#: ../app/tools/gimpgradienttool-editor.c:1533
+msgid "Blending:"
+msgstr "Смешивание:"
+
+#. the color label
+#: ../app/tools/gimpgradienttool-editor.c:1555
+msgid "Coloring:"
+msgstr "Окрашивание:"
+
+#: ../app/tools/gimpgradienttool-editor.c:1589
+msgid "New stop at midpoint"
+msgstr "Создать опорную точку из срединной"
+
+#: ../app/tools/gimpgradienttool-editor.c:1597
+msgid "Center midpoint"
+msgstr "Центрировать срединную точку"
+
+#: ../app/tools/gimpgradienttool-editor.c:1660
+msgid "Start Endpoint"
+msgstr "Начальная крайняя точка"
+
+#: ../app/tools/gimpgradienttool-editor.c:1668
+msgid "End Endpoint"
+msgstr "Конечная крайняя точка"
+
+#: ../app/tools/gimpgradienttool-editor.c:1721
+#, c-format
+msgid "Stop %d"
+msgstr "Опорная точка %d"
+
+#: ../app/tools/gimpgradienttool-editor.c:1789
+#, c-format
+msgid "Midpoint %d"
+msgstr "Срединная точка %d"
+
+#: ../app/tools/gimpgradienttool-editor.c:2366
+#: ../app/tools/gimpgradienttool-editor.c:2375
+#, fuzzy
+msgid "Gradient Step"
+msgstr "Градиент"
 
 #: ../app/tools/gimpguidetool.c:274
 msgid "Remove Guide"
@@ -21516,7 +21577,7 @@ msgstr "_Перемещение"
 msgid "There is no path to move."
 msgstr "Нет перемещаемого контура."
 
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1470
+#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1484
 msgid "The active path's position is locked."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -21578,8 +21639,8 @@ msgid "Show lattice"
 msgstr "Показывать сетку"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:546
-#: ../app/tools/gimptransformoptions.c:557
+#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:554
+#: ../app/tools/gimptransformoptions.c:565
 msgid "Scale"
 msgstr "Масштабирование"
 
@@ -21665,7 +21726,7 @@ msgstr "Параметры угасания"
 msgid "Color Options"
 msgstr "Параметры цвета"
 
-#: ../app/tools/gimppaintoptions-gui.c:622
+#: ../app/tools/gimppaintoptions-gui.c:636
 msgid "Link to brush default"
 msgstr ""
 
@@ -21880,7 +21941,7 @@ msgstr "Рисовать маску выделенной области"
 msgid "Move the mouse to change threshold"
 msgstr "Переместите мышь для смены порога"
 
-#: ../app/tools/gimprotatetool.c:95 ../app/tools/gimptransformoptions.c:548
+#: ../app/tools/gimprotatetool.c:95 ../app/tools/gimptransformoptions.c:556
 msgid "Rotate"
 msgstr "Вращение"
 
@@ -22020,8 +22081,8 @@ msgstr "Нажмите и перетащите для смещения копи�
 msgid "Click to anchor the floating selection"
 msgstr "Нажмите, чтобы прицепить плавающее выделение"
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformoptions.c:550
-#: ../app/tools/gimptransformoptions.c:559
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformoptions.c:558
+#: ../app/tools/gimptransformoptions.c:567
 msgid "Shear"
 msgstr "Наклон"
 
@@ -22273,7 +22334,7 @@ msgid "Opacity of the preview image"
 msgstr "Непрозрачность предпросмотра"
 
 #: ../app/tools/gimptransformoptions.c:154
-#: ../app/tools/gimptransformoptions.c:468
+#: ../app/tools/gimptransformoptions.c:476
 msgid "Guides"
 msgstr "Направляющие"
 
@@ -22281,108 +22342,108 @@ msgstr "Направляющие"
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:491
+#: ../app/tools/gimptransformoptions.c:499
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 градусов (%s)"
 
-#: ../app/tools/gimptransformoptions.c:498
+#: ../app/tools/gimptransformoptions.c:506
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ограничить вращение шагами по 15 градусов"
 
-#: ../app/tools/gimptransformoptions.c:508
+#: ../app/tools/gimptransformoptions.c:516
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Сохранить пропорции  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:515
+#: ../app/tools/gimptransformoptions.c:523
 msgid "Keep the original aspect ratio"
 msgstr "Сохранять исходное соотношение сторон"
 
-#: ../app/tools/gimptransformoptions.c:520
+#: ../app/tools/gimptransformoptions.c:528
 #, c-format
 msgid "Around center (%s)"
 msgstr "Вокруг центра (%s)"
 
-#: ../app/tools/gimptransformoptions.c:527
+#: ../app/tools/gimptransformoptions.c:535
 msgid "Scale around the center point"
 msgstr "Масштабировать от центральной точки"
 
-#: ../app/tools/gimptransformoptions.c:543
+#: ../app/tools/gimptransformoptions.c:551
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ограничить (%s)"
 
-#: ../app/tools/gimptransformoptions.c:544
+#: ../app/tools/gimptransformoptions.c:552
 msgid "Move"
 msgstr "Перемещение"
 
-#: ../app/tools/gimptransformoptions.c:545
+#: ../app/tools/gimptransformoptions.c:553
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ограничить движение шагами по 45 градусов от центра (%s)"
 
-#: ../app/tools/gimptransformoptions.c:547
+#: ../app/tools/gimptransformoptions.c:555
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Сохранять соотношение сторон при масштабировании (%s)"
 
-#: ../app/tools/gimptransformoptions.c:549
+#: ../app/tools/gimptransformoptions.c:557
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ограничить вращение шагами по 15 градусов (%s)"
 
-#: ../app/tools/gimptransformoptions.c:551
+#: ../app/tools/gimptransformoptions.c:559
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Искривлять только вдоль края (%s)"
 
-#: ../app/tools/gimptransformoptions.c:553
+#: ../app/tools/gimptransformoptions.c:561
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ограничить перемещение вертикалью, горизонталью и диагональю при коррекции "
 "перспективы (%s)"
 
-#: ../app/tools/gimptransformoptions.c:556
+#: ../app/tools/gimptransformoptions.c:564
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "От опорной точки  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:558
+#: ../app/tools/gimptransformoptions.c:566
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Масштабировать от опорной точки (%s)"
 
-#: ../app/tools/gimptransformoptions.c:560
+#: ../app/tools/gimptransformoptions.c:568
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Искривлять противоположный край на ту же величину (%s)"
 
-#: ../app/tools/gimptransformoptions.c:562
+#: ../app/tools/gimptransformoptions.c:570
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Сохранять положение опорной точки при коррекции перспективы (%s)"
 
-#: ../app/tools/gimptransformoptions.c:565
+#: ../app/tools/gimptransformoptions.c:573
 msgid "Pivot"
 msgstr "Опорная точка"
 
-#: ../app/tools/gimptransformoptions.c:566
+#: ../app/tools/gimptransformoptions.c:574
 #, c-format
 msgid "Snap (%s)"
 msgstr "Прилипать (%s)"
 
-#: ../app/tools/gimptransformoptions.c:567
+#: ../app/tools/gimptransformoptions.c:575
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Прилипать опорной точкой к углам и центру (%s)"
 
-#: ../app/tools/gimptransformoptions.c:568
+#: ../app/tools/gimptransformoptions.c:576
 msgid "Lock"
 msgstr "Блокировать"
 
-#: ../app/tools/gimptransformoptions.c:569
+#: ../app/tools/gimptransformoptions.c:577
 msgid "Lock pivot position to canvas"
 msgstr "Заблокировать положение опорной точки на холсте"
 
@@ -22403,31 +22464,31 @@ msgstr "Это выделение не пересекается со слоем.
 msgid "Transform Step"
 msgstr "Шаг преобразования"
 
-#: ../app/tools/gimptransformtool.c:982
+#: ../app/tools/gimptransformtool.c:996
 msgid "The current transform is invalid"
 msgstr ""
 
-#: ../app/tools/gimptransformtool.c:1430
+#: ../app/tools/gimptransformtool.c:1444
 msgid "There is no layer to transform."
 msgstr "Нет слоя для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1437
+#: ../app/tools/gimptransformtool.c:1451
 msgid "The active layer's position and size are locked."
 msgstr "Размер и положение активного слоя заблокированы от изменений."
 
-#: ../app/tools/gimptransformtool.c:1450
+#: ../app/tools/gimptransformtool.c:1464
 msgid "There is no selection to transform."
 msgstr "Нет трансформируемого выделения."
 
-#: ../app/tools/gimptransformtool.c:1463
+#: ../app/tools/gimptransformtool.c:1477
 msgid "There is no path to transform."
 msgstr "Нет контура для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1468
+#: ../app/tools/gimptransformtool.c:1482
 msgid "The active path's strokes are locked."
 msgstr "Элементы активного контура заблокированы от изменений"
 
-#: ../app/tools/gimptransformtool.c:1472
+#: ../app/tools/gimptransformtool.c:1486
 msgid "The active path has no strokes."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -24009,84 +24070,84 @@ msgstr "Цвет заливки"
 msgid "_Antialiasing"
 msgstr "Сгл_аживание"
 
-#: ../app/widgets/gimpgradienteditor.c:754
+#: ../app/widgets/gimpgradienteditor.c:756
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Масштаб: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:757
+#: ../app/widgets/gimpgradienteditor.c:759
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Отображение [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:957
+#: ../app/widgets/gimpgradienteditor.c:959
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Позиция: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:958
+#: ../app/widgets/gimpgradienteditor.c:960
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:960
+#: ../app/widgets/gimpgradienteditor.c:962
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:962
+#: ../app/widgets/gimpgradienteditor.c:964
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Светимость: %0.1f    Непрозрачность: %0.1f"
 
-#: ../app/widgets/gimpgradienteditor.c:994
+#: ../app/widgets/gimpgradienteditor.c:996
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1005
+#: ../app/widgets/gimpgradienteditor.c:1007
 msgid "Foreground color set to:"
 msgstr "Установить цвет переднего плана:"
 
-#: ../app/widgets/gimpgradienteditor.c:1012
+#: ../app/widgets/gimpgradienteditor.c:1014
 msgid "Background color set to:"
 msgstr "Установить цвет фона:"
 
-#: ../app/widgets/gimpgradienteditor.c:1240
-#: ../app/widgets/gimpgradienteditor.c:1301
+#: ../app/widgets/gimpgradienteditor.c:1242
+#: ../app/widgets/gimpgradienteditor.c:1303
 #, c-format
 msgid "%s-Drag: move & compress"
 msgstr "%s-перетаскивание: переместить и сжать"
 
-#: ../app/widgets/gimpgradienteditor.c:1245
+#: ../app/widgets/gimpgradienteditor.c:1247
 msgid "Drag: move"
 msgstr "Нажать и потянуть: перемещение"
 
-#: ../app/widgets/gimpgradienteditor.c:1252
-#: ../app/widgets/gimpgradienteditor.c:1265
-#: ../app/widgets/gimpgradienteditor.c:1278
-#: ../app/widgets/gimpgradienteditor.c:1299
+#: ../app/widgets/gimpgradienteditor.c:1254
+#: ../app/widgets/gimpgradienteditor.c:1267
+#: ../app/widgets/gimpgradienteditor.c:1280
+#: ../app/widgets/gimpgradienteditor.c:1301
 #, c-format
 msgid "%s-Click: extend selection"
 msgstr "%s-щелчок: расширить выделение"
 
-#: ../app/widgets/gimpgradienteditor.c:1257
-#: ../app/widgets/gimpgradienteditor.c:1270
+#: ../app/widgets/gimpgradienteditor.c:1259
+#: ../app/widgets/gimpgradienteditor.c:1272
 msgid "Click: select"
 msgstr "Щелчок: выделение"
 
-#: ../app/widgets/gimpgradienteditor.c:1283
-#: ../app/widgets/gimpgradienteditor.c:1305
+#: ../app/widgets/gimpgradienteditor.c:1285
+#: ../app/widgets/gimpgradienteditor.c:1307
 msgid "Click: select    Drag: move"
 msgstr "Щелчок: выделение   Нажать и потянуть: перемещение"
 
-#: ../app/widgets/gimpgradienteditor.c:1520
-#: ../app/widgets/gimpgradienteditor.c:1528
+#: ../app/widgets/gimpgradienteditor.c:1522
+#: ../app/widgets/gimpgradienteditor.c:1530
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Позиция метки: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1545
+#: ../app/widgets/gimpgradienteditor.c:1547
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Расстояние: %0.4f"
@@ -24818,31 +24879,31 @@ msgstr "Заблокировать контур от изменений"
 msgid "Lock path position"
 msgstr "Заблокировать положение контура"
 
-#: ../app/widgets/gimpviewablebox.c:91
+#: ../app/widgets/gimpviewablebox.c:94
 msgid "Open the brush selection dialog"
 msgstr "Открыть диалог выбора кисти"
 
-#: ../app/widgets/gimpviewablebox.c:159
+#: ../app/widgets/gimpviewablebox.c:162
 msgid "Open the dynamics selection dialog"
 msgstr "Открыть диалог выбора динамики рисования"
 
-#: ../app/widgets/gimpviewablebox.c:226
+#: ../app/widgets/gimpviewablebox.c:229
 msgid "Open the MyPaint brush selection dialog"
 msgstr "Открыть диалог выбора кисти MyPaint"
 
-#: ../app/widgets/gimpviewablebox.c:289
+#: ../app/widgets/gimpviewablebox.c:292
 msgid "Open the pattern selection dialog"
 msgstr "Открыть диалог выбора текстуры"
 
-#: ../app/widgets/gimpviewablebox.c:358
+#: ../app/widgets/gimpviewablebox.c:362
 msgid "Open the gradient selection dialog"
 msgstr "Открыть диалог выбора градиента"
 
-#: ../app/widgets/gimpviewablebox.c:476
+#: ../app/widgets/gimpviewablebox.c:501
 msgid "Open the palette selection dialog"
 msgstr "Открыть диалог выбора палитры"
 
-#: ../app/widgets/gimpviewablebox.c:542
+#: ../app/widgets/gimpviewablebox.c:567
 msgid "Open the font selection dialog"
 msgstr "Открыть диалог выбора шрифта"
 
@@ -25127,6 +25188,25 @@ msgstr "круглые"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушеванные"
+
+#~ msgctxt "undo-type"
+#~ msgid "Blend"
+#~ msgstr "Градиентная заливка"
+
+#~ msgid "Blending"
+#~ msgstr "Заливка"
+
+#~ msgid "Blend"
+#~ msgstr "Градиентная заливка"
+
+#~ msgid "Blen_d"
+#~ msgstr "_Градиентная заливка"
+
+#~ msgid "Blend: "
+#~ msgstr "Градиентная заливка: "
+
+#~ msgid "Blend Step"
+#~ msgstr "Пространство смешивания"
 
 #, fuzzy
 #~ msgid "Core color management"
@@ -26423,9 +26503,6 @@ msgstr "растушеванные"
 
 #~ msgid "Flow:"
 #~ msgstr "Поток:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Градиент:"
 
 #~ msgid "Threshold:"
 #~ msgstr "Порог:"

@@ -76,6 +76,7 @@ struct _GimpColorTransformPrivate
   const Babl       *dest_space_format;
 
   cmsHTRANSFORM     transform;
+  const Babl       *fish;
 };
 
 
@@ -228,11 +229,14 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
     {
       priv->src_format  = src_format;
       priv->dest_format = dest_format;
+      priv->fish        = babl_fish (priv->src_space_format,
+                                     priv->dest_space_format);
 
       g_printerr ("%s: using babl for '%s' -> '%s'\n",
                   G_STRFUNC,
                   gimp_color_profile_get_label (src_profile),
                   gimp_color_profile_get_label (dest_profile));
+
       return transform;
     }
 
@@ -421,9 +425,7 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
     }
   else
     {
-      babl_process (babl_fish (priv->src_space_format,
-                               priv->dest_space_format),
-                    src, dest, length);
+      babl_process (priv->fish, src, dest, length);
     }
 
   if (src_format != priv->src_format)
@@ -502,8 +504,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
             }
           else
             {
-              babl_process (babl_fish (priv->src_space_format,
-                                       priv->dest_space_format),
+              babl_process (priv->fish,
                             iter->data[0], iter->data[1], iter->length);
             }
 
@@ -530,8 +531,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
             }
           else
             {
-              babl_process (babl_fish (priv->src_space_format,
-                                       priv->dest_space_format),
+              babl_process (priv->fish,
                             iter->data[0], iter->data[0], iter->length);
             }
 

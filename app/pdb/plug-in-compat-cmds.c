@@ -3154,7 +3154,7 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
           GeglNode *node;
 
           if (randomize)
-            seed = g_random_int ();
+            seed = (gint32) g_random_int ();
 
           node =
             gegl_node_new_child (NULL,
@@ -3207,7 +3207,7 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
           GeglNode *node;
 
           if (randomize)
-            seed = g_random_int ();
+            seed = (gint32) g_random_int ();
 
           node =
             gegl_node_new_child (NULL,
@@ -3260,7 +3260,7 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
           GeglNode *node;
 
           if (randomize)
-            seed = g_random_int ();
+            seed = (gint32) g_random_int ();
 
           node =
             gegl_node_new_child (NULL,
@@ -3340,7 +3340,7 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
                                       "green",       g,
                                       "blue",        b,
                                       "alpha",       a,
-                                      "seed",        g_random_int_range (0, G_MAXINT),
+                                      "seed",        g_random_int (),
                                       NULL);
 
           node = wrap_in_gamma_cast (node, drawable);
@@ -3463,7 +3463,7 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
                                       "green",       g,
                                       "blue",        b,
                                       "alpha",       a,
-                                      "seed",        g_random_int_range (0, G_MAXINT),
+                                      "seed",        g_random_int (),
                                       NULL);
 
           node = wrap_in_gamma_cast (node, drawable);
@@ -3852,7 +3852,7 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
                                  "operation", "gegl:noise-spread",
                                  "amount-x",  (gint) spread_amount_x,
                                  "amount-y",  (gint) spread_amount_y,
-                                 "seed",      (guint) g_random_int (),
+                                 "seed",      g_random_int (),
                                  NULL);
 
           gimp_drawable_apply_operation (drawable, progress,

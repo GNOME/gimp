@@ -52,7 +52,7 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable FILL-BACKGROUND)
+    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
     ; Create main horizontal ribbon
 
@@ -66,10 +66,13 @@
                                  (+ (* 2 ribbon-spacing) ribbon-width)
                                  ribbon-width)
 
-    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
-                     GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
-                     FALSE 0 0 TRUE
-                     (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0 0)
+    (gimp-context-set-gradient-fg-bg-rgb)
+    (gimp-drawable-edit-gradient-fill drawable
+				      GRADIENT-BILINEAR (- 100 shadow-depth)
+				      FALSE 0 0
+				      TRUE
+				      (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0
+				      0 0)
 
     ; Create main vertical ribbon
 
@@ -80,10 +83,12 @@
                                  ribbon-width
                                  (+ (* 2 ribbon-spacing) ribbon-width))
 
-    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
-                     GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
-                     FALSE 0 0 TRUE
-                     0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0)
+    (gimp-drawable-edit-gradient-fill drawable
+				      GRADIENT-BILINEAR (- 100 shadow-depth)
+				      FALSE 0 0
+				      TRUE
+				      0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2)
+				      0 0)
 
     ; Create the secondary horizontal ribbon
 
@@ -170,14 +175,14 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable FILL-BACKGROUND)
+    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
     (gimp-image-select-rectangle img CHANNEL-OP-REPLACE r1-x1 r1-y1 r1-width r1-height)
     (gimp-image-select-rectangle img CHANNEL-OP-ADD r2-x1 r2-y1 r2-width r2-height)
     (gimp-image-select-rectangle img CHANNEL-OP-ADD r3-x1 r3-y1 r3-width r3-height)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill drawable FILL-BACKGROUND)
+    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
     (gimp-selection-none img)
 
     (gimp-image-undo-enable img)
@@ -272,7 +277,7 @@
          (dense (/ density 100.0)))
     (gimp-image-insert-layer img drawable 0 -1)
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill drawable FILL-BACKGROUND)
+    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     (cond ((eq? orientation 'horizontal)
@@ -366,6 +371,8 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
+    (gimp-context-set-opacity 100.0)
     (gimp-context-set-feather FALSE)
 
     (gimp-selection-all w-img)

@@ -84,7 +84,7 @@ implemented calls.
 
 You should copy these applications to the directory where
 TinyScheme is installed (i.e., where the "scheme" binary
-file resides), and can be runned with:
+file resides), and can be run with:
 
     ./scheme listhome.scm
     ./scheme smtp.scm

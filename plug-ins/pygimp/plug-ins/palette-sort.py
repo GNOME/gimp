@@ -312,7 +312,7 @@ register(
     N_("Sort the colors in a palette"),
     # FIXME: Write humanly readable help -
     # (I can't figure out what the plugin does, or how to use the parameters after
-    # David's enhacements even looking at the code -
+    # David's enhancements even looking at the code -
     # let alone someone just using GIMP (JS) )
     dedent("""\
     palette_sort (palette, selection, slice_expr, channel,

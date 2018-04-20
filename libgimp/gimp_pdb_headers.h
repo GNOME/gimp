@@ -39,6 +39,7 @@
 #include <libgimp/gimpdisplay_pdb.h>
 #include <libgimp/gimpdrawable_pdb.h>
 #include <libgimp/gimpdrawablecolor_pdb.h>
+#include <libgimp/gimpdrawableedit_pdb.h>
 #include <libgimp/gimpdrawabletransform_pdb.h>
 #include <libgimp/gimpdynamics_pdb.h>
 #include <libgimp/gimpedit_pdb.h>

@@ -418,8 +418,6 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           base_src_offset_x += off_x;
           base_src_offset_y += off_y;
         }
-
-      gimp_pickable_flush (src_pickable);
     }
 
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),

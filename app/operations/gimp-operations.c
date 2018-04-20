@@ -30,7 +30,6 @@
 
 #include "gimp-operations.h"
 
-#include "gimpoperationblend.h"
 #include "gimpoperationborder.h"
 #include "gimpoperationbuffersourcevalidate.h"
 #include "gimpoperationcagecoefcalc.h"
@@ -38,6 +37,7 @@
 #include "gimpoperationcomposecrop.h"
 #include "gimpoperationequalize.h"
 #include "gimpoperationflood.h"
+#include "gimpoperationgradient.h"
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
 #include "gimpoperationmaskcomponents.h"
@@ -123,7 +123,6 @@ gimp_operations_init (Gimp *gimp)
 
   gimp_layer_modes_init ();
 
-  g_type_class_ref (GIMP_TYPE_OPERATION_BLEND);
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_BUFFER_SOURCE_VALIDATE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
@@ -131,6 +130,7 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_COMPOSE_CROP);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_FLOOD);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRADIENT);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_MASK_COMPONENTS);

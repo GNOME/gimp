@@ -25,8 +25,8 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-edit.h"
 #include "core/gimpdrawable-bucket-fill.h"
+#include "core/gimpdrawable-edit.h"
 #include "core/gimperror.h"
 #include "core/gimpfilloptions.h"
 #include "core/gimpimage.h"
@@ -191,7 +191,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
           if (options->fill_selection)
             {
-              gimp_edit_fill (image, drawable, fill_options, NULL);
+              gimp_drawable_edit_fill (drawable, fill_options, NULL);
             }
           else
             {

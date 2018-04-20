@@ -47,10 +47,16 @@
 
     ; Render gradient
 
-    (gimp-edit-blend drawable BLEND-CUSTOM LAYER-MODE-NORMAL
-                     GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
-                     FALSE 0 0 TRUE
-                     0 0 (- width 1) 0)
+    (gimp-context-push)
+
+    (gimp-context-set-gradient-reverse gradient-reverse)
+    (gimp-drawable-edit-gradient-fill drawable
+				      GRADIENT-LINEAR 0
+				      FALSE 0 0
+				      TRUE
+				      0 0 (- width 1) 0)
+
+    (gimp-context-pop)
 
     ; Terminate
 

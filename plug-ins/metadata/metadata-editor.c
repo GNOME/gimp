@@ -524,7 +524,7 @@ metadata_editor_dialog (gint32        image_id,
 
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
     {
-      g_printerr ("Error occured while loading UI file!\n");
+      g_printerr ("Error occurred while loading UI file!\n");
       g_printerr ("Message: %s\n", error->message);
       g_clear_error (&error);
       if (ui_file)
@@ -729,7 +729,7 @@ on_date_button_clicked (GtkButton *widget,
 
   if (! gtk_builder_add_from_file (builder, ui_file, &error))
     {
-      g_printerr ("Error occured while loading UI file!\n");
+      g_printerr ("Error occurred while loading UI file!\n");
       if (error != NULL)
         {
           g_printerr ("Message: %s\n", error->message);
@@ -802,7 +802,7 @@ on_date_button_clicked (GtkButton *widget,
 }
 
 /* ============================================================================
- * ==[ SEPCIAL TAGS HANDLERS ]=================================================
+ * ==[ SPECIAL TAGS HANDLERS ]=================================================
  * ============================================================================
  */
 
@@ -2450,7 +2450,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gint               store_index;
                   gchar              arr[256][256];
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -2534,7 +2534,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   int                store_index;
                   gchar               arr[256][256];
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -2618,7 +2618,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   int                store_index;
                   gchar               arr[256][256];
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -2711,7 +2711,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   int                store_index;
                   gchar               arr[256][256];
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -4025,7 +4025,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gchar              arr[256][256];
                   gint               item;
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -4094,7 +4094,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gchar              arr[256][256];
                   gint               item;
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -4163,7 +4163,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gchar              arr[256][256];
                   gint               item;
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {
@@ -4232,7 +4232,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   gchar              arr[256][256];
                   gint               item;
 
-                  /* seperate list on commas */
+                  /* separate list on commas */
                   store_index = 0;
                   if (value)
                     {

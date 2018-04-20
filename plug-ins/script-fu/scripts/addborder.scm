@@ -108,6 +108,8 @@
                                      _"Border Layer" 100 LAYER-MODE-NORMAL))))
 
     (gimp-context-push)
+    (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
+    (gimp-context-set-opacity 100.0)
     (gimp-context-set-antialias FALSE)
     (gimp-context-set-feather FALSE)
 
@@ -127,27 +129,27 @@
                                CHANNEL-OP-REPLACE
                                10
                                (gen_top_array xsize ysize owidth oheight width height))
-    (gimp-edit-fill layer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (/ dvalue 2)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_left_array xsize ysize owidth oheight width height))
-    (gimp-edit-fill layer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_right_array xsize ysize owidth oheight width height))
 
-    (gimp-edit-fill layer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (- 0 dvalue)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_bottom_array xsize ysize owidth oheight width height))
 
-    (gimp-edit-fill layer FILL-BACKGROUND)
+    (gimp-drawableedit-fill layer FILL-BACKGROUND)
     (gimp-selection-none img)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)

@@ -39,10 +39,13 @@ struct _GimpSamplePointEditor
 {
   GimpImageEditor  parent_instance;
 
-  GtkWidget       *table;
-  GtkWidget       *color_frames[4];
+  GtkWidget       *empty_icon;
+  GtkWidget       *empty_label;
 
-  gboolean         dirty[4];
+  GtkWidget       *table;
+  GtkWidget      **color_frames;
+  gint             n_color_frames;
+
   guint            dirty_idle_id;
 
   gboolean         sample_merged;

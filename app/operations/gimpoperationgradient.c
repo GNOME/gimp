@@ -1,9 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Largely based on gimpdrawable-blend.c
+ * Largely based on gimpdrawable-gradient.c
  *
- * gimpoperationblend.c
+ * gimpoperationgradient.c
  * Copyright (C) 2014 Michael Henning <drawoc@darkrefraction.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,12 +33,8 @@
 
 #include "core/gimpgradient.h"
 
-#include "gimpoperationblend.h"
+#include "gimpoperationgradient.h"
 
-#include "gimp-intl.h"
-
-
-//#define USE_GRADIENT_CACHE 1
 
 enum
 {
@@ -53,6 +49,7 @@ enum
   PROP_GRADIENT_REPEAT,
   PROP_OFFSET,
   PROP_GRADIENT_REVERSE,
+  PROP_GRADIENT_BLEND_COLOR_SPACE,
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -61,24 +58,16 @@ enum
 
 typedef struct
 {
-  GimpGradient        *gradient;
-  gboolean             reverse;
-#ifdef USE_GRADIENT_CACHE
-  GimpRGB             *gradient_cache;
-  gint                 gradient_cache_size;
-#else
-  GimpGradientSegment *last_seg;
-#endif
-  gdouble              offset;
-  gdouble              sx, sy;
-  GimpGradientType     gradient_type;
-  gdouble              dist;
-  gdouble              vec[2];
-  GimpRepeatMode       repeat;
-  GimpRGB              leftmost_color;
-  GimpRGB              rightmost_color;
-  GRand               *seed;
-  GeglBuffer          *dist_buffer;
+  GimpGradient      *gradient;
+  GimpRGB           *gradient_cache;
+  gint               gradient_cache_size;
+  gdouble            offset;
+  gdouble            sx, sy;
+  GimpGradientType   gradient_type;
+  gdouble            dist;
+  gdouble            vec[2];
+  GimpRepeatMode     repeat;
+  GeglBuffer        *dist_buffer;
 } RenderBlendData;
 
 
@@ -94,19 +83,19 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void     gimp_operation_blend_dispose      (GObject      *gobject);
-static void     gimp_operation_blend_get_property (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
-static void     gimp_operation_blend_set_property (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
+static void     gimp_operation_gradient_dispose      (GObject      *gobject);
+static void     gimp_operation_gradient_get_property (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
+static void     gimp_operation_gradient_set_property (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
 
-static void     gimp_operation_blend_prepare      (GeglOperation *operation);
+static void     gimp_operation_gradient_prepare      (GeglOperation *operation);
 
-static GeglRectangle gimp_operation_blend_get_bounding_box (GeglOperation *operation);
+static GeglRectangle gimp_operation_gradient_get_bounding_box (GeglOperation *operation);
 
 static gdouble  gradient_calc_conical_sym_factor  (gdouble   dist,
                                                    gdouble  *axis,
@@ -163,39 +152,39 @@ static void     gradient_put_pixel           (gint                x,
                                               GimpRGB            *color,
                                               gpointer            put_pixel_data);
 
-static gboolean gimp_operation_blend_process (GeglOperation       *operation,
-                                              GeglBuffer          *input,
-                                              GeglBuffer          *output,
-                                              const GeglRectangle *result,
-                                              gint                 level);
+static gboolean gimp_operation_gradient_process (GeglOperation       *operation,
+                                                 GeglBuffer          *input,
+                                                 GeglBuffer          *output,
+                                                 const GeglRectangle *result,
+                                                 gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationBlend, gimp_operation_blend,
+G_DEFINE_TYPE (GimpOperationGradient, gimp_operation_gradient,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_blend_parent_class
+#define parent_class gimp_operation_gradient_parent_class
 
 
 static void
-gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
+gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  object_class->dispose             = gimp_operation_blend_dispose;
-  object_class->set_property        = gimp_operation_blend_set_property;
-  object_class->get_property        = gimp_operation_blend_get_property;
+  object_class->dispose             = gimp_operation_gradient_dispose;
+  object_class->set_property        = gimp_operation_gradient_set_property;
+  object_class->get_property        = gimp_operation_gradient_get_property;
 
-  operation_class->prepare          = gimp_operation_blend_prepare;
-  operation_class->get_bounding_box = gimp_operation_blend_get_bounding_box;
+  operation_class->prepare          = gimp_operation_gradient_prepare;
+  operation_class->get_bounding_box = gimp_operation_gradient_get_bounding_box;
 
-  filter_class->process             = gimp_operation_blend_process;
+  filter_class->process             = gimp_operation_gradient_process;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:blend",
+                                 "name",        "gimp:gradient",
                                  "categories",  "gimp",
-                                 "description", "GIMP Blend operation",
+                                 "description", "GIMP Gradient operation",
                                  NULL);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
@@ -281,6 +270,15 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
+                                   g_param_spec_enum ("gradient-blend-color-space",
+                                                      "Blend Color Space",
+                                                      "Which color space to use when blending RGB gradient segments",
+                                                      GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                      GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SUPERSAMPLE,
                                    g_param_spec_boolean ("supersample",
                                                          "Supersample",
@@ -315,28 +313,31 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
 }
 
 static void
-gimp_operation_blend_init (GimpOperationBlend *self)
+gimp_operation_gradient_init (GimpOperationGradient *self)
 {
+  g_mutex_init (&self->gradient_cache_mutex);
 }
 
 static void
-gimp_operation_blend_dispose (GObject *object)
+gimp_operation_gradient_dispose (GObject *object)
 {
-  GimpOperationBlend *self = GIMP_OPERATION_BLEND (object);
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
 
   g_clear_object (&self->gradient);
   g_clear_object (&self->context);
+  g_clear_pointer (&self->gradient_cache, g_free);
+  g_mutex_clear (&self->gradient_cache_mutex);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_operation_blend_get_property (GObject    *object,
-                                   guint       property_id,
-                                   GValue     *value,
-                                   GParamSpec *pspec)
+gimp_operation_gradient_get_property (GObject    *object,
+                                      guint       property_id,
+                                      GValue     *value,
+                                      GParamSpec *pspec)
 {
- GimpOperationBlend *self = GIMP_OPERATION_BLEND (object);
+ GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
 
   switch (property_id)
     {
@@ -380,6 +381,10 @@ gimp_operation_blend_get_property (GObject    *object,
       g_value_set_boolean (value, self->gradient_reverse);
       break;
 
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      g_value_set_enum (value, self->gradient_blend_color_space);
+      break;
+
     case PROP_SUPERSAMPLE:
       g_value_set_boolean (value, self->supersample);
       break;
@@ -403,12 +408,12 @@ gimp_operation_blend_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_blend_set_property (GObject      *object,
-                                   guint         property_id,
-                                   const GValue *value,
-                                   GParamSpec   *pspec)
+gimp_operation_gradient_set_property (GObject      *object,
+                                      guint         property_id,
+                                      const GValue *value,
+                                      GParamSpec   *pspec)
 {
-  GimpOperationBlend *self = GIMP_OPERATION_BLEND (object);
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
 
   switch (property_id)
     {
@@ -423,11 +428,7 @@ gimp_operation_blend_set_property (GObject      *object,
       {
         GimpGradient *gradient = g_value_get_object (value);
 
-        if (self->gradient)
-          {
-            g_object_unref (self->gradient);
-            self->gradient = NULL;
-          }
+        g_clear_object (&self->gradient);
 
         if (gradient)
           {
@@ -471,6 +472,10 @@ gimp_operation_blend_set_property (GObject      *object,
       self->gradient_reverse = g_value_get_boolean (value);
       break;
 
+    case PROP_GRADIENT_BLEND_COLOR_SPACE:
+      self->gradient_blend_color_space = g_value_get_enum (value);
+      break;
+
     case PROP_SUPERSAMPLE:
       self->supersample = g_value_get_boolean (value);
       break;
@@ -494,13 +499,17 @@ gimp_operation_blend_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_blend_prepare (GeglOperation *operation)
+gimp_operation_gradient_prepare (GeglOperation *operation)
 {
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
+
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
+
+  self->gradient_cache_valid = FALSE;
 }
 
 static GeglRectangle
-gimp_operation_blend_get_bounding_box (GeglOperation *operation)
+gimp_operation_gradient_get_bounding_box (GeglOperation *operation)
 {
   return gegl_rectangle_infinite_plane ();
 }
@@ -887,7 +896,6 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->repeat)
     {
-    case GIMP_REPEAT_TRUNCATE:
     case GIMP_REPEAT_NONE:
       break;
 
@@ -909,28 +917,21 @@ gradient_render_pixel (gdouble   x,
           factor = 1.0 - factor;
       }
       break;
+
+    case GIMP_REPEAT_TRUNCATE:
+      if (factor < 0.0 || factor > 1.0)
+        {
+          gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
+          return;
+        }
+      break;
     }
 
   /* Blend the colors */
 
-  if (factor <= 0.0)
-    {
-      *color = rbd->leftmost_color;
-    }
-  else if (factor >= 1.0)
-    {
-      *color = rbd->rightmost_color;
-    }
-  else
-    {
-#ifdef USE_GRADIENT_CACHE
-      *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
-#else
-      rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
-                                                  rbd->last_seg, factor,
-                                                  rbd->reverse, color);
-#endif
-    }
+  factor = CLAMP (factor, 0.0, 1.0);
+
+  *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
 }
 
 static void
@@ -978,13 +979,13 @@ gradient_put_pixel (gint      x,
 }
 
 static gboolean
-gimp_operation_blend_process (GeglOperation       *operation,
-                              GeglBuffer          *input,
-                              GeglBuffer          *output,
-                              const GeglRectangle *result,
-                              gint                 level)
+gimp_operation_gradient_process (GeglOperation       *operation,
+                                 GeglBuffer          *input,
+                                 GeglBuffer          *output,
+                                 const GeglRectangle *result,
+                                 gint                 level)
 {
-  GimpOperationBlend *self = GIMP_OPERATION_BLEND (operation);
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
 
   const gdouble sx = self->start_x;
   const gdouble sy = self->start_y;
@@ -993,32 +994,50 @@ gimp_operation_blend_process (GeglOperation       *operation,
 
   RenderBlendData rbd = { 0, };
 
-  rbd.gradient = NULL;
-  rbd.reverse  = self->gradient_reverse;
+  if (! self->gradient)
+    return TRUE;
 
-  if (self->gradient)
-    rbd.gradient = g_object_ref (self->gradient);
-  else
-    rbd.gradient = GIMP_GRADIENT (gimp_gradient_new (NULL, "Blend-Temp"));
+  g_mutex_lock (&self->gradient_cache_mutex);
 
-#ifdef USE_GRADIENT_CACHE
-  {
-    GimpGradientSegment *last_seg = NULL;
-    gint                 i;
+  if (! self->gradient_cache_valid)
+    {
+      GimpGradientSegment *last_seg = NULL;
+      gint                 cache_size;
+      gint                 i;
 
-    rbd.gradient_cache_size = ceil (sqrt (SQR (sx - ex) + SQR (sy - ey)));
-    rbd.gradient_cache      = g_new0 (GimpRGB, rbd.gradient_cache_size);
+      cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
+                               SQR (self->start_y - self->end_y))) * 4;
 
-    for (i = 0; i < rbd.gradient_cache_size; i++)
-      {
-        gdouble factor = (gdouble) i / (gdouble) (rbd.gradient_cache_size - 1);
+      /*  have at least one value in the cache  */
+      cache_size = MAX (cache_size, 1);
 
-        last_seg = gimp_gradient_get_color_at (rbd.gradient, NULL, last_seg,
-                                               factor, rbd.reverse,
-                                               rbd.gradient_cache + i);
-      }
-  }
-#endif
+      if (cache_size != self->gradient_cache_size)
+        {
+          g_clear_pointer (&self->gradient_cache, g_free);
+
+          self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+          self->gradient_cache_size = cache_size;
+        }
+
+      for (i = 0; i < self->gradient_cache_size; i++)
+        {
+          gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
+
+          last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
+                                                 factor,
+                                                 self->gradient_reverse,
+                                                 self->gradient_blend_color_space,
+                                                 self->gradient_cache + i);
+        }
+
+      self->gradient_cache_valid = TRUE;
+    }
+
+  g_mutex_unlock (&self->gradient_cache_mutex);
+
+  rbd.gradient            = self->gradient;
+  rbd.gradient_cache      = self->gradient_cache;
+  rbd.gradient_cache_size = self->gradient_cache_size;
 
   /* Calculate type-specific parameters */
 
@@ -1068,26 +1087,6 @@ gimp_operation_blend_process (GeglOperation       *operation,
   rbd.gradient_type = self->gradient_type;
   rbd.repeat        = self->gradient_repeat;
 
-  if (rbd.repeat == GIMP_REPEAT_NONE)
-    {
-      gimp_gradient_segment_get_left_flat_color  (rbd.gradient, NULL,
-                                                  rbd.gradient->segments,
-                                                  &rbd.leftmost_color);
-      gimp_gradient_segment_get_right_flat_color (rbd.gradient, NULL,
-                                                  gimp_gradient_segment_get_last (
-                                                    rbd.gradient->segments),
-                                                  &rbd.rightmost_color);
-
-      if (rbd.reverse)
-        {
-          GimpRGB temp;
-
-          temp                = rbd.leftmost_color;
-          rbd.leftmost_color  = rbd.rightmost_color;
-          rbd.rightmost_color = temp;
-        }
-    }
-
   /* Render the gradient! */
 
   if (self->supersample)
@@ -1119,6 +1118,7 @@ gimp_operation_blend_process (GeglOperation       *operation,
     {
       GeglBufferIterator *iter;
       GeglRectangle      *roi;
+      GRand              *seed = NULL;
 
       iter = gegl_buffer_iterator_new (output, result, 0,
                                        babl_format ("R'G'B'A float"),
@@ -1126,7 +1126,7 @@ gimp_operation_blend_process (GeglOperation       *operation,
       roi = &iter->roi[0];
 
       if (self->dither)
-        rbd.seed = g_rand_new ();
+        seed = g_rand_new ();
 
       while (gegl_buffer_iterator_next (iter))
         {
@@ -1135,9 +1135,9 @@ gimp_operation_blend_process (GeglOperation       *operation,
           gint    endy = roi->y + roi->height;
           gint    x, y;
 
-          if (rbd.seed)
+          if (seed)
             {
-              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (rbd.seed));
+              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (seed));
 
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
@@ -1183,14 +1183,8 @@ gimp_operation_blend_process (GeglOperation       *operation,
         }
 
       if (self->dither)
-        g_rand_free (rbd.seed);
+        g_rand_free (seed);
     }
-
-#ifdef USE_GRADIENT_CACHE
-  g_free (rbd.gradient_cache);
-#endif
-
-  g_object_unref (rbd.gradient);
 
   return TRUE;
 }

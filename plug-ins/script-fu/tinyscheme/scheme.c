@@ -1604,7 +1604,7 @@ static gunichar basic_inchar(port *pt) {
         /* Is this byte an invalid lead per RFC-3629? */
         if (c < 0xc2 || c > 0xf4)
           {
-            /* Ignore invalid lead byte and get the next characer */
+            /* Ignore invalid lead byte and get the next character */
             c = fgetc(pt->rep.stdio.file);
           }
         else    /* Byte is valid lead */

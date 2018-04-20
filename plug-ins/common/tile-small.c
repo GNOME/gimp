@@ -1061,7 +1061,7 @@ tiles_xy (gint  width,
 }
 
 
-/* Given a row then srink it down a bit */
+/* Given a row then shrink it down a bit */
 static void
 do_tiles_preview (guchar *dest_row,
                   guchar *src_rows,

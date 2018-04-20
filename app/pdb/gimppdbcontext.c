@@ -503,6 +503,14 @@ gimp_pdb_context_new (Gimp        *gimp,
   return GIMP_CONTEXT (context);
 }
 
+GimpContainer *
+gimp_pdb_context_get_paint_options_list (GimpPDBContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+
+  return context->paint_options_list;
+}
+
 GimpPaintOptions *
 gimp_pdb_context_get_paint_options (GimpPDBContext *context,
                                     const gchar    *name)

@@ -578,7 +578,7 @@ gfig_style_copy (Style       *style1,
   if (name)
     style1->name = g_strdup (name);
   else
-    g_message ("Eror: name is NULL in gfig_style_copy.");
+    g_message ("Error: name is NULL in gfig_style_copy.");
 
   if (gfig_context->debug_styles)
     g_printerr ("Copying style %s as style %s\n", style0->name, name);

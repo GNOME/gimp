@@ -25,9 +25,9 @@
 
 #include "dialogs-types.h"
 
-#include "core/gimp-edit.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-fade.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawableundo.h"
@@ -206,7 +206,7 @@ fade_dialog_response (GtkWidget  *dialog,
 static void
 fade_dialog_context_changed (FadeDialog *private)
 {
-  if (gimp_edit_fade (private->image, private->context))
+  if (gimp_image_fade (private->image, private->context))
     {
       private->applied = TRUE;
       gimp_image_flush (private->image);

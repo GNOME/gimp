@@ -1426,7 +1426,7 @@ get_layer_color (gint32    layer_ID,
 
   if (gimp_drawable_is_indexed (layer_ID))
     {
-      /* FIXME: We can't do a propper histogram on indexed layers! */
+      /* FIXME: We can't do a proper histogram on indexed layers! */
       *single = FALSE;
       col. r = col.g = col.b = col.a = 0;
       return col;

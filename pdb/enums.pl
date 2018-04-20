@@ -203,6 +203,16 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_FOREGROUND_EXTRACT_SIOX => '0',
 		       GIMP_FOREGROUND_EXTRACT_MATTING => '1' }
 	},
+    GimpGradientBlendColorSpace =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL
+			  GIMP_GRADIENT_BLEND_RGB_LINEAR
+			  GIMP_GRADIENT_BLEND_CIE_LAB) ],
+	  mapping => { GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL => '0',
+		       GIMP_GRADIENT_BLEND_RGB_LINEAR => '1',
+		       GIMP_GRADIENT_BLEND_CIE_LAB => '2' }
+	},
     GimpGradientSegmentColor =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

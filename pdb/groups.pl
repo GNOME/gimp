@@ -11,6 +11,7 @@
     display
     drawable
     drawable_color
+    drawable_edit
     drawable_transform
     dynamics
     edit

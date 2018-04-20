@@ -32,10 +32,12 @@
 
 #include "pdb-types.h"
 
+#include "core/gimp-gradients.h"
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdashpattern.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpstrokeoptions.h"
 #include "paint/gimppaintoptions.h"
@@ -1562,6 +1564,251 @@ context_set_gradient_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_set_gradient_fg_bg_rgb_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_rgb (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_bg_hsv_cw_invoker (GimpProcedure         *procedure,
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_cw (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_bg_hsv_ccw_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_bg_hsv_ccw (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_set_gradient_fg_transparent_invoker (GimpProcedure         *procedure,
+                                             Gimp                  *gimp,
+                                             GimpContext           *context,
+                                             GimpProgress          *progress,
+                                             const GimpValueArray  *args,
+                                             GError               **error)
+{
+  gimp_context_set_gradient (context,
+                             gimp_gradients_get_fg_transparent (gimp));
+
+  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+}
+
+static GimpValueArray *
+context_get_gradient_blend_color_space_invoker (GimpProcedure         *procedure,
+                                                Gimp                  *gimp,
+                                                GimpContext           *context,
+                                                GimpProgress          *progress,
+                                                const GimpValueArray  *args,
+                                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gint32 blend_color_space = 0;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "gradient-blend-color-space", &blend_color_space,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), blend_color_space);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_gradient_blend_color_space_invoker (GimpProcedure         *procedure,
+                                                Gimp                  *gimp,
+                                                GimpContext           *context,
+                                                GimpProgress          *progress,
+                                                const GimpValueArray  *args,
+                                                GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 blend_color_space;
+
+  blend_color_space = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpContainer *options;
+      GList         *list;
+
+      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+
+      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "gradient-blend-color-space", blend_color_space,
+                       NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gint32 repeat_mode = 0;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "gradient-repeat", &repeat_mode,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), repeat_mode);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_gradient_repeat_mode_invoker (GimpProcedure         *procedure,
+                                          Gimp                  *gimp,
+                                          GimpContext           *context,
+                                          GimpProgress          *progress,
+                                          const GimpValueArray  *args,
+                                          GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 repeat_mode;
+
+  repeat_mode = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpContainer *options;
+      GList         *list;
+
+      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+
+      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "gradient-repeat", repeat_mode,
+                       NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_gradient_reverse_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gboolean reverse = FALSE;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "gradient-reverse", &reverse,
+                  NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), reverse);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_gradient_reverse_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  gboolean reverse;
+
+  reverse = g_value_get_boolean (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpContainer *options;
+      GList         *list;
+
+      options = gimp_pdb_context_get_paint_options_list (GIMP_PDB_CONTEXT (context));
+
+      for (list = GIMP_LIST (options)->queue->head; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "gradient-reverse", reverse,
+                       NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_palette_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -2080,6 +2327,51 @@ context_set_diagonal_neighbors_invoker (GimpProcedure         *procedure,
     {
       g_object_set (context,
                     "diagonal-neighbors", diagonal_neighbors,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_distance_metric_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 metric = 0;
+
+  g_object_get (context,
+                "distance-metric", &metric,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), metric);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_distance_metric_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 metric;
+
+  metric = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      g_object_set (context,
+                    "distance-metric", metric,
                     NULL);
     }
 
@@ -2764,51 +3056,6 @@ context_set_ink_blob_angle_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-context_get_distance_metric_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
-{
-  GimpValueArray *return_vals;
-  gint32 metric = 0;
-
-  g_object_get (context,
-                "distance-metric", &metric,
-                NULL);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_enum (gimp_value_array_index (return_vals, 1), metric);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-context_set_distance_metric_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
-                                     GError               **error)
-{
-  gboolean success = TRUE;
-  gint32 metric;
-
-  metric = g_value_get_enum (gimp_value_array_index (args, 0));
-
-  if (success)
-    {
-      g_object_set (context,
-                    "distance-metric", metric,
-                    NULL);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
 void
 register_context_procs (GimpPDB *pdb)
 {
@@ -3246,7 +3493,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-width",
                                      "Set the line width setting.",
                                      "This procedure modifies the line width setting for stroking lines.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3295,7 +3543,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-width-unit",
                                      "Set the line width unit setting.",
                                      "This procedure modifies the line width unit setting for stroking lines.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3345,7 +3594,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-cap-style",
                                      "Set the line cap style setting.",
                                      "This procedure modifies the line cap style setting for stroking lines.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3394,7 +3644,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-join-style",
                                      "Set the line join style setting.",
                                      "This procedure modifies the line join style setting for stroking lines.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3443,7 +3694,8 @@ register_context_procs (GimpPDB *pdb)
                                      "Set the line miter limit setting.",
                                      "This procedure modifies the line miter limit setting for stroking lines.\n"
                                      "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3490,7 +3742,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-dash-offset",
                                      "Set the line dash offset setting.",
                                      "This procedure modifies the line dash offset setting for stroking lines.\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -3542,8 +3795,10 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-line-dash-pattern",
                                      "Set the line dash pattern setting.",
                                      "This procedure modifies the line dash pattern setting for stroking lines.\n"
+                                     "\n"
                                      "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
-                                     "This setting affects the following procedures: 'gimp-edit-stroke', 'gimp-edit-stroke-vectors'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection-', 'gimp-drawable-edit-stroke-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -4130,6 +4385,216 @@ register_context_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-context-set-gradient-fg-bg-rgb
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_rgb_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-rgb");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-rgb",
+                                     "Sets the built-in FG-BG RGB gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG RGB gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-bg-hsv-cw
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_cw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-hsv-cw");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-hsv-cw",
+                                     "Sets the built-in FG-BG HSV (cw) gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG HSV (cw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-bg-hsv-ccw
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_bg_hsv_ccw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-bg-hsv-ccw");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-bg-hsv-ccw",
+                                     "Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-BG HSV (ccw) gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-fg-transparent
+   */
+  procedure = gimp_procedure_new (context_set_gradient_fg_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-fg-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-fg-transparent",
+                                     "Sets the built-in FG-Transparent gradient as the active gradient.",
+                                     "This procedure sets the built-in FG-Transparent gradient as the active gradient. The gradient will be used for subsequent gradient operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-gradient-blend-color-space
+   */
+  procedure = gimp_procedure_new (context_get_gradient_blend_color_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-gradient-blend-color-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-gradient-blend-color-space",
+                                     "Get the gradient blend color space.",
+                                     "Get the gradient blend color space for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("blend-color-space",
+                                                      "blend color space",
+                                                      "Color blend space",
+                                                      GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                      GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-blend-color-space
+   */
+  procedure = gimp_procedure_new (context_set_gradient_blend_color_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-blend-color-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-blend-color-space",
+                                     "Set the gradient blend color space.",
+                                     "Set the gradient blend color space for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("blend-color-space",
+                                                  "blend color space",
+                                                  "Blend color space",
+                                                  GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                                                  GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-gradient-repeat-mode
+   */
+  procedure = gimp_procedure_new (context_get_gradient_repeat_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-gradient-repeat-mode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-gradient-repeat-mode",
+                                     "Get the gradient repeat mode.",
+                                     "Get the gradient repeat mode for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("repeat-mode",
+                                                      "repeat mode",
+                                                      "Repeat mode",
+                                                      GIMP_TYPE_REPEAT_MODE,
+                                                      GIMP_REPEAT_NONE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-repeat-mode
+   */
+  procedure = gimp_procedure_new (context_set_gradient_repeat_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-repeat-mode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-repeat-mode",
+                                     "Set the gradient repeat mode.",
+                                     "Set the gradient repeat mode for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("repeat-mode",
+                                                  "repeat mode",
+                                                  "Repeat mode",
+                                                  GIMP_TYPE_REPEAT_MODE,
+                                                  GIMP_REPEAT_NONE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-gradient-reverse
+   */
+  procedure = gimp_procedure_new (context_get_gradient_reverse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-gradient-reverse");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-gradient-reverse",
+                                     "Get the gradient reverse setting.",
+                                     "Get the gradient reverse setting for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("reverse",
+                                                         "reverse",
+                                                         "Reverse",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-gradient-reverse
+   */
+  procedure = gimp_procedure_new (context_set_gradient_reverse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-gradient-reverse");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-gradient-reverse",
+                                     "Set the gradient reverse setting.",
+                                     "Set the gradient reverse setting for paint tools and the gradient tool.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("reverse",
+                                                     "reverse",
+                                                     "Reverse",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-context-get-palette
    */
   procedure = gimp_procedure_new (context_get_palette_invoker);
@@ -4258,7 +4723,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-antialias",
                                      "Set the antialias setting.",
                                      "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -4305,6 +4771,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-feather",
                                      "Set the feather setting.",
                                      "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
+                                     "\n"
                                      "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4358,6 +4825,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-feather-radius",
                                      "Set the feather radius setting.",
                                      "This procedure modifies the feather radius setting.\n"
+                                     "\n"
                                      "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4411,7 +4879,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-merged",
                                      "Set the sample merged setting.",
                                      "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4459,7 +4928,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-criterion",
                                      "Set the sample criterion setting.",
                                      "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4507,7 +4977,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-threshold",
                                      "Set the sample threshold setting.",
                                      "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4600,7 +5071,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-sample-transparent",
                                      "Set the sample transparent setting.",
                                      "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2011",
@@ -4647,7 +5119,8 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-diagonal-neighbors",
                                      "Set the diagonal neighbors setting.",
                                      "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-contiguous-color'.",
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                      "Ell",
                                      "Ell",
                                      "2016",
@@ -4658,6 +5131,56 @@ register_context_procs (GimpPDB *pdb)
                                                      "The diagonal neighbors setting",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-distance-metric
+   */
+  procedure = gimp_procedure_new (context_get_distance_metric_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-distance-metric");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-distance-metric",
+                                     "Get the distance metric used in some computations.",
+                                     "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
+                                     "Jehan",
+                                     "Jehan",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("metric",
+                                                      "metric",
+                                                      "The distance metric",
+                                                      GEGL_TYPE_DISTANCE_METRIC,
+                                                      GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-distance-metric
+   */
+  procedure = gimp_procedure_new (context_set_distance_metric_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-distance-metric");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-distance-metric",
+                                     "Set the distance metric used in some computations.",
+                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
+                                     "\n"
+                                     "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
+                                     "Jehan",
+                                     "Jehan",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("metric",
+                                                  "metric",
+                                                  "The distance metric",
+                                                  GEGL_TYPE_DISTANCE_METRIC,
+                                                  GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4695,6 +5218,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-interpolation",
                                      "Set the interpolation type.",
                                      "This procedure modifies the interpolation setting.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4744,6 +5268,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-transform-direction",
                                      "Set the transform direction.",
                                      "This procedure modifies the transform direction setting.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -4793,6 +5318,7 @@ register_context_procs (GimpPDB *pdb)
                                      "gimp-context-set-transform-resize",
                                      "Set the transform resize type.",
                                      "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
+                                     "\n"
                                      "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
@@ -5221,54 +5747,6 @@ register_context_procs (GimpPDB *pdb)
                                                     "ink blob angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-context-get-distance-metric
-   */
-  procedure = gimp_procedure_new (context_get_distance_metric_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-distance-metric");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-distance-metric",
-                                     "Get the distance metric used in some computations.",
-                                     "This procedure returns the distance metric in the current context. See 'gimp-context-set-distance-metric' to know more about its usage.",
-                                     "Jehan",
-                                     "Jehan",
-                                     "2018",
-                                     NULL);
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_enum ("metric",
-                                                      "metric",
-                                                      "The distance metric",
-                                                      GEGL_TYPE_DISTANCE_METRIC,
-                                                      GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-context-set-distance-metric
-   */
-  procedure = gimp_procedure_new (context_set_distance_metric_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-distance-metric");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-distance-metric",
-                                     "Set the distance metric used in some computations.",
-                                     "This procedure modifies the distance metric used in some computations, such as 'gimp-edit-blend'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.",
-                                     "Jehan",
-                                     "Jehan",
-                                     "2018",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("metric",
-                                                  "metric",
-                                                  "The distance metric",
-                                                  GEGL_TYPE_DISTANCE_METRIC,
-                                                  GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

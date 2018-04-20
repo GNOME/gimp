@@ -71,8 +71,8 @@
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/babl",
-                    "branch": "BABL_0_1_44",
-                    "commit": "9e4bfe9f1470a7836f7f885ea95607427ed7997f"
+                    "branch": "BABL_0_1_46",
+                    "commit": "e92ced2c54250af1dddb58f76ff1678d74a30dcf"
                 }
             ]
         },
@@ -84,8 +84,8 @@
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gegl",
-                    "branch": "GEGL_0_3_30",
-                    "commit": "6183445f039847814ebf52edb77e861004aa93ab"
+                    "branch": "GEGL_0_3_34",
+                    "commit": "29254dcd875d271043aba57d0e6ebc48ec63c013"
                 }
             ]
         },
@@ -97,8 +97,8 @@
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gimp",
-                    "branch": "GIMP_2_10_0_RC1",
-                    "commit": "956ca8e3a39cc93d8fae439a8e5eb073059db011"
+                    "branch": "GIMP_2_10_0_RC2",
+                    "commit": "6582692ec6c8196108b2d42f6758c62076a88d13"
                 }
             ],
 	    "post-install": [

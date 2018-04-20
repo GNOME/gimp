@@ -94,7 +94,7 @@
           (gimp-context-set-foreground '(0 0 0))))
 
     (gimp-image-insert-layer img drawable 0 0)
-    (gimp-edit-clear drawable)
+    (gimp-drawable-edit-clear drawable)
 
     (if (= labels TRUE)
         (begin
@@ -103,7 +103,7 @@
                                                   GRAYA-IMAGE RGBA-IMAGE)
                                               "Labels" 100 LAYER-MODE-NORMAL)))
           (gimp-image-insert-layer img drawable 0 -1)))
-          (gimp-edit-clear drawable)
+          (gimp-drawable-edit-clear drawable)
 
     (while (< count num-fonts)
       (set! font (car font-list))

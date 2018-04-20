@@ -100,7 +100,7 @@ export_merge (gint32  image_ID,
                                100.0, GIMP_LAYER_MODE_NORMAL);
       gimp_image_insert_layer (image_ID, transp, -1, 1);
       gimp_selection_none (image_ID);
-      gimp_edit_clear (transp);
+      gimp_drawable_edit_clear (transp);
       nvisible++;
     }
 

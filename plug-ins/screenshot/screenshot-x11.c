@@ -433,7 +433,7 @@ create_image (cairo_surface_t *surface,
       if (! gimp_selection_is_empty (image))
         {
           gimp_layer_add_alpha (layer);
-          gimp_edit_clear (layer);
+          gimp_drawable_edit_clear (layer);
           gimp_selection_none (image);
         }
     }

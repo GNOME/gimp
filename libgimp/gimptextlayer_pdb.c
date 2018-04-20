@@ -1091,6 +1091,12 @@ gimp_text_layer_get_hinting (gint32    layer_ID,
  * @hinting: Enable/disable the use of hinting on the text.
  * @autohint: Force the use of the autohinter provided through FreeType.
  *
+ * Enable/disable the use of hinting in a text layer.
+ *
+ * This procedure enables or disables hinting on the text of a text
+ * layer. If you enable 'auto-hint', FreeType\'s automatic hinter will
+ * be used and hinting information from the font will be ignored.
+ *
  * Deprecated: Use gimp_text_layer_set_hint_style() instead.
  *
  * Returns: TRUE on success.

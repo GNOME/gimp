@@ -370,15 +370,29 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
       gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
       gtk_widget_show (inner_frame);
 
+      inner_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+      gtk_container_add (GTK_CONTAINER (inner_frame), inner_vbox);
+      gtk_widget_show (inner_vbox);
+
       box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
                                         _("Gradient"), 2,
                                         "gradient-view-type",
                                         "gradient-view-size",
                                         "gradient-reverse",
+                                        "gradient-blend-color-space",
                                         "gimp-gradient-editor",
                                         _("Edit this gradient"));
-      gtk_container_add (GTK_CONTAINER (inner_frame), box);
+      gtk_box_pack_start (GTK_BOX (inner_vbox), box, FALSE, FALSE, 0);
       gtk_widget_show (box);
+
+      /*  the blend color space  */
+      combo = gimp_prop_enum_combo_box_new (config, "gradient-blend-color-space",
+                                            0, 0);
+      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo),
+                                    _("Blend Color Space"));
+      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+      gtk_box_pack_start (GTK_BOX (inner_vbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
     }
 
   return frame;

@@ -48,4 +48,4 @@ Making a gih file:
 Or use the GIH plug-in to save a brush pipe from an image.
 
 
-Thats about it for now.
+That's about it for now.

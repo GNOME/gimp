@@ -107,7 +107,7 @@
       (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
       (gimp-drawable-fill shadow-layer FILL-TRANSPARENT)
       (gimp-context-set-background shadow-color)
-      (gimp-edit-fill shadow-layer FILL-BACKGROUND)
+      (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
       (gimp-selection-none image)
 
       (if (= allow-resize TRUE)
@@ -178,7 +178,7 @@
     (if (= from-selection TRUE)
         (begin
           (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-clear shadow-layer)
+          (gimp-drawable-edit-clear shadow-layer)
           (gimp-image-remove-channel image active-selection)))
 
     (if (and

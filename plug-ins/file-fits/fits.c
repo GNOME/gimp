@@ -115,7 +115,7 @@ static FITSLoadVals plvals =
 {
   0,        /* Replace with black */
   0,        /* Do autoscale on pixel-values */
-  0         /* Dont compose images */
+  0         /* Don't compose images */
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =

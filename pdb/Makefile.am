@@ -13,6 +13,7 @@ pdb_groups = \
 	groups/display.pdb		\
 	groups/drawable.pdb		\
 	groups/drawable_color.pdb	\
+	groups/drawable_edit.pdb	\
 	groups/drawable_transform.pdb	\
 	groups/dynamics.pdb		\
 	groups/edit.pdb			\

@@ -63,7 +63,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_DYNAMICS                  "gimp-dynamics"
 #define GIMP_ICON_FILE_MANAGER              "gimp-file-manager"
 #define GIMP_ICON_FONT                      "gtk-select-font"
-#define GIMP_ICON_GRADIENT                  GIMP_ICON_TOOL_BLEND
+#define GIMP_ICON_GRADIENT                  GIMP_ICON_TOOL_GRADIENT
 #define GIMP_ICON_GRID                      "gimp-grid"
 #define GIMP_ICON_INPUT_DEVICE              "gimp-input-device"
 #define GIMP_ICON_MYPAINT_BRUSH             GIMP_ICON_TOOL_MYPAINT_BRUSH
@@ -322,7 +322,6 @@ G_BEGIN_DECLS
 
 #define GIMP_ICON_TOOL_AIRBRUSH             "gimp-tool-airbrush"
 #define GIMP_ICON_TOOL_ALIGN                "gimp-tool-align"
-#define GIMP_ICON_TOOL_BLEND                "gimp-tool-blend"
 #define GIMP_ICON_TOOL_BLUR                 "gimp-tool-blur"
 #define GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST  "gimp-tool-brightness-contrast"
 #define GIMP_ICON_TOOL_BUCKET_FILL          "gimp-tool-bucket-fill"
@@ -344,6 +343,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_TOOL_FOREGROUND_SELECT    "gimp-tool-foreground-select"
 #define GIMP_ICON_TOOL_FREE_SELECT          "gimp-tool-free-select"
 #define GIMP_ICON_TOOL_FUZZY_SELECT         "gimp-tool-fuzzy-select"
+#define GIMP_ICON_TOOL_GRADIENT             "gimp-tool-gradient"
 #define GIMP_ICON_TOOL_HANDLE_TRANSFORM     "gimp-tool-handle-transform"
 #define GIMP_ICON_TOOL_HEAL                 "gimp-tool-heal"
 #define GIMP_ICON_TOOL_HUE_SATURATION       "gimp-tool-hue-saturation"
@@ -462,7 +462,7 @@ G_BEGIN_DECLS
 
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_ALIGN               "gimp-tool-align"
-#define GIMP_STOCK_TOOL_BLEND               "gimp-tool-blend"
+#define GIMP_STOCK_TOOL_BLEND               "gimp-tool-gradient"
 #define GIMP_STOCK_TOOL_BLUR                "gimp-tool-blur"
 #define GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST "gimp-tool-brightness-contrast"
 #define GIMP_STOCK_TOOL_BUCKET_FILL         "gimp-tool-bucket-fill"

@@ -401,7 +401,7 @@ p_gimp_rotate (gint32  image_id,
                                             GIMP_PDB_IMAGE, image_id,
                                             GIMP_PDB_DRAWABLE, drawable_id,
                                             GIMP_PDB_INT32, l_angle_step,
-                                            GIMP_PDB_INT32, FALSE,         /* dont rotate the whole image */
+                                            GIMP_PDB_INT32, FALSE,         /* don't rotate the whole image */
                                             GIMP_PDB_END);
 
           if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
@@ -517,7 +517,7 @@ query (void)
   {
     { GIMP_PDB_INT32, "run-mode", "The run mode { RUN-NONINTERACTIVE (1) }" },
     { GIMP_PDB_INT32, "total-steps", "total number of steps (# of layers-1 to apply the related plug-in)" },
-    { GIMP_PDB_FLOAT, "current-step", "current (for linear iterations this is the layerstack position, otherwise some value inbetween)" },
+    { GIMP_PDB_FLOAT, "current-step", "current (for linear iterations this is the layerstack position, otherwise some value in between)" },
     { GIMP_PDB_INT32, "len-struct", "length of stored data structure with id is equal to the plug_in  proc_name" },
   };
 
@@ -589,7 +589,7 @@ run (const gchar      *name,
   /* Get the runmode from the in-parameters */
   GimpRunMode run_mode = param[0].data.d_int32;
 
-  /* status variable, use it to check for errors in invocation usualy only
+  /* status variable, use it to check for errors in invocation usually only
      during non-interactive calling */
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
@@ -922,7 +922,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warnig: BAD points[%d] in file %s are ignored\n", l_pi, filename);
+              printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
            }
         }
         l_len = strlen(KEY_VAL_Y);
@@ -937,7 +937,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warnig: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
+              printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
            }
         }
 
@@ -2483,7 +2483,7 @@ p_curve_get_dy (BenderDialog *cd,
                 gdouble       current_step)
 {
   /* get y values of both upper and lower curve,
-   * and return the iterated value inbetween
+   * and return the iterated value in between
    */
   gdouble     l_y1,  l_y2;
   gdouble     delta;
@@ -3000,7 +3000,7 @@ p_vertical_bend (BenderDialog *cd,
                                            (gint32)src_gdrw->drawable->height, (gdouble)l_y);
                   l_desty = l_y + l_topshift + l_curvy;
 
-                  /* ----------- SMOOTING ------------------ */
+                  /* ----------- SMOOTHING ------------------ */
                   if (cd->smoothing && (l_x > 0))
                     {
                       l_nb_curvy = p_curve_get_dy(cd, l_x -1,
@@ -3136,7 +3136,7 @@ p_vertical_bend (BenderDialog *cd,
 
                       if (cd->smoothing)
                         {
-                          /* smooting is on, so we are using a mixed color */
+                          /* smoothing is on, so we are using a mixed color */
                           gulong alpha1 = last_arr[l_x].color[3];
                           gulong alpha2 = color[3];
                           gulong alpha;
@@ -3156,7 +3156,7 @@ p_vertical_bend (BenderDialog *cd,
                         }
                       else
                         {
-                          /* smooting is off, so we are using this color or
+                          /* smoothing is off, so we are using this color or
                              the last color */
                           if (l_dy < l_diff / 2)
                             {

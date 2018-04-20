@@ -96,6 +96,8 @@
         )
 
   (gimp-context-push)
+  (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
+  (gimp-context-set-opacity 100.0)
   (gimp-context-set-feather FALSE)
 
   (gimp-image-undo-disable image)
@@ -202,7 +204,7 @@
     )
 
     (gimp-context-set-foreground '(0 0 0))
-    (gimp-edit-fill film-mask FILL-BACKGROUND)
+    (gimp-drawable-edit-fill film-mask FILL-BACKGROUND)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image film-mask hole-radius TRUE TRUE)
     (gimp-threshold film-mask 127 255)

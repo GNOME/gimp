@@ -2166,7 +2166,9 @@ register_text_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-layer-set-hinting",
                                      "Enable/disable the use of hinting in a text layer.",
-                                     "This procedure enables or disables hinting on the text of a text layer. If you enable 'auto-hint', FreeType\'s automatic hinter will be used and hinting information from the font will be ignored.",
+                                     "This procedure enables or disables hinting on the text of a text layer. If you enable 'auto-hint', FreeType\'s automatic hinter will be used and hinting information from the font will be ignored.\n"
+                                     "\n"
+                                     "Deprecated: Use 'gimp-text-layer-set-hint-style' instead.",
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
                                      "2008",

@@ -253,7 +253,7 @@ gimp_enum_store_new_with_range (GType  enum_type,
  * @...:       a list of enum values (exactly @n_values)
  *
  * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
- * to explicitely list the enum values that should be added to the
+ * to explicitly list the enum values that should be added to the
  * store.
  *
  * Return value: a new #GimpEnumStore.

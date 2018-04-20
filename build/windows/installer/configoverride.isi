@@ -1,4 +1,4 @@
-﻿;allow specific configuration files to be overriden by files in a specific directory
+﻿;allow specific configuration files to be overridden by files in a specific directory
 #if 0
 [Files]
 #endif

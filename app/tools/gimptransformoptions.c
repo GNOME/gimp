@@ -254,6 +254,14 @@ gimp_transform_options_set_property (GObject      *object,
       break;
     case PROP_DIRECTION:
       options->direction = g_value_get_enum (value);
+
+      /* Expected default for corrective transform is to see the
+       * original image only.
+       */
+      g_object_set (options,
+                    "show-preview",
+                    options->direction != GIMP_TRANSFORM_BACKWARD,
+                    NULL);
       break;
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);

@@ -1013,7 +1013,7 @@ open_dialog (const gchar      *filename,
       if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
         {
           /* Do not set an error here. The import was simply canceled.
-           * No error occured. */
+           * No error occurred. */
           color_space = OPJ_CLRSPC_UNKNOWN;
         }
     }

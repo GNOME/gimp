@@ -29,7 +29,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpdrawable-blend.h"
+#include "gimpdrawable-gradient.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
@@ -40,25 +40,26 @@
 /*  public functions  */
 
 void
-gimp_drawable_blend (GimpDrawable       *drawable,
-                     GimpContext        *context,
-                     GimpGradient       *gradient,
-                     GeglDistanceMetric  metric,
-                     GimpLayerMode       paint_mode,
-                     GimpGradientType    gradient_type,
-                     gdouble             opacity,
-                     gdouble             offset,
-                     GimpRepeatMode      repeat,
-                     gboolean            reverse,
-                     gboolean            supersample,
-                     gint                max_depth,
-                     gdouble             threshold,
-                     gboolean            dither,
-                     gdouble             startx,
-                     gdouble             starty,
-                     gdouble             endx,
-                     gdouble             endy,
-                     GimpProgress       *progress)
+gimp_drawable_gradient (GimpDrawable                *drawable,
+                        GimpContext                 *context,
+                        GimpGradient                *gradient,
+                        GeglDistanceMetric           metric,
+                        GimpLayerMode                paint_mode,
+                        GimpGradientType             gradient_type,
+                        gdouble                      opacity,
+                        gdouble                      offset,
+                        GimpRepeatMode               repeat,
+                        gboolean                     reverse,
+                        GimpGradientBlendColorSpace  blend_color_space,
+                        gboolean                     supersample,
+                        gint                         max_depth,
+                        gdouble                      threshold,
+                        gboolean                     dither,
+                        gdouble                      startx,
+                        gdouble                      starty,
+                        gdouble                      endx,
+                        gdouble                      endy,
+                        GimpProgress                *progress)
 {
   GimpImage  *image;
   GeglBuffer *buffer;
@@ -87,27 +88,37 @@ gimp_drawable_blend (GimpDrawable       *drawable,
       gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
     {
       shapeburst =
-        gimp_drawable_blend_shapeburst_distmap (drawable, metric,
-                                                GEGL_RECTANGLE (x, y, width, height),
-                                                progress);
+        gimp_drawable_gradient_shapeburst_distmap (drawable, metric,
+                                                   GEGL_RECTANGLE (x, y, width, height),
+                                                   progress);
+
+      /*  in shapeburst mode, make sure the "line" is long enough to
+       *  span across the selection, so the operation's cache has the
+       *  right size
+       */
+      startx = x;
+      starty = y;
+      endx   = x + width;
+      endy   = y + height;
     }
 
   render = gegl_node_new_child (NULL,
-                                "operation",             "gimp:blend",
-                                "context",               context,
-                                "gradient",              gradient,
-                                "start-x",               startx,
-                                "start-y",               starty,
-                                "end-x",                 endx,
-                                "end-y",                 endy,
-                                "gradient-type",         gradient_type,
-                                "gradient-repeat",       repeat,
-                                "offset",                offset,
-                                "gradient-reverse",      reverse,
-                                "supersample",           supersample,
-                                "supersample-depth",     max_depth,
-                                "supersample-threshold", threshold,
-                                "dither",                dither,
+                                "operation",                  "gimp:gradient",
+                                "context",                    context,
+                                "gradient",                   gradient,
+                                "start-x",                    startx,
+                                "start-y",                    starty,
+                                "end-x",                      endx,
+                                "end-y",                      endy,
+                                "gradient-type",              gradient_type,
+                                "gradient-repeat",            repeat,
+                                "offset",                     offset,
+                                "gradient-reverse",           reverse,
+                                "gradient-blend-color-space", blend_color_space,
+                                "supersample",                supersample,
+                                "supersample-depth",          max_depth,
+                                "supersample-threshold",      threshold,
+                                "dither",                     dither,
                                 NULL);
 
   gimp_gegl_apply_operation (shapeburst, progress, NULL,
@@ -122,7 +133,7 @@ gimp_drawable_blend (GimpDrawable       *drawable,
 
   gimp_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (x, y, width, height),
-                              TRUE, C_("undo-type", "Blend"),
+                              TRUE, C_("undo-type", "Gradient"),
                               opacity, paint_mode,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
@@ -137,10 +148,10 @@ gimp_drawable_blend (GimpDrawable       *drawable,
 }
 
 GeglBuffer *
-gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
-                                        GeglDistanceMetric   metric,
-                                        const GeglRectangle *region,
-                                        GimpProgress        *progress)
+gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
+                                           GeglDistanceMetric   metric,
+                                           const GeglRectangle *region,
+                                           GimpProgress        *progress)
 {
   GimpChannel *mask;
   GimpImage   *image;

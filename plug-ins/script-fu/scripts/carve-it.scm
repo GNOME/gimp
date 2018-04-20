@@ -31,7 +31,7 @@
 
 (define (copy-layer-carve-it dest-image dest-drawable source-image source-drawable)
   (gimp-selection-all dest-image)
-  (gimp-edit-clear dest-drawable)
+  (gimp-drawable-edit-clear dest-drawable)
   (gimp-selection-none dest-image)
   (gimp-selection-all source-image)
   (gimp-edit-copy source-drawable)
@@ -84,7 +84,7 @@
     (gimp-image-insert-layer img layer1 0 0)
 
     (gimp-selection-all img)
-    (gimp-edit-clear layer1)
+    (gimp-drawable-edit-clear layer1)
     (gimp-selection-none img)
     (copy-layer-carve-it img layer1 bg-image bg-layer)
 
@@ -102,7 +102,7 @@
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask-fat)
     (gimp-context-set-brush (carve-brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
-    (gimp-edit-stroke mask-fat)
+    (gimp-drawable-edit-stroke-selection mask-fat)
     (gimp-selection-none img)
 
     (set! mask-emboss (car (gimp-channel-copy mask-fat)))
@@ -113,9 +113,9 @@
     (gimp-context-set-background '(180 180 180))
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask-fat)
     (gimp-selection-invert img)
-    (gimp-edit-fill mask-emboss FILL-BACKGROUND)
+    (gimp-drawable-edit-fill mask-emboss FILL-BACKGROUND)
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
-    (gimp-edit-fill mask-emboss FILL-BACKGROUND)
+    (gimp-drawable-edit-fill mask-emboss FILL-BACKGROUND)
     (gimp-selection-none img)
 
     (set! mask-highlight (car (gimp-channel-copy mask-emboss)))
@@ -147,7 +147,7 @@
     (gimp-layer-add-mask cast-shadow-layer csl-mask)
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill csl-mask FILL-BACKGROUND)
+    (gimp-drawable-edit-fill csl-mask FILL-BACKGROUND)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-insert-layer img inset-layer 0 1)
@@ -156,7 +156,7 @@
     (gimp-layer-add-mask inset-layer il-mask)
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill il-mask FILL-BACKGROUND)
+    (gimp-drawable-edit-fill il-mask FILL-BACKGROUND)
     (gimp-selection-none img)
     (gimp-selection-none bg-image)
     (gimp-levels inset-layer 0 0 255 inset-gamma 0 255)

@@ -115,18 +115,20 @@
               (if (= fadeout TRUE)
                   (begin
                     ; blend with 20% offset to get less transparency in the front
-                    (gimp-edit-blend bl-mask BLEND-FG-BG-RGB LAYER-MODE-NORMAL
-                                     GRADIENT-LINEAR 100 20 REPEAT-NONE FALSE
-                                     FALSE 0 0 TRUE
-                                     (+ bl-x-off bl-width) 0 bl-x-off 0)
+		    (gimp-context-set-gradient-fg-bg-rgb)
+                    (gimp-drawable_edit-gradient-fill bl-mask
+						      GRADIENT-LINEAR 20
+						      FALSE 0 0
+						      TRUE
+						      (+ bl-x-off bl-width) 0
+						      bl-x-off 0)
                   )
               )
 
               (if (= fadeout FALSE)
                   (begin
                     (gimp-context-set-foreground '(255 255 255))
-                    (gimp-edit-bucket-fill bl-mask BUCKET-FILL-FG LAYER-MODE-NORMAL
-                                           100 255 0 0 0)
+                    (gimp-drawable-edit-fill bl-mask FILL-FOREGROUND)
                   )
               )
 
@@ -140,28 +142,31 @@
                         (gimp-drawable-brightness-contrast bl-layer 0.787 0)
                     )
 
-          ;--- blend glow color inside the letters
-          (gimp-context-set-foreground glow-color)
-          (gimp-edit-blend bl-layer BLEND-FG-TRANSPARENT LAYER-MODE-NORMAL
-                   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-                   FALSE 0 0 TRUE
-                   (+ bl-x-off bl-width) 0
-                   (- (+ bl-x-off bl-width) after-glow) 0)
+		    ;--- blend glow color inside the letters
+		    (gimp-context-set-foreground glow-color)
+		    (gimp-context-set-gradient-fg-transparent)
+		    (gimp-drawable-edit-gradient-fill bl-layer
+						      GRADIENT-LINEAR 0
+						      FALSE 0 0
+						      TRUE
+						      (+ bl-x-off bl-width) 0
+						      (- (+ bl-x-off bl-width) after-glow) 0)
 
-          ;--- add corona effect
-          (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
-          (gimp-selection-sharpen img)
-          (gimp-selection-grow img corona-width)
-          (gimp-layer-set-lock-alpha bl-layer FALSE)
-          (gimp-selection-feather img corona-width)
-          (gimp-context-set-foreground glow-color)
-          (gimp-edit-blend bl-layer BLEND-FG-TRANSPARENT LAYER-MODE-NORMAL
-                   GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
-                   FALSE 0 0 TRUE
-                   (- (+ bl-x-off bl-width) corona-width) 0
-                   (- (+ bl-x-off bl-width) after-glow) 0)
-                  )
-              )
+                    ;--- add corona effect
+		    (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
+		    (gimp-selection-sharpen img)
+		    (gimp-selection-grow img corona-width)
+		    (gimp-layer-set-lock-alpha bl-layer FALSE)
+		    (gimp-selection-feather img corona-width)
+		    (gimp-context-set-foreground glow-color)
+		    (gimp-drawable-edit-gradient-fill bl-layer
+						      GRADIENT-LINEAR 0
+						      FALSE 0 0
+						      TRUE
+						      (- (+ bl-x-off bl-width) corona-width) 0
+						      (- (+ bl-x-off bl-width) after-glow) 0)
+		    )
+		  )
 
               ;--- merge with bg layer
               (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))

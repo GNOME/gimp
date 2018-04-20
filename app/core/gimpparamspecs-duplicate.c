@@ -160,11 +160,20 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     }
   else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
     {
+      GParamSpecUInt    *spec  = G_PARAM_SPEC_UINT (pspec);
+      GeglParamSpecSeed *gspec = GEGL_PARAM_SPEC_SEED (pspec);
+
       copy = gegl_param_spec_seed (pspec->name,
                                    g_param_spec_get_nick (pspec),
                                    g_param_spec_get_blurb (pspec),
                                    pspec->flags |
                                    GIMP_CONFIG_PARAM_SERIALIZE);
+
+      G_PARAM_SPEC_UINT (copy)->minimum = spec->minimum;
+      G_PARAM_SPEC_UINT (copy)->maximum = spec->maximum;
+
+      GEGL_PARAM_SPEC_SEED (copy)->ui_minimum = gspec->ui_minimum;
+      GEGL_PARAM_SPEC_SEED (copy)->ui_maximum = gspec->ui_maximum;
     }
   else if (G_IS_PARAM_SPEC_INT (pspec))
     {

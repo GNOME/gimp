@@ -39,26 +39,27 @@
 
       (gimp-image-insert-layer theImage theStain 0 0)
       (gimp-selection-all theImage)
-      (gimp-edit-clear theStain)
+      (gimp-drawable-edit-clear theStain)
 
       (let ((blobSize (/ (rand (- theSize 40)) (+ (rand 3) 1))))
         (gimp-image-select-ellipse theImage
-                             CHANNEL-OP-REPLACE
-                             (/ (- theSize blobSize) 2)
-                             (/ (- theSize blobSize) 2)
-                             blobSize blobSize)
+				   CHANNEL-OP-REPLACE
+				   (/ (- theSize blobSize) 2)
+				   (/ (- theSize blobSize) 2)
+				   blobSize blobSize)
       )
 
       (script-fu-distress-selection theImage theStain
-                                    (* (+ (rand 15) 1) (+ (rand 15) 1))
+                                    (- (* (+ (rand 15) 1) (+ (rand 15) 1)) 1)
                                     (/ theSize 25) 4 2 TRUE TRUE)
 
       (gimp-context-set-gradient "Coffee")
 
-      (gimp-edit-blend theStain BLEND-CUSTOM LAYER-MODE-NORMAL
-                       GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
-                       FALSE 0 0 TRUE
-                       0 0 0 0)
+      (gimp-drawable-edit-gradient-fill theStain
+					GRADIENT-SHAPEBURST-DIMPLED 0
+					FALSE 0 0
+					TRUE
+					0 0 0 0)
 
       (gimp-layer-set-offsets theStain
                               (- (rand theWidth) (/ theSize 2))

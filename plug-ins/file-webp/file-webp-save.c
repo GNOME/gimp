@@ -521,7 +521,7 @@ save_animation (const gchar    *filename,
 
       if (! WebPAnimEncoderOptionsInit (&enc_options))
         {
-          g_printerr ("ERROR: verion mismatch\n");
+          g_printerr ("ERROR: version mismatch\n");
           status = FALSE;
           break;
         }

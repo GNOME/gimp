@@ -461,7 +461,7 @@ query (void)
                           "Make an image of Coupled-Map Lattice (CML). CML is "
                           "a kind of Cellula Automata on continuous (value) "
                           "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "
-                          "prameter file is passed as the 4th arg. You can "
+                          "parameter file is passed as the 4th arg. You can "
                           "control CML_explorer via parameter file.",
                           /*  Or do you want to call me with over 50 args? */
                           "Shuji Narazaki (narazaki@InetQ.or.jp); "

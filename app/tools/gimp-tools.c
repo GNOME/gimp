@@ -41,7 +41,6 @@
 
 #include "gimpairbrushtool.h"
 #include "gimpaligntool.h"
-#include "gimpblendtool.h"
 #include "gimpbrightnesscontrasttool.h"
 #include "gimpbucketfilltool.h"
 #include "gimpbycolorselecttool.h"
@@ -59,6 +58,7 @@
 #include "gimpforegroundselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpgegltool.h"
+#include "gimpgradienttool.h"
 #include "gimphandletransformtool.h"
 #include "gimphealtool.h"
 #include "gimpinktool.h"
@@ -159,7 +159,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_seamless_clone_tool_register,
     gimp_text_tool_register,
     gimp_bucket_fill_tool_register,
-    gimp_blend_tool_register,
+    gimp_gradient_tool_register,
     gimp_pencil_tool_register,
     gimp_paintbrush_tool_register,
     gimp_eraser_tool_register,

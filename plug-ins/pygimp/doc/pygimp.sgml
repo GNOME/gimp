@@ -476,7 +476,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
       <Para>For more information on invoking PDB procedures, please
       see the example plugins.  For information on individual
       procedures, please see the PDB Browser plugin (in the Xtns
-      menu).  It alows you to peruse to the database
+      menu).  It allows you to peruse to the database
       interactively.</Para>
 
     </Sect2>
@@ -912,7 +912,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
             while keeping the plugin connection open.  This is used by
             an extension plugin to tell gimp it can continue, while
             leaving the plugin connection open.  This is what the
-            script-fu plugin does so that only one scheme interpretter
+            script-fu plugin does so that only one scheme interpreter
             is needed.</Para>
 	  </listitem>
 	</VarListEntry>
@@ -1954,7 +1954,7 @@ pdb.query(name, [blurb, [help, [author, [copyright, [date, [type]]]]]])
 	2-tuple with components that are either integers or slices.
 	The subscripts may be read and assigned to.  The type of the
 	subscripts is a string containing the binary data of the
-	requested region.  Here is a description of the posible
+	requested region.  Here is a description of the possible
 	operations:</Para>
 
 	<VariableList>
@@ -2134,7 +2134,7 @@ main()
 	  <ListItem>
 	    <Para>The registered procedure name (first parameter of the
 	    <Literal>register()</Literal> function) is mangled: all underscores
-	    are converted to hypens, to better match the usual Scheme syntatic
+	    are converted to hyphens, to better match the usual Scheme syntatic
 	    style (here, <Literal>console_echo</Literal> becomes
 	    <Literal>console-echo</Literal>). Moreover, a
 	    <Literal>python-fu-</Literal> prefix is automatically added; it is

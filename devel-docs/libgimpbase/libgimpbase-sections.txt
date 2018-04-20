@@ -35,6 +35,7 @@ GimpDesaturateMode
 GimpDodgeBurnType
 GimpFillType
 GimpForegroundExtractMode
+GimpGradientBlendColorSpace
 GimpGradientSegmentColor
 GimpGradientSegmentType
 GimpGradientType
@@ -92,6 +93,7 @@ GIMP_TYPE_DESATURATE_MODE
 GIMP_TYPE_DODGE_BURN_TYPE
 GIMP_TYPE_FILL_TYPE
 GIMP_TYPE_FOREGROUND_EXTRACT_MODE
+GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE
 GIMP_TYPE_GRADIENT_SEGMENT_COLOR
 GIMP_TYPE_GRADIENT_SEGMENT_TYPE
 GIMP_TYPE_GRADIENT_TYPE
@@ -137,6 +139,7 @@ gimp_component_type_get_type
 gimp_convert_palette_type_get_type
 gimp_convolve_type_get_type
 gimp_fill_type_get_type
+gimp_gradient_blend_color_space_get_type
 gimp_gradient_segment_color_get_type
 gimp_gradient_segment_type_get_type
 gimp_hue_range_get_type
@@ -261,9 +264,12 @@ gimp_metadata_new
 gimp_metadata_duplicate
 gimp_metadata_deserialize
 gimp_metadata_serialize
+gimp_metadata_get_guid
+gimp_metadata_add_xmp_history
 gimp_metadata_load_from_file
 gimp_metadata_save_to_file
 gimp_metadata_set_from_exif
+gimp_metadata_set_from_iptc
 gimp_metadata_set_from_xmp
 gimp_metadata_set_pixel_size
 gimp_metadata_set_bits_per_sample
@@ -390,10 +396,15 @@ gimp_enum_get_desc
 gimp_enum_get_value
 gimp_enum_value_get_desc
 gimp_enum_value_get_help
+gimp_enum_value_get_abbrev
 gimp_flags_get_first_desc
 gimp_flags_get_first_value
 gimp_flags_value_get_desc
 gimp_flags_value_get_help
+gimp_flags_value_get_abbrev
+gimp_stack_trace_available
+gimp_stack_trace_print
+gimp_stack_trace_query
 </SECTION>
 
 <SECTION>

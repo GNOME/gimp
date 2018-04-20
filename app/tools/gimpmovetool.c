@@ -160,13 +160,14 @@ gimp_move_tool_button_press (GimpTool            *tool,
                              GimpButtonPressType  press_type,
                              GimpDisplay         *display)
 {
-  GimpMoveTool     *move           = GIMP_MOVE_TOOL (tool);
-  GimpMoveOptions  *options        = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell *shell          = gimp_display_get_shell (display);
-  GimpImage        *image          = gimp_display_get_image (display);
-  GimpItem         *active_item    = NULL;
-  const gchar      *null_message   = NULL;
-  const gchar      *locked_message = NULL;
+  GimpMoveTool      *move           = GIMP_MOVE_TOOL (tool);
+  GimpMoveOptions   *options        = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell  *shell          = gimp_display_get_shell (display);
+  GimpImage         *image          = gimp_display_get_image (display);
+  GimpItem          *active_item    = NULL;
+  GimpTranslateMode  translate_mode = GIMP_TRANSLATE_MODE_MASK;
+  const gchar       *null_message   = NULL;
+  const gchar       *locked_message = NULL;
 
   tool->display = display;
 
@@ -252,87 +253,75 @@ gimp_move_tool_button_press (GimpTool            *tool,
     {
     case GIMP_TRANSFORM_TYPE_PATH:
       {
-        active_item    = GIMP_ITEM (gimp_image_get_active_vectors (image));
-        null_message   = _("There is no path to move.");
-        locked_message = _("The active path's position is locked.");
+        active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
 
-        if (active_item && ! gimp_item_is_position_locked (active_item))
+        translate_mode = GIMP_TRANSLATE_MODE_VECTORS;
+
+        if (! active_item)
           {
-            gimp_tool_control_activate (tool->control);
-            gimp_edit_selection_tool_start (tool, display, coords,
-                                            GIMP_TRANSLATE_MODE_VECTORS,
-                                            TRUE);
-            return;
+            null_message = _("There is no path to move.");
+          }
+        else if (gimp_item_is_position_locked (active_item))
+          {
+            locked_message = _("The active path's position is locked.");
           }
       }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       {
-        active_item    = GIMP_ITEM (gimp_image_get_mask (image));
-        /* cannot happen, so don't translate these messages */
-        null_message   = "There is no selection to move.";
-        locked_message = "The selection's position is locked.";
+        active_item = GIMP_ITEM (gimp_image_get_mask (image));
 
-        if (active_item && ! gimp_item_is_position_locked (active_item))
+        translate_mode = GIMP_TRANSLATE_MODE_MASK;
+
+        if (! active_item)
           {
-            if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_MASK,
-                                                TRUE);
-                return;
-              }
-            else
-              locked_message = _("The selection is empty.");
+            /* cannot happen, don't translate this message */
+            null_message  = "There is no selection to move.";
+          }
+        else if (gimp_item_is_position_locked (active_item))
+          {
+            locked_message = "The selection's position is locked.";
+          }
+        else if (gimp_channel_is_empty (GIMP_CHANNEL (active_item)))
+          {
+            locked_message = _("The selection is empty.");
           }
       }
       break;
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
-        active_item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-        null_message = _("There is no layer to move.");
+        active_item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
-        if (GIMP_IS_LAYER_MASK (active_item))
+        if (! active_item)
           {
-            locked_message = _("The active layer's position is locked.");
+            null_message = _("There is no layer to move.");
+          }
+        else if (GIMP_IS_LAYER_MASK (active_item))
+          {
+            translate_mode = GIMP_TRANSLATE_MODE_LAYER_MASK;
 
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_LAYER_MASK,
-                                                TRUE);
-                return;
-              }
+            if (gimp_item_is_position_locked (active_item))
+              locked_message = _("The active layer's position is locked.");
+            else if (gimp_item_is_content_locked (active_item))
+              locked_message = _("The active layer's pixels are locked.");
           }
         else if (GIMP_IS_CHANNEL (active_item))
           {
-            locked_message = _("The active channel's position is locked.");
+            translate_mode = GIMP_TRANSLATE_MODE_CHANNEL;
 
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_CHANNEL,
-                                                TRUE);
-                return;
-              }
+            if (gimp_item_is_position_locked (active_item))
+              locked_message = _("The active channel's position is locked.");
+            else if (gimp_item_is_content_locked (active_item))
+              locked_message = _("The active channel's pixels are locked.");
           }
-        else if (GIMP_IS_LAYER (active_item))
+        else
           {
-            locked_message = _("The active layer's position is locked.");
+            translate_mode = GIMP_TRANSLATE_MODE_LAYER;
 
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_LAYER,
-                                                TRUE);
-                return;
-              }
+            if (gimp_item_is_position_locked (active_item))
+              locked_message = _("The active layer's position is locked.");
           }
       }
       break;
@@ -342,12 +331,20 @@ gimp_move_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display, null_message);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      return;
     }
-  else
+  else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      return;
     }
+
+  gimp_tool_control_activate (tool->control);
+
+  gimp_edit_selection_tool_start (tool, display, coords,
+                                  translate_mode,
+                                  TRUE);
 }
 
 static void

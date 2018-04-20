@@ -131,12 +131,13 @@ app/core/gimpcurve-save.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
-app/core/gimpdrawable-blend.c
 app/core/gimpdrawable-bucket-fill.c
+app/core/gimpdrawable-edit.c
 app/core/gimpdrawable-equalize.c
 app/core/gimpdrawable-floating-selection.c
 app/core/gimpdrawable-foreground-extract.c
 app/core/gimpdrawable-fill.c
+app/core/gimpdrawable-gradient.c
 app/core/gimpdrawable-levels.c
 app/core/gimpdrawable-offset.c
 app/core/gimpdrawable-stroke.c
@@ -336,6 +337,7 @@ app/pdb/channel-cmds.c
 app/pdb/color-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
+app/pdb/drawable-edit-cmds.c
 app/pdb/drawable-transform-cmds.c
 app/pdb/edit-cmds.c
 app/pdb/floating-sel-cmds.c
@@ -405,9 +407,6 @@ app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
-app/tools/gimpblendoptions.c
-app/tools/gimpblendtool.c
-app/tools/gimpblendtool-editor.c
 app/tools/gimpbrightnesscontrasttool.c
 app/tools/gimpbucketfilloptions.c
 app/tools/gimpbucketfilltool.c
@@ -439,6 +438,9 @@ app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimpgegltool.c
 app/tools/gimpgenerictransformtool.c
+app/tools/gimpgradientoptions.c
+app/tools/gimpgradienttool.c
+app/tools/gimpgradienttool-editor.c
 app/tools/gimpguidetool.c
 app/tools/gimphandletransformoptions.c
 app/tools/gimphandletransformtool.c
@@ -573,6 +575,7 @@ app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
+app/widgets/gimpsamplepointeditor.c
 app/widgets/gimpsavedialog.c
 app/widgets/gimpsearchpopup.c
 app/widgets/gimpselectiondata.c

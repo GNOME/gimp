@@ -20,7 +20,7 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-m4_define([gimp_version], [2.10.0-RC1-git])
+m4_define([gimp_version], [2.10.0-RC2-git])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
@@ -44,7 +44,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([babl_required_version], [0.1.46])
-m4_define([gegl_required_version], [0.3.31])
+m4_define([gegl_required_version], [0.3.34])
 m4_define([glib_required_version], [2.54.2])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -237,7 +237,7 @@ AM_PROG_CC_C_O
 
 # Determine a C++ compiler to use
 AC_PROG_CXX
-AX_CXX_COMPILE_STDCXX([11], , [mandatory])
+AX_CXX_COMPILE_STDCXX([14], , [mandatory])
 
 # Initialize libtool
 LT_PREREQ([2.2])
@@ -987,7 +987,7 @@ AC_SUBST(SOCKET_LIBS)
 # Check for Intel vector intrinsics
 ###################################
 intrinsics_save_CFLAGS="$CFLAGS"
-#FIXME: Check the CFLAGS separatly
+#FIXME: Check the CFLAGS separately
 GIMP_DETECT_CFLAGS(SSE_MATH_CFLAG, '-mfpmath=sse')
 GIMP_DETECT_CFLAGS(SSE2_CFLAG, '-msse2')
 SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
@@ -1963,7 +1963,7 @@ have_email="no (xdg-email not found)"
 AC_ARG_WITH(sendmail,[  --with-sendmail[=DIR]     use sendmail instead of xdg-email])
 
 have_sendmail=no
-# Sendmail must be explicitely enabled to replace xdg-email implementation.
+# Sendmail must be explicitly enabled to replace xdg-email implementation.
 if test "x$with_sendmail" != "x" && test "x$with_sendmail" != "xno"; then
   if test "x$with_sendmail" = "xyes"; then
       sendmail_path=$PATH:/usr/sbin:/usr/lib

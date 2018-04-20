@@ -35,6 +35,7 @@ void   register_debug_procs               (GimpPDB *pdb);
 void   register_display_procs             (GimpPDB *pdb);
 void   register_drawable_procs            (GimpPDB *pdb);
 void   register_drawable_color_procs      (GimpPDB *pdb);
+void   register_drawable_edit_procs       (GimpPDB *pdb);
 void   register_drawable_transform_procs  (GimpPDB *pdb);
 void   register_dynamics_procs            (GimpPDB *pdb);
 void   register_edit_procs                (GimpPDB *pdb);

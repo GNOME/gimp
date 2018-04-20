@@ -3130,7 +3130,7 @@ run (const gchar      *name,
       break;
     case GIMP_RUN_NONINTERACTIVE:
     default:
-      /* Not implementet yet... */
+      /* Not implemented yet... */
       gimp_drawable_detach (drawable);
       return;
     }

@@ -1488,8 +1488,8 @@ save_image (GFile     *file,
     g_snprintf (buf, sizeof (buf), "%d %d\n%d\n", xres, yres,
                 rowinfo.bpc == 1 ? 255 : 65535);
   else
-    g_snprintf (buf, sizeof (buf), "%d %d\n%f\n", xres, yres,
-                G_BYTE_ORDER == G_BIG_ENDIAN ? 1.0f : -1.0f);
+    g_snprintf (buf, sizeof (buf), "%d %d\n%s\n", xres, yres,
+                G_BYTE_ORDER == G_BIG_ENDIAN ? "1.0" : "-1.0");
 
   if (! output_write (output, buf, strlen (buf), error))
     goto out;

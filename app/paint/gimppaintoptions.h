@@ -31,10 +31,10 @@
                                         GIMP_CONTEXT_PROP_MASK_PALETTE
 
 
-typedef struct _GimpJitterOptions   GimpJitterOptions;
-typedef struct _GimpFadeOptions     GimpFadeOptions;
-typedef struct _GimpGradientOptions GimpGradientOptions;
-typedef struct _GimpSmoothingOptions GimpSmoothingOptions;
+typedef struct _GimpJitterOptions        GimpJitterOptions;
+typedef struct _GimpFadeOptions          GimpFadeOptions;
+typedef struct _GimpGradientPaintOptions GimpGradientPaintOptions;
+typedef struct _GimpSmoothingOptions     GimpSmoothingOptions;
 
 struct _GimpJitterOptions
 {
@@ -50,10 +50,11 @@ struct _GimpFadeOptions
   GimpRepeatMode  fade_repeat;
 };
 
-struct _GimpGradientOptions
+struct _GimpGradientPaintOptions
 {
-  gboolean        gradient_reverse;
-  GimpRepeatMode  gradient_repeat;
+  gboolean                    gradient_reverse;
+  GimpGradientBlendColorSpace gradient_blend_color_space;
+  GimpRepeatMode              gradient_repeat;
 };
 
 struct _GimpSmoothingOptions
@@ -108,7 +109,7 @@ struct _GimpPaintOptions
 
   gboolean                  dynamics_expanded;
   GimpFadeOptions          *fade_options;
-  GimpGradientOptions      *gradient_options;
+  GimpGradientPaintOptions *gradient_options;
   GimpSmoothingOptions     *smoothing_options;
 
   GimpViewType              brush_view_type;

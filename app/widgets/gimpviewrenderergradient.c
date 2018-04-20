@@ -63,9 +63,8 @@ gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 static void
 gimp_view_renderer_gradient_init (GimpViewRendererGradient *renderer)
 {
-  renderer->left    = 0.0;
-  renderer->right   = 1.0;
-  renderer->reverse = FALSE;
+  renderer->left  = 0.0;
+  renderer->right = 1.0;
 }
 
 static void
@@ -177,7 +176,10 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
       guchar r, g, b, a;
 
       seg = gimp_gradient_get_color_at (gradient, renderer->context, seg,
-                                        cur_x, rendergrad->reverse, &color);
+                                        cur_x,
+                                        rendergrad->reverse,
+                                        rendergrad->blend_color_space,
+                                        &color);
       cur_x += dx;
 
       gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
@@ -241,6 +243,21 @@ gimp_view_renderer_gradient_set_reverse (GimpViewRendererGradient *renderer,
   if (reverse != renderer->reverse)
     {
       renderer->reverse = reverse ? TRUE : FALSE;
+
+      gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
+      gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));
+    }
+}
+
+void
+gimp_view_renderer_gradient_set_blend_color_space (GimpViewRendererGradient    *renderer,
+                                                   GimpGradientBlendColorSpace  blend_color_space)
+{
+  g_return_if_fail (GIMP_IS_VIEW_RENDERER_GRADIENT (renderer));
+
+  if (blend_color_space != renderer->blend_color_space)
+    {
+      renderer->blend_color_space = blend_color_space;
 
       gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
       gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));

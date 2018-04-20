@@ -318,7 +318,7 @@ endif
 #
 # rules to generate built sources
 #
-# setup autogeneration dependancies
+# setup autogeneration dependencies
 gen_sources = xgen-wec xgen-wmh xgen-wmc
 CLEANFILES = $(gen_sources)
 

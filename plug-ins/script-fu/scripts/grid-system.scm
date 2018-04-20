@@ -53,7 +53,7 @@
 
     (set! grid-layer (car (gimp-layer-copy drw TRUE)))
     (gimp-image-insert-layer img grid-layer 0 0)
-    (gimp-edit-clear grid-layer)
+    (gimp-drawable-edit-clear grid-layer)
     (gimp-item-set-name grid-layer "Grid Layer")
 
     (while (not (null? (cdr x-divides)))

@@ -519,6 +519,8 @@ HELP
 
     &std_pdb_misc;
 
+    $deprecated = 'gimp-drawable-edit-clear';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable to clear from' }
@@ -531,9 +533,7 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-      gimp_edit_clear (image, drawable, context);
+      gimp_drawable_edit_clear (drawable, context);
     }
   else
     success = FALSE;
@@ -559,6 +559,8 @@ HELP
     $author .= ' & Raphael Quinet';
     $date = '1995-2000';
 
+    $deprecated = 'gimp-drawable-edit-fill';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => "The drawable to fill to" },
@@ -573,13 +575,12 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (drawable));
       GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
 
       if (gimp_fill_options_set_by_fill_type (options, context,
                                               fill_type, error))
         {
-          gimp_edit_fill (image, drawable, options, NULL);
+          gimp_drawable_edit_fill (drawable, options, NULL);
         }
       else
         success = FALSE;
@@ -615,6 +616,8 @@ drawable's origin.
 HELP
 
     &std_pdb_misc;
+
+    $deprecated = 'gimp-drawable-edit-bucket-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -666,7 +669,7 @@ HELP
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             {
@@ -713,6 +716,8 @@ drawable's origin.
 HELP
 
     &david_pdb_misc('2006', '2.4');
+
+    $deprecated = 'gimp-drawable-edit-bucket-fill';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -772,7 +777,7 @@ HELP
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              gimp_edit_fill (image, drawable, options, NULL);
+              gimp_drawable_edit_fill (drawable, options, NULL);
             }
           else
             {
@@ -814,6 +819,8 @@ HELP
 
     &std_pdb_misc;
 
+    $deprecated = 'gimp-drawable-edit-gradient-fill';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
@@ -852,20 +859,28 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-blend.h") ],
+        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-gradient.h") ],
 	code => <<'CODE'
 {
   success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                         GIMP_PDB_ITEM_CONTENT, error) &&
              gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
 
-  if (success && supersample)
+  if (success)
     {
-      if (max_depth < 1 || max_depth > 9)
-        success = FALSE;
+      if (supersample)
+        {
+          if (max_depth < 1 || max_depth > 9)
+            success = FALSE;
 
-      if (threshold < 0.0 || threshold > 4.0)
-        success = FALSE;
+          if (threshold < 0.0 || threshold > 4.0)
+            success = FALSE;
+	}
+      else
+        {
+	  max_depth = CLAMP (max_depth, 1, 9);
+	  threshold = CLAMP (threshold, 0.0, 4.0);
+	}
     }
 
   if (success)
@@ -876,7 +891,7 @@ HELP
         paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Blending"));
+        gimp_progress_start (progress, FALSE, _("Gradient"));
 
       switch (blend_mode)
         {
@@ -898,18 +913,19 @@ HELP
           break;
         }
 
-      gimp_drawable_blend (drawable,
-                           context,
-                           gradient,
-                           GIMP_PDB_CONTEXT (context)->distance_metric,
-                           paint_mode,
-                           gradient_type,
-                           opacity / 100.0,
-	                   offset, repeat, reverse,
-                           supersample, max_depth,
-                           threshold, dither,
-                           x1, y1, x2, y2,
-	                   progress);
+      gimp_drawable_gradient (drawable,
+                              context,
+                              gradient,
+                              GIMP_PDB_CONTEXT (context)->distance_metric,
+                              paint_mode,
+                              gradient_type,
+                              opacity / 100.0,
+                              offset, repeat, reverse,
+                              GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                              supersample, max_depth,
+                              threshold, dither,
+                              x1, y1, x2, y2,
+                              progress);
 
       if (progress)
         gimp_progress_end (progress);
@@ -929,6 +945,8 @@ the specified drawable regardless of the active selection.
 HELP
 
     &std_pdb_misc;
+
+    $deprecated = 'gimp-drawable-edit-stroke-selection';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -976,6 +994,8 @@ HELP
 
     &simon_pdb_misc('2006', '2.4');
 
+    $deprecated = 'gimp-drawable-edit-stroke-item';
+
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable to stroke to' },
@@ -1020,6 +1040,7 @@ CODE
 @headers = qw("libgimpconfig/gimpconfig.h"
               "core/gimp.h"
               "core/gimp-edit.h"
+              "core/gimpdrawable-edit.h"
               "core/gimpbuffer.h"
               "core/gimpimage.h"
               "core/gimpprogress.h"

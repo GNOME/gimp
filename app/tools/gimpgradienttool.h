@@ -15,27 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_BLEND_TOOL_H__
-#define  __GIMP_BLEND_TOOL_H__
+#ifndef  __GIMP_GRADIENT_TOOL_H__
+#define  __GIMP_GRADIENT_TOOL_H__
 
 
 #include "gimpdrawtool.h"
 
 
-#define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
-#define GIMP_BLEND_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
-#define GIMP_BLEND_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
-#define GIMP_IS_BLEND_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BLEND_TOOL))
-#define GIMP_IS_BLEND_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BLEND_TOOL))
-#define GIMP_BLEND_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
+#define GIMP_TYPE_GRADIENT_TOOL            (gimp_gradient_tool_get_type ())
+#define GIMP_GRADIENT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_TOOL, GimpGradientTool))
+#define GIMP_GRADIENT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_TOOL, GimpGradientToolClass))
+#define GIMP_IS_GRADIENT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_TOOL))
+#define GIMP_IS_GRADIENT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_TOOL))
+#define GIMP_GRADIENT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_TOOL, GimpGradientToolClass))
 
-#define GIMP_BLEND_TOOL_GET_OPTIONS(t)  (GIMP_BLEND_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define GIMP_GRADIENT_TOOL_GET_OPTIONS(t)  (GIMP_GRADIENT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
-typedef struct _GimpBlendTool      GimpBlendTool;
-typedef struct _GimpBlendToolClass GimpBlendToolClass;
+typedef struct _GimpGradientTool      GimpGradientTool;
+typedef struct _GimpGradientToolClass GimpGradientToolClass;
 
-struct _GimpBlendTool
+struct _GimpGradientTool
 {
   GimpDrawTool        parent_instance;
 
@@ -90,22 +90,22 @@ struct _GimpBlendTool
   GtkWidget          *midpoint_center_button;
 };
 
-struct _GimpBlendToolClass
+struct _GimpGradientToolClass
 {
   GimpDrawToolClass  parent_class;
 };
 
 
-void    gimp_blend_tool_register               (GimpToolRegisterCallback  callback,
-                                                gpointer                  data);
+void    gimp_gradient_tool_register               (GimpToolRegisterCallback  callback,
+                                                   gpointer                  data);
 
-GType   gimp_blend_tool_get_type               (void) G_GNUC_CONST;
+GType   gimp_gradient_tool_get_type               (void) G_GNUC_CONST;
 
 
 /*  protected functions  */
 
-void    gimp_blend_tool_set_tentative_gradient (GimpBlendTool            *blend_tool,
-                                                GimpGradient             *gradient);
+void    gimp_gradient_tool_set_tentative_gradient (GimpGradientTool         *gradient_tool,
+                                                   GimpGradient             *gradient);
 
 
-#endif  /*  __GIMP_BLEND_TOOL_H__  */
+#endif  /*  __GIMP_GRADIENT_TOOL_H__  */

@@ -637,7 +637,7 @@
       </menu>
       <menu action="tools-paint-menu" name="Paint Tools">
         <menuitem action="tools-bucket-fill" />
-        <menuitem action="tools-blend" />
+        <menuitem action="tools-gradient" />
         <menuitem action="tools-pencil" />
         <menuitem action="tools-paintbrush" />
         <menuitem action="tools-eraser" />

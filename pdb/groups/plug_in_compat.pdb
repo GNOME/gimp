@@ -3140,7 +3140,7 @@ HELP
       GeglNode *node;
 
       if (randomize)
-        seed = g_random_int ();
+        seed = (gint32) g_random_int ();
 
       node =
         gegl_node_new_child (NULL,
@@ -3201,7 +3201,7 @@ HELP
       GeglNode *node;
 
       if (randomize)
-        seed = g_random_int ();
+        seed = (gint32) g_random_int ();
 
       node =
         gegl_node_new_child (NULL,
@@ -3262,7 +3262,7 @@ HELP
       GeglNode *node;
 
       if (randomize)
-        seed = g_random_int ();
+        seed = (gint32) g_random_int ();
 
       node =
         gegl_node_new_child (NULL,
@@ -3400,7 +3400,7 @@ HELP
                                   "green",       g,
                                   "blue",        b,
                                   "alpha",       a,
-                                  "seed",        g_random_int_range (0, G_MAXINT),
+                                  "seed",        g_random_int (),
                                   NULL);
 
       node = wrap_in_gamma_cast (node, drawable);
@@ -3536,7 +3536,7 @@ HELP
                                   "green",       g,
                                   "blue",        b,
                                   "alpha",       a,
-                                  "seed",        g_random_int_range (0, G_MAXINT),
+                                  "seed",        g_random_int (),
                                   NULL);
 
       node = wrap_in_gamma_cast (node, drawable);
@@ -3978,7 +3978,7 @@ HELP
                              "operation", "gegl:noise-spread",
                              "amount-x",  (gint) spread_amount_x,
                              "amount-y",  (gint) spread_amount_y,
-                             "seed",      (guint) g_random_int (),
+                             "seed",      g_random_int (),
                              NULL);
 
       gimp_drawable_apply_operation (drawable, progress,

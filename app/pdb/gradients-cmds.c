@@ -127,7 +127,9 @@ gradients_sample_uniform_invoker (GimpProcedure         *procedure,
       while (num_samples--)
         {
           seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                            pos, reverse, &color);
+                                            pos, reverse,
+                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            &color);
 
           *pv++ = color.r;
           *pv++ = color.g;
@@ -186,7 +188,9 @@ gradients_sample_custom_invoker (GimpProcedure         *procedure,
       while (num_samples--)
         {
           seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                            *positions, reverse, &color);
+                                            *positions, reverse,
+                                            GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                            &color);
 
           *pv++ = color.r;
           *pv++ = color.g;
@@ -261,7 +265,9 @@ gradients_get_gradient_data_invoker (GimpProcedure         *procedure,
           while (sample_size--)
             {
               seg = gimp_gradient_get_color_at (gradient, context, seg,
-                                                pos, reverse, &color);
+                                                pos, reverse,
+                                                GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                &color);
 
               *pv++ = color.r;
               *pv++ = color.g;

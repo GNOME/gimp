@@ -84,7 +84,11 @@ header files installed.
 
         https://github.com/mypaint/libmypaint
 
-     We also need the mypaint-brushes data package with is currently
+     If installing from repository, do not install the master branch!
+     Checkout the tag "v1.3.0" instead, or simply install from a tarball
+     or from your favorite package manager.
+
+ 11. We also need the mypaint-brushes data package with is currently
      hosted by Jehan, until the MyPaint project takes care of it:
 
         https://github.com/Jehan/mypaint-brushes
@@ -99,34 +103,34 @@ header files installed.
      have to make sure your $PKG_CONFIG_PATH environment variable also
      lists `$PREFIX/share/pkgconfig/`.
 
- 11. You may want to install other third party libraries or programs
+ 12. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: libjasper,
      webkit, libmng, librsvg, libwmf, libaa and libgs (Ghostscript).
 
- 12. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
+ 13. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
 
- 13. Windows builds can now generate backtrace logs upon a crash.
+ 14. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
      The feature depends on Dr.MinGW's ExcHndl library:
 
         https://github.com/jrfonseca/drmingw
 
- 14. Configure GIMP by running the `configure' script. You may want
+ 15. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 15. Build GIMP by running `make'. The use of GNU make is recommended.
+ 16. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 16. Install GIMP by running `make install'. In order to avoid clashes
+ 17. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 17. Summary of required packages and what version you need:
+ 18. Summary of required packages and what version you need:
 
      Package Name         Version
 
@@ -156,7 +160,7 @@ header files installed.
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
- 18. Summary of optional packages:
+ 19. Summary of optional packages:
 
      Package Name        Version        Feature
 
@@ -174,7 +178,7 @@ header files installed.
      python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
      webkit              @WEBKIT_REQUIRED_VERSION@          Help browser & webpage
 
- 19. Summary of optional runtime dependencies:
+ 20. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      RawTherapee >= 5.2 for raw loading

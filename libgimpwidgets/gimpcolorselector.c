@@ -174,7 +174,7 @@ gimp_color_selector_dispose (GObject *object)
 /**
  * gimp_color_selector_new:
  * @selector_type: The #GType of the selector to create.
- * @rgb:           The inital color to be edited.
+ * @rgb:           The initial color to be edited.
  * @hsv:           The same color in HSV.
  * @channel:       The selector's initial channel.
  *

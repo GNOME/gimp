@@ -1096,7 +1096,7 @@ double random_uniform11 (void)
 }
 
 /* returns a mean 0 variance 1 random variable
-   see numerical recipies p 217 */
+   see numerical recipes p 217 */
 double random_gaussian(void)
 {
   static int    iset = 0;

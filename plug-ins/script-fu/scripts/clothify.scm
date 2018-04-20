@@ -16,13 +16,14 @@
         )
 
     (gimp-context-push)
+    (gimp-context-set-defaults)
 
     (gimp-image-undo-disable img)
 
     (gimp-image-insert-layer img layer-one 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill layer-one FILL-BACKGROUND)
+    (gimp-drawable-edit-fill layer-one FILL-BACKGROUND)
 
     (plug-in-noisify RUN-NONINTERACTIVE img layer-one FALSE 0.7 0.7 0.7 0.7)
 

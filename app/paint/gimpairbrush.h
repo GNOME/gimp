@@ -46,6 +46,9 @@ struct _GimpAirbrush
 struct _GimpAirbrushClass
 {
   GimpPaintbrushClass  parent_class;
+
+  /*  signals  */
+  void (* stamp) (GimpAirbrush *airbrush);
 };
 
 
@@ -53,6 +56,8 @@ void    gimp_airbrush_register (Gimp                      *gimp,
                                 GimpPaintRegisterCallback  callback);
 
 GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
+
+void    gimp_airbrush_stamp    (GimpAirbrush              *airbrush);
 
 
 #endif  /*  __GIMP_AIRBRUSH_H__  */

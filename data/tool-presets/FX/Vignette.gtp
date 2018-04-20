@@ -1,9 +1,9 @@
 # GIMP tool preset file
 
-(icon-name "gimp-tool-blend")
+(icon-name "gimp-tool-gradient")
 (name "Vignette")
-(tool-options "GimpBlendOptions"
-    (tool "gimp-blend-tool")
+(tool-options "GimpGradientOptions"
+    (tool "gimp-gradient-tool")
     (opacity 0.750000)
     (paint-mode multiply-mode)
     (gradient "FG to Transparent")

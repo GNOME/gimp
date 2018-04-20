@@ -126,7 +126,7 @@ run (const gchar      *name,
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &pvals);
-      /* Since a channel might be selected, we must check wheter RGB or not. */
+      /* Since a channel might be selected, we must check whether RGB or not. */
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
         {
           g_message (_("Can only operate on RGB drawables."));

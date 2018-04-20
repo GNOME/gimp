@@ -1293,7 +1293,7 @@ load_paths (TIFF *tif,
                 case 4:  /* open subpath bezier knot, linked */
                 case 5:  /* open subpath bezier knot, unlinked */
                   /* since we already know if the subpath is open
-                   * or closed and since we don't differenciate between
+                   * or closed and since we don't differentiate between
                    * linked and unlinked, just treat all the same...  */
 
                   if (pointcount < expected_points)

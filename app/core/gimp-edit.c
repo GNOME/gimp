@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -28,16 +26,10 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimp.h"
 #include "gimp-edit.h"
-#include "gimp-utils.h"
 #include "gimpbuffer.h"
-#include "gimpchannel.h"
 #include "gimpcontext.h"
-#include "gimpfilloptions.h"
-#include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
 #include "gimpimage-new.h"
@@ -48,7 +40,6 @@
 #include "gimplist.h"
 #include "gimppickable.h"
 #include "gimpselection.h"
-#include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 
@@ -698,116 +689,6 @@ gimp_edit_named_copy_visible (GimpImage    *image,
     }
 
   return NULL;
-}
-
-void
-gimp_edit_clear (GimpImage    *image,
-                 GimpDrawable *drawable,
-                 GimpContext  *context)
-{
-  GimpFillOptions *options;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  options = gimp_fill_options_new (context->gimp, NULL, FALSE);
-
-  if (gimp_drawable_has_alpha (drawable))
-    gimp_fill_options_set_by_fill_type (options, context,
-                                        GIMP_FILL_TRANSPARENT, NULL);
-  else
-    gimp_fill_options_set_by_fill_type (options, context,
-                                        GIMP_FILL_BACKGROUND, NULL);
-
-  gimp_edit_fill (image, drawable, options, C_("undo-type", "Clear"));
-
-  g_object_unref (options);
-}
-
-void
-gimp_edit_fill (GimpImage       *image,
-                GimpDrawable    *drawable,
-                GimpFillOptions *options,
-                const gchar     *undo_desc)
-{
-  GeglBuffer  *buffer;
-  gint         x, y, width, height;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
-
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
-    return;  /*  nothing to do, but the fill succeeded  */
-
-  buffer = gimp_fill_options_create_buffer (options, drawable,
-                                            GEGL_RECTANGLE (0, 0,
-                                                            width, height));
-
-  if (! undo_desc)
-    undo_desc = gimp_fill_options_get_undo_desc (options);
-
-  gimp_drawable_apply_buffer (drawable, buffer,
-                              GEGL_RECTANGLE (0, 0, width, height),
-                              TRUE, undo_desc,
-                              gimp_context_get_opacity (GIMP_CONTEXT (options)),
-                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COMPOSITE_AUTO,
-                              NULL, x, y);
-
-  g_object_unref (buffer);
-
-  gimp_drawable_update (drawable, x, y, width, height);
-}
-
-gboolean
-gimp_edit_fade (GimpImage   *image,
-                GimpContext *context)
-{
-  GimpDrawableUndo *undo;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-
-  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-  if (undo && undo->applied_buffer)
-    {
-      GimpDrawable *drawable;
-      GeglBuffer   *buffer;
-
-      drawable = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
-
-      g_object_ref (undo);
-      buffer = g_object_ref (undo->applied_buffer);
-
-      gimp_image_undo (image);
-
-      gimp_drawable_apply_buffer (drawable, buffer,
-                                  GEGL_RECTANGLE (0, 0,
-                                                  gegl_buffer_get_width (undo->buffer),
-                                                  gegl_buffer_get_height (undo->buffer)),
-                                  TRUE,
-                                  gimp_object_get_name (undo),
-                                  gimp_context_get_opacity (context),
-                                  gimp_context_get_paint_mode (context),
-                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  GIMP_LAYER_COMPOSITE_AUTO,
-                                  NULL, undo->x, undo->y);
-
-      g_object_unref (buffer);
-      g_object_unref (undo);
-
-      return TRUE;
-    }
-
-  return FALSE;
 }
 
 

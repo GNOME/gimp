@@ -36,6 +36,13 @@
 #include "gimp-intl.h"
 
 
+enum
+{
+  STAMP,
+  LAST_SIGNAL
+};
+
+
 static void       gimp_airbrush_finalize (GObject          *object);
 
 static void       gimp_airbrush_paint    (GimpPaintCore    *paint_core,
@@ -55,6 +62,8 @@ static gboolean   gimp_airbrush_timeout  (gpointer          data);
 G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH)
 
 #define parent_class gimp_airbrush_parent_class
+
+static guint airbrush_signals[LAST_SIGNAL] = { 0 };
 
 
 void
@@ -78,6 +87,15 @@ gimp_airbrush_class_init (GimpAirbrushClass *klass)
   object_class->finalize  = gimp_airbrush_finalize;
 
   paint_core_class->paint = gimp_airbrush_paint;
+
+  airbrush_signals[STAMP] =
+    g_signal_new ("stamp",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpAirbrushClass, stamp),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -212,13 +230,25 @@ gimp_airbrush_timeout (gpointer data)
 {
   GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
 
+  airbrush->timeout_id = 0;
+
+  g_signal_emit (airbrush, airbrush_signals[STAMP], 0);
+
+  return G_SOURCE_REMOVE;
+}
+
+
+/*  public functions  */
+
+
+void
+gimp_airbrush_stamp (GimpAirbrush *airbrush)
+{
+  g_return_if_fail (GIMP_IS_AIRBRUSH (airbrush));
+
   gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
                        airbrush->drawable,
                        airbrush->paint_options,
                        airbrush->sym,
                        GIMP_PAINT_STATE_MOTION, 0);
-
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));
-
-  return G_SOURCE_REMOVE;
 }

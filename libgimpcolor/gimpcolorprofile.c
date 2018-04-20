@@ -271,7 +271,7 @@ gimp_color_profile_new_from_file (GFile   *file,
 /**
  * gimp_color_profile_new_from_icc_profile:
  * @data:   pointer to memory containing an ICC profile
- * @length: lenght of the profile in memory, in bytes
+ * @length: length of the profile in memory, in bytes
  * @error:  return location for #GError
  *
  * This function opens an ICC color profile from memory. On error,
@@ -376,7 +376,7 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
  *
  * This function saves @profile to @file as ICC profile.
  *
- * Return value: %TRUE on success, %FALSE if an error occured.
+ * Return value: %TRUE on success, %FALSE if an error occurred.
  *
  * Since: 2.10
  **/
@@ -594,7 +594,7 @@ gimp_color_profile_get_label (GimpColorProfile *profile)
  *
  * This function return a string containing a multi-line summary of
  * @profile's description, model, manufacturer and copyright, to be
- * used as detailled information about the profile in a user
+ * used as detailed information about the profile in a user
  * interface.
  *
  * Return value: the @profile's summary. The returned value belongs to
@@ -1159,7 +1159,7 @@ gimp_color_profile_new_rgb_srgb_linear_internal (void)
  * gimp_color_profile_new_rgb_srgb_linear:
  *
  * This function creates a profile for babl_model("RGB"). Please
- * somebody write someting smarter here.
+ * somebody write something smarter here.
  *
  * Return value: the linear RGB #GimpColorProfile.
  *
@@ -1358,7 +1358,7 @@ gimp_color_profile_new_d65_gray_linear_internal (void)
  * gimp_color_profile_new_d65_gray_srgb_gray:
  *
  * This function creates a profile for babl_model("Y"). Please
- * somebody write someting smarter here.
+ * somebody write something smarter here.
  *
  * Return value: the linear grayscale #GimpColorProfile.
  *

@@ -238,7 +238,7 @@ main (int argc, char **argv)
   GList     *toplevels;
   GList     *node;
 
-  g_set_application_name ("GIMP documention shooter");
+  g_set_application_name ("GIMP documentation shooter");
 
   /* If there's no DISPLAY, we silently error out.
    * We don't want to break headless builds.

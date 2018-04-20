@@ -5,7 +5,7 @@ we break API/ABI for 3.x.
 - Move GIMP_REPEAT_TRUNCATE to the start of the enum and rename it
   to NONE. Rename the current NONE to EXTEND or something.
 
-- Add padding to all public class structs.
+- Add LOTS of padding to all public class structs.
 
 - Have private pointers in all public instance structs, not just
   GET_PRIVATE() macros, in order to inspect the private structs
@@ -15,10 +15,9 @@ we break API/ABI for 3.x.
 
 - Add user_data to all functions passed to gimp_widgets_init()
 
-- Preferrably make gimp_widgets_init() take a vtable with padding.
-
-- Change GIMP_CONFIG_INSTALL_PROP_FOO() macros to include the nick,
-  or drop them alltogether
+- Preferably make gimp_widgets_init() take a vtable with padding.
 
 - Change gimp_prop_foo_new() to use the nick as label, or find some
   other way to use the nick.
+
+- Pass the plug-in protocol version on the plug-in command line.

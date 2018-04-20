@@ -71,8 +71,8 @@ typedef struct
 } DespeckleHistogram;
 
 /* Number of pixels in actual histogram falling into each category */
-static gint                hist0;    /* Less than min treshold */
-static gint                hist255;  /* More than max treshold */
+static gint                hist0;    /* Less than min threshold */
+static gint                hist255;  /* More than max threshold */
 static gint                histrest; /* From min to max        */
 
 static DespeckleHistogram  histogram;
@@ -376,7 +376,7 @@ pixel_copy (guchar       *dest,
  * target pixel, sorts them, and uses the median value. This code uses a
  * circular row buffer to improve performance.
  *
- * The adaptive filter is based on the median filter but analizes the histogram
+ * The adaptive filter is based on the median filter but analyzes the histogram
  * of the region around the target pixel and adjusts the despeckle diameter
  * accordingly.
  */

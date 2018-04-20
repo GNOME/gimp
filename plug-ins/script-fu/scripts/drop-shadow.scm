@@ -21,7 +21,7 @@
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
 ; 1.02 - some code cleanup, no real changes
-; 1.03 - can't call gimp-edit-fill until layer is added to image!
+; 1.03 - can't call gimp-drawable-edit-fill until layer is added to image!
 ; 1.04
 ; 1.05 - replaced deprecated function calls with new ones for 2.8
 ;
@@ -136,7 +136,7 @@
 
   (gimp-drawable-fill shadow-layer FILL-TRANSPARENT)
   (gimp-context-set-background shadow-color)
-  (gimp-edit-fill shadow-layer FILL-BACKGROUND)
+  (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
   (gimp-selection-none image)
   (gimp-layer-set-lock-alpha shadow-layer FALSE)
   (if (>= shadow-blur 1.0) (plug-in-gauss-rle RUN-NONINTERACTIVE
@@ -150,7 +150,7 @@
   (if (= from-selection TRUE)
       (begin
         (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-        (gimp-edit-clear shadow-layer)
+        (gimp-drawable-edit-clear shadow-layer)
         (gimp-image-remove-channel image active-selection)))
 
   (if (and

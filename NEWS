@@ -10,8 +10,9 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
-Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0
-=======================================================
+
+Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC2
+===========================================================
 
 Core:
 
@@ -27,6 +28,21 @@ Core:
     data.
   - Plug-ins debugging on crashes through --stack-trace-mode CLI option
     improved to handle more case.
+  - Fix selection -> channel -> selection roundtrips by never doing
+    any gamma conversion when converting between an image's selection,
+    channels, masks. Also, make all channels linear in all images with
+    >8bit.
+
+Libgimp:
+
+  - New group "drawable_edit" which contains all functions from "edit"
+    that are not cut/copy/paste. The new functions have much less
+    arguments and take them from the context instead. The respective
+    functions in "edit" have been deprecated.
+  - New functions in "context" to configure aspects of gradient
+    drawing, and to set the built-in gradients (the new gradient
+    function in "drawable_edit" doesn't have a parameter for the
+    gradient type any longer).
 
 User interface:
 
@@ -49,6 +65,10 @@ Configurability:
 Tools:
 
   - Color used in the Smudge tool is now added to the color history.
+  - "Blend" tool renamed to much more consistent "Gradient" tool.
+    Also it can now work in linear RGB matching capabilities CSS/SVG
+    specification without gamma-errors in color blending and CIE Lab
+    which in addition keeps a perceptual graylevel.
 
 Assets / Resources:
 
@@ -66,8 +86,9 @@ Building:
 
 Translations:
 
-  - 7 translations were updated: Arabic, Catalan, French, Italian,
+  - 8 translations were updated: Arabic, Catalan, Chinese, French, Italian,
     Polish, Russian, Swedish.
+
 
 Overview of Changes from GIMP 2.9.8 to GIMP 2.10.0 RC1
 ======================================================
