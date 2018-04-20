@@ -1004,6 +1004,9 @@ gimp_operation_gradient_process (GeglOperation       *operation,
       cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
                                SQR (self->start_y - self->end_y))) * 4;
 
+      /*  have at least one value in the cache  */
+      cache_size = MAX (cache_size, 1);
+
       if (cache_size != self->gradient_cache_size)
         {
           g_clear_pointer (&self->gradient_cache, g_free);
