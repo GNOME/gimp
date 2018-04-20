@@ -315,6 +315,7 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
 static void
 gimp_operation_gradient_init (GimpOperationGradient *self)
 {
+  g_mutex_init (&self->gradient_cache_mutex);
 }
 
 static void
@@ -325,6 +326,7 @@ gimp_operation_gradient_dispose (GObject *object)
   g_clear_object (&self->gradient);
   g_clear_object (&self->context);
   g_clear_pointer (&self->gradient_cache, g_free);
+  g_mutex_clear (&self->gradient_cache_mutex);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -995,6 +997,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   if (! self->gradient)
     return TRUE;
 
+  g_mutex_lock (&self->gradient_cache_mutex);
+
   if (! self->gradient_cache_valid)
     {
       GimpGradientSegment *last_seg = NULL;
@@ -1028,6 +1032,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
       self->gradient_cache_valid = TRUE;
     }
+
+  g_mutex_unlock (&self->gradient_cache_mutex);
 
   rbd.gradient            = self->gradient;
   rbd.gradient_cache      = self->gradient_cache;
