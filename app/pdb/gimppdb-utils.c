@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
@@ -565,6 +566,13 @@ gimp_pdb_item_is_modifyable (GimpItem           *item,
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  /*  When a channel is position-locked, it is also implicitly
+   *  content-locked because we translate channels by modifying their
+   *  pixels.
+   */
+  if ((modify & GIMP_PDB_ITEM_POSITION) && GIMP_IS_CHANNEL (item))
+    modify |= GIMP_PDB_ITEM_CONTENT;
 
   if ((modify & GIMP_PDB_ITEM_CONTENT) && gimp_item_is_content_locked (item))
     {
