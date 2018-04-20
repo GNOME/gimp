@@ -4,7 +4,7 @@
 project('gimp', ['c', 'cpp'], version: '2.10.0',
   meson_version: '>=0.44.0',
   default_options: [
-    'cpp_std=gnu++11',
+    'cpp_std=gnu++14',
     'sysconfdir=/etc',
     'localstatedir=/var',
     'sharedstatedir=/var/lib',
@@ -43,7 +43,7 @@ user_version  = '@0@.@1@'.format(major_version, minor_version)
 gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
 
 # Override for Release-candidates
-gimp_version  = gimp_version + '-RC1-git'
+gimp_version  = gimp_version + '-RC2-git'
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
@@ -256,7 +256,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 gdk_pixbuf_minver = '>=2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: gdk_pixbuf_minver)
 
-gegl_minver       = '>=0.3.31'
+gegl_minver       = '>=0.3.34'
 gegl              = dependency('gegl-0.3',           version: gegl_minver)
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')

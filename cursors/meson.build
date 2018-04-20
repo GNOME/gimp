@@ -41,7 +41,6 @@ tool_cursors = [
   'modifier-zoom.png',
 
   'tool-airbrush.png',
-  'tool-blend.png',
   'tool-blur.png',
   'tool-bucket-fill.png',
   'tool-burn.png',
@@ -55,6 +54,7 @@ tool_cursors = [
   'tool-flip-vertical.png',
   'tool-free-select.png',
   'tool-fuzzy-select.png',
+  'tool-gradient.png',
   'tool-hand.png',
   'tool-heal.png',
   'tool-ink.png',
