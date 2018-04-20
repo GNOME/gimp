@@ -446,7 +446,7 @@ gimp_pdb_item_is_attached (GimpItem           *item,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_modifyable (item, modify, error);
+  return gimp_pdb_item_is_modifiable (item, modify, error);
 }
 
 gboolean
@@ -560,7 +560,7 @@ gimp_pdb_item_is_floating (GimpItem  *item,
 }
 
 gboolean
-gimp_pdb_item_is_modifyable (GimpItem           *item,
+gimp_pdb_item_is_modifiable (GimpItem           *item,
                              GimpPDBItemModify   modify,
                              GError            **error)
 {
@@ -823,7 +823,7 @@ gimp_pdb_get_vectors_stroke (GimpVectors        *vectors,
   if (! gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
     return NULL;
 
-  if (! modify || gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+  if (! modify || gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
                                                modify, error))
     {
       stroke = gimp_vectors_stroke_get_by_ID (vectors, stroke_ID);

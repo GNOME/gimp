@@ -74,7 +74,7 @@ gboolean        gimp_pdb_item_is_not_ancestor   (GimpItem           *item,
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
                                                  GimpImage          *dest_image,
                                                  GError            **error);
-gboolean        gimp_pdb_item_is_modifyable     (GimpItem           *item,
+gboolean        gimp_pdb_item_is_modifiable     (GimpItem           *item,
                                                  GimpPDBItemModify   modify,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_group          (GimpItem           *item,

@@ -327,7 +327,7 @@ layer_add_alpha_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         {
@@ -356,7 +356,7 @@ layer_flatten_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
         {
@@ -546,7 +546,7 @@ layer_translate_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_POSITION, error))
         {
           if (gimp_item_get_linked (GIMP_ITEM (layer)))
@@ -585,7 +585,7 @@ layer_set_offsets_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_POSITION, error))
         {
           gint offset_x;

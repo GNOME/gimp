@@ -679,7 +679,7 @@ drawable_set_pixel_invoker (GimpProcedure         *procedure,
           format = gimp_babl_compat_u8_format (format);
         }
 
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
@@ -715,7 +715,7 @@ drawable_fill_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {

@@ -336,7 +336,7 @@ path_stroke_current_invoker (GimpProcedure         *procedure,
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (vectors && drawable &&
-          gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
+          gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {

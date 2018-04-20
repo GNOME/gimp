@@ -834,7 +834,7 @@ vectors_bezier_stroke_new_moveto_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
         {
@@ -1064,7 +1064,7 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifyable (GIMP_ITEM (vectors),
+      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (vectors),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (vectors), error))
         {
