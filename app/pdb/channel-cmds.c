@@ -195,7 +195,9 @@ channel_combine_masks_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_channel_push_undo (channel1, _("Combine Masks"));
+      if (gimp_item_is_attached (GIMP_ITEM (channel1)))
+        gimp_channel_push_undo (channel1, _("Combine Masks"));
+
       gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
