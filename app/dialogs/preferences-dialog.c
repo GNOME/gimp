@@ -1553,6 +1553,17 @@ prefs_dialog_new (Gimp       *gimp,
                                       NULL,
                                       &top_iter);
 
+      hbox = g_object_new (GIMP_TYPE_HINT_BOX,
+                           "icon-name", GIMP_ICON_DIALOG_WARNING,
+                           "hint",      _("These features are unfinished, buggy "
+                                          "and may crash GIMP. It is unadvised to "
+                                          "use them unless you really know what "
+                                          "you are doing or you intend to contribute "
+                                          "patches."),
+                           NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       vbox2 = prefs_frame_new (_("Insane Options"),
                                GTK_CONTAINER (vbox), TRUE);
 

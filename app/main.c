@@ -280,7 +280,7 @@ static const GOptionEntry main_entries[] =
     N_("Output a sorted list of deprecated procedures in the PDB"), NULL
   },
   {
-    "show-playground", 0, G_OPTION_FLAG_HIDDEN,
+    "show-playground", 0, 0,
     G_OPTION_ARG_NONE, &show_playground,
     N_("Show a preferences page with experimental features"), NULL
   },
