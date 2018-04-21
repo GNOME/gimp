@@ -149,8 +149,6 @@ gimp_ui_init (const gchar *prog_name,
   themerc = gimp_personal_rc_file ("themerc");
   gtk_rc_parse (themerc);
 
-  gimp_ui_fix_pixbuf_style ();
-
   file = g_file_new_for_path (themerc);
   g_free (themerc);
 
@@ -184,6 +182,7 @@ gimp_ui_init (const gchar *prog_name,
   [NSApp activateIgnoringOtherApps:YES];
 #endif
 
+  gimp_ui_fix_pixbuf_style ();
   gimp_ui_initialized = TRUE;
 }
 
