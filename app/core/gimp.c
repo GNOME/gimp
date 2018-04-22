@@ -1183,6 +1183,13 @@ gimp_get_temp_file (Gimp        *gimp,
 
   dir = gimp_file_new_for_config_path (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
                                        NULL);
+  if (! g_file_query_exists (dir, NULL))
+    {
+      /* Try to make the temp directory if it doesn't exist.
+       * Ignore any error.
+       */
+      g_file_make_directory_with_parents (dir, NULL, NULL);
+    }
   file = g_file_get_child (dir, basename);
   g_free (basename);
   g_object_unref (dir);
