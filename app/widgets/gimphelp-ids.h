@@ -379,7 +379,7 @@
 #define GIMP_HELP_FILTER_GAUSSIAN_BLUR            "gimp-filter-gaussian-blur"
 #define GIMP_HELP_FILTER_GAUSSIAN_BLUR_SELECTIVE  "gimp-filter-gaussian-blur-selective"
 #define GIMP_HELP_FILTER_GEGL_GRAPH               "gimp-filter-gegl"
-#define GIMP_HELP_FILTER_GAUSSIAN_GRID            "gimp-filter-grid"
+#define GIMP_HELP_FILTER_GRID                     "gimp-filter-grid"
 #define GIMP_HELP_FILTER_HIGH_PASS                "gimp-filter-high-pass"
 #define GIMP_HELP_FILTER_HUE_CHROMA               "gimp-filter-hue-chroma"
 #define GIMP_HELP_FILTER_ILLUSION                 "gimp-filter-illusion"

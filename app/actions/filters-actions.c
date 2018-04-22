@@ -366,7 +366,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
   { "filters-grid", GIMP_ICON_GRID,
     NC_("filters-action", "_Grid..."), NULL, NULL,
     "gegl:grid",
-    GIMP_HELP_FILTER_GAUSSIAN_GRID },
+    GIMP_HELP_FILTER_GRID },
 
   { "filters-high-pass", GIMP_ICON_GEGL,
     NC_("filters-action", "_High Pass..."), NULL, NULL,
