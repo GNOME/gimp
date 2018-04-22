@@ -1504,7 +1504,19 @@ gimp_group_layer_suspend_mask (GimpGroupLayer *group,
   private = GET_PRIVATE (group);
   item    = GIMP_ITEM (group);
 
-  if (! gimp_item_is_attached (item))
+  /* avoid pushing an undo step if this is a nested suspend_mask() call, since
+   * the value of 'push_undo' in nested calls should be the same as that passed
+   * to the outermost call, and only pushing an undo step for the outermost
+   * call in this case is enough.  we can't support cases where the values of
+   * 'push_undo' in nested calls are different in a meaningful way, and
+   * avoiding undo steps for nested calls prevents us from storing multiple
+   * references to the suspend mask buffer on the undo stack.  while storing
+   * multiple references to the buffer doesn't waste any memory (since all the
+   * references are to the same buffer), it does cause the undo stack memory-
+   * usage estimation to overshoot, potentially resulting in undo steps being
+   * dropped unnecessarily.
+   */
+  if (! gimp_item_is_attached (item) || private->suspend_mask > 0)
     push_undo = FALSE;
 
   if (push_undo)
@@ -1549,7 +1561,10 @@ gimp_group_layer_resume_mask (GimpGroupLayer *group,
 
   item = GIMP_ITEM (group);
 
-  if (! gimp_item_is_attached (item))
+  /* avoid pushing an undo step if this is a nested resume_mask() call.  see
+   * the comment in gimp_group_layer_suspend_mask().
+   */
+  if (! gimp_item_is_attached (item) || private->suspend_mask > 1)
     push_undo = FALSE;
 
   if (push_undo)
