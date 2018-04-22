@@ -118,7 +118,7 @@ gimp_image_item_list_translate (GimpImage *image,
             }
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_move (GIMP_ITEM (l->data), push_undo);
+            gimp_item_start_transform (GIMP_ITEM (l->data), push_undo);
         }
 
       for (l = list; l; l = g_list_next (l))
@@ -128,7 +128,7 @@ gimp_image_item_list_translate (GimpImage *image,
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_move (GIMP_ITEM (l->data), push_undo);
+            gimp_item_end_transform (GIMP_ITEM (l->data), push_undo);
 
           if (push_undo)
             gimp_image_undo_group_end (image);
@@ -157,7 +157,7 @@ gimp_image_item_list_flip (GimpImage           *image,
                                        C_("undo-type", "Flip Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
@@ -167,7 +167,7 @@ gimp_image_item_list_flip (GimpImage           *image,
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
 
           gimp_image_undo_group_end (image);
         }
@@ -196,7 +196,7 @@ gimp_image_item_list_rotate (GimpImage        *image,
                                        C_("undo-type", "Rotate Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
@@ -206,7 +206,7 @@ gimp_image_item_list_rotate (GimpImage        *image,
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
 
           gimp_image_undo_group_end (image);
         }
@@ -246,7 +246,7 @@ gimp_image_item_list_transform (GimpImage              *image,
                                        C_("undo-type", "Transform Items"));
 
           for (l = list; l; l = g_list_next (l))
-            gimp_item_start_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_start_transform (GIMP_ITEM (l->data), TRUE);
         }
 
       for (l = list; l; l = g_list_next (l))
@@ -263,7 +263,7 @@ gimp_image_item_list_transform (GimpImage              *image,
       if (list->next)
         {
           for (l = list; l; l = g_list_next (l))
-            gimp_item_end_move (GIMP_ITEM (l->data), TRUE);
+            gimp_item_end_transform (GIMP_ITEM (l->data), TRUE);
 
           gimp_image_undo_group_end (image);
         }

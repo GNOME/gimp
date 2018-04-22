@@ -61,7 +61,7 @@ struct _GimpGroupLayerPrivate
   gint            suspend_mask;
   GeglBuffer     *suspended_mask_buffer;
   GeglRectangle   suspended_mask_bounds;
-  gint            moving;
+  gint            transforming;
   gboolean        expanded;
   gboolean        pass_through;
 
@@ -108,9 +108,9 @@ static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
 static void            gimp_group_layer_convert      (GimpItem        *item,
                                                       GimpImage       *dest_image,
                                                       GType            old_type);
-static void            gimp_group_layer_start_move   (GimpItem        *item,
+static void         gimp_group_layer_start_transform (GimpItem        *item,
                                                       gboolean         push_undo);
-static void            gimp_group_layer_end_move     (GimpItem        *item,
+static void           gimp_group_layer_end_transform (GimpItem        *item,
                                                       gboolean         push_undo);
 static void            gimp_group_layer_resize       (GimpItem        *item,
                                                       GimpContext     *context,
@@ -270,8 +270,8 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->is_position_locked         = gimp_group_layer_is_position_locked;
   item_class->duplicate                  = gimp_group_layer_duplicate;
   item_class->convert                    = gimp_group_layer_convert;
-  item_class->start_move                 = gimp_group_layer_start_move;
-  item_class->end_move                   = gimp_group_layer_end_move;
+  item_class->start_transform            = gimp_group_layer_start_transform;
+  item_class->end_transform              = gimp_group_layer_end_transform;
   item_class->resize                     = gimp_group_layer_resize;
 
   item_class->default_name               = _("Layer Group");
@@ -606,23 +606,23 @@ gimp_group_layer_convert (GimpItem  *item,
 }
 
 static void
-gimp_group_layer_start_move (GimpItem *item,
+gimp_group_layer_start_transform (GimpItem *item,
                              gboolean  push_undo)
 {
-  _gimp_group_layer_start_move (GIMP_GROUP_LAYER (item), push_undo);
+  _gimp_group_layer_start_transform (GIMP_GROUP_LAYER (item), push_undo);
 
-  if (GIMP_ITEM_CLASS (parent_class)->start_move)
-    GIMP_ITEM_CLASS (parent_class)->start_move (item, push_undo);
+  if (GIMP_ITEM_CLASS (parent_class)->start_transform)
+    GIMP_ITEM_CLASS (parent_class)->start_transform (item, push_undo);
 }
 
 static void
-gimp_group_layer_end_move (GimpItem *item,
+gimp_group_layer_end_transform (GimpItem *item,
                            gboolean  push_undo)
 {
-  if (GIMP_ITEM_CLASS (parent_class)->end_move)
-    GIMP_ITEM_CLASS (parent_class)->end_move (item, push_undo);
+  if (GIMP_ITEM_CLASS (parent_class)->end_transform)
+    GIMP_ITEM_CLASS (parent_class)->end_transform (item, push_undo);
 
-  _gimp_group_layer_end_move (GIMP_GROUP_LAYER (item), push_undo);
+  _gimp_group_layer_end_transform (GIMP_GROUP_LAYER (item), push_undo);
 }
 
 static void
@@ -640,12 +640,10 @@ gimp_group_layer_resize (GimpItem     *item,
   gint                   x, y;
 
   /* we implement GimpItem::resize(), instead of GimpLayer::resize(), so that
-   * GimpLayer doesn't resize the mask.  instead, we temporarily decrement
-   * private->moving, so that mask resizing is handled by
-   * gimp_group_layer_update_size().
+   * GimpLayer doesn't resize the mask.  note that gimp_item_resize() calls
+   * gimp_item_{start,end}_move(), and not gimp_item_{start,end}_transform(),
+   * so that mask resizing is handled by gimp_group_layer_update_size().
    */
-  g_return_if_fail (private->moving > 0);
-  private->moving--;
 
   x = gimp_item_get_offset_x (item) - offset_x;
   y = gimp_item_get_offset_y (item) - offset_y;
@@ -697,8 +695,6 @@ gimp_group_layer_resize (GimpItem     *item,
     }
 
   gimp_group_layer_resume_resize (group, TRUE);
-
-  private->moving++;
 }
 
 static gint64
@@ -1631,8 +1627,8 @@ _gimp_group_layer_get_suspended_mask (GimpGroupLayer *group,
 }
 
 void
-_gimp_group_layer_start_move (GimpGroupLayer *group,
-                              gboolean        push_undo)
+_gimp_group_layer_start_transform (GimpGroupLayer *group,
+                                   gboolean        push_undo)
 {
   GimpGroupLayerPrivate *private;
   GimpItem              *item;
@@ -1648,15 +1644,15 @@ _gimp_group_layer_start_move (GimpGroupLayer *group,
     push_undo = FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_group_layer_start_move (gimp_item_get_image (item),
-                                                 NULL, group);
+    gimp_image_undo_push_group_layer_start_transform (gimp_item_get_image (item),
+                                                      NULL, group);
 
-  private->moving++;
+  private->transforming++;
 }
 
 void
-_gimp_group_layer_end_move (GimpGroupLayer *group,
-                            gboolean        push_undo)
+_gimp_group_layer_end_transform (GimpGroupLayer *group,
+                                 gboolean        push_undo)
 {
   GimpGroupLayerPrivate *private;
   GimpItem              *item;
@@ -1667,18 +1663,18 @@ _gimp_group_layer_end_move (GimpGroupLayer *group,
   item    = GIMP_ITEM (group);
 
   g_return_if_fail (private->suspend_mask == 0);
-  g_return_if_fail (private->moving > 0);
+  g_return_if_fail (private->transforming > 0);
 
   if (! gimp_item_is_attached (item))
     push_undo = FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_group_layer_end_move (gimp_item_get_image (item),
-                                               NULL, group);
+    gimp_image_undo_push_group_layer_end_transform (gimp_item_get_image (item),
+                                                    NULL, group);
 
-  private->moving--;
+  private->transforming--;
 
-  if (private->moving == 0)
+  if (private->transforming == 0)
     gimp_group_layer_update_mask_size (GIMP_GROUP_LAYER (item));
 }
 
@@ -1926,10 +1922,10 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
     }
 
-  /* resize the mask if not moving (in which case, GimpLayer takes care of the
-   * mask)
+  /* resize the mask if not transforming (in which case, GimpLayer takes care
+   * of the mask)
    */
-  if (resize_mask && ! private->moving)
+  if (resize_mask && ! private->transforming)
     gimp_group_layer_update_mask_size (group);
 
   /* if we show the mask, invalidate the new mask area */

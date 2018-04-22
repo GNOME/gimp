@@ -69,9 +69,9 @@ void             _gimp_group_layer_set_suspended_mask (GimpGroupLayer      *grou
 GeglBuffer     * _gimp_group_layer_get_suspended_mask (GimpGroupLayer      *group,
                                                        GeglRectangle       *bounds);
 
-void             _gimp_group_layer_start_move         (GimpGroupLayer      *group,
+void             _gimp_group_layer_start_transform    (GimpGroupLayer      *group,
                                                        gboolean             push_undo);
-void             _gimp_group_layer_end_move           (GimpGroupLayer      *group,
+void             _gimp_group_layer_end_transform      (GimpGroupLayer      *group,
                                                        gboolean             push_undo);
 
 

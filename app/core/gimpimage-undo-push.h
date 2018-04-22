@@ -162,11 +162,11 @@ GimpUndo *
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
 GimpUndo *
-      gimp_image_undo_push_group_layer_start_move   (GimpImage      *image,
+   gimp_image_undo_push_group_layer_start_transform (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
 GimpUndo *
-      gimp_image_undo_push_group_layer_end_move     (GimpImage      *image,
+     gimp_image_undo_push_group_layer_end_transform (GimpImage      *image,
                                                      const gchar    *undo_desc,
                                                      GimpGroupLayer *group);
 GimpUndo * gimp_image_undo_push_group_layer_convert (GimpImage      *image,

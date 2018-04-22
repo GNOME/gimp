@@ -132,6 +132,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
       if (! resize_text_layers && gimp_item_is_text_layer (item))
         continue;
 
+      /* note that we call gimp_item_start_move(), and not
+       * gimp_item_start_transform().  see the comment in gimp_item_resize()
+       * for more information.
+       */
       gimp_item_start_move (item, TRUE);
 
       gimp_object_queue_push (queue, item);

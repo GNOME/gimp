@@ -427,8 +427,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_LAYER_RESUME_RESIZE,/*< desc="Resume group layer resize"   >*/
   GIMP_UNDO_GROUP_LAYER_SUSPEND_MASK, /*< desc="Suspend group layer mask"    >*/
   GIMP_UNDO_GROUP_LAYER_RESUME_MASK,  /*< desc="Resume group layer mask"     >*/
-  GIMP_UNDO_GROUP_LAYER_START_MOVE,   /*< desc="Start moving group layer"    >*/
-  GIMP_UNDO_GROUP_LAYER_END_MOVE,     /*< desc="End moving group layer"      >*/
+  GIMP_UNDO_GROUP_LAYER_START_TRANSFORM,/*< desc="Start transforming group layer" >*/
+  GIMP_UNDO_GROUP_LAYER_END_TRANSFORM,/*< desc="End transforming group layer">*/
   GIMP_UNDO_GROUP_LAYER_CONVERT,      /*< desc="Convert group layer"         >*/
   GIMP_UNDO_TEXT_LAYER,               /*< desc="Text layer"                  >*/
   GIMP_UNDO_TEXT_LAYER_MODIFIED,      /*< desc="Text layer modification"     >*/

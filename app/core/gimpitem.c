@@ -143,6 +143,10 @@ static gboolean   gimp_item_real_rename             (GimpItem       *item,
                                                      const gchar    *new_name,
                                                      const gchar    *undo_desc,
                                                      GError        **error);
+static void       gimp_item_real_start_transform    (GimpItem       *item,
+                                                     gboolean        push_undo);
+static void       gimp_item_real_end_transform      (GimpItem       *item,
+                                                     gboolean        push_undo);
 static void       gimp_item_real_translate          (GimpItem       *item,
                                                      gint            offset_x,
                                                      gint            offset_y,
@@ -261,6 +265,8 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->rename                    = gimp_item_real_rename;
   klass->start_move                = NULL;
   klass->end_move                  = NULL;
+  klass->start_transform           = gimp_item_real_start_transform;
+  klass->end_transform             = gimp_item_real_end_transform;
   klass->translate                 = gimp_item_real_translate;
   klass->scale                     = gimp_item_real_scale;
   klass->resize                    = gimp_item_real_resize;
@@ -615,6 +621,20 @@ gimp_item_real_translate (GimpItem *item,
   gimp_item_set_offset (item,
                         private->offset_x + offset_x,
                         private->offset_y + offset_y);
+}
+
+static void
+gimp_item_real_start_transform (GimpItem *item,
+                                gboolean  push_undo)
+{
+  gimp_item_start_move (item, push_undo);
+}
+
+static void
+gimp_item_real_end_transform (GimpItem *item,
+                                gboolean  push_undo)
+{
+  gimp_item_end_move (item, push_undo);
 }
 
 static void
@@ -1204,6 +1224,26 @@ gimp_item_end_move (GimpItem *item,
     GIMP_ITEM_GET_CLASS (item)->end_move (item, push_undo);
 }
 
+void
+gimp_item_start_transform (GimpItem *item,
+                           gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (GIMP_ITEM_GET_CLASS (item)->start_transform)
+    GIMP_ITEM_GET_CLASS (item)->start_transform (item, push_undo);
+}
+
+void
+gimp_item_end_transform (GimpItem *item,
+                         gboolean  push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (GIMP_ITEM_GET_CLASS (item)->end_transform)
+    GIMP_ITEM_GET_CLASS (item)->end_transform (item, push_undo);
+}
+
 /**
  * gimp_item_translate:
  * @item:      The #GimpItem to move.
@@ -1235,11 +1275,11 @@ gimp_item_translate (GimpItem *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                  item_class->translate_desc);
 
-  gimp_item_start_move (item, push_undo);
+  gimp_item_start_transform (item, push_undo);
 
   item_class->translate (item, offset_x, offset_y, push_undo);
 
-  gimp_item_end_move (item, push_undo);
+  gimp_item_end_transform (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -1319,7 +1359,7 @@ gimp_item_scale (GimpItem              *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_SCALE,
                                  item_class->scale_desc);
 
-  gimp_item_start_move (item, push_undo);
+  gimp_item_start_transform (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1328,7 +1368,7 @@ gimp_item_scale (GimpItem              *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_item_end_move (item, push_undo);
+  gimp_item_end_transform (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -1547,6 +1587,16 @@ gimp_item_resize (GimpItem     *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                  item_class->resize_desc);
 
+  /* note that we call gimp_item_start_move(), and not
+   * gimp_item_start_transform().  whether or not a resize operation should be
+   * considered a transform operation, or a move operation, depends on the
+   * intended use of these functions by subclasses.  atm, we only use
+   * gimp_item_{start,end}_transform() to suspend mask resizing in group
+   * layers, which should not happen when reisizing a group, hence the call to
+   * gimp_item_start_move().
+   *
+   * see the comment in gimp_group_layer_resize() for more information.
+   */
   gimp_item_start_move (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
@@ -1586,7 +1636,7 @@ gimp_item_flip (GimpItem            *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                  item_class->flip_desc);
 
-  gimp_item_start_move (item, push_undo);
+  gimp_item_start_transform (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1594,7 +1644,7 @@ gimp_item_flip (GimpItem            *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_item_end_move (item, push_undo);
+  gimp_item_end_transform (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -1625,7 +1675,7 @@ gimp_item_rotate (GimpItem         *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                  item_class->rotate_desc);
 
-  gimp_item_start_move (item, push_undo);
+  gimp_item_start_transform (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1634,7 +1684,7 @@ gimp_item_rotate (GimpItem         *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_item_end_move (item, push_undo);
+  gimp_item_end_transform (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
@@ -1668,7 +1718,7 @@ gimp_item_transform (GimpItem               *item,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
                                  item_class->transform_desc);
 
-  gimp_item_start_move (item, push_undo);
+  gimp_item_start_transform (item, push_undo);
 
   g_object_freeze_notify (G_OBJECT (item));
 
@@ -1677,7 +1727,7 @@ gimp_item_transform (GimpItem               *item,
 
   g_object_thaw_notify (G_OBJECT (item));
 
-  gimp_item_end_move (item, push_undo);
+  gimp_item_end_transform (item, push_undo);
 
   if (push_undo)
     gimp_image_undo_group_end (image);
