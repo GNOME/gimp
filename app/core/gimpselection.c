@@ -49,8 +49,8 @@
 static gboolean   gimp_selection_is_attached   (GimpItem            *item);
 static GimpItemTree * gimp_selection_get_tree  (GimpItem            *item);
 static void       gimp_selection_translate     (GimpItem            *item,
-                                                gint                 offset_x,
-                                                gint                 offset_y,
+                                                gdouble              offset_x,
+                                                gdouble              offset_y,
                                                 gboolean             push_undo);
 static void       gimp_selection_scale         (GimpItem            *item,
                                                 gint                 new_width,
@@ -217,8 +217,8 @@ gimp_selection_get_tree (GimpItem *item)
 
 static void
 gimp_selection_translate (GimpItem *item,
-                          gint      offset_x,
-                          gint      offset_y,
+                          gdouble   offset_x,
+                          gdouble   offset_y,
                           gboolean  push_undo)
 {
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,

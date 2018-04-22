@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
@@ -89,8 +90,8 @@ static void       gimp_channel_convert       (GimpItem          *item,
                                               GimpImage         *dest_image,
                                               GType              old_type);
 static void       gimp_channel_translate     (GimpItem          *item,
-                                              gint               off_x,
-                                              gint               off_y,
+                                              gdouble            off_x,
+                                              gdouble            off_y,
                                               gboolean           push_undo);
 static void       gimp_channel_scale         (GimpItem          *item,
                                               gint               new_width,
@@ -634,81 +635,72 @@ gimp_channel_convert (GimpItem  *item,
 
 static void
 gimp_channel_translate (GimpItem *item,
-                        gint      off_x,
-                        gint      off_y,
+                        gdouble   off_x,
+                        gdouble   off_y,
                         gboolean  push_undo)
 {
-  GimpChannel *channel    = GIMP_CHANNEL (item);
-  GeglBuffer  *tmp_buffer = NULL;
-  gint         width, height;
-  gint         x1, y1, x2, y2;
+  GimpChannel *channel = GIMP_CHANNEL (item);
+  gint         x, y, width, height;
 
-  gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2);
-  x2 += x1;
-  y2 += y1;
+  gimp_item_bounds (GIMP_ITEM (channel), &x, &y, &width, &height);
 
   /*  update the old area  */
-  gimp_drawable_update (GIMP_DRAWABLE (item), x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (GIMP_DRAWABLE (item), x, y, width, height);
 
   if (push_undo)
     gimp_channel_push_undo (channel, NULL);
 
-  x1 = CLAMP ((x1 + off_x), 0, gimp_item_get_width  (GIMP_ITEM (channel)));
-  y1 = CLAMP ((y1 + off_y), 0, gimp_item_get_height (GIMP_ITEM (channel)));
-  x2 = CLAMP ((x2 + off_x), 0, gimp_item_get_width  (GIMP_ITEM (channel)));
-  y2 = CLAMP ((y2 + off_y), 0, gimp_item_get_height (GIMP_ITEM (channel)));
-
-  width  = x2 - x1;
-  height = y2 - y1;
-
-  /*  make sure width and height are non-zero  */
-  if (width != 0 && height != 0)
+  if (gimp_rectangle_intersect (x + SIGNED_ROUND (off_x),
+                                y + SIGNED_ROUND (off_y),
+                                width, height,
+                                0, 0,
+                                gimp_item_get_width  (GIMP_ITEM (channel)),
+                                gimp_item_get_height (GIMP_ITEM (channel)),
+                                &x, &y, &width, &height))
     {
       /*  copy the portion of the mask we will keep to a temporary
        *  buffer
        */
-      tmp_buffer =
+      GeglBuffer *tmp_buffer =
         gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                          gimp_drawable_get_format (GIMP_DRAWABLE (channel)));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x1 - off_x, y1 - off_y, width, height),
+                        GEGL_RECTANGLE (x - SIGNED_ROUND (off_x),
+                                        y - SIGNED_ROUND (off_y),
+                                        width, height),
                         GEGL_ABYSS_NONE,
                         tmp_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
-    }
 
-  /*  clear the mask  */
-  gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                     NULL);
+      /*  clear the mask  */
+      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                         NULL);
 
-  if (width != 0 && height != 0)
-    {
       /*  copy the temp mask back to the mask  */
-
       gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x1, y1, 0, 0));
+                        GEGL_RECTANGLE (x, y, 0, 0));
 
       /*  free the temporary mask  */
       g_object_unref (tmp_buffer);
-    }
 
-  /*  calculate new bounds  */
-  if (width == 0 || height == 0)
+      channel->x1 = x;
+      channel->y1 = y;
+      channel->x2 = x + width;
+      channel->y2 = y + height;
+    }
+  else
     {
+      /*  clear the mask  */
+      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                         NULL);
+
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
       channel->x2    = gimp_item_get_width  (GIMP_ITEM (channel));
       channel->y2    = gimp_item_get_height (GIMP_ITEM (channel));
-    }
-  else
-    {
-      channel->x1 = x1;
-      channel->y1 = y1;
-      channel->x2 = x2;
-      channel->y2 = y2;
     }
 
   /*  update the new area  */

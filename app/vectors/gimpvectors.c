@@ -81,8 +81,8 @@ static void       gimp_vectors_convert       (GimpItem          *item,
                                               GimpImage         *dest_image,
                                               GType              old_type);
 static void       gimp_vectors_translate     (GimpItem          *item,
-                                              gint               offset_x,
-                                              gint               offset_y,
+                                              gdouble            offset_x,
+                                              gdouble            offset_y,
                                               gboolean           push_undo);
 static void       gimp_vectors_scale         (GimpItem          *item,
                                               gint               new_width,
@@ -441,8 +441,8 @@ gimp_vectors_convert (GimpItem  *item,
 
 static void
 gimp_vectors_translate (GimpItem *item,
-                        gint      offset_x,
-                        gint      offset_y,
+                        gdouble   offset_x,
+                        gdouble   offset_y,
                         gboolean  push_undo)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);

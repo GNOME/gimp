@@ -136,8 +136,8 @@ static void       gimp_layer_start_move         (GimpItem           *item,
 static void       gimp_layer_end_move           (GimpItem           *item,
                                                  gboolean            push_undo);
 static void       gimp_layer_translate          (GimpItem           *item,
-                                                 gint                offset_x,
-                                                 gint                offset_y,
+                                                 gdouble             offset_x,
+                                                 gdouble             offset_y,
                                                  gboolean            push_undo);
 static void       gimp_layer_scale              (GimpItem           *item,
                                                  gint                new_width,
@@ -1119,8 +1119,8 @@ gimp_layer_end_move (GimpItem *item,
 
 static void
 gimp_layer_translate (GimpItem *item,
-                      gint      offset_x,
-                      gint      offset_y,
+                      gdouble   offset_x,
+                      gdouble   offset_y,
                       gboolean  push_undo)
 {
   GimpLayer *layer = GIMP_LAYER (item);
@@ -1128,7 +1128,9 @@ gimp_layer_translate (GimpItem *item,
   if (push_undo)
     gimp_image_undo_push_item_displace (gimp_item_get_image (item), NULL, item);
 
-  GIMP_LAYER_GET_CLASS (layer)->translate (layer, offset_x, offset_y);
+  GIMP_LAYER_GET_CLASS (layer)->translate (layer,
+                                           SIGNED_ROUND (offset_x),
+                                           SIGNED_ROUND (offset_y));
 
   if (layer->mask)
     {

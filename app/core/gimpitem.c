@@ -148,8 +148,8 @@ static void       gimp_item_real_start_transform    (GimpItem       *item,
 static void       gimp_item_real_end_transform      (GimpItem       *item,
                                                      gboolean        push_undo);
 static void       gimp_item_real_translate          (GimpItem       *item,
-                                                     gint            offset_x,
-                                                     gint            offset_y,
+                                                     gdouble         offset_x,
+                                                     gdouble         offset_y,
                                                      gboolean        push_undo);
 static void       gimp_item_real_scale              (GimpItem       *item,
                                                      gint            new_width,
@@ -612,15 +612,15 @@ gimp_item_real_rename (GimpItem     *item,
 
 static void
 gimp_item_real_translate (GimpItem *item,
-                          gint      offset_x,
-                          gint      offset_y,
+                          gdouble   offset_x,
+                          gdouble   offset_y,
                           gboolean  push_undo)
 {
   GimpItemPrivate *private = GET_PRIVATE (item);
 
   gimp_item_set_offset (item,
-                        private->offset_x + offset_x,
-                        private->offset_y + offset_y);
+                        private->offset_x + SIGNED_ROUND (offset_x),
+                        private->offset_y + SIGNED_ROUND (offset_y));
 }
 
 static void
@@ -1256,8 +1256,8 @@ gimp_item_end_transform (GimpItem *item,
  */
 void
 gimp_item_translate (GimpItem *item,
-                     gint      offset_x,
-                     gint      offset_y,
+                     gdouble   offset_x,
+                     gdouble   offset_y,
                      gboolean  push_undo)
 {
   GimpItemClass *item_class;

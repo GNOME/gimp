@@ -78,8 +78,8 @@ struct _GimpItemClass
   void            (* end_transform)      (GimpItem               *item,
                                           gboolean                push_undo);
   void            (* translate)          (GimpItem               *item,
-                                          gint                    offset_x,
-                                          gint                    offset_y,
+                                          gdouble                 offset_x,
+                                          gdouble                 offset_y,
                                           gboolean                push_undo);
   void            (* scale)              (GimpItem               *item,
                                           gint                    new_width,
@@ -226,8 +226,8 @@ void            gimp_item_end_transform      (GimpItem           *item,
                                               gboolean            push_undo);
 
 void            gimp_item_translate          (GimpItem           *item,
-                                              gint                offset_x,
-                                              gint                offset_y,
+                                              gdouble             offset_x,
+                                              gdouble             offset_y,
                                               gboolean            push_undo);
 
 gboolean        gimp_item_check_scaling      (GimpItem           *item,
