@@ -236,7 +236,7 @@ gimp_tool_info_new (Gimp                *gimp,
 
   if (tool_info->tool_options_type == paint_info->paint_options_type)
     {
-      tool_info->tool_options = g_object_ref (paint_info->paint_options);
+      tool_info->tool_options = g_object_ref (GIMP_TOOL_OPTIONS (paint_info->paint_options));
     }
   else
     {
