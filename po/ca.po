@@ -6303,12 +6303,12 @@ msgstr "Activa l'acció d'edició per defecte per aquest tipus de capa"
 #: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "Edit Te_xt on canvas"
-msgstr "Edita _text al tapís"
+msgstr "Edita _text al llenç"
 
 #: ../app/actions/layers-actions.c:96
 msgctxt "layers-action"
 msgid "Edit this text layer content on canvas"
-msgstr "Edita el contingut d'aquesta capa de text al tapís"
+msgstr "Edita el contingut d'aquesta capa de text al llenç"
 
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
