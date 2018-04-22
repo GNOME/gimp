@@ -170,9 +170,24 @@ gimp_config_writer_new_gfile (GFile        *file,
 {
   GimpConfigWriter *writer;
   GOutputStream    *output;
+  GFile            *dir;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  dir = g_file_get_parent (file);
+  if (dir && ! g_file_query_exists (dir, NULL))
+    {
+      if (! g_file_make_directory_with_parents (dir, NULL, error))
+        g_prefix_error (error,
+                        _("Could not create directory '%s' for '%s': "),
+                        gimp_file_get_utf8_name (dir),
+                        gimp_file_get_utf8_name (file));
+    }
+  g_object_unref (dir);
+
+  if (error && *error)
+    return NULL;
 
   if (atomic)
     {
