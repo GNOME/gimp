@@ -2,6 +2,7 @@
 
 SUBDIRS = \
 	Basic			\
+	Fun			\
 	gimp-obsolete-files	\
 	Media			\
 	Legacy			\
