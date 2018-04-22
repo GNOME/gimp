@@ -415,7 +415,7 @@ gimp_spin_scale_expose (GtkWidget      *widget,
         cairo_rectangle (cr, 0.5, 0.5, w, h - 1.0);
 
       gdk_cairo_set_source_color (cr,
-                                  &style->text[gtk_widget_get_state (widget)]);
+                                  &style->text_aa[gtk_widget_get_state (widget)]);
       cairo_stroke (cr);
     }
   else
@@ -427,7 +427,7 @@ gimp_spin_scale_expose (GtkWidget      *widget,
         cairo_rectangle (cr, -0.5, 0.5, w, h - 1.0);
 
       gdk_cairo_set_source_color (cr,
-                                  &style->text[gtk_widget_get_state (widget)]);
+                                  &style->text_aa[gtk_widget_get_state (widget)]);
       cairo_stroke (cr);
 
       if (rtl)
