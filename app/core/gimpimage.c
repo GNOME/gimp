@@ -4155,6 +4155,7 @@ gimp_image_reorder_item (GimpImage   *image,
                          const gchar *undo_desc)
 {
   GimpItemTree *tree;
+  gboolean      result;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -4164,14 +4165,29 @@ gimp_image_reorder_item (GimpImage   *image,
 
   g_return_val_if_fail (tree != NULL, FALSE);
 
-  if (push_undo && ! undo_desc)
-    undo_desc = GIMP_ITEM_GET_CLASS (item)->reorder_desc;
+  if (push_undo)
+    {
+      if (! undo_desc)
+        undo_desc = GIMP_ITEM_GET_CLASS (item)->reorder_desc;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REORDER,
+                                   undo_desc);
+    }
+
+  gimp_item_start_move (item, push_undo);
 
   /*  item and new_parent are type-checked in GimpItemTree
    */
-  return gimp_item_tree_reorder_item (tree, item,
-                                      new_parent, new_index,
-                                      push_undo, undo_desc);
+  result = gimp_item_tree_reorder_item (tree, item,
+                                        new_parent, new_index,
+                                        push_undo, undo_desc);
+
+  gimp_item_end_move (item, push_undo);
+
+  if (push_undo)
+    gimp_image_undo_group_end (image);
+
+  return result;
 }
 
 gboolean
