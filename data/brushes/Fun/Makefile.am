@@ -3,6 +3,7 @@
 brushfundatadir = $(gimpdatadir)/brushes/Fun
 
 brushfundata_DATA = \
+	GEGL-goat.gih		\
 	pepper.gbr		\
 	Wilber.gih
 
