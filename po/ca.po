@@ -87,6 +87,8 @@ msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
+"Primera versió de la sèrie 2.10, que com a canvi destacat inclou la migració a una nova "
+"versió del motor de processament d'imatges GEGL. Els canvis més destacats són:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "High bit depth color processing (16/32-bit per color channel)"
@@ -159,16 +161,19 @@ msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
+"Optimitzacions importants pel traçat i la visualització, incloent-hi l'execució en paral·lel del codi de traçat."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
-msgstr ""
+msgstr "Les simetries es preserven ara en fitxers XCF (desats com a paràsits d'imatge)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
+"El temes «clar» i «fosc» s'han escrit des de zero per solucionar diversos problemes d'usabilitat. "
+"El temes «més clar» i «més fosc» s'han eliminat."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
@@ -199,13 +204,14 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New dashboard dockable to monitor GIMP resource usage"
-msgstr ""
+msgstr "Nou tauler de control acoblable per fer un seguiment de l'ús dels recursos"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
+"Nou diàleg de depuració que produeix traces i altres dades depuració, encoratjant a que s'enviïn informes d'error"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Unsaved images can now be recovered after a crash"
@@ -278,7 +284,7 @@ msgstr "El manual es pot mostrar en la llengua preferida de l'usuari"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Improvements for the Wavelet Decompose filter"
-msgstr ""
+msgstr "Millores en el filtre descomposició de l'oneta"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Improved compatibility with Photoshop .psd files"
@@ -7044,7 +7050,7 @@ msgstr "Drecera de teclat: "
 #.
 #: ../app/actions/layers-actions.c:651
 msgid "-Click on thumbnail in Layers dockable"
-msgstr "-Feu clic en la miniatura de l’acoblador de capes"
+msgstr "-Feu clic en la miniatura de l'acoblador de capes"
 
 #: ../app/actions/layers-actions.c:909 ../app/actions/layers-actions.c:910
 msgctxt "layers-action"
@@ -9946,7 +9952,7 @@ msgstr "_Acobladors tancats recentment"
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr "_Diàlegs encastables"
+msgstr "_Diàlegs acoblables"
 
 #: ../app/actions/windows-actions.c:105
 msgctxt "windows-action"
@@ -24761,7 +24767,7 @@ msgstr "Columnes:"
 
 #: ../app/widgets/gimppanedbox.c:59
 msgid "You can drop dockable dialogs here"
-msgstr "Podeu arrossegar diàlegs encastables aquí."
+msgstr "Podeu arrossegar diàlegs acoblables aquí."
 
 #: ../app/widgets/gimppickablepopup.c:206
 #: ../app/widgets/gimppickablepopup.c:423
