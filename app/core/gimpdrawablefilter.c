@@ -188,6 +188,8 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 {
   GimpDrawableFilter *filter;
   GeglNode           *node;
+  GeglNode           *input;
+  GeglNode           *effect;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -230,20 +232,28 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                             "operation", "gegl:nop",
                                             NULL);
 
+  input = gegl_node_get_input_proxy (node, "input");
+
   if (gegl_node_has_pad (filter->operation, "input"))
     {
-      GeglNode *input = gegl_node_get_input_proxy (node, "input");
+      effect = filter->operation;
+    }
+  else
+    {
+      effect = gegl_node_new_child (node,
+                                    "operation", "gegl:over",
+                                    NULL);
 
-      gegl_node_link_many (input,
-                           filter->translate,
-                           filter->crop,
-                           filter->cast_before,
-                           filter->transform_before,
-                           filter->operation,
-                           NULL);
+      gegl_node_connect_to (filter->operation, "output",
+                            effect,            "aux");
     }
 
-  gegl_node_link_many (filter->operation,
+  gegl_node_link_many (input,
+                       filter->translate,
+                       filter->crop,
+                       filter->cast_before,
+                       filter->transform_before,
+                       effect,
                        filter->transform_after,
                        filter->cast_after,
                        NULL);
