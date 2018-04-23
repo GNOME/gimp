@@ -89,15 +89,22 @@ gimp_item_transform_translate (gint32  item_ID,
  *
  * Flip the specified item either vertically or horizontally.
  *
- * This procedure flips the specified item. If a selection exists and
- * the item is a drawable, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then flipped. If auto_center is set to TRUE, the
- * flip is around the selection's center. Otherwise, the coordinate of
- * the axis needs to be specified. The return value is the ID of the
- * flipped item. If there was no selection or the item is not a
- * drawable, this will be equal to the item ID supplied as input.
- * Otherwise, this will be the newly created and flipped drawable.
+ * This procedure flips the specified item.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then flipped. If auto_center
+ * is set to TRUE, the flip is around the selection's center.
+ * Otherwise, the coordinate of the axis needs to be specified. The
+ * return value is the ID of the flipped floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be flipped around its center if auto_center is set to
+ * TRUE, otherwise the coordinate of the axis needs to be specified.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be flipped around the same axis. The return
+ * value will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
@@ -142,15 +149,20 @@ gimp_item_transform_flip_simple (gint32              item_ID,
  *
  * Flip the specified item around a given line.
  *
- * This procedure flips the specified item. If a selection exists and
- * the item is a drawable , the portion of the drawable which lies
- * under the selection is cut from the drawable and made into a
- * floating selection which is then flipped. The axis to flip around is
- * specified by specifying two points from that line. The return value
- * is the ID of the flipped item. If there was no selection or the item
- * is not a drawable, this will be equal to the item ID supplied as
- * input. Otherwise, this will be the newly created and flipped
- * drawable.
+ * This procedure flips the specified item.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then flipped. The axis to
+ * flip around is specified by specifying two points from that line.
+ * The return value is the ID of the flipped floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be flipped around the specified axis. Additionally, if the
+ * item has its linked flag set to TRUE, all additional items contained
+ * in the image which have the linked flag set to TRUE will also be
+ * flipped around the same axis. The return value will be equal to the
+ * item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -205,27 +217,34 @@ gimp_item_transform_flip (gint32  item_ID,
  *
  * This procedure performs a possibly non-affine transformation on the
  * specified item by allowing the corners of the original bounding box
- * to be arbitrarily remapped to any values. The specified item is
- * remapped if no selection exists or it is not a drawable. However, if
- * a selection exists and the item is a drawable, the portion of the
+ * to be arbitrarily remapped to any values.
+ *
+ * The 4 coordinates specify the new locations of each corner of the
+ * original bounding box. By specifying these values, any affine
+ * transformation (rotation, scaling, translation) can be affected.
+ * Additionally, these values can be specified such that the resulting
+ * transformed item will appear to have been projected via a
+ * perspective transform.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
  * drawable which lies under the selection is cut from the drawable and
- * made into a floating selection which is then remapped as specified.
- * The return value is the ID of the remapped item. If there was no
- * selection or the item is not a drawable, this will be equal to the
- * item ID supplied as input. Otherwise, this will be the newly created
- * and remapped drawable. The 4 coordinates specify the new locations
- * of each corner of the original bounding box. By specifying these
- * values, any affine transformation (rotation, scaling, translation)
- * can be affected. Additionally, these values can be specified such
- * that the resulting transformed item will appear to have been
- * projected via a perspective transform.
+ * made into a floating selection which is then transformed as
+ * specified. The return value is the ID of the transformed floating
+ * selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be transformed according to the specified mapping.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be transformed the same way. The return value
+ * will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
  * gimp_context_set_transform_resize().
  *
- * Returns: The newly mapped item.
+ * Returns: The transformed item.
  *
  * Since: 2.8
  **/
@@ -276,14 +295,24 @@ gimp_item_transform_perspective (gint32  item_ID,
  * Rotate the specified item about given coordinates through the
  * specified angle.
  *
- * This function rotates the specified item. If a selection exists and
- * the item is a drawable, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then rotated by the specified amount. The return
- * value is the ID of the rotated item. If there was no selection or
- * the item is not a drawable, this will be equal to the item ID
- * supplied as input. Otherwise, this will be the newly created and
- * rotated drawable.
+ * This function rotates the specified item.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then rotated by the
+ * specified amount. If auto_center is set to TRUE, the rotation is
+ * around the selection's center. Otherwise, the coordinate of the
+ * center point needs to be specified. The return value is the ID of
+ * the rotated floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be rotated around its center if auto_center is set to
+ * TRUE, otherwise the coordinate of the center point needs to be
+ * specified. Additionally, if the item has its linked flag set to
+ * TRUE, all additional items contained in the image which have the
+ * linked flag set to TRUE will also be rotated around the same center
+ * point. The return value will be equal to the item ID supplied as
+ * input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
@@ -331,14 +360,24 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
  * Rotate the specified item about given coordinates through the
  * specified angle.
  *
- * This function rotates the specified item. If a selection exists and
- * the item is a drawable, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then rotated by the specified amount. The return
- * value is the ID of the rotated item. If there was no selection or
- * the item is not a drawable, this will be equal to the item ID
- * supplied as input. Otherwise, this will be the newly created and
- * rotated drawable.
+ * This function rotates the specified item.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then rotated by the
+ * specified amount. If auto_center is set to TRUE, the rotation is
+ * around the selection's center. Otherwise, the coordinate of the
+ * center point needs to be specified. The return value is the ID of
+ * the rotated floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be rotated around its center if auto_center is set to
+ * TRUE, otherwise the coordinate of the center point needs to be
+ * specified. Additionally, if the item has its linked flag set to
+ * TRUE, all additional items contained in the image which have the
+ * linked flag set to TRUE will also be rotated around the same center
+ * point. The return value will be equal to the item ID supplied as
+ * input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -387,14 +426,22 @@ gimp_item_transform_rotate (gint32   item_ID,
  *
  * Scale the specified item.
  *
- * This procedure scales the specified item. If a selection exists and
- * the item is a drawable, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then scaled by the specified amount. The return
- * value is the ID of the scaled item. If there was no selection or the
- * item is not a drawable, this will be equal to the item ID supplied
- * as input. Otherwise, this will be the newly created and scaled
- * drawable.
+ * This procedure scales the specified item.
+ *
+ * The 2 coordinates specify the new locations of the top-left and
+ * bottom-roght corners of the original bounding box.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then scaled as specified.
+ * The return value is the ID of the scaled floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be scaled according to the specified coordinates.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be scaled the same way. The return value will
+ * be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -442,17 +489,23 @@ gimp_item_transform_scale (gint32  item_ID,
  * Shear the specified item about its center by the specified
  * magnitude.
  *
- * This procedure shears the specified item. If a selection exists and
- * the item is a drawable, the portion of the drawable which lies under
- * the selection is cut from the drawable and made into a floating
- * selection which is then sheard by the specified amount. The return
- * value is the ID of the sheard item. If there was no selection or the
- * item is not a drawable, this will be equal to the item ID supplied
- * as input. Otherwise, this will be the newly created and sheard
- * drawable. The shear type parameter indicates whether the shear will
- * be applied horizontally or vertically. The magnitude can be either
- * positive or negative and indicates the extent (in pixels) to shear
- * by.
+ * This procedure shears the specified item.
+ *
+ * The shear type parameter indicates whether the shear will be applied
+ * horizontally or vertically. The magnitude can be either positive or
+ * negative and indicates the extent (in pixels) to shear by.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then sheared as specified.
+ * The return value is the ID of the sheared floating selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be sheared according to the specified parameters.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be sheared the same way. The return value will
+ * be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -500,17 +553,25 @@ gimp_item_transform_shear (gint32              item_ID,
  *
  * Transform the specified item in 2d.
  *
- * This procedure transforms the specified item. If a selection exists
- * and the item is a drawable, the portion of the drawable which lies
- * under the selection is cut from the drawable and made into a
- * floating selection which is then transformed. The transformation is
- * done by scaling the image by the x and y scale factors about the
- * point (source_x, source_y), then rotating around the same point,
- * then translating that point to the new position (dest_x, dest_y).
- * The return value is the ID of the rotated drawable. If there was no
- * selection or the item is not a drawable, this will be equal to the
- * item ID supplied as input. Otherwise, this will be the newly created
- * and transformed drawable.
+ * This procedure transforms the specified item.
+ *
+ * The transformation is done by scaling by the x and y scale factors
+ * about the point (source_x, source_y), then rotating around the same
+ * point, then translating that point to the new position (dest_x,
+ * dest_y).
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then transformed as
+ * specified. The return value is the ID of the transformed floating
+ * selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be transformed according to the specified parameters.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be transformed the same way. The return value
+ * will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
@@ -570,15 +631,23 @@ gimp_item_transform_2d (gint32  item_ID,
  *
  * Transform the specified item in 2d.
  *
- * This procedure transforms the specified item. If a selection exists
- * and the item is a drawable, the portion of the drawable which lies
- * under the selection is cut from the drawable and made into a
- * floating selection which is then transformed. The transformation is
- * done by assembling a 3x3 matrix from the coefficients passed. The
- * return value is the ID of the transformed item. If there was no
- * selection or the item is not a drawable, this will be equal to the
- * item ID supplied as input. Otherwise, this will be the newly created
- * and transformed drawable.
+ * This procedure transforms the specified item.
+ *
+ * The transformation is done by assembling a 3x3 matrix from the
+ * coefficients passed.
+ *
+ * If a selection exists and the item is a drawable, the portion of the
+ * drawable which lies under the selection is cut from the drawable and
+ * made into a floating selection which is then transformed as
+ * specified. The return value is the ID of the transformed floating
+ * selection.
+ *
+ * If there is no selection or the item is not a drawable, the entire
+ * item will be transformed according to the specified matrix.
+ * Additionally, if the item has its linked flag set to TRUE, all
+ * additional items contained in the image which have the linked flag
+ * set to TRUE will also be transformed the same way. The return value
+ * will be equal to the item ID supplied as input.
  *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
