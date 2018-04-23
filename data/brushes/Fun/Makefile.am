@@ -3,6 +3,7 @@
 brushfundatadir = $(gimpdatadir)/brushes/Fun
 
 brushfundata_DATA = \
-	pepper.gbr
+	pepper.gbr		\
+	Wilber.gih
 
 EXTRA_DIST = $(brushfundata_DATA)
