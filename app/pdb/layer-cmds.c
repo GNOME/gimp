@@ -1752,11 +1752,13 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-translate",
                                      "Translate the layer by the specified offsets.",
-                                     "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.",
+                                     "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.\n"
+                                     "\n"
+                                     "Deprecated: Use 'gimp-item-transform-translate' instead.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
-                                     NULL);
+                                     "gimp-item-transform-translate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",

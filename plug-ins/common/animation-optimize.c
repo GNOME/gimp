@@ -1081,7 +1081,7 @@ do_optimizations (GimpRunMode run_mode,
                                        bbox_bottom-bbox_top);
               gimp_drawable_flush (drawable);
               gimp_drawable_detach (drawable);
-              gimp_layer_translate (new_layer_id, bbox_left, bbox_top);
+              gimp_item_transform_translate (new_layer_id, bbox_left, bbox_top);
             }
 
           gimp_progress_update (((gdouble) this_frame_num + 1.0) /

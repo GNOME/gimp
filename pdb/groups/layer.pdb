@@ -613,6 +613,8 @@ HELP
 
     &std_pdb_misc;
 
+    $deprecated = 'gimp-item-transform-translate';
+
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },

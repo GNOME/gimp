@@ -52,7 +52,7 @@
 
     ; Offset the clouds layer
     (if (gimp-item-is-layer drawable)
-      (gimp-layer-translate diff-clouds offset-x offset-y))
+      (gimp-item-transform-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
     (plug-in-solid-noise SF-RUN-MODE image diff-clouds 0 0 0 1 4.0 4.0)

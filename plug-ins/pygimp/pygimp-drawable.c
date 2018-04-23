@@ -1620,7 +1620,7 @@ lay_translate(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 				     &offs_x, &offs_y))
 	return NULL;
 
-    if (!gimp_layer_translate(self->ID, offs_x, offs_y)) {
+    if (!gimp_item_transform_translate(self->ID, offs_x, offs_y)) {
 	PyErr_Format(pygimp_error,
 		     "could not translate layer (ID %d) to offset %d, %d",
 		     self->ID, offs_x, offs_y);

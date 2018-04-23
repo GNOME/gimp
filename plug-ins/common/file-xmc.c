@@ -739,9 +739,9 @@ load_image (const gchar  *filename,
       gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
       /* Adjust layer position to let hotspot sit on the same point. */
-      gimp_layer_translate (layer_ID,
-                            xmcparas.x - imagesp->images[i]->xhot,
-                            xmcparas.y - imagesp->images[i]->yhot);
+      gimp_item_transform_translate (layer_ID,
+                                     xmcparas.x - imagesp->images[i]->xhot,
+                                     xmcparas.y - imagesp->images[i]->yhot);
 
       g_free (framename);
 

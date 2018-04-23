@@ -141,7 +141,7 @@
     (gimp-layer-set-mode cast-shadow-layer LAYER-MODE-MULTIPLY)
     (gimp-layer-set-opacity cast-shadow-layer 75)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img cast-shadow-layer feather TRUE TRUE)
-    (gimp-layer-translate cast-shadow-layer offx offy)
+    (gimp-item-transform-translate cast-shadow-layer offx offy)
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-MASK-BLACK)))
     (gimp-layer-add-mask cast-shadow-layer csl-mask)

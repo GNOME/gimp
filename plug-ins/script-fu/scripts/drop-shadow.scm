@@ -145,7 +145,7 @@
                                               shadow-blur
                                               TRUE
                                               TRUE))
-  (gimp-layer-translate shadow-layer shadow-transl-x shadow-transl-y)
+  (gimp-item-transform-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)
       (begin

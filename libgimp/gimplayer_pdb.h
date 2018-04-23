@@ -65,6 +65,7 @@ gboolean               gimp_layer_resize               (gint32                  
                                                         gint                    offx,
                                                         gint                    offy);
 gboolean               gimp_layer_resize_to_image_size (gint32                  layer_ID);
+GIMP_DEPRECATED_FOR(gimp_item_transform_translate)
 gboolean               gimp_layer_translate            (gint32                  layer_ID,
                                                         gint                    offx,
                                                         gint                    offy);

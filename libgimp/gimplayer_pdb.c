@@ -482,6 +482,8 @@ gimp_layer_resize_to_image_size (gint32 layer_ID)
  * which have the linked flag set to TRUE w ill also be translated by
  * the specified offsets.
  *
+ * Deprecated: Use gimp_item_transform_translate() instead.
+ *
  * Returns: TRUE on success.
  **/
 gboolean

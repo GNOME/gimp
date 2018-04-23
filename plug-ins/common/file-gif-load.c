@@ -1092,7 +1092,7 @@ ReadImage (FILE        *fd,
   frame_number++;
 
   gimp_image_insert_layer (*image_ID, layer_ID, -1, 0);
-  gimp_layer_translate (layer_ID, (gint) leftpos, (gint) toppos);
+  gimp_item_transform_translate (layer_ID, (gint) leftpos, (gint) toppos);
 
   cur_progress = 0;
   max_progress = height;
