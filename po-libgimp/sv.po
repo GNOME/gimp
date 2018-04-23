@@ -12,9 +12,9 @@ msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-14 20:11+0000\n"
-"PO-Revision-Date: 2018-04-14 22:14+0200\n"
-"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"POT-Creation-Date: 2018-04-22 20:18+0000\n"
+"PO-Revision-Date: 2018-04-23 18:13+0200\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -1788,17 +1788,22 @@ msgid "Cannot expand ${%s}"
 msgstr "Kan inte expandera ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:658
+#: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fel vid skrivande till ”%s”: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:184
+#: ../libgimpconfig/gimpconfigwriter.c:183
+#, c-format
+msgid "Could not create directory '%s' for '%s': "
+msgstr "Misslyckades med att skapa katalogen ”%s” för ”%s”: "
+
+#: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Misslyckades med att skapa temporär fil för ”%s”: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:761
+#: ../libgimpconfig/gimpconfigwriter.c:776
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Fel vid skrivning av ”%s”: %s"
