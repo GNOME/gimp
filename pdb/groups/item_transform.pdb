@@ -98,6 +98,60 @@ CODE
 
 # The defs
 
+sub item_transform_translate {
+    $blurb = 'Translate the item by the specified offsets.';
+
+    $help = <<'HELP';
+This procedure translates the item by the amounts specified in the
+off_x and off_y arguments. These can be negative, and are considered
+offsets from the current position. The offsets will be rounded to the
+nearest pixel unless the item is a path.
+
+
+If the item is attached to an image and has its linked flag set to
+TRUE, all additional items contained in the image which have the
+linked flag set to TRUE will also be translated by the specified
+offsets.
+HELP
+
+    &mitch_pdb_misc('2018', '2.10');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'off_x', type => 'float',
+	  desc => "Offset in x direction" },
+	{ name => 'off_y', type => 'float',
+	  desc => "Offset in y direction" }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The translated item' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_modifiable (item,
+                                   GIMP_PDB_ITEM_POSITION, error))
+    {
+      if (gimp_item_get_linked (item) && gimp_item_is_attached (item))
+        {
+          gimp_item_linked_translate (item, off_x, off_y, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (item, off_x, off_y, TRUE);
+        }
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub item_transform_flip_simple {
     $blurb = <<'BLURB';
 Flip the specified item either vertically or horizontally.
@@ -113,6 +167,7 @@ needs to be specified. The return value is the ID of the flipped
 item. If there was no selection or the item is not a drawable, this
 will be equal to the item ID supplied as input.  Otherwise, this will
 be the newly created and flipped drawable.
+
 
 This procedure is affected by the following context setters:
 gimp_context_set_transform_resize().
@@ -202,6 +257,7 @@ the flipped item. If there was no selection or the item is not a
 drawable, this will be equal to the item ID supplied as input.
 Otherwise, this will be the newly created and flipped drawable.
 
+
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize().
@@ -256,6 +312,7 @@ these values, any affine transformation (rotation, scaling,
 translation) can be affected. Additionally, these values can be
 specified such that the resulting transformed item will appear to
 have been projected via a perspective transform.
+
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
@@ -321,6 +378,7 @@ selection which is then rotated by the specified amount. The return
 value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
+
 
 This procedure is affected by the following context setters:
 gimp_context_set_transform_resize().
@@ -414,6 +472,7 @@ value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
 
+
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize().
@@ -462,6 +521,7 @@ selection which is then scaled by the specified amount. The return
 value is the ID of the scaled item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and scaled drawable.
+
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
@@ -518,6 +578,7 @@ drawable. The shear type parameter indicates whether the shear will be
 applied horizontally or vertically. The magnitude can be either
 positive or negative and indicates the extent (in pixels) to shear by.
 
+
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize().
@@ -564,6 +625,7 @@ return value is the ID of the rotated drawable. If there was no
 selection or the item is not a drawable, this will be equal to the
 item ID supplied as input. Otherwise, this will be the newly created
 and transformed drawable.
+
 
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
@@ -620,6 +682,7 @@ the item is not a drawable, this will be equal to the item ID supplied
 as input. Otherwise, this will be the newly created and transformed
 drawable.
 
+
 This procedure is affected by the following context setters:
 gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
 gimp_context_set_transform_resize().
@@ -675,12 +738,14 @@ CODE
               "core/gimpdrawable.h"
               "core/gimpdrawable-transform.h"
               "core/gimpimage.h"
+              "core/gimpitem-linked.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
               "gimp-intl.h");
 
-@procs = qw(item_transform_flip_simple
+@procs = qw(item_transform_translate
+            item_transform_flip_simple
             item_transform_flip
             item_transform_perspective
             item_transform_rotate_simple

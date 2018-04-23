@@ -35,6 +35,52 @@
 
 
 /**
+ * gimp_item_transform_translate:
+ * @item_ID: The item.
+ * @off_x: Offset in x direction.
+ * @off_y: Offset in y direction.
+ *
+ * Translate the item by the specified offsets.
+ *
+ * This procedure translates the item by the amounts specified in the
+ * off_x and off_y arguments. These can be negative, and are considered
+ * offsets from the current position. The offsets will be rounded to
+ * the nearest pixel unless the item is a path.
+ *
+ * If the item is attached to an image and has its linked flag set to
+ * TRUE, all additional items contained in the image which have the
+ * linked flag set to TRUE will also be translated by the specified
+ * offsets.
+ *
+ * Returns: The translated item.
+ *
+ * Since: 2.10
+ **/
+gint32
+gimp_item_transform_translate (gint32  item_ID,
+                               gdouble off_x,
+                               gdouble off_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 ret_item_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-item-transform-translate",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_FLOAT, off_x,
+                                    GIMP_PDB_FLOAT, off_y,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_item_ID = return_vals[1].data.d_item;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_item_ID;
+}
+
+/**
  * gimp_item_transform_flip_simple:
  * @item_ID: The affected item.
  * @flip_type: Type of flip.
@@ -52,6 +98,7 @@
  * flipped item. If there was no selection or the item is not a
  * drawable, this will be equal to the item ID supplied as input.
  * Otherwise, this will be the newly created and flipped drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
  *
@@ -104,6 +151,7 @@ gimp_item_transform_flip_simple (gint32              item_ID,
  * is not a drawable, this will be equal to the item ID supplied as
  * input. Otherwise, this will be the newly created and flipped
  * drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -171,6 +219,7 @@ gimp_item_transform_flip (gint32  item_ID,
  * can be affected. Additionally, these values can be specified such
  * that the resulting transformed item will appear to have been
  * projected via a perspective transform.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -235,6 +284,7 @@ gimp_item_transform_perspective (gint32  item_ID,
  * the item is not a drawable, this will be equal to the item ID
  * supplied as input. Otherwise, this will be the newly created and
  * rotated drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_transform_resize().
  *
@@ -289,6 +339,7 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
  * the item is not a drawable, this will be equal to the item ID
  * supplied as input. Otherwise, this will be the newly created and
  * rotated drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -344,6 +395,7 @@ gimp_item_transform_rotate (gint32   item_ID,
  * item is not a drawable, this will be equal to the item ID supplied
  * as input. Otherwise, this will be the newly created and scaled
  * drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -401,6 +453,7 @@ gimp_item_transform_scale (gint32  item_ID,
  * be applied horizontally or vertically. The magnitude can be either
  * positive or negative and indicates the extent (in pixels) to shear
  * by.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -458,6 +511,7 @@ gimp_item_transform_shear (gint32              item_ID,
  * selection or the item is not a drawable, this will be equal to the
  * item ID supplied as input. Otherwise, this will be the newly created
  * and transformed drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),
@@ -525,6 +579,7 @@ gimp_item_transform_2d (gint32  item_ID,
  * selection or the item is not a drawable, this will be equal to the
  * item ID supplied as input. Otherwise, this will be the newly created
  * and transformed drawable.
+ *
  * This procedure is affected by the following context setters:
  * gimp_context_set_interpolation(),
  * gimp_context_set_transform_direction(),

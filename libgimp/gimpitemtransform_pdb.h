@@ -32,6 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gint32 gimp_item_transform_translate     (gint32              item_ID,
+                                          gdouble             off_x,
+                                          gdouble             off_y);
 gint32 gimp_item_transform_flip_simple   (gint32              item_ID,
                                           GimpOrientationType flip_type,
                                           gboolean            auto_center,

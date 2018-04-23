@@ -615,6 +615,7 @@ EXPORTS
 	gimp_item_transform_rotate_simple
 	gimp_item_transform_scale
 	gimp_item_transform_shear
+	gimp_item_transform_translate
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
 	gimp_layer_color_space_get_type
