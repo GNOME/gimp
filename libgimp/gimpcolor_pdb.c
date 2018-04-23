@@ -404,6 +404,8 @@ gimp_curves_explicit (gint32                drawable_ID,
  * differently. The 'preserve-lum' parameter, if TRUE, ensures that the
  * luminosity of each pixel remains fixed.
  *
+ * Deprecated: Use gimp_drawable_color_color_balance() instead.
+ *
  * Returns: TRUE on success.
  **/
 gboolean

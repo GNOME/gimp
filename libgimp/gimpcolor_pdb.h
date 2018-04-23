@@ -71,6 +71,7 @@ gboolean gimp_curves_explicit     (gint32                drawable_ID,
                                    GimpHistogramChannel  channel,
                                    gint                  num_bytes,
                                    const guint8         *curve);
+GIMP_DEPRECATED_FOR(gimp_drawable_color_color_balance)
 gboolean gimp_color_balance       (gint32                drawable_ID,
                                    GimpTransferMode      transfer_mode,
                                    gboolean              preserve_lum,

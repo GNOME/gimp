@@ -428,6 +428,7 @@ HELP
 
     &std_pdb_misc;
     $date = '1997';
+    $deprecated = 'gimp-drawable-color-color-balance';
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
