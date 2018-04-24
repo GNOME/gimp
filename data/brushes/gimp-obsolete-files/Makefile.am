@@ -42,6 +42,7 @@ obsoletebrushdata_DATA = \
 	SketchBrush-16.gih		\
 	SketchBrush-32.gih		\
 	SketchBrush-64.gih		\
+	Structure.gbr			\
 	feltpen.gih			\
 	galaxy_small.gbr		\
 	pepper.gbr			\

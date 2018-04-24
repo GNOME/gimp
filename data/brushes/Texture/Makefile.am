@@ -9,7 +9,6 @@ brushtexturedata_DATA = \
 	Hatch-Pen-01.gbr	\
 	Smoke.gbr		\
 	Stone-Work-01.gih	\
-	Structure.gbr		\
 	Texture-01.gbr		\
 	Texture-02.gbr		\
 	Texture-Hose-01.gih	\
