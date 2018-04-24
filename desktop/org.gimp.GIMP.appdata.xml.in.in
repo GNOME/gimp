@@ -125,7 +125,7 @@
       </description>
     </release>
 
-    <release version="2.10.0-rc2" date="2018-04-14" type="development">
+    <release version="2.10.0-rc2" date="2018-04-17" type="development">
       <description>
         <_p>
         In this second release candidate before GIMP 2.10.0, while
@@ -149,7 +149,7 @@
           on receiving signals but also on warnings and critical errors
           when "fatal-warnings" debug key is set.</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/04/14/gimp-2-10-rc2-released/</_p>
+        <_p>For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</_p>
       </description>
     </release>
     <release version="2.10.0-rc1" date="2018-03-26" type="development">
@@ -171,7 +171,7 @@
           <_li>Metadata defaults preferences now available</_li>
           <_li>Various GUI polishing</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/03/23/gimp-2-10-rc1-released/</_p>
+        <_p>For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</_p>
       </description>
     </release>
 
