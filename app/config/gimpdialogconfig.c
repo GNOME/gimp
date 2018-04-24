@@ -312,7 +312,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          "Default new layer mode",
                          LAYER_NEW_MODE_BLURB,
                          GIMP_TYPE_LAYER_MODE,
-                         GIMP_LAYER_MODE_NORMAL_LEGACY,
+                         GIMP_LAYER_MODE_NORMAL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_BLEND_SPACE,
