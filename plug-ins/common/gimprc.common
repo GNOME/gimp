@@ -75,7 +75,6 @@ photocopy_RC = photocopy.rc.o
 plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
-ripple_RC = ripple.rc.o
 sample_colorize_RC = sample-colorize.rc.o
 sharpen_RC = sharpen.rc.o
 smooth_palette_RC = smooth-palette.rc.o

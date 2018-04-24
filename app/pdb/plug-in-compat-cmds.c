@@ -3359,6 +3359,79 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_ripple_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble period;
+  gdouble amplitude;
+  gint32 orientation;
+  gint32 edges;
+  gint32 waveform;
+  gboolean antialias;
+  gboolean tile;
+
+  /* first arg is "image", which is unused. */
+  drawable    = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  period      = g_value_get_int (gimp_value_array_index (args, 3));
+  amplitude   = g_value_get_int (gimp_value_array_index (args, 4));
+  orientation = g_value_get_int (gimp_value_array_index (args, 5));
+  edges       = g_value_get_int (gimp_value_array_index (args, 6));
+  waveform    = g_value_get_int (gimp_value_array_index (args, 7));
+  antialias   = g_value_get_boolean (gimp_value_array_index (args, 8));
+  tile        = g_value_get_boolean (gimp_value_array_index (args, 9));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gdouble angle, phi;
+
+          angle = orientation ? 0.0 : 90.0;
+          phi = waveform ? 0.0 : 0.75;
+          if (orientation == 0 && waveform == 1)
+            phi = 0.5;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",    "gegl:ripple",
+                                      "amplitude",    amplitude,
+                                      "period",       period,
+                                      "phi",          phi,
+                                      "angle",        angle,
+                                      "sampler_type", antialias ? GEGL_SAMPLER_CUBIC : GEGL_SAMPLER_NEAREST,
+                                      "wave_type",    waveform ? 0 : 1,
+                                      "abyss_policy", edges == 0 ? GEGL_ABYSS_CLAMP :
+                                                      edges == 1 ? GEGL_ABYSS_LOOP :
+                                                      GEGL_ABYSS_NONE,
+                                      "tileable",     tile ? TRUE : FALSE,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Ripple"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_rotate_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -7547,6 +7620,85 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-ripple
+   */
+  procedure = gimp_procedure_new (plug_in_ripple_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-ripple");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-ripple",
+                                     "Displace pixels in a ripple pattern",
+                                     "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form.",
+                                     "Brian Degenhardt <bdegenha@ucsd.edu>",
+                                     "Brian Degenhardt",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("period",
+                                                      "period",
+                                                      "Period: number of pixels for one wave to complete",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("amplitude",
+                                                      "amplitude",
+                                                      "Amplitude: maximum displacement of wave",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("orientation",
+                                                      "orientatioon",
+                                                      "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("edges",
+                                                      "edges",
+                                                      "Edges { SMEAR (0), WRAP (1), BLANK (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("waveform",
+                                                      "waveform",
+                                                      "Waveform { SAWTOOTH (0), SINE (1) }",
+                                                      0, 1, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "Antialias { TRUE, FALSE }",
+                                                     TRUE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("tile",
+                                                     "tile",
+                                                     "Tileable { TRUE, FALSE }",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
 
   /*
    * gimp-plug-in-rotate

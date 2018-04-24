@@ -126,7 +126,6 @@ libexec_PROGRAMS = \
 	plugin-browser \
 	procedure-browser \
 	qbist \
-	ripple \
 	sample-colorize \
 	sharpen \
 	smooth-palette \
@@ -1525,23 +1524,6 @@ qbist_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(qbist_RC)
-
-ripple_SOURCES = \
-	ripple.c
-
-ripple_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(ripple_RC)
 
 sample_colorize_SOURCES = \
 	sample-colorize.c
