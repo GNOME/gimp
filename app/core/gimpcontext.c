@@ -696,7 +696,7 @@ gimp_context_class_init (GimpContextClass *klass)
                          _("Paint Mode"),
                          _("Paint Mode"),
                          GIMP_TYPE_LAYER_MODE,
-                         GIMP_LAYER_MODE_NORMAL_LEGACY,
+                         GIMP_LAYER_MODE_NORMAL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_BRUSH,
@@ -2464,7 +2464,7 @@ gimp_context_real_set_opacity (GimpContext *context,
 GimpLayerMode
 gimp_context_get_paint_mode (GimpContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_LAYER_MODE_NORMAL_LEGACY);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_LAYER_MODE_NORMAL);
 
   return context->paint_mode;
 }
