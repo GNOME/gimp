@@ -10,6 +10,28 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC3
+===========================================================
+
+Core:
+
+  - CLI option --show-playground visible in --help.
+  - Sample point dockable now works with more than 4 sample points.
+
+PDB:
+
+  - New procedure: gimp-item-transform-translate.
+  - Deprecate gimp-color-balance and gimp-layer-translate.
+
+Assets / Resources:
+
+  - New "Fun" category for brushes (moving the "Pepper" there, which
+    also gets improved resolution), and adding Wilber and GEGL brushes.
+  - 5 new and more serious brushes.
+
+Translations:
+
+  - 4 translations were updated: Catalan, Danish, Polish, Swedish.
 
 Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC2
 ===========================================================
