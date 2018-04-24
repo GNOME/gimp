@@ -1178,7 +1178,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
   pid_t    pid = getpid();
 #if defined(G_OS_WIN32)
   DWORD    tid = GetCurrentThreadId ();
-#else
+#elif defined(SYS_gettid)
   long     tid = syscall (SYS_gettid);
 #endif
 
@@ -1272,16 +1272,20 @@ gimp_stack_trace_print (const gchar   *prog_name,
         {
           if (! stack_printed)
             {
+#if defined(G_OS_WIN32) || defined(SYS_gettid)
               if (stream)
                 g_fprintf (stream,
                            "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
                            pid, tid);
+#endif
               if (trace)
                 {
                   gtrace = g_string_new (NULL);
+#if defined(G_OS_WIN32) || defined(SYS_gettid)
                   g_string_printf (gtrace,
                                    "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
                                    pid, tid);
+#endif
                 }
             }
           /* It's hard to know if the debugger was found since it
