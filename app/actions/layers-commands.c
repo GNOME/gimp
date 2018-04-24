@@ -320,7 +320,14 @@ layers_new_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GimpDialogConfig *config     = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GimpLayerMode     layer_mode = config->layer_new_mode;
+
+      if (layer_mode == GIMP_LAYER_MODE_NORMAL ||
+          layer_mode == GIMP_LAYER_MODE_NORMAL_LEGACY)
+        {
+          layer_mode = gimp_image_get_default_new_layer_mode (image);
+        }
 
       dialog = layer_options_dialog_new (image, NULL,
                                          action_data_get_context (data),
@@ -331,7 +338,7 @@ layers_new_cmd_callback (GtkAction *action,
                                          _("Create a New Layer"),
                                          GIMP_HELP_LAYER_NEW,
                                          config->layer_new_name,
-                                         config->layer_new_mode,
+                                         layer_mode,
                                          config->layer_new_blend_space,
                                          config->layer_new_composite_space,
                                          config->layer_new_composite_mode,
@@ -360,6 +367,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
   GtkWidget        *widget;
   GimpLayer        *layer;
   GimpDialogConfig *config;
+  GimpLayerMode     layer_mode;
 
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
@@ -375,13 +383,21 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       return;
     }
 
+  layer_mode = config->layer_new_mode;
+
+  if (layer_mode == GIMP_LAYER_MODE_NORMAL ||
+      layer_mode == GIMP_LAYER_MODE_NORMAL_LEGACY)
+    {
+      layer_mode = gimp_image_get_default_new_layer_mode (image);
+    }
+
   layer = gimp_layer_new (image,
                           gimp_image_get_width  (image),
                           gimp_image_get_height (image),
                           gimp_image_get_layer_format (image, TRUE),
                           config->layer_new_name,
                           config->layer_new_opacity,
-                          config->layer_new_mode);
+                          layer_mode);
 
   gimp_drawable_fill (GIMP_DRAWABLE (layer),
                       action_data_get_context (data),
