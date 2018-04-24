@@ -139,8 +139,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  /*  temp debug foo  */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL) &&
+  /*  temp debug foo, disabled in stable  */
+  if (FALSE &&
+      g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL) &&
       tool_type != GIMP_TYPE_MYBRUSH_TOOL)
     {
       GtkWidget *button;
