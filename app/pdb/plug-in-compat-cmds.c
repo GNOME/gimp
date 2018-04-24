@@ -3368,23 +3368,22 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gdouble period;
-  gdouble amplitude;
+  gint32 period;
+  gint32 amplitude;
   gint32 orientation;
   gint32 edges;
   gint32 waveform;
   gboolean antialias;
   gboolean tile;
 
-  /* first arg is "image", which is unused. */
-  drawable    = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  period      = g_value_get_int (gimp_value_array_index (args, 3));
-  amplitude   = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  period = g_value_get_int (gimp_value_array_index (args, 3));
+  amplitude = g_value_get_int (gimp_value_array_index (args, 4));
   orientation = g_value_get_int (gimp_value_array_index (args, 5));
-  edges       = g_value_get_int (gimp_value_array_index (args, 6));
-  waveform    = g_value_get_int (gimp_value_array_index (args, 7));
-  antialias   = g_value_get_boolean (gimp_value_array_index (args, 8));
-  tile        = g_value_get_boolean (gimp_value_array_index (args, 9));
+  edges = g_value_get_int (gimp_value_array_index (args, 6));
+  waveform = g_value_get_int (gimp_value_array_index (args, 7));
+  antialias = g_value_get_boolean (gimp_value_array_index (args, 8));
+  tile = g_value_get_boolean (gimp_value_array_index (args, 9));
 
   if (success)
     {
@@ -3402,8 +3401,8 @@ plug_in_ripple_invoker (GimpProcedure         *procedure,
 
           node = gegl_node_new_child (NULL,
                                       "operation",    "gegl:ripple",
-                                      "amplitude",    amplitude,
-                                      "period",       period,
+                                      "amplitude",    (gdouble) amplitude,
+                                      "period",       (gdouble) period,
                                       "phi",          phi,
                                       "angle",        angle,
                                       "sampler_type", antialias ? GEGL_SAMPLER_CUBIC : GEGL_SAMPLER_NEAREST,
@@ -7631,9 +7630,9 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                      "plug-in-ripple",
                                      "Displace pixels in a ripple pattern",
                                      "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form.",
-                                     "Brian Degenhardt <bdegenha@ucsd.edu>",
-                                     "Brian Degenhardt",
-                                     "1997",
+                                     "Compatibility procedure. Please see 'gegl:ripple' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:ripple' for credits.",
+                                     "2018",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
@@ -7658,17 +7657,17 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("period",
                                                       "period",
                                                       "Period: number of pixels for one wave to complete",
-                                                      0, G_MAXINT32, 0,
+                                                      G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("amplitude",
                                                       "amplitude",
                                                       "Amplitude: maximum displacement of wave",
-                                                      0, G_MAXINT32, 0,
+                                                      G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("orientation",
-                                                      "orientatioon",
+                                                      "orientation",
                                                       "Orientation { ORIENTATION-HORIZONTAL (0), ORIENTATION-VERTICAL (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
@@ -7682,13 +7681,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("waveform",
                                                       "waveform",
                                                       "Waveform { SAWTOOTH (0), SINE (1) }",
-                                                      0, 1, 1,
+                                                      0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
                                                      "Antialias { TRUE, FALSE }",
-                                                     TRUE,
+                                                     FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("tile",
@@ -7698,7 +7697,6 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
-
 
   /*
    * gimp-plug-in-rotate

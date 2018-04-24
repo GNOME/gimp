@@ -80,7 +80,6 @@ plug-ins/common/photocopy.c
 plug-ins/common/plugin-browser.c
 plug-ins/common/procedure-browser.c
 plug-ins/common/qbist.c
-plug-ins/common/ripple.c
 plug-ins/common/sample-colorize.c
 plug-ins/common/sharpen.c
 plug-ins/common/smooth-palette.c
