@@ -1186,18 +1186,28 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
   if (text_tool->layer != layer)
     {
       if (text_tool->layer)
-        g_signal_handlers_disconnect_by_func (text_tool->layer,
-                                              gimp_text_tool_layer_notify,
-                                              text_tool);
+        {
+          g_signal_handlers_disconnect_by_func (text_tool->layer,
+                                                gimp_text_tool_layer_notify,
+                                                text_tool);
 
-      gimp_text_tool_remove_empty_text_layer (text_tool);
+          /*  don't try to remove the layer if it is not attached,
+           *  which can happen if we got here because the layer was
+           *  somehow deleted from the image (like by the user in the
+           *  layers dialog).
+           */
+          if (gimp_item_is_attached (GIMP_ITEM (text_tool->layer)))
+            gimp_text_tool_remove_empty_text_layer (text_tool);
+        }
 
       text_tool->layer = layer;
 
       if (layer)
-        g_signal_connect_object (text_tool->layer, "notify",
-                                 G_CALLBACK (gimp_text_tool_layer_notify),
-                                 text_tool, 0);
+        {
+          g_signal_connect_object (text_tool->layer, "notify",
+                                   G_CALLBACK (gimp_text_tool_layer_notify),
+                                   text_tool, 0);
+        }
     }
 }
 
