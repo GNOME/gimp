@@ -6,7 +6,9 @@ brushtexturedata_DATA = \
 	Cell-01.gbr		\
 	Cell-02.gbr		\
 	Grass.gih		\
+	Hatch-Pen-01.gbr	\
 	Smoke.gbr		\
+	Stone-Work-01.gih	\
 	Structure.gbr		\
 	Texture-01.gbr		\
 	Texture-02.gbr		\
