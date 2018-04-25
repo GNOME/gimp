@@ -191,7 +191,7 @@ struct _GimpToolRectanglePrivate
   /* How to constrain the rectangle. */
   GimpRectangleConstraint constraint;
 
-  /* What precision the rectangle will apear to have externally (it
+  /* What precision the rectangle will appear to have externally (it
    * will always be double internally)
    */
   GimpRectanglePrecision  precision;

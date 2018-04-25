@@ -224,7 +224,7 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
  *
  * Returns: a pointer to the filled buffer or %NULL if fontname is
  * %NULL, the field is longer than XFLD_MAX_FIELD_LEN or it contains
- * just an asteriks.
+ * just an asterisk.
  **/
 static gchar *
 gimp_text_get_xlfd_field (const gchar *fontname,

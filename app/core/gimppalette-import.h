@@ -29,7 +29,7 @@ GimpPalette * gimp_palette_import_from_image         (GimpImage    *image,
                                                       GimpContext  *context,
                                                       const gchar  *palette_name,
                                                       gint          n_colors,
-                                                      gint          treshold,
+                                                      gint          threshold,
                                                       gboolean      selection_only);
 GimpPalette * gimp_palette_import_from_indexed_image (GimpImage    *image,
                                                       GimpContext  *context,

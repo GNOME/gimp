@@ -781,7 +781,7 @@ gimp_operation_flood_process_propagate_horizontal (GimpOperationFloodContext    
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
             }
 
-          /* The new water level is the maximum of the curernt ground level,
+          /* The new water level is the maximum of the current ground level,
            * and the minimum of the current and previous water levels.  Recall
            * that `level` holds the previous water level, and that the current
            * water level is never less than the ground level.

@@ -51,7 +51,7 @@ static void   palettes_merge_callback (GtkWidget   *widget,
                                        gpointer     data);
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 palettes_import_cmd_callback (GtkAction *action,

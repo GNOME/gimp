@@ -451,7 +451,7 @@ decompose (gint32       image_ID,
   GeglBuffer    *src_buffer;
   GeglBuffer    *dst_buffer[MAX_EXTRACT_IMAGES];
   GimpPrecision  precision;
-  gboolean       requirments      = FALSE;
+  gboolean       requirements      = FALSE;
   gboolean       decomp_has_alpha = FALSE;
 
   extract_idx = -1;   /* Search extract type */
@@ -479,15 +479,15 @@ decompose (gint32       image_ID,
       decomp_has_alpha |= ! g_strcmp0 ("A",     extract[extract_idx].component[j].babl_name);
     }
 
-  requirments |= (gimp_drawable_is_rgb (drawable_ID));
-  requirments |= (gimp_drawable_is_indexed (drawable_ID));
-  requirments |= (gimp_drawable_is_gray (drawable_ID)
+  requirements |= (gimp_drawable_is_rgb (drawable_ID));
+  requirements |= (gimp_drawable_is_indexed (drawable_ID));
+  requirements |= (gimp_drawable_is_gray (drawable_ID)
                   && gimp_drawable_has_alpha (drawable_ID)
                   && (num_layers <= 2)
                   && decomp_has_alpha);
-  requirments &= (!decomp_has_alpha || gimp_drawable_has_alpha (drawable_ID));
+  requirements &= (!decomp_has_alpha || gimp_drawable_has_alpha (drawable_ID));
 
-  if (!requirments)
+  if (!requirements)
     {
       g_message (_("Image not suitable for this decomposition"));
       return -1;

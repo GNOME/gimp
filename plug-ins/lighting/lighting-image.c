@@ -318,7 +318,7 @@ compute_maps (void)
   gint    x;
   gdouble val, c, d;
 
-  /* Compute Sine, Log ans Spherical transfer function maps */
+  /* Compute Sine, Log and Spherical transfer function maps */
   /* ====================================================== */
 
   c = 1.0  / 255.0;

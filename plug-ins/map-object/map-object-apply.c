@@ -305,7 +305,7 @@ compute_image (void)
       gimp_adaptive_supersample_area (0, 0,
                                       width - 1, height - 1,
                                       max_depth,
-                                      mapvals.pixeltreshold,
+                                      mapvals.pixelthreshold,
                                       render,
                                       NULL,
                                       poke,

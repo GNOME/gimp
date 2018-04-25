@@ -151,7 +151,7 @@ peekmap (const guchar *image,
 /*     |1 0 -1|     |  1   2   1|                  */
 /* DX: |2 0 -2| DY: |  0   0   0|                  */
 /*     |1 0 -1|     | -1  -2  -1|                  */
-/* (It's a varation of the Sobel kernels, really)  */
+/* (It's a variation of the Sobel kernels, really)  */
 /***************************************************/
 
 static gint

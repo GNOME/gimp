@@ -43,7 +43,7 @@ GimpTextLayout * gimp_text_layout_new                  (GimpText       *text,
                                                         GError        **error);
 gboolean         gimp_text_layout_get_size             (GimpTextLayout *layout,
                                                         gint           *width,
-                                                        gint           *heigth);
+                                                        gint           *height);
 void             gimp_text_layout_get_offsets          (GimpTextLayout *layout,
                                                         gint           *x,
                                                         gint           *y);

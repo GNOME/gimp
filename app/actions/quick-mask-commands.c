@@ -59,7 +59,7 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
                                              gpointer       user_data);
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 quick_mask_toggle_cmd_callback (GtkAction *action,

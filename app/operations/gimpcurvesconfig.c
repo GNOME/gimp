@@ -672,7 +672,7 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
 
       for (j = 0; j < curve->n_points; j++)
         {
-          /* don't use gimp_curve_get_point() becaue that doesn't
+          /* don't use gimp_curve_get_point() because that doesn't
            * work when the curve type is GIMP_CURVE_FREE
            */
           gdouble x = curve->points[j].x;

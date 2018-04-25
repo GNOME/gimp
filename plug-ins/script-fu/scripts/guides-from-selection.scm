@@ -2,13 +2,13 @@
 
 (define (script-fu-guides-from-selection image drawable)
   (let* (
-        (boundries (gimp-selection-bounds image))
+        (boundaries (gimp-selection-bounds image))
         ;; non-empty INT32 TRUE if there is a selection
-        (selection (car boundries))
-        (x1 (cadr boundries))
-        (y1 (caddr boundries))
-        (x2 (cadr (cddr boundries)))
-        (y2 (caddr (cddr boundries)))
+        (selection (car boundaries))
+        (x1 (cadr boundaries))
+        (y1 (caddr boundaries))
+        (x2 (cadr (cddr boundaries)))
+        (y2 (caddr (cddr boundaries)))
         )
 
     ;; need to check for a selection or we get guides right at edges of the image

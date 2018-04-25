@@ -523,7 +523,7 @@ TODO: can this cause confusion and hard-to-find errors? If so, fix.
 Text
 ----
 
-GIMP stores text in plain layers with parasites for the text and formattting
+GIMP stores text in plain layers with parasites for the text and formatting
 and PROP_TEXT_LAYER_FLAGS for flags.
 
 

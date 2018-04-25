@@ -300,7 +300,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   switch (ct->tool_state)
     {
     case CAGE_STATE_INIT:
-      /* No handle yet, we add the first one and swith the tool to
+      /* No handle yet, we add the first one and switch the tool to
        * moving handle state.
        */
       gimp_cage_config_add_cage_point (ct->config,

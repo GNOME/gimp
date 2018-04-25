@@ -659,7 +659,7 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   GimpDialogFactoryEntry *entry       = NULL;
   gchar                  *name        = NULL;
 
-  /* Don't add docks with just a singe dockable to the list of
+  /* Don't add docks with just a single dockable to the list of
    * recently closed dock since those can be brought back through the
    * normal Windows->Dockable Dialogs menu
    */

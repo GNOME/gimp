@@ -8036,13 +8036,13 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("alpha1",
                                                     "alpha1",
-                                                    "alpha for the first color (used if the drawable has an alpha chanel)",
+                                                    "alpha for the first color (used if the drawable has an alpha channel)",
                                                     0, 1, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("alpha2",
                                                     "alpha2",
-                                                    "alpha for the second color (used if the drawable has an alpha chanel)",
+                                                    "alpha for the second color (used if the drawable has an alpha channel)",
                                                     0, 1, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

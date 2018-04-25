@@ -2451,7 +2451,7 @@ xcf_load_old_path (XcfInfo   *info,
     {
       guint32 dummy;
 
-      /* Has extra tatto field */
+      /* Has extra tattoo field */
       xcf_read_int32 (info, (guint32 *) &dummy,  1);
       xcf_read_int32 (info, (guint32 *) &tattoo, 1);
     }

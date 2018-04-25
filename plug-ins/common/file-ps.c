@@ -604,7 +604,7 @@ query (void)
 
   static const GimpParamDef set_load_args[] =
   {
-    { GIMP_PDB_INT32,  "resolution", "Resolution to interprete image (dpi)"    },
+    { GIMP_PDB_INT32,  "resolution", "Resolution to interpret image (dpi)"     },
     { GIMP_PDB_INT32,  "width",      "Desired width"                           },
     { GIMP_PDB_INT32,  "height",     "Desired height"                          },
     { GIMP_PDB_INT32,  "check-bbox", "0: Use width/height, 1: Use BoundingBox" },

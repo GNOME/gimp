@@ -2938,7 +2938,7 @@ p_vertical_bend (BenderDialog *cd,
                                      src_gdrw->drawable->height);
   l_diff = l_curvy = l_nb_curvy = l_nb2_curvy= l_miny = l_maxy = 0;
 
-  /* allocate array of last values (one element foreach x koordinate) */
+  /* allocate array of last values (one element foreach x coordinate) */
   last_arr  = g_new (t_Last, src_gdrw->x2);
   first_arr = g_new (t_Last, src_gdrw->x2);
 

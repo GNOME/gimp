@@ -22,7 +22,7 @@
 # The gimp module provides a basic method for storing information that persists
 # for a whole gimp session, but only allows for the storage of strings.  This
 # is because other Python types usually have pointers to other Python objects,
-# making it dificult to work out what to save.  This module gives an interface
+# making it difficult to work out what to save.  This module gives an interface
 # to the gimp module's primitive interface, which resembles the shelve module.
 
 # use cPickle and cStringIO if available

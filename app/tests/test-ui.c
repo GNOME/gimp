@@ -711,7 +711,7 @@ repeatedly_switch_window_mode (gconstpointer data)
   /* Switch to single-window mode */
   gimp_ui_switch_window_mode (gimp);
 
-  /* Rememeber the single-window mode size */
+  /* Remember the single-window mode size */
   gtk_window_get_size (GTK_WINDOW (toplevel),
                        &expected_second_width,
                        &expected_second_height);

@@ -446,7 +446,7 @@ gimp_create_mainimage (Gimp     *gimp,
                                       GIMP_MAINIMAGE_SAMPLEPOINT2_Y,
                                       FALSE /*push_undo*/);
 
-  /* Tatto
+  /* Tattoo
    * We don't bother testing this, not yet at least
    */
 

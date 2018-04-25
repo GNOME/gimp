@@ -64,7 +64,7 @@ set_default_settings (void)
 
   mapvals.maptype = MAP_PLANE;
 
-  mapvals.pixeltreshold   = 0.25;
+  mapvals.pixelthreshold  = 0.25;
   mapvals.alpha           = 0.0;
   mapvals.beta            = 0.0;
   mapvals.gamma           = 0.0;

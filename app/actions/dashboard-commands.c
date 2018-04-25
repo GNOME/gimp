@@ -32,7 +32,7 @@
 #include "gimp-intl.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 
 void

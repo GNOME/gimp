@@ -560,7 +560,7 @@ create_options_page (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.maxdepth);
 
-  spinbutton = spin_button_new (&adj, mapvals.pixeltreshold,
+  spinbutton = spin_button_new (&adj, mapvals.pixelthreshold,
                                 0.001, 1000, 0.1, 1, 0, 0, 3);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Threshold:"), 0.0, 0.5,
@@ -568,7 +568,7 @@ create_options_page (void)
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (double_adjustment_update),
-                    &mapvals.pixeltreshold);
+                    &mapvals.pixelthreshold);
 
   gimp_help_set_help_data (spinbutton,
                            _("Stop when pixel differences are smaller than "

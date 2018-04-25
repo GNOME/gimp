@@ -423,11 +423,11 @@ gimp_operation_shrink_process (GeglOperation       *operation,
                        GEGL_AUTO_ROWSTRIDE);
     }
 
-  /* undo the offsets to the pointers so we can free the malloced memmory */
+  /* undo the offsets to the pointers so we can free the malloced memory */
   circ -= self->radius_x;
   max -= self->radius_x;
 
-  /* free the memmory */
+  /* free the memory */
   g_free (circ);
   g_free (buffer);
   g_free (max);

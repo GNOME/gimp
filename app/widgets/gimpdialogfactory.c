@@ -822,7 +822,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dockable_new:
  * @factory:      a #GimpDialogFactory
- * @dock:         a #GimpDock crated by this %factory.
+ * @dock:         a #GimpDock created by this %factory.
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
  * @view_size:

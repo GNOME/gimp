@@ -832,7 +832,7 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
               gimp_tool_control_push_preserve (tool->control, TRUE);
 
               /* We can conceptually think of a click outside of the
-               * selection as adding a 0px selection. Behave intuitivly
+               * selection as adding a 0px selection. Behave intuitively
                * for the current selection mode
                */
               operation = gimp_rectangle_select_tool_get_operation (rect_tool);

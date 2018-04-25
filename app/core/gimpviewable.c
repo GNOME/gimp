@@ -1173,7 +1173,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
 /**
  * gimp_viewable_get_description:
  * @viewable: viewable object for which to retrieve a description.
- * @tooltip:  return loaction for an optional tooltip string.
+ * @tooltip:  return location for an optional tooltip string.
  *
  * Retrieves a string containing a description of the viewable object,
  * By default, it simply returns the name of the object, but this can

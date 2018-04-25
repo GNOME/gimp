@@ -961,7 +961,7 @@ gimp_display_shell_untransform_bounds_with_scale (GimpDisplayShell *shell,
  * @width:  returns width of display measured in image coordinates
  * @height: returns height of display measured in image coordinates
  *
- * This function calculates the part of the image, im image coordinates,
+ * This function calculates the part of the image, in image coordinates,
  * that corresponds to the display viewport.
  **/
 void

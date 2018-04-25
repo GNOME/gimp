@@ -30,7 +30,7 @@
 #include "fonts-commands.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 fonts_refresh_cmd_callback (GtkAction *action,

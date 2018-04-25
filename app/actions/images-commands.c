@@ -38,7 +38,7 @@
 #include "images-commands.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 images_raise_views_cmd_callback (GtkAction *action,

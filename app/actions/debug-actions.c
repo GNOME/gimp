@@ -44,7 +44,7 @@ static const GimpActionEntry debug_actions[] =
   { "debug-benchmark-projection", NULL,
     "Benchmark _Projection", NULL,
     "Invalidates the entire projection, measures the time it takes to "
-    "validate (render) the part that is visible in the active diaplay, "
+    "validate (render) the part that is visible in the active display, "
     "and print the result to stdout.",
     G_CALLBACK (debug_benchmark_projection_cmd_callback),
     NULL },

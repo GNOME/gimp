@@ -1666,7 +1666,7 @@ order_cmp (const void *va,
  * should get the same color back again.  The only way of getting a
  * correctly balanced function is by getting a formula for the spot's
  * area as a function of x and y - this can be fairly tough (ie
- * possiblly an integral in two dimensions that must be solved
+ * possibly an integral in two dimensions that must be solved
  * analytically).
  *
  * The threshold matrix is used to compare against image values.  If

@@ -336,7 +336,7 @@ struct AlgorithmBase
 /* BasicDispatch:
  *
  * A class template implementing a simple dispatch function object, which adds
- * an algorithm to the heirarchy unconditionally.  'AlgorithmTemplate' is the
+ * an algorithm to the hierarchy unconditionally.  'AlgorithmTemplate' is the
  * alogithm class template (usually a helper class, rather than an actual
  * algorithm), and 'Mask' is the dispatch function mask, as described in
  * 'dispatch()'.
@@ -369,7 +369,7 @@ struct BasicDispatch
  * is a list of (types of) dispatch functions the algorithm depends on, usd as
  * explained below.
  *
- * 'AlgorithmDispatch' adds the algorithm to the heirarchy if it's included in
+ * 'AlgorithmDispatch' adds the algorithm to the hierarchy if it's included in
  * the set of requested algorithms; specifically, if the bitwise-AND of the
  * requested-algorithms bitset and of 'Mask' is equal to 'Mask'.
  *
@@ -881,7 +881,7 @@ struct PaintMaskToPaintBuffer : Base
   PaintMaskToPaintBuffer (const GimpPaintCoreLoopsParams *params) :
     Base (params)
   {
-    /* Validate that the paint buffer is withing the bounds of the paint mask */
+    /* Validate that the paint buffer is within the bounds of the paint mask */
     g_return_if_fail (gimp_temp_buf_get_width (params->paint_buf) <=
                       gimp_temp_buf_get_width (params->paint_mask) -
                       params->paint_mask_offset_x);

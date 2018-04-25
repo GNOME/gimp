@@ -3552,7 +3552,7 @@ gimp_image_parasite_attach (GimpImage          *image,
                                          C_("undo-type", "Attach Parasite to Image"),
                                          &copy);
 
-  /*  We used to push an cantundo on te stack here. This made the undo stack
+  /*  We used to push a cantundo on the stack here. This made the undo stack
    *  unusable (NULL on the stack) and prevented people from undoing after a
    *  save (since most save plug-ins attach an undoable comment parasite).
    *  Now we simply attach the parasite without pushing an undo. That way

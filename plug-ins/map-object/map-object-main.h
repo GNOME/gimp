@@ -72,7 +72,7 @@ typedef struct
   gdouble zoom;
   gdouble alpha,beta,gamma;
   gdouble maxdepth;
-  gdouble pixeltreshold;
+  gdouble pixelthreshold;
   gdouble radius;
   gdouble cylinder_radius;
   gdouble cylinder_length;

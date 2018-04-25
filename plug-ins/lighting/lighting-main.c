@@ -94,7 +94,7 @@ set_default_settings (void)
   mapvals.material.highlight    = 27.0;
   mapvals.material.metallic     = FALSE;
 
-  mapvals.pixel_treshold      = 0.25;
+  mapvals.pixel_threshold     = 0.25;
   mapvals.max_depth           =  3.0;
   mapvals.preview_zoom_factor =  1.0;
 

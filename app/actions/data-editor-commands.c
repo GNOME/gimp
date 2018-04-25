@@ -27,7 +27,7 @@
 #include "data-editor-commands.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 data_editor_edit_active_cmd_callback (GtkAction *action,

@@ -372,7 +372,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
                        GEGL_AUTO_ROWSTRIDE);
     }
 
-  /* undo the offsets to the pointers so we can free the malloced memmory */
+  /* undo the offsets to the pointers so we can free the malloced memory */
   circ -= self->radius_x;
   max -= self->radius_x;
 

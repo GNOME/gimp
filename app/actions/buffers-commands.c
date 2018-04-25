@@ -43,7 +43,7 @@
 #include "gimp-intl.h"
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 buffers_paste_cmd_callback (GtkAction *action,

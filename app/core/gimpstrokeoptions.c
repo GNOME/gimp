@@ -78,7 +78,7 @@ struct _GimpStrokeOptionsPrivate
 {
   GimpStrokeMethod  method;
 
-  /*  options for medhod == LIBART  */
+  /*  options for method == LIBART  */
   gdouble           width;
   GimpUnit          unit;
 

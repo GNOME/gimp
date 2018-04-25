@@ -44,7 +44,7 @@ struct _GimpCurve
   gint           n_samples;
   gdouble       *samples;
 
-  gboolean       identity;  /* whether the curve is an identiy mapping */
+  gboolean       identity;  /* whether the curve is an identity mapping */
 };
 
 struct _GimpCurveClass

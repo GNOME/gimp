@@ -65,7 +65,7 @@ static void   gradient_editor_replicate_response     (GtkWidget           *widge
                                                       GimpGradientEditor  *editor);
 
 
-/*  public functionss */
+/*  public functions */
 
 void
 gradient_editor_left_color_cmd_callback (GtkAction *action,

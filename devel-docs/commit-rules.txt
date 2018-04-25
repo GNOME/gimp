@@ -26,4 +26,4 @@ commits.
 
    Whenever you make a change that is worthy of being mentioned in the
    NEWS file, update the NEWS file too. The purpose of this rule is to
-   make it as easy as possble to make a GIMP release.
+   make it as easy as possible to make a GIMP release.

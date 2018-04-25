@@ -39,7 +39,7 @@ cairo_surface_t *preview_surface = NULL;
 glong   maxcounter,old_depth,max_depth;
 gint    imgtype,width,height,in_channels,out_channels,image_id;
 GimpRGB  background;
-gdouble oldtreshold;
+gdouble oldthreshold;
 
 gint border_x, border_y, border_w, border_h;
 

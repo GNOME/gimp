@@ -2006,7 +2006,7 @@ gimp_item_replace_item (GimpItem *item,
                          gimp_item_get_ID (item),
                          item);
 
-  /* Set image before tatoo so that the explicitly set tatoo overrides
+  /* Set image before tattoo so that the explicitly set tattoo overrides
    * the one implicitly set when setting the image
    */
   gimp_item_set_image (item, gimp_item_get_image (replace));

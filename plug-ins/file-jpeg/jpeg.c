@@ -451,7 +451,7 @@ run (const gchar      *name,
                   jsvals.quality = orig_quality;
                 }
 
-              /* Skip changing subsampling to original if we alredy have best
+              /* Skip changing subsampling to original if we already have best
                * setting or if original have worst setting */
               if (!(jsvals.subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1 ||
                     orig_subsmp == JPEG_SUBSAMPLING_2x2_1x1_1x1))

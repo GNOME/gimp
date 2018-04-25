@@ -584,7 +584,7 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
       /* FIXME: support it!
        *
        * We can probabaly feed the info into the generated brush code
-       * and get a useable brush back. It seems to support the same
+       * and get a usable brush back. It seems to support the same
        * types -akl
        */
       g_printerr ("WARNING: computed brush unsupported, skipping.\n");

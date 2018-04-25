@@ -92,7 +92,7 @@ gimp_brush_real_transform_size (GimpBrush *brush,
  * corner points of the destination image to work out the starting
  * position in the source image and the U and V deltas in the source
  * image space.  It then uses a scan-line approach, looping through
- * rows and colummns in the transformed (destination) image while
+ * rows and columns in the transformed (destination) image while
  * walking along the corresponding rows and columns (named U and V) in
  * the source image.
  *
@@ -392,7 +392,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
  * corner points of the destination image to work out the starting
  * position in the source image and the U and V deltas in the source
  * image space.  It then uses a scan-line approach, looping through
- * rows and colummns in the transformed (destination) image while
+ * rows and columns in the transformed (destination) image while
  * walking along the corresponding rows and columns (named U and V) in
  * the source image.
  *

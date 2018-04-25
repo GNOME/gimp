@@ -42,7 +42,7 @@
  *
  *  2005-2-11 Jay Cox <jaycox@gimp.org>
  *       Rewrote all the code that deals with pixels to be stingy with
- *       memory and opperate on tile-size chunks.  Create a flattened
+ *       memory and operate on tile-size chunks.  Create a flattened
  *       copy of the image when necessary. Fixes file corruption bug
  *       #167139 and memory bug #121871
  *

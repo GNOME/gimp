@@ -72,7 +72,7 @@ typedef struct
   MaterialSettings material;
   MaterialSettings ref_material;
 
-  gdouble      pixel_treshold;
+  gdouble      pixel_threshold;
   gdouble      bumpmax,bumpmin;
   gint         max_depth;
   gint         bumpmaptype;

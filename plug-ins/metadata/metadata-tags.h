@@ -335,19 +335,19 @@ static const combobox_str_tag dicom[] =
   { "other",   N_("Other")   },
 };
 
-/* GPS Altitute Ref */
+/* GPS Altitude Ref */
 static const gchar *gpsaltref[] =
 {
   N_("Unknown"), N_("Above Sea Level"), N_("Below Sea Level")
 };
 
-/* GPS Latitute Ref */
+/* GPS Latitude Ref */
 static const gchar *gpslatref[] =
 {
   N_("Unknown"), N_("North"), N_("South")
 };
 
-/* GPS Longitute Ref */
+/* GPS Longitude Ref */
 static const gchar *gpslngref[] =
 {
   N_("Unknown"), N_("East"), N_("West")

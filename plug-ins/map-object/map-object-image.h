@@ -20,7 +20,7 @@ extern cairo_surface_t *preview_surface;
 extern glong   maxcounter, old_depth, max_depth;
 extern gint    imgtype, width,height, in_channels, out_channels, image_id;
 extern GimpRGB  background;
-extern gdouble oldtreshold;
+extern gdouble oldthreshold;
 
 extern gint border_x1, border_y1, border_x2, border_y2;
 

@@ -88,7 +88,7 @@ make install
     interface for implementing some portions of a plugin.  For this
     reason, there is a python module called
     <filename>plugin.py</filename> that sets out a structure for
-    plugins and implements some things that were either too dificult
+    plugins and implements some things that were either too difficult
     or impossible to do in C.</Para>
 
     <Para>The main purpose of <filename>plugin.py</filename> was to
@@ -2064,7 +2064,7 @@ class myplugin(gimpplugin.plugin):
       <Para>This module gives a nicer interface to the persistent
       storage interface for GIMP plugins.  Due to the complicated
       nature of Python objects (there is often a lot of connections
-      between them), it can be dificult to work out what to store in
+      between them), it can be difficult to work out what to store in
       gimp's persistent storage.  The python interface only allows
       storage of strings, so this module wraps pickle and unpickle to
       allow persistentstorage of any python object.</Para>

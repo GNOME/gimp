@@ -669,7 +669,7 @@ gimp_layer_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
                                     GtkTreeViewDropPosition *return_drop_pos,
                                     GdkDragAction           *return_drag_action)
 {
-  /* If we are dropping a new layer, check if the destionation image
+  /* If we are dropping a new layer, check if the destination image
    * has a floating selection.
    */
   if  (src_type == GIMP_DND_TYPE_URI_LIST     ||

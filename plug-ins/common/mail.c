@@ -647,7 +647,7 @@ find_extension (const gchar *filename)
         }
       else
         {
-          /* we found somehting, loop back, and look again */
+          /* we found something, loop back, and look again */
           *ext = 0;
           ext = strrchr (filename_copy, '.');
         }

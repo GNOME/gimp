@@ -1364,7 +1364,7 @@ load_gui_defaults (JpegSaveGui *pg)
   gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->smoothing),
                             jsvals.smoothing);
 
-  /* Don't override quality and subsampling setting if we alredy set it from original */
+  /* Don't override quality and subsampling setting if we already set it from original */
   if (!jsvals.use_orig_quality)
     {
       gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->quality),

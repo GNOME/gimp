@@ -1005,9 +1005,9 @@ gimp_curve_plot (GimpCurve *curve,
   /*
    * the x values of the inner control points are fixed at
    * x1 = 2/3*x0 + 1/3*x3   and  x2 = 1/3*x0 + 2/3*x3
-   * this ensures that the x values increase linearily with the
+   * this ensures that the x values increase linearly with the
    * parameter t and enables us to skip the calculation of the x
-   * values altogehter - just calculate y(t) evenly spaced.
+   * values altogether - just calculate y(t) evenly spaced.
    */
 
   dx = x3 - x0;
@@ -1061,7 +1061,7 @@ gimp_curve_plot (GimpCurve *curve,
 
   /*
    * finally calculate the y(t) values for the given bezier values. We can
-   * use homogenously distributed values for t, since x(t) increases linearily.
+   * use homogenously distributed values for t, since x(t) increases linearly.
    */
   for (i = 0; i <= ROUND (dx * (gdouble) (curve->n_samples - 1)); i++)
     {
