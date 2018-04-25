@@ -21,6 +21,8 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
@@ -93,16 +95,12 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
         gimp_drawable_gradient_shapeburst_distmap (drawable, metric,
                                                    GEGL_RECTANGLE (x, y, width, height),
                                                    progress);
-
-      /*  in shapeburst mode, make sure the "line" is long enough to
-       *  span across the selection, so the operation's cache has the
-       *  right size
-       */
-      startx = x;
-      starty = y;
-      endx   = x + width;
-      endy   = y + height;
     }
+
+  gimp_drawable_gradient_adjust_coords (drawable,
+                                        gradient_type,
+                                        GEGL_RECTANGLE (x, y, width, height),
+                                        &startx, &starty, &endx, &endy);
 
   render = gegl_node_new_child (NULL,
                                 "operation",                  "gimp:gradient",
@@ -234,4 +232,74 @@ gimp_drawable_gradient_shapeburst_distmap (GimpDrawable        *drawable,
   g_object_unref (temp_buffer);
 
   return dist_buffer;
+}
+
+void
+gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
+                                      GimpGradientType     gradient_type,
+                                      const GeglRectangle *region,
+                                      gdouble             *startx,
+                                      gdouble             *starty,
+                                      gdouble             *endx,
+                                      gdouble             *endy)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (region != NULL);
+  g_return_if_fail (startx != NULL);
+  g_return_if_fail (starty != NULL);
+  g_return_if_fail (endx != NULL);
+  g_return_if_fail (endy != NULL);
+
+  /* we potentially adjust the gradient coordinates according to the gradient
+   * type, so that in cases where the gradient span is not related to the
+   * segment length, the gradient cache (in GimpOperationGradient) is big
+   * enough not to produce banding.
+   */
+
+  switch (gradient_type)
+    {
+    /* for conical gradients, use a segment with the original origin and
+     * direction, whose length is the circumference of the largest circle
+     * centered at the origin, passing through one of the regions's vertices.
+     */
+    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
+    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
+      {
+        gdouble     r = 0.0;
+        GimpVector2 v;
+
+        r = MAX (r, hypot (region->x - *startx,
+                           region->y - *starty));
+        r = MAX (r, hypot (region->x + region->width - *startx,
+                           region->y - *starty));
+        r = MAX (r, hypot (region->x - *startx,
+                           region->y + region->height - *starty));
+        r = MAX (r, hypot (region->x + region->width - *startx,
+                           region->y + region->height - *starty));
+
+        gimp_vector2_set (&v, *endx - *startx, *endy - *starty);
+        gimp_vector2_normalize (&v);
+        gimp_vector2_mul (&v, 2.0 * G_PI * r);
+
+        *endx = *startx + v.x;
+        *endy = *starty + v.y;
+      }
+      break;
+
+    /* for shaped gradients, only the segment's length matters; use the
+     * regions's diagonal, which is the largest possible distance between two
+     * points in the region.
+     */
+    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
+    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
+    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
+      *startx = region->x;
+      *starty = region->y;
+      *endx   = region->x + region->width;
+      *endy   = region->y + region->height;
+      break;
+
+    default:
+      break;
+    }
 }

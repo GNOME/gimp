@@ -1226,21 +1226,6 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
       return;
     }
 
-  switch (self->gradient_type)
-    {
-    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
-    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
-      /*  don't use a gradient cache for conical gradients, since the necessary
-       *  cache size is not related to the line length
-       */
-      g_mutex_unlock (&self->gradient_cache_mutex);
-
-      return;
-
-    default:
-      break;
-    }
-
   cache_size = ceil (hypot (self->start_x - self->end_x,
                             self->start_y - self->end_y)) *
                GRADIENT_CACHE_N_SUPERSAMPLES;
