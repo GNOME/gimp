@@ -1,10 +1,10 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017, 2018 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-03-22 12:37+0000\n"
-"PO-Revision-Date: 2018-04-14 02:08+0200\n"
+"POT-Creation-Date: 2018-04-14 20:19+0000\n"
+"PO-Revision-Date: 2018-04-25 21:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -807,7 +807,7 @@ msgstr "Platta till bilden"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "Using _Paths"
-msgstr "Användning av _slingor"
+msgstr "Användning av _banor"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:60
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:73
@@ -3277,14 +3277,6 @@ msgstr "Y-avstånd för skuggkastning"
 #~ msgid "<Image>/Script-Fu/Selection/_Round..."
 #~ msgstr "<Image>/Script-Fu/Markering/_Runda..."
 
-#, fuzzy
-#~ msgid "Relative radius"
-#~ msgstr "Relativ radie"
-
-#, fuzzy
-#~ msgid "_About"
-#~ msgstr "Om"
-
 #~ msgid "DB Browser"
 #~ msgstr "DB-bläddrare"
 
@@ -3356,10 +3348,6 @@ msgstr "Y-avstånd för skuggkastning"
 
 #~ msgid "Unable to open the SIOD output pipe"
 #~ msgstr "Kan inte öppna SIOD-utdataröret"
-
-#, fuzzy
-#~ msgid "Blend gradient (sext)"
-#~ msgstr "Färgtoningsskala (text)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Tillägg/Script-Fu/Script-fu-_konsol"
