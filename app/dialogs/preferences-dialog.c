@@ -1161,16 +1161,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
                          _("Number of _threads to use:"),
                          GTK_TABLE (table), 4, size_group);
-
-  vbox2 = g_object_new (GIMP_TYPE_HINT_BOX,
-                        "icon-name", GIMP_ICON_DIALOG_WARNING,
-                        "hint",      _("Threading support is not yet stable.\n"
-                                       "Setting this to greater than one might\n"
-                                       "result in image errors or crashes."),
-                        NULL);
-  gtk_table_attach (GTK_TABLE (table), vbox2, 1, 2, 5, 6,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (vbox2);
 #endif /* ENABLE_MP */
 
   /*  Hardware Acceleration  */
