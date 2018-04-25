@@ -77,11 +77,12 @@ struct _GimpDrawableFilter
   GeglRectangle           filter_area;
 
   GeglNode               *translate;
-  GeglNode               *crop;
+  GeglNode               *crop_before;
   GeglNode               *cast_before;
   GeglNode               *transform_before;
   GeglNode               *transform_after;
   GeglNode               *cast_after;
+  GeglNode               *crop_after;
   GimpApplicator         *applicator;
 };
 
@@ -215,9 +216,9 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   filter->translate = gegl_node_new_child (node,
                                            "operation", "gegl:translate",
                                            NULL);
-  filter->crop = gegl_node_new_child (node,
-                                      "operation", "gegl:crop",
-                                      NULL);
+  filter->crop_before = gegl_node_new_child (node,
+                                             "operation", "gegl:crop",
+                                             NULL);
 
   filter->cast_before = gegl_node_new_child (node,
                                              "operation", "gegl:nop",
@@ -230,6 +231,10 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                                  NULL);
   filter->cast_after = gegl_node_new_child (node,
                                             "operation", "gegl:nop",
+                                            NULL);
+
+  filter->crop_after = gegl_node_new_child (node,
+                                            "operation", "gegl:crop",
                                             NULL);
 
   input = gegl_node_get_input_proxy (node, "input");
@@ -250,15 +255,16 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   gegl_node_link_many (input,
                        filter->translate,
-                       filter->crop,
+                       filter->crop_before,
                        filter->cast_before,
                        filter->transform_before,
                        effect,
                        filter->transform_after,
                        filter->cast_after,
+                       filter->crop_after,
                        NULL);
 
-  gegl_node_connect_to (filter->cast_after, "output",
+  gegl_node_connect_to (filter->crop_after, "output",
                         node,               "aux");
 
   return filter;
@@ -454,7 +460,11 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                      "y", (gdouble) -filter->filter_area.y,
                      NULL);
 
-      gegl_node_set (filter->crop,
+      gegl_node_set (filter->crop_before,
+                     "width",  (gdouble) filter->filter_area.width,
+                     "height", (gdouble) filter->filter_area.height,
+                     NULL);
+      gegl_node_set (filter->crop_after,
                      "width",  (gdouble) filter->filter_area.width,
                      "height", (gdouble) filter->filter_area.height,
                      NULL);
@@ -474,7 +484,11 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
                      "y", (gdouble) 0.0,
                      NULL);
 
-      gegl_node_set (filter->crop,
+      gegl_node_set (filter->crop_before,
+                     "width",  width,
+                     "height", height,
+                     NULL);
+      gegl_node_set (filter->crop_after,
                      "width",  width,
                      "height", height,
                      NULL);
