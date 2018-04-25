@@ -58,6 +58,7 @@ struct _GimpOperationGradient
 
   GimpRGB                     *gradient_cache;
   gint                         gradient_cache_size;
+  GMutex                       gradient_cache_mutex;
 };
 
 struct _GimpOperationGradientClass

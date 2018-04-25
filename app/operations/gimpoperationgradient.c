@@ -91,6 +91,7 @@ typedef struct
 /*  local function prototypes  */
 
 static void            gimp_operation_gradient_dispose           (GObject               *gobject);
+static void            gimp_operation_gradient_finalize          (GObject               *gobject);
 static void            gimp_operation_gradient_get_property      (GObject               *object,
                                                                   guint                  property_id,
                                                                   GValue                *value,
@@ -183,6 +184,7 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
   GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
   object_class->dispose             = gimp_operation_gradient_dispose;
+  object_class->finalize            = gimp_operation_gradient_finalize;
   object_class->set_property        = gimp_operation_gradient_set_property;
   object_class->get_property        = gimp_operation_gradient_get_property;
 
@@ -325,6 +327,7 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
 static void
 gimp_operation_gradient_init (GimpOperationGradient *self)
 {
+  g_mutex_init (&self->gradient_cache_mutex);
 }
 
 static void
@@ -338,6 +341,16 @@ gimp_operation_gradient_dispose (GObject *object)
   g_clear_object (&self->context);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_operation_gradient_finalize (GObject *object)
+{
+  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
+
+  g_mutex_clear (&self->gradient_cache_mutex);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -526,11 +539,7 @@ gimp_operation_gradient_set_property (GObject      *object,
 static void
 gimp_operation_gradient_prepare (GeglOperation *operation)
 {
-  GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (operation);
-
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
-
-  gimp_operation_gradient_validate_cache (self);
 }
 
 static GeglRectangle
@@ -1034,6 +1043,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   if (! self->gradient)
     return TRUE;
 
+  gimp_operation_gradient_validate_cache (self);
+
   rbd.gradient            = self->gradient;
   rbd.reverse             = self->gradient_reverse;
   rbd.blend_color_space   = self->gradient_blend_color_space;
@@ -1203,8 +1214,17 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
   gint                 cache_size;
   gint                 i;
 
-  if (! self->gradient || self->gradient_cache)
+  if (! self->gradient)
     return;
+
+  g_mutex_lock (&self->gradient_cache_mutex);
+
+  if (self->gradient_cache)
+    {
+      g_mutex_unlock (&self->gradient_cache_mutex);
+
+      return;
+    }
 
   switch (self->gradient_type)
     {
@@ -1213,6 +1233,8 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
       /*  don't use a gradient cache for conical gradients, since the necessary
        *  cache size is not related to the line length
        */
+      g_mutex_unlock (&self->gradient_cache_mutex);
+
       return;
 
     default:
@@ -1228,7 +1250,11 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
 
   /*  don't use a cache if its necessary size is too big  */
   if (cache_size > GRADIENT_CACHE_MAX_SIZE)
-    return;
+    {
+      g_mutex_unlock (&self->gradient_cache_mutex);
+
+      return;
+    }
 
   self->gradient_cache      = g_new0 (GimpRGB, cache_size);
   self->gradient_cache_size = cache_size;
@@ -1243,4 +1269,6 @@ gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
                                              self->gradient_blend_color_space,
                                              self->gradient_cache + i);
     }
+
+  g_mutex_unlock (&self->gradient_cache_mutex);
 }
