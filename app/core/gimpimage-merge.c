@@ -336,6 +336,29 @@ gimp_image_merge_group_layer (GimpImage      *image,
   parent = gimp_layer_get_parent (GIMP_LAYER (group));
   index  = gimp_item_get_index (GIMP_ITEM (group));
 
+  /* if this is a pass-through group, change its mode to NORMAL *before*
+   * duplicating it, since PASS_THROUGH mode is invalid for regular layers.
+   * see bug #793714.
+   */
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      GimpLayerColorSpace    blend_space;
+      GimpLayerColorSpace    composite_space;
+      GimpLayerCompositeMode composite_mode;
+
+      /* keep the group's current blend space, composite space, and composite
+       * mode.
+       */
+      blend_space     = gimp_layer_get_blend_space     (GIMP_LAYER (group));
+      composite_space = gimp_layer_get_composite_space (GIMP_LAYER (group));
+      composite_mode  = gimp_layer_get_composite_mode  (GIMP_LAYER (group));
+
+      gimp_layer_set_mode            (GIMP_LAYER (group), GIMP_LAYER_MODE_NORMAL, TRUE);
+      gimp_layer_set_blend_space     (GIMP_LAYER (group), blend_space,            TRUE);
+      gimp_layer_set_composite_space (GIMP_LAYER (group), composite_space,        TRUE);
+      gimp_layer_set_composite_mode  (GIMP_LAYER (group), composite_mode,         TRUE);
+    }
+
   layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (group),
                                            GIMP_TYPE_LAYER));
 
