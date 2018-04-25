@@ -30,6 +30,8 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimp-utils.h"
 #include "gimpbezierdesc.h"
 #include "gimpchannel.h"
@@ -258,7 +260,8 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                               gimp_context_get_paint_mode (context),
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COMPOSITE_AUTO,
+                              gimp_layer_mode_get_paint_composite_mode (
+                                gimp_context_get_paint_mode (context)),
                               NULL, x, y);
 
   g_object_unref (buffer);

@@ -26,6 +26,8 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -137,7 +139,7 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
                               opacity, paint_mode,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COMPOSITE_AUTO,
+                              gimp_layer_mode_get_paint_composite_mode (paint_mode),
                               NULL, x, y);
 
   gimp_drawable_update (drawable, x, y, width, height);

@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimpdrawable.h"
 #include "gimpdrawable-edit.h"
 #include "gimpcontext.h"
@@ -85,7 +87,8 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                               gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COMPOSITE_AUTO,
+                              gimp_layer_mode_get_paint_composite_mode (
+                                gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
                               NULL, x, y);
 
   g_object_unref (buffer);

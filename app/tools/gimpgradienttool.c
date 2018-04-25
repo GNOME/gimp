@@ -30,6 +30,8 @@
 
 #include "operations/gimp-operation-config.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawablefilter.h"
@@ -575,7 +577,8 @@ gimp_gradient_tool_options_notify (GimpTool         *tool,
                                      gimp_context_get_paint_mode (context),
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
-                                     GIMP_LAYER_COMPOSITE_AUTO);
+                                     gimp_layer_mode_get_paint_composite_mode (
+                                       gimp_context_get_paint_mode (context)));
     }
 
   gimp_gradient_tool_editor_options_notify (gradient_tool, options, pspec);
@@ -1048,7 +1051,8 @@ gimp_gradient_tool_create_filter (GimpGradientTool *gradient_tool,
                                  gimp_context_get_paint_mode (context),
                                  GIMP_LAYER_COLOR_SPACE_AUTO,
                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                 GIMP_LAYER_COMPOSITE_AUTO);
+                                 gimp_layer_mode_get_paint_composite_mode (
+                                   gimp_context_get_paint_mode (context)));
 
   g_signal_connect (gradient_tool->filter, "flush",
                     G_CALLBACK (gimp_gradient_tool_filter_flush),

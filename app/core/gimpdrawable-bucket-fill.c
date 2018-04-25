@@ -31,6 +31,8 @@
 #include "gegl/gimp-gegl-mask-combine.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
@@ -182,7 +184,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                               gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                               GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COMPOSITE_AUTO,
+                              gimp_layer_mode_get_paint_composite_mode (
+                                gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
                               NULL, x, y);
 
   g_object_unref (buffer);

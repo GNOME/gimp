@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawableundo.h"
@@ -65,7 +67,8 @@ gimp_image_fade (GimpImage   *image,
                                   gimp_context_get_paint_mode (context),
                                   GIMP_LAYER_COLOR_SPACE_AUTO,
                                   GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  GIMP_LAYER_COMPOSITE_AUTO,
+                                  gimp_layer_mode_get_paint_composite_mode (
+                                    gimp_context_get_paint_mode (context)),
                                   NULL, undo->x, undo->y);
 
       g_object_unref (buffer);
