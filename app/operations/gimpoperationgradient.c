@@ -36,6 +36,10 @@
 #include "gimpoperationgradient.h"
 
 
+#define GRADIENT_CACHE_N_SUPERSAMPLES 4
+#define GRADIENT_CACHE_MAX_SIZE       ((1 << 20) / sizeof (GimpRGB))
+
+
 enum
 {
   PROP_0,
@@ -58,105 +62,111 @@ enum
 
 typedef struct
 {
-  GimpGradient      *gradient;
-  GimpRGB           *gradient_cache;
-  gint               gradient_cache_size;
-  gdouble            offset;
-  gdouble            sx, sy;
-  GimpGradientType   gradient_type;
-  gdouble            dist;
-  gdouble            vec[2];
-  GimpRepeatMode     repeat;
-  GeglBuffer        *dist_buffer;
+  GimpGradient                *gradient;
+  gboolean                     reverse;
+  GimpGradientBlendColorSpace  blend_color_space;
+  GimpRGB                     *gradient_cache;
+  gint                         gradient_cache_size;
+  GimpGradientSegment         *last_seg;
+  gdouble                      offset;
+  gdouble                      sx, sy;
+  GimpGradientType             gradient_type;
+  gdouble                      dist;
+  gdouble                      vec[2];
+  GimpRepeatMode               repeat;
+  GeglBuffer                  *dist_buffer;
 } RenderBlendData;
 
 
 typedef struct
 {
-  GeglBuffer    *buffer;
-  gfloat        *row_data;
-  gint           roi_x;
-  gint           width;
-  GRand         *dither_rand;
+  GeglBuffer *buffer;
+  gfloat     *row_data;
+  gint        roi_x;
+  gint        width;
+  GRand      *dither_rand;
 } PutPixelData;
 
 
 /*  local function prototypes  */
 
-static void     gimp_operation_gradient_dispose      (GObject      *gobject);
-static void     gimp_operation_gradient_get_property (GObject      *object,
-                                                      guint         property_id,
-                                                      GValue       *value,
-                                                      GParamSpec   *pspec);
-static void     gimp_operation_gradient_set_property (GObject      *object,
-                                                      guint         property_id,
-                                                      const GValue *value,
-                                                      GParamSpec   *pspec);
+static void            gimp_operation_gradient_dispose           (GObject               *gobject);
+static void            gimp_operation_gradient_get_property      (GObject               *object,
+                                                                  guint                  property_id,
+                                                                  GValue                *value,
+                                                                  GParamSpec            *pspec);
+static void            gimp_operation_gradient_set_property      (GObject               *object,
+                                                                  guint                  property_id,
+                                                                  const GValue          *value,
+                                                                  GParamSpec            *pspec);
 
-static void     gimp_operation_gradient_prepare      (GeglOperation *operation);
+static void            gimp_operation_gradient_prepare           (GeglOperation         *operation);
 
-static GeglRectangle gimp_operation_gradient_get_bounding_box (GeglOperation *operation);
+static GeglRectangle   gimp_operation_gradient_get_bounding_box  (GeglOperation         *operation);
 
-static gdouble  gradient_calc_conical_sym_factor  (gdouble   dist,
-                                                   gdouble  *axis,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_conical_asym_factor (gdouble   dist,
-                                                   gdouble  *axis,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_square_factor       (gdouble   dist,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_radial_factor       (gdouble   dist,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_linear_factor       (gdouble   dist,
-                                                   gdouble  *vec,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_bilinear_factor     (gdouble   dist,
-                                                   gdouble  *vec,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y);
-static gdouble  gradient_calc_spiral_factor       (gdouble   dist,
-                                                   gdouble  *axis,
-                                                   gdouble   offset,
-                                                   gdouble   x,
-                                                   gdouble   y,
-                                                   gboolean  clockwise);
+static gdouble         gradient_calc_conical_sym_factor          (gdouble                dist,
+                                                                  gdouble               *axis,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_conical_asym_factor         (gdouble                dist,
+                                                                  gdouble               *axis,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_square_factor               (gdouble                dist,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_radial_factor               (gdouble                dist,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_linear_factor               (gdouble                dist,
+                                                                  gdouble               *vec,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_bilinear_factor             (gdouble                dist,
+                                                                  gdouble               *vec,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_spiral_factor               (gdouble                dist,
+                                                                  gdouble               *axis,
+                                                                  gdouble                offset,
+                                                                  gdouble                x,
+                                                                  gdouble                y,
+                                                                  gboolean               clockwise);
 
-static gdouble  gradient_calc_shapeburst_angular_factor   (GeglBuffer *dist_buffer,
-                                                           gdouble     x,
-                                                           gdouble     y);
-static gdouble  gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
-                                                           gdouble     x,
-                                                           gdouble     y);
-static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buffer,
-                                                           gdouble     x,
-                                                           gdouble     y);
+static gdouble         gradient_calc_shapeburst_angular_factor   (GeglBuffer            *dist_buffer,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_shapeburst_spherical_factor (GeglBuffer            *dist_buffer,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
+static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglBuffer            *dist_buffer,
+                                                                  gdouble                x,
+                                                                  gdouble                y);
 
-static void     gradient_render_pixel        (gdouble             x,
-                                              gdouble             y,
-                                              GimpRGB            *color,
-                                              gpointer            render_data);
+static void            gradient_render_pixel                     (gdouble                x,
+                                                                  gdouble                y,
+                                                                  GimpRGB               *color,
+                                                                  gpointer               render_data);
 
-static void     gradient_put_pixel           (gint                x,
-                                              gint                y,
-                                              GimpRGB            *color,
-                                              gpointer            put_pixel_data);
+static void            gradient_put_pixel                        (gint                   x,
+                                                                  gint                   y,
+                                                                  GimpRGB               *color,
+                                                                  gpointer               put_pixel_data);
 
-static gboolean gimp_operation_gradient_process (GeglOperation       *operation,
-                                                 GeglBuffer          *input,
-                                                 GeglBuffer          *output,
-                                                 const GeglRectangle *result,
-                                                 gint                 level);
+static gboolean        gimp_operation_gradient_process           (GeglOperation         *operation,
+                                                                  GeglBuffer            *input,
+                                                                  GeglBuffer            *output,
+                                                                  const GeglRectangle   *result,
+                                                                  gint                   level);
+
+static void            gimp_operation_gradient_invalidate_cache  (GimpOperationGradient *self);
+static void            gimp_operation_gradient_validate_cache    (GimpOperationGradient *self);
 
 
 G_DEFINE_TYPE (GimpOperationGradient, gimp_operation_gradient,
@@ -315,7 +325,6 @@ gimp_operation_gradient_class_init (GimpOperationGradientClass *klass)
 static void
 gimp_operation_gradient_init (GimpOperationGradient *self)
 {
-  g_mutex_init (&self->gradient_cache_mutex);
 }
 
 static void
@@ -323,10 +332,10 @@ gimp_operation_gradient_dispose (GObject *object)
 {
   GimpOperationGradient *self = GIMP_OPERATION_GRADIENT (object);
 
+  gimp_operation_gradient_invalidate_cache (self);
+
   g_clear_object (&self->gradient);
   g_clear_object (&self->context);
-  g_clear_pointer (&self->gradient_cache, g_free);
-  g_mutex_clear (&self->gradient_cache_mutex);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -437,27 +446,39 @@ gimp_operation_gradient_set_property (GObject      *object,
             else
               self->gradient = g_object_ref (gradient);
           }
+
+        gimp_operation_gradient_invalidate_cache (self);
       }
       break;
 
     case PROP_START_X:
       self->start_x = g_value_get_double (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_START_Y:
       self->start_y = g_value_get_double (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_END_X:
       self->end_x = g_value_get_double (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_END_Y:
       self->end_y = g_value_get_double (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_TYPE:
       self->gradient_type = g_value_get_enum (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_REPEAT:
@@ -470,10 +491,14 @@ gimp_operation_gradient_set_property (GObject      *object,
 
     case PROP_GRADIENT_REVERSE:
       self->gradient_reverse = g_value_get_boolean (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_BLEND_COLOR_SPACE:
       self->gradient_blend_color_space = g_value_get_enum (value);
+
+      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_SUPERSAMPLE:
@@ -505,7 +530,7 @@ gimp_operation_gradient_prepare (GeglOperation *operation)
 
   gegl_operation_set_format (operation, "output", babl_format ("R'G'B'A float"));
 
-  self->gradient_cache_valid = FALSE;
+  gimp_operation_gradient_validate_cache (self);
 }
 
 static GeglRectangle
@@ -929,9 +954,21 @@ gradient_render_pixel (gdouble   x,
 
   /* Blend the colors */
 
-  factor = CLAMP (factor, 0.0, 1.0);
+  if (rbd->gradient_cache)
+    {
+      factor = CLAMP (factor, 0.0, 1.0);
 
-  *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
+      *color =
+        rbd->gradient_cache[ROUND (factor * (rbd->gradient_cache_size - 1))];
+    }
+  else
+    {
+      rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
+                                                  rbd->last_seg, factor,
+                                                  rbd->reverse,
+                                                  rbd->blend_color_space,
+                                                  color);
+    }
 }
 
 static void
@@ -997,45 +1034,9 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   if (! self->gradient)
     return TRUE;
 
-  g_mutex_lock (&self->gradient_cache_mutex);
-
-  if (! self->gradient_cache_valid)
-    {
-      GimpGradientSegment *last_seg = NULL;
-      gint                 cache_size;
-      gint                 i;
-
-      cache_size = ceil (sqrt (SQR (self->start_x - self->end_x) +
-                               SQR (self->start_y - self->end_y))) * 4;
-
-      /*  have at least one value in the cache  */
-      cache_size = MAX (cache_size, 1);
-
-      if (cache_size != self->gradient_cache_size)
-        {
-          g_clear_pointer (&self->gradient_cache, g_free);
-
-          self->gradient_cache      = g_new0 (GimpRGB, cache_size);
-          self->gradient_cache_size = cache_size;
-        }
-
-      for (i = 0; i < self->gradient_cache_size; i++)
-        {
-          gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
-
-          last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
-                                                 factor,
-                                                 self->gradient_reverse,
-                                                 self->gradient_blend_color_space,
-                                                 self->gradient_cache + i);
-        }
-
-      self->gradient_cache_valid = TRUE;
-    }
-
-  g_mutex_unlock (&self->gradient_cache_mutex);
-
   rbd.gradient            = self->gradient;
+  rbd.reverse             = self->gradient_reverse;
+  rbd.blend_color_space   = self->gradient_blend_color_space;
   rbd.gradient_cache      = self->gradient_cache;
   rbd.gradient_cache_size = self->gradient_cache_size;
 
@@ -1187,4 +1188,59 @@ gimp_operation_gradient_process (GeglOperation       *operation,
     }
 
   return TRUE;
+}
+
+static void
+gimp_operation_gradient_invalidate_cache (GimpOperationGradient *self)
+{
+  g_clear_pointer (&self->gradient_cache, g_free);
+}
+
+static void
+gimp_operation_gradient_validate_cache (GimpOperationGradient *self)
+{
+  GimpGradientSegment *last_seg = NULL;
+  gint                 cache_size;
+  gint                 i;
+
+  if (! self->gradient || self->gradient_cache)
+    return;
+
+  switch (self->gradient_type)
+    {
+    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
+    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
+      /*  don't use a gradient cache for conical gradients, since the necessary
+       *  cache size is not related to the line length
+       */
+      return;
+
+    default:
+      break;
+    }
+
+  cache_size = ceil (hypot (self->start_x - self->end_x,
+                            self->start_y - self->end_y)) *
+               GRADIENT_CACHE_N_SUPERSAMPLES;
+
+  /*  have at least two values in the cache  */
+  cache_size = MAX (cache_size, 2);
+
+  /*  don't use a cache if its necessary size is too big  */
+  if (cache_size > GRADIENT_CACHE_MAX_SIZE)
+    return;
+
+  self->gradient_cache      = g_new0 (GimpRGB, cache_size);
+  self->gradient_cache_size = cache_size;
+
+  for (i = 0; i < self->gradient_cache_size; i++)
+    {
+      gdouble factor = (gdouble) i / (gdouble) (self->gradient_cache_size - 1);
+
+      last_seg = gimp_gradient_get_color_at (self->gradient, NULL, last_seg,
+                                             factor,
+                                             self->gradient_reverse,
+                                             self->gradient_blend_color_space,
+                                             self->gradient_cache + i);
+    }
 }
