@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-14 19:09+0200\n"
-"PO-Revision-Date: 2018-04-14 19:10+0200\n"
+"POT-Creation-Date: 2018-04-25 20:28+0200\n"
+"PO-Revision-Date: 2018-04-25 20:29+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1784,17 +1784,22 @@ msgid "Cannot expand ${%s}"
 msgstr "Nie można rozwinąć ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:658
+#: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Błąd podczas zapisywania do „%s”: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:184
+#: ../libgimpconfig/gimpconfigwriter.c:183
+#, c-format
+msgid "Could not create directory '%s' for '%s': "
+msgstr "Nie można utworzyć katalogu „%s” dla „%s”: "
+
+#: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Nie można utworzyć pliku tymczasowego dla „%s”: "
 
-#: ../libgimpconfig/gimpconfigwriter.c:761
+#: ../libgimpconfig/gimpconfigwriter.c:776
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Błąd podczas zapisywania „%s”: %s"
