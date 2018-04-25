@@ -72,7 +72,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.0" date="2018-04-25">
+    <release version="2.10.0" date="2018-04-26">
       <description>
         <_p>
           First release of the 2.10 series which prominently features
