@@ -964,6 +964,8 @@ gimp_context_dispose (GObject *object)
 {
   GimpContext *context = GIMP_CONTEXT (object);
 
+  gimp_context_set_parent (context, NULL);
+
   if (context->gimp)
     {
       context->gimp->context_list = g_list_remove (context->gimp->context_list,
@@ -1479,12 +1481,18 @@ gimp_context_set_parent (GimpContext *context,
       g_signal_handlers_disconnect_by_func (context->parent,
                                             gimp_context_parent_notify,
                                             context);
+
+      g_object_remove_weak_pointer (G_OBJECT (context->parent),
+                                    (gpointer) &context->parent);
     }
 
   context->parent = parent;
 
   if (parent)
     {
+      g_object_add_weak_pointer (G_OBJECT (context->parent),
+                                 (gpointer) &context->parent);
+
       /*  copy all undefined properties from the new parent  */
       gimp_context_copy_properties (parent, context,
                                     ~context->defined_props &
