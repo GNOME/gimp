@@ -277,6 +277,12 @@ gimp_drawable_gradient_adjust_coords (GimpDrawable        *drawable,
         r = MAX (r, hypot (region->x + region->width - *startx,
                            region->y + region->height - *starty));
 
+        /* symmetric conical gradients only span half a revolution, and
+         * therefore require only half the cache size.
+         */
+        if (gradient_type == GIMP_GRADIENT_CONICAL_SYMMETRIC)
+          r /= 2.0;
+
         gimp_vector2_set (&v, *endx - *startx, *endy - *starty);
         gimp_vector2_normalize (&v);
         gimp_vector2_mul (&v, 2.0 * G_PI * r);
