@@ -314,7 +314,8 @@ style "gimp-dark-default-style"
     }
 }
 
-class "GtkWidget" style "gimp-dark-default-style"
+# class "GtkWidget" style "gimp-dark-default-style"
+class "*" style "gimp-dark-default-style"
 
 ###########################################################
 
@@ -466,9 +467,9 @@ style "gimp-dark-list-header-style"
   # set custom text color here
   #
 
-  #text[NORMAL] = "#FF0"
+  text[NORMAL] = "#C1C1C1"
   #text[PRELIGHT] = "#FF0"
-  #text[SELECTED] = "#FF0"
+  text[SELECTED] = "#DDDDDD"
   #text[INSENSITIVE] = "#FF0"
   #text[ACTIVE] = "#FF0"
 
@@ -2116,203 +2117,6 @@ style "gimp-dark-button-style"
 }
 
 widget_class "*<GtkButton>*" style "gimp-dark-button-style"
-
-###########################################################
-
-style "kde_hack_1"
-{
-  GtkComboBox::appears-as-list = 0
-  GtkComboBoxEntry::appears-as-list = 0
-  GtkComboBoxText::appears-as-list = 0
-
-  color["clr1"]  = "#DDDDDD"
-  color["clr2"]  = "#FFFFFF"
-  color["clr3"]  = "#c1c1c1"
-  color["clr4"]  = "#383838"
-  color["clr5"]  = "#555555"
-  color["clr6"]  = "#828282"
-  color["clr7"]  = "#3b3b3b"
-  color["clr8"]  = "#383838"
-  color["clr9"]  = "#4D4D4D"
-  color["clrA"]  = "#303030"
-
-  fg[NORMAL] = @clr1
-  fg[PRELIGHT] = @clr2
-  fg[ACTIVE] = @clr3
-  fg[SELECTED] = @clr1
-  fg[INSENSITIVE] = @clr3
-
-  base[NORMAL] = @clrA
-  base[PRELIGHT] = @clr7
-  base[ACTIVE] = @clr7
-  base[SELECTED] = @clr1
-  base[INSENSITIVE] = @clr8
-
-  text[NORMAL] = @clr1
-  text[PRELIGHT] = @clr1
-  text[ACTIVE] = @clr1
-  text[SELECTED] = @clr7
-  text[INSENSITIVE] = @clr9
-}
-
-widget_class "*" style "kde_hack_1"
-
-###########################################################
-
-style "kde_hack_2"
-{
-  bg[NORMAL] = "#383838" #Sets canvas BG
-}
-
-widget "*GimpDisplayShell.*" style "kde_hack_2"
-
-###########################################################
-
-style "kde_hack_3"
-{
-  bg[NORMAL] = "#383838"
-}
-
-class "GtkFrame" style "kde_hack_3"
-widget_class "*<GimpDisplay>*" style "kde_hack_3"
-
-###########################################################
-
-style "kde_hack_4"
-{
-  engine "pixmap"
-    {
-      image
-        {
-          function = OPTION
-          shadow = OUT
-          recolorable = TRUE
-          overlay_file = "ui/option1.png"
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
-          function = OPTION
-          shadow = IN
-          recolorable = TRUE
-          overlay_file = "ui/option2.png"
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
-          function = OPTION
-          shadow = ETCHED_IN
-          recolorable = TRUE
-          overlay_file = "ui/option3.png"
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
-          function = CHECK
-          shadow = OUT
-          recolorable = TRUE
-          overlay_file = "ui/check1.png"
-          overlay_border = { 0, 0, 0, 0 }
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
-          function = CHECK
-          shadow = IN
-          recolorable = TRUE
-          overlay_file = "ui/check2.png"
-          overlay_border = { 0, 0, 0, 0 }
-          overlay_stretch = FALSE
-        }
-
-      image
-        {
-          function = CHECK
-          shadow = ETCHED_IN
-          recolorable = TRUE
-          overlay_file = "ui/check3.png"
-          overlay_border = { 0, 0, 0, 0 }
-          overlay_stretch = FALSE
-        }
-    }
-}
-
-widget_class "*<GtkWidget>*" style "kde_hack_4"
-
-###########################################################
-
-# KDE Hack 5
-widget_class "*<GtkToolbar>*" style "gimp-dark-toolbar-style"
-
-###########################################################
-
-style "kde_hack_6"
-{
-  engine "pixmap"
-    {
-      # This image is used to draw the headers of columns
-      # in list views when they are not selected.
-      image
-        {
-          function = BOX
-          recolorable = TRUE
-          state = NORMAL
-          file = "ui/list_header.png"
-          border = { 2, 2, 2, 2 }
-          stretch = TRUE
-        }
-
-      # This image is used to draw the column headers in
-      # list views when they are clicked.
-      image
-        {
-          function = BOX
-          recolorable = TRUE
-          state = PRELIGHT
-          file = "ui/list_header.png"
-          border = { 2, 2, 2, 2 }
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = BOX
-          recolorable = TRUE
-          state = ACTIVE
-          file = "ui/list_header-pressed.png"
-          border = { 2, 2, 2, 2}
-          stretch = TRUE
-        }
-
-      image
-        {
-          function = BOX
-          recolorable = TRUE
-          state = SELECTED
-          file = "ui/list_header.png"
-          border = { 2, 2, 2, 2 }
-          stretch = TRUE
-        }
-    }
-}
-
-widget_class "*<GtkTreeView>*<GtkButton>*" style "kde_hack_6"
-
-###########################################################
-
-# KDE & oxygen-gtk fix for BG
-style "gimp-dark-oxygen-default-style" = "gimp-dark-default-style"
-{
-  GtkComboBox::appears-as-list = 0
-  GtkComboBoxEntry::appears-as-list = 0
-  GtkComboBoxText::appears-as-list = 0
-}
-
-class "*" style "gimp-dark-oxygen-default-style"
 
 ###########################################################
 
