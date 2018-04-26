@@ -517,8 +517,8 @@ sanity_check_gegl (void)
   gint gegl_micro_version;
 
 #define GEGL_REQUIRED_MAJOR 0
-#define GEGL_REQUIRED_MINOR 3
-#define GEGL_REQUIRED_MICRO 34
+#define GEGL_REQUIRED_MINOR 4
+#define GEGL_REQUIRED_MICRO 0
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
