@@ -490,8 +490,6 @@ gimp_operation_gradient_set_property (GObject      *object,
 
     case PROP_GRADIENT_TYPE:
       self->gradient_type = g_value_get_enum (value);
-
-      gimp_operation_gradient_invalidate_cache (self);
       break;
 
     case PROP_GRADIENT_REPEAT:
