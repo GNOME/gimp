@@ -484,7 +484,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
       gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Xmp.xmp.CreatorTool",
-                                      N_("GIMP 2.9/2.10"));
+                                      N_("GIMP 2.10"));
 
       gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Xmp.GIMP.Version",
