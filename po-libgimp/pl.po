@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-25 20:28+0200\n"
-"PO-Revision-Date: 2018-04-25 20:29+0200\n"
+"POT-Creation-Date: 2018-04-26 16:28+0200\n"
+"PO-Revision-Date: 2018-04-26 16:29+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -240,8 +240,8 @@ msgid "Gradient Selection"
 msgstr "Wybór gradientu"
 
 #: ../libgimp/gimpimagemetadata.c:487
-msgid "GIMP 2.9/2.10"
-msgstr "GIMP 2.9/2.10"
+msgid "GIMP 2.10"
+msgstr "GIMP 2.10"
 
 #: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
