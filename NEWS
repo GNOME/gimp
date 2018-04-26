@@ -10,6 +10,7 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+
 Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0
 =======================================================
 
@@ -22,7 +23,13 @@ Core:
   - Various fill and fade operations now use the current paint composite
     mode, allowing for instance filling to paint over transparent areas.
   - Default layer and paint modes are now Normal (instead of Legacy).
-  - Layer mode from opened image now remembered.
+  - Be smarter about layer modes for new layers.
+  - Get rid of the remaining places that were using the NORMAL_LEGACY
+    mode by default (painting, some more).
+  - Improve painting speed even more by even more evil C++.
+  - Flipping drawables is much faster because it's now working
+    tile-by-tile.
+  - Gradient rendering is now much faster, using a cache.
 
 Plug-ins:
 
@@ -32,6 +39,7 @@ Plug-ins:
 PDB:
 
   - New procedure: gimp-item-transform-translate.
+  - Make gimp-item-transform-* transform linked items too.
   - Deprecate gimp-color-balance and gimp-layer-translate.
 
 Assets / Resources:
@@ -45,6 +53,7 @@ Translations:
 
   - 6 translations were updated: Catalan, Danish, Finnish, Korean,
     Polish, Swedish.
+
 
 Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC2
 ===========================================================
