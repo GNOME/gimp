@@ -49,7 +49,7 @@
   )
 
   (define (highlights val)
-    ; The result is used as "gimp-color-balance" color parameter
+    ; The result is used as "gimp-drawable-color-balance" color parameter
     ; and thus must be restricted to -100.0 <= highlights <= 100.0.
     (min (/ (* 1.108 val) 2.55) 100.0)
   )
@@ -180,20 +180,36 @@
 
     (gimp-image-convert-rgb img)
 
-    (gimp-color-balance layer1 TRANSFER-SHADOWS TRUE
-                        (shadows (rval hc)) (shadows (gval hc)) (shadows (bval hc)))
-    (gimp-color-balance layer1 TRANSFER-MIDTONES TRUE
-                        (midtones (rval hc)) (midtones (gval hc)) (midtones (bval hc)))
-    (gimp-color-balance layer1 TRANSFER-HIGHLIGHTS TRUE
-                        (highlights (rval hc)) (highlights (gval hc)) (highlights (bval hc)))
+    (gimp-drawable-color-balance layer1 TRANSFER-SHADOWS TRUE
+				 (shadows (rval hc))
+				 (shadows (gval hc))
+				 (shadows (bval hc)))
+    (gimp-drawable-color-balance layer1 TRANSFER-MIDTONES TRUE
+				 (midtones (rval hc))
+				 (midtones (gval hc))
+				 (midtones (bval hc)))
+    (gimp-drawable-color-balance layer1 TRANSFER-HIGHLIGHTS TRUE
+				 (highlights (rval hc))
+				 (highlights (gval hc))
+				 (highlights (bval hc)))
 
-    (gimp-color-balance layer2 TRANSFER-SHADOWS TRUE
-                        (shadows (rval cc)) (shadows (gval cc)) (shadows (bval cc)))
-    (gimp-color-balance layer2 TRANSFER-MIDTONES TRUE
-                        (midtones (rval cc)) (midtones (gval cc)) (midtones (bval cc)))
-    (gimp-color-balance layer2 TRANSFER-HIGHLIGHTS TRUE
-                        (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
-    (gimp-hue-saturation layer2 HUE-RANGE-ALL 0.0 chrome-lightness chrome-saturation)
+    (gimp-drawable-color-balance layer2 TRANSFER-SHADOWS TRUE
+				 (shadows (rval cc))
+				 (shadows (gval cc))
+				 (shadows (bval cc)))
+    (gimp-drawable-color-balance layer2 TRANSFER-MIDTONES TRUE
+				 (midtones (rval cc))
+				 (midtones (gval cc))
+				 (midtones (bval cc)))
+    (gimp-drawable-color-balance layer2 TRANSFER-HIGHLIGHTS TRUE
+				 (highlights (rval cc))
+				 (highlights (gval cc))
+				 (highlights (bval cc)))
+    (gimp-drawable-hue-saturation layer2 HUE-RANGE-ALL
+				  0.0
+				  chrome-lightness
+				  chrome-saturation
+				  0.0)
 
     (gimp-item-set-visible shadow TRUE)
     (gimp-item-set-visible bg-layer TRUE)
