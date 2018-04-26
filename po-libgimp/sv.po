@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-22 20:18+0000\n"
-"PO-Revision-Date: 2018-04-23 18:13+0200\n"
+"POT-Creation-Date: 2018-04-26 14:09+0000\n"
+"PO-Revision-Date: 2018-04-26 16:48+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -248,8 +248,8 @@ msgid "Gradient Selection"
 msgstr "Gradientval"
 
 #: ../libgimp/gimpimagemetadata.c:487
-msgid "GIMP 2.9/2.10"
-msgstr "GIMP 2.9/2.10"
+msgid "GIMP 2.10"
+msgstr "GIMP 2.10"
 
 #: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
