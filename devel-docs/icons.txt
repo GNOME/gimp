@@ -111,4 +111,4 @@ so, set the environment variable `GIMP_ICONS_LIKE_A_BOSS`.
 
 For instance, start GIMP like this:
 
-    GIMP_ICONS_LIKE_A_BOSS=1 gimp-2.9
+    GIMP_ICONS_LIKE_A_BOSS=1 gimp-2.10
