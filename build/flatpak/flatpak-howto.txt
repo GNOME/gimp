@@ -8,6 +8,22 @@ The stable manifest is maintained at flathub: https://github.com/flathub/org.gim
 This repository is pulled in GIMP repository as a submodule so that we
 can share as much code as possible with the other builds.
 
+To prepare a new build:
+
+* A few hours before the release, test with the last master commit (even
+  if the release is not tagged yet) in the manifest.
+* Make it a branch, and create a pull-request instead of pushing to
+  master.
+* In the comment section, just write "bot, build".
+  This will trigger test builds to test the manifest.
+* At release time, if the last test build succeeded, update the manifest
+  to track the release tag instead.
+* Merge to master.
+* Check the final build on https://flathub.org/builds/
+
+See also:
+https://github.com/flathub/flathub/wiki/App-Maintenance#test-builds-and-pull-requests
+
 Development and nightly builds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
