@@ -19,7 +19,7 @@ comma-separated list of domain.
 For instance, for `GIMP_LOG (XCF, "some string")` to be outputted,
 run GIMP like this:
 
-> GIMP_DEBUG=xcf gimp-2.9
+> GIMP_DEBUG=xcf gimp-2.10
 
 Special flags are:
 - "all" to output all domain logs;
@@ -31,7 +31,7 @@ If you encounter a CRITICAL or WARNING message on console, you can make
 so that GIMP crashes on it, which will make it very easy to be tracked
 down in a debugger (for instance GDB), by running GIMP with:
 
-> gimp-2.9 --g-fatal-warnings
+> gimp-2.10 --g-fatal-warnings
 
 Note that if all you want is a stacktrace, it is not necessary anymore
 to use a debugger and --g-fatal-warnings. In Preferences > Debugging,
@@ -68,7 +68,7 @@ back to the old lcms implementation, which can be useful for comparison.
 
 Make X calls synchronous so that your crashes happen immediately with:
 
-> gimp-2.9 --sync
+> gimp-2.10 --sync
 
 You can also break on `gdk_x_error()`.
 
