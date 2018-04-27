@@ -44,7 +44,10 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([babl_required_version], [0.1.46])
-m4_define([gegl_required_version], [0.4.1])
+m4_define([gegl_major_minor_version], [0.4])
+m4_define([gegl_micro_version], [1])
+m4_define([gegl_required_version],
+          [gegl_major_minor_version.gegl_micro_version])
 m4_define([glib_required_version], [2.54.2])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -141,6 +144,7 @@ GTK_REQUIRED_VERSION=gtk_required_version
 GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
+GEGL_MAJOR_MINOR_VERSION=gegl_major_minor_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
@@ -671,8 +675,8 @@ m4_define([add_deps_error], [
 
 PKG_CHECK_MODULES(BABL, [babl >= babl_required_version],,
                   [add_deps_error([babl >= babl_required_version])])
-PKG_CHECK_MODULES(GEGL, gegl-0.4 >= gegl_required_version,,
-                  [add_deps_error([gegl-0.4 >= gegl_required_version])])
+PKG_CHECK_MODULES(GEGL, gegl-gegl_major_minor_version >= gegl_required_version,,
+                  [add_deps_error([gegl-gegl_major_minor_version >= gegl_required_version])])
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version,,
                   [add_deps_error([atk >= atk_required_version])])
 
