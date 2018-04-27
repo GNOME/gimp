@@ -896,7 +896,7 @@
 # luma-lighten-only, luminance, color-erase, erase, merge, split,
 # pass-through, replace and anti-erase.
 # 
-# (layer-new-mode normal-legacy)
+# (layer-new-mode normal)
 
 # Sets the default blend space for the 'New Layer' dialog.  Possible values
 # are auto, rgb-linear, rgb-perceptual and lab.

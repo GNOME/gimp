@@ -1105,7 +1105,7 @@ Sets the default layer name for the 'New Layer' dialog.  This is a string
 value.
 
 .TP
-(layer-new-mode normal-legacy)
+(layer-new-mode normal)
 
 Sets the default mode for the 'New Layer' dialog.  Possible values are
 normal-legacy, dissolve, behind-legacy, multiply-legacy, screen-legacy,
