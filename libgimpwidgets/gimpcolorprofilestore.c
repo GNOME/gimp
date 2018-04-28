@@ -257,44 +257,6 @@ gimp_color_profile_store_new (const gchar *history)
 }
 
 /**
- * gimp_color_profile_store_add:
- * @store:    a #GimpColorProfileStore
- * @filename: filename of the profile to add (or %NULL)
- * @label:    label to use for the profile
- *            (may only be %NULL if @filename is %NULL)
- *
- * Adds a color profile item to the #GimpColorProfileStore. Items
- * added with this function will be kept at the top, separated from
- * the history of last used color profiles.
- *
- * This function is often used to add a selectable item for the %NULL
- * filename. If you pass %NULL for both @filename and @label, the
- * @label will be set to the string "None" for you (and translated for
- * the user).
- *
- * Deprecated: use gimp_color_profile_store_add_file() instead.
- *
- * Since: 2.4
- **/
-void
-gimp_color_profile_store_add (GimpColorProfileStore *store,
-                              const gchar           *filename,
-                              const gchar           *label)
-{
-  GFile *file = NULL;
-
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store));
-  g_return_if_fail (label != NULL || filename == NULL);
-
-  if (filename)
-    file = g_file_new_for_path (filename);
-
-  gimp_color_profile_store_add_file (store, file, label);
-
-  g_object_unref (file);
-}
-
-/**
  * gimp_color_profile_store_add_file:
  * @store: a #GimpColorProfileStore
  * @file:  file of the profile to add (or %NULL)

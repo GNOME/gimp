@@ -53,27 +53,6 @@ GtkWidget * gimp_enum_radio_frame_new_with_range  (GType         enum_type,
                                                    gpointer      callback_data,
                                                    GtkWidget   **first_button);
 
-GIMP_DEPRECATED_FOR(gimp_enum_icon_box_new)
-GtkWidget * gimp_enum_stock_box_new               (GType         enum_type,
-                                                   const gchar  *stock_prefix,
-                                                   GtkIconSize   icon_size,
-                                                   GCallback     callback,
-                                                   gpointer      callback_data,
-                                                   GtkWidget   **first_button);
-GIMP_DEPRECATED_FOR(gimp_enum_icon_box_new_with_range)
-GtkWidget * gimp_enum_stock_box_new_with_range    (GType         enum_type,
-                                                   gint          minimum,
-                                                   gint          maximum,
-                                                   const gchar  *stock_prefix,
-                                                   GtkIconSize   icon_size,
-                                                   GCallback     callback,
-                                                   gpointer      callback_data,
-                                                   GtkWidget   **first_button);
-GIMP_DEPRECATED_FOR(gimp_enum_icon_box_set_child_padding)
-void        gimp_enum_stock_box_set_child_padding (GtkWidget    *stock_box,
-                                                   gint          xpad,
-                                                   gint          ypad);
-
 GtkWidget * gimp_enum_icon_box_new                (GType         enum_type,
                                                    const gchar  *icon_prefix,
                                                    GtkIconSize   icon_size,

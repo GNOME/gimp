@@ -185,26 +185,6 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
 }
 
 /**
- * gimp_enum_combo_box_set_stock_prefix:
- * @combo_box:    a #GimpEnumComboBox
- * @stock_prefix: a prefix to create icon stock ID from enum values
- *
- * Attempts to create stock icons for all items in the @combo_box. See
- * gimp_enum_store_set_stock_prefix() to find out what to use as
- * @stock_prefix.
- *
- * Since: 2.4
- *
- * Deprecated: GIMP 2.10
- **/
-void
-gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
-                                      const gchar      *stock_prefix)
-{
-  gimp_enum_combo_box_set_icon_prefix (combo_box, stock_prefix);
-}
-
-/**
  * gimp_enum_combo_box_set_icon_prefix:
  * @combo_box:   a #GimpEnumComboBox
  * @icon_prefix: a prefix to create icon names from enum values

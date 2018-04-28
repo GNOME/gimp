@@ -36,7 +36,6 @@
  * @see_also: #GimpUnit, #GimpUnitStore
  *
  * #GimpUnitComboBox selects units stored in a #GimpUnitStore.
- * It replaces the deprecated #GimpUnitMenu.
  **/
 
 

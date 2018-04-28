@@ -43,7 +43,6 @@ typedef struct
   GtkBox    parent_instance;
 
   gchar    *icon_name;
-  gchar    *stock_id;
   gchar    *hint;
 } GimpHintBox;
 
@@ -54,7 +53,6 @@ enum
 {
   PROP_0,
   PROP_ICON_NAME,
-  PROP_STOCK_ID,
   PROP_HINT
 };
 
@@ -94,14 +92,6 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id",
-                                                        "Stock ID",
-                                                        "Deprecated: use icon-name instead",
-                                                        GIMP_ICON_DIALOG_INFORMATION,
-                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                        GIMP_PARAM_READWRITE));
-
   g_object_class_install_property (object_class, PROP_HINT,
                                    g_param_spec_string ("hint",
                                                         "Hint",
@@ -133,11 +123,6 @@ gimp_hint_box_constructed (GObject *object)
     {
       image = gtk_image_new_from_icon_name (box->icon_name,
                                             GTK_ICON_SIZE_DIALOG);
-    }
-  else if (box->stock_id)
-    {
-      image = gtk_image_new_from_stock (box->stock_id,
-                                        GTK_ICON_SIZE_DIALOG);
     }
 
   if (image)
@@ -172,12 +157,6 @@ gimp_hint_box_finalize (GObject *object)
       box->icon_name = NULL;
     }
 
-  if (box->stock_id)
-    {
-      g_free (box->stock_id);
-      box->stock_id = NULL;
-    }
-
   if (box->hint)
     {
       g_free (box->hint);
@@ -199,10 +178,6 @@ gimp_hint_box_set_property (GObject      *object,
     {
     case PROP_ICON_NAME:
       box->icon_name = g_value_dup_string (value);
-      break;
-
-    case PROP_STOCK_ID:
-      box->stock_id = g_value_dup_string (value);
       break;
 
     case PROP_HINT:
@@ -229,10 +204,6 @@ gimp_hint_box_get_property (GObject    *object,
       g_value_set_string (value, box->icon_name);
       break;
 
-    case PROP_STOCK_ID:
-      g_value_set_string (value, box->stock_id);
-      break;
-
     case PROP_HINT:
       g_value_set_string (value, box->hint);
       break;
@@ -248,7 +219,7 @@ gimp_hint_box_get_property (GObject    *object,
  * @hint: text to display as a user hint
  *
  * Creates a new widget that shows a text label showing @hint,
- * decorated with a GIMP_STOCK_INFO wilber icon.
+ * decorated with a GIMP_ICON_INFO wilber icon.
  *
  * Return value: a new widget
  *

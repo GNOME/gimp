@@ -135,6 +135,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
                                                         GIMP_TYPE_COLOR_MANAGED,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   display_signals[CHANGED] =
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -148,14 +149,9 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   klass->help_id         = NULL;
   klass->icon_name       = GIMP_ICON_DISPLAY_FILTER;
 
-  klass->clone           = NULL;
   klass->convert_buffer  = NULL;
-  klass->convert_surface = NULL;
-  klass->convert         = NULL;
-  klass->load_state      = NULL;
-  klass->save_state      = NULL;
   klass->configure       = NULL;
-  klass->configure_reset = NULL;
+
   klass->changed         = NULL;
 
   g_type_class_add_private (object_class, sizeof (GimpColorDisplayPrivate));
@@ -299,48 +295,10 @@ gimp_color_display_set_color_managed (GimpColorDisplay *display,
     }
 }
 
-/**
- * gimp_color_display_new:
- * @display_type: the GType of the GimpColorDisplay to instantiate.
- *
- * This function is deprecated. Please use g_object_new() directly.
- *
- * Return value: a new %GimpColorDisplay object.
- **/
-GimpColorDisplay *
-gimp_color_display_new (GType display_type)
-{
-  g_return_val_if_fail (g_type_is_a (display_type, GIMP_TYPE_COLOR_DISPLAY),
-                        NULL);
-
-  return g_object_new (display_type, NULL);
-}
-
 GimpColorDisplay *
 gimp_color_display_clone (GimpColorDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
-
-  /*  implementing the clone method is deprecated
-   */
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone)
-    {
-      GimpColorDisplay *clone;
-
-      clone = GIMP_COLOR_DISPLAY_GET_CLASS (display)->clone (display);
-
-      if (clone)
-        {
-          GimpColorDisplayPrivate *private = GET_PRIVATE (display);
-
-          g_object_set (clone,
-                        "enabled",       private->enabled,
-                        "color-managed", private->managed,
-                        NULL);
-        }
-
-      return clone;
-    }
 
   return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
 }
@@ -375,74 +333,6 @@ gimp_color_display_convert_buffer (GimpColorDisplay *display,
     }
 }
 
-/**
- * gimp_color_display_convert_surface:
- * @display: a #GimpColorDisplay
- * @surface: a #cairo_image_surface_t of type ARGB32
- *
- * Converts all pixels in @surface.
- *
- * Since: 2.8
- *
- * Deprecated: GIMP 2.8: Use gimp_color_display_convert_buffer() instead.
- **/
-void
-gimp_color_display_convert_surface (GimpColorDisplay *display,
-                                    cairo_surface_t  *surface)
-{
-  GimpColorDisplayPrivate *private;
-
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
-  g_return_if_fail (surface != NULL);
-  g_return_if_fail (cairo_surface_get_type (surface) ==
-                    CAIRO_SURFACE_TYPE_IMAGE);
-
-  private = GET_PRIVATE (display);
-
-  if (private->enabled &&
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_surface)
-    {
-      cairo_surface_flush (surface);
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_surface (display, surface);
-      cairo_surface_mark_dirty (surface);
-    }
-}
-
-/**
- * gimp_color_display_convert:
- * @display: a #GimpColorDisplay
- * @buf: the pixel buffer to convert
- * @width: the width of the buffer
- * @height: the height of the buffer
- * @bpp: the number of bytes per pixel
- * @bpl: the buffer's rowstride
- *
- * Converts all pixels in @buf.
- *
- * Deprecated: GIMP 2.8: Use gimp_color_display_convert_buffer() instead.
- **/
-void
-gimp_color_display_convert (GimpColorDisplay *display,
-                            guchar            *buf,
-                            gint               width,
-                            gint               height,
-                            gint               bpp,
-                            gint               bpl)
-{
-  GimpColorDisplayPrivate *private;
-
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
-
-  private = GET_PRIVATE (display);
-
-  /*  implementing the convert method is deprecated
-   */
-  if (private->enabled && GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert)
-    GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert (display, buf,
-                                                     width, height,
-                                                     bpp, bpl);
-}
-
 void
 gimp_color_display_load_state (GimpColorDisplay *display,
                                GimpParasite     *state)
@@ -450,19 +340,10 @@ gimp_color_display_load_state (GimpColorDisplay *display,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
   g_return_if_fail (state != NULL);
 
-  /*  implementing the load_state method is deprecated
-   */
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->load_state)
-    {
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->load_state (display, state);
-    }
-  else
-    {
-      gimp_config_deserialize_string (GIMP_CONFIG (display),
-                                      gimp_parasite_data (state),
-                                      gimp_parasite_data_size (state),
-                                      NULL, NULL);
-    }
+  gimp_config_deserialize_string (GIMP_CONFIG (display),
+                                  gimp_parasite_data (state),
+                                  gimp_parasite_data_size (state),
+                                  NULL, NULL);
 }
 
 GimpParasite *
@@ -472,13 +353,6 @@ gimp_color_display_save_state (GimpColorDisplay *display)
   gchar        *str;
 
   g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), NULL);
-
-  /*  implementing the save_state method is deprecated
-   */
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->save_state)
-    {
-      return GIMP_COLOR_DISPLAY_GET_CLASS (display)->save_state (display);
-    }
 
   str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
 
@@ -506,16 +380,7 @@ gimp_color_display_configure_reset (GimpColorDisplay *display)
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  /*  implementing the configure_reset method is deprecated
-   */
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset)
-    {
-      GIMP_COLOR_DISPLAY_GET_CLASS (display)->configure_reset (display);
-    }
-  else
-    {
-      gimp_config_reset (GIMP_CONFIG (display));
-    }
+  gimp_config_reset (GIMP_CONFIG (display));
 }
 
 void

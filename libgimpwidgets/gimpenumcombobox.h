@@ -62,10 +62,6 @@ GType       gimp_enum_combo_box_get_type         (void) G_GNUC_CONST;
 GtkWidget * gimp_enum_combo_box_new              (GType             enum_type);
 GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
 
-GIMP_DEPRECATED_FOR(gimp_enum_combo_box_set_icon_prefix)
-void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
-                                                  const gchar      *stock_prefix);
-
 void        gimp_enum_combo_box_set_icon_prefix  (GimpEnumComboBox *combo_box,
                                                   const gchar      *icon_prefix);
 
