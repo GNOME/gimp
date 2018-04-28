@@ -21,12 +21,9 @@
 #include <babl/babl.h>
 #include <glib-object.h>
 
-#define GIMP_DISABLE_DEPRECATION_WARNINGS /*  for GIMP_RGB_INTENSITY()  */
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpcolortypes.h"
-
-#undef GIMP_DISABLE_DEPRECATED  /*  for GIMP_RGB_INTENSITY()  */
 #include "gimprgb.h"
 
 
@@ -352,42 +349,6 @@ gimp_rgb_luminance_uchar (const GimpRGB *rgb)
   g_return_val_if_fail (rgb != NULL, 0);
 
   return ROUND (gimp_rgb_luminance (rgb) * 255.0);
-}
-
-/**
- * gimp_rgb_intensity:
- * @rgb: a #GimpRGB struct
- *
- * This function is deprecated! Use gimp_rgb_luminance() instead.
- *
- * Return value: the intensity in the range from 0.0 to 1.0.
- **/
-gdouble
-gimp_rgb_intensity (const GimpRGB *rgb)
-{
-  gdouble intensity;
-
-  g_return_val_if_fail (rgb != NULL, 0.0);
-
-  intensity = GIMP_RGB_INTENSITY (rgb->r, rgb->g, rgb->b);
-
-  return CLAMP (intensity, 0.0, 1.0);
-}
-
-/**
- * gimp_rgb_intensity_uchar:
- * @rgb: a #GimpRGB struct
- *
- * This function is deprecated! Use gimp_rgb_luminance_uchar() instead.
- *
- * Return value: the intensity in the range from 0 to 255.
- **/
-guchar
-gimp_rgb_intensity_uchar (const GimpRGB *rgb)
-{
-  g_return_val_if_fail (rgb != NULL, 0);
-
-  return ROUND (gimp_rgb_intensity (rgb) * 255.0);
 }
 
 void

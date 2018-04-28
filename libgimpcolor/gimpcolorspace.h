@@ -48,18 +48,6 @@ void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
 void   gimp_cmyk_to_rgb         (const GimpCMYK *cmyk,
                                  GimpRGB        *rgb);
 
-GIMP_DEPRECATED
-void   gimp_rgb_to_hwb          (const GimpRGB  *rgb,
-                                 gdouble        *hue,
-                                 gdouble        *whiteness,
-                                 gdouble        *blackness);
-
-GIMP_DEPRECATED
-void   gimp_hwb_to_rgb          (gdouble         hue,
-                                 gdouble         whiteness,
-                                 gdouble         blackness,
-                                 GimpRGB        *rgb);
-
 
 /*  gint functions  */
 
@@ -72,18 +60,6 @@ GIMP_DEPRECATED_FOR (gimp_hsv_to_rgb)
 void    gimp_hsv_to_rgb_int     (gint    *hue         /* returns red        */,
                                  gint    *saturation  /* returns green      */,
                                  gint    *value       /* returns blue       */);
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_cmyk)
-void    gimp_rgb_to_cmyk_int    (gint    *red         /* returns cyan       */,
-                                 gint    *green       /* returns magenta    */,
-                                 gint    *blue        /* returns yellow     */,
-                                 gint    *pullout     /* returns black      */);
-
-GIMP_DEPRECATED_FOR (gimp_cmyk_to_rgb)
-void    gimp_cmyk_to_rgb_int    (gint    *cyan        /* returns red        */,
-                                 gint    *magenta     /* returns green      */,
-                                 gint    *yellow      /* returns blue       */,
-                                 gint    *black       /* not changed        */);
 
 GIMP_DEPRECATED_FOR (gimp_rgb_to_hsl)
 void    gimp_rgb_to_hsl_int     (gint    *red         /* returns hue        */,
@@ -99,21 +75,6 @@ GIMP_DEPRECATED_FOR (gimp_hsl_to_rgb)
 void    gimp_hsl_to_rgb_int     (gint    *hue         /* returns red        */,
                                  gint    *saturation  /* returns green      */,
                                  gint    *lightness   /* returns blue       */);
-
-
-/*  gdouble functions  */
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsv)
-void    gimp_rgb_to_hsv4        (const guchar *rgb,
-                                 gdouble      *hue,
-                                 gdouble      *saturation,
-                                 gdouble      *value);
-
-GIMP_DEPRECATED_FOR (gimp_hsv_to_rgb)
-void    gimp_hsv_to_rgb4        (guchar       *rgb,
-                                 gdouble       hue,
-                                 gdouble       saturation,
-                                 gdouble       value);
 
 
 G_END_DECLS
