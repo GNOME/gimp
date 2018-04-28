@@ -142,8 +142,12 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
    * doesn't contribute to the minimum height of the toolbox.
    */
   paned_box->p->instructions = gtk_label_new (INSTRUCTIONS_TEXT);
-  gtk_misc_set_padding (GTK_MISC (paned_box->p->instructions),
-                        INSTRUCTIONS_TEXT_PADDING, INSTRUCTIONS_TEXT_PADDING);
+  g_object_set (paned_box->p->instructions,
+                "margin-start",  INSTRUCTIONS_TEXT_PADDING,
+                "margin-end",    INSTRUCTIONS_TEXT_PADDING,
+                "margin-top",    INSTRUCTIONS_TEXT_PADDING,
+                "margin-bottom", INSTRUCTIONS_TEXT_PADDING,
+                NULL);
   gtk_label_set_line_wrap (GTK_LABEL (paned_box->p->instructions), TRUE);
   gtk_label_set_justify (GTK_LABEL (paned_box->p->instructions),
                          GTK_JUSTIFY_CENTER);

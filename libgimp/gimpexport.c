@@ -465,7 +465,7 @@ confirm_save_dialog (const gchar *message,
 
   image = gtk_image_new_from_icon_name ("dialog-warning",
                                         GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
@@ -548,7 +548,7 @@ export_dialog (GSList      *actions,
 
   image = gtk_image_new_from_icon_name ("dialog-information",
                                         GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 

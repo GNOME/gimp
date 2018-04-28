@@ -519,7 +519,10 @@ gimp_random_seed_new (guint    *seed,
                              "given \"random\" operation"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("_New Seed"));
-  gtk_misc_set_padding (GTK_MISC (gtk_bin_get_child (GTK_BIN (button))), 2, 0);
+  g_object_set (gtk_bin_get_child (GTK_BIN (button)),
+                "margin-start", 2,
+                "margin-end",   2,
+                NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

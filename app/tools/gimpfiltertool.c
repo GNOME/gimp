@@ -1628,7 +1628,12 @@ gimp_filter_tool_add_color_picker (GimpFilterTool     *filter_tool,
                          NULL);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  g_object_set (image,
+                "margin-start",  2,
+                "margin-end",    2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
