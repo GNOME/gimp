@@ -50,12 +50,10 @@
 
 #include "gimp-intl.h"
 
+
 #define MAX_TRACES 3
 #define MAX_ERRORS 10
 
-static GMutex mutex;
-static gint   n_traces = 0;
-static gint   n_errors = 0;
 
 typedef struct
 {
@@ -89,8 +87,13 @@ static gchar *   gui_message_format         (GimpMessageSeverity  severity,
 static GtkWidget * global_error_dialog      (void);
 static GtkWidget * global_critical_dialog   (void);
 
-static void        gui_message_reset_errors (GtkObject           *object,
+static void        gui_message_reset_errors (GObject             *object,
                                              gpointer             user_data);
+
+
+static GMutex mutex;
+static gint   n_traces = 0;
+static gint   n_errors = 0;
 
 
 void
@@ -488,8 +491,8 @@ global_critical_dialog (void)
 }
 
 static void
-gui_message_reset_errors (GtkObject *object,
-                          gpointer   user_data)
+gui_message_reset_errors (GObject  *object,
+                          gpointer  user_data)
 {
   g_mutex_lock (&mutex);
   n_errors = 0;
