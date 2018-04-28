@@ -65,11 +65,6 @@ GFile       * gimp_sysconf_directory_file     (const gchar *first_element,
 GFile       * gimp_plug_in_directory_file     (const gchar *first_element,
                                                ...) G_GNUC_MALLOC;
 
-#ifndef GIMP_DISABLE_DEPRECATED
-GIMP_DEPRECATED_FOR(g_get_user_special_dir)
-const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_CONST;
-#endif /* !GIMP_DISABLE_DEPRECATED */
-
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar        *basename) G_GNUC_MALLOC;
 
