@@ -498,6 +498,14 @@ gimp_data_get_identifier (GimpTagged *tagged)
           identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
+      else if (g_str_has_prefix (path, MYPAINT_BRUSHES_DIR))
+        {
+          tmp = g_strconcat ("${mypaint_brushes_dir}",
+                             path + strlen (MYPAINT_BRUSHES_DIR),
+                             NULL);
+          identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
+          g_free (tmp);
+        }
       else
         {
           identifier = g_filename_to_utf8 (path, -1,

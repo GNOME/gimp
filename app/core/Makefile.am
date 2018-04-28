@@ -19,6 +19,7 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
 	$(LIBMYPAINT_CFLAGS)				\
+	$(MYPAINT_BRUSHES_CFLAGS)			\
 	$(GEXIV2_CFLAGS)				\
 	-I$(includedir)
 
