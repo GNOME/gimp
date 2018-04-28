@@ -59,17 +59,17 @@ struct _GimpHighlightableButtonPrivate
 };
 
 
-static void       gimp_highlightable_button_set_property (GObject        *object,
-                                                          guint           property_id,
-                                                          const GValue   *value,
-                                                          GParamSpec     *pspec);
-static void       gimp_highlightable_button_get_property (GObject        *object,
-                                                          guint           property_id,
-                                                          GValue         *value,
-                                                          GParamSpec     *pspec);
+static void       gimp_highlightable_button_set_property (GObject      *object,
+                                                          guint         property_id,
+                                                          const GValue *value,
+                                                          GParamSpec   *pspec);
+static void       gimp_highlightable_button_get_property (GObject      *object,
+                                                          guint         property_id,
+                                                          GValue       *value,
+                                                          GParamSpec   *pspec);
 
-static gboolean   gimp_highlightable_button_expose_event (GtkWidget      *widget,
-                                                          GdkEventExpose *event);
+static gboolean   gimp_highlightable_button_draw         (GtkWidget    *widget,
+                                                          cairo_t      *cr);
 
 
 G_DEFINE_TYPE (GimpHighlightableButton, gimp_highlightable_button, GIMP_TYPE_BUTTON)
@@ -86,7 +86,7 @@ gimp_highlightable_button_class_init (GimpHighlightableButtonClass *klass)
   object_class->get_property = gimp_highlightable_button_get_property;
   object_class->set_property = gimp_highlightable_button_set_property;
 
-  widget_class->expose_event = gimp_highlightable_button_expose_event;
+  widget_class->draw         = gimp_highlightable_button_draw;
 
   g_object_class_install_property (object_class, PROP_HIGHLIGHT,
                                    g_param_spec_boolean ("highlight",
@@ -165,153 +165,137 @@ gimp_highlightable_button_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_highlightable_button_expose_event (GtkWidget      *widget,
-                                        GdkEventExpose *event)
+gimp_highlightable_button_draw (GtkWidget *widget,
+                                cairo_t   *cr)
 {
   GimpHighlightableButton *button = GIMP_HIGHLIGHTABLE_BUTTON (widget);
+  GtkStyle                *style  = gtk_widget_get_style (widget);
+  GtkStateType             state  = gtk_widget_get_state (widget);
+  GtkAllocation            allocation;
+  gboolean                 border;
+  gdouble                  lightness;
+  gdouble                  opacity;
+  gdouble                  x;
+  gdouble                  y;
+  gdouble                  width;
+  gdouble                  height;
 
-  if (button->priv->highlight)
+  if (! button->priv->highlight)
+    return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  border =
+    (state                                       == GTK_STATE_ACTIVE   ||
+     state                                       == GTK_STATE_PRELIGHT ||
+     gtk_button_get_relief (GTK_BUTTON (button)) == GTK_RELIEF_NORMAL);
+
+  lightness = 1.00;
+  opacity   = 1.00;
+
+  switch (state)
     {
-      if (gtk_widget_is_drawable (widget))
+    case GTK_STATE_ACTIVE:      lightness = 0.80; break;
+    case GTK_STATE_PRELIGHT:    lightness = 1.25; break;
+    case GTK_STATE_INSENSITIVE: opacity   = 0.50; break;
+    default:                                      break;
+    }
+
+  x      = allocation.x      +       PADDING;
+  y      = allocation.y      +       PADDING;
+  width  = allocation.width  - 2.0 * PADDING;
+  height = allocation.height - 2.0 * PADDING;
+
+  if (border)
+    {
+      x      += BORDER_WIDTH / 2.0;
+      y      += BORDER_WIDTH / 2.0;
+      width  -= BORDER_WIDTH;
+      height -= BORDER_WIDTH;
+    }
+
+  cairo_set_source_rgba (cr,
+                         button->priv->highlight_color.r * lightness,
+                         button->priv->highlight_color.g * lightness,
+                         button->priv->highlight_color.b * lightness,
+                         button->priv->highlight_color.a * opacity);
+
+  gimp_cairo_rounded_rectangle (cr,
+                                x, y, width, height, CORNER_RADIUS);
+
+  cairo_fill_preserve (cr);
+
+  if (border)
+    {
+      gdk_cairo_set_source_color (cr, &style->fg[state]);
+
+      cairo_set_line_width (cr, BORDER_WIDTH);
+
+      cairo_stroke (cr);
+    }
+
+  if (gtk_widget_has_focus (widget))
+    {
+      gboolean interior_focus;
+      gint     focus_width;
+      gint     focus_pad;
+      gint     child_displacement_x;
+      gint     child_displacement_y;
+      gboolean displace_focus;
+      gint     x;
+      gint     y;
+      gint     width;
+      gint     height;
+
+      gtk_widget_style_get (widget,
+                            "interior-focus",       &interior_focus,
+                            "focus-line-width",     &focus_width,
+                            "focus-padding",        &focus_pad,
+                            "child-displacement-y", &child_displacement_y,
+                            "child-displacement-x", &child_displacement_x,
+                            "displace-focus",       &displace_focus,
+                            NULL);
+
+      x      = allocation.x      +     PADDING;
+      y      = allocation.y      +     PADDING;
+      width  = allocation.width  - 2 * PADDING;
+      height = allocation.height - 2 * PADDING;
+
+      if (interior_focus)
         {
-          GtkStyle      *style = gtk_widget_get_style (widget);
-          GtkStateType   state = gtk_widget_get_state (widget);
-          GtkAllocation  allocation;
-          gboolean       border;
-          gdouble        lightness;
-          gdouble        opacity;
-          gdouble        x;
-          gdouble        y;
-          gdouble        width;
-          gdouble        height;
-          cairo_t       *cr;
-
-          gtk_widget_get_allocation (widget, &allocation);
-
-          border =
-            (state                                       == GTK_STATE_ACTIVE   ||
-             state                                       == GTK_STATE_PRELIGHT ||
-             gtk_button_get_relief (GTK_BUTTON (button)) == GTK_RELIEF_NORMAL);
-
-          lightness = 1.00;
-          opacity   = 1.00;
-
-          switch (state)
-            {
-            case GTK_STATE_ACTIVE:      lightness = 0.80; break;
-            case GTK_STATE_PRELIGHT:    lightness = 1.25; break;
-            case GTK_STATE_INSENSITIVE: opacity   = 0.50; break;
-            default:                                      break;
-            }
-
-          x      = allocation.x      +       PADDING;
-          y      = allocation.y      +       PADDING;
-          width  = allocation.width  - 2.0 * PADDING;
-          height = allocation.height - 2.0 * PADDING;
-
-          if (border)
-            {
-              x      += BORDER_WIDTH / 2.0;
-              y      += BORDER_WIDTH / 2.0;
-              width  -= BORDER_WIDTH;
-              height -= BORDER_WIDTH;
-            }
-
-          cr = gdk_cairo_create (event->window);
-          gdk_cairo_region (cr, event->region);
-          cairo_clip (cr);
-
-          cairo_set_source_rgba (cr,
-                                 button->priv->highlight_color.r * lightness,
-                                 button->priv->highlight_color.g * lightness,
-                                 button->priv->highlight_color.b * lightness,
-                                 button->priv->highlight_color.a * opacity);
-
-          gimp_cairo_rounded_rectangle (cr,
-                                        x, y, width, height, CORNER_RADIUS);
-
-          cairo_fill_preserve (cr);
-
-          if (border)
-            {
-              gdk_cairo_set_source_color (cr, &style->fg[state]);
-
-              cairo_set_line_width (cr, BORDER_WIDTH);
-
-              cairo_stroke (cr);
-            }
-
-          cairo_destroy (cr);
-
-          if (gtk_widget_has_focus (widget))
-            {
-              gboolean interior_focus;
-              gint     focus_width;
-              gint     focus_pad;
-              gint     child_displacement_x;
-              gint     child_displacement_y;
-              gboolean displace_focus;
-              gint     x;
-              gint     y;
-              gint     width;
-              gint     height;
-
-              gtk_widget_style_get (widget,
-                                    "interior-focus",       &interior_focus,
-                                    "focus-line-width",     &focus_width,
-                                    "focus-padding",        &focus_pad,
-                                    "child-displacement-y", &child_displacement_y,
-                                    "child-displacement-x", &child_displacement_x,
-                                    "displace-focus",       &displace_focus,
-                                    NULL);
-
-              x      = allocation.x      +     PADDING;
-              y      = allocation.y      +     PADDING;
-              width  = allocation.width  - 2 * PADDING;
-              height = allocation.height - 2 * PADDING;
-
-              if (interior_focus)
-                {
-                  x      += style->xthickness + focus_pad;
-                  y      += style->ythickness + focus_pad;
-                  width  -= 2 * (style->xthickness + focus_pad);
-                  height -= 2 * (style->ythickness + focus_pad);
-                }
-              else
-                {
-                  x      -= focus_width + focus_pad;
-                  y      -= focus_width + focus_pad;
-                  width  += 2 * (focus_width + focus_pad);
-                  height += 2 * (focus_width + focus_pad);
-                }
-
-              if (state == GTK_STATE_ACTIVE && displace_focus)
-                {
-                  x += child_displacement_x;
-                  y += child_displacement_y;
-                }
-
-              gtk_paint_focus (style, gtk_widget_get_window (widget), state,
-                               &event->area, widget, "button",
-                               x, y, width, height);
-            }
-
-          gtk_container_propagate_expose (GTK_CONTAINER (button),
-                                          gtk_bin_get_child (GTK_BIN (button)),
-                                          event);
+          x      += style->xthickness + focus_pad;
+          y      += style->ythickness + focus_pad;
+          width  -= 2 * (style->xthickness + focus_pad);
+          height -= 2 * (style->ythickness + focus_pad);
+        }
+      else
+        {
+          x      -= focus_width + focus_pad;
+          y      -= focus_width + focus_pad;
+          width  += 2 * (focus_width + focus_pad);
+          height += 2 * (focus_width + focus_pad);
         }
 
-      return FALSE;
+      if (state == GTK_STATE_ACTIVE && displace_focus)
+        {
+          x += child_displacement_x;
+          y += child_displacement_y;
+        }
+
+      gtk_paint_focus (style, cr, state,
+                       widget, "button",
+                       x, y, width, height);
     }
-  else
-    {
-      return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
-    }
+
+  gtk_container_propagate_draw (GTK_CONTAINER (button),
+                                gtk_bin_get_child (GTK_BIN (button)),
+                                cr);
+
+  return FALSE;
 }
 
 
 /*  public functions  */
-
 
 GtkWidget *
 gimp_highlightable_button_new (void)
