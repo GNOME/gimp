@@ -44,8 +44,6 @@ typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
 struct _GimpDrawablePreview
 {
   GimpScrolledPreview  parent_instance;
-
-  GimpDrawable        *drawable;
 };
 
 struct _GimpDrawablePreviewClass
@@ -64,12 +62,6 @@ GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_drawable_preview_new_from_drawable_id (gint32               drawable_ID);
 gint32         gimp_drawable_preview_get_drawable_id      (GimpDrawablePreview *preview);
-
-GIMP_DEPRECATED_FOR(gimp_drawable_preview_new_from_drawable_id)
-GtkWidget    * gimp_drawable_preview_new                  (GimpDrawable        *drawable,
-                                                           gboolean            *toggle);
-GIMP_DEPRECATED_FOR(gimp_drawable_preview_get_drawable_id)
-GimpDrawable * gimp_drawable_preview_get_drawable         (GimpDrawablePreview *preview);
 
 void           gimp_drawable_preview_draw_region          (GimpDrawablePreview *preview,
                                                            const GimpPixelRgn  *region);

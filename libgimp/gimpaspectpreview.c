@@ -46,7 +46,6 @@
 enum
 {
   PROP_0,
-  PROP_DRAWABLE,
   PROP_DRAWABLE_ID
 };
 
@@ -93,8 +92,6 @@ static void  gimp_aspect_preview_untransform   (GimpPreview     *preview,
                                                 gint            *dest_x,
                                                 gint            *dest_y);
 
-static void  gimp_aspect_preview_set_drawable  (GimpAspectPreview *preview,
-                                                GimpDrawable      *drawable);
 static void  gimp_aspect_preview_set_drawable_id
                                                (GimpAspectPreview *preview,
                                                 gint32             drawable_ID);
@@ -127,20 +124,6 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
   preview_class->untransform  = gimp_aspect_preview_untransform;
 
   g_type_class_add_private (object_class, sizeof (GimpAspectPreviewPrivate));
-
-  /**
-   * GimpAspectPreview:drawable:
-   *
-   * Deprecated: use the drawable-id property instead.
-   *
-   * Since: 2.4
-   */
-  g_object_class_install_property (object_class, PROP_DRAWABLE,
-                                   g_param_spec_pointer ("drawable",
-                                                         "Drawable",
-                                                         "Deprecated: use the drawable-id property instead",
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   /**
    * GimpAspectPreview:drawable-id:
@@ -218,10 +201,6 @@ gimp_aspect_preview_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_value_set_pointer (value, preview->drawable);
-      break;
-
     case PROP_DRAWABLE_ID:
       g_value_set_int (value, priv->drawable_ID);
       break;
@@ -238,18 +217,10 @@ gimp_aspect_preview_set_property (GObject      *object,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpAspectPreview        *preview = GIMP_ASPECT_PREVIEW (object);
-  GimpAspectPreviewPrivate *priv    = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreview *preview = GIMP_ASPECT_PREVIEW (object);
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_return_if_fail (priv->drawable_ID < 1);
-      if (g_value_get_pointer (value))
-        gimp_aspect_preview_set_drawable (preview,
-                                          g_value_get_pointer (value));
-      break;
-
     case PROP_DRAWABLE_ID:
       gimp_aspect_preview_set_drawable_id (preview,
                                            g_value_get_int (value));
@@ -386,20 +357,6 @@ gimp_aspect_preview_untransform (GimpPreview *preview,
 }
 
 static void
-gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
-                                  GimpDrawable      *drawable)
-{
-  GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
-
-  g_return_if_fail (preview->drawable == NULL);
-  g_return_if_fail (priv->drawable_ID < 1);
-
-  preview->drawable = drawable;
-
-  gimp_aspect_preview_set_drawable_id (preview, drawable->drawable_id);
-}
-
-static void
 gimp_aspect_preview_set_drawable_id (GimpAspectPreview *preview,
                                      gint32             drawable_ID)
 {
@@ -455,32 +412,5 @@ gimp_aspect_preview_new_from_drawable_id (gint32 drawable_ID)
 
   return g_object_new (GIMP_TYPE_ASPECT_PREVIEW,
                        "drawable-id", drawable_ID,
-                       NULL);
-}
-/**
- * gimp_aspect_preview_new:
- * @drawable: a #GimpDrawable
- * @toggle:   unused
- *
- * Creates a new #GimpAspectPreview widget for @drawable. See also
- * gimp_drawable_preview_new().
- *
- * In GIMP 2.2 the @toggle parameter was provided to conviently access
- * the state of the "Preview" check-button. This is not any longer
- * necessary as the preview itself now stores this state, as well as
- * the scroll offset.
- *
- * Since: 2.2
- *
- * Returns: a new #GimpAspectPreview.
- **/
-GtkWidget *
-gimp_aspect_preview_new (GimpDrawable *drawable,
-                         gboolean     *toggle)
-{
-  g_return_val_if_fail (drawable != NULL, NULL);
-
-  return g_object_new (GIMP_TYPE_ASPECT_PREVIEW,
-                       "drawable", drawable,
                        NULL);
 }

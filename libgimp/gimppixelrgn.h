@@ -53,12 +53,6 @@ void      gimp_pixel_rgn_init       (GimpPixelRgn  *pr,
                                      gint           height,
                                      gint           dirty,
                                      gint           shadow);
-GIMP_DEPRECATED
-void      gimp_pixel_rgn_resize     (GimpPixelRgn  *pr,
-                                     gint           x,
-                                     gint           y,
-                                     gint           width,
-                                     gint           height);
 GIMP_DEPRECATED_FOR(gegl_buffer_sample)
 void      gimp_pixel_rgn_get_pixel  (GimpPixelRgn  *pr,
                                      guchar        *buf,

@@ -44,9 +44,6 @@ typedef struct _GimpAspectPreviewClass  GimpAspectPreviewClass;
 struct _GimpAspectPreview
 {
   GimpPreview   parent_instance;
-
-  /*< private >*/
-  GimpDrawable *drawable;
 };
 
 struct _GimpAspectPreviewClass
@@ -63,11 +60,7 @@ struct _GimpAspectPreviewClass
 
 GType       gimp_aspect_preview_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * gimp_aspect_preview_new_from_drawable_id (gint32        drawable_ID);
-
-GIMP_DEPRECATED_FOR(gimp_aspect_preview_new_from_drawable_id)
-GtkWidget * gimp_aspect_preview_new                  (GimpDrawable *drawable,
-                                                      gboolean     *toggle);
+GtkWidget * gimp_aspect_preview_new_from_drawable_id (gint32 drawable_ID);
 
 
 G_END_DECLS

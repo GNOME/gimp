@@ -24,9 +24,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpprogress.h"
-#define GIMP_DISABLE_DEPRECATED
 
 #include "gimp.h"
 
@@ -58,45 +56,6 @@ static const gdouble   gimp_progress_step    = (1.0 / 256.0);
 
 
 /*  public functions  */
-
-/**
- * gimp_progress_install:
- * @start_callback: the function to call when progress starts
- * @end_callback:   the function to call when progress finishes
- * @text_callback:  the function to call to change the text
- * @value_callback: the function to call to change the value
- * @user_data:      a pointer that is returned when uninstalling the progress
- *
- * Note that since GIMP 2.4, @value_callback can be called with
- * negative values. This is triggered by calls to gimp_progress_pulse().
- * The callback should then implement a progress indicating business,
- * e.g. by calling gtk_progress_bar_pulse().
- *
- * Return value: the name of the temporary procedure that's been installed
- *
- * Since: 2.2
- **/
-const gchar *
-gimp_progress_install (GimpProgressStartCallback start_callback,
-                       GimpProgressEndCallback   end_callback,
-                       GimpProgressTextCallback  text_callback,
-                       GimpProgressValueCallback value_callback,
-                       gpointer                  user_data)
-{
-  GimpProgressVtable vtable = { 0, };
-
-  g_return_val_if_fail (start_callback != NULL, NULL);
-  g_return_val_if_fail (end_callback != NULL, NULL);
-  g_return_val_if_fail (text_callback != NULL, NULL);
-  g_return_val_if_fail (value_callback != NULL, NULL);
-
-  vtable.start     = start_callback;
-  vtable.end       = end_callback;
-  vtable.set_text  = text_callback;
-  vtable.set_value = value_callback;
-
-  return gimp_progress_install_vtable (&vtable, user_data);
-}
 
 /**
  * gimp_progress_install_vtable:

@@ -80,15 +80,6 @@ gint32          gimp_zoom_preview_get_drawable_id(GimpZoomPreview *preview);
 GimpZoomModel * gimp_zoom_preview_get_model      (GimpZoomPreview *preview);
 gdouble         gimp_zoom_preview_get_factor     (GimpZoomPreview *preview);
 
-GIMP_DEPRECATED_FOR(gimp_zoom_preview_new_from_drawable_id)
-GtkWidget     * gimp_zoom_preview_new            (GimpDrawable    *drawable);
-GIMP_DEPRECATED_FOR(gimp_zoom_preview_new_with_model_from_drawable_id)
-GtkWidget     * gimp_zoom_preview_new_with_model (GimpDrawable    *drawable,
-                                                  GimpZoomModel   *model);
-
-GIMP_DEPRECATED_FOR(gimp_zoom_preview_get_drawable_id)
-GimpDrawable  * gimp_zoom_preview_get_drawable   (GimpZoomPreview *preview);
-
 
 G_END_DECLS
 
