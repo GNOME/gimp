@@ -126,37 +126,6 @@ CODE
     );
 }
 
-sub image_scale_full {
-    &std_pdb_deprecated('gimp-image-scale');
-    &neo_pdb_misc('2008', '2.6');
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
-          desc => 'New image width' },
-        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
-          desc => 'New image height' },
-        { name => 'interpolation', type => 'enum GimpInterpolationType',
-          desc => 'Type of interpolation' }
-    );
-
-    %invoke = (
-        headers => [ qw("core/gimpimage-scale.h") ],
-        code => <<'CODE'
-{
-  if (progress)
-    gimp_progress_start (progress, FALSE, _("Scaling"));
-
-  gimp_image_scale (image, new_width, new_height, interpolation, progress);
-
-  if (progress)
-    gimp_progress_end (progress);
-}
-CODE
-    );
-}
-
 sub image_crop {
     $blurb = 'Crop the image to the specified extents.';
 
@@ -263,7 +232,7 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(image_resize image_resize_to_layers
-            image_scale image_scale_full
+            image_scale
             image_crop image_flip image_rotate);
 
 %exports = (app => [@procs], lib => [@procs]);

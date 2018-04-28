@@ -2515,41 +2515,6 @@ context_set_transform_resize_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-context_get_transform_recursion_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
-                                         GError               **error)
-{
-  GimpValueArray *return_vals;
-  gint32 transform_recursion = 0;
-
-  transform_recursion = 3;
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (gimp_value_array_index (return_vals, 1), transform_recursion);
-
-  return return_vals;
-}
-
-static GimpValueArray *
-context_set_transform_recursion_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
-                                         GError               **error)
-{
-  gboolean success = TRUE;
-  if (success)
-    {
-    }
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 context_get_ink_size_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -5331,52 +5296,6 @@ register_context_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_TRANSFORM_RESIZE,
                                                   GIMP_TRANSFORM_RESIZE_ADJUST,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-context-get-transform-recursion
-   */
-  procedure = gimp_procedure_new (context_get_transform_recursion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-get-transform-recursion");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-get-transform-recursion",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "",
-                                     "",
-                                     "",
-                                     "NONE");
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("transform-recursion",
-                                                          "transform recursion",
-                                                          "This returns always 3 and is meaningless",
-                                                          1, G_MAXINT32, 1,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-context-set-transform-recursion
-   */
-  procedure = gimp_procedure_new (context_set_transform_recursion_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-context-set-transform-recursion");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-context-set-transform-recursion",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "",
-                                     "",
-                                     "",
-                                     "NONE");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("transform-recursion",
-                                                      "transform recursion",
-                                                      "This parameter is ignored",
-                                                      1, G_MAXINT32, 1,
-                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

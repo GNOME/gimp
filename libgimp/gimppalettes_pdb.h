@@ -32,16 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_palettes_refresh           (void);
-gchar**  gimp_palettes_get_list          (const gchar *filter,
-                                          gint        *num_palettes);
-GIMP_DEPRECATED_FOR(gimp_context_get_palette)
-gchar*   gimp_palettes_get_palette       (gint        *num_colors);
-GIMP_DEPRECATED_FOR(gimp_palette_entry_get_color)
-gchar*   gimp_palettes_get_palette_entry (const gchar *name,
-                                          gint         entry_num,
-                                          gint        *num_colors,
-                                          GimpRGB     *color);
+gboolean gimp_palettes_refresh  (void);
+gchar**  gimp_palettes_get_list (const gchar *filter,
+                                 gint        *num_palettes);
 
 
 G_END_DECLS

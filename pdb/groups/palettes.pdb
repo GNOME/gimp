@@ -68,82 +68,6 @@ CODE
     );
 }
 
-sub palettes_get_palette {
-    &std_pdb_deprecated ('gimp-context-get-palette');
-
-    @outargs = (
-	{ name => 'name', type => 'string', null_ok => 1,
-	  desc => 'The palette name' },
-	{ name => 'num_colors', type => 'int32',
-	  desc => 'The palette num_colors' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  GimpPalette *palette = gimp_context_get_palette (context);
-
-  if (palette)
-    {
-      name       = g_strdup (gimp_object_get_name (palette));
-      num_colors = gimp_palette_get_n_colors (palette);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub palettes_get_palette_entry {
-    &std_pdb_deprecated ('gimp-palette-entry-get-color');
-
-    @inargs = (
-	{ name => 'name', type => 'string', null_ok => 1,
-	  desc => 'The palette name ("" means currently active palette)' },
-        { name => 'entry_num', type => 'int32',
-          desc => 'The entry to retrieve' }
-    );
-
-    @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => 'The palette name' },
-	{ name => 'num_colors', type => 'int32',
-	  desc => 'The palette num_colors' },
-	{ name => 'color', type => 'color', void_ret => 1,
-	  desc => 'The color requested' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpPalette *palette;
-
-  if (name && strlen (name))
-    palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
-  else
-    palette = gimp_context_get_palette (context);
-
-  if (palette)
-    {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
-
-      if (entry)
-        {
-          actual_name = g_strdup (gimp_object_get_name (palette));
-          num_colors  = gimp_palette_get_n_colors (palette);
-          color       = entry->color;
-        }
-      else
-        success = FALSE;
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 
 @headers = qw(<string.h>
               "core/gimp.h"
@@ -153,9 +77,7 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(palettes_refresh
-            palettes_get_list
-            palettes_get_palette
-            palettes_get_palette_entry);
+            palettes_get_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

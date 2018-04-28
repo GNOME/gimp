@@ -391,31 +391,6 @@ drawable_offsets_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_set_image_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpImage *image;
-
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-
-  if (success)
-    {
-      if (image != gimp_item_get_image (GIMP_ITEM (drawable)))
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 drawable_mask_bounds_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1315,35 +1290,6 @@ register_drawable_procs (GimpPDB *pdb)
                                                           "y offset of drawable",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-drawable-set-image
-   */
-  procedure = gimp_procedure_new (drawable_set_image_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-set-image");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-set-image",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "",
-                                     "",
-                                     "",
-                                     "NONE");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

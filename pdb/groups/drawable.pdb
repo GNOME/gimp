@@ -704,26 +704,6 @@ CODE
     );
 }
 
-sub drawable_set_image {
-    &std_pdb_deprecated();
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'image', type => 'image',
-	  desc => 'The image' }
-    );
-
-    %invoke = (
-	code =><<'CODE'
-{
-  if (image != gimp_item_get_image (GIMP_ITEM (drawable)))
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub drawable_thumbnail {
     $blurb = 'Get a thumbnail of a drawable.';
 
@@ -996,6 +976,7 @@ CODE
               "core/gimp.h"
               "core/gimpchannel-select.h"
               "core/gimpdrawable-offset.h"
+              "core/gimpimage.h"
               "core/gimptempbuf.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
@@ -1012,7 +993,6 @@ CODE
             drawable_width
             drawable_height
             drawable_offsets
-            drawable_set_image
             drawable_mask_bounds
             drawable_mask_intersect
             drawable_merge_shadow

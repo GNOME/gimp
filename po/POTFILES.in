@@ -334,11 +334,9 @@ app/paint/gimpsourceoptions.c
 app/paint/paint-enums.c
 
 app/pdb/channel-cmds.c
-app/pdb/color-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
 app/pdb/drawable-edit-cmds.c
-app/pdb/drawable-transform-cmds.c
 app/pdb/edit-cmds.c
 app/pdb/floating-sel-cmds.c
 app/pdb/gimppdb-query.c
@@ -355,13 +353,10 @@ app/pdb/image-transform-cmds.c
 app/pdb/image-undo-cmds.c
 app/pdb/item-transform-cmds.c
 app/pdb/layer-cmds.c
-app/pdb/paths-cmds.c
 app/pdb/plug-in-compat-cmds.c
 app/pdb/procedural-db-cmds.c
 app/pdb/selection-cmds.c
-app/pdb/selection-tools-cmds.c
 app/pdb/text-layer-cmds.c
-app/pdb/transform-tools-cmds.c
 app/pdb/vectors-cmds.c
 
 app/plug-in/gimpenvirontable.c

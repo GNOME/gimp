@@ -29,14 +29,10 @@ EXPORTS
 	gimp_brush_set_spacing
 	gimp_brush_set_spikes
 	gimp_brushes_close_popup
-	gimp_brushes_get_brush
-	gimp_brushes_get_brush_data
 	gimp_brushes_get_list
-	gimp_brushes_get_spacing
 	gimp_brushes_popup
 	gimp_brushes_refresh
 	gimp_brushes_set_popup
-	gimp_brushes_set_spacing
 	gimp_buffer_delete
 	gimp_buffer_get_bytes
 	gimp_buffer_get_height
@@ -44,8 +40,6 @@ EXPORTS
 	gimp_buffer_get_width
 	gimp_buffer_rename
 	gimp_buffers_get_list
-	gimp_by_color_select
-	gimp_by_color_select_full
 	gimp_channel_combine_masks
 	gimp_channel_copy
 	gimp_channel_get_color
@@ -111,7 +105,6 @@ EXPORTS
 	gimp_context_get_sample_transparent
 	gimp_context_get_stroke_method
 	gimp_context_get_transform_direction
-	gimp_context_get_transform_recursion
 	gimp_context_get_transform_resize
 	gimp_context_list_paint_methods
 	gimp_context_pop
@@ -174,7 +167,6 @@ EXPORTS
 	gimp_context_set_sample_transparent
 	gimp_context_set_stroke_method
 	gimp_context_set_transform_direction
-	gimp_context_set_transform_recursion
 	gimp_context_set_transform_resize
 	gimp_context_swap_colors
 	gimp_convert_dither_type_get_type
@@ -246,39 +238,17 @@ EXPORTS
 	gimp_drawable_offset
 	gimp_drawable_offsets
 	gimp_drawable_posterize
-	gimp_drawable_set_image
 	gimp_drawable_set_pixel
 	gimp_drawable_threshold
-	gimp_drawable_transform_2d
-	gimp_drawable_transform_2d_default
-	gimp_drawable_transform_flip
-	gimp_drawable_transform_flip_default
-	gimp_drawable_transform_flip_simple
-	gimp_drawable_transform_matrix
-	gimp_drawable_transform_matrix_default
-	gimp_drawable_transform_perspective
-	gimp_drawable_transform_perspective_default
-	gimp_drawable_transform_rotate
-	gimp_drawable_transform_rotate_default
-	gimp_drawable_transform_rotate_simple
-	gimp_drawable_transform_scale
-	gimp_drawable_transform_scale_default
-	gimp_drawable_transform_shear
-	gimp_drawable_transform_shear_default
 	gimp_drawable_type
 	gimp_drawable_type_with_alpha
 	gimp_drawable_update
 	gimp_drawable_width
 	gimp_dynamics_get_list
 	gimp_dynamics_refresh
-	gimp_edit_blend
-	gimp_edit_bucket_fill
-	gimp_edit_bucket_fill_full
-	gimp_edit_clear
 	gimp_edit_copy
 	gimp_edit_copy_visible
 	gimp_edit_cut
-	gimp_edit_fill
 	gimp_edit_named_copy
 	gimp_edit_named_copy_visible
 	gimp_edit_named_cut
@@ -286,9 +256,6 @@ EXPORTS
 	gimp_edit_named_paste_as_new_image
 	gimp_edit_paste
 	gimp_edit_paste_as_new_image
-	gimp_edit_stroke
-	gimp_edit_stroke_vectors
-	gimp_ellipse_select
 	gimp_enums_get_type_names
 	gimp_enums_init
 	gimp_equalize
@@ -308,9 +275,7 @@ EXPORTS
 	gimp_flip
 	gimp_floating_sel_anchor
 	gimp_floating_sel_attach
-	gimp_floating_sel_relax
 	gimp_floating_sel_remove
-	gimp_floating_sel_rigor
 	gimp_floating_sel_to_layer
 	gimp_font_select_destroy
 	gimp_font_select_new
@@ -319,9 +284,6 @@ EXPORTS
 	gimp_fonts_popup
 	gimp_fonts_refresh
 	gimp_fonts_set_popup
-	gimp_free_select
-	gimp_fuzzy_select
-	gimp_fuzzy_select_full
 	gimp_gamma
 	gimp_get_color_configuration
 	gimp_get_default_comment
@@ -373,12 +335,9 @@ EXPORTS
 	gimp_gradient_select_destroy
 	gimp_gradient_select_new
 	gimp_gradients_close_popup
-	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
 	gimp_gradients_popup
 	gimp_gradients_refresh
-	gimp_gradients_sample_custom
-	gimp_gradients_sample_uniform
 	gimp_gradients_set_popup
 	gimp_heal
 	gimp_heal_default
@@ -386,11 +345,8 @@ EXPORTS
 	gimp_histogram
 	gimp_histogram_channel_get_type
 	gimp_hue_saturation
-	gimp_image_add_channel
 	gimp_image_add_hguide
-	gimp_image_add_layer
 	gimp_image_add_sample_point
-	gimp_image_add_vectors
 	gimp_image_add_vguide
 	gimp_image_attach_parasite
 	gimp_image_base_type
@@ -413,7 +369,6 @@ EXPORTS
 	gimp_image_flatten
 	gimp_image_flip
 	gimp_image_floating_sel_attached_to
-	gimp_image_free_shadow
 	gimp_image_freeze_channels
 	gimp_image_freeze_layers
 	gimp_image_freeze_vectors
@@ -494,7 +449,6 @@ EXPORTS
 	gimp_image_resize_to_layers
 	gimp_image_rotate
 	gimp_image_scale
-	gimp_image_scale_full
 	gimp_image_select_color
 	gimp_image_select_contiguous_color
 	gimp_image_select_ellipse
@@ -603,7 +557,6 @@ EXPORTS
 	gimp_layer_resize
 	gimp_layer_resize_to_image_size
 	gimp_layer_scale
-	gimp_layer_scale_full
 	gimp_layer_set_apply_mask
 	gimp_layer_set_blend_space
 	gimp_layer_set_composite_mode
@@ -614,7 +567,6 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
-	gimp_layer_translate
 	gimp_levels
 	gimp_levels_auto
 	gimp_levels_stretch
@@ -644,33 +596,15 @@ EXPORTS
 	gimp_palette_set_columns
 	gimp_palettes_close_popup
 	gimp_palettes_get_list
-	gimp_palettes_get_palette
-	gimp_palettes_get_palette_entry
 	gimp_palettes_popup
 	gimp_palettes_refresh
 	gimp_palettes_set_popup
-	gimp_path_delete
-	gimp_path_get_current
-	gimp_path_get_locked
-	gimp_path_get_point_at_dist
-	gimp_path_get_points
-	gimp_path_get_tattoo
-	gimp_path_import
-	gimp_path_list
-	gimp_path_set_current
-	gimp_path_set_locked
-	gimp_path_set_points
-	gimp_path_set_tattoo
-	gimp_path_stroke_current
-	gimp_path_to_selection
 	gimp_pattern_get_info
 	gimp_pattern_get_pixels
 	gimp_pattern_select_destroy
 	gimp_pattern_select_new
 	gimp_patterns_close_popup
 	gimp_patterns_get_list
-	gimp_patterns_get_pattern
-	gimp_patterns_get_pattern_data
 	gimp_patterns_popup
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
@@ -729,7 +663,6 @@ EXPORTS
 	gimp_progress_update
 	gimp_quit
 	gimp_read_expect_msg
-	gimp_rect_select
 	gimp_register_file_handler_mime
 	gimp_register_file_handler_raw
 	gimp_register_file_handler_uri
@@ -745,22 +678,18 @@ EXPORTS
 	gimp_rgn_iterator_src
 	gimp_rgn_iterator_src_dest
 	gimp_rotate
-	gimp_round_rect_select
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
-	gimp_selection_combine
 	gimp_selection_feather
 	gimp_selection_float
 	gimp_selection_flood
 	gimp_selection_grow
 	gimp_selection_invert
 	gimp_selection_is_empty
-	gimp_selection_layer_alpha
-	gimp_selection_load
 	gimp_selection_none
 	gimp_selection_save
 	gimp_selection_sharpen
@@ -775,9 +704,7 @@ EXPORTS
 	gimp_smudge
 	gimp_smudge_default
 	gimp_temp_name
-	gimp_text
 	gimp_text_fontname
-	gimp_text_get_extents
 	gimp_text_get_extents_fontname
 	gimp_text_layer_get_antialias
 	gimp_text_layer_get_base_direction
@@ -785,7 +712,6 @@ EXPORTS
 	gimp_text_layer_get_font
 	gimp_text_layer_get_font_size
 	gimp_text_layer_get_hint_style
-	gimp_text_layer_get_hinting
 	gimp_text_layer_get_indent
 	gimp_text_layer_get_justification
 	gimp_text_layer_get_kerning
@@ -802,7 +728,6 @@ EXPORTS
 	gimp_text_layer_set_font
 	gimp_text_layer_set_font_size
 	gimp_text_layer_set_hint_style
-	gimp_text_layer_set_hinting
 	gimp_text_layer_set_indent
 	gimp_text_layer_set_justification
 	gimp_text_layer_set_kerning
@@ -847,6 +772,5 @@ EXPORTS
 	gimp_vectors_stroke_rotate
 	gimp_vectors_stroke_scale
 	gimp_vectors_stroke_translate
-	gimp_vectors_to_selection
 	gimp_version
 	gimp_wm_class

@@ -346,80 +346,6 @@ CODE
     );
 }
 
-sub text_layer_get_hinting {
-    &std_pdb_deprecated ('gimp-text-layer-get-hint-style');
-
-    @inargs = (
-        { name => 'layer', type => 'layer',
-          desc => 'The text layer' }
-    );
-
-    @outargs = (
-        { name => 'hinting', type => 'boolean',
-          desc => 'A flag which is true if hinting is used on the font.' },
-        { name => 'autohint', type => 'boolean',
-          desc => 'A flag which is true if the text layer is forced to use the autohinter from FreeType.' }
-    );
-    
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "hinting", &hinting,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
-}
-CODE
-    );
-}
-
-sub text_layer_set_hinting {
-    &std_pdb_deprecated ('gimp-text-layer-set-hint-style');
-
-    $blurb = 'Enable/disable the use of hinting in a text layer.';
-
-    $help = <<'HELP';
-This procedure enables or disables hinting on the text of a text
-layer. If you enable 'auto-hint', FreeType\'s automatic hinter will be
-used and hinting information from the font will be ignored.
-HELP
-
-    &marcus_pdb_misc('2008', '2.6');
-
-    @inargs = (
-        { name => 'layer', type => 'layer',
-          desc => 'The text layer' },
-        { name => 'hinting', type => 'boolean',
-          desc => 'Enable/disable the use of hinting on the text' },
-        { name => 'autohint', type => 'boolean', dead => 1,
-          desc => 'Force the use of the autohinter provided through FreeType' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "hinting", hinting,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
-}
-CODE
-    );
-}
-
 sub text_layer_get_antialias {
     $blurb = 'Check if antialiasing is used in the text layer.';
 
@@ -1238,10 +1164,7 @@ CODE
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
             text_layer_set_letter_spacing
-            text_layer_resize
-            text_layer_get_hinting
-            text_layer_set_hinting
-);
+            text_layer_resize);
 
 %exports = (app => [@procs], lib => [@procs]);
 

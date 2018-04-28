@@ -454,74 +454,6 @@ CODE
     );
 }
 
-sub selection_layer_alpha {
-    &std_pdb_deprecated ('gimp-image-select-item');
-
-    @inargs = (
-	{ name => 'layer', type => 'layer',
-	  desc => 'Layer with alpha' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, 0, error))
-    gimp_item_to_selection (GIMP_ITEM (layer),
-                            GIMP_CHANNEL_OP_REPLACE,
-                            TRUE, FALSE, 0.0, 0.0);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub selection_load {
-    &std_pdb_deprecated ('gimp-image-select-item');
-
-    @inargs = (
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
-    gimp_item_to_selection (GIMP_ITEM (channel),
-                            GIMP_CHANNEL_OP_REPLACE,
-                            TRUE, FALSE, 0.0, 0.0);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub selection_combine {
-    &std_pdb_deprecated ('gimp-image-select-item');
-
-    @inargs = (
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
-    gimp_item_to_selection (GIMP_ITEM (channel),
-                            operation,
-                            TRUE, FALSE, 0.0, 0.0);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub selection_save {
     $blurb = 'Copy the selection mask to a new channel.';
 
@@ -574,8 +506,8 @@ CODE
 	    selection_translate selection_float
 	    selection_invert selection_sharpen selection_all selection_none
 	    selection_feather selection_border selection_grow selection_shrink
-	    selection_flood selection_layer_alpha selection_load selection_save
-	    selection_combine);
+	    selection_flood
+	    selection_save);
 
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -1074,43 +1074,6 @@ CODE
     );
 }
 
-sub vectors_to_selection {
-    &std_pdb_deprecated ('gimp-image-select-item');
-    &simon_pdb_misc('2006', '2.4');
-
-    @inargs = (
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors object to render to the selection' },
-        { name => 'operation', type => 'enum GimpChannelOps',
-          desc => 'The desired operation with current selection' },
-        { name => 'antialias', type => 'boolean',
-          desc => 'Antialias selection.' },
-        { name => 'feather', type => 'boolean',
-          desc => 'Feather selection.' },
-        { name => 'feather_radius_x', type => 'float',
-          desc => 'Feather radius x.'  },
-        { name => 'feather_radius_y', type => 'float',
-          desc => 'Feather radius y.'  }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, 0, error))
-    gimp_item_to_selection (GIMP_ITEM (vectors),
-                            operation,
-                            antialias,
-                            feather,
-                            feather_radius_x,
-                            feather_radius_y);
-  else
-    success = FALSE;
-}
-CODE
-    );
-
-}
-
 sub vectors_import_from_file {
     $blurb = 'Import paths from an SVG file.';
 
@@ -1349,7 +1312,6 @@ CODE
             vectors_bezier_stroke_conicto
             vectors_bezier_stroke_cubicto
             vectors_bezier_stroke_new_ellipse
-            vectors_to_selection
             vectors_import_from_file
             vectors_import_from_string
             vectors_export_to_file

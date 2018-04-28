@@ -1100,46 +1100,6 @@ vectors_bezier_stroke_new_ellipse_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-vectors_to_selection_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gint32 operation;
-  gboolean antialias;
-  gboolean feather;
-  gdouble feather_radius_x;
-  gdouble feather_radius_y;
-
-  vectors = gimp_value_get_vectors (gimp_value_array_index (args, 0), gimp);
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-  antialias = g_value_get_boolean (gimp_value_array_index (args, 2));
-  feather = g_value_get_boolean (gimp_value_array_index (args, 3));
-  feather_radius_x = g_value_get_double (gimp_value_array_index (args, 4));
-  feather_radius_y = g_value_get_double (gimp_value_array_index (args, 5));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, 0, error))
-        gimp_item_to_selection (GIMP_ITEM (vectors),
-                                operation,
-                                antialias,
-                                feather,
-                                feather_radius_x,
-                                feather_radius_y);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 vectors_import_from_file_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
@@ -2275,60 +2235,6 @@ register_vectors_procs (GimpPDB *pdb)
                                                           "The resulting stroke",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-vectors-to-selection
-   */
-  procedure = gimp_procedure_new (vectors_to_selection_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-to-selection");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-to-selection",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "Simon Budig",
-                                     "Simon Budig",
-                                     "2006",
-                                     "gimp-image-select-item");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object to render to the selection",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The desired operation with current selection",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("antialias",
-                                                     "antialias",
-                                                     "Antialias selection.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("feather",
-                                                     "feather",
-                                                     "Feather selection.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("feather-radius-x",
-                                                    "feather radius x",
-                                                    "Feather radius x.",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("feather-radius-y",
-                                                    "feather radius y",
-                                                    "Feather radius y.",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

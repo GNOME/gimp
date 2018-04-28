@@ -393,36 +393,6 @@ gimp_drawable_offsets (gint32  drawable_ID,
 }
 
 /**
- * gimp_drawable_set_image:
- * @drawable_ID: The drawable.
- * @image_ID: The image.
- *
- * Deprecated: There is no replacement for this procedure.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_drawable_set_image (gint32 drawable_ID,
-                         gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-set-image",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_drawable_mask_bounds:
  * @drawable_ID: The drawable.
  * @x1: x coordinate of the upper left corner of selection bounds.
