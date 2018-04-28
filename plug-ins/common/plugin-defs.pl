@@ -9,7 +9,6 @@
     'checkerboard' => { ui => 1 },
     'cml-explorer' => { ui => 1 },
     'color-cube-analyze' => { ui => 1 },
-    'color-enhance' => { ui => 1 },
     'colorify' => { ui => 1 },
     'colormap-remap' => { ui => 1, gegl => 1 },
     'compose' => { ui => 1, gegl => 1 },

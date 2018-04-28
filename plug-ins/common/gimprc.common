@@ -8,7 +8,6 @@ cartoon_RC = cartoon.rc.o
 checkerboard_RC = checkerboard.rc.o
 cml_explorer_RC = cml-explorer.rc.o
 color_cube_analyze_RC = color-cube-analyze.rc.o
-color_enhance_RC = color-enhance.rc.o
 colorify_RC = colorify.rc.o
 colormap_remap_RC = colormap-remap.rc.o
 compose_RC = compose.rc.o

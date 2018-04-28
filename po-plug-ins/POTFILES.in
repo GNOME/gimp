@@ -13,7 +13,6 @@ plug-ins/common/cartoon.c
 plug-ins/common/checkerboard.c
 plug-ins/common/cml-explorer.c
 plug-ins/common/color-cube-analyze.c
-plug-ins/common/color-enhance.c
 plug-ins/common/colorify.c
 plug-ins/common/colormap-remap.c
 plug-ins/common/compose.c
