@@ -1940,19 +1940,22 @@ do {                                                            \
                         {
                         case CS_CMYK:
                           {
-                            gint r,g,b,k;
+                            GimpRGB  rgb;
+                            GimpCMYK cmyk;
 
-                            r = data[0];
-                            g = data[1];
-                            b = data[2];
-                            k = pvals.k_pullout;
+                            gimp_rgb_set_uchar (&rgb,
+                                                data[0],
+                                                data[1],
+                                                data[2]);
 
-                            gimp_rgb_to_cmyk_int (&r, &g, &b, &k);
+                            gimp_rgb_to_cmyk (&rgb, pvals.k_pullout / 100.0,
+                                              &cmyk);
 
-                            data[0] = r;
-                            data[1] = g;
-                            data[2] = b;
-                            data[3] = k;
+                            gimp_cmyk_get_uchar (&cmyk,
+                                                 data,
+                                                 data + 1,
+                                                 data + 2,
+                                                 data + 3);
                           }
                           break;
 
