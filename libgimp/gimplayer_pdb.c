@@ -353,47 +353,6 @@ gimp_layer_scale (gint32   layer_ID,
 }
 
 /**
- * gimp_layer_scale_full:
- * @layer_ID: The layer.
- * @new_width: New layer width.
- * @new_height: New layer height.
- * @local_origin: Use a local origin (as opposed to the image origin).
- * @interpolation: Type of interpolation.
- *
- * Deprecated: Use gimp_layer_scale() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-gimp_layer_scale_full (gint32                layer_ID,
-                       gint                  new_width,
-                       gint                  new_height,
-                       gboolean              local_origin,
-                       GimpInterpolationType interpolation)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-layer-scale-full",
-                                    &nreturn_vals,
-                                    GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_INT32, new_width,
-                                    GIMP_PDB_INT32, new_height,
-                                    GIMP_PDB_INT32, local_origin,
-                                    GIMP_PDB_INT32, interpolation,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_layer_resize:
  * @layer_ID: The layer.
  * @new_width: New layer width.
@@ -458,48 +417,6 @@ gimp_layer_resize_to_image_size (gint32 layer_ID)
   return_vals = gimp_run_procedure ("gimp-layer-resize-to-image-size",
                                     &nreturn_vals,
                                     GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_layer_translate:
- * @layer_ID: The layer.
- * @offx: Offset in x direction.
- * @offy: Offset in y direction.
- *
- * Translate the layer by the specified offsets.
- *
- * This procedure translates the layer by the amounts specified in the
- * x and y arguments. These can be negative, and are considered offsets
- * from the current position. This command only works if the layer has
- * been added to an image. All additional layers contained in the image
- * which have the linked flag set to TRUE w ill also be translated by
- * the specified offsets.
- *
- * Deprecated: Use gimp_item_transform_translate() instead.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_layer_translate (gint32 layer_ID,
-                      gint   offx,
-                      gint   offy)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-layer-translate",
-                                    &nreturn_vals,
-                                    GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_INT32, offx,
-                                    GIMP_PDB_INT32, offy,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

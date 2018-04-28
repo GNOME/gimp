@@ -53,22 +53,12 @@ gboolean               gimp_layer_scale                (gint32                  
                                                         gint                    new_width,
                                                         gint                    new_height,
                                                         gboolean                local_origin);
-GIMP_DEPRECATED_FOR(gimp_layer_scale)
-gboolean               gimp_layer_scale_full           (gint32                  layer_ID,
-                                                        gint                    new_width,
-                                                        gint                    new_height,
-                                                        gboolean                local_origin,
-                                                        GimpInterpolationType   interpolation);
 gboolean               gimp_layer_resize               (gint32                  layer_ID,
                                                         gint                    new_width,
                                                         gint                    new_height,
                                                         gint                    offx,
                                                         gint                    offy);
 gboolean               gimp_layer_resize_to_image_size (gint32                  layer_ID);
-GIMP_DEPRECATED_FOR(gimp_item_transform_translate)
-gboolean               gimp_layer_translate            (gint32                  layer_ID,
-                                                        gint                    offx,
-                                                        gint                    offy);
 gboolean               gimp_layer_set_offsets          (gint32                  layer_ID,
                                                         gint                    offx,
                                                         gint                    offy);

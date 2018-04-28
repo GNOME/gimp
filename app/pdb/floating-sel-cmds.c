@@ -171,38 +171,6 @@ floating_sel_attach_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-floating_sel_rigor_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  if (success)
-    {
-    }
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-floating_sel_relax_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  if (success)
-    {
-    }
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
 void
 register_floating_sel_procs (GimpPDB *pdb)
 {
@@ -303,64 +271,6 @@ register_floating_sel_procs (GimpPDB *pdb)
                                                             "The drawable (where to attach the floating selection)",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-floating-sel-rigor
-   */
-  procedure = gimp_procedure_new (floating_sel_rigor_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-floating-sel-rigor");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-rigor",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "",
-                                     "",
-                                     "",
-                                     "NONE");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("undo",
-                                                     "undo",
-                                                     "",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-floating-sel-relax
-   */
-  procedure = gimp_procedure_new (floating_sel_relax_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-floating-sel-relax");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-floating-sel-relax",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "Deprecated: There is no replacement for this procedure.",
-                                     "",
-                                     "",
-                                     "",
-                                     "NONE");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("floating-sel",
-                                                         "floating sel",
-                                                         "The floating selection",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("undo",
-                                                     "undo",
-                                                     "",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

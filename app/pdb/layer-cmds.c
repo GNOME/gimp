@@ -418,53 +418,6 @@ layer_scale_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-layer_scale_full_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 new_width;
-  gint32 new_height;
-  gboolean local_origin;
-  gint32 interpolation;
-
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  local_origin = g_value_get_boolean (gimp_value_array_index (args, 3));
-  interpolation = g_value_get_enum (gimp_value_array_index (args, 4));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                     GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
-                                     error))
-        {
-          if (progress)
-            gimp_progress_start (progress, FALSE, _("Scaling"));
-
-          gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                     interpolation, progress,
-                                     local_origin);
-
-          if (progress)
-            gimp_progress_end (progress);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 layer_resize_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -519,45 +472,6 @@ layer_resize_to_image_size_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                      error))
         gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-layer_translate_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-  gint32 offx;
-  gint32 offy;
-
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
-  offx = g_value_get_int (gimp_value_array_index (args, 1));
-  offy = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                       GIMP_PDB_ITEM_POSITION, error))
-        {
-          if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            {
-              gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-            }
-          else
-            {
-              gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-            }
-        }
       else
         success = FALSE;
     }
@@ -1626,54 +1540,6 @@ register_layer_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-layer-scale-full
-   */
-  procedure = gimp_procedure_new (layer_scale_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-scale-full");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-layer-scale-full",
-                                     "Deprecated: Use 'gimp-layer-scale' instead.",
-                                     "Deprecated: Use 'gimp-layer-scale' instead.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008",
-                                     "gimp-layer-scale");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New layer width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New layer height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("local-origin",
-                                                     "local origin",
-                                                     "Use a local origin (as opposed to the image origin)",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("interpolation",
-                                                  "interpolation",
-                                                  "Type of interpolation",
-                                                  GIMP_TYPE_INTERPOLATION_TYPE,
-                                                  GIMP_INTERPOLATION_NONE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-layer-resize
    */
   procedure = gimp_procedure_new (layer_resize_invoker);
@@ -1740,43 +1606,6 @@ register_layer_procs (GimpPDB *pdb)
                                                          "The layer to resize",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-layer-translate
-   */
-  procedure = gimp_procedure_new (layer_translate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-translate");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-layer-translate",
-                                     "Translate the layer by the specified offsets.",
-                                     "This procedure translates the layer by the amounts specified in the x and y arguments. These can be negative, and are considered offsets from the current position. This command only works if the layer has been added to an image. All additional layers contained in the image which have the linked flag set to TRUE w ill also be translated by the specified offsets.\n"
-                                     "\n"
-                                     "Deprecated: Use 'gimp-item-transform-translate' instead.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     "gimp-item-transform-translate");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offx",
-                                                      "offx",
-                                                      "Offset in x direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("offy",
-                                                      "offy",
-                                                      "Offset in y direction",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

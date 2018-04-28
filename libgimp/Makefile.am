@@ -97,14 +97,12 @@ PDB_WRAPPERS_C = \
 	gimpbrushselect_pdb.c		\
 	gimpbuffer_pdb.c		\
 	gimpchannel_pdb.c		\
-	gimpcolor_pdb.c			\
 	gimpcontext_pdb.c		\
 	gimpdebug_pdb.c			\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
 	gimpdrawablecolor_pdb.c		\
 	gimpdrawableedit_pdb.c		\
-	gimpdrawabletransform_pdb.c	\
 	gimpdynamics_pdb.c		\
 	gimpedit_pdb.c			\
 	gimpfileops_pdb.c		\
@@ -133,7 +131,6 @@ PDB_WRAPPERS_C = \
 	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
 	gimppaletteselect_pdb.c		\
-	gimppaths_pdb.c			\
 	gimppattern_pdb.c		\
 	gimppatterns_pdb.c		\
 	gimppatternselect_pdb.c		\
@@ -141,10 +138,8 @@ PDB_WRAPPERS_C = \
 	gimpproceduraldb_pdb.c		\
 	gimpprogress_pdb.c		\
 	gimpselection_pdb.c		\
-	gimpselectiontools_pdb.c	\
 	gimptextlayer_pdb.c		\
 	gimptexttool_pdb.c		\
-	gimptransformtools_pdb.c	\
 	gimpunit_pdb.c			\
 	gimpvectors_pdb.c
 
@@ -156,14 +151,12 @@ PDB_WRAPPERS_H = \
 	gimpbrushselect_pdb.h		\
 	gimpbuffer_pdb.h		\
 	gimpchannel_pdb.h		\
-	gimpcolor_pdb.h			\
 	gimpcontext_pdb.h		\
 	gimpdebug_pdb.h			\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
 	gimpdrawablecolor_pdb.h		\
 	gimpdrawableedit_pdb.h		\
-	gimpdrawabletransform_pdb.h	\
 	gimpdynamics_pdb.h		\
 	gimpedit_pdb.h			\
 	gimpfileops_pdb.h		\
@@ -192,7 +185,6 @@ PDB_WRAPPERS_H = \
 	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\
 	gimppaletteselect_pdb.h		\
-	gimppaths_pdb.h			\
 	gimppattern_pdb.h		\
 	gimppatterns_pdb.h		\
 	gimppatternselect_pdb.h		\
@@ -200,10 +192,8 @@ PDB_WRAPPERS_H = \
 	gimpproceduraldb_pdb.h		\
 	gimpprogress_pdb.h		\
 	gimpselection_pdb.h		\
-	gimpselectiontools_pdb.h	\
 	gimptextlayer_pdb.h		\
 	gimptexttool_pdb.h		\
-	gimptransformtools_pdb.h	\
 	gimpunit_pdb.h			\
 	gimpvectors_pdb.h
 

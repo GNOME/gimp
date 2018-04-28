@@ -32,26 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_brushes_refresh        (void);
-gchar**  gimp_brushes_get_list       (const gchar    *filter,
-                                      gint           *num_brushes);
-GIMP_DEPRECATED_FOR(gimp_context_get_brush)
-gchar*   gimp_brushes_get_brush      (gint           *width,
-                                      gint           *height,
-                                      gint           *spacing);
-GIMP_DEPRECATED_FOR(gimp_brush_get_spacing)
-gint     gimp_brushes_get_spacing    (void);
-GIMP_DEPRECATED_FOR(gimp_brush_set_spacing)
-gboolean gimp_brushes_set_spacing    (gint            spacing);
-GIMP_DEPRECATED_FOR(gimp_brush_get_pixels)
-gchar*   gimp_brushes_get_brush_data (const gchar    *name,
-                                      gdouble        *opacity,
-                                      gint           *spacing,
-                                      GimpLayerMode  *paint_mode,
-                                      gint           *width,
-                                      gint           *height,
-                                      gint           *length,
-                                      guint8        **mask_data);
+gboolean gimp_brushes_refresh  (void);
+gchar**  gimp_brushes_get_list (const gchar *filter,
+                                gint        *num_brushes);
 
 
 G_END_DECLS

@@ -446,60 +446,6 @@ selection_flood_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-selection_layer_alpha_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
-                               GError               **error)
-{
-  gboolean success = TRUE;
-  GimpLayer *layer;
-
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, 0, error))
-        gimp_item_to_selection (GIMP_ITEM (layer),
-                                GIMP_CHANNEL_OP_REPLACE,
-                                TRUE, FALSE, 0.0, 0.0);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-selection_load_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
-                        GError               **error)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-
-  channel = gimp_value_get_channel (gimp_value_array_index (args, 0), gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
-        gimp_item_to_selection (GIMP_ITEM (channel),
-                                GIMP_CHANNEL_OP_REPLACE,
-                                TRUE, FALSE, 0.0, 0.0);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 selection_save_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -538,35 +484,6 @@ selection_save_invoker (GimpProcedure         *procedure,
     gimp_value_set_channel (gimp_value_array_index (return_vals, 1), channel);
 
   return return_vals;
-}
-
-static GimpValueArray *
-selection_combine_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  GimpChannel *channel;
-  gint32 operation;
-
-  channel = gimp_value_get_channel (gimp_value_array_index (args, 0), gimp);
-  operation = g_value_get_enum (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, 0, error))
-        gimp_item_to_selection (GIMP_ITEM (channel),
-                                operation,
-                                TRUE, FALSE, 0.0, 0.0);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
 }
 
 void
@@ -1005,52 +922,6 @@ register_selection_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-layer-alpha
-   */
-  procedure = gimp_procedure_new (selection_layer_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-layer-alpha");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-layer-alpha",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-select-item");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "Layer with alpha",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-selection-load
-   */
-  procedure = gimp_procedure_new (selection_load_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-load");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-load",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-select-item");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-selection-save
    */
   procedure = gimp_procedure_new (selection_save_invoker);
@@ -1076,36 +947,6 @@ register_selection_procs (GimpPDB *pdb)
                                                                "The new channel",
                                                                pdb->gimp, FALSE,
                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-selection-combine
-   */
-  procedure = gimp_procedure_new (selection_combine_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-combine");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-selection-combine",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "Deprecated: Use 'gimp-image-select-item' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-select-item");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

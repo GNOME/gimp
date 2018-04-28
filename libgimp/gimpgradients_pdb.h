@@ -32,22 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_gradients_refresh           (void);
-gchar**  gimp_gradients_get_list          (const gchar    *filter,
-                                           gint           *num_gradients);
-GIMP_DEPRECATED_FOR(gimp_gradient_get_uniform_samples)
-gdouble* gimp_gradients_sample_uniform    (gint            num_samples,
-                                           gboolean        reverse);
-GIMP_DEPRECATED_FOR(gimp_gradient_get_custom_samples)
-gdouble* gimp_gradients_sample_custom     (gint            num_samples,
-                                           const gdouble  *positions,
-                                           gboolean        reverse);
-GIMP_DEPRECATED_FOR(gimp_gradient_get_uniform_samples)
-gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
-                                           gint            sample_size,
-                                           gboolean        reverse,
-                                           gint           *width,
-                                           gdouble       **grad_data);
+gboolean gimp_gradients_refresh  (void);
+gchar**  gimp_gradients_get_list (const gchar *filter,
+                                  gint        *num_gradients);
 
 
 G_END_DECLS

@@ -3270,59 +3270,6 @@ gimp_context_set_transform_resize (GimpTransformResize transform_resize)
 }
 
 /**
- * gimp_context_get_transform_recursion:
- *
- * Deprecated: There is no replacement for this procedure.
- *
- * Returns: This returns always 3 and is meaningless.
- **/
-gint
-gimp_context_get_transform_recursion (void)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint transform_recursion = 0;
-
-  return_vals = gimp_run_procedure ("gimp-context-get-transform-recursion",
-                                    &nreturn_vals,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    transform_recursion = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return transform_recursion;
-}
-
-/**
- * gimp_context_set_transform_recursion:
- * @transform_recursion: This parameter is ignored.
- *
- * Deprecated: There is no replacement for this procedure.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_context_set_transform_recursion (gint transform_recursion)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-context-set-transform-recursion",
-                                    &nreturn_vals,
-                                    GIMP_PDB_INT32, transform_recursion,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_context_get_ink_size:
  *
  * Get ink blob size in pixels.

@@ -146,137 +146,13 @@ CODE
     );
 }
 
-sub text {
-    &std_pdb_deprecated ('gimp-text-fontname');
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'drawable', type => 'drawable',
-          desc => 'The affected drawable: (-1 for a new text layer)',
-          none_ok => 1 },
-        { name => 'x', type => 'float',
-          desc => 'The x coordinate for the left of the text bounding box' },
-        { name => 'y', type => 'float',
-          desc => 'The y coordinate for the top of the text bounding box' },
-        { name => 'text', type => 'string',
-          desc => 'The text to generate (in UTF-8 encoding)' },
-        { name => 'border', type => '-1 <= int32',
-          desc => 'The size of the border' },
-        { name => 'antialias', type => 'boolean',
-          desc => 'Antialiasing' },
-        { name => 'size', type => '0 < float',
-          desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
-          desc => 'The units of specified size' },
-        { name => 'foundry', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font foundry' },
-        { name => 'family', type => 'string', allow_non_utf8 => 1,
-          desc => 'The font family' },
-        { name => 'weight', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font weight' },
-        { name => 'slant', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font slant' },
-        { name => 'set_width', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font set-width' },
-        { name => 'spacing', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font spacing' },
-        { name => 'registry', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font registry' },
-        { name => 'encoding', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font encoding' }
-    );
-
-    @outargs = (
-        { name => 'text_layer', type => 'layer',
-          desc => 'The new text layer or -1 if no layer was created.' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (drawable &&
-      (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image,
-                                    GIMP_PDB_ITEM_CONTENT, error) ||
-       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error)))
-    success = FALSE;
-
-  if (success)
-    {
-      gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
-
-      text_layer = text_render (image, drawable, context,
-                                x, y, real_fontname, text,
-                                border, antialias);
-
-      g_free (real_fontname);
-    }
-}
-CODE
-   );
-}
-
-sub text_get_extents {
-    &std_pdb_deprecated ('gimp-text-get-extents-fontname');
-
-    @inargs = (
-        { name => 'text', type => 'string',
-          desc => 'The text to generate (in UTF-8 encoding)' },
-        { name => 'size', type => '0 < float',
-          desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
-          desc => 'The units of specified size' },
-        { name => 'foundry', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font foundry' },
-        { name => 'family', type => 'string', allow_non_utf8 => 1,
-          desc => 'The font family' },
-        { name => 'weight', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font weight' },
-        { name => 'slant', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font slant' },
-        { name => 'set_width', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font set-width' },
-        { name => 'spacing', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font spacing' },
-        { name => 'registry', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font registry' },
-        { name => 'encoding', type => 'string', allow_non_utf8 => 1, dead => 1,
-          desc => 'The font encoding' }
-    );
-
-    @outargs = (
-        { name => 'width', type => 'int32', void_ret => 1,
-          desc => 'The width of the specified font' },
-        { name => 'height', type => 'int32',
-          desc => 'The height of the specified font' },
-        { name => 'ascent', type => 'int32',
-          desc => 'The ascent of the specified font' },
-        { name => 'descent', type => 'int32',
-          desc => 'The descent of the specified font' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
-
-  success = text_get_extents (real_fontname, text,
-                              &width, &height,
-                              &ascent, &descent);
-
-  g_free (real_fontname);
-}
-CODE
-    );
-}
-
 
 @headers = qw("libgimpbase/gimpbase.h"
               "text/gimptext-compat.h"
               "gimppdb-utils.h");
 
-@procs = qw(text_fontname text_get_extents_fontname
-            text text_get_extents);
+@procs = qw(text_fontname
+            text_get_extents_fontname);
 
 %exports = (app => [@procs], lib => [@procs]);
 

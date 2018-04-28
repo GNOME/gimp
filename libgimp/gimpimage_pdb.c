@@ -421,33 +421,6 @@ gimp_image_height (gint32 image_ID)
 }
 
 /**
- * gimp_image_free_shadow:
- * @image_ID: The image.
- *
- * Deprecated: Use gimp_drawable_free_shadow() instead.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_image_free_shadow (gint32 image_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-free-shadow",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_get_layers:
  * @image_ID: The image.
  * @num_layers: The number of layers contained in the image.
@@ -811,39 +784,6 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
 }
 
 /**
- * gimp_image_add_layer:
- * @image_ID: The image.
- * @layer_ID: The layer.
- * @position: The layer position.
- *
- * Deprecated: Use gimp_image_insert_layer() instead.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_image_add_layer (gint32 image_ID,
-                      gint32 layer_ID,
-                      gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-add-layer",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_LAYER, layer_ID,
-                                    GIMP_PDB_INT32, position,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_insert_layer:
  * @image_ID: The image.
  * @layer_ID: The layer.
@@ -1000,39 +940,6 @@ gimp_image_thaw_layers (gint32 image_ID)
 }
 
 /**
- * gimp_image_add_channel:
- * @image_ID: The image.
- * @channel_ID: The channel.
- * @position: The channel position.
- *
- * Deprecated: Use gimp_image_insert_channel() instead.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_image_add_channel (gint32 image_ID,
-                        gint32 channel_ID,
-                        gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-add-channel",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_CHANNEL, channel_ID,
-                                    GIMP_PDB_INT32, position,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_insert_channel:
  * @image_ID: The image.
  * @channel_ID: The channel.
@@ -1172,39 +1079,6 @@ gimp_image_thaw_channels (gint32 image_ID)
   return_vals = gimp_run_procedure ("gimp-image-thaw-channels",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_add_vectors:
- * @image_ID: The image.
- * @vectors_ID: The vectors object.
- * @position: The vectors objects position.
- *
- * Deprecated: Use gimp_image_insert_vectors() instead.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-gimp_image_add_vectors (gint32 image_ID,
-                        gint32 vectors_ID,
-                        gint   position)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-add-vectors",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, position,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

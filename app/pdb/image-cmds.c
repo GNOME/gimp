@@ -46,7 +46,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
-#include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
@@ -423,22 +422,6 @@ image_height_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_free_shadow_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  if (success)
-    {
-    }
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_get_layers_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -788,43 +771,6 @@ image_pick_correlate_layer_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_add_layer_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  gint32 position;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
-          gimp_pdb_image_is_base_type (image,
-                                       gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
-                                       error))
-        {
-          success = gimp_image_add_layer (image, layer,
-                                          NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_insert_layer_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -958,40 +904,6 @@ image_thaw_layers_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_add_channel_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpChannel *channel;
-  gint32 position;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  channel = gimp_value_get_channel (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
-        {
-          success = gimp_image_add_channel (image, channel,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_insert_channel_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1115,40 +1027,6 @@ image_thaw_channels_invoker (GimpProcedure         *procedure,
 
       if (success)
         gimp_container_thaw (container);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-image_add_vectors_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpVectors *vectors;
-  gint32 position;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  vectors = gimp_value_get_vectors (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
-        {
-          success = gimp_image_add_vectors (image, vectors,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1572,71 +1450,6 @@ image_merge_down_invoker (GimpProcedure         *procedure,
     gimp_value_set_layer (gimp_value_array_index (return_vals, 1), layer);
 
   return return_vals;
-}
-
-static GimpValueArray *
-image_add_layer_mask_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  GimpLayerMask *mask;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  mask = gimp_value_get_layer_mask (gimp_value_array_index (args, 2), gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-image_remove_layer_mask_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  gint32 mode;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  mode = g_value_get_enum (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      GimpPDBItemModify modify = 0;
-
-      if (mode == GIMP_MASK_APPLY)
-        modify |= GIMP_PDB_ITEM_CONTENT;
-
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, modify, error) &&
-          gimp_layer_get_mask (layer))
-        gimp_layer_apply_mask (layer, mode, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -3300,29 +3113,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-free-shadow
-   */
-  procedure = gimp_procedure_new (image_free_shadow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-free-shadow");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-free-shadow",
-                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
-                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-drawable-free-shadow");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-get-layers
    */
   procedure = gimp_procedure_new (image_get_layers_invoker);
@@ -3642,41 +3432,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-add-layer
-   */
-  procedure = gimp_procedure_new (image_add_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer",
-                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-layer");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The layer position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-insert-layer
    */
   procedure = gimp_procedure_new (image_insert_layer_invoker);
@@ -3797,41 +3552,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-add-channel
-   */
-  procedure = gimp_procedure_new (image_add_channel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-channel");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-channel",
-                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-channel");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The channel position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-insert-channel
    */
   procedure = gimp_procedure_new (image_insert_channel_invoker);
@@ -3948,41 +3668,6 @@ register_image_procs (GimpPDB *pdb)
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-add-vectors
-   */
-  procedure = gimp_procedure_new (image_add_vectors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-vectors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-vectors",
-                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-vectors");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The vectors objects position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4406,77 +4091,6 @@ register_image_procs (GimpPDB *pdb)
                                                              "The resulting layer",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-add-layer-mask
-   */
-  procedure = gimp_procedure_new (image_add_layer_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-layer-mask");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer-mask",
-                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
-                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-layer-add-mask");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to receive the mask",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_mask_id ("mask",
-                                                              "mask",
-                                                              "The mask to add to the layer",
-                                                              pdb->gimp, FALSE,
-                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-remove-layer-mask
-   */
-  procedure = gimp_procedure_new (image_remove_layer_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-remove-layer-mask");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-layer-mask",
-                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
-                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-layer-remove-mask");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer from which to remove mask",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("mode",
-                                                  "mode",
-                                                  "Removal mode",
-                                                  GIMP_TYPE_MASK_APPLY_MODE,
-                                                  GIMP_MASK_APPLY,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

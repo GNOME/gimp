@@ -134,40 +134,6 @@ image_scale_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_scale_full_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
-                          GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  gint32 new_width;
-  gint32 new_height;
-  gint32 interpolation;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  new_width = g_value_get_int (gimp_value_array_index (args, 1));
-  new_height = g_value_get_int (gimp_value_array_index (args, 2));
-  interpolation = g_value_get_enum (gimp_value_array_index (args, 3));
-
-  if (success)
-    {
-      if (progress)
-        gimp_progress_start (progress, FALSE, _("Scaling"));
-
-      gimp_image_scale (image, new_width, new_height, interpolation, progress);
-
-      if (progress)
-        gimp_progress_end (progress);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_crop_invoker (GimpProcedure         *procedure,
                     Gimp                  *gimp,
                     GimpContext           *context,
@@ -366,48 +332,6 @@ register_image_transform_procs (GimpPDB *pdb)
                                                       "New image height",
                                                       1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-scale-full
-   */
-  procedure = gimp_procedure_new (image_scale_full_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-scale-full");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-scale-full",
-                                     "Deprecated: Use 'gimp-image-scale' instead.",
-                                     "Deprecated: Use 'gimp-image-scale' instead.",
-                                     "Sven Neumann <sven@gimp.org>",
-                                     "Sven Neumann",
-                                     "2008",
-                                     "gimp-image-scale");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-width",
-                                                      "new width",
-                                                      "New image width",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("new-height",
-                                                      "new height",
-                                                      "New image height",
-                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("interpolation",
-                                                  "interpolation",
-                                                  "Type of interpolation",
-                                                  GIMP_TYPE_INTERPOLATION_TYPE,
-                                                  GIMP_INTERPOLATION_NONE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

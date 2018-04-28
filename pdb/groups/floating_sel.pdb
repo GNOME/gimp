@@ -164,40 +164,6 @@ CODE
     );
 }
 
-sub floating_sel_rigor {
-    &std_pdb_deprecated ();
-
-    @inargs = (
-	{ name => 'floating_sel', type => 'layer', dead => 1,
-	  desc => 'The floating selection' },
-	{ name => 'undo', type => 'boolean', dead => 1 }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-}
-CODE
-    );
-}
-
-sub floating_sel_relax {
-    &std_pdb_deprecated ();
-
-    @inargs = (
-	{ name => 'floating_sel', type => 'layer', dead => 1,
-	  desc => 'The floating selection' },
-	{ name => 'undo', type => 'boolean', dead => 1 }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-}
-CODE
-    );
-}
-
 
 @headers = qw("core/gimpimage.h"
               "core/gimplayer-floating-selection.h"
@@ -208,9 +174,7 @@ CODE
 @procs = qw(floating_sel_remove
             floating_sel_anchor
             floating_sel_to_layer
-            floating_sel_attach
-            floating_sel_rigor
-            floating_sel_relax);
+            floating_sel_attach);
 
 %exports = (app => [@procs], lib => [@procs]);
 
