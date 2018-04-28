@@ -128,8 +128,7 @@ enum
   PROP_SIMULATION_USE_BPC,
   PROP_SIMULATION_OPTIMIZE,
   PROP_SIMULATION_GAMUT_CHECK,
-  PROP_OUT_OF_GAMUT_COLOR,
-  PROP_DISPLAY_MODULE
+  PROP_OUT_OF_GAMUT_COLOR
 };
 
 
@@ -303,13 +302,6 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
-                           "display-module",
-                           "Display module",
-                           "This property is deprecated and its value ignored",
-                           "CdisplayLcms",
-                           GIMP_PARAM_STATIC_STRINGS);
-
   g_type_class_add_private (object_class, sizeof (GimpColorConfigPrivate));
 }
 
@@ -337,9 +329,6 @@ gimp_color_config_finalize (GObject *object)
 
   if (color_config->printer_profile)
     g_free (color_config->printer_profile);
-
-  if (color_config->display_module)
-    g_free (color_config->display_module);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -411,10 +400,6 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_OUT_OF_GAMUT_COLOR:
       color_config->out_of_gamut_color = *(GimpRGB *) g_value_get_boxed (value);
       break;
-    case PROP_DISPLAY_MODULE:
-      g_free (color_config->display_module);
-      color_config->display_module = g_value_dup_string (value);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -483,9 +468,6 @@ gimp_color_config_get_property (GObject    *object,
       break;
     case PROP_OUT_OF_GAMUT_COLOR:
       g_value_set_boxed (value, &color_config->out_of_gamut_color);
-      break;
-    case PROP_DISPLAY_MODULE:
-      g_value_set_string (value, color_config->display_module);
       break;
 
     default:
