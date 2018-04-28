@@ -20,7 +20,7 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-m4_define([gimp_version], [2.10.0])
+# m4_define([gimp_version], [2.10.0])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
