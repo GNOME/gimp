@@ -4,7 +4,6 @@ EXPORTS
 	gimp_bilinear_16
 	gimp_bilinear_32
 	gimp_bilinear_8
-	gimp_bilinear_pixels_8
 	gimp_bilinear_rgb
 	gimp_bilinear_rgba
 	gimp_cairo_checkerboard_create
@@ -17,7 +16,6 @@ EXPORTS
 	gimp_cmyk_set
 	gimp_cmyk_set_uchar
 	gimp_cmyk_to_rgb
-	gimp_cmyk_to_rgb_int
 	gimp_cmyka_get_uchar
 	gimp_cmyka_set
 	gimp_cmyka_set_uchar
@@ -68,10 +66,8 @@ EXPORTS
 	gimp_hsv_get_type
 	gimp_hsv_set
 	gimp_hsv_to_rgb
-	gimp_hsv_to_rgb4
 	gimp_hsv_to_rgb_int
 	gimp_hsva_set
-	gimp_hwb_to_rgb
 	gimp_param_rgb_get_type
 	gimp_param_spec_rgb
 	gimp_param_spec_rgb_has_alpha
@@ -86,8 +82,6 @@ EXPORTS
 	gimp_rgb_get_pixel
 	gimp_rgb_get_type
 	gimp_rgb_get_uchar
-	gimp_rgb_intensity
-	gimp_rgb_intensity_uchar
 	gimp_rgb_list_names
 	gimp_rgb_luminance
 	gimp_rgb_luminance_uchar
@@ -103,13 +97,10 @@ EXPORTS
 	gimp_rgb_set_uchar
 	gimp_rgb_subtract
 	gimp_rgb_to_cmyk
-	gimp_rgb_to_cmyk_int
 	gimp_rgb_to_hsl
 	gimp_rgb_to_hsl_int
 	gimp_rgb_to_hsv
-	gimp_rgb_to_hsv4
 	gimp_rgb_to_hsv_int
-	gimp_rgb_to_hwb
 	gimp_rgb_to_l_int
 	gimp_rgba_add
 	gimp_rgba_distance
