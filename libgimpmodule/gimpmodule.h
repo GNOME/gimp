@@ -221,11 +221,6 @@ void          gimp_module_set_load_inhibit (GimpModule      *module,
 
 const gchar * gimp_module_state_name       (GimpModuleState  state);
 
-GIMP_DEPRECATED_FOR(g_type_module_register_enum)
-GType         gimp_module_register_enum    (GTypeModule      *module,
-                                            const gchar      *name,
-                                            const GEnumValue *const_static_values);
-
 
 /*  GimpModuleInfo functions  */
 
