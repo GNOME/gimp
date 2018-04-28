@@ -35,9 +35,6 @@ gint32   gimp_selection_float (gint32 image_ID,
                                gint   offx,
                                gint   offy);
 
-GIMP_DEPRECATED_FOR(gimp_selection_none)
-gboolean gimp_selection_clear (gint32 image_ID);
-
 
 G_END_DECLS
 

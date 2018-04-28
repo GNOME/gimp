@@ -6,15 +6,10 @@ EXPORTS
 	gimp_brush_select_button_get_type
 	gimp_brush_select_button_new
 	gimp_brush_select_button_set_brush
-	gimp_brush_select_widget_close
-	gimp_brush_select_widget_new
-	gimp_brush_select_widget_set
 	gimp_channel_combo_box_get_type
 	gimp_channel_combo_box_new
-	gimp_channel_menu_new
 	gimp_drawable_combo_box_get_type
 	gimp_drawable_combo_box_new
-	gimp_drawable_menu_new
 	gimp_drawable_preview_draw_region
 	gimp_drawable_preview_get_drawable
 	gimp_drawable_preview_get_drawable_id
@@ -28,19 +23,12 @@ EXPORTS
 	gimp_font_select_button_get_type
 	gimp_font_select_button_new
 	gimp_font_select_button_set_font
-	gimp_font_select_widget_close
-	gimp_font_select_widget_new
-	gimp_font_select_widget_set
 	gimp_gradient_select_button_get_gradient
 	gimp_gradient_select_button_get_type
 	gimp_gradient_select_button_new
 	gimp_gradient_select_button_set_gradient
-	gimp_gradient_select_widget_close
-	gimp_gradient_select_widget_new
-	gimp_gradient_select_widget_set
 	gimp_image_combo_box_get_type
 	gimp_image_combo_box_new
-	gimp_image_menu_new
 	gimp_image_metadata_load_finish
 	gimp_image_metadata_load_prepare
 	gimp_image_metadata_load_thumbnail
@@ -48,21 +36,14 @@ EXPORTS
 	gimp_image_metadata_save_prepare
 	gimp_layer_combo_box_get_type
 	gimp_layer_combo_box_new
-	gimp_layer_menu_new
 	gimp_palette_select_button_get_palette
 	gimp_palette_select_button_get_type
 	gimp_palette_select_button_new
 	gimp_palette_select_button_set_palette
-	gimp_palette_select_widget_close
-	gimp_palette_select_widget_new
-	gimp_palette_select_widget_set
 	gimp_pattern_select_button_get_pattern
 	gimp_pattern_select_button_get_type
 	gimp_pattern_select_button_new
 	gimp_pattern_select_button_set_pattern
-	gimp_pattern_select_widget_close
-	gimp_pattern_select_widget_new
-	gimp_pattern_select_widget_set
 	gimp_proc_browser_dialog_get_selected
 	gimp_proc_browser_dialog_get_type
 	gimp_proc_browser_dialog_new

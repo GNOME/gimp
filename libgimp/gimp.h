@@ -35,22 +35,16 @@
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
-#include <libgimp/gimpbrushes.h>
 #include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdrawable.h>
-#include <libgimp/gimpedit.h>
 #include <libgimp/gimpfontselect.h>
 #include <libgimp/gimpgimprc.h>
-#include <libgimp/gimpgradients.h>
 #include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimplayer.h>
-#include <libgimp/gimppalette.h>
-#include <libgimp/gimppalettes.h>
 #include <libgimp/gimppaletteselect.h>
-#include <libgimp/gimppatterns.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppixbuf.h>
 #include <libgimp/gimppixelfetcher.h>
@@ -61,7 +55,6 @@
 #include <libgimp/gimpregioniterator.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>
-#include <libgimp/gimpvectors.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 
@@ -342,26 +335,6 @@ gint           gimp_monitor_number      (void) G_GNUC_CONST;
 guint32        gimp_user_time           (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
-
-GIMP_DEPRECATED
-gboolean       gimp_install_cmap        (void) G_GNUC_CONST;
-GIMP_DEPRECATED
-gint           gimp_min_colors          (void) G_GNUC_CONST;
-
-GIMP_DEPRECATED_FOR(gimp_get_parasite)
-GimpParasite * gimp_parasite_find       (const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_attach_parasite)
-gboolean       gimp_parasite_attach     (const GimpParasite *parasite);
-GIMP_DEPRECATED_FOR(gimp_detach_parasite)
-gboolean       gimp_parasite_detach     (const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_get_parasite_list)
-gboolean       gimp_parasite_list       (gint               *num_parasites,
-                                         gchar            ***parasites);
-GIMP_DEPRECATED_FOR(gimp_attach_parasite)
-gboolean       gimp_attach_new_parasite (const gchar        *name,
-                                         gint                flags,
-                                         gint                size,
-                                         gconstpointer       data);
 
 
 G_END_DECLS

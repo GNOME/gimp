@@ -214,22 +214,16 @@ libgimp_sources = \
 	gimpenums.h		\
 	${PDB_WRAPPERS_C}	\
 	${PDB_WRAPPERS_H}	\
-	gimpbrushes.c		\
-	gimpbrushes.h		\
 	gimpbrushselect.c	\
 	gimpbrushselect.h	\
 	gimpchannel.c		\
 	gimpchannel.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimpedit.c		\
-	gimpedit.h		\
 	gimpfontselect.c	\
 	gimpfontselect.h	\
 	gimpgimprc.c		\
 	gimpgimprc.h		\
-	gimpgradients.c		\
-	gimpgradients.h		\
 	gimpgradientselect.c	\
 	gimpgradientselect.h	\
 	gimpimage.c		\
@@ -238,14 +232,8 @@ libgimp_sources = \
 	gimpimagecolorprofile.h	\
 	gimplayer.c		\
 	gimplayer.h		\
-	gimppalette.c		\
-	gimppalette.h		\
-	gimppalettes.c		\
-	gimppalettes.h		\
 	gimppaletteselect.c	\
 	gimppaletteselect.h	\
-	gimppatterns.c		\
-	gimppatterns.h		\
 	gimppatternselect.c	\
 	gimppatternselect.h	\
 	gimppixbuf.c		\
@@ -270,8 +258,6 @@ libgimp_sources = \
 	gimptilebackendplugin.h \
 	gimpunitcache.c		\
 	gimpunitcache.h		\
-	gimpvectors.c		\
-	gimpvectors.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
@@ -290,20 +276,14 @@ libgimpui_sources = \
 	gimpuitypes.h			\
 	gimpaspectpreview.c     	\
 	gimpaspectpreview.h     	\
-	gimpbrushmenu.c			\
-	gimpbrushmenu.h			\
 	gimpbrushselectbutton.c		\
 	gimpbrushselectbutton.h		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
 	gimpexport.c			\
 	gimpexport.h			\
-	gimpfontmenu.c			\
-	gimpfontmenu.h			\
 	gimpfontselectbutton.c		\
 	gimpfontselectbutton.h		\
-	gimpgradientmenu.c 		\
-	gimpgradientmenu.h 		\
 	gimpgradientselectbutton.c	\
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.c		\
@@ -312,14 +292,8 @@ libgimpui_sources = \
 	gimpimagemetadata.h		\
 	gimpitemcombobox.c		\
 	gimpitemcombobox.h		\
-	gimpmenu.c			\
-	gimpmenu.h			\
-	gimppalettemenu.c		\
-	gimppalettemenu.h		\
 	gimppaletteselectbutton.c	\
 	gimppaletteselectbutton.h	\
-	gimppatternmenu.c		\
-	gimppatternmenu.h		\
 	gimppatternselectbutton.c	\
 	gimppatternselectbutton.h	\
 	gimpprocbrowserdialog.c		\
@@ -348,22 +322,16 @@ gimpinclude_HEADERS = \
 	gimptypes.h			\
 	gimpenums.h			\
 	${PDB_WRAPPERS_H}		\
-	gimpbrushes.h			\
 	gimpbrushselect.h		\
 	gimpchannel.h			\
 	gimpdrawable.h			\
-	gimpedit.h			\
 	gimpfontselect.h		\
 	gimpgimprc.h			\
-	gimpgradients.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
 	gimpimagecolorprofile.h		\
 	gimplayer.h			\
-	gimppalette.h			\
-	gimppalettes.h			\
 	gimppaletteselect.h		\
-	gimppatterns.h			\
 	gimppatternselect.h		\
 	gimppixelfetcher.h		\
 	gimppixelrgn.h			\
@@ -373,26 +341,19 @@ gimpinclude_HEADERS = \
 	gimpregioniterator.h		\
 	gimpselection.h			\
 	gimptile.h			\
-	gimpvectors.h			\
 	\
 	gimpui.h			\
 	gimpuitypes.h			\
 	gimpaspectpreview.h		\
-	gimpbrushmenu.h			\
 	gimpbrushselectbutton.h		\
 	gimpdrawablepreview.h   	\
 	gimpexport.h			\
-	gimpfontmenu.h			\
 	gimpfontselectbutton.h		\
-	gimpgradientmenu.h		\
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.h		\
 	gimpimagemetadata.h		\
 	gimpitemcombobox.h		\
-	gimpmenu.h			\
-	gimppalettemenu.h		\
 	gimppaletteselectbutton.h	\
-	gimppatternmenu.h		\
 	gimppatternselectbutton.h	\
 	gimppixbuf.h			\
 	gimpprocbrowserdialog.h		\

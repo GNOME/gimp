@@ -82,59 +82,6 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
                                                      gint          *dest_height,
                                                      gint          *bpp);
 
-GIMP_DEPRECATED_FOR(gimp_item_is_valid)
-gboolean       gimp_drawable_is_valid               (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_is_layer)
-gboolean       gimp_drawable_is_layer               (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_is_text_layer)
-gboolean       gimp_drawable_is_text_layer          (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_is_layer_mask)
-gboolean       gimp_drawable_is_layer_mask          (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_is_channel)
-gboolean       gimp_drawable_is_channel             (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_delete)
-gboolean       gimp_drawable_delete                 (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_get_image)
-gint32         gimp_drawable_get_image              (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_get_name)
-gchar*         gimp_drawable_get_name               (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_set_name)
-gboolean       gimp_drawable_set_name               (gint32              drawable_ID,
-                                                     const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_item_get_visible)
-gboolean       gimp_drawable_get_visible            (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_get_visible)
-gboolean       gimp_drawable_set_visible            (gint32              drawable_ID,
-                                                     gboolean            visible);
-GIMP_DEPRECATED_FOR(gimp_item_get_linked)
-gboolean       gimp_drawable_get_linked             (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_set_linked)
-gboolean       gimp_drawable_set_linked             (gint32              drawable_ID,
-                                                     gboolean            linked);
-GIMP_DEPRECATED_FOR(gimp_item_get_tattoo)
-gint           gimp_drawable_get_tattoo             (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_set_tattoo)
-gboolean       gimp_drawable_set_tattoo             (gint32              drawable_ID,
-                                                     gint                tattoo);
-GIMP_DEPRECATED_FOR(gimp_item_get_parasite)
-GimpParasite * gimp_drawable_parasite_find          (gint32              drawable_ID,
-                                                     const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_item_attach_parasite)
-gboolean       gimp_drawable_parasite_attach        (gint32              drawable_ID,
-                                                     const GimpParasite *parasite);
-GIMP_DEPRECATED_FOR(gimp_item_detach_parasite)
-gboolean       gimp_drawable_parasite_detach        (gint32              drawable_ID,
-                                                     const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_item_get_parasite_list)
-gboolean       gimp_drawable_parasite_list          (gint32              drawable_ID,
-                                                     gint               *num_parasites,
-                                                     gchar            ***parasites);
-GIMP_DEPRECATED_FOR(gimp_item_attach_parasite)
-gboolean       gimp_drawable_attach_new_parasite    (gint32              drawable_ID,
-                                                     const gchar        *name,
-                                                     gint                flags,
-                                                     gint                size,
-                                                     gconstpointer       data);
 
 G_END_DECLS
 
