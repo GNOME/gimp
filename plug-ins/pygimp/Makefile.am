@@ -60,6 +60,7 @@ gimp_la_LIBADD = \
 	$(libgimpbase)		\
 	$(libgimpui)		\
 	$(GLIB_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)
 
