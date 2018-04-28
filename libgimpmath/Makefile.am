@@ -63,8 +63,6 @@ libgimpmath_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpmathtypes.h	\
 	gimpmatrix.c	\
 	gimpmatrix.h	\
-	gimpmd5.c	\
-	gimpmd5.h	\
 	gimpvector.c	\
 	gimpvector.h
 
@@ -72,7 +70,6 @@ libgimpmathinclude_HEADERS = \
 	gimpmath.h	\
 	gimpmathtypes.h	\
 	gimpmatrix.h	\
-	gimpmd5.h	\
 	gimpvector.h
 
 libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
