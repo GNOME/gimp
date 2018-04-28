@@ -237,14 +237,14 @@ create_group (GimpColorScales           *scales,
               GimpColorSelectorChannel   last_channel)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  GtkWidget         *table;
+  GtkWidget         *grid;
   GEnumClass        *enum_class;
   gint               row;
   gint               i;
 
-  table = gtk_table_new (last_channel - first_channel + 1, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 1);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
 
   enum_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
 
@@ -295,9 +295,7 @@ create_group (GimpColorScales           *scales,
             }
         }
 
-      gtk_table_attach (GTK_TABLE (table), scales->toggles[i],
-                        0, 1, row, row + 1,
-                        GTK_SHRINK, GTK_EXPAND, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), scales->toggles[i], 0, row, 1, 1);
 
       if (gimp_color_selector_get_toggles_visible (selector))
         gtk_widget_show (scales->toggles[i]);
@@ -308,17 +306,17 @@ create_group (GimpColorScales           *scales,
       gtk_size_group_add_widget (size_group0, scales->toggles[i]);
 
       scales->adjustments[i] = (GtkAdjustment *)
-        gimp_color_scale_entry_new (GTK_TABLE (table), 1, row,
-                                    gettext (enum_desc->value_desc),
-                                    -1, -1,
-                                    scale_defs[i].default_value,
-                                    scale_defs[i].scale_min_value,
-                                    scale_defs[i].scale_max_value,
-                                    1.0,
-                                    scale_defs[i].scale_inc,
-                                    1,
-                                    gettext (enum_desc->value_help),
-                                    NULL);
+        gimp_color_scale_entry_new_grid (GTK_GRID (grid), 1, row,
+                                         gettext (enum_desc->value_desc),
+                                         -1, -1,
+                                         scale_defs[i].default_value,
+                                         scale_defs[i].scale_min_value,
+                                         scale_defs[i].scale_max_value,
+                                         1.0,
+                                         scale_defs[i].scale_inc,
+                                         1,
+                                         gettext (enum_desc->value_help),
+                                         NULL);
 
       gtk_adjustment_configure (scales->adjustments[i],
                                 scale_defs[i].default_value,
@@ -346,7 +344,7 @@ create_group (GimpColorScales           *scales,
 
   g_type_class_unref (enum_class);
 
-  return table;
+  return grid;
 }
 
 static void
@@ -359,7 +357,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   GtkWidget         *hbox;
   GtkWidget         *radio1;
   GtkWidget         *radio2;
-  GtkWidget         *table;
+  GtkWidget         *grid;
   GSList            *main_group;
   GSList            *u8_group;
   GSList            *radio_group;
@@ -385,46 +383,46 @@ gimp_color_scales_init (GimpColorScales *scales)
   size_group2 = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   scales->rgb_percent_group =
-    table = create_group (scales, &main_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_RED,
-                          GIMP_COLOR_SELECTOR_BLUE);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &main_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_RED,
+                         GIMP_COLOR_SELECTOR_BLUE);
+  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->rgb_u8_group =
-    table = create_group (scales, &u8_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_RED_U8,
-                          GIMP_COLOR_SELECTOR_BLUE_U8);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &u8_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_RED_U8,
+                         GIMP_COLOR_SELECTOR_BLUE_U8);
+  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->lch_group =
-    table = create_group (scales, &main_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
-                          GIMP_COLOR_SELECTOR_LCH_HUE);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &main_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
+                         GIMP_COLOR_SELECTOR_LCH_HUE);
+  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
  scales->hsv_group =
-    table = create_group (scales, &main_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_HUE,
-                          GIMP_COLOR_SELECTOR_VALUE);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &main_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_HUE,
+                         GIMP_COLOR_SELECTOR_VALUE);
+ gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->alpha_percent_group =
-    table = create_group (scales, &main_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_ALPHA,
-                          GIMP_COLOR_SELECTOR_ALPHA);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &main_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_ALPHA,
+                         GIMP_COLOR_SELECTOR_ALPHA);
+  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->alpha_u8_group =
-    table = create_group (scales, &u8_group,
-                          size_group0, size_group1, size_group2,
-                          GIMP_COLOR_SELECTOR_ALPHA_U8,
-                          GIMP_COLOR_SELECTOR_ALPHA_U8);
-  gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
+    grid = create_group (scales, &u8_group,
+                         size_group0, size_group1, size_group2,
+                         GIMP_COLOR_SELECTOR_ALPHA_U8,
+                         GIMP_COLOR_SELECTOR_ALPHA_U8);
+  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   g_object_unref (size_group0);
   g_object_unref (size_group1);
