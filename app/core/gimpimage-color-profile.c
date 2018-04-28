@@ -770,8 +770,6 @@ gimp_image_create_color_transforms (GimpImage *image)
       GimpColorProfile        *srgb_profile;
       GimpColorTransformFlags  flags = 0;
 
-      g_printerr ("XXXXXX %s XXXXXX\n", G_STRFUNC);
-
       srgb_profile = gimp_color_profile_new_rgb_srgb ();
 
       flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
