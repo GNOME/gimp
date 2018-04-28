@@ -521,7 +521,10 @@ gimp_prop_gui_new (GObject                  *config,
       gimp_label_set_attributes (GTK_LABEL (gui),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
-      gtk_misc_set_padding (GTK_MISC (gui), 0, 4);
+      g_object_set (gui,
+                    "margin-top",    4,
+                    "margin-bottom", 4,
+                    NULL);
     }
 
   return gui;

@@ -99,7 +99,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
@@ -107,7 +107,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 
   /* The error label. */
   dialog->top_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->top_label), 0.0, 0.5);
+  gtk_widget_set_halign (dialog->top_label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (dialog->top_label), PANGO_ELLIPSIZE_END);
   gtk_label_set_selectable (GTK_LABEL (dialog->top_label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->top_label,
@@ -144,7 +144,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   dialog->bottom_label = gtk_label_new (text);
   g_free (text);
 
-  gtk_misc_set_alignment (GTK_MISC (dialog->bottom_label), 0.0, 0.5);
+  gtk_widget_set_halign (dialog->bottom_label, GTK_ALIGN_START);
   gtk_label_set_selectable (GTK_LABEL (dialog->bottom_label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->bottom_label,
                       FALSE, FALSE, 0);
@@ -153,7 +153,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   widget = gtk_label_new (_("You can also close the dialog directly but "
                             "reporting bugs is the best way to make your "
                             "software awesome."));
-  gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
+  gtk_widget_set_halign (widget, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();

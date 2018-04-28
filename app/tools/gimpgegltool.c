@@ -487,7 +487,10 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   gimp_label_set_attributes (GTK_LABEL (options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_padding (GTK_MISC (options_gui), 0, 4);
+  g_object_set (options_gui,
+                "margin-top",    4,
+                "margin-bottom", 4,
+                NULL);
   gtk_container_add (GTK_CONTAINER (options_box), options_gui);
   g_object_unref (options_box);
   g_weak_ref_set (&o_tool->options_gui_ref, options_gui);

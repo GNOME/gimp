@@ -226,7 +226,7 @@ gimp_table_attach_icon (GtkTable    *table,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
+  gtk_widget_set_halign (image, GTK_ALIGN_END);
   gtk_table_attach (table, image, 0, 1, row, row + 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (image);

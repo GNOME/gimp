@@ -2631,7 +2631,10 @@ prefs_dialog_new (Gimp       *gimp,
 
   calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate..."));
   label = gtk_bin_get_child (GTK_BIN (calibrate_button));
-  gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+  g_object_set (label,
+                "margin-start", 4,
+                "margin-end",   4,
+                NULL);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_button);
   gtk_widget_set_sensitive (calibrate_button,

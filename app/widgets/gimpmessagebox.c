@@ -167,12 +167,11 @@ gimp_message_box_constructed (GObject *object)
 
   if (box->icon_name)
     {
-      gtk_widget_push_composite_child ();
       box->image = gtk_image_new_from_icon_name (box->icon_name,
                                                  GTK_ICON_SIZE_DIALOG);
-      gtk_widget_pop_composite_child ();
 
-      gtk_misc_set_alignment (GTK_MISC (box->image), 0.0, 0.0);
+      gtk_widget_set_halign (box->image, GTK_ALIGN_START);
+      gtk_widget_set_valign (box->image, GTK_ALIGN_START);
       gtk_widget_set_parent (box->image, GTK_WIDGET (box));
       gtk_widget_show (box->image);
     }

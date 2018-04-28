@@ -118,7 +118,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_widget_show (hbox);
 
   dialog->icon = gtk_image_new ();
-  gtk_misc_set_alignment (GTK_MISC (dialog->icon), 0.5, 0.0);
+  gtk_widget_set_valign (dialog->icon, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->icon, FALSE, FALSE, 0);
   gtk_widget_show (dialog->icon);
 

@@ -160,7 +160,12 @@ prefs_check_button_add_with_icon (GObject      *config,
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  g_object_set (image,
+                "margin-start",  2,
+                "margin-end",    2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 

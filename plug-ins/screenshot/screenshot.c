@@ -700,7 +700,7 @@ shoot_dialog (GdkScreen **screen)
   label = gtk_label_new (_("seconds"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Selection delay hints  */
@@ -763,7 +763,7 @@ shoot_dialog (GdkScreen **screen)
   label = gtk_label_new (_("seconds"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Screenshot delay hints  */

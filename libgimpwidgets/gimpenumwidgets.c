@@ -271,7 +271,7 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  * icon name for each icon is created by appending the enum_value's
  * nick to the given @icon_prefix.
  *
- * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
+ * Return value: a new horizontal #GtkBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.10
  **/
@@ -318,7 +318,7 @@ gimp_enum_icon_box_new (GType         enum_type,
  * of radio buttons, but additionally it supports limiting the range
  * of available enum values.
  *
- * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
+ * Return value: a new horizontal #GtkBox holding a group of #GtkRadioButtons.
  *
  * Since: 2.10
  **/
@@ -423,19 +423,22 @@ gimp_enum_icon_box_set_child_padding (GtkWidget *icon_box,
   for (list = children; list; list = g_list_next (list))
     {
       GtkWidget *child = gtk_bin_get_child (GTK_BIN (list->data));
+      gint       start, end;
+      gint       top, bottom;
 
-      if (GTK_IS_MISC (child))
-        {
-          GtkMisc *misc = GTK_MISC (child);
-          gint     misc_xpad;
-          gint     misc_ypad;
+      g_object_get (child,
+                    "margin-start",  &start,
+                    "margin-end",    &end,
+                    "margin-top",    &top,
+                    "margin-bottom", &bottom,
+                    NULL);
 
-          gtk_misc_get_padding (misc, &misc_xpad, &misc_ypad);
-
-          gtk_misc_set_padding (misc,
-                                xpad < 0 ? misc_xpad : xpad,
-                                ypad < 0 ? misc_ypad : ypad);
-        }
+      g_object_set (child,
+                    "margin-start",  xpad < 0 ? start  : xpad,
+                    "margin-end",    xpad < 0 ? end    : xpad,
+                    "margin-top",    ypad < 0 ? top    : ypad,
+                    "margin-bottom", ypad < 0 ? bottom : ypad,
+                    NULL);
     }
 
   g_list_free (children);
