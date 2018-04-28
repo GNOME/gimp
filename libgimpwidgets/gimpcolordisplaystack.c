@@ -28,7 +28,6 @@
 
 #include "gimpwidgetstypes.h"
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "gimpcolordisplay.h"
 #include "gimpcolordisplaystack.h"
 #include "gimpwidgetsmarshal.h"
@@ -360,79 +359,6 @@ gimp_color_display_stack_convert_buffer (GimpColorDisplayStack *stack,
       GimpColorDisplay *display = list->data;
 
       gimp_color_display_convert_buffer (display, buffer, area);
-    }
-}
-
-/**
- * gimp_color_display_stack_convert_surface:
- * @stack: a #GimpColorDisplayStack
- * @surface: a #cairo_image_surface_t of type ARGB32
- *
- * Runs all the stack's filters on all pixels in @surface.
- *
- * Since: 2.8
- *
- * Deprecated: GIMP 2.10: Use gimp_color_display_stack_convert_buffer() instead.
- **/
-void
-gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
-                                          cairo_surface_t       *surface)
-{
-  GimpColorDisplayStackPrivate *private;
-  GList                        *list;
-
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
-  g_return_if_fail (surface != NULL);
-  g_return_if_fail (cairo_surface_get_type (surface) ==
-                    CAIRO_SURFACE_TYPE_IMAGE);
-
-  private = GET_PRIVATE (stack);
-
-  for (list = private->filters; list; list = g_list_next (list))
-    {
-      GimpColorDisplay *display = list->data;
-
-      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-      gimp_color_display_convert_surface (display, surface);
-      G_GNUC_END_IGNORE_DEPRECATIONS
-    }
-}
-
-/**
- * gimp_color_display_stack_convert:
- * @stack: a #GimpColorDisplayStack
- * @buf: the pixel buffer to convert
- * @width: the width of the buffer
- * @height: the height of the buffer
- * @bpp: the number of bytes per pixel
- * @bpl: the buffer's rowstride
- *
- * Converts all pixels in @buf.
- *
- * Deprecated: GIMP 2.8: Use gimp_color_display_stack_convert_buffer() instead.
- **/
-void
-gimp_color_display_stack_convert (GimpColorDisplayStack *stack,
-                                  guchar                *buf,
-                                  gint                   width,
-                                  gint                   height,
-                                  gint                   bpp,
-                                  gint                   bpl)
-{
-  GimpColorDisplayStackPrivate *private;
-  GList                        *list;
-
-  g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
-
-  private = GET_PRIVATE (stack);
-
-  for (list = private->filters; list; list = g_list_next (list))
-    {
-      GimpColorDisplay *display = list->data;
-
-      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-      gimp_color_display_convert (display, buf, width, height, bpp, bpl);
-      G_GNUC_END_IGNORE_DEPRECATIONS
     }
 }
 

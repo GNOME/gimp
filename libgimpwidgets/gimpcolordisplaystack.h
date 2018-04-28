@@ -88,16 +88,7 @@ void    gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
 void    gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
                                                   GeglBuffer            *buffer,
                                                   GeglRectangle         *area);
-GIMP_DEPRECATED_FOR(gimp_color_display_stack_convert_buffer)
-void    gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
-                                                  cairo_surface_t       *surface);
-GIMP_DEPRECATED_FOR(gimp_color_display_stack_convert_surface)
-void    gimp_color_display_stack_convert         (GimpColorDisplayStack *stack,
-                                                  guchar                *buf,
-                                                  gint                   width,
-                                                  gint                   height,
-                                                  gint                   bpp,
-                                                  gint                   bpl);
+
 
 G_END_DECLS
 

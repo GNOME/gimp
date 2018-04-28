@@ -62,24 +62,14 @@ GtkWidget * gimp_color_profile_combo_box_new              (GtkWidget    *dialog,
 GtkWidget * gimp_color_profile_combo_box_new_with_model   (GtkWidget    *dialog,
                                                            GtkTreeModel *model);
 
-GIMP_DEPRECATED_FOR (gimp_color_profile_combo_box_add_file)
-void        gimp_color_profile_combo_box_add              (GimpColorProfileComboBox *combo,
-                                                           const gchar              *filename,
-                                                           const gchar              *label);
 void        gimp_color_profile_combo_box_add_file         (GimpColorProfileComboBox *combo,
                                                            GFile                    *file,
                                                            const gchar              *label);
 
-GIMP_DEPRECATED_FOR (gimp_color_profile_combo_box_set_active_file)
-void        gimp_color_profile_combo_box_set_active       (GimpColorProfileComboBox *combo,
-                                                           const gchar              *filename,
-                                                           const gchar              *label);
 void        gimp_color_profile_combo_box_set_active_file  (GimpColorProfileComboBox *combo,
                                                            GFile                    *file,
                                                            const gchar              *label);
 
-GIMP_DEPRECATED_FOR (gimp_color_profile_combo_box_get_active_file)
-gchar *     gimp_color_profile_combo_box_get_active       (GimpColorProfileComboBox *combo);
 GFile *     gimp_color_profile_combo_box_get_active_file  (GimpColorProfileComboBox *combo);
 
 

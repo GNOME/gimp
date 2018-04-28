@@ -52,7 +52,6 @@ enum
 {
   PROP_0,
   PROP_ICON_NAME,
-  PROP_STOCK_ID,
   PROP_STOCK_SIZE,
   PROP_OVERRIDE_BACKGROUND
 };
@@ -63,7 +62,6 @@ typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
 struct _GimpCellRendererTogglePrivate
 {
   gchar       *icon_name;
-  gchar       *stock_id;
   GtkIconSize  stock_size;
   gboolean     override_background;
 
@@ -150,14 +148,6 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id",
-                                                        "Stock ID",
-                                                        "The icon to display, deprecated",
-                                                        NULL,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
-
   g_object_class_install_property (object_class, PROP_STOCK_SIZE,
                                    g_param_spec_int ("stock-size",
                                                      "Stock Size",
@@ -189,8 +179,6 @@ gimp_cell_renderer_toggle_finalize (GObject *object)
   GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->icon_name, g_free);
-  g_clear_pointer (&priv->stock_id,  g_free);
-
   g_clear_object (&priv->pixbuf);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -208,10 +196,6 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
     {
     case PROP_ICON_NAME:
       g_value_set_string (value, priv->icon_name);
-      break;
-
-    case PROP_STOCK_ID:
-      g_value_set_string (value, priv->stock_id);
       break;
 
     case PROP_STOCK_SIZE:
@@ -242,12 +226,6 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       if (priv->icon_name)
         g_free (priv->icon_name);
       priv->icon_name = g_value_dup_string (value);
-      break;
-
-    case PROP_STOCK_ID:
-      if (priv->stock_id)
-        g_free (priv->stock_id);
-      priv->stock_id = g_value_dup_string (value);
       break;
 
     case PROP_STOCK_SIZE:
@@ -288,7 +266,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   gint                           xpad;
   gint                           ypad;
 
-  if (! priv->icon_name && ! priv->stock_id)
+  if (! priv->icon_name)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->get_size (cell,
                                                         widget,
@@ -360,7 +338,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   gint                           xpad;
   gint                           ypad;
 
-  if (! priv->icon_name && ! priv->stock_id)
+  if (! priv->icon_name)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->render (cell, cr, widget,
                                                       background_area,
@@ -521,12 +499,6 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
       priv->pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                                priv->icon_name,
                                                MIN (width, height), 0, NULL);
-    }
-  else
-    {
-      priv->pixbuf = gtk_widget_render_icon_pixbuf (widget,
-                                                    priv->stock_id,
-                                                    priv->stock_size);
     }
 }
 

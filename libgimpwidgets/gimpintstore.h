@@ -38,7 +38,6 @@ G_BEGIN_DECLS
  * @GIMP_INT_STORE_USER_DATA:   arbitrary user data
  * @GIMP_INT_STORE_ABBREV:      an abbreviated label
  * @GIMP_INT_STORE_NUM_COLUMNS: the number of columns
- * @GIMP_INT_STORE_STOCK_ID:    compat alias for @GIMP_INT_STORE_ICON_NAME
  *
  * The column types of #GimpIntStore.
  **/
@@ -50,10 +49,7 @@ typedef enum
   GIMP_INT_STORE_PIXBUF,
   GIMP_INT_STORE_USER_DATA,
   GIMP_INT_STORE_ABBREV,
-  GIMP_INT_STORE_NUM_COLUMNS,
-
-  /* deprecated */
-  GIMP_INT_STORE_STOCK_ID = GIMP_INT_STORE_ICON_NAME
+  GIMP_INT_STORE_NUM_COLUMNS
 } GimpIntStoreColumns;
 
 

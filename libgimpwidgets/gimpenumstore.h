@@ -72,10 +72,6 @@ GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
 
-GIMP_DEPRECATED_FOR(gimp_enum_store_set_icon_prefix)
-void           gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
-                                                 const gchar   *stock_prefix);
-
 void           gimp_enum_store_set_icon_prefix  (GimpEnumStore *store,
                                                  const gchar   *icon_prefix);
 

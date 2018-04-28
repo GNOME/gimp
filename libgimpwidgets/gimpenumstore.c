@@ -318,27 +318,6 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
 }
 
 /**
- * gimp_enum_store_set_stock_prefix:
- * @store:        a #GimpEnumStore
- * @stock_prefix: a prefix to create icon stock ID from enum values
- *
- * Creates a stock ID for each enum value in the @store by appending
- * the value's nick to the given @stock_prefix, separated by a hyphen.
- *
- * See also: gimp_enum_combo_box_set_stock_prefix().
- *
- * Since: 2.4
- *
- * Deprecated: GIMP 2.10
- **/
-void
-gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
-                                  const gchar   *stock_prefix)
-{
-  gimp_enum_store_set_icon_prefix (store, stock_prefix);
-}
-
-/**
  * gimp_enum_store_set_icon_prefix:
  * @store:       a #GimpEnumStore
  * @icon_prefix: a prefix to create icon names from enum values

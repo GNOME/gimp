@@ -20,8 +20,6 @@
 #include <string.h>
 
 #include <gegl.h>
-/* FIXME: #undef GTK_DISABLE_DEPRECATED */
-#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -1066,37 +1064,6 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
   return frame;
-}
-
-/**
- * gimp_prop_enum_stock_box_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of enum property controlled by the radio buttons.
- * @stock_prefix:  The prefix of the group of stock ids to use.
- * @minimum:       Smallest value of enum to be included.
- * @maximum:       Largest value of enum to be included.
- *
- * Creates a horizontal box of radio buttons with stock icons, which
- * function to set and display the value of the specified Enum
- * property.  The stock_id for each icon is created by appending the
- * enum_value's nick to the given @stock_prefix.  See
- * gimp_enum_stock_box_new() for more information.
- *
- * Return value: A #libgimpwidgets-gimpenumstockbox containing the radio buttons.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_enum_stock_box_new (GObject     *config,
-                              const gchar *property_name,
-                              const gchar *stock_prefix,
-                              gint         minimum,
-                              gint         maximum)
-{
-  return gimp_prop_enum_icon_box_new (config, property_name,
-                                      stock_prefix, minimum, maximum);
 }
 
 /**
@@ -3824,30 +3791,6 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
 static void   gimp_prop_icon_image_notify (GObject    *config,
                                            GParamSpec *param_spec,
                                            GtkWidget  *image);
-
-/**
- * gimp_prop_stock_image_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of string property.
- * @icon_size:     Size of desired stock image.
- *
- * Creates a widget to display a stock image representing the value of the
- * specified string property, which should encode a Stock ID.
- * See gtk_image_new_from_stock() for more information.
- *
- * Return value:  A new #GtkImage widget.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_stock_image_new (GObject     *config,
-                           const gchar *property_name,
-                           GtkIconSize  icon_size)
-{
-  return gimp_prop_icon_image_new (config, property_name, icon_size);
-}
 
 /**
  * gimp_prop_icon_image_new:
