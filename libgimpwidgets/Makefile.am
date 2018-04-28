@@ -191,9 +191,7 @@ libgimpwidgets_sources = \
 	gimpwidgetsutils.c		\
 	gimpwidgetsutils.h		\
 	gimpzoommodel.c			\
-	gimpzoommodel.h			\
-	gimp3migration.c		\
-	gimp3migration.h
+	gimpzoommodel.h
 
 libgimpwidgets_built_sources = \
 	gimpwidgetsenums.c	\
@@ -263,8 +261,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
 	gimpwidgetsutils.h		\
-	gimpzoommodel.h			\
-	gimp3migration.h
+	gimpzoommodel.h
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

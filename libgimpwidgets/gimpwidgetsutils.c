@@ -41,7 +41,6 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimp3migration.h"
 #include "gimpsizeentry.h"
 #include "gimpwidgetsutils.h"
 

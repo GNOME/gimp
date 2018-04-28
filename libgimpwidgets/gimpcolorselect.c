@@ -39,7 +39,6 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimpwidgetsutils.h"
-#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 

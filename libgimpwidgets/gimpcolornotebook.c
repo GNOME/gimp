@@ -34,7 +34,6 @@
 #include "gimpcolornotebook.h"
 #include "gimpcolorscales.h"
 #include "gimpwidgetsmarshal.h"
-#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
