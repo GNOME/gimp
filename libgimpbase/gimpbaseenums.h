@@ -46,17 +46,7 @@ typedef enum
   GIMP_ADD_MASK_ALPHA_TRANSFER, /*< desc="_Transfer layer's alpha channel" >*/
   GIMP_ADD_MASK_SELECTION,      /*< desc="_Selection"                      >*/
   GIMP_ADD_MASK_COPY,           /*< desc="_Grayscale copy of layer"        >*/
-  GIMP_ADD_MASK_CHANNEL,        /*< desc="C_hannel"                        >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_ADD_WHITE_MASK          = GIMP_ADD_MASK_WHITE,     /*< skip, pdb-skip >*/
-  GIMP_ADD_BLACK_MASK          = GIMP_ADD_MASK_BLACK,     /*< skip, pdb-skip >*/
-  GIMP_ADD_ALPHA_MASK          = GIMP_ADD_MASK_ALPHA,     /*< skip, pdb-skip >*/
-  GIMP_ADD_ALPHA_TRANSFER_MASK = GIMP_ADD_MASK_ALPHA_TRANSFER, /*< skip, pdb-skip >*/
-  GIMP_ADD_SELECTION_MASK      = GIMP_ADD_MASK_SELECTION, /*< skip, pdb-skip >*/
-  GIMP_ADD_COPY_MASK           = GIMP_ADD_MASK_COPY,      /*< skip, pdb-skip >*/
-  GIMP_ADD_CHANNEL_MASK        = GIMP_ADD_MASK_CHANNEL    /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_ADD_MASK_CHANNEL         /*< desc="C_hannel"                        >*/
 } GimpAddMaskType;
 
 
@@ -69,14 +59,7 @@ typedef enum
   GIMP_BLEND_FG_BG_RGB,      /*< desc="FG to BG (RGB)"    >*/
   GIMP_BLEND_FG_BG_HSV,      /*< desc="FG to BG (HSV)"    >*/
   GIMP_BLEND_FG_TRANSPARENT, /*< desc="FG to transparent" >*/
-  GIMP_BLEND_CUSTOM,         /*< desc="Custom gradient"   >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_FG_BG_RGB_MODE      = GIMP_BLEND_FG_BG_RGB,      /*< skip, pdb-skip >*/
-  GIMP_FG_BG_HSV_MODE      = GIMP_BLEND_FG_BG_HSV,      /*< skip, pdb-skip >*/
-  GIMP_FG_TRANSPARENT_MODE = GIMP_BLEND_FG_TRANSPARENT, /*< skip, pdb-skip >*/
-  GIMP_CUSTOM_MODE         = GIMP_BLEND_CUSTOM          /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_BLEND_CUSTOM          /*< desc="Custom gradient"   >*/
 } GimpBlendMode;
 
 
@@ -100,13 +83,7 @@ typedef enum
 {
   GIMP_BUCKET_FILL_FG,      /*< desc="FG color fill" >*/
   GIMP_BUCKET_FILL_BG,      /*< desc="BG color fill" >*/
-  GIMP_BUCKET_FILL_PATTERN, /*< desc="Pattern fill"  >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_FG_BUCKET_FILL      = GIMP_BUCKET_FILL_FG,     /*< skip, pdb-skip >*/
-  GIMP_BG_BUCKET_FILL      = GIMP_BUCKET_FILL_BG,     /*< skip, pdb-skip >*/
-  GIMP_PATTERN_BUCKET_FILL = GIMP_BUCKET_FILL_PATTERN /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_BUCKET_FILL_PATTERN  /*< desc="Pattern fill"  >*/
 } GimpBucketFillMode;
 
 
@@ -146,16 +123,7 @@ typedef enum
   GIMP_CHANNEL_BLUE,     /*< desc="Blue"    >*/
   GIMP_CHANNEL_GRAY,     /*< desc="Gray"    >*/
   GIMP_CHANNEL_INDEXED,  /*< desc="Indexed" >*/
-  GIMP_CHANNEL_ALPHA,    /*< desc="Alpha"   >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_RED_CHANNEL     = GIMP_CHANNEL_RED,     /*< skip, pdb-skip >*/
-  GIMP_GREEN_CHANNEL   = GIMP_CHANNEL_GREEN,   /*< skip, pdb-skip >*/
-  GIMP_BLUE_CHANNEL    = GIMP_CHANNEL_BLUE,    /*< skip, pdb-skip >*/
-  GIMP_GRAY_CHANNEL    = GIMP_CHANNEL_GRAY,    /*< skip, pdb-skip >*/
-  GIMP_INDEXED_CHANNEL = GIMP_CHANNEL_INDEXED, /*< skip, pdb-skip >*/
-  GIMP_ALPHA_CHANNEL   = GIMP_CHANNEL_ALPHA    /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_CHANNEL_ALPHA     /*< desc="Alpha"   >*/
 } GimpChannelType;
 
 
@@ -193,12 +161,7 @@ GType gimp_clone_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_CLONE_IMAGE,    /*< desc="Image"   >*/
-  GIMP_CLONE_PATTERN,  /*< desc="Pattern" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_IMAGE_CLONE   = GIMP_CLONE_IMAGE,  /*< skip, pdb-skip >*/
-  GIMP_PATTERN_CLONE = GIMP_CLONE_PATTERN /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_CLONE_PATTERN   /*< desc="Pattern" >*/
 } GimpCloneType;
 
 
@@ -245,15 +208,7 @@ typedef enum
   GIMP_CONVERT_PALETTE_REUSE,    /*< skip >*/
   GIMP_CONVERT_PALETTE_WEB,      /*< desc="Use web-optimized palette"         >*/
   GIMP_CONVERT_PALETTE_MONO,     /*< desc="Use black and white (1-bit) palette" >*/
-  GIMP_CONVERT_PALETTE_CUSTOM,   /*< desc="Use custom palette"                >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_MAKE_PALETTE   = GIMP_CONVERT_PALETTE_GENERATE, /*< skip, pdb-skip >*/
-  GIMP_REUSE_PALETTE  = GIMP_CONVERT_PALETTE_REUSE,    /*< skip, pdb-skip >*/
-  GIMP_WEB_PALETTE    = GIMP_CONVERT_PALETTE_WEB,      /*< skip, pdb-skip >*/
-  GIMP_MONO_PALETTE   = GIMP_CONVERT_PALETTE_MONO,     /*< skip, pdb-skip >*/
-  GIMP_CUSTOM_PALETTE = GIMP_CONVERT_PALETTE_CUSTOM    /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_CONVERT_PALETTE_CUSTOM    /*< desc="Use custom palette"                >*/
 } GimpConvertPaletteType;
 
 
@@ -264,12 +219,7 @@ GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_CONVOLVE_BLUR,    /*< desc="Blur"    >*/
-  GIMP_CONVOLVE_SHARPEN, /*< desc="Sharpen" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_BLUR_CONVOLVE    = GIMP_CONVOLVE_BLUR,   /*< skip, pdb-skip >*/
-  GIMP_SHARPEN_CONVOLVE = GIMP_CONVOLVE_SHARPEN /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_CONVOLVE_SHARPEN  /*< desc="Sharpen" >*/
 } GimpConvolveType;
 
 
@@ -283,11 +233,7 @@ typedef enum
   GIMP_DESATURATE_LUMA,        /*< desc="Luma"                     >*/
   GIMP_DESATURATE_AVERAGE,     /*< desc="Average (HSI Intensity)"  >*/
   GIMP_DESATURATE_LUMINANCE,   /*< desc="Luminance"                >*/
-  GIMP_DESATURATE_VALUE,       /*< desc="Value (HSV)"              >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_DESATURATE_LUMINOSITY = GIMP_DESATURATE_LUMA /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_DESATURATE_VALUE        /*< desc="Value (HSV)"              >*/
 } GimpDesaturateMode;
 
 
@@ -298,12 +244,7 @@ GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_DODGE_BURN_TYPE_DODGE,  /*< desc="Dodge" >*/
-  GIMP_DODGE_BURN_TYPE_BURN,   /*< desc="Burn"  >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_DODGE = GIMP_DODGE_BURN_TYPE_DODGE, /*< skip, pdb-skip >*/
-  GIMP_BURN  = GIMP_DODGE_BURN_TYPE_BURN   /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_DODGE_BURN_TYPE_BURN    /*< desc="Burn"  >*/
 } GimpDodgeBurnType;
 
 
@@ -317,15 +258,7 @@ typedef enum
   GIMP_FILL_BACKGROUND,  /*< desc="Background color" >*/
   GIMP_FILL_WHITE,       /*< desc="White"            >*/
   GIMP_FILL_TRANSPARENT, /*< desc="Transparency"     >*/
-  GIMP_FILL_PATTERN,     /*< desc="Pattern"          >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_FOREGROUND_FILL  = GIMP_FILL_FOREGROUND,  /*< skip, pdb-skip >*/
-  GIMP_BACKGROUND_FILL  = GIMP_FILL_BACKGROUND,  /*< skip, pdb-skip >*/
-  GIMP_WHITE_FILL       = GIMP_FILL_WHITE,       /*< skip, pdb-skip >*/
-  GIMP_TRANSPARENT_FILL = GIMP_FILL_TRANSPARENT, /*< skip, pdb-skip >*/
-  GIMP_PATTERN_FILL     = GIMP_FILL_PATTERN      /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_FILL_PATTERN      /*< desc="Pattern"          >*/
 } GimpFillType;
 
 
@@ -424,17 +357,7 @@ typedef enum
   GIMP_HUE_RANGE_GREEN,
   GIMP_HUE_RANGE_CYAN,
   GIMP_HUE_RANGE_BLUE,
-  GIMP_HUE_RANGE_MAGENTA,
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_ALL_HUES     = GIMP_HUE_RANGE_ALL,    /*< skip, pdb-skip >*/
-  GIMP_RED_HUES     = GIMP_HUE_RANGE_RED,    /*< skip, pdb-skip >*/
-  GIMP_YELLOW_HUES  = GIMP_HUE_RANGE_YELLOW, /*< skip, pdb-skip >*/
-  GIMP_GREEN_HUES   = GIMP_HUE_RANGE_GREEN,  /*< skip, pdb-skip >*/
-  GIMP_CYAN_HUES    = GIMP_HUE_RANGE_CYAN,   /*< skip, pdb-skip >*/
-  GIMP_BLUE_HUES    = GIMP_HUE_RANGE_BLUE,   /*< skip, pdb-skip >*/
-  GIMP_MAGENTA_HUES = GIMP_HUE_RANGE_MAGENTA /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_HUE_RANGE_MAGENTA
 } GimpHueRange;
 
 
@@ -446,11 +369,7 @@ typedef enum
 {
   GIMP_ICON_TYPE_ICON_NAME,     /*< desc="Icon name"     >*/
   GIMP_ICON_TYPE_INLINE_PIXBUF, /*< desc="Inline pixbuf" >*/
-  GIMP_ICON_TYPE_IMAGE_FILE,    /*< desc="Image file"    >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_ICON_TYPE_STOCK_ID = GIMP_ICON_TYPE_ICON_NAME  /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_ICON_TYPE_IMAGE_FILE     /*< desc="Image file"    >*/
 } GimpIconType;
 
 
@@ -503,11 +422,7 @@ typedef enum
   GIMP_INTERPOLATION_LINEAR, /*< desc="Linear" >*/
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
   GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
-  GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_INTERPOLATION_LOHALO  /*< desc="LoHalo" >*/
 } GimpInterpolationType;
 
 
@@ -621,13 +536,7 @@ typedef enum
   GIMP_PDB_VECTORS,
   GIMP_PDB_PARASITE,
   GIMP_PDB_STATUS,
-  GIMP_PDB_END,
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_PDB_PATH     = GIMP_PDB_VECTORS,     /*< skip >*/
-  GIMP_PDB_BOUNDARY = GIMP_PDB_COLORARRAY,  /*< skip >*/
-  GIMP_PDB_REGION   = GIMP_PDB_ITEM         /*< skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_PDB_END
 } GimpPDBArgType;
 
 
@@ -841,13 +750,7 @@ typedef enum
 {
   GIMP_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
   GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
-  GIMP_TRANSFER_HIGHLIGHTS,  /*< desc="Highlights" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,   /*< skip, pdb-skip >*/
-  GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,  /*< skip, pdb-skip >*/
-  GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
+  GIMP_TRANSFER_HIGHLIGHTS   /*< desc="Highlights" >*/
 } GimpTransferMode;
 
 
@@ -888,25 +791,6 @@ typedef enum /*< skip >*/
 
   GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
 } GimpUnit;
-
-
-#ifndef GIMP_DISABLE_DEPRECATED
-#define GIMP_TYPE_USER_DIRECTORY (gimp_user_directory_get_type ())
-
-GType gimp_user_directory_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_USER_DIRECTORY_DESKTOP,
-  GIMP_USER_DIRECTORY_DOCUMENTS,
-  GIMP_USER_DIRECTORY_DOWNLOAD,
-  GIMP_USER_DIRECTORY_MUSIC,
-  GIMP_USER_DIRECTORY_PICTURES,
-  GIMP_USER_DIRECTORY_PUBLIC_SHARE,
-  GIMP_USER_DIRECTORY_TEMPLATES,
-  GIMP_USER_DIRECTORY_VIDEOS
-} GimpUserDirectory;
-#endif /* !GIMP_DISABLE_DEPRECATED */
 
 
 #define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())

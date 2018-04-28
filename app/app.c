@@ -86,8 +86,10 @@ static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GMainLoop         **loop);
 
+#if 0
+/*  left here as documentation how to do compat enums  */
 GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
-GType gimp_layer_mode_effects_get_type         (void); /* compat cruft */
+#endif
 
 
 /*  local variables  */
@@ -102,7 +104,9 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
+#if 0
   GQuark quark;
+#endif
 
   /* disable OpenCL before GEGL is even initialized; this way we only
    * enable if wanted in gimprc, instead of always enabling, and then
@@ -122,13 +126,15 @@ app_libs_init (GOptionContext *context,
     }
 #endif
 
+#if 0
+  /*  left here as documentation how to do compat enums  */
+
   /*  keep compat enum code in sync with pdb/enumcode.pl  */
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
                     (gpointer) gimp_convert_dither_type_compat_get_type ());
-  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
-                    (gpointer) gimp_layer_mode_effects_get_type ());
+#endif
 }
 
 void

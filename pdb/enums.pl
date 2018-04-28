@@ -398,7 +398,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_PAINT_INCREMENTAL => '1' }
 	},
     GimpPDBArgType =>
-	{ contig => 0,
+	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_PDB_INT32 GIMP_PDB_INT16 GIMP_PDB_INT8
 			  GIMP_PDB_FLOAT GIMP_PDB_STRING GIMP_PDB_INT32ARRAY
@@ -408,8 +408,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_PDB_IMAGE GIMP_PDB_LAYER GIMP_PDB_CHANNEL
 			  GIMP_PDB_DRAWABLE GIMP_PDB_SELECTION
 			  GIMP_PDB_COLORARRAY GIMP_PDB_VECTORS
-			  GIMP_PDB_PARASITE GIMP_PDB_STATUS GIMP_PDB_END
-			  GIMP_PDB_PATH GIMP_PDB_BOUNDARY GIMP_PDB_REGION) ],
+			  GIMP_PDB_PARASITE GIMP_PDB_STATUS GIMP_PDB_END) ],
 	  mapping => { GIMP_PDB_INT32 => '0',
 		       GIMP_PDB_INT16 => '1',
 		       GIMP_PDB_INT8 => '2',
@@ -432,10 +431,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_PDB_VECTORS => '19',
 		       GIMP_PDB_PARASITE => '20',
 		       GIMP_PDB_STATUS => '21',
-		       GIMP_PDB_END => '22',
-		       GIMP_PDB_PATH => 'GIMP_PDB_VECTORS',
-		       GIMP_PDB_BOUNDARY => 'GIMP_PDB_COLORARRAY',
-		       GIMP_PDB_REGION => 'GIMP_PDB_ITEM' }
+		       GIMP_PDB_END => '22' }
 	},
     GimpPDBErrorHandler =>
 	{ contig => 1,
@@ -649,26 +645,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_UNIT_POINT => '3',
 		       GIMP_UNIT_PICA => '4',
 		       GIMP_UNIT_END => '5' }
-	},
-    GimpUserDirectory =>
-	{ contig => 1,
-	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_USER_DIRECTORY_DESKTOP
-			  GIMP_USER_DIRECTORY_DOCUMENTS
-			  GIMP_USER_DIRECTORY_DOWNLOAD
-			  GIMP_USER_DIRECTORY_MUSIC
-			  GIMP_USER_DIRECTORY_PICTURES
-			  GIMP_USER_DIRECTORY_PUBLIC_SHARE
-			  GIMP_USER_DIRECTORY_TEMPLATES
-			  GIMP_USER_DIRECTORY_VIDEOS) ],
-	  mapping => { GIMP_USER_DIRECTORY_DESKTOP => '0',
-		       GIMP_USER_DIRECTORY_DOCUMENTS => '1',
-		       GIMP_USER_DIRECTORY_DOWNLOAD => '2',
-		       GIMP_USER_DIRECTORY_MUSIC => '3',
-		       GIMP_USER_DIRECTORY_PICTURES => '4',
-		       GIMP_USER_DIRECTORY_PUBLIC_SHARE => '5',
-		       GIMP_USER_DIRECTORY_TEMPLATES => '6',
-		       GIMP_USER_DIRECTORY_VIDEOS => '7' }
 	},
     GimpVectorsStrokeType =>
 	{ contig => 1,

@@ -782,23 +782,6 @@ gimp_plug_in_directory_file (const gchar *first_element,
 }
 
 /**
- * gimp_user_directory:
- * @type: the type of user directory to retrieve
- *
- * This procedure is deprecated! Use g_get_user_special_dir() instead.
- *
- * Returns: The path to the specified user directory, or %NULL if the
- *          logical ID was not found.
- *
- * Since: 2.4
- **/
-const gchar *
-gimp_user_directory (GimpUserDirectory type)
-{
-  return g_get_user_special_dir ((GUserDirectory) type);
-}
-
-/**
  * gimp_personal_rc_file:
  * @basename: The basename of a rc_file.
  *
