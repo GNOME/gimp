@@ -50,8 +50,6 @@ struct _GimpColorConfig
   GimpColorRenderingIntent    display_intent;
   GimpColorRenderingIntent    simulation_intent;
 
-  gchar                      *display_module;
-
   gboolean                    simulation_gamut_check;
   GimpRGB                     out_of_gamut_color;
 

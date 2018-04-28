@@ -183,58 +183,6 @@ G_BEGIN_DECLS
                                    GIMP_CONFIG_PARAM_SERIALIZE))
 
 
-/*  deprecated macros, they all lack the "nick" parameter  */
-
-#ifndef GIMP_DISABLE_DEPRECATED
-
-#define GIMP_CONFIG_INSTALL_PROP_BOOLEAN(class, id, name, blurb, default, flags) \
-  GIMP_CONFIG_PROP_BOOLEAN(class, id, name, NULL, blurb, default, flags);
-
-#define GIMP_CONFIG_INSTALL_PROP_INT(class, id, name, blurb, min, max, default, flags) \
-  GIMP_CONFIG_PROP_INT(class, id, name, NULL, blurb, min, max, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_UINT(class, id, name, blurb, min, max, default, flags) \
-  GIMP_CONFIG_PROP_UINT(class, id, name, NULL, blurb, min, max, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_UNIT(class, id, name, blurb, pixels, percent, default, flags) \
-  GIMP_CONFIG_PROP_UNIT(class, id, name, NULL, blurb, pixels, percent, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_MEMSIZE(class, id, name, blurb, min, max, default, flags) \
-  GIMP_CONFIG_PROP_MEMSIZE(class, id, name, NULL, blurb, min, max, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_DOUBLE(class, id, name, blurb, min, max, default, flags) \
-  GIMP_CONFIG_PROP_DOUBLE(class, id, name, NULL, blurb, min, max, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_RESOLUTION(class, id, name, blurb, default, flags) \
-  GIMP_CONFIG_PROP_RESOLUTION(class, id, name, NULL, blurb, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_ENUM(class, id, name, blurb, enum_type, default, flags) \
-  GIMP_CONFIG_PROP_ENUM(class, id, name, NULL, blurb, enum_type, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_STRING(class, id, name, blurb, default, flags) \
-  GIMP_CONFIG_PROP_STRING(class, id, name, NULL, blurb, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_PATH(class, id, name, blurb, path_type, default, flags) \
-  GIMP_CONFIG_PROP_PATH(class, id, name, NULL, blurb, path_type, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_RGB(class, id, name, blurb, has_alpha, default, flags) \
-  GIMP_CONFIG_PROP_RGB(class, id, name, NULL, blurb, has_alpha, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_MATRIX2(class, id, name, blurb, default, flags) \
-  GIMP_CONFIG_PROP_MATRIX2(class, id, name, NULL, blurb, default, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id, name, blurb, object_type, flags) \
-  GIMP_CONFIG_PROP_OBJECT(class, id, name, NULL, blurb, object_type, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_BOXED(class, id, name, blurb, boxed_type, flags) \
-  GIMP_CONFIG_PROP_BOXED(class, id, name, NULL, blurb, boxed_type, flags)
-
-#define GIMP_CONFIG_INSTALL_PROP_POINTER(class, id, name, blurb, flags) \
-  GIMP_CONFIG_PROP_POINTER(class, id, name, NULL, blurb, flags)
-
-#endif /* GIMP_DISABLE_DEPRECATED */
-
-
 G_END_DECLS
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */
