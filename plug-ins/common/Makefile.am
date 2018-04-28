@@ -59,7 +59,6 @@ libexec_PROGRAMS = \
 	checkerboard \
 	cml-explorer \
 	color-cube-analyze \
-	color-enhance \
 	colorify \
 	colormap-remap \
 	compose \
@@ -335,23 +334,6 @@ color_cube_analyze_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(color_cube_analyze_RC)
-
-color_enhance_SOURCES = \
-	color-enhance.c
-
-color_enhance_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(color_enhance_RC)
 
 colorify_SOURCES = \
 	colorify.c
