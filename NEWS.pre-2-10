@@ -1,14 +1,12 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                         2.10 Stable Branch
+                      2.10 Development Branch
                    ------------------------------
 
-This is the stable branch of GIMP. Unlike earlier stable branches,
-we do allow some new features here, if they are not too invasive.
-Otherwise, this branch is only for bug-fixes.
+This used to be the development branch that lead to GIMP 2.10.
 
 
-Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0
+Overview of Changes from GIMP 2.10.0 RC2 to GIMP 2.10.0
 =======================================================
 
 Core:
