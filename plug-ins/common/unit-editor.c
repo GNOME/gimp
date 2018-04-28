@@ -338,11 +338,11 @@ new_unit_dialog (GtkWidget *main_dialog,
       singular     = g_strstrip (singular);
       plural       = g_strstrip (plural);
 
-      if (!strlen (identifier) |
-          !strlen (symbol) |
-          !strlen (abbreviation) |
-          !strlen (singular) |
-          !strlen (plural))
+      if (! strlen (identifier)   ||
+          ! strlen (symbol)       ||
+          ! strlen (abbreviation) ||
+          ! strlen (singular)     ||
+          ! strlen (plural))
         {
           GtkWidget *msg = gtk_message_dialog_new (GTK_WINDOW (dialog), 0,
                                                    GTK_MESSAGE_ERROR,
