@@ -45,16 +45,19 @@ G_BEGIN_DECLS
 #define GIMP_CHAIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
 
 
-typedef struct _GimpChainButtonClass GimpChainButtonClass;
+typedef struct _GimpChainButtonPrivate GimpChainButtonPrivate;
+typedef struct _GimpChainButtonClass   GimpChainButtonClass;
 
 struct _GimpChainButton
 {
-  GtkTable  parent_instance;
+  GtkGrid                 parent_instance;
+
+  GimpChainButtonPrivate *priv;
 };
 
 struct _GimpChainButtonClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass  parent_class;
 
   void (* toggled)  (GimpChainButton *button);
 
@@ -63,6 +66,10 @@ struct _GimpChainButtonClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

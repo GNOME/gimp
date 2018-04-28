@@ -64,8 +64,6 @@ enum
 };
 
 
-typedef struct _GimpChainButtonPrivate GimpChainButtonPrivate;
-
 struct _GimpChainButtonPrivate
 {
   GimpChainPosition  position;
@@ -77,9 +75,7 @@ struct _GimpChainButtonPrivate
   GtkWidget         *image;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_CHAIN_BUTTON, \
-                                                      GimpChainButtonPrivate)
+#define GET_PRIVATE(obj) (((GimpChainButton *) (obj))->priv)
 
 
 static void      gimp_chain_button_constructed      (GObject         *object);
@@ -100,7 +96,7 @@ static GtkWidget * gimp_chain_line_new            (GimpChainPosition  position,
                                                    gint               which);
 
 
-G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_GRID)
 
 #define parent_class gimp_chain_button_parent_class
 
@@ -159,6 +155,12 @@ gimp_chain_button_init (GimpChainButton *button)
 {
   GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
+  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
+                                              GIMP_TYPE_CHAIN_BUTTON,
+                                              GimpChainButtonPrivate);
+
+  private = GET_PRIVATE (button);
+
   private->position = GIMP_CHAIN_TOP;
   private->active   = FALSE;
   private->image    = gtk_image_new ();
@@ -188,23 +190,21 @@ gimp_chain_button_constructed (GObject *object)
 
   if (private->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
-      gtk_table_resize (GTK_TABLE (button), 3, 1);
-      gtk_table_attach (GTK_TABLE (button), private->button, 0, 1, 1, 2,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_table_attach_defaults (GTK_TABLE (button),
-                                 private->line1, 0, 1, 0, 1);
-      gtk_table_attach_defaults (GTK_TABLE (button),
-                                 private->line2, 0, 1, 2, 3);
+      gtk_widget_set_vexpand (private->line1, TRUE);
+      gtk_widget_set_vexpand (private->line2, TRUE);
+
+      gtk_grid_attach (GTK_GRID (button), private->line1,  0, 0, 1, 1);
+      gtk_grid_attach (GTK_GRID (button), private->button, 0, 1, 1, 1);
+      gtk_grid_attach (GTK_GRID (button), private->line2,  0, 2, 1, 1);
     }
   else
     {
-      gtk_table_resize (GTK_TABLE (button), 1, 3);
-      gtk_table_attach (GTK_TABLE (button), private->button, 1, 2, 0, 1,
-                        GTK_SHRINK, GTK_SHRINK, 0, 0);
-      gtk_table_attach_defaults (GTK_TABLE (button),
-                                 private->line1, 0, 1, 0, 1);
-      gtk_table_attach_defaults (GTK_TABLE (button),
-                                 private->line2, 2, 3, 0, 1);
+      gtk_widget_set_hexpand (private->line1, TRUE);
+      gtk_widget_set_hexpand (private->line2, TRUE);
+
+      gtk_grid_attach (GTK_GRID (button), private->line1,  0, 0, 1, 1);
+      gtk_grid_attach (GTK_GRID (button), private->button, 1, 0, 1, 1);
+      gtk_grid_attach (GTK_GRID (button), private->line2,  2, 0, 1, 1);
     }
 
   gtk_widget_show (private->button);
@@ -260,11 +260,11 @@ gimp_chain_button_get_property (GObject    *object,
  * Creates a new #GimpChainButton widget.
  *
  * This returns a button showing either a broken or a linked chain and
- * small clamps attached to both sides that visually group the two widgets
- * you want to connect. This widget looks best when attached
- * to a table taking up two columns (or rows respectively) next
- * to the widgets that it is supposed to connect. It may work
- * for more than two widgets, but the look is optimized for two.
+ * small clamps attached to both sides that visually group the two
+ * widgets you want to connect. This widget looks best when attached
+ * to a grid taking up two columns (or rows respectively) next to the
+ * widgets that it is supposed to connect. It may work for more than
+ * two widgets, but the look is optimized for two.
  *
  * Returns: Pointer to the new #GimpChainButton, which is inactive
  *          by default. Use gimp_chain_button_set_active() to
