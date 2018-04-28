@@ -62,6 +62,10 @@
 #include <sys/prctl.h>
 #endif
 
+#ifdef HAVE_SYS_THR_H
+#include <sys/thr.h>
+#endif
+
 #endif /* G_OS_WIN32 */
 
 #include "gimpbasetypes.h"
@@ -1180,6 +1184,9 @@ gimp_stack_trace_print (const gchar   *prog_name,
   DWORD    tid = GetCurrentThreadId ();
 #elif defined(SYS_gettid)
   long     tid = syscall (SYS_gettid);
+#elif defined(HAVE_THR_SELF)
+  long     tid = 0;
+  thr_self (&tid);
 #endif
 
   g_snprintf (gimp_pid, 16, "%u", (guint) pid);
@@ -1272,7 +1279,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
         {
           if (! stack_printed)
             {
-#if defined(G_OS_WIN32) || defined(SYS_gettid)
+#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
               if (stream)
                 g_fprintf (stream,
                            "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
@@ -1281,7 +1288,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
               if (trace)
                 {
                   gtrace = g_string_new (NULL);
-#if defined(G_OS_WIN32) || defined(SYS_gettid)
+#if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
                   g_string_printf (gtrace,
                                    "\n# Stack traces obtained from PID %d - Thread %lu #\n\n",
                                    pid, tid);
