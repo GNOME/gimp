@@ -30,7 +30,6 @@
 #include "gimpenumwidgets.h"
 #include "gimpframe.h"
 #include "gimphelpui.h"
-#include "gimp3migration.h"
 
 
 /**

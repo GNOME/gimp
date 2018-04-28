@@ -79,7 +79,6 @@
 #include <libgimpwidgets/gimpwidgets-error.h>
 #include <libgimpwidgets/gimpwidgetsutils.h>
 #include <libgimpwidgets/gimpzoommodel.h>
-#include <libgimpwidgets/gimp3migration.h>
 
 #undef __GIMP_WIDGETS_H_INSIDE__
 

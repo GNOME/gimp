@@ -26,7 +26,6 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpbutton.h"
-#include "gimp3migration.h"
 
 
 /**

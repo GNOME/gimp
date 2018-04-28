@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+#/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimppageselector.c
@@ -33,7 +33,6 @@
 #include "gimppageselector.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets.h"
-#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 

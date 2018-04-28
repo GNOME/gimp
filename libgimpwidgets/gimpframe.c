@@ -27,7 +27,6 @@
 
 #include "gimpwidgetstypes.h"
 
-#include "gimp3migration.h"
 #include "gimpframe.h"
 
 
