@@ -39,6 +39,12 @@
  **/
 
 
+typedef void   (* GimpRgnFuncSrc)     (gint          x,
+                                       gint          y,
+                                       const guchar *src,
+                                       gint          bpp,
+                                       gpointer      data);
+
 struct _GimpRgnIterator
 {
   GimpDrawable *drawable;
@@ -107,90 +113,6 @@ gimp_rgn_iterator_free (GimpRgnIterator *iter)
   g_return_if_fail (iter != NULL);
 
   g_slice_free (GimpRgnIterator, iter);
-}
-
-void
-gimp_rgn_iterator_src (GimpRgnIterator *iter,
-                       GimpRgnFuncSrc   func,
-                       gpointer         data)
-{
-  GimpPixelRgn srcPR;
-
-  g_return_if_fail (iter != NULL);
-
-  gimp_pixel_rgn_init (&srcPR, iter->drawable,
-                       iter->x1, iter->y1,
-                       iter->x2 - iter->x1, iter->y2 - iter->y1,
-                       FALSE, FALSE);
-  gimp_rgn_iterator_iter_single (iter, &srcPR, func, data);
-}
-
-void
-gimp_rgn_iterator_src_dest (GimpRgnIterator    *iter,
-                            GimpRgnFuncSrcDest  func,
-                            gpointer            data)
-{
-  GimpPixelRgn  srcPR, destPR;
-  gint          x1, y1, x2, y2;
-  gint          bpp;
-  gint          count;
-  gpointer      pr;
-  gint          total_area;
-  gint          area_so_far;
-
-  g_return_if_fail (iter != NULL);
-
-  x1 = iter->x1;
-  y1 = iter->y1;
-  x2 = iter->x2;
-  y2 = iter->y2;
-
-  total_area  = (x2 - x1) * (y2 - y1);
-  area_so_far = 0;
-
-  gimp_pixel_rgn_init (&srcPR, iter->drawable, x1, y1, x2 - x1, y2 - y1,
-                       FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, iter->drawable, x1, y1, x2 - x1, y2 - y1,
-                       TRUE, TRUE);
-
-  bpp = srcPR.bpp;
-
-  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR), count = 0;
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr), count++)
-    {
-      const guchar *src  = srcPR.data;
-      guchar       *dest = destPR.data;
-      gint          y;
-
-      for (y = srcPR.y; y < srcPR.y + srcPR.h; y++)
-        {
-          const guchar *s = src;
-          guchar       *d = dest;
-          gint          x;
-
-          for (x = srcPR.x; x < srcPR.x + srcPR.w; x++)
-            {
-              func (x, y, s, d, bpp, data);
-
-              s += bpp;
-              d += bpp;
-            }
-
-          src  += srcPR.rowstride;
-          dest += destPR.rowstride;
-        }
-
-      area_so_far += srcPR.w * srcPR.h;
-
-      if ((count % 16) == 0)
-        gimp_progress_update ((gdouble) area_so_far / (gdouble) total_area);
-    }
-
-  gimp_drawable_flush (iter->drawable);
-  gimp_drawable_merge_shadow (iter->drawable->drawable_id, TRUE);
-  gimp_drawable_update (iter->drawable->drawable_id,
-                        x1, y1, x2 - x1, y2 - y1);
 }
 
 void

@@ -24,9 +24,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-/* we use our own deprecated API here */
-#define GIMP_DISABLE_DEPRECATION_WARNINGS
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpuitypes.h"
@@ -49,7 +46,6 @@
 enum
 {
   PROP_0,
-  PROP_DRAWABLE,
   PROP_DRAWABLE_ID,
   PROP_MODEL
 };
@@ -58,7 +54,6 @@ enum
 struct _GimpZoomPreviewPrivate
 {
   gint32         drawable_ID;
-  GimpDrawable  *drawable;
   GimpZoomModel *model;
   GdkRectangle   extents;
 };
@@ -114,8 +109,6 @@ static void     gimp_zoom_preview_untransform     (GimpPreview     *preview,
                                                    gint            *dest_x,
                                                    gint            *dest_y);
 
-static void     gimp_zoom_preview_set_drawable    (GimpZoomPreview *preview,
-                                                   GimpDrawable    *drawable);
 static void     gimp_zoom_preview_set_drawable_id (GimpZoomPreview *preview,
                                                    gint32           drawable_ID);
 static void     gimp_zoom_preview_set_model       (GimpZoomPreview *preview,
@@ -158,22 +151,6 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   preview_class->untransform  = gimp_zoom_preview_untransform;
 
   g_type_class_add_private (object_class, sizeof (GimpZoomPreviewPrivate));
-
-  /**
-   * GimpZoomPreview:drawable:
-   *
-   * The drawable the #GimpZoomPreview is attached to.
-   *
-   * Deprecated: use the drawable-id property instead.
-   *
-   * Since: 2.4
-   */
-  g_object_class_install_property (object_class, PROP_DRAWABLE,
-                                   g_param_spec_pointer ("drawable",
-                                                         "Drawable",
-                                                         "Deprecated: use the drawable-id property instead",
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   /**
    * GimpZoomPreview:drawable-id:
@@ -302,10 +279,6 @@ gimp_zoom_preview_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_value_set_pointer (value, gimp_zoom_preview_get_drawable (preview));
-      break;
-
     case PROP_DRAWABLE_ID:
       g_value_set_int (value, gimp_zoom_preview_get_drawable_id (preview));
       break;
@@ -330,12 +303,6 @@ gimp_zoom_preview_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_return_if_fail (preview->priv->drawable_ID < 1);
-      if (g_value_get_pointer (value))
-        gimp_zoom_preview_set_drawable (preview, g_value_get_pointer (value));
-      break;
-
     case PROP_DRAWABLE_ID:
       gimp_zoom_preview_set_drawable_id (preview, g_value_get_int (value));
       break;
@@ -648,18 +615,6 @@ gimp_zoom_preview_untransform (GimpPreview *preview,
 }
 
 static void
-gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
-                                GimpDrawable    *drawable)
-{
-  g_return_if_fail (preview->priv->drawable == NULL);
-  g_return_if_fail (preview->priv->drawable_ID < 1);
-
-  preview->priv->drawable = drawable;
-
-  gimp_zoom_preview_set_drawable_id (preview, drawable->drawable_id);
-}
-
-static void
 gimp_zoom_preview_set_drawable_id (GimpZoomPreview *preview,
                                    gint32           drawable_ID)
 {
@@ -819,63 +774,6 @@ gimp_zoom_preview_new_with_model_from_drawable_id (gint32         drawable_ID,
 }
 
 /**
- * gimp_zoom_preview_new:
- * @drawable: a #GimpDrawable
- *
- * Creates a new #GimpZoomPreview widget for @drawable.
- *
- * Deprecated: 2.10: Use gimp_zoom_preview_new_from_drawable_id() instead.
- *
- * Since: 2.4
- *
- * Returns: a new #GimpZoomPreview.
- **/
-GtkWidget *
-gimp_zoom_preview_new (GimpDrawable *drawable)
-{
-  g_return_val_if_fail (drawable != NULL, NULL);
-
-  return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
-                       "drawable", drawable,
-                       NULL);
-}
-
-/**
- * gimp_zoom_preview_new_with_model:
- * @drawable: a #GimpDrawable
- * @model:    a #GimpZoomModel
- *
- * Creates a new #GimpZoomPreview widget for @drawable using the
- * given @model.
- *
- * This variant of gimp_zoom_preview_new() allows you to create a
- * preview using an existing zoom model. This may be useful if for
- * example you want to have two zoom previews that keep their zoom
- * factor in sync.
- *
- * Deprecated: 2.10: Use gimp_zoom_preview_new_with_model_from_drawable_id()
- * instead.
- *
- * Since: 2.4
- *
- * Returns: a new #GimpZoomPreview.
- **/
-GtkWidget *
-gimp_zoom_preview_new_with_model (GimpDrawable  *drawable,
-                                  GimpZoomModel *model)
-
-{
-  g_return_val_if_fail (drawable != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
-
-  return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
-                       "drawable", drawable,
-                       "model",    model,
-                       NULL);
-}
-
-
-/**
  * gimp_zoom_preview_get_drawable_id:
  * @preview: a #GimpZoomPreview widget
  *
@@ -892,26 +790,6 @@ gimp_zoom_preview_get_drawable_id (GimpZoomPreview *preview)
   g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), -1);
 
   return GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
-}
-
-/**
- * gimp_zoom_preview_get_drawable:
- * @preview: a #GimpZoomPreview widget
- *
- * Returns the #GimpDrawable the #GimpZoomPreview is attached to.
- *
- * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
- *
- * Deprecated: 2.10: Use gimp_zoom_preview_get_drawable_id() instead.
- *
- * Since: 2.4
- **/
-GimpDrawable *
-gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
-{
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
-
-  return GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview)->drawable;
 }
 
 /**

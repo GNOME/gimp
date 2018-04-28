@@ -23,9 +23,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-/* we use our own deprecated API here */
-#define GIMP_DISABLE_DEPRECATION_WARNINGS
-
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpuitypes.h"
@@ -49,7 +46,6 @@
 enum
 {
   PROP_0,
-  PROP_DRAWABLE,
   PROP_DRAWABLE_ID
 };
 
@@ -93,8 +89,6 @@ static void  gimp_drawable_preview_draw_buffer   (GimpPreview     *preview,
                                                   const guchar    *buffer,
                                                   gint             rowstride);
 
-static void  gimp_drawable_preview_set_drawable (GimpDrawablePreview *preview,
-                                                 GimpDrawable        *drawable);
 static void  gimp_drawable_preview_set_drawable_id
                                                 (GimpDrawablePreview *preview,
                                                  gint32               drawable_ID);
@@ -127,20 +121,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   preview_class->draw_buffer  = gimp_drawable_preview_draw_buffer;
 
   g_type_class_add_private (object_class, sizeof (GimpDrawablePreviewPrivate));
-
-  /**
-   * GimpDrawablePreview:drawable:
-   *
-   * Deprecated: use the drawable-id property instead.
-   *
-   * Since: 2.4
-   */
-  g_object_class_install_property (object_class, PROP_DRAWABLE,
-                                   g_param_spec_pointer ("drawable",
-                                                         "Drawable",
-                                                         "Deprecated: use the drawable-id property instead",
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   /**
    * GimpDrawablePreview:drawable-id:
@@ -222,10 +202,6 @@ gimp_drawable_preview_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_value_set_pointer (value, preview->drawable);
-      break;
-
     case PROP_DRAWABLE_ID:
       g_value_set_int (value,
                        gimp_drawable_preview_get_drawable_id (preview));
@@ -243,18 +219,10 @@ gimp_drawable_preview_set_property (GObject      *object,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpDrawablePreview        *preview = GIMP_DRAWABLE_PREVIEW (object);
-  GimpDrawablePreviewPrivate *priv    = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  GimpDrawablePreview *preview = GIMP_DRAWABLE_PREVIEW (object);
 
   switch (property_id)
     {
-    case PROP_DRAWABLE:
-      g_return_if_fail (priv->drawable_ID < 1);
-      if (g_value_get_pointer (value))
-        gimp_drawable_preview_set_drawable (preview,
-                                            g_value_get_pointer (value));
-      break;
-
     case PROP_DRAWABLE_ID:
       gimp_drawable_preview_set_drawable_id (preview,
                                              g_value_get_int (value));
@@ -538,22 +506,6 @@ gimp_drawable_preview_draw_buffer (GimpPreview  *preview,
 }
 
 static void
-gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
-                                    GimpDrawable        *drawable)
-{
-  GimpPreview                *preview = GIMP_PREVIEW (drawable_preview);
-  GimpDrawablePreviewPrivate *priv    = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
-
-  g_return_if_fail (drawable_preview->drawable == NULL);
-  g_return_if_fail (priv->drawable_ID < 1);
-
-  drawable_preview->drawable = drawable;
-
-  gimp_drawable_preview_set_drawable_id (drawable_preview,
-                                         drawable->drawable_id);
-}
-
-static void
 gimp_drawable_preview_set_drawable_id (GimpDrawablePreview *drawable_preview,
                                        gint32               drawable_ID)
 {
@@ -656,54 +608,6 @@ gimp_drawable_preview_get_drawable_id (GimpDrawablePreview *preview)
   g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), -1);
 
   return GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
-}
-
-/**
- * gimp_drawable_preview_new:
- * @drawable: a #GimpDrawable
- * @toggle:   unused
- *
- * Creates a new #GimpDrawablePreview widget for @drawable.
- *
- * In GIMP 2.2 the @toggle parameter was provided to conviently access
- * the state of the "Preview" check-button. This is not any longer
- * necessary as the preview itself now stores this state, as well as
- * the scroll offset.
- *
- * Returns: A pointer to the new #GimpDrawablePreview widget.
- *
- * Deprecated: Use gimp_drawable_preview_new_from_drawable_id() instead.
- *
- * Since: 2.2
- **/
-GtkWidget *
-gimp_drawable_preview_new (GimpDrawable *drawable,
-                           gboolean     *toggle)
-{
-  g_return_val_if_fail (drawable != NULL, NULL);
-
-  return g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
-                       "drawable", drawable,
-                       NULL);
-}
-
-/**
- * gimp_drawable_preview_get_drawable:
- * @preview:   a #GimpDrawablePreview widget
- *
- * Return value: the #GimpDrawable that has been passed to
- *               gimp_drawable_preview_new().
- *
- * Deprecated: use gimp_drawable_preview_get_drawable_id() instead.
- *
- * Since: 2.2
- **/
-GimpDrawable *
-gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), NULL);
-
-  return preview->drawable;
 }
 
 /**

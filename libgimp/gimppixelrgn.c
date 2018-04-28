@@ -148,35 +148,6 @@ gimp_pixel_rgn_init (GimpPixelRgn *pr,
 }
 
 /**
- * gimp_pixel_rgn_resize:
- * @pr:      a pointer to a previously initialized #GimpPixelRgn.
- * @x:       the x coordinate of the new position of the region's
- *           top-left corner.
- * @y:       the y coordinate of the new position of the region's
- *           top-left corner.
- * @width:   the new width of the region.
- * @height:  the new height of the region.
- *
- * Change the position and size of a previously initialized pixel region.
- **/
-void
-gimp_pixel_rgn_resize (GimpPixelRgn *pr,
-                       gint          x,
-                       gint          y,
-                       gint          width,
-                       gint          height)
-{
-  g_return_if_fail (pr != NULL && pr->drawable != NULL);
-  g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
-  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
-
-  pr->x = x;
-  pr->y = y;
-  pr->w = width;
-  pr->h = height;
-}
-
-/**
  * gimp_pixel_rgn_get_pixel:
  * @pr:    a pointer to a previously initialized #GimpPixelRgn.
  * @buf:   a pointer to an array of #guchar

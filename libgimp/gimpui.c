@@ -18,9 +18,6 @@
 
 #include "config.h"
 
-#ifdef GDK_DISABLE_DEPRECATED
-#undef GDK_DISABLE_DEPRECATED
-#endif
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
