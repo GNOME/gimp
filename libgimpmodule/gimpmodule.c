@@ -394,24 +394,6 @@ gimp_module_state_name (GimpModuleState state)
 }
 
 /**
- * gimp_module_register_enum:
- * @module:              a module
- * @name:                the name of the new enum type
- * @const_static_values: the enum values
- *
- * This function is deprecated! Use g_type_module_register_enum() instead.
- *
- * Return value: a new enum #GType
- **/
-GType
-gimp_module_register_enum (GTypeModule      *module,
-                           const gchar      *name,
-                           const GEnumValue *const_static_values)
-{
-  return g_type_module_register_enum (module, name, const_static_values);
-}
-
-/**
  * gimp_module_error_quark:
  *
  * This function is never called directly. Use GIMP_MODULE_ERROR() instead.
