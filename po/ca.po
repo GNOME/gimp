@@ -71,7 +71,7 @@ msgstr ""
 "El GIMP és ampliable i extensible. Està dissenyat per augmentar-se amb "
 "connectors i extensions, per fer-hi gairebé de tot. La interfície avançada "
 "d'scripts ho permet tot, es poden realitzar fàcilment amb scripts des de la "
-"tasca més simple als processos més complexos de manipulació d'imatges . El "
+"tasca més simple als processos més complexos de manipulació d'imatges. El "
 "GIMP està disponible per a Linux, Microsoft Windows i OS X."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
@@ -2544,7 +2544,7 @@ msgstr "Angle del pinzell (editor): gira a la dreta 15°"
 #: ../app/actions/context-actions.c:1085
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
-msgstr "Angle del pinzell (editor): gira a l'esquerre un 15°"
+msgstr "Angle del pinzell (editor): gira a l'esquerre 15°"
 
 #: ../app/actions/context-commands.c:411
 #, c-format
@@ -3797,7 +3797,7 @@ msgstr "Copia de la regió seleccionada tot el que està visible"
 #: ../app/actions/edit-actions.c:130
 msgctxt "edit-action"
 msgid "From _Clipboard"
-msgstr "Del _porta-retalls"
+msgstr "Des del _porta-retalls"
 
 #: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
 msgctxt "edit-action"
@@ -6091,7 +6091,7 @@ msgstr "_Escala de grisos..."
 #: ../app/actions/image-commands.c:559
 #, c-format
 msgid "Saving color profile failed: %s"
-msgstr "S'ha produït un error al desar el perfil de color: %s"
+msgstr "S'ha produït un error en desar el perfil de color: %s"
 
 #: ../app/actions/image-commands.c:598
 msgid "Save Color Profile"
@@ -11413,22 +11413,22 @@ msgstr "Gran (256x256)"
 #: ../app/core/core-enums.c:671
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
-msgstr ""
+msgstr "Depuració d'avisos, errors crítics i fallades"
 
 #: ../app/core/core-enums.c:672
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
-msgstr ""
+msgstr "Depuració d'errors crítics i fallades"
 
 #: ../app/core/core-enums.c:673
 msgctxt "debug-policy"
 msgid "Debug crashes only"
-msgstr ""
+msgstr "Depuració només de fallades"
 
 #: ../app/core/core-enums.c:674
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
-msgstr ""
+msgstr "No utilitzis mai la depuració"
 
 #: ../app/core/core-enums.c:863
 msgctxt "undo-type"
@@ -12238,7 +12238,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
-"Error greu d'anàlisi en el fitxer de pinzell: les dimensions del pinzells "
+"Error greu d'anàlisi en el fitxer de pinzell: les dimensions del pinzell "
 "estan fora de rang."
 
 #: ../app/core/gimpbrush-load.c:671
@@ -14162,11 +14162,9 @@ msgid "translator-credits"
 msgstr ""
 "Softcatalà - www.softcatala.org\n"
 " Diversos contribuïdors, 2000-2008.\n"
-" Quim Perez i Noguer <noguer a gmail.com>, 2005-2008\n"
+" Quim Perez i Noguer <noguer a gmail.com>, 2005-2011\n"
 " Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007\n"
 " Jordi Jover, jordijn@softcatala.org, 2002\n"
-" Joaquim Perez <noguer@gmail.com>, 2008\n"
-" Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011\n"
 " Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013\n"
 " Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017\n"
 " Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2018"
@@ -15296,16 +15294,17 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
+"Esperem que mai us calguin aquests paràmetres, però com tot el programari, "
+"el GIMP conté errades, i poden ocórrer fallades. Si això succeïx, "
+"ens podeu ajudar enviant informes d'error."
 
 #: ../app/dialogs/preferences-dialog.c:1236
 msgid "Bug Reporting"
 msgstr "Informe d'error"
 
 #: ../app/dialogs/preferences-dialog.c:1243
-#, fuzzy
-#| msgid "Debug Policy"
 msgid "Debug _policy:"
-msgstr "Política de depuració"
+msgstr "_Política de depuració:"
 
 #: ../app/dialogs/preferences-dialog.c:1255
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
@@ -24748,9 +24747,10 @@ msgid_plural "Message repeated %d times."
 msgstr[0] "Missatge repetit una sola vegada."
 msgstr[1] "Missatge repetit %d vegades."
 
+#. N.T.: El text apareix entre () com a part d'una altre frase.
 #: ../app/widgets/gimpopendialog.c:71
 msgid "Automatically Detected"
-msgstr "Detectat automàticament"
+msgstr "detectat automàticament"
 
 #: ../app/widgets/gimpoverlaydialog.c:229
 msgid "Detach dialog from canvas"
