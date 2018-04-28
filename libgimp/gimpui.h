@@ -28,21 +28,15 @@
 #include <libgimp/gimpuitypes.h>
 
 #include <libgimp/gimpaspectpreview.h>
-#include <libgimp/gimpbrushmenu.h>
 #include <libgimp/gimpbrushselectbutton.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpexport.h>
-#include <libgimp/gimpfontmenu.h>
 #include <libgimp/gimpfontselectbutton.h>
-#include <libgimp/gimpgradientmenu.h>
 #include <libgimp/gimpgradientselectbutton.h>
 #include <libgimp/gimpimagecombobox.h>
 #include <libgimp/gimpimagemetadata.h>
 #include <libgimp/gimpitemcombobox.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimppalettemenu.h>
 #include <libgimp/gimppaletteselectbutton.h>
-#include <libgimp/gimppatternmenu.h>
 #include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpprocview.h>
