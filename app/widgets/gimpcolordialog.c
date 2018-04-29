@@ -39,6 +39,7 @@
 #include "gimpcolorhistory.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
+#include "gimpwidgets-constructors.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -139,7 +140,6 @@ gimp_color_dialog_constructed (GObject *object)
   GtkWidget          *hbox;
   GtkWidget          *history;
   GtkWidget          *button;
-  GtkWidget          *arrow;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -150,7 +150,7 @@ gimp_color_dialog_constructed (GObject *object)
   gtk_widget_show (hbox);
 
   /* Button for adding to color history. */
-  button = gtk_button_new ();
+  button = gimp_icon_button_new (GIMP_ICON_LIST_ADD, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button), FALSE, FALSE, 0);
   gimp_help_set_help_data (button,
                            _("Add the current color to the color history"),
@@ -160,10 +160,6 @@ gimp_color_dialog_constructed (GObject *object)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_color_history_add_clicked),
                     dialog);
-
-  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (button), arrow);
-  gtk_widget_show (arrow);
 
   /* Color history table. */
   history = gimp_color_history_new (viewable_dialog->context, 12);
