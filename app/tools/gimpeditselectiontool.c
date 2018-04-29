@@ -433,7 +433,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
     }
 
   for (list = edit_select->live_items; list; list = g_list_next (list))
-    gimp_item_start_move (GIMP_ITEM (list->data), TRUE);
+    gimp_item_start_transform (GIMP_ITEM (list->data), TRUE);
 
   tool_manager_push_tool (display->gimp, tool);
 
@@ -487,7 +487,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
                                   TRUE);
 
   for (list = edit_select->live_items; list; list = g_list_next (list))
-    gimp_item_end_move (GIMP_ITEM (list->data), TRUE);
+    gimp_item_end_transform (GIMP_ITEM (list->data), TRUE);
 
   gimp_image_undo_group_end (image);
 
@@ -600,7 +600,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
 
           edit_select->live_items = g_list_prepend (NULL, active_item);
 
-          gimp_item_start_move (active_item, TRUE);
+          gimp_item_start_transform (active_item, TRUE);
 
           /*  fallthru  */
 
