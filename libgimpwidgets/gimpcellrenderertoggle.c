@@ -488,9 +488,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
     {
       gint width, height;
 
-      if (! gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
-                                               priv->stock_size,
-                                               &width, &height))
+      if (! gtk_icon_size_lookup (priv->stock_size, &width, &height))
         {
           width  = 20;
           height = 20;

@@ -215,8 +215,7 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
   gint                          xpad;
   gint                          ypad;
 
-  gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
-                                     private->size, &calc_width, &calc_height);
+  gtk_icon_size_lookup (private->size, &calc_width, &calc_height);
   gtk_cell_renderer_get_alignment (cell, &xalign, &yalign);
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 

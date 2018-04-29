@@ -396,10 +396,7 @@ gimp_action_set_proxy (GimpAction *action,
             gimp_color_area_set_color_config (GIMP_COLOR_AREA (area),
                                               action->context->gimp->config->color_management);
 
-          gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (proxy),
-                                             GTK_ICON_SIZE_MENU,
-                                             &width, &height);
-
+          gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
           gtk_widget_set_size_request (area, width, height);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), area);
           gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
@@ -436,9 +433,7 @@ gimp_action_set_proxy (GimpAction *action,
               border_width = 1;
             }
 
-          gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (proxy),
-                                             size, &width, &height);
-
+          gtk_icon_size_lookup (size, &width, &height);
           view = gimp_view_new_full (action->context, action->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
