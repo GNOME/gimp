@@ -77,7 +77,7 @@ static void   gimp_color_history_color_changed (GtkWidget         *widget,
                                                 gpointer           data);
 
 
-G_DEFINE_TYPE (GimpColorHistory, gimp_color_history, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (GimpColorHistory, gimp_color_history, GTK_TYPE_GRID)
 
 #define parent_class gimp_color_history_parent_class
 
@@ -175,10 +175,8 @@ gimp_color_history_set_property (GObject      *object,
           gtk_container_foreach (GTK_CONTAINER (history),
                                  (GtkCallback) gtk_widget_destroy, NULL);
           history->history_size = g_value_get_int (value);
-          gtk_table_resize (GTK_TABLE (history),
-                            2, (history->history_size + 1)/ 2);
-          gtk_table_set_row_spacings (GTK_TABLE (history), 2);
-          gtk_table_set_col_spacings (GTK_TABLE (history), 2);
+          gtk_grid_set_row_spacing (GTK_GRID (history), 2);
+          gtk_grid_set_column_spacing (GTK_GRID (history), 2);
           history->color_areas = g_realloc_n (history->color_areas,
                                               history->history_size,
                                               sizeof (GtkWidget*));
@@ -191,9 +189,10 @@ gimp_color_history_set_property (GObject      *object,
               row    = i / (history->history_size / 2);
 
               button = gtk_button_new ();
-              gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
-              gtk_table_attach_defaults (GTK_TABLE (history), button,
-                                         column, column + 1, row, row + 1);
+              gtk_widget_set_size_request (button,
+                                           COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+              gtk_grid_attach (GTK_GRID (history), button,
+                               column, row, 1, 1);
               gtk_widget_show (button);
 
               history->color_areas[i] = gimp_color_area_new (&black,
