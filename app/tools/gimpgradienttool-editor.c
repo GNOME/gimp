@@ -1466,7 +1466,7 @@ gimp_gradient_tool_editor_init_stop_gui (GimpGradientTool *gradient_tool)
   row += 2;
 
   /* the action buttons separator */
-  separator = gtk_hseparator_new ();
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_table_attach (GTK_TABLE (table), separator, 0, 2, row, row + 1,
                     GTK_SHRINK | GTK_FILL | GTK_EXPAND,
                     GTK_SHRINK | GTK_FILL,
@@ -1577,7 +1577,7 @@ gimp_gradient_tool_editor_init_midpoint_gui (GimpGradientTool *gradient_tool)
   row++;
 
   /* the action buttons separator */
-  separator = gtk_hseparator_new ();
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_table_attach (GTK_TABLE (table), separator, 0, 2, row, row + 1,
                     GTK_SHRINK | GTK_FILL | GTK_EXPAND,
                     GTK_SHRINK | GTK_FILL,
