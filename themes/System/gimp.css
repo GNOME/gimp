@@ -54,14 +54,14 @@ GimpDockbook tab {
 }
 
 GimpDockbook GtkButton {
-    -GtkWidget-focus-padding: 0;
+//    -GtkWidget-focus-padding: 0;
 }
 
 GimpDockable {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
-    -GtkWidget-focus-line-width: 1;
-    -GtkWidget-focus-padding:    0;
+//    -GtkWidget-focus-line-width: 1;
+//    -GtkWidget-focus-padding:    0;
 }
 
 GimpDisplayShell {
@@ -70,8 +70,8 @@ GimpDisplayShell {
     -GimpScaleComboBox-label-scale: 0.8333;
     -GtkComboBox-arrow-size:        8;
     -GtkButton-inner-border:        0 0 0 0;
-    -GtkWidget-focus-line_width:    0;
-    -GtkWidget-focus-padding:       0;
+//    -GtkWidget-focus-line_width:    0;
+//    -GtkWidget-focus-padding:       0;
 }
 
 GimpColorFrame {
@@ -95,7 +95,7 @@ GimpHistogramView:selected {
 }
 
 GimpOverlayFrame {
-    -GtkButton-focus-line-width: 1;
+//    -GtkButton-focus-line-width: 1;
 }
 
 GimpRuler {
