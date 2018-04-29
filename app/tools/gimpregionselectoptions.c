@@ -122,13 +122,12 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
                          GIMP_SELECT_CRITERION_COMPOSITE,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (object_class, PROP_DRAW_MASK,
-                                   g_param_spec_boolean ("draw-mask",
-                                                         _("Draw mask"),
-                                                         _("Draw the selected region's mask"),
-                                                         FALSE,
-                                                         G_PARAM_READWRITE |
-                                                         GIMP_PARAM_STATIC_STRINGS));
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DRAW_MASK,
+                            "draw-mask",
+                            _("Draw mask"),
+                            _("Draw the selected region's mask"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
