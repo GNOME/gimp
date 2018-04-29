@@ -15,6 +15,7 @@ isl_input = custom_target('setup.isl',
 
 languages = [
   [ 'ca',   '[ca]',     'WINDOWS-1252', ],
+  [ 'cs',   '[cs]',     'WINDOWS-1250', ],
   [ 'da',   '[da]',     'WINDOWS-1252', ],
   [ 'de',   '[de]',     'WINDOWS-1252', ],
   [ 'el',   '[el]',     'WINDOWS-1253', ],
@@ -27,6 +28,7 @@ languages = [
   [ 'id',   '[id]',     'ISO-8859-1',   ],
   [ 'is',   '[is]',     'WINDOWS-1252', ],
   [ 'it',   '[it]',     'WINDOWS-1252', ],
+  [ 'ko',   '[ko]',     'EUC-KR',       ],
   [ 'lv',   '[lv]',     'ISO-8859-13',  ],
   [ 'nl',   '[nl]',     'WINDOWS-1252', ],
   [ 'pl',   '[pl]',     'WINDOWS-1250', ],
@@ -36,6 +38,7 @@ languages = [
   [ 'sv',   '[sv]',     'WINDOWS-1252', ],
   [ 'tr',   '[tr]',     'WINDOWS-1254', ],
   [ 'zh_CN','[zh_CN]',  'WINDOWS-936',  ],
+  [ 'zh_TW','[zh_TW]',  'CP950',        ],
 ]
 
 extractlang = find_program('extractlang.sh')

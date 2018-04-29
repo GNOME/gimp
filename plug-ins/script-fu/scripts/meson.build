@@ -47,7 +47,6 @@ scripts = [
   'selection-round.scm',
   'slide.scm',
   'spinning-globe.scm',
-  'spyrogimp.scm',
   'tileblur.scm',
   'unsharp-mask.scm',
   'waves-anim.scm',
@@ -55,11 +54,13 @@ scripts = [
   'xach-effect.scm',
 ]
 
-test_scripts = [
-  'contactsheet.scm',
-  'test-sphere.scm',
-  'ts-helloworld.scm',
-]
+if not stable
+  scripts += [
+    'contactsheet.scm',
+    'test-sphere.scm',
+    'ts-helloworld.scm',
+  ]
+endif
 
 install_data(
   scripts,

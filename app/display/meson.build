@@ -91,6 +91,7 @@ libappdisplay_sources = [
   'gimptoolsheargrid.c',
   'gimptooltransformgrid.c',
   'gimptoolwidget.c',
+  'gimptoolwidgetgroup.c',
   appdisplayenums,
   appcoremarshal,
   gitversion_h,
@@ -99,10 +100,8 @@ libappdisplay_sources = [
 libappdisplay = static_library('appdisplay',
   libappdisplay_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Display"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Display"',
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )

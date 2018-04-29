@@ -20,7 +20,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, gdk_pixbuf, cairo,
+    gtk3, gegl, gdk_pixbuf, cairo,
   ],
   link_with: [
     libgimp,
@@ -32,5 +32,5 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )

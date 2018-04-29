@@ -12,9 +12,9 @@ rc_file = platform_win32 ? windows.compile_resources(
   ],
 ) : []
 
-executable(plugin_name,
+help_plugin_lib = static_library('help_plugin',
   [
-    'gimp-help-lookup.c',
+    # 'gimp-help-lookup.c',
     'gimphelp.c',
     'gimphelpdomain.c',
     'gimphelpitem.c',
@@ -24,9 +24,19 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk2, gegl, cairo, gio, gdk_pixbuf,
+    gtk3, gegl, cairo, gio, gdk_pixbuf,
+  ],
+  install: false,
+)
+
+executable(plugin_name,
+  'help.c',
+  include_directories: [ rootInclude, ],
+  dependencies: [
+    gtk3, gegl, cairo, gio, gdk_pixbuf,
   ],
   link_with: [
+    help_plugin_lib,
     libgimp,
     libgimpbase,
     libgimpcolor,
@@ -36,5 +46,5 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )

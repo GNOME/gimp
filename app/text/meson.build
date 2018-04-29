@@ -7,9 +7,8 @@ apptextenums = custom_target('text-enums.c',
 )
 
 libapptext_sources = [
-  'gimp-fonts.c',
   'gimpfont.c',
-  'gimpfontlist.c',
+  'gimpfontfactory.c',
   'gimptext-compat.c',
   'gimptext-parasite.c',
   'gimptext-vectors.c',
@@ -29,9 +28,7 @@ libapptext_sources = [
 libapptext = static_library('apptext',
   libapptext_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Text"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Text"',
   dependencies: [
     gegl, gdk_pixbuf, harfbuzz, pangocairo, pangoft2,
   ],

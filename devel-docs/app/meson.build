@@ -11,7 +11,7 @@ configure_file(
 gnome.gtkdoc(module_name,
   content_files: [],
   dependencies: [
-    fontconfig, freetype2, gtk2, harfbuzz, pangocairo,
+    fontconfig, freetype2, gtk3, harfbuzz, pangocairo,
   ],
   fixxref_args:  [
     '--extra-dir=' + join_paths(meson.current_build_dir(), '..', 'libgimpbase',    'html'),

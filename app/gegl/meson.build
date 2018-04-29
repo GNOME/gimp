@@ -12,7 +12,7 @@ libappgegl_sources = [
   'gimp-gegl-apply-operation.c',
   'gimp-gegl-loops-sse2.c',
   'gimp-gegl-loops.cc',
-  'gimp-gegl-mask-combine.c',
+  'gimp-gegl-mask-combine.cc',
   'gimp-gegl-mask.c',
   'gimp-gegl-nodes.c',
   'gimp-gegl-tile-compat.c',
@@ -26,9 +26,7 @@ libappgegl_sources = [
 libappgegl = static_library('appgegl',
   libappgegl_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-GEGL"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-GEGL"',
   dependencies: [
     cairo, gegl, gdk_pixbuf,
   ],

@@ -1,14 +1,11 @@
 
 themes = [
-  'Dark',
-  'Light',
-  'Gray',
   'System',
 ]
 
 foreach theme : themes
   install_data(
-    join_paths(theme, 'gtkrc'),
+    join_paths(theme, 'gimp.css'),
     install_dir: join_paths(gimpdatadir, 'themes', theme)
   )
 

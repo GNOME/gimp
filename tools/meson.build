@@ -6,11 +6,11 @@ if platform_win32
 endif
 
 
-gimptool = executable('gimptool-' + api_version,
+gimptool = executable('gimptool-' + user_version,
   'gimptool.c',
   include_directories: rootInclude,
   dependencies: [
-    gtk2,
+    gtk3,
   ],
   link_with: [
     libgimpbase,
@@ -24,22 +24,11 @@ executable('kernelgen',
   install: false,
 )
 
-executable('test-clipboard',
-  'test-clipboard.c',
+executable('gimp-test-clipboard',
+  'gimp-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
-    gtk2,
+    gtk3,
   ],
-  install: false,
+  install: true,
 )
-
-if have_vector_icons
-  invert_svg = generator(
-    executable('invert-svg',
-      'invert-svg.c',
-      dependencies: gio,
-    ),
-    output: '@BASENAME@',
-    arguments: [ '@INPUT@', '@OUTPUT@' ],
-  )
-endif

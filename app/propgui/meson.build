@@ -8,6 +8,9 @@ libapppropgui_sources = [
   'gimppropgui-eval.c',
   'gimppropgui-generic.c',
   'gimppropgui-hue-saturation.c',
+  'gimppropgui-motion-blur-circular.c',
+  'gimppropgui-motion-blur-linear.c',
+  'gimppropgui-motion-blur-zoom.c',
   'gimppropgui-panorama-projection.c',
   'gimppropgui-recursive-transform.c',
   'gimppropgui-shadows-highlights.c',
@@ -20,10 +23,8 @@ libapppropgui_sources = [
 libapppropgui = static_library('apppropgui',
   libapppropgui_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-PropGUI"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-PropGUI"',
   dependencies: [
-    gegl, gtk2,
+    gegl, gtk3,
   ],
 )
