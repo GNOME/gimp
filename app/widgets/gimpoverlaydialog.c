@@ -549,10 +549,8 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
       response_id == GIMP_RESPONSE_DETACH)
     return NULL;
 
-  button = gtk_button_new_from_stock (button_text);
-
+  button = gtk_button_new_with_mnemonic (button_text);
   gtk_widget_set_can_default (button, TRUE);
-
   gtk_widget_show (button);
 
   ad = get_response_data (button, TRUE);

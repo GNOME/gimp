@@ -328,7 +328,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_box_pack_end (GTK_BOX (editor->config_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  editor->reset_button = gtk_button_new_from_stock (GIMP_ICON_RESET);
+  editor->reset_button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_end (GTK_BOX (hbox), editor->reset_button, FALSE, FALSE, 0);
   gtk_widget_show (editor->reset_button);
 

@@ -53,7 +53,7 @@ typedef struct _ResponseEntry ResponseEntry;
 struct _ResponseEntry
 {
   gint      response_id;
-  gchar    *stock_id;
+  gchar    *button_text;
   gint      alternative_position;
   gboolean  sensitive;
 };
@@ -104,7 +104,7 @@ static void   gimp_tool_gui_canvas_resized  (GtkWidget     *canvas,
                                              GimpToolGui   *gui);
 
 static ResponseEntry * response_entry_new   (gint           response_id,
-                                             const gchar   *stock_id);
+                                             const gchar   *button_text);
 static void            response_entry_free  (ResponseEntry *entry);
 static ResponseEntry * response_entry_find  (GList         *entries,
                                              gint           response_id);
@@ -229,7 +229,7 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
   GimpToolGui        *gui;
   GimpToolGuiPrivate *private;
   va_list             args;
-  const gchar        *stock_id;
+  const gchar        *button_text;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
@@ -258,15 +258,15 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
   va_start (args, overlay);
 
-  for (stock_id = va_arg (args, const gchar *);
-       stock_id;
-       stock_id = va_arg (args, const gchar *))
+  for (button_text = va_arg (args, const gchar *);
+       button_text;
+       button_text = va_arg (args, const gchar *))
     {
       gint response_id = va_arg (args, gint);
 
       private->response_entries = g_list_append (private->response_entries,
                                                  response_entry_new (response_id,
-                                                                     stock_id));
+                                                                     button_text));
     }
 
   va_end (args);
@@ -752,7 +752,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
           ResponseEntry *entry = list->data;
 
           gimp_overlay_dialog_add_button (GIMP_OVERLAY_DIALOG (private->dialog),
-                                          entry->stock_id,
+                                          entry->button_text,
                                           entry->response_id);
 
           if (! entry->sensitive)
@@ -786,7 +786,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
           ResponseEntry *entry = list->data;
 
           gimp_dialog_add_button (GIMP_DIALOG (private->dialog),
-                                  entry->stock_id,
+                                  entry->button_text,
                                   entry->response_id);
 
           if (! entry->sensitive)
@@ -955,12 +955,12 @@ gimp_tool_gui_canvas_resized (GtkWidget     *canvas,
 
 static ResponseEntry *
 response_entry_new (gint         response_id,
-                    const gchar *stock_id)
+                    const gchar *button_text)
 {
   ResponseEntry *entry = g_slice_new0 (ResponseEntry);
 
   entry->response_id          = response_id;
-  entry->stock_id             = g_strdup (stock_id);
+  entry->button_text          = g_strdup (button_text);
   entry->alternative_position = -1;
   entry->sensitive            = TRUE;
 
@@ -970,7 +970,7 @@ response_entry_new (gint         response_id,
 static void
 response_entry_free (ResponseEntry *entry)
 {
-  g_free (entry->stock_id);
+  g_free (entry->button_text);
 
   g_slice_free (ResponseEntry, entry);
 }

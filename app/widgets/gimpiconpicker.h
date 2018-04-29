@@ -50,7 +50,7 @@ GtkWidget   * gimp_icon_picker_new             (Gimp           *gimp);
 
 const gchar * gimp_icon_picker_get_icon_name   (GimpIconPicker *picker);
 void          gimp_icon_picker_set_icon_name   (GimpIconPicker *picker,
-                                                const gchar    *stock_id);
+                                                const gchar    *icon_name);
 
 GdkPixbuf   * gimp_icon_picker_get_icon_pixbuf (GimpIconPicker *picker);
 void          gimp_icon_picker_set_icon_pixbuf (GimpIconPicker *picker,
