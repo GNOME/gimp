@@ -681,6 +681,7 @@ sanity_check_gegl_ops (void)
     "gegl:photocopy",
     "gegl:pixelize",
     "gegl:polar-coordinates",
+    "gegl:recursive-transform",
     "gegl:red-eye-removal",
     "gegl:reinhard05",
     "gegl:rgb-clip",

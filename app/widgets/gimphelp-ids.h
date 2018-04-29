@@ -417,6 +417,7 @@
 #define GIMP_HELP_FILTER_PLASMA                   "gimp-filter-plasma"
 #define GIMP_HELP_FILTER_POLAR_COORDINATES        "gimp-filter-polar-coordinates"
 #define GIMP_HELP_FILTER_POSTERIZE                "gimp-filter-posterize"
+#define GIMP_HELP_FILTER_RECURSIVE_TRANSFORM      "gimp-filter-recursive-transform"
 #define GIMP_HELP_FILTER_RED_EYE_REMOVAL          "gimp-filter-red-eye-removal"
 #define GIMP_HELP_FILTER_REINHARD_2005            "gimp-filter-reinhard-2005"
 #define GIMP_HELP_FILTER_RGB_CLIP                 "gimp-filter-rgb-clip"

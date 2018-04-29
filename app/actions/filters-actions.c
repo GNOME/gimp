@@ -548,6 +548,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gimp:posterize",
     GIMP_HELP_FILTER_POSTERIZE },
 
+  { "filters-recursive-transform", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Recursive Transform..."), NULL, NULL,
+    "gegl:recursive-transform",
+    GIMP_HELP_FILTER_RECURSIVE_TRANSFORM },
+
   { "filters-red-eye-removal", GIMP_ICON_GEGL,
     NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
     "gegl:red-eye-removal",
@@ -907,6 +912,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-plasma",                  writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-posterize",               writable);
+  SET_SENSITIVE ("filters-recursive-transform",     writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-reinhard-2005",           writable);
   SET_SENSITIVE ("filters-rgb-clip",                writable);

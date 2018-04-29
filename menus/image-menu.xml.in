@@ -781,6 +781,7 @@
         <menuitem action="filters-fractal-trace" />
         <menuitem action="filters-illusion" />
         <menuitem action="filters-panorama-projection" />
+        <menuitem action="filters-recursive-transform" />
         <menuitem action="filters-tile-paper" />
         <menuitem action="filters-tile-seamless" />
       </menu>
