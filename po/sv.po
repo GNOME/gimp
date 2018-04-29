@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-25 15:21+0000\n"
-"PO-Revision-Date: 2018-04-25 20:37+0200\n"
+"POT-Creation-Date: 2018-04-29 17:57+0000\n"
+"PO-Revision-Date: 2018-04-29 21:36+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4914,7 +4914,7 @@ msgstr "_Enfärgat brus…"
 #: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "Sp_rida…"
+msgstr "Sp_rid…"
 
 #: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
@@ -7420,6 +7420,7 @@ msgstr "Återställ alla filter"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
 #: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1214
 #: ../app/widgets/gimpcolordialog.c:109
+#: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
 msgstr "_Återställ"
 
@@ -12471,12 +12472,12 @@ msgstr "Verktygsförinställning"
 msgid "Font"
 msgstr "Typsnitt"
 
-#: ../app/core/gimpdata.c:582 ../app/core/gimpdata.c:590
+#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Fel vid sparning av ”%s”: "
 
-#: ../app/core/gimpdata.c:596
+#: ../app/core/gimpdata.c:604
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Fel vid sparning av ”%s”"
@@ -12593,12 +12594,12 @@ msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rendera penseldrag"
 
-#: ../app/core/gimpdrawable-gradient.c:138 ../app/tools/gimpgradienttool.c:1042
+#: ../app/core/gimpdrawable-gradient.c:136 ../app/tools/gimpgradienttool.c:1037
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Toning"
 
-#: ../app/core/gimpdrawable-gradient.c:226
+#: ../app/core/gimpdrawable-gradient.c:224
 msgid "Calculating distance map"
 msgstr "Beräknar avståndskarta"
 
@@ -14295,7 +14296,7 @@ msgstr ""
 "Är du säker att du vill ta bort ”%s” från listan och ta bort den från disken?"
 
 #: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:190
-#: ../app/gui/gui-message.c:268
+#: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
 
@@ -16375,7 +16376,7 @@ msgstr "H_öjd:"
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:327
 msgid "_X resolution:"
-msgstr "_X upplösning:"
+msgstr "_X-upplösning:"
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:334
@@ -16477,6 +16478,10 @@ msgstr "Åter_ställ"
 #: ../app/dialogs/resize-dialog.c:187
 msgid "_Resize"
 msgstr "_Ändra storlek"
+
+#: ../app/dialogs/resize-dialog.c:277
+msgid "C_enter"
+msgstr "C_entrera"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -20084,6 +20089,20 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
+#: ../app/text/gimp-fonts.c:304 ../app/text/gimp-fonts.c:334
+msgid "Some fonts failed to load."
+msgstr "Några typsnitt kunde inte läsas in."
+
+#: ../app/text/gimp-fonts.c:309
+#, c-format
+msgid "Opening font directory '%s' failed: %s"
+msgstr "Öppnande av typsnittskatalogen ”%s” misslyckades: %s"
+
+#: ../app/text/gimp-fonts.c:339
+#, c-format
+msgid "Loading font file '%s' failed."
+msgstr "Misslyckades med att läsa in typsnittsfilen ”%s”."
+
 #: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1482
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
@@ -22011,7 +22030,7 @@ msgid "Base selection on all visible layers"
 msgstr "Basera markering på alla synliga lager"
 
 #: ../app/tools/gimpregionselectoptions.c:119
-#: ../app/tools/gimpregionselectoptions.c:281
+#: ../app/tools/gimpregionselectoptions.c:280
 msgid "Select by"
 msgstr "Markera med"
 
