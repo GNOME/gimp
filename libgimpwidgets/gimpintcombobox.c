@@ -72,6 +72,7 @@ typedef struct
   ((GimpIntComboBoxPrivate *) ((GimpIntComboBox *) (obj))->priv)
 
 
+static void  gimp_int_combo_box_constructed  (GObject         *object);
 static void  gimp_int_combo_box_finalize     (GObject         *object);
 static void  gimp_int_combo_box_set_property (GObject         *object,
                                               guint            property_id,
@@ -100,6 +101,7 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_int_combo_box_constructed;
   object_class->finalize     = gimp_int_combo_box_finalize;
   object_class->set_property = gimp_int_combo_box_set_property;
   object_class->get_property = gimp_int_combo_box_get_property;
@@ -168,8 +170,14 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
   g_object_unref (store);
 
   priv->layout = GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED;
+}
 
-  gimp_int_combo_box_create_cells (GIMP_INT_COMBO_BOX (combo_box));
+static void
+gimp_int_combo_box_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_int_combo_box_create_cells (GIMP_INT_COMBO_BOX (object));
 }
 
 static void
