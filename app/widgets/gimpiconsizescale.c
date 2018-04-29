@@ -129,7 +129,8 @@ gimp_icon_size_scale_init (GimpIconSizeScale *object)
   gtk_box_pack_start (GTK_BOX (box), private->combo, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  private->scale = gtk_hscale_new_with_range (0.0, 3.0, 1.0);
+  private->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                             0.0, 3.0, 1.0);
   /* 'draw_value' updates round_digits. So set it first. */
   gtk_scale_set_draw_value (GTK_SCALE (private->scale), FALSE);
   gtk_range_set_round_digits (GTK_RANGE (private->scale), 0.0);
