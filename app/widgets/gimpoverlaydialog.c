@@ -346,7 +346,6 @@ gimp_overlay_dialog_get_preferred_width (GtkWidget *widget,
                                          gint      *natural_width)
 {
   GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
-  gint               border_width;
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
@@ -361,8 +360,8 @@ gimp_overlay_dialog_get_preferred_width (GtkWidget *widget,
   gtk_widget_get_preferred_width (dialog->action_area,
                                   &action_minimum, &action_natural);
 
-  *minimum_width = MAX (MAX (*minimum_width, action_minimum), header_minimum) + 2 * border_width;
-  *natural_width = MAX (MAX (*natural_width, action_natural), header_natural) + 2 * border_width;
+  *minimum_width = MAX (MAX (*minimum_width, action_minimum), header_minimum);
+  *natural_width = MAX (MAX (*natural_width, action_natural), header_natural);
 }
 
 static void
@@ -371,13 +370,10 @@ gimp_overlay_dialog_get_preferred_height (GtkWidget *widget,
                                           gint      *natural_height)
 {
   GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
-  gint               border_width;
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
   gint               action_natural;
-
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   GTK_WIDGET_CLASS (parent_class)->get_preferred_height (widget,
                                                          minimum_height,
@@ -388,8 +384,8 @@ gimp_overlay_dialog_get_preferred_height (GtkWidget *widget,
   gtk_widget_get_preferred_height (dialog->action_area,
                                    &action_minimum, &action_natural);
 
-  *minimum_height += header_minimum + action_minimum + 2 * border_width;
-  *natural_height += header_natural + action_natural + 2 * border_width;
+  *minimum_height += header_minimum + action_minimum;
+  *natural_height += header_natural + action_natural;
 }
 
 static void
