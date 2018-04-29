@@ -175,6 +175,58 @@ gimp_table_attach_aligned (GtkTable    *table,
 }
 
 /**
+ * gimp_grid_attach_aligned:
+ * @grid:       The #GtkGrid the widgets will be attached to.
+ * @left:       The column to start with.
+ * @top:        The row to attach the widgets.
+ * @label_text: The text for the #GtkLabel which will be attached left of
+ *              the widget.
+ * @xalign:     The horizontal alignment of the #GtkLabel.
+ * @yalign:     The vertical alignment of the #GtkLabel.
+ * @widget:     The #GtkWidget to attach right of the label.
+ * @columns:    The number of columns the widget will use.
+ *
+ * Note that the @label_text can be %NULL and that the widget will be
+ * attached starting at (@column + 1) in this case, too.
+ *
+ * Returns: The created #GtkLabel.
+ **/
+GtkWidget *
+gimp_grid_attach_aligned (GtkGrid     *grid,
+                          gint         left,
+                          gint         top,
+                          const gchar *label_text,
+                          gfloat       xalign,
+                          gfloat       yalign,
+                          GtkWidget   *widget,
+                          gint         columns)
+{
+  GtkWidget *label = NULL;
+
+  if (label_text)
+    {
+      GtkWidget *mnemonic_widget;
+
+      label = gtk_label_new_with_mnemonic (label_text);
+      gtk_label_set_xalign (GTK_LABEL (label), xalign);
+      gtk_label_set_yalign (GTK_LABEL (label), yalign);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_grid_attach (grid, label, left, top, 1, 1);
+      gtk_widget_show (label);
+
+      mnemonic_widget = find_mnemonic_widget (widget, 0);
+
+      if (mnemonic_widget)
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), mnemonic_widget);
+    }
+
+  gtk_grid_attach (grid, widget, left + 1, top, columns, 1);
+  gtk_widget_show (widget);
+
+  return label;
+}
+
+/**
  * gimp_label_set_attributes:
  * @label: a #GtkLabel
  * @...:   a list of PangoAttrType and value pairs terminated by -1.
