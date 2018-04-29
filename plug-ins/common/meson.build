@@ -361,11 +361,6 @@ common_exes_list = [
     [ gtk2, gegl, gdk_pixbuf, ],
   ],
   [
-    'ripple',
-    [ 'ripple.c', ],
-    [ gtk2, gegl, gdk_pixbuf, ],
-  ],
-  [
     'sample-colorize',
     [ 'sample-colorize.c', ],
     [ gtk2, gegl, gdk_pixbuf, ],
