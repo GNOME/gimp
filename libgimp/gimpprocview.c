@@ -100,7 +100,7 @@ gimp_proc_view_new (const gchar        *name,
   GtkWidget    *main_vbox;
   GtkWidget    *frame;
   GtkWidget    *vbox;
-  GtkWidget    *table;
+  GtkWidget    *grid;
   GtkWidget    *label;
   GtkSizeGroup *name_group;
   GtkSizeGroup *type_group;
@@ -174,10 +174,10 @@ gimp_proc_view_new (const gchar        *name,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gimp_proc_view_create_params (params, n_params,
-                                            name_group, type_group, desc_group);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gimp_proc_view_create_params (params, n_params,
+                                           name_group, type_group, desc_group);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
     }
 
   /* out parameters */
@@ -187,10 +187,10 @@ gimp_proc_view_new (const gchar        *name,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gimp_proc_view_create_params (return_vals, n_return_vals,
-                                            name_group, type_group, desc_group);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gimp_proc_view_create_params (return_vals, n_return_vals,
+                                           name_group, type_group, desc_group);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
     }
 
   if (! help && ! author && ! date && ! copyright)
@@ -220,11 +220,11 @@ gimp_proc_view_new (const gchar        *name,
   if (! author && ! date && ! copyright)
     return main_vbox;
 
-  table = gtk_table_new (0, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   row = 0;
 
@@ -236,9 +236,9 @@ gimp_proc_view_new (const gchar        *name,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                 _("Author:"), 0.0, 0.0,
-                                 label, 3, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                _("Author:"), 0.0, 0.0,
+                                label, 3);
     }
 
   if (date)
@@ -249,9 +249,9 @@ gimp_proc_view_new (const gchar        *name,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                 _("Date:"), 0.0, 0.0,
-                                 label, 3, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                _("Date:"), 0.0, 0.0,
+                                label, 3);
     }
 
   if (copyright)
@@ -262,9 +262,9 @@ gimp_proc_view_new (const gchar        *name,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                 _("Copyright:"), 0.0, 0.0,
-                                 label, 3, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                _("Copyright:"), 0.0, 0.0,
+                                label, 3);
     }
 
   return main_vbox;
@@ -280,12 +280,12 @@ gimp_proc_view_create_params (const GimpParamDef *params,
                               GtkSizeGroup       *type_group,
                               GtkSizeGroup       *desc_group)
 {
-  GtkWidget *table;
+  GtkWidget *grid;
   gint       i;
 
-  table = gtk_table_new (n_params, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
 
   for (i = 0; i < n_params; i++)
     {
@@ -298,8 +298,7 @@ gimp_proc_view_create_params (const GimpParamDef *params,
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (name_group, label);
-      gtk_table_attach (GTK_TABLE (table), label,
-                        0, 1, i, i + 1, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, i, 1, 1);
       gtk_widget_show (label);
 
       /* type */
@@ -319,8 +318,7 @@ gimp_proc_view_create_params (const GimpParamDef *params,
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (type_group, label);
-      gtk_table_attach (GTK_TABLE (table), label,
-                        1, 2, i, i + 1, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 1, i, 1, 1);
       gtk_widget_show (label);
 
       /* description */
@@ -330,10 +328,9 @@ gimp_proc_view_create_params (const GimpParamDef *params,
       gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_size_group_add_widget (desc_group, label);
-      gtk_table_attach (GTK_TABLE (table), label,
-                        2, 3, i, i + 1, GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 2, i, 1, 1);
       gtk_widget_show (label);
     }
 
-  return table;
+  return grid;
 }
