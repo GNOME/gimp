@@ -2450,13 +2450,6 @@ if test "x$have_pango_1_32" != "xyes"; then
 fi
 
 
-############################
-# Require multihead safe API
-############################
-
-CPPFLAGS="${CPPFLAGS} -DGDK_MULTIHEAD_SAFE -DGTK_MULTIHEAD_SAFE"
-
-
 ##################
 # configure output
 ##################
