@@ -265,7 +265,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
                                              args);
       va_end (args);
 
-      gtk_combo_box_set_focus_on_click (GTK_COMBO_BOX (combo), FALSE);
+      gtk_widget_set_focus_on_click (combo, FALSE);
 
       priv->search_type_combo = combo;
       priv->search_type       = first_type_id;
@@ -484,8 +484,6 @@ gimp_browser_search_timeout (gpointer data)
   GimpBrowserPrivate *priv = GET_PRIVATE (data);
   const gchar        *search_string;
 
-  GDK_THREADS_ENTER();
-
   search_string = gtk_entry_get_text (GTK_ENTRY (priv->search_entry));
 
   if (! search_string)
@@ -495,8 +493,6 @@ gimp_browser_search_timeout (gpointer data)
                  search_string, priv->search_type);
 
   priv->search_timeout_id = 0;
-
-  GDK_THREADS_LEAVE();
 
   return FALSE;
 }
