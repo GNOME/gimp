@@ -762,8 +762,7 @@ toolbox_paste_received (GtkClipboard *clipboard,
 
           image = file_open_with_display (context->gimp, context, NULL,
                                           file, FALSE,
-                                          G_OBJECT (gtk_widget_get_screen (widget)),
-                                          gimp_widget_get_monitor (widget),
+                                          G_OBJECT (gimp_widget_get_monitor (widget)),
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)

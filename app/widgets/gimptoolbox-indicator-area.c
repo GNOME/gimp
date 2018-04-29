@@ -59,7 +59,6 @@ brush_preview_clicked (GtkWidget       *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-brush-grid|gimp-brush-list");
 }
@@ -86,7 +85,6 @@ pattern_preview_clicked (GtkWidget       *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-pattern-grid|gimp-pattern-list");
 }
@@ -113,7 +111,6 @@ gradient_preview_clicked (GtkWidget       *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-gradient-list|gimp-gradient-grid");
 }

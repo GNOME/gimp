@@ -1850,7 +1850,6 @@ gimp_gradient_tool_editor_update_gui (GimpGradientTool *gradient_tool)
               gradient_tool->gui =
                 gimp_tool_gui_new (GIMP_TOOL (gradient_tool)->tool_info,
                                    NULL, NULL, NULL, NULL,
-                                   gtk_widget_get_screen (GTK_WIDGET (shell)),
                                    gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                    TRUE,
 

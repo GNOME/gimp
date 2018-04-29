@@ -103,22 +103,24 @@ static void        splash_timer_elapsed        (void);
 /*  public functions  */
 
 void
-splash_create (gboolean   be_verbose,
-               GdkScreen *screen,
-               gint       monitor)
+splash_create (gboolean    be_verbose,
+               GdkMonitor *monitor)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
   PangoRectangle      ink;
+  GdkRectangle        workarea;
   gint                max_width;
   gint                max_height;
 
   g_return_if_fail (splash == NULL);
-  g_return_if_fail (GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_MONITOR (monitor));
 
-  max_width  = gdk_screen_get_width (screen) / 2;
-  max_height = gdk_screen_get_height (screen) / 2;
+  gdk_monitor_get_workarea (monitor, &workarea);
+
+  max_width  = workarea.width  / 2;
+  max_height = workarea.height / 2;
   pixbuf = splash_image_load (max_width, max_height, be_verbose);
 
   if (! pixbuf)
@@ -132,7 +134,6 @@ splash_create (gboolean   be_verbose,
                   "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
                   "title",           _("GIMP Startup"),
                   "role",            "gimp-startup",
-                  "screen",          screen,
                   "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
                   NULL);
@@ -142,9 +143,9 @@ splash_create (gboolean   be_verbose,
                             GINT_TO_POINTER (0));
 
   splash->width  = MIN (gdk_pixbuf_animation_get_width (pixbuf),
-                        gdk_screen_get_width (screen));
+                        workarea.width);
   splash->height = MIN (gdk_pixbuf_animation_get_height (pixbuf),
-                        gdk_screen_get_height (screen));
+                        workarea.height);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);

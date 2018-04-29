@@ -315,7 +315,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                            filter_tool->description,
                            gimp_tool_get_icon_name (tool),
                            gimp_tool_get_help_id (tool),
-                           gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            filter_tool->overlay,
 

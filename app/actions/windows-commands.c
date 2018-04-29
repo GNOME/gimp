@@ -193,7 +193,6 @@ windows_open_recent_cmd_callback (GtkAction *action,
                                         info);
 
   gimp_session_info_restore (info, gimp_dialog_factory_get_singleton (),
-                             gtk_widget_get_screen (widget),
                              gimp_widget_get_monitor (widget));
 
   g_object_unref (info);

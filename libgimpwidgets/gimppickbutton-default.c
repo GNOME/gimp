@@ -204,9 +204,9 @@ gimp_pick_button_pick (GdkScreen      *screen,
                        gint            y_root,
                        GimpPickButton *button)
 {
-  GimpRGB           rgb;
   GimpColorProfile *monitor_profile;
-  gint              monitor;
+  GdkMonitor       *monitor;
+  GimpRGB           rgb;
 
 #ifdef G_OS_WIN32
 
@@ -276,8 +276,9 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
 #endif
 
-  monitor = gdk_screen_get_monitor_at_point (screen, x_root, y_root);
-  monitor_profile = gimp_screen_get_color_profile (screen, monitor);
+  monitor = gdk_display_get_monitor_at_point (gdk_screen_get_display (screen),
+                                              x_root, y_root);
+  monitor_profile = gimp_monitor_get_color_profile (monitor);
 
   if (monitor_profile)
     {

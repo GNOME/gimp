@@ -549,15 +549,13 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
       {
-        GdkScreen *screen  = gtk_widget_get_screen (GTK_WIDGET (shell));
-        gint       monitor = gimp_widget_get_monitor (GTK_WIDGET (shell));
-        GtkWidget *dockable;
+        GdkMonitor *monitor = gimp_widget_get_monitor (GTK_WIDGET (shell));
+        GtkWidget  *dockable;
 
         dockable =
           gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (display->gimp)),
                                                      display->gimp,
                                                      dialog_factory,
-                                                     screen,
                                                      monitor,
                                                      "gimp-palette-editor");
 

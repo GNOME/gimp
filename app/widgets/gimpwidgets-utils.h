@@ -69,8 +69,7 @@ GdkModifierType   gimp_get_toggle_behavior_mask    (void);
 GdkModifierType   gimp_get_constrain_behavior_mask (void);
 GdkModifierType   gimp_get_all_modifiers_mask      (void);
 
-void              gimp_get_monitor_resolution      (GdkScreen            *screen,
-                                                    gint                  monitor,
+void              gimp_get_monitor_resolution      (GdkMonitor           *monitor,
                                                     gdouble              *xres,
                                                     gdouble              *yres);
 gboolean          gimp_get_style_color             (GtkWidget            *widget,
@@ -98,8 +97,7 @@ void              gimp_highlight_widget            (GtkWidget            *widget
 void              gimp_widget_blink                (GtkWidget             *widget);
 void              gimp_widget_blink_cancel         (GtkWidget             *widget);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
-                                                    GdkScreen            *screen,
-                                                    gint                  monitor,
+                                                    GdkMonitor           *monitor,
                                                     gboolean              toolbox);
 GtkWidget       * gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,

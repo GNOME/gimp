@@ -644,7 +644,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
                            NULL,
                            _("Measure Distances and Angles"),
                            NULL, NULL,
-                           gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,
 

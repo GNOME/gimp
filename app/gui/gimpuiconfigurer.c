@@ -331,8 +331,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                          GimpDockColumns   *dock_columns,
                                          GimpAlignmentType  screen_side)
 {
-  GdkScreen     *screen;
-  gint           monitor;
+  GdkMonitor    *monitor;
   GdkRectangle   monitor_rect;
   GList         *docks;
   GList         *iter;
@@ -345,10 +344,9 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   if (! docks)
     return;
 
-  screen  = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
   monitor = gimp_widget_get_monitor (GTK_WIDGET (dock_columns));
 
-  gdk_screen_get_monitor_workarea (screen, monitor, &monitor_rect);
+  gdk_monitor_get_workarea (monitor, &monitor_rect);
 
   /* Remember the size so we can set the new dock window to the same
    * size
@@ -374,7 +372,6 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
    */
   dock_window =
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                    screen,
                                     monitor,
                                     NULL /*ui_manager*/,
                                     (contains_toolbox ?
@@ -449,7 +446,6 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
                                                 NULL,
                                                 gimp_dialog_factory_get_singleton (),
-                                                gtk_widget_get_screen (GTK_WIDGET (source_image_window)),
                                                 gimp_widget_get_monitor (GTK_WIDGET (source_image_window)));
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);

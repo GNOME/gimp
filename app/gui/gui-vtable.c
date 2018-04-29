@@ -100,8 +100,8 @@ static void           gui_help                   (Gimp                *gimp,
 static const gchar  * gui_get_program_class      (Gimp                *gimp);
 static gchar        * gui_get_display_name       (Gimp                *gimp,
                                                   gint                 display_ID,
-                                                  GObject            **screen,
-                                                  gint                *monitor);
+                                                  GObject            **monitor,
+                                                  gint                *monitor_number);
 static guint32        gui_get_user_time          (Gimp                *gimp);
 static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
@@ -115,8 +115,7 @@ static GimpObject   * gui_display_create         (Gimp                *gimp,
                                                   GimpImage           *image,
                                                   GimpUnit             unit,
                                                   gdouble              scale,
-                                                  GObject             *screen,
-                                                  gint                 monitor);
+                                                  GObject             *monitor);
 static void           gui_display_delete         (GimpObject          *display);
 static void           gui_displays_reconnect     (Gimp                *gimp,
                                                   GimpImage           *old_image,
@@ -258,40 +257,53 @@ gui_get_program_class (Gimp *gimp)
   return gdk_get_program_class ();
 }
 
+static gint
+get_monitor_number (GdkMonitor *monitor)
+{
+  GdkDisplay *display    = gdk_monitor_get_display (monitor);
+  gint        n_monitors = gdk_display_get_n_monitors (display);
+  gint        i;
+
+  for (i = 0; i < n_monitors; i++)
+    if (gdk_display_get_monitor (display, i) == monitor)
+      return i;
+
+  return 0;
+}
+
 static gchar *
 gui_get_display_name (Gimp     *gimp,
                       gint      display_ID,
-                      GObject **screen,
-                      gint     *monitor)
+                      GObject **monitor,
+                      gint     *monitor_number)
 {
-  GimpDisplay *display   = NULL;
-  GdkScreen   *my_screen = NULL;
+  GimpDisplay *display = NULL;
+  GdkDisplay  *gdk_display;
 
   if (display_ID > 0)
     display = gimp_display_get_by_ID (gimp, display_ID);
 
   if (display)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (display);
-      GdkWindow        *window = gtk_widget_get_window (GTK_WIDGET (shell));
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-      my_screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-      *monitor = gdk_screen_get_monitor_at_window (my_screen, window);
+      gdk_display = gtk_widget_get_display (GTK_WIDGET (shell));
+
+      *monitor = G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell)));
     }
   else
     {
-      *monitor = gui_get_initial_monitor (gimp, &my_screen);
+      *monitor = G_OBJECT (gui_get_initial_monitor (gimp));
 
-      if (*monitor == -1)
-        *monitor = gimp_get_monitor_at_pointer (&my_screen);
+      if (! *monitor)
+        *monitor = G_OBJECT (gimp_get_monitor_at_pointer ());
+
+      gdk_display = gdk_monitor_get_display (GDK_MONITOR (*monitor));
     }
 
-  *screen = G_OBJECT (my_screen);
+  *monitor_number = get_monitor_number (GDK_MONITOR (*monitor));
 
-  if (my_screen)
-    return gdk_screen_make_display_name (my_screen);
-
-  return NULL;
+  return gdk_screen_make_display_name (gdk_display_get_default_screen (gdk_display));
 }
 
 static guint32
@@ -378,14 +390,13 @@ gui_display_create (Gimp      *gimp,
                     GimpImage *image,
                     GimpUnit   unit,
                     gdouble    scale,
-                    GObject   *screen,
-                    gint       monitor)
+                    GObject   *monitor)
 {
   GimpContext *context = gimp_get_user_context (gimp);
   GimpDisplay *display = GIMP_DISPLAY (gui_get_empty_display (gimp));
 
-  if (! screen)
-    monitor = gimp_get_monitor_at_pointer ((GdkScreen **) &screen);
+  if (! monitor)
+    monitor = G_OBJECT (gimp_get_monitor_at_pointer ());
 
   if (display)
     {
@@ -400,8 +411,7 @@ gui_display_create (Gimp      *gimp,
       display = gimp_display_new (gimp, image, unit, scale,
                                   image_managers->data,
                                   gimp_dialog_factory_get_singleton (),
-                                  GDK_SCREEN (screen),
-                                  monitor);
+                                  GDK_MONITOR (monitor));
    }
 
   if (gimp_context_get_display (context) == display)

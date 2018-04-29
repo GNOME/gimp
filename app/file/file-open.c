@@ -478,14 +478,13 @@ file_open_with_display (Gimp               *gimp,
                         GimpProgress       *progress,
                         GFile              *file,
                         gboolean            as_new,
-                        GObject            *screen,
-                        gint                monitor,
+                        GObject            *monitor,
                         GimpPDBStatusType  *status,
                         GError            **error)
 {
   return file_open_with_proc_and_display (gimp, context, progress,
                                           file, file, as_new, NULL,
-                                          screen, monitor,
+                                          monitor,
                                           status, error);
 }
 
@@ -497,8 +496,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  GFile               *entered_file,
                                  gboolean             as_new,
                                  GimpPlugInProcedure *file_proc,
-                                 GObject             *screen,
-                                 gint                 monitor,
+                                 GObject             *monitor,
                                  GimpPDBStatusType   *status,
                                  GError             **error)
 {
@@ -510,7 +508,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_FILE (entered_file), NULL);
-  g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), NULL);
+  g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
   image = file_open_image (gimp, context, progress,
@@ -552,7 +550,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
         }
 
       if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                               screen, monitor))
+                               monitor))
         {
           /*  the display owns the image now  */
           g_object_unref (image);
@@ -673,8 +671,7 @@ gboolean
 file_open_from_command_line (Gimp     *gimp,
                              GFile    *file,
                              gboolean  as_new,
-                             GObject  *screen,
-                             gint      monitor)
+                             GObject  *monitor)
 
 {
   GimpImage         *image;
@@ -685,7 +682,7 @@ file_open_from_command_line (Gimp     *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
-  g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), FALSE);
+  g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), FALSE);
 
   display = gimp_get_empty_display (gimp);
 
@@ -700,7 +697,7 @@ file_open_from_command_line (Gimp     *gimp,
                                   gimp_get_user_context (gimp),
                                   GIMP_PROGRESS (display),
                                   file, as_new,
-                                  screen, monitor,
+                                  monitor,
                                   &status, &error);
 
   if (image)

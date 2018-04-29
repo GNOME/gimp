@@ -173,8 +173,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       GPConfig           config;
       GPProcRun          proc_run;
       gint               display_ID;
-      GObject           *screen;
-      gint               monitor;
+      GObject           *monitor;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
@@ -217,8 +216,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
       config.display_name     = gimp_get_display_name (manager->gimp,
                                                        display_ID,
-                                                       &screen, &monitor);
-      config.monitor_number   = monitor;
+                                                       &monitor,
+                                                       &config.monitor_number);
       config.timestamp        = gimp_get_user_time (manager->gimp);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;

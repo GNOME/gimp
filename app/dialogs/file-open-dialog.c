@@ -202,8 +202,7 @@ file_open_dialog_open_image (GtkWidget           *dialog,
                                            GIMP_PROGRESS (dialog),
                                            file, file, FALSE,
                                            load_proc,
-                                           G_OBJECT (gtk_widget_get_screen (dialog)),
-                                           gimp_widget_get_monitor (dialog),
+                                           G_OBJECT (gimp_widget_get_monitor (dialog)),
                                            &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)

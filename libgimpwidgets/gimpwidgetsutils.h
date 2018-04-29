@@ -51,15 +51,14 @@ GtkWidget          * gimp_grid_attach_aligned        (GtkGrid           *grid,
 void                 gimp_label_set_attributes       (GtkLabel          *label,
                                                       ...);
 
-gint                 gimp_widget_get_monitor         (GtkWidget         *widget);
-gint                 gimp_get_monitor_at_pointer     (GdkScreen        **screen);
+GdkMonitor         * gimp_widget_get_monitor         (GtkWidget         *widget);
+GdkMonitor         * gimp_get_monitor_at_pointer     (void);
 
 void                 gimp_widget_track_monitor       (GtkWidget         *widget,
                                                       GCallback          monitor_changed_callback,
                                                       gpointer           user_data);
 
-GimpColorProfile   * gimp_screen_get_color_profile   (GdkScreen         *screen,
-                                                      gint               monitor);
+GimpColorProfile   * gimp_monitor_get_color_profile  (GdkMonitor        *monitor);
 GimpColorProfile   * gimp_widget_get_color_profile   (GtkWidget         *widget);
 
 GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,

@@ -1017,8 +1017,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
 {
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
     {
-      gimp_get_monitor_resolution (gtk_widget_get_screen (GTK_WIDGET (shell)),
-                                   gimp_widget_get_monitor (GTK_WIDGET (shell)),
+      gimp_get_monitor_resolution (gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                    &shell->monitor_xres,
                                    &shell->monitor_yres);
     }

@@ -60,11 +60,11 @@ static void                run                 (const gchar      *name,
                                                 gint             *nreturn_vals,
                                                 GimpParam       **return_vals);
 
-static GimpPDBStatusType   shoot               (GdkScreen        *screen,
+static GimpPDBStatusType   shoot               (GdkMonitor       *monitor,
                                                 gint32           *image_ID,
                                                 GError          **error);
 
-static gboolean            shoot_dialog        (GdkScreen       **screen);
+static gboolean            shoot_dialog        (GdkMonitor      **monitor);
 static gboolean            shoot_quit_timeout  (gpointer          data);
 static gboolean            shoot_delay_timeout (gpointer          data);
 
@@ -81,7 +81,6 @@ static ScreenshotValues shootvals =
   SHOOT_WINDOW, /* root window            */
   TRUE,         /* include WM decorations */
   0,            /* window ID              */
-  0,            /* monitor                */
   0,            /* select delay           */
   0,            /* screenshot delay       */
   0,            /* coords of region dragged out by pointer */
@@ -168,7 +167,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
-  GdkScreen         *screen = NULL;
+  GdkMonitor        *monitor = NULL;
   gint32             image_ID;
   GError            *error  = NULL;
 
@@ -247,7 +246,7 @@ run (const gchar      *name,
         }
 
       /* Get information from the dialog */
-      if (! shoot_dialog (&screen))
+      if (! shoot_dialog (&monitor))
         status = GIMP_PDB_CANCEL;
       break;
 
@@ -299,7 +298,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      status = shoot (screen, &image_ID, &error);
+      status = shoot (monitor, &image_ID, &error);
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -343,7 +342,7 @@ run (const gchar      *name,
           /* Give some sort of feedback that the shot is done */
           if (shootvals.select_delay > 0)
             {
-              gdk_display_beep (gdk_screen_get_display (screen));
+              gdk_display_beep (gdk_monitor_get_display (monitor));
               gdk_flush (); /* flush so the beep makes it to the server */
             }
         }
@@ -368,30 +367,30 @@ run (const gchar      *name,
 /* The main Screenshot function */
 
 static GimpPDBStatusType
-shoot (GdkScreen  *screen,
+shoot (GdkMonitor *monitor,
        gint32     *image_ID,
        GError    **error)
 {
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
-    return screenshot_osx_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_osx_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
 #ifdef G_OS_WIN32
   if (backend == SCREENSHOT_BACKEND_WIN32)
-    return screenshot_win32_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_win32_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
-    return screenshot_freedesktop_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_freedesktop_shoot (&shootvals, monitor, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_gnome_shell_shoot (&shootvals, monitor, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
-    return screenshot_kwin_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_kwin_shoot (&shootvals, monitor, image_ID, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
-    return screenshot_x11_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_x11_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
   return GIMP_PDB_CALLING_ERROR; /* silence compiler */
@@ -458,7 +457,7 @@ shoot_radio_button_toggled (GtkWidget *widget,
 }
 
 static gboolean
-shoot_dialog (GdkScreen **screen)
+shoot_dialog (GdkMonitor **monitor)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -817,7 +816,7 @@ shoot_dialog (GdkScreen **screen)
   if (run)
     {
       /* get the screen on which we are running */
-      *screen = gtk_widget_get_screen (dialog);
+      *monitor = gimp_widget_get_monitor (dialog);
     }
 
   gtk_widget_destroy (dialog);

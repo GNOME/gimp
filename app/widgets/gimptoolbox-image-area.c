@@ -51,7 +51,6 @@ image_preview_clicked (GtkWidget       *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (context->gimp)),
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-image-list|gimp-image-grid");
 }

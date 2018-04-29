@@ -268,7 +268,6 @@ gimp_color_dialog_new (GimpViewable      *viewable,
     {
       gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
                                        GTK_WIDGET (dialog),
-                                       gtk_widget_get_screen (parent),
                                        gimp_widget_get_monitor (parent));
     }
 

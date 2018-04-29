@@ -44,8 +44,7 @@ struct _GimpWindowClass
   GtkWindowClass  parent_class;
 
   void (* monitor_changed) (GimpWindow *window,
-                            GdkScreen  *screen,
-                            gint        monitor);
+                            GdkMonitor *monitor);
 };
 
 

@@ -165,8 +165,7 @@ static gboolean  gui_check_action_exists        (const gchar *accel_path);
 static Gimp             *the_gui_gimp     = NULL;
 static GimpUIManager    *image_ui_manager = NULL;
 static GimpUIConfigurer *ui_configurer    = NULL;
-static GdkScreen        *initial_screen   = NULL;
-static gint              initial_monitor  = -1;
+static GdkMonitor       *initial_monitor  = NULL;
 
 
 /*  public functions  */
@@ -269,11 +268,11 @@ gui_init (Gimp     *gimp,
 
   themes_init (gimp);
 
-  initial_monitor = gimp_get_monitor_at_pointer (&initial_screen);
+  initial_monitor = gimp_get_monitor_at_pointer ();
 
   if (! no_splash)
     {
-      splash_create (gimp->be_verbose, initial_screen, initial_monitor);
+      splash_create (gimp->be_verbose, initial_monitor);
       status_callback = splash_update;
     }
 
@@ -349,14 +348,10 @@ gui_recover (gint n_recoveries)
   return recover;
 }
 
-gint
-gui_get_initial_monitor (Gimp       *gimp,
-                         GdkScreen **screen)
+GdkMonitor *
+gui_get_initial_monitor (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
-  g_return_val_if_fail (screen != NULL, 0);
-
-  *screen = initial_screen;
 
   return initial_monitor;
 }
@@ -449,11 +444,10 @@ gui_initialize_after_callback (Gimp               *gimp,
 
   if (name)
     {
-      gchar *display = gdk_get_display ();
+      const gchar *display = gdk_display_get_name (gdk_display_get_default ());
 
       gimp_environ_table_add (gimp->plug_in_manager->environ_table,
                               name, display, NULL);
-      g_free (display);
     }
 
   gimp_tools_init (gimp);
@@ -505,9 +499,7 @@ gui_restore_callback (Gimp               *gimp,
     {
       gdouble xres, yres;
 
-      gimp_get_monitor_resolution (initial_screen,
-                                   initial_monitor,
-                                   &xres, &yres);
+      gimp_get_monitor_resolution (initial_monitor, &xres, &yres);
 
       g_object_set (gimp->config,
                     "monitor-xresolution",                      xres,
@@ -696,15 +688,12 @@ gui_restore_after_callback (Gimp               *gimp,
       /*  create the empty display  */
       display = GIMP_DISPLAY (gimp_create_display (gimp, NULL,
                                                    GIMP_UNIT_PIXEL, 1.0,
-                                                   G_OBJECT (initial_screen),
-                                                   initial_monitor));
+                                                   G_OBJECT (initial_monitor)));
 
       shell = gimp_display_get_shell (display);
 
       if (gui_config->restore_session)
-        session_restore (gimp,
-                         initial_screen,
-                         initial_monitor);
+        session_restore (gimp, initial_monitor);
 
       /*  move keyboard focus to the display  */
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
@@ -715,8 +704,7 @@ gui_restore_after_callback (Gimp               *gimp,
   gdk_notify_startup_complete ();
 
   /*  clear startup monitor variables  */
-  initial_screen  = NULL;
-  initial_monitor = -1;
+  initial_monitor = NULL;
 }
 
 static gboolean
@@ -730,13 +718,12 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      GdkScreen *screen;
-      gint       monitor;
+      GdkMonitor *monitor;
 
-      monitor = gimp_get_monitor_at_pointer (&screen);
+      monitor = gimp_get_monitor_at_pointer ();
 
       gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                        screen, monitor,
+                                        monitor,
                                         "gimp-quit-dialog", -1);
 
       return TRUE; /* stop exit for now */

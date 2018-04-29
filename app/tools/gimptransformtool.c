@@ -1207,7 +1207,6 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     NULL, NULL, NULL, NULL,
-                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,
 

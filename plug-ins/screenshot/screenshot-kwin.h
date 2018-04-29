@@ -24,7 +24,7 @@ gboolean               screenshot_kwin_available        (void);
 ScreenshotCapabilities screenshot_kwin_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_kwin_shoot            (ScreenshotValues  *shootvals,
-                                                         GdkScreen         *screen,
+                                                         GdkMonitor        *monitor,
                                                          gint32            *image_ID,
                                                          GError           **error);
 

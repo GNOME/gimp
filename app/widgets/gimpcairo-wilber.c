@@ -335,6 +335,7 @@ eyes_state_free (EyesState *state)
 static gboolean
 gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
 {
+  GdkSeat       *seat;
   EyesState     *state;
   gdouble        t;
   gint           pointer_x;
@@ -350,8 +351,10 @@ gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
 
   t = (gdouble) g_get_monotonic_time () / G_TIME_SPAN_SECOND;
 
-  gdk_display_get_pointer (gtk_widget_get_display (widget),
-                           NULL, &pointer_x, &pointer_y, NULL);
+  seat = gdk_display_get_default_seat (gdk_display_get_default ());
+
+  gdk_device_get_position (gdk_seat_get_pointer (seat),
+                           NULL, &pointer_x, &pointer_y);
 
   gtk_widget_get_allocation (widget, &allocation);
 

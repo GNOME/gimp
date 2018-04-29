@@ -57,8 +57,7 @@ GTokenType            gimp_session_info_dock_deserialize (GScanner             *
 GimpSessionInfoDock * gimp_session_info_dock_from_widget (GimpDock             *dock);
 GimpDock            * gimp_session_info_dock_restore     (GimpSessionInfoDock  *dock_info,
                                                           GimpDialogFactory    *factory,
-                                                          GdkScreen            *screen,
-                                                          gint                  monitor,
+                                                          GdkMonitor           *monitor,
                                                           GimpDockContainer    *dock_container);
 
 

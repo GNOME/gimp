@@ -642,7 +642,6 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    "gimp-controller-editor-dialog",
                                    dialog,
-                                   gtk_widget_get_screen (button),
                                    gimp_widget_get_monitor (button));
 
   g_signal_connect (dialog, "response",
