@@ -1,7 +1,7 @@
 # Meson build file
 
 # http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
-project('gimp', ['c', 'cpp'], version: '2.10.0',
+project('gimp', ['c', 'cpp'], version: '2.10.1',
   meson_version: '>=0.44.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -43,7 +43,7 @@ user_version  = '@0@.@1@'.format(major_version, minor_version)
 gimp_version  = '@0@.@1@.@2@'.format(major_version, minor_version, micro_version)
 
 # Override for Release-candidates
-gimp_version  = gimp_version + '-RC2-git'
+gimp_version  = gimp_version
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
@@ -238,26 +238,21 @@ math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.2.0')
 
-babl_minver       = '>=0.1.46'
-babl              = dependency('babl',               version: babl_minver)
+babl              = dependency('babl',               version: '>=0.1.46')
 
-cairo_minver      = '>=1.12.2'
-cairo             = dependency('cairo',              version: cairo_minver)
+cairo             = dependency('cairo',              version: '>=1.12.2')
 
 dbus_glib         = dependency('dbus-glib-1')
 
-fontconfig_minver = '>=2.12.4'
 # fontconfig_name   = platform_win32 ? 'fontconfig_win32' : 'fontconfig'
 fontconfig_name   = 'fontconfig'
-fontconfig        = dependency(fontconfig_name,      version: fontconfig_minver)
+fontconfig        = dependency(fontconfig_name,      version: '>=2.12.4')
 
 freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
-gdk_pixbuf_minver = '>=2.30.8'
-gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: gdk_pixbuf_minver)
+gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl_minver       = '>=0.3.34'
-gegl              = dependency('gegl-0.3',           version: gegl_minver)
+gegl              = dependency('gegl-0.4',           version: '>=0.4.1')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -269,8 +264,7 @@ glib              = dependency('glib-2.0',           version: '>=2.54.2')
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
 
-gtk2_minver       = '>=2.24.32'
-gtk2              = dependency('gtk+-2.0',           version: gtk2_minver)
+gtk2              = dependency('gtk+-2.0',           version: '>=2.24.32')
 
 harfbuzz          = dependency('harfbuzz',           version: '>=0.9.19')
 lcms              = dependency('lcms2',              version: '>=2.8')
@@ -1010,6 +1004,7 @@ foreach fn : [
     'isfinite',
     'mmap',
     'rint',
+    'thr_self',
     'vfork',
     'vprintf',
   ]
@@ -1040,6 +1035,7 @@ foreach header : [
     # 'sys/prctl.h',
     'sys/select.h',
     'sys/stat.h',
+    'sys/thr.h',
     'sys/time.h',
     'sys/times.h',
     'sys/types.h',
@@ -1283,9 +1279,9 @@ pkgconfig.generate(filebase: 'gimp-' + api_version,
   description: 'GIMP Library',
   version: gimp_version,
   requires: [
-    'gdk-pixbuf-2.0 ' + gdk_pixbuf_minver,
-    'cairo '          + cairo_minver,
-    'gegl-0.3 '       + gegl_minver,
+    gdk_pixbuf,
+    cairo,
+    gegl,
   ],
   libraries: [
     '-L${libdir}',
@@ -1312,7 +1308,7 @@ pkgconfig.generate(filebase: 'gimpthumb-' + api_version,
   description: 'GIMP Thumbnail Library',
   version: gimp_version,
   requires: [
-    'gdk-pixbuf-2.0 ' + gdk_pixbuf_minver,
+    gdk_pixbuf,
   ],
   libraries: [
     '-L${libdir}',
@@ -1329,7 +1325,7 @@ pkgconfig.generate(filebase: 'gimpui-' + api_version,
   version: gimp_version,
   requires: [
     'gimp-' + api_version + ' >= ' + app_version,
-    'gtk+-2.0 ' + gtk2_minver,
+    gtk2,
   ],
   libraries: [
     '-L${libdir}',
