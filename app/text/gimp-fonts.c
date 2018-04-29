@@ -40,10 +40,12 @@
 #define CONF_FNAME "fonts.conf"
 
 
-static gboolean gimp_fonts_load_fonts_conf (FcConfig *config,
-                                            GFile    *fonts_conf);
-static void     gimp_fonts_add_directories (FcConfig *config,
-                                            GList    *path);
+static gboolean gimp_fonts_load_fonts_conf    (FcConfig *config,
+                                               GFile    *fonts_conf);
+static void     gimp_fonts_add_directories    (FcConfig *config,
+                                               GList    *path);
+static void     gimp_fonts_recursive_add_font (FcConfig    *config,
+                                               const gchar *path);
 
 
 void
@@ -238,15 +240,60 @@ gimp_fonts_add_directories (FcConfig *config,
   for (list = path; list; list = list->next)
     {
       gchar *dir = g_file_get_path (list->data);
-#ifdef G_OS_WIN32
-      gchar *tmp = g_win32_locale_filename_from_utf8 (dir);
 
+      /* Do not use FcConfigAppFontAddDir(). Instead use
+       * FcConfigAppFontAddFile() with our own recursive loop.
+       * Otherwise, when some fonts fail to load (e.g. permission
+       * issues), we end up in weird situations where the fonts are in
+       * the list, but are unusable and output many errors.
+       * See bug 748553.
+       */
+      gimp_fonts_recursive_add_font (config, dir);
       g_free (dir);
-      dir = tmp;
+    }
+}
+
+static void
+gimp_fonts_recursive_add_font (FcConfig    *config,
+                               const gchar *path)
+{
+  g_return_if_fail (config != NULL);
+
+  if (g_file_test (path, G_FILE_TEST_IS_DIR))
+    {
+      GDir *gdir = g_dir_open (path, 0, NULL);
+
+      if (gdir)
+        {
+          const gchar *basename;
+
+          while ((basename = g_dir_read_name (gdir)))
+            {
+              gchar *filename;
+
+              filename = g_build_filename (path, basename, NULL);
+              gimp_fonts_recursive_add_font (config, filename);
+              g_free (filename);
+            }
+          g_dir_close (gdir);
+        }
+      else
+        {
+          g_printerr ("%s: opening font directory '%s' failed.\n",
+                      G_STRFUNC, path);
+        }
+    }
+  else
+    {
+#ifdef G_OS_WIN32
+      gchar *filename = g_win32_locale_filename_from_utf8 (path);
+#else
+      gchar *filename = g_strdup (path);
 #endif
 
-      FcConfigAppFontAddDir (config, (const FcChar8 *) dir);
-
-      g_free (dir);
+      if (FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) filename))
+        g_printerr ("%s: adding font file '%s' failed.\n",
+                    G_STRFUNC, filename);
+      g_free (filename);
     }
 }
