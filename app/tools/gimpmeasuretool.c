@@ -633,7 +633,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   GimpTool         *tool = GIMP_TOOL (measure);
   GimpDisplayShell *shell;
   GimpToolGui      *gui;
-  GtkWidget        *table;
+  GtkWidget        *grid;
   GtkWidget        *label;
 
   g_return_val_if_fail (tool->display != NULL, NULL);
@@ -658,123 +658,123 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
                     G_CALLBACK (g_object_unref),
                     NULL);
 
-  table = gtk_table_new (4, 5, TRUE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (gui)), table,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (gui)), grid,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
 
   label = gtk_label_new (_("Distance:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   measure->distance_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
   gtk_widget_show (label);
 
   measure->distance_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 1, 1);
   gtk_widget_show (label);
 
   measure->unit_label[0] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 0, 1, 1);
   gtk_widget_show (label);
 
 
   label = gtk_label_new (_("Angle:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   measure->angle_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 1, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new ("\302\260");
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
   gtk_widget_show (label);
 
   measure->angle_label[1] = label = gtk_label_new (NULL);
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 1, 1, 1);
   gtk_widget_show (label);
 
   measure->unit_label[1] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 1, 1, 1);
   gtk_widget_show (label);
 
 
   label = gtk_label_new (_("Width:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
   measure->width_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 2, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 2, 1, 1);
   gtk_widget_show (label);
 
   measure->width_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 2, 1, 1);
   gtk_widget_show (label);
 
   measure->unit_label[2] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 2, 1, 1);
   gtk_widget_show (label);
 
 
   label = gtk_label_new (_("Height:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 3, 4);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
   gtk_widget_show (label);
 
   measure->height_label[0] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 3, 4);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("pixels"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 3, 4);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 3, 1, 1);
   gtk_widget_show (label);
 
   measure->height_label[1] = label = gtk_label_new ("0.0");
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 3, 4);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 3, 1, 1);
   gtk_widget_show (label);
 
   measure->unit_label[3] = label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 3, 4);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 3, 1, 1);
   gtk_widget_show (label);
 
   return gui;

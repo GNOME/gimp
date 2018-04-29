@@ -30,12 +30,11 @@ void              gimp_button_menu_position        (GtkWidget            *button
                                                     GtkPositionType       position,
                                                     gint                 *x,
                                                     gint                 *y);
-void              gimp_table_attach_icon           (GtkTable             *table,
+void              gimp_grid_attach_icon            (GtkGrid              *grid,
                                                     gint                  row,
                                                     const gchar          *icon_name,
                                                     GtkWidget            *widget,
-                                                    gint                  colspan,
-                                                    gboolean              left_align);
+                                                    gint                  columns);
 void              gimp_enum_radio_box_add          (GtkBox               *box,
                                                     GtkWidget            *widget,
                                                     gint                  enum_value,
