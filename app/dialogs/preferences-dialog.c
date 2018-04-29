@@ -528,8 +528,7 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
   if (from_gdk)
     {
-      gimp_get_monitor_resolution (gtk_widget_get_screen (widget),
-                                   gimp_widget_get_monitor (widget),
+      gimp_get_monitor_resolution (gimp_widget_get_monitor (widget),
                                    &xres, &yres);
     }
   else
@@ -571,7 +570,6 @@ prefs_input_devices_dialog (GtkWidget *widget,
                             Gimp      *gimp)
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gtk_widget_get_screen (widget),
                                     gimp_widget_get_monitor (widget),
                                     "gimp-input-devices-dialog", 0);
 }
@@ -581,7 +579,6 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                    gtk_widget_get_screen (widget),
                                     gimp_widget_get_monitor (widget),
                                     "gimp-keyboard-shortcuts-dialog", 0);
 }
@@ -2592,8 +2589,7 @@ prefs_dialog_new (Gimp       *gimp,
     gdouble  yres;
     gchar   *str;
 
-    gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
-                                 0, /* FIXME monitor */
+    gimp_get_monitor_resolution (gdk_display_get_monitor (gdk_display_get_default (), 0),
                                  &xres, &yres);
 
     str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),

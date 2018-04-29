@@ -1300,7 +1300,6 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
                                    text_tool->editor_dialog,
-                                   gtk_widget_get_screen (GTK_WIDGET (image_window)),
                                    gimp_widget_get_monitor (GTK_WIDGET (image_window)));
 
   g_signal_connect (text_tool->editor_dialog, "destroy",

@@ -208,8 +208,7 @@ file_open_location_response (GtkDialog *dialog,
                                                    GIMP_PROGRESS (box),
                                                    file, entered_file,
                                                    FALSE, NULL,
-                                                   G_OBJECT (gtk_widget_get_screen (entry)),
-                                                   gimp_widget_get_monitor (entry),
+                                                   G_OBJECT (gimp_widget_get_monitor (entry)),
                                                    &status, &error);
 
           gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, TRUE);

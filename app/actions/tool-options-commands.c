@@ -244,7 +244,6 @@ tool_options_show_preset_editor (Gimp           *gimp,
     gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                                gimp,
                                                gimp_dialog_factory_get_singleton (),
-                                               gtk_widget_get_screen (GTK_WIDGET (editor)),
                                                gimp_widget_get_monitor (GTK_WIDGET (editor)),
                                                "gimp-tool-preset-editor");
 

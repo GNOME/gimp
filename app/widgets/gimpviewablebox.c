@@ -730,7 +730,6 @@ gimp_viewable_box_edit_clicked (GtkWidget          *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (button->context->gimp)),
                                              button->context->gimp,
                                              gimp_dialog_factory_get_singleton (),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              editor_id);
 }

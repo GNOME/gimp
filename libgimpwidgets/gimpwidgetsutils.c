@@ -359,11 +359,10 @@ gimp_label_set_attributes (GtkLabel *label,
   pango_attr_list_unref (attrs);
 }
 
-gint
+GdkMonitor *
 gimp_widget_get_monitor (GtkWidget *widget)
 {
   GdkWindow     *window;
-  GdkScreen     *screen;
   GtkAllocation  allocation;
   gint           x, y;
 
@@ -372,9 +371,7 @@ gimp_widget_get_monitor (GtkWidget *widget)
   window = gtk_widget_get_window (widget);
 
   if (! window)
-    return gimp_get_monitor_at_pointer (&screen);
-
-  screen = gtk_widget_get_screen (widget);
+    return gimp_get_monitor_at_pointer ();
 
   gdk_window_get_origin (window, &x, &y);
   gtk_widget_get_allocation (widget, &allocation);
@@ -388,32 +385,31 @@ gimp_widget_get_monitor (GtkWidget *widget)
   x += allocation.width  / 2;
   y += allocation.height / 2;
 
-  return gdk_screen_get_monitor_at_point (screen, x, y);
+  return gdk_display_get_monitor_at_point (gdk_display_get_default (), x, y);
 }
 
-gint
-gimp_get_monitor_at_pointer (GdkScreen **screen)
+GdkMonitor *
+gimp_get_monitor_at_pointer (void)
 {
-  GdkDeviceManager *device_manager;
-  GdkDevice        *device;
-  gint              x, y;
+  GdkDisplay *display;
+  GdkSeat    *seat;
+  gint        x, y;
 
-  g_return_val_if_fail (screen != NULL, 0);
+  display = gdk_display_get_default ();
+  seat = gdk_display_get_default_seat (display);
 
-  device_manager = gdk_display_get_device_manager (gdk_display_get_default ());
-  device = gdk_device_manager_get_client_pointer (device_manager);
+  gdk_device_get_position (gdk_seat_get_pointer (seat),
+                           NULL, &x, &y);
 
-  gdk_device_get_position (device, screen, &x, &y);
-
-  return gdk_screen_get_monitor_at_point (*screen, x, y);
+  return gdk_display_get_monitor_at_point (display, x, y);
 }
 
 typedef void (* MonitorChangedCallback) (GtkWidget *, gpointer);
 
 typedef struct
 {
-  GtkWidget *widget;
-  gint       monitor;
+  GtkWidget  *widget;
+  GdkMonitor *monitor;
 
   MonitorChangedCallback callback;
   gpointer               user_data;
@@ -424,7 +420,7 @@ track_monitor_configure_event (GtkWidget        *toplevel,
                                GdkEvent         *event,
                                TrackMonitorData *track_data)
 {
-  gint monitor = gimp_widget_get_monitor (toplevel);
+  GdkMonitor *monitor = gimp_widget_get_monitor (toplevel);
 
   if (monitor != track_data->monitor)
     {
@@ -454,8 +450,8 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
 
   if (GTK_IS_WINDOW (toplevel))
     {
-      GClosure *closure;
-      gint      monitor;
+      GClosure   *closure;
+      GdkMonitor *monitor;
 
       closure = g_cclosure_new (G_CALLBACK (track_monitor_configure_event),
                                 track_data, NULL);
@@ -525,27 +521,41 @@ gimp_widget_track_monitor (GtkWidget *widget,
     track_monitor_hierarchy_changed (widget, NULL, track_data);
 }
 
+static gint
+monitor_number (GdkMonitor *monitor)
+{
+  GdkDisplay *display    = gdk_monitor_get_display (monitor);
+  gint        n_monitors = gdk_display_get_n_monitors (display);
+  gint        i;
+
+  for (i = 0; i < n_monitors; i++)
+    if (gdk_display_get_monitor (display, i) == monitor)
+      return i;
+
+  return 0;
+}
+
 /**
- * gimp_screen_get_color_profile:
- * @screen:  a #GdkScreen
- * @monitor: the monitor number
+ * gimp_monitor_get_color_profile:
+ * @monitor: a #GdkMonitor
  *
- * This function returns the #GimpColorProfile of monitor number @monitor
- * of @screen, or %NULL if there is no profile configured.
+ * This function returns the #GimpColorProfile of @monitor
+ * or %NULL if there is no profile configured.
  *
- * Since: 2.10
+ * Since: 3.0
  *
  * Return value: the monitor's #GimpColorProfile, or %NULL.
  **/
 GimpColorProfile *
-gimp_screen_get_color_profile (GdkScreen *screen,
-                               gint       monitor)
+gimp_monitor_get_color_profile (GdkMonitor *monitor)
 {
+  GdkDisplay       *display;
+  GdkScreen        *screen;
   GimpColorProfile *profile = NULL;
 
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-  g_return_val_if_fail (monitor >= 0, NULL);
-  g_return_val_if_fail (monitor < gdk_screen_get_n_monitors (screen), NULL);
+  g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
+
+  display = gdk_monitor_get_display (monitor);
 
 #if defined GDK_WINDOWING_X11
   {
@@ -556,9 +566,12 @@ gimp_screen_get_color_profile (GdkScreen *screen,
     guchar  *data    = NULL;
 
     if (monitor > 0)
-      atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor);
+      atom_name = g_strdup_printf ("_ICC_PROFILE_%d",
+                                   monitor_number (monitor));
     else
       atom_name = g_strdup ("_ICC_PROFILE");
+
+    screen = gdk_display_get_default_screen (display);
 
     if (gdk_property_get (gdk_screen_get_root_window (screen),
                           gdk_atom_intern (atom_name, FALSE),
@@ -639,23 +652,20 @@ gimp_screen_get_color_profile (GdkScreen *screen,
 GimpColorProfile *
 gimp_widget_get_color_profile (GtkWidget *widget)
 {
-  GdkScreen *screen;
-  gint       monitor;
+  GdkMonitor *monitor;
 
   g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
 
   if (widget)
     {
-      screen  = gtk_widget_get_screen (widget);
       monitor = gimp_widget_get_monitor (widget);
     }
   else
     {
-      screen  = gdk_screen_get_default ();
-      monitor = 0;
+      monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
     }
 
-  return gimp_screen_get_color_profile (screen, monitor);
+  return gimp_monitor_get_color_profile (monitor);
 }
 
 static GimpColorProfile *

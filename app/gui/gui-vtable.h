@@ -19,13 +19,12 @@
 #define __GUI_VTABLE_H__
 
 
-void   gui_vtable_init        (Gimp       *gimp);
+void         gui_vtable_init         (Gimp *gimp);
 
 /*  this function lives in gui.c but must only be used from gui-vtable.c;
  *  also, gui.h can't contain any Gdk types.
  */
-gint  gui_get_initial_monitor (Gimp       *gimp,
-                               GdkScreen **screen);
+GdkMonitor * gui_get_initial_monitor (Gimp *gimp);
 
 
 #endif /* __GUI_VTABLE_H__ */

@@ -578,7 +578,6 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (status->gimp)),
                                              status->gimp,
                                              dialog_factory,
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              identifier);
 }

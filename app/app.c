@@ -94,8 +94,7 @@ GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
 
 /*  local variables  */
 
-static GObject *initial_screen  = NULL;
-static gint     initial_monitor = 0;
+static GObject *initial_monitor = NULL;
 
 
 /*  public functions  */
@@ -372,7 +371,6 @@ app_run (const gchar         *full_prog_name,
                                               gimp_get_user_context (gimp),
                                               NULL,
                                               file, as_new,
-                                              initial_screen,
                                               initial_monitor,
                                               &status, &error);
               if (image)
@@ -415,7 +413,6 @@ app_run (const gchar         *full_prog_name,
               GFile *file = g_file_new_for_commandline_arg (filenames[i]);
 
               file_open_from_command_line (gimp, file, as_new,
-                                           initial_screen,
                                            initial_monitor);
 
               g_object_unref (file);
@@ -471,12 +468,14 @@ static void
 app_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
 {
+  gint dummy;
+
   /*  Getting the display name for a -1 display returns the initial
    *  monitor during startup. Need to call this from a restore_after
    *  callback, because before restore(), the GUI can't return anything,
    *  after after restore() the initial monitor gets reset.
    */
-  g_free (gimp_get_display_name (gimp, -1, &initial_screen, &initial_monitor));
+  g_free (gimp_get_display_name (gimp, -1, &initial_monitor, &dummy));
 }
 
 static gboolean

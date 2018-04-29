@@ -61,7 +61,6 @@ palettes_import_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                  gtk_widget_get_screen (widget),
                                   gimp_widget_get_monitor (widget),
                                   NULL /*ui_manager*/,
                                   "gimp-palette-import-dialog", -1, TRUE);

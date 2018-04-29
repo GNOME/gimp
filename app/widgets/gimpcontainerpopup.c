@@ -399,7 +399,6 @@ gimp_container_popup_dialog_clicked (GtkWidget          *button,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (popup->context->gimp)),
                                              popup->context->gimp,
                                              popup->dialog_factory,
-                                             gtk_widget_get_screen (button),
                                              gimp_widget_get_monitor (button),
                                              popup->dialog_identifier);
   g_signal_emit_by_name (popup, "confirm");

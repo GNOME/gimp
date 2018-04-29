@@ -90,8 +90,7 @@ static void   gimp_tool_gui_dispose         (GObject       *object);
 static void   gimp_tool_gui_finalize        (GObject       *object);
 
 static void   gimp_tool_gui_create_dialog   (GimpToolGui   *gui,
-                                             GdkScreen     *screen,
-                                             gint           monitor);
+                                             GdkMonitor    *monitor);
 static void   gimp_tool_gui_update_buttons  (GimpToolGui   *gui);
 static void   gimp_tool_gui_update_shell    (GimpToolGui   *gui);
 static void   gimp_tool_gui_update_viewable (GimpToolGui   *gui);
@@ -221,8 +220,7 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
                    const gchar  *description,
                    const gchar  *icon_name,
                    const gchar  *help_id,
-                   GdkScreen    *screen,
-                   gint          monitor,
+                   GdkMonitor   *monitor,
                    gboolean      overlay,
                    ...)
 {
@@ -271,7 +269,7 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
 
   va_end (args);
 
-  gimp_tool_gui_create_dialog (gui, screen, monitor);
+  gimp_tool_gui_create_dialog (gui, monitor);
 
   return gui;
 }
@@ -535,8 +533,7 @@ gimp_tool_gui_hide (GimpToolGui *gui)
 
 void
 gimp_tool_gui_set_overlay (GimpToolGui *gui,
-                           GdkScreen   *screen,
-                           gint         monitor,
+                           GdkMonitor  *monitor,
                            gboolean     overlay)
 {
   GimpToolGuiPrivate *private;
@@ -570,7 +567,7 @@ gimp_tool_gui_set_overlay (GimpToolGui *gui,
 
   private->overlay = overlay;
 
-  gimp_tool_gui_create_dialog (gui, screen, monitor);
+  gimp_tool_gui_create_dialog (gui, monitor);
 
   if (visible)
     gimp_tool_gui_show (gui);
@@ -734,8 +731,7 @@ gimp_tool_gui_set_alternative_button_order (GimpToolGui *gui,
 
 static void
 gimp_tool_gui_create_dialog (GimpToolGui *gui,
-                             GdkScreen   *screen,
-                             gint         monitor)
+                             GdkMonitor  *monitor)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (gui);
   GList              *list;
@@ -774,7 +770,7 @@ gimp_tool_gui_create_dialog (GimpToolGui *gui,
   else
     {
       private->dialog = gimp_tool_dialog_new (private->tool_info,
-                                              screen, monitor,
+                                              monitor,
                                               private->title,
                                               private->description,
                                               private->icon_name,
@@ -913,7 +909,6 @@ gimp_tool_gui_dialog_response (GtkWidget   *dialog,
     {
       gimp_tool_gui_set_auto_overlay (gui, FALSE);
       gimp_tool_gui_set_overlay (gui,
-                                 gtk_widget_get_screen (dialog),
                                  gimp_widget_get_monitor (dialog),
                                  FALSE);
     }
@@ -947,7 +942,6 @@ gimp_tool_gui_canvas_resized (GtkWidget     *canvas,
         }
 
       gimp_tool_gui_set_overlay (gui,
-                                 gtk_widget_get_screen (private->dialog),
                                  gimp_widget_get_monitor (private->dialog),
                                  overlay);
     }

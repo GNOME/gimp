@@ -82,7 +82,7 @@ screenshot_kwin_get_capabilities (void)
 
 GimpPDBStatusType
 screenshot_kwin_shoot (ScreenshotValues  *shootvals,
-                       GdkScreen         *screen,
+                       GdkMonitor        *monitor,
                        gint32            *image_ID,
                        GError           **error)
 {
@@ -90,7 +90,6 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
   const gchar *method   = NULL;
   GVariant    *args     = NULL;
   GVariant    *retval;
-  gint         monitor = shootvals->monitor;
   gint32       mask;
 
   switch (shootvals->shoot_type)
@@ -178,7 +177,7 @@ screenshot_kwin_shoot (ScreenshotValues  *shootvals,
        * assume always the monitor 0, which will still work in common
        * cases.
        */
-      profile = gimp_screen_get_color_profile (screen, monitor);
+      profile = gimp_monitor_get_color_profile (monitor);
 
       if (profile)
         {

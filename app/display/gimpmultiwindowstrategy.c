@@ -37,8 +37,7 @@ static void        gimp_multi_window_strategy_window_strategy_iface_init (GimpWi
 static GtkWidget * gimp_multi_window_strategy_show_dockable_dialog       (GimpWindowStrategy          *strategy,
                                                                           Gimp                        *gimp,
                                                                           GimpDialogFactory           *factory,
-                                                                          GdkScreen                   *screen,
-                                                                          gint                         monitor,
+                                                                          GdkMonitor                  *monitor,
                                                                           const gchar                 *identifiers);
 
 
@@ -69,11 +68,10 @@ static GtkWidget *
 gimp_multi_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                  Gimp               *gimp,
                                                  GimpDialogFactory  *factory,
-                                                 GdkScreen          *screen,
-                                                 gint                monitor,
+                                                 GdkMonitor         *monitor,
                                                  const gchar        *identifiers)
 {
-  return gimp_dialog_factory_dialog_raise (factory, screen, monitor,
+  return gimp_dialog_factory_dialog_raise (factory, monitor,
                                            identifiers, -1);
 }
 

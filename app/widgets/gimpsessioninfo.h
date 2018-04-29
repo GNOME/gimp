@@ -61,11 +61,9 @@ GimpSessionInfo * gimp_session_info_new                     (void);
 
 void              gimp_session_info_restore                 (GimpSessionInfo        *info,
                                                              GimpDialogFactory      *factory,
-                                                             GdkScreen              *screen,
-                                                             gint                    monitor);
+                                                             GdkMonitor             *monitor);
 void              gimp_session_info_apply_geometry          (GimpSessionInfo        *info,
-                                                             GdkScreen              *screen,
-                                                             gint                    current_monitor,
+                                                             GdkMonitor             *current_monitor,
                                                              gboolean                apply_stored_monitor);
 void              gimp_session_info_read_geometry           (GimpSessionInfo        *info,
                                                              GdkEventConfigure      *cevent);

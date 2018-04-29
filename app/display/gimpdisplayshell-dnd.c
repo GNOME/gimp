@@ -225,8 +225,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
       image = gimp_image_new_from_drawable (shell->display->gimp,
                                             GIMP_DRAWABLE (viewable));
       gimp_create_display (shell->display->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;
@@ -460,8 +459,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
       image = gimp_image_new_from_buffer (shell->display->gimp,
                                           GIMP_BUFFER (viewable));
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;
@@ -584,8 +582,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           new_image = file_open_with_display (shell->display->gimp, context,
                                               NULL,
                                               file, FALSE,
-                                              G_OBJECT (gtk_widget_get_screen (widget)),
-                                              gimp_widget_get_monitor (widget),
+                                              G_OBJECT (gimp_widget_get_monitor (widget)),
                                               &status, &error);
 
           if (! new_image && status != GIMP_PDB_CANCEL)
@@ -597,8 +594,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           image = file_open_with_display (shell->display->gimp, context,
                                           GIMP_PROGRESS (shell->display),
                                           file, FALSE,
-                                          G_OBJECT (gtk_widget_get_screen (widget)),
-                                          gimp_widget_get_monitor (widget),
+                                          G_OBJECT (gimp_widget_get_monitor (widget)),
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
@@ -648,8 +644,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
       dest_image = gimp_image_new_from_component (image->gimp,
                                                   image, component);
       gimp_create_display (dest_image->gimp, dest_image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (dest_image);
 
       return;
@@ -706,8 +701,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
       image = gimp_image_new_from_pixbuf (shell->display->gimp, pixbuf,
                                           _("Dropped Buffer"));
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (image);
 
       return;

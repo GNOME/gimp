@@ -384,8 +384,7 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
   if (image)
     {
       gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (image);
     }
   else
@@ -468,7 +467,6 @@ edit_named_paste_cmd_callback (GtkAction *action,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              "gimp-buffer-list|gimp-buffer-grid");
 }

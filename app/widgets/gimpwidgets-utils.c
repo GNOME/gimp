@@ -782,24 +782,23 @@ gimp_get_all_modifiers_mask (void)
  * Retrieves the monitor's resolution from GDK.
  **/
 void
-gimp_get_monitor_resolution (GdkScreen *screen,
-                             gint       monitor,
-                             gdouble   *xres,
-                             gdouble   *yres)
+gimp_get_monitor_resolution (GdkMonitor *monitor,
+                             gdouble    *xres,
+                             gdouble    *yres)
 {
   GdkRectangle size_pixels;
   gint         width_mm, height_mm;
   gdouble      x = 0.0;
   gdouble      y = 0.0;
 
-  g_return_if_fail (GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_MONITOR (monitor));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
-  gdk_screen_get_monitor_geometry (screen, monitor, &size_pixels);
+  gdk_monitor_get_geometry (monitor, &size_pixels);
 
-  width_mm  = gdk_screen_get_monitor_width_mm  (screen, monitor);
-  height_mm = gdk_screen_get_monitor_height_mm (screen, monitor);
+  width_mm  = gdk_monitor_get_width_mm  (monitor);
+  height_mm = gdk_monitor_get_height_mm (monitor);
 
   /*
    * From xdpyinfo.c:
@@ -1381,7 +1380,7 @@ void gimp_widget_blink_cancel (GtkWidget *widget)
 /**
  * gimp_dock_with_window_new:
  * @factory: a #GimpDialogFacotry
- * @screen:  the #GdkScreen the dock window should appear on
+ * @monitor: the #GdkMonitor the dock window should appear on
  * @toolbox: if %TRUE; gives a "gimp-toolbox-window" with a
  *           "gimp-toolbox", "gimp-dock-window"+"gimp-dock"
  *           otherwise
@@ -1390,8 +1389,7 @@ void gimp_widget_blink_cancel (GtkWidget *widget)
  **/
 GtkWidget *
 gimp_dock_with_window_new (GimpDialogFactory *factory,
-                           GdkScreen         *screen,
-                           gint               monitor,
+                           GdkMonitor        *monitor,
                            gboolean           toolbox)
 {
   GtkWidget         *dock_window;
@@ -1400,13 +1398,13 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
   GimpUIManager     *ui_manager;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
   /* Create a dock window to put the dock in. We need to create the
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window = gimp_dialog_factory_dialog_new (factory, screen, monitor,
+  dock_window = gimp_dialog_factory_dialog_new (factory, monitor,
                                                 NULL /*ui_manager*/,
                                                 (toolbox ?
                                                  "gimp-toolbox-window" :
@@ -1416,9 +1414,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
 
   dock_container = GIMP_DOCK_CONTAINER (dock_window);
   ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
-  dock           = gimp_dialog_factory_dialog_new (factory,
-                                                   screen,
-                                                   monitor,
+  dock           = gimp_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
                                                    (toolbox ?
                                                     "gimp-toolbox" :

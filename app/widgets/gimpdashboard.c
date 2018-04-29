@@ -1488,9 +1488,8 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
 
   if (priv->gimp)
     {
-      GdkScreen *screen;
-      gint       monitor;
-      gint       field;
+      GdkMonitor *monitor;
+      gint        field;
 
       gtk_expander_set_expanded (priv->groups[GROUP_SWAP].expander, TRUE);
 
@@ -1508,13 +1507,13 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
 
       gimp_dashboard_update_groups (dashboard);
 
-      monitor = gimp_get_monitor_at_pointer (&screen);
+      monitor = gimp_get_monitor_at_pointer ();
 
       gimp_window_strategy_show_dockable_dialog (
         GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (priv->gimp)),
         priv->gimp,
         gimp_dialog_factory_get_singleton (),
-        screen, monitor,
+        monitor,
         "gimp-dashboard");
 
       g_mutex_lock (&priv->mutex);

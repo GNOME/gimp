@@ -373,8 +373,7 @@ documents_open_image (GtkWidget     *editor,
   file = gimp_imagefile_get_file (imagefile);
 
   image = file_open_with_display (context->gimp, context, NULL, file, FALSE,
-                                  G_OBJECT (gtk_widget_get_screen (editor)),
-                                  gimp_widget_get_monitor (editor),
+                                  G_OBJECT (gimp_widget_get_monitor (editor)),
                                   &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)

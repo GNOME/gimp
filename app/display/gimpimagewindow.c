@@ -100,7 +100,6 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_DIALOG_FACTORY,
-  PROP_INITIAL_SCREEN,
   PROP_INITIAL_MONITOR
 };
 
@@ -129,8 +128,7 @@ struct _GimpImageWindowPrivate
 
   const gchar       *entry_id;
 
-  GdkScreen         *initial_screen;
-  gint               initial_monitor;
+  GdkMonitor        *initial_monitor;
 
   gint               suspend_keep_pos;
 
@@ -182,8 +180,7 @@ static gboolean  gimp_image_window_window_state_event  (GtkWidget           *wid
 static void      gimp_image_window_style_updated       (GtkWidget           *widget);
 
 static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
-                                                        GdkScreen           *screen,
-                                                        gint                 monitor);
+                                                        GdkMonitor          *monitor);
 
 static GList *   gimp_image_window_get_docks           (GimpDockContainer   *dock_container);
 static GimpDialogFactory *
@@ -208,13 +205,11 @@ static void      gimp_image_window_config_notify       (GimpImageWindow     *win
 static void      gimp_image_window_session_clear       (GimpImageWindow     *window);
 static void      gimp_image_window_session_apply       (GimpImageWindow     *window,
                                                         const gchar         *entry_id,
-                                                        GdkScreen           *screen,
-                                                        gint                 monitor);
+                                                        GdkMonitor          *monitor);
 static void      gimp_image_window_session_update      (GimpImageWindow     *window,
                                                         GimpDisplay         *new_display,
                                                         const gchar         *new_entry_id,
-                                                        GdkScreen           *screen,
-                                                        gint                 monitor);
+                                                        GdkMonitor          *monitor);
 static const gchar *
                  gimp_image_window_config_to_entry_id  (GimpGuiConfig       *config);
 static void      gimp_image_window_show_tooltip        (GimpUIManager       *manager,
@@ -319,18 +314,12 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_INITIAL_SCREEN,
-                                   g_param_spec_object ("initial-screen",
+  g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
+                                   g_param_spec_object ("initial-monitor",
                                                         NULL, NULL,
-                                                        GDK_TYPE_SCREEN,
+                                                        GDK_TYPE_MONITOR,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
-                                   g_param_spec_int ("initial-monitor",
-                                                     NULL, NULL,
-                                                     0, 16, 0,
-                                                     GIMP_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
 
@@ -511,7 +500,6 @@ gimp_image_window_constructed (GObject *object)
   gimp_image_window_session_update (window,
                                     NULL /*new_display*/,
                                     gimp_image_window_config_to_entry_id (config),
-                                    private->initial_screen,
                                     private->initial_monitor);
 }
 
@@ -570,11 +558,8 @@ gimp_image_window_set_property (GObject      *object,
     case PROP_DIALOG_FACTORY:
       private->dialog_factory = g_value_get_object (value);
       break;
-    case PROP_INITIAL_SCREEN:
-      private->initial_screen = g_value_get_object (value);
-      break;
     case PROP_INITIAL_MONITOR:
-      private->initial_monitor = g_value_get_int (value);
+      private->initial_monitor = g_value_get_object (value);
       break;
 
     default:
@@ -600,11 +585,8 @@ gimp_image_window_get_property (GObject    *object,
     case PROP_DIALOG_FACTORY:
       g_value_set_object (value, private->dialog_factory);
       break;
-    case PROP_INITIAL_SCREEN:
-      g_value_set_object (value, private->initial_screen);
-      break;
     case PROP_INITIAL_MONITOR:
-      g_value_set_int (value, private->initial_monitor);
+      g_value_set_object (value, private->initial_monitor);
       break;
 
     default:
@@ -810,8 +792,7 @@ gimp_image_window_style_updated (GtkWidget *widget)
 
 static void
 gimp_image_window_monitor_changed (GimpWindow *window,
-                                   GdkScreen  *screen,
-                                   gint        monitor)
+                                   GdkMonitor *monitor)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GList                  *list;
@@ -1125,8 +1106,7 @@ GimpImageWindow *
 gimp_image_window_new (Gimp              *gimp,
                        GimpImage         *image,
                        GimpDialogFactory *dialog_factory,
-                       GdkScreen         *screen,
-                       gint               monitor)
+                       GdkMonitor        *monitor)
 {
   GimpImageWindow        *window;
   GimpImageWindowPrivate *private;
@@ -1134,12 +1114,11 @@ gimp_image_window_new (Gimp              *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
   window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
                          "gimp",            gimp,
                          "dialog-factory",  dialog_factory,
-                         "initial-screen",  screen,
                          "initial-monitor", monitor,
                          /* The window position will be overridden by the
                           * dialog factory, it is only really used on first
@@ -1155,23 +1134,21 @@ gimp_image_window_new (Gimp              *gimp,
 
   if (! GIMP_GUI_CONFIG (private->gimp->config)->single_window_mode)
     {
-      GdkScreen *pointer_screen;
-      gint       pointer_monitor;
+      GdkMonitor *pointer_monitor;
 
-      pointer_monitor = gimp_get_monitor_at_pointer (&pointer_screen);
+      pointer_monitor = gimp_get_monitor_at_pointer ();
 
       /*  If we are supposed to go to a monitor other than where the
        *  pointer is, place the window on that monitor manually,
        *  otherwise simply let the window manager place the window on
        *  the poiner's monitor.
        */
-      if (pointer_screen  != screen ||
-          pointer_monitor != monitor)
+      if (pointer_monitor != monitor)
         {
           GdkRectangle rect;
           gchar        geom[32];
 
-          gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+          gdk_monitor_get_workarea (monitor, &rect);
 
           /*  FIXME: image window placement
            *
@@ -1466,9 +1443,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   GimpImage        *image;
   GtkWidget        *widget;
   GtkAllocation     allocation;
-  GdkScreen        *screen;
+  GdkMonitor       *monitor;
   GdkRectangle      rect;
-  gint              monitor;
   gint              disp_width, disp_height;
   gdouble           x, y;
   gdouble           width, height;
@@ -1490,14 +1466,12 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   image = gimp_display_get_image (active_shell->display);
 
-  widget = GTK_WIDGET (window);
-  screen = gtk_widget_get_screen (widget);
+  widget  = GTK_WIDGET (window);
+  monitor = gimp_widget_get_monitor (widget);
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  monitor = gdk_screen_get_monitor_at_window (screen,
-                                              gtk_widget_get_window (widget));
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gdk_monitor_get_workarea (monitor, &rect);
 
   gimp_display_shell_transform_bounds (active_shell,
                                        0, 0,
@@ -1878,7 +1852,6 @@ gimp_image_window_config_notify (GimpImageWindow *window,
       gimp_image_window_session_update (window,
                                         NULL /*new_display*/,
                                         gimp_image_window_config_to_entry_id (config),
-                                        gtk_widget_get_screen (GTK_WIDGET (window)),
                                         gimp_widget_get_monitor (GTK_WIDGET (window)));
     }
 }
@@ -2020,7 +1993,6 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
       gimp_image_window_session_update (window,
                                         active_display,
                                         NULL /*new_entry_id*/,
-                                        gtk_widget_get_screen (GTK_WIDGET (window)),
                                         gimp_widget_get_monitor (GTK_WIDGET (window)));
     }
   else
@@ -2032,7 +2004,6 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
       gimp_image_window_session_update (window,
                                         active_display,
                                         NULL /*new_entry_id*/,
-                                        private->initial_screen,
                                         private->initial_monitor);
     }
 
@@ -2139,7 +2110,6 @@ gimp_image_window_image_notify (GimpDisplay      *display,
   gimp_image_window_session_update (window,
                                     display,
                                     NULL /*new_entry_id*/,
-                                    gtk_widget_get_screen (GTK_WIDGET (window)),
                                     gimp_widget_get_monitor (GTK_WIDGET (window)));
 
   tab_label = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
@@ -2168,8 +2138,7 @@ gimp_image_window_session_clear (GimpImageWindow *window)
 static void
 gimp_image_window_session_apply (GimpImageWindow *window,
                                  const gchar     *entry_id,
-                                 GdkScreen       *screen,
-                                 gint             monitor)
+                                 GdkMonitor      *monitor)
 {
   GimpImageWindowPrivate *private      = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpSessionInfo        *session_info = NULL;
@@ -2203,7 +2172,6 @@ gimp_image_window_session_apply (GimpImageWindow *window,
   gimp_dialog_factory_add_foreign (private->dialog_factory,
                                    entry_id,
                                    GTK_WIDGET (window),
-                                   screen,
                                    monitor);
 
   gtk_window_unmaximize (GTK_WINDOW (window));
@@ -2214,8 +2182,7 @@ static void
 gimp_image_window_session_update (GimpImageWindow *window,
                                   GimpDisplay     *new_display,
                                   const gchar     *new_entry_id,
-                                  GdkScreen       *screen,
-                                  gint             monitor)
+                                  GdkMonitor      *monitor)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
@@ -2231,8 +2198,7 @@ gimp_image_window_session_update (GimpImageWindow *window,
            */
           if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
             {
-              gimp_image_window_session_apply (window, new_entry_id,
-                                               screen, monitor);
+              gimp_image_window_session_apply (window, new_entry_id, monitor);
             }
         }
       else if (strcmp (private->entry_id, new_entry_id) != 0)
@@ -2253,7 +2219,7 @@ gimp_image_window_session_update (GimpImageWindow *window,
                   g_list_length (private->shells) <= 1)
                 {
                   gimp_image_window_session_apply (window, new_entry_id,
-                                                   screen, monitor);
+                                                   monitor);
                 }
             }
           else if (strcmp (new_entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
@@ -2263,7 +2229,7 @@ gimp_image_window_session_update (GimpImageWindow *window,
                * is exited
                */
               gimp_image_window_session_apply (window, new_entry_id,
-                                               screen, monitor);
+                                               monitor);
             }
         }
 
@@ -2291,7 +2257,7 @@ gimp_image_window_session_update (GimpImageWindow *window,
            * contain images) we should become the empty image window
            */
           gimp_image_window_session_apply (window, private->entry_id,
-                                           screen, monitor);
+                                           monitor);
         }
     }
 }

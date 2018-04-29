@@ -314,15 +314,14 @@ session_exit (Gimp *gimp)
 }
 
 void
-session_restore (Gimp      *gimp,
-                 GdkScreen *screen,
-                 gint       monitor)
+session_restore (Gimp       *gimp,
+                 GdkMonitor *monitor)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_MONITOR (monitor));
 
   gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton (),
-                               screen, monitor);
+                               monitor);
 
   /* make sure GimpImageWindow acts upon hide-docks at the right time,
    * see bug #678043.

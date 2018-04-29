@@ -49,7 +49,7 @@
 
 
 static guint32    select_window        (ScreenshotValues *shootvals,
-                                        GdkScreen        *screen);
+                                        GdkMonitor       *monitor);
 static gint32     create_image         (cairo_surface_t  *surface,
                                         cairo_region_t   *shape,
                                         const gchar      *name);
@@ -59,10 +59,10 @@ static gint32     create_image         (cairo_surface_t  *surface,
 
 static guint32
 select_window (ScreenshotValues *shootvals,
-               GdkScreen        *screen)
+               GdkMonitor       *monitor)
 {
-  Display      *x_dpy    = GDK_SCREEN_XDISPLAY (screen);
-  gint          x_scr    = GDK_SCREEN_XNUMBER (screen);
+  Display      *x_dpy    = GDK_DISPLAY_XDISPLAY (gdk_monitor_get_display (monitor));
+  gint          x_scr    = 0;
   Window        x_root   = RootWindow (x_dpy, x_scr);
   Window        x_win    = None;
   GC            x_gc     = NULL;
@@ -123,7 +123,7 @@ select_window (ScreenshotValues *shootvals,
                         &gc_values);
     }
 
-  keymap = gdk_keymap_get_for_display (gdk_screen_get_display (screen));
+  keymap = gdk_keymap_get_for_display (gdk_monitor_get_display (monitor));
 
   if (gdk_keymap_get_entries_for_keyval (keymap, GDK_KEY_Escape,
                                          &keys, &num_keys))
@@ -331,8 +331,8 @@ window_get_title (GdkDisplay *display,
 }
 
 static cairo_region_t *
-window_get_shape (GdkScreen *screen,
-                  guint32    window)
+window_get_shape (GdkMonitor *monitor,
+                  guint32     window)
 {
   cairo_region_t *shape = NULL;
 
@@ -341,7 +341,8 @@ window_get_shape (GdkScreen *screen,
   gint        rect_count;
   gint        rect_order;
 
-  rects = XShapeGetRectangles (GDK_SCREEN_XDISPLAY (screen), window,
+  rects = XShapeGetRectangles (GDK_DISPLAY_XDISPLAY (gdk_monitor_get_display (monitor)),
+                               window,
                                ShapeBounding,
                                &rect_count, &rect_order);
 
@@ -553,7 +554,7 @@ screenshot_x11_get_capabilities (void)
 
 GimpPDBStatusType
 screenshot_x11_shoot (ScreenshotValues  *shootvals,
-                      GdkScreen         *screen,
+                      GdkMonitor        *monitor,
                       gint32            *image_ID,
                       GError           **error)
 {
@@ -568,19 +569,18 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   gchar            *name  = NULL;
   gint              screen_x;
   gint              screen_y;
-  gint              monitor = shootvals->monitor;
   gint              x, y;
 
   /* use default screen if we are running non-interactively */
-  if (screen == NULL)
-    screen = gdk_screen_get_default ();
+  if (monitor == NULL)
+    monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
 
   if (shootvals->shoot_type != SHOOT_ROOT && ! shootvals->window_id)
     {
       if (shootvals->select_delay > 0)
         screenshot_delay (shootvals->select_delay);
 
-      shootvals->window_id = select_window (shootvals, screen);
+      shootvals->window_id = select_window (shootvals, monitor);
 
       if (! shootvals->window_id)
         return GIMP_PDB_CANCEL;
@@ -589,12 +589,12 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   if (shootvals->screenshot_delay > 0)
     screenshot_delay (shootvals->screenshot_delay);
 
-  display = gdk_screen_get_display (screen);
+  display = gdk_monitor_get_display (monitor);
 
   screen_rect.x      = 0;
   screen_rect.y      = 0;
-  screen_rect.width  = gdk_screen_get_width (screen);
-  screen_rect.height = gdk_screen_get_height (screen);
+  screen_rect.width  = gdk_screen_get_width (gdk_display_get_default_screen (display));
+  screen_rect.height = gdk_screen_get_height (gdk_display_get_default_screen (display));
 
   if (shootvals->shoot_type == SHOOT_REGION)
     {
@@ -603,15 +603,15 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
       rect.width  = ABS (shootvals->x2 - shootvals->x1);
       rect.height = ABS (shootvals->y2 - shootvals->y1);
 
-      monitor = gdk_screen_get_monitor_at_point (screen,
-                                                 rect.x + rect.width  / 2,
-                                                 rect.y + rect.height / 2);
+      monitor = gdk_display_get_monitor_at_point (display,
+                                                  rect.x + rect.width  / 2,
+                                                  rect.y + rect.height / 2);
     }
   else
     {
       if (shootvals->shoot_type == SHOOT_ROOT)
         {
-          window = gdk_screen_get_root_window (screen);
+          window = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
 
           /* FIXME: figure monitor */
         }
@@ -620,7 +620,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
           window = gdk_x11_window_foreign_new_for_display (display,
                                                            shootvals->window_id);
 
-          monitor = gdk_screen_get_monitor_at_window (screen, window);
+          monitor = gdk_display_get_monitor_at_window (display, window);
         }
 
       if (! window)
@@ -640,7 +640,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return GIMP_PDB_EXECUTION_ERROR;
 
-  window = gdk_screen_get_root_window (screen);
+  window = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
   gdk_window_get_origin (window, &screen_x, &screen_y);
 
   screenshot = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
@@ -661,7 +661,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
     {
       name = window_get_title (display, shootvals->window_id);
 
-      shape = window_get_shape (screen, shootvals->window_id);
+      shape = window_get_shape (monitor, shootvals->window_id);
 
       if (shape)
         cairo_region_translate (shape, x - rect.x, y - rect.y);
@@ -683,7 +683,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
        shootvals->shoot_type == SHOOT_WINDOW) && shootvals->show_cursor)
     add_cursor_image (*image_ID, display);
 
-  profile = gimp_screen_get_color_profile (screen, monitor);
+  profile = gimp_monitor_get_color_profile (monitor);
 
   if (profile)
     {
