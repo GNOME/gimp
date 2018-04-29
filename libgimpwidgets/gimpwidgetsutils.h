@@ -39,6 +39,14 @@ GtkWidget          * gimp_table_attach_aligned       (GtkTable          *table,
                                                       GtkWidget         *widget,
                                                       gint               colspan,
                                                       gboolean           left_align);
+GtkWidget          * gimp_grid_attach_aligned        (GtkGrid           *grid,
+                                                      gint               left,
+                                                      gint               top,
+                                                      const gchar       *label_text,
+                                                      gfloat             xalign,
+                                                      gfloat             yalign,
+                                                      GtkWidget         *widget,
+                                                      gint               columns);
 
 void                 gimp_label_set_attributes       (GtkLabel          *label,
                                                       ...);
