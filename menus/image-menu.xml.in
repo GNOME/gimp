@@ -719,6 +719,7 @@
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
         <menuitem action="filters-shift" />
+        <menuitem action="filters-spherize" />
         <menuitem action="filters-value-propagate" />
         <menuitem action="filters-video-degradation" />
         <menuitem action="filters-waves" />

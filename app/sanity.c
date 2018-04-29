@@ -698,6 +698,7 @@ sanity_check_gegl_ops (void)
     "gegl:slic",
     "gegl:snn-mean",
     "gegl:softglow",
+    "gegl:spherize",
     "gegl:spiral",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",
