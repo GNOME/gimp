@@ -34,7 +34,7 @@ typedef struct _GimpColorHistoryClass GimpColorHistoryClass;
 
 struct _GimpColorHistory
 {
-  GtkTable      parent_instance;
+  GtkGrid       parent_instance;
 
   GimpContext  *context;
 
@@ -44,11 +44,11 @@ struct _GimpColorHistory
 
 struct _GimpColorHistoryClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass  parent_class;
 
   /*  signals  */
-  void   (* color_selected)             (GimpColorHistory *history,
-                                         const GimpRGB    *rgb);
+  void   (* color_selected) (GimpColorHistory *history,
+                             const GimpRGB    *rgb);
 };
 
 
