@@ -346,14 +346,13 @@ gimp_color_editor_get_preview (GimpDocked  *docked,
                                GimpContext *context,
                                GtkIconSize  size)
 {
-  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (docked));
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
+  GtkWidget *preview;
+  gint       width;
+  gint       height;
 
   preview = gimp_fg_bg_view_new (context);
 
-  if (gtk_icon_size_lookup_for_settings (settings, size, &width, &height))
+  if (gtk_icon_size_lookup (size, &width, &height))
     gtk_widget_set_size_request (preview, width, height);
 
   return preview;

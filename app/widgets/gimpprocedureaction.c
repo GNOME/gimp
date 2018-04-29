@@ -187,13 +187,11 @@ gimp_procedure_action_connect_proxy (GtkAction *action,
 
       if (pixbuf)
         {
-          GtkSettings *settings = gtk_widget_get_settings (proxy);
-          gint         width;
-          gint         height;
-          GtkWidget   *image;
+          GtkWidget *image;
+          gint       width;
+          gint       height;
 
-          gtk_icon_size_lookup_for_settings (settings, GTK_ICON_SIZE_MENU,
-                                             &width, &height);
+          gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
 
           if (width  != gdk_pixbuf_get_width  (pixbuf) ||
               height != gdk_pixbuf_get_height (pixbuf))

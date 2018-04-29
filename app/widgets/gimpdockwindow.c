@@ -293,7 +293,6 @@ gimp_dock_window_constructed (GObject *object)
   GimpMenuFactory *menu_factory;
   GtkAccelGroup   *accel_group;
   Gimp            *gimp;
-  GtkSettings     *settings;
   gint             menu_view_width  = -1;
   gint             menu_view_height = -1;
 
@@ -448,11 +447,9 @@ gimp_dock_window_constructed (GObject *object)
                            dock_window,
                            0);
 
-  settings = gtk_widget_get_settings (GTK_WIDGET (dock_window));
-  gtk_icon_size_lookup_for_settings (settings,
-                                     DEFAULT_MENU_VIEW_SIZE,
-                                     &menu_view_width,
-                                     &menu_view_height);
+  gtk_icon_size_lookup (DEFAULT_MENU_VIEW_SIZE,
+                        &menu_view_width,
+                        &menu_view_height);
 
   g_object_set (dock_window->p->image_combo,
                 "container", dock_window->p->image_container,
@@ -610,18 +607,15 @@ gimp_dock_window_style_updated (GtkWidget *widget)
 
   if (dock_window->p->image_combo)
     {
-      GtkSettings *settings;
-      GtkBorder    border;
-      gint         menu_view_width  = 18;
-      gint         menu_view_height = 18;
-      gint         focus_line_width;
-      gint         focus_padding;
+      GtkBorder border;
+      gint      menu_view_width  = 18;
+      gint      menu_view_height = 18;
+      gint      focus_line_width;
+      gint      focus_padding;
 
-      settings = gtk_widget_get_settings (dock_window->p->image_combo);
-      gtk_icon_size_lookup_for_settings (settings,
-                                         menu_view_size,
-                                         &menu_view_width,
-                                         &menu_view_height);
+      gtk_icon_size_lookup (menu_view_size,
+                            &menu_view_width,
+                            &menu_view_height);
 
       gtk_widget_style_get (dock_window->p->auto_button,
                             "focus-line-width", &focus_line_width,
