@@ -75,7 +75,7 @@ gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
   GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
   GtkWidget                *frame;
   GtkWidget                *vbox;
-  GtkWidget                *table;
+  GtkWidget                *grid;
   GtkWidget                *label;
   GtkSizeGroup             *size_group;
   gint                      x, y;
@@ -91,12 +91,12 @@ gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 
-  table = generic->matrix_table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-  gtk_size_group_add_widget (size_group, table);
-  gtk_widget_show (table);
+  grid = generic->matrix_grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, TRUE, TRUE, 0);
+  gtk_size_group_add_widget (size_group, grid);
+  gtk_widget_show (grid);
 
   for (y = 0; y < 3; y++)
     {
@@ -105,8 +105,7 @@ gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
           label = generic->matrix_labels[y][x] = gtk_label_new (" ");
           gtk_label_set_xalign (GTK_LABEL (label), 1.0);
           gtk_label_set_width_chars (GTK_LABEL (label), 12);
-          gtk_table_attach (GTK_TABLE (table), label,
-                            x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
+          gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
           gtk_widget_show (label);
         }
     }
@@ -130,7 +129,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformTool *tr_tool)
     {
       gint x, y;
 
-      gtk_widget_show (generic->matrix_table);
+      gtk_widget_show (generic->matrix_grid);
       gtk_widget_hide (generic->invalid_label);
 
       for (y = 0; y < 3; y++)
@@ -149,7 +148,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformTool *tr_tool)
   else
     {
       gtk_widget_show (generic->invalid_label);
-      gtk_widget_hide (generic->matrix_table);
+      gtk_widget_hide (generic->matrix_grid);
     }
 }
 

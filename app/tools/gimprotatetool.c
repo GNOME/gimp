@@ -171,26 +171,26 @@ static void
 gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
-  GtkWidget      *table;
+  GtkWidget      *grid;
   GtkWidget      *button;
   GtkWidget      *scale;
   GtkAdjustment  *adj;
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 6);
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), table,
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), grid,
                       FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   rotate->angle_adj = gtk_adjustment_new (0, -180, 180, 0.1, 15, 0);
   button = gtk_spin_button_new (rotate->angle_adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("_Angle:"),
-                             0.0, 0.5, button, 1, TRUE);
+  gtk_widget_set_halign (button, GTK_ALIGN_START);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0, _("_Angle:"),
+                             0.0, 0.5, button, 1);
   rotate->angle_spin_button = button;
 
   g_signal_connect (rotate->angle_adj, "value-changed",
@@ -199,16 +199,17 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, rotate->angle_adj);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_set_hexpand (scale, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), scale, 1, 1, 1, 1);
   gtk_widget_show (scale);
 
   adj = gtk_adjustment_new (0, -1, 1, 1, 10, 0);
   button = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center _X:"),
-                             0.0, 0.5, button, 1, TRUE);
+  gtk_widget_set_halign (button, GTK_ALIGN_START);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2, _("Center _X:"),
+                            0.0, 0.5, button, 1);
 
   rotate->sizeentry = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                            TRUE, TRUE, FALSE, SB_WIDTH,
@@ -216,8 +217,9 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (rotate->sizeentry),
                              GTK_SPIN_BUTTON (button), NULL);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (rotate->sizeentry), 2);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3, _("Center _Y:"),
-                             0.0, 0.5, rotate->sizeentry, 1, TRUE);
+  gtk_widget_set_halign (rotate->sizeentry, GTK_ALIGN_START);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3, _("Center _Y:"),
+                            0.0, 0.5, rotate->sizeentry, 1);
 
   g_signal_connect (rotate->sizeentry, "value-changed",
                     G_CALLBACK (rotate_center_changed),

@@ -212,37 +212,24 @@ gimp_button_menu_position (GtkWidget       *button,
 }
 
 void
-gimp_table_attach_icon (GtkTable    *table,
-                        gint         row,
-                        const gchar *icon_name,
-                        GtkWidget   *widget,
-                        gint         colspan,
-                        gboolean     left_align)
+gimp_grid_attach_icon (GtkGrid     *grid,
+                       gint         row,
+                       const gchar *icon_name,
+                       GtkWidget   *widget,
+                       gint         columns)
 {
   GtkWidget *image;
 
-  g_return_if_fail (GTK_IS_TABLE (table));
+  g_return_if_fail (GTK_IS_GRID (grid));
   g_return_if_fail (icon_name != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_widget_set_halign (image, GTK_ALIGN_END);
-  gtk_table_attach (table, image, 0, 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, image, 0, row, 1, 1);
   gtk_widget_show (image);
 
-  if (left_align)
-    {
-      GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-
-      gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
-
-      widget = hbox;
-    }
-
-  gtk_table_attach (table, widget, 1, 1 + colspan, row, row + 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, widget, 1, row, columns, 1);
   gtk_widget_show (widget);
 }
 
