@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-25 20:29+0200\n"
-"PO-Revision-Date: 2018-04-25 20:30+0200\n"
+"POT-Creation-Date: 2018-04-29 18:04+0200\n"
+"PO-Revision-Date: 2018-04-29 18:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -7449,6 +7449,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
 #: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1214
 #: ../app/widgets/gimpcolordialog.c:109
+#: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
 msgstr "_Przywróć"
 
@@ -12550,12 +12551,12 @@ msgstr "Ustawienia narzędzia"
 msgid "Font"
 msgstr "Czcionka"
 
-#: ../app/core/gimpdata.c:582 ../app/core/gimpdata.c:590
+#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimpdata.c:596
+#: ../app/core/gimpdata.c:604
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -14383,7 +14384,7 @@ msgid ""
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
 #: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:190
-#: ../app/gui/gui-message.c:268
+#: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
 
@@ -16572,6 +16573,10 @@ msgstr "_Przywróć"
 #: ../app/dialogs/resize-dialog.c:187
 msgid "_Resize"
 msgstr "_Zmień wymiary"
+
+#: ../app/dialogs/resize-dialog.c:277
+msgid "C_enter"
+msgstr "_Wyśrodkuj"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -22134,7 +22139,7 @@ msgid "Base selection on all visible layers"
 msgstr "Bazowe zaznaczenie na wszystkich widocznych warstwach"
 
 #: ../app/tools/gimpregionselectoptions.c:119
-#: ../app/tools/gimpregionselectoptions.c:281
+#: ../app/tools/gimpregionselectoptions.c:280
 msgid "Select by"
 msgstr "Zaznaczenie"
 
