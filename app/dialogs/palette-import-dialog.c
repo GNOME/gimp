@@ -139,7 +139,6 @@ palette_import_dialog_new (GimpContext *context)
   GtkWidget    *frame;
   GtkWidget    *vbox;
   GtkWidget    *table;
-  GtkWidget    *abox;
   GtkSizeGroup *size_group;
   GSList       *group = NULL;
 
@@ -362,16 +361,13 @@ palette_import_dialog_new (GimpContext *context)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   private->preview = gimp_view_new_full_by_types (private->context,
                                                  GIMP_TYPE_VIEW,
                                                  GIMP_TYPE_PALETTE,
                                                  192, 192, 1,
                                                  TRUE, FALSE, FALSE);
-  gtk_container_add (GTK_CONTAINER (abox), private->preview);
+  gtk_widget_set_halign (private->preview, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), private->preview, FALSE, FALSE, 0);
   gtk_widget_show (private->preview);
 
   private->no_colors_label =
