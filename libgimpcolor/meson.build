@@ -31,11 +31,6 @@ libgimpcolor_headers = [
   'gimprgb.h',
 ]
 
-libgimpcolor_cflags = [
-  '-DG_LOG_DOMAIN="LibGimpColor"',
-  '-DGIMP_COLOR_COMPILATION',
-]
-
 
 libgimpcolor = library('gimpcolor-' + api_version,
   libgimpcolor_sources,
@@ -43,8 +38,8 @@ libgimpcolor = library('gimpcolor-' + api_version,
   dependencies: [
     cairo, gdk_pixbuf, gegl, lcms, math,
   ],
-  c_args:     [ libgimpcolor_cflags, ],
-  link_with:  [ libgimpbase, ],
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpColor"', '-DGIMP_COLOR_COMPILATION', ],
+  link_with: [ libgimpbase, ],
   vs_module_defs: 'gimpcolor.def',
   install: true,
   version: so_version,
@@ -65,7 +60,7 @@ executable('test-color-parser',
     babl,
     # glib,
   ],
-  c_args:     [ libgimpcolor_cflags, ],
-  link_with:  [ libgimpbase, libgimpcolor, ],
+  c_args: '-DG_LOG_DOMAIN="LibGimpColor"',
+  link_with: [ libgimpbase, libgimpcolor, ],
   install: false,
 )

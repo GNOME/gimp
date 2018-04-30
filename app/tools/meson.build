@@ -117,9 +117,7 @@ libapptools_sources = [
 libapptools = static_library('apptools',
   libapptools_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Tools"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Tools"',
   dependencies: [
     gegl, gtk3,
   ],

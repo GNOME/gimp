@@ -18,11 +18,8 @@ libgimpmath = library('gimpmath-' + api_version,
   dependencies: [
     glib, gobject, math,
   ],
-  c_args:     [
-    '-DG_LOG_DOMAIN="LibGimpMath"',
-    '-DGIMP_MATH_COMPILATION',
-  ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpMath"', '-DGIMP_MATH_COMPILATION', ],
+  link_with: [
     libgimpbase,
   ],
   vs_module_defs: 'gimpmath.def',

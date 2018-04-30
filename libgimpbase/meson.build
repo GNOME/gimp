@@ -81,10 +81,6 @@ libgimpbase_headers = [
   gimpversion,
 ]
 
-libgimpbase_cflags = [
-  '-DG_LOG_DOMAIN="LibGimpBase"',
-  '-DGIMP_BASE_COMPILATION',
-]
 
 libgimpbase = library('gimpbase-' + api_version,
   libgimpbase_sources,
@@ -92,7 +88,7 @@ libgimpbase = library('gimpbase-' + api_version,
   dependencies: [
     gexiv2, gio, math,
   ],
-  c_args:     [ libgimpbase_cflags, ],
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpBase"', '-DGIMP_BASE_COMPILATION', ],
   vs_module_defs: 'gimpbase.def',
   install: true,
   version: so_version,
@@ -111,8 +107,8 @@ executable('test-cpu-accel',
   dependencies: [
     glib,
   ],
-  c_args:     [ libgimpbase_cflags, ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpBase"', '-DGIMP_BASE_COMPILATION', ],
+  link_with: [
     libgimpbase,
   ],
   install: false,

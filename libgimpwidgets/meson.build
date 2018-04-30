@@ -144,11 +144,6 @@ libgimpwidgets_headers = [
 ]
 
 
-libgimpwidgets_cflags = [
-  '-DG_LOG_DOMAIN="LibGimpWidgets"',
-  '-DGIMP_WIDGETS_COMPILATION',
-]
-
 if gtk3_macos.found()
   libgimpwidgets_sources += [
     'gimppickbutton-quartz.c',
@@ -166,8 +161,8 @@ libgimpwidgets = library('gimpwidgets-'+ api_version,
   dependencies: [
     gegl, gtk3, lcms, math
   ],
-  c_args:     [ libgimpwidgets_cflags, ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpWidgets"', '-DGIMP_WIDGETS_COMPILATION', ],
+  link_with: [
     libgimpbase,
     libgimpcolor,
     libgimpconfig,
@@ -191,8 +186,8 @@ test_preview_area = executable('test-preview-area',
   dependencies: [
     gtk3,
   ],
-  c_args:     [ libgimpwidgets_cflags, ],
-  link_with:  [ libgimpwidgets, ],
+  c_args: '-DG_LOG_DOMAIN="LibGimpWidgets"',
+  link_with: [ libgimpwidgets, ],
   install: false,
   build_by_default: false,
 )
@@ -203,7 +198,7 @@ test_eevl = executable('test-eevl',
   dependencies: [
     glib, gtk3,
   ],
-  c_args:     [ libgimpwidgets_cflags, ],
-  link_with:  [ libgimpwidgets, ],
+  c_args: '-DG_LOG_DOMAIN="LibGimpWidgets"',
+  link_with: [ libgimpwidgets, ],
   install: false,
 )

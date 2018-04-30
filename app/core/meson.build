@@ -226,9 +226,7 @@ libappcore_sources = [
 libappcore = static_library('appcore',
   libappcore_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Core"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Core"',
   dependencies: [
     cairo, gegl, gdk_pixbuf, libmypaint, gexiv2, math
   ],
