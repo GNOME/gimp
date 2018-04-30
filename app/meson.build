@@ -37,10 +37,6 @@ app_debug_files = files(
 )
 
 # Top-level library
-app_cflags = [
-  '-DG_LOG_DOMAIN="Gimp"',
-  '-DGIMP_APP_GLUE_COMPILATION',
-]
 
 libapp_sources = [
   'app.c',
@@ -60,7 +56,7 @@ libapp_sources = [
 libapp = static_library('app',
   libapp_sources,
   include_directories: [ rootInclude, rootAppInclude, configInclude, ],
-  c_args: app_cflags,
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   dependencies: [
     gegl, gdk_pixbuf, gtk3,
   ],
@@ -129,7 +125,7 @@ rc_file = platform_win32 ? windows.compile_resources(
 
 gimpconsole_exe = executable('gimp-console-'+app_version,
   libapp_sources + [ 'main.c', rc_file, ],
-  c_args: app_cflags + [ '-DGIMP_CONSOLE_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ] + [ '-DGIMP_CONSOLE_COMPILATION', ],
   include_directories: [ rootInclude, ],
   dependencies: app_deps,
   link_with: app_links,
@@ -151,7 +147,7 @@ rc_file = platform_win32 ? windows.compile_resources(
 
 gimpmain_exe = executable('gimp-'+app_version,
   libapp_sources + [ 'main.c', rc_file, ],
-  c_args: app_cflags + [ ],
+  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   include_directories: [ rootInclude, ],
   dependencies: app_deps,
   link_with: app_links + app_gui_links,

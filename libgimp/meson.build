@@ -233,19 +233,14 @@ libgimp_top_headers = [
 ]
 
 
-libgimp_top_cflags = [
-  '-DG_LOG_DOMAIN="LibGimp"',
-  '-DGIMP_COMPILATION',
-]
-
 libgimp = library('gimp-'+ api_version,
   libgimp_top_sources,
   include_directories: rootInclude,
   dependencies: [
     gegl, gexiv2, gtk3, drmingw,
   ],
-  c_args:     [ libgimp_top_cflags, ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimp"', '-DGIMP_COMPILATION', ],
+  link_with: [
     libgimpbase,
     libgimpcolor,
     libgimpconfig,
@@ -262,8 +257,8 @@ libgimpui = library('gimpui-'+ api_version,
   dependencies: [
     gegl, gexiv2, gtk3,
   ],
-  c_args:     [ libgimp_top_cflags, ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpUI"', '-DGIMP_COMPILATION', ],
+  link_with: [
     libgimp,
     libgimpbase,
     libgimpcolor,
