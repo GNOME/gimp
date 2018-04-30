@@ -1136,62 +1136,59 @@ conf.set('HAVE_FUNC_ATTRIBUTE_DESTRUCTOR',
 #     # #      #      # #   ## #      #    #
 ######  ###### #      # #    # ######  ####
 
+# Compiler
+conf.set_quoted('CC',             cc.get_id())
+conf.set_quoted('CC_VERSION',     cc.version())
+
+# Names
+conf.set_quoted('GIMP_PACKAGE',   meson.project_name())
+conf.set_quoted('PACKAGE_NAME',   meson.project_name())
+conf.set_quoted('PACKAGE_STRING', package_string)
+conf.set_quoted('GIMP_COMMAND',   gimp_command)
+
+# Versions
+conf.set_quoted('GIMP_APP_VERSION',      app_version)
+conf.set_quoted('GIMP_DATA_VERSION',     api_version)
+conf.set_quoted('GIMP_PLUGIN_VERSION',   api_version)
+conf.set_quoted('GIMP_TOOL_VERSION',     api_version)
+
+conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
+conf.set_quoted('GIMP_USER_VERSION',      user_version)
+conf.set_quoted('GIMP_APP_VERSION_STRING',app_version)
+
+# Directories
+conf.set_quoted('PREFIX',          prefix)
+conf.set_quoted('EXEC_PREFIX',     prefix)
+conf.set_quoted('GIMPDIR',         gimpdir)
+conf.set_quoted('GIMPSYSCONFDIR',  gimpsysconfdir)
+conf.set_quoted('GIMPDATADIR',     join_paths(prefix, gimpdatadir))
+conf.set_quoted('GIMPPLUGINDIR',   join_paths(prefix, gimpplugindir))
+conf.set_quoted('PLUGINDIR',       join_paths(prefix, gimpplugindir))
+conf.set_quoted('LOCALEDIR',       join_paths(prefix, localedir))
+
+conf.set_quoted('LOCALSTATEDIR',   get_option('localstatedir'))
+# /usr/com?
+conf.set_quoted('SHAREDSTATEDIR',  get_option('sharedstatedir'))
+conf.set_quoted('SYSCONFDIR',      get_option('sysconfdir'))
+conf.set_quoted('BINDIR',          join_paths(prefix, get_option('bindir')))
+conf.set_quoted('DATAROOTDIR',     join_paths(prefix, get_option('datadir')))
+conf.set_quoted('INFODIR',         join_paths(prefix, get_option('infodir')))
+conf.set_quoted('LIBDIR',          join_paths(prefix, get_option('libdir')))
+conf.set_quoted('LIBEXECDIR',      join_paths(prefix, get_option('libexecdir')))
+conf.set_quoted('MANDIR',          join_paths(prefix, get_option('mandir')))
+conf.set_quoted('SBINDIR',         join_paths(prefix, get_option('sbindir')))
+conf.set_quoted('SYSDATADIR',      join_paths(prefix, get_option('datadir')))
+
+# Third-party/Misc
+conf.set_quoted('ISO_CODES_LOCATION',    isocodes_location)
+conf.set_quoted('ISO_CODES_LOCALEDIR',   isocodes_localedir)
+
+
 # Global arguments
-# Should be moved into config.h someday
-
-config_defines = [
-  # Compiler
-  '-DCC='                   +'"'+ cc.get_id()           +'"',
-  '-DCC_VERSION='           +'"'+ cc.version()          +'"',
-
-  # Names
-  '-DGIMP_PACKAGE='         +'"'+ meson.project_name()  +'"',
-  '-DPACKAGE_NAME='         +'"'+ meson.project_name()  +'"',
-  '-DPACKAGE_STRING='       +'"'+ package_string        +'"',
-  '-DGIMP_COMMAND='         +'"'+ gimp_command          +'"',
-
-  # Versions
-  '-DGIMP_APP_VERSION='     +'"'+ app_version           +'"',
-  '-DGIMP_DATA_VERSION='    +'"'+ api_version           +'"',
-  '-DGIMP_PLUGIN_VERSION='  +'"'+ api_version           +'"',
-  '-DGIMP_TOOL_VERSION='    +'"'+ api_version           +'"',
-
-  '-DGIMP_SYSCONF_VERSION=' +'"'+ api_version           +'"',
-  '-DGIMP_USER_VERSION='    +'"'+ user_version          +'"',
-  '-DGIMP_APP_VERSION_STRING="' + app_version           +'"',
-
-  # Directories
-  '-DPREFIX='         +'"'+ prefix                +'"',
-  '-DEXEC_PREFIX='    +'"'+ prefix                +'"',
-  '-DGIMPDIR='        +'"'+ gimpdir               +'"',
-  '-DGIMPSYSCONFDIR=' +'"'+ gimpsysconfdir        +'"',
-  '-DGIMPDATADIR='    +'"'+ join_paths(prefix, gimpdatadir)    +'"',
-  '-DGIMPPLUGINDIR='  +'"'+ join_paths(prefix, gimpplugindir)  +'"',
-  '-DPLUGINDIR='      +'"'+ join_paths(prefix, gimpplugindir)  +'"',
-  '-DLOCALEDIR='      +'"'+ join_paths(prefix, localedir)      +'"',
-
-  '-DLOCALSTATEDIR='  +'"'+ get_option('localstatedir')        +'"',
-  '-DSHAREDSTATEDIR=' +'"'+ get_option('sharedstatedir')       +'"', # /usr/com?
-  '-DSYSCONFDIR='     +'"'+ get_option('sysconfdir')           +'"',
-  '-DBINDIR='         +'"'+ join_paths(prefix, get_option('bindir'))       +'"',
-  '-DDATAROOTDIR='    +'"'+ join_paths(prefix, get_option('datadir'))      +'"',
-  '-DINFODIR='        +'"'+ join_paths(prefix, get_option('infodir'))      +'"',
-  '-DLIBDIR='         +'"'+ join_paths(prefix, get_option('libdir'))       +'"',
-  '-DLIBEXECDIR='     +'"'+ join_paths(prefix, get_option('libexecdir'))   +'"',
-  '-DMANDIR='         +'"'+ join_paths(prefix, get_option('mandir'))       +'"',
-  '-DSBINDIR='        +'"'+ join_paths(prefix, get_option('sbindir'))      +'"',
-  '-DSYSDATADIR='     +'"'+ join_paths(prefix, get_option('datadir'))      +'"',
-
-  # Third-party/Misc
-  '-DISO_CODES_LOCATION='   +'"'+ isocodes_location  +'"',
-  '-DISO_CODES_LOCALEDIR='  +'"'+ isocodes_localedir +'"',
-
-  '-DHAVE_CONFIG_H',
-  '-DMESON_BUILD',
-]
-
-add_project_arguments(
-  config_defines,
+add_project_arguments([
+    '-DHAVE_CONFIG_H',
+    '-DMESON_BUILD',
+  ],
   language: [ 'c', 'cpp', ],
 )
 
@@ -1284,8 +1281,6 @@ configure_file(
   output: 'config.h',
   configuration: conf
 )
-
-
 
 
 ################################################################################
