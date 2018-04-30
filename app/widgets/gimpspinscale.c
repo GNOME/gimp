@@ -72,7 +72,6 @@ struct _GimpSpinScalePrivate
   gboolean         relative_change;
   gdouble          start_x;
   gdouble          start_value;
-  GdkScreen       *start_screen;
   gint             start_pointer_x;
   gint             start_pointer_y;
   SpinScaleTarget  target;
@@ -852,10 +851,10 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
 
       if (private->relative_change)
         {
-          gdk_display_warp_pointer (gdk_screen_get_display (private->start_screen),
-                                    private->start_screen,
-                                    private->start_pointer_x,
-                                    private->start_pointer_y);
+          gdk_device_warp (gdk_event_get_device ((GdkEvent *) event),
+                           gdk_event_get_screen ((GdkEvent *) event),
+                           private->start_pointer_x,
+                           private->start_pointer_y);
         }
 
       if (private->hover)
@@ -893,7 +892,7 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
       GdkDisplay   *display;
       gint          pointer_x;
       gint          pointer_y;
-      gint          monitor;
+      GdkMonitor   *monitor;
       GdkRectangle  monitor_geometry;
 
       screen  = gdk_event_get_screen ((GdkEvent *) event);
@@ -902,8 +901,8 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
       pointer_x = floor (event->x_root);
       pointer_y = floor (event->y_root);
 
-      monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
-      gdk_screen_get_monitor_geometry (screen, monitor, &monitor_geometry);
+      monitor = gdk_display_get_monitor_at_point (display, pointer_x, pointer_y);
+      gdk_monitor_get_geometry (monitor, &monitor_geometry);
 
       /* when applying a relative change, we wrap the pointer around the left
        * and right edges of the current monitor, so that the adjustment is not
@@ -912,7 +911,7 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
        * that it can be subsequently moved in the other direction, and adjust
        * start_x accordingly.
        *
-       * unfortunately, we can't rely on gdk_display_warp_pointer() to actually
+       * unfortunately, we can't rely on gdk_device_warp() to actually
        * move the pointer (for example, it doesn't work on wayland), and
        * there's no easy way to tell whether the pointer moved or not.  in
        * particular, even when the pointer doesn't move, gdk still simulates a
@@ -920,15 +919,16 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
        * motion event occurs.
        *
        * in order not to erroneously adjust start_x when
-       * gdk_display_warp_pointer() fails, we remember that we *tried* to warp
-       * the pointer, and defer the actual adjustment of start_x until a future
-       * motion event, where the pointer's x coordinate is different from the
-       * one passed to gdk_display_warp_pointer().  when that happens, we
-       * "guess" whether the pointer got warped or not by comparing its x
-       * coordinate to the one passed to gdk_display_warp_pointer(): if their
-       * difference is less than half the monitor width, then we assume the
-       * pointer got warped (otherwise, the user must have very quickly moved
-       * the mouse across half the screen.)  yes, this is an ugly ugly hack :)
+       * gdk_device_warp() fails, we remember that we *tried* to warp
+       * the pointer, and defer the actual adjustment of start_x until
+       * a future motion event, where the pointer's x coordinate is
+       * different from the one passed to gdk_device_warp().  when
+       * that happens, we "guess" whether the pointer got warped or
+       * not by comparing its x coordinate to the one passed to
+       * gdk_device_warp(): if their difference is less than half the
+       * monitor width, then we assume the pointer got warped
+       * (otherwise, the user must have very quickly moved the mouse
+       * across half the screen.)  yes, this is an ugly ugly hack :)
        */
 
       if (private->pointer_warp)
@@ -985,10 +985,10 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
 
           if (private->pointer_warp)
             {
-              gdk_display_warp_pointer (display,
-                                        screen,
-                                        private->pointer_warp_x,
-                                        pointer_y);
+              gdk_device_warp (gdk_event_get_device ((GdkEvent *) event),
+                               screen,
+                               private->pointer_warp_x,
+                               pointer_y);
             }
         }
 
