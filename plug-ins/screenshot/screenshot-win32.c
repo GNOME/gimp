@@ -73,7 +73,7 @@ static HWND       mainHwnd = NULL;
 static HINSTANCE  hInst = NULL;
 static HCURSOR    selectCursor = 0;
 static ICONINFO   iconInfo;
-static byte		  *capturedPixels;
+static guchar		  *capturedPixels;
 
 static gint32    *image_id;
 
@@ -232,6 +232,21 @@ flipRedAndBlueBytes (int width,
   }
 }
 
+static void
+rgbaTorgbBytes (guchar *rgbBufp,
+           guchar *rgbaBufp,
+           int    rgbaBufSize)
+{
+  int rgbPoint = 0, rgbaPoint;
+
+	  for (rgbaPoint = 0; rgbaPoint < rgbaBufSize; rgbaPoint += 4)
+	  {
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint];
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 1];
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 2];
+	  }
+}
+
 /*
  * sendBMPToGIMP
  *
@@ -310,15 +325,6 @@ sendBMPToGimp (RECT rect,
 
   return;
 }
-
-static void
-unnamed()
-{
-
-
-
-}
-
 
 /*
  * doNonRootWindowCapture
@@ -960,46 +966,35 @@ WndProc (HWND   hwnd,
          LPARAM lParam)
 {
   HWND selectedHwnd;
-
+  
   switch (message)
     {
+    case WM_COPYDATA:
+    {
 
+      /* Load the capture object info */
+      magCapturedData* capturedDat = (magCapturedData*)((COPYDATASTRUCT*)lParam)->lpData;;
+      /* Get the pixels pointer */
+      capturedPixels = (guchar*)capturedDat->pixels;
+      /* Init rectImage  */
+      RECT rectImage;
+      rectImage.left = 0;
+      rectImage.top = 0;
+      rectImage.right = capturedDat->width;
+      rectImage.bottom = capturedDat->height;
 
-  case WM_COPYDATA:
-  {
+      /* Calculate the size of the rgb array and malloc it */
+      int rgbSize = (capturedDat->cbsize / 4) * 3;
+      capBytes = (guchar*)malloc(sizeof(guchar)*rgbSize);
 
-	  // Load the capture object info
-	  magCapturedData* capturedDat = (magCapturedData*)((COPYDATASTRUCT*)lParam)->lpData;;
-	  // Get the pixels pointer
-	  capturedPixels = capturedDat->pixels;
-	  // Init rectImage 
-	  RECT rectImage;
-	  rectImage.left = 0;
-	  rectImage.top = 0;
-	  rectImage.right = capturedDat->width;
-	  rectImage.bottom = capturedDat->height;
+      rgbaTorgbBytes (capBytes,capturedPixels,capturedDat->cbsize);
 
+      sendBMPToGimp(rectImage, FALSE);
 
-	  // Calculate the size of the rgb array and malloc it.
-	  unsigned int rgbSize = (capturedDat->cbsize / 4) * 3;
-	  capBytes = (guchar*)malloc(sizeof(guchar)*rgbSize);
+      return (DefWindowProc(hwnd, message, wParam, lParam));
 
-	  // Convert rgba to rgb and save it on the rgb array
-	  unsigned int rgbPoint = 0;
-	  for (unsigned int rgbaPoint = 0; rgbaPoint < capturedDat->cbsize; rgbaPoint += 4)
-	  {
-		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint];
-		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 1];
-		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 2];
-	  }
-
-	  sendBMPToGimp(rectImage, FALSE);
-
-	  return (DefWindowProc(hwnd, message, wParam, lParam));
-
-  }
-  break;
-
+    }
+    break;
 
     case WM_CREATE:
       /* The window is created... Send the capture message */
