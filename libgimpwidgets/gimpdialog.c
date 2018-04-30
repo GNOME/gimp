@@ -83,7 +83,6 @@ static gboolean   gimp_dialog_delete_event (GtkWidget    *widget,
 
 static void       gimp_dialog_close        (GtkDialog    *dialog);
 
-static void       gimp_dialog_help         (GObject      *dialog);
 static void       gimp_dialog_response     (GtkDialog    *dialog,
                                             gint          response_id);
 
@@ -176,20 +175,9 @@ gimp_dialog_constructed (GObject *object)
 
   if (show_help_button && private->help_func && private->help_id)
     {
-      GtkDialog *dialog      = GTK_DIALOG (object);
-      GtkWidget *action_area = gtk_dialog_get_action_area (dialog);
-
-      private->help_button = gtk_button_new_with_mnemonic (_("_Help"));
-
-      gtk_box_pack_end (GTK_BOX (action_area), private->help_button,
-                        FALSE, TRUE, 0);
-      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
-                                          private->help_button, TRUE);
-      gtk_widget_show (private->help_button);
-
-      g_signal_connect_object (private->help_button, "clicked",
-                               G_CALLBACK (gimp_dialog_help),
-                               dialog, G_CONNECT_SWAPPED);
+      private->help_button = gtk_dialog_add_button (GTK_DIALOG (object),
+                                                    ("_Help"),
+                                                    GTK_RESPONSE_HELP);
     }
 }
 
@@ -331,43 +319,31 @@ gimp_dialog_close (GtkDialog *dialog)
 }
 
 static void
-gimp_dialog_help (GObject *dialog)
-{
-  GimpDialogPrivate *private = GET_PRIVATE (dialog);
-
-  if (private->help_func)
-    private->help_func (private->help_id, dialog);
-}
-
-static void
 gimp_dialog_response (GtkDialog *dialog,
                       gint       response_id)
 {
-  GtkWidget *action_area;
-  GList     *children;
-  GList     *list;
+  GimpDialogPrivate *private = GET_PRIVATE (dialog);
+  GtkWidget         *widget  = gtk_dialog_get_widget_for_response (dialog,
+                                                                   response_id);
 
-  action_area = gtk_dialog_get_action_area (dialog);
-
-  children = gtk_container_get_children (GTK_CONTAINER (action_area));
-
-  for (list = children; list; list = g_list_next (list))
+  if (widget &&
+      (! GTK_IS_BUTTON (widget) ||
+       gtk_widget_get_focus_on_click (widget)))
     {
-      GtkWidget *widget = list->data;
-
-      if (gtk_dialog_get_response_for_widget (dialog, widget) == response_id)
-        {
-          if (! GTK_IS_BUTTON (widget) ||
-              gtk_button_get_focus_on_click (GTK_BUTTON (widget)))
-            {
-              gtk_widget_grab_focus (widget);
-            }
-
-          break;
-        }
+      gtk_widget_grab_focus (widget);
     }
 
-  g_list_free (children);
+  /*  if our own help button was activated, abort "response" and
+   *  call our help callback.
+   */
+  if (response_id == GTK_RESPONSE_HELP &&
+      widget      == private->help_button)
+    {
+      g_signal_stop_emission_by_name (dialog, "response");
+
+      if (private->help_func)
+        private->help_func (private->help_id, dialog);
+    }
 }
 
 
@@ -452,18 +428,24 @@ gimp_dialog_new_valist (const gchar    *title,
                         va_list         args)
 {
   GtkWidget *dialog;
+  gboolean   use_header_bar;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_DIALOG,
-                         "title",     title,
-                         "role",      role,
-                         "modal",     (flags & GTK_DIALOG_MODAL),
-                         "help-func", help_func,
-                         "help-id",   help_id,
-                         "parent",    parent,
+                         "title",          title,
+                         "role",           role,
+                         "modal",          (flags & GTK_DIALOG_MODAL),
+                         "help-func",      help_func,
+                         "help-id",        help_id,
+                         "parent",         parent,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   if (parent)
@@ -497,6 +479,7 @@ gimp_dialog_add_button (GimpDialog  *dialog,
                         gint         response_id)
 {
   GtkWidget *button;
+  gboolean   use_header_bar;
 
   /*  hide the automatically added help button if another one is added  */
   if (response_id == GTK_RESPONSE_HELP)
@@ -504,16 +487,32 @@ gimp_dialog_add_button (GimpDialog  *dialog,
       GimpDialogPrivate *private = GET_PRIVATE (dialog);
 
       if (private->help_button)
-        gtk_widget_hide (private->help_button);
+        {
+          gtk_widget_destroy (private->help_button);
+          private->help_button = NULL;
+        }
     }
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog), button_text,
                                   response_id);
 
-  if (response_id == GTK_RESPONSE_OK)
+  g_object_get (dialog,
+                "use-header-bar", &use_header_bar,
+                NULL);
+
+  if (use_header_bar &&
+      (response_id == GTK_RESPONSE_OK ||
+       response_id == GTK_RESPONSE_CANCEL))
     {
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                       GTK_RESPONSE_OK);
+      GtkWidget *header = gtk_dialog_get_header_bar (GTK_DIALOG (dialog));
+
+      if (response_id == GTK_RESPONSE_OK)
+        gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                         GTK_RESPONSE_OK);
+
+      gtk_container_child_set (GTK_CONTAINER (header), button,
+                               "position", 0,
+                               NULL);
     }
 
   return button;
@@ -656,9 +655,7 @@ gimp_dialog_run (GimpDialog *dialog)
 
   ri.loop = g_main_loop_new (NULL, FALSE);
 
-  GDK_THREADS_LEAVE ();
   g_main_loop_run (ri.loop);
-  GDK_THREADS_ENTER ();
 
   g_main_loop_unref (ri.loop);
 
