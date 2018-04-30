@@ -50,11 +50,8 @@ libgimpconfig = library('gimpconfig-' + api_version,
   dependencies: [
     cairo, gdk_pixbuf, gegl, gio, gio_specific,
   ],
-  c_args:     [
-    '-DG_LOG_DOMAIN="LibGimpConfig"',
-    '-DGIMP_CONFIG_COMPILATION',
-  ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpConfig"', '-DGIMP_CONFIG_COMPILATION', ],
+  link_with: [
     libgimpbase,
     libgimpcolor,
     libgimpmath,

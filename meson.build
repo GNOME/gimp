@@ -842,39 +842,6 @@ localedir      = join_paths(get_option('datadir'), 'locale')
 
 
 
-# Disable deprecated APIs
-add_project_arguments([
-  '-DGIMP_DISABLE_DEPRECATED',
-  '-DBABL_DISABLE_DEPRECATED',
-  '-DGSEAL_ENABLE'
-  ],
-  language: 'c',
-)
-
-# if glib.version().version_compare('>=2.43')
-#   add_project_arguments([
-#     '-DG_DISABLE_DEPRECATED',
-#     ],
-#     language: 'c',
-#   )
-# endif
-# if gtk3.version().version_compare('>=2.26')
-#   add_project_arguments([
-#     '-DGDK_DISABLE_DEPRECATED',
-#     '-DGTK_DISABLE_DEPRECATED',
-#     ],
-#     language: 'c',
-#   )
-# endif
-# if glib.version().version_compare('>=1.32')
-#   add_project_arguments([
-#     '-DPANGO_DISABLE_DEPRECATED',
-#     ],
-#     language: 'c',
-#   )
-# endif
-
-
 # Check for internal tools
 defcheck            = find_program(join_paths('tools','defcheck.py'))
 extract_vector_icon = find_program(join_paths('tools','extract-vector-icon.sh'))
