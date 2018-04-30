@@ -307,10 +307,15 @@ gimp_fonts_recursive_add_fontdir (FcConfig  *config,
               gchar *tmp = g_win32_locale_filename_from_utf8 (path);
 
               g_free (path);
+              /* XXX: g_win32_locale_filename_from_utf8() may return
+               * NULL. So we need to check that path is not NULL before
+               * trying to load with fontconfig.
+               */
               path = tmp;
 #endif
 
-              if (FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) path))
+              if (! path ||
+                  FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) path))
                 {
                   g_printerr ("%s: adding font file '%s' failed.\n",
                               G_STRFUNC, path);
