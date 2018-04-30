@@ -13,7 +13,7 @@ manconf.set('mypaint_brushes_dir', libmypaint_brushes_dir)
 man_files = [
   configure_file(
     input : 'gimptool.1.in',
-    output: 'gimptool-' + api_version + '.1',
+    output: 'gimptool-' + user_version + '.1',
     configuration: manconf,
   ),
   configure_file(
@@ -24,7 +24,7 @@ man_files = [
 
   configure_file(
     input : 'gimprc.5.in',
-    output: 'gimprc-' + app_version + '.5',
+    output: 'gimprc-' + user_version + '.5',
     configuration: manconf,
   ),
   configure_file(
@@ -37,7 +37,7 @@ man_files = [
 if enable_console_bin
   man_files += configure_file(
     input : 'gimp.1.in',
-    output: 'gimp-console-' + app_version + '.1',
+    output: 'gimp-console-' + user_version + '.1',
     configuration: manconf,
   )
   man_files += configure_file(
@@ -50,7 +50,7 @@ endif
 if enable_default_bin
   man_files +=  configure_file(
     input : 'gimp.1.in',
-    output: 'gimp-' + app_version + '.1',
+    output: 'gimp-' + user_version + '.1',
     configuration: manconf,
   )
   man_files +=  configure_file(
