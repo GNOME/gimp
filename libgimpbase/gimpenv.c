@@ -526,6 +526,12 @@ gimp_locale_directory (void)
       g_free (tmp);
 
 #ifdef G_OS_WIN32
+      /* FIXME: g_win32_locale_filename_from_utf8() can actually return
+       * NULL (we had actual cases of this). Not sure exactly what
+       * gimp_locale_directory() should do when this happens. Anyway
+       * that's really broken, and something should be done some day
+       * about this!
+       */
       tmp = g_win32_locale_filename_from_utf8 (gimp_locale_dir);
       g_free (gimp_locale_dir);
       gimp_locale_dir = tmp;
