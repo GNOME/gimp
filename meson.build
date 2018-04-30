@@ -1,6 +1,6 @@
 # Meson build file
 
-project('gimp', ['c', 'cpp'], version: '2.10.2',
+project('gimp', ['c', 'cpp'], version: '2.99.0',
   meson_version: '>=0.44.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -12,7 +12,6 @@ project('gimp', ['c', 'cpp'], version: '2.10.2',
 
 project_url = 'https://gitlab.gnome.org/GNOME/gimp'
 project_url_issues = project_url + '/issues/new'
-# http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
 
 conf = configuration_data()
 
@@ -25,57 +24,57 @@ conf = configuration_data()
 #       #   #  #    # #    # #      #    #   #        # #   ## #      #    #
 #       #    #  ####   ####  ######  ####    #        # #    # #       ####
 
-
-
 prettyname = 'GIMP'
 full_name  = 'GNU Image Manipulation Program'
 
-# Making releases on the stable branch:
-#   micro_version += 1
-#   interface_age += 1
+version_arr = meson.project_version().split('.')
+version_major = version_arr[0].to_int()
+version_minor = version_arr[1].to_int()
+version_micro = version_arr[2].to_int()
 
-version  = meson.project_version().split('.')
-major_version = version[0].to_int()
-minor_version = version[1].to_int()
-micro_version = version[2].to_int()
-interface_age = 0
+apiversion_major = (version_minor == 99) ? (version_major+1) : (version_major)
+apiversion_minor = (version_minor == 99) ? (              0) : (version_minor)
 
-api_version   = '3.0'
-app_version   = '2.99'
-user_version  = '3.0'
-gimp_version  = meson.project_version()
 
 # Override for Release-candidates
-gimp_version  = gimp_version
+gimp_version = meson.project_version()
+app_version = '@0@.@1@'.format(   version_major,    version_minor)
+api_version = '@0@.@1@'.format(apiversion_major, apiversion_minor)
+user_version = api_version
+
+
+# See http://sources.redhat.com/autobook/autobook/autobook_91.html#SEC91 for details
+# - If interfaces have been changed or added, but binary compatibility has been preserved, change:
+#      lt_current += 1
+#      lt_revision = 0
+#      lt_age += 1
+# - If binary compatibility has been broken (eg removed or changed interfaces), change:
+#      lt_current += 1
+#      lt_revision = 0
+#      lt_age = 0
+# - If the interface is the same as the previous version, but bugs are fixed, change:
+#      lt_revision += 1
+lt_current = 0
+lt_revision = version_micro
+lt_age = 100*apiversion_minor + 0
+so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
+
 
 gimp_command  = 'gimp-' + app_version
 gimp_api_name = 'gimp-' + api_version
 package_string= prettyname + ' ' + gimp_version
 
-gettext_package= 'gimp30'
+gettext_package= 'gimp@0@@1@'.format(apiversion_major, apiversion_minor)
 conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
-
-# TODO cleanup all this versions mess
-binary_age = 100 * minor_version + micro_version
-
-lt_current = 100 * minor_version + micro_version - interface_age
-lt_revision = interface_age
-lt_age = binary_age - interface_age
-lt_version_info = '@0@:@1@:@2@'.format(lt_current, lt_revision, lt_age)
-lt_current_minus_age = lt_current - lt_age
-
-so_version = '@0@.@1@.@2@'.format(lt_revision, lt_current, lt_current_minus_age)
-
-
-stable = (minor_version % 2 == 0)
+stable = (version_minor % 2 == 0)
 conf.set10('GIMP_UNSTABLE', not stable)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)
-versionconfig.set('GIMP_MAJOR_VERSION', major_version)
-versionconfig.set('GIMP_MINOR_VERSION', minor_version)
-versionconfig.set('GIMP_MICRO_VERSION', micro_version)
+versionconfig.set('GIMP_MAJOR_VERSION', version_major)
+versionconfig.set('GIMP_MINOR_VERSION', version_minor)
+versionconfig.set('GIMP_MICRO_VERSION', version_micro)
 versionconfig.set('GIMP_VERSION',       gimp_version)
 versionconfig.set('GIMP_API_VERSION',   api_version)
 
@@ -1147,14 +1146,13 @@ conf.set_quoted('PACKAGE_STRING', package_string)
 conf.set_quoted('GIMP_COMMAND',   gimp_command)
 
 # Versions
-conf.set_quoted('GIMP_APP_VERSION',      app_version)
-conf.set_quoted('GIMP_DATA_VERSION',     api_version)
-conf.set_quoted('GIMP_PLUGIN_VERSION',   api_version)
-conf.set_quoted('GIMP_TOOL_VERSION',     api_version)
-
-conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
-conf.set_quoted('GIMP_USER_VERSION',      user_version)
 conf.set_quoted('GIMP_APP_VERSION_STRING',app_version)
+conf.set_quoted('GIMP_APP_VERSION',       app_version)
+conf.set_quoted('GIMP_DATA_VERSION',      api_version)
+conf.set_quoted('GIMP_PLUGIN_VERSION',    api_version)
+conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
+conf.set_quoted('GIMP_TOOL_VERSION',      api_version)
+conf.set_quoted('GIMP_USER_VERSION',      user_version)
 
 # Directories
 conf.set_quoted('PREFIX',          prefix)
