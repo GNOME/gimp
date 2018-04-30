@@ -26,6 +26,8 @@
  * hesitation. So what, it runs only for a minimal time.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
