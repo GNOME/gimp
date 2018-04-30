@@ -17,11 +17,8 @@ libgimpmodule = library('gimpmodule-' + api_version,
   dependencies: [
     gio, glib, gmodule,
   ],
-  c_args:     [
-    '-DG_LOG_DOMAIN="LibGimpModule"',
-    '-DGIMP_MODULE_COMPILATION',
-  ],
-  link_with:  [
+  c_args: [ '-DG_LOG_DOMAIN="LibGimpModule"', '-DGIMP_MODULE_COMPILATION', ],
+  link_with: [
     libgimpbase,
     libgimpconfig,
   ],

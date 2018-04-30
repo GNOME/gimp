@@ -49,9 +49,7 @@ libappoperations_sources = [
 libappoperations = static_library('appoperations',
   libappoperations_sources,
   include_directories: [ rootInclude, rootAppInclude, ],
-  c_args: [
-    '-DG_LOG_DOMAIN="Gimp-Operations"',
-  ],
+  c_args: '-DG_LOG_DOMAIN="Gimp-Operations"',
   dependencies: [
     cairo, gegl, gdk_pixbuf,
   ],
