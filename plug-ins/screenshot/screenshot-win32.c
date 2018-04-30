@@ -30,13 +30,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <time.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+
+
 #include "screenshot.h"
 #include "screenshot-win32.h"
 #include "screenshot-win32-resource.h"
+
+#include "capture-window_common_structs.h" // This file must be exact copy of the file in capture-window project at https://github.com/gileli121/capture-window
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -66,12 +71,11 @@ static HWND       mainHwnd = NULL;
 static HINSTANCE  hInst = NULL;
 static HCURSOR    selectCursor = 0;
 static ICONINFO   iconInfo;
+static guchar		  *capturedPixels;
 
 static gint32    *image_id;
 
-static void sendBMPToGimp   (HBITMAP hBMP,
-                             HDC     hDC,
-                             RECT    rect);
+static void sendBMPToGimp   (RECT,int);
 static void doWindowCapture (void);
 static int  doCapture       (HWND    selectedHwnd);
 
@@ -116,6 +120,9 @@ typedef struct {
  */
 
 #define ROUND4(width) (((width-1)/4+1)*4)
+
+
+
 
 
 gboolean
@@ -223,6 +230,21 @@ flipRedAndBlueBytes (int width,
   }
 }
 
+static void
+rgbaTorgbBytes (guchar *rgbBufp,
+           guchar *rgbaBufp,
+           int    rgbaBufSize)
+{
+  int rgbPoint = 0, rgbaPoint;
+
+	  for (rgbaPoint = 0; rgbaPoint < rgbaBufSize; rgbaPoint += 4)
+	  {
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint];
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 1];
+		  capBytes[rgbPoint++] = capturedPixels[rgbaPoint + 2];
+	  }
+}
+
 /*
  * sendBMPToGIMP
  *
@@ -230,9 +252,9 @@ flipRedAndBlueBytes (int width,
  * to GIMP.
  */
 static void
-sendBMPToGimp (HBITMAP hBMP,
-               HDC     hDC,
-               RECT    rect)
+sendBMPToGimp (RECT rect,
+			   int round4) /* Note from Gil Eliyahu: The ROUND4 macro causesing rendering problems in specific cases*/
+						   /* So I added to the function the parameter round4 to disable it in the problematic cases*/
 {
   int            width, height;
   int            imageType, layerType;
@@ -262,7 +284,7 @@ sendBMPToGimp (HBITMAP hBMP,
   /* Create the GIMP image and layers */
   new_image_id = gimp_image_new (width, height, imageType);
   layer_id = gimp_layer_new (new_image_id, _("Background"),
-                             ROUND4 (width), height,
+	  width, height,
                              layerType,
                              100,
                              gimp_image_get_default_new_layer_mode (new_image_id));
@@ -272,7 +294,7 @@ sendBMPToGimp (HBITMAP hBMP,
   rectangle = g_new (GeglRectangle, 1);
   rectangle->x = 0;
   rectangle->y = 0;
-  rectangle->width = ROUND4(width);
+  rectangle->width = round4 ? ROUND4(width) : width;
   rectangle->height = height;
 
   /* get the buffer */
@@ -285,13 +307,18 @@ sendBMPToGimp (HBITMAP hBMP,
   /* flushing data */
   gegl_buffer_flush (buffer);
 
-  /* Now resize the layer down to the correct size if necessary. */
-  if (width != ROUND4 (width))
-    {
-      gimp_layer_resize (layer_id, width, height, 0, 0);
-      gimp_image_resize (new_image_id, width, height, 0, 0);
-    }
 
+  if (round4)
+  { 
+	  
+	  
+	  /* Now resize the layer down to the correct size if necessary. */
+	  if (width != ROUND4(width))
+	  {
+		  gimp_layer_resize(layer_id, width, height, 0, 0);
+		  gimp_image_resize(new_image_id, width, height, 0, 0);
+	  }
+  }
   *image_id = new_image_id;
 
   return;
@@ -433,9 +460,11 @@ doCapture (HWND selectedHwnd)
 {
   HDC     hdcSrc;
   HDC     hdcCompat;
-  HWND    oldForeground;
   RECT    rect;
   HBITMAP hbm;
+
+  char cmdSend[256];
+  clock_t waitForCapture;
 
   /* Try and get everything out of the way before the
    * capture.
@@ -448,64 +477,71 @@ doCapture (HWND selectedHwnd)
    * don't render to their main window's device
    * context (e.g. browsers).
   */
-  hdcSrc = CreateDC (TEXT("DISPLAY"), NULL, NULL, NULL);
+  
 
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd)
     {
-      /* Set to foreground window */
-      oldForeground = GetForegroundWindow ();
-      SetForegroundWindow (selectedHwnd);
-      BringWindowToTop (selectedHwnd);
 
-      Sleep (500);
+	 
+	  // Here we capturing the window using capture-window.exe script
+	  sprintf(cmdSend, "%x %x", mainHwnd, selectedHwnd);
+	  ShellExecute(NULL, NULL, "capture-window.exe", cmdSend, NULL, SW_HIDE);
+	  
 
-      /* Build a region for the capture */
-      GetWindowRect (selectedHwnd, &rect);
+	  waitForCapture = clock();
+	  do
+	  {
+		  Sleep(10);
+	  } while (clock()-waitForCapture <= 3000);
+
+
+	  return TRUE;
+	  
 
     }
   else
     {
       /* Get the screen's rectangle */
+
+	  hdcSrc = CreateDC(TEXT("DISPLAY"), NULL, NULL, NULL);
+
+	  if (!hdcSrc)
+	  {
+		  formatWindowsError(buffer, sizeof buffer);
+		  g_error("Error getting device context: %s", buffer);
+		  return FALSE;
+	  }
+	  hdcCompat = CreateCompatibleDC(hdcSrc);
+	  if (!hdcCompat)
+	  {
+		  formatWindowsError(buffer, sizeof buffer);
+		  g_error("Error getting compat device context: %s", buffer);
+		  return FALSE;
+	  }
+
       rect.top    = GetSystemMetrics (SM_YVIRTUALSCREEN);
       rect.bottom = GetSystemMetrics (SM_YVIRTUALSCREEN) + GetSystemMetrics (SM_CYVIRTUALSCREEN);
       rect.left   = GetSystemMetrics (SM_XVIRTUALSCREEN);
       rect.right  = GetSystemMetrics (SM_XVIRTUALSCREEN) + GetSystemMetrics (SM_CXVIRTUALSCREEN);
-    }
+    
+  
+	  /* Do the window capture */
+	  hbm = primDoWindowCapture(hdcSrc, hdcCompat, rect);
+	  if (!hbm)
+		  return FALSE;
 
-  if (!hdcSrc)
-    {
-      formatWindowsError(buffer, sizeof buffer);
-      g_error ("Error getting device context: %s", buffer);
-      return FALSE;
-    }
-  hdcCompat = CreateCompatibleDC (hdcSrc);
-  if (!hdcCompat)
-    {
-      formatWindowsError (buffer, sizeof buffer);
-      g_error ("Error getting compat device context: %s", buffer);
-      return FALSE;
-    }
+	  /* Release the device context */
+	  ReleaseDC(selectedHwnd, hdcSrc);
 
-  /* Do the window capture */
-  hbm = primDoWindowCapture (hdcSrc, hdcCompat, rect);
-  if (!hbm)
-    return FALSE;
+	  if (hbm == NULL) return FALSE;
+	  
+	  sendBMPToGimp(rect,TRUE);
+  
+  
+  }
 
-  /* Release the device context */
-  ReleaseDC(selectedHwnd, hdcSrc);
-
-  /* Replace the previous foreground window */
-  if (selectedHwnd && oldForeground)
-    SetForegroundWindow (oldForeground);
-
-  /* Send the bitmap
-   * TODO: Change this
-   */
-  if (hbm != NULL)
-    {
-      sendBMPToGimp (hbm, hdcCompat, rect);
-    }
+  
 
   return TRUE;
 }
@@ -928,9 +964,35 @@ WndProc (HWND   hwnd,
          LPARAM lParam)
 {
   HWND selectedHwnd;
-
+  
   switch (message)
     {
+    case WM_COPYDATA:
+    {
+
+      /* Load the capture object info */
+      magCapturedData* capturedDat = (magCapturedData*)((COPYDATASTRUCT*)lParam)->lpData;;
+      /* Get the pixels pointer */
+      capturedPixels = (guchar*)capturedDat->pixels;
+      /* Init rectImage  */
+      RECT rectImage;
+      rectImage.left = 0;
+      rectImage.top = 0;
+      rectImage.right = capturedDat->width;
+      rectImage.bottom = capturedDat->height;
+
+      /* Calculate the size of the rgb array and malloc it */
+      int rgbSize = (capturedDat->cbsize / 4) * 3;
+      capBytes = (guchar*)malloc(sizeof(guchar)*rgbSize);
+
+      rgbaTorgbBytes (capBytes,capturedPixels,capturedDat->cbsize);
+
+      sendBMPToGimp(rectImage, FALSE);
+
+      return (DefWindowProc(hwnd, message, wParam, lParam));
+
+    }
+    break;
 
     case WM_CREATE:
       /* The window is created... Send the capture message */
