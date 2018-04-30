@@ -6,7 +6,7 @@ if platform_win32
 endif
 
 
-gimptool = executable('gimptool-' + api_version,
+gimptool = executable('gimptool-' + user_version,
   'gimptool.c',
   include_directories: rootInclude,
   dependencies: [
