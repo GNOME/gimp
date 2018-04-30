@@ -189,6 +189,8 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                                NULL, NULL,
                                                                GDK_TYPE_RGBA,
                                                                GIMP_PARAM_READABLE));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpHistogramView");
 }
 
 static void

@@ -143,8 +143,6 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   widget_class->scroll_event         = gimp_color_scale_scroll;
   widget_class->draw                 = gimp_color_scale_draw;
 
-  gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
-
   /**
    * GimpColorScale:channel:
    *
@@ -160,6 +158,8 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
                                                       GIMP_COLOR_SELECTOR_VALUE,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
 
   g_type_class_add_private (object_class, sizeof (GimpColorScalePrivate));
 
@@ -200,7 +200,7 @@ gimp_color_scale_init (GimpColorScale *scale)
                                    "  min-width:  24px;"
                                    "  min-height: 24px;"
                                    "}\n"
-                                   "GimpColorScale slider {"
+                                   "GimpColorScale contents trough slider {"
                                    "  min-width:  14px;"
                                    "  min-height: 14px;"
                                    "}",
@@ -280,7 +280,6 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
 {
   GimpColorScalePrivate *priv  = GET_PRIVATE (widget);
   GtkRange              *range = GTK_RANGE (widget);
-  GtkStyleContext       *style = gtk_widget_get_style_context (widget);
   GdkRectangle           range_rect;
   gint                   focus = 0;
   gint                   trough_border;
@@ -1053,7 +1052,7 @@ gimp_color_scale_render_stipple (GimpColorScale *scale)
   GdkRGBA                color;
   guchar                 r, g, b;
   guchar                *buf;
-  guchar                 insensitive[4];
+  guchar                 insensitive[4] = { 0, };
   guint                  x, y;
 
   if ((buf = priv->buf) == NULL)

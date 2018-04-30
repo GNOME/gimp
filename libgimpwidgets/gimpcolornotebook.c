@@ -134,6 +134,8 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   selector_class->set_model_visible     = gimp_color_notebook_set_model_visible;
   selector_class->set_config            = gimp_color_notebook_set_config;
 
+  gtk_widget_class_set_css_name (widget_class, "GimpColorNotebook");
+
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tab-icon-size",
                                                               NULL,

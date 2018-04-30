@@ -22,7 +22,6 @@
 
     -GtkPaned-handle-size:             6;
     -GimpDockWindow-default-height:    300;
-    -GimpDock-font-scale:              0.8333;
     -GimpMenuDock-minimal-width:       200;
     -GimpDockWindow-menu-preview-size: button;
     -GimpToolPalette-tool-icon-size:   button;
@@ -49,29 +48,44 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDockbook tab {
+GimpColorScales spinbutton button {
     padding: 0 0 0 0;
 }
 
-GimpDockbook GtkButton {
-//    -GtkWidget-focus-padding: 0;
+GimpColorScales spinbutton entry {
+    min-height: 0;
+}
+
+GimpDock {
+    font-size: smaller;
+}
+
+GimpDock notebook tab {
+    padding: 0 0 0 0;
+}
+
+GimpDock spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpDock spinbutton entry {
+    min-height: 0;
 }
 
 GimpDockable {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
-//    -GtkWidget-focus-line-width: 1;
-//    -GtkWidget-focus-padding:    0;
+/*    -GtkWidget-focus-line-width: 1; */
+/*    -GtkWidget-focus-padding:    0; */
 }
 
 GimpDisplayShell {
-    -GimpRuler-font-scale:          0.8333;
     -GimpUnitComboBox-label-scale:  0.8333;
     -GimpScaleComboBox-label-scale: 0.8333;
     -GtkComboBox-arrow-size:        8;
     -GtkButton-inner-border:        0 0 0 0;
-//    -GtkWidget-focus-line_width:    0;
-//    -GtkWidget-focus-padding:       0;
+/*    -GtkWidget-focus-line_width:    0; */
+/*    -GtkWidget-focus-padding:       0; */
 }
 
 GimpColorFrame {
@@ -95,9 +109,10 @@ GimpHistogramView:selected {
 }
 
 GimpOverlayFrame {
-//    -GtkButton-focus-line-width: 1;
+/*    -GtkButton-focus-line-width: 1; */
 }
 
 GimpRuler {
+    font-size: smaller;
     background-color: @bg_color;
 }
