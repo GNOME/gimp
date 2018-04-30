@@ -41,14 +41,14 @@
 #define CONF_FNAME "fonts.conf"
 
 
-static gboolean gimp_fonts_load_fonts_conf    (FcConfig     *config,
-                                               GFile        *fonts_conf);
-static void     gimp_fonts_add_directories    (Gimp         *gimp,
-                                               FcConfig     *config,
-                                               GList        *path);
-static void     gimp_fonts_recursive_add_font (FcConfig     *config,
-                                               const gchar  *path,
-                                               GError      **error);
+static gboolean gimp_fonts_load_fonts_conf       (FcConfig     *config,
+                                                  GFile        *fonts_conf);
+static void     gimp_fonts_add_directories       (Gimp         *gimp,
+                                                  FcConfig     *config,
+                                                  GList        *path);
+static void     gimp_fonts_recursive_add_fontdir (FcConfig     *config,
+                                                  GFile        *path,
+                                                  GError      **error);
 
 
 void
@@ -244,8 +244,6 @@ gimp_fonts_add_directories (Gimp      *gimp,
 
   for (list = path; list; list = list->next)
     {
-      gchar *dir = g_file_get_path (list->data);
-
       /* Do not use FcConfigAppFontAddDir(). Instead use
        * FcConfigAppFontAddFile() with our own recursive loop.
        * Otherwise, when some fonts fail to load (e.g. permission
@@ -253,8 +251,7 @@ gimp_fonts_add_directories (Gimp      *gimp,
        * the list, but are unusable and output many errors.
        * See bug 748553.
        */
-      gimp_fonts_recursive_add_font (config, dir, &error);
-      g_free (dir);
+      gimp_fonts_recursive_add_fontdir (config, list->data, &error);
     }
   if (error)
     {
@@ -266,81 +263,78 @@ gimp_fonts_add_directories (Gimp      *gimp,
 }
 
 static void
-gimp_fonts_recursive_add_font (FcConfig     *config,
-                               const gchar  *path,
-                               GError      **error)
+gimp_fonts_recursive_add_fontdir (FcConfig  *config,
+                                  GFile     *file,
+                                  GError   **error)
 {
+  GFileEnumerator *enumerator;
+
   g_return_if_fail (config != NULL);
 
-  if (g_file_test (path, G_FILE_TEST_IS_DIR))
+  enumerator = g_file_enumerate_children (file,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                          G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+  if (enumerator)
     {
-      GError *dir_error = NULL;
-      GDir   *gdir      = g_dir_open (path, 0, &dir_error);
+      GFileInfo *info;
 
-      if (gdir)
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
         {
-          const gchar *basename;
+          GFileType  file_type;
+          GFile     *child;
 
-          while ((basename = g_dir_read_name (gdir)))
+          if (g_file_info_get_is_hidden (info))
             {
-              gchar *filename;
+              g_object_unref (info);
+              continue;
+            }
 
-              filename = g_build_filename (path, basename, NULL);
-              gimp_fonts_recursive_add_font (config, filename, error);
-              g_free (filename);
-            }
-          g_dir_close (gdir);
-        }
-      else
-        {
-          g_printerr ("%s: opening font directory '%s' failed.\n",
-                      G_STRFUNC, path);
-          if (error)
+          file_type = g_file_info_get_file_type (info);
+          child     = g_file_enumerator_get_child (enumerator, info);
+
+          if (file_type == G_FILE_TYPE_DIRECTORY)
             {
-              if (*error)
-                {
-                  g_clear_error (error);
-                  g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                       _("Some fonts failed to load."));
-                }
-              else
-                {
-                  g_set_error (error, dir_error->domain, dir_error->code,
-                               _("Opening font directory '%s' failed: %s"),
-                               path, dir_error->message);
-                }
-              g_error_free (dir_error);
+              gimp_fonts_recursive_add_fontdir (config, child, error);
             }
-        }
-    }
-  else
-    {
+          else if (file_type == G_FILE_TYPE_REGULAR)
+            {
+              gchar *path = g_file_get_path (child);
 #ifdef G_OS_WIN32
-      gchar *filename = g_win32_locale_filename_from_utf8 (path);
-#else
-      gchar *filename = g_strdup (path);
+              gchar *tmp = g_win32_locale_filename_from_utf8 (path);
+
+              g_free (path);
+              path = tmp;
 #endif
 
-      if (FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) filename))
-        {
-          g_printerr ("%s: adding font file '%s' failed.\n",
-                      G_STRFUNC, filename);
-          if (error)
-            {
-              if (*error)
+              if (FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) path))
                 {
-                  g_clear_error (error);
-                  g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                       _("Some fonts failed to load."));
+                  g_printerr ("%s: adding font file '%s' failed.\n",
+                              G_STRFUNC, path);
+                  if (error)
+                    {
+                      if (*error)
+                        {
+                          g_clear_error (error);
+                          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                               _("Some fonts failed to load."));
+                        }
+                      else
+                        {
+                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                       _("Loading font file '%s' failed."),
+                                       path);
+                        }
+                    }
                 }
-              else
-                {
-                  g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Loading font file '%s' failed."),
-                               filename);
-                }
+              g_free (path);
             }
+
+          g_object_unref (child);
+          g_object_unref (info);
         }
-      g_free (filename);
     }
 }
