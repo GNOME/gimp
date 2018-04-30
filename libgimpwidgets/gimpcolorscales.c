@@ -196,6 +196,7 @@ static void
 gimp_color_scales_class_init (GimpColorScalesClass *klass)
 {
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
+  GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   object_class->dispose                 = gimp_color_scales_dispose;
@@ -220,6 +221,8 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpColorScales");
 
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
                                babl_format ("CIE LCH(ab) alpha double"));

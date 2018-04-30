@@ -39,7 +39,6 @@
  **/
 
 
-#define DEFAULT_RULER_FONT_SCALE    PANGO_SCALE_SMALL
 #define MINIMUM_INCR                5
 #define IMMEDIATE_REDRAW_THRESHOLD  20
 
@@ -74,7 +73,6 @@ typedef struct
   GdkRectangle     last_pos_rect;
   guint            pos_redraw_idle_id;
   PangoLayout     *layout;
-  gdouble          font_scale;
 
   GList           *track_widgets;
 } GimpRulerPrivate;
@@ -182,8 +180,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->motion_notify_event  = gimp_ruler_motion_notify;
   widget_class->draw                 = gimp_ruler_draw;
 
-  g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
-
   g_object_class_install_property (object_class,
                                    PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation",
@@ -242,14 +238,9 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE));
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_double ("font-scale",
-                                                                "Font Scale",
-                                                                "The size of the used font",
-                                                                0.0,
-                                                                G_MAXDOUBLE,
-                                                                DEFAULT_RULER_FONT_SCALE,
-                                                                GIMP_PARAM_READABLE));
+  gtk_widget_class_set_css_name (widget_class, "GimpRuler");
+
+  g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
 }
 
 static void
@@ -274,8 +265,6 @@ gimp_ruler_init (GimpRuler *ruler)
   priv->last_pos_rect.width  = 0;
   priv->last_pos_rect.height = 0;
   priv->pos_redraw_idle_id   = 0;
-
-  priv->font_scale          = DEFAULT_RULER_FONT_SCALE;
 }
 
 static void
@@ -959,10 +948,6 @@ gimp_ruler_style_updated (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget,
-                        "font-scale", &priv->font_scale,
-                        NULL);
-
   priv->backing_store_valid = FALSE;
 
   g_clear_object (&priv->layout);
@@ -1390,30 +1375,6 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
 }
 
 static PangoLayout *
-gimp_ruler_create_layout (GtkWidget   *widget,
-                          const gchar *text)
-{
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
-  PangoLayout      *layout;
-  PangoAttrList    *attrs;
-  PangoAttribute   *attr;
-
-  layout = gtk_widget_create_pango_layout (widget, text);
-
-  attrs = pango_attr_list_new ();
-
-  attr = pango_attr_scale_new (priv->font_scale);
-  attr->start_index = 0;
-  attr->end_index   = -1;
-  pango_attr_list_insert (attrs, attr);
-
-  pango_layout_set_attributes (layout, attrs);
-  pango_attr_list_unref (attrs);
-
-  return layout;
-}
-
-static PangoLayout *
 gimp_ruler_get_layout (GtkWidget   *widget,
                        const gchar *text)
 {
@@ -1425,7 +1386,7 @@ gimp_ruler_get_layout (GtkWidget   *widget,
       return priv->layout;
     }
 
-  priv->layout = gimp_ruler_create_layout (widget, text);
+  priv->layout = gtk_widget_create_pango_layout (widget, text);
 
   return priv->layout;
 }
