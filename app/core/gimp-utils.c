@@ -854,7 +854,7 @@ gimp_create_image_from_buffer (Gimp        *gimp,
                                            NULL /* same image */);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
-  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);
+  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL);
 
   /* unref the image unconditionally, even when no display was created */
   g_object_add_weak_pointer (G_OBJECT (image), (gpointer) &image);
