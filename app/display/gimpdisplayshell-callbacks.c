@@ -116,17 +116,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 
   shell->xfer = gimp_display_xfer_realize (GTK_WIDGET(shell));
-
-  /*  HACK: remove with GTK+ 3.x: this unconditionally maps the
-   *  rulers, if configured to be hidden they are never visible to the
-   *  user because they will be hidden again right away.
-   *
-   *  For some obscure reason, having the rulers mapped once prevents
-   *  crashes with tablets and on-canvas dialogs. See bug #784480 and
-   *  all its duplicates.
-   */
-  gtk_widget_show (shell->hrule);
-  gtk_widget_show (shell->vrule);
 }
 
 void
