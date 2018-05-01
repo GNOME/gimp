@@ -200,6 +200,8 @@ Name: wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: do
 
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 
+Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
+
 #ifdef PYTHON
 Name: py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
 #endif
@@ -245,6 +247,10 @@ Source: "{#GIMP_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Compo
 
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
+
+;configure gimp with --enable-bundled-mypaint-brushes for the correct path to
+;be picked by gimp
+Source: "{#GIMP_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 Source: "{#GIMP_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
@@ -1021,7 +1027,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','GtkWimp','Translations','Python','Ghostscript','Gimp32','Compat'];
+	Components := ['Gimp','Deps','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
 	ComponentDesc := '';
 	
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
