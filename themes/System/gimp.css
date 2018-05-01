@@ -83,7 +83,7 @@ GimpDisplayShell {
     -GimpUnitComboBox-label-scale:  0.8333;
     -GimpScaleComboBox-label-scale: 0.8333;
     -GtkComboBox-arrow-size:        8;
-    -GtkButton-inner-border:        0 0 0 0;
+/*    -GtkButton-inner-border:        0 0 0 0; */
 /*    -GtkWidget-focus-line_width:    0; */
 /*    -GtkWidget-focus-padding:       0; */
 }
