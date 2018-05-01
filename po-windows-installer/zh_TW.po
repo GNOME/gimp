@@ -25,7 +25,7 @@ msgstr "許可協議"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "安裝程式由 Jernej Simonèiè, jernej-gimp@ena.si 所建立"
+msgstr "安裝程式由 Jernej Simoncic, jernej-gimp@ena.si 所建立"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid ""
