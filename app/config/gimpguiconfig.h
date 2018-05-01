@@ -65,6 +65,7 @@ struct _GimpGuiConfig
   gboolean             toolbox_wilber;
   gchar               *theme_path;
   gchar               *theme;
+  gboolean             prefer_dark_theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
   GimpIconSize         icon_size;

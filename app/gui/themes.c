@@ -131,11 +131,6 @@ themes_init (Gimp *gimp)
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
-
-  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme", TRUE,
-                NULL);
-
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
   /*  Use GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1 so theme files
@@ -148,6 +143,9 @@ themes_init (Gimp *gimp)
   g_object_unref (themes_style_provider);
 
   g_signal_connect (config, "notify::theme",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+  g_signal_connect (config, "notify::prefer-dark-theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
 
@@ -382,8 +380,14 @@ themes_theme_change_notify (GimpGuiConfig *config,
                             GParamSpec    *pspec,
                             Gimp          *gimp)
 {
-  GFile  *theme_css;
-  GError *error = NULL;
+  GFile    *theme_css;
+  GError   *error = NULL;
+  gboolean  prefer_dark_theme;
+
+  g_object_get (config, "prefer-dark-theme", &prefer_dark_theme, NULL);
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                NULL);
 
   themes_apply_theme (gimp, config->theme);
 
