@@ -306,7 +306,7 @@ themes_apply_theme (Gimp        *gimp,
       else
         {
           tmp = g_build_filename (gimp_data_directory (),
-                                  "themes", "Default", "gimp.css",
+                                  "themes", "System", "gimp.css",
                                   NULL);
           css_theme = g_file_new_for_path (tmp);
           g_free (tmp);
