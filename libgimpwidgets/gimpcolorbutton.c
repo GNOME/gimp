@@ -535,9 +535,7 @@ gimp_color_button_button_press (GtkWidget      *widget,
 
       gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
 
-      gtk_menu_popup (GTK_MENU (menu),
-                      NULL, NULL, NULL, NULL,
-                      bevent->button, bevent->time);
+      gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) bevent);
     }
 
   return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);

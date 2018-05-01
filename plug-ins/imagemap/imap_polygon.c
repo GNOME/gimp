@@ -719,8 +719,7 @@ polygon_handle_popup (GdkEventButton *event, gboolean near_sash,
   gtk_widget_set_sensitive (delete, near_sash);
   gtk_widget_set_sensitive (insert, near_edge);
 
-  gtk_menu_popup(GTK_MENU(popup), NULL, NULL, NULL, NULL,
-                 event->button, event->time);
+  gtk_menu_popup_at_pointer (GTK_MENU (popup), (GdkEvent *) event);
 }
 
 static void

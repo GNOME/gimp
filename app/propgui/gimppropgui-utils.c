@@ -28,8 +28,6 @@
 
 #include "propgui-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
-
 #include "gimppropgui-utils.h"
 
 #include "gimp-intl.h"
@@ -37,18 +35,13 @@
 
 /*  local function prototypes  */
 
-static void      gimp_prop_kelvin_presets_menu_position (GtkMenu        *menu,
-                                                         gint           *x,
-                                                         gint           *y,
-                                                         gboolean       *push_in,
-                                                         gpointer        user_data);
-static gboolean  gimp_prop_kelvin_presets_button_press  (GtkWidget      *widget,
-                                                         GdkEventButton *bevent,
-                                                         GtkMenu        *menu);
-static void      gimp_prop_kelvin_presets_activate      (GtkWidget      *widget,
-                                                         GObject        *config);
-static void      gimp_prop_random_seed_new_clicked      (GtkButton      *button,
-                                                         GtkAdjustment  *adj);
+static gboolean  gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
+                                                        GdkEventButton *bevent,
+                                                        GtkMenu        *menu);
+static void      gimp_prop_kelvin_presets_activate     (GtkWidget      *widget,
+                                                        GObject        *config);
+static void      gimp_prop_random_seed_new_clicked     (GtkButton      *button,
+                                                        GtkAdjustment  *adj);
 
 
 /*  public functions  */
@@ -168,16 +161,6 @@ gimp_prop_random_seed_new (GObject     *config,
 
 /*  private functions  */
 
-static void
-gimp_prop_kelvin_presets_menu_position (GtkMenu  *menu,
-                                        gint     *x,
-                                        gint     *y,
-                                        gboolean *push_in,
-                                        gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_LEFT, x, y);
-}
-
 static gboolean
 gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
                                        GdkEventButton *bevent,
@@ -185,10 +168,10 @@ gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
 {
   if (bevent->type == GDK_BUTTON_PRESS)
     {
-      gtk_menu_popup (menu,
-                      NULL, NULL,
-                      gimp_prop_kelvin_presets_menu_position, widget,
-                      bevent->button, bevent->time);
+      gtk_menu_popup_at_widget (menu, widget,
+                                GDK_GRAVITY_WEST,
+                                GDK_GRAVITY_NORTH_EAST,
+                                (GdkEvent *) bevent);
     }
 
   return TRUE;

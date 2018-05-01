@@ -1946,10 +1946,5 @@ gimp_preview_area_menu_popup (GimpPreviewArea *area,
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-size"));
 
-  if (event)
-    gtk_menu_popup (GTK_MENU (menu),
-                    NULL, NULL, NULL, NULL, event->button, event->time);
-  else
-    gtk_menu_popup (GTK_MENU (menu),
-                    NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time ());
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 }

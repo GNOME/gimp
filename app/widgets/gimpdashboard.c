@@ -50,7 +50,6 @@
 #include "gimpmeter.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -300,12 +299,6 @@ static void       gimp_dashboard_sample_object               (GimpDashboard     
 
 static void       gimp_dashboard_container_remove            (GtkWidget           *widget,
                                                               GtkContainer        *container);
-
-static void       gimp_dashboard_group_menu_position         (GtkMenu             *menu,
-                                                              gint                *x,
-                                                              gint                *y,
-                                                              gboolean            *push_in,
-                                                              gpointer             user_data);
 
 static void       gimp_dashboard_update_groups               (GimpDashboard       *dashboard);
 static void       gimp_dashboard_update_group                (GimpDashboard       *dashboard,
@@ -1256,11 +1249,11 @@ gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
       bevent->y >= allocation.y                    &&
       bevent->y <  allocation.y + allocation.height)
     {
-      gtk_menu_popup (group_data->menu,
-                      NULL, NULL,
-                      gimp_dashboard_group_menu_position,
-                      group_data->menu_button,
-                      bevent->button, bevent->time);
+      gtk_menu_popup_at_widget (group_data->menu,
+                                GTK_WIDGET (group_data->menu_button),
+                                GDK_GRAVITY_WEST,
+                                GDK_GRAVITY_NORTH_EAST,
+                                (GdkEvent *) bevent);
 
       return TRUE;
     }
@@ -1898,16 +1891,6 @@ gimp_dashboard_container_remove (GtkWidget    *widget,
                                  GtkContainer *container)
 {
   gtk_container_remove (container, widget);
-}
-
-static void
-gimp_dashboard_group_menu_position (GtkMenu  *menu,
-                                    gint     *x,
-                                    gint     *y,
-                                    gboolean *push_in,
-                                    gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_LEFT, x, y);
 }
 
 static void
