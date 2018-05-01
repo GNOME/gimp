@@ -201,6 +201,9 @@ gimp_font_list_load_names (GimpFontList *list,
   FcFontSet   *fontset;
   gint         i;
 
+  g_return_if_fail (GIMP_IS_FONT_LIST (list));
+  g_return_if_fail (PANGO_IS_CONTEXT (context));
+
   os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
                          FC_SLANT, FC_WEIGHT, FC_WIDTH,
                          NULL);
