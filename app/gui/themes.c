@@ -20,9 +20,6 @@
 #include <stdlib.h>
 
 #include <gegl.h>
-#ifdef GDK_DISABLE_DEPRECATED
-#undef GDK_DISABLE_DEPRECATED
-#endif
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
