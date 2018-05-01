@@ -466,18 +466,9 @@ gimp_image_window_constructed (GObject *object)
 
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
                    TRUE, TRUE);
-
-  /*  HACK: remove with GTK+ 3.x: there is no reason to
-   *  connect_after() here except the HACK at the end of
-   *  gimp_display_shell_canvas_realize().
-   *
-   *  We need to make sure gimp_display_shell_appearance_update() is
-   *  called after realize() so the ill-shown rulers are properly
-   *  hidden again
-   */
-  g_signal_connect_after (private->notebook, "switch-page",
-                          G_CALLBACK (gimp_image_window_switch_page),
-                          window);
+  g_signal_connect (private->notebook, "switch-page",
+                    G_CALLBACK (gimp_image_window_switch_page),
+                    window);
   g_signal_connect (private->notebook, "page-removed",
                     G_CALLBACK (gimp_image_window_page_removed),
                     window);
