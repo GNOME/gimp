@@ -183,6 +183,7 @@ Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
 Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
 Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
+Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
 [Types]
