@@ -6,7 +6,7 @@
     (tool "gimp-paintbrush-tool")
     (foreground (color-rgb 0.102075 0.183901 0.594317))
     (opacity 0.750000)
-    (paint-mode multiply-mode)
+    (paint-mode multiply)
     (brush "2. Hardness 050")
     (dynamics "Pen Generic")
     (gradient "FG to BG (RGB)")
