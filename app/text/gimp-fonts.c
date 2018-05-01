@@ -45,10 +45,14 @@ static gboolean gimp_fonts_load_fonts_conf       (FcConfig     *config,
                                                   GFile        *fonts_conf);
 static void     gimp_fonts_add_directories       (Gimp         *gimp,
                                                   FcConfig     *config,
-                                                  GList        *path);
+                                                  GList        *path,
+                                                  GError      **error);
 static void     gimp_fonts_recursive_add_fontdir (FcConfig     *config,
                                                   GFile        *path,
                                                   GError      **error);
+static void     gimp_fonts_notify_font_path      (GObject      *gobject,
+                                                  GParamSpec   *pspec,
+                                                  Gimp         *gimp);
 
 
 void
@@ -65,9 +69,9 @@ gimp_fonts_set_config (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  g_signal_connect_swapped (gimp->config, "notify::font-path",
-                            G_CALLBACK (gimp_fonts_load),
-                            gimp);
+  g_signal_connect (gimp->config, "notify::font-path",
+                    G_CALLBACK (gimp_fonts_notify_font_path),
+                    gimp);
 }
 
 void
@@ -79,7 +83,7 @@ gimp_fonts_exit (Gimp *gimp)
     {
       if (gimp->config)
         g_signal_handlers_disconnect_by_func (gimp->config,
-                                              G_CALLBACK (gimp_fonts_load),
+                                              G_CALLBACK (gimp_fonts_notify_font_path),
                                               gimp);
 
       g_clear_object (&gimp->fonts);
@@ -117,8 +121,9 @@ gimp_fonts_load_thread (GimpFontsLoadFuncData *data)
 }
 
 void
-gimp_fonts_load (Gimp               *gimp,
-                 GimpInitStatusFunc  status_callback)
+gimp_fonts_load (Gimp                *gimp,
+                 GimpInitStatusFunc   status_callback,
+                 GError             **error)
 {
   FcConfig *config;
   GFile    *fonts_conf;
@@ -149,7 +154,7 @@ gimp_fonts_load (Gimp               *gimp,
     goto cleanup;
 
   path = gimp_config_path_expand_to_files (gimp->config->font_path, FALSE);
-  gimp_fonts_add_directories (gimp, config, path);
+  gimp_fonts_add_directories (gimp, config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   if (status_callback)
@@ -235,10 +240,10 @@ gimp_fonts_load_fonts_conf (FcConfig *config,
 static void
 gimp_fonts_add_directories (Gimp      *gimp,
                             FcConfig  *config,
-                            GList     *path)
+                            GList     *path,
+                            GError   **error)
 {
-  GList  *list;
-  GError *error = NULL;
+  GList *list;
 
   g_return_if_fail (config != NULL);
 
@@ -251,14 +256,16 @@ gimp_fonts_add_directories (Gimp      *gimp,
        * the list, but are unusable and output many errors.
        * See bug 748553.
        */
-      gimp_fonts_recursive_add_fontdir (config, list->data, &error);
+      gimp_fonts_recursive_add_fontdir (config, list->data, error);
     }
-  if (error)
+  if (error && *error)
     {
-      gimp_message_literal (gimp, NULL,
-                            GIMP_MESSAGE_INFO,
-                            error->message);
-      g_error_free (error);
+      gchar *font_list = g_strdup ((*error)->message);
+
+      g_clear_error (error);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Some fonts failed to load:\n%s"), font_list);
+      g_free (font_list);
     }
 }
 
@@ -323,15 +330,17 @@ gimp_fonts_recursive_add_fontdir (FcConfig  *config,
                     {
                       if (*error)
                         {
+                          gchar *current_message = g_strdup ((*error)->message);
+
                           g_clear_error (error);
-                          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                               _("Some fonts failed to load."));
+                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                       "%s\n- %s", current_message, path);
+                          g_free (current_message);
                         }
                       else
                         {
                           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                                       _("Loading font file '%s' failed."),
-                                       path);
+                                       "- %s", path);
                         }
                     }
                 }
@@ -341,5 +350,47 @@ gimp_fonts_recursive_add_fontdir (FcConfig  *config,
           g_object_unref (child);
           g_object_unref (info);
         }
+    }
+  else
+    {
+      if (error)
+        {
+          gchar *path = g_file_get_path (file);
+
+          if (*error)
+            {
+              gchar *current_message = g_strdup ((*error)->message);
+
+              g_clear_error (error);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           "%s\n- %s%s", current_message, path,
+                           G_DIR_SEPARATOR_S);
+              g_free (current_message);
+            }
+          else
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           "- %s%s", path, G_DIR_SEPARATOR_S);
+            }
+          g_free (path);
+        }
+    }
+}
+
+static void
+gimp_fonts_notify_font_path (GObject    *gobject,
+                             GParamSpec *pspec,
+                             Gimp       *gimp)
+{
+  GError *error = NULL;
+
+  gimp_fonts_load (gimp, NULL, &error);
+
+  if (error)
+    {
+      gimp_message_literal (gimp, NULL,
+                            GIMP_MESSAGE_INFO,
+                            error->message);
+      g_error_free (error);
     }
 }

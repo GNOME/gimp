@@ -189,7 +189,8 @@ app_run (const gchar         *full_prog_name,
   GFile              *gimpdir;
   const gchar        *abort_message;
   GimpLangRc         *temprc;
-  gchar              *language = NULL;
+  gchar              *language   = NULL;
+  GError             *font_error = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -326,7 +327,7 @@ app_run (const gchar         *full_prog_name,
 
   /*  Load all data files
    */
-  gimp_restore (gimp, update_status_func);
+  gimp_restore (gimp, update_status_func, &font_error);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -379,6 +380,10 @@ app_run (const gchar         *full_prog_name,
                    */
                   gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
                 }
+              else
+                {
+                  g_error_free (error);
+                }
 
               g_object_unref (file);
             }
@@ -410,6 +415,13 @@ app_run (const gchar         *full_prog_name,
               g_object_unref (file);
             }
         }
+    }
+  if (font_error)
+    {
+      gimp_message_literal (gimp, NULL,
+                            GIMP_MESSAGE_INFO,
+                            font_error->message);
+      g_error_free (font_error);
     }
 
   if (run_loop)

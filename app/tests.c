@@ -72,7 +72,7 @@ gimp_init_for_testing (void)
 
   gimp_gegl_init (gimp);
   gimp_initialize (gimp, gimp_status_func_dummy);
-  gimp_restore (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy, NULL);
 
   return gimp;
 }
@@ -128,7 +128,7 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gui_init (gimp, TRUE);
   gimp_init_icon_theme_for_testing ();
   gimp_initialize (gimp, gimp_status_func_dummy);
-  gimp_restore (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy, NULL);
 
   return gimp;
 }
