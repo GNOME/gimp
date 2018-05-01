@@ -21,8 +21,6 @@
 
 void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
                                                        GimpDisplayShell *shell);
-void       gimp_display_shell_canvas_realize_after    (GtkWidget        *widget,
-                                                       GimpDisplayShell *shell);
 void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,
                                                        GtkAllocation    *alloc,
                                                        GimpDisplayShell *shell);

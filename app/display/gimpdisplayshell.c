@@ -591,9 +591,6 @@ gimp_display_shell_constructed (GObject *object)
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),
                     shell);
-  g_signal_connect (shell->canvas, "realize",
-                    G_CALLBACK (gimp_display_shell_canvas_realize_after),
-                    shell);
   g_signal_connect (shell->canvas, "size-allocate",
                     G_CALLBACK (gimp_display_shell_canvas_size_allocate),
                     shell);
