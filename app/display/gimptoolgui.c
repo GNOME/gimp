@@ -932,7 +932,7 @@ gimp_tool_gui_canvas_resized (GtkWidget     *canvas,
       GtkAllocation  allocation;
       gboolean       overlay = FALSE;
 
-      gtk_widget_size_request (private->vbox, &requisition);
+      gtk_widget_get_preferred_size (private->vbox, &requisition, NULL);
       gtk_widget_get_allocation (canvas, &allocation);
 
       if (allocation.width  > 2 * requisition.width &&
