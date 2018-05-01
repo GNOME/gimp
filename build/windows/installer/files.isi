@@ -4,20 +4,26 @@
 
 #if PLATFORM==32
 	#define DIR DIR32
+	#define DDIR DDIR32
 #elif PLATFORM==64
 	#define DIR DIR64
+	#define DDIR DDIR64
 #else
 	#error "Unknown PLATFORM:" + PLATFORM
 #endif
 
 Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
-Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain.exe,\lib\gimp\2.0\plug-ins\file-ps.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain.exe,\lib\gimp\2.0\plug-ins\file-ps.exe,\lib\gimp\2.0\plug-ins\file-mng.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM}; Flags: restartreplace comparetimestamp uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM} and gs; Flags: restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\libgs-8.dll"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
-Source: "{#GIMP_DIR}\{#DIR}\bin\libgs-8.dll"; DestDir: "{app}\bin"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\gsdll??.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\gsdll??.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
-;Source: "{#GIMP_DIR}\{#DIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR}\{#DIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+
+#if PLATFORM==64
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-mng.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM}; Flags: restartreplace comparetimestamp uninsrestartdelete
+#endif
