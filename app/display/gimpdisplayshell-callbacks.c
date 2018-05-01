@@ -130,20 +130,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 }
 
 void
-gimp_display_shell_canvas_realize_after (GtkWidget        *canvas,
-                                         GimpDisplayShell *shell)
-{
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-  /*  HACK: see above: must go with GTK+ 3.x too. Restore the rulers'
-   *  intended visibility again.
-   */
-  gimp_image_window_suspend_keep_pos (window);
-  gimp_display_shell_appearance_update (shell);
-  gimp_image_window_resume_keep_pos (window);
-}
-
-void
 gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
                                          GtkAllocation    *allocation,
                                          GimpDisplayShell *shell)
