@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-29 17:57+0000\n"
-"PO-Revision-Date: 2018-04-29 21:36+0200\n"
+"POT-Creation-Date: 2018-05-01 01:29+0000\n"
+"PO-Revision-Date: 2018-05-02 00:53+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -727,7 +727,7 @@ msgid "Select"
 msgstr "Välj"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:797
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:807
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Mallar"
@@ -11899,20 +11899,20 @@ msgid "Internal Procedures"
 msgstr "Interna procedurer"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Looking for data files"
 msgstr "Letar efter datafiler"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Parasites"
 msgstr "Parasiter"
 
-#: ../app/core/gimp.c:792
+#: ../app/core/gimp.c:802
 msgid "Fonts (this may take a while)"
 msgstr "Typsnitt (det här kan ta en stund)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:801 ../app/dialogs/preferences-dialog.c:3133
+#: ../app/core/gimp.c:811 ../app/dialogs/preferences-dialog.c:3133
 msgid "Modules"
 msgstr "Moduler"
 
@@ -20089,19 +20089,14 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: ../app/text/gimp-fonts.c:304 ../app/text/gimp-fonts.c:334
-msgid "Some fonts failed to load."
-msgstr "Några typsnitt kunde inte läsas in."
-
-#: ../app/text/gimp-fonts.c:309
+#: ../app/text/gimp-fonts.c:267
 #, c-format
-msgid "Opening font directory '%s' failed: %s"
-msgstr "Öppnande av typsnittskatalogen ”%s” misslyckades: %s"
-
-#: ../app/text/gimp-fonts.c:339
-#, c-format
-msgid "Loading font file '%s' failed."
-msgstr "Misslyckades med att läsa in typsnittsfilen ”%s”."
+msgid ""
+"Some fonts failed to load:\n"
+"%s"
+msgstr ""
+"Några typsnitt kunde inte läsas in:\n"
+"%s"
 
 #: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1482
 msgid "Add Text Layer"
@@ -25325,6 +25320,12 @@ msgstr "rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "luddig"
+
+#~ msgid "Opening font directory '%s' failed: %s"
+#~ msgstr "Öppnande av typsnittskatalogen ”%s” misslyckades: %s"
+
+#~ msgid "Loading font file '%s' failed."
+#~ msgstr "Misslyckades med att läsa in typsnittsfilen ”%s”."
 
 #~ msgid ""
 #~ "Threading support is not yet stable.\n"
