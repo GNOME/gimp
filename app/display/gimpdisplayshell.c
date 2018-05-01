@@ -154,10 +154,6 @@ static GimpColorProfile *
                gimp_display_shell_get_color_profile(GimpColorManaged *managed);
 static void      gimp_display_shell_profile_changed(GimpColorManaged *managed);
 
-static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
-                                                    gint             *x,
-                                                    gint             *y,
-                                                    gpointer          data);
 static void      gimp_display_shell_zoom_button_callback
                                                    (GimpDisplayShell *shell,
                                                     GtkWidget        *zoom_button);
@@ -994,11 +990,13 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
   gimp_context_set_display (gimp_get_user_context (shell->display->gimp),
                             shell->display);
 
-  gimp_ui_manager_ui_popup (shell->popup_manager, "/dummy-menubar/image-popup",
-                            GTK_WIDGET (shell),
-                            gimp_display_shell_menu_position,
-                            shell->origin,
-                            NULL, NULL);
+  gimp_ui_manager_ui_popup_at_widget (shell->popup_manager,
+                                      "/dummy-menubar/image-popup",
+                                      shell->origin,
+                                      GDK_GRAVITY_EAST,
+                                      GDK_GRAVITY_NORTH_WEST,
+                                      NULL,
+                                      NULL, NULL);
 
   return TRUE;
 }
@@ -1110,15 +1108,6 @@ gimp_display_shell_profile_changed (GimpColorManaged *managed)
 
   gimp_display_shell_profile_update (shell);
   gimp_display_shell_expose_full (shell);
-}
-
-static void
-gimp_display_shell_menu_position (GtkMenu  *menu,
-                                  gint     *x,
-                                  gint     *y,
-                                  gpointer  data)
-{
-  gimp_button_menu_position (GTK_WIDGET (data), menu, GTK_POS_RIGHT, x, y);
 }
 
 static void

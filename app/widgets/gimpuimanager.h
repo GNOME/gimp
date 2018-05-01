@@ -106,6 +106,15 @@ void            gimp_ui_manager_ui_popup    (GimpUIManager          *manager,
                                              gpointer                position_data,
                                              GDestroyNotify          popdown_func,
                                              gpointer                popdown_data);
+void            gimp_ui_manager_ui_popup_at_widget
+                                            (GimpUIManager          *manager,
+                                             const gchar            *ui_path,
+                                             GtkWidget              *widget,
+                                             GdkGravity              widget_anchor,
+                                             GdkGravity              menu_anchor,
+                                             const GdkEvent         *trigger_event,
+                                             GDestroyNotify          popdown_func,
+                                             gpointer                popdown_data);
 
 
 #endif  /* __GIMP_UI_MANAGER_H__ */
