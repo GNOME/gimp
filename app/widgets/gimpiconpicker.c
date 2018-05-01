@@ -38,7 +38,6 @@
 #include "gimpiconpicker.h"
 #include "gimpview.h"
 #include "gimpviewablebutton.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -555,16 +554,6 @@ gimp_icon_picker_menu_paste (GtkWidget      *widget,
 }
 
 static void
-gimp_icon_picker_menu_position (GtkMenu  *menu,
-                                gint     *x,
-                                gint     *y,
-                                gboolean *push_in,
-                                gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_RIGHT, x, y);
-}
-
-static void
 gimp_icon_picker_clicked (GtkWidget      *widget,
                           GdkEventButton *event,
                           gpointer        object)
@@ -586,10 +575,11 @@ gimp_icon_picker_clicked (GtkWidget      *widget,
   else
     gtk_widget_set_sensitive (private->menu_item_copy, FALSE);
 
-  gtk_menu_popup (GTK_MENU (private->right_click_menu),
-                  NULL, NULL,
-                  gimp_icon_picker_menu_position, widget,
-                  event->button, event->time);
+  gtk_menu_popup_at_widget (GTK_MENU (private->right_click_menu),
+                            widget,
+                            GDK_GRAVITY_EAST,
+                            GDK_GRAVITY_NORTH_WEST,
+                            (GdkEvent *) event);
 }
 
 static void
