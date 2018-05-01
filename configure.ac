@@ -2690,7 +2690,6 @@ data/Makefile
 data/brushes/Makefile
 data/brushes/Basic/Makefile
 data/brushes/Fun/Makefile
-data/brushes/gimp-obsolete-files/Makefile
 data/brushes/Media/Makefile
 data/brushes/Legacy/Makefile
 data/brushes/Sketch/Makefile
