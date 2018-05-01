@@ -92,8 +92,10 @@
 AppName=GIMP
 #if Defined(DEVEL) && DEVEL != ""
 AppID=GIMP-{#MAJOR}.{#MINOR}
+#define APP_ID="GIMP-" + MAJOR + "." + MINOR
 #else
 AppID=GIMP-{#MAJOR}
+#define APP_ID="GIMP-" + MAJOR
 #endif
 VersionInfoVersion={#VERSION}
 #if !defined(REVISION)
@@ -1278,6 +1280,7 @@ end;
 function RemoveOldGIMPVersions(): TRemoveOldGIMPResult;
 var lblInfo1,lblInfo2: TNewStaticText;
 	RootKey: Integer;
+	SubKeyName: String;
 	OldPath, UninstallString, WhichStr: String;
 begin
 	Result := rogContinue;
@@ -1312,26 +1315,24 @@ begin
 	begin
 		DebugMsg('RemoveOldGIMPVersions',ExpandConstant('{app}') + ' exists, checking if old GIMP version is in it');*)
 
-		if Is64BitInstallMode() then
+		(*if Is64BitInstallMode() then
 			RootKey := HKLM32
-		else
+		else*)
 			RootKey := HKLM;
 
-		if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-		                  'Inno Setup: App Path') then
+		SubKeyName := ExpandConstant('Software\Microsoft\Windows\CurrentVersion\Uninstall\{#APP_ID}_is1');
+
+		if RegValueExists(RootKey,SubKeyName,'Inno Setup: App Path') then
 		begin
-			if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-			                       'Inno Setup: App Path',OldPath) then
+			if RegQueryStringValue(RootKey,SubKeyName,'Inno Setup: App Path',OldPath) then
 			begin
 				(*if LowerCase(RemoveBackslashUnlessRoot(OldPath)) = LowerCase(RemoveBackslashUnlessRoot(ExpandConstant('{app}'))) then
 				begin //directory contains previous version of GIMP, run it's uninstaller*)
 					DebugMsg('RemoveOldGIMPVersions','Found legacy GIMP install, removing');
 
-					if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                  'QuietUninstallString') then
+					if RegValueExists(RootKey,SubKeyName,'QuietUninstallString') then
 						WhichStr := 'QuietUninstallString'
-					else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                       'UninstallString') then
+					else if RegValueExists(RootKey,SubKeyName,'UninstallString') then
 						WhichStr := 'UninstallString'
 					else
 					begin
@@ -1339,8 +1340,7 @@ begin
 						exit;
 					end;
 
-					if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                           WhichStr,UninstallString) then
+					if not RegQueryStringValue(RootKey,SubKeyName,WhichStr,UninstallString) then
 					begin
 						Result := rogCantUninstall;
 						exit;
@@ -1352,13 +1352,9 @@ begin
 					UninstallString := UninstallString + ' /NORESTART';
 
 					DoUninstall(UninstallString, OldPath, lblInfo2, Result);
-					
 				//end;
 			end;
-			
-			
 		end;
-
 	//end;
 
 	lblInfo1.Free;
