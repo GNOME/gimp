@@ -70,6 +70,7 @@ GType       gimp_navigation_editor_get_type  (void) G_GNUC_CONST;
 GtkWidget * gimp_navigation_editor_new       (GimpMenuFactory  *menu_factory);
 void        gimp_navigation_editor_popup     (GimpDisplayShell *shell,
                                               GtkWidget        *widget,
+                                              GdkEvent         *event,
                                               gint              click_x,
                                               gint              click_y);
 

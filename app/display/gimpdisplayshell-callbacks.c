@@ -346,7 +346,9 @@ gimp_display_shell_navigation_button_press (GtkWidget        *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      gimp_navigation_editor_popup (shell, widget, bevent->x, bevent->y);
+      gimp_navigation_editor_popup (shell, widget,
+                                    (GdkEvent *) bevent,
+                                    bevent->x, bevent->y);
     }
 
   return TRUE;

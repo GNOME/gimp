@@ -135,45 +135,42 @@ gimp_popup_grab_broken_event (GtkWidget          *widget,
 }
 
 static gboolean
-gimp_popup_map_event (GtkWidget                 *widget,
-                      G_GNUC_UNUSED GdkEventAny *event)
+gimp_popup_map_event (GtkWidget   *widget,
+                      GdkEventAny *event)
 {
+  GdkDisplay *display = gtk_widget_get_display (widget);
+
   GTK_WIDGET_CLASS (parent_class)->map_event (widget, event);
 
   /*  grab with owner_events == TRUE so the popup's widgets can
    *  receive events. we filter away events outside this toplevel
    *  away in button_press()
    */
-  if (gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
-                        GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-                        GDK_POINTER_MOTION_MASK,
-                        NULL, NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+  if (gdk_seat_grab (gdk_display_get_default_seat (display),
+                     gtk_widget_get_window (widget),
+                     GDK_SEAT_CAPABILITY_ALL,
+                     TRUE,
+                     NULL,
+                     (GdkEvent *) event,
+                     NULL, NULL) == GDK_GRAB_SUCCESS)
     {
-      if (gdk_keyboard_grab (gtk_widget_get_window (widget), TRUE,
-                             GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
-        {
-          gtk_grab_add (widget);
+      gtk_grab_add (widget);
 
-          g_signal_connect (widget, "grab-notify",
-                            G_CALLBACK (gimp_popup_grab_notify),
-                            widget);
-          g_signal_connect (widget, "grab-broken-event",
-                            G_CALLBACK (gimp_popup_grab_broken_event),
-                            widget);
+      g_signal_connect (widget, "grab-notify",
+                        G_CALLBACK (gimp_popup_grab_notify),
+                        widget);
+      g_signal_connect (widget, "grab-broken-event",
+                        G_CALLBACK (gimp_popup_grab_broken_event),
+                        widget);
 
-          return FALSE;
-        }
-      else
-        {
-          gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                      GDK_CURRENT_TIME);
-        }
+      return FALSE;
     }
 
   /*  if we could not grab, destroy the popup instead of leaving it
    *  around uncloseable.
    */
   g_signal_emit (widget, popup_signals[CANCEL], 0);
+
   return FALSE;
 }
 
@@ -286,11 +283,11 @@ void
 gimp_popup_show (GimpPopup *popup,
                  GtkWidget *widget)
 {
-  GdkScreen      *screen;
+  GdkDisplay     *display;
+  GdkMonitor     *monitor;
   GtkRequisition  requisition;
   GtkAllocation   allocation;
   GdkRectangle    rect;
-  gint            monitor;
   gint            orig_x;
   gint            orig_y;
   gint            x;
@@ -299,7 +296,7 @@ gimp_popup_show (GimpPopup *popup,
   g_return_if_fail (GIMP_IS_POPUP (popup));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gtk_widget_size_request (GTK_WIDGET (popup), &requisition);
+  gtk_widget_get_preferred_size (GTK_WIDGET (popup), &requisition, NULL);
 
   gtk_widget_get_allocation (widget, &allocation);
   gdk_window_get_origin (gtk_widget_get_window (widget), &orig_x, &orig_y);
@@ -310,10 +307,10 @@ gimp_popup_show (GimpPopup *popup,
       orig_y += allocation.y;
     }
 
-  screen = gtk_widget_get_screen (widget);
+  display = gtk_widget_get_display (widget);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, orig_x, orig_y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  monitor = gdk_display_get_monitor_at_point (display, orig_x, orig_y);
+  gdk_monitor_get_workarea (monitor, &rect);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
@@ -335,7 +332,7 @@ gimp_popup_show (GimpPopup *popup,
   if (y + requisition.height > rect.y + rect.height)
     y = orig_y - requisition.height;
 
-  gtk_window_set_screen (GTK_WINDOW (popup), screen);
+  gtk_window_set_screen (GTK_WINDOW (popup), gtk_widget_get_screen (widget));
   gtk_window_set_transient_for (GTK_WINDOW (popup),
                                 GTK_WINDOW (gtk_widget_get_toplevel (widget)));
 

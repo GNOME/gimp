@@ -73,7 +73,8 @@ void    gimp_navigation_view_get_local_marker
                                            gint               *center_y,
                                            gint               *width,
                                            gint               *height);
-void    gimp_navigation_view_grab_pointer (GimpNavigationView *view);
+void    gimp_navigation_view_grab_pointer (GimpNavigationView *view,
+                                           GdkEvent           *event);
 
 
 #endif /* __GIMP_NAVIGATION_VIEW_H__ */

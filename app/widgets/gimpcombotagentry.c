@@ -264,7 +264,7 @@ gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
           g_signal_connect (entry->popup, "destroy",
                             G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
                             entry);
-          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup));
+          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup), event);
         }
     }
   else

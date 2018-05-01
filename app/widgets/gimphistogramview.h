@@ -44,7 +44,7 @@ struct _GimpHistogramView
   gint                   border_width;
   gint                   subdivisions;
 
-  GdkDevice             *grab_device;
+  GdkSeat               *grab_seat;
 };
 
 struct _GimpHistogramViewClass

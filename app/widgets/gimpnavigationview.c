@@ -209,7 +209,8 @@ gimp_navigation_view_draw (GtkWidget *widget,
 }
 
 void
-gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view)
+gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view,
+                                   GdkEvent           *event)
 {
   GtkWidget  *widget = GTK_WIDGET (nav_view);
   GdkDisplay *display;
@@ -225,11 +226,10 @@ gimp_navigation_view_grab_pointer (GimpNavigationView *nav_view)
 
   window = GIMP_VIEW (nav_view)->event_window;
 
-  gdk_pointer_grab (window, FALSE,
-                    GDK_BUTTON_RELEASE_MASK      |
-                    GDK_POINTER_MOTION_HINT_MASK |
-                    GDK_BUTTON_MOTION_MASK,
-                    NULL, cursor, GDK_CURRENT_TIME);
+  gdk_seat_grab (gdk_event_get_seat (event),
+                 window,
+                 GDK_SEAT_CAPABILITY_ALL,
+                 FALSE, cursor, event, NULL, NULL);
 
   g_object_unref (cursor);
 }
@@ -267,7 +267,7 @@ gimp_navigation_view_button_press (GtkWidget      *widget,
           nav_view->motion_offset_y = ty - nav_view->p_center_y;
         }
 
-      gimp_navigation_view_grab_pointer (nav_view);
+      gimp_navigation_view_grab_pointer (nav_view, (GdkEvent *) bevent);
     }
 
   return TRUE;
@@ -284,8 +284,7 @@ gimp_navigation_view_button_release (GtkWidget      *widget,
       nav_view->has_grab = FALSE;
 
       gtk_grab_remove (widget);
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  GDK_CURRENT_TIME);
+      gdk_seat_ungrab (gdk_event_get_seat ((GdkEvent *) bevent));
     }
 
   return TRUE;
