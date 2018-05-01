@@ -1593,9 +1593,7 @@ design_area_button_press (GtkWidget      *widget,
 
       gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
 
-      gtk_menu_popup (GTK_MENU (menu),
-                      NULL, NULL, NULL, NULL,
-                      event->button, event->time);
+      gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
       return FALSE;
     }

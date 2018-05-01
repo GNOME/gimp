@@ -493,8 +493,8 @@ void
 do_main_popup_menu(GdkEventButton *event)
 {
   GtkWidget *popup = gtk_ui_manager_get_widget (ui_manager, "/PopupMenu");
-  gtk_menu_popup (GTK_MENU (popup), NULL, NULL, NULL, NULL,
-                  event->button, event->time);
+
+  gtk_menu_popup_at_pointer (GTK_MENU (popup), (GdkEvent *) event);
 }
 
 void

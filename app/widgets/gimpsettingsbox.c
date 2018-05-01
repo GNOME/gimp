@@ -39,7 +39,6 @@
 #include "gimpcontainerview.h"
 #include "gimpsettingsbox.h"
 #include "gimpsettingseditor.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -575,16 +574,6 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
     }
 }
 
-static void
-gimp_settings_box_menu_position (GtkMenu  *menu,
-                                 gint     *x,
-                                 gint     *y,
-                                 gboolean *push_in,
-                                 gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_LEFT, x, y);
-}
-
 static gboolean
 gimp_settings_box_menu_press (GtkWidget       *widget,
                               GdkEventButton  *bevent,
@@ -594,10 +583,10 @@ gimp_settings_box_menu_press (GtkWidget       *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS)
     {
-      gtk_menu_popup (GTK_MENU (private->menu),
-                      NULL, NULL,
-                      gimp_settings_box_menu_position, widget,
-                      bevent->button, bevent->time);
+      gtk_menu_popup_at_widget (GTK_MENU (private->menu), widget,
+                                GDK_GRAVITY_WEST,
+                                GDK_GRAVITY_NORTH_EAST,
+                                (GdkEvent *) bevent);
     }
 
   return TRUE;

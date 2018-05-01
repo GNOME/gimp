@@ -557,10 +557,7 @@ remap_popup_menu (GtkWidget      *widget,
   GtkWidget *menu = gtk_ui_manager_get_widget (remap_ui, "/remap-popup");
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-  gtk_menu_popup (GTK_MENU (menu),
-                  NULL, NULL, NULL, NULL,
-                  event ? event->button : 0,
-                  event ? event->time   : gtk_get_current_event_time ());
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
   return TRUE;
 }
