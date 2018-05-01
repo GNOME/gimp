@@ -661,6 +661,47 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
                   button, activate_time);
 }
 
+void
+gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
+                                    const gchar    *ui_path,
+                                    GtkWidget      *widget,
+                                    GdkGravity      widget_anchor,
+                                    GdkGravity      menu_anchor,
+                                    const GdkEvent *trigger_event,
+                                    GDestroyNotify  popdown_func,
+                                    gpointer        popdown_data)
+{
+  GtkWidget *menu;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (ui_path != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), ui_path);
+
+  if (GTK_IS_MENU_ITEM (menu))
+    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+
+  if (! menu)
+    return;
+
+  g_return_if_fail (GTK_IS_MENU (menu));
+
+  if (popdown_func && popdown_data)
+    {
+      g_object_set_data_full (G_OBJECT (manager), "popdown-data",
+                              popdown_data, popdown_func);
+      g_signal_connect (menu, "selection-done",
+                        G_CALLBACK (gimp_ui_manager_delete_popdown_data),
+                        manager);
+    }
+
+  gtk_menu_popup_at_widget (GTK_MENU (menu), widget,
+                            widget_anchor,
+                            menu_anchor,
+                            trigger_event);
+}
+
 
 /*  private functions  */
 
