@@ -230,6 +230,7 @@ gimp_navigation_editor_new (GimpMenuFactory *menu_factory)
 void
 gimp_navigation_editor_popup (GimpDisplayShell *shell,
                               GtkWidget        *widget,
+                              GdkEvent         *event,
                               gint              click_x,
                               gint              click_y)
 {
@@ -339,7 +340,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
 
   /* fill in then grab pointer */
   gimp_navigation_view_set_motion_offset (view, 0, 0);
-  gimp_navigation_view_grab_pointer (view);
+  gimp_navigation_view_grab_pointer (view, event);
 }
 
 

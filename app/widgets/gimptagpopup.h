@@ -77,7 +77,8 @@ GType       gimp_tag_popup_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_tag_popup_new      (GimpComboTagEntry *entry);
 
-void        gimp_tag_popup_show     (GimpTagPopup      *popup);
+void        gimp_tag_popup_show     (GimpTagPopup      *popup,
+                                     GdkEvent          *event);
 
 
 #endif  /*  __GIMP_TAG_POPUP_H__  */

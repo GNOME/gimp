@@ -593,22 +593,22 @@ gimp_histogram_view_button_press (GtkWidget      *widget,
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  if (! view->grab_device &&
+  if (! view->grab_seat &&
       bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      GdkDevice     *device = gdk_event_get_device ((GdkEvent *) bevent);
+      GdkSeat       *seat = gdk_event_get_seat ((GdkEvent *) bevent);
       GtkAllocation  allocation;
       gint           width;
 
-      if (gdk_device_grab (device, gtk_widget_get_window (widget),
-                           GDK_OWNERSHIP_WINDOW, FALSE,
-                           GDK_BUTTON_RELEASE_MASK | GDK_BUTTON1_MOTION_MASK,
-                           NULL, bevent->time) != GDK_GRAB_SUCCESS)
+      if (gdk_seat_grab (seat, gtk_widget_get_window (widget),
+                         GDK_SEAT_CAPABILITY_ALL, FALSE,
+                         NULL, (GdkEvent *) bevent,
+                         NULL, NULL) != GDK_GRAB_SUCCESS)
         {
           return TRUE;
         }
 
-      view->grab_device = device;
+      view->grab_seat = seat;
 
       gtk_widget_get_allocation (widget, &allocation);
 
@@ -630,12 +630,13 @@ gimp_histogram_view_button_release (GtkWidget      *widget,
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  if (gdk_event_get_device ((GdkEvent *) bevent) == view->grab_device &&
+  if (gdk_event_get_seat ((GdkEvent *) bevent) == view->grab_seat &&
       bevent->button == 1)
     {
       gint start, end;
 
-      gdk_device_ungrab (view->grab_device, bevent->time);
+      gdk_seat_ungrab (view->grab_seat);
+      view->grab_seat = NULL;
 
       start = view->start;
       end   = view->end;
@@ -658,7 +659,7 @@ gimp_histogram_view_motion_notify (GtkWidget      *widget,
   GtkAllocation      allocation;
   gint               width;
 
-  if (gdk_event_get_device ((GdkEvent *) mevent) == view->grab_device)
+  if (gdk_event_get_seat ((GdkEvent *) mevent) == view->grab_seat)
     {
       gtk_widget_get_allocation (widget, &allocation);
 

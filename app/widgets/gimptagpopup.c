@@ -467,7 +467,8 @@ gimp_tag_popup_new (GimpComboTagEntry *combo_entry)
  * it is destroyed.
  **/
 void
-gimp_tag_popup_show (GimpTagPopup *popup)
+gimp_tag_popup_show (GimpTagPopup *popup,
+                     GdkEvent     *event)
 {
   GtkWidget *widget;
 
@@ -480,12 +481,10 @@ gimp_tag_popup_show (GimpTagPopup *popup)
   gtk_grab_add (widget);
   gtk_widget_grab_focus (widget);
 
-  if (gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
-                        GDK_BUTTON_PRESS_MASK   |
-                        GDK_BUTTON_RELEASE_MASK |
-                        GDK_POINTER_MOTION_MASK,
-                        NULL, NULL,
-                        GDK_CURRENT_TIME) != GDK_GRAB_SUCCESS)
+  if (gdk_seat_grab (gdk_event_get_seat (event),
+                     gtk_widget_get_window (widget),
+                     GDK_SEAT_CAPABILITY_ALL,
+                     TRUE, NULL, event, NULL, NULL) != GDK_GRAB_SUCCESS)
     {
       /* pointer grab must be attained otherwise user would have
        * problems closing the popup window.
@@ -673,7 +672,9 @@ gimp_tag_popup_border_event (GtkWidget *widget,
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
+      gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                      gdk_event_get_device (event),
+                                      &x, &y, NULL);
 
       if (button_event->window != gtk_widget_get_window (popup->tag_area) &&
           (x < allocation.y                    ||
@@ -685,8 +686,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
            * which means it should be hidden.
            */
           gtk_grab_remove (widget);
-          gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                      GDK_CURRENT_TIME);
+          gdk_seat_ungrab (gdk_event_get_seat (event));
           gtk_widget_destroy (widget);
         }
     }
@@ -695,7 +695,9 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       GdkEventMotion *motion_event = (GdkEventMotion *) event;
       gint            x, y;
 
-      gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
+      gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                      gdk_event_get_device (event),
+                                      &x, &y, NULL);
 
       gimp_tag_popup_handle_scrolling (popup, x, y,
                                        motion_event->window ==
@@ -717,15 +719,13 @@ gimp_tag_popup_border_event (GtkWidget *widget,
   else if (event->type == GDK_GRAB_BROKEN)
     {
       gtk_grab_remove (widget);
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  GDK_CURRENT_TIME);
+      gdk_seat_ungrab (gdk_event_get_seat (event));
       gtk_widget_destroy (widget);
     }
   else if (event->type == GDK_KEY_PRESS)
     {
       gtk_grab_remove (widget);
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  GDK_CURRENT_TIME);
+      gdk_seat_ungrab (gdk_event_get_seat (event));
       gtk_widget_destroy (widget);
     }
   else if (event->type == GDK_SCROLL)
