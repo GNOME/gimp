@@ -523,6 +523,12 @@ gimp_text_tool_button_press (GimpTool            *tool,
       /*  create a new text layer  */
       text_tool->text_box_fixed = FALSE;
 
+      /* make sure the text tool has an image, even if the user didn't click
+       * inside the active drawable, in particular, so that the text style
+       * editor picks the correct resolution.
+       */
+      gimp_text_tool_set_image (text_tool, image);
+
       gimp_text_tool_connect (text_tool, NULL, NULL);
       gimp_text_tool_editor_start (text_tool);
     }
