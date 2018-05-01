@@ -76,6 +76,7 @@ enum
   PROP_TOOLBOX_WILBER,
   PROP_THEME_PATH,
   PROP_THEME,
+  PROP_PREFER_DARK_THEME,
   PROP_ICON_THEME_PATH,
   PROP_ICON_THEME,
   PROP_ICON_SIZE,
@@ -322,6 +323,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                            THEME_BLURB,
                            GIMP_CONFIG_DEFAULT_THEME,
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_DARK_THEME,
+                            "prefer-dark-theme",
+                            "Prefer Dark Theme",
+                            THEME_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   path = gimp_config_build_data_path ("icons");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
@@ -645,6 +653,9 @@ gimp_gui_config_set_property (GObject      *object,
       g_free (gui_config->theme);
       gui_config->theme = g_value_dup_string (value);
       break;
+    case PROP_PREFER_DARK_THEME:
+      gui_config->prefer_dark_theme = g_value_get_boolean (value);
+      break;
      case PROP_ICON_THEME_PATH:
       g_free (gui_config->icon_theme_path);
       gui_config->icon_theme_path = g_value_dup_string (value);
@@ -827,6 +838,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_THEME:
       g_value_set_string (value, gui_config->theme);
+      break;
+    case PROP_PREFER_DARK_THEME:
+      g_value_set_boolean (value, gui_config->prefer_dark_theme);
       break;
     case PROP_ICON_THEME_PATH:
       g_value_set_string (value, gui_config->icon_theme_path);

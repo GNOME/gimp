@@ -1874,6 +1874,10 @@ prefs_dialog_new (Gimp       *gimp,
                       gimp);
   }
 
+  prefs_check_button_add (object, "prefer-dark-theme",
+                          _("Use dark theme variant if available"),
+                          GTK_BOX (vbox2));
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
