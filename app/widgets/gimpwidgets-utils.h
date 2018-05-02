@@ -22,6 +22,10 @@
 #define __APP_GIMP_WIDGETS_UTILS_H__
 
 
+GtkWidget       * gimp_menu_item_get_image         (GtkMenuItem          *item);
+void              gimp_menu_item_set_image         (GtkMenuItem          *item,
+                                                    GtkWidget            *image);
+
 void              gimp_menu_position               (GtkMenu              *menu,
                                                     gint                 *x,
                                                     gint                 *y);
