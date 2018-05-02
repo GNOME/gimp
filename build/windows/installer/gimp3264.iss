@@ -130,7 +130,7 @@ WizardSmallImageFile=wilber.bmp
 UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
-MinVersion=0,5.01sp3
+MinVersion=6.1
 ArchitecturesInstallIn64BitMode=x64
 
 #ifdef NOCOMPRESSION
