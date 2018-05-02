@@ -111,8 +111,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *scale;
   GtkWidget *button;
   GtkWidget *hbox;
@@ -129,7 +128,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
     gint         frame_col;
     gint         frame_row;
   }
-  hue_range_table[] =
+  hue_range_grid[] =
   {
     { N_("M_aster"), N_("Adjust all colors"), 2, 3, 0, 0 },
     { N_("_R"),      N_("Red"),               2, 1, 2, 0 },
@@ -155,29 +154,24 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
-  /*  The table containing hue ranges  */
-  table = gtk_table_new (7, 5, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 3, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 2);
-  gtk_container_add (GTK_CONTAINER (abox), table);
+  /*  The grid containing hue ranges  */
+  grid = gtk_grid_new ();
+  gtk_widget_set_halign (grid, GTK_ALIGN_CENTER);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
 
   /*  the radio buttons for hue ranges  */
-  for (i = 0; i < G_N_ELEMENTS (hue_range_table); i++)
+  for (i = 0; i < G_N_ELEMENTS (hue_range_grid); i++)
     {
       button = gtk_radio_button_new_with_mnemonic (group,
-                                                   gettext (hue_range_table[i].label));
+                                                   gettext (hue_range_grid[i].label));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       g_object_set_data (G_OBJECT (button), "gimp-item-data",
                          GINT_TO_POINTER (i));
 
       gimp_help_set_help_data (button,
-                               gettext (hue_range_table[i].tooltip),
+                               gettext (hue_range_grid[i].tooltip),
                                NULL);
 
       if (i == 0)
@@ -187,12 +181,10 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
           range_radio = button;
         }
 
-      gtk_table_attach (GTK_TABLE (table), button,
-                        hue_range_table[i].label_col,
-                        hue_range_table[i].label_col + 1,
-                        hue_range_table[i].label_row,
-                        hue_range_table[i].label_row + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), button,
+                       hue_range_grid[i].label_col,
+                       hue_range_grid[i].label_row,
+                       1, 1);
 
       if (i > 0)
         {
@@ -201,12 +193,10 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
 
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-          gtk_table_attach (GTK_TABLE (table), frame,
-                            hue_range_table[i].frame_col,
-                            hue_range_table[i].frame_col + 1,
-                            hue_range_table[i].frame_row,
-                            hue_range_table[i].frame_row + 1,
-                            GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+          gtk_grid_attach (GTK_GRID (grid), frame,
+                           hue_range_grid[i].frame_col,
+                           hue_range_grid[i].frame_row,
+                           1, 1);
           gtk_widget_show (frame);
 
           color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_FLAT, 0);
@@ -229,7 +219,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
       gtk_widget_show (button);
     }
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   /* Create the 'Overlap' option slider */
   scale = gimp_prop_spin_scale_new (config, "overlap",
