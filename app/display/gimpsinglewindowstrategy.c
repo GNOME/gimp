@@ -96,6 +96,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
 
           widget = gimp_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
+                                                   GTK_WIDGET (window),
                                                    "gimp-toolbox",
                                                    -1 /*view_size*/,
                                                    FALSE /*present*/);
@@ -111,6 +112,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
     {
       /* if the dialog is already open, simply raise it */
       return gimp_dialog_factory_dialog_raise (factory, monitor,
+                                               GTK_WIDGET (window),
                                                identifiers, -1);
    }
   else

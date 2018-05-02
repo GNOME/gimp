@@ -1364,6 +1364,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
    */
   dock_window = gimp_dialog_factory_dialog_new (factory, monitor,
                                                 NULL /*ui_manager*/,
+                                                NULL,
                                                 (toolbox ?
                                                  "gimp-toolbox-window" :
                                                  "gimp-dock-window"),
@@ -1374,6 +1375,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
   ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
   dock           = gimp_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
+                                                   dock_window,
                                                    (toolbox ?
                                                     "gimp-toolbox" :
                                                     "gimp-dock"),

@@ -718,13 +718,20 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      GdkMonitor *monitor;
+      GimpContext *context = gimp_get_user_context (gimp);
+      GimpDisplay *display = gimp_context_get_display (context);
+      GdkMonitor  *monitor = gimp_get_monitor_at_pointer ();
+      GtkWidget   *parent  = NULL;
 
-      monitor = gimp_get_monitor_at_pointer ();
+      if (display)
+        {
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+          parent = GTK_WIDGET (gimp_display_shell_get_window (shell));
+        }
 
       gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                        monitor,
-                                        "gimp-quit-dialog", -1);
+                                        monitor, parent, "gimp-quit-dialog", -1);
 
       return TRUE; /* stop exit for now */
     }
