@@ -389,11 +389,15 @@ gimp_spin_scale_draw (GtkWidget *widget,
       switch (private->target)
         {
         case TARGET_UPPER:
-          cairo_rectangle (cr, 0, 0, text_area.width, text_area.height / 2);
+          cairo_rectangle (cr,
+                           text_area.x, text_area.y,
+                           text_area.width, text_area.height / 2);
           break;
 
         case TARGET_LOWER:
-          cairo_rectangle (cr, 0, text_area.height / 2, text_area.width, (text_area.height + 1) / 2);
+          cairo_rectangle (cr,
+                           text_area.x, text_area.y + text_area.height / 2,
+                           text_area.width, text_area.height / 2);
           break;
 
         default:
@@ -542,7 +546,9 @@ gtk_widget_get_translation_to_window (GtkWidget *widget,
 
   widget_window = gtk_widget_get_window (widget);
 
-  for (w = window; w && w != widget_window; w = gdk_window_get_parent (w))
+  for (w = window;
+       w && w != widget_window;
+       w = gdk_window_get_parent (w))
     {
       int wx, wy;
       gdk_window_get_position (w, &wx, &wy);
@@ -586,26 +592,23 @@ gimp_spin_scale_get_target (GtkWidget *widget,
                             gdouble    y)
 {
   GdkRectangle    text_area;
-  GtkAllocation   allocation;
   PangoRectangle  logical;
   gint            layout_x;
   gint            layout_y;
 
-  gtk_widget_get_allocation (widget, &allocation);
+  gtk_entry_get_text_area (GTK_ENTRY (widget), &text_area);
   gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
   pango_layout_get_pixel_extents (gtk_entry_get_layout (GTK_ENTRY (widget)),
                                   NULL, &logical);
 
-  gtk_entry_get_text_area (GTK_ENTRY (widget), &text_area);
-
   if (x >= text_area.x && x < text_area.width &&
       y >= text_area.y && y < text_area.height)
     {
-      x -= text_area.x;
-      y -= text_area.y;
+      layout_x -= text_area.x;
+      layout_y -= text_area.y;
 
-      if (x > layout_x && x < layout_x + logical.width &&
-          y > layout_y && y < layout_y + logical.height)
+      if (x >= layout_x && x < layout_x + logical.width &&
+          y >= layout_y && y < layout_y + logical.height)
         {
           return TARGET_NUMBER;
         }
