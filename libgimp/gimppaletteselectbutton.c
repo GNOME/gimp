@@ -457,8 +457,6 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
 
   priv = GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE (palette_button);
 
-  gtk_widget_push_composite_child ();
-
   button = gtk_button_new ();
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -487,8 +485,6 @@ gimp_palette_select_button_create_inside (GimpPaletteSelectButton *palette_butto
   g_signal_connect_swapped (button, "drag-data-received",
                             G_CALLBACK (gimp_palette_select_drag_data_received),
                             palette_button);
-
-  gtk_widget_pop_composite_child ();
 
   return button;
 }
