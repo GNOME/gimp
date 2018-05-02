@@ -131,7 +131,7 @@ UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
 MinVersion=0,5.01sp3
-//MinVersion=0,5.0
+ArchitecturesInstallIn64BitMode=x64
 
 #ifdef NOCOMPRESSION
 UseSetupLdr=no
@@ -152,7 +152,6 @@ OutputBaseFileName=gimp-{#VERSION}-setup
 #else
 OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
 #endif
-ArchitecturesInstallIn64BitMode=x64
 
 ;SignTool=Default
 SignedUninstaller=yes
