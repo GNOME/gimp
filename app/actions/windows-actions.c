@@ -354,9 +354,6 @@ windows_actions_image_notify (GimpDisplay      *display,
 
           gimp_action_group_add_actions (group, NULL, &entry, 1);
 
-          gimp_action_group_set_action_always_show_image (group, action_name,
-                                                          TRUE);
-
           action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                                 action_name);
 

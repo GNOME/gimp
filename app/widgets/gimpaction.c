@@ -43,6 +43,7 @@
 #include "gimpaction-history.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -371,14 +372,14 @@ static void
 gimp_action_set_proxy (GimpAction *action,
                        GtkWidget  *proxy)
 {
-  if (! GTK_IS_IMAGE_MENU_ITEM (proxy))
+  if (! GTK_IS_MENU_ITEM (proxy))
     return;
 
   if (action->color)
     {
       GtkWidget *area;
 
-      area = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+      area = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
       if (GIMP_IS_COLOR_AREA (area))
         {
@@ -398,9 +399,7 @@ gimp_action_set_proxy (GimpAction *action,
 
           gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
           gtk_widget_set_size_request (area, width, height);
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), area);
-          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
-                                                     TRUE);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area);
           gtk_widget_show (area);
         }
     }
@@ -408,7 +407,7 @@ gimp_action_set_proxy (GimpAction *action,
     {
       GtkWidget *view;
 
-      view = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+      view = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
       if (GIMP_IS_VIEW (view) &&
           g_type_is_a (G_TYPE_FROM_INSTANCE (action->viewable),
@@ -437,9 +436,7 @@ gimp_action_set_proxy (GimpAction *action,
           view = gimp_view_new_full (action->context, action->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
-          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
-                                                     TRUE);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view);
           gtk_widget_show (view);
         }
     }
@@ -447,19 +444,20 @@ gimp_action_set_proxy (GimpAction *action,
     {
       GtkWidget *image;
 
-      image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (proxy));
+      image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
       if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
-                                                     FALSE);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL);
           g_object_notify (G_OBJECT (action), "icon-name");
         }
     }
 
   {
     GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
+
+    if (GTK_IS_BOX (child))
+      child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
 
     if (GTK_IS_LABEL (child))
       {
