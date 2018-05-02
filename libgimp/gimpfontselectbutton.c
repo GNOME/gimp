@@ -440,8 +440,6 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
 
   priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (font_button);
 
-  gtk_widget_push_composite_child ();
-
   button = gtk_button_new ();
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -470,8 +468,6 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
   g_signal_connect_swapped (button, "drag-data-received",
                             G_CALLBACK (gimp_font_select_drag_data_received),
                             font_button);
-
-  gtk_widget_pop_composite_child ();
 
   return button;
 }

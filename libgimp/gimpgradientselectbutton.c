@@ -588,8 +588,6 @@ gimp_gradient_select_button_create_inside (GimpGradientSelectButton *gradient_bu
 
   priv = GIMP_GRADIENT_SELECT_BUTTON_GET_PRIVATE (gradient_button);
 
-  gtk_widget_push_composite_child ();
-
   button = gtk_button_new ();
 
   priv->preview = gtk_drawing_area_new ();
@@ -620,8 +618,6 @@ gimp_gradient_select_button_create_inside (GimpGradientSelectButton *gradient_bu
   g_signal_connect_swapped (button, "drag-data-received",
                             G_CALLBACK (gimp_gradient_select_drag_data_received),
                             gradient_button);
-
-  gtk_widget_pop_composite_child ();
 
   return button;
 }

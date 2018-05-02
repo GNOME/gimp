@@ -572,11 +572,10 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   GimpPatternSelectButtonPrivate *priv;
   GtkWidget                      *frame;
   GtkWidget                      *preview;
-  GdkScreen                      *screen;
+  GdkMonitor                    *monitor;
+  GdkRectangle                   workarea;
   gint                            x_org;
   gint                            y_org;
-  gint                            scr_w;
-  gint                            scr_h;
 
   priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (button);
 
@@ -586,11 +585,10 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   if (priv->width <= CELL_SIZE && priv->height <= CELL_SIZE)
     return;
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (button));
-
   priv->popup = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_type_hint (GTK_WINDOW (priv->popup), GDK_WINDOW_TYPE_HINT_DND);
-  gtk_window_set_screen (GTK_WINDOW (priv->popup), screen);
+  gtk_window_set_screen (GTK_WINDOW (priv->popup),
+                         gtk_widget_get_screen (GTK_WIDGET (button)));
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -606,15 +604,14 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   gdk_window_get_origin (gtk_widget_get_window (priv->preview),
                          &x_org, &y_org);
 
-  scr_w = gdk_screen_get_width (screen);
-  scr_h = gdk_screen_get_height (screen);
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (button));
+  gdk_monitor_get_workarea (monitor, &workarea);
 
   x = x_org + x - (priv->width  / 2);
   y = y_org + y - (priv->height / 2);
-  x = (x < 0) ? 0 : x;
-  y = (y < 0) ? 0 : y;
-  x = (x + priv->width  > scr_w) ? scr_w - priv->width  : x;
-  y = (y + priv->height > scr_h) ? scr_h - priv->height : y;
+
+  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - priv->width);
+  y = CLAMP (y, workarea.y, workarea.y + workarea.height - priv->height);
 
   gtk_window_move (GTK_WINDOW (priv->popup), x, y);
 
@@ -691,8 +688,6 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
 
   priv = GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE (pattern_button);
 
-  gtk_widget_push_composite_child ();
-
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   frame = gtk_frame_new (NULL);
@@ -731,8 +726,6 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
                             pattern_button);
 
   gtk_widget_show_all (hbox);
-
-  gtk_widget_pop_composite_child ();
 
   return hbox;
 }
