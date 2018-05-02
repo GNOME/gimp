@@ -101,9 +101,9 @@ AppVerName=GIMP {#VERSION}
 #else
 AppVerName=GIMP {#VERSION}-{#REVISION}
 #endif
-AppPublisherURL=http://gimp-win.sourceforge.net/
-AppSupportURL=http://www.gimp.org/docs/
-AppUpdatesURL=http://gimp-win.sourceforge.net/
+AppPublisherURL=https://www.gimp.org/
+AppSupportURL=https://www.gimp.org/docs/
+AppUpdatesURL=https://www.gimp.org/
 AppPublisher=The GIMP Team
 AppVersion={#VERSION}
 DisableProgramGroupPage=yes
@@ -377,7 +377,7 @@ const
 	BITSPIXEL = 12;
 	PLANES = 14;
 
-	GIMP_URL = 'http://www.gimp.org/';
+	GIMP_URL = 'https://www.gimp.org/';
 
 	RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Tahoma;}{\f1\fnil\fcharset2 Symbol;}}\viewkind4\uc1\fs16';
 	//RTFBullet = '{\pntext\f1\''B7\tab}';
@@ -1019,7 +1019,7 @@ begin
 
 		OnClick := @lblURL_OnClick;
 
-		Caption := 'http://www.gimp.org/';
+		Caption := GIMP_URL;
 
 		Left := Integer(WizardForm.InstallingPage.ClientWidth / 2 - Width / 2);
 	end;
