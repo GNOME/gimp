@@ -302,22 +302,29 @@ Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Fla
 
 ;python
 #ifdef PYTHON
-Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\python.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\python27.dll"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\DLLs\*"; DestDir: "{app}\Python\DLLs"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\Lib\*"; DestDir: "{app}\Python\Lib"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\bin"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\lib\python2.7"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
+
+Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\32\bin"; DestName: "pythonw.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\32\bin"; DestName: "python.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\32\bin"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\32\lib\python2.7"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif
 #endif //NOFILES
 
 [InstallDelete]
 Type: files; Name: "{app}\bin\gimp-?.?.exe"
+Type: files; Name: "{app}\bin\gimp-?.??.exe"
 Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
 Type: files; Name: "{app}\lib\gegl-0.1\*.dll"
 ;obsolete plugins from gimp 2.6
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee-zoom.exe"
+;old Python
+Type: filesandordirs; Name: "{app}\Python\*"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -536,9 +543,17 @@ begin
 		PyGimpInterp := ExpandConstant('{app}\lib\gimp\2.0\interpreters\pygimp.interp');
         DebugMsg('PreparePyGimp','Writing interpreter file for gimp-python: ' + PyGimpInterp);
 		
-		Interp := 'python=' + ExpandConstant('{app}\Python\pythonw.exe') + #10 + 
-		           '/usr/bin/python=' + ExpandConstant('{app}\Python\pythonw.exe') + #10':Python:E::py::python:'#10
+		if IsComponentSelected('py') then
+		begin
+			Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 + 
+			           '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+		end else
+		begin
+			Interp := 'python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 + 
+			           '/usr/bin/python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+		end;
 
+		
 		if not SaveStringToUTF8File(PyGimpInterp,Interp,False) then
 		begin
 			DebugMsg('PreparePyGimp','Problem writing the file. [' + Interp + ']');
