@@ -172,7 +172,7 @@ static void
 gimp_cursor_view_init (GimpCursorView *view)
 {
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *toggle;
   gint       content_spacing;
 
@@ -215,23 +215,23 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   view->priv->pixel_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_x_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X"), 0.5, 0.5,
-                             view->priv->pixel_x_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("X"), 0.5, 0.5,
+                            view->priv->pixel_x_label, 1);
 
   view->priv->pixel_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->pixel_y_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y"), 0.5, 0.5,
-                             view->priv->pixel_y_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Y"), 0.5, 0.5,
+                            view->priv->pixel_y_label, 1);
 
 
   /* Units */
@@ -240,23 +240,23 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_box_pack_start (GTK_BOX (view->priv->coord_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   view->priv->unit_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->unit_x_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X"), 0.5, 0.5,
-                             view->priv->unit_x_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("X"), 0.5, 0.5,
+                            view->priv->unit_x_label, 1);
 
   view->priv->unit_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->unit_y_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y"), 0.5, 0.5,
-                             view->priv->unit_y_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Y"), 0.5, 0.5,
+                            view->priv->unit_y_label, 1);
 
 
   /* Selection Bounding Box */
@@ -265,47 +265,47 @@ gimp_cursor_view_init (GimpCursorView *view)
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   view->priv->selection_x_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_x_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("X"), 0.5, 0.5,
-                             view->priv->selection_x_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("X"), 0.5, 0.5,
+                            view->priv->selection_x_label, 1);
 
   view->priv->selection_y_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_y_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Y"), 0.5, 0.5,
-                             view->priv->selection_y_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Y"), 0.5, 0.5,
+                            view->priv->selection_y_label, 1);
 
   frame = gimp_frame_new ("");
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   view->priv->selection_width_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_width_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             /* Width */
-                             _("W"), 0.5, 0.5,
-                             view->priv->selection_width_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            /* Width */
+                            _("W"), 0.5, 0.5,
+                            view->priv->selection_width_label, 1);
 
   view->priv->selection_height_label = gtk_label_new (_("n/a"));
   gtk_label_set_xalign (GTK_LABEL (view->priv->selection_height_label), 1.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             /* Height */
-                             _("H"), 0.5, 0.5,
-                             view->priv->selection_height_label, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            /* Height */
+                            _("H"), 0.5, 0.5,
+                            view->priv->selection_height_label, 1);
 
 
   /* color information */
