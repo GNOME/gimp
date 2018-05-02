@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-29 15:35+0200\n"
-"PO-Revision-Date: 2018-04-29 15:40+0200\n"
+"POT-Creation-Date: 2018-05-02 15:42+0200\n"
+"PO-Revision-Date: 2018-05-02 15:43+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -232,7 +232,9 @@ msgstr ""
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
-msgstr "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/17/gimp-2-10-rc2-released/"
+msgstr ""
+"Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/17/"
+"gimp-2-10-rc2-released/"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
@@ -289,7 +291,9 @@ msgstr "Diversi miglioramenti all'interfaccia utente"
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
-msgstr "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/03/26/gimp-2-10-rc1-released/"
+msgstr ""
+"Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/03/26/"
+"gimp-2-10-rc1-released/"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
@@ -763,7 +767,7 @@ msgid "Select"
 msgstr "Seleziona"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:797
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:807
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Modelli"
@@ -3476,7 +3480,7 @@ msgstr "Cancella la cronologia documenti"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1601
+#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1607
 #: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -4667,7 +4671,7 @@ msgstr "_Bilanciamento colore..."
 #: ../app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "_Color Exchange..."
-msgstr "Aumento _colore..."
+msgstr "Scambio _colore..."
 
 #: ../app/actions/filters-actions.c:227
 msgctxt "filters-action"
@@ -12021,20 +12025,20 @@ msgid "Internal Procedures"
 msgstr "Procedure interne"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Looking for data files"
 msgstr "Inizializzazione"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Parasites"
 msgstr "Parasites"
 
-#: ../app/core/gimp.c:792
+#: ../app/core/gimp.c:802
 msgid "Fonts (this may take a while)"
 msgstr "Caratteri (può metterci parecchio tempo)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:801 ../app/dialogs/preferences-dialog.c:3133
+#: ../app/core/gimp.c:811 ../app/dialogs/preferences-dialog.c:3133
 msgid "Modules"
 msgstr "Moduli"
 
@@ -15510,7 +15514,11 @@ msgid ""
 "These features are unfinished, buggy and may crash GIMP. It is unadvised to "
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
-msgstr "Queste caratteristiche non sono finite, sono difettose e potrebbero bloccare GIMP. Non è consigliabile usarle a meno di non essere veramente sicuri di quello che si sta facendo o a meno che non si voglia contribuire al codice con una patch."
+msgstr ""
+"Queste caratteristiche non sono finite, sono difettose e potrebbero bloccare "
+"GIMP. Non è consigliabile usarle a meno di non essere veramente sicuri di "
+"quello che si sta facendo o a meno che non si voglia contribuire al codice "
+"con una patch."
 
 #: ../app/dialogs/preferences-dialog.c:1557
 msgid "Insane Options"
@@ -20236,7 +20244,17 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1482
+#: ../app/text/gimp-fonts.c:267
+#, c-format
+msgid ""
+"Some fonts failed to load:\n"
+"%s"
+msgstr ""
+"Impossibile caricare alcuni font:\n"
+"\n"
+"%s"
+
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1488
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -22519,27 +22537,27 @@ msgstr "Strumento testo: crea o modifica livelli di testo"
 msgid "Te_xt"
 msgstr "_Testo"
 
-#: ../app/tools/gimptexttool.c:953
+#: ../app/tools/gimptexttool.c:959
 msgid "Text box: "
 msgstr "Riquadro di testo: "
 
-#: ../app/tools/gimptexttool.c:1084
+#: ../app/tools/gimptexttool.c:1090
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
-#: ../app/tools/gimptexttool.c:1593 ../app/tools/gimptexttool.c:1596
+#: ../app/tools/gimptexttool.c:1599 ../app/tools/gimptexttool.c:1602
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1600
+#: ../app/tools/gimptexttool.c:1606
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1602
+#: ../app/tools/gimptexttool.c:1608
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../app/tools/gimptexttool.c:1624
+#: ../app/tools/gimptexttool.c:1630
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
