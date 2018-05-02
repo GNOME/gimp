@@ -424,13 +424,6 @@ gimp_spin_scale_draw (GtkWidget *widget,
       cairo_fill (cr);
     }
 
-  cairo_set_line_width (cr, 1.0);
-
-  cairo_rectangle (cr, 0.5, 0.5,
-                   allocation.width - 1.0, allocation.height - 1.0);
-  gdk_cairo_set_source_rgba (cr, &text_color);
-  cairo_stroke (cr);
-
   if (private->label)
     {
       gint           minimum_width;
