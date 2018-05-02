@@ -57,6 +57,67 @@
 #define GIMP_TOOL_OPTIONS_GUI_KEY "gimp-tool-options-gui"
 
 
+GtkWidget *
+gimp_menu_item_get_image (GtkMenuItem *item)
+{
+  g_return_val_if_fail (GTK_IS_MENU_ITEM (item), NULL);
+
+  return g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+}
+
+void
+gimp_menu_item_set_image (GtkMenuItem *item,
+                          GtkWidget   *image)
+{
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *old_image;
+
+  g_return_if_fail (GTK_IS_MENU_ITEM (item));
+  g_return_if_fail (image == NULL || GTK_IS_WIDGET (image));
+
+  hbox = g_object_get_data (G_OBJECT (item), "gimp-menu-item-hbox");
+
+  if (! hbox)
+    {
+      if (! image)
+        return;
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      g_object_set_data (G_OBJECT (hbox), "gimp-menu-item-hbox", hbox);
+
+      label = gtk_bin_get_child (GTK_BIN (item));
+      g_object_set_data (G_OBJECT (hbox), "gimp-menu-item-label", label);
+
+      g_object_ref (label);
+      gtk_container_remove (GTK_CONTAINER (item), label);
+      gtk_container_add (GTK_CONTAINER (hbox), label);
+      g_object_unref (label);
+
+      gtk_container_add (GTK_CONTAINER (item), hbox);
+      gtk_widget_show (hbox);
+    }
+
+  old_image = g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+
+  if (old_image != image)
+    {
+      if (old_image)
+        {
+          gtk_widget_destroy (old_image);
+          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", NULL);
+        }
+
+      if (image)
+        {
+          gtk_container_add (GTK_CONTAINER (hbox), image);
+          gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", image);
+          gtk_widget_show (image);
+        }
+    }
+}
+
 /**
  * gimp_menu_position:
  * @menu: a #GtkMenu widget
