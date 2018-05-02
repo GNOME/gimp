@@ -229,7 +229,7 @@ gimp_size_box_constructed (GObject *object)
   g_list_free (children);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_table_attach_defaults (GTK_TABLE (entry), vbox, 1, 3, 2, 3);
+  gtk_grid_attach (GTK_GRID (entry), vbox, 1, 2, 2, 1);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (NULL);

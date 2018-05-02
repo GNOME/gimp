@@ -244,15 +244,9 @@ resize_dialog_new (GimpViewable       *viewable,
   private->offset = entry = gimp_size_entry_new (1, unit, "%p",
                                                  TRUE, FALSE, FALSE, SB_WIDTH,
                                                  GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 3, 12);
-  gtk_table_set_row_spacing (GTK_TABLE (entry), 0, 2);
-
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), spinbutton,
-                             1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (entry), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
@@ -275,7 +269,7 @@ resize_dialog_new (GimpViewable       *viewable,
                     private);
 
   button = gtk_button_new_with_mnemonic (_("C_enter"));
-  gtk_table_attach_defaults (GTK_TABLE (entry), button, 4, 5, 1, 2);
+  gtk_grid_attach (GTK_GRID (entry), button, 4, 1, 1, 1);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",

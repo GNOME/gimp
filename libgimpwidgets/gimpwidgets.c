@@ -757,11 +757,9 @@ gimp_coordinates_new (GimpUnit         unit,
                                    FALSE,
                                    spinbutton_width,
                                    update_policy);
-  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 2, 4);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (sizeentry), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
@@ -797,8 +795,7 @@ gimp_coordinates_new (GimpUnit         unit,
   if (chainbutton_active)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
 
-  gtk_table_attach (GTK_TABLE (sizeentry), chainbutton, 2, 3, 0, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (sizeentry), chainbutton, 2, 0, 1, 2);
   gtk_widget_show (chainbutton);
 
   data = g_slice_new (GimpCoordinatesData);

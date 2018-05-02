@@ -46,7 +46,7 @@ typedef struct _GimpSizeEntryField  GimpSizeEntryField;
 
 struct _GimpSizeEntry
 {
-  GtkTable   parent_instance;
+  GtkGrid    parent_instance;
 
   GSList    *fields;
   gint       number_of_fields;
@@ -62,7 +62,7 @@ struct _GimpSizeEntry
 
 struct _GimpSizeEntryClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass  parent_class;
 
   void (* value_changed)  (GimpSizeEntry *gse);
   void (* refval_changed) (GimpSizeEntry *gse);

@@ -126,7 +126,7 @@ static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
                                                       gpointer            data);
 
 
-G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
 
 #define parent_class gimp_size_entry_parent_class
 
@@ -243,7 +243,7 @@ gimp_size_entry_finalize (GObject *object)
  *
  * 7. gimp_size_entry_set_refval() (or gimp_size_entry_set_value())
  *
- * The #GimpSizeEntry is derived from #GtkTable and will have
+ * The #GimpSizeEntry is derived from #GtkGrid and will have
  * an empty border of one cell width on each side plus an empty column left
  * of the #GimpUnitComboBox to allow the caller to add labels or a
  * #GimpChainButton.
@@ -273,10 +273,6 @@ gimp_size_entry_new (gint                       number_of_fields,
   gse->unit             = unit;
   gse->show_refval      = show_refval;
   gse->update_policy    = update_policy;
-
-  gtk_table_resize (GTK_TABLE (gse),
-                    1 + gse->show_refval + 2,
-                    number_of_fields + 1 + 3);
 
   /*  show the 'pixels' menu entry only if we are a 'size' sizeentry and
    *  don't have the reference value spinbutton
@@ -343,9 +339,8 @@ gimp_size_entry_new (gint                       number_of_fields,
                                          spinbutton_width, -1);
         }
 
-      gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
-                                 i+1, i+2,
-                                 gse->show_refval+1, gse->show_refval+2);
+      gtk_grid_attach (GTK_GRID (gse), gsef->value_spinbutton,
+                       i+1, gse->show_refval+1, 1, 1);
       g_signal_connect (gsef->value_adjustment, "value-changed",
                         G_CALLBACK (gimp_size_entry_value_callback),
                         gsef);
@@ -366,8 +361,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 
           gtk_widget_set_size_request (gsef->refval_spinbutton,
                                        spinbutton_width, -1);
-          gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
-                                     i + 1, i + 2, 1, 2);
+          gtk_grid_attach (GTK_GRID (gse), gsef->refval_spinbutton,
+                           i + 1, 1, 1, 1);
           g_signal_connect (gsef->refval_adjustment,
                             "value-changed",
                             G_CALLBACK (gimp_size_entry_refval_callback),
@@ -412,10 +407,8 @@ gimp_size_entry_new (gint                       number_of_fields,
 
   gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gse->unitmenu), unit);
 
-  gtk_table_attach (GTK_TABLE (gse), gse->unitmenu,
-                    i+2, i+3,
-                    gse->show_refval+1, gse->show_refval+2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (gse), gse->unitmenu,
+                    i+2, gse->show_refval+1, 1, 1);
   g_signal_connect (gse->unitmenu, "changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
@@ -514,7 +507,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
  * @column:    The column where the label will be attached.
  * @alignment: The horizontal alignment of the label.
  *
- * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkTable).
+ * Attaches a #GtkLabel to the #GimpSizeEntry (which is a #GtkGrid).
  *
  * Returns: A pointer to the new #GtkLabel widget.
  **/
@@ -562,8 +555,7 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
 
   gtk_label_set_xalign (GTK_LABEL (label), alignment);
 
-  gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (gse), label, column, row, 1, 1);
   gtk_widget_show (label);
 
   return label;
@@ -1509,7 +1501,7 @@ gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
  * @gse: The sizeentry you want to grab the keyboard focus.
  *
  * This function is rather ugly and just a workaround for the fact that
- * it's impossible to implement gtk_widget_grab_focus() for a #GtkTable.
+ * it's impossible to implement gtk_widget_grab_focus() for a #GtkGrid (is this actually true after the Table->Grid conversion?).
  **/
 void
 gimp_size_entry_grab_focus (GimpSizeEntry *gse)

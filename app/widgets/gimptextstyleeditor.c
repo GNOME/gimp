@@ -209,7 +209,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   editor->size_entry =
     gimp_size_entry_new (1, 0, "%a", TRUE, FALSE, FALSE, 10,
                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (editor->size_entry), 1, 0);
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->size_entry,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->size_entry);
