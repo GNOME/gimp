@@ -182,14 +182,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
 static guint display_shell_signals[LAST_SIGNAL] = { 0 };
 
 
-static const gchar display_rc_style[] =
-  "style \"check-button-style\"\n"
-  "{\n"
-  "  GtkToggleButton::child-displacement-x = 0\n"
-  "  GtkToggleButton::child-displacement-y = 0\n"
-  "}\n"
-  "widget \"*\" style \"check-button-style\"";
-
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
@@ -289,7 +281,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
 
-  gtk_rc_parse_string (display_rc_style);
+  gtk_widget_class_set_css_name (widget_class, "GimpDisplayShell");
 }
 
 static void

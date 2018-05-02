@@ -56,6 +56,12 @@ GimpColorScales spinbutton entry {
     min-height: 0;
 }
 
+GimpDisplayShell button {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+
 GimpDock {
     font-size: smaller;
 }
