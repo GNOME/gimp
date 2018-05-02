@@ -325,6 +325,13 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee-zoom.exe"
 ;old Python
 Type: filesandordirs; Name: "{app}\Python\*"
+;remove incompatible version shipped with 2.8
+Type: files; Name: "{app}\bin\zlib1.dll"
+Type: files; Name: "{app}\32\bin\zlib1.dll"
+;obsolete plugins from gimp 2.8
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
