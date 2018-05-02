@@ -332,6 +332,7 @@ Type: files; Name: "{app}\32\bin\zlib1.dll"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
+Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
