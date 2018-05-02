@@ -465,7 +465,7 @@ splash_average_text_area (GimpSplash *splash,
 
     }
 
-  color->red = color->green = color->blue = (luminance << 8 | luminance) / 255.0;
+  color->red = color->green = color->blue = luminance / 255.0;
   color->alpha = 1.0;
 }
 
