@@ -149,7 +149,7 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *frame;
   GtkWidget                 *hbox;
   GtkWidget                 *vbox;
-  GtkWidget                 *table;
+  GtkWidget                 *grid;
   GtkWidget                 *label;
   GtkAdjustment             *adjustment;
   GtkWidget                 *width;
@@ -177,12 +177,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   width = gtk_spin_button_new (adjustment, 1.0, 2);
@@ -198,20 +197,18 @@ gimp_template_editor_constructed (GObject *object)
   label = gtk_label_new_with_mnemonic (_("_Width:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), width);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("H_eight:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), height);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   /*  create the sizeentry which keeps it all together  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
   gtk_widget_show (hbox);
 
   private->size_se = gimp_size_entry_new (0,
@@ -240,7 +237,7 @@ gimp_template_editor_constructed (GObject *object)
                                  gimp_template_get_resolution_y (template));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 2, 1);
   gtk_widget_show (hbox);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -303,12 +300,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (9, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   xres = gtk_spin_button_new (adjustment, 1.0, 2);
@@ -324,20 +320,18 @@ gimp_template_editor_constructed (GObject *object)
   label = gtk_label_new_with_mnemonic (_("_X resolution:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), xres);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new_with_mnemonic (_("_Y resolution:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), yres);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 2);
   gtk_widget_show (hbox);
 
   private->resolution_se =
@@ -393,17 +387,17 @@ gimp_template_editor_constructed (GObject *object)
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "image-type",
                                         GIMP_RGB, GIMP_GRAY);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Color _space:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Color _space:"), 0.0, 0.5,
+                            combo, 1);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "component-type",
                                         GIMP_COMPONENT_TYPE_U8,
                                         GIMP_COMPONENT_TYPE_FLOAT);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Precision:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Precision:"), 0.0, 0.5,
+                            combo, 1);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_template_editor_precision_changed),
@@ -413,16 +407,16 @@ gimp_template_editor_constructed (GObject *object)
                                            "linear",
                                            _("Linear light"),
                                            _("Perceptual gamma (sRGB)"));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Gamma:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Gamma:"), 0.0, 0.5,
+                            combo, 1);
 
   toggle = gimp_prop_check_button_new (G_OBJECT (template),
                                        "color-managed",
                                        _("Color _manage this image"));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             NULL, 0.0, 0.5,
-                             toggle, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            NULL, 0.0, 0.5,
+                            toggle, 1);
 
   private->profile_combo =
     gimp_prop_profile_combo_box_new (G_OBJECT (template),
@@ -431,16 +425,16 @@ gimp_template_editor_constructed (GObject *object)
                                      _("Choose A Color Profile"),
                                      G_OBJECT (private->gimp->config),
                                      "color-profile-path");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Co_lor profile:"), 0.0, 0.5,
-                             private->profile_combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Co_lor profile:"), 0.0, 0.5,
+                            private->profile_combo, 1);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Fill with:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Fill with:"), 0.0, 0.5,
+                            combo, 1);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -448,9 +442,9 @@ gimp_template_editor_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     _("Comme_nt:"), 0.0, 0.0,
-                                     scrolled_window, 1, FALSE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    _("Comme_nt:"), 0.0, 0.0,
+                                    scrolled_window, 1);
 
   text_buffer = gimp_prop_text_buffer_new (G_OBJECT (template),
                                            "comment", MAX_COMMENT_LENGTH);
@@ -550,28 +544,28 @@ gimp_template_editor_new (GimpTemplate *template,
 
   if (edit_template)
     {
-      GtkWidget   *table;
+      GtkWidget   *grid;
       GtkWidget   *entry;
       GtkWidget   *icon_picker;
 
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
-      gtk_box_reorder_child (GTK_BOX (editor), table, 0);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_box_pack_start (GTK_BOX (editor), grid, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (editor), grid, 0);
+      gtk_widget_show (grid);
 
       entry = gimp_prop_entry_new (G_OBJECT (private->template), "name", 128);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("_Name:"), 1.0, 0.5,
-                                 entry, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("_Name:"), 1.0, 0.5,
+                                entry, 1);
 
       icon_picker = gimp_prop_icon_picker_new (GIMP_VIEWABLE (private->template),
                                                gimp);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("_Icon:"), 1.0, 0.5,
-                                 icon_picker, 1, TRUE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("_Icon:"), 1.0, 0.5,
+                                icon_picker, 1);
     }
 
   return GTK_WIDGET (editor);
