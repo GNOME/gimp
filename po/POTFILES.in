@@ -513,7 +513,6 @@ app/widgets/gimpcolorframe.c
 app/widgets/gimpcolorhistory.c
 app/widgets/gimpcolormapeditor.c
 app/widgets/gimpcolorselectorpalette.c
-app/widgets/gimpcontainergridview.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerinfo.c
