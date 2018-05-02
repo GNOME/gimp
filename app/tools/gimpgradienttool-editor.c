@@ -1304,12 +1304,12 @@ gimp_gradient_tool_editor_init_endpoint_gui (GimpGradientTool *gradient_tool)
   se                         = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                                     TRUE, TRUE, FALSE, 6,
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_row_spacings (GTK_TABLE (se), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (se), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (se), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (se), 2);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (se), spinbutton, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (se), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gtk_table_attach (GTK_TABLE (table), se, 1, 2, row, row + 2,

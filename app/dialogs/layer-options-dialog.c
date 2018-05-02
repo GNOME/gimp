@@ -125,7 +125,7 @@ layer_options_dialog_new (GimpImage                *image,
 {
   LayerOptionsDialog   *private;
   GtkWidget            *dialog;
-  GtkWidget            *table;
+  GtkWidget            *grid;
   GtkListStore         *space_model;
   GtkWidget            *combo;
   GtkWidget            *scale;
@@ -242,7 +242,7 @@ layer_options_dialog_new (GimpImage                *image,
                     G_CALLBACK (gimp_double_adjustment_update),
                     &private->opacity);
 
-  table = item_options_dialog_get_table (dialog, &row);
+  grid = item_options_dialog_get_grid (dialog, &row);
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -251,14 +251,12 @@ layer_options_dialog_new (GimpImage                *image,
       /*  The size labels  */
       label = gtk_label_new (_("Width:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Height:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, row + 1, row + 2,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
       gtk_widget_show (label);
 
       /*  The size sizeentry  */
@@ -277,8 +275,7 @@ layer_options_dialog_new (GimpImage                *image,
       gtk_grid_attach (GTK_GRID (private->size_se), spinbutton, 1, 0, 1, 1);
       gtk_widget_show (spinbutton);
 
-      gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, row, row + 2,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), private->size_se, 1, row, 1, 2);
       gtk_widget_show (private->size_se);
 
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se),
@@ -312,14 +309,12 @@ layer_options_dialog_new (GimpImage                *image,
   /*  The offset labels  */
   label = gtk_label_new (_("Offset X:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, row, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Offset Y:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row + 1, row + 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, row + 1, 1, 1);
   gtk_widget_show (label);
 
   /*  The offset sizeentry  */
@@ -338,8 +333,7 @@ layer_options_dialog_new (GimpImage                *image,
   gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
-  gtk_table_attach (GTK_TABLE (table), private->offset_se, 1, 2, row, row + 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), private->offset_se, 1, row, 1, 2);
   gtk_widget_show (private->offset_se);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
@@ -377,18 +371,13 @@ layer_options_dialog_new (GimpImage                *image,
 
   row += 2;
 
-  /*  set the spacings after adding widgets or GtkTable will warn  */
-  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
-  if (! layer)
-    gtk_table_set_row_spacing (GTK_TABLE (table), 5, 4);
-
   if (! layer)
     {
       /*  The fill type  */
       combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                 _("_Fill with:"), 0.0, 0.5,
-                                 combo, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                _("_Fill with:"), 0.0, 0.5,
+                                combo, 1);
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                                   private->fill_type,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
