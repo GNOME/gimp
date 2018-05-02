@@ -470,7 +470,6 @@ tile_dialog (gint32 image_ID,
                                     1, GIMP_MAX_IMAGE_SIZE,
                                     0, height);
   gtk_container_add (GTK_CONTAINER (frame), sizeentry);
-  gtk_table_set_row_spacing (GTK_TABLE (sizeentry), 1, 6);
   gtk_widget_show (sizeentry);
 
   chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));

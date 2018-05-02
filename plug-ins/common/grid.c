@@ -713,9 +713,7 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
-  gtk_table_set_row_spacing (GTK_TABLE (width), 0, 6);
-  gtk_table_set_col_spacings (GTK_TABLE (width), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (width), 2, 12);
+  gtk_grid_set_column_spacing (GTK_GRID (width), 6);
 
   /*  initialize the values  */
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (width), 0, grid_cfg.hwidth);
@@ -741,7 +739,7 @@ dialog (gint32        image_ID,
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (grid_cfg.hwidth == grid_cfg.vwidth)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (width), chain_button, 1, 3, 2, 3);
+  gtk_grid_attach (GTK_GRID (width), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
   /* connect to the 'value-changed' signal because we have to take care
@@ -787,8 +785,7 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
-  gtk_table_set_col_spacings (GTK_TABLE (space), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (space), 2, 12);
+  gtk_grid_set_column_spacing (GTK_GRID (space), 6);
 
   /*  initialize the values  */
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 0, grid_cfg.hspace);
@@ -804,7 +801,7 @@ dialog (gint32        image_ID,
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (grid_cfg.hspace == grid_cfg.vspace)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (space), chain_button, 1, 3, 2, 3);
+  gtk_grid_attach (GTK_GRID (space), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
   /* connect to the 'value-changed' and "unit-changed" signals because
@@ -854,8 +851,7 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
                                          MAX (drawable->width,
                                               drawable->height));
-  gtk_table_set_col_spacings (GTK_TABLE (offset), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (offset), 2, 12);
+  gtk_grid_set_column_spacing (GTK_GRID (offset), 6);
 
   /*  initialize the values  */
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 0, grid_cfg.hoffset);
@@ -869,7 +865,7 @@ dialog (gint32        image_ID,
 
   /*  this is a weird hack: we put a table into the offset table  */
   table = gtk_table_new (3, 3, FALSE);
-  gtk_table_attach_defaults (GTK_TABLE (offset), table, 1, 4, 2, 3);
+  gtk_grid_attach (GTK_GRID (offset), table, 1, 2, 3, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 10);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
 

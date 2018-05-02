@@ -600,7 +600,6 @@ load_dialog (const gchar *filename)
   size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                                TRUE, FALSE, FALSE, 10,
                                                GIMP_SIZE_ENTRY_UPDATE_SIZE));
-  gtk_table_set_col_spacing (GTK_TABLE (size), 1, 6);
 
   gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
@@ -700,7 +699,6 @@ load_dialog (const gchar *filename)
   res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
                              FALSE, FALSE, FALSE, 10,
                              GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-  gtk_table_set_col_spacing (GTK_TABLE (res), 1, 6);
 
   gtk_table_attach (GTK_TABLE (table), res, 1, 2, 4, 5,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
