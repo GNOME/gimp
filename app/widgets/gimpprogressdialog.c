@@ -219,6 +219,12 @@ gimp_progress_dialog_progress_pulse (GimpProgress *progress)
 GtkWidget *
 gimp_progress_dialog_new (void)
 {
+  gboolean use_header_bar;
+
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   return g_object_new (GIMP_TYPE_PROGRESS_DIALOG,
                        "title",             _("Progress"),
                        "role",              "progress",
@@ -227,5 +233,6 @@ gimp_progress_dialog_new (void)
                        "resizable",         FALSE,
                        "focus-on-map",      FALSE,
                        "window-position",   GTK_WIN_POS_CENTER,
+                       "use-header-bar",    use_header_bar,
                        NULL);
 }

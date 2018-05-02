@@ -124,11 +124,18 @@ gimp_error_dialog_message_destroy (gpointer data)
 GtkWidget *
 gimp_error_dialog_new (const gchar *title)
 {
+  gboolean use_header_bar;
+
   g_return_val_if_fail (title != NULL, NULL);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   return g_object_new (GIMP_TYPE_ERROR_DIALOG,
-                       "title", title,
-                       NULL);
+                       "title",          title,
+                       "use-header-bar", use_header_bar,
+                        NULL);
 }
 
 void

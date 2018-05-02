@@ -220,6 +220,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 {
   GimpColorDialog *dialog;
   const gchar     *role;
+  gboolean         use_header_bar;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -232,15 +233,20 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   role = dialog_identifier ? dialog_identifier : "gimp-color-selector";
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_COLOR_DIALOG,
-                         "title",       title,
-                         "role",        role,
-                         "help-func",   gimp_color_dialog_help_func,
-                         "help-id",     GIMP_HELP_COLOR_DIALOG,
-                         "icon-name",   icon_name,
-                         "description", desc,
-                         "context",     context,
-                         "parent",      parent,
+                         "title",          title,
+                         "role",           role,
+                         "help-func",      gimp_color_dialog_help_func,
+                         "help-id",        GIMP_HELP_COLOR_DIALOG,
+                         "icon-name",      icon_name,
+                         "description",    desc,
+                         "context",        context,
+                         "parent",         parent,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   if (viewable)
