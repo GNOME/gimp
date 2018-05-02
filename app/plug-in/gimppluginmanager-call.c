@@ -256,9 +256,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
         {
           plug_in->ext_main_loop = g_main_loop_new (NULL, FALSE);
 
-          gimp_threads_leave (manager->gimp);
           g_main_loop_run (plug_in->ext_main_loop);
-          gimp_threads_enter (manager->gimp);
 
           /*  main_loop is quit in gimp_plug_in_handle_extension_ack()  */
 
@@ -274,9 +272,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
-          gimp_threads_leave (manager->gimp);
           g_main_loop_run (proc_frame->main_loop);
-          gimp_threads_enter (manager->gimp);
 
           /*  main_loop is quit in gimp_plug_in_handle_proc_return()  */
 
