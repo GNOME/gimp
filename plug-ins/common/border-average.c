@@ -414,8 +414,6 @@ borderaverage_dialog (gint32        image_ID,
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
                               (gdouble) borderaverage_thickness);
   g_signal_connect (size_entry, "value-changed",

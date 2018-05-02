@@ -387,8 +387,6 @@ checkerboard_dialog (gint32        image_ID,
   size_entry = gimp_size_entry_new (1, unit, "%a",
                                     TRUE, TRUE, FALSE, SPIN_BUTTON_WIDTH,
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 1, 4);
   gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
   gtk_widget_show (size_entry);
 

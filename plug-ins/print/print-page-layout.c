@@ -266,16 +266,14 @@ print_size_frame (PrintData    *data,
 
   info.size_entry = GIMP_SIZE_ENTRY (entry);
 
-  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 6);
+  gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), height, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_TABLE (entry), height, 1, 0, 1, 1);
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
@@ -310,16 +308,14 @@ print_size_frame (PrintData    *data,
 
   info.resolution_entry = GIMP_SIZE_ENTRY (entry);
 
-  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 0, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 6);
+  gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), height, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (entry), height, 1, 0, 1, 1);
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
@@ -352,8 +348,7 @@ print_size_frame (PrintData    *data,
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   if (ABS (data->xres - data->yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach (GTK_TABLE (entry), chain, 2, 3, 0, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (entry), chain, 2, 0, 1, 2);
   gtk_widget_show (chain);
 
   info.chain = GIMP_CHAIN_BUTTON (chain);
