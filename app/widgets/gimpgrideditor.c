@@ -188,8 +188,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE);
 
-  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (sizeentry), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (sizeentry), 2);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
                                 _("Horizontal"), 0, 1, 0.0);
@@ -223,8 +223,8 @@ gimp_grid_editor_constructed (GObject *object)
                                          editor->yresolution,
                                          TRUE);
 
-  gtk_table_set_col_spacings (GTK_TABLE (sizeentry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (sizeentry), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (sizeentry), 2);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
                                 _("Horizontal"), 0, 1, 0.0);

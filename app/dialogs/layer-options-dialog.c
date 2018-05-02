@@ -271,13 +271,10 @@ layer_options_dialog_new (GimpImage                *image,
       private->size_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                               TRUE, TRUE, FALSE, 10,
                                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
-      gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 4);
-      gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
 
       gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                                  GTK_SPIN_BUTTON (spinbutton), NULL);
-      gtk_table_attach_defaults (GTK_TABLE (private->size_se), spinbutton,
-                                 1, 2, 0, 1);
+      gtk_grid_attach (GTK_GRID (private->size_se), spinbutton, 1, 0, 1, 1);
       gtk_widget_show (spinbutton);
 
       gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, row, row + 2,
@@ -335,13 +332,10 @@ layer_options_dialog_new (GimpImage                *image,
   private->offset_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
                                             TRUE, TRUE, FALSE, 10,
                                             GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (private->offset_se), 0, 2);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->offset_se), spinbutton,
-                             1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (private->offset_se), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gtk_table_attach (GTK_TABLE (table), private->offset_se, 1, 2, row, row + 2,

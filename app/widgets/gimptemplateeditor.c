@@ -220,20 +220,17 @@ gimp_template_editor_constructed (GObject *object)
                                           TRUE, FALSE, FALSE, SB_WIDTH,
                                           GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
-  gtk_table_set_row_spacing (GTK_TABLE (private->size_se), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->size_se), 1, 6);
-
   gtk_box_pack_start (GTK_BOX (hbox), private->size_se, FALSE, FALSE, 0);
   gtk_widget_show (private->size_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->size_se), height, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (private->size_se), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->size_se),
                              GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->size_se), width, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (private->size_se), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
   gimp_prop_coordinates_connect (G_OBJECT (template),
@@ -350,23 +347,17 @@ gimp_template_editor_constructed (GObject *object)
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
-  gtk_table_set_row_spacing (GTK_TABLE (private->resolution_se), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 2, 2);
-
   gtk_box_pack_start (GTK_BOX (hbox), private->resolution_se, FALSE, FALSE, 0);
   gtk_widget_show (private->resolution_se);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (yres), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->resolution_se), yres,
-                             0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (private->resolution_se), yres, 0, 1, 1, 1);
   gtk_widget_show (yres);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->resolution_se),
                              GTK_SPIN_BUTTON (xres), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->resolution_se), xres,
-                             0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (private->resolution_se), xres, 0, 0, 1, 1);
   gtk_widget_show (xres);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
@@ -378,8 +369,7 @@ gimp_template_editor_constructed (GObject *object)
 
   /*  the resolution chainbutton  */
   private->chain_button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gtk_table_attach_defaults (GTK_TABLE (private->resolution_se),
-                             private->chain_button, 1, 2, 0, 2);
+  gtk_grid_attach (GTK_GRID (private->resolution_se), private->chain_button, 1, 0, 1, 2);
   gtk_widget_show (private->chain_button);
 
   gimp_prop_coordinates_connect (G_OBJECT (template),

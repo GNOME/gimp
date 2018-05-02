@@ -2570,8 +2570,8 @@ prefs_dialog_new (Gimp       *gimp,
     g_free (pixels_per_unit);
   }
 
-  gtk_table_set_col_spacings (GTK_TABLE (entry), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (entry), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                 _("Horizontal"), 0, 1, 0.0);

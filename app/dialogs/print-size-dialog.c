@@ -190,20 +190,17 @@ print_size_dialog_new (GimpImage              *image,
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
-  gtk_table_set_row_spacing (GTK_TABLE (entry), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 6);
-
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), height, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), width, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
@@ -256,21 +253,17 @@ print_size_dialog_new (GimpImage              *image,
                                GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   private->resolution_entry = GIMP_SIZE_ENTRY (entry);
 
-  gtk_table_set_row_spacing (GTK_TABLE (entry), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 2, 2);
-
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), height, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (entry), height, 0, 1, 1, 1);
   gtk_widget_show (height);
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (width), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (entry), width, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (entry), width, 0, 0, 1, 1);
   gtk_widget_show (width);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
@@ -286,7 +279,7 @@ print_size_dialog_new (GimpImage              *image,
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   if (ABS (private->xres - private->yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
+  gtk_grid_attach (GTK_GRID (entry), chain, 1, 0, 1, 2);
   gtk_widget_show (chain);
 
   private->chain = GIMP_CHAIN_BUTTON (chain);

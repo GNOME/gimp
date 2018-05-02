@@ -2861,7 +2861,6 @@ gimp_prop_size_entry_new (GObject                   *config,
                                gimp_prop_size_entry_num_chars (lower, upper) + 1 +
                                gimp_unit_get_scaled_digits (unit_value, resolution),
                                update_policy);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
 
   set_param_spec (NULL,
                   gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
@@ -3132,7 +3131,7 @@ gimp_prop_coordinates_new (GObject                   *config,
   if (has_chainbutton)
     {
       chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-      gtk_table_attach_defaults (GTK_TABLE (entry), chainbutton, 1, 3, 3, 4);
+      gtk_grid_attach (GTK_GRID (entry), chainbutton, 1, 3, 2, 1);
       gtk_widget_show (chainbutton);
     }
 

@@ -178,14 +178,9 @@ offset_dialog_new (GimpDrawable       *drawable,
                                         TRUE, TRUE, FALSE, 10,
                                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
-  gtk_table_set_col_spacing (GTK_TABLE (private->off_se), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (private->off_se), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (private->off_se), 0, 2);
-
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->off_se),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (private->off_se), spinbutton,
-                             1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (private->off_se), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (private->off_se),
