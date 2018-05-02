@@ -56,8 +56,8 @@ struct _ItemOptionsDialog
   gpointer                 user_data;
 
   GtkWidget               *left_vbox;
-  GtkWidget               *left_table;
-  gint                     table_row;
+  GtkWidget               *left_grid;
+  gint                     grid_row;
   GtkWidget               *name_entry;
   GtkWidget               *right_frame;
   GtkWidget               *right_vbox;
@@ -105,7 +105,7 @@ item_options_dialog_new (GimpImage               *image,
   GtkWidget         *dialog;
   GimpViewable      *viewable;
   GtkWidget         *main_hbox;
-  GtkWidget         *table;
+  GtkWidget         *grid;
   GtkWidget         *button;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -171,11 +171,11 @@ item_options_dialog_new (GimpImage               *image,
   gtk_box_pack_start (GTK_BOX (main_hbox), private->left_vbox, TRUE, TRUE, 0);
   gtk_widget_show (private->left_vbox);
 
-  private->left_table = table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (private->left_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  private->left_grid = grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (private->left_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*  The name label and entry  */
   if (name_label)
@@ -189,14 +189,14 @@ item_options_dialog_new (GimpImage               *image,
       private->name_entry = gtk_entry_new ();
       gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
       gtk_entry_set_text (GTK_ENTRY (private->name_entry), item_name);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, private->table_row++,
-                                 name_label, 0.0, 0.5,
-                                 private->name_entry, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, private->grid_row++,
+                                name_label, 0.0, 0.5,
+                                private->name_entry, 1);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, private->table_row++,
-                                 _("Color tag:"), 0.0, 0.5,
-                                 hbox, 1, TRUE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, private->grid_row++,
+                                _("Color tag:"), 0.0, 0.5,
+                                hbox, 1);
 
       radio_box = gimp_enum_radio_box_new (GIMP_TYPE_COLOR_TAG,
                                            G_CALLBACK (gimp_radio_button_update),
@@ -320,8 +320,8 @@ item_options_dialog_get_vbox (GtkWidget *dialog)
 }
 
 GtkWidget *
-item_options_dialog_get_table (GtkWidget *dialog,
-                               gint      *next_row)
+item_options_dialog_get_grid (GtkWidget *dialog,
+                              gint      *next_row)
 {
   ItemOptionsDialog *private;
 
@@ -333,9 +333,9 @@ item_options_dialog_get_table (GtkWidget *dialog,
 
   g_return_val_if_fail (private != NULL, NULL);
 
-  *next_row = private->table_row;
+  *next_row = private->grid_row;
 
-  return private->left_table;
+  return private->left_grid;
 }
 
 GtkWidget *
@@ -383,10 +383,10 @@ item_options_dialog_add_widget (GtkWidget   *dialog,
 
   g_return_if_fail (private != NULL);
 
-  gimp_table_attach_aligned (GTK_TABLE (private->left_table),
-                             0, private->table_row++,
-                             label, 0.0, 0.5,
-                             widget, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (private->left_grid),
+                            0, private->grid_row++,
+                            label, 0.0, 0.5,
+                            widget, 1);
 }
 
 GtkWidget *
