@@ -4369,7 +4369,7 @@ gimp_image_remove_layer (GimpImage *image,
         {
           g_warning ("%s() was called from an undo function while the layer "
                      "had a floating selection. Please report this at "
-                     "http://www.gimp.org/bugs/", G_STRFUNC);
+                     "https://www.gimp.org/bugs/", G_STRFUNC);
           return;
         }
 
@@ -4589,7 +4589,7 @@ gimp_image_remove_channel (GimpImage   *image,
         {
           g_warning ("%s() was called from an undo function while the channel "
                      "had a floating selection. Please report this at "
-                     "http://www.gimp.org/bugs/", G_STRFUNC);
+                     "https://www.gimp.org/bugs/", G_STRFUNC);
           return;
         }
 

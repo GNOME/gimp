@@ -600,7 +600,7 @@ gimp_container_add (GimpContainer *container,
   if (n_children == container->priv->n_children)
     {
       g_warning ("%s: GimpContainer::add() implementation did not "
-                 "chain up. Please report this at http://www.gimp.org/bugs/",
+                 "chain up. Please report this at https://www.gimp.org/bugs/",
                  G_STRFUNC);
 
       container->priv->n_children++;

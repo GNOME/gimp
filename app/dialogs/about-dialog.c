@@ -120,7 +120,7 @@ about_dialog_create (GimpContext *context)
                              "license",            GIMP_LICENSE,
                              "wrap-license",       TRUE,
                              "logo",               pixbuf,
-                             "website",            "http://www.gimp.org/",
+                             "website",            "https://www.gimp.org/",
                              "website-label",      _("Visit the GIMP website"),
                              "authors",            authors,
                              "artists",            artists,
