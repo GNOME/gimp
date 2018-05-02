@@ -375,7 +375,7 @@ gimp_display_shell_constructed (GObject *object)
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
   GtkWidget             *lower_hbox;
-  GtkWidget             *inner_table;
+  GtkWidget             *inner_grid;
   GtkWidget             *gtk_image;
   GtkAction             *action;
   gint                   image_width;
@@ -449,7 +449,7 @@ gimp_display_shell_constructed (GObject *object)
    *            |
    *            +-- upper_hbox
    *            |      |
-   *            |      +-- inner_table
+   *            |      +-- inner_grid
    *            |      |      |
    *            |      |      +-- origin
    *            |      |      +-- hruler
@@ -483,17 +483,15 @@ gimp_display_shell_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
   gtk_widget_show (main_vbox);
 
-  /*  a hbox for the inner_table and the vertical scrollbar  */
+  /*  a hbox for the inner_grid and the vertical scrollbar  */
   upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
   /*  the table containing origin, rulers and the canvas  */
-  inner_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (inner_table), 0, 0);
-  gtk_table_set_row_spacing (GTK_TABLE (inner_table), 0, 0);
-  gtk_box_pack_start (GTK_BOX (upper_hbox), inner_table, TRUE, TRUE, 0);
-  gtk_widget_show (inner_table);
+  inner_grid = gtk_grid_new ();
+  gtk_box_pack_start (GTK_BOX (upper_hbox), inner_grid, TRUE, TRUE, 0);
+  gtk_widget_show (inner_grid);
 
   /*  the vbox containing the color button and the vertical scrollbar  */
   right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
@@ -521,7 +519,7 @@ gimp_display_shell_constructed (GObject *object)
   shell->vsb = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, shell->vsbdata);
   gtk_widget_set_can_focus (shell->vsb, FALSE);
 
-  /*  create the contents of the inner_table  ********************************/
+  /*  create the contents of the inner_grif * ********************************/
 
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
@@ -716,16 +714,18 @@ gimp_display_shell_constructed (GObject *object)
 
   /*  pack all the widgets  **************************************************/
 
-  /*  fill the inner_table  */
-  gtk_table_attach (GTK_TABLE (inner_table), shell->origin, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (inner_table), shell->hrule, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (inner_table), shell->vrule, 0, 1, 1, 2,
-                    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_table_attach (GTK_TABLE (inner_table), shell->canvas, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+  /*  fill the inner_grid  */
+  gtk_grid_attach (GTK_GRID (inner_grid), shell->origin, 0, 0, 1, 1);
+
+  gtk_widget_set_hexpand (shell->hrule, TRUE);
+  gtk_grid_attach (GTK_GRID (inner_grid), shell->hrule, 1, 0, 1, 1);
+
+  gtk_widget_set_vexpand (shell->vrule, TRUE);
+  gtk_grid_attach (GTK_GRID (inner_grid), shell->vrule, 0, 1, 1, 1);
+
+  gtk_widget_set_hexpand (shell->canvas, TRUE);
+  gtk_widget_set_vexpand (shell->canvas, TRUE);
+  gtk_grid_attach (GTK_GRID (inner_grid), shell->canvas, 1, 1, 1, 1);
 
   /*  fill the right_vbox  */
   gtk_box_pack_start (GTK_BOX (right_vbox),
