@@ -50,7 +50,7 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                              const gchar *icon_name)
 {
   GtkWidget    *dialog;
-  GtkWidget    *table;
+  GtkWidget    *grid;
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *ruler;
@@ -90,39 +90,35 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
   ruler_width  = rect.width  - 300 - (rect.width  % 100);
   ruler_height = rect.height - 300 - (rect.height % 100);
 
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
   if (icon_name)
     {
       GtkWidget *image = gtk_image_new_from_icon_name (icon_name,
                                                        GTK_ICON_SIZE_DIALOG);
 
-      gtk_table_attach (GTK_TABLE (table), image, 0, 1, 0, 1,
-                        GTK_SHRINK, GTK_SHRINK, 4, 4);
+      gtk_grid_attach (GTK_GRID (grid), image, 0, 0, 1, 1);
       gtk_widget_show (image);
     }
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_width, ruler_width);
-  gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 2, 1);
   gtk_widget_show (ruler);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_height, ruler_height);
-  gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 2);
   gtk_widget_show (ruler);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 1, 2,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), vbox, 1, 1, 1, 1);
   gtk_widget_show (vbox);
 
   label =
