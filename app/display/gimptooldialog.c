@@ -114,6 +114,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   GtkWidget *dialog;
   gchar     *identifier;
   va_list    args;
+  gboolean   use_header_bar;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
@@ -129,14 +130,19 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   if (! icon_name)
     icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
-                         "title",        title,
-                         "role",         gimp_object_get_name (tool_info),
-                         "description",  description,
-                         "icon-name",    icon_name,
-                         "help-func",    gimp_standard_help_func,
-                         "help-id",      help_id,
-                         NULL);
+                         "title",          title,
+                         "role",           gimp_object_get_name (tool_info),
+                         "description",    description,
+                         "icon-name",      icon_name,
+                         "help-func",      gimp_standard_help_func,
+                         "help-id",        help_id,
+                         "use-header-bar", use_header_bar,
+                          NULL);
 
   va_start (args, help_id);
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
