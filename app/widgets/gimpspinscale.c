@@ -804,6 +804,9 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
       private->start_x = x;
       private->start_value = gtk_adjustment_get_value (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget)));
 
+      private->start_pointer_x = floor (event->x_root);
+      private->start_pointer_y = floor (event->y_root);
+
       return TRUE;
 
     default:
