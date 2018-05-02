@@ -177,7 +177,7 @@ gimp_procedure_action_connect_proxy (GtkAction *action,
 
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  if (GTK_IS_IMAGE_MENU_ITEM (proxy) && procedure_action->procedure)
+  if (GTK_IS_MENU_ITEM (proxy) && procedure_action->procedure)
     {
       GdkPixbuf *pixbuf;
 
@@ -205,7 +205,7 @@ gimp_procedure_action_connect_proxy (GtkAction *action,
             }
 
           image = gtk_image_new_from_pixbuf (pixbuf);
-          gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), image);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), image);
           g_object_unref (pixbuf);
         }
     }

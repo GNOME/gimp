@@ -106,7 +106,6 @@ static void      gimp_settings_box_get_property  (GObject           *object,
 
 static GtkWidget *
                  gimp_settings_box_menu_item_add (GimpSettingsBox   *box,
-                                                  const gchar       *icon_name,
                                                   const gchar       *label,
                                                   GCallback          callback);
 static gboolean
@@ -355,20 +354,17 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_ICON_DOCUMENT_OPEN,
                                      _("_Import Current Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_ICON_DOCUMENT_SAVE,
                                      _("_Export Current Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
-  gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
+  gimp_settings_box_menu_item_add (box, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   GIMP_ICON_EDIT,
                                    _("_Manage Saved Presets..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }
@@ -514,7 +510,6 @@ gimp_settings_box_get_property (GObject    *object,
 
 static GtkWidget *
 gimp_settings_box_menu_item_add (GimpSettingsBox *box,
-                                 const gchar     *icon_name,
                                  const gchar     *label,
                                  GCallback        callback)
 {
@@ -523,11 +518,7 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
 
   if (label)
     {
-      GtkWidget *image;
-
-      item = gtk_image_menu_item_new_with_mnemonic (label);
-      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-      gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+      item = gtk_menu_item_new_with_mnemonic (label);
 
       g_signal_connect (item, "activate",
                         callback,

@@ -50,6 +50,7 @@
 #include "gimpstringaction.h"
 #include "gimpuimanager.h"
 #include "gimpview.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -538,11 +539,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
       {
         GtkWidget *image = gimp_dockable_get_icon (dockable,
                                                    GTK_ICON_SIZE_MENU);
-
-        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
-                                       image);
-        gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
-                                                   TRUE);
+        gimp_menu_item_set_image (GTK_MENU_ITEM (parent_menu_widget), image);
         gtk_widget_show (image);
       }
 
@@ -1645,16 +1642,12 @@ gimp_dockbook_tab_timeout (GimpDockbook *dockbook)
 {
   gint page_num;
 
-  GDK_THREADS_ENTER ();
-
   page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
                                     GTK_WIDGET (dockbook->p->tab_hover_dockable));
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
 
   dockbook->p->tab_hover_timeout  = 0;
   dockbook->p->tab_hover_dockable = NULL;
-
-  GDK_THREADS_LEAVE ();
 
   return FALSE;
 }
