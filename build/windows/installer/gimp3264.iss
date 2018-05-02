@@ -146,6 +146,7 @@ SolidCompression=yes
 LZMAUseSeparateProcess=yes
 LZMANumFastBytes=273
 LZMADictionarySize=524288
+#endif //NOCOMPRESSION
 
 #if !defined(REVISION)
 OutputBaseFileName=gimp-{#VERSION}-setup
@@ -156,8 +157,6 @@ OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
 ;SignTool=Default
 SignedUninstaller=yes
 SignedUninstallerDir=_Uninst
-
-#endif //NOCOMPRESSION
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
