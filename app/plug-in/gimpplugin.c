@@ -218,9 +218,10 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gint          my_read[2];
   gint          my_write[2];
   gchar       **envp;
-  const gchar  *args[9];
+  const gchar  *args[10];
   gchar       **argv;
   gint          argc;
+  gchar         protocol_version[8];
   gchar        *interp, *interp_arg;
   gchar        *his_read_fd, *his_write_fd;
   const gchar  *mode;
@@ -327,8 +328,12 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   if (interp_arg)
     args[argc++] = interp_arg;
 
+  g_snprintf (protocol_version, sizeof (protocol_version),
+              "%d", GIMP_PROTOCOL_VERSION);
+
   args[argc++] = progname;
   args[argc++] = "-gimp";
+  args[argc++] = protocol_version;
   args[argc++] = his_read_fd;
   args[argc++] = his_write_fd;
   args[argc++] = mode;

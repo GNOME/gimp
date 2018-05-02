@@ -129,7 +129,6 @@ union _GimpParamData
   gchar           **d_stringarray;
   GimpRGB          *d_colorarray;
   GimpRGB           d_color;
-  GimpParamRegion   d_region; /* deprecated */
   gint32            d_display;
   gint32            d_image;
   gint32            d_item;
@@ -139,7 +138,6 @@ union _GimpParamData
   gint32            d_drawable;
   gint32            d_selection;
   gint32            d_boundary;
-  gint32            d_path; /* deprecated */
   gint32            d_vectors;
   gint32            d_unit;
   GimpParasite      d_parasite;
