@@ -168,11 +168,11 @@ Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
 Name: "el"; MessagesFile: "compiler:Languages\Greek.isl,lang\el.setup.isl"
 ;Name: "eo"; MessagesFile: "compiler:Languages\Unofficial\Esperanto.isl,lang\eo.setup.isl"
 Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\es.setup.isl"
-Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
+;;Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
 Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\fr.setup.isl"
 Name: "hu"; MessagesFile: "compiler:Languages\Hungarian.isl,lang\hu.setup.isl"
-Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
-Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
+;;Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
+;;Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
 ;Name: "lv"; MessagesFile: "compiler:Languages\Unofficial\Latvian.isl,lang\lv.setup.isl"
 Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\nl.setup.isl"
@@ -180,10 +180,10 @@ Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
-Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
+;;Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
-Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
-Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
+;;Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
+;;Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
 [Types]
@@ -196,7 +196,13 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
 Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
 
-Name: wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning
+Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
+Name: deps32\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('32')
+Name: deps32\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('32')
+Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
+Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
+
+Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
 
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 
@@ -238,27 +244,26 @@ Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp6
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-;Source: "{#GIMP_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-;Source: "{#GIMP_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#GIMP_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;configure gimp with --enable-bundled-mypaint-brushes for the correct path to
 ;be picked by gimp
-Source: "{#GIMP_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#GIMP_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;ghostscript TODO: detect version automatically
-Source: "{#GIMP_DIR32}\share\ghostscript\8.71\lib\*.*"; DestDir: "{app}\share\ghostscript\8.71\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\share\ghostscript\8.71\Resource"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\ghostscript\9.21\lib\*.*"; DestDir: "{app}\share\ghostscript\9.21\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32-on-64bit
 #include "32on64.isi"
@@ -266,8 +271,8 @@ Source: "{#GIMP_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\sha
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;special case due to MS-Windows engine
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;python scripts
 #ifdef PYTHON
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
@@ -291,8 +296,8 @@ Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\p
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#GIMP_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete; Check: BadSysDLL('zlib1.dll',32)
-Source: "{#GIMP_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete; Check: BadSysDLL('zlib1.dll',64)
 
 ;overridden configuration files
 #include "configoverride.isi"

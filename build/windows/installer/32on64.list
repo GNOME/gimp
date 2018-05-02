@@ -6,4 +6,6 @@ lib\gtk-2.0\modules\
 share\themes\
 bin\gspawn*.exe
 bin\*.dll
+!GIMP
+bin\*.dll
 !end
