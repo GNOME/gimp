@@ -374,6 +374,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     monitor,
                                     NULL /*ui_manager*/,
+                                    GTK_WIDGET (dock_columns),
                                     (contains_toolbox ?
                                      "gimp-toolbox-window" :
                                      "gimp-dock-window"),

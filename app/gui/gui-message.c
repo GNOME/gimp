@@ -457,6 +457,7 @@ global_error_dialog (void)
   return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                          monitor,
                                          NULL /*ui_manager*/,
+                                         NULL,
                                          "gimp-error-dialog", -1,
                                          FALSE);
 }
@@ -470,6 +471,7 @@ global_critical_dialog (void)
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            monitor,
                                            NULL /*ui_manager*/,
+                                           NULL,
                                            "gimp-critical-dialog", -1,
                                            FALSE);
   g_signal_handlers_disconnect_by_func (dialog,

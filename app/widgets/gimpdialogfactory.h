@@ -140,6 +140,7 @@ GtkWidget *         gimp_dialog_factory_find_widget          (GimpDialogFactory 
 GtkWidget *         gimp_dialog_factory_dialog_new           (GimpDialogFactory       *factory,
                                                               GdkMonitor              *monitor,
                                                               GimpUIManager           *ui_manager,
+                                                              GtkWidget               *parent,
                                                               const gchar             *identifier,
                                                               gint                     view_size,
                                                               gboolean                 present);
@@ -151,6 +152,7 @@ void                gimp_dialog_factory_add_session_info     (GimpDialogFactory 
                                                               GimpSessionInfo         *info);
 GtkWidget *         gimp_dialog_factory_dialog_raise         (GimpDialogFactory       *factory,
                                                               GdkMonitor              *monitor,
+                                                              GtkWidget               *parent,
                                                               const gchar             *identifiers,
                                                               gint                     view_size);
 GtkWidget *         gimp_dialog_factory_dockable_new         (GimpDialogFactory       *factory,

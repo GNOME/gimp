@@ -150,6 +150,7 @@ file_open_location_cmd_callback (GtkAction *action,
   gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                   gimp_widget_get_monitor (widget),
                                   NULL /*ui_manager*/,
+                                  widget,
                                   "gimp-file-open-location-dialog", -1, TRUE);
 }
 
@@ -463,6 +464,7 @@ file_close_all_cmd_callback (GtkAction *action,
 
       gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                         gimp_widget_get_monitor (widget),
+                                        widget,
                                         "gimp-close-all-dialog", -1);
     }
 }
@@ -556,6 +558,7 @@ file_open_dialog_show (Gimp        *gimp,
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gimp_widget_get_monitor (parent),
                                            NULL /*ui_manager*/,
+                                           parent,
                                            "gimp-file-open-dialog", -1, FALSE);
 
   if (dialog)
@@ -609,6 +612,7 @@ file_save_dialog_show (Gimp        *gimp,
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gimp_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
+                                               parent,
                                                "gimp-file-save-dialog",
                                                -1, FALSE);
 
@@ -690,6 +694,7 @@ file_export_dialog_show (Gimp      *gimp,
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gimp_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
+                                               parent,
                                                "gimp-file-export-dialog",
                                                -1, FALSE);
 

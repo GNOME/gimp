@@ -459,8 +459,11 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
                         GdkMonitor        *monitor,
                         GimpSessionInfo   *info)
 {
-  GtkWidget      *dialog;
-  GimpCoreConfig *config = gimp_dialog_factory_get_context (factory)->gimp->config;
+  GtkWidget        *dialog;
+  Gimp             *gimp    = gimp_dialog_factory_get_context (factory)->gimp;
+  GimpCoreConfig   *config  = gimp->config;
+  GimpDisplay      *display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
   GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
             gimp_session_info_get_factory_entry (info)->identifier,
@@ -469,6 +472,7 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
   dialog =
     gimp_dialog_factory_dialog_new (factory, monitor,
                                     NULL /*ui_manager*/,
+                                    GTK_WIDGET (gimp_display_shell_get_window (shell)),
                                     gimp_session_info_get_factory_entry (info)->identifier,
                                     gimp_session_info_get_factory_entry (info)->view_size,
                                     ! GIMP_GUI_CONFIG (config)->hide_docks);

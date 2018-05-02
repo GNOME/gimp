@@ -571,6 +571,7 @@ prefs_input_devices_dialog (GtkWidget *widget,
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gimp_widget_get_monitor (widget),
+                                    widget,
                                     "gimp-input-devices-dialog", 0);
 }
 
@@ -580,6 +581,7 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gimp_widget_get_monitor (widget),
+                                    widget,
                                     "gimp-keyboard-shortcuts-dialog", 0);
 }
 

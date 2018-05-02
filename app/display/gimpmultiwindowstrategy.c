@@ -71,7 +71,7 @@ gimp_multi_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                  GdkMonitor         *monitor,
                                                  const gchar        *identifiers)
 {
-  return gimp_dialog_factory_dialog_raise (factory, monitor,
+  return gimp_dialog_factory_dialog_raise (factory, monitor, NULL,
                                            identifiers, -1);
 }
 

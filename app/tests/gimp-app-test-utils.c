@@ -307,6 +307,7 @@ gimp_test_utils_create_image_from_dialog (Gimp *gimp)
   new_image_dialog =
     gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                       gdk_display_get_monitor (gdk_display_get_default (), 0),
+                                      NULL,
                                       "gimp-image-new-dialog",
                                       -1 /*view_size*/);
 

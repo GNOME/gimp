@@ -190,6 +190,7 @@ image_new_cmd_callback (GtkAction *action,
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gimp_widget_get_monitor (widget),
                                            NULL /*ui_manager*/,
+                                           widget,
                                            "gimp-image-new-dialog", -1, FALSE);
 
   if (dialog)
