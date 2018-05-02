@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0016
+#define GIMP_PROTOCOL_VERSION  0x0017
 
 
 enum
@@ -61,7 +61,6 @@ typedef struct _GPProcUninstall GPProcUninstall;
 
 struct _GPConfig
 {
-  guint32  version;
   guint32  tile_width;
   guint32  tile_height;
   gint32   shm_ID;
@@ -73,9 +72,7 @@ struct _GPConfig
   gint8    export_exif;
   gint8    export_xmp;
   gint8    export_iptc;
-  gint8    install_cmap;
   gint8    show_tooltips;
-  gint32   min_colors;
   gint32   gdisp_ID;
   gchar   *app_name;
   gchar   *wm_class;
@@ -121,13 +118,6 @@ struct _GPParam
     gchar       **d_stringarray;
     GimpRGB      *d_colorarray;
     GimpRGB       d_color;
-    struct
-    {
-      gint32 x;
-      gint32 y;
-      gint32 width;
-      gint32 height;
-    } d_region; /* deprecated */
     gint32        d_display;
     gint32        d_image;
     gint32        d_item;
@@ -136,7 +126,6 @@ struct _GPParam
     gint32        d_drawable;
     gint32        d_selection;
     gint32        d_boundary;
-    gint32        d_path; /* deprecated */
     gint32        d_vectors;
     gint32        d_status;
     GimpParasite  d_parasite;

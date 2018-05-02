@@ -474,9 +474,6 @@ _gp_config_read (GIOChannel      *channel,
   GPConfig *config = g_slice_new0 (GPConfig);
 
   if (! _gimp_wire_read_int32 (channel,
-                               &config->version, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
                                &config->tile_width, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
@@ -516,13 +513,7 @@ _gp_config_read (GIOChannel      *channel,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->install_cmap, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->show_tooltips, 1, user_data))
-    goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
-                               (guint32 *) &config->min_colors, 1, user_data))
     goto cleanup;
   if (! _gimp_wire_read_int32 (channel,
                                (guint32 *) &config->gdisp_ID, 1, user_data))
@@ -562,9 +553,6 @@ _gp_config_write (GIOChannel      *channel,
 {
   GPConfig *config = msg->data;
 
-  if (! _gimp_wire_write_int32 (channel,
-                                &config->version, 1, user_data))
-    return;
   if (! _gimp_wire_write_int32 (channel,
                                 &config->tile_width, 1, user_data))
     return;
@@ -608,16 +596,8 @@ _gp_config_write (GIOChannel      *channel,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->install_cmap, 1,
-                               user_data))
-    return;
-  if (! _gimp_wire_write_int8 (channel,
                                (const guint8 *) &config->show_tooltips, 1,
                                user_data))
-    return;
-  if (! _gimp_wire_write_int32 (channel,
-                                (const guint32 *) &config->min_colors, 1,
-                                user_data))
     return;
   if (! _gimp_wire_write_int32 (channel,
                                 (const guint32 *) &config->gdisp_ID, 1,

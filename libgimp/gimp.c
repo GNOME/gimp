@@ -214,7 +214,6 @@ static gint           _tile_height       = -1;
 static gint           _shm_ID            = -1;
 static guchar        *_shm_addr          = NULL;
 static const gdouble  _gamma_val         = 2.2;
-static gboolean       _install_cmap      = FALSE;
 static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
 static gboolean       _export_exif       = FALSE;
@@ -222,7 +221,6 @@ static gboolean       _export_xmp        = FALSE;
 static gboolean       _export_iptc       = FALSE;
 static GimpCheckSize  _check_size        = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
 static GimpCheckType  _check_type        = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static gint           _min_colors        = 144;
 static gint           _gdisp_ID          = -1;
 static gchar         *_wm_class          = NULL;
 static gchar         *_display_name      = NULL;
@@ -279,6 +277,7 @@ gimp_main (const GimpPlugInInfo *info,
   {
     ARG_PROGNAME,
     ARG_GIMP,
+    ARG_PROTOCOL_VERSION,
     ARG_READ_FD,
     ARG_WRITE_FD,
     ARG_MODE,
@@ -290,6 +289,7 @@ gimp_main (const GimpPlugInInfo *info,
   gchar       *basename;
   const gchar *env_string;
   gchar       *debug_string;
+  gint         protocol_version;
 
 #ifdef G_OS_WIN32
   gint i, j, k;
@@ -454,6 +454,27 @@ gimp_main (const GimpPlugInInfo *info,
   basename = g_path_get_basename (progname);
 
   g_set_prgname (basename);
+
+  protocol_version = atoi (argv[ARG_PROTOCOL_VERSION]);
+
+  if (protocol_version < GIMP_PROTOCOL_VERSION)
+    {
+      gimp_message (g_strdup_printf ("Could not execute plug-in \"%s\"\n(%s)\n"
+                                     "because GIMP is using an older version of the "
+                                     "plug-in protocol.",
+                                     gimp_filename_to_utf8 (g_get_prgname ()),
+                                     gimp_filename_to_utf8 (progname)));
+      return 1;
+    }
+  else if (protocol_version > GIMP_PROTOCOL_VERSION)
+    {
+      gimp_message (g_strdup_printf ("Could not execute plug-in \"%s\"\n(%s)\n"
+                                     "because it uses an obsolete version of the "
+                                     "plug-in protocol.",
+                                     gimp_filename_to_utf8 (g_get_prgname ()),
+                                     gimp_filename_to_utf8 (progname)));
+      return 1;
+    }
 
   env_string = g_getenv ("GIMP_PLUGIN_DEBUG");
 
@@ -2126,37 +2147,16 @@ gimp_loop (void)
 static void
 gimp_config (GPConfig *config)
 {
-  if (config->version < GIMP_PROTOCOL_VERSION)
-    {
-      g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
-                 "because GIMP is using an older version of the "
-                 "plug-in protocol.",
-                 gimp_filename_to_utf8 (g_get_prgname ()),
-                 gimp_filename_to_utf8 (progname));
-      gimp_quit ();
-    }
-  else if (config->version > GIMP_PROTOCOL_VERSION)
-    {
-      g_message ("Could not execute plug-in \"%s\"\n(%s)\n"
-                 "because it uses an obsolete version of the "
-                 "plug-in protocol.",
-                 gimp_filename_to_utf8 (g_get_prgname ()),
-                 gimp_filename_to_utf8 (progname));
-      gimp_quit ();
-    }
-
   _tile_width       = config->tile_width;
   _tile_height      = config->tile_height;
   _shm_ID           = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
-  _install_cmap     = config->install_cmap     ? TRUE : FALSE;
   _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
   _export_exif      = config->export_exif      ? TRUE : FALSE;
   _export_xmp       = config->export_xmp       ? TRUE : FALSE;
   _export_iptc      = config->export_iptc      ? TRUE : FALSE;
-  _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;
   _wm_class         = g_strdup (config->wm_class);
   _display_name     = g_strdup (config->display_name);
