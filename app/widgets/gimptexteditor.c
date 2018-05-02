@@ -142,6 +142,7 @@ gimp_text_editor_new (const gchar     *title,
   GtkWidget      *toolbar;
   GtkWidget      *style_editor;
   GtkWidget      *scrolled_window;
+  gboolean        use_header_bar;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
@@ -150,12 +151,17 @@ gimp_text_editor_new (const gchar     *title,
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (text_buffer), NULL);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
-                         "title",         title,
-                         "role",          "gimp-text-editor",
-                         "transient-for", parent,
-                         "help-func",     gimp_standard_help_func,
-                         "help-id",       GIMP_HELP_TEXT_EDITOR_DIALOG,
+                         "title",          title,
+                         "role",           "gimp-text-editor",
+                         "transient-for",  parent,
+                         "help-func",      gimp_standard_help_func,
+                         "help-id",        GIMP_HELP_TEXT_EDITOR_DIALOG,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   gtk_dialog_add_button (GTK_DIALOG (editor),

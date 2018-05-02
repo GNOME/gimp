@@ -239,6 +239,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
 {
   GimpViewableDialog *dialog;
   va_list             args;
+  gboolean            use_header_bar;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
@@ -249,16 +250,21 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   if (! viewable)
     g_warning ("Use of GimpViewableDialog with a NULL viewable is deprecated!");
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
-                         "viewable",    viewable,
-                         "context",     context,
-                         "title",       title,
-                         "role",        role,
-                         "help-func",   help_func,
-                         "help-id",     help_id,
-                         "icon-name",   icon_name,
-                         "description", desc,
-                         "parent",      parent,
+                         "viewable",       viewable,
+                         "context",        context,
+                         "title",          title,
+                         "role",           role,
+                         "help-func",      help_func,
+                         "help-id",        help_id,
+                         "icon-name",      icon_name,
+                         "description",    desc,
+                         "parent",         parent,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   va_start (args, help_id);
