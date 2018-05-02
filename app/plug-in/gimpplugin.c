@@ -784,7 +784,9 @@ gimp_plug_in_main_loop (GimpPlugIn *plug_in)
 
   proc_frame->main_loop = g_main_loop_new (NULL, FALSE);
 
+  gimp_threads_leave (plug_in->manager->gimp);
   g_main_loop_run (proc_frame->main_loop);
+  gimp_threads_enter (plug_in->manager->gimp);
 
   g_clear_pointer (&proc_frame->main_loop, g_main_loop_unref);
 }

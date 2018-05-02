@@ -42,6 +42,8 @@ gimp_gui_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->gui.ungrab                 = NULL;
+  gimp->gui.threads_enter          = NULL;
+  gimp->gui.threads_leave          = NULL;
   gimp->gui.set_busy               = NULL;
   gimp->gui.unset_busy             = NULL;
   gimp->gui.show_message           = NULL;
@@ -74,6 +76,24 @@ gimp_gui_ungrab (Gimp *gimp)
 
   if (gimp->gui.ungrab)
     gimp->gui.ungrab (gimp);
+}
+
+void
+gimp_threads_enter (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui.threads_enter)
+    gimp->gui.threads_enter (gimp);
+}
+
+void
+gimp_threads_leave (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui.threads_leave)
+    gimp->gui.threads_leave (gimp);
 }
 
 void
