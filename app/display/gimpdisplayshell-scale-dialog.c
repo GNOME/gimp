@@ -81,7 +81,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   GimpImage       *image;
   GtkWidget       *toplevel;
   GtkWidget       *hbox;
-  GtkWidget       *table;
+  GtkWidget       *grid;
   GtkWidget       *spin;
   GtkWidget       *label;
   gint             num, denom, row;
@@ -147,20 +147,20 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_scale_dialog_response),
                     data);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell->scale_dialog))),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
   row = 0;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom ratio:"), 0.0, 0.5,
-                             hbox, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Zoom ratio:"), 0.0, 0.5,
+                            hbox, 1);
 
   gimp_zoom_model_get_fraction (data->model, &num, &denom);
 
@@ -183,9 +183,9 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_widget_show (spin);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Zoom:"), 0.0, 0.5,
-                             hbox, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Zoom:"), 0.0, 0.5,
+                            hbox, 1);
 
   data->scale_adj = gtk_adjustment_new (fabs (shell->other_scale) * 100,
                                         100.0 / 256.0, 25600.0,
