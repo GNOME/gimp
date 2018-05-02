@@ -22,8 +22,12 @@ Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: 
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#DEPS_DIR}\{#DDIR}\lib\*.dll"; DestDir: "{app}\lib"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\gdk-pixbuf-2.0\2.10.0\loaders.cache"; DestDir: "{app}\lib\gdk-pixbuf-2.0\2.10.0\"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\babl-0.1\*.dll"; DestDir: "{app}\lib\babl-0.1"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\gdk-pixbuf-2.0\*.dll"; DestDir: "{app}\lib\gdk-pixbuf-2.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\gegl-0.4\*.dll"; DestDir: "{app}\lib\gegl-0.4"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\gio\*.dll"; DestDir: "{app}\lib\gio"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\lib\gtk-2.0\*.dll"; DestDir: "{app}\lib\gtk-2.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 
 #if PLATFORM==64
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-mng.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM}; Flags: restartreplace replacesameversion uninsrestartdelete
