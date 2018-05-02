@@ -378,7 +378,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget        *label;
   GtkWidget        *main_frame;
   GtkWidget        *frame;
-  GtkWidget        *table;
+  GtkWidget        *grid;
   GtkWidget        *button;
   GtkWidget        *bar;
   GtkWidget        *combo;
@@ -459,16 +459,15 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
   gtk_widget_show (frame_vbox);
 
-  /*  The table for the color bars and the graph  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (frame_vbox), table, TRUE, TRUE, 0);
+  /*  The grid for the color bars and the graph  */
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), grid, TRUE, TRUE, 0);
 
   /*  The left color bar  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_table_attach (GTK_TABLE (table), vbox, 0, 1, 0, 1,
-                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), vbox, 0, 0, 1, 1);
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (NULL);
@@ -484,8 +483,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), frame, 1, 0, 1, 1);
   gtk_widget_show (frame);
 
   tool->graph = gimp_curve_view_new ();
@@ -512,8 +510,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox2, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox2, 1, 1, 1, 1);
   gtk_widget_show (hbox2);
 
   frame = gtk_frame_new (NULL);
@@ -535,7 +532,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox), bar, TRUE, TRUE, 0);
   gtk_widget_show (bar);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_end (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
