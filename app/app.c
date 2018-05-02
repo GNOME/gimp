@@ -392,6 +392,7 @@ app_run (const gchar         *full_prog_name,
               g_object_unref (file);
             }
         }
+
       /* Delete backup XCF images. */
       for (iter = recovered_files; iter; iter = iter->next)
         {
@@ -419,6 +420,7 @@ app_run (const gchar         *full_prog_name,
             }
         }
     }
+
   if (font_error)
     {
       gimp_message_literal (gimp, NULL,
@@ -431,11 +433,7 @@ app_run (const gchar         *full_prog_name,
     gimp_batch_run (gimp, batch_interpreter, batch_commands);
 
   if (run_loop)
-    {
-      gimp_threads_leave (gimp);
-      g_main_loop_run (loop);
-      gimp_threads_enter (gimp);
-    }
+    g_main_loop_run (loop);
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);

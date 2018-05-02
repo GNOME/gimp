@@ -25,9 +25,6 @@ struct _GimpGui
 {
   void           (* ungrab)                 (Gimp                *gimp);
 
-  void           (* threads_enter)          (Gimp                *gimp);
-  void           (* threads_leave)          (Gimp                *gimp);
-
   void           (* set_busy)               (Gimp                *gimp);
   void           (* unset_busy)             (Gimp                *gimp);
 
@@ -111,9 +108,6 @@ struct _GimpGui
 void           gimp_gui_init               (Gimp                *gimp);
 
 void           gimp_gui_ungrab             (Gimp                *gimp);
-
-void           gimp_threads_enter          (Gimp                *gimp);
-void           gimp_threads_leave          (Gimp                *gimp);
 
 GimpObject   * gimp_get_window_strategy    (Gimp                *gimp);
 GimpObject   * gimp_get_empty_display      (Gimp                *gimp);
