@@ -269,10 +269,10 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
     case GDK_BUTTON_PRESS:
       if (gdk_event_triggers_context_menu (event))
         {
-          gimp_ui_manager_ui_popup (shell->popup_manager,
-                                    "/dummy-menubar/image-popup",
-                                    GTK_WIDGET (shell),
-                                    NULL, NULL, NULL, NULL);
+          gimp_ui_manager_ui_popup_at_pointer (shell->popup_manager,
+                                               "/dummy-menubar/image-popup",
+                                               (GdkEvent *) event,
+                                               NULL, NULL);
           return TRUE;
         }
       break;
@@ -695,20 +695,14 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
                                                         display,
                                                         &ui_path);
 
-            if (ui_manager)
+            if (! ui_manager)
               {
-                gimp_ui_manager_ui_popup (ui_manager,
-                                          ui_path,
-                                          GTK_WIDGET (shell),
-                                          NULL, NULL, NULL, NULL);
+                ui_manager = shell->popup_manager;
+                ui_path    = "/dummy-menubar/image-popup";
               }
-            else
-              {
-                gimp_ui_manager_ui_popup (shell->popup_manager,
-                                          "/dummy-menubar/image-popup",
-                                          GTK_WIDGET (shell),
-                                          NULL, NULL, NULL, NULL);
-              }
+
+            gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
+                                                 NULL, NULL);
           }
         else if (bevent->button == 1)
           {
