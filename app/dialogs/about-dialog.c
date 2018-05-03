@@ -167,8 +167,6 @@ about_dialog_create (GimpContext *context)
       g_list_free (children);
     }
 
-  gtk_window_present (GTK_WINDOW (dialog.dialog));
-
   return dialog.dialog;
 }
 
