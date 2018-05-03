@@ -357,7 +357,7 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER);
-  gtk_container_add (GTK_CONTAINER (page_vbox), scrolled_win);
+  gtk_box_pack_start (GTK_BOX (page_vbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
   gimp_help_set_help_data (scrolled_win, NULL, help_id);
