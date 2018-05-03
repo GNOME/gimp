@@ -1664,6 +1664,7 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
   editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
+  gtk_widget_set_vexpand (editor, FALSE);
   gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
@@ -2576,6 +2577,7 @@ prefs_dialog_new (Gimp       *gimp,
                                 _("ppi"), 1, 4, 0.0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_START);
 
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 24);
   gtk_widget_show (entry);
