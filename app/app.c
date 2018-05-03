@@ -441,11 +441,12 @@ app_run (const gchar         *full_prog_name,
 
   gimp_gegl_exit (gimp);
 
+  errors_exit ();
+
   g_object_unref (gimp);
 
   gimp_debug_instances ();
 
-  errors_exit ();
   gegl_exit ();
 }
 
