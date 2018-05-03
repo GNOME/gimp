@@ -322,7 +322,8 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                                    gdouble          new_factor)
 {
   GimpScrolledPreview *scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
-  GtkAdjustment       *adj;
+  GtkAdjustment       *hadj;
+  GtkAdjustment       *vadj;
   gdouble              width;
   gdouble              height;
   gdouble              ratio;
@@ -334,9 +335,10 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
 
   ratio = new_factor / old_factor;
 
-  adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->hscr));
-  gtk_adjustment_configure (adj,
-                            (gtk_adjustment_get_value (adj) + width / 2.0) * ratio
+  gimp_scrolled_preview_get_adjustments (scrolled_preview, &hadj, &vadj);
+
+  gtk_adjustment_configure (hadj,
+                            (gtk_adjustment_get_value (vadj) + width / 2.0) * ratio
                             - width / 2.0,
                             0,
                             width * new_factor,
@@ -344,9 +346,8 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                             MAX (width / 2.0, new_factor),
                             width);
 
-  adj = gtk_range_get_adjustment (GTK_RANGE (scrolled_preview->vscr));
-  gtk_adjustment_configure (adj,
-                            (gtk_adjustment_get_value (adj) + height / 2.0) * ratio
+  gtk_adjustment_configure (vadj,
+                            (gtk_adjustment_get_value (vadj) + height / 2.0) * ratio
                             - height / 2.0,
                             0,
                             height * new_factor,
@@ -565,8 +566,13 @@ gimp_zoom_preview_set_cursor (GimpPreview *preview)
 
   if (gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview)) > 1.0)
     {
+      GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (preview));
+      GdkCursor  *cursor;
+
+      cursor = gdk_cursor_new_for_display (display, GDK_HAND1);
       gdk_window_set_cursor (gtk_widget_get_window (preview->area),
-                             GIMP_SCROLLED_PREVIEW (preview)->cursor_move);
+                             cursor);
+      g_object_unref (cursor);
     }
   else
     {

@@ -49,14 +49,6 @@ struct _GimpScrolledPreview
   GimpPreview                 parent_instance;
 
   GimpScrolledPreviewPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GtkWidget    *hscr;
-  GtkWidget    *vscr;
-  GtkWidget    *nav_icon;
-  GtkWidget    *nav_popup;
-  GdkCursor    *cursor_move;
-  gpointer      nav_gc; /* unused */
 };
 
 struct _GimpScrolledPreviewClass
@@ -75,18 +67,22 @@ struct _GimpScrolledPreviewClass
 };
 
 
-GType  gimp_scrolled_preview_get_type  (void) G_GNUC_CONST;
+GType  gimp_scrolled_preview_get_type        (void) G_GNUC_CONST;
 
-void   gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
-                                           gint                 x,
-                                           gint                 y);
-void   gimp_scrolled_preview_set_policy   (GimpScrolledPreview *preview,
-                                           GtkPolicyType        hscrollbar_policy,
-                                           GtkPolicyType        vscrollbar_policy);
+void   gimp_scrolled_preview_set_position    (GimpScrolledPreview  *preview,
+                                              gint                  x,
+                                              gint                  y);
+void   gimp_scrolled_preview_set_policy      (GimpScrolledPreview  *preview,
+                                              GtkPolicyType         hscrollbar_policy,
+                                              GtkPolicyType         vscrollbar_policy);
+
+void   gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
+                                              GtkAdjustment       **hadj,
+                                              GtkAdjustment       **vadj);
 
 /*  only for use from derived widgets  */
-void   gimp_scrolled_preview_freeze       (GimpScrolledPreview *preview);
-void   gimp_scrolled_preview_thaw         (GimpScrolledPreview *preview);
+void   gimp_scrolled_preview_freeze          (GimpScrolledPreview  *preview);
+void   gimp_scrolled_preview_thaw            (GimpScrolledPreview  *preview);
 
 
 G_END_DECLS
