@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_ASPECT_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ASPECT_PREVIEW, GimpAspectPreviewClass))
 
 
-typedef struct _GimpAspectPreviewClass  GimpAspectPreviewClass;
+typedef struct _GimpAspectPreviewPrivate GimpAspectPreviewPrivate;
+typedef struct _GimpAspectPreviewClass   GimpAspectPreviewClass;
 
 struct _GimpAspectPreview
 {
-  GimpPreview   parent_instance;
+  GimpPreview               parent_instance;
+
+  GimpAspectPreviewPrivate *priv;
 };
 
 struct _GimpAspectPreviewClass
@@ -55,6 +58,10 @@ struct _GimpAspectPreviewClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

@@ -65,8 +65,6 @@ enum
 };
 
 
-typedef struct _GimpColorAreaPrivate GimpColorAreaPrivate;
-
 struct _GimpColorAreaPrivate
 {
   GimpColorConfig    *config;
@@ -83,10 +81,7 @@ struct _GimpColorAreaPrivate
   guint               needs_render : 1;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_AREA, \
-                                     GimpColorAreaPrivate)
+#define GET_PRIVATE(obj) (((GimpColorArea *) (obj))->priv)
 
 
 static void      gimp_color_area_dispose             (GObject           *object);
@@ -244,7 +239,13 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 static void
 gimp_color_area_init (GimpColorArea *area)
 {
-  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+  GimpColorAreaPrivate *priv;
+
+  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
+                                            GIMP_TYPE_COLOR_AREA,
+                                            GimpColorAreaPrivate);
+
+  priv = GET_PRIVATE (area);
 
   priv->buf         = NULL;
   priv->width       = 0;

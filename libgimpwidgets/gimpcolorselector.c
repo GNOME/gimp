@@ -58,17 +58,12 @@ enum
 };
 
 
-typedef struct _GimpColorSelectorPrivate GimpColorSelectorPrivate;
-
 struct _GimpColorSelectorPrivate
 {
   gboolean model_visible[3];
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_SELECTOR, \
-                                     GimpColorSelectorPrivate)
+#define GET_PRIVATE(obj) (((GimpColorSelector *) (obj))->priv)
 
 
 static void   gimp_color_selector_dispose (GObject *object);
@@ -141,7 +136,13 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
 static void
 gimp_color_selector_init (GimpColorSelector *selector)
 {
-  GimpColorSelectorPrivate *priv = GET_PRIVATE (selector);
+  GimpColorSelectorPrivate *priv;
+
+  selector->priv = G_TYPE_INSTANCE_GET_PRIVATE (selector,
+                                                GIMP_TYPE_COLOR_SELECTOR,
+                                                GimpColorSelectorPrivate);
+
+  priv = GET_PRIVATE (selector);
 
   selector->toggles_visible   = TRUE;
   selector->toggles_sensitive = TRUE;

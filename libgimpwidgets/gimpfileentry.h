@@ -41,12 +41,16 @@ G_BEGIN_DECLS
 #define GIMP_FILE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_ENTRY, GimpFileEntryClass))
 
 
-typedef struct _GimpFileEntryClass  GimpFileEntryClass;
+typedef struct _GimpFileEntryPrivate GimpFileEntryPrivate;
+typedef struct _GimpFileEntryClass   GimpFileEntryClass;
 
 struct _GimpFileEntry
 {
-  GtkBox     parent_instance;
+  GtkBox                parent_instance;
 
+  GimpFileEntryPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GtkWidget *file_exists;
   GtkWidget *entry;
   GtkWidget *browse_button;
@@ -69,6 +73,10 @@ struct _GimpFileEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

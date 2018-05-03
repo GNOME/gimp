@@ -53,16 +53,12 @@ enum
 };
 
 
-typedef struct _GimpColorDisplayStackPrivate GimpColorDisplayStackPrivate;
-
 struct _GimpColorDisplayStackPrivate
 {
   GList *filters;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_COLOR_DISPLAY_STACK, \
-                                                       GimpColorDisplayStackPrivate))
+#define GET_PRIVATE(obj) (((GimpColorDisplayStack *) (obj))->priv)
 
 
 static void   gimp_color_display_stack_dispose         (GObject               *object);
@@ -142,9 +138,9 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
 static void
 gimp_color_display_stack_init (GimpColorDisplayStack *stack)
 {
-  GimpColorDisplayStackPrivate *private = GET_PRIVATE (stack);
-
-  private->filters = NULL;
+  stack->priv = G_TYPE_INSTANCE_GET_PRIVATE (stack,
+                                             GIMP_TYPE_COLOR_DISPLAY_STACK,
+                                             GimpColorDisplayStackPrivate);
 }
 
 static void

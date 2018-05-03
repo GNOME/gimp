@@ -70,7 +70,7 @@ enum
 };
 
 
-typedef struct
+struct _GimpPageSelectorPrivate
 {
   gint                    n_pages;
   GimpPageSelectorTarget  target;
@@ -82,10 +82,9 @@ typedef struct
   GtkWidget              *range_entry;
 
   GdkPixbuf              *default_thumbnail;
-} GimpPageSelectorPrivate;
+};
 
-#define GIMP_PAGE_SELECTOR_GET_PRIVATE(obj) \
-  ((GimpPageSelectorPrivate *) ((GimpPageSelector *) (obj))->priv)
+#define GET_PRIVATE(obj) (((GimpPageSelector *) (obj))->priv)
 
 
 static void   gimp_page_selector_finalize          (GObject          *object);
@@ -222,7 +221,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
                                                 GIMP_TYPE_PAGE_SELECTOR,
                                                 GimpPageSelectorPrivate);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   priv->n_pages = 0;
   priv->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
@@ -338,7 +337,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
 static void
 gimp_page_selector_finalize (GObject *object)
 {
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
+  GimpPageSelectorPrivate *priv = GET_PRIVATE (object);
 
   g_clear_object (&priv->default_thumbnail);
 
@@ -351,7 +350,7 @@ gimp_page_selector_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
+  GimpPageSelectorPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -374,7 +373,7 @@ gimp_page_selector_set_property (GObject      *object,
                                  GParamSpec   *pspec)
 {
   GimpPageSelector        *selector = GIMP_PAGE_SELECTOR (object);
-  GimpPageSelectorPrivate *priv     = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
+  GimpPageSelectorPrivate *priv     = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -426,7 +425,7 @@ gimp_page_selector_set_n_pages (GimpPageSelector *selector,
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
   g_return_if_fail (n_pages >= 0);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   if (n_pages != priv->n_pages)
     {
@@ -483,7 +482,7 @@ gimp_page_selector_get_n_pages (GimpPageSelector *selector)
 
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), 0);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   return priv->n_pages;
 }
@@ -504,7 +503,7 @@ gimp_page_selector_set_target (GimpPageSelector       *selector,
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
   g_return_if_fail (target <= GIMP_PAGE_SELECTOR_TARGET_IMAGES);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   if (target != priv->target)
     {
@@ -530,7 +529,7 @@ gimp_page_selector_get_target (GimpPageSelector *selector)
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector),
                         GIMP_PAGE_SELECTOR_TARGET_LAYERS);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   return priv->target;
 }
@@ -557,7 +556,7 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
   g_return_if_fail (thumbnail == NULL || GDK_IS_PIXBUF (thumbnail));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_if_fail (page_no >= 0 && page_no < priv->n_pages);
 
@@ -601,7 +600,7 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
 
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_val_if_fail (page_no >= 0 && page_no < priv->n_pages, NULL);
 
@@ -641,7 +640,7 @@ gimp_page_selector_set_page_label (GimpPageSelector *selector,
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_if_fail (page_no >= 0 && page_no < priv->n_pages);
 
@@ -683,7 +682,7 @@ gimp_page_selector_get_page_label (GimpPageSelector *selector,
 
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_val_if_fail (page_no >= 0 && page_no < priv->n_pages, NULL);
 
@@ -718,7 +717,7 @@ gimp_page_selector_select_all (GimpPageSelector *selector)
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   gtk_icon_view_select_all (GTK_ICON_VIEW (priv->view));
 }
@@ -738,7 +737,7 @@ gimp_page_selector_unselect_all (GimpPageSelector *selector)
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   gtk_icon_view_unselect_all (GTK_ICON_VIEW (priv->view));
 }
@@ -762,7 +761,7 @@ gimp_page_selector_select_page (GimpPageSelector *selector,
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_if_fail (page_no >= 0 && page_no < priv->n_pages);
 
@@ -794,7 +793,7 @@ gimp_page_selector_unselect_page (GimpPageSelector *selector,
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_if_fail (page_no >= 0 && page_no < priv->n_pages);
 
@@ -827,7 +826,7 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
 
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), FALSE);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   g_return_val_if_fail (page_no >= 0 && page_no < priv->n_pages, FALSE);
 
@@ -866,7 +865,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
   g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
   g_return_val_if_fail (n_selected_pages != NULL, NULL);
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   selected = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (priv->view));
 
@@ -912,7 +911,7 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
 
   g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
 
-  priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  priv = GET_PRIVATE (selector);
 
   if (! range)
     range = "";
@@ -1054,7 +1053,7 @@ static void
 gimp_page_selector_selection_changed (GtkIconView      *icon_view,
                                       GimpPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
+  GimpPageSelectorPrivate *priv = GET_PRIVATE (selector);
   GList                   *selected;
   gint                     n_selected;
   gchar                   *range;

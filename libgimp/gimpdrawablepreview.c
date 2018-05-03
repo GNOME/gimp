@@ -51,21 +51,19 @@ enum
 
 typedef struct
 {
-  gint32 drawable_ID;
-} GimpDrawablePreviewPrivate;
-
-typedef struct
-{
   gint      x;
   gint      y;
   gboolean  update;
 } PreviewSettings;
 
 
-#define GIMP_DRAWABLE_PREVIEW_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (preview, \
-                               GIMP_TYPE_DRAWABLE_PREVIEW, \
-                               GimpDrawablePreviewPrivate)
+struct _GimpDrawablePreviewPrivate
+{
+  gint32 drawable_ID;
+};
+
+#define GET_PRIVATE(obj) (((GimpDrawablePreview *) (obj))->priv)
+
 
 static void  gimp_drawable_preview_constructed   (GObject         *object);
 static void  gimp_drawable_preview_dispose       (GObject         *object);
@@ -142,6 +140,10 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 static void
 gimp_drawable_preview_init (GimpDrawablePreview *preview)
 {
+  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
+                                               GIMP_TYPE_DRAWABLE_PREVIEW,
+                                               GimpDrawablePreviewPrivate);
+
   g_object_set (GIMP_PREVIEW (preview)->area,
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
@@ -259,7 +261,7 @@ gimp_drawable_preview_style_updated (GtkWidget *widget)
 static void
 gimp_drawable_preview_draw_original (GimpPreview *preview)
 {
-  GimpDrawablePreviewPrivate *priv = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  GimpDrawablePreviewPrivate *priv = GET_PRIVATE (preview);
   guchar                     *buffer;
   gint                        width, height;
   gint                        bpp;
@@ -304,7 +306,7 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
                                   gint             width,
                                   gint             height)
 {
-  GimpDrawablePreviewPrivate *priv = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  GimpDrawablePreviewPrivate *priv = GET_PRIVATE (preview);
 
   if (priv->drawable_ID > 0)
     _gimp_drawable_preview_area_draw_thumb (area, priv->drawable_ID,
@@ -398,7 +400,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
                                  const guchar        *buf,
                                  gint                 rowstride)
 {
-  GimpDrawablePreviewPrivate *priv         = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  GimpDrawablePreviewPrivate *priv         = GET_PRIVATE (preview);
   GimpPreview                *gimp_preview = GIMP_PREVIEW (preview);
   gint32                      image_ID;
 
@@ -510,7 +512,7 @@ gimp_drawable_preview_set_drawable_id (GimpDrawablePreview *drawable_preview,
                                        gint32               drawable_ID)
 {
   GimpPreview                *preview = GIMP_PREVIEW (drawable_preview);
-  GimpDrawablePreviewPrivate *priv    = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  GimpDrawablePreviewPrivate *priv    = GET_PRIVATE (preview);
   gint                        x1, y1, x2, y2;
 
   g_return_if_fail (priv->drawable_ID < 1);
@@ -607,7 +609,7 @@ gimp_drawable_preview_get_drawable_id (GimpDrawablePreview *preview)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), -1);
 
-  return GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
+  return GET_PRIVATE (preview)->drawable_ID;
 }
 
 /**
@@ -626,7 +628,7 @@ gimp_drawable_preview_draw_region (GimpDrawablePreview *preview,
   g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
   g_return_if_fail (region != NULL);
 
-  priv = GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   g_return_if_fail (priv->drawable_ID > 0);
 

@@ -51,8 +51,6 @@ enum
 };
 
 
-typedef struct _GimpDialogPrivate GimpDialogPrivate;
-
 struct _GimpDialogPrivate
 {
   GimpHelpFunc  help_func;
@@ -60,9 +58,7 @@ struct _GimpDialogPrivate
   GtkWidget    *help_button;
 };
 
-#define GET_PRIVATE(dialog) G_TYPE_INSTANCE_GET_PRIVATE (dialog, \
-                                                         GIMP_TYPE_DIALOG, \
-                                                         GimpDialogPrivate)
+#define GET_PRIVATE(obj) (((GimpDialog *) (obj))->priv)
 
 
 static void       gimp_dialog_constructed  (GObject      *object);
@@ -156,6 +152,10 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 static void
 gimp_dialog_init (GimpDialog *dialog)
 {
+  dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
+                                              GIMP_TYPE_DIALOG,
+                                              GimpDialogPrivate);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_dialog_response),
                     NULL);

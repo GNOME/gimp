@@ -36,13 +36,14 @@ G_BEGIN_DECLS
 #define GIMP_PAGE_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAGE_SELECTOR, GimpPageSelectorClass))
 
 
-typedef struct _GimpPageSelectorClass  GimpPageSelectorClass;
+typedef struct _GimpPageSelectorPrivate GimpPageSelectorPrivate;
+typedef struct _GimpPageSelectorClass   GimpPageSelectorClass;
 
 struct _GimpPageSelector
 {
-  GtkBox    parent_instance;
+  GtkBox                   parent_instance;
 
-  gpointer  priv;
+  GimpPageSelectorPrivate *priv;
 };
 
 struct _GimpPageSelectorClass
@@ -57,6 +58,10 @@ struct _GimpPageSelectorClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

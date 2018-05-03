@@ -37,11 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_CELL_RENDERER_TOGGLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CELL_RENDERER_TOGGLE, GimpCellRendererToggleClass))
 
 
-typedef struct _GimpCellRendererToggleClass GimpCellRendererToggleClass;
+typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
+typedef struct _GimpCellRendererToggleClass   GimpCellRendererToggleClass;
 
 struct _GimpCellRendererToggle
 {
-  GtkCellRendererToggle  parent_instance;
+  GtkCellRendererToggle          parent_instance;
+
+  GimpCellRendererTogglePrivate *priv;
 };
 
 struct _GimpCellRendererToggleClass
@@ -57,6 +60,10 @@ struct _GimpCellRendererToggleClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

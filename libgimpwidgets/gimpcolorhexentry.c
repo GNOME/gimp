@@ -58,16 +58,12 @@ enum
 };
 
 
-typedef struct _GimpColorHexEntryPrivate GimpColorHexEntryPrivate;
-
 struct _GimpColorHexEntryPrivate
 {
   GimpRGB  color;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_COLOR_HEX_ENTRY, \
-                                                       GimpColorHexEntryPrivate))
+#define GET_PRIVATE(obj) (((GimpColorHexEntry *) (obj))->priv)
 
 
 static void      gimp_color_hex_entry_constructed (GObject            *object);
@@ -115,7 +111,7 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
 static void
 gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 {
-  GimpColorHexEntryPrivate *private = GET_PRIVATE (entry);
+  GimpColorHexEntryPrivate *private;
   GtkEntryCompletion       *completion;
   GtkCellRenderer          *cell;
   GtkListStore             *store;
@@ -123,6 +119,12 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   const gchar             **names;
   gint                      num_colors;
   gint                      i;
+
+  entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry,
+                                             GIMP_TYPE_COLOR_HEX_ENTRY,
+                                             GimpColorHexEntryPrivate);
+
+  private = GET_PRIVATE (entry);
 
   /* GtkEntry's minimum size is way too large, set a reasonable one
    * for our use case

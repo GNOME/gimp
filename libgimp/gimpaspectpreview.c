@@ -49,21 +49,18 @@ enum
   PROP_DRAWABLE_ID
 };
 
-typedef struct
+struct _GimpAspectPreviewPrivate
 {
   gint32 drawable_ID;
-} GimpAspectPreviewPrivate;
+};
 
 typedef struct
 {
   gboolean  update;
 } PreviewSettings;
 
+#define GET_PRIVATE(obj) (((GimpAspectPreview *) (obj))->priv)
 
-#define GIMP_ASPECT_PREVIEW_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (preview, \
-                               GIMP_TYPE_ASPECT_PREVIEW, \
-                               GimpAspectPreviewPrivate)
 
 static void  gimp_aspect_preview_constructed   (GObject         *object);
 static void  gimp_aspect_preview_dispose       (GObject         *object);
@@ -144,6 +141,10 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 static void
 gimp_aspect_preview_init (GimpAspectPreview *preview)
 {
+  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
+                                               GIMP_TYPE_ASPECT_PREVIEW,
+                                               GimpAspectPreviewPrivate);
+
   g_object_set (GIMP_PREVIEW (preview)->area,
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
@@ -197,7 +198,7 @@ gimp_aspect_preview_get_property (GObject    *object,
                                   GParamSpec *pspec)
 {
   GimpAspectPreview        *preview = GIMP_ASPECT_PREVIEW (object);
-  GimpAspectPreviewPrivate *priv    = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreviewPrivate *priv    = GET_PRIVATE (preview);
 
   switch (property_id)
     {
@@ -241,7 +242,7 @@ gimp_aspect_preview_style_updated (GtkWidget *widget)
 
   if (preview->area)
     {
-      GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+      GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
       gint                      width;
       gint                      height;
       gint                      size;
@@ -286,7 +287,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
                                  const guchar *buffer,
                                  gint          rowstride)
 {
-  GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
   gint32                    image_ID;
 
   image_ID = gimp_item_get_image (priv->drawable_ID);
@@ -337,7 +338,7 @@ gimp_aspect_preview_transform (GimpPreview *preview,
                                gint        *dest_x,
                                gint        *dest_y)
 {
-  GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
 
   *dest_x = (gdouble) src_x * preview->width  / gimp_drawable_width  (priv->drawable_ID);
   *dest_y = (gdouble) src_y * preview->height / gimp_drawable_height (priv->drawable_ID);
@@ -350,7 +351,7 @@ gimp_aspect_preview_untransform (GimpPreview *preview,
                                  gint        *dest_x,
                                  gint        *dest_y)
 {
-  GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
 
   *dest_x = (gdouble) src_x * gimp_drawable_width  (priv->drawable_ID) / preview->width;
   *dest_y = (gdouble) src_y * gimp_drawable_height (priv->drawable_ID) / preview->height;
@@ -360,7 +361,7 @@ static void
 gimp_aspect_preview_set_drawable_id (GimpAspectPreview *preview,
                                      gint32             drawable_ID)
 {
-  GimpAspectPreviewPrivate *priv = GIMP_ASPECT_PREVIEW_GET_PRIVATE (preview);
+  GimpAspectPreviewPrivate *priv = GET_PRIVATE (preview);
   gint                      d_width;
   gint                      d_height;
   gint                      width;

@@ -40,11 +40,14 @@ G_BEGIN_DECLS
 #define GIMP_GRADIENT_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_SELECT_BUTTON, GimpGradientSelectButtonClass))
 
 
+typedef struct _GimpGradientSelectButtonPrivate GimpGradientSelectButtonPrivate;
 typedef struct _GimpGradientSelectButtonClass   GimpGradientSelectButtonClass;
 
 struct _GimpGradientSelectButton
 {
-  GimpSelectButton  parent_instance;
+  GimpSelectButton                 parent_instance;
+
+  GimpGradientSelectButtonPrivate *priv;
 };
 
 struct _GimpGradientSelectButtonClass
@@ -63,6 +66,10 @@ struct _GimpGradientSelectButtonClass
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);
   void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
 };
 
 

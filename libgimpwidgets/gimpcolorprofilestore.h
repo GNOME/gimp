@@ -37,11 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_PROFILE_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_PROFILE_STORE, GimpColorProfileStoreClass))
 
 
-typedef struct _GimpColorProfileStoreClass  GimpColorProfileStoreClass;
+typedef struct _GimpColorProfileStorePrivate GimpColorProfileStorePrivate;
+typedef struct _GimpColorProfileStoreClass   GimpColorProfileStoreClass;
 
 struct _GimpColorProfileStore
 {
-  GtkListStore  parent_instance;
+  GtkListStore                  parent_instance;
+
+  GimpColorProfileStorePrivate *priv;
 };
 
 struct _GimpColorProfileStoreClass
@@ -52,6 +55,10 @@ struct _GimpColorProfileStoreClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

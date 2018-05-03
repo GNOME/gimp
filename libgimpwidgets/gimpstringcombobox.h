@@ -37,14 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_STRING_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STRING_COMBO_BOX, GimpStringComboBoxClass))
 
 
-typedef struct _GimpStringComboBoxClass  GimpStringComboBoxClass;
+typedef struct _GimpStringComboBoxPrivate GimpStringComboBoxPrivate;
+typedef struct _GimpStringComboBoxClass   GimpStringComboBoxClass;
 
 struct _GimpStringComboBox
 {
-  GtkComboBox       parent_instance;
+  GtkComboBox                parent_instance;
 
-  /*< private >*/
-  gpointer          priv;
+  GimpStringComboBoxPrivate *priv;
 };
 
 struct _GimpStringComboBoxClass
@@ -56,6 +56,10 @@ struct _GimpStringComboBoxClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

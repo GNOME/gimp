@@ -39,12 +39,16 @@ G_BEGIN_DECLS
 #define GIMP_PROC_BROWSER_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROC_BROWSER_DIALOG, GimpProcBrowserDialogClass))
 
 
-typedef struct _GimpProcBrowserDialogClass GimpProcBrowserDialogClass;
+typedef struct _GimpProcBrowserDialogPrivate GimpProcBrowserDialogPrivate;
+typedef struct _GimpProcBrowserDialogClass   GimpProcBrowserDialogClass;
 
 struct _GimpProcBrowserDialog
 {
-  GimpDialog    parent_instance;
+  GimpDialog                    parent_instance;
 
+  GimpProcBrowserDialogPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GtkWidget    *browser;
 
   GtkListStore *store;
@@ -63,6 +67,10 @@ struct _GimpProcBrowserDialogClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

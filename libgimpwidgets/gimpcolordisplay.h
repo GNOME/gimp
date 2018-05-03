@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayClass))
 
 
-typedef struct _GimpColorDisplayClass GimpColorDisplayClass;
+typedef struct _GimpColorDisplayPrivate GimpColorDisplayPrivate;
+typedef struct _GimpColorDisplayClass   GimpColorDisplayClass;
 
 struct _GimpColorDisplay
 {
-  GObject  parent_instance;
+  GObject                 parent_instance;
+
+  GimpColorDisplayPrivate *priv;
 };
 
 struct _GimpColorDisplayClass
@@ -55,44 +58,47 @@ struct _GimpColorDisplayClass
   const gchar  *icon_name;
 
   /*  virtual functions  */
-
-  void               (* convert_buffer)  (GimpColorDisplay *display,
-                                          GeglBuffer       *buffer,
-                                          GeglRectangle    *area);
-  GtkWidget        * (* configure)       (GimpColorDisplay *display);
+  void        (* convert_buffer) (GimpColorDisplay *display,
+                                  GeglBuffer       *buffer,
+                                  GeglRectangle    *area);
+  GtkWidget * (* configure)      (GimpColorDisplay *display);
 
   /*  signals  */
-  void               (* changed)         (GimpColorDisplay *display);
+  void        (* changed)        (GimpColorDisplay *display);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
-GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
+GType              gimp_color_display_get_type        (void) G_GNUC_CONST;
 
-GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
+GimpColorDisplay * gimp_color_display_clone           (GimpColorDisplay *display);
 
-void           gimp_color_display_convert_buffer  (GimpColorDisplay *display,
-                                                   GeglBuffer       *buffer,
-                                                   GeglRectangle    *area);
-void           gimp_color_display_load_state      (GimpColorDisplay *display,
-                                                   GimpParasite     *state);
-GimpParasite * gimp_color_display_save_state      (GimpColorDisplay *display);
-GtkWidget    * gimp_color_display_configure       (GimpColorDisplay *display);
-void           gimp_color_display_configure_reset (GimpColorDisplay *display);
+void               gimp_color_display_convert_buffer  (GimpColorDisplay *display,
+                                                       GeglBuffer       *buffer,
+                                                       GeglRectangle    *area);
+void               gimp_color_display_load_state      (GimpColorDisplay *display,
+                                                       GimpParasite     *state);
+GimpParasite     * gimp_color_display_save_state      (GimpColorDisplay *display);
+GtkWidget        * gimp_color_display_configure       (GimpColorDisplay *display);
+void               gimp_color_display_configure_reset (GimpColorDisplay *display);
 
-void           gimp_color_display_changed         (GimpColorDisplay *display);
+void               gimp_color_display_changed         (GimpColorDisplay *display);
 
-void           gimp_color_display_set_enabled     (GimpColorDisplay *display,
-                                                   gboolean          enabled);
-gboolean       gimp_color_display_get_enabled     (GimpColorDisplay *display);
+void               gimp_color_display_set_enabled     (GimpColorDisplay *display,
+                                                       gboolean          enabled);
+gboolean           gimp_color_display_get_enabled     (GimpColorDisplay *display);
 
-GimpColorConfig  * gimp_color_display_get_config  (GimpColorDisplay *display);
-GimpColorManaged * gimp_color_display_get_managed (GimpColorDisplay *display);
+GimpColorConfig  * gimp_color_display_get_config      (GimpColorDisplay *display);
+GimpColorManaged * gimp_color_display_get_managed     (GimpColorDisplay *display);
 
 
 G_END_DECLS

@@ -46,16 +46,12 @@ enum
 };
 
 
-typedef struct _GimpButtonPrivate GimpButtonPrivate;
-
 struct _GimpButtonPrivate
 {
   GdkModifierType  press_state;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_BUTTON, \
-                                                      GimpButtonPrivate)
+#define GET_PRIVATE(obj) (((GimpButton *) (obj))->priv)
 
 
 static gboolean   gimp_button_button_press (GtkWidget      *widget,
@@ -105,9 +101,9 @@ gimp_button_class_init (GimpButtonClass *klass)
 static void
 gimp_button_init (GimpButton *button)
 {
-  GimpButtonPrivate *private = GET_PRIVATE (button);
-
-  private->press_state = 0;
+  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
+                                              GIMP_TYPE_BUTTON,
+                                              GimpButtonPrivate);
 }
 
 /**

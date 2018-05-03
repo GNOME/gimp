@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
 
 
-typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
+typedef struct _GimpDrawablePreviewPrivate GimpDrawablePreviewPrivate;
+typedef struct _GimpDrawablePreviewClass   GimpDrawablePreviewClass;
 
 struct _GimpDrawablePreview
 {
-  GimpScrolledPreview  parent_instance;
+  GimpScrolledPreview         parent_instance;
+
+  GimpDrawablePreviewPrivate *priv;
 };
 
 struct _GimpDrawablePreviewClass
@@ -55,6 +58,10 @@ struct _GimpDrawablePreviewClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

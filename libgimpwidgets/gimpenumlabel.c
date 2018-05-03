@@ -47,17 +47,12 @@ enum
 };
 
 
-
-typedef struct _GimpEnumLabelPrivate GimpEnumLabelPrivate;
-
 struct _GimpEnumLabelPrivate
 {
   GEnumClass *enum_class;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_ENUM_LABEL, \
-                                                      GimpEnumLabelPrivate)
+#define GET_PRIVATE(obj) (((GimpEnumLabel *) (obj))->priv)
 
 
 static void   gimp_enum_label_finalize     (GObject      *object);
@@ -121,6 +116,9 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
 static void
 gimp_enum_label_init (GimpEnumLabel *enum_label)
 {
+  enum_label->priv = G_TYPE_INSTANCE_GET_PRIVATE (enum_label,
+                                                  GIMP_TYPE_ENUM_LABEL,
+                                                  GimpEnumLabelPrivate);
 }
 
 static void

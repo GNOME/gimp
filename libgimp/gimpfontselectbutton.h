@@ -40,11 +40,14 @@ G_BEGIN_DECLS
 #define GIMP_FONT_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonClass))
 
 
-typedef struct _GimpFontSelectButtonClass  GimpFontSelectButtonClass;
+typedef struct _GimpFontSelectButtonPrivate GimpFontSelectButtonPrivate;
+typedef struct _GimpFontSelectButtonClass   GimpFontSelectButtonClass;
 
 struct _GimpFontSelectButton
 {
-  GimpSelectButton  parent_instance;
+  GimpSelectButton             parent_instance;
+
+  GimpFontSelectButtonPrivate *priv;
 };
 
 struct _GimpFontSelectButtonClass
@@ -61,6 +64,10 @@ struct _GimpFontSelectButtonClass
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);
   void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
 };
 
 

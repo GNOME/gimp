@@ -50,6 +50,11 @@ enum
   PROP_MODEL
 };
 
+typedef struct
+{
+  gboolean  update;
+} PreviewSettings;
+
 
 struct _GimpZoomPreviewPrivate
 {
@@ -58,14 +63,8 @@ struct _GimpZoomPreviewPrivate
   GdkRectangle   extents;
 };
 
-typedef struct
-{
-  gboolean  update;
-} PreviewSettings;
+#define GET_PRIVATE(obj) (((GimpZoomPreview *) (obj))->priv)
 
-
-#define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) \
-  ((GimpZoomPreviewPrivate *) ((GimpZoomPreview *) (obj))->priv)
 
 static void     gimp_zoom_preview_constructed     (GObject         *object);
 static void     gimp_zoom_preview_finalize        (GObject         *object);
@@ -209,7 +208,7 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
 static void
 gimp_zoom_preview_constructed (GObject *object)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
+  GimpZoomPreviewPrivate *priv = GET_PRIVATE (object);
   gchar                  *data_name;
   PreviewSettings         settings;
 
@@ -243,7 +242,7 @@ gimp_zoom_preview_constructed (GObject *object)
 static void
 gimp_zoom_preview_finalize (GObject *object)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
+  GimpZoomPreviewPrivate *priv = GET_PRIVATE (object);
 
   g_clear_object (&priv->model);
 
@@ -385,7 +384,7 @@ gimp_zoom_preview_style_updated (GtkWidget *widget)
 
   if (preview->area)
     {
-      GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+      GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
       gint                    size;
       gint                    width, height;
       gint                    x1, y1;
@@ -428,7 +427,7 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
 {
   if (event->state & GDK_CONTROL_MASK)
     {
-      GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+      GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
 
       gimp_scrolled_preview_freeze (GIMP_SCROLLED_PREVIEW (preview));
 
@@ -667,7 +666,7 @@ static void
 gimp_zoom_preview_set_model (GimpZoomPreview *preview,
                              GimpZoomModel   *model)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
   GtkWidget              *button_bar;
   GtkWidget              *button;
   GtkWidget              *box;
@@ -710,7 +709,7 @@ gimp_zoom_preview_get_source_area (GimpPreview *preview,
                                    gint        *w,
                                    gint        *h)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
   gdouble                 zoom = gimp_zoom_model_get_factor (priv->model);
 
   gimp_zoom_preview_untransform (preview, 0, 0, x, y);
@@ -789,7 +788,7 @@ gimp_zoom_preview_get_drawable_id (GimpZoomPreview *preview)
 {
   g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), -1);
 
-  return GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
+  return GET_PRIVATE (preview)->drawable_ID;
 }
 
 /**
@@ -807,7 +806,7 @@ gimp_zoom_preview_get_model (GimpZoomPreview *preview)
 {
   g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
 
-  return GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview)->model;
+  return GET_PRIVATE (preview)->model;
 }
 
 /**
@@ -827,7 +826,7 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
 
   g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), 1.0);
 
-  priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   return priv->model ? gimp_zoom_model_get_factor (priv->model) : 1.0;
 }

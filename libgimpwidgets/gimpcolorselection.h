@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_SELECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECTION, GimpColorSelectionClass))
 
 
-typedef struct _GimpColorSelectionClass GimpColorSelectionClass;
+typedef struct _GimpColorSelectionPrivate GimpColorSelectionPrivate;
+typedef struct _GimpColorSelectionClass   GimpColorSelectionClass;
 
 struct _GimpColorSelection
 {
-  GtkBox  parent_instance;
+  GtkBox                     parent_instance;
+
+  GimpColorSelectionPrivate *priv;
 };
 
 struct _GimpColorSelectionClass
@@ -57,6 +60,10 @@ struct _GimpColorSelectionClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

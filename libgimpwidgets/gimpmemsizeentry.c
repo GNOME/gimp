@@ -51,8 +51,6 @@ enum
 };
 
 
-typedef struct _GimpMemsizeEntryPrivate GimpMemsizeEntryPrivate;
-
 struct _GimpMemsizeEntryPrivate
 {
   guint64        value;
@@ -66,9 +64,7 @@ struct _GimpMemsizeEntryPrivate
   GtkWidget     *menu;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_MEMSIZE_ENTRY, \
-                                                      GimpMemsizeEntryPrivate)
+#define GET_PRIVATE(obj) (((GimpMemsizeEntry *) (obj))->priv)
 
 
 static void  gimp_memsize_entry_finalize      (GObject          *object);
@@ -110,19 +106,14 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
-  GimpMemsizeEntryPrivate *private = GET_PRIVATE (entry);
+  entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry,
+                                             GIMP_TYPE_MEMSIZE_ENTRY,
+                                             GimpMemsizeEntryPrivate);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
                                   GTK_ORIENTATION_HORIZONTAL);
 
   gtk_box_set_spacing (GTK_BOX (entry), 4);
-
-  private->value      = 0;
-  private->lower      = 0;
-  private->upper      = 0;
-  private->shift      = 0;
-  private->adjustment = NULL;
-  private->menu       = NULL;
 }
 
 static void

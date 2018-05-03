@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_OFFSET_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
 
 
-typedef struct _GimpOffsetAreaClass  GimpOffsetAreaClass;
+typedef struct _GimpOffsetAreaPrivate GimpOffsetAreaPrivate;
+typedef struct _GimpOffsetAreaClass   GimpOffsetAreaClass;
 
 struct _GimpOffsetArea
 {
-  GtkDrawingArea  parent_instance;
+  GtkDrawingArea         parent_instance;
+
+  GimpOffsetAreaPrivate *priv;
 };
 
 struct _GimpOffsetAreaClass
@@ -59,6 +62,10 @@ struct _GimpOffsetAreaClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

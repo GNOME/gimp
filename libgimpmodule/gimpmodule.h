@@ -151,7 +151,8 @@ G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module
 #define GIMP_MODULE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE, GimpModuleClass))
 
 
-typedef struct _GimpModuleClass GimpModuleClass;
+typedef struct _GimpModulePrivate GimpModulePrivate;
+typedef struct _GimpModuleClass   GimpModuleClass;
 
 /**
  * GimpModule:
@@ -171,8 +172,11 @@ typedef struct _GimpModuleClass GimpModuleClass;
  **/
 struct _GimpModule
 {
-  GTypeModule      parent_instance;
+  GTypeModule        parent_instance;
 
+  GimpModulePrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   /*< public >*/
   gchar           *filename;     /* path to the module                       */
   gboolean         verbose;      /* verbose error reporting                  */
@@ -204,6 +208,10 @@ struct _GimpModuleClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

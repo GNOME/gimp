@@ -61,13 +61,16 @@ typedef enum
 #define GIMP_INT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INT_STORE, GimpIntStoreClass))
 
 
-typedef struct _GimpIntStoreClass  GimpIntStoreClass;
+typedef struct _GimpIntStorePrivate GimpIntStorePrivate;
+typedef struct _GimpIntStoreClass   GimpIntStoreClass;
 
 struct _GimpIntStore
 {
-  GtkListStore  parent_instance;
+  GtkListStore         parent_instance;
 
-  /*< private >*/
+  GimpIntStorePrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GtkTreeIter  *empty_iter;
 };
 
@@ -80,6 +83,10 @@ struct _GimpIntStoreClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

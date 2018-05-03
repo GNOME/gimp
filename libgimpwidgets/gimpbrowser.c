@@ -50,8 +50,6 @@ enum
 };
 
 
-typedef struct _GimpBrowserPrivate GimpBrowserPrivate;
-
 struct _GimpBrowserPrivate
 {
   GtkWidget *left_vbox;
@@ -68,9 +66,7 @@ struct _GimpBrowserPrivate
   GtkWidget *right_widget;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_BROWSER, \
-                                                      GimpBrowserPrivate)
+#define GET_PRIVATE(obj) (((GimpBrowser *) (obj))->priv)
 
 
 static void      gimp_browser_dispose          (GObject               *object);
@@ -119,11 +115,17 @@ gimp_browser_class_init (GimpBrowserClass *klass)
 static void
 gimp_browser_init (GimpBrowser *browser)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (browser);
+  GimpBrowserPrivate *priv;
   GtkWidget          *hbox;
   GtkWidget          *label;
   GtkWidget          *scrolled_window;
   GtkWidget          *viewport;
+
+  browser->priv = G_TYPE_INSTANCE_GET_PRIVATE (browser,
+                                               GIMP_TYPE_BROWSER,
+                                               GimpBrowserPrivate);
+
+  priv = GET_PRIVATE (browser);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (browser),
                                   GTK_ORIENTATION_HORIZONTAL);

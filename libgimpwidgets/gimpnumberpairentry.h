@@ -39,14 +39,15 @@ G_BEGIN_DECLS
 #define GIMP_NUMBER_PAIR_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_NUMBER_PAIR_AREA, GimpNumberPairEntryClass))
 
 
+typedef struct _GimpNumberPairEntryPrivate GimpNumberPairEntryPrivate;
 typedef struct _GimpNumberPairEntryClass   GimpNumberPairEntryClass;
 
 
 struct _GimpNumberPairEntry
 {
-  GtkEntry   parent_instance;
+  GtkEntry                    parent_instance;
 
-  gpointer   priv;
+  GimpNumberPairEntryPrivate *priv;
 };
 
 struct _GimpNumberPairEntryClass
@@ -61,6 +62,10 @@ struct _GimpNumberPairEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

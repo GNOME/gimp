@@ -82,8 +82,6 @@ enum
 };
 
 
-typedef struct _GimpColorSelectionPrivate GimpColorSelectionPrivate;
-
 struct _GimpColorSelectionPrivate
 {
   gboolean                  show_alpha;
@@ -102,9 +100,7 @@ struct _GimpColorSelectionPrivate
   GtkWidget                *old_color;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_COLOR_SELECTION, \
-                                                       GimpColorSelectionPrivate))
+#define GET_PRIVATE(obj) (((GimpColorSelection *) (obj))->priv)
 
 
 static void   gimp_color_selection_set_property      (GObject            *object,
@@ -177,7 +173,7 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
 static void
 gimp_color_selection_init (GimpColorSelection *selection)
 {
-  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GimpColorSelectionPrivate *priv;
   GtkWidget                 *main_hbox;
   GtkWidget                 *hbox;
   GtkWidget                 *vbox;
@@ -187,6 +183,12 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkWidget                 *button;
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
+
+  selection->priv = G_TYPE_INSTANCE_GET_PRIVATE (selection,
+                                                 GIMP_TYPE_COLOR_SELECTION,
+                                                 GimpColorSelectionPrivate);
+
+  priv = selection->priv;
 
   priv->show_alpha = TRUE;
 

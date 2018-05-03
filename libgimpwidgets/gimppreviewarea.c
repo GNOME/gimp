@@ -61,18 +61,13 @@ enum
     (((area)->offset_x + (col)) & size)) ? dark : light)
 
 
-typedef struct _GimpPreviewAreaPrivate GimpPreviewAreaPrivate;
-
 struct _GimpPreviewAreaPrivate
 {
   GimpColorConfig    *config;
   GimpColorTransform *transform;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_PREVIEW_AREA, \
-                                     GimpPreviewAreaPrivate)
+#define GET_PRIVATE(obj) (((GimpPreviewArea *) (obj))->priv)
 
 
 static void      gimp_preview_area_dispose           (GObject          *object);
@@ -143,15 +138,12 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
 static void
 gimp_preview_area_init (GimpPreviewArea *area)
 {
+  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
+                                            GIMP_TYPE_PREVIEW_AREA,
+                                            GimpPreviewAreaPrivate);
+
   area->check_size = DEFAULT_CHECK_SIZE;
   area->check_type = DEFAULT_CHECK_TYPE;
-  area->buf        = NULL;
-  area->colormap   = NULL;
-  area->offset_x   = 0;
-  area->offset_y   = 0;
-  area->width      = 0;
-  area->height     = 0;
-  area->rowstride  = 0;
   area->max_width  = -1;
   area->max_height = -1;
 
