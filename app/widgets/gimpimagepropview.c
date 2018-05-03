@@ -63,7 +63,7 @@ static void        gimp_image_prop_view_get_property (GObject           *object,
                                                       GValue            *value,
                                                       GParamSpec        *pspec);
 
-static GtkWidget * gimp_image_prop_view_add_label    (GtkTable          *table,
+static GtkWidget * gimp_image_prop_view_add_label    (GtkGrid           *grid,
                                                       gint               row,
                                                       const gchar       *text);
 static void        gimp_image_prop_view_undo_event   (GimpImage         *image,
@@ -74,7 +74,7 @@ static void        gimp_image_prop_view_update       (GimpImagePropView *view);
 static void        gimp_image_prop_view_file_update  (GimpImagePropView *view);
 
 
-G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (GimpImagePropView, gimp_image_prop_view, GTK_TYPE_GRID)
 
 #define parent_class gimp_image_prop_view_parent_class
 
@@ -98,67 +98,65 @@ gimp_image_prop_view_class_init (GimpImagePropViewClass *klass)
 static void
 gimp_image_prop_view_init (GimpImagePropView *view)
 {
-  GtkTable *table = GTK_TABLE (view);
-  gint      row = 0;
+  GtkGrid *grid = GTK_GRID (view);
+  gint     row = 0;
 
-  gtk_table_resize (table, 15, 2);
-
-  gtk_table_set_col_spacings (table, 6);
-  gtk_table_set_row_spacings (table, 3);
+  gtk_grid_set_column_spacing (grid, 6);
+  gtk_grid_set_row_spacing (grid, 3);
 
   view->pixel_size_label =
-    gimp_image_prop_view_add_label (table, row++, _("Size in pixels:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Size in pixels:"));
 
   view->print_size_label =
-    gimp_image_prop_view_add_label (table, row++, _("Print size:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Print size:"));
 
   view->resolution_label =
-    gimp_image_prop_view_add_label (table, row++, _("Resolution:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Resolution:"));
 
   view->colorspace_label =
-    gimp_image_prop_view_add_label (table, row++, _("Color space:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Color space:"));
 
   view->precision_label =
-    gimp_image_prop_view_add_label (table, row, _("Precision:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Precision:"));
 
-  gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
+  gtk_widget_set_margin_bottom (view->precision_label, 12);
 
   view->filename_label =
-    gimp_image_prop_view_add_label (table, row++, _("File Name:"));
+    gimp_image_prop_view_add_label (grid, row++, _("File Name:"));
 
   gtk_label_set_ellipsize (GTK_LABEL (view->filename_label),
                            PANGO_ELLIPSIZE_MIDDLE);
 
   view->filesize_label =
-    gimp_image_prop_view_add_label (table, row++, _("File Size:"));
+    gimp_image_prop_view_add_label (grid, row++, _("File Size:"));
 
   view->filetype_label =
-    gimp_image_prop_view_add_label (table, row, _("File Type:"));
+    gimp_image_prop_view_add_label (grid, row++, _("File Type:"));
 
-  gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
+  gtk_widget_set_margin_bottom (view->filetype_label, 12);
 
   view->memsize_label =
-    gimp_image_prop_view_add_label (table, row++, _("Size in memory:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Size in memory:"));
 
   view->undo_label =
-    gimp_image_prop_view_add_label (table, row++, _("Undo steps:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Undo steps:"));
 
   view->redo_label =
-    gimp_image_prop_view_add_label (table, row, _("Redo steps:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Redo steps:"));
 
-  gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
+  gtk_widget_set_margin_bottom (view->redo_label, 12);
 
   view->pixels_label =
-    gimp_image_prop_view_add_label (table, row++, _("Number of pixels:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Number of pixels:"));
 
   view->layers_label =
-    gimp_image_prop_view_add_label (table, row++, _("Number of layers:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Number of layers:"));
 
   view->channels_label =
-    gimp_image_prop_view_add_label (table, row++, _("Number of channels:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Number of channels:"));
 
   view->vectors_label =
-    gimp_image_prop_view_add_label (table, row++, _("Number of paths:"));
+    gimp_image_prop_view_add_label (grid, row++, _("Number of paths:"));
 
 }
 
@@ -256,7 +254,7 @@ gimp_image_prop_view_new (GimpImage *image)
 /*  private functions  */
 
 static GtkWidget *
-gimp_image_prop_view_add_label (GtkTable    *table,
+gimp_image_prop_view_add_label (GtkGrid     *grid,
                                 gint         row,
                                 const gchar *text)
 {
@@ -266,13 +264,12 @@ gimp_image_prop_view_add_label (GtkTable    *table,
   desc = g_object_new (GTK_TYPE_LABEL,
                        "label",  text,
                        "xalign", 1.0,
-                       "yalign", 0.5,
+                       "yalign", 0.0,
                        NULL);
   gimp_label_set_attributes (GTK_LABEL (desc),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_table_attach (table, desc,
-                    0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, desc, 0, row, 1, 1);
   gtk_widget_show (desc);
 
   label = g_object_new (GTK_TYPE_LABEL,
@@ -281,8 +278,7 @@ gimp_image_prop_view_add_label (GtkTable    *table,
                         "selectable", TRUE,
                         NULL);
 
-  gtk_table_attach (table, label,
-                    1, 2, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, label, 1, row, 1, 1);
 
   gtk_widget_show (label);
 
