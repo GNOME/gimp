@@ -34,7 +34,7 @@ typedef struct _GimpImagePropViewClass GimpImagePropViewClass;
 
 struct _GimpImagePropView
 {
-  GtkTable   parent_instance;
+  GtkGrid    parent_instance;
 
   GimpImage *image;
 
@@ -57,7 +57,7 @@ struct _GimpImagePropView
 
 struct _GimpImagePropViewClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass  parent_class;
 };
 
 
