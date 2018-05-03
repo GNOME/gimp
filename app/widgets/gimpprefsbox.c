@@ -169,7 +169,9 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_widget_show (vbox);
 
   ebox = gtk_event_box_new ();
-  gtk_widget_set_state (ebox, GTK_STATE_SELECTED);
+  gtk_widget_set_state_flags (ebox, GTK_STATE_FLAG_SELECTED, TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (ebox),
+                               GTK_STYLE_CLASS_VIEW);
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
   gtk_widget_show (ebox);
 
@@ -179,6 +181,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_widget_show (hbox);
 
   private->label = gtk_label_new (NULL);
+  gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (private->label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
@@ -188,6 +191,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_widget_show (private->label);
 
   private->image = gtk_image_new ();
+  gtk_widget_set_state_flags (private->image, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), private->image, FALSE, FALSE, 0);
   gtk_widget_show (private->image);
 
