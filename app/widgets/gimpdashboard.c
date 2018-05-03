@@ -218,7 +218,7 @@ struct _GroupData
   GtkButton       *menu_button;
   GtkMenu         *menu;
   GimpMeter       *meter;
-  GtkTable        *table;
+  GtkGrid         *grid;
 
   FieldData       *fields;
 };
@@ -633,7 +633,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   GtkWidget            *frame;
   GtkWidget            *vbox2;
   GtkWidget            *meter;
-  GtkWidget            *table;
+  GtkWidget            *grid;
   GtkWidget            *label;
   gint                  content_spacing;
   Group                 group;
@@ -850,13 +850,13 @@ gimp_dashboard_init (GimpDashboard *dashboard)
             }
         }
 
-      /* group table */
-      table = gtk_table_new (1, 1, FALSE);
-      group_data->table = GTK_TABLE (table);
-      gtk_table_set_row_spacings (GTK_TABLE (table), content_spacing);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
-      gtk_widget_show (table);
+      /* group grid */
+      grid = gtk_grid_new ();
+      group_data->grid = GTK_GRID (grid);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), content_spacing);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+      gtk_box_pack_start (GTK_BOX (vbox2), grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
 
       gimp_dashboard_group_set_active (dashboard, group,
                                        group_info->default_active);
@@ -1954,10 +1954,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
         }
     }
 
-  gtk_container_foreach (GTK_CONTAINER (group_data->table),
+  gtk_container_foreach (GTK_CONTAINER (group_data->grid),
                          (GtkCallback) gimp_dashboard_container_remove,
-                         group_data->table);
-  gtk_table_resize (group_data->table, MAX (n_rows, 1), 3);
+                         group_data->grid);
 
   n_rows        = 0;
   add_separator = FALSE;
@@ -1984,10 +1983,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
           if (add_separator)
             {
               separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
-              gtk_table_attach (group_data->table, separator,
-                                0, 3, n_rows, n_rows + 1,
-                                GTK_EXPAND | GTK_FILL, 0,
-                                0, 0);
+              gtk_widget_set_hexpand (separator, TRUE);
+              gtk_grid_attach (group_data->grid, separator,
+                               0, n_rows, 3, 1);
               gtk_widget_show (separator);
 
               add_separator = FALSE;
@@ -2001,10 +1999,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
               gimp_help_set_help_data (color_area, description,
                                        NULL);
               gtk_widget_set_size_request (color_area, 5, 5);
-              gtk_table_attach (group_data->table, color_area,
-                                0, 1, n_rows, n_rows + 1,
-                                0, 0,
-                                0, 0);
+              gtk_widget_set_valign (color_area, GTK_ALIGN_CENTER);
+              gtk_grid_attach (group_data->grid, color_area,
+                               0, n_rows, 1, 1);
               gtk_widget_show (color_area);
             }
 
@@ -2016,10 +2013,8 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
           gimp_help_set_help_data (label, description,
                                    NULL);
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-          gtk_table_attach (group_data->table, label,
-                            1, 2, n_rows, n_rows + 1,
-                            GTK_FILL, 0,
-                            0, 0);
+          gtk_grid_attach (group_data->grid, label,
+                           1, n_rows, 1, 1);
           gtk_widget_show (label);
 
           g_free (str);
@@ -2029,10 +2024,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
           gimp_help_set_help_data (label, description,
                                    NULL);
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-          gtk_table_attach (group_data->table, label,
-                            2, 3, n_rows, n_rows + 1,
-                            GTK_EXPAND | GTK_FILL, 0,
-                            0, 0);
+          gtk_widget_set_hexpand (label, TRUE);
+          gtk_grid_attach (group_data->grid, label,
+                           2, n_rows, 1, 1);
           gtk_widget_show (label);
 
           n_rows++;
