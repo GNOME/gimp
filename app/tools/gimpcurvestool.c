@@ -483,6 +483,8 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_widget_set_hexpand (frame, TRUE);
+  gtk_widget_set_vexpand (frame, TRUE);
   gtk_grid_attach (GTK_GRID (grid), frame, 1, 0, 1, 1);
   gtk_widget_show (frame);
 
