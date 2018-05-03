@@ -134,7 +134,7 @@ GtkWidget *
 gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 {
   GimpContext *context;
-  GtkWidget   *indicator_table;
+  GtkWidget   *indicator_grid;
   GtkWidget   *brush_view;
   GtkWidget   *pattern_view;
   GtkWidget   *gradient_view;
@@ -143,9 +143,9 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 
   context = gimp_toolbox_get_context (toolbox);
 
-  indicator_table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (indicator_table), CELL_SPACING);
-  gtk_table_set_col_spacings (GTK_TABLE (indicator_table), CELL_SPACING);
+  indicator_grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (indicator_grid), CELL_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (indicator_grid), CELL_SPACING);
 
   /*  brush view  */
 
@@ -156,8 +156,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (brush_view),
                           GIMP_VIEWABLE (gimp_context_get_brush (context)));
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), brush_view,
-                             0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (indicator_grid), brush_view, 0, 0, 1, 1);
   gtk_widget_show (brush_view);
 
   gimp_help_set_help_data (brush_view,
@@ -188,8 +187,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gimp_view_set_viewable (GIMP_VIEW (pattern_view),
                           GIMP_VIEWABLE (gimp_context_get_pattern (context)));
 
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), pattern_view,
-                             1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (indicator_grid), pattern_view, 1, 0, 1, 1);
   gtk_widget_show (pattern_view);
 
   gimp_help_set_help_data (pattern_view,
@@ -220,8 +218,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gimp_view_set_viewable (GIMP_VIEW (gradient_view),
                           GIMP_VIEWABLE (gimp_context_get_gradient (context)));
 
-  gtk_table_attach_defaults (GTK_TABLE (indicator_table), gradient_view,
-                             0, 2, 1, 2);
+  gtk_grid_attach (GTK_GRID (indicator_grid), gradient_view, 0, 1, 2, 1);
   gtk_widget_show (gradient_view);
 
   gimp_help_set_help_data (gradient_view,
@@ -242,7 +239,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                               gradient_preview_drop_gradient,
                               context);
 
-  gtk_widget_show (indicator_table);
+  gtk_widget_show (indicator_grid);
 
-  return indicator_table;
+  return indicator_grid;
 }
