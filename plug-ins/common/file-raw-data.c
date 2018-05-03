@@ -1463,17 +1463,21 @@ preview_update_size (GimpPreviewArea *preview)
 static void
 preview_update (GimpPreviewArea *preview)
 {
+  gint     preview_width;
+  gint     preview_height;
   gint     width;
   gint     height;
   gint32   pos;
   gint     x, y;
   gint     bitspp = 0;
 
-  width  = MIN (runtime->image_width,  preview->width);
-  height = MIN (runtime->image_height, preview->height);
+  gimp_preview_area_get_size (preview, &preview_width, &preview_height);
+
+  width  = MIN (runtime->image_width,  preview_width);
+  height = MIN (runtime->image_height, preview_height);
 
   gimp_preview_area_fill (preview,
-                          0, 0, preview->width, preview->height,
+                          0, 0, preview_width, preview_height,
                           255, 255, 255);
 
   switch (runtime->image_type)
