@@ -109,7 +109,7 @@ gimp_stroke_editor_constructed (GObject *object)
   GtkWidget         *size;
   GtkWidget         *label;
   GtkWidget         *frame;
-  GtkWidget         *table;
+  GtkWidget         *grid;
   GtkWidget         *expander;
   GtkWidget         *dash_editor;
   GtkWidget         *button;
@@ -146,37 +146,35 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (expander), frame);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 3);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
                                      "gimp-cap", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Cap style:"), 0.0, 0.5,
-                             box, 2, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Cap style:"), 0.0, 0.5,
+                            box, 2);
 
   box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "join-style",
                                      "gimp-join", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Join style:"), 0.0, 0.5,
-                             box, 2, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Join style:"), 0.0, 0.5,
+                            box, 2);
 
   gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
-                             GTK_TABLE (table), 0, row++,
+                             GTK_GRID (grid), 0, row++,
                              _("_Miter limit:"),
                              1.0, 1.0, 1,
                              FALSE, 0.0, 0.0);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash pattern:"), 0.0, 0.5,
-                             frame, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Dash pattern:"), 0.0, 0.5,
+                            frame, 2);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), box);
@@ -237,9 +235,9 @@ gimp_stroke_editor_constructed (GObject *object)
   g_object_unref (store);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Dash _preset:"), 0.0, 0.5,
-                             box, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Dash _preset:"), 0.0, 0.5,
+                            box, 2);
 
   cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,
                        "xpad", 2,

@@ -1315,7 +1315,7 @@ gimp_prop_hscale_new (GObject     *config,
  * gimp_prop_scale_entry_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of double property controlled by the spin button.
- * @table:          The #GtkTable the widgets will be attached to.
+ * @grid:           The #GtkGrid the widgets will be attached to.
  * @column:         The column to start with.
  * @row:            The row to attach the widgets.
  * @label:          The text for the #GtkLabel which will appear left of
@@ -1344,7 +1344,7 @@ gimp_prop_hscale_new (GObject     *config,
 GtkAdjustment *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
-                           GtkTable    *table,
+                           GtkGrid     *grid,
                            gint         column,
                            gint         row,
                            const gchar *label,
@@ -1377,25 +1377,25 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   if (! limit_scale)
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
-                                         label, -1, -1,
-                                         value, lower, upper,
-                                         step_increment, page_increment,
-                                         digits,
-                                         TRUE, 0.0, 0.0,
-                                         tooltip,
-                                         NULL);
+      adjustment = gimp_scale_entry_new_grid (grid, column, row,
+                                              label, -1, -1,
+                                              value, lower, upper,
+                                              step_increment, page_increment,
+                                              digits,
+                                              TRUE, 0.0, 0.0,
+                                              tooltip,
+                                              NULL);
     }
   else
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
-                                         label, -1, -1,
-                                         value, lower_limit, upper_limit,
-                                         step_increment, page_increment,
-                                         digits,
-                                         FALSE, lower, upper,
-                                         tooltip,
-                                         NULL);
+      adjustment = gimp_scale_entry_new_grid (grid, column, row,
+                                              label, -1, -1,
+                                              value, lower_limit, upper_limit,
+                                              step_increment, page_increment,
+                                              digits,
+                                              FALSE, lower, upper,
+                                              tooltip,
+                                              NULL);
     }
 
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);
@@ -1472,7 +1472,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  * gimp_prop_opacity_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of double property controlled by the spin button.
- * @table:         The #GtkTable the widgets will be attached to.
+ * @grid:          The #GtkGrid the widgets will be attached to.
  * @column:        The column to start with.
  * @row:           The row to attach the widgets.
  * @label:         The text for the #GtkLabel which will appear left of the
@@ -1490,7 +1490,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
 GtkAdjustment *
 gimp_prop_opacity_entry_new (GObject     *config,
                              const gchar *property_name,
-                             GtkTable    *table,
+                             GtkGrid     *grid,
                              gint         column,
                              gint         row,
                              const gchar *label)
@@ -1501,7 +1501,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   g_return_val_if_fail (property_name != NULL, NULL);
 
   adjustment = gimp_prop_scale_entry_new (config, property_name,
-                                          table, column, row, label,
+                                          grid, column, row, label,
                                           0.01, 0.1, 1,
                                           FALSE, 0.0, 0.0);
 

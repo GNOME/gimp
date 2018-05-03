@@ -110,7 +110,7 @@ GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
 
 GtkAdjustment * gimp_prop_scale_entry_new         (GObject      *config,
                                                    const gchar  *property_name,
-                                                   GtkTable     *table,
+                                                   GtkGrid      *grid,
                                                    gint          column,
                                                    gint          row,
                                                    const gchar  *label,
@@ -125,7 +125,7 @@ GtkAdjustment * gimp_prop_scale_entry_new         (GObject      *config,
 
 GtkAdjustment * gimp_prop_opacity_entry_new       (GObject       *config,
                                                    const gchar   *property_name,
-                                                   GtkTable      *table,
+                                                   GtkGrid       *grid,
                                                    gint           column,
                                                    gint           row,
                                                    const gchar   *label);
