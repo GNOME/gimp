@@ -69,9 +69,6 @@ struct _GimpIntStore
   GtkListStore         parent_instance;
 
   GimpIntStorePrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GtkTreeIter  *empty_iter;
 };
 
 struct _GimpIntStoreClass
