@@ -220,6 +220,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
         gtk_label_set_mnemonic_widget (GTK_LABEL (label), mnemonic_widget);
     }
 
+  gtk_widget_set_hexpand (widget, TRUE);
   gtk_grid_attach (grid, widget, left + 1, top, columns, 1);
   gtk_widget_show (widget);
 
