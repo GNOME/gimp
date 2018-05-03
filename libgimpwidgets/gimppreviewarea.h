@@ -42,19 +42,6 @@ struct _GimpPreviewArea
   GtkDrawingArea          parent_instance;
 
   GimpPreviewAreaPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GimpCheckSize    check_size;
-  GimpCheckType    check_type;
-  gint             width;
-  gint             height;
-  gint             rowstride;
-  gint             offset_x;
-  gint             offset_y;
-  gint             max_width;
-  gint             max_height;
-  guchar          *buf;
-  guchar          *colormap;
 };
 
 struct _GimpPreviewAreaClass
@@ -128,6 +115,9 @@ void        gimp_preview_area_set_colormap     (GimpPreviewArea *area,
 void        gimp_preview_area_set_color_config (GimpPreviewArea *area,
                                                 GimpColorConfig *config);
 
+void        gimp_preview_area_get_size         (GimpPreviewArea *area,
+                                                gint            *width,
+                                                gint            *height);
 void        gimp_preview_area_set_max_size     (GimpPreviewArea *area,
                                                 gint             width,
                                                 gint             height);

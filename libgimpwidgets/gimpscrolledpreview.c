@@ -566,6 +566,9 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       GtkWidget       *area;
       GdkCursor       *cursor;
       GtkBorder        border;
+      GimpCheckType    check_type;
+      gint             area_width;
+      gint             area_height;
       gint             x, y;
       gdouble          h, v;
 
@@ -584,9 +587,13 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       gtk_container_add (GTK_CONTAINER (outer), inner);
       gtk_widget_show (inner);
 
+      g_object_get (gimp_preview->area,
+                    "check-type", &check_type,
+                    NULL);
+
       area = g_object_new (GIMP_TYPE_PREVIEW_AREA,
                            "check-size", GIMP_CHECK_SIZE_SMALL_CHECKS,
-                           "check-type", GIMP_PREVIEW_AREA (gimp_preview->area)->check_type,
+                           "check-type", check_type,
                            NULL);
 
       gtk_container_add (GTK_CONTAINER (inner), area);
@@ -618,8 +625,11 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
            (gtk_adjustment_get_page_size (adj) /
             gtk_adjustment_get_upper (adj)) / 2.0);
 
-      x += event->x - h * (gdouble) GIMP_PREVIEW_AREA (area)->width;
-      y += event->y - v * (gdouble) GIMP_PREVIEW_AREA (area)->height;
+      gimp_preview_area_get_size (GIMP_PREVIEW_AREA (area),
+                                  &area_width, &area_height);
+
+      x += event->x - h * (gdouble) area_width;
+      y += event->y - v * (gdouble) area_height;
 
       gtk_style_context_get_border (context, 0, &border);
 
