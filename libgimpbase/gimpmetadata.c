@@ -38,8 +38,8 @@
 
 #include "libgimp/libgimp-intl.h"
 
-typedef struct _GimpMetadataClass   GimpMetadataClass;
 typedef struct _GimpMetadataPrivate GimpMetadataPrivate;
+typedef struct _GimpMetadataClass   GimpMetadataClass;
 
 struct _GimpMetadata
 {

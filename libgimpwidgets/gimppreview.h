@@ -39,12 +39,16 @@ G_BEGIN_DECLS
 #define GIMP_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW, GimpPreviewClass))
 
 
-typedef struct _GimpPreviewClass  GimpPreviewClass;
+typedef struct _GimpPreviewPrivate GimpPreviewPrivate;
+typedef struct _GimpPreviewClass   GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkBox        parent_instance;
+  GtkBox              parent_instance;
 
+  GimpPreviewPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   gboolean      update_preview;
 
   /*< protected >*/
@@ -78,10 +82,6 @@ struct _GimpPreviewClass
                           gint             rowstride);
   void   (* set_cursor)  (GimpPreview     *preview);
 
-  /* signal */
-  void   (* invalidated) (GimpPreview     *preview);
-
-  /* virtual methods */
   void   (* transform)   (GimpPreview     *preview,
                           gint             src_x,
                           gint             src_y,
@@ -93,9 +93,18 @@ struct _GimpPreviewClass
                           gint            *dest_x,
                           gint            *dest_y);
 
+  /* signal */
+  void   (* invalidated) (GimpPreview     *preview);
+
   /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

@@ -38,11 +38,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SCALE, GimpColorScaleClass))
 
 
-typedef struct _GimpColorScaleClass  GimpColorScaleClass;
+typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
+typedef struct _GimpColorScaleClass   GimpColorScaleClass;
 
 struct _GimpColorScale
 {
-  GtkRange  parent_instance;
+  GtkRange               parent_instance;
+
+  GimpColorScalePrivate *priv;
 };
 
 struct _GimpColorScaleClass
@@ -54,6 +57,10 @@ struct _GimpColorScaleClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

@@ -44,20 +44,6 @@
  **/
 
 
-#define GIMP_FONT_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonPrivate))
-
-typedef struct _GimpFontSelectButtonPrivate GimpFontSelectButtonPrivate;
-
-struct _GimpFontSelectButtonPrivate
-{
-  gchar       *title;
-
-  gchar       *font_name;      /* local copy */
-
-  GtkWidget   *inside;
-  GtkWidget   *label;
-};
-
 enum
 {
   FONT_SET,
@@ -70,6 +56,19 @@ enum
   PROP_TITLE,
   PROP_FONT_NAME
 };
+
+
+struct _GimpFontSelectButtonPrivate
+{
+  gchar       *title;
+
+  gchar       *font_name;      /* local copy */
+
+  GtkWidget   *inside;
+  GtkWidget   *label;
+};
+
+#define GET_PRIVATE(obj) (((GimpFontSelectButton *) (obj))->priv)
 
 
 /*  local function prototypes  */
@@ -184,7 +183,11 @@ gimp_font_select_button_init (GimpFontSelectButton *button)
 {
   GimpFontSelectButtonPrivate *priv;
 
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
+  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
+                                              GIMP_TYPE_FONT_SELECT_BUTTON,
+                                              GimpFontSelectButtonPrivate);
+
+  priv = GET_PRIVATE (button);
 
   priv->font_name = NULL;
 
@@ -237,12 +240,9 @@ gimp_font_select_button_new (const gchar *title,
 const gchar *
 gimp_font_select_button_get_font (GimpFontSelectButton *button)
 {
-  GimpFontSelectButtonPrivate *priv;
-
   g_return_val_if_fail (GIMP_IS_FONT_SELECT_BUTTON (button), NULL);
 
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
-  return priv->font_name;
+  return GET_PRIVATE (button)->font_name;
 }
 
 /**
@@ -276,9 +276,7 @@ gimp_font_select_button_set_font (GimpFontSelectButton *button,
 static void
 gimp_font_select_button_finalize (GObject *object)
 {
-  GimpFontSelectButtonPrivate *priv;
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (object);
+  GimpFontSelectButtonPrivate *priv = GET_PRIVATE (object);
 
   g_free (priv->font_name);
   priv->font_name = NULL;
@@ -296,9 +294,7 @@ gimp_font_select_button_set_property (GObject      *object,
                                       GParamSpec   *pspec)
 {
   GimpFontSelectButton        *button = GIMP_FONT_SELECT_BUTTON (object);
-  GimpFontSelectButtonPrivate *priv;
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
+  GimpFontSelectButtonPrivate *priv   = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -309,6 +305,7 @@ gimp_font_select_button_set_property (GObject      *object,
       gimp_font_select_button_set_font (button,
                                         g_value_get_string (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -322,9 +319,7 @@ gimp_font_select_button_get_property (GObject    *object,
                                       GParamSpec *pspec)
 {
   GimpFontSelectButton        *button = GIMP_FONT_SELECT_BUTTON (object);
-  GimpFontSelectButtonPrivate *priv;
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
+  GimpFontSelectButtonPrivate *priv   = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -334,6 +329,7 @@ gimp_font_select_button_get_property (GObject    *object,
     case PROP_FONT_NAME:
       g_value_set_string (value, priv->font_name);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -345,14 +341,9 @@ gimp_font_select_button_callback (const gchar *font_name,
                                   gboolean     dialog_closing,
                                   gpointer     user_data)
 {
-  GimpFontSelectButton        *button;
-  GimpFontSelectButtonPrivate *priv;
-  GimpSelectButton            *select_button;
-
-  button = GIMP_FONT_SELECT_BUTTON (user_data);
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
-  select_button = GIMP_SELECT_BUTTON (button);
+  GimpFontSelectButton        *button        = GIMP_FONT_SELECT_BUTTON (user_data);
+  GimpFontSelectButtonPrivate *priv          = GET_PRIVATE (button);
+  GimpSelectButton            *select_button = GIMP_SELECT_BUTTON (button);
 
   g_free (priv->font_name);
   priv->font_name = g_strdup (font_name);
@@ -370,11 +361,8 @@ gimp_font_select_button_callback (const gchar *font_name,
 static void
 gimp_font_select_button_clicked (GimpFontSelectButton *button)
 {
-  GimpFontSelectButtonPrivate *priv;
-  GimpSelectButton            *select_button;
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (button);
-  select_button = GIMP_SELECT_BUTTON (button);
+  GimpFontSelectButtonPrivate *priv          = GET_PRIVATE (button);
+  GimpSelectButton            *select_button = GIMP_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
@@ -433,12 +421,10 @@ gimp_font_select_drag_data_received (GimpFontSelectButton *button,
 static GtkWidget *
 gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
 {
+  GimpFontSelectButtonPrivate *priv = GET_PRIVATE (font_button);
   GtkWidget                   *button;
   GtkWidget                   *hbox;
   GtkWidget                   *image;
-  GimpFontSelectButtonPrivate *priv;
-
-  priv = GIMP_FONT_SELECT_BUTTON_GET_PRIVATE (font_button);
 
   button = gtk_button_new ();
 

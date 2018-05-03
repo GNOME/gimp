@@ -48,10 +48,13 @@ enum
   PROP_USER_DATA_TYPE
 };
 
-typedef struct
+
+struct _GimpIntStorePrivate
 {
   GType  user_data_type;
-} GimpIntStorePrivate;
+};
+
+#define GET_PRIVATE(obj) (((GimpIntStore *) (obj))->priv)
 
 
 static void  gimp_int_store_tree_model_init (GtkTreeModelIface *iface);
@@ -78,9 +81,6 @@ static void  gimp_int_store_add_empty       (GimpIntStore      *store);
 G_DEFINE_TYPE_WITH_CODE (GimpIntStore, gimp_int_store, GTK_TYPE_LIST_STORE,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
                                                 gimp_int_store_tree_model_init))
-
-#define GIMP_INT_STORE_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (obj, GIMP_TYPE_INT_STORE, GimpIntStorePrivate)
 
 #define parent_class gimp_int_store_parent_class
 
@@ -132,14 +132,16 @@ gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
 static void
 gimp_int_store_init (GimpIntStore *store)
 {
-  store->empty_iter = NULL;
+  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
+                                             GIMP_TYPE_INT_STORE,
+                                             GimpIntStorePrivate);
 }
 
 static void
 gimp_int_store_constructed (GObject *object)
 {
   GimpIntStore        *store = GIMP_INT_STORE (object);
-  GimpIntStorePrivate *priv  = GIMP_INT_STORE_GET_PRIVATE (store);
+  GimpIntStorePrivate *priv  = GET_PRIVATE (store);
   GType                types[GIMP_INT_STORE_NUM_COLUMNS];
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -178,7 +180,7 @@ gimp_int_store_set_property (GObject      *object,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpIntStorePrivate *priv = GIMP_INT_STORE_GET_PRIVATE (object);
+  GimpIntStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -197,7 +199,7 @@ gimp_int_store_get_property (GObject    *object,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpIntStorePrivate *priv = GIMP_INT_STORE_GET_PRIVATE (object);
+  GimpIntStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {

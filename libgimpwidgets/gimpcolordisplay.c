@@ -62,8 +62,6 @@ enum
 };
 
 
-typedef struct _GimpColorDisplayPrivate GimpColorDisplayPrivate;
-
 struct _GimpColorDisplayPrivate
 {
   gboolean          enabled;
@@ -71,9 +69,7 @@ struct _GimpColorDisplayPrivate
   GimpColorManaged *managed;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_COLOR_DISPLAY, \
-                                                       GimpColorDisplayPrivate))
+#define GET_PRIVATE(obj) (((GimpColorDisplay *) (obj))->priv)
 
 
 
@@ -160,9 +156,9 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 static void
 gimp_color_display_init (GimpColorDisplay *display)
 {
-  GimpColorDisplayPrivate *private = GET_PRIVATE (display);
-
-  private->enabled = FALSE;
+  display->priv = G_TYPE_INSTANCE_GET_PRIVATE (display,
+                                               GIMP_TYPE_COLOR_DISPLAY,
+                                               GimpColorDisplayPrivate);
 }
 
 static void

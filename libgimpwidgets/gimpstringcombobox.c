@@ -48,15 +48,14 @@ enum
 };
 
 
-typedef struct
+struct _GimpStringComboBoxPrivate
 {
   gint             id_column;
   gint             label_column;
   GtkCellRenderer *text_renderer;
-} GimpStringComboBoxPrivate;
+};
 
-#define GIMP_STRING_COMBO_BOX_GET_PRIVATE(obj) \
-  ((GimpStringComboBoxPrivate *) ((GimpStringComboBox *) (obj))->priv)
+#define GET_PRIVATE(obj) (((GimpStringComboBox *) (obj))->priv)
 
 
 static void   gimp_string_combo_box_constructed  (GObject      *object);
@@ -151,7 +150,7 @@ gimp_string_combo_box_init (GimpStringComboBox *combo_box)
 static void
 gimp_string_combo_box_constructed (GObject *object)
 {
-  GimpStringComboBoxPrivate *priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
+  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
   GtkCellRenderer           *cell;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -170,7 +169,7 @@ gimp_string_combo_box_set_property (GObject      *object,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
+  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -198,7 +197,7 @@ gimp_string_combo_box_get_property (GObject    *object,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpStringComboBoxPrivate *priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
+  GimpStringComboBoxPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -312,7 +311,7 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-      column = GIMP_STRING_COMBO_BOX_GET_PRIVATE (combo_box)->id_column;
+      column = GET_PRIVATE (combo_box)->id_column;
 
       if (gimp_string_model_lookup (model, column, id, &iter))
         {
@@ -353,7 +352,7 @@ gimp_string_combo_box_get_active (GimpStringComboBox *combo_box)
       gchar        *value;
       gint          column;
 
-      column = GIMP_STRING_COMBO_BOX_GET_PRIVATE (combo_box)->id_column;
+      column = GET_PRIVATE (combo_box)->id_column;
 
       gtk_tree_model_get (model, &iter,
                           column, &value,

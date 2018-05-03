@@ -59,12 +59,13 @@ enum
   PROP_UPDATE
 };
 
-typedef struct
+
+struct _GimpPreviewPrivate
 {
   GtkWidget *controls;
-} GimpPreviewPrivate;
+};
 
-#define GIMP_PREVIEW_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PREVIEW, GimpPreviewPrivate))
+#define GET_PRIVATE(obj) (((GimpPreview *) (obj))->priv)
 
 
 static void      gimp_preview_class_init          (GimpPreviewClass *klass);
@@ -113,6 +114,8 @@ static void      gimp_preview_real_untransform    (GimpPreview      *preview,
                                                    gint             *dest_x,
                                                    gint             *dest_y);
 
+
+/* FIXME G_DEFINE_TYPE */
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
@@ -202,9 +205,15 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 static void
 gimp_preview_init (GimpPreview *preview)
 {
-  GimpPreviewPrivate *priv = GIMP_PREVIEW_GET_PRIVATE (preview);
+  GimpPreviewPrivate *priv;
   GtkWidget          *frame;
   gdouble             xalign = 0.0;
+
+  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
+                                               GIMP_TYPE_PREVIEW,
+                                               GimpPreviewPrivate);
+
+  priv = preview->priv;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (preview),
                                   GTK_ORIENTATION_VERTICAL);
@@ -853,5 +862,5 @@ gimp_preview_get_controls (GimpPreview *preview)
 {
   g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
 
-  return GIMP_PREVIEW_GET_PRIVATE (preview)->controls;
+  return GET_PRIVATE (preview)->controls;
 }

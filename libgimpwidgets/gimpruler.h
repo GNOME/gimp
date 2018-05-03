@@ -33,11 +33,14 @@ G_BEGIN_DECLS
 #define GIMP_RULER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RULER, GimpRulerClass))
 
 
+typedef struct _GimpRulerPrivate GimpRulerPrivate;
 typedef struct _GimpRulerClass   GimpRulerClass;
 
 struct _GimpRuler
 {
-  GtkWidget  parent_instance;
+  GtkWidget         parent_instance;
+
+  GimpRulerPrivate *priv;
 };
 
 struct _GimpRulerClass
@@ -49,6 +52,10 @@ struct _GimpRulerClass
   void (*_gimp_reserved2) (void);
   void (*_gimp_reserved3) (void);
   void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
 };
 
 

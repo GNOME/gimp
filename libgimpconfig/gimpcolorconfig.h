@@ -34,13 +34,16 @@
 #define GIMP_IS_COLOR_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_CONFIG))
 
 
-typedef struct _GimpColorConfigClass GimpColorConfigClass;
+typedef struct _GimpColorConfigPrivate GimpColorConfigPrivate;
+typedef struct _GimpColorConfigClass   GimpColorConfigClass;
 
 struct _GimpColorConfig
 {
-  GObject                     parent_instance;
+  GObject                 parent_instance;
 
-  /*< public >*/
+  GimpColorConfigPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GimpColorManagementMode     mode;
   gchar                      *rgb_profile;
   gchar                      *cmyk_profile;
@@ -57,22 +60,20 @@ struct _GimpColorConfig
   gboolean                    simulation_use_black_point_compensation;
 
   gchar                      *gray_profile;
+};
 
-  /*< private >*/
-  /* Padding for future expansion */
-#if (GLIB_SIZEOF_VOID_P == 8)
+struct _GimpColorConfigClass
+{
+  GObjectClass  parent_class;
+
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
-#endif
   void (* _gimp_reserved4) (void);
   void (* _gimp_reserved5) (void);
   void (* _gimp_reserved6) (void);
   void (* _gimp_reserved7) (void);
   void (* _gimp_reserved8) (void);
-};
-
-struct _GimpColorConfigClass
-{
-  GObjectClass                parent_class;
 };
 
 

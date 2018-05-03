@@ -37,11 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_HEX_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_HEX_AREA, GimpColorHexEntryClass))
 
 
-typedef struct _GimpColorHexEntryClass  GimpColorHexEntryClass;
+typedef struct _GimpColorHexEntryPrivate GimpColorHexEntryPrivate;
+typedef struct _GimpColorHexEntryClass   GimpColorHexEntryClass;
 
 struct _GimpColorHexEntry
 {
-  GtkEntry  parent_instance;
+  GtkEntry                  parent_instance;
+
+  GimpColorHexEntryPrivate *priv;
 };
 
 struct _GimpColorHexEntryClass
@@ -55,6 +58,10 @@ struct _GimpColorHexEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

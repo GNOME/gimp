@@ -132,18 +132,13 @@ enum
 };
 
 
-typedef struct _GimpColorConfigPrivate GimpColorConfigPrivate;
-
 struct _GimpColorConfigPrivate
 {
   gboolean display_optimize;
   gboolean simulation_optimize;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_CONFIG, \
-                                     GimpColorConfigPrivate)
+#define GET_PRIVATE(obj) (((GimpColorConfig *) (obj))->priv)
 
 
 static void  gimp_color_config_finalize               (GObject          *object);
@@ -308,6 +303,9 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 static void
 gimp_color_config_init (GimpColorConfig *config)
 {
+  config->priv = G_TYPE_INSTANCE_GET_PRIVATE (config,
+                                              GIMP_TYPE_COLOR_CONFIG,
+                                              GimpColorConfigPrivate);
 }
 
 static void

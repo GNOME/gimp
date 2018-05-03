@@ -41,22 +41,22 @@ G_BEGIN_DECLS
 #define GIMP_SCROLLED_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewClass))
 
 
-typedef struct _GimpScrolledPreviewClass  GimpScrolledPreviewClass;
+typedef struct _GimpScrolledPreviewPrivate GimpScrolledPreviewPrivate;
+typedef struct _GimpScrolledPreviewClass   GimpScrolledPreviewClass;
 
 struct _GimpScrolledPreview
 {
-  GimpPreview   parent_instance;
+  GimpPreview                 parent_instance;
 
-  /*< protected >*/
+  GimpScrolledPreviewPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GtkWidget    *hscr;
   GtkWidget    *vscr;
   GtkWidget    *nav_icon;
   GtkWidget    *nav_popup;
   GdkCursor    *cursor_move;
   gpointer      nav_gc; /* unused */
-
-  /*< private >*/
-  gpointer      priv;
 };
 
 struct _GimpScrolledPreviewClass
@@ -68,6 +68,10 @@ struct _GimpScrolledPreviewClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

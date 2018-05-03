@@ -54,16 +54,12 @@ enum
 };
 
 
-typedef struct _GimpColorProfileStorePrivate GimpColorProfileStorePrivate;
-
 struct _GimpColorProfileStorePrivate
 {
   gchar *history;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_COLOR_PROFILE_STORE, \
-                                                      GimpColorProfileStorePrivate)
+#define GET_PRIVATE(obj) (((GimpColorProfileStore *) (obj))->priv)
 
 
 static void      gimp_color_profile_store_constructed    (GObject               *object);
@@ -140,6 +136,10 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
       G_TYPE_FILE,   /*  GIMP_COLOR_PROFILE_STORE_FILE       */
       G_TYPE_INT     /*  GIMP_COLOR_PROFILE_STORE_INDEX      */
     };
+
+  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
+                                             GIMP_TYPE_COLOR_PROFILE_STORE,
+                                             GimpColorProfileStorePrivate);
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);

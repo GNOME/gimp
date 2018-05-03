@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUTTON, GimpButtonClass))
 
 
-typedef struct _GimpButtonClass  GimpButtonClass;
+typedef struct _GimpButtonPrivate GimpButtonPrivate;
+typedef struct _GimpButtonClass   GimpButtonClass;
 
 struct _GimpButton
 {
-  GtkButton  parent_instance;
+  GtkButton         parent_instance;
+
+  GimpButtonPrivate *priv;
 };
 
 struct _GimpButtonClass
@@ -58,6 +61,10 @@ struct _GimpButtonClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

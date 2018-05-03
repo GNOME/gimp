@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_BROWSER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BROWSER, GimpBrowserClass))
 
 
-typedef struct _GimpBrowserClass GimpBrowserClass;
+typedef struct _GimpBrowserPrivate GimpBrowserPrivate;
+typedef struct _GimpBrowserClass   GimpBrowserClass;
 
 struct _GimpBrowser
 {
-  GtkPaned  parent_instance;
+  GtkPaned            parent_instance;
+
+  GimpBrowserPrivate *priv;
 };
 
 struct _GimpBrowserClass
@@ -59,6 +62,10 @@ struct _GimpBrowserClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

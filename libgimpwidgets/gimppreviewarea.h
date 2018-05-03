@@ -34,12 +34,16 @@ G_BEGIN_DECLS
 #define GIMP_PREVIEW_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW_AREA, GimpPreviewArea))
 
 
-typedef struct _GimpPreviewAreaClass  GimpPreviewAreaClass;
+typedef struct _GimpPreviewAreaPrivate GimpPreviewAreaPrivate;
+typedef struct _GimpPreviewAreaClass   GimpPreviewAreaClass;
 
 struct _GimpPreviewArea
 {
-  GtkDrawingArea   parent_instance;
+  GtkDrawingArea          parent_instance;
 
+  GimpPreviewAreaPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GimpCheckSize    check_size;
   GimpCheckType    check_type;
   gint             width;
@@ -62,6 +66,10 @@ struct _GimpPreviewAreaClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

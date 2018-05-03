@@ -91,8 +91,6 @@ enum
 };
 
 
-typedef struct _GimpColorButtonPrivate GimpColorButtonPrivate;
-
 struct _GimpColorButtonPrivate
 {
   gchar           *title;
@@ -107,9 +105,7 @@ struct _GimpColorButtonPrivate
   GimpColorConfig *config;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_COLOR_BUTTON, \
-                                                      GimpColorButtonPrivate)
+#define GET_PRIVATE(obj) (((GimpColorButton *) (obj))->priv)
 
 
 static void     gimp_color_button_class_init     (GimpColorButtonClass *klass);
@@ -346,9 +342,15 @@ static void
 gimp_color_button_init (GimpColorButton      *button,
                         GimpColorButtonClass *klass)
 {
-  GimpColorButtonPrivate *priv = GET_PRIVATE (button);
+  GimpColorButtonPrivate *priv;
   GtkActionGroup         *group;
   gint                    i;
+
+  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
+                                              GIMP_TYPE_COLOR_BUTTON,
+                                              GimpColorButtonPrivate);
+
+  priv = GET_PRIVATE (button);
 
   priv->color_area = g_object_new (GIMP_TYPE_COLOR_AREA,
                                    "drag-mask", GDK_BUTTON1_MASK,

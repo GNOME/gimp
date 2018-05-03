@@ -54,11 +54,14 @@ enum
 #define GIMP_UNIT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_UNIT_STORE, GimpUnitStoreClass))
 
 
-typedef struct _GimpUnitStoreClass  GimpUnitStoreClass;
+typedef struct _GimpUnitStorePrivate GimpUnitStorePrivate;
+typedef struct _GimpUnitStoreClass   GimpUnitStoreClass;
 
 struct _GimpUnitStore
 {
-  GObject  parent_instance;
+  GObject               parent_instance;
+
+  GimpUnitStorePrivate *priv;
 };
 
 struct _GimpUnitStoreClass
@@ -66,10 +69,14 @@ struct _GimpUnitStoreClass
   GObjectClass  parent_class;
 
   /* Padding for future expansion */
-  void (*_gtk_reserved1) (void);
-  void (*_gtk_reserved2) (void);
-  void (*_gtk_reserved3) (void);
-  void (*_gtk_reserved4) (void);
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
 };
 
 

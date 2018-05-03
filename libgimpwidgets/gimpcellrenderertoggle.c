@@ -57,8 +57,6 @@ enum
 };
 
 
-typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
-
 struct _GimpCellRendererTogglePrivate
 {
   gchar       *icon_name;
@@ -68,10 +66,7 @@ struct _GimpCellRendererTogglePrivate
   GdkPixbuf   *pixbuf;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_CELL_RENDERER_TOGGLE, \
-                                     GimpCellRendererTogglePrivate)
+#define GET_PRIVATE(obj) (((GimpCellRendererToggle *) (obj))->priv)
 
 
 static void gimp_cell_renderer_toggle_finalize     (GObject              *object);
@@ -171,6 +166,9 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 static void
 gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
 {
+  toggle->priv = G_TYPE_INSTANCE_GET_PRIVATE (toggle,
+                                              GIMP_TYPE_CELL_RENDERER_TOGGLE,
+                                              GimpCellRendererTogglePrivate);
 }
 
 static void

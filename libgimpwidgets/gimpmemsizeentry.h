@@ -37,11 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_MEMSIZE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEMSIZE_ENTRY, GimpMemsizeEntryClass))
 
 
-typedef struct _GimpMemsizeEntryClass  GimpMemsizeEntryClass;
+typedef struct _GimpMemsizeEntryPrivate GimpMemsizeEntryPrivate;
+typedef struct _GimpMemsizeEntryClass   GimpMemsizeEntryClass;
 
 struct _GimpMemsizeEntry
 {
   GtkBox  parent_instance;
+
+  GimpMemsizeEntryPrivate *priv;
 };
 
 struct _GimpMemsizeEntryClass
@@ -55,6 +58,10 @@ struct _GimpMemsizeEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

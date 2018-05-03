@@ -39,7 +39,7 @@ typedef struct _GimpTileBackendPluginPrivate GimpTileBackendPluginPrivate;
 
 struct _GimpTileBackendPlugin
 {
-  GeglTileBackend  parent_instance;
+  GeglTileBackend               parent_instance;
 
   GimpTileBackendPluginPrivate *priv;
 };

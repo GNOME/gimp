@@ -40,14 +40,18 @@ G_BEGIN_DECLS
 #define GIMP_SIZE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
 
 
-typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
+typedef struct _GimpSizeEntryPrivate GimpSizeEntryPrivate;
+typedef struct _GimpSizeEntryClass   GimpSizeEntryClass;
 
 typedef struct _GimpSizeEntryField  GimpSizeEntryField;
 
 struct _GimpSizeEntry
 {
-  GtkGrid    parent_instance;
+  GtkGrid               parent_instance;
 
+  GimpSizeEntryPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GSList    *fields;
   gint       number_of_fields;
 
@@ -73,6 +77,10 @@ struct _GimpSizeEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

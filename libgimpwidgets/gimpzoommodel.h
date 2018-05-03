@@ -37,14 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_ZOOM_MODEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ZOOM_MODEL, GimpZoomModel))
 
 
-typedef struct _GimpZoomModelClass  GimpZoomModelClass;
+typedef struct _GimpZoomModelPrivate GimpZoomModelPrivate;
+typedef struct _GimpZoomModelClass   GimpZoomModelClass;
 
 struct _GimpZoomModel
 {
-  GObject   parent_instance;
+  GObject               parent_instance;
 
-  /*< private >*/
-  gpointer  priv;
+  GimpZoomModelPrivate *priv;
 };
 
 struct _GimpZoomModelClass
@@ -60,6 +60,10 @@ struct _GimpZoomModelClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

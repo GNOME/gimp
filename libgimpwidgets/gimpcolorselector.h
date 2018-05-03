@@ -59,13 +59,16 @@ G_BEGIN_DECLS
 #define GIMP_IS_COLOR_SELECTOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SELECTOR))
 #define GIMP_COLOR_SELECTOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECTOR, GimpColorSelectorClass))
 
-
-typedef struct _GimpColorSelectorClass GimpColorSelectorClass;
+typedef struct _GimpColorSelectorPrivate GimpColorSelectorPrivate;
+typedef struct _GimpColorSelectorClass   GimpColorSelectorClass;
 
 struct _GimpColorSelector
 {
   GtkBox                    parent_instance;
 
+  GimpColorSelectorPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   gboolean                  toggles_visible;
   gboolean                  toggles_sensitive;
   gboolean                  show_alpha;

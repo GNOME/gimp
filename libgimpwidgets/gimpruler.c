@@ -58,7 +58,7 @@ enum
 /* All distances below are in 1/72nd's of an inch. (According to
  * Adobe that's a point, but points are really 1/72.27 in.)
  */
-typedef struct
+struct _GimpRulerPrivate
 {
   GtkOrientation   orientation;
   GimpUnit         unit;
@@ -75,10 +75,9 @@ typedef struct
   PangoLayout     *layout;
 
   GList           *track_widgets;
-} GimpRulerPrivate;
+};
 
-#define GIMP_RULER_GET_PRIVATE(ruler) \
-  G_TYPE_INSTANCE_GET_PRIVATE (ruler, GIMP_TYPE_RULER, GimpRulerPrivate)
+#define GET_PRIVATE(obj) (((GimpRuler *) (obj))->priv)
 
 
 typedef struct
@@ -246,32 +245,25 @@ gimp_ruler_class_init (GimpRulerClass *klass)
 static void
 gimp_ruler_init (GimpRuler *ruler)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv;
+
+  ruler->priv = G_TYPE_INSTANCE_GET_PRIVATE (ruler,
+                                             GIMP_TYPE_RULER,
+                                             GimpRulerPrivate);
+
+  priv = ruler->priv;
 
   gtk_widget_set_has_window (GTK_WIDGET (ruler), FALSE);
 
-  priv->orientation         = GTK_ORIENTATION_HORIZONTAL;
-  priv->unit                = GIMP_UNIT_PIXEL;
-  priv->lower               = 0;
-  priv->upper               = 0;
-  priv->position            = 0;
-  priv->max_size            = 0;
-
-  priv->backing_store       = NULL;
-  priv->backing_store_valid = FALSE;
-
-  priv->last_pos_rect.x      = 0;
-  priv->last_pos_rect.y      = 0;
-  priv->last_pos_rect.width  = 0;
-  priv->last_pos_rect.height = 0;
-  priv->pos_redraw_idle_id   = 0;
+  priv->orientation = GTK_ORIENTATION_HORIZONTAL;
+  priv->unit        = GIMP_UNIT_PIXEL;
 }
 
 static void
 gimp_ruler_dispose (GObject *object)
 {
   GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   while (priv->track_widgets)
     gimp_ruler_remove_track_widget (ruler, priv->track_widgets->data);
@@ -292,7 +284,7 @@ gimp_ruler_set_property (GObject      *object,
                          GParamSpec   *pspec)
 {
   GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   switch (prop_id)
     {
@@ -342,7 +334,7 @@ gimp_ruler_get_property (GObject    *object,
                          GParamSpec *pspec)
 {
   GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   switch (prop_id)
     {
@@ -399,7 +391,7 @@ gimp_ruler_update_position (GimpRuler *ruler,
                             gdouble    x,
                             gdouble    y)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   gdouble           lower;
   gdouble           upper;
@@ -537,7 +529,7 @@ gimp_ruler_add_track_widget (GimpRuler *ruler,
   g_return_if_fail (GIMP_IS_RULER (ruler));
   g_return_if_fail (GTK_IS_WIDGET (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   g_return_if_fail (g_list_find (priv->track_widgets, widget) == NULL);
 
@@ -570,7 +562,7 @@ gimp_ruler_remove_track_widget (GimpRuler *ruler,
   g_return_if_fail (GIMP_IS_RULER (ruler));
   g_return_if_fail (GTK_IS_WIDGET (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   g_return_if_fail (g_list_find (priv->track_widgets, widget) != NULL);
 
@@ -601,7 +593,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
 
   g_return_if_fail (GIMP_IS_RULER (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   if (priv->unit != unit)
     {
@@ -626,7 +618,7 @@ gimp_ruler_get_unit (GimpRuler *ruler)
 {
   g_return_val_if_fail (GIMP_IS_RULER (ruler), 0);
 
-  return GIMP_RULER_GET_PRIVATE (ruler)->unit;
+  return GET_PRIVATE (ruler)->unit;
 }
 
 /**
@@ -646,7 +638,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
 
   g_return_if_fail (GIMP_IS_RULER (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   if (priv->position != position)
     {
@@ -705,7 +697,7 @@ gimp_ruler_get_position (GimpRuler *ruler)
 {
   g_return_val_if_fail (GIMP_IS_RULER (ruler), 0.0);
 
-  return GIMP_RULER_GET_PRIVATE (ruler)->position;
+  return GET_PRIVATE (ruler)->position;
 }
 
 /**
@@ -730,7 +722,7 @@ gimp_ruler_set_range (GimpRuler *ruler,
 
   g_return_if_fail (GIMP_IS_RULER (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   g_object_freeze_notify (G_OBJECT (ruler));
   if (priv->lower != lower)
@@ -777,7 +769,7 @@ gimp_ruler_get_range (GimpRuler *ruler,
 
   g_return_if_fail (GIMP_IS_RULER (ruler));
 
-  priv = GIMP_RULER_GET_PRIVATE (ruler);
+  priv = GET_PRIVATE (ruler);
 
   if (lower)
     *lower = priv->lower;
@@ -791,7 +783,7 @@ static void
 gimp_ruler_realize (GtkWidget *widget)
 {
   GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   GdkWindowAttr     attributes;
   gint              attributes_mask;
@@ -823,7 +815,7 @@ static void
 gimp_ruler_unrealize (GtkWidget *widget)
 {
   GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   g_clear_pointer (&priv->backing_store, cairo_surface_destroy);
   priv->backing_store_valid = FALSE;
@@ -838,7 +830,7 @@ gimp_ruler_unrealize (GtkWidget *widget)
 static void
 gimp_ruler_map (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv = GET_PRIVATE (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -849,7 +841,7 @@ gimp_ruler_map (GtkWidget *widget)
 static void
 gimp_ruler_unmap (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv = GET_PRIVATE (widget);
 
   if (priv->input_window)
     gdk_window_hide (priv->input_window);
@@ -862,7 +854,7 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
   GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
   GtkAllocation     widget_allocation;
   gboolean          resized;
 
@@ -888,7 +880,7 @@ static void
 gimp_ruler_size_request (GtkWidget      *widget,
                          GtkRequisition *requisition)
 {
-  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv    = GET_PRIVATE (widget);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
   PangoLayout      *layout;
   PangoRectangle    ink_rect;
@@ -944,7 +936,7 @@ gimp_ruler_get_preferred_height (GtkWidget *widget,
 static void
 gimp_ruler_style_updated (GtkWidget *widget)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv = GET_PRIVATE (widget);
 
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_updated (widget);
 
@@ -969,7 +961,7 @@ gimp_ruler_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
   GimpRuler        *ruler   = GIMP_RULER (widget);
-  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
   GtkAllocation     allocation;
 
@@ -993,7 +985,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 {
   GtkWidget         *widget  = GTK_WIDGET (ruler);
   GtkStyleContext   *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate  *priv    = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate  *priv    = GET_PRIVATE (ruler);
   GtkAllocation      allocation;
   GtkBorder          border;
   GdkRGBA            color;
@@ -1201,7 +1193,7 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
 {
   GtkWidget        *widget  = GTK_WIDGET (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
   GtkBorder         border;
   gint              width, height;
@@ -1258,7 +1250,7 @@ static gboolean
 gimp_ruler_idle_queue_pos_redraw (gpointer data)
 {
   GimpRuler        *ruler = data;
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
 
   gimp_ruler_queue_pos_redraw (ruler);
 
@@ -1270,7 +1262,7 @@ gimp_ruler_idle_queue_pos_redraw (gpointer data)
 static void
 gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
 {
-  GimpRulerPrivate  *priv = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate  *priv = GET_PRIVATE (ruler);
   const GdkRectangle rect = gimp_ruler_get_pos_rect (ruler, priv->position);
   GtkAllocation      allocation;
 
@@ -1304,7 +1296,7 @@ gimp_ruler_draw_pos (GimpRuler *ruler,
 {
   GtkWidget        *widget  = GTK_WIDGET (ruler);
   GtkStyleContext  *context = gtk_widget_get_style_context (widget);
-  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv    = GET_PRIVATE (ruler);
   GdkRectangle      pos_rect;
 
   if (! gtk_widget_is_drawable (widget))
@@ -1357,7 +1349,7 @@ static void
 gimp_ruler_make_pixmap (GimpRuler *ruler)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
-  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRulerPrivate *priv   = GET_PRIVATE (ruler);
   GtkAllocation     allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -1378,7 +1370,7 @@ static PangoLayout *
 gimp_ruler_get_layout (GtkWidget   *widget,
                        const gchar *text)
 {
-  GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
+  GimpRulerPrivate *priv = GET_PRIVATE (widget);
 
   if (priv->layout)
     {

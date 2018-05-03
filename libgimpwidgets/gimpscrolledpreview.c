@@ -46,7 +46,7 @@
 #define POPUP_SIZE  100
 
 
-typedef struct
+struct _GimpScrolledPreviewPrivate
 {
   GtkPolicyType hscr_policy;
   GtkPolicyType vscr_policy;
@@ -56,10 +56,9 @@ typedef struct
   gint          drag_yoff;
   gboolean      in_drag;
   gint          frozen;
-} GimpScrolledPreviewPrivate;
+};
 
-#define GIMP_SCROLLED_PREVIEW_GET_PRIVATE(obj) \
-  ((GimpScrolledPreviewPrivate *) ((GimpScrolledPreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (((GimpScrolledPreview *) (obj))->priv)
 
 
 static void      gimp_scrolled_preview_class_init          (GimpScrolledPreviewClass *klass);
@@ -154,7 +153,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                                                GIMP_TYPE_SCROLLED_PREVIEW,
                                                GimpScrolledPreviewPrivate);
 
-  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   preview->nav_popup = NULL;
 
@@ -300,7 +299,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
                                           GtkAllocation       *allocation,
                                           GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   gint width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
   gint height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
@@ -359,7 +358,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
                                   GdkEvent            *event,
                                   GimpScrolledPreview *preview)
 {
-  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
   GdkEventButton             *button_event = (GdkEventButton *) event;
   GdkCursor                  *cursor;
 
@@ -516,7 +515,7 @@ static void
 gimp_scrolled_preview_h_scroll (GtkAdjustment *hadj,
                                 GimpPreview   *preview)
 {
-  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   preview->xoff = gtk_adjustment_get_value (hadj);
 
@@ -534,7 +533,7 @@ static void
 gimp_scrolled_preview_v_scroll (GtkAdjustment *vadj,
                                 GimpPreview   *preview)
 {
-  GimpScrolledPreviewPrivate *priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
 
   preview->yoff = gtk_adjustment_get_value (vadj);
 
@@ -843,7 +842,7 @@ gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
 
-  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   priv->hscr_policy = hscrollbar_policy;
   priv->vscr_policy = vscrollbar_policy;
@@ -871,7 +870,7 @@ gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
 
-  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   priv->frozen++;
 }
@@ -895,7 +894,7 @@ gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
 
-  priv = GIMP_SCROLLED_PREVIEW_GET_PRIVATE (preview);
+  priv = GET_PRIVATE (preview);
 
   g_return_if_fail (priv->frozen > 0);
 

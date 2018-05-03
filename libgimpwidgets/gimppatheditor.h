@@ -39,12 +39,16 @@ G_BEGIN_DECLS
 #define GIMP_PATH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
 
 
-typedef struct _GimpPathEditorClass  GimpPathEditorClass;
+typedef struct _GimpPathEditorPrivate GimpPathEditorPrivate;
+typedef struct _GimpPathEditorClass   GimpPathEditorClass;
 
 struct _GimpPathEditor
 {
-  GtkBox             parent_instance;
+  GtkBox                 parent_instance;
 
+  GimpPathEditorPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   GtkWidget         *upper_hbox;
 
   GtkWidget         *new_button;
@@ -76,6 +80,10 @@ struct _GimpPathEditorClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

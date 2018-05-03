@@ -62,8 +62,6 @@ struct _GimpLCH
 };
 
 
-typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
-
 struct _GimpColorScalePrivate
 {
   GimpColorConfig          *config;
@@ -82,10 +80,7 @@ struct _GimpColorScalePrivate
   gboolean                  needs_render;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_SCALE, \
-                                     GimpColorScalePrivate)
+#define GET_PRIVATE(obj) (((GimpColorScale *) (obj))->priv)
 
 
 static void     gimp_color_scale_dispose             (GObject          *object);
@@ -172,9 +167,15 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 static void
 gimp_color_scale_init (GimpColorScale *scale)
 {
-  GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
+  GimpColorScalePrivate *priv;
   GtkRange              *range = GTK_RANGE (scale);
   GtkCssProvider        *css;
+
+  scale->priv = G_TYPE_INSTANCE_GET_PRIVATE (scale,
+                                             GIMP_TYPE_COLOR_SCALE,
+                                             GimpColorScalePrivate);
+
+  priv = scale->priv;
 
   gtk_widget_set_can_focus (GTK_WIDGET (scale), TRUE);
 

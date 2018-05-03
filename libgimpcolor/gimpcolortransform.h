@@ -48,8 +48,8 @@ typedef enum
 #define GIMP_COLOR_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_TRANSFORM, GimpColorTransformClass))
 
 
-typedef struct _GimpColorTransformClass   GimpColorTransformClass;
 typedef struct _GimpColorTransformPrivate GimpColorTransformPrivate;
+typedef struct _GimpColorTransformClass   GimpColorTransformClass;
 
 struct _GimpColorTransform
 {
@@ -71,6 +71,10 @@ struct _GimpColorTransformClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

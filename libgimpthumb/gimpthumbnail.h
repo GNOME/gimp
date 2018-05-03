@@ -40,7 +40,8 @@ G_BEGIN_DECLS
 #define GIMP_THUMBNAIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_THUMBNAIL, GimpThumbnailClass))
 
 
-typedef struct _GimpThumbnailClass GimpThumbnailClass;
+typedef struct _GimpThumbnailPrivate GimpThumbnailPrivate;
+typedef struct _GimpThumbnailClass   GimpThumbnailClass;
 
 /**
  * GimpThumbnail:
@@ -50,8 +51,11 @@ typedef struct _GimpThumbnailClass GimpThumbnailClass;
  **/
 struct _GimpThumbnail
 {
-  GObject         parent_instance;
+  GObject               parent_instance;
 
+  GimpThumbnailPrivate *priv;
+
+  /* FIXME MOVE TO PRIVATE */
   /*< private >*/
   GimpThumbState  image_state;
   gchar          *image_uri;
@@ -71,8 +75,6 @@ struct _GimpThumbnail
   gint64          thumb_mtime;
 
   gchar          *image_mimetype;
-
-  gpointer        _reserved_2;
 };
 
 struct _GimpThumbnailClass
@@ -84,6 +86,10 @@ struct _GimpThumbnailClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

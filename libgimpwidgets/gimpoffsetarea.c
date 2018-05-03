@@ -48,8 +48,6 @@ enum
 };
 
 
-typedef struct _GimpOffsetAreaPrivate GimpOffsetAreaPrivate;
-
 struct _GimpOffsetAreaPrivate
 {
   gint    orig_width;
@@ -62,9 +60,7 @@ struct _GimpOffsetAreaPrivate
   gdouble display_ratio_y;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_OFFSET_AREA, \
-                                                      GimpOffsetAreaPrivate)
+#define GET_PRIVATE(obj) (((GimpOffsetArea *) (obj))->priv)
 
 
 static void      gimp_offset_area_resize        (GimpOffsetArea *area);
@@ -113,14 +109,14 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 static void
 gimp_offset_area_init (GimpOffsetArea *area)
 {
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  GimpOffsetAreaPrivate *private;
 
-  private->orig_width      = 0;
-  private->orig_height     = 0;
-  private->width           = 0;
-  private->height          = 0;
-  private->offset_x        = 0;
-  private->offset_y        = 0;
+  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
+                                            GIMP_TYPE_OFFSET_AREA,
+                                            GimpOffsetAreaPrivate);
+
+  private = GET_PRIVATE (area);
+
   private->display_ratio_x = 1.0;
   private->display_ratio_y = 1.0;
 

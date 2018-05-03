@@ -51,17 +51,13 @@ enum
 };
 
 
-typedef struct _GimpColorProfileComboBoxPrivate GimpColorProfileComboBoxPrivate;
-
 struct _GimpColorProfileComboBoxPrivate
 {
   GtkWidget   *dialog;
   GtkTreePath *last_path;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, \
-                                                      GimpColorProfileComboBoxPrivate)
+#define GET_PRIVATE(obj) (((GimpColorProfileComboBox *) (obj))->priv)
 
 
 static void  gimp_color_profile_combo_box_finalize     (GObject      *object);
@@ -142,7 +138,13 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
 static void
 gimp_color_profile_combo_box_init (GimpColorProfileComboBox *combo_box)
 {
-  GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+  GtkCellRenderer *cell;
+
+  combo_box->priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
+                                                 GIMP_TYPE_COLOR_PROFILE_COMBO_BOX,
+                                                 GimpColorProfileComboBoxPrivate);
+
+  cell = gtk_cell_renderer_text_new ();
 
   g_object_set (cell,
                 "width-chars", 42,

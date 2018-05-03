@@ -54,8 +54,6 @@ enum
 };
 
 
-typedef struct _GimpCellRendererColorPrivate GimpCellRendererColorPrivate;
-
 struct _GimpCellRendererColorPrivate
 {
   GimpRGB     color;
@@ -64,9 +62,7 @@ struct _GimpCellRendererColorPrivate
   gint        border;
 };
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_CELL_RENDERER_COLOR, \
-                                                      GimpCellRendererColorPrivate)
+#define GET_PRIVATE(obj) (((GimpCellRendererColor *) (obj))->priv)
 
 
 static void gimp_cell_renderer_color_get_property (GObject            *object,
@@ -141,9 +137,11 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
 static void
 gimp_cell_renderer_color_init (GimpCellRendererColor *cell)
 {
-  GimpCellRendererColorPrivate *private = GET_PRIVATE (cell);
+  cell->priv = G_TYPE_INSTANCE_GET_PRIVATE (cell,
+                                            GIMP_TYPE_CELL_RENDERER_COLOR,
+                                            GimpCellRendererColorPrivate);
 
-  gimp_rgba_set (&private->color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&cell->priv->color, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void
