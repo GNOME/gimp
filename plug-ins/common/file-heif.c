@@ -153,6 +153,7 @@ run (const gchar      *name,
   GError            *error  = NULL;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -297,11 +298,10 @@ load_image (const gchar  *filename,
   gint                      height;
   gint32                    image_ID;
   gint32                    layer_ID;
-  GimpDrawable             *drawable;
-  GimpPixelRgn              rgn_out;
+  GeglBuffer               *buffer;
+  const Babl               *format;
   const guint8             *data;
   gint                      stride;
-  gint                      bpp;
 
   ctx = heif_context_alloc ();
 
@@ -419,40 +419,21 @@ load_image (const gchar  *filename,
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
-  drawable = gimp_drawable_get (layer_ID);
+  buffer = gimp_drawable_get_buffer (layer_ID);
 
-  gimp_pixel_rgn_init (&rgn_out,
-                       drawable,
-                       0,0,
-                       width, height,
-                       TRUE, TRUE);
+  if (has_alpha)
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
 
   data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
                                         &stride);
 
-  bpp = heif_image_get_bits_per_pixel (img, heif_channel_interleaved) / 8;
+  gegl_buffer_set (buffer,
+                   GEGL_RECTANGLE (0, 0, width, height),
+                   0, format, data, stride);
 
-  if (stride == width * bpp)
-    {
-      /* we can transfer the whole image at once */
-
-      gimp_pixel_rgn_set_rect (&rgn_out,
-                               data,
-                               0, 0, width, height);
-    }
-  else
-    {
-      gint y;
-
-      for (y = 0; y < height; y++)
-        {
-          /* stride has some padding, we have to send the image line by line */
-
-          gimp_pixel_rgn_set_row (&rgn_out,
-                                  data + y * stride,
-                                  0, y, width);
-        }
-    }
+  g_object_unref (buffer);
 
   if (FALSE)
     {
@@ -466,9 +447,10 @@ load_image (const gchar  *filename,
 
       if (n_metadata > 0)
         {
-          size_t      data_size;
-          uint8_t    *data;
-          const gint  heif_exif_skip = 4;
+          GimpParasite *parasite;
+          size_t        data_size;
+          uint8_t      *data;
+          const gint    heif_exif_skip = 4;
 
           data_size = heif_image_handle_get_metadata_size (handle,
                                                            metadata_id);
@@ -476,21 +458,14 @@ load_image (const gchar  *filename,
 
           err = heif_image_handle_get_metadata (handle, metadata_id, data);
 
-
-          gimp_image_attach_new_parasite (image_ID,
-                                          "exif-data",
-                                          0,
-                                          data_size - heif_exif_skip,
-                                          data + heif_exif_skip);
+          parasite = gimp_parasite_new ("exif-data",
+                                        0,
+                                        data_size - heif_exif_skip,
+                                        data + heif_exif_skip);
+          gimp_image_attach_parasite (image_ID, parasite);
+          gimp_parasite_free (parasite);
         }
     }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
-                        0, 0, width, height);
-
-  gimp_drawable_detach (drawable);
 
   heif_image_handle_release (handle);
   heif_context_free (ctx);
@@ -511,14 +486,13 @@ save_image (const gchar       *filename,
   struct heif_encoder      *encoder;
   struct heif_image_handle *handle;
   struct heif_error         err;
+  GeglBuffer               *buffer;
+  const Babl               *format;
   guint8                   *data;
   gint                      stride;
-  GimpPixelRgn              rgn_in;
-  GimpDrawable             *drawable;
   gint                      width;
   gint                      height;
   gboolean                  has_alpha;
-  gint                      y;
 
   width  = gimp_drawable_width  (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
@@ -537,18 +511,18 @@ save_image (const gchar       *filename,
 
   data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
 
-  drawable = gimp_drawable_get (drawable_ID);
+  buffer = gimp_drawable_get_buffer (drawable_ID);
 
-  gimp_pixel_rgn_init (&rgn_in, drawable,
-                       0, 0, width, height, FALSE, FALSE);
+  if (has_alpha)
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
 
-  for (y = 0; y < height; y++)
-    {
-      gimp_pixel_rgn_get_row (&rgn_in,
-                              data + y * stride, 0, y, width);
-    }
+  gegl_buffer_get (buffer,
+                   GEGL_RECTANGLE (0, 0, width, height),
+                   1.0, format, data, stride, GEGL_ABYSS_NONE);
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   /*  encode to HEIF file  */
 
