@@ -492,110 +492,107 @@ static GtkWidget *
 ifs_compose_trans_page (void)
 {
   GtkWidget *vbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *label;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  table = gtk_table_new (3, 6, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 2, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 4, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 12);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* X */
 
   label = gtk_label_new (_("X:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+                   // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->x_pair = value_pair_create (&ifsD->current_vals.x, 0.0, 1.0, FALSE,
                                     VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->x_pair->spin, 1, 2, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->x_pair->spin, 1, 0, 1, 1);
+                   // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->x_pair->spin);
 
   /* Y */
 
   label = gtk_label_new (_("Y:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->y_pair = value_pair_create (&ifsD->current_vals.y, 0.0, 1.0, FALSE,
                                     VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->y_pair->spin, 1, 2, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->y_pair->spin, 1, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->y_pair->spin);
 
   /* Scale */
 
   label = gtk_label_new (_("Scale:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0,
                                         FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->scale_pair->spin, 3, 4, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->scale_pair->spin, 3, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->scale_pair->spin);
 
   /* Angle */
 
   label = gtk_label_new (_("Angle:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->angle_pair = value_pair_create (&ifsD->current_vals.theta, -180, 180,
                                         FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->angle_pair->spin, 3, 4, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->angle_pair->spin, 3, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->angle_pair->spin);
 
   /* Asym */
 
   label = gtk_label_new (_("Asymmetry:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->asym_pair = value_pair_create (&ifsD->current_vals.asym, 0.10, 10.0,
                                        FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->asym_pair->spin, 5, 6, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->asym_pair->spin, 5, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->asym_pair->spin);
 
   /* Shear */
 
   label = gtk_label_new (_("Shear:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->shear_pair = value_pair_create (&ifsD->current_vals.shear, -10.0, 10.0,
                                         FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->shear_pair->spin, 5, 6, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->shear_pair->spin, 5, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->shear_pair->spin);
 
   /* Flip */
 
   ifsD->flip_check_button = gtk_check_button_new_with_label (_("Flip"));
-  gtk_table_attach (GTK_TABLE (table), ifsD->flip_check_button, 0, 6, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->flip_check_button, 0, 2, 6, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   g_signal_connect (ifsD->flip_check_button, "toggled",
                     G_CALLBACK (flip_check_button_callback),
                     NULL);
@@ -608,7 +605,7 @@ static GtkWidget *
 ifs_compose_color_page (void)
 {
   GtkWidget *vbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *label;
   GSList    *group = NULL;
   GimpRGB    color;
@@ -616,17 +613,17 @@ ifs_compose_color_page (void)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
-  table = gtk_table_new (3, 5, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 12);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* Simple color control section */
 
   ifsD->simple_button = gtk_radio_button_new_with_label (group, _("Simple"));
-  gtk_table_attach (GTK_TABLE (table), ifsD->simple_button, 0, 1, 0, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->simple_button, 0, 0, 1, 2);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->simple_button));
   g_signal_connect (ifsD->simple_button, "toggled",
                     G_CALLBACK (simple_color_toggled),
@@ -635,45 +632,45 @@ ifs_compose_color_page (void)
 
   ifsD->target_cmap = color_map_create (_("IFS Fractal: Target"), NULL,
                                         &ifsD->current_vals.target_color, TRUE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->target_cmap->hbox, 1, 0, 1, 2);
+                    // GTK_FILL, 0, 0, 0);
   gtk_widget_show (ifsD->target_cmap->hbox);
 
   label = gtk_label_new (_("Scale hue by:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->hue_scale_pair = value_pair_create (&ifsD->current_vals.hue_scale,
                                             0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->scale, 3, 4, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->hue_scale_pair->scale, 3, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->scale);
-  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->spin, 4, 5, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->hue_scale_pair->spin, 4, 0, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->spin);
 
   label = gtk_label_new (_("Scale value by:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   ifsD->value_scale_pair = value_pair_create (&ifsD->current_vals.value_scale,
                                               0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->scale,
-                    3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->value_scale_pair->scale, 3, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->value_scale_pair->scale);
-  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->spin,
-                    4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->value_scale_pair->spin, 4, 1, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->value_scale_pair->spin);
 
   /* Full color control section */
 
   ifsD->full_button = gtk_radio_button_new_with_label (group, _("Full"));
-  gtk_table_attach (GTK_TABLE (table), ifsD->full_button, 0, 1, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->full_button, 0, 2, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
@@ -681,32 +678,32 @@ ifs_compose_color_page (void)
   gimp_rgb_set_alpha (&color, 1.0);
   ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), &color,
                                      &ifsD->current_vals.red_color, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->red_cmap->hbox, 1, 2, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
 
   gimp_rgb_parse_name (&color, "green", -1);
   gimp_rgb_set_alpha (&color, 1.0);
   ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), &color,
                                        &ifsD->current_vals.green_color, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->green_cmap->hbox, 2, 2, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
 
   gimp_rgb_parse_name (&color, "blue", -1);
   gimp_rgb_set_alpha (&color, 1.0);
   ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), &color,
                                       &ifsD->current_vals.blue_color, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->blue_cmap->hbox, 3, 2, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
 
   gimp_rgb_parse_name (&color, "black", -1);
   gimp_rgb_set_alpha (&color, 1.0);
   ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), &color,
                                        &ifsD->current_vals.black_color, FALSE);
-  gtk_table_attach (GTK_TABLE (table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ifsD->black_cmap->hbox, 4, 2, 1, 1);
+                    // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->black_cmap->hbox);
 
   return vbox;
@@ -1152,7 +1149,7 @@ ifs_options_dialog (GtkWidget *parent)
 {
   if (!ifsOptD)
     {
-      GtkWidget *table;
+      GtkWidget *grid;
       GtkWidget *label;
 
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
@@ -1170,70 +1167,73 @@ ifs_options_dialog (GtkWidget *parent)
                         G_CALLBACK (gtk_widget_hide),
                         NULL);
 
-      /* Table of options */
+      /* Grid of options */
 
-      table = gtk_table_new (4, 3, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+      grid = gtk_grid_new ();
+      gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (ifsOptD->dialog))),
-                          table, FALSE, FALSE, 0);
-      gtk_widget_show (table);
+                          grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
 
       label = gtk_label_new (_("Max. memory:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       ifsOptD->memory_pair = value_pair_create (&ifsvals.max_memory,
                                                 1, 1000000, FALSE,
                                                 VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->memory_pair->spin,
-                        1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), ifsOptD->memory_pair->spin, 1, 0, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->memory_pair->spin);
 
       label = gtk_label_new (_("Iterations:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       ifsOptD->iterations_pair = value_pair_create (&ifsvals.iterations,
                                                     1, 10000000, FALSE,
                                                     VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->iterations_pair->spin,
-                        1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), ifsOptD->iterations_pair->spin,
+                       1, 1, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->iterations_pair->spin);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Subdivide:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       ifsOptD->subdivide_pair = value_pair_create (&ifsvals.subdivide,
                                                    1, 10, FALSE,
                                                    VALUE_PAIR_INT);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->subdivide_pair->spin,
-                        1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), ifsOptD->subdivide_pair->spin,
+                       1, 2, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->subdivide_pair->spin);
 
       label = gtk_label_new (_("Spot radius:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
       ifsOptD->radius_pair = value_pair_create (&ifsvals.radius,
                                                 0, 5, TRUE,
                                                 VALUE_PAIR_DOUBLE);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->scale,
-                        1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), ifsOptD->radius_pair->scale,
+                       1, 3, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->radius_pair->scale);
-      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->spin,
-                        2, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), ifsOptD->radius_pair->spin, 2, 3, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->radius_pair->spin);
 
       value_pair_update (ifsOptD->iterations_pair);
