@@ -42,7 +42,7 @@ struct _GimpSamplePointEditor
   GtkWidget       *empty_icon;
   GtkWidget       *empty_label;
 
-  GtkWidget       *table;
+  GtkWidget       *grid;
   GtkWidget      **color_frames;
   gint             n_color_frames;
 
