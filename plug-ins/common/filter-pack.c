@@ -511,36 +511,40 @@ fp (GimpDrawable *drawable)
 static GtkWidget *
 fp_create_bna (void)
 {
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *label;
   GtkWidget *bframe, *aframe;
 
   fp_create_preview (&origPreview, &bframe, reduced->width, reduced->height);
   fp_create_preview (&curPreview, &aframe, reduced->width, reduced->height);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  grid = gtk_grid_new ();
+  gtk_widget_set_halign (grid, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (grid, GTK_ALIGN_START);
+  gtk_widget_set_hexpand (grid, TRUE);
+  gtk_widget_set_vexpand (grid, TRUE);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
 
   label = gtk_label_new (_("Original:"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
-  gtk_table_attach (GTK_TABLE (table), bframe, 0, 1, 1, 2,
-                    GTK_EXPAND, 0, 0, 0);
+  gtk_widget_set_halign (bframe, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (bframe, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), bframe, 0, 1, 1, 1);
 
   label = gtk_label_new (_("Current:"));
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
   gtk_widget_show (label);
 
-  gtk_table_attach (GTK_TABLE (table), aframe, 1, 2, 1, 2,
-                    GTK_EXPAND, 0, 0, 0);
+  gtk_widget_set_halign (aframe, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (aframe, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), aframe, 1, 1, 1, 1);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
-  return table;
+  return grid;
 }
 
 /* close a sub dialog (from window manager) by simulating toggle click */
@@ -560,7 +564,7 @@ sub_dialog_destroy (GtkWidget *dialog,
 static GtkWidget *
 fp_create_circle_palette (GtkWidget *parent)
 {
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *rVbox, *rFrame;
   GtkWidget *gVbox, *gFrame;
   GtkWidget *bVbox, *bFrame;
@@ -581,12 +585,12 @@ fp_create_circle_palette (GtkWidget *parent)
                     G_CALLBACK (sub_dialog_destroy),
                     NULL);
 
-  table = gtk_table_new (11, 11, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (win), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_container_add (GTK_CONTAINER (win), grid);
+  gtk_widget_show (grid);
 
   fp_create_preview (&rPreview, &rFrame, reduced->width, reduced->height);
   fp_create_preview (&gPreview, &gFrame, reduced->width, reduced->height);
@@ -605,20 +609,13 @@ fp_create_circle_palette (GtkWidget *parent)
   fp_create_table_entry (&mVbox, mFrame, hue_magenta);
   fp_create_table_entry (&centerVbox, centerFrame, current_val);
 
-  gtk_table_attach (GTK_TABLE (table), rVbox, 8, 11 ,4 , 7,
-                    GTK_EXPAND , GTK_EXPAND, 0 ,0);
-  gtk_table_attach (GTK_TABLE (table), gVbox, 2, 5, 0, 3,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), bVbox, 2, 5, 8, 11,
-                    GTK_EXPAND, GTK_EXPAND,0,0);
-  gtk_table_attach (GTK_TABLE (table), cVbox, 0, 3, 4, 7,
-                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
-  gtk_table_attach (GTK_TABLE (table), yVbox, 6, 9, 0, 3,
-                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
-  gtk_table_attach (GTK_TABLE (table), mVbox, 6, 9, 8, 11,
-                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
-  gtk_table_attach (GTK_TABLE (table), centerVbox, 4, 7, 4, 7,
-                    GTK_EXPAND, GTK_EXPAND, 0 ,0);
+  gtk_grid_attach (GTK_GRID (grid), rVbox, 8, 4, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), gVbox, 2, 0, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), bVbox, 2, 8, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), cVbox, 0, 4, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), yVbox, 6, 0, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), mVbox, 6, 8, 3, 3);
+  gtk_grid_attach (GTK_GRID (grid), centerVbox, 4, 4, 3, 3);
 
   return win;
 }
@@ -723,7 +720,7 @@ fp_create_control (void)
 static GtkWidget *
 fp_create_lnd (GtkWidget *parent)
 {
-  GtkWidget *table, *lighterFrame, *middleFrame, *darkerFrame;
+  GtkWidget *grid, *lighterFrame, *middleFrame, *darkerFrame;
   GtkWidget *lighterVbox, *middleVbox, *darkerVbox;
   GtkWidget *win;
 
@@ -749,18 +746,15 @@ fp_create_lnd (GtkWidget *parent)
   fp_create_table_entry (&middleVbox, middleFrame, current_val);
   fp_create_table_entry (&darkerVbox, darkerFrame, val_darker);
 
-  table = gtk_table_new (1, 11, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (win), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_container_add (GTK_CONTAINER (win), grid);
+  gtk_widget_show (grid);
 
-  gtk_table_attach (GTK_TABLE (table), lighterVbox, 0, 3, 0, 1,
-                    GTK_EXPAND , GTK_EXPAND, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), middleVbox, 4, 7, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), darkerVbox, 8, 11, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), lighterVbox, 0, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), middleVbox, 4, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), darkerVbox, 8, 0, 3, 1);
 
   return win;
 }
@@ -768,7 +762,7 @@ fp_create_lnd (GtkWidget *parent)
 static GtkWidget *
 fp_create_msnls (GtkWidget *parent)
 {
-  GtkWidget *table, *lessFrame, *middleFrame, *moreFrame;
+  GtkWidget *grid, *lessFrame, *middleFrame, *moreFrame;
   GtkWidget *lessVbox, *middleVbox, *moreVbox;
   GtkWidget *win;
 
@@ -794,18 +788,15 @@ fp_create_msnls (GtkWidget *parent)
   fp_create_table_entry (&middleVbox, middleFrame, current_val);
   fp_create_table_entry (&lessVbox, lessFrame, sat_less);
 
-  table = gtk_table_new (1, 11, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (win), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_container_add (GTK_CONTAINER (win), grid);
+  gtk_widget_show (grid);
 
-  gtk_table_attach (GTK_TABLE (table), moreVbox, 0, 3, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), middleVbox, 4, 7, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), lessVbox, 8, 11, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), moreVbox, 0, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), middleVbox, 4, 0, 3, 1);
+  gtk_grid_attach (GTK_GRID (grid), lessVbox, 8, 0, 3, 1);
 
   return win;
 }
@@ -880,15 +871,16 @@ fp_create_show (void)
 
 static void
 fp_create_preview (GtkWidget **preview,
-                  GtkWidget  **frame,
-                  gint         preview_width,
-                  gint         preview_height)
+                   GtkWidget **frame,
+                   gint        preview_width,
+                   gint        preview_height)
 {
   *frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (*frame), GTK_SHADOW_IN);
   gtk_widget_show (*frame);
 
   *preview = gimp_preview_area_new ();
+
   gtk_widget_set_size_request (*preview, preview_width, preview_height);
   g_signal_connect (*preview, "size-allocate",
                     G_CALLBACK (fp_preview_size_allocate), NULL);
@@ -919,12 +911,12 @@ fp_frames_checkbutton_in_box (GtkWidget     *vbox,
 
 static void
 fp_create_table_entry (GtkWidget   **box,
-                      GtkWidget    *smaller_frame,
-                      const gchar  *description)
+                       GtkWidget    *smaller_frame,
+                       const gchar  *description)
 {
   GtkWidget *label;
   GtkWidget *button;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   *box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
   gtk_container_set_border_width (GTK_CONTAINER (*box), PR_BX_BRDR);
@@ -934,21 +926,24 @@ fp_create_table_entry (GtkWidget   **box,
   label = gtk_label_new (gettext (description));
 
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_widget_set_halign (label, GTK_ALIGN_CENTER);
   gtk_widget_show (label);
 
-  table = gtk_table_new (2, 1, FALSE);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_widget_set_halign (grid, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (grid, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (grid, TRUE);
+  gtk_widget_set_vexpand (grid, TRUE);
+  gtk_widget_show (grid);
 
-  gtk_box_pack_start (GTK_BOX (*box), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (*box), grid, TRUE, TRUE, 0);
 
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
 
   if (description != current_val)
     {
       button = gtk_button_new ();
-      gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-                        0, 0, 0, 4);
+      gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
       gtk_widget_show (button);
 
       gtk_container_add (GTK_CONTAINER (button), smaller_frame);
@@ -959,8 +954,7 @@ fp_create_table_entry (GtkWidget   **box,
     }
   else
     {
-      gtk_table_attach (GTK_TABLE (table), smaller_frame, 0, 1, 1, 2,
-                        0, 0, 0, 4);
+      gtk_grid_attach (GTK_GRID (grid), smaller_frame, 0, 1, 1, 1);
     }
 }
 
@@ -1192,7 +1186,7 @@ fp_dialog (void)
   GtkWidget *pixelsBy;
   GtkWidget *satur;
   GtkWidget *control;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   reduced = fp_reduce_image (drawable, mask,
                              fpvals.preview_size,
@@ -1240,31 +1234,20 @@ fp_dialog (void)
   /********************************************************************/
   /********************   PUT EVERYTHING TOGETHER    ******************/
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
-  gtk_table_attach (GTK_TABLE (table), bna, 0, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), control, 1, 2, 1, 3,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), rough, 1, 2, 3, 4,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), show, 0, 1, 1, 2,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), range, 0, 1, 2, 3,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), pixelsBy, 0, 1, 3, 4,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), bna,      0, 0, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), show,     0, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), range,    0, 2, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), pixelsBy, 0, 3, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), control,  1, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), rough,    1, 3, 1, 1);
 
   gtk_widget_show (dlg);
 
@@ -1296,7 +1279,7 @@ fp_advanced_dialog (GtkWidget *parent)
   GtkWidget     *frame, *hbox;
   GtkAdjustment *smoothnessData;
   GtkWidget     *graphFrame, *scale;
-  GtkWidget     *vbox, *label, *labelTable, *alignment;
+  GtkWidget     *vbox, *label, *labelGrid, *alignment;
   GtkWidget     *inner_vbox, *innermost_vbox;
   gint           i;
 
@@ -1359,11 +1342,11 @@ fp_advanced_dialog (GtkWidget *parent)
 
   fp_range_preview_spill (AW.range_preview, fpvals.value_by);
 
-  labelTable = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (labelTable), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (labelTable), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), labelTable, FALSE, FALSE, 0);
-  gtk_widget_show (labelTable);
+  labelGrid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (labelGrid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (labelGrid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), labelGrid, FALSE, FALSE, 0);
+  gtk_widget_show (labelGrid);
 
   /************************************************************/
 
@@ -1399,8 +1382,7 @@ fp_advanced_dialog (GtkWidget *parent)
         }
 
       gtk_widget_show (label);
-      gtk_table_attach (GTK_TABLE (labelTable), label, i%4, i%4+1, i/4, i/4+1,
-                        GTK_EXPAND | GTK_FILL, 0, 0, 0);
+      gtk_grid_attach (GTK_GRID (labelGrid), label, i%4, i/4, 1, 1);
     }
 
   smoothnessData = gtk_adjustment_new (fpvals.aliasing,
