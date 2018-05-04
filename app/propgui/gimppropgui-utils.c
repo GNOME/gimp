@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "propgui-types.h"
@@ -211,8 +212,10 @@ static void
 gimp_prop_random_seed_new_clicked (GtkButton     *button,
                                    GtkAdjustment *adj)
 {
-  guint32 value = g_random_int_range (gtk_adjustment_get_lower (adj),
-                                      gtk_adjustment_get_upper (adj));
+  guint32 value;
+
+  value = floor (g_random_double_range (gtk_adjustment_get_lower (adj),
+                                        gtk_adjustment_get_upper (adj) + 1.0));
 
   gtk_adjustment_set_value (adj, value);
 }
