@@ -87,6 +87,7 @@ libexec_PROGRAMS = \
 	file-gih \
 	file-glob \
 	file-header \
+	$(FILE_HEIF) \
 	file-html-table \
 	$(FILE_JP2_LOAD) \
 	$(FILE_MNG) \
@@ -144,6 +145,7 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	file-aa \
+	file-heif \
 	file-jp2-load \
 	file-mng \
 	file-pdf-save \
@@ -820,6 +822,27 @@ file_header_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_header_RC)
+
+file_heif_CFLAGS = $(LIBHEIF_CFLAGS)
+
+file_heif_SOURCES = \
+	file-heif.c
+
+file_heif_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(LIBHEIF_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_heif_RC)
 
 file_html_table_SOURCES = \
 	file-html-table.c

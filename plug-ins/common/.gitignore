@@ -78,6 +78,8 @@
 /file-glob.exe
 /file-header
 /file-header.exe
+/file-heif
+/file-heif.exe
 /file-html-table
 /file-html-table.exe
 /file-jp2-load

@@ -81,6 +81,7 @@ m4_define([intltool_required_version], [0.40.1])
 m4_define([perl_required_version], [5.10.0])
 m4_define([python2_required_version], [2.5.0])
 m4_define([webp_required_version], [0.6.0])
+m4_define([libheif_required_version], [1.1.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -167,6 +168,7 @@ INTLTOOL_REQUIRED_VERSION=intltool_required_version
 PERL_REQUIRED_VERSION=perl_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
+LIBHEIF_REQUIRED_VERSION=libheif_required_version
 XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
@@ -197,6 +199,7 @@ AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
+AC_SUBST(LIBHEIF_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -1664,6 +1667,28 @@ fi
 AM_CONDITIONAL(HAVE_WEBP, test "x$have_webp" = xyes)
 
 
+###################
+# Check for libheif
+###################
+
+AC_ARG_WITH(libheif, [  --without-libheif       build without libheif support])
+
+have_libheif=no
+if test "x$with_libheif" != xno; then
+  have_libheif=yes
+  PKG_CHECK_MODULES(LIBHEIF, libheif >= libheif_required_version,
+    FILE_HEIF='file-heif$(EXEEXT)',
+    [have_libheif="no (libheif not found)"])
+fi
+
+if test "x$have_libheif" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/heif;image/heic"
+fi
+
+AC_SUBST(FILE_HEIF)
+AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
+
+
 ######################
 # Check for libmypaint
 ######################
@@ -2762,6 +2787,7 @@ Optional Plug-Ins:
   MNG:                     $have_libmng
   OpenEXR:                 $have_openexr
   WebP:                    $have_webp
+  Heif:                    $have_libheif
   PDF (export):            $have_cairo_pdf
   Print:                   $enable_print
   Python 2:                $enable_python

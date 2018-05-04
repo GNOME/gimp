@@ -1,0 +1,969 @@
+/*
+ * GIMP HEIF loader / write plugin.
+ * Copyright (c) 2018 struktur AG, Dirk Farin <farin@struktur.de>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <libheif/heif.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
+#include "libgimp/stdplugins-intl.h"
+
+
+#define LOAD_PROC      "file-heif-load"
+#define SAVE_PROC      "file-heif-save"
+#define PLUG_IN_BINARY "file-heif"
+
+
+typedef struct _SaveParams SaveParams;
+
+struct _SaveParams
+{
+  gint     quality;
+  gboolean lossless;
+};
+
+
+/*  local function prototypes  */
+
+static void       query          (void);
+static void       run            (const gchar          *name,
+                                  gint                  nparams,
+                                  const GimpParam      *param,
+                                  gint                 *nreturn_vals,
+                                  GimpParam           **return_vals);
+
+static gint32     load_image     (const gchar         *filename,
+                                  gboolean             interactive,
+                                  GError              **error);
+static gboolean   save_image     (const gchar          *filename,
+                                  gint32                image_ID,
+                                  gint32                drawable_ID,
+                                  const SaveParams     *params,
+                                  GError              **error);
+
+static gboolean   load_dialog    (struct heif_context  *heif,
+                                  uint32_t             *selected_image);
+static gboolean   save_dialog    (SaveParams           *params);
+
+
+GimpPlugInInfo PLUG_IN_INFO =
+{
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
+};
+
+
+MAIN ()
+
+
+static void
+query (void)
+{
+  static const GimpParamDef load_args[] =
+  {
+    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
+  };
+
+  static const GimpParamDef load_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE, "image", "Output image" }
+  };
+
+
+  static const GimpParamDef save_args[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
+    { GIMP_PDB_INT32,    "quality",      "Quality factor (range: 0-100. 0 = worst, 100 = best)" },
+    { GIMP_PDB_INT32,    "lossless",     "Use lossless compression (0 = lossy, 1 = lossless)" }
+  };
+
+  gimp_install_procedure (LOAD_PROC,
+			  _("Loads HEIF images"),
+                          _("Load image stored in HEIF format (High "
+                            "Efficiency Image File Format). Typical "
+                            "suffices for HEIF files are .heif, .heic."),
+			  "Dirk Farin <farin@struktur.de>",
+			  "Dirk Farin <farin@struktur.de>",
+			  "2018",
+			  _("HEIF/HEIC"),
+			  NULL,
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (load_args),
+			  G_N_ELEMENTS (load_return_vals),
+			  load_args, load_return_vals);
+
+  gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
+  gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
+
+  gimp_install_procedure (SAVE_PROC,
+			  _("Exports HEIF images"),
+                          _("Save image in HEIF format (High Efficiency "
+                            "Image File Format)."),
+			  "Dirk Farin <farin@struktur.de>",
+			  "Dirk Farin <farin@struktur.de>",
+			  "2018",
+			  _("HEIF/HEIC"),
+			  "RGB*",
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (save_args), 0,
+			  save_args, NULL);
+
+  gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
+}
+
+#define LOAD_HEIF_ERROR  -1
+#define LOAD_HEIF_CANCEL -2
+
+static void
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
+{
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GError            *error  = NULL;
+
+  INIT_I18N ();
+
+  run_mode = param[0].data.d_int32;
+
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
+  if (strcmp (name, LOAD_PROC) == 0)
+    {
+      const gchar *filename;
+      gboolean     interactive;
+
+      if (n_params != 3)
+        status = GIMP_PDB_CALLING_ERROR;
+
+      filename    = param[1].data.d_string;
+      interactive = (run_mode == GIMP_RUN_INTERACTIVE);
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          gint32 image_ID;
+
+          image_ID = load_image (filename, interactive, &error);
+
+          if (image_ID >= 0)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image_ID;
+            }
+          else if (image_ID == LOAD_HEIF_CANCEL)
+            {
+              status = GIMP_PDB_CANCEL;
+            }
+        }
+    }
+  else if (strcmp(name, SAVE_PROC) == 0)
+    {
+      gint32           image_ID    = param[1].data.d_int32;
+      gint32           drawable_ID = param[2].data.d_int32;
+      GimpExportReturn export      = GIMP_EXPORT_CANCEL;
+      SaveParams       params;
+
+      params.lossless = FALSE;
+      params.quality  = 50;
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          export = gimp_export_image (&image_ID, &drawable_ID, "HEIF",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+          break;
+
+        default:
+          break;
+        }
+
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data (SAVE_PROC, &params);
+
+          if (! save_dialog (&params))
+            status = GIMP_PDB_CANCEL;
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data (SAVE_PROC, &params);
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          /*  Make sure all the arguments are there!  */
+          if (n_params != 7)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              params.quality  = (param[5].data.d_int32);
+              params.lossless = (param[6].data.d_int32);
+            }
+          break;
+        }
+
+      if (status == GIMP_PDB_SUCCESS)
+        {
+
+          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+                          &params,
+                          &error))
+            {
+              gimp_set_data (SAVE_PROC, &params, sizeof (params));
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+        }
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status != GIMP_PDB_SUCCESS && error)
+    {
+      *nreturn_vals = 2;
+      values[1].type          = GIMP_PDB_STRING;
+      values[1].data.d_string = error->message;
+    }
+
+  values[0].data.d_status = status;
+}
+
+gint32
+load_image (const gchar  *filename,
+            gboolean      interactive,
+            GError      **error)
+{
+  struct heif_context      *ctx;
+  struct heif_error         err;
+  struct heif_image_handle *handle = NULL;
+  struct heif_image        *img = NULL;
+  gint                      n_images;
+  heif_item_id              primary;
+  heif_item_id              selected_image;
+  gboolean                  has_alpha;
+  gint                      width;
+  gint                      height;
+  gint32                    image_ID;
+  gint32                    layer_ID;
+  GimpDrawable             *drawable;
+  GimpPixelRgn              rgn_out;
+  const guint8             *data;
+  gint                      stride;
+  gint                      bpp;
+
+  ctx = heif_context_alloc ();
+
+  err = heif_context_read_from_file (ctx, filename, NULL);
+  if (err.code)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Loading HEIF image failed: %s"),
+                   err.message);
+      heif_context_free (ctx);
+
+      return -1;
+    }
+
+  /* analyze image content
+   * Is there more than one image? Which image is the primary image?
+   */
+
+  n_images = heif_context_get_number_of_top_level_images (ctx);
+  if (n_images == 0)
+    {
+      g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Loading HEIF image failed: "
+                             "Input file contains no readable images"));
+      heif_context_free (ctx);
+
+      return -1;
+    }
+
+  err = heif_context_get_primary_image_ID (ctx, &primary);
+  if (err.code)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Loading HEIF image failed: %s"),
+                   err.message);
+      heif_context_free (ctx);
+
+      return -1;
+    }
+
+  /* if primary image is no top level image or not present (invalid
+   * file), just take the first image
+   */
+
+  if (! heif_context_is_top_level_image_ID (ctx, primary))
+    {
+      gint n = heif_context_get_list_of_top_level_image_IDs (ctx, &primary, 1);
+      g_assert (n == 1);
+    }
+
+  selected_image = primary;
+
+  /* if there are several images in the file and we are running
+   * interactive, let the user choose a picture
+   */
+
+  if (interactive && n_images > 1)
+    {
+      if (! load_dialog (ctx, &selected_image))
+        {
+          heif_context_free (ctx);
+
+          return LOAD_HEIF_CANCEL;
+        }
+    }
+
+  /* load the picture */
+
+  err = heif_context_get_image_handle (ctx, selected_image, &handle);
+  if (err.code)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Loading HEIF image failed: %s"),
+                   err.message);
+      heif_context_free (ctx);
+
+      return -1;
+    }
+
+  has_alpha = heif_image_handle_has_alpha_channel (handle);
+
+  err = heif_decode_image (handle,
+                           &img,
+                           heif_colorspace_RGB,
+                           has_alpha ? heif_chroma_interleaved_32bit :
+                           heif_chroma_interleaved_24bit,
+                           NULL);
+  if (err.code)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Loading HEIF image failed: %s"),
+                   err.message);
+     heif_image_handle_release (handle);
+     heif_context_free (ctx);
+
+     return -1;
+    }
+
+  width  = heif_image_get_width  (img, heif_channel_interleaved);
+  height = heif_image_get_height (img, heif_channel_interleaved);
+
+  /* create GIMP image and copy HEIF image into the GIMP image
+   * (converting it to RGB)
+   */
+
+  image_ID = gimp_image_new (width, height, GIMP_RGB);
+  gimp_image_set_filename (image_ID, filename);
+
+  layer_ID = gimp_layer_new (image_ID,
+                             _("image content"),
+                             width, height,
+                             has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE,
+                             100.0,
+                             gimp_image_get_default_new_layer_mode (image_ID));
+
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+
+  drawable = gimp_drawable_get (layer_ID);
+
+  gimp_pixel_rgn_init (&rgn_out,
+                       drawable,
+                       0,0,
+                       width, height,
+                       TRUE, TRUE);
+
+  data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
+                                        &stride);
+
+  bpp = heif_image_get_bits_per_pixel (img, heif_channel_interleaved) / 8;
+
+  if (stride == width * bpp)
+    {
+      /* we can transfer the whole image at once */
+
+      gimp_pixel_rgn_set_rect (&rgn_out,
+                               data,
+                               0, 0, width, height);
+    }
+  else
+    {
+      gint y;
+
+      for (y = 0; y < height; y++)
+        {
+          /* stride has some padding, we have to send the image line by line */
+
+          gimp_pixel_rgn_set_row (&rgn_out,
+                                  data + y * stride,
+                                  0, y, width);
+        }
+    }
+
+  if (FALSE)
+    {
+      gint         n_metadata;
+      heif_item_id metadata_id;
+
+      n_metadata =
+        heif_image_handle_get_list_of_metadata_block_IDs (handle,
+                                                          "Exif",
+                                                          &metadata_id, 1);
+
+      if (n_metadata > 0)
+        {
+          size_t      data_size;
+          uint8_t    *data;
+          const gint  heif_exif_skip = 4;
+
+          data_size = heif_image_handle_get_metadata_size (handle,
+                                                           metadata_id);
+          data = g_alloca (data_size);
+
+          err = heif_image_handle_get_metadata (handle, metadata_id, data);
+
+
+          gimp_image_attach_new_parasite (image_ID,
+                                          "exif-data",
+                                          0,
+                                          data_size - heif_exif_skip,
+                                          data + heif_exif_skip);
+        }
+    }
+
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id,
+                        0, 0, width, height);
+
+  gimp_drawable_detach (drawable);
+
+  heif_image_handle_release (handle);
+  heif_context_free (ctx);
+  heif_image_release (img);
+
+  return image_ID;
+}
+
+static gboolean
+save_image (const gchar       *filename,
+            gint32             image_ID,
+            gint32             drawable_ID,
+            const SaveParams  *params,
+            GError           **error)
+{
+  struct heif_image        *image   = NULL;
+  struct heif_context      *context = heif_context_alloc ();
+  struct heif_encoder      *encoder;
+  struct heif_image_handle *handle;
+  struct heif_error         err;
+  guint8                   *data;
+  gint                      stride;
+  GimpPixelRgn              rgn_in;
+  GimpDrawable             *drawable;
+  gint                      width;
+  gint                      height;
+  gboolean                  has_alpha;
+  gint                      y;
+
+  width  = gimp_drawable_width  (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
+
+  has_alpha = gimp_drawable_has_alpha (drawable_ID);
+
+  err = heif_image_create (width, height,
+                           heif_colorspace_RGB,
+                           has_alpha ?
+                           heif_chroma_interleaved_32bit :
+                           heif_chroma_interleaved_24bit,
+                           &image);
+
+  heif_image_add_plane (image, heif_channel_interleaved,
+                        width, height, has_alpha ? 32 : 24);
+
+  data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
+
+  drawable = gimp_drawable_get (drawable_ID);
+
+  gimp_pixel_rgn_init (&rgn_in, drawable,
+                       0, 0, width, height, FALSE, FALSE);
+
+  for (y = 0; y < height; y++)
+    {
+      gimp_pixel_rgn_get_row (&rgn_in,
+                              data + y * stride, 0, y, width);
+    }
+
+  gimp_drawable_detach (drawable);
+
+  /*  encode to HEIF file  */
+
+  context = heif_context_alloc ();
+
+  err = heif_context_get_encoder_for_format (context,
+                                             heif_compression_HEVC,
+                                             &encoder);
+
+  heif_encoder_set_lossy_quality (encoder, params->quality);
+  heif_encoder_set_lossless (encoder, params->lossless);
+  /* heif_encoder_set_logging_level (encoder, logging_level); */
+
+  err = heif_context_encode_image (context,
+                                   image,
+                                   encoder,
+                                   NULL,
+                                   &handle);
+  if (err.code != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Encoding HEIF image failed: %s"),
+                   err.message);
+      return FALSE;
+    }
+
+  heif_image_handle_release (handle);
+
+  err = heif_context_write_to_file (context, filename);
+
+  if (err.code != 0)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Writing HEIF image failed: %s"),
+                   err.message);
+      return FALSE;
+    }
+
+  heif_context_free (context);
+  heif_image_release (image);
+
+  heif_encoder_release (encoder);
+
+  return TRUE;
+}
+
+
+/*  the dialogs  */
+
+#define MAX_THUMBNAIL_SIZE 320
+
+typedef struct _HeifImage HeifImage;
+
+struct _HeifImage
+{
+  uint32_t           ID;
+  gchar              caption[100];
+  struct heif_image *thumbnail;
+  gint               width;
+  gint               height;
+};
+
+static gboolean
+load_thumbnails (struct heif_context *heif,
+                 HeifImage           *images)
+{
+  guint32 *IDs;
+  gint     n_images;
+  gint     i;
+
+  n_images = heif_context_get_number_of_top_level_images (heif);
+
+  /* get list of all (top level) image IDs */
+
+  IDs = g_alloca (n_images * sizeof (guint32));
+
+  heif_context_get_list_of_top_level_image_IDs (heif, IDs, n_images);
+
+
+  /* Load a thumbnail for each image. */
+
+  for (i = 0; i < n_images; i++)
+    {
+      struct heif_image_handle *handle;
+      struct heif_error         err;
+      gint                      width;
+      gint                      height;
+      struct heif_image_handle *thumbnail_handle;
+      heif_item_id              thumbnail_ID;
+      gint                      n_thumbnails;
+      struct heif_image        *thumbnail_img;
+      gint                      thumbnail_width;
+      gint                      thumbnail_height;
+
+      images[i].caption[0] = 0;
+      images[i].thumbnail  = NULL;
+
+      /* get image handle */
+
+      err = heif_context_get_image_handle (heif, IDs[i], &handle);
+      if (err.code)
+        {
+          gimp_message (err.message);
+          continue;
+        }
+
+      /* generate image caption */
+
+      width  = heif_image_handle_get_width  (handle);
+      height = heif_image_handle_get_height (handle);
+
+      if (heif_image_handle_is_primary_image (handle))
+        {
+          g_snprintf (images[i].caption, sizeof (images[i].caption),
+                      "%dx%d (%s)", width, height, _("primary"));
+        }
+      else
+        {
+          g_snprintf (images[i].caption, sizeof (images[i].caption),
+                      "%dx%d", width, height);
+        }
+
+      /* get handle to thumbnail image
+       *
+       * if there is no thumbnail image, just the the image itself
+       * (will be scaled down later)
+       */
+
+      n_thumbnails = heif_image_handle_get_list_of_thumbnail_IDs (handle,
+                                                                  &thumbnail_ID,
+                                                                  1);
+
+      if (n_thumbnails > 0)
+        {
+          err = heif_image_handle_get_thumbnail (handle, thumbnail_ID,
+                                                 &thumbnail_handle);
+          if (err.code)
+            {
+              gimp_message (err.message);
+              continue;
+            }
+        }
+      else
+        {
+          err = heif_context_get_image_handle (heif, IDs[i], &thumbnail_handle);
+          if (err.code)
+            {
+              gimp_message (err.message);
+              continue;
+            }
+        }
+
+      /* decode the thumbnail image */
+
+      err = heif_decode_image (thumbnail_handle,
+                               &thumbnail_img,
+                               heif_colorspace_RGB,
+                               heif_chroma_interleaved_24bit,
+                               NULL);
+      if (err.code)
+        {
+          gimp_message (err.message);
+          continue;
+        }
+
+      /* if thumbnail image size exceeds the maximum, scale it down */
+
+      thumbnail_width  = heif_image_handle_get_width  (thumbnail_handle);
+      thumbnail_height = heif_image_handle_get_height (thumbnail_handle);
+
+      if (thumbnail_width  > MAX_THUMBNAIL_SIZE ||
+          thumbnail_height > MAX_THUMBNAIL_SIZE)
+        {
+          /* compute scaling factor to fit into a max sized box */
+
+          gfloat factor_h = thumbnail_width  / (gfloat) MAX_THUMBNAIL_SIZE;
+          gfloat factor_v = thumbnail_height / (gfloat) MAX_THUMBNAIL_SIZE;
+          gint   new_width, new_height;
+          struct heif_image *scaled_img = NULL;
+
+          if (factor_v > factor_h)
+            {
+              new_height = MAX_THUMBNAIL_SIZE;
+              new_width  = thumbnail_width / factor_v;
+            }
+          else
+            {
+              new_height = thumbnail_height / factor_h;
+              new_width  = MAX_THUMBNAIL_SIZE;
+            }
+
+          /* scale the image */
+
+          err = heif_image_scale_image (thumbnail_img,
+                                        &scaled_img,
+                                        new_width, new_height,
+                                        NULL);
+          if (err.code)
+            {
+              gimp_message (err.message);
+              continue;
+            }
+
+          /* release the old image and only keep the scaled down version */
+
+          heif_image_release (thumbnail_img);
+          thumbnail_img = scaled_img;
+
+          thumbnail_width  = new_width;
+          thumbnail_height = new_height;
+        }
+
+      heif_image_handle_release (thumbnail_handle);
+      heif_image_handle_release (handle);
+
+      /* remember the HEIF thumbnail image (we need it for the GdkPixbuf) */
+
+      images[i].thumbnail = thumbnail_img;
+
+      images[i].width  = thumbnail_width;
+      images[i].height = thumbnail_height;
+    }
+
+  return TRUE;
+}
+
+
+static gboolean
+load_dialog (struct heif_context *heif,
+             uint32_t            *selected_image)
+{
+  GtkWidget    *dialog;
+  GtkWidget    *main_vbox;
+  GtkWidget    *frame;
+  HeifImage    *heif_images;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  GtkWidget    *icon_view;
+  gint          n_images;
+  gint          i;
+  gint          selected_idx = -1;
+  gboolean      run          = FALSE;
+
+  n_images = heif_context_get_number_of_top_level_images (heif);
+
+  heif_images = g_alloca (n_images * sizeof (HeifImage));
+
+  if (! load_thumbnails (heif, heif_images))
+    return FALSE;
+
+  dialog = gimp_dialog_new (_("Load HEIF Image"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, LOAD_PROC,
+
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                            NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      main_vbox, TRUE, TRUE, 0);
+
+  frame = gimp_frame_new (_("Select Image"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  /* prepare list store with all thumbnails and caption */
+
+  list_store = gtk_list_store_new (2, G_TYPE_STRING, GDK_TYPE_PIXBUF);
+
+  for (i = 0; i < n_images; i++)
+    {
+      GdkPixbuf    *pixbuf;
+      const guint8 *data;
+      gint          stride;
+
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter, 0, heif_images[i].caption, -1);
+
+      data = heif_image_get_plane_readonly (heif_images[i].thumbnail,
+                                            heif_channel_interleaved,
+                                            &stride);
+
+      pixbuf = gdk_pixbuf_new_from_data (data,
+                                         GDK_COLORSPACE_RGB,
+                                         FALSE,
+                                         8,
+                                         heif_images[i].width,
+                                         heif_images[i].height,
+                                         stride,
+                                         NULL,
+                                         NULL);
+
+      gtk_list_store_set (list_store, &iter, 1, pixbuf, -1);
+    }
+
+  icon_view = gtk_icon_view_new ();
+  gtk_icon_view_set_model (GTK_ICON_VIEW (icon_view),
+                           GTK_TREE_MODEL (list_store));
+  gtk_icon_view_set_text_column (GTK_ICON_VIEW (icon_view), 0);
+  gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (icon_view), 1);
+  gtk_container_add (GTK_CONTAINER (frame), icon_view);
+  gtk_widget_show (icon_view);
+
+  /* pre-select the primary image */
+
+  for (i = 0; i < n_images; i++)
+    {
+      if (heif_images[i].ID == *selected_image)
+        {
+          selected_idx = i;
+          break;
+        }
+    }
+
+  if (selected_idx != -1)
+    {
+      GtkTreePath *path = gtk_tree_path_new_from_indices (selected_idx, -1);
+
+      gtk_icon_view_select_path (GTK_ICON_VIEW (icon_view), path);
+      gtk_tree_path_free (path);
+    }
+
+  gtk_widget_show (main_vbox);
+  gtk_widget_show (dialog);
+
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (run)
+    {
+      GList *selected_items =
+        gtk_icon_view_get_selected_items (GTK_ICON_VIEW (icon_view));
+
+      if (selected_items)
+        {
+          GtkTreePath *path    = selected_items->data;
+          gint        *indices = gtk_tree_path_get_indices (path);
+
+          *selected_image = heif_images[indices[0]].ID;
+
+          g_list_free_full (selected_items,
+                            (GDestroyNotify) gtk_tree_path_free);
+        }
+    }
+
+  gtk_widget_destroy (dialog);
+
+  /* release thumbnail images */
+
+  for (i = 0 ; i < n_images; i++)
+    heif_image_release (heif_images[i].thumbnail);
+
+  return run;
+}
+
+static void
+lossless_button_toggled (GtkToggleButton *source,
+                         GtkWidget       *slider)
+{
+  gboolean lossless = gtk_toggle_button_get_active (source);
+
+  gtk_widget_set_sensitive (slider, ! lossless);
+}
+
+gboolean
+save_dialog (SaveParams *params)
+{
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *lossless_button;
+  GtkWidget *quality_slider;
+  gboolean   run = FALSE;
+
+  dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      main_vbox, TRUE, TRUE, 0);
+
+  lossless_button = gtk_check_button_new_with_label (_("Lossless"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), lossless_button, FALSE, FALSE, 0);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  label = gtk_label_new (_("Quality:"));
+  quality_slider = gtk_hscale_new_with_range (0, 100, 5);
+  gtk_scale_set_value_pos (GTK_SCALE(quality_slider), GTK_POS_RIGHT);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
+
+  gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lossless_button),
+                                params->lossless);
+  gtk_widget_set_sensitive (quality_slider, !params->lossless);
+
+  g_signal_connect (lossless_button, "toggled",
+                    G_CALLBACK (lossless_button_toggled),
+                    quality_slider);
+
+  gtk_widget_show_all (dialog);
+
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (run)
+    {
+      params->quality  = gtk_range_get_value (GTK_RANGE (quality_slider));
+      params->lossless = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (lossless_button));
+    }
+
+  gtk_widget_destroy (dialog);
+
+  return run;
+}
