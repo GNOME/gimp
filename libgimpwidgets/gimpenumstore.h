@@ -47,9 +47,6 @@ struct _GimpEnumStore
   GimpIntStore          parent_instance;
 
   GimpEnumStorePrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GEnumClass        *enum_class;
 };
 
 struct _GimpEnumStoreClass

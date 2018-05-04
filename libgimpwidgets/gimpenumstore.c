@@ -46,6 +46,14 @@ enum
 };
 
 
+struct _GimpEnumStorePrivate
+{
+  GEnumClass *enum_class;
+};
+
+#define GET_PRIVATE(obj) (((GimpEnumStore *) (obj))->priv)
+
+
 static void   gimp_enum_store_finalize     (GObject      *object);
 static void   gimp_enum_store_set_property (GObject      *object,
                                             guint         property_id,
@@ -89,20 +97,24 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
                                                        G_TYPE_ENUM,
                                                        G_PARAM_CONSTRUCT_ONLY |
                                                        GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (klass, sizeof (GimpEnumStorePrivate));
 }
 
 static void
 gimp_enum_store_init (GimpEnumStore *store)
 {
+  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
+                                             GIMP_TYPE_ENUM_STORE,
+                                             GimpEnumStorePrivate);
 }
 
 static void
 gimp_enum_store_finalize (GObject *object)
 {
-  GimpEnumStore *store = GIMP_ENUM_STORE (object);
+  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
 
-  if (store->enum_class)
-    g_type_class_unref (store->enum_class);
+  g_clear_pointer (&priv->enum_class, g_type_class_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -113,14 +125,15 @@ gimp_enum_store_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpEnumStore *store = GIMP_ENUM_STORE (object);
+  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      g_return_if_fail (store->enum_class == NULL);
-      store->enum_class = g_type_class_ref (g_value_get_gtype (value));
+      g_return_if_fail (priv->enum_class == NULL);
+      priv->enum_class = g_type_class_ref (g_value_get_gtype (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -133,15 +146,16 @@ gimp_enum_store_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpEnumStore *store = GIMP_ENUM_STORE (object);
+  GimpEnumStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      g_value_set_gtype (value, (store->enum_class ?
-                                 G_TYPE_FROM_CLASS (store->enum_class) :
+      g_value_set_gtype (value, (priv->enum_class ?
+                                 G_TYPE_FROM_CLASS (priv->enum_class) :
                                  G_TYPE_NONE));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -152,13 +166,14 @@ static void
 gimp_enum_store_add_value (GtkListStore *store,
                            GEnumValue   *value)
 {
-  GtkTreeIter  iter = { 0, };
-  const gchar *desc;
-  const gchar *abbrev;
-  gchar       *stripped;
+  GimpEnumStorePrivate *priv = GET_PRIVATE (store);
+  GtkTreeIter           iter = { 0, };
+  const gchar          *desc;
+  const gchar          *abbrev;
+  gchar                *stripped;
 
-  desc   = gimp_enum_value_get_desc   (GIMP_ENUM_STORE (store)->enum_class, value);
-  abbrev = gimp_enum_value_get_abbrev (GIMP_ENUM_STORE (store)->enum_class, value);
+  desc   = gimp_enum_value_get_desc   (priv->enum_class, value);
+  abbrev = gimp_enum_value_get_abbrev (priv->enum_class, value);
 
   /* no mnemonics in combo boxes */
   stripped = gimp_strip_uline (desc);
@@ -224,8 +239,9 @@ gimp_enum_store_new_with_range (GType  enum_type,
                                 gint   minimum,
                                 gint   maximum)
 {
-  GtkListStore *store;
-  GEnumValue   *value;
+  GimpEnumStorePrivate *priv;
+  GtkListStore         *store;
+  GEnumValue           *value;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
 
@@ -233,7 +249,9 @@ gimp_enum_store_new_with_range (GType  enum_type,
                         "enum-type", enum_type,
                         NULL);
 
-  for (value = GIMP_ENUM_STORE (store)->enum_class->values;
+  priv = GET_PRIVATE (store);
+
+  for (value = priv->enum_class->values;
        value->value_name;
        value++)
     {
@@ -294,9 +312,10 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
                                         gint      n_values,
                                         va_list   args)
 {
-  GtkListStore *store;
-  GEnumValue   *value;
-  gint          i;
+  GimpEnumStorePrivate *priv;
+  GtkListStore         *store;
+  GEnumValue           *value;
+  gint                  i;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
   g_return_val_if_fail (n_values > 1, NULL);
@@ -305,9 +324,11 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
                         "enum-type", enum_type,
                         NULL);
 
+  priv = GET_PRIVATE (store);
+
   for (i = 0; i < n_values; i++)
     {
-      value = g_enum_get_value (GIMP_ENUM_STORE (store)->enum_class,
+      value = g_enum_get_value (priv->enum_class,
                                 va_arg (args, gint));
 
       if (value)
@@ -333,12 +354,14 @@ void
 gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
                                  const gchar   *icon_prefix)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
+  GimpEnumStorePrivate *priv;
+  GtkTreeModel         *model;
+  GtkTreeIter           iter;
+  gboolean              iter_valid;
 
   g_return_if_fail (GIMP_IS_ENUM_STORE (store));
 
+  priv  = GET_PRIVATE (store);
   model = GTK_TREE_MODEL (store);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
@@ -356,7 +379,7 @@ gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
                               GIMP_INT_STORE_VALUE, &value,
                               -1);
 
-          enum_value = g_enum_get_value (store->enum_class, value);
+          enum_value = g_enum_get_value (priv->enum_class, value);
 
           if (enum_value)
             {

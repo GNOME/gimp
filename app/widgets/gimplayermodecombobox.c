@@ -335,6 +335,7 @@ gimp_layer_mode_combo_box_get_group (GimpLayerModeComboBox *combo)
 
 static void
 gimp_enum_store_add_value (GtkListStore *store,
+                           GEnumClass   *enum_class,
                            GEnumValue   *value)
 {
   GtkTreeIter  iter = { 0, };
@@ -342,8 +343,8 @@ gimp_enum_store_add_value (GtkListStore *store,
   const gchar *abbrev;
   gchar       *stripped;
 
-  desc   = gimp_enum_value_get_desc   (GIMP_ENUM_STORE (store)->enum_class, value);
-  abbrev = gimp_enum_value_get_abbrev (GIMP_ENUM_STORE (store)->enum_class, value);
+  desc   = gimp_enum_value_get_desc   (enum_class, value);
+  abbrev = gimp_enum_value_get_abbrev (enum_class, value);
 
   /* no mnemonics in combo boxes */
   stripped = gimp_strip_uline (desc);
@@ -376,6 +377,7 @@ gimp_enum_store_new_from_array (GType                 enum_type,
                                 GimpLayerModeContext  context)
 {
   GtkListStore *store;
+  GEnumClass   *enum_class;
   GEnumValue   *value;
   gboolean      first_item        = TRUE;
   gboolean      prepend_separator = FALSE;
@@ -389,14 +391,15 @@ gimp_enum_store_new_from_array (GType                 enum_type,
                         "enum-type", enum_type,
                         NULL);
 
+  enum_class = g_type_class_ref (enum_type);
+
   for (i = 0; i < n_values; i++)
     {
       if (values[i] != GIMP_LAYER_MODE_SEPARATOR)
         {
           if (gimp_layer_mode_get_context (values[i]) & context)
             {
-              value = g_enum_get_value (GIMP_ENUM_STORE (store)->enum_class,
-                                        values[i]);
+              value = g_enum_get_value (enum_class, values[i]);
 
               if (value)
                 {
@@ -407,7 +410,7 @@ gimp_enum_store_new_from_array (GType                 enum_type,
                       prepend_separator = FALSE;
                     }
 
-                  gimp_enum_store_add_value (store, value);
+                  gimp_enum_store_add_value (store, enum_class, value);
 
                   first_item = FALSE;
                 }
@@ -419,6 +422,8 @@ gimp_enum_store_new_from_array (GType                 enum_type,
             prepend_separator = TRUE;
         }
     }
+
+  g_type_class_unref (enum_class);
 
   return store;
 }

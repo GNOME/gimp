@@ -104,6 +104,7 @@ gimp_stroke_editor_constructed (GObject *object)
   GimpStrokeEditor  *editor      = GIMP_STROKE_EDITOR (object);
   GimpStrokeOptions *options;
   GimpEnumStore     *store;
+  GEnumClass        *enum_class;
   GEnumValue        *value;
   GtkWidget         *box;
   GtkWidget         *size;
@@ -217,12 +218,14 @@ gimp_stroke_editor_constructed (GObject *object)
                         "user-data-type", GIMP_TYPE_DASH_PATTERN,
                         NULL);
 
-  for (value = store->enum_class->values; value->value_name; value++)
+  enum_class = g_type_class_ref (GIMP_TYPE_DASH_PRESET);
+
+  for (value = enum_class->values; value->value_name; value++)
     {
       GtkTreeIter  iter = { 0, };
       const gchar *desc;
 
-      desc = gimp_enum_value_get_desc (store->enum_class, value);
+      desc = gimp_enum_value_get_desc (enum_class, value);
 
       gtk_list_store_append (GTK_LIST_STORE (store), &iter);
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
@@ -230,6 +233,8 @@ gimp_stroke_editor_constructed (GObject *object)
                           GIMP_INT_STORE_LABEL, desc,
                           -1);
     }
+
+  g_type_class_unref (enum_class);
 
   box = gimp_enum_combo_box_new_with_model (store);
   g_object_unref (store);
