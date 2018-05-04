@@ -732,9 +732,9 @@ save_dialog (void)
   GtkWidget     *dialog;
   GtkWidget     *vbox;
   GtkAdjustment *entry;
-  GtkWidget     *table;
-  GtkWidget     *table2;
-  GtkWidget     *tabledefaults;
+  GtkWidget     *grid;
+  GtkWidget     *grid2;
+  GtkWidget     *griddefaults;
   GtkWidget     *expander;
   GtkWidget     *frame;
   GtkWidget     *toggle;
@@ -765,19 +765,19 @@ save_dialog (void)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   pg.quality = entry = (GtkAdjustment *)
-                       gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                             _("_Quality:"),
-                                             SCALE_WIDTH, 0, jsvals.quality,
-                                             0.0, 100.0, 1.0, 10.0, 0,
-                                             TRUE, 0.0, 0.0,
-                                             _("JPEG quality parameter"),
-                                             "file-jpeg-save-quality");
+                       gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                                  _("_Quality:"),
+                                                  SCALE_WIDTH, 0, jsvals.quality,
+                                                  0.0, 100.0, 1.0, 10.0, 0,
+                                                  TRUE, 0.0, 0.0,
+                                                  _("JPEG quality parameter"),
+                                                  "file-jpeg-save-quality");
 
   g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -827,26 +827,24 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 8, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
-  table2 = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
-  gtk_table_attach (GTK_TABLE (table), table2,
-                    2, 6, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (table2);
+  grid2 = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
+  gtk_grid_attach (GTK_GRID (grid), grid2, 2, 0, 4, 1);
+  gtk_widget_show (grid2);
 
   pg.smoothing = entry = (GtkAdjustment *)
-                         gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-                                               _("S_moothing:"),
-                                               100, 0, jsvals.smoothing,
-                                               0.0, 1.0, 0.01, 0.1, 2,
-                                               TRUE, 0.0, 0.0,
-                                               NULL,
-                                               "file-jpeg-save-smoothing");
+                         gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
+                                                    _("S_moothing:"),
+                                                    100, 0, jsvals.smoothing,
+                                                    0.0, 1.0, 0.01, 0.1, 2,
+                                                    TRUE, 0.0, 0.0,
+                                                    NULL,
+                                                    "file-jpeg-save-smoothing");
   g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);
@@ -856,8 +854,7 @@ save_dialog (void)
 
   restart_markers_label = gtk_label_new (_("Interval (MCU rows):"));
   gtk_label_set_xalign (GTK_LABEL (restart_markers_label), 1.0);
-  gtk_table_attach (GTK_TABLE (table), restart_markers_label, 4, 5, 1, 2,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), restart_markers_label, 4, 1, 1, 1);
   gtk_widget_show (restart_markers_label);
 
   pg.scale_data = (GtkAdjustment *)
@@ -867,13 +864,12 @@ save_dialog (void)
   pg.restart = restart_markers_scale = spinbutton =
     gtk_spin_button_new (pg.scale_data, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_table_attach (GTK_TABLE (table), spinbutton, 5, 6, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinbutton, 5, 1, 1, 1);
   gtk_widget_show (spinbutton);
 
   pg.use_restart_markers = toggle =
     gtk_check_button_new_with_mnemonic (_("Use _restart markers"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 2, 4, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 2, 1, 2, 1);
   gtk_widget_show (toggle);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.restart);
@@ -892,8 +888,7 @@ save_dialog (void)
 
   /* Optimize */
   pg.optimize = toggle = gtk_check_button_new_with_mnemonic (_("_Optimize"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -918,8 +913,7 @@ save_dialog (void)
       gtk_widget_set_tooltip_text
         (toggle, _("Older software may have trouble opening "
                    "arithmetic-coded images"));
-      gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                        row, row + 1, GTK_FILL, 0, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
@@ -940,8 +934,7 @@ save_dialog (void)
   /* Progressive */
   pg.progressive = toggle =
     gtk_check_button_new_with_mnemonic (_("_Progressive"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -960,8 +953,7 @@ save_dialog (void)
   pg.save_exif = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -979,8 +971,7 @@ save_dialog (void)
   pg.save_thumbnail = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_thumbnail);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -996,8 +987,7 @@ save_dialog (void)
   pg.save_xmp = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_xmp);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -1015,8 +1005,7 @@ save_dialog (void)
   pg.save_iptc = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _IPTC data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_iptc);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 1, 1);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -1034,8 +1023,7 @@ save_dialog (void)
   pg.use_orig_quality = toggle =
     gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
                                           "image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 4, 1);
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
@@ -1067,8 +1055,7 @@ save_dialog (void)
   /* Subsampling */
   label = gtk_label_new_with_mnemonic (_("Su_bsampling:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 2, 1, 1);
   gtk_widget_show (label);
 
   pg.subsmp =
@@ -1081,8 +1068,7 @@ save_dialog (void)
                                     _("4:2:0 (chroma quartered)"),
                                     JPEG_SUBSAMPLING_2x2_1x1_1x1,
                                     NULL);
-  gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 3, 2, 3, 1);
   gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
@@ -1112,8 +1098,7 @@ save_dialog (void)
   /* DCT method */
   label = gtk_label_new_with_mnemonic (_("_DCT method:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 3, 1, 1);
   gtk_widget_show (label);
 
   pg.dct = combo = gimp_int_combo_box_new (_("Fast Integer"),   1,
@@ -1121,8 +1106,7 @@ save_dialog (void)
                                            _("Floating-Point"), 2,
                                            NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), jsvals.dct);
-  gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 3, 4,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 3, 3, 3, 1);
   gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
@@ -1166,14 +1150,13 @@ save_dialog (void)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  tabledefaults = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (tabledefaults), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), tabledefaults, FALSE, FALSE, 0);
-  gtk_widget_show (tabledefaults);
+  griddefaults = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (griddefaults), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), griddefaults, FALSE, FALSE, 0);
+  gtk_widget_show (griddefaults);
 
   button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
-  gtk_table_attach (GTK_TABLE (tabledefaults),
-                    button, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (griddefaults), button, 0, 1, 1, 1);
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
@@ -1181,8 +1164,7 @@ save_dialog (void)
                             &pg);
 
   button = gtk_button_new_with_mnemonic (_("Sa_ve Defaults"));
-  gtk_table_attach (GTK_TABLE (tabledefaults),
-                    button, 1, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (griddefaults), button, 1, 1, 1, 1);
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
@@ -1190,7 +1172,7 @@ save_dialog (void)
                             &pg);
   gtk_widget_show (frame);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (dialog);
 
   make_preview ();
