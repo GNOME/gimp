@@ -586,9 +586,7 @@ preview_update (GtkWidget *widget)
 
   img_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
-  width  = preview->width;
-  height = preview->height;
-
+  gimp_preview_get_size (preview, &width, &height);
   gimp_preview_get_position (preview, &x1, &y1);
 
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
