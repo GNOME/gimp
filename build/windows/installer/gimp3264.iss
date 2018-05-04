@@ -200,6 +200,10 @@ Name: deps32\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; F
 Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
 Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
 
+#ifdef DEBUG_SYMBOLS
+Name: debug; Description: "{cm:ComponentsDebug}"; Types: custom
+#endif
+
 Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
 
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
@@ -285,7 +289,7 @@ Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gim
 ;python scripts
 #ifdef PYTHON
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif
 
 ;64bit
@@ -1053,7 +1057,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
+	Components := ['Gimp','Deps','Debug','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
 	ComponentDesc := '';
 	
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
