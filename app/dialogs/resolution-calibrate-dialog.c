@@ -55,9 +55,7 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
   GtkWidget    *hbox;
   GtkWidget    *ruler;
   GtkWidget    *label;
-  GdkScreen    *screen;
-  GdkRectangle  rect;
-  gint          monitor;
+  GdkRectangle  workarea;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (gtk_widget_get_realized (resolution_entry));
@@ -82,13 +80,10 @@ resolution_calibrate_dialog (GtkWidget   *resolution_entry,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  screen = gtk_widget_get_screen (dialog);
-  monitor = gdk_screen_get_monitor_at_window (screen,
-                                              gtk_widget_get_window (resolution_entry));
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (dialog), &workarea);
 
-  ruler_width  = rect.width  - 300 - (rect.width  % 100);
-  ruler_height = rect.height - 300 - (rect.height % 100);
+  ruler_width  = workarea.width  - 300 - (workarea.width  % 100);
+  ruler_height = workarea.height - 300 - (workarea.height % 100);
 
   grid = gtk_grid_new ();
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);

@@ -894,8 +894,7 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
   GdkDevice        *device;
   GdkScreen        *screen;
   GtkRequisition    requisition;
-  GdkRectangle      rect;
-  gint              monitor;
+  GdkRectangle      workarea;
   gint              pointer_x;
   gint              pointer_y;
 
@@ -909,8 +908,7 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
 
   gdk_device_get_position (device, &screen, &pointer_x, &pointer_y);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gdk_monitor_get_workarea (gimp_get_monitor_at_pointer (), &workarea);
 
   gtk_menu_set_screen (menu, screen);
 
@@ -920,24 +918,24 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
     {
       *x = pointer_x - 2 - requisition.width;
 
-      if (*x < rect.x)
+      if (*x < workarea.x)
         *x = pointer_x + 2;
     }
   else
     {
       *x = pointer_x + 2;
 
-      if (*x + requisition.width > rect.x + rect.width)
+      if (*x + requisition.width > workarea.x + workarea.width)
         *x = pointer_x - 2 - requisition.width;
     }
 
   *y = pointer_y + 2;
 
-  if (*y + requisition.height > rect.y + rect.height)
+  if (*y + requisition.height > workarea.y + workarea.height)
     *y = pointer_y - 2 - requisition.height;
 
-  if (*x < rect.x) *x = rect.x;
-  if (*y < rect.y) *y = rect.y;
+  if (*x < workarea.x) *x = workarea.x;
+  if (*y < workarea.y) *y = workarea.y;
 }
 
 static void
