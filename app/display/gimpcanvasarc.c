@@ -256,6 +256,10 @@ gimp_canvas_arc_transform (GimpCanvasItem *item,
       *radius_x = MAX (*radius_x - 0.5, 0.0);
       *radius_y = MAX (*radius_y - 0.5, 0.0);
     }
+
+  /* avoid cairo_scale (cr, 0.0, 0.0) */
+  if (*radius_x == 0.0) *radius_x = 0.000001;
+  if (*radius_y == 0.0) *radius_y = 0.000001;
 }
 
 static void
