@@ -140,10 +140,8 @@ gimp_menu_position (GtkMenu *menu,
                     gint    *y)
 {
   GtkWidget      *widget;
-  GdkScreen      *screen;
   GtkRequisition  requisition;
-  GdkRectangle    rect;
-  gint            monitor;
+  GdkRectangle    workarea;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
@@ -151,35 +149,32 @@ gimp_menu_position (GtkMenu *menu,
 
   widget = GTK_WIDGET (menu);
 
-  screen = gtk_widget_get_screen (widget);
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget), &workarea);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
-
-  gtk_menu_set_screen (menu, screen);
+  gtk_menu_set_screen (menu, gtk_widget_get_screen (widget));
 
   gtk_widget_get_preferred_size (widget, &requisition, NULL);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
       *x -= requisition.width;
-      if (*x < rect.x)
+      if (*x < workarea.x)
         *x += requisition.width;
     }
   else
     {
-      if (*x + requisition.width > rect.x + rect.width)
+      if (*x + requisition.width > workarea.x + workarea.width)
         *x -= requisition.width;
     }
 
-  if (*x < rect.x)
-    *x = rect.x;
+  if (*x < workarea.x)
+    *x = workarea.x;
 
-  if (*y + requisition.height > rect.y + rect.height)
+  if (*y + requisition.height > workarea.y + workarea.height)
     *y -= requisition.height;
 
-  if (*y < rect.y)
-    *y = rect.y;
+  if (*y < workarea.y)
+    *y = workarea.y;
 }
 
 void

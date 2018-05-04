@@ -193,20 +193,18 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   GtkWidget    *window;
   GtkWidget    *frame;
   GtkWidget    *view;
-  GdkScreen    *screen;
-  GdkRectangle  rect;
-  gint          monitor;
+  GdkDisplay   *display;
+  GdkRectangle  workarea;
   gint          x;
   gint          y;
 
   popup->timeout_id = 0;
 
-  screen = gtk_widget_get_screen (popup->widget);
-
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 
-  gtk_window_set_screen (GTK_WINDOW (window), screen);
+  gtk_window_set_screen (GTK_WINDOW (window),
+                         gtk_widget_get_screen (popup->widget));
   gtk_window_set_transient_for (GTK_WINDOW (window),
                                 GTK_WINDOW (gtk_widget_get_toplevel (popup->widget)));
 
@@ -225,14 +223,18 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
+  display = gtk_widget_get_display (popup->widget);
+
+  gdk_monitor_get_workarea (gdk_display_get_monitor_at_point (display,
+                                                              popup->button_x,
+                                                              popup->button_y),
+                            &workarea);
+
   x = popup->button_x - (popup->popup_width  / 2);
   y = popup->button_y - (popup->popup_height / 2);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, x, y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
-
-  x = CLAMP (x, rect.x, rect.x + rect.width  - popup->popup_width);
-  y = CLAMP (y, rect.y, rect.y + rect.height - popup->popup_height);
+  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - popup->popup_width);
+  y = CLAMP (y, workarea.y, workarea.y + workarea.height - popup->popup_height);
 
   gtk_window_move (GTK_WINDOW (window), x, y);
   gtk_widget_show (window);
