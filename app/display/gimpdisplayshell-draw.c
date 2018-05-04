@@ -42,7 +42,7 @@
 #include "gimpdisplayxfer.h"
 
 
-/* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
+#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
 
 
 /*  public functions  */
@@ -160,7 +160,10 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   chunk_height = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
-  /* if we had this future API, things would look pretty on hires (retina) */
+  /* multiply the image scale-factor by the window scale-factor, and divide
+   * the cairo scale-factor by the same amount (further down), so that we make
+   * full use of the screen resolution, even on hidpi displays.
+   */
   scale *=
     gdk_window_get_scale_factor (
       gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
