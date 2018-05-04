@@ -113,7 +113,6 @@ resize_dialog_new (GimpViewable       *viewable,
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
-  GtkWidget     *abox;
   GtkWidget     *frame;
   GtkWidget     *button;
   GtkWidget     *spinbutton;
@@ -276,13 +275,10 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offset_center_clicked),
                     private);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_halign (frame, GTK_ALIGN_CENTER);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   private->area = gimp_offset_area_new (width, height);

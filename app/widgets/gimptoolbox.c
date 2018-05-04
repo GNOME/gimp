@@ -645,57 +645,63 @@ static GtkWidget *
 toolbox_create_color_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *alignment;
   GtkWidget *col_area;
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
-
-  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
-
   col_area = gimp_toolbox_color_area_create (toolbox, 54, 42);
-  gtk_container_add (GTK_CONTAINER (alignment), col_area);
-  gtk_widget_show (col_area);
+  g_object_set (col_area,
+                "halign",        GTK_ALIGN_CENTER,
+                "valign",        GTK_ALIGN_CENTER,
+                "margin-left",   2,
+                "margin-right",  2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
 
-  return alignment;
+  gimp_help_set_help_data (col_area, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
+
+  return col_area;
 }
 
 static GtkWidget *
 toolbox_create_foo_area (GimpToolbox *toolbox,
                          GimpContext *context)
 {
-  GtkWidget *alignment;
   GtkWidget *foo_area;
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
-
-  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
-
   foo_area = gimp_toolbox_indicator_area_create (toolbox);
-  gtk_container_add (GTK_CONTAINER (alignment), foo_area);
-  gtk_widget_show (foo_area);
+  g_object_set (foo_area,
+                "halign",        GTK_ALIGN_CENTER,
+                "valign",        GTK_ALIGN_CENTER,
+                "margin-left",   2,
+                "margin-right",  2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
 
-  return alignment;
+  gimp_help_set_help_data (foo_area, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
+
+  return foo_area;
 }
 
 static GtkWidget *
 toolbox_create_image_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *alignment;
   GtkWidget *image_area;
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
-
-  gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
-
   image_area = gimp_toolbox_image_area_create (toolbox, 52, 42);
-  gtk_container_add (GTK_CONTAINER (alignment), image_area);
-  gtk_widget_show (image_area);
+  g_object_set (image_area,
+                "halign",        GTK_ALIGN_CENTER,
+                "valign",        GTK_ALIGN_CENTER,
+                "margin-left",   2,
+                "margin-right",  2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
 
-  return alignment;
+  gimp_help_set_help_data (image_area, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
+
+  return image_area;
 }
 
 static void

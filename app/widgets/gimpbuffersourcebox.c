@@ -145,16 +145,12 @@ static void
 gimp_buffer_source_box_constructed (GObject *object)
 {
   GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
-  GtkWidget           *alignment;
-
-  alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (box), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
 
   box->priv->toggle = gtk_check_button_new_with_mnemonic (box->priv->name);
+  gtk_widget_set_valign (box->priv->toggle, GTK_ALIGN_CENTER);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (box->priv->toggle),
                                 box->priv->enabled);
-  gtk_container_add (GTK_CONTAINER (alignment), box->priv->toggle);
+  gtk_box_pack_start (GTK_BOX (box), box->priv->toggle, FALSE, FALSE, 0);
   gtk_widget_show (box->priv->toggle);
 
   g_signal_connect_object (box->priv->toggle, "toggled",
