@@ -1857,6 +1857,7 @@ gimp_prop_label_new (GObject     *config,
     }
 
   label = gtk_label_new (NULL);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 

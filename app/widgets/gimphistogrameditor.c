@@ -122,7 +122,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   GtkWidget         *hbox;
   GtkWidget         *label;
   GtkWidget         *menu;
-  GtkWidget         *table;
+  GtkWidget         *grid;
   gint               i;
 
   const gchar *gimp_histogram_editor_labels[] =
@@ -189,11 +189,10 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             G_CALLBACK (gimp_histogram_editor_view_draw),
                             editor);
 
-  table = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (editor), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   for (i = 0; i < 6; i++)
     {
@@ -206,8 +205,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
       gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-      gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+      gtk_widget_set_hexpand (label, TRUE);
+      gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
       gtk_widget_show (label);
 
       editor->labels[i] =
@@ -219,8 +218,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gimp_label_set_attributes (GTK_LABEL (editor->labels[i]),
                                  PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                  -1);
-      gtk_table_attach (GTK_TABLE (table), label, x + 1, x + 2, y, y + 1,
-                        GTK_FILL, GTK_FILL, 2, 2);
+      gtk_grid_attach (GTK_GRID (grid), label, x + 1, y, 1, 1);
       gtk_widget_show (label);
     }
 }

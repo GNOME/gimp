@@ -161,7 +161,7 @@ gimp_controller_editor_constructed (GObject *object)
   GtkListStore         *store;
   GtkWidget            *frame;
   GtkWidget            *vbox;
-  GtkWidget            *table;
+  GtkWidget            *grid;
   GtkWidget            *hbox;
   GtkWidget            *button;
   GtkWidget            *tv;
@@ -213,25 +213,25 @@ gimp_controller_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   row = 0;
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Name:"), 0.0, 0.5,
-                             gimp_prop_label_new (G_OBJECT (controller),
-                                                  "name"),
-                             1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("Name:"), 0.0, 0.5,
+                            gimp_prop_label_new (G_OBJECT (controller),
+                                                 "name"),
+                            1);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("State:"), 0.0, 0.5,
-                             gimp_prop_label_new (G_OBJECT (controller),
-                                                  "state"),
-                             1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("State:"), 0.0, 0.5,
+                            gimp_prop_label_new (G_OBJECT (controller),
+                                                 "state"),
+                            1);
 
   property_specs =
     g_object_class_list_properties (G_OBJECT_CLASS (controller_class),
@@ -249,21 +249,22 @@ gimp_controller_editor_constructed (GObject *object)
         {
           widget = gimp_controller_string_view_new (controller, pspec);
 
-          gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     g_param_spec_get_nick (pspec),
-                                     0.0, 0.5,
-                                     widget,
-                                     1, FALSE);
+          gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    g_param_spec_get_nick (pspec),
+                                    0.0, 0.5,
+                                    widget,
+                                    1);
         }
       else if (G_IS_PARAM_SPEC_INT (pspec))
         {
           widget = gimp_controller_int_view_new (controller, pspec);
+          gtk_widget_set_halign (widget, GTK_ALIGN_START);
 
-          gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     g_param_spec_get_nick (pspec),
-                                     0.0, 0.5,
-                                     widget,
-                                     1, TRUE);
+          gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    g_param_spec_get_nick (pspec),
+                                    0.0, 0.5,
+                                    widget,
+                                    1);
         }
     }
 

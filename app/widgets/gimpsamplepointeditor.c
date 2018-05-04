@@ -161,11 +161,11 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), editor->empty_label, TRUE, TRUE, 0);
 
-  editor->table = gtk_table_new (1, 2, TRUE);
-  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_box_pack_start (GTK_BOX (vbox), editor->table, FALSE, FALSE, 0);
-  gtk_widget_show (editor->table);
+  editor->grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (editor->grid), content_spacing);
+  gtk_grid_set_column_spacing (GTK_GRID (editor->grid), content_spacing);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->grid, FALSE, FALSE, 0);
+  gtk_widget_show (editor->grid);
 }
 
 static void
@@ -238,7 +238,7 @@ gimp_sample_point_editor_style_updated (GtkWidget *widget)
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  if (editor->table)
+  if (editor->grid)
     {
       gint content_spacing;
 
@@ -246,8 +246,8 @@ gimp_sample_point_editor_style_updated (GtkWidget *widget)
                             "content-spacing", &content_spacing,
                             NULL);
 
-      gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
-      gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
+      gtk_grid_set_row_spacing (GTK_GRID (editor->grid), content_spacing);
+      gtk_grid_set_column_spacing (GTK_GRID (editor->grid), content_spacing);
     }
 }
 
@@ -453,14 +453,14 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
                           "number",         i + 1,
                           "has-color-area", TRUE,
                           "has-coords",     TRUE,
+                          "hexpand",        TRUE,
                           NULL);
 
           gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (editor->color_frames[i]),
                                              config);
 
-          gtk_table_attach (GTK_TABLE (editor->table), editor->color_frames[i],
-                            column, column + 1, row, row + 1,
-                            GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+          gtk_grid_attach (GTK_GRID (editor->grid), editor->color_frames[i],
+                           column, row, 1, 1);
           gtk_widget_show (editor->color_frames[i]);
 
           g_object_set_data (G_OBJECT (editor->color_frames[i]),

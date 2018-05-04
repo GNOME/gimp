@@ -149,7 +149,7 @@ static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -186,30 +186,32 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                     editor);
 
   /*  Some helpful hints  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_end (GTK_BOX (editor), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   editor->index_adjustment = gtk_adjustment_new (0, 0, 0, 1, 10, 0);
   editor->index_spinbutton = gtk_spin_button_new (editor->index_adjustment,
                                                   1.0, 0);
+  gtk_widget_set_halign (editor->index_spinbutton, GTK_ALIGN_START);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (editor->index_spinbutton),
                                TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Color index:"), 0.0, 0.5,
-                             editor->index_spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Color index:"), 0.0, 0.5,
+                            editor->index_spinbutton, 1);
 
   g_signal_connect (editor->index_adjustment, "value-changed",
                     G_CALLBACK (gimp_colormap_adjustment_changed),
                     editor);
 
   editor->color_entry = gimp_color_hex_entry_new ();
+  gtk_widget_set_halign (editor->color_entry, GTK_ALIGN_START);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 12);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("HTML notation:"), 0.0, 0.5,
-                             editor->color_entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("HTML notation:"), 0.0, 0.5,
+                            editor->color_entry, 1);
 
   g_signal_connect (editor->color_entry, "color-changed",
                     G_CALLBACK (gimp_colormap_hex_entry_changed),

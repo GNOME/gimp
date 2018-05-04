@@ -60,7 +60,7 @@ static void   gimp_dynamics_editor_add_icon_editor (GimpDynamics       *dynamics
 
 static void   gimp_dynamics_editor_add_output_row  (GObject     *config,
                                                     const gchar *row_label,
-                                                    GtkTable    *table,
+                                                    GtkGrid     *grid,
                                                     gint         row);
 
 static void gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
@@ -70,7 +70,7 @@ static void gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
 
 static GtkWidget * dynamics_check_button_new       (GObject     *config,
                                                     const gchar *property_name,
-                                                    GtkTable    *table,
+                                                    GtkGrid     *grid,
                                                     gint         column,
                                                     gint         row);
 
@@ -130,7 +130,7 @@ gimp_dynamics_editor_constructed (GObject *object)
   GtkWidget          *input_labels[7];
   GtkWidget          *vbox;
   GtkWidget          *icon_box;
-  GtkWidget          *table;
+  GtkWidget          *grid;
   gint                n_inputs    = G_N_ELEMENTS (input_labels);
   gint                i;
 
@@ -149,14 +149,14 @@ gimp_dynamics_editor_constructed (GObject *object)
                                         data_editor->context->gimp,
                                         vbox);
 
-  table = gtk_table_new (10, n_inputs + 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   gimp_dynamics_editor_init_output_editors (dynamics,
                                             editor->view_selector,
                                             editor->notebook,
-                                            table);
+                                            grid);
 
   input_labels[0] = gtk_label_new (_("Pressure"));
   input_labels[1] = gtk_label_new (_("Velocity"));
@@ -171,9 +171,7 @@ gimp_dynamics_editor_constructed (GObject *object)
       gtk_label_set_angle (GTK_LABEL (input_labels[i]), 90);
       gtk_label_set_yalign (GTK_LABEL (input_labels[i]), 1.0);
 
-      gtk_table_attach (GTK_TABLE (table), input_labels[i],
-                        i + 1, i + 2, 0, 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), input_labels[i], i + 1, 0, 1, 1);
       gtk_widget_show (input_labels[i]);
     }
 
@@ -324,7 +322,7 @@ gimp_dynamics_editor_add_icon_editor (GimpDynamics *dynamics,
 static void
 gimp_dynamics_editor_add_output_row (GObject     *config,
                                      const gchar *row_label,
-                                     GtkTable    *table,
+                                     GtkGrid     *grid,
                                      gint         row)
 {
   GtkWidget *label;
@@ -332,43 +330,42 @@ gimp_dynamics_editor_add_output_row (GObject     *config,
 
   label = gtk_label_new (row_label);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, label, 0, row, 1, 1);
   gtk_widget_show (label);
 
   dynamics_check_button_new (config, "use-pressure",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config, "use-velocity",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config, "use-direction",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config,  "use-tilt",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config,  "use-wheel",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config, "use-random",
-                             table, column, row);
+                             grid, column, row);
   column++;
 
   dynamics_check_button_new (config, "use-fade",
-                             table, column, row);
+                             grid, column, row);
   column++;
 }
 
 static GtkWidget *
 dynamics_check_button_new (GObject     *config,
                            const gchar *property_name,
-                           GtkTable    *table,
+                           GtkGrid     *grid,
                            gint         column,
                            gint         row)
 {
@@ -376,8 +373,7 @@ dynamics_check_button_new (GObject     *config,
 
   button = gimp_prop_check_button_new (config, property_name, NULL);
   gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
-  gtk_table_attach (table, button, column, column + 1, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (grid, button, column, row, 1, 1);
   gtk_widget_show (button);
 
   return button;
@@ -422,7 +418,7 @@ gimp_dynamics_editor_init_output_editors (GimpDynamics *dynamics,
 
       gimp_dynamics_editor_add_output_row (G_OBJECT (output),
                                            label,
-                                           GTK_TABLE (check_grid),
+                                           GTK_GRID (check_grid),
                                            i);
 
       g_free (label);
