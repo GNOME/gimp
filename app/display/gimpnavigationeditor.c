@@ -237,7 +237,6 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   GtkStyleContext      *style = gtk_widget_get_style_context (widget);
   GimpNavigationEditor *editor;
   GimpNavigationView   *view;
-  GdkScreen            *screen;
   gint                  x, y;
   gint                  view_marker_center_x, view_marker_center_y;
   gint                  view_marker_width, view_marker_height;
@@ -276,8 +275,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   view = GIMP_NAVIGATION_VIEW (editor->view);
 
   /* Set poup screen */
-  screen = gtk_widget_get_screen (widget);
-  gtk_window_set_screen (GTK_WINDOW (shell->nav_popup), screen);
+  gtk_window_set_screen (GTK_WINDOW (shell->nav_popup),
+                         gtk_widget_get_screen (widget));
 
   gimp_navigation_view_get_local_marker (view,
                                          &view_marker_center_x,
@@ -286,11 +285,16 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
                                          &view_marker_height);
   /* Position the popup */
   {
-    GtkBorder border;
-    gint      x_origin, y_origin;
-    gint      popup_width, popup_height;
-    gint      border_width, border_height;
-    gint      screen_click_x, screen_click_y;
+    GdkMonitor   *monitor;
+    GdkRectangle  workarea;
+    GtkBorder     border;
+    gint          x_origin, y_origin;
+    gint          popup_width, popup_height;
+    gint          border_width, border_height;
+    gint          screen_click_x, screen_click_y;
+
+    monitor = gimp_widget_get_monitor (widget);
+    gdk_monitor_get_workarea (monitor, &workarea);
 
     gdk_window_get_origin (gtk_widget_get_window (widget),
                            &x_origin, &y_origin);
@@ -329,8 +333,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
      *
      * Warping the pointer would be another solution ...
      */
-    x = CLAMP (x, 0, gdk_screen_get_width (screen)  - popup_width);
-    y = CLAMP (y, 0, gdk_screen_get_height (screen) - popup_height);
+    x = CLAMP (x, workarea.x, workarea.x + workarea.width  - popup_width);
+    y = CLAMP (y, workarea.y, workarea.y + workarea.height - popup_height);
 
     gtk_window_move (GTK_WINDOW (shell->nav_popup), x, y);
   }
