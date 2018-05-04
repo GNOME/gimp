@@ -722,26 +722,26 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
                                       gint             *display_width,
                                       gint             *display_height)
 {
-  GimpImage *image;
-  GdkScreen *screen;
-  gint       image_width;
-  gint       image_height;
-  gint       shell_width;
-  gint       shell_height;
-  gint       screen_width;
-  gint       screen_height;
+  GimpImage    *image;
+  GdkRectangle  workarea;
+  gint          image_width;
+  gint          image_height;
+  gint          monitor_width;
+  gint          monitor_height;
+  gint          shell_width;
+  gint          shell_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = gimp_display_get_image (shell->display);
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+  gdk_monitor_get_workarea (shell->initial_monitor, &workarea);
 
   image_width  = gimp_image_get_width  (image);
   image_height = gimp_image_get_height (image);
 
-  screen_width  = gdk_screen_get_width (screen)  * 0.75;
-  screen_height = gdk_screen_get_height (screen) * 0.75;
+  monitor_width  = workarea.width  * 0.75;
+  monitor_height = workarea.height * 0.75;
 
   /* We need to zoom before we use SCALE[XY] */
   gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
@@ -751,14 +751,14 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 
   if (shell->display->config->initial_zoom_to_fit)
     {
-      /*  Limit to the size of the screen...  */
-      if (shell_width > screen_width || shell_height > screen_height)
+      /*  Limit to the size of the monitor...  */
+      if (shell_width > monitor_width || shell_height > monitor_height)
         {
           gdouble new_scale;
           gdouble current = gimp_zoom_model_get_factor (shell->zoom);
 
-          new_scale = current * MIN (((gdouble) screen_height) / shell_height,
-                                     ((gdouble) screen_width)  / shell_width);
+          new_scale = current * MIN (((gdouble) monitor_height) / shell_height,
+                                     ((gdouble) monitor_width)  / shell_width);
 
           new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, new_scale);
 
@@ -769,8 +769,8 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
                                 gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
                                                            new_scale));
 
-          if (SCALEX (shell, image_width) > screen_width ||
-              SCALEY (shell, image_height) > screen_height)
+          if (SCALEX (shell, image_width)  > monitor_width ||
+              SCALEY (shell, image_height) > monitor_height)
             gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
 
           shell_width  = SCALEX (shell, image_width);
@@ -782,18 +782,12 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
       /*  Set up size like above, but do not zoom to fit. Useful when
        *  working on large images.
        */
-      if (shell_width > screen_width)
-        shell_width = screen_width;
-
-      if (shell_height > screen_height)
-        shell_height = screen_height;
+      shell_width  = MIN (shell_width,  monitor_width);
+      shell_height = MIN (shell_height, monitor_height);
     }
 
-  if (display_width)
-    *display_width = shell_width;
-
-  if (display_height)
-    *display_height = shell_height;
+  if (display_width)  *display_width  = shell_width;
+  if (display_height) *display_height = shell_height;
 }
 
 /**
