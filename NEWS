@@ -10,3 +10,9 @@ Otherwise, this branch is only for bug-fixes.
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
+
+Plug-ins:
+
+* New plug-in for importing and exporting HEIF images.
+* Enable visibility of rasterized vectror layer from PSD.
+
