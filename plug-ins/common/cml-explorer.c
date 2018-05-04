@@ -1309,7 +1309,7 @@ CML_explorer_dialog (void)
 
     {
       GtkSizeGroup  *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-      GtkWidget     *table;
+      GtkWidget     *grid;
       GtkWidget     *label;
       GtkWidget     *combo;
       GtkWidget     *frame;
@@ -1324,11 +1324,11 @@ CML_explorer_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
 
       combo = gimp_int_combo_box_new_array (CML_INITIAL_NUM_VALUES,
                                             initial_value_names);
@@ -1341,26 +1341,26 @@ CML_explorer_dialog (void)
 
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
                                     combo, &VALS.initial_value);
-      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Initial value:"), 0.0, 0.5,
-                                         combo, 2, FALSE);
+      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                        _("Initial value:"), 0.0, 0.5,
+                                        combo, 2);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                  _("Zoom scale:"), SCALE_WIDTH, 3,
-                                  VALS.scale, 1, 10, 1, 2, 0,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                       _("Zoom scale:"), SCALE_WIDTH, 3,
+                                       VALS.scale, 1, 10, 1, 2, 0,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
                                    adj, &VALS.scale);
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                                  _("Start offset:"), SCALE_WIDTH, 3,
-                                  VALS.start_offset, 0, 100, 1, 10, 0,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+                                       _("Start offset:"), SCALE_WIDTH, 3,
+                                       VALS.start_offset, 0, 100, 1, 10, 0,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
                                    adj, &VALS.start_offset);
@@ -1370,28 +1370,28 @@ CML_explorer_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (2, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                  _("Seed:"), SCALE_WIDTH, 0,
-                                  VALS.seed, 0, (guint32) -1, 1, 10, 0,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                       _("Seed:"), SCALE_WIDTH, 0,
+                                       VALS.seed, 0, (guint32) -1, 1, 10, 0,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
                                    adj, &VALS.seed);
 
-      random_sensitives[3].widget = table;
+      random_sensitives[3].widget = grid;
       random_sensitives[3].logic  = FALSE;
 
       button =
         gtk_button_new_with_label
         (_("Switch to \"From seed\" With the Last Seed"));
-      gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
+      gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 3, 1);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
@@ -1415,7 +1415,7 @@ CML_explorer_dialog (void)
 
     {
       GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-      GtkWidget    *table;
+      GtkWidget    *grid;
       GtkWidget    *frame;
       GtkWidget    *label;
       GtkWidget    *combo;
@@ -1429,11 +1429,11 @@ CML_explorer_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (3, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
                                             channel_names);
@@ -1443,9 +1443,9 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &copy_source);
 
-      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Source channel:"), 0.0, 0.5,
-                                         combo, 1, FALSE);
+      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                        _("Source channel:"), 0.0, 0.5,
+                                        combo, 1);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
@@ -1458,14 +1458,13 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &copy_destination);
 
-      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                         _("Destination channel:"), 0.0, 0.5,
-                                         combo, 1, FALSE);
+      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                        _("Destination channel:"), 0.0, 0.5,
+                                        combo, 1);
       gtk_size_group_add_widget (group, label);
 
       button = gtk_button_new_with_label (_("Copy Parameters"));
-      gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), button, 0, 2, 2, 1);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
@@ -1476,11 +1475,11 @@ CML_explorer_dialog (void)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (2, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
                                             load_channel_names);
@@ -1491,10 +1490,10 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &selective_load_source);
 
-      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                         _("Source channel in file:"),
-                                         0.0, 0.5,
-                                         combo, 1, FALSE);
+      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                        _("Source channel in file:"),
+                                        0.0, 0.5,
+                                        combo, 1);
       gtk_size_group_add_widget (group, label);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
@@ -1506,10 +1505,10 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &selective_load_destination);
 
-      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                         _("Destination channel:"),
-                                         0.0, 0.5,
-                                         combo, 1, FALSE);
+      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                        _("Destination channel:"),
+                                        0.0, 0.5,
+                                        combo, 1);
       gtk_size_group_add_widget (group, label);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
@@ -1548,7 +1547,7 @@ static GtkWidget *
 CML_dialog_channel_panel_new (CML_PARAM *param,
                               gint       channel_id)
 {
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *combo;
   GtkWidget     *toggle;
   GtkWidget     *button;
@@ -1556,11 +1555,11 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gpointer      *chank;
   gint           index = 0;
 
-  table = gtk_table_new (13, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_widget_show (grid);
 
   combo = gimp_int_combo_box_new_array (CML_NUM_VALUES, function_names);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), param->function);
@@ -1571,9 +1570,9 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->function);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-                             _("Function type:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+                            _("Function type:"), 0.0, 0.5,
+                            combo, 2);
   index++;
 
   combo = gimp_int_combo_box_new_array (COMP_NUM_VALUES, composition_names);
@@ -1587,9 +1586,9 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->composition);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-                             _("Composition:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+                            _("Composition:"), 0.0, 0.5,
+                            combo, 2);
   index++;
 
   combo = gimp_int_combo_box_new_array (ARRANGE_NUM_VALUES, arrange_names);
@@ -1601,88 +1600,88 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->arrange);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
-                             _("Misc arrange:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+                            _("Misc arrange:"), 0.0, 0.5,
+                            combo, 2);
   index++;
 
   toggle = gtk_check_button_new_with_label (_("Use cyclic range"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 param->cyclic_range);
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, index, index + 1);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, index, 3, 1);
   CML_explorer_toggle_entry_init (&widget_pointers[channel_id][index],
                                   toggle, &param->cyclic_range);
   gtk_widget_show (toggle);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Mod. rate:"), SCALE_WIDTH, 5,
-                              param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Mod. rate:"), SCALE_WIDTH, 5,
+                                   param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->mod_rate);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Env. sensitivity:"), SCALE_WIDTH, 5,
-                              param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Env. sensitivity:"), SCALE_WIDTH, 5,
+                                   param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->env_sensitivity);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Diffusion dist.:"), SCALE_WIDTH, 5,
-                              param->diffusion_dist, 2, 10, 1, 2, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Diffusion dist.:"), SCALE_WIDTH, 5,
+                                   param->diffusion_dist, 2, 10, 1, 2, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                adj, &param->diffusion_dist);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("# of subranges:"), SCALE_WIDTH, 5,
-                              param->range_num, 1, 10, 1, 2, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("# of subranges:"), SCALE_WIDTH, 5,
+                                   param->range_num, 1, 10, 1, 2, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                adj, &param->range_num);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("P(ower factor):"), SCALE_WIDTH, 5,
-                              param->power, 0.0, 10.0, 0.1, 1.0, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("P(ower factor):"), SCALE_WIDTH, 5,
+                                   param->power, 0.0, 10.0, 0.1, 1.0, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->power);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Parameter k:"), SCALE_WIDTH, 5,
-                              param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Parameter k:"), SCALE_WIDTH, 5,
+                                   param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->parameter_k);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Range low:"), SCALE_WIDTH, 5,
-                              param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Range low:"), SCALE_WIDTH, 5,
+                                   param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->range_l);
   index++;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                              _("Range high:"), SCALE_WIDTH, 5,
-                              param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                   _("Range high:"), SCALE_WIDTH, 5,
+                                   param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   adj, &param->range_h);
   index++;
@@ -1692,14 +1691,13 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   chank[1] = param;
 
   button = gtk_button_new_with_label (_("Plot a Graph of the Settings"));
-  gtk_table_attach_defaults (GTK_TABLE (table), button,
-                             0, 3, index, index + 1);
+  gtk_grid_attach (GTK_GRID (grid), button, 0, index, 3, 1);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (function_graph_new),
                     chank);
-  return table;
+  return grid;
 }
 
 static GtkWidget *
@@ -1707,7 +1705,7 @@ CML_dialog_advanced_panel_new (void)
 {
   GtkWidget     *vbox;
   GtkWidget     *subframe;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gint           index = 0;
   gint           widget_offset = 12;
@@ -1726,39 +1724,39 @@ CML_dialog_advanced_panel_new (void)
       gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
       gtk_widget_show (subframe);
 
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (subframe), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (subframe), grid);
+      gtk_widget_show (grid);
 
       index = 0;
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                                  _("Ch. sensitivity:"), SCALE_WIDTH, 0,
-                                  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                       _("Ch. sensitivity:"), SCALE_WIDTH, 0,
+                                       param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       adj, &param->ch_sensitivity);
       index++;
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                                  _("Mutation rate:"), SCALE_WIDTH, 0,
-                                  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                       _("Mutation rate:"), SCALE_WIDTH, 0,
+                                       param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       adj, &param->mutation_rate);
       index++;
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
-                                  _("Mutation dist.:"), SCALE_WIDTH, 0,
-                                  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, index,
+                                       _("Mutation dist.:"), SCALE_WIDTH, 0,
+                                       param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       adj, &param->mutation_dist);
