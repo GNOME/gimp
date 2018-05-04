@@ -26,7 +26,7 @@ endif
 
 SUBDIRS = \
 	script-fu		\
-	$(pygimp)		\
+##	$(pygimp)		\
 	file-bmp		\
 	$(file_darktable)	\
 	$(file_exr)		\
@@ -43,11 +43,11 @@ SUBDIRS = \
 	flame			\
 	fractal-explorer	\
 	gfig			\
-	gimpressionist		\
+##	gimpressionist		\
 	gradient-flare		\
 	help			\
 	$(help_browser)		\
-	ifs-compose		\
+##	ifs-compose		\
 	imagemap		\
 	lighting		\
 	map-object		\
