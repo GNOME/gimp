@@ -710,7 +710,7 @@ static void ed_make_page_rays     (GFlareEditor *ed,
                                    GtkWidget    *notebook);
 static void ed_make_page_sflare   (GFlareEditor *ed,
                                    GtkWidget    *notebook);
-static void ed_put_gradient_menu  (GtkWidget    *table,
+static void ed_put_gradient_menu  (GtkWidget    *grid,
                                    gint          x,
                                    gint          y,
                                    const gchar  *caption,
@@ -2699,9 +2699,9 @@ dlg_make_page_settings (GFlareDialog *dlg,
   GtkWidget     *frame;
   GtkWidget     *center;
   GtkWidget     *chain;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *button;
-  GtkWidget     *asup_table;
+  GtkWidget     *asup_grid;
   GtkAdjustment *adj;
   gdouble        xres, yres;
   gint           row;
@@ -2745,20 +2745,20 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   row = 0;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("_Radius:"), SCALE_WIDTH, 6,
-                              pvals.radius, 0.0, drawable->width / 2,
-                              1.0, 10.0, 1,
-                              FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("_Radius:"), SCALE_WIDTH, 6,
+                                   pvals.radius, 0.0, drawable->width / 2,
+                                   1.0, 10.0, 1,
+                                   FALSE, 0.0, GIMP_MAX_IMAGE_SIZE,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.radius);
@@ -2766,11 +2766,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Ro_tation:"), SCALE_WIDTH, 6,
-                              pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Ro_tation:"), SCALE_WIDTH, 6,
+                                   pvals.rotation, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.rotation);
@@ -2778,11 +2778,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("_Hue rotation:"), SCALE_WIDTH, 6,
-                              pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("_Hue rotation:"), SCALE_WIDTH, 6,
+                                   pvals.hue, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.hue);
@@ -2790,11 +2790,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Vector _angle:"), SCALE_WIDTH, 6,
-                              pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Vector _angle:"), SCALE_WIDTH, 6,
+                                   pvals.vangle, 0.0, 359.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vangle);
@@ -2802,11 +2802,11 @@ dlg_make_page_settings (GFlareDialog *dlg,
                     G_CALLBACK (dlg_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Vector _length:"), SCALE_WIDTH, 6,
-                              pvals.vlength, 1, 1000, 1.0, 10.0, 1,
-                              FALSE, 1, GIMP_MAX_IMAGE_SIZE,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Vector _length:"), SCALE_WIDTH, 6,
+                                   pvals.vlength, 1, 1000, 1.0, 10.0, 1,
+                                   FALSE, 1, GIMP_MAX_IMAGE_SIZE,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.vlength);
@@ -2830,36 +2830,36 @@ dlg_make_page_settings (GFlareDialog *dlg,
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  asup_table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (asup_table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (asup_table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), asup_table);
-  gtk_widget_show (asup_table);
+  asup_grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (asup_grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (asup_grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), asup_grid);
+  gtk_widget_show (asup_grid);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &pvals.use_asupsample);
 
-  g_object_bind_property (button,     "active",
-                          asup_table, "sensitive",
+  g_object_bind_property (button,    "active",
+                          asup_grid, "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 0,
-                              _("_Max depth:"), -1, 4,
-                              pvals.asupsample_max_depth,
-                              1.0, 10.0, 1.0, 1.0, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (asup_grid), 0, 0,
+                                   _("_Max depth:"), -1, 4,
+                                   pvals.asupsample_max_depth,
+                                   1.0, 10.0, 1.0, 1.0, 0,
+                                   TRUE, 0.0, 0.0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.asupsample_max_depth);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (asup_table), 0, 1,
-                              _("_Threshold"), -1, 4,
-                              pvals.asupsample_threshold,
-                              0.0, 4.0, 0.01, 0.01, 2,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (asup_grid), 0, 1,
+                                   _("_Threshold"), -1, 4,
+                                   pvals.asupsample_threshold,
+                                   0.0, 4.0, 0.01, 0.01, 2,
+                                   TRUE, 0.0, 0.0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.asupsample_threshold);
@@ -3435,7 +3435,7 @@ ed_make_page_general (GFlareEditor *ed,
   GFlare        *gflare = ed->gflare;
   GtkWidget     *vbox;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *combo;
   GtkAdjustment *adj;
 
@@ -3448,17 +3448,17 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Opacity:"), SCALE_WIDTH, 6,
-                              gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("Opacity:"), SCALE_WIDTH, 6,
+                                   gflare->glow_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_opacity);
@@ -3467,8 +3467,8 @@ ed_make_page_general (GFlareEditor *ed,
                     NULL);
 
   combo = ed_mode_menu_new (&gflare->glow_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   /*  Rays  */
 
@@ -3476,17 +3476,17 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Opacity:"), SCALE_WIDTH, 6,
-                              gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("Opacity:"), SCALE_WIDTH, 6,
+                                   gflare->rays_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_opacity);
@@ -3495,8 +3495,8 @@ ed_make_page_general (GFlareEditor *ed,
                     NULL);
 
   combo = ed_mode_menu_new (&gflare->rays_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   /*  Rays  */
 
@@ -3504,17 +3504,17 @@ ed_make_page_general (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Opacity:"), SCALE_WIDTH, 6,
-                              gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("Opacity:"), SCALE_WIDTH, 6,
+                                   gflare->sflare_opacity, 0.0, 100.0, 1.0, 10.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_opacity);
@@ -3523,8 +3523,8 @@ ed_make_page_general (GFlareEditor *ed,
                     NULL);
 
   combo = ed_mode_menu_new (&gflare->sflare_mode);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Paint mode:"), 0.0, 0.5, combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Paint mode:"), 0.0, 0.5, combo, 1);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_General")));
@@ -3542,7 +3542,7 @@ ed_make_page_glow (GFlareEditor *ed,
   GradientMenu  *gm;
   GtkWidget     *vbox;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gint           row;
 
@@ -3557,24 +3557,24 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_radial, gflare->glow_radial);
-  ed_put_gradient_menu (table, 0, 0, _("Radial gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 0, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_angular, gflare->glow_angular);
-  ed_put_gradient_menu (table, 0, 1, _("Angular gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 1, _("Angular gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->glow_angular_size, gflare->glow_angular_size);
-  ed_put_gradient_menu (table, 0, 2, _("Angular size gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 2, _("Angular size gradient:"), gm);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   /*
    *  Scales
@@ -3584,18 +3584,18 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   row = 0;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Size (%):"), SCALE_WIDTH, 6,
-                              gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
-                              FALSE, 0, G_MAXINT,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Size (%):"), SCALE_WIDTH, 6,
+                                   gflare->glow_size, 0.0, 200.0, 1.0, 10.0, 1,
+                                   FALSE, 0, G_MAXINT,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_size);
@@ -3603,11 +3603,11 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Rotation:"), SCALE_WIDTH, 6,
-                              gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Rotation:"), SCALE_WIDTH, 6,
+                                   gflare->glow_rotation, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_rotation);
@@ -3615,11 +3615,11 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue rotation:"), SCALE_WIDTH, 6,
-                              gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Hue rotation:"), SCALE_WIDTH, 6,
+                                   gflare->glow_hue, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->glow_hue);
@@ -3627,7 +3627,7 @@ ed_make_page_glow (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("G_low")));
@@ -3645,7 +3645,7 @@ ed_make_page_rays (GFlareEditor *ed,
   GradientMenu  *gm;
   GtkWidget     *vbox;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gint           row;
 
@@ -3660,26 +3660,26 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   row = 0;
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_radial, gflare->rays_radial);
-  ed_put_gradient_menu (table, 0, row++, _("Radial gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, row++, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_angular, gflare->rays_angular);
-  ed_put_gradient_menu (table, 0, row++, _("Angular gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, row++, _("Angular gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->rays_angular_size, gflare->rays_angular_size);
-  ed_put_gradient_menu (table, 0, row++, _("Angular size gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, row++, _("Angular size gradient:"), gm);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   /*
    *    Scales
@@ -3689,18 +3689,18 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   row = 0;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Size (%):"), SCALE_WIDTH, 6,
-                              gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
-                              FALSE, 0, G_MAXINT,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Size (%):"), SCALE_WIDTH, 6,
+                                   gflare->rays_size, 0.0, 200.0, 1.0, 10.0, 1,
+                                   FALSE, 0, G_MAXINT,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_size);
@@ -3708,12 +3708,12 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Rotation:"), SCALE_WIDTH, 6,
-                              gflare->rays_rotation,
-                              -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Rotation:"), SCALE_WIDTH, 6,
+                                   gflare->rays_rotation,
+                                   -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_rotation);
@@ -3721,11 +3721,11 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue rotation:"), SCALE_WIDTH, 6,
-                              gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Hue rotation:"), SCALE_WIDTH, 6,
+                                   gflare->rays_hue, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_hue);
@@ -3733,11 +3733,11 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("# of Spikes:"), SCALE_WIDTH, 6,
-                              gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
-                              FALSE, 0, G_MAXINT,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("# of Spikes:"), SCALE_WIDTH, 6,
+                                   gflare->rays_nspikes, 1, 300, 1.0, 10.0, 0,
+                                   FALSE, 0, G_MAXINT,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gflare->rays_nspikes);
@@ -3745,11 +3745,11 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Spike thickness:"), SCALE_WIDTH, 6,
-                              gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
-                              FALSE, 0, GIMP_MAX_IMAGE_SIZE,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Spike thickness:"), SCALE_WIDTH, 6,
+                                   gflare->rays_thickness, 1.0, 100.0, 1.0, 10.0, 1,
+                                   FALSE, 0, GIMP_MAX_IMAGE_SIZE,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->rays_thickness);
@@ -3757,7 +3757,7 @@ ed_make_page_rays (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new_with_mnemonic (_("_Rays")));
@@ -3774,7 +3774,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   GFlare        *gflare = ed->gflare;
   GradientMenu  *gm;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *frame;
   GtkWidget     *shape_vbox;
   GSList        *shape_group = NULL;
@@ -3799,24 +3799,24 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_radial, gflare->sflare_radial);
-  ed_put_gradient_menu (table, 0, 0, _("Radial gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 0, _("Radial gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_sizefac, gflare->sflare_sizefac);
-  ed_put_gradient_menu (table, 0, 1, _("Size factor gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 1, _("Size factor gradient:"), gm);
 
   gm = gradient_menu_new ((GradientMenuCallback) &ed_gradient_menu_callback,
                           gflare->sflare_probability, gflare->sflare_probability);
-  ed_put_gradient_menu (table, 0, 2, _("Probability gradient:"), gm);
+  ed_put_gradient_menu (grid, 0, 2, _("Probability gradient:"), gm);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   /*
    *    Scales
@@ -3826,18 +3826,18 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   row = 0;
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Size (%):"), SCALE_WIDTH, 6,
-                              gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
-                              FALSE, 0, G_MAXINT,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Size (%):"), SCALE_WIDTH, 6,
+                                   gflare->sflare_size, 0.0, 200.0, 1.0, 10.0, 1,
+                                   FALSE, 0, G_MAXINT,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_size);
@@ -3845,12 +3845,12 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Rotation:"), SCALE_WIDTH, 6,
-                              gflare->sflare_rotation,
-                              -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Rotation:"), SCALE_WIDTH, 6,
+                                   gflare->sflare_rotation,
+                                   -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_rotation);
@@ -3858,11 +3858,11 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                              _("Hue rotation:"), SCALE_WIDTH, 6,
-                              gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                                   _("Hue rotation:"), SCALE_WIDTH, 6,
+                                   gflare->sflare_hue, -180.0, 180.0, 1.0, 15.0, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &gflare->sflare_hue);
@@ -3870,7 +3870,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     G_CALLBACK (ed_preview_update),
                     NULL);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   /*
    *    Shape Radio Button Frame
@@ -3970,11 +3970,11 @@ ed_mode_menu_new (GFlareMode *mode_var)
 }
 
 /*
-  puts gradient menu with caption into table
-  occupies 1 row and 3 cols in table
+  puts gradient menu with caption into grid
+  occupies 1 row and 3 cols in grid
  */
 static void
-ed_put_gradient_menu (GtkWidget    *table,
+ed_put_gradient_menu (GtkWidget    *grid,
                       gint          x,
                       gint          y,
                       const gchar  *caption,
@@ -3986,15 +3986,9 @@ ed_put_gradient_menu (GtkWidget    *table,
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_widget_show (label);
 
-  gtk_table_attach (GTK_TABLE (table), label,
-                    x    , x + 1, y, y + 1,
-                    GTK_FILL, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gm->preview,
-                    x + 1, x + 2, y, y + 1,
-                    0, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), gm->combo,
-                    x + 2, x + 3, y, y + 1,
-                    0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), gm->preview, x + 1, y, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), gm->combo, x + 2, y, 1, 1);
 }
 
 static void
