@@ -929,7 +929,7 @@ open_dialog (const gchar      *filename,
   const gchar     *title;
   GtkWidget       *dialog;
   GtkWidget       *main_vbox;
-  GtkWidget       *table;
+  GtkWidget       *grid;
   GtkWidget       *combo       = NULL;
   OPJ_COLOR_SPACE  color_space = OPJ_CLRSPC_SRGB;
 
@@ -962,11 +962,11 @@ open_dialog (const gchar      *filename,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_add (GTK_CONTAINER (main_vbox), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (main_vbox), grid);
+  gtk_widget_show (grid);
 
   if (num_components == 3)
     {
@@ -996,9 +996,9 @@ open_dialog (const gchar      *filename,
 
   if (combo)
     {
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Color space:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("Color space:"), 0.0, 0.5,
+                                combo, 2);
       gtk_widget_show (combo);
 
       g_signal_connect (combo, "changed",

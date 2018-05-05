@@ -602,27 +602,27 @@ static gboolean
 save_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *entry;
   gboolean   run;
 
   dialog = gimp_export_dialog_new (_("Pattern"), PLUG_IN_BINARY, SAVE_PROC);
 
-  /* The main table */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  /* The main grid */
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
   entry = gtk_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (entry), description);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Description:"), 1.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Description:"), 1.0, 0.5,
+                            entry, 1);
   gtk_widget_show (entry);
 
   gtk_widget_show (dialog);

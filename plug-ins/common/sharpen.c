@@ -463,7 +463,7 @@ sharpen_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *preview;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gboolean       run;
 
@@ -499,17 +499,17 @@ sharpen_dialog (GimpDrawable *drawable)
                     G_CALLBACK (preview_update),
                     drawable);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Sharpness:"), SCALE_WIDTH, 0,
-                              sharpen_params.sharpen_percent,
-                              1, 99, 1, 10, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Sharpness:"), SCALE_WIDTH, 0,
+                                   sharpen_params.sharpen_percent,
+                                   1, 99, 1, 10, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &sharpen_params.sharpen_percent);

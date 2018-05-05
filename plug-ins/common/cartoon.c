@@ -800,7 +800,7 @@ cartoon_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *preview;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *scale_data;
   gboolean       run;
 
@@ -836,18 +836,18 @@ cartoon_dialog (GimpDrawable *drawable)
                             G_CALLBACK (cartoon),
                             drawable);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*  Label, scale, entry for cvals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("_Mask radius:"), 100, 5,
-                                     cvals.mask_radius, 1.0, 50.0, 1, 5.0, 2,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                          _("_Mask radius:"), 100, 5,
+                                          cvals.mask_radius, 1.0, 50.0, 1, 5.0, 2,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -857,11 +857,11 @@ cartoon_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for cvals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                     _("_Percent black:"), 50, 5,
-                                     cvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                          _("_Percent black:"), 50, 5,
+                                          cvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

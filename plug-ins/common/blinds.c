@@ -209,7 +209,7 @@ blinds_dialog (GimpDrawable *drawable)
   GtkWidget     *preview;
   GtkWidget     *hbox;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *size_data;
   GtkWidget     *toggle;
   GtkWidget     *horizontal;
@@ -297,17 +297,17 @@ blinds_dialog (GimpDrawable *drawable)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                    _("_Displacement:"), SCALE_WIDTH, 0,
-                                    bvals.angledsp, 1, 90, 1, 15, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
+  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                         _("_Displacement:"), SCALE_WIDTH, 0,
+                                         bvals.angledsp, 1, 90, 1, 15, 0,
+                                         TRUE, 0, 0,
+                                         NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.angledsp);
@@ -315,11 +315,11 @@ blinds_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                    _("_Number of segments:"), SCALE_WIDTH, 0,
-                                    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
+  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                         _("_Number of segments:"), SCALE_WIDTH, 0,
+                                         bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
+                                         TRUE, 0, 0,
+                                         NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.numsegs);

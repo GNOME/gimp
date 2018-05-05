@@ -1008,7 +1008,7 @@ nlfilter_dialog (GimpDrawable *drawable)
   GtkWidget     *alpha_trim;
   GtkWidget     *opt_est;
   GtkWidget     *edge_enhance;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gboolean       run;
 
@@ -1070,17 +1070,17 @@ nlfilter_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("A_lpha:"), 0, 0,
-                              nlfvals.alpha, 0.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("A_lpha:"), 0, 0,
+                                   nlfvals.alpha, 0.0, 1.0, 0.05, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &nlfvals.alpha);
@@ -1088,11 +1088,11 @@ nlfilter_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("_Radius:"), 0, 0,
-                              nlfvals.radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                   _("_Radius:"), 0, 0,
+                                   nlfvals.radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &nlfvals.radius);

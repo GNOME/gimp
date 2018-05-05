@@ -687,7 +687,7 @@ neon_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *preview;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *scale_data;
   gboolean       run;
 
@@ -723,19 +723,19 @@ neon_dialog (GimpDrawable *drawable)
                     G_CALLBACK (neon_preview_update),
                     drawable);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*  Label, scale, entry for evals.radius  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("_Radius:"), 100, 8,
-                                     evals.radius, 0.0, 64.0, 1, 10, 2,
-                                     FALSE, 0.0,
-                                     8 * MAX (drawable->width, drawable->height),
-                                     NULL, NULL);
+  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                          _("_Radius:"), 100, 8,
+                                          evals.radius, 0.0, 64.0, 1, 10, 2,
+                                          FALSE, 0.0,
+                                          8 * MAX (drawable->width, drawable->height),
+                                          NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -745,11 +745,11 @@ neon_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for evals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                     _("_Amount:"), 100, 8,
-                                     evals.amount, 0.0, 1.0, 0.01, 0.1, 2,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                          _("_Amount:"), 100, 8,
+                                          evals.amount, 0.0, 1.0, 0.01, 0.1, 2,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

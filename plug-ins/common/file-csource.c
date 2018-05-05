@@ -875,7 +875,7 @@ run_save_dialog (Config *config)
 {
   GtkWidget     *dialog;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *prefixed_name;
   GtkWidget     *centry;
   GtkWidget     *toggle;
@@ -891,27 +891,27 @@ run_save_dialog (Config *config)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* Prefixed Name
    */
   prefixed_name = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Prefixed name:"), 0.0, 0.5,
-                             prefixed_name, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Prefixed name:"), 0.0, 0.5,
+                            prefixed_name, 1);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
                       config->prefixed_name ? config->prefixed_name : "");
 
   /* Comment Entry
    */
   centry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Co_mment:"), 0.0, 0.5,
-                             centry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Co_mment:"), 0.0, 0.5,
+                            centry, 1);
   gtk_entry_set_text (GTK_ENTRY (centry),
                       config->comment ? config->comment : "");
 
@@ -996,16 +996,16 @@ run_save_dialog (Config *config)
 
   /* Max Alpha Value
    */
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("Op_acity:"), 100, 0,
-                              config->opacity, 0, 100, 1, 10, 1,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("Op_acity:"), 100, 0,
+                                   config->opacity, 0, 100, 1, 10, 1,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config->opacity);
