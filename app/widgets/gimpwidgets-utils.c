@@ -1586,18 +1586,23 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
   if (profile)
     {
+      gchar *path;
       GFile *file;
 
       if (base_type == GIMP_GRAY)
         {
-          file = gimp_file_new_for_config_path (config->gray_profile, NULL);
+          g_object_get (config, "gray-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
         {
-          file = gimp_file_new_for_config_path (config->rgb_profile, NULL);
+          g_object_get (config, "rgb-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
                                    gimp_color_profile_get_label (profile));

@@ -662,7 +662,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
   rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
 
-  if (config->display_intent ==
+  if (gimp_color_config_get_display_intent (config) ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
       flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
@@ -670,7 +670,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
   transform = cmsCreateTransform (cmyk_lcms, TYPE_CMYK_8_REV,
                                   rgb_lcms,  TYPE_RGB_8,
-                                  config->display_intent,
+                                  gimp_color_config_get_display_intent (config),
                                   flags);
 
   g_object_unref (cmyk_profile);

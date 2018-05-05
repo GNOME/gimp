@@ -1979,9 +1979,12 @@ gimp_color_select_notify_config (GimpColorConfig  *config,
                                  const GParamSpec *pspec,
                                  GimpColorSelect  *select)
 {
+  GimpRGB color;
+
   gimp_color_select_destroy_transform (select);
 
-  gimp_rgb_get_uchar (&config->out_of_gamut_color,
+  gimp_color_config_get_out_of_gamut_color (config, &color);
+  gimp_rgb_get_uchar (&color,
                       select->oog_color,
                       select->oog_color + 1,
                       select->oog_color + 2);
