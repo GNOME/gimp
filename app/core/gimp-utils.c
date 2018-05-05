@@ -103,43 +103,6 @@ gimp_get_physical_memory_size (void)
   return 0;
 }
 
-/**
- * gimp_get_backtrace:
- *
- * Returns: The current stack trace. Free with g_free(). Mainly meant
- * for debugging, for example storing the allocation stack traces for
- * objects to hunt down leaks.
- **/
-gchar *
-gimp_get_backtrace (void)
-{
-#if defined(G_OS_UNIX) && defined(HAVE_EXECINFO_H)
-  void     *functions[MAX_FUNC];
-  char    **function_names;
-  int       n_functions;
-  int       i;
-  GString  *result;
-
-  /* Get symbols */
-  n_functions    = backtrace (functions, MAX_FUNC);
-  function_names = backtrace_symbols (functions, n_functions);
-
-  /* Construct stack trace */
-  result = g_string_new ("");
-  for (i = 0; i < n_functions; i++)
-    g_string_append_printf (result, "%s\n", function_names[i]);
-
-  /* We must not free the function names themselves, we only need to
-   * free the array that points to them
-   */
-  free (function_names);
-
-  return g_string_free (result, FALSE/*free_segment*/);
-#else
-  return g_strdup ("backtrace() only available with GNU libc\n");
-#endif
-}
-
 /*
  *  basically copied from gtk_get_default_language()
  */
