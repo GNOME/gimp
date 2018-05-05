@@ -131,17 +131,22 @@
 
  ( ) Publish dist tarballs:
 
-     [ ] Use md5sum to create a checksum of the tarball (tar.bz2).
+     [ ] Use `sha256sum` and `sha512sum` to create checksums of the
+         tarball (tar.bz2).
 
-     [ ] Upload the tarball (tar.bz2) and the .md5 file to your home
-         directory on pentagon.gnome.org.  Keep a copy of the .md5
-         file around.
+     [ ] Upload the tarball (tar.bz2) to your home directory on
+         pentagon.gnome.org.
 
-     [ ] Copy the tarball and the .md5 file to its final destination
-         in the download area (/srv/ftp/pub/gimp/v2.x). Really use
-         "cp" not "mv" or SELinux will make the uploaded file
-         unreadable to the web server unless some obscure status bit
-         is toggled.
+     [ ] Copy the tarball to its final destination in the download area
+         (/srv/ftp/pub/gimp/v2.x). Really use "cp" not "mv" or SELinux
+         will make the uploaded file unreadable to the web server unless
+         some obscure status bit is toggled.
+
+     [ ] Update the `SHA256SUMS` and `SHA512SUMS` files present in the
+         same download area by adding the computed sha256 and sha512
+         sums.
+         Note: do not add new MD5 sums anymore. They are considered
+         unsafe.
 
      [ ] Update the 0.0_LATEST-IS- file in the corresponding directory
          on the download server.
@@ -157,7 +162,9 @@
      branch.
 
      [ ] Update the file 'GIMP_VERSIONS' adding the version, release
-         date, tarball name and its MD5 hash under "STABLE".
+         date, tarball name and its SHA256 and SHA512 hashes under
+         "STABLE".
+         Note: do not add new MD5 sums in 'GIMP_VERSIONS' as well.
 
      [ ] Create a news items for the release in content/news/
 
