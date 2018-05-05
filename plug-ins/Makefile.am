@@ -51,7 +51,7 @@ SUBDIRS = \
 	gradient-flare		\
 	help			\
 	$(help_browser)		\
-##	ifs-compose		\
+	ifs-compose		\
 	imagemap		\
 	lighting		\
 	map-object		\

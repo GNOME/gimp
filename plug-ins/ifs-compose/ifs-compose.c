@@ -115,19 +115,19 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget    *area;
-  GtkUIManager *ui_manager;
-  GdkPixmap    *pixmap;
+  GtkWidget       *area;
+  GtkUIManager    *ui_manager;
+  cairo_surface_t *surface;
 
-  DesignOp      op;
-  gdouble       op_x;
-  gdouble       op_y;
-  gdouble       op_xcenter;
-  gdouble       op_ycenter;
-  gdouble       op_center_x;
-  gdouble       op_center_y;
-  guint         button_state;
-  gint          num_selected;
+  DesignOp         op;
+  gdouble          op_x;
+  gdouble          op_y;
+  gdouble          op_xcenter;
+  gdouble          op_ycenter;
+  gdouble          op_center_x;
+  gdouble          op_center_y;
+  guint            button_state;
+  gint             num_selected;
 } IfsDesignArea;
 
 typedef struct
@@ -199,16 +199,16 @@ static void           design_area_create          (GtkWidget   *window,
 static void update_values                   (void);
 static void set_current_element             (gint               index);
 static void design_area_realize             (GtkWidget         *widget);
-static gint design_area_expose              (GtkWidget         *widget,
-                                             GdkEventExpose    *event);
+static gint design_area_draw                (GtkWidget         *widget,
+                                             cairo_t           *cr);
 static gint design_area_button_press        (GtkWidget         *widget,
                                              GdkEventButton    *event);
 static gint design_area_button_release      (GtkWidget         *widget,
                                              GdkEventButton    *event);
 static void design_area_select_all_callback (GtkWidget         *widget,
                                              gpointer           data);
-static gint design_area_configure           (GtkWidget         *widget,
-                                             GdkEventConfigure *event);
+static void design_area_size_allocate       (GtkWidget         *widget,
+                                             GtkAllocation     *allocation);
 static gint design_area_motion              (GtkWidget         *widget,
                                              GdkEventMotion    *event);
 static void design_area_redraw              (void);
@@ -987,8 +987,8 @@ design_area_create (GtkWidget *window,
   g_signal_connect (ifsDesign->area, "realize",
                     G_CALLBACK (design_area_realize),
                     NULL);
-  g_signal_connect (ifsDesign->area, "expose-event",
-                    G_CALLBACK (design_area_expose),
+  g_signal_connect (ifsDesign->area, "draw",
+                    G_CALLBACK (design_area_draw),
                     NULL);
   g_signal_connect (ifsDesign->area, "button-press-event",
                     G_CALLBACK (design_area_button_press),
@@ -999,8 +999,8 @@ design_area_create (GtkWidget *window,
   g_signal_connect (ifsDesign->area, "motion-notify-event",
                     G_CALLBACK (design_area_motion),
                     NULL);
-  g_signal_connect (ifsDesign->area, "configure-event",
-                    G_CALLBACK (design_area_configure),
+  g_signal_connect (ifsDesign->area, "size-allocate",
+                    G_CALLBACK (design_area_size_allocate),
                     NULL);
   gtk_widget_set_events (ifsDesign->area,
                          GDK_EXPOSURE_MASK       |
@@ -1473,12 +1473,12 @@ design_area_realize (GtkWidget *widget)
 }
 
 static gboolean
-design_area_expose (GtkWidget      *widget,
-                    GdkEventExpose *event)
+design_area_draw (GtkWidget *widget,
+                  cairo_t   *cr)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
   GtkStateType   state = gtk_widget_get_state (widget);
-  cairo_t       *cr;
+  cairo_t       *design_cr;
   GtkAllocation  allocation;
   PangoLayout   *layout;
   gint           i;
@@ -1486,29 +1486,29 @@ design_area_expose (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  cr = gdk_cairo_create (ifsDesign->pixmap);
+  design_cr = cairo_create (ifsDesign->surface);
 
-  gdk_cairo_set_source_color (cr, &style->bg[state]);
-  cairo_paint (cr);
+  gdk_cairo_set_source_color (design_cr, &style->bg[state]);
+  cairo_paint (design_cr);
 
-  cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-  cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
-  cairo_translate (cr, 0.5, 0.5);
+  cairo_set_line_join (design_cr, CAIRO_LINE_JOIN_ROUND);
+  cairo_set_line_cap (design_cr, CAIRO_LINE_CAP_ROUND);
+  cairo_translate (design_cr, 0.5, 0.5);
 
   /* draw an indicator for the center */
 
   cx = ifsvals.center_x * allocation.width;
   cy = ifsvals.center_y * allocation.width;
 
-  cairo_move_to (cr, cx - 10, cy);
-  cairo_line_to (cr, cx + 10, cy);
+  cairo_move_to (design_cr, cx - 10, cy);
+  cairo_line_to (design_cr, cx + 10, cy);
 
-  cairo_move_to (cr, cx, cy - 10);
-  cairo_line_to (cr, cx, cy + 10);
+  cairo_move_to (design_cr, cx, cy - 10);
+  cairo_line_to (design_cr, cx, cy + 10);
 
-  gdk_cairo_set_source_color (cr, &style->fg[state]);
-  cairo_set_line_width (cr, 1.0);
-  cairo_stroke (cr);
+  gdk_cairo_set_source_color (design_cr, &style->fg[state]);
+  cairo_set_line_width (design_cr, 1.0);
+  cairo_stroke (design_cr);
 
   layout = gtk_widget_create_pango_layout (widget, NULL);
 
@@ -1517,57 +1517,43 @@ design_area_expose (GtkWidget      *widget,
       aff_element_draw (elements[i], element_selected[i],
                         allocation.width,
                         allocation.height,
-                        cr,
+                        design_cr,
                         &style->fg[state],
                         layout);
     }
 
   g_object_unref (layout);
 
-  cairo_destroy (cr);
+  cairo_destroy (design_cr);
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  gdk_cairo_set_source_pixmap (cr, ifsDesign->pixmap, 0.0, 0.0);
+  cairo_set_source_surface (cr, ifsDesign->surface, 0.0, 0.0);
   cairo_paint (cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
 
-static gboolean
-design_area_configure (GtkWidget         *widget,
-                       GdkEventConfigure *event)
+static void
+design_area_size_allocate (GtkWidget     *widget,
+                           GtkAllocation *allocation)
 {
-  GtkAllocation allocation;
-  gint          i;
-
-  gtk_widget_get_allocation (widget, &allocation);
+  gint i;
 
   for (i = 0; i < ifsvals.num_elements; i++)
     aff_element_compute_trans (elements[i],
-                               allocation.width, allocation.height,
+                               allocation->width, allocation->height,
                                ifsvals.center_x, ifsvals.center_y);
 
   for (i = 0; i < ifsvals.num_elements; i++)
     aff_element_compute_boundary (elements[i],
-                                  allocation.width, allocation.height,
+                                  allocation->width, allocation->height,
                                   elements, ifsvals.num_elements);
 
-  if (ifsDesign->pixmap)
-    {
-      g_object_unref (ifsDesign->pixmap);
-    }
-  ifsDesign->pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-                                      allocation.width,
-                                      allocation.height,
-                                      -1); /* Is this correct? */
+  if (ifsDesign->surface)
+    cairo_surface_destroy (ifsDesign->surface);
 
-  return FALSE;
+  ifsDesign->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                                   allocation->width,
+                                                   allocation->height);
 }
 
 static gint
