@@ -207,13 +207,22 @@ gimp_font_list_load_names (GimpFontList *list,
   os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
                          FC_SLANT, FC_WEIGHT, FC_WIDTH,
                          NULL);
+  g_return_if_fail (os);
 
   pat = FcPatternCreate ();
+  if (! pat)
+    {
+      FcObjectSetDestroy (os);
+      g_critical ("%s: FcPatternCreate() returned NULL.", G_STRFUNC);
+      return;
+    }
 
   fontset = FcFontList (NULL, pat, os);
 
   FcPatternDestroy (pat);
   FcObjectSetDestroy (os);
+
+  g_return_if_fail (fontset);
 
   for (i = 0; i < fontset->nfont; i++)
     {
