@@ -34,7 +34,7 @@
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
 #include "imap_stock.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -192,96 +192,96 @@ static void
 create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
    BrowseWidget_t *browse;
-   GtkWidget *table, *label;
-   GtkWidget *subtable, *frame;
+   GtkWidget *grid, *label;
+   GtkWidget *subgrid, *frame;
    GSList    *group;
 
-   table = gtk_table_new(11, 1, FALSE);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_widget_show(table);
+   grid = gtk_grid_new ();
+   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_widget_show (grid);
 
-   frame = gimp_frame_new(_("Link Type"));
-   gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
-   gtk_widget_show(frame);
+   frame = gimp_frame_new (_("Link Type"));
+   gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 2, 1);
+   gtk_widget_show (frame);
 
-   subtable = gtk_table_new(2, 4, FALSE);
-   gtk_container_add (GTK_CONTAINER(frame), subtable);
-   gtk_widget_show(subtable);
+   subgrid = gtk_grid_new ();
+   gtk_container_add (GTK_CONTAINER (frame), subgrid);
+   gtk_widget_show (subgrid);
 
-   dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0,
+   dialog->web_site = create_radio_button_in_grid (subgrid, NULL, 0, 0,
                                                    _("_Web Site"));
    g_signal_connect(dialog->web_site, "toggled",
                     G_CALLBACK (select_web_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
-   dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1,
+   dialog->ftp_site = create_radio_button_in_grid (subgrid, group, 0, 1,
                                                    _("_Ftp Site"));
    g_signal_connect(dialog->ftp_site, "toggled",
                     G_CALLBACK (select_ftp_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
-   dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2,
+   dialog->gopher = create_radio_button_in_grid (subgrid, group, 0, 2,
                                                  _("_Gopher"));
    g_signal_connect(dialog->gopher, "toggled",
                     G_CALLBACK (select_gopher_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->gopher));
 
-   dialog->other = create_radio_button_in_table(subtable, group, 0, 3,
+   dialog->other = create_radio_button_in_grid (subgrid, group, 0, 3,
                                                 _("Ot_her"));
    g_signal_connect(dialog->other, "toggled",
                     G_CALLBACK (select_other_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->other));
 
-   dialog->file = create_radio_button_in_table(subtable, group, 1, 0,
+   dialog->file = create_radio_button_in_grid (subgrid, group, 1, 0,
                                                _("F_ile"));
    g_signal_connect(dialog->file, "toggled",
                     G_CALLBACK (select_file_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->file));
 
-   dialog->wais = create_radio_button_in_table(subtable, group, 1, 1,
+   dialog->wais = create_radio_button_in_grid (subgrid, group, 1, 1,
                                                _("WAI_S"));
    g_signal_connect(dialog->wais, "toggled",
                     G_CALLBACK (select_wais_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->wais));
 
-   dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2,
+   dialog->telnet = create_radio_button_in_grid (subgrid, group, 1, 2,
                                                  _("Tel_net"));
    g_signal_connect(dialog->telnet, "toggled",
                     G_CALLBACK (select_telnet_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->telnet));
 
-   dialog->email = create_radio_button_in_table(subtable, group, 1, 3,
+   dialog->email = create_radio_button_in_grid (subgrid, group, 1, 3,
                                                 _("e-_mail"));
    g_signal_connect(dialog->email, "toggled",
                     G_CALLBACK (select_email_cb), (gpointer) dialog);
 
-   label = create_label_in_table(
-      table, 2, 0,
+   label = create_label_in_grid (
+      grid, 2, 0,
       _("_URL to activate when this area is clicked: (required)"));
 
    browse = browse_widget_new( _("Select HTML file"));
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
-   gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
+   gtk_grid_attach (GTK_GRID (grid), browse->hbox, 0, 3, 1, 1);
    dialog->url = browse->file;
    g_signal_connect(dialog->url, "changed", G_CALLBACK(url_changed),
                     dialog);
    gtk_label_set_mnemonic_widget(GTK_LABEL(label), dialog->url);
 
-   dialog->relative_link = create_check_button_in_table(table, 4, 0,
+   dialog->relative_link = create_check_button_in_grid (grid, 4, 0,
                                                         _("Relati_ve link"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->relative_link),
                                 TRUE);
 
-   label = create_label_in_table(
-      table, 6, 0,
+   label = create_label_in_grid (
+      grid, 6, 0,
       _("_Target frame name/ID: (optional - used for FRAMES only)"));
-   dialog->target = create_entry_in_table(table, label, 7, 0);
+   dialog->target = create_entry_in_grid (grid, label, 7, 0);
 
-   label = create_label_in_table(table, 9, 0, _("ALT te_xt: (optional)"));
-   dialog->comment = create_entry_in_table(table, label, 10, 0);
+   label = create_label_in_grid (grid, 9, 0, _("ALT te_xt: (optional)"));
+   dialog->comment = create_entry_in_grid (grid, label, 10, 0);
 
-   append_page (notebook, table, GIMP_ICON_WEB, _("_Link"));
+   append_page (notebook, grid, GIMP_ICON_WEB, _("_Link"));
 }
 
 static void
@@ -334,28 +334,28 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 static void
 create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 {
-   GtkWidget *vbox, *table, *label;
+   GtkWidget *vbox, *grid, *label;
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
    gtk_widget_show(vbox);
 
-   table = gtk_table_new(11, 1, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_widget_show(table);
+   grid = gtk_grid_new ();
+   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_widget_show (grid);
 
-   label = create_label_in_table(table, 0, 0, "o_nMouseover:");
-   dialog->mouse_over = create_entry_in_table(table, label, 1, 0);
+   label = create_label_in_grid (grid, 0, 0, "o_nMouseover:");
+   dialog->mouse_over = create_entry_in_grid (grid, label, 1, 0);
 
-   label = create_label_in_table(table, 3, 0, "on_Mouseout:");
-   dialog->mouse_out = create_entry_in_table(table, label, 4, 0);
+   label = create_label_in_grid (grid, 3, 0, "on_Mouseout:");
+   dialog->mouse_out = create_entry_in_grid (grid, label, 4, 0);
 
-   label = create_label_in_table(table, 6, 0, "on_Focus (HTML 4.0):");
-   dialog->focus = create_entry_in_table(table, label, 7, 0);
+   label = create_label_in_grid (grid, 6, 0, "on_Focus (HTML 4.0):");
+   dialog->focus = create_entry_in_grid (grid, label, 7, 0);
 
-   label = create_label_in_table(table, 9, 0, "on_Blur (HTML 4.0):");
-   dialog->blur = create_entry_in_table(table, label, 10, 0);
+   label = create_label_in_grid (grid, 9, 0, "on_Blur (HTML 4.0):");
+   dialog->blur = create_entry_in_grid (grid, label, 10, 0);
 
    append_page (notebook, vbox, IMAP_STOCK_JAVA, _("_JavaScript"));
 }

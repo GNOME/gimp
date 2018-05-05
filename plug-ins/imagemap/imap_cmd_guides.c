@@ -29,7 +29,7 @@
 #include "imap_default_dialog.h"
 #include "imap_main.h"
 #include "imap_rectangle.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -131,7 +131,7 @@ make_guides_dialog (void)
 {
    GuidesDialog_t *data = g_new(GuidesDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *table;
+   GtkWidget *grid;
    GtkWidget *label;
    GtkWidget *hbox;
 
@@ -158,48 +158,48 @@ make_guides_dialog (void)
                        data->guide_bounds, FALSE, FALSE, 0);
    gtk_widget_show (data->guide_bounds);
 
-   table = default_dialog_add_table (dialog, 4, 4);
+   grid = default_dialog_add_grid (dialog);
 
-   label = create_label_in_table (table, 0, 0, _("_Width:"));
-   data->width = create_spin_button_in_table (table, label, 0, 1, 32, 1, 100);
+   label = create_label_in_grid (grid, 0, 0, _("_Width:"));
+   data->width = create_spin_button_in_grid (grid, label, 0, 1, 32, 1, 100);
    g_signal_connect (data->width, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 0, 2, _("_Left start at:"));
-   data->left = create_spin_button_in_table (table, label, 0, 3, 0, 0, 100);
+   label = create_label_in_grid (grid, 0, 2, _("_Left start at:"));
+   data->left = create_spin_button_in_grid  (grid, label, 0, 3, 0, 0, 100);
    g_signal_connect (data->left, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 1, 0, _("_Height:"));
-   data->height = create_spin_button_in_table (table, label, 1, 1, 32, 1, 100);
+   label = create_label_in_grid (grid, 1, 0, _("_Height:"));
+   data->height = create_spin_button_in_grid (grid, label, 1, 1, 32, 1, 100);
    g_signal_connect (data->height, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table (table, 1, 2, _("_Top start at:"));
-   data->top = create_spin_button_in_table (table, label, 1, 3, 0, 0, 100);
+   label = create_label_in_grid (grid, 1, 2, _("_Top start at:"));
+   data->top = create_spin_button_in_grid (grid, label, 1, 3, 0, 0, 100);
    g_signal_connect (data->top, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table (table, 2, 0, _("_Horz. spacing:"));
-   data->horz_spacing = create_spin_button_in_table (table, label, 2, 1, 0, 0,
+   label = create_label_in_grid (grid, 2, 0, _("_Horz. spacing:"));
+   data->horz_spacing = create_spin_button_in_grid (grid, label, 2, 1, 0, 0,
                                                      100);
    g_signal_connect (data->horz_spacing, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 2, 2, _("_No. across:"));
-   data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0,
+   label = create_label_in_grid (grid, 2, 2, _("_No. across:"));
+   data->no_across = create_spin_button_in_grid (grid, label, 2, 3, 0, 0,
                                                  100);
    g_signal_connect (data->no_across, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 3, 0, _("_Vert. spacing:"));
-   data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0,
+   label = create_label_in_grid (grid, 3, 0, _("_Vert. spacing:"));
+   data->vert_spacing = create_spin_button_in_grid (grid, label, 3, 1, 0, 0,
                                                     100);
    g_signal_connect (data->vert_spacing, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   label = create_label_in_table(table, 3, 2, _("No. _down:"));
-   data->no_down = create_spin_button_in_table (table, label, 3, 3, 0, 0, 100);
+   label = create_label_in_grid (grid, 3, 2, _("No. _down:"));
+   data->no_down = create_spin_button_in_grid (grid, label, 3, 3, 0, 0, 100);
    g_signal_connect (data->no_down, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 

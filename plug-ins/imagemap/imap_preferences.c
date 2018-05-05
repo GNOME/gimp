@@ -37,7 +37,7 @@
 #include "imap_misc.h"
 #include "imap_mru.h"
 #include "imap_preferences.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -333,37 +333,37 @@ set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
 }
 
 static GtkWidget*
-create_tab(GtkWidget *notebook, const gchar *label, gint rows, gint cols)
+create_tab (GtkWidget *notebook, const gchar *label)
 {
-   GtkWidget *table;
+   GtkWidget *grid;
    GtkWidget *vbox;
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-   gtk_widget_show(vbox);
+   gtk_widget_show (vbox);
 
-   table = gtk_table_new(rows, cols, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
-   gtk_container_set_border_width(GTK_CONTAINER(table), 12);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_widget_show(table);
+   grid = gtk_grid_new ();
+   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+   gtk_container_set_border_width (GTK_CONTAINER(grid), 12);
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+   gtk_widget_show (grid);
 
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox,
-                            gtk_label_new_with_mnemonic(label));
+   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+                             gtk_label_new_with_mnemonic (label));
 
-   return table;
+   return grid;
 }
 
 static void
 create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("General"), 7, 2);
+   GtkWidget *grid = create_tab (notebook, _("General"));
    GtkWidget *frame;
    GtkWidget *hbox;
 
    frame = gimp_frame_new( _("Default Map Type"));
    gtk_widget_show(frame);
-   gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
+   gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
@@ -380,17 +380,17 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    gtk_widget_show(data->csim);
 
    data->prompt_for_area_info =
-      create_check_button_in_table(table, 1, 0, _("_Prompt for area info"));
+      create_check_button_in_grid (grid, 1, 0, _("_Prompt for area info"));
    data->require_default_url =
-      create_check_button_in_table(table, 2, 0, _("_Require default URL"));
+      create_check_button_in_grid (grid, 2, 0, _("_Require default URL"));
    data->show_area_handle =
-      create_check_button_in_table(table, 3, 0, _("Show area _handles"));
+      create_check_button_in_grid (grid, 3, 0, _("Show area _handles"));
    data->keep_circles_round =
-      create_check_button_in_table(table, 4, 0, _("_Keep NCSA circles true"));
+      create_check_button_in_grid (grid, 4, 0, _("_Keep NCSA circles true"));
    data->show_url_tip =
-      create_check_button_in_table(table, 5, 0, _("Show area URL _tip"));
+      create_check_button_in_grid (grid, 5, 0, _("Show area URL _tip"));
    data->use_doublesized =
-      create_check_button_in_table(table, 6, 0,
+      create_check_button_in_grid (grid, 6, 0,
                                    _("_Use double-sized grab handles"));
    gtk_widget_show(frame);
 }
@@ -398,29 +398,28 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 static void
 create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("Menu"), 2, 2);
+   GtkWidget *grid = create_tab (notebook, _("Menu"));
    GtkWidget *label;
 
-   label = create_label_in_table(table, 0, 0,
+   label = create_label_in_grid (grid, 0, 0,
                                  _("Number of _undo levels (1 - 99):"));
-   data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1,
+   data->undo_levels = create_spin_button_in_grid (grid, label, 0, 1, 1, 1,
                                                    99);
 
-   label = create_label_in_table(table, 1, 0,
+   label = create_label_in_grid (grid, 1, 0,
                                  _("Number of M_RU entries (1 - 16):"));
-   data->mru_size = create_spin_button_in_table(table, label, 1, 1, 1, 1, 16);
+   data->mru_size = create_spin_button_in_grid (grid, label, 1, 1, 1, 1, 16);
 }
 
 static GtkWidget*
-create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
-                   gint col)
+create_color_field (PreferencesDialog_t *data, GtkWidget *grid, gint row,
+                    gint col)
 {
    GimpRGB color = {0.0, 0.0, 0.0, 1.0};
    GtkWidget *area = gimp_color_button_new (_("Select Color"), 16, 8, &color,
                                             GIMP_COLOR_AREA_FLAT);
    gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
-   gtk_table_attach_defaults (GTK_TABLE (table), area, col, col + 1, row,
-                              row + 1);
+   gtk_grid_attach (GTK_GRID (grid), area, col, row, 1, 1);
    gtk_widget_show (area);
 
    return area;
@@ -429,32 +428,32 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 static void
 create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("Colors"), 3, 3);
+   GtkWidget *grid = create_tab (notebook, _("Colors"));
 
-   create_label_in_table(table, 0, 0, _("Normal:"));
-   data->normal_fg = create_color_field(data, table, 0, 1);
-   data->normal_bg = create_color_field(data, table, 0, 2);
+   create_label_in_grid (grid, 0, 0, _("Normal:"));
+   data->normal_fg = create_color_field(data, grid, 0, 1);
+   data->normal_bg = create_color_field(data, grid, 0, 2);
 
-   create_label_in_table(table, 1, 0, _("Selected:"));
-   data->selected_fg = create_color_field(data, table, 1, 1);
-   data->selected_bg = create_color_field(data, table, 1, 2);
+   create_label_in_grid (grid, 1, 0, _("Selected:"));
+   data->selected_fg = create_color_field(data, grid, 1, 1);
+   data->selected_bg = create_color_field(data, grid, 1, 2);
 
-   create_label_in_table(table, 2, 0, _("Interaction:"));
-   data->interactive_fg = create_color_field(data, table, 2, 1);
-   data->interactive_bg = create_color_field(data, table, 2, 2);
+   create_label_in_grid (grid, 2, 0, _("Interaction:"));
+   data->interactive_fg = create_color_field(data, grid, 2, 1);
+   data->interactive_bg = create_color_field(data, grid, 2, 2);
 }
 
 #ifdef _NOT_READY_YET_
 static void
 create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("Co_ntiguous Region"), 2, 2);
+   GtkWidget *grid = create_tab (notebook, _("Co_ntiguous Region"));
    GtkWidget *label;
 
-   label = create_label_in_table(table, 0, 0,
+   label = create_label_in_grid (grid, 0, 0,
                                  _("_Threshold:"));
    data->auto_convert =
-      create_check_button_in_table(table, 1, 0, _("_Automatically convert"));
+      create_check_button_in_grid (grid, 1, 0, _("_Automatically convert"));
 }
 #endif
 

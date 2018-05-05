@@ -126,8 +126,8 @@ imagemap_SOURCES = \
 	imap_statusbar.h		\
 	imap_string.c			\
 	imap_string.h			\
-	imap_table.c			\
-	imap_table.h			\
+	imap_ui_grid.c			\
+	imap_ui_grid.h			\
 	imap_taglist.c			\
 	imap_taglist.h
 
