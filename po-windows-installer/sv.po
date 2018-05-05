@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-03 08:07+0000\n"
-"PO-Revision-Date: 2018-05-03 11:23+0200\n"
+"POT-Creation-Date: 2018-05-04 22:34+0000\n"
+"PO-Revision-Date: 2018-05-05 13:16+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -143,55 +143,63 @@ msgstr ""
 "Exekveringsbibliotek som används av GIMP, inklusive GTK+ exekveringsmiljö"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "Felsökningssymboler"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "Inkludera information som hjälper till vid felsökning av GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
 msgstr "MS-Windows-motor för GTK+"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:25
+#: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
 msgstr "Ursprungligt Windows-utseende för GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:26
+#: ../build/windows/installer/lang/setup.isl.in.h:28
 msgid "Support for old plug-ins"
 msgstr "Stöd för gamla insticksmoduler"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:27
+#: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr ""
 "Installera bibliotek som behövs för gamla insticksmoduler från tredje part"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:28
+#: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
 msgstr "Översättningar"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
+#: ../build/windows/installer/lang/setup.isl.in.h:31
 msgid "Python scripting"
 msgstr "Python-skriptning"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:30
+#: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "Låter dig använda GIMP-insticksmoduler skrivna i skriptspråket Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:31
+#: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "MyPaint brushes"
 msgstr "MyPaint-penslar"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:32
+#: ../build/windows/installer/lang/setup.isl.in.h:34
 msgid "Install the default set of MyPaint brushes"
 msgstr "Installera standarduppsättningen av MyPaint-penslar"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:33
+#: ../build/windows/installer/lang/setup.isl.in.h:35
 msgid "PostScript support"
 msgstr "PostScript-stöd"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: ../build/windows/installer/lang/setup.isl.in.h:36
 msgid "Allow GIMP to load PostScript files"
 msgstr "Tillåt GIMP att läsa in PostScript-filer"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: ../build/windows/installer/lang/setup.isl.in.h:37
 msgid "Support for 32-bit plug-ins"
 msgstr "Stöd för 32-bitars insticksmoduler"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
+#: ../build/windows/installer/lang/setup.isl.in.h:39
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
@@ -200,23 +208,23 @@ msgstr ""
 "Inkludera filer som behövs för att använda 32-bitars insticksmoduler.%nKrävs "
 "för Python-stöd."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:38
+#: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
 msgstr "Ytterligare ikoner:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: ../build/windows/installer/lang/setup.isl.in.h:41
 msgid "Create a &desktop icon"
 msgstr "Skapa en &skrivbordsikon"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Create a &Quick Launch icon"
 msgstr "Skapa en Sna&bbstartsikon"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
+#: ../build/windows/installer/lang/setup.isl.in.h:43
 msgid "Remove previous GIMP version"
 msgstr "Ta bort föregående GIMP-version"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: ../build/windows/installer/lang/setup.isl.in.h:45
 #, no-c-format
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
@@ -225,45 +233,45 @@ msgstr ""
 "Ett fel uppstod vid uppdatering av GIMP:s miljö i %1. Om du får fel vid "
 "inläsning av insticksmodulerna, prova att avinstallera och ominstallera GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:44
+#: ../build/windows/installer/lang/setup.isl.in.h:46
 msgid "Error extracting temporary data."
 msgstr "Ett fel uppstod vid extrahering av temporär data."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: ../build/windows/installer/lang/setup.isl.in.h:47
 msgid "Error updating Python interpreter info."
 msgstr "Ett fel uppstod vid uppdatering av information för Python-tolk."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error updating MyPaint brushes info."
 msgstr "Ett fel uppstod vid uppdatering av information för MyPaint-penslar."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: ../build/windows/installer/lang/setup.isl.in.h:50
 #, no-c-format
 msgid "There was an error updating %1."
 msgstr "Ett fel uppstod vid uppdatering av %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
+#: ../build/windows/installer/lang/setup.isl.in.h:52
 #, no-c-format
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "Ett fel uppstod vid uppdatering av GIMP:s konfigurationsfil %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:51
+#: ../build/windows/installer/lang/setup.isl.in.h:53
 msgid "Edit with GIMP"
 msgstr "Redigera med GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
+#: ../build/windows/installer/lang/setup.isl.in.h:54
 msgid "Select file associations"
 msgstr "Välj filändelser"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Extensions:"
 msgstr "Filändelser:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Markera filtyperna du önskar associera med GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -271,27 +279,27 @@ msgstr ""
 "Detta kommer att göra så att markerade filer öppnas i GIMP när du "
 "dubbelklickar på dem i Utforskaren."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &All"
 msgstr "Markera &alla"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid "Unselect &All"
 msgstr "Avmarkera &alla"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &Unused"
 msgstr "Markera &oanvända"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "File types to associate with GIMP:"
 msgstr "Filtyper som ska associeras med GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Removing previous version of GIMP:"
 msgstr "Tar bort föregående version av GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -306,7 +314,7 @@ msgstr ""
 "installerar denna version i %2, eller välj Anpassad installation, och välj "
 "en annan installationsmapp.%n%nInstallationen kommer nu att avslutas."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -322,7 +330,7 @@ msgstr ""
 "och välj en annan installationsmapp.%n%nInstallationen kommer nu att "
 "avslutas."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
+#: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
@@ -333,54 +341,54 @@ msgstr ""
 "om innan installationen kan fortsätta.%n%nEfter att du startat om din dator "
 "kommer installationen att fortsätta nästa gång en administratör loggar in."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
+#: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Ett fel uppstod vid omstart av installationen. (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
+#: ../build/windows/installer/lang/setup.isl.in.h:72
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Kom ihåg: GIMP är Fri Programvara.%n%nBesök"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: ../build/windows/installer/lang/setup.isl.in.h:73
 msgid "for free updates."
 msgstr "för fria uppdateringar."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:72
+#: ../build/windows/installer/lang/setup.isl.in.h:74
 msgid "Setting up file associations..."
 msgstr "Ställer in filassociationer…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Ställer in miljö för GIMP:s Python-tillägg…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up MyPaint brushes..."
 msgstr "Ställer in MyPaint-penslar…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up GIMP environment..."
 msgstr "Ställer in GIMP-miljön…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Ställer in GIMP-konfiguration för stöd för 32-bitars insticksmoduler…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Launch GIMP"
 msgstr "Starta GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Removing add-on"
 msgstr "Tar bort tillägg"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:82
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "Internt fel (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
