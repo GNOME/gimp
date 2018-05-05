@@ -818,7 +818,7 @@ server_interface (void)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *hbox;
   GtkWidget *image;
   GtkWidget *label;
@@ -854,32 +854,32 @@ server_interface (void)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  /*  The table to hold port, logfile and listen-to entries  */
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /*  The grid to hold port, logfile and listen-to entries  */
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* The server ip to listen to */
   sint.ip_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.ip_entry), "127.0.0.1");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Listen on IP:"), 0.0, 0.5,
-                             sint.ip_entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Listen on IP:"), 0.0, 0.5,
+                            sint.ip_entry, 1);
 
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Server port:"), 0.0, 0.5,
-                             sint.port_entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Server port:"), 0.0, 0.5,
+                            sint.port_entry, 1);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Server logfile:"), 0.0, 0.5,
-                             sint.log_entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("Server logfile:"), 0.0, 0.5,
+                            sint.log_entry, 1);
 
   /* Warning */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

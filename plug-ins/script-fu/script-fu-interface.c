@@ -52,7 +52,7 @@ typedef struct
 {
   GtkWidget  *dialog;
 
-  GtkWidget  *table;
+  GtkWidget  *grid;
   GtkWidget **widgets;
 
   GtkWidget  *progress_label;
@@ -264,12 +264,12 @@ script_fu_interface (SFScript  *script,
   gtk_widget_show (vbox);
 
   /*  The argument table  */
-  sf_interface->table = gtk_table_new (script->n_args - start_arg, 3, FALSE);
+  sf_interface->grid = gtk_grid_new ();
 
-  gtk_table_set_col_spacings (GTK_TABLE (sf_interface->table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (sf_interface->table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), sf_interface->table, FALSE, FALSE, 0);
-  gtk_widget_show (sf_interface->table);
+  gtk_grid_set_row_spacing (GTK_GRID (sf_interface->grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (sf_interface->grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), sf_interface->grid, FALSE, FALSE, 0);
+  gtk_widget_show (sf_interface->grid);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -409,17 +409,17 @@ script_fu_interface (SFScript  *script,
             {
             case SF_SLIDER:
               arg->value.sfa_adjustment.adj = (GtkAdjustment *)
-                gimp_scale_entry_new (GTK_TABLE (sf_interface->table),
-                                      0, row,
-                                      label_text, SLIDER_WIDTH, -1,
-                                      arg->value.sfa_adjustment.value,
-                                      arg->default_value.sfa_adjustment.lower,
-                                      arg->default_value.sfa_adjustment.upper,
-                                      arg->default_value.sfa_adjustment.step,
-                                      arg->default_value.sfa_adjustment.page,
-                                      arg->default_value.sfa_adjustment.digits,
-                                      TRUE, 0.0, 0.0,
-                                      NULL, NULL);
+                gimp_scale_entry_new_grid (GTK_GRID (sf_interface->grid),
+                                           0, row,
+                                           label_text, SLIDER_WIDTH, -1,
+                                           arg->value.sfa_adjustment.value,
+                                           arg->default_value.sfa_adjustment.lower,
+                                           arg->default_value.sfa_adjustment.upper,
+                                           arg->default_value.sfa_adjustment.step,
+                                           arg->default_value.sfa_adjustment.page,
+                                           arg->default_value.sfa_adjustment.digits,
+                                           TRUE, 0.0, 0.0,
+                                           NULL, NULL);
               gtk_entry_set_activates_default (GIMP_SCALE_ENTRY_SPINBUTTON (arg->value.sfa_adjustment.adj), TRUE);
               break;
 
@@ -552,17 +552,16 @@ script_fu_interface (SFScript  *script,
         {
           if (label_text)
             {
-              gimp_table_attach_aligned (GTK_TABLE (sf_interface->table),
-                                         0, row,
-                                         label_text, 0.0, label_yalign,
-                                         widget, 2, left_align);
+              gimp_grid_attach_aligned (GTK_GRID (sf_interface->grid),
+                                        0, row,
+                                        label_text, 0.0, label_yalign,
+                                        widget, 2);
               g_free (label_text);
             }
           else
             {
-              gtk_table_attach (GTK_TABLE (sf_interface->table),
-                                widget, 0, 3, row, row + 1,
-                                GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+              gtk_grid_attach (GTK_GRID (sf_interface->grid),
+                               widget, 0, row, 3, 1);
               gtk_widget_show (widget);
             }
 
@@ -767,7 +766,7 @@ script_fu_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      gtk_widget_set_sensitive (sf_interface->table, FALSE);
+      gtk_widget_set_sensitive (sf_interface->grid, FALSE);
       gtk_widget_set_sensitive (action_area, FALSE);
 
       script_fu_ok (script);
