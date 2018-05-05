@@ -1322,7 +1322,7 @@ mng_save_dialog (gint32 image_id)
   GtkWidget     *main_vbox;
   GtkWidget     *frame;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *toggle;
   GtkWidget     *hbox;
   GtkWidget     *combo;
@@ -1401,11 +1401,11 @@ mng_save_dialog (gint32 image_id)
 
   gtk_widget_show (toggle);
 
-  table = gtk_table_new (2, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   gimp_image_get_layers (image_id, &num_layers);
 
@@ -1428,9 +1428,9 @@ mng_save_dialog (gint32 image_id)
                     &mng_data.default_chunks);
 
   gtk_widget_set_sensitive (combo, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Default chunks type:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Default chunks type:"), 0.0, 0.5,
+                            combo, 1);
 
   combo = gimp_int_combo_box_new (_("Combine"), DISPOSE_COMBINE,
                                   _("Replace"), DISPOSE_REPLACE,
@@ -1443,9 +1443,9 @@ mng_save_dialog (gint32 image_id)
                     G_CALLBACK (gimp_int_combo_box_get_active),
                     &mng_data.default_dispose);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Default frame disposal:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Default frame disposal:"), 0.0, 0.5,
+                            combo, 1);
 
   scale_adj = gtk_adjustment_new (mng_data.compression_level,
                                   0.0, 9.0, 1.0, 1.0, 0.0);
@@ -1454,9 +1454,9 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("PNG compression level:"), 0.0, 0.9,
-                             scale, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("PNG compression level:"), 0.0, 0.9,
+                            scale, 1);
 
   g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1475,9 +1475,9 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_set_sensitive (scale, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("JPEG compression quality:"), 0.0, 0.9,
-                             scale, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("JPEG compression quality:"), 0.0, 0.9,
+                            scale, 1);
 
   g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1491,9 +1491,9 @@ mng_save_dialog (gint32 image_id)
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_widget_set_sensitive (scale, FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("JPEG smoothing factor:"), 0.0, 0.9,
-                             scale, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("JPEG smoothing factor:"), 0.0, 0.9,
+                            scale, 1);
 
   g_signal_connect (scale_adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),

@@ -243,7 +243,7 @@ colorify_dialog (GimpDrawable *drawable)
   GtkWidget *preview;
   GtkWidget *label;
   GtkWidget *button;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *color_area;
   gint       i;
   gboolean   run;
@@ -279,15 +279,14 @@ colorify_dialog (GimpDrawable *drawable)
                             G_CALLBACK (colorify),
                             drawable);
 
-  table = gtk_table_new (2, 7, TRUE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   label = gtk_label_new (_("Custom color:"));
-  gtk_table_attach (GTK_TABLE (table), label, 4, 6, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 4, 0, 2, 1);
   gtk_widget_show (label);
 
   custom_color_button = gimp_color_button_new (_("Colorify Custom Color"),
@@ -301,8 +300,7 @@ colorify_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_table_attach (GTK_TABLE (table), custom_color_button, 6, 7, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), custom_color_button, 6, 0, 1, 1);
   gtk_widget_show (custom_color_button);
 
   for (i = 0; i < 7; i++)
@@ -319,8 +317,7 @@ colorify_dialog (GimpDrawable *drawable)
                         &button_color[i]);
       gtk_widget_show (color_area);
 
-      gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), button, i, 1, 1, 1);
       gtk_widget_show (button);
     }
 

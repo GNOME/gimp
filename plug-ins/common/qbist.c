@@ -803,7 +803,7 @@ dialog_run (void)
   GtkWidget *vbox;
   GtkWidget *bbox;
   GtkWidget *button;
-  GtkWidget *table;
+  GtkWidget *grid;
   gint       i;
   gboolean   run;
 
@@ -831,11 +831,11 @@ dialog_run (void)
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   info[0] = qbist_info.info;
   dialog_new_variations (NULL, NULL);
@@ -844,9 +844,8 @@ dialog_run (void)
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
-      gtk_table_attach (GTK_TABLE (table),
-                        button, i % 3, (i % 3) + 1, i / 3, (i / 3) + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), button, i % 3, i / 3, 1, 1);
+                        // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
