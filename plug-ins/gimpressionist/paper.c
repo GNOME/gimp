@@ -127,7 +127,7 @@ void
 create_paperpage (GtkNotebook *notebook)
 {
   GtkWidget         *box1, *thispage, *box2;
-  GtkWidget        *label, *tmpw, *table;
+  GtkWidget        *label, *tmpw, *grid;
   GtkWidget        *view;
   GtkWidget        *frame;
   GtkTreeSelection *selection;
@@ -182,32 +182,32 @@ create_paperpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.paper_overlay);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (thispage), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   paper_scale_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Scale:"),
-                          150, -1, pcvals.paper_scale,
-                          3.0, 150.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Specifies the scale of the texture (in percent of original file)"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                               _("Scale:"),
+                               150, -1, pcvals.paper_scale,
+                               3.0, 150.0, 1.0, 10.0, 1,
+                               TRUE, 0, 0,
+                               _("Specifies the scale of the texture (in percent of original file)"),
+                               NULL);
   g_signal_connect (paper_scale_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paper_scale);
 
   paper_relief_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                          _("Relief:"),
-                          150, -1, pcvals.paper_relief,
-                          0.0, 100.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Specifies the amount of embossing to apply to the image (in percent)"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                               _("Relief:"),
+                               150, -1, pcvals.paper_relief,
+                               0.0, 100.0, 1.0, 10.0, 1,
+                               TRUE, 0, 0,
+                               _("Specifies the amount of embossing to apply to the image (in percent)"),
+                               NULL);
   g_signal_connect (paper_relief_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.paper_relief);

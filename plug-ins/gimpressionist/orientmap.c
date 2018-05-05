@@ -505,7 +505,7 @@ void
 create_orientmap_dialog (GtkWidget *parent)
 {
   GtkWidget *tmpw, *tmpw2;
-  GtkWidget *table1, *table2;
+  GtkWidget *grid1, *grid2;
   GtkWidget *frame;
   GtkWidget *ebox, *hbox, *vbox;
 
@@ -543,16 +543,15 @@ create_orientmap_dialog (GtkWidget *parent)
                     G_CALLBACK (gtk_widget_destroyed),
                     &orient_map_window);
 
-  table1 = gtk_table_new (2, 5, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
+  grid1 = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid1), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (orient_map_window))),
-                      table1, TRUE, TRUE, 0);
-  gtk_widget_show (table1);
+                      grid1, TRUE, TRUE, 0);
+  gtk_widget_show (grid1);
 
   frame = gtk_frame_new (_("Vectors"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
-  gtk_table_attach (GTK_TABLE (table1), frame, 0, 1, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid1), frame, 0, 0, 1, 1);
   gtk_widget_show (frame);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -589,8 +588,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   tmpw2 = tmpw = gtk_frame_new (_("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_table_attach (GTK_TABLE (table1), tmpw, 1,2, 0,1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid1), tmpw, 1, 0, 1, 1);
   gtk_widget_show (tmpw);
 
   tmpw = orient_map_preview_prev = gimp_preview_area_new ();
@@ -601,7 +599,7 @@ create_orientmap_dialog (GtkWidget *parent)
   hbox = tmpw = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
-  gtk_table_attach_defaults (GTK_TABLE (table1), tmpw, 0,1, 1,2);
+  gtk_grid_attach (GTK_GRID (grid1), tmpw, 0, 1, 1, 1);
   gtk_widget_show (tmpw);
 
   prev_button = tmpw = gtk_button_new_with_mnemonic ("_<<");
@@ -630,7 +628,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_spacing (GTK_BOX (hbox), 12);
-  gtk_table_attach_defaults (GTK_TABLE (table1), hbox, 0, 2, 2, 3);
+  gtk_grid_attach (GTK_GRID (grid1), hbox, 0, 2, 2, 1);
   gtk_widget_show (hbox);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
@@ -661,52 +659,52 @@ create_orientmap_dialog (GtkWidget *parent)
                           _("Voronoi-mode makes only the vector closest to the given point have any influence"),
                           NULL);
 
-  table2 = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table2, TRUE, TRUE, 0);
-  gtk_widget_show (table2);
+  grid2 = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid2), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), grid2, TRUE, TRUE, 0);
+  gtk_widget_show (grid2);
 
   angle_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-                          _("A_ngle:"),
-                          150, 6, 0.0,
-                          0.0, 360.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Change the angle of the selected vector"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
+                               _("A_ngle:"),
+                               150, 6, 0.0,
+                               0.0, 360.0, 1.0, 10.0, 1,
+                               TRUE, 0, 0,
+                               _("Change the angle of the selected vector"),
+                               NULL);
   g_signal_connect (angle_adjust, "value-changed",
                     G_CALLBACK (angle_adjust_move_callback), NULL);
 
   angle_offset_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table2), 0, 1,
-                          _("Ang_le offset:"),
-                          150, 6, 0.0,
-                          0.0, 360.0, 1.0, 10.0, 1,
-                          TRUE, 0, 0,
-                          _("Offset all vectors with a given angle"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 1,
+                               _("Ang_le offset:"),
+                               150, 6, 0.0,
+                               0.0, 360.0, 1.0, 10.0, 1,
+                               TRUE, 0, 0,
+                               _("Offset all vectors with a given angle"),
+                               NULL);
   g_signal_connect (angle_offset_adjust, "value-changed",
                     G_CALLBACK (angle_offset_adjust_move_callback), NULL);
 
   strength_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table2), 0, 2,
-                          _("_Strength:"),
-                          150, 6, 1.0,
-                          0.1, 5.0, 0.1, 1.0, 1,
-                          TRUE, 0, 0,
-                          _("Change the strength of the selected vector"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 2,
+                               _("_Strength:"),
+                               150, 6, 1.0,
+                               0.1, 5.0, 0.1, 1.0, 1,
+                               TRUE, 0, 0,
+                               _("Change the strength of the selected vector"),
+                               NULL);
   g_signal_connect (strength_adjust, "value-changed",
                     G_CALLBACK (strength_adjust_move_callback), NULL);
 
   orient_map_str_exp_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table2), 0, 3,
-                          _("S_trength exp.:"),
-                          150, 6, 1.0,
-                          0.1, 10.9, 0.1, 1.0, 1,
-                          TRUE, 0, 0,
-                          _("Change the exponent of the strength"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 3,
+                               _("S_trength exp.:"),
+                               150, 6, 1.0,
+                               0.1, 10.9, 0.1, 1.0, 1,
+                               TRUE, 0, 0,
+                               _("Change the exponent of the strength"),
+                               NULL);
   g_signal_connect (orient_map_str_exp_adjust, "value-changed",
                     G_CALLBACK (strength_exponent_adjust_move_callback), NULL);
 
