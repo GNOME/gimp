@@ -35,7 +35,7 @@
 #include "imap_object_popup.h"
 #include "imap_polygon.h"
 #include "imap_stock.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -441,7 +441,7 @@ static gpointer
 polygon_create_info_widget(GtkWidget *frame)
 {
    PolygonProperties_t *props = g_new(PolygonProperties_t, 1);
-   GtkWidget *hbox, *swin, *table, *label;
+   GtkWidget *hbox, *swin, *grid, *label;
    GtkWidget *view;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
@@ -487,50 +487,50 @@ polygon_create_info_widget(GtkWidget *frame)
 
    gtk_container_add (GTK_CONTAINER (swin), view);
 
-   table = gtk_table_new(6, 3, FALSE);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, FALSE);
-   gtk_widget_show(table);
+   grid = gtk_grid_new ();
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+   gtk_box_pack_start (GTK_BOX(hbox), grid, FALSE, FALSE, FALSE);
+   gtk_widget_show (grid);
 
-   label = create_label_in_table(table, 0, 0, "_x:");
-   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
+   label = create_label_in_grid (grid, 0, 0, "_x:");
+   props->x = create_spin_button_in_grid (grid, label, 0, 1, 1, 0,
                                           max_width - 1);
    g_signal_connect(props->x, "changed",
                     G_CALLBACK(x_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->x, 64, -1);
-   create_label_in_table(table, 0, 2, _("pixels"));
+   create_label_in_grid (grid, 0, 2, _("pixels"));
 
-   label = create_label_in_table(table, 1, 0, "_y:");
-   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
+   label = create_label_in_grid (grid, 1, 0, "_y:");
+   props->y = create_spin_button_in_grid (grid, label, 1, 1, 1, 0,
                                           max_height - 1);
    g_signal_connect(props->y, "changed",
                     G_CALLBACK(y_changed_cb), (gpointer) props);
    gtk_widget_set_size_request(props->y, 64, -1);
-   create_label_in_table(table, 1, 2, _("pixels"));
+   create_label_in_grid (grid, 1, 2, _("pixels"));
 
    props->update = gtk_button_new_with_mnemonic(_("_Update"));
    g_signal_connect(props->update, "clicked",
                     G_CALLBACK(update_button_clicked), props);
-   gtk_table_attach_defaults(GTK_TABLE(table), props->update, 1, 2, 2, 3);
+   gtk_grid_attach (GTK_GRID (grid), props->update, 1, 2, 1, 1);
    gtk_widget_show(props->update);
 
    props->insert = gtk_button_new_with_mnemonic(_("_Insert"));
    g_signal_connect(props->insert, "clicked",
                     G_CALLBACK(insert_button_clicked), props);
-   gtk_table_attach_defaults(GTK_TABLE(table), props->insert, 1, 2, 3, 4);
+   gtk_grid_attach (GTK_GRID (grid), props->insert, 1, 3, 1, 1);
    gtk_widget_show(props->insert);
 
    props->append = gtk_button_new_with_mnemonic(_("A_ppend"));
    g_signal_connect(props->append, "clicked",
                     G_CALLBACK(append_button_clicked), props);
-   gtk_table_attach_defaults(GTK_TABLE(table), props->append, 1, 2, 4, 5);
+   gtk_grid_attach (GTK_GRID (grid), props->append, 1, 4, 1, 1);
    gtk_widget_show(props->append);
 
    props->remove = gtk_button_new_with_mnemonic(_("_Remove"));
    g_signal_connect(props->remove, "clicked",
                     G_CALLBACK(remove_button_clicked), props);
-   gtk_table_attach_defaults(GTK_TABLE(table), props->remove, 1, 2, 5, 6);
+   gtk_grid_attach (GTK_GRID (grid), props->remove, 1, 5, 1, 1);
    gtk_widget_show(props->remove);
 
    props->timeout = 0;

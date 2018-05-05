@@ -33,7 +33,7 @@
 #include "imap_default_dialog.h"
 #include "imap_main.h"
 #include "imap_rectangle.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -140,16 +140,16 @@ make_gimp_guides_dialog(void)
 {
    GimpGuidesDialog_t *data = g_new(GimpGuidesDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *table, *frame, *hbox, *vbox;
+   GtkWidget *grid, *frame, *hbox, *vbox;
    GtkWidget *label;
 
    dialog = data->dialog = make_default_dialog(_("Use Gimp Guides"));
    default_dialog_set_ok_cb(dialog, gimp_guides_ok_cb, data);
-   table = default_dialog_add_table(dialog, 3, 2);
+   grid = default_dialog_add_grid (dialog);
 
    frame = gimp_frame_new(_("Create"));
    gtk_widget_show(frame);
-   gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 0, 1);
+   gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 1, 1);
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
@@ -167,7 +167,7 @@ make_gimp_guides_dialog(void)
 
    frame = gimp_frame_new(_("Add Additional Guides"));
    gtk_widget_show(frame);
-   gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 1, 2);
+   gtk_grid_attach (GTK_GRID (grid), frame, 0, 1, 1, 1);
 
    vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
    gtk_container_add(GTK_CONTAINER(frame), vbox);
@@ -190,7 +190,7 @@ make_gimp_guides_dialog(void)
    gtk_widget_show(data->lower_border);
 
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-   gtk_table_attach_defaults(GTK_TABLE(table), hbox, 0, 2, 2, 3);
+   gtk_grid_attach (GTK_GRID (grid), hbox, 0, 2, 2, 1);
    gtk_widget_show(hbox);
 
    label = gtk_label_new_with_mnemonic(_("_Base URL:"));

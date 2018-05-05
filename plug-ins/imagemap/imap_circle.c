@@ -32,7 +32,7 @@
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_stock.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -247,36 +247,36 @@ static gpointer
 circle_create_info_widget(GtkWidget *frame)
 {
    CircleProperties_t *props = g_new(CircleProperties_t, 1);
-   GtkWidget *table, *label;
+   GtkWidget *grid, *label;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
 
-   table = gtk_table_new(3, 3, FALSE);
-   gtk_container_add(GTK_CONTAINER(frame), table);
+   grid = gtk_grid_new ();
+   gtk_container_add (GTK_CONTAINER(frame), grid);
 
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_widget_show(table);
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+   gtk_widget_show (grid);
 
-   label = create_label_in_table(table, 0, 0, _("Center _x:"));
-   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
+   label = create_label_in_grid (grid, 0, 0, _("Center _x:"));
+   props->x = create_spin_button_in_grid (grid, label, 0, 1, 1, 0,
                                           max_width - 1);
    g_signal_connect(props->x, "value-changed",
                     G_CALLBACK (x_changed_cb), (gpointer) props);
-   create_label_in_table(table, 0, 2, _("pixels"));
+   create_label_in_grid (grid, 0, 2, _("pixels"));
 
-   label = create_label_in_table(table, 1, 0, _("Center _y:"));
-   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
+   label = create_label_in_grid (grid, 1, 0, _("Center _y:"));
+   props->y = create_spin_button_in_grid (grid, label, 1, 1, 1, 0,
                                           max_height - 1);
    g_signal_connect(props->y, "value-changed",
                     G_CALLBACK (y_changed_cb), (gpointer) props);
-   create_label_in_table(table, 1, 2, _("pixels"));
+   create_label_in_grid (grid, 1, 2, _("pixels"));
 
-   label = create_label_in_table(table, 2, 0, _("_Radius:"));
-   props->r = create_spin_button_in_table(table, label, 2, 1, 1, 1, G_MAXINT);
+   label = create_label_in_grid (grid, 2, 0, _("_Radius:"));
+   props->r = create_spin_button_in_grid (grid, label, 2, 1, 1, 1, G_MAXINT);
    g_signal_connect(props->r, "value-changed",
                     G_CALLBACK (r_changed_cb), (gpointer) props);
-   create_label_in_table(table, 2, 2, _("pixels"));
+   create_label_in_grid (grid, 2, 2, _("pixels"));
 
    return props;
 }

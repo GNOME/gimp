@@ -33,7 +33,7 @@
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_preview.h"
-#include "imap_table.h"
+#include "imap_ui_grid.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -187,7 +187,7 @@ create_grid_settings_dialog(void)
 {
    GridDialog_t *data = g_new(GridDialog_t, 1);
    DefaultDialog_t *dialog;
-   GtkWidget *main_table, *table, *label;
+   GtkWidget *main_grid, *grid, *label;
    GtkWidget *frame;
    GtkWidget *hbox;
    GtkWidget *button;
@@ -195,17 +195,17 @@ create_grid_settings_dialog(void)
 
    data->dialog = dialog = make_default_dialog(_("Grid Settings"));
    default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
-   main_table = default_dialog_add_table(dialog, 4, 2);
+   main_grid = default_dialog_add_grid (dialog);
 
    data->snap = gtk_check_button_new_with_mnemonic(_("_Snap-to grid enabled"));
    g_signal_connect(data->snap, "toggled",
                     G_CALLBACK (snap_toggled_cb), data);
-   gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);
+   gtk_grid_attach (GTK_GRID (main_grid), data->snap, 0, 0, 1, 1);
    gtk_widget_show(data->snap);
 
    data->type_frame = frame = gimp_frame_new(_("Grid Visibility and Type"));
    gtk_widget_show(frame);
-   gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 2, 1, 2);
+   gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 1, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
@@ -236,55 +236,55 @@ create_grid_settings_dialog(void)
    gtk_widget_show(button);
 
    data->granularity_frame = frame = gimp_frame_new(_("Grid Granularity"));
-   gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 1, 2, 3);
-   table = gtk_table_new(2, 4, FALSE);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_container_add(GTK_CONTAINER(frame), table);
+   gtk_grid_attach (GTK_GRID (main_grid), frame, 0, 2, 1, 1);
+   grid = gtk_grid_new ();
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+   gtk_container_add(GTK_CONTAINER(frame), grid);
 
-   label = create_label_in_table(table, 0, 0, _("_Width"));
-   data->width = create_spin_button_in_table(table, label, 0, 1, 15, 1, 100);
+   label = create_label_in_grid (grid, 0, 0, _("_Width"));
+   data->width = create_spin_button_in_grid (grid, label, 0, 1, 15, 1, 100);
    g_signal_connect(data->width, "value-changed",
                     G_CALLBACK (width_changed_cb), (gpointer) data);
-   create_label_in_table(table, 0, 3, _("pixels"));
+   create_label_in_grid (grid, 0, 3, _("pixels"));
 
-   label = create_label_in_table(table, 1, 0, _("_Height"));
-   data->height = create_spin_button_in_table(table, label, 1, 1, 15, 1, 100);
+   label = create_label_in_grid (grid, 1, 0, _("_Height"));
+   data->height = create_spin_button_in_grid (grid, label, 1, 1, 15, 1, 100);
    g_signal_connect(data->height, "value-changed",
                     G_CALLBACK (height_changed_cb), (gpointer) data);
-   create_label_in_table(table, 1, 3, _("pixels"));
+   create_label_in_grid (grid, 1, 3, _("pixels"));
 
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    data->chain_width_height = chain_button;
-   gtk_table_attach_defaults(GTK_TABLE(table), chain_button, 2, 3, 0, 2);
+   gtk_grid_attach (GTK_GRID (grid), chain_button, 2, 0, 1, 2);
    gtk_widget_show(chain_button);
 
-   gtk_widget_show(table);
+   gtk_widget_show(grid);
    gtk_widget_show(frame);
 
    data->offset_frame = frame = gimp_frame_new(_("Grid Offset"));
-   gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 1, 2, 2, 3);
-   table = gtk_table_new(2, 3, FALSE);
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-   gtk_container_add(GTK_CONTAINER(frame), table);
+   gtk_grid_attach (GTK_GRID (main_grid), frame, 1, 2, 1, 1);
+   grid = gtk_grid_new ();
+   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+   gtk_container_add(GTK_CONTAINER(frame), grid);
 
-   label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));
-   data->left = create_spin_button_in_table(table, label, 0, 0, 0, 0, 100);
+   label = create_label_in_grid (grid, 0, 2, _("pixels from l_eft"));
+   data->left = create_spin_button_in_grid (grid, label, 0, 0, 0, 0, 100);
    g_signal_connect(data->left, "value-changed",
                     G_CALLBACK (left_changed_cb), (gpointer) data);
 
-   label = create_label_in_table(table, 1, 2, _("pixels from _top"));
-   data->top = create_spin_button_in_table(table, label, 1, 0, 0, 0, 100);
+   label = create_label_in_grid (grid, 1, 2, _("pixels from _top"));
+   data->top = create_spin_button_in_grid (grid, label, 1, 0, 0, 0, 100);
    g_signal_connect(data->top, "value-changed",
                     G_CALLBACK (top_changed_cb), (gpointer) data);
 
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    data->chain_left_top = chain_button;
-   gtk_table_attach_defaults(GTK_TABLE(table), chain_button, 1, 2, 0, 2);
+   gtk_grid_attach (GTK_GRID (grid), chain_button, 1, 0, 1, 2);
    gtk_widget_show(chain_button);
 
-   data->preview = create_check_button_in_table(main_table, 3, 0,
+   data->preview = create_check_button_in_grid (main_grid, 3, 0,
                                                 _("_Preview"));
    g_signal_connect(data->preview, "toggled",
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
@@ -292,7 +292,7 @@ create_grid_settings_dialog(void)
 
    snap_toggled_cb(data->snap, data);
 
-   gtk_widget_show(table);
+   gtk_widget_show(grid);
    gtk_widget_show(frame);
 
    return data;
