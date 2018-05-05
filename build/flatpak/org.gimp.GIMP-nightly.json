@@ -28,43 +28,6 @@
                 "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
         {
-            "name": "mypaint-brushes",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/Jehan/mypaint-brushes.git",
-                    "branch": "v1.3.0",
-                    "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
-                }
-            ]
-        },
-        {
-            "name": "lcms2",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/share" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
-                    "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
-                }
-            ]
-        },
-        {
-            "name": "openjpeg",
-            "cmake": true,
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
-                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
-                }
-            ]
-        },
-        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
