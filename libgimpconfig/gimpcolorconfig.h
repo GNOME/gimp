@@ -42,24 +42,6 @@ struct _GimpColorConfig
   GObject                 parent_instance;
 
   GimpColorConfigPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GimpColorManagementMode     mode;
-  gchar                      *rgb_profile;
-  gchar                      *cmyk_profile;
-  gchar                      *display_profile;
-  gboolean                    display_profile_from_gdk;
-  gchar                      *printer_profile;
-  GimpColorRenderingIntent    display_intent;
-  GimpColorRenderingIntent    simulation_intent;
-
-  gboolean                    simulation_gamut_check;
-  GimpRGB                     out_of_gamut_color;
-
-  gboolean                    display_use_black_point_compensation;
-  gboolean                    simulation_use_black_point_compensation;
-
-  gchar                      *gray_profile;
 };
 
 struct _GimpColorConfigClass
@@ -93,6 +75,8 @@ GimpColorRenderingIntent
 gboolean           gimp_color_config_get_simulation_bpc           (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_optimize      (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_gamut_check   (GimpColorConfig  *config);
+void               gimp_color_config_get_out_of_gamut_color       (GimpColorConfig  *config,
+                                                                   GimpRGB          *color);
 
 GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
                                                                    GError          **error);

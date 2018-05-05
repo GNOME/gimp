@@ -456,14 +456,17 @@ gimp_color_area_draw (GtkWidget *widget,
        priv->color.g < 0.0 || priv->color.g > 1.0 ||
        priv->color.b < 0.0 || priv->color.b > 1.0))
     {
-      gint side = MIN (priv->width, priv->height) * 2 / 3;
+      GimpRGB color;
+      gint    side = MIN (priv->width, priv->height) * 2 / 3;
 
       cairo_move_to (cr, priv->width, 0);
       cairo_line_to (cr, priv->width - side, 0);
       cairo_line_to (cr, priv->width, side);
       cairo_line_to (cr, priv->width, 0);
 
-      gimp_cairo_set_source_rgb (cr, &priv->config->out_of_gamut_color);
+      gimp_color_config_get_out_of_gamut_color (priv->config, &color);
+      gimp_cairo_set_source_rgb (cr, &color);
+
       cairo_fill (cr);
     }
 

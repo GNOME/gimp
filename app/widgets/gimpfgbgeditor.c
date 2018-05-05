@@ -346,15 +346,17 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
            color.g < 0.0 || color.g > 1.0 ||
            color.b < 0.0 || color.b > 1.0))
         {
-          gint side = MIN (rect_w, rect_h) * 2 / 3;
+          GimpRGB color;
+          gint    side = MIN (rect_w, rect_h) * 2 / 3;
 
           cairo_move_to (cr, width, height);
           cairo_line_to (cr, width - side, height);
           cairo_line_to (cr, width, height - side);
           cairo_line_to (cr, width, height);
 
-          gimp_cairo_set_source_rgb (cr,
-                                     &editor->color_config->out_of_gamut_color);
+          gimp_color_config_get_out_of_gamut_color (editor->color_config,
+                                                    &color);
+          gimp_cairo_set_source_rgb (cr, &color);
           cairo_fill (cr);
         }
     }
@@ -400,15 +402,17 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
            color.g < 0.0 || color.g > 1.0 ||
            color.b < 0.0 || color.b > 1.0))
         {
-          gint side = MIN (rect_w, rect_h) * 2 / 3;
+          GimpRGB color;
+          gint    side = MIN (rect_w, rect_h) * 2 / 3;
 
           cairo_move_to (cr, 0, 0);
           cairo_line_to (cr, 0, side);
           cairo_line_to (cr, side, 0);
           cairo_line_to (cr, 0, 0);
 
-          gimp_cairo_set_source_rgb (cr,
-                                     &editor->color_config->out_of_gamut_color);
+          gimp_color_config_get_out_of_gamut_color (editor->color_config,
+                                                    &color);
+          gimp_cairo_set_source_rgb (cr, &color);
           cairo_fill (cr);
         }
     }

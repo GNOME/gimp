@@ -870,12 +870,14 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
 
       if (gimp_color_config_get_simulation_gamut_check (config))
         {
+          GimpRGB         color;
           cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
           guchar          r, g, b;
 
           flags |= GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
 
-          gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
+          gimp_color_config_get_out_of_gamut_color (config, &color);
+          gimp_rgb_get_uchar (&color, &r, &g, &b);
 
           alarmCodes[0] = (cmsUInt16Number) r * 256;
           alarmCodes[1] = (cmsUInt16Number) g * 256;

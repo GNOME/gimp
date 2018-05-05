@@ -1122,10 +1122,12 @@ gimp_color_scale_notify_config (GimpColorConfig  *config,
                                 GimpColorScale   *scale)
 {
   GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+  GimpRGB                color;
 
   gimp_color_scale_destroy_transform (scale);
 
-  gimp_rgb_get_uchar (&config->out_of_gamut_color,
+  gimp_color_config_get_out_of_gamut_color (config, &color);
+  gimp_rgb_get_uchar (&color,
                       priv->oog_color,
                       priv->oog_color + 1,
                       priv->oog_color + 2);
