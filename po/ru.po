@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-30 03:54+0300\n"
-"PO-Revision-Date: 2018-04-30 05:23+0300\n"
+"PO-Revision-Date: 2018-05-05 03:06+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -152,10 +152,11 @@ msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
+"Существенное ускорение рисования за счёт вывода рисования в отдельный поток"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
-msgstr ""
+msgstr "Симметрия рисования теперь сохраняется в файлах XCF."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
@@ -165,11 +166,15 @@ msgstr ""
 "Светлая и темная темы переписаны с нуля и теперь не содержат прежних проблем"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#, fuzzy
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
+"Новый контроллер GimpToolGyroscope, используется пока только для фильтра "
+"«Панорамная проекция». Позволяет вращать вид панорамы на холсте в 3D (yaw, "
+"pitch, roll)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
@@ -193,6 +198,8 @@ msgid ""
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
+"GIMP 2.10.0-RC1 — первый кандидат в релизы GIMP 2.10.0. Основной фокус — на "
+"отладке и стабильности. Помимо исправления ошибок основные изменения таковы:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New dashboard dockable to monitor GIMP resource usage"
@@ -203,6 +210,8 @@ msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
+"Новый диалог создает отладочные данные и помогает сообщать разработчикам "
+"полезную информацию о произошедших ошибках."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Unsaved images can now be recovered after a crash"
@@ -9528,10 +9537,9 @@ msgid "Zoom 1:16"
 msgstr "Масштаб 1:16"
 
 #: ../app/actions/view-actions.c:451
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Указать другой коэффициент масштабирования"
+msgstr "Указать _другой коэффициент масштаба…"
 
 #: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
@@ -12530,7 +12538,6 @@ msgid "Render Stroke"
 msgstr "Отрисовка обводки"
 
 #: ../app/core/gimpdrawable-gradient.c:136 ../app/tools/gimpgradienttool.c:1037
-#, fuzzy
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Градиент"
@@ -16415,9 +16422,8 @@ msgid "_Resize"
 msgstr "_Изменить"
 
 #: ../app/dialogs/resize-dialog.c:277
-#, fuzzy
 msgid "C_enter"
-msgstr "Центр _X:"
+msgstr "В _центр"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -17622,7 +17628,7 @@ msgstr "Только темное (старый)"
 #: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "Только темное (с)"
+msgstr "Только тёмное (l)"
 
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
@@ -17634,7 +17640,7 @@ msgstr "Только светлое (старый)"
 #: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "Только светлое (с)"
+msgstr "Только светлое (l)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
@@ -17843,7 +17849,7 @@ msgstr "Вычитание"
 #: ../app/operations/operations-enums.c:254
 msgctxt "layer-mode"
 msgid "Darken only"
-msgstr "Только темное"
+msgstr "Только тёмное"
 
 #: ../app/operations/operations-enums.c:255
 msgctxt "layer-mode"
@@ -17938,28 +17944,26 @@ msgstr "Линейное затемнение"
 #: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
-msgstr "Только темное"
+msgstr "Только тёмное в светимости"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance darken only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:276
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr "Только темное"
+msgstr "Только тёмное (luma)"
 
 #: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
-msgstr "Только светлое"
+msgstr "Только светлое в светимости"
 
 #. Translators: this is an abbreviated version of "Luma/Luminance lighten only".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:280
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Luma lighten only"
-msgstr "Только светлое"
+msgstr "Только светлое (luma)"
 
 #: ../app/operations/operations-enums.c:281
 msgctxt "layer-mode"
@@ -19148,9 +19152,8 @@ msgid "Transform resize"
 msgstr "Преобразование элементов"
 
 #: ../app/pdb/gimppdbcontext.c:195
-#, fuzzy
 msgid "Distance metric"
-msgstr "Расстояние:"
+msgstr "Метрика расстояния"
 
 #: ../app/pdb/gimpprocedure.c:467 ../app/plug-in/gimppluginprocframe.c:191
 #, c-format
@@ -19454,10 +19457,9 @@ msgid "RGB Noise"
 msgstr "Шум в RGB"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3419
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ripple"
-msgstr "_Рябь..."
+msgstr "Рябь"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3544
 msgctxt "undo-type"
@@ -21215,14 +21217,12 @@ msgstr ""
 "напрямую. Выключите эту функцию, чтобы редактировать копию."
 
 #: ../app/tools/gimpgradienttool.c:159
-#, fuzzy
 msgid "Gradient Tool: Fill selected area with a color gradient"
-msgstr "Градиент: заливка цветным градиентом"
+msgstr "Градиент: заливка выделения цветным градиентом"
 
 #: ../app/tools/gimpgradienttool.c:160
-#, fuzzy
 msgid "Gra_dient"
-msgstr "Градиент"
+msgstr "_Градиент"
 
 #: ../app/tools/gimpgradienttool.c:215
 msgid "Click-Drag to draw a gradient"
@@ -21233,9 +21233,8 @@ msgid "No gradient available for use with this tool."
 msgstr "Нет градиентов, доступных для использования с этим инструментом."
 
 #: ../app/tools/gimpgradienttool.c:617
-#, fuzzy
 msgid "Gradient: "
-msgstr "Градиент:"
+msgstr "Градиент: "
 
 #. the position labels
 #: ../app/tools/gimpgradienttool-editor.c:1283
@@ -22266,6 +22265,8 @@ msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
 msgstr ""
+"Заполняет ли текст прямоугольник или переносится на новую строку нажатием "
+"Enter"
 
 #: ../app/tools/gimptextoptions.c:207
 msgid "Use editor"
@@ -23004,6 +23005,8 @@ msgstr "Клавишу F1 невозможно переназначить."
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
 msgstr ""
+"Комбинация Alt+%d используется для переключения на монитор %d и не может "
+"быть переназначена."
 
 #: ../app/widgets/gimpactionview.c:904
 msgid "Removing shortcut failed."
@@ -23591,9 +23594,8 @@ msgstr "Скопируйте собранную информацию об оши
 
 #: ../app/widgets/gimpcriticaldialog.c:136
 #: ../app/widgets/gimpcriticaldialog.c:447
-#, fuzzy
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr "Откройте наш трекер ошибок в брайзере, щёлкнув: "
+msgstr "Откройте наш трекер ошибок в браузере, щёлкнув: "
 
 #: ../app/widgets/gimpcriticaldialog.c:138
 #: ../app/widgets/gimpcriticaldialog.c:449
@@ -24517,12 +24519,13 @@ msgid "Progress"
 msgstr "Прогресс"
 
 #: ../app/widgets/gimpsamplepointeditor.c:158
-#, fuzzy
 msgid ""
 "This image\n"
 "has no\n"
 "sample points"
-msgstr "Показывать цветные образцовые точки изображения"
+msgstr ""
+"В этом изображении\n"
+"нет образцовых точек"
 
 #: ../app/widgets/gimpsavedialog.c:151
 msgid "All XCF images"
