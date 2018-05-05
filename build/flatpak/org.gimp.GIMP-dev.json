@@ -62,12 +62,6 @@
                     "url": "git://git.gnome.org/gimp",
                     "branch": "GIMP_2_10_0_RC2",
                     "commit": "6582692ec6c8196108b2d42f6758c62076a88d13"
-                },
-                {
-                    /* Fix only the forgotten splash screen! */
-                    "type": "patch",
-                    "use-git": true,
-                    "path": "0001-data-update-splash-screen-text-for-2.10.0-RC2.patch"
                 }
             ],
 	    "post-install": [
