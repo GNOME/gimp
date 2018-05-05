@@ -11,12 +11,20 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
 
-Plug-ins:
-
-* New plug-in for importing and exporting HEIF images.
-* Enable visibility of rasterized vector layer from PSD.
-
 Core:
 
-* Discard fonts which fail to load and popup an info dialog to allow
-  people debug their fonts.
+  - Discard fonts which fail to load and popup an info dialog to allow
+    people debug their fonts.
+
+Plug-ins:
+
+  - New plug-in for importing and exporting HEIF images.
+  - Enable visibility of rasterized vector layer from PSD.
+
+  
+Translations:
+
+  - Updated translations: Catalan, German, Greek, Italian, Polish,
+    Russian, Swedish, Ukrainian.
+  - New translation: Chinese (Taiwan)
+
