@@ -49,10 +49,10 @@ static void       run            (const gchar          *name,
                                   gint                 *nreturn_vals,
                                   GimpParam           **return_vals);
 
-static gint32     load_image     (const gchar         *filename,
+static gint32     load_image     (GFile               *file,
                                   gboolean             interactive,
                                   GError              **error);
-static gboolean   save_image     (const gchar          *filename,
+static gboolean   save_image     (GFile                *file,
                                   gint32                image_ID,
                                   gint32                drawable_ID,
                                   const SaveParams     *params,
@@ -80,9 +80,9 @@ query (void)
 {
   static const GimpParamDef load_args[] =
   {
-    { GIMP_PDB_INT32,  "run-mode",     "The run mode { RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
-    { GIMP_PDB_STRING, "raw-filename", "The name entered"             }
+    { GIMP_PDB_INT32,  "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING, "uri",      "The URI of the file to load" },
+    { GIMP_PDB_STRING, "raw-uri",  "The URI of the file to load" }
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -93,13 +93,13 @@ query (void)
 
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to export"           },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to export the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to export the image in" },
-    { GIMP_PDB_INT32,    "quality",      "Quality factor (range: 0-100. 0 = worst, 100 = best)" },
-    { GIMP_PDB_INT32,    "lossless",     "Use lossless compression (0 = lossy, 1 = lossless)" }
+    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to export" },
+    { GIMP_PDB_STRING,   "uri",      "The URI of the file to export the image to" },
+    { GIMP_PDB_STRING,   "raw-uri",  "The UTI of the file to export the image to" },
+    { GIMP_PDB_INT32,    "quality",  "Quality factor (range: 0-100. 0 = worst, 100 = best)" },
+    { GIMP_PDB_INT32,    "lossless", "Use lossless compression (0 = lossy, 1 = lossless)" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -119,6 +119,7 @@ query (void)
 
   gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
+  gimp_register_file_handler_uri (LOAD_PROC);
 
   gimp_install_procedure (SAVE_PROC,
 			  _("Exports HEIF images"),
@@ -135,9 +136,9 @@ query (void)
 
   gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
+  gimp_register_file_handler_uri (SAVE_PROC);
 }
 
-#define LOAD_HEIF_ERROR  -1
 #define LOAD_HEIF_CANCEL -2
 
 static void
@@ -168,20 +169,20 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      const gchar *filename;
-      gboolean     interactive;
+      GFile    *file;
+      gboolean  interactive;
 
       if (n_params != 3)
         status = GIMP_PDB_CALLING_ERROR;
 
-      filename    = param[1].data.d_string;
+      file        = g_file_new_for_uri (param[1].data.d_string);
       interactive = (run_mode == GIMP_RUN_INTERACTIVE);
 
       if (status == GIMP_PDB_SUCCESS)
         {
           gint32 image_ID;
 
-          image_ID = load_image (filename, interactive, &error);
+          image_ID = load_image (file, interactive, &error);
 
           if (image_ID >= 0)
             {
@@ -194,6 +195,8 @@ run (const gchar      *name,
               status = GIMP_PDB_CANCEL;
             }
         }
+
+      g_object_unref (file);
     }
   else if (strcmp(name, SAVE_PROC) == 0)
     {
@@ -253,8 +256,9 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
+          GFile *file = g_file_new_for_uri (param[3].data.d_string);
 
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+          if (save_image (file, image_ID, drawable_ID,
                           &params,
                           &error))
             {
@@ -264,6 +268,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          g_object_unref (file);
         }
     }
   else
@@ -281,11 +287,36 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-gint32
-load_image (const gchar  *filename,
-            gboolean      interactive,
-            GError      **error)
+static goffset
+get_file_size (GFile   *file,
+               GError **error)
 {
+  GFileInfo *info;
+  goffset    size = 1;
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, error);
+  if (info)
+    {
+      size = g_file_info_get_size (info);
+
+      g_object_unref (info);
+    }
+
+  return size;
+}
+
+gint32
+load_image (GFile     *file,
+            gboolean   interactive,
+            GError   **error)
+{
+  GInputStream             *input;
+  goffset                   file_size;
+  guchar                   *file_buffer;
+  gsize                     bytes_read;
   struct heif_context      *ctx;
   struct heif_error         err;
   struct heif_image_handle *handle = NULL;
@@ -303,18 +334,49 @@ load_image (const gchar  *filename,
   const guint8             *data;
   gint                      stride;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
+  file_size = get_file_size (file, error);
+  if (file_size <= 0)
+    return -1;
+
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+  if (! input)
+    return -1;
+
+  file_buffer = g_malloc (file_size);
+
+  if (! g_input_stream_read_all (input, file_buffer, file_size,
+                                 &bytes_read, NULL, error) &&
+      bytes_read == 0)
+    {
+      g_free (file_buffer);
+      g_object_unref (input);
+      return -1;
+    }
+
+  gimp_progress_update (0.25);
+
   ctx = heif_context_alloc ();
 
-  err = heif_context_read_from_file (ctx, filename, NULL);
+  err = heif_context_read_from_memory (ctx, file_buffer, file_size, NULL);
   if (err.code)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Loading HEIF image failed: %s"),
                    err.message);
       heif_context_free (ctx);
+      g_free (file_buffer);
+      g_object_unref (input);
 
       return -1;
     }
+
+  g_free (file_buffer);
+  g_object_unref (input);
+
+  gimp_progress_update (0.5);
 
   /* analyze image content
    * Is there more than one image? Which image is the primary image?
@@ -400,6 +462,8 @@ load_image (const gchar  *filename,
      return -1;
     }
 
+  gimp_progress_update (0.75);
+
   width  = heif_image_get_width  (img, heif_channel_interleaved);
   height = heif_image_get_height (img, heif_channel_interleaved);
 
@@ -408,7 +472,7 @@ load_image (const gchar  *filename,
    */
 
   image_ID = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_set_filename (image_ID, filename);
+  gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   layer_ID = gimp_layer_new (image_ID,
                              _("image content"),
@@ -471,11 +535,36 @@ load_image (const gchar  *filename,
   heif_context_free (ctx);
   heif_image_release (img);
 
+  gimp_progress_update (1.0);
+
   return image_ID;
 }
 
+static struct heif_error
+write_callback (struct heif_context *ctx,
+                const void          *data,
+                size_t               size,
+                void                *userdata)
+{
+  GOutputStream     *output = userdata;
+  GError            *error  = NULL;
+  struct heif_error  heif_error;
+
+  heif_error.code    = heif_error_Ok;
+  heif_error.subcode = heif_error_Ok;
+  heif_error.message = "";
+
+  if (! g_output_stream_write_all (output, data, size, NULL, NULL, &error))
+    {
+      heif_error.code    = 99; /* hmm */
+      heif_error.message = error->message;
+    }
+
+  return heif_error;
+}
+
 static gboolean
-save_image (const gchar       *filename,
+save_image (GFile             *file,
             gint32             image_ID,
             gint32             drawable_ID,
             const SaveParams  *params,
@@ -485,7 +574,9 @@ save_image (const gchar       *filename,
   struct heif_context      *context = heif_context_alloc ();
   struct heif_encoder      *encoder;
   struct heif_image_handle *handle;
+  struct heif_writer        writer;
   struct heif_error         err;
+  GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
   guint8                   *data;
@@ -493,6 +584,9 @@ save_image (const gchar       *filename,
   gint                      width;
   gint                      height;
   gboolean                  has_alpha;
+
+  gimp_progress_init_printf (_("Exporting '%s'"),
+                             g_file_get_parse_name (file));
 
   width  = gimp_drawable_width  (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
@@ -524,6 +618,8 @@ save_image (const gchar       *filename,
 
   g_object_unref (buffer);
 
+  gimp_progress_update (0.33);
+
   /*  encode to HEIF file  */
 
   context = heif_context_alloc ();
@@ -551,7 +647,18 @@ save_image (const gchar       *filename,
 
   heif_image_handle_release (handle);
 
-  err = heif_context_write_to_file (context, filename);
+  gimp_progress_update (0.66);
+
+  writer.writer_api_version = 1;
+  writer.write              = write_callback;
+
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
+    return FALSE;
+
+  err = heif_context_write (context, &writer, output);
 
   if (err.code != 0)
     {
@@ -561,10 +668,14 @@ save_image (const gchar       *filename,
       return FALSE;
     }
 
+  g_object_unref (output);
+
   heif_context_free (context);
   heif_image_release (image);
 
   heif_encoder_release (encoder);
+
+  gimp_progress_update (1.0);
 
   return TRUE;
 }
