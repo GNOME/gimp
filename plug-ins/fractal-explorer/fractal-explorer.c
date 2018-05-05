@@ -1007,7 +1007,7 @@ fractalexplorer_list_load_all (const gchar *path)
 GtkWidget *
 add_objects_list (void)
 {
-  GtkWidget         *table;
+  GtkWidget         *grid;
   GtkWidget         *scrolled_win;
   GtkTreeViewColumn *col;
   GtkCellRenderer   *renderer;
@@ -1016,19 +1016,20 @@ add_objects_list (void)
   GtkListStore      *list_store;
   GtkWidget         *button;
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_widget_show (grid);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_hexpand (scrolled_win, TRUE);
+  gtk_widget_set_vexpand (scrolled_win, TRUE);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), scrolled_win, 0, 3, 0, 1,
-                    GTK_FILL|GTK_EXPAND , GTK_FILL|GTK_EXPAND, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_win, 0, 0, 3, 1);
   gtk_widget_show (scrolled_win);
 
   view = gtk_tree_view_new ();
@@ -1056,8 +1057,7 @@ add_objects_list (void)
 
   /* Put buttons in */
   button = gtk_button_new_with_mnemonic (_("_Refresh"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
@@ -1068,8 +1068,7 @@ add_objects_list (void)
                     view);
 
   button = gtk_button_new_with_mnemonic (_("_Apply"));
-  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), button, 1, 1, 1, 1);
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
@@ -1080,8 +1079,7 @@ add_objects_list (void)
                     view);
 
   button = gtk_button_new_with_mnemonic (_("_Delete"));
-  gtk_table_attach (GTK_TABLE (table), button, 2, 3, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), button, 2, 1, 1, 1);
   gtk_widget_show (button);
 
   gimp_help_set_help_data (button,
@@ -1091,7 +1089,7 @@ add_objects_list (void)
                     G_CALLBACK (delete_fractal_callback),
                     view);
 
-  return table;
+  return grid;
 }
 
 static void

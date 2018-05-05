@@ -519,7 +519,7 @@ explorer_dialog (void)
   GtkWidget *toggle_vbox3;
   GtkWidget *notebook;
   GtkWidget *hbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *button;
   GtkWidget *gradient;
   gchar     *path;
@@ -584,6 +584,7 @@ explorer_dialog (void)
                     NULL);
 
   top_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_widget_set_vexpand (top_hbox, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       top_hbox, FALSE, FALSE, 0);
@@ -709,6 +710,8 @@ explorer_dialog (void)
 
   /*  Create notebook  */
   notebook = gtk_notebook_new ();
+  gtk_widget_set_halign (notebook, GTK_ALIGN_START);
+  gtk_widget_set_hexpand (notebook, FALSE);
   gtk_box_pack_start (GTK_BOX (top_hbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
 
@@ -723,83 +726,83 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (8, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 6, 12);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   elements->xmin =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Left:"), SCALE_WIDTH, 10,
-                          wvals.xmin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0, NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                               _("Left:"), SCALE_WIDTH, 10,
+                               wvals.xmin, -3, 3, 0.001, 0.01, 5,
+                               TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmin);
 
   elements->xmax =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                          _("Right:"), SCALE_WIDTH, 10,
-                          wvals.xmax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0, NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                               _("Right:"), SCALE_WIDTH, 10,
+                               wvals.xmax, -3, 3, 0.001, 0.01, 5,
+                               TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->xmax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.xmax);
 
   elements->ymin =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                          _("Top:"), SCALE_WIDTH, 10,
-                          wvals.ymin, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0, NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+                               _("Top:"), SCALE_WIDTH, 10,
+                               wvals.ymin, -3, 3, 0.001, 0.01, 5,
+                               TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymin, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymin);
 
   elements->ymax =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                          _("Bottom:"), SCALE_WIDTH, 10,
-                          wvals.ymax, -3, 3, 0.001, 0.01, 5,
-                          TRUE, 0, 0, NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
+                               _("Bottom:"), SCALE_WIDTH, 10,
+                               wvals.ymax, -3, 3, 0.001, 0.01, 5,
+                               TRUE, 0, 0, NULL, NULL);
   g_signal_connect (elements->ymax, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.ymax);
 
   elements->iter =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                          _("Iterations:"), SCALE_WIDTH, 10,
-                          wvals.iter, 1, 1000, 1, 10, 0,
-                          TRUE, 0, 0,
-                          _("The higher the number of iterations, "
-                            "the more details will be calculated"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
+                               _("Iterations:"), SCALE_WIDTH, 10,
+                               wvals.iter, 1, 1000, 1, 10, 0,
+                               TRUE, 0, 0,
+                               _("The higher the number of iterations, "
+                                 "the more details will be calculated"), NULL);
   g_signal_connect (elements->iter, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.iter);
 
   elements->cx =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                          _("CX:"), SCALE_WIDTH, 10,
-                          wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Changes aspect of fractal"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 5,
+                               _("CX:"), SCALE_WIDTH, 10,
+                               wvals.cx, -2.5, 2.5, 0.001, 0.01, 5,
+                               TRUE, 0, 0,
+                               _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cx, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cx);
 
   elements->cy =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-                          _("CY:"), SCALE_WIDTH, 10,
-                          wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
-                          TRUE, 0, 0,
-                          _("Changes aspect of fractal"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 6,
+                               _("CY:"), SCALE_WIDTH, 10,
+                               wvals.cy, -2.5, 2.5, 0.001, 0.01, 5,
+                               TRUE, 0, 0,
+                               _("Changes aspect of fractal"), NULL);
   g_signal_connect (elements->cy, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.cy);
 
   bbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_widget_set_margin_top (bbox, 12);
   gtk_box_set_homogeneous (GTK_BOX (bbox), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), bbox, 0, 3, 7, 8);
+  gtk_grid_attach (GTK_GRID (grid), bbox, 0, 7, 3, 1);
   gtk_widget_show (bbox);
 
   button = gtk_button_new_with_mnemonic (_("_Open"));
@@ -911,26 +914,26 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   elements->ncol =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Number of colors:"), SCALE_WIDTH, 0,
-                          wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
-                          TRUE, 0, 0,
-                          _("Change the number of colors in the mapping"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                               _("Number of colors:"), SCALE_WIDTH, 0,
+                               wvals.ncolors, 2, MAXNCOLORS, 1, 10, 0,
+                               TRUE, 0, 0,
+                               _("Change the number of colors in the mapping"),
+                               NULL);
   g_signal_connect (elements->ncol, "value-changed",
                     G_CALLBACK (explorer_number_of_colors_callback),
                     &wvals.ncolors);
 
   elements->useloglog = toggle =
     gtk_check_button_new_with_label (_("Use loglog smoothing"));
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 3, 1);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (explorer_toggle_update),
                     &wvals.useloglog);
@@ -944,38 +947,38 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   elements->red =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Red:"), SCALE_WIDTH, 0,
-                          wvals.redstretch, 0, 1, 0.01, 0.1, 2,
-                          TRUE, 0, 0,
-                          _("Change the intensity of the red channel"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                               _("Red:"), SCALE_WIDTH, 0,
+                               wvals.redstretch, 0, 1, 0.01, 0.1, 2,
+                               TRUE, 0, 0,
+                               _("Change the intensity of the red channel"), NULL);
   g_signal_connect (elements->red, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.redstretch);
 
   elements->green =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                          _("Green:"), SCALE_WIDTH, 0,
-                          wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
-                          TRUE, 0, 0,
-                          _("Change the intensity of the green channel"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                               _("Green:"), SCALE_WIDTH, 0,
+                               wvals.greenstretch, 0, 1, 0.01, 0.1, 2,
+                               TRUE, 0, 0,
+                               _("Change the intensity of the green channel"), NULL);
   g_signal_connect (elements->green, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.greenstretch);
 
   elements->blue =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                          _("Blue:"), SCALE_WIDTH, 0,
-                          wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
-                          TRUE, 0, 0,
-                          _("Change the intensity of the blue channel"), NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+                               _("Blue:"), SCALE_WIDTH, 0,
+                               wvals.bluestretch, 0, 1, 0.01, 0.1, 2,
+                               TRUE, 0, 0,
+                               _("Change the intensity of the blue channel"), NULL);
   g_signal_connect (elements->blue, "value-changed",
                     G_CALLBACK (explorer_double_adjustment_update),
                     &wvals.bluestretch);
