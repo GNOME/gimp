@@ -499,37 +499,67 @@ load_image (GFile     *file,
 
   g_object_unref (buffer);
 
-  if (FALSE)
-    {
-      gint         n_metadata;
-      heif_item_id metadata_id;
+  {
+    size_t        exif_data_size = 0;
+    uint8_t      *exif_data      = NULL;
+    size_t        xmp_data_size  = 0;
+    uint8_t      *xmp_data       = NULL;
+    gint          n_metadata;
+    heif_item_id  metadata_id;
 
-      n_metadata =
-        heif_image_handle_get_list_of_metadata_block_IDs (handle,
-                                                          "Exif",
-                                                          &metadata_id, 1);
+    n_metadata =
+      heif_image_handle_get_list_of_metadata_block_IDs (handle,
+                                                        "Exif",
+                                                        &metadata_id, 1);
+    if (n_metadata > 0)
+      {
+        exif_data_size = heif_image_handle_get_metadata_size (handle,
+                                                              metadata_id);
+        exif_data = g_alloca (exif_data_size);
 
-      if (n_metadata > 0)
-        {
-          GimpParasite *parasite;
-          size_t        data_size;
-          uint8_t      *data;
-          const gint    heif_exif_skip = 4;
+        err = heif_image_handle_get_metadata (handle, metadata_id, exif_data);
+        if (err.code != 0)
+          {
+            exif_data      = NULL;
+            exif_data_size = 0;
+          }
+      }
 
-          data_size = heif_image_handle_get_metadata_size (handle,
-                                                           metadata_id);
-          data = g_alloca (data_size);
+    n_metadata =
+      heif_image_handle_get_list_of_metadata_block_IDs (handle,
+                                                        "XMP",
+                                                        &metadata_id, 1);
+    if (n_metadata > 0)
+      {
+        xmp_data_size = heif_image_handle_get_metadata_size (handle,
+                                                             metadata_id);
+        xmp_data = g_alloca (xmp_data_size);
 
-          err = heif_image_handle_get_metadata (handle, metadata_id, data);
+        err = heif_image_handle_get_metadata (handle, metadata_id, xmp_data);
+        if (err.code != 0)
+          {
+            xmp_data      = NULL;
+            xmp_data_size = 0;
+          }
+      }
 
-          parasite = gimp_parasite_new ("exif-data",
-                                        0,
-                                        data_size - heif_exif_skip,
-                                        data + heif_exif_skip);
-          gimp_image_attach_parasite (image_ID, parasite);
-          gimp_parasite_free (parasite);
-        }
-    }
+    if (exif_data || xmp_data)
+      {
+        GimpMetadata *metadata = gimp_metadata_new ();
+
+        if (exif_data)
+          gimp_metadata_set_from_exif (metadata,
+                                       exif_data, exif_data_size, NULL);
+
+        if (xmp_data)
+          gimp_metadata_set_from_xmp (metadata,
+                                      xmp_data, xmp_data_size, NULL);
+
+        gimp_image_metadata_load_finish (image_ID, "image/heif",
+                                         metadata, GIMP_METADATA_LOAD_ALL,
+                                         interactive);
+      }
+  }
 
   heif_image_handle_release (handle);
   heif_context_free (ctx);
