@@ -68,8 +68,7 @@ gimp_modules_load (Gimp *gimp)
   if (gimp->no_interface)
     return;
 
-  /* FIXME, gimp->be_verbose is not yet initialized in init() */
-  gimp->module_db->verbose = gimp->be_verbose;
+  gimp_module_db_set_verbose (gimp->module_db, gimp->be_verbose);
 
   file = gimp_directory_file ("modulerc", NULL);
 
@@ -179,7 +178,8 @@ gimp_modules_unload (Gimp *gimp)
       GError           *error = NULL;
 
       str = g_string_new (NULL);
-      g_list_foreach (gimp->module_db->modules, add_to_inhibit_string, str);
+      g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
+                      add_to_inhibit_string, str);
       if (str->len > 0)
         p = str->str + 1;
       else

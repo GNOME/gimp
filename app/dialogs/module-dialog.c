@@ -176,7 +176,8 @@ module_dialog_new (Gimp *gimp)
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
-  g_list_foreach (gimp->module_db->modules, make_list_item, private);
+  g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
+                  make_list_item, private);
 
   rend = gtk_cell_renderer_toggle_new ();
 
