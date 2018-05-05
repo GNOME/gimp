@@ -129,7 +129,12 @@ gimp_font_list_add_font (GimpFontList         *list,
 
   name = pango_font_description_to_string (desc);
 
-  if (g_utf8_validate (name, -1, NULL))
+  /* It doesn't look like pango_font_description_to_string() could ever
+   * return NULL. But just to be double sure and avoid a segfault, I
+   * check before validating the string.
+   */
+  if (name && strlen (name) > 0 &&
+      g_utf8_validate (name, -1, NULL))
     {
       GimpFont *font;
 
