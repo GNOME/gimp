@@ -61,7 +61,7 @@ void
 create_placementpage (GtkNotebook *notebook)
 {
   GtkWidget *vbox;
-  GtkWidget *label, *tmpw, *table, *frame;
+  GtkWidget *label, *tmpw, *grid, *frame;
 
   label = gtk_label_new_with_mnemonic (_("Pl_acement"));
 
@@ -109,19 +109,19 @@ create_placementpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.placement_center);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   brush_density_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Stroke _density:"),
-                          100, -1, pcvals.brush_density,
-                          1.0, 50.0, 1.0, 5.0, 0,
-                          TRUE, 0, 0,
-                          _("The relative density of the brush strokes"),
-                          NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                               _("Stroke _density:"),
+                               100, -1, pcvals.brush_density,
+                               1.0, 50.0, 1.0, 5.0, 0,
+                               TRUE, 0, 0,
+                               _("The relative density of the brush strokes"),
+                               NULL);
   g_signal_connect (brush_density_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_density);
