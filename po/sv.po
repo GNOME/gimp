@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-01 01:29+0000\n"
-"PO-Revision-Date: 2018-05-02 00:53+0200\n"
+"POT-Creation-Date: 2018-05-05 18:14+0000\n"
+"PO-Revision-Date: 2018-05-05 21:32+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -3441,7 +3441,7 @@ msgstr "Töm dokumenthistorik"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1601
+#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1607
 #: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -19986,88 +19986,88 @@ msgstr "Spiral: "
 msgid "Supernova: "
 msgstr "Supernova: "
 
-#: ../app/propgui/gimppropgui-utils.c:70
+#: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,700 K – Match flame"
 msgstr "1700 K – Tändsticksflamma"
 
-#: ../app/propgui/gimppropgui-utils.c:71
+#: ../app/propgui/gimppropgui-utils.c:72
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1850 K – Ljusflamma, solnedgång/soluppgång"
 
-#: ../app/propgui/gimppropgui-utils.c:72
+#: ../app/propgui/gimppropgui-utils.c:73
 msgid "2,700 K - Soft (or warm) LED lamps"
 msgstr "2700 K – Mjuka (eller varma) LED-lampor"
 
-#: ../app/propgui/gimppropgui-utils.c:73
+#: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3000 K – Mjukt (eller varmt) vitt kompaktlysrör"
 
-#: ../app/propgui/gimppropgui-utils.c:74
+#: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3200 K – Studiolampor, fotoflodljus, etc."
 
-#: ../app/propgui/gimppropgui-utils.c:75
+#: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,300 K – Incandescent lamps"
 msgstr "3300 K – Glödlampor"
 
 # sebras: circularly polarized
-#: ../app/propgui/gimppropgui-utils.c:76
+#: ../app/propgui/gimppropgui-utils.c:77
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3350 K – Studio ”CP”-ljus"
 
-#: ../app/propgui/gimppropgui-utils.c:77
+#: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,000 K - Cold (daylight) LED lamps"
 msgstr "4000 K - Kalla (dagsljus) LED-lampor"
 
-#: ../app/propgui/gimppropgui-utils.c:78
+#: ../app/propgui/gimppropgui-utils.c:79
 msgid "4,100 K – Moonlight"
 msgstr "4100 K – Månljus"
 
-#: ../app/propgui/gimppropgui-utils.c:79
+#: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,000 K – D50"
 msgstr "5000 K – D50"
 
-#: ../app/propgui/gimppropgui-utils.c:80
+#: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5000 K – Kallt vitt/dagsljus kompaktlysrör"
 
-#: ../app/propgui/gimppropgui-utils.c:81
+#: ../app/propgui/gimppropgui-utils.c:82
 msgid "5,000 K – Horizon daylight"
 msgstr "5000 K – Dagsljus horisont"
 
-#: ../app/propgui/gimppropgui-utils.c:82
+#: ../app/propgui/gimppropgui-utils.c:83
 msgid "5,500 K – D55"
 msgstr "5500 K – D55"
 
-#: ../app/propgui/gimppropgui-utils.c:83
+#: ../app/propgui/gimppropgui-utils.c:84
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5500 K – Dagsljus vertikalt, elektrisk blixt"
 
-#: ../app/propgui/gimppropgui-utils.c:84
+#: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6200 K – Xenonlampa kort båge"
 
-#: ../app/propgui/gimppropgui-utils.c:85
+#: ../app/propgui/gimppropgui-utils.c:86
 msgid "6,500 K – D65"
 msgstr "6500 K – D65"
 
-#: ../app/propgui/gimppropgui-utils.c:86
+#: ../app/propgui/gimppropgui-utils.c:87
 msgid "6,500 K – Daylight, overcast"
 msgstr "6500 K – Dagsljus mulet"
 
-#: ../app/propgui/gimppropgui-utils.c:87
+#: ../app/propgui/gimppropgui-utils.c:88
 msgid "7,500 K – D75"
 msgstr "7500 K – D75"
 
-#: ../app/propgui/gimppropgui-utils.c:88
+#: ../app/propgui/gimppropgui-utils.c:89
 msgid "9,300 K"
 msgstr "9300 K"
 
-#: ../app/propgui/gimppropgui-utils.c:103
+#: ../app/propgui/gimppropgui-utils.c:104
 msgid "Choose from a list of common color temperatures"
 msgstr "Välj från en lista över vanliga färgtemperaturer"
 
-#: ../app/propgui/gimppropgui-utils.c:154
+#: ../app/propgui/gimppropgui-utils.c:155
 msgid "New Seed"
 msgstr "Nytt frö"
 
@@ -20098,7 +20098,7 @@ msgstr ""
 "Några typsnitt kunde inte läsas in:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1482
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1488
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -22353,27 +22353,27 @@ msgstr "Textverktyg: Skapa eller redigera textlager"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:953
+#: ../app/tools/gimptexttool.c:959
 msgid "Text box: "
 msgstr "Textruta: "
 
-#: ../app/tools/gimptexttool.c:1084
+#: ../app/tools/gimptexttool.c:1090
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
-#: ../app/tools/gimptexttool.c:1593 ../app/tools/gimptexttool.c:1596
+#: ../app/tools/gimptexttool.c:1599 ../app/tools/gimptexttool.c:1602
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:1600
+#: ../app/tools/gimptexttool.c:1606
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:1602
+#: ../app/tools/gimptexttool.c:1608
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../app/tools/gimptexttool.c:1624
+#: ../app/tools/gimptexttool.c:1630
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25302,7 +25302,12 @@ msgstr "Kunde inte söka i XCF-fil: "
 msgid "Error writing XCF: "
 msgstr "Fel vid skrivande av XCF: "
 
-#: ../app/xcf/xcf-write.c:273
+#: ../app/xcf/xcf-write.c:193
+#, c-format
+msgid "Error writing XCF: failed to allocate %d bytes of memory."
+msgstr "Fel vid skrivning av XCF: misslyckades med att allokera %d byte minne."
+
+#: ../app/xcf/xcf-write.c:287
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr ""
