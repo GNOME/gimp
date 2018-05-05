@@ -1024,6 +1024,8 @@ key_timeout_cb(gpointer data)
       break;
    }
    preview_redraw();
+
+   _timeout = 0;
    return FALSE;
 }
 
