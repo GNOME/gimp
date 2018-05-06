@@ -47,12 +47,6 @@ struct _GimpProcBrowserDialog
   GimpDialog                    parent_instance;
 
   GimpProcBrowserDialogPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GtkWidget    *browser;
-
-  GtkListStore *store;
-  GtkWidget    *tree_view;
 };
 
 struct _GimpProcBrowserDialogClass

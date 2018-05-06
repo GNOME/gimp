@@ -76,6 +76,17 @@ enum
 };
 
 
+struct _GimpProcBrowserDialogPrivate
+{
+  GtkWidget    *browser;
+
+  GtkListStore *store;
+  GtkWidget    *tree_view;
+};
+
+#define GET_PRIVATE(obj) (((GimpProcBrowserDialog *) (obj))->priv)
+
+
 static void       browser_selection_changed (GtkTreeSelection      *sel,
                                              GimpProcBrowserDialog *dialog);
 static void       browser_row_activated     (GtkTreeView           *treeview,
@@ -135,18 +146,27 @@ gimp_proc_browser_dialog_class_init (GimpProcBrowserDialogClass *klass)
 
   klass->selection_changed = NULL;
   klass->row_activated     = NULL;
+
+  g_type_class_add_private (klass, sizeof (GimpProcBrowserDialogPrivate));
 }
 
 static void
 gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
 {
-  GtkWidget        *scrolled_window;
-  GtkCellRenderer  *renderer;
-  GtkTreeSelection *selection;
-  GtkWidget        *parent;
+  GimpProcBrowserDialogPrivate *priv;
+  GtkWidget                    *scrolled_window;
+  GtkCellRenderer              *renderer;
+  GtkTreeSelection             *selection;
+  GtkWidget                    *parent;
 
-  dialog->browser = gimp_browser_new ();
-  gimp_browser_add_search_types (GIMP_BROWSER (dialog->browser),
+  dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
+                                              GIMP_TYPE_PROC_BROWSER_DIALOG,
+                                              GimpProcBrowserDialogPrivate);
+
+  priv = GET_PRIVATE (dialog);
+
+  priv->browser = gimp_browser_new ();
+  gimp_browser_add_search_types (GIMP_BROWSER (priv->browser),
                                  _("by name"),        SEARCH_TYPE_NAME,
                                  _("by description"), SEARCH_TYPE_BLURB,
                                  _("by help"),        SEARCH_TYPE_HELP,
@@ -155,12 +175,12 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                                  _("by date"),        SEARCH_TYPE_DATE,
                                  _("by type"),        SEARCH_TYPE_PROC_TYPE,
                                  NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->browser), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (priv->browser), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      dialog->browser, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->browser);
+                      priv->browser, TRUE, TRUE, 0);
+  gtk_widget_show (priv->browser);
 
-  g_signal_connect (dialog->browser, "search",
+  g_signal_connect (priv->browser, "search",
                     G_CALLBACK (browser_search),
                     dialog);
 
@@ -172,38 +192,38 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (dialog->browser))),
+  gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (priv->browser))),
                       scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  dialog->tree_view = gtk_tree_view_new ();
+  priv->tree_view = gtk_tree_view_new ();
 
   renderer = gtk_cell_renderer_text_new ();
   gtk_cell_renderer_text_set_fixed_height_from_font
     (GTK_CELL_RENDERER_TEXT (renderer), 1);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dialog->tree_view),
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (priv->tree_view),
                                                -1, NULL,
                                                renderer,
                                                "text", 0,
                                                NULL);
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dialog->tree_view), FALSE);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (priv->tree_view), FALSE);
 
-  g_signal_connect (dialog->tree_view, "row_activated",
+  g_signal_connect (priv->tree_view, "row_activated",
                     G_CALLBACK (browser_row_activated),
                     dialog);
 
-  gtk_widget_set_size_request (dialog->tree_view, DBL_LIST_WIDTH, DBL_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->tree_view);
-  gtk_widget_show (dialog->tree_view);
+  gtk_widget_set_size_request (priv->tree_view, DBL_LIST_WIDTH, DBL_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), priv->tree_view);
+  gtk_widget_show (priv->tree_view);
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->tree_view));
 
   g_signal_connect (selection, "changed",
                     G_CALLBACK (browser_selection_changed),
                     dialog);
 
-  parent = gtk_widget_get_parent (gimp_browser_get_right_vbox (GIMP_BROWSER (dialog->browser)));
+  parent = gtk_widget_get_parent (gimp_browser_get_right_vbox (GIMP_BROWSER (priv->browser)));
   parent = gtk_widget_get_parent (parent);
 
   gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
@@ -250,7 +270,8 @@ gimp_proc_browser_dialog_new (const gchar  *title,
   va_end (args);
 
   /* first search (all procedures) */
-  browser_search (GIMP_BROWSER (dialog->browser), "", SEARCH_TYPE_ALL, dialog);
+  browser_search (GIMP_BROWSER (dialog->priv->browser),
+                  "", SEARCH_TYPE_ALL, dialog);
 
   return GTK_WIDGET (dialog);
 }
@@ -274,13 +295,13 @@ gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog)
 
   g_return_val_if_fail (GIMP_IS_PROC_BROWSER_DIALOG (dialog), NULL);
 
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->priv->tree_view));
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       gchar *proc_name;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (dialog->store), &iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->store), &iter,
                           COLUMN_PROC_NAME, &proc_name,
                           -1);
 
@@ -303,7 +324,7 @@ browser_selection_changed (GtkTreeSelection      *sel,
     {
       gchar *proc_name;
 
-      gtk_tree_model_get (GTK_TREE_MODEL (dialog->store), &iter,
+      gtk_tree_model_get (GTK_TREE_MODEL (dialog->priv->store), &iter,
                           COLUMN_PROC_NAME, &proc_name,
                           -1);
       browser_show_procedure (dialog, proc_name);
@@ -326,16 +347,17 @@ static void
 browser_show_procedure (GimpProcBrowserDialog *dialog,
                         const gchar           *proc_name)
 {
-  gchar           *proc_blurb;
-  gchar           *proc_help;
-  gchar           *proc_author;
-  gchar           *proc_copyright;
-  gchar           *proc_date;
-  GimpPDBProcType  proc_type;
-  gint             n_params;
-  gint             n_return_vals;
-  GimpParamDef    *params;
-  GimpParamDef    *return_vals;
+  GimpProcBrowserDialogPrivate *priv = GET_PRIVATE (dialog);
+  gchar                        *proc_blurb;
+  gchar                        *proc_help;
+  gchar                        *proc_author;
+  gchar                        *proc_copyright;
+  gchar                        *proc_date;
+  GimpPDBProcType               proc_type;
+  gint                          n_params;
+  gint                          n_return_vals;
+  GimpParamDef                 *params;
+  GimpParamDef                 *return_vals;
 
   gimp_procedural_db_proc_info (proc_name,
                                 &proc_blurb,
@@ -349,7 +371,7 @@ browser_show_procedure (GimpProcBrowserDialog *dialog,
                                 &params,
                                 &return_vals);
 
-  gimp_browser_set_widget (GIMP_BROWSER (dialog->browser),
+  gimp_browser_set_widget (GIMP_BROWSER (priv->browser),
                            gimp_proc_view_new (proc_name,
                                                NULL,
                                                proc_blurb,
@@ -379,18 +401,19 @@ browser_search (GimpBrowser           *browser,
                 gint                   search_type,
                 GimpProcBrowserDialog *dialog)
 {
-  gchar  **proc_list;
-  gint     num_procs;
-  gchar   *str;
-  GRegex  *regex;
+  GimpProcBrowserDialogPrivate  *priv = GET_PRIVATE (dialog);
+  gchar                        **proc_list;
+  gint                           num_procs;
+  gchar                         *str;
+  GRegex                        *regex;
 
   /*  first check if the query is a valid regex  */
   regex = g_regex_new (query_text, 0, 0, NULL);
 
   if (! regex)
     {
-      gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view), NULL);
-      dialog->store = NULL;
+      gtk_tree_view_set_model (GTK_TREE_VIEW (priv->tree_view), NULL);
+      priv->store = NULL;
 
       gimp_browser_show_message (browser, _("No matches"));
 
@@ -510,36 +533,36 @@ browser_search (GimpBrowser           *browser,
       GtkTreeIter       iter;
       gint              i;
 
-      dialog->store = gtk_list_store_new (N_COLUMNS,
+      priv->store = gtk_list_store_new (N_COLUMNS,
                                           G_TYPE_STRING);
-      gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view),
-                               GTK_TREE_MODEL (dialog->store));
-      g_object_unref (dialog->store);
+      gtk_tree_view_set_model (GTK_TREE_VIEW (priv->tree_view),
+                               GTK_TREE_MODEL (priv->store));
+      g_object_unref (priv->store);
 
       for (i = 0; i < num_procs; i++)
         {
-          gtk_list_store_append (dialog->store, &iter);
-          gtk_list_store_set (dialog->store, &iter,
+          gtk_list_store_append (priv->store, &iter);
+          gtk_list_store_set (priv->store, &iter,
                               COLUMN_PROC_NAME, proc_list[i],
                               -1);
         }
 
       g_strfreev (proc_list);
 
-      gtk_tree_view_columns_autosize (GTK_TREE_VIEW (dialog->tree_view));
+      gtk_tree_view_columns_autosize (GTK_TREE_VIEW (priv->tree_view));
 
-      gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (dialog->store),
+      gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (priv->store),
                                             COLUMN_PROC_NAME,
                                             GTK_SORT_ASCENDING);
 
-      gtk_tree_model_get_iter_first (GTK_TREE_MODEL (dialog->store), &iter);
-      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
+      gtk_tree_model_get_iter_first (GTK_TREE_MODEL (priv->store), &iter);
+      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (priv->tree_view));
       gtk_tree_selection_select_iter (selection, &iter);
     }
   else
     {
-      gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->tree_view), NULL);
-      dialog->store = NULL;
+      gtk_tree_view_set_model (GTK_TREE_VIEW (priv->tree_view), NULL);
+      priv->store = NULL;
 
       gimp_browser_show_message (browser, _("No matches"));
     }
