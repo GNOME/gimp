@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-29 18:04+0200\n"
-"PO-Revision-Date: 2018-04-29 18:05+0200\n"
+"POT-Creation-Date: 2018-05-06 19:24+0200\n"
+"PO-Revision-Date: 2018-05-06 19:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -760,7 +760,7 @@ msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:797
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:807
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Szablony"
@@ -3471,7 +3471,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1601
+#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1607
 #: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -4982,189 +4982,199 @@ msgstr "_Redukcja kolorów…"
 
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
+msgid "_Recursive Transform..."
+msgstr "_Przekształcenie rekurencyjne…"
+
+#: ../app/actions/filters-actions.c:557
+msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Usuwanie efektu _czerwonych oczu…"
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Przy_cięcie RGB…"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Falowanie…"
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Nasycenie…"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Pół_spłaszczenie…"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Cień i podświetlenie…"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Przesuń…"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_SLIC…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symetryczni najbliżsi sąsiedzi…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Lekki żar…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
+msgctxt "filters-action"
+msgid "Spheri_ze..."
+msgstr "_Utwórz kulę…"
+
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirala…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_STRESS…"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "P_rogowanie…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Maska wyostrzająca…"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Piksele wody…"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:705
+#: ../app/actions/filters-actions.c:715
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:1037
+#: ../app/actions/filters-actions.c:1049
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:1038
+#: ../app/actions/filters-actions.c:1050
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:1076
+#: ../app/actions/filters-actions.c:1088
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:1078
+#: ../app/actions/filters-actions.c:1090
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -11962,20 +11972,20 @@ msgid "Internal Procedures"
 msgstr "Wewnętrzne procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Looking for data files"
 msgstr "Wyszukiwanie plików z danymi"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:793
 msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
-#: ../app/core/gimp.c:792
+#: ../app/core/gimp.c:802
 msgid "Fonts (this may take a while)"
 msgstr "Czcionki (może to zająć kilka minut)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:801 ../app/dialogs/preferences-dialog.c:3133
+#: ../app/core/gimp.c:811 ../app/dialogs/preferences-dialog.c:3133
 msgid "Modules"
 msgstr "Moduły"
 
@@ -12105,7 +12115,7 @@ msgstr "Tworzenie katalogu „%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nie można utworzyć katalogu „%s”: %s"
 
-#: ../app/core/gimp-utils.c:569 ../app/core/gimpfilloptions.c:330
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:330
 msgid "No patterns available for this operation."
 msgstr "Brak deseni dostępnych dla tego działania."
 
@@ -18444,7 +18454,7 @@ msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
 msgid_plural ""
 "%d images were salvaged from the crash. Do you want to try and recover them?"
-msgstr[0] "%d obraz został uratowany z awarii. Spróbować go odzyskać?"
+msgstr[0] "Obraz został uratowany z awarii. Spróbować go odzyskać?"
 msgstr[1] "%d obrazy zostały uratowane z awarii. Spróbować je odzyskać?"
 msgstr[2] "%d obrazów zostało uratowanych z awarii. Spróbować je odzyskać?"
 
@@ -20101,88 +20111,88 @@ msgstr "Spirala: "
 msgid "Supernova: "
 msgstr "Supernowa: "
 
-#: ../app/propgui/gimppropgui-utils.c:70
+#: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,700 K – Match flame"
 msgstr "1,700 K — płomień zapałki"
 
-#: ../app/propgui/gimppropgui-utils.c:71
+#: ../app/propgui/gimppropgui-utils.c:72
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K — płomień świecy, zachód/wschód słońca"
 
-#: ../app/propgui/gimppropgui-utils.c:72
+#: ../app/propgui/gimppropgui-utils.c:73
 msgid "2,700 K - Soft (or warm) LED lamps"
 msgstr "2,700 K — miękkie (lub ciepłe) żarówki LED"
 
-#: ../app/propgui/gimppropgui-utils.c:73
+#: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr ""
 "3,000 K — miękkie (lub ciepłe) białe, kompaktowe żarówki fluorescencyjne"
 
-#: ../app/propgui/gimppropgui-utils.c:74
+#: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K — oświetlenie studyjne, fotograficzne itp."
 
-#: ../app/propgui/gimppropgui-utils.c:75
+#: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K — żarówki żarzeniowe"
 
-#: ../app/propgui/gimppropgui-utils.c:76
+#: ../app/propgui/gimppropgui-utils.c:77
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K — studyjne oświetlenie „CP”"
 
-#: ../app/propgui/gimppropgui-utils.c:77
+#: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,000 K - Cold (daylight) LED lamps"
 msgstr "4,000 K — zimne (dzienne) żarówki LED"
 
-#: ../app/propgui/gimppropgui-utils.c:78
+#: ../app/propgui/gimppropgui-utils.c:79
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K — światło księżyca"
 
-#: ../app/propgui/gimppropgui-utils.c:79
+#: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,000 K – D50"
 msgstr "5,000 K — D50"
 
-#: ../app/propgui/gimppropgui-utils.c:80
+#: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K — zimne, białe/dzienne, kompaktowe żarówki fluorescencyjne"
 
-#: ../app/propgui/gimppropgui-utils.c:81
+#: ../app/propgui/gimppropgui-utils.c:82
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K — horyzontalne światło dzienne"
 
-#: ../app/propgui/gimppropgui-utils.c:82
+#: ../app/propgui/gimppropgui-utils.c:83
 msgid "5,500 K – D55"
 msgstr "5,500 K — D55"
 
-#: ../app/propgui/gimppropgui-utils.c:83
+#: ../app/propgui/gimppropgui-utils.c:84
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K — wertykalne światło dzienne, elektroniczne światło błyskowe"
 
-#: ../app/propgui/gimppropgui-utils.c:84
+#: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K — ksenonowa żarówka łukowa"
 
-#: ../app/propgui/gimppropgui-utils.c:85
+#: ../app/propgui/gimppropgui-utils.c:86
 msgid "6,500 K – D65"
 msgstr "6,500 K — D65"
 
-#: ../app/propgui/gimppropgui-utils.c:86
+#: ../app/propgui/gimppropgui-utils.c:87
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K — dzienne światło w pochmurny dzień"
 
-#: ../app/propgui/gimppropgui-utils.c:87
+#: ../app/propgui/gimppropgui-utils.c:88
 msgid "7,500 K – D75"
 msgstr "7,500 K — D75"
 
-#: ../app/propgui/gimppropgui-utils.c:88
+#: ../app/propgui/gimppropgui-utils.c:89
 msgid "9,300 K"
 msgstr "9,300 K"
 
-#: ../app/propgui/gimppropgui-utils.c:103
+#: ../app/propgui/gimppropgui-utils.c:104
 msgid "Choose from a list of common color temperatures"
 msgstr "Wybiera z listy często używanych temperatur kolorów"
 
-#: ../app/propgui/gimppropgui-utils.c:154
+#: ../app/propgui/gimppropgui-utils.c:155
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
@@ -20204,7 +20214,16 @@ msgstr ""
 "Pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1482
+#: ../app/text/gimp-fonts.c:267
+#, c-format
+msgid ""
+"Some fonts failed to load:\n"
+"%s"
+msgstr ""
+"Wczytanie części czcionek się nie powiodło:\n"
+"%s"
+
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1488
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -21289,8 +21308,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:539
-#: ../app/tools/gimpgegltool.c:540 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:541
+#: ../app/tools/gimpgegltool.c:542 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -21303,7 +21322,7 @@ msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:484
+#: ../app/tools/gimpgegltool.c:486
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -22466,27 +22485,27 @@ msgstr "Tekst: tworzy i modyfikuje warstwy tekstowe"
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:953
+#: ../app/tools/gimptexttool.c:959
 msgid "Text box: "
 msgstr "Pole tekstowe: "
 
-#: ../app/tools/gimptexttool.c:1084
+#: ../app/tools/gimptexttool.c:1090
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
-#: ../app/tools/gimptexttool.c:1593 ../app/tools/gimptexttool.c:1596
+#: ../app/tools/gimptexttool.c:1599 ../app/tools/gimptexttool.c:1602
 msgid "Confirm Text Editing"
 msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: ../app/tools/gimptexttool.c:1600
+#: ../app/tools/gimptexttool.c:1606
 msgid "Create _New Layer"
 msgstr "Utwórz _nową warstwę"
 
-#: ../app/tools/gimptexttool.c:1602
+#: ../app/tools/gimptexttool.c:1608
 msgid "_Edit"
 msgstr "_Modyfikuj"
 
-#: ../app/tools/gimptexttool.c:1624
+#: ../app/tools/gimptexttool.c:1630
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -25416,7 +25435,14 @@ msgstr "Nie można przeglądać pliku XCF: "
 msgid "Error writing XCF: "
 msgstr "Błąd podczas zapisywania pliku XCF: "
 
-#: ../app/xcf/xcf-write.c:273
+#: ../app/xcf/xcf-write.c:193
+#, c-format
+msgid "Error writing XCF: failed to allocate %d bytes of memory."
+msgstr ""
+"Błąd podczas zapisywania pliku XCF: przydzielenie %d B pamięci się nie "
+"powiodło."
+
+#: ../app/xcf/xcf-write.c:287
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr ""
