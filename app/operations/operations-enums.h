@@ -181,7 +181,8 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     =  1 << 1,
   GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE =  1 << 2,
   GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  =  1 << 3,
-  GIMP_LAYER_MODE_FLAG_SUBTRACTIVE               =  1 << 4
+  GIMP_LAYER_MODE_FLAG_SUBTRACTIVE               =  1 << 4,
+  GIMP_LAYER_MODE_FLAG_ALPHA_ONLY                =  1 << 5
 } GimpLayerModeFlags;
 
 

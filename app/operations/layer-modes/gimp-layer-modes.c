@@ -774,7 +774,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:erase",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
+                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE           |
+                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
@@ -796,7 +797,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:split",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
+                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE               |
+                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP
@@ -825,8 +827,9 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_ANTI_ERASE,
 
     .op_name              = "gimp:anti-erase",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
     .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION
@@ -1173,6 +1176,17 @@ gimp_layer_mode_is_subtractive (GimpLayerMode mode)
     return FALSE;
 
   return (info->flags & GIMP_LAYER_MODE_FLAG_SUBTRACTIVE) != 0;
+}
+
+gboolean
+gimp_layer_mode_is_alpha_only (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+
+  if (! info)
+    return FALSE;
+
+  return (info->flags & GIMP_LAYER_MODE_FLAG_ALPHA_ONLY) != 0;
 }
 
 GimpLayerColorSpace
