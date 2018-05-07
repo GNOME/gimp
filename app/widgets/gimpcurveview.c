@@ -488,6 +488,9 @@ gimp_curve_view_draw (GtkWidget *widget,
   if (! view->curve)
     return FALSE;
 
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, "view");
+
   gtk_widget_get_allocation (widget, &allocation);
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
@@ -505,9 +508,17 @@ gimp_curve_view_draw (GtkWidget *widget,
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_translate (cr, 0.5, 0.5);
 
-  gtk_style_context_get_color (style, 0, &fg_color);
-  gtk_style_context_get_background_color (style, 0, &bg_color);
-  gimp_get_style_color (widget, "grid-color", &grid_color);
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &fg_color);
+  bg_color       = fg_color;
+  bg_color.red   = 1 - bg_color.red;
+  bg_color.green = 1 - bg_color.green;
+  bg_color.blue  = 1 - bg_color.blue;
+
+  gtk_style_context_add_class (style, "grid");
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &grid_color);
+  gtk_style_context_remove_class (style, "grid");
 
   /*  Draw the grid lines  */
   gdk_cairo_set_source_rgba (cr, &grid_color);
@@ -741,6 +752,8 @@ gimp_curve_view_draw (GtkWidget *widget,
       cairo_pop_group_to_source (cr);
       cairo_paint_with_alpha (cr, 0.6);
     }
+
+  gtk_style_context_restore (style);
 
   return FALSE;
 }

@@ -163,69 +163,16 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                      1, 64, 5,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("grid-color",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("fg-color",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("fg-color-selected",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("bg-color",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("bg-color-selected",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-
-  gtk_widget_class_set_css_name (widget_class, "GimpHistogramView");
 }
 
 static void
 gimp_histogram_view_init (GimpHistogramView *view)
 {
-  GtkCssProvider *css;
-  const gchar    *str;
-
   view->histogram    = NULL;
   view->bg_histogram = NULL;
   view->n_bins       = 256;
   view->start        = 0;
   view->end          = 255;
-
-  str =
-    "GimpHistogramView {\n"
-    "  color: @text_color;\n"
-    "  background-color: @base_color;\n"
-    "  -GimpHistogramView-grid-color: darker (@bg_color);\n"
-    "  -GimpHistogramView-fg-color: @fg_color;\n"
-    "  -GimpHistogramView-fg-color-selected: @selected_fg_color;\n"
-    "  -GimpHistogramView-bg-color: mix (lighter (@bg_color), darker (@bg_color), 0.5);\n"
-    "  -GimpHistogramView-bg-color-selected: mix (lighter (@selected_bg_color), darker (@selected_bg_color), 0.5);\n"
-    "}\n"
-    "\n"
-    "GimpHistogramView:selected {\n"
-    "  background-color: @selected_bg_color;\n"
-    "}\n";
-
-  css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css, str, -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (view)),
-                                  GTK_STYLE_PROVIDER (css),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (css);
 }
 
 static void
@@ -359,19 +306,19 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gdouble            bg_max = 0.0;
   gint               xstop;
   GdkRGBA            grid_color;
-  GdkRGBA            color;
   GdkRGBA            color_in;
   GdkRGBA            color_out;
   GdkRGBA            bg_color_in;
   GdkRGBA            bg_color_out;
   GdkRGBA            rgb_color[3];
 
-  /*  Draw the background  */
-  gtk_style_context_get_background_color (style, 0, &color);
-  gdk_cairo_set_source_rgba (cr, &color);
-  cairo_paint (cr);
-
   gtk_widget_get_allocation (widget, &allocation);
+
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, "view");
+
+  gtk_render_background (style, cr, 0, 0,
+                         allocation.width, allocation.height);
 
   border = view->border_width;
   width  = allocation.width  - 2 * border;
@@ -382,13 +329,20 @@ gimp_histogram_view_draw (GtkWidget *widget,
   cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the outer border  */
-  gimp_get_style_color (widget, "grid-color", &grid_color);
+  gtk_style_context_add_class (style, "grid");
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &grid_color);
+  gtk_style_context_remove_class (style, "grid");
+
   gdk_cairo_set_source_rgba (cr, &grid_color);
   cairo_rectangle (cr, border, border, width - 1, height - 1);
   cairo_stroke (cr);
 
   if (! view->histogram && ! view->bg_histogram)
-    return FALSE;
+    {
+      gtk_style_context_restore (style);
+      return FALSE;
+    }
 
   x1 = CLAMP (MIN (view->start, view->end), 0, view->n_bins - 1);
   x2 = CLAMP (MAX (view->start, view->end), 0, view->n_bins - 1);
@@ -401,10 +355,18 @@ gimp_histogram_view_draw (GtkWidget *widget,
     bg_max = gimp_histogram_view_get_maximum (view, view->bg_histogram,
                                               view->channel);
 
-  gimp_get_style_color (widget, "fg-color-selected", &color_in);
-  gimp_get_style_color (widget, "fg-color",          &color_out);
-  gimp_get_style_color (widget, "bg-color-selected", &bg_color_in);
-  gimp_get_style_color (widget, "bg-color",          &bg_color_out);
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &color_out);
+  bg_color_out       = color_out;
+  bg_color_out.alpha = 0.5;
+
+  gtk_style_context_save (style);
+  gtk_style_context_set_state (style, GTK_STATE_FLAG_SELECTED);
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &color_in);
+  bg_color_in       = color_in;
+  bg_color_in.alpha = 0.5;
+  gtk_style_context_restore (style);
 
   if (view->channel == GIMP_HISTOGRAM_RGB)
     {
@@ -446,14 +408,14 @@ gimp_histogram_view_draw (GtkWidget *widget,
         }
       else if (in_selection)
         {
-          gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
-                                                  &color);
+          gtk_style_context_save (style);
+          gtk_style_context_set_state (style, GTK_STATE_FLAG_SELECTED);
 
-          gdk_cairo_set_source_rgba (cr, &color);
+          gtk_render_background (style, cr,
+                                 x + border, border,
+                                 1,          height - 1);
 
-          cairo_move_to (cr, x + border, border);
-          cairo_line_to (cr, x + border, border + height - 1);
-          cairo_stroke (cr);
+          gtk_style_context_restore (style);
         }
 
       if (view->channel == GIMP_HISTOGRAM_RGB)
@@ -490,6 +452,8 @@ gimp_histogram_view_draw (GtkWidget *widget,
                                           x, i, j, max, bg_max, height, border);
         }
     }
+
+  gtk_style_context_restore (style);
 
   return FALSE;
 }
