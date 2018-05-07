@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-05 18:14+0000\n"
-"PO-Revision-Date: 2018-05-05 21:32+0200\n"
+"POT-Creation-Date: 2018-05-06 11:14+0000\n"
+"PO-Revision-Date: 2018-05-06 17:44+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4953,189 +4953,199 @@ msgstr "_Färgreduktion…"
 
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
+msgid "_Recursive Transform..."
+msgstr "_Rekursiv transform…"
+
+#: ../app/actions/filters-actions.c:557
+msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Borttagning av _röda ögon…"
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB-_klipp…"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Krusa…"
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Mättnad…"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Halvutplattning…"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Skuggor-_högdagrar…"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Skifta…"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Enkel linjär iterativ klustring…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetriskt närmaste grannar…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mjuk glöd…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
+msgctxt "filters-action"
+msgid "Spheri_ze..."
+msgstr "Sfä_r…"
+
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_piral…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Sträck ut kontrast…"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Belasta…"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Tröskelvärde…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Tröskelvärde alfa…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Glasplatta…"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Pappersplatta…"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "Pla_ttlägg sömlöst…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Oskarp mask…"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Värdepropagering…"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Videoförsämring…"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vinjett…"
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Vattenbildpunkter…"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Vågor…"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Virvel och knipning…"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Vind…"
 
-#: ../app/actions/filters-actions.c:705
+#: ../app/actions/filters-actions.c:715
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Upp_repa senaste"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Kör senast använda filter igen med samma inställningar"
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Visa s_enaste igen"
 
-#: ../app/actions/filters-actions.c:713
+#: ../app/actions/filters-actions.c:723
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Visa dialogrutan för senast använda filter igen"
 
-#: ../app/actions/filters-actions.c:1037
+#: ../app/actions/filters-actions.c:1049
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "U_pprepa ”%s”"
 
-#: ../app/actions/filters-actions.c:1038
+#: ../app/actions/filters-actions.c:1050
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "V_isa ”%s” igen"
 
-#: ../app/actions/filters-actions.c:1076
+#: ../app/actions/filters-actions.c:1088
 msgid "Repeat Last"
 msgstr "Upprepa senaste"
 
-#: ../app/actions/filters-actions.c:1078
+#: ../app/actions/filters-actions.c:1090
 msgid "Re-Show Last"
 msgstr "Visa senaste igen"
 
@@ -12041,7 +12051,7 @@ msgstr "Skapar mappen ”%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan inte skapa mappen ”%s”: %s"
 
-#: ../app/core/gimp-utils.c:569 ../app/core/gimpfilloptions.c:330
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:330
 msgid "No patterns available for this operation."
 msgstr "Inga mönster tillgängliga för denna åtgärd."
 
@@ -21178,8 +21188,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Luddig markering"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:539
-#: ../app/tools/gimpgegltool.c:540 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:541
+#: ../app/tools/gimpgegltool.c:542 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "GEGL-operation"
 
@@ -21192,7 +21202,7 @@ msgid "_GEGL Operation..."
 msgstr "_GEGL-operation…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:484
+#: ../app/tools/gimpgegltool.c:486
 msgid "Select an operation from the list above"
 msgstr "Välj en åtgärd från listan ovan"
 
