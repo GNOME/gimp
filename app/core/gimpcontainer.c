@@ -769,6 +769,14 @@ gimp_container_frozen (GimpContainer *container)
   return (container->priv->freeze_count > 0) ? TRUE : FALSE;
 }
 
+gint
+gimp_container_freeze_count (GimpContainer *container)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
+
+  return container->priv->freeze_count;
+}
+
 void
 gimp_container_clear (GimpContainer *container)
 {
