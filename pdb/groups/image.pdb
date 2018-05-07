@@ -1034,7 +1034,7 @@ corresponding call to gimp_image_thaw_layers(), undoing its
 effects.
 HELP
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     @inargs = (
     { name => 'image', type => 'image',
@@ -1064,7 +1064,7 @@ This procedure should match a corresponding call to
 gimp_image_freeze_layers().
 HELP
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     @inargs = (
     { name => 'image', type => 'image',
@@ -1192,7 +1192,7 @@ CODE
 sub image_freeze_channels {
     $blurb = "Freeze the image's channel list.";
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
 This procedure freezes the channel list of the image, supressing any
@@ -1225,7 +1225,7 @@ CODE
 sub image_thaw_channels {
     $blurb = "Thaw the image's channel list.";
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
 This procedure thaws the channel list of the image, re-enabling
@@ -1360,7 +1360,7 @@ CODE
 sub image_freeze_vectors {
     $blurb = "Freeze the image's vectors list.";
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
 This procedure freezes the vectors list of the image, supressing any
@@ -1393,7 +1393,7 @@ CODE
 sub image_thaw_vectors {
     $blurb = "Thaw the image's vectors list.";
 
-    &ell_pdb_misc('2018');
+    &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
 This procedure thaws the vectors list of the image, re-enabling
