@@ -451,26 +451,32 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
   if (view->histogram)
     {
+      gint ii = i;
+
       do
         {
-          gdouble v = gimp_histogram_get_value (view->histogram, channel, i++);
+          gdouble v = gimp_histogram_get_value (view->histogram,
+                                                channel, ii++);
 
           if (v > value)
             value = v;
         }
-      while (i < j);
+      while (ii < j);
     }
 
   if (bg_color && view->bg_histogram)
     {
+      gint ii = i;
+
       do
         {
-          gdouble v = gimp_histogram_get_value (view->bg_histogram, channel, i++);
+          gdouble v = gimp_histogram_get_value (view->bg_histogram,
+                                                channel, ii++);
 
           if (v > bg_value)
             bg_value = v;
         }
-      while (i < j);
+      while (ii < j);
     }
 
   if (value <= 0.0 && bg_value <= 0.0)
