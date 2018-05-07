@@ -32,6 +32,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
@@ -100,6 +101,10 @@ static GimpCanvasItem *
                                               GimpDisplay           *display,
                                               gdouble                x,
                                               gdouble                y);
+
+static gboolean  gimp_paint_tool_check_alpha (GimpPaintTool         *paint_tool,
+                                              GimpDrawable          *drawable,
+                                              GError               **error);
 
 static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
                                               const GParamSpec      *pspec,
@@ -275,6 +280,13 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
+      return;
+    }
+
+  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, &error))
+    {
+      gimp_tool_message_literal (tool, display, error->message);
+      g_clear_error (&error);
       return;
     }
 
@@ -459,8 +471,9 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))      ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable))         ||
+          ! gimp_paint_tool_check_alpha (paint_tool, drawable, NULL) ||
           ! gimp_item_is_visible (GIMP_ITEM (drawable)))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
@@ -775,6 +788,38 @@ gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
                                                                 display, x, y);
 
   return NULL;
+}
+
+static gboolean
+gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
+                             GimpDrawable   *drawable,
+                             GError        **error)
+{
+  GimpPaintToolClass *klass = GIMP_PAINT_TOOL_GET_CLASS (paint_tool);
+
+  if (klass->is_alpha_only && klass->is_alpha_only (paint_tool, drawable))
+    {
+      if (! gimp_drawable_has_alpha (drawable))
+        {
+          g_set_error_literal (
+            error, GIMP_ERROR, GIMP_FAILED,
+            _("The active layer does not have an alpha channel."));
+
+          return FALSE;
+        }
+
+        if (GIMP_IS_LAYER (drawable) &&
+            gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)))
+        {
+          g_set_error_literal (
+            error, GIMP_ERROR, GIMP_FAILED,
+            _("The active layer's alpha channel is locked."));
+
+          return FALSE;
+        }
+    }
+
+  return TRUE;
 }
 
 static void

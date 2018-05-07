@@ -24,6 +24,10 @@
 
 #include "tools-types.h"
 
+#include "core/gimpdrawable.h"
+
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "paint/gimpinkoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -35,15 +39,17 @@
 #include "gimp-intl.h"
 
 
+static GimpCanvasItem * gimp_ink_tool_get_outline   (GimpPaintTool *paint_tool,
+                                                     GimpDisplay   *display,
+                                                     gdouble        x,
+                                                     gdouble        y);
+static gboolean         gimp_ink_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                                                     GimpDrawable  *drawable);
+
+
 G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 
 #define parent_class gimp_ink_tool_parent_class
-
-
-static GimpCanvasItem * gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
-                                                   GimpDisplay   *display,
-                                                   gdouble        x,
-                                                   gdouble        y);
 
 
 void
@@ -71,7 +77,8 @@ gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
   GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  paint_tool_class->get_outline = gimp_ink_tool_get_outline;
+  paint_tool_class->get_outline   = gimp_ink_tool_get_outline;
+  paint_tool_class->is_alpha_only = gimp_ink_tool_is_alpha_only;
 }
 
 static void
@@ -103,4 +110,15 @@ gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
                                    options->size);
 
   return NULL;
+}
+
+static gboolean
+gimp_ink_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                             GimpDrawable  *drawable)
+{
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  GimpContext      *context       = GIMP_CONTEXT (paint_options);
+  GimpLayerMode     paint_mode    = gimp_context_get_paint_mode (context);
+
+  return gimp_layer_mode_is_alpha_only (paint_mode);
 }

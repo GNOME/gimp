@@ -36,17 +36,20 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_tool_modifier_key  (GimpTool         *tool,
-                                              GdkModifierType   key,
-                                              gboolean          press,
-                                              GdkModifierType   state,
-                                              GimpDisplay      *display);
-static void   gimp_eraser_tool_cursor_update (GimpTool         *tool,
-                                              const GimpCoords *coords,
-                                              GdkModifierType   state,
-                                              GimpDisplay      *display);
+static void        gimp_eraser_tool_modifier_key  (GimpTool         *tool,
+                                                   GdkModifierType   key,
+                                                   gboolean          press,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
+static void        gimp_eraser_tool_cursor_update (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
 
-static GtkWidget * gimp_eraser_options_gui   (GimpToolOptions *tool_options);
+static gboolean    gimp_eraser_tool_is_alpha_only (GimpPaintTool    *paint_tool,
+                                                   GimpDrawable     *drawable);
+
+static GtkWidget * gimp_eraser_options_gui        (GimpToolOptions  *tool_options);
 
 
 G_DEFINE_TYPE (GimpEraserTool, gimp_eraser_tool, GIMP_TYPE_BRUSH_TOOL)
@@ -74,10 +77,13 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_eraser_tool_class_init (GimpEraserToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  tool_class->modifier_key  = gimp_eraser_tool_modifier_key;
-  tool_class->cursor_update = gimp_eraser_tool_cursor_update;
+  tool_class->modifier_key        = gimp_eraser_tool_modifier_key;
+  tool_class->cursor_update       = gimp_eraser_tool_cursor_update;
+
+  paint_tool_class->is_alpha_only = gimp_eraser_tool_is_alpha_only;
 }
 
 static void
@@ -129,6 +135,13 @@ gimp_eraser_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_toggled (tool->control, options->anti_erase);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static gboolean
+gimp_eraser_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                                GimpDrawable  *drawable)
+{
+  return gimp_drawable_has_alpha (drawable);
 }
 
 
