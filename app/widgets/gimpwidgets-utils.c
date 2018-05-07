@@ -1411,7 +1411,7 @@ gimp_widget_flush_expose (GtkWidget *widget)
     return;
 
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (widget));
 }
 
 gboolean

@@ -228,7 +228,7 @@ background_jpeg_save (PreviewPersistent *pp)
       prev_p = NULL;
 
       gimp_displays_flush ();
-      gdk_flush ();
+      gdk_display_flush (gdk_display_get_default ());
 
       return FALSE;
     }

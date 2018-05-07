@@ -965,7 +965,7 @@ ifs_compose_dialog (gint32 drawable_id)
   if (ifsOptD)
     gtk_widget_destroy (ifsOptD->dialog);
 
-  gdk_flush ();
+  gdk_display_flush (gdk_display_get_default ());
 
   g_free (ifsD);
 

@@ -450,7 +450,7 @@ shape_released (GtkWidget *widget)
 {
   gtk_grab_remove (widget);
   gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (widget));
 
   return FALSE;
 }

@@ -230,7 +230,7 @@ gui_set_busy (Gimp *gimp)
   gimp_displays_set_busy (gimp);
   gimp_dialog_factory_set_busy (gimp_dialog_factory_get_singleton ());
 
-  gdk_flush ();
+  gdk_display_flush (gdk_display_get_default ());
 }
 
 static void
@@ -239,7 +239,7 @@ gui_unset_busy (Gimp *gimp)
   gimp_displays_unset_busy (gimp);
   gimp_dialog_factory_unset_busy (gimp_dialog_factory_get_singleton ());
 
-  gdk_flush ();
+  gdk_display_flush (gdk_display_get_default ());
 }
 
 static void

@@ -516,13 +516,14 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
                                         gdouble                new_y,
                                         GimpDisplay           *display)
 {
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (edit_select);
-  GimpTool     *tool      = GIMP_TOOL (edit_select);
-  GimpImage    *image     = gimp_display_get_image (display);
-  gint          dx;
-  gint          dy;
+  GimpDrawTool     *draw_tool = GIMP_DRAW_TOOL (edit_select);
+  GimpTool         *tool      = GIMP_TOOL (edit_select);
+  GimpDisplayShell *shell     = gimp_display_get_shell (display);
+  GimpImage        *image     = gimp_display_get_image (display);
+  gint              dx;
+  gint              dy;
 
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (GTK_WIDGET (shell)));
 
   gimp_draw_tool_pause (draw_tool);
 

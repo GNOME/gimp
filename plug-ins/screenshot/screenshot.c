@@ -343,7 +343,8 @@ run (const gchar      *name,
           if (shootvals.select_delay > 0)
             {
               gdk_display_beep (gdk_monitor_get_display (monitor));
-              gdk_flush (); /* flush so the beep makes it to the server */
+              /* flush so the beep makes it to the server */
+              gdk_display_flush (gdk_monitor_get_display (monitor));
             }
         }
 

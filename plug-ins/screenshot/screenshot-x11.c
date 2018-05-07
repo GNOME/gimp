@@ -148,7 +148,7 @@ select_window (ScreenshotValues *shootvals,
 
 #undef X_GRAB_KEY
 
-      gdk_flush ();
+      gdk_display_flush (gdk_monitor_get_display (monitor));
 
       if (gdk_error_trap_pop ())
         {

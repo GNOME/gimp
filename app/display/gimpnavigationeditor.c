@@ -340,7 +340,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   }
 
   gtk_widget_show (shell->nav_popup);
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (shell->nav_popup));
 
   /* fill in then grab pointer */
   gimp_navigation_view_set_motion_offset (view, 0, 0);
