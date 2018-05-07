@@ -1044,9 +1044,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_layers (image);
 
-  gimp_container_freeze (container);
+  if (plug_in)
+    success = gimp_plug_in_cleanup_layers_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
 }
 CODE
     );
@@ -1074,12 +1079,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_layers (image);
 
-  if (gimp_container_frozen (container))
+  if (plug_in)
+    success = gimp_plug_in_cleanup_layers_thaw (plug_in, image);
+
+  if (success)
+    success = gimp_container_frozen (container);
+
+  if (success)
     gimp_container_thaw (container);
-  else
-    success = FALSE;
 }
 CODE
     );
@@ -1214,9 +1224,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_channels (image);
 
-  gimp_container_freeze (container);
+  if (plug_in)
+    success = gimp_plug_in_cleanup_channels_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
 }
 CODE
     );
@@ -1244,12 +1259,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_channels (image);
 
-  if (gimp_container_frozen (container))
+  if (plug_in)
+    success = gimp_plug_in_cleanup_channels_thaw (plug_in, image);
+
+  if (success)
+    success = gimp_container_frozen (container);
+
+  if (success)
     gimp_container_thaw (container);
-  else
-    success = FALSE;
 }
 CODE
     );
@@ -1382,9 +1402,14 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_vectors (image);
 
-  gimp_container_freeze (container);
+  if (plug_in)
+    success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
 }
 CODE
     );
@@ -1412,12 +1437,17 @@ HELP
     %invoke = (
     code => <<'CODE'
 {
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
   GimpContainer *container = gimp_image_get_vectors (image);
 
-  if (gimp_container_frozen (container))
+  if (plug_in)
+    success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+
+  if (success)
+    success = gimp_container_frozen (container);
+
+  if (success)
     gimp_container_thaw (container);
-  else
-    success = FALSE;
 }
 CODE
     );
@@ -3051,6 +3081,7 @@ CODE
               "core/gimptempbuf.h"
               "file/file-utils.h"
               "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-cleanup.h"
               "plug-in/gimppluginmanager.h"
               "gimppdbcontext.h"
               "gimppdberror.h"

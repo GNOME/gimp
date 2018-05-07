@@ -53,6 +53,7 @@
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "file/file-utils.h"
+#include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 #include "vectors/gimpvectors.h"
@@ -910,9 +911,14 @@ image_freeze_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_layers (image);
 
-      gimp_container_freeze (container);
+      if (plug_in)
+        success = gimp_plug_in_cleanup_layers_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -934,12 +940,17 @@ image_thaw_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_layers (image);
 
-      if (gimp_container_frozen (container))
+      if (plug_in)
+        success = gimp_plug_in_cleanup_layers_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
         gimp_container_thaw (container);
-      else
-        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1064,9 +1075,14 @@ image_freeze_channels_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_channels (image);
 
-      gimp_container_freeze (container);
+      if (plug_in)
+        success = gimp_plug_in_cleanup_channels_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1088,12 +1104,17 @@ image_thaw_channels_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_channels (image);
 
-      if (gimp_container_frozen (container))
+      if (plug_in)
+        success = gimp_plug_in_cleanup_channels_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
         gimp_container_thaw (container);
-      else
-        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1218,9 +1239,14 @@ image_freeze_vectors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_vectors (image);
 
-      gimp_container_freeze (container);
+      if (plug_in)
+        success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1242,12 +1268,17 @@ image_thaw_vectors_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
       GimpContainer *container = gimp_image_get_vectors (image);
 
-      if (gimp_container_frozen (container))
+      if (plug_in)
+        success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
         gimp_container_thaw (container);
-      else
-        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
