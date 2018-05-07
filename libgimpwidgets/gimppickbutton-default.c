@@ -57,10 +57,8 @@ static gboolean   gimp_pick_button_mouse_release (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
 static void       gimp_pick_button_shutdown      (GimpPickButton *button);
-static void       gimp_pick_button_pick          (GdkScreen      *screen,
-                                                  gint            x_root,
-                                                  gint            y_root,
-                                                  GimpPickButton *button);
+static void       gimp_pick_button_pick          (GimpPickButton *button,
+                                                  GdkEvent       *event);
 
 
 static GdkCursor *
@@ -110,6 +108,8 @@ gimp_pick_button_mouse_press (GtkWidget      *invisible,
                                             gimp_pick_button_key_press,
                                             button);
 
+      gimp_pick_button_pick (button, (GdkEvent *) event);
+
       return TRUE;
     }
 
@@ -143,15 +143,7 @@ gimp_pick_button_mouse_motion (GtkWidget      *invisible,
                                GdkEventMotion *event,
                                GimpPickButton *button)
 {
-  gint x_root;
-  gint y_root;
-
-  gdk_window_get_origin (event->window, &x_root, &y_root);
-  x_root += event->x;
-  y_root += event->y;
-
-  gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
-                         x_root, y_root, button);
+  gimp_pick_button_pick (button, (GdkEvent *) event);
 
   return TRUE;
 }
@@ -161,18 +153,10 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
                                 GdkEventButton *event,
                                 GimpPickButton *button)
 {
-  gint x_root;
-  gint y_root;
-
   if (event->button != 1)
     return FALSE;
 
-  gdk_window_get_origin (event->window, &x_root, &y_root);
-  x_root += event->x;
-  y_root += event->y;
-
-  gimp_pick_button_pick (gdk_event_get_screen ((GdkEvent *) event),
-                         x_root, y_root, button);
+  gimp_pick_button_pick (button, (GdkEvent *) event);
 
   gimp_pick_button_shutdown (button);
 
@@ -189,90 +173,99 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 static void
 gimp_pick_button_shutdown (GimpPickButton *button)
 {
-  GdkDisplay *display   = gtk_widget_get_display (button->priv->grab_widget);
-  guint32     timestamp = gtk_get_current_event_time ();
-
-  gdk_display_keyboard_ungrab (display, timestamp);
-  gdk_display_pointer_ungrab (display, timestamp);
+  GdkDisplay *display = gtk_widget_get_display (button->priv->grab_widget);
 
   gtk_grab_remove (button->priv->grab_widget);
+
+  gdk_seat_ungrab (gdk_display_get_default_seat (display));
 }
 
 static void
-gimp_pick_button_pick (GdkScreen      *screen,
-                       gint            x_root,
-                       gint            y_root,
-                       GimpPickButton *button)
+gimp_pick_button_pick (GimpPickButton *button,
+                       GdkEvent       *event)
 {
+  GdkScreen        *screen = gdk_event_get_screen (event);
   GimpColorProfile *monitor_profile;
   GdkMonitor       *monitor;
   GimpRGB           rgb;
+  gint              x_root;
+  gint              y_root;
+  gdouble           x_win;
+  gdouble           y_win;
+
+  gdk_window_get_origin (gdk_event_get_window (event), &x_root, &y_root);
+  gdk_event_get_coords (event, &x_win, &y_win);
+  x_root += x_win;
+  y_root += y_win;
 
 #ifdef G_OS_WIN32
 
-  HDC               hdc;
-  RECT              rect;
-  COLORREF          win32_color;
+  {
+    HDC      hdc;
+    RECT     rect;
+    COLORREF win32_color;
 
-  /* For MS Windows, use native GDI functions to get the pixel, as
-   * cairo does not handle the case where you have multiple monitors
-   * with a monitor on the left or above the primary monitor.  That
-   * scenario create a cairo primary surface with negative extent,
-   * which is not handled properly (bug 740634).
-   */
+    /* For MS Windows, use native GDI functions to get the pixel, as
+     * cairo does not handle the case where you have multiple monitors
+     * with a monitor on the left or above the primary monitor.  That
+     * scenario create a cairo primary surface with negative extent,
+     * which is not handled properly (bug 740634).
+     */
 
-  hdc = GetDC (HWND_DESKTOP);
-  GetClipBox (hdc, &rect);
-  win32_color = GetPixel (hdc, x_root + rect.left, y_root + rect.top);
-  ReleaseDC (HWND_DESKTOP, hdc);
+    hdc = GetDC (HWND_DESKTOP);
+    GetClipBox (hdc, &rect);
+    win32_color = GetPixel (hdc, x_root + rect.left, y_root + rect.top);
+    ReleaseDC (HWND_DESKTOP, hdc);
 
-  gimp_rgba_set_uchar (&rgb,
-                       GetRValue (win32_color),
-                       GetGValue (win32_color),
-                       GetBValue (win32_color),
-                       255);
+    gimp_rgba_set_uchar (&rgb,
+                         GetRValue (win32_color),
+                         GetGValue (win32_color),
+                         GetBValue (win32_color),
+                         255);
+  }
 
 #else
 
-  GdkWindow        *window;
-  gint              x_window;
-  gint              y_window;
-  cairo_surface_t  *image;
-  cairo_t          *cr;
-  guchar           *data;
-  guchar            color[3];
+  {
+    GdkWindow       *window;
+    gint             x_window;
+    gint             y_window;
+    cairo_surface_t *image;
+    cairo_t         *cr;
+    guchar          *data;
+    guchar           color[3];
 
-  /* we try to pick from the local window under the cursor, and fall back to
-   * picking from the root window if this fails (i.e., if the cursor is not
-   * under a local window).  on wayland, picking from the root window is not
-   * supported, so this at least allows us to pick from local windows.  see
-   * bug #780375.
-   */
-  window = gdk_display_get_window_at_pointer (gdk_screen_get_display (screen),
-                                              &x_window, &y_window);
+    /* we try to pick from the local window under the cursor, and fall
+     * back to picking from the root window if this fails (i.e., if
+     * the cursor is not under a local window).  on wayland, picking
+     * from the root window is not supported, so this at least allows
+     * us to pick from local windows.  see bug #780375.
+     */
+    window = gdk_device_get_window_at_position (gdk_event_get_device (event),
+                                                &x_window, &y_window);
+    if (! window)
+      {
+        window   = gdk_screen_get_root_window (screen);
+        x_window = x_root;
+        y_window = y_root;
+      }
 
-  if (! window)
-    {
-      window   = gdk_screen_get_root_window (screen);
-      x_window = x_root;
-      y_window = y_root;
-    }
+    image = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
 
-  image = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
+    cr = cairo_create (image);
 
-  cr = cairo_create (image);
+    gdk_cairo_set_source_window (cr, window, -x_window, -y_window);
+    cairo_paint (cr);
 
-  gdk_cairo_set_source_window (cr, window, -x_window, -y_window);
-  cairo_paint (cr);
+    cairo_destroy (cr);
 
-  cairo_destroy (cr);
+    data = cairo_image_surface_get_data (image);
+    GIMP_CAIRO_RGB24_GET_PIXEL (data, color[0], color[1], color[2]);
 
-  data = cairo_image_surface_get_data (image);
-  GIMP_CAIRO_RGB24_GET_PIXEL (data, color[0], color[1], color[2]);
+    cairo_surface_destroy (image);
 
-  cairo_surface_destroy (image);
-
-  gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
+    gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
+  }
 
 #endif
 
@@ -318,8 +311,8 @@ gimp_pick_button_pick (GdkScreen      *screen,
 void
 _gimp_pick_button_default_pick (GimpPickButton *button)
 {
-  GtkWidget *widget;
-  guint32    timestamp;
+  GdkDisplay *display;
+  GtkWidget  *widget;
 
   if (! button->priv->cursor)
     button->priv->cursor =
@@ -330,33 +323,26 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
       button->priv->grab_widget = gtk_invisible_new ();
 
       gtk_widget_add_events (button->priv->grab_widget,
-                             GDK_BUTTON_RELEASE_MASK |
                              GDK_BUTTON_PRESS_MASK   |
-                             GDK_POINTER_MOTION_MASK);
+                             GDK_BUTTON_RELEASE_MASK |
+                             GDK_BUTTON1_MOTION_MASK);
 
       gtk_widget_show (button->priv->grab_widget);
     }
 
   widget = button->priv->grab_widget;
-  timestamp = gtk_get_current_event_time ();
 
-  if (gdk_keyboard_grab (gtk_widget_get_window (widget), FALSE,
-                         timestamp) != GDK_GRAB_SUCCESS)
-    {
-      g_warning ("Failed to grab keyboard to do eyedropper");
-      return;
-    }
+  display = gtk_widget_get_display (widget);
 
-  if (gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
-                        GDK_BUTTON_RELEASE_MASK |
-                        GDK_BUTTON_PRESS_MASK   |
-                        GDK_POINTER_MOTION_MASK,
-                        NULL,
-                        button->priv->cursor,
-                        timestamp) != GDK_GRAB_SUCCESS)
+  if (gdk_seat_grab (gdk_display_get_default_seat (display),
+                     gtk_widget_get_window (widget),
+                     GDK_SEAT_CAPABILITY_ALL,
+                     FALSE,
+                     button->priv->cursor,
+                     NULL,
+                     NULL, NULL) != GDK_GRAB_SUCCESS)
     {
-      gdk_display_keyboard_ungrab (gtk_widget_get_display (widget), timestamp);
-      g_warning ("Failed to grab pointer to do eyedropper");
+      g_warning ("Failed to grab seat to do eyedropper");
       return;
     }
 
