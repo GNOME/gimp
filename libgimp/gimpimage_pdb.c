@@ -928,6 +928,74 @@ gimp_image_remove_layer (gint32 image_ID,
 }
 
 /**
+ * gimp_image_freeze_layers:
+ * @image_ID: The image.
+ *
+ * Freeze the image's layer list.
+ *
+ * This procedure freezes the layer list of the image, supressing any
+ * updates to the Layers dialog in response to changes to the image's
+ * layers. This can significantly improve performance while applying
+ * changes affecting the layer list.
+ *
+ * Each call to gimp_image_freeze_layers() should be matched by a
+ * corresponding call to gimp_image_thaw_layers(), undoing its effects.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_freeze_layers (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-freeze-layers",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_thaw_layers:
+ * @image_ID: The image.
+ *
+ * Thaw the image's layer list.
+ *
+ * This procedure thaws the layer list of the image, re-enabling
+ * updates to the Layers dialog.
+ *
+ * This procedure should match a corresponding call to
+ * gimp_image_freeze_layers().
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_thaw_layers (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-thaw-layers",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_add_channel:
  * @image_ID: The image.
  * @channel_ID: The channel.
@@ -1027,6 +1095,75 @@ gimp_image_remove_channel (gint32 image_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_freeze_channels:
+ * @image_ID: The image.
+ *
+ * Freeze the image's channel list.
+ *
+ * This procedure freezes the channel list of the image, supressing any
+ * updates to the Channels dialog in response to changes to the image's
+ * channels. This can significantly improve performance while applying
+ * changes affecting the channel list.
+ *
+ * Each call to gimp_image_freeze_channels() should be matched by a
+ * corresponding call to gimp_image_thaw_channels(), undoing its
+ * effects.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_freeze_channels (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-freeze-channels",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_thaw_channels:
+ * @image_ID: The image.
+ *
+ * Thaw the image's channel list.
+ *
+ * This procedure thaws the channel list of the image, re-enabling
+ * updates to the Channels dialog.
+ *
+ * This procedure should match a corresponing call to
+ * gimp_image_freeze_channels().
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_thaw_channels (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-thaw-channels",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1138,6 +1275,75 @@ gimp_image_remove_vectors (gint32 image_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_freeze_vectors:
+ * @image_ID: The image.
+ *
+ * Freeze the image's vectors list.
+ *
+ * This procedure freezes the vectors list of the image, supressing any
+ * updates to the Paths dialog in response to changes to the image's
+ * vectors. This can significantly improve performance while applying
+ * changes affecting the vectors list.
+ *
+ * Each call to gimp_image_freeze_vectors() should be matched by a
+ * corresponding call to gimp_image_thaw_vectors(), undoing its
+ * effects.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_freeze_vectors (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-freeze-vectors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_thaw_vectors:
+ * @image_ID: The image.
+ *
+ * Thaw the image's vectors list.
+ *
+ * This procedure thaws the vectors list of the image, re-enabling
+ * updates to the Paths dialog.
+ *
+ * This procedure should match a corresponding call to
+ * gimp_image_freeze_vectors().
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_thaw_vectors (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-thaw-vectors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

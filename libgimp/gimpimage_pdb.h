@@ -81,6 +81,8 @@ gboolean                 gimp_image_insert_layer               (gint32          
                                                                 gint                 position);
 gboolean                 gimp_image_remove_layer               (gint32               image_ID,
                                                                 gint32               layer_ID);
+gboolean                 gimp_image_freeze_layers              (gint32               image_ID);
+gboolean                 gimp_image_thaw_layers                (gint32               image_ID);
 GIMP_DEPRECATED_FOR(gimp_image_insert_channel)
 gboolean                 gimp_image_add_channel                (gint32               image_ID,
                                                                 gint32               channel_ID,
@@ -91,6 +93,8 @@ gboolean                 gimp_image_insert_channel             (gint32          
                                                                 gint                 position);
 gboolean                 gimp_image_remove_channel             (gint32               image_ID,
                                                                 gint32               channel_ID);
+gboolean                 gimp_image_freeze_channels            (gint32               image_ID);
+gboolean                 gimp_image_thaw_channels              (gint32               image_ID);
 GIMP_DEPRECATED_FOR(gimp_image_insert_vectors)
 gboolean                 gimp_image_add_vectors                (gint32               image_ID,
                                                                 gint32               vectors_ID,
@@ -101,6 +105,8 @@ gboolean                 gimp_image_insert_vectors             (gint32          
                                                                 gint                 position);
 gboolean                 gimp_image_remove_vectors             (gint32               image_ID,
                                                                 gint32               vectors_ID);
+gboolean                 gimp_image_freeze_vectors             (gint32               image_ID);
+gboolean                 gimp_image_thaw_vectors               (gint32               image_ID);
 gint                     gimp_image_get_item_position          (gint32               image_ID,
                                                                 gint32               item_ID);
 gboolean                 gimp_image_raise_item                 (gint32               image_ID,

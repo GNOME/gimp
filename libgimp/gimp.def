@@ -445,6 +445,9 @@ EXPORTS
 	gimp_image_flip
 	gimp_image_floating_sel_attached_to
 	gimp_image_free_shadow
+	gimp_image_freeze_channels
+	gimp_image_freeze_layers
+	gimp_image_freeze_vectors
 	gimp_image_get_active_channel
 	gimp_image_get_active_drawable
 	gimp_image_get_active_layer
@@ -560,6 +563,9 @@ EXPORTS
 	gimp_image_set_resolution
 	gimp_image_set_tattoo_state
 	gimp_image_set_unit
+	gimp_image_thaw_channels
+	gimp_image_thaw_layers
+	gimp_image_thaw_vectors
 	gimp_image_undo_disable
 	gimp_image_undo_enable
 	gimp_image_undo_freeze

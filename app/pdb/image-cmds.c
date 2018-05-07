@@ -896,6 +896,57 @@ image_remove_layer_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_freeze_layers_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_layers (image);
+
+      gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_layers_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_layers (image);
+
+      if (gimp_container_frozen (container))
+        gimp_container_thaw (container);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_add_channel_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -999,6 +1050,57 @@ image_remove_channel_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_freeze_channels_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_channels (image);
+
+      gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_channels_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_channels (image);
+
+      if (gimp_container_frozen (container))
+        gimp_container_thaw (container);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_add_vectors_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -1093,6 +1195,57 @@ image_remove_vectors_invoker (GimpProcedure         *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, 0, error))
         gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_freeze_vectors_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_vectors_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      if (gimp_container_frozen (container))
+        gimp_container_thaw (container);
       else
         success = FALSE;
     }
@@ -3563,6 +3716,56 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-freeze-layers
+   */
+  procedure = gimp_procedure_new (image_freeze_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-freeze-layers");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-freeze-layers",
+                                     "Freeze the image's layer list.",
+                                     "This procedure freezes the layer list of the image, supressing any updates to the Layers dialog in response to changes to the image's layers. This can significantly improve performance while applying changes affecting the layer list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-layers' should be matched by a corresponding call to 'gimp-image-thaw-layers', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-layers
+   */
+  procedure = gimp_procedure_new (image_thaw_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-layers");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-layers",
+                                     "Thaw the image's layer list.",
+                                     "This procedure thaws the layer list of the image, re-enabling updates to the Layers dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponding call to 'gimp-image-freeze-layers'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-add-channel
    */
   procedure = gimp_procedure_new (image_add_channel_invoker);
@@ -3668,6 +3871,56 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-freeze-channels
+   */
+  procedure = gimp_procedure_new (image_freeze_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-freeze-channels");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-freeze-channels",
+                                     "Freeze the image's channel list.",
+                                     "This procedure freezes the channel list of the image, supressing any updates to the Channels dialog in response to changes to the image's channels. This can significantly improve performance while applying changes affecting the channel list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-channels' should be matched by a corresponding call to 'gimp-image-thaw-channels', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-channels
+   */
+  procedure = gimp_procedure_new (image_thaw_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-channels");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-channels",
+                                     "Thaw the image's channel list.",
+                                     "This procedure thaws the channel list of the image, re-enabling updates to the Channels dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponing call to 'gimp-image-freeze-channels'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-add-vectors
    */
   procedure = gimp_procedure_new (image_add_vectors_invoker);
@@ -3769,6 +4022,56 @@ register_image_procs (GimpPDB *pdb)
                                                            "The vectors object",
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-freeze-vectors
+   */
+  procedure = gimp_procedure_new (image_freeze_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-freeze-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-freeze-vectors",
+                                     "Freeze the image's vectors list.",
+                                     "This procedure freezes the vectors list of the image, supressing any updates to the Paths dialog in response to changes to the image's vectors. This can significantly improve performance while applying changes affecting the vectors list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-vectors' should be matched by a corresponding call to 'gimp-image-thaw-vectors', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-vectors
+   */
+  procedure = gimp_procedure_new (image_thaw_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-vectors",
+                                     "Thaw the image's vectors list.",
+                                     "This procedure thaws the vectors list of the image, re-enabling updates to the Paths dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponding call to 'gimp-image-freeze-vectors'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
