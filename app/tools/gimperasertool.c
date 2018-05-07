@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimpdrawable.h"
+
 #include "paint/gimperaseroptions.h"
 
 #include "widgets/gimphelp-ids.h"
