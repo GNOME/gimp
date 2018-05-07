@@ -153,7 +153,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
       if (! gegl_node_has_pad (operation, "input"))
         {
           effect = gegl_node_new_child (gegl,
-                                        "operation", "gegl:over",
+                                        "operation", "gimp:normal",
                                         NULL);
 
           gegl_node_connect_to (operation, "output",
