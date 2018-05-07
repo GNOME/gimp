@@ -178,6 +178,8 @@ run (const gchar      *name,
 
       gimp_image_undo_group_start (image_id);
 
+      gimp_image_freeze_layers (image_id);
+
       if (wavelet_params.create_group)
         {
           gint32 group_id = gimp_layer_group_new (image_id);
@@ -290,6 +292,8 @@ run (const gchar      *name,
         gimp_item_set_visible (parent_id, TRUE);
 
       g_free (scale_ids);
+
+      gimp_image_thaw_layers (image_id);
 
       gimp_image_undo_group_end (image_id);
 
