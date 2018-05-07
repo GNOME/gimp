@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-07 07:52+0200\n"
-"PO-Revision-Date: 2018-05-07 07:51+0200\n"
+"POT-Creation-Date: 2018-05-08 00:46+0200\n"
+"PO-Revision-Date: 2018-05-08 00:49+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -5061,7 +5061,7 @@ msgstr "Clustering iterativo lineare _semplice..."
 #: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr "_Symmetric Nearest Neighbor..."
+msgstr "Vicino più _simmetrico..."
 
 #: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
@@ -17061,7 +17061,7 @@ msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
 #: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
-#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:277
+#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
 #: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
@@ -17217,7 +17217,7 @@ msgid "Click-Drag to rotate"
 msgstr "Fare clic e trascinare per ruotare"
 
 #: ../app/display/gimptoolgyroscope.c:717 ../app/display/gimptoolline.c:1490
-#: ../app/tools/gimppainttool.c:569
+#: ../app/tools/gimppainttool.c:582
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
@@ -18532,7 +18532,7 @@ msgstr "Nessun pennello disponibile da usare con questo strumento."
 msgid "No paint dynamics available for use with this tool."
 msgstr "Nessuna dinamica di disegno disponibile per questo strumento."
 
-#: ../app/paint/gimpclone.c:87 ../app/tools/gimpclonetool.c:56
+#: ../app/paint/gimpclone.c:87 ../app/tools/gimpclonetool.c:62
 msgid "Clone"
 msgstr "Duplica"
 
@@ -18569,7 +18569,7 @@ msgstr "Tipo"
 msgid "Exposure"
 msgstr "Esposizione"
 
-#: ../app/paint/gimperaser.c:64 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:64 ../app/tools/gimperasertool.c:71
 msgid "Eraser"
 msgstr "Gomma"
 
@@ -18585,7 +18585,7 @@ msgstr "Cerotto"
 msgid "Healing does not operate on indexed layers."
 msgstr "Il cerotto non agisce su livelli indicizzati."
 
-#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:67
 msgid "Ink"
 msgstr "Stilo"
 
@@ -18661,7 +18661,7 @@ msgstr "Nessun effetto cancellazione"
 msgid "Never decrease alpha of existing pixels"
 msgstr "Non decrementare mai l'alfa dei pixel esistenti"
 
-#: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
 msgstr "Pennello"
 
@@ -19439,7 +19439,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
 "\" (#%d, tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/image-cmds.c:2339
+#: ../app/pdb/image-cmds.c:2523
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -20609,7 +20609,7 @@ msgstr "_Riempimento colore"
 #: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpfiltertool.c:284
 #: ../app/tools/gimpforegroundselecttool.c:288
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:284
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
 #: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
@@ -20663,27 +20663,27 @@ msgstr "Calcolo coefficienti gabbia"
 msgid "Cage transform"
 msgstr "Trasformazione gabbia"
 
-#: ../app/tools/gimpclonetool.c:57
+#: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
 "Strumento clona: copia selettivamente da un'immagine o da un motivo usando "
 "un pennello"
 
-#: ../app/tools/gimpclonetool.c:58
+#: ../app/tools/gimpclonetool.c:64
 msgid "_Clone"
 msgstr "_Clona"
 
-#: ../app/tools/gimpclonetool.c:81 ../app/tools/gimpclonetool.c:84
+#: ../app/tools/gimpclonetool.c:90 ../app/tools/gimpclonetool.c:93
 msgid "Click to clone"
 msgstr "Fare clic per clonare"
 
-#: ../app/tools/gimpclonetool.c:82 ../app/tools/gimpclonetool.c:87
+#: ../app/tools/gimpclonetool.c:91 ../app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s per impostare una nuova sorgente per la duplicazione"
 
 #. Translators: the translation of "Click" must be the first word
-#: ../app/tools/gimpclonetool.c:86
+#: ../app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "Fare clic per impostare una nuova sorgente per la duplicazione"
 
@@ -20751,11 +20751,11 @@ msgstr "Prelievo c_olore"
 msgid "Click in any image to view its color"
 msgstr "Fare clic sull'immagine per visualizzare il colore"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:412
+#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:424
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:418
+#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:430
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
@@ -21051,31 +21051,31 @@ msgstr "Strumento selezione ellittica: seleziona un'area di forma ellittica"
 msgid "_Ellipse Select"
 msgstr "_Ellittica"
 
-#: ../app/tools/gimperasertool.c:67
+#: ../app/tools/gimperasertool.c:72
 msgid "Eraser Tool: Erase to background or transparency using a brush"
 msgstr ""
 "Strumento cancellino: cancella sullo sfondo o sulla trasparenza usando un "
 "pennello"
 
-#: ../app/tools/gimperasertool.c:68
+#: ../app/tools/gimperasertool.c:73
 msgid "_Eraser"
 msgstr "_Gomma"
 
-#: ../app/tools/gimperasertool.c:97
+#: ../app/tools/gimperasertool.c:105
 msgid "Click to erase"
 msgstr "Fare clic per cancellare"
 
-#: ../app/tools/gimperasertool.c:98
+#: ../app/tools/gimperasertool.c:106
 msgid "Click to erase the line"
 msgstr "Fare clic per cancellare la riga"
 
-#: ../app/tools/gimperasertool.c:99
+#: ../app/tools/gimperasertool.c:107
 #, c-format
 msgid "%s to pick a background color"
 msgstr "%s per prelevare un colore di sfondo"
 
 #. the anti_erase toggle
-#: ../app/tools/gimperasertool.c:146
+#: ../app/tools/gimperasertool.c:161
 #, c-format
 msgid "Anti erase  (%s)"
 msgstr "Anti gomma  (%s)"
@@ -21631,11 +21631,11 @@ msgstr "Regolazione"
 msgid "Sensitivity"
 msgstr "Sensibilità"
 
-#: ../app/tools/gimpinktool.c:62
+#: ../app/tools/gimpinktool.c:68
 msgid "Ink Tool: Calligraphy-style painting"
 msgstr "Strumento stilo: disegna con stile amanuense"
 
-#: ../app/tools/gimpinktool.c:63
+#: ../app/tools/gimpinktool.c:69
 msgid "In_k"
 msgstr "_Stilo"
 
@@ -21966,11 +21966,11 @@ msgstr "Ingresso aux"
 msgid "Aux%d Input"
 msgstr "Ingresso aux%d"
 
-#: ../app/tools/gimppaintbrushtool.c:52
+#: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgstr "Strumento pennello: dipinge tratti smussati con un pennello"
 
-#: ../app/tools/gimppaintbrushtool.c:53
+#: ../app/tools/gimppaintbrushtool.c:59
 msgid "_Paintbrush"
 msgstr "_Pennello"
 
@@ -22018,27 +22018,35 @@ msgstr "Opzioni colore"
 msgid "Link to brush default"
 msgstr "Collega al predefinito del pennello"
 
-#: ../app/tools/gimppainttool.c:158
+#: ../app/tools/gimppainttool.c:163
 msgid "Click to paint"
 msgstr "Fare clic per disegnare"
 
-#: ../app/tools/gimppainttool.c:159
+#: ../app/tools/gimppainttool.c:164
 msgid "Click to draw the line"
 msgstr "Clic per disegnare la riga"
 
-#: ../app/tools/gimppainttool.c:160
+#: ../app/tools/gimppainttool.c:165
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s per prelevare un colore"
 
-#: ../app/tools/gimppainttool.c:270
+#: ../app/tools/gimppainttool.c:275
 msgid "Cannot paint on layer groups."
 msgstr "Impossibile disegnare sui gruppi livello."
 
-#: ../app/tools/gimppainttool.c:600
+#: ../app/tools/gimppainttool.c:613
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per una riga diritta"
+
+#: ../app/tools/gimppainttool.c:806
+msgid "The active layer does not have an alpha channel."
+msgstr "Il livello attivo non ha un canale alfa."
+
+#: ../app/tools/gimppainttool.c:816
+msgid "The active layer's alpha channel is locked."
+msgstr "Il canale alfa del livello attivo è bloccato."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
