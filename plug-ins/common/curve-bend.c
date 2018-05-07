@@ -1145,7 +1145,7 @@ do_dialog (GimpDrawable *drawable)
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 
   gtk_main ();
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (cd->shell));
 
   gimp_image_delete(cd->preview_image_id);
   cd->preview_image_id = -1;
@@ -1525,7 +1525,7 @@ bender_update (BenderDialog *cd,
     {
       gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (cd->shell)),
                              cd->cursor_busy);
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (cd->shell));
 
       if (cd->preview_layer_id2 >= 0)
          gimp_image_remove_layer(cd->preview_image_id, cd->preview_layer_id2);

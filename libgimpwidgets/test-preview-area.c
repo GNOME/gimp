@@ -84,7 +84,7 @@ test_run (GtkWidget *area,
     }
 
   gdk_window_process_all_updates ();
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (area));
 
   timer = g_timer_new ();
 
@@ -108,7 +108,7 @@ test_run (GtkWidget *area,
           gdk_window_process_updates (area->window, FALSE);
         }
 
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (area));
       total_time = g_timer_elapsed (timer, NULL) - start_time;
 
       g_print ("%-20s "
@@ -138,7 +138,7 @@ test_run (GtkWidget *area,
           gdk_window_process_updates (area->window, FALSE);
         }
 
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (area));
       total_time = g_timer_elapsed (timer, NULL) - start_time;
 
       g_print ("%-20s "
@@ -170,7 +170,7 @@ test_run (GtkWidget *area,
           gdk_window_process_updates (area->window, FALSE);
         }
 
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (area));
       total_time = g_timer_elapsed (timer, NULL) - start_time;
 
       g_print ("%-20s "
@@ -197,7 +197,7 @@ test_run (GtkWidget *area,
       gdk_window_process_updates (area->window, FALSE);
     }
 
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (area));
   total_time = g_timer_elapsed (timer, NULL) - start_time;
   g_print ("%-20s "
            "fill  :  %5.2fs, %8.1f fps, %8.2f megapixels/s\n",

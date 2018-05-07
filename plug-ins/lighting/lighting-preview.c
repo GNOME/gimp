@@ -394,7 +394,7 @@ preview_compute (void)
   cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
   g_object_unref (cursor);
-  gdk_flush ();
+  gdk_display_flush (display);
 }
 
 

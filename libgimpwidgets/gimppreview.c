@@ -523,7 +523,7 @@ gimp_preview_invalidate_now (GimpPreview *preview)
       gdk_window_set_cursor (gtk_widget_get_window (priv->area),
                              priv->cursor_busy);
 
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (toplevel));
 
       g_signal_emit (preview, preview_signals[INVALIDATED], 0);
 
