@@ -662,6 +662,9 @@ gimp_container_view_select_item (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
+  if (gimp_container_frozen (private->container))
+    return TRUE;
+
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   g_signal_emit (view, view_signals[SELECT_ITEM], 0,
@@ -682,6 +685,9 @@ gimp_container_view_activate_item (GimpContainerView *view,
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
+  if (gimp_container_frozen (private->container))
+    return;
+
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
   g_signal_emit (view, view_signals[ACTIVATE_ITEM], 0,
@@ -699,6 +705,9 @@ gimp_container_view_context_item (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+
+  if (gimp_container_frozen (private->container))
+    return;
 
   insert_data = g_hash_table_lookup (private->item_hash, viewable);
 
