@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="2.24"/>
-  <!-- interface-naming-policy project-wide -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkAdjustment" id="compression-level">
     <property name="upper">9</property>
     <property name="value">9</property>
     <property name="step_increment">1</property>
     <property name="page_increment">1</property>
   </object>
-  <object class="GtkTable" id="table">
+  <object class="GtkGrid" id="grid">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
-    <property name="n_rows">12</property>
-    <property name="n_columns">3</property>
-    <property name="column_spacing">6</property>
     <property name="row_spacing">6</property>
+    <property name="column_spacing">6</property>
     <child>
       <object class="GtkCheckButton" id="interlace">
         <property name="label" translatable="yes">_Interlacing (Adam7)</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
+        <property name="top_attach">0</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -36,14 +36,14 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">1</property>
-        <property name="bottom_attach">2</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -52,13 +52,13 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
-        <property name="xalign">0</property>
+        <property name="halign">start</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">2</property>
-        <property name="bottom_attach">3</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -67,14 +67,14 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">3</property>
-        <property name="bottom_attach">4</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -83,14 +83,14 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">4</property>
-        <property name="bottom_attach">5</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -99,14 +99,14 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">5</property>
-        <property name="bottom_attach">6</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -115,14 +115,14 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">6</property>
-        <property name="bottom_attach">7</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -132,28 +132,27 @@
         <property name="sensitive">False</property>
         <property name="can_focus">True</property>
         <property name="receives_default">False</property>
+        <property name="halign">start</property>
         <property name="use_underline">True</property>
-        <property name="xalign">0</property>
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">7</property>
-        <property name="bottom_attach">8</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
-      <object class="GtkHScale" id="compression-level-scale">
+      <object class="GtkScale" id="compression-level-scale">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
         <property name="adjustment">compression-level</property>
         <property name="draw_value">False</property>
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="right_attach">2</property>
         <property name="top_attach">9</property>
-        <property name="bottom_attach">10</property>
       </packing>
     </child>
     <child>
@@ -170,14 +169,11 @@
       </object>
       <packing>
         <property name="left_attach">2</property>
-        <property name="right_attach">3</property>
         <property name="top_attach">9</property>
-        <property name="bottom_attach">10</property>
-        <property name="x_options"/>
       </packing>
     </child>
     <child>
-      <object class="GtkHButtonBox" id="hbuttonbox">
+      <object class="GtkButtonBox" id="buttonbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="spacing">6</property>
@@ -212,9 +208,9 @@
         </child>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">11</property>
-        <property name="bottom_attach">12</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
@@ -222,7 +218,7 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <child>
-          <object class="GtkVBox" id="vbox1">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
@@ -231,7 +227,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
               </object>
@@ -247,7 +243,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
               </object>
@@ -263,7 +259,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
               </object>
@@ -279,7 +275,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="xalign">0</property>
+                <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
               </object>
@@ -300,24 +296,24 @@
         </child>
       </object>
       <packing>
-        <property name="right_attach">3</property>
+        <property name="left_attach">0</property>
         <property name="top_attach">10</property>
-        <property name="bottom_attach">11</property>
+        <property name="width">3</property>
       </packing>
     </child>
     <child>
       <object class="GtkLabel" id="compression-level-label">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="halign">start</property>
         <property name="label" translatable="yes">Co_mpression level:</property>
         <property name="use_underline">True</property>
         <property name="mnemonic_widget">compression-level-spin</property>
         <property name="xalign">0</property>
       </object>
       <packing>
+        <property name="left_attach">0</property>
         <property name="top_attach">9</property>
-        <property name="bottom_attach">10</property>
-        <property name="x_options"/>
       </packing>
     </child>
     <child>
@@ -338,9 +334,8 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="right_attach">3</property>
         <property name="top_attach">8</property>
-        <property name="bottom_attach">9</property>
+        <property name="width">3</property>
       </packing>
     </child>
   </object>

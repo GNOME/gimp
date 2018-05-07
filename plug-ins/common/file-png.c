@@ -2365,9 +2365,9 @@ save_dialog (gint32    image_ID,
 
   g_free (ui_file);
 
-  /* Table */
+  /* Grid */
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      GTK_WIDGET (gtk_builder_get_object (builder, "table")),
+                      GTK_WIDGET (gtk_builder_get_object (builder, "grid")),
                       FALSE, FALSE, 0);
 
   /* Toggles */
