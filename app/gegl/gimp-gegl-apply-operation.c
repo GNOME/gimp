@@ -77,6 +77,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                   gboolean             cancellable)
 {
   GeglNode      *gegl;
+  GeglNode      *effect;
   GeglNode      *dest_node;
   GeglNode      *operation_src_node = NULL;
   GeglRectangle  rect = { 0, };
@@ -108,7 +109,9 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   if (! gegl_node_get_parent (operation))
     gegl_node_add_child (gegl, operation);
 
-  if (src_buffer && gegl_node_has_pad (operation, "input"))
+  effect = operation;
+
+  if (src_buffer)
     {
       GeglNode *src_node;
 
@@ -147,8 +150,18 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
       operation_src_node = gegl_node_get_producer (operation, "input", NULL);
 
-      gegl_node_connect_to (src_node,  "output",
-                            operation, "input");
+      if (! gegl_node_has_pad (operation, "input"))
+        {
+          effect = gegl_node_new_child (gegl,
+                                        "operation", "gegl:over",
+                                        NULL);
+
+          gegl_node_connect_to (operation, "output",
+                                effect,    "aux");
+        }
+
+      gegl_node_connect_to (src_node, "output",
+                            effect,   "input");
     }
 
   dest_node = gegl_node_new_child (gegl,
@@ -156,7 +169,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                    "buffer",    dest_buffer,
                                    NULL);
 
-  gegl_node_connect_to (operation, "output",
+  gegl_node_connect_to (effect,    "output",
                         dest_node, "input");
 
   if (progress)
