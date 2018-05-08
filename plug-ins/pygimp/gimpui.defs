@@ -30,7 +30,7 @@
 
 (define-object ChainButton
   (in-module "Gimp")
-  (parent "GtkTable")
+  (parent "GtkGrid")
   (c-name "GimpChainButton")
   (gtype-id "GIMP_TYPE_CHAIN_BUTTON")
 )
@@ -352,7 +352,7 @@
 
 (define-object SizeEntry
   (in-module "Gimp")
-  (parent "GtkTable")
+  (parent "GtkGrid")
   (c-name "GimpSizeEntry")
   (gtype-id "GIMP_TYPE_SIZE_ENTRY")
 )

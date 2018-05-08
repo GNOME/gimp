@@ -54,7 +54,7 @@ import gtk.RadioButton as PyGtkRadioButton_Type
 import gtk.SpinButton as PyGtkSpinButton_Type
 import gtk.Entry as PyGtkEntry_Type
 import gtk.DrawingArea as PyGtkDrawingArea_Type
-import gtk.Table as PyGtkTable_Type
+import gtk.Grid as PyGtkGrid_Type
 import gtk.Frame as PyGtkFrame_Type
 import gtk.HBox as PyGtkHBox_Type
 import gtk.VBox as PyGtkVBox_Type
