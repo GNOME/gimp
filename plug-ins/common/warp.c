@@ -400,7 +400,6 @@ warp_dialog (GimpDrawable *drawable)
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  // gtk_table_set_col_spacing (GTK_GRID (grid), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
@@ -542,7 +541,6 @@ warp_dialog (GimpDrawable *drawable)
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  // gtk_table_set_col_spacing (GTK_GRID (grid), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
@@ -632,7 +630,6 @@ warp_dialog (GimpDrawable *drawable)
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  // gtk_table_set_col_spacing (GTK_GRID (grid), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
