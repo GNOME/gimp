@@ -630,7 +630,6 @@ dialog (gint32        image_ID,
   GtkWidget      *space;
   GtkWidget      *offset;
   GtkWidget      *chain_button;
-  GtkWidget      *table;
   GimpUnit        unit;
   gdouble         xres;
   gdouble         yres;
@@ -863,17 +862,11 @@ dialog (gint32        image_ID,
                                         1, 0, 0.0);
   gtk_size_group_add_widget (group, label);
 
-  /*  this is a weird hack: we put a table into the offset table  */
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_grid_attach (GTK_GRID (offset), table, 1, 2, 3, 1);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 10);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
-
   /*  put a chain_button under the offset_entries  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (grid_cfg.hoffset == grid_cfg.voffset)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (offset), chain_button, 1, 2, 2, 1);
   gtk_widget_show (chain_button);
 
   /* connect to the 'value-changed' and "unit-changed" signals because
@@ -894,7 +887,7 @@ dialog (gint32        image_ID,
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
   if (gimp_rgba_distance (&grid_cfg.hcolor, &grid_cfg.vcolor) < 0.0001)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 2, 3);
+  gtk_grid_attach (GTK_GRID (offset), chain_button, 1, 4, 2, 1);
   gtk_widget_show (chain_button);
 
   /*  attach color selectors  */
@@ -903,7 +896,7 @@ dialog (gint32        image_ID,
                                          &grid_cfg.hcolor,
                                          GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (hcolor_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), hcolor_button, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (offset), hcolor_button, 1, 3, 1, 1);
   gtk_widget_show (hcolor_button);
 
   config = gimp_get_color_configuration ();
@@ -925,7 +918,7 @@ dialog (gint32        image_ID,
                                          &grid_cfg.vcolor,
                                          GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (vcolor_button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), vcolor_button, 1, 2, 1, 2);
+  gtk_grid_attach (GTK_GRID (offset), vcolor_button, 2, 3, 1, 1);
   gtk_widget_show (vcolor_button);
 
   gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (vcolor_button),
@@ -946,7 +939,7 @@ dialog (gint32        image_ID,
                                   &grid_cfg.icolor,
                                   GIMP_COLOR_AREA_SMALL_CHECKS);
   gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, 1, 2);
+  gtk_grid_attach (GTK_GRID (offset), button, 3, 3, 1, 1);
   gtk_widget_show (button);
 
   gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (button),
@@ -959,8 +952,6 @@ dialog (gint32        image_ID,
   g_signal_connect_swapped (button, "color-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-
-  gtk_widget_show (table);
 
   gtk_widget_show (dlg);
 
