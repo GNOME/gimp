@@ -71,10 +71,10 @@ static gboolean            shoot_delay_timeout (gpointer          data);
 
 /* Global Variables */
 
-static ScreenshotBackend       backend            = SCREENSHOT_BACKEND_NONE;
-static ScreenshotCapabilities  capabilities       = 0;
-static GtkWidget              *select_delay_table = NULL;
-static GtkWidget              *shot_delay_table   = NULL;
+static ScreenshotBackend       backend           = SCREENSHOT_BACKEND_NONE;
+static ScreenshotCapabilities  capabilities      = 0;
+static GtkWidget              *select_delay_grid = NULL;
+static GtkWidget              *shot_delay_grid   = NULL;
 
 static ScreenshotValues shootvals =
 {
@@ -428,30 +428,30 @@ shoot_radio_button_toggled (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, &shootvals.shoot_type);
 
-  if (select_delay_table)
+  if (select_delay_grid)
     {
       if (shootvals.shoot_type == SHOOT_ROOT ||
           (shootvals.shoot_type == SHOOT_WINDOW &&
            ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW)))
         {
-          gtk_widget_hide (select_delay_table);
+          gtk_widget_hide (select_delay_grid);
         }
       else
         {
-          gtk_widget_show (select_delay_table);
+          gtk_widget_show (select_delay_grid);
         }
     }
-  if (shot_delay_table)
+  if (shot_delay_grid)
     {
       if (shootvals.shoot_type == SHOOT_WINDOW        &&
           (capabilities & SCREENSHOT_CAN_PICK_WINDOW) &&
           ! (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
         {
-          gtk_widget_hide (shot_delay_table);
+          gtk_widget_hide (shot_delay_grid);
         }
       else
         {
-          gtk_widget_show (shot_delay_table);
+          gtk_widget_show (shot_delay_grid);
         }
     }
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
@@ -471,7 +471,7 @@ shoot_dialog (GdkMonitor **monitor)
   GtkWidget     *button;
   GtkWidget     *toggle;
   GtkWidget     *spinner;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GSList        *radio_group = NULL;
   GtkAdjustment *adj;
   gboolean       run;
@@ -667,20 +667,19 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_widget_show (vbox);
 
   /* Selection delay  */
-  table = gtk_table_new (2, 3, FALSE);
-  select_delay_table = table;
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  grid = gtk_grid_new ();
+  select_delay_grid = grid;
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   /* Check if this delay must be hidden from start. */
   if (shootvals.shoot_type == SHOOT_REGION ||
       (shootvals.shoot_type == SHOOT_WINDOW &&
        capabilities & SCREENSHOT_CAN_PICK_WINDOW))
     {
-      gtk_widget_show (select_delay_table);
+      gtk_widget_show (select_delay_grid);
     }
 
   label = gtk_label_new (_("Selection delay: "));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   adj = (GtkAdjustment *)
@@ -688,8 +687,7 @@ shoot_dialog (GdkMonitor **monitor)
                         0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
-  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
@@ -698,14 +696,13 @@ shoot_dialog (GdkMonitor **monitor)
 
   /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+  gtk_widget_set_hexpand (label, TRUE);
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Selection delay hints  */
-  gtk_table_attach (GTK_TABLE (table), notebook1, 0, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), notebook1, 0, 1, 3, 1);
   gtk_widget_show (notebook1);
 
   /* No selection delay for full-screen. */
@@ -731,19 +728,18 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook1), shootvals.shoot_type);
 
   /* Screenshot delay  */
-  table = gtk_table_new (2, 3, FALSE);
-  shot_delay_table = table;
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  grid = gtk_grid_new ();
+  shot_delay_grid = grid;
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   if (shootvals.shoot_type != SHOOT_WINDOW          ||
       ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW) ||
       (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
     {
-      gtk_widget_show (table);
+      gtk_widget_show (grid);
     }
 
   label = gtk_label_new (_("Screenshot delay: "));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   adj = (GtkAdjustment *)
@@ -751,8 +747,7 @@ shoot_dialog (GdkMonitor **monitor)
                         0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
-  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
@@ -761,14 +756,13 @@ shoot_dialog (GdkMonitor **monitor)
 
   /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+  gtk_widget_set_hexpand (label, TRUE);
   gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Screenshot delay hints  */
-  gtk_table_attach (GTK_TABLE (table), notebook2, 0, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), notebook2, 0, 1, 3, 1);
   gtk_widget_show (notebook2);
 
   shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_ROOT,
