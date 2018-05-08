@@ -3370,7 +3370,7 @@ load_dialog (const gchar *filename)
   GtkWidget     *hbox;
   GtkWidget     *frame;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
   GtkWidget     *entry    = NULL;
@@ -3436,20 +3436,20 @@ load_dialog (const gchar *filename)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Resolution/Width/Height/Pages labels */
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (plvals.resolution,
                                               MIN_RESOLUTION, MAX_RESOLUTION,
                                               1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Resolution:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Resolution:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (resolution_change_callback),
@@ -3463,9 +3463,9 @@ load_dialog (const gchar *filename)
                                               1, 10, 0);
   ps_width_spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Width:"), 0.0, 0.5,
-                             ps_width_spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Width:"), 0.0, 0.5,
+                            ps_width_spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -3476,9 +3476,9 @@ load_dialog (const gchar *filename)
                                               1, 10, 0);
   ps_height_spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Height:"), 0.0, 0.5,
-                             ps_height_spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("_Height:"), 0.0, 0.5,
+                            ps_height_spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -3489,9 +3489,9 @@ load_dialog (const gchar *filename)
       entry = gtk_entry_new ();
       gtk_widget_set_size_request (entry, 80, -1);
       gtk_entry_set_text (GTK_ENTRY (entry), plvals.pages);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                                 _("Pages:"), 0.0, 0.5,
-                                 entry, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                                _("Pages:"), 0.0, 0.5,
+                                entry, 1);
 
       g_signal_connect (entry, "changed",
                         G_CALLBACK (load_pages_entry_callback),
@@ -3507,9 +3507,9 @@ load_dialog (const gchar *filename)
                                       GIMP_PAGE_SELECTOR_TARGET_IMAGES,
                                       _("Images"));
       gtk_combo_box_set_active (GTK_COMBO_BOX (target), (int) ps_pagemode);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                                 _("Open as"), 0.0, 0.5,
-                                 target, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                                _("Open as"), 0.0, 0.5,
+                                target, 1);
     }
 
   toggle = gtk_check_button_new_with_label (_("Try Bounding Box"));
@@ -3624,7 +3624,7 @@ save_dialog (void)
   GtkWidget      *frame, *uframe;
   GtkWidget      *hbox, *vbox;
   GtkWidget      *main_vbox[2];
-  GtkWidget      *table;
+  GtkWidget      *grid;
   GtkWidget      *spinbutton;
   GtkAdjustment  *adj;
   gint            j;
@@ -3657,20 +3657,20 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Width/Height/X-/Y-offset labels */
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   vals->adjustment[0] = (GtkAdjustment *)
     gtk_adjustment_new (psvals.width,
                         1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (vals->adjustment[0], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Width:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Width:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (vals->adjustment[0], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.width);
@@ -3680,9 +3680,9 @@ save_dialog (void)
                         1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (vals->adjustment[1], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Height:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Height:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (vals->adjustment[1], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.height);
@@ -3692,9 +3692,9 @@ save_dialog (void)
                         0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (vals->adjustment[2], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_X offset:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("_X offset:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (vals->adjustment[2], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.x_offset);
@@ -3704,9 +3704,9 @@ save_dialog (void)
                         0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (vals->adjustment[3], 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("_Y offset:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("_Y offset:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (vals->adjustment[3], "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
@@ -3792,22 +3792,22 @@ save_dialog (void)
                     &psvals.preview);
 
   /* Preview size label/entry */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   g_object_bind_property (toggle, "active",
-                          table,  "sensitive",
+                          grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (psvals.preview_size,
                                               0, 1024, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Preview _size:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Preview _size:"), 1.0, 0.5,
+                            spinbutton, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
