@@ -778,8 +778,6 @@ load_dialog (const gchar  *filename,
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  // gtk_table_set_row_spacing (GTK_GRID (grid), 0, 2);
-  // gtk_table_set_row_spacing (GTK_GRID (grid), 2, 2);
   gtk_box_pack_start (GTK_BOX (hbox), grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
@@ -846,8 +844,6 @@ load_dialog (const gchar  *filename,
   gtk_widget_show (hbox);
 
   grid2 = gtk_grid_new ();
-  // gtk_table_set_col_spacing (GTK_GRID (grid2), 0, 2);
-  // gtk_table_set_row_spacing (GTK_GRID (grid2), 0, 4);
   gtk_box_pack_start (GTK_BOX (hbox), grid2, FALSE, FALSE, 0);
 
   xadj = (GtkAdjustment *)
