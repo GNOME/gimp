@@ -554,16 +554,16 @@ static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
                                      GtkWidget *entry)
 {
-  GtkWidget *dialog;
-  GtkWidget *prefs_box;
-  GtkWidget *image;
+  GtkWidget   *dialog;
+  GtkWidget   *prefs_box;
+  const gchar *icon_name;
 
   dialog = gtk_widget_get_toplevel (entry);
 
   prefs_box = g_object_get_data (G_OBJECT (dialog), "prefs-box");
-  image     = gimp_prefs_box_get_image (GIMP_PREFS_BOX (prefs_box));
+  icon_name = gimp_prefs_box_get_current_icon_name (GIMP_PREFS_BOX (prefs_box));
 
-  resolution_calibrate_dialog (entry, gtk_image_get_pixbuf (GTK_IMAGE (image)));
+  resolution_calibrate_dialog (entry, icon_name);
 }
 
 static void
@@ -1023,16 +1023,11 @@ prefs_help_func (const gchar *help_id,
                  gpointer     help_data)
 {
   GtkWidget *prefs_box;
-  GtkWidget *notebook;
-  GtkWidget *page;
-  gint       page_num;
 
   prefs_box = g_object_get_data (G_OBJECT (help_data), "prefs-box");
-  notebook  = gimp_prefs_box_get_notebook (GIMP_PREFS_BOX (prefs_box));
-  page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
-  page      = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
-  help_id = g_object_get_data (G_OBJECT (page), "gimp-help-id");
+  help_id = gimp_prefs_box_get_current_help_id (GIMP_PREFS_BOX (prefs_box));
+
   gimp_standard_help_func (help_id, NULL);
 }
 
@@ -1457,7 +1452,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   "gimp-prefs-import-export",
                                   _("Image Import & Export"),
                                   _("Image Import & Export"),
-                                  GIMP_HELP_PREFS_DIALOG,
+                                  GIMP_HELP_PREFS_IMPORT_EXPORT,
                                   NULL,
                                   &top_iter);
 
@@ -1539,7 +1534,7 @@ prefs_dialog_new (Gimp       *gimp,
                                       "gimp-prefs-playground",
                                       _("Experimental Playground"),
                                       _("Playground"),
-                                      GIMP_HELP_PREFS_DIALOG,
+                                      GIMP_HELP_PREFS_PLAYGROUND,
                                       NULL,
                                       &top_iter);
 
@@ -2943,7 +2938,7 @@ prefs_dialog_new (Gimp       *gimp,
                                   "gimp-prefs-image-windows-snapping",
                                   _("Image Window Snapping Behavior"),
                                   _("Snapping"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE,
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW_SNAPPING,
                                   &top_iter,
                                   &child_iter);
 

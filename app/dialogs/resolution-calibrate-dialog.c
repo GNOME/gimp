@@ -39,15 +39,15 @@ static gint       ruler_height    = 1;
 /**
  * resolution_calibrate_dialog:
  * @resolution_entry: a #GimpSizeEntry to connect the dialog to
- * @pixbuf:           an optional #GdkPixbuf for the upper left corner
+ * @icon_name:        an optional icon-name for the upper left corner
  *
  * Displays a dialog that allows the user to interactively determine
  * her monitor resolution. This dialog runs it's own GTK main loop and
  * is connected to a #GimpSizeEntry handling the resolution to be set.
  **/
 void
-resolution_calibrate_dialog (GtkWidget *resolution_entry,
-                             GdkPixbuf *pixbuf)
+resolution_calibrate_dialog (GtkWidget   *resolution_entry,
+                             const gchar *icon_name)
 {
   GtkWidget    *dialog;
   GtkWidget    *table;
@@ -61,7 +61,6 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (gtk_widget_get_realized (resolution_entry));
-  g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
 
   /*  this dialog can only exist once  */
   if (calibrate_entry)
@@ -97,9 +96,10 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  if (pixbuf)
+  if (icon_name)
     {
-      GtkWidget *image = gtk_image_new_from_pixbuf (pixbuf);
+      GtkWidget *image = gtk_image_new_from_icon_name (icon_name,
+                                                       GTK_ICON_SIZE_DIALOG);
 
       gtk_table_attach (GTK_TABLE (table), image, 0, 1, 0, 1,
                         GTK_SHRINK, GTK_SHRINK, 4, 4);

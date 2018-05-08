@@ -30,11 +30,14 @@
 #define GIMP_PREFS_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREFS_BOX, GimpPrefsBoxClass))
 
 
-typedef struct _GimpPrefsBoxClass GimpPrefsBoxClass;
+typedef struct _GimpPrefsBoxPrivate GimpPrefsBoxPrivate;
+typedef struct _GimpPrefsBoxClass   GimpPrefsBoxClass;
 
 struct _GimpPrefsBox
 {
-  GtkBox  parent_instance;
+  GtkBox               parent_instance;
+
+  GimpPrefsBoxPrivate *priv;
 };
 
 struct _GimpPrefsBoxClass
@@ -43,28 +46,29 @@ struct _GimpPrefsBoxClass
 };
 
 
-GType       gimp_prefs_box_get_type            (void) G_GNUC_CONST;
+GType         gimp_prefs_box_get_type              (void) G_GNUC_CONST;
 
-GtkWidget * gimp_prefs_box_new                 (void);
+GtkWidget   * gimp_prefs_box_new                   (void);
 
-GtkWidget * gimp_prefs_box_add_page            (GimpPrefsBox *box,
-                                                const gchar  *icon_name,
-                                                const gchar  *notebook_label,
-                                                const gchar  *tree_label,
-                                                const gchar  *help_id,
-                                                GtkTreeIter  *parent,
-                                                GtkTreeIter  *iter);
+GtkWidget   * gimp_prefs_box_add_page              (GimpPrefsBox *box,
+                                                    const gchar  *icon_name,
+                                                    const gchar  *notebook_label,
+                                                    const gchar  *tree_label,
+                                                    const gchar  *help_id,
+                                                    GtkTreeIter  *parent,
+                                                    GtkTreeIter  *iter);
 
-void        gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
-                                                GtkWidget    *page,
-                                                gboolean      scrollable);
-GtkWidget * gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
-                                                GtkWidget    *page,
-                                                const gchar  *label);
+const gchar * gimp_prefs_box_get_current_icon_name (GimpPrefsBox *box);
+const gchar * gimp_prefs_box_get_current_help_id   (GimpPrefsBox *box);
 
-GtkWidget * gimp_prefs_box_get_tree_view       (GimpPrefsBox *box);
-GtkWidget * gimp_prefs_box_get_notebook        (GimpPrefsBox *box);
-GtkWidget * gimp_prefs_box_get_image           (GimpPrefsBox *box);
+void          gimp_prefs_box_set_page_scrollable   (GimpPrefsBox *box,
+                                                    GtkWidget    *page,
+                                                    gboolean      scrollable);
+GtkWidget   * gimp_prefs_box_set_page_resettable   (GimpPrefsBox *box,
+                                                    GtkWidget    *page,
+                                                    const gchar  *label);
+
+GtkWidget   * gimp_prefs_box_get_tree_view         (GimpPrefsBox *box);
 
 
 #endif  /*  __GIMP_PREFS_BOX_H__  */

@@ -38,13 +38,13 @@ enum
   COLUMN_TREE_ICON_NAME,
   COLUMN_TREE_ICON_SIZE,
   COLUMN_TREE_LABEL,
-  COLUMN_NOTEBOOK_ICON_NAME,
-  COLUMN_NOTEBOOK_ICON_SIZE,
-  COLUMN_NOTEBOOK_LABEL,
+  COLUMN_PAGE_ICON_NAME,
+  COLUMN_PAGE_ICON_SIZE,
+  COLUMN_PAGE_TITLE,
+  COLUMN_PAGE_HELP_ID,
   COLUMN_PAGE_INDEX
 };
 
-typedef struct _GimpPrefsBoxPrivate GimpPrefsBoxPrivate;
 
 struct _GimpPrefsBoxPrivate
 {
@@ -55,15 +55,17 @@ struct _GimpPrefsBoxPrivate
   GtkWidget    *image;
 
   gint          tree_icon_size;
-  gint          notebook_icon_size;
+  gint          page_icon_size;
 
   gint          page_index;
+  gchar        *page_icon_name;
+  gchar        *page_help_id;
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_PREFS_BOX, \
-                                                       GimpPrefsBoxPrivate)
+#define GET_PRIVATE(obj) (((GimpPrefsBox *) (obj))->priv)
 
+
+static void   gimp_prefs_box_finalize               (GObject          *object);
 
 static void   gimp_prefs_box_tree_select_callback   (GtkTreeSelection *sel,
                                                      GimpPrefsBox     *box);
@@ -81,13 +83,17 @@ G_DEFINE_TYPE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
 static void
 gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gimp_prefs_box_finalize;
+
   g_type_class_add_private (klass, sizeof (GimpPrefsBoxPrivate));
 }
 
 static void
 gimp_prefs_box_init (GimpPrefsBox *box)
 {
-  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  GimpPrefsBoxPrivate *private;
   GtkTreeViewColumn   *column;
   GtkCellRenderer     *cell;
   GtkTreeSelection    *sel;
@@ -96,8 +102,14 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *ebox;
   GtkWidget           *vbox;
 
-  private->tree_icon_size     = GTK_ICON_SIZE_BUTTON;
-  private->notebook_icon_size = GTK_ICON_SIZE_DIALOG;
+  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
+                                           GIMP_TYPE_PREFS_BOX,
+                                           GimpPrefsBoxPrivate);
+
+  private = box->priv;
+
+  private->tree_icon_size = GTK_ICON_SIZE_BUTTON;
+  private->page_icon_size = GTK_ICON_SIZE_DIALOG;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -114,12 +126,13 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  private->store = gtk_tree_store_new (7,
+  private->store = gtk_tree_store_new (8,
                                        G_TYPE_STRING,
                                        G_TYPE_INT,
                                        G_TYPE_STRING,
                                        G_TYPE_STRING,
                                        G_TYPE_INT,
+                                       G_TYPE_STRING,
                                        G_TYPE_STRING,
                                        G_TYPE_INT);
   private->tree_view =
@@ -195,41 +208,52 @@ gimp_prefs_box_init (GimpPrefsBox *box)
 }
 
 static void
+gimp_prefs_box_finalize (GObject *object)
+{
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (object);
+
+  g_clear_pointer (&private->page_icon_name, g_free);
+  g_clear_pointer (&private->page_help_id,   g_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
                                      GimpPrefsBox     *box)
 {
   GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeModel        *model;
   GtkTreeIter          iter;
-  gchar               *notebook_text;
-  gchar               *notebook_icon_name;
-  gint                 notebook_icon_size;
-  gint                 notebook_index;
+  gchar               *page_title;
+  gchar               *page_icon_name;
+  gint                 page_icon_size;
+  gint                 page_index;
 
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_NOTEBOOK_ICON_NAME, &notebook_icon_name,
-                      COLUMN_NOTEBOOK_ICON_SIZE, &notebook_icon_size,
-                      COLUMN_NOTEBOOK_LABEL,     &notebook_text,
-                      COLUMN_PAGE_INDEX,         &notebook_index,
+                      COLUMN_PAGE_ICON_NAME, &page_icon_name,
+                      COLUMN_PAGE_ICON_SIZE, &page_icon_size,
+                      COLUMN_PAGE_TITLE,     &page_title,
+                      COLUMN_PAGE_INDEX,     &page_index,
                       -1);
 
-  gtk_label_set_text (GTK_LABEL (private->label), notebook_text);
-  g_free (notebook_text);
+  gtk_label_set_text (GTK_LABEL (private->label), page_title);
+  g_free (page_title);
 
   gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                notebook_icon_name,
-                                notebook_icon_size);
-  g_free (notebook_icon_name);
+                                page_icon_name,
+                                page_icon_size);
+  g_free (page_icon_name);
 
   g_signal_handlers_block_by_func (private->notebook,
                                    gimp_prefs_box_notebook_page_callback,
                                    sel);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
-                                 notebook_index);
+                                 page_index);
 
   g_signal_handlers_unblock_by_func (private->notebook,
                                      gimp_prefs_box_notebook_page_callback,
@@ -310,7 +334,7 @@ gimp_prefs_box_new (void)
 GtkWidget *
 gimp_prefs_box_add_page (GimpPrefsBox      *box,
                          const gchar       *icon_name,
-                         const gchar       *notebook_label,
+                         const gchar       *page_title,
                          const gchar       *tree_label,
                          const gchar       *help_id,
                          GtkTreeIter       *parent,
@@ -349,16 +373,69 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 
   gtk_tree_store_append (private->store, iter, parent);
   gtk_tree_store_set (private->store, iter,
-                      COLUMN_TREE_ICON_NAME,     icon_name,
-                      COLUMN_TREE_ICON_SIZE,     private->tree_icon_size,
-                      COLUMN_TREE_LABEL,         tree_label,
-                      COLUMN_NOTEBOOK_ICON_NAME, icon_name,
-                      COLUMN_NOTEBOOK_ICON_SIZE, private->notebook_icon_size,
-                      COLUMN_NOTEBOOK_LABEL ,    notebook_label,
-                      COLUMN_PAGE_INDEX,         private->page_index++,
+                      COLUMN_TREE_ICON_NAME, icon_name,
+                      COLUMN_TREE_ICON_SIZE, private->tree_icon_size,
+                      COLUMN_TREE_LABEL,     tree_label,
+                      COLUMN_PAGE_ICON_NAME, icon_name,
+                      COLUMN_PAGE_ICON_SIZE, private->page_icon_size,
+                      COLUMN_PAGE_TITLE ,    page_title,
+                      COLUMN_PAGE_HELP_ID,   help_id,
+                      COLUMN_PAGE_INDEX,     private->page_index++,
                       -1);
 
   return vbox;
+}
+
+const gchar *
+gimp_prefs_box_get_current_icon_name (GimpPrefsBox *box)
+{
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  GtkTreeSelection    *sel;
+  GtkTreeModel        *model;
+  GtkTreeIter          iter;
+
+  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
+
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    {
+      g_clear_pointer (&private->page_icon_name, g_free);
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_PAGE_ICON_NAME, &private->page_icon_name,
+                          -1);
+
+      return private->page_icon_name;
+    }
+
+  return NULL;
+}
+
+const gchar *
+gimp_prefs_box_get_current_help_id (GimpPrefsBox *box)
+{
+  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  GtkTreeSelection    *sel;
+  GtkTreeModel        *model;
+  GtkTreeIter          iter;
+
+  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
+
+  if (gtk_tree_selection_get_selected (sel, &model, &iter))
+    {
+      g_clear_pointer (&private->page_help_id, g_free);
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_PAGE_HELP_ID, &private->page_help_id,
+                          -1);
+
+      return private->page_help_id;
+    }
+
+  return NULL;
 }
 
 void
@@ -428,20 +505,4 @@ gimp_prefs_box_get_tree_view (GimpPrefsBox *box)
   g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
 
   return GET_PRIVATE (box)->tree_view;
-}
-
-GtkWidget *
-gimp_prefs_box_get_notebook (GimpPrefsBox *box)
-{
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
-
-  return GET_PRIVATE (box)->notebook;
-}
-
-GtkWidget *
-gimp_prefs_box_get_image (GimpPrefsBox *box)
-{
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
-
-  return GET_PRIVATE (box)->image;
 }

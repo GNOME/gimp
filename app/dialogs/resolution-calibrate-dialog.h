@@ -19,8 +19,8 @@
 #define __RESOLUTION_CALIBRATE_DIALOG_H__
 
 
-void  resolution_calibrate_dialog (GtkWidget  *resolution_entry,
-                                   GdkPixbuf  *pixbuf);
+void  resolution_calibrate_dialog (GtkWidget   *resolution_entry,
+                                   const gchar *icon_name);
 
 
 #endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */
