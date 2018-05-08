@@ -168,12 +168,7 @@ gimp_symmetry_finalize (GObject *object)
 {
   GimpSymmetry *sym = GIMP_SYMMETRY (object);
 
-  g_clear_object (&sym->drawable);
-
-  g_clear_pointer (&sym->origin, g_free);
-
-  g_list_free_full (sym->strokes, g_free);
-  sym->strokes = NULL;
+  gimp_symmetry_clear_origin (sym);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -333,6 +328,25 @@ gimp_symmetry_set_origin (GimpSymmetry *sym,
   sym->strokes = NULL;
 
   GIMP_SYMMETRY_GET_CLASS (sym)->update_strokes (sym, drawable, origin);
+}
+
+/**
+ * gimp_symmetry_clear_origin:
+ * @sym: the #GimpSymmetry
+ *
+ * Clear the symmetry's origin coordinates and drawable.
+ **/
+void
+gimp_symmetry_clear_origin (GimpSymmetry *sym)
+{
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+
+  g_clear_object (&sym->drawable);
+
+  g_clear_pointer (&sym->origin, g_free);
+
+  g_list_free_full (sym->strokes, g_free);
+  sym->strokes = NULL;
 }
 
 /**

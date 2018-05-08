@@ -335,6 +335,7 @@ gimp_paint_core_paint (GimpPaintCore    *core,
                          paint_options,
                          sym, paint_state, time);
 
+      gimp_symmetry_clear_origin (sym);
       g_object_unref (sym);
 
       core_class->post_paint (core, drawable,

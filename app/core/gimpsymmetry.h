@@ -80,6 +80,7 @@ void           gimp_symmetry_set_stateful   (GimpSymmetry       *symmetry,
 void           gimp_symmetry_set_origin     (GimpSymmetry       *symmetry,
                                              GimpDrawable       *drawable,
                                              GimpCoords         *origin);
+void           gimp_symmetry_clear_origin   (GimpSymmetry       *symmetry);
 
 GimpCoords   * gimp_symmetry_get_origin     (GimpSymmetry       *symmetry);
 gint           gimp_symmetry_get_size       (GimpSymmetry       *symmetry);
