@@ -633,7 +633,7 @@ edit_callback (GtkWidget *widget,
     {
       GtkWidget     *main_vbox;
       GtkWidget     *frame;
-      GtkWidget     *table;
+      GtkWidget     *grid;
       GtkWidget     *vbox;
       GtkWidget     *hbox;
       GtkWidget     *button;
@@ -669,11 +669,11 @@ edit_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
 
       for (i = 0; i < 3; i++)
         for (j = 0; j < 3; j++)
@@ -685,9 +685,10 @@ edit_callback (GtkWidget *widget,
                                          EDIT_PREVIEW_SIZE,
                                          EDIT_PREVIEW_SIZE);
             button = gtk_button_new ();
+            gtk_widget_set_hexpand (button, TRUE);
+            gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
             gtk_container_add (GTK_CONTAINER(button), edit_previews[mut]);
-            gtk_table_attach (GTK_TABLE (table), button, i, i+1, j, j+1,
-                              GTK_EXPAND, GTK_EXPAND, 0, 0);
+            gtk_grid_attach (GTK_GRID (grid), button, i, j, 1, 1);
             gtk_widget_show (edit_previews[mut]);
 
             gtk_widget_show (button);
@@ -709,17 +710,17 @@ edit_callback (GtkWidget *widget,
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-      gtk_widget_show(table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+      gtk_widget_show(grid);
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                  _("_Speed:"), SCALE_WIDTH, 0,
-                                  pick_speed,
-                                  0.05, 0.5, 0.01, 0.1, 2,
-                                  TRUE, 0, 0,
-                                  NULL, NULL);
+      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                       _("_Speed:"), SCALE_WIDTH, 0,
+                                       pick_speed,
+                                       0.05, 0.5, 0.01, 0.1, 2,
+                                       TRUE, 0, 0,
+                                       NULL, NULL);
 
       g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
@@ -959,7 +960,7 @@ flame_dialog (void)
   GtkWidget     *frame;
   GtkWidget     *abox;
   GtkWidget     *button;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *box;
   GtkAdjustment *adj;
   gboolean       run;
@@ -1071,19 +1072,18 @@ flame_dialog (void)
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
   gtk_widget_show (box);
 
-  table = gtk_table_new (6, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (box), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Brightness:"), SCALE_WIDTH, 5,
-                              config.cp.brightness,
-                              0, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Brightness:"), SCALE_WIDTH, 5,
+                                   config.cp.brightness,
+                                   0, 5, 0.1, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1092,12 +1092,12 @@ flame_dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("Co_ntrast:"), SCALE_WIDTH, 5,
-                              config.cp.contrast,
-                              0, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                   _("Co_ntrast:"), SCALE_WIDTH, 5,
+                                   config.cp.contrast,
+                                   0, 5, 0.1, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1106,12 +1106,15 @@ flame_dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                              _("_Gamma:"), SCALE_WIDTH, 5,
-                              config.cp.gamma,
-                              1, 5, 0.1, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+                                   _("_Gamma:"), SCALE_WIDTH, 5,
+                                   config.cp.gamma,
+                                   1, 5, 0.1, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 2), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 2), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 2), 6);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1120,34 +1123,34 @@ flame_dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                              _("Sample _density:"), SCALE_WIDTH, 5,
-                              config.cp.sample_density,
-                              0.1, 20, 1, 5, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
+                                   _("Sample _density:"), SCALE_WIDTH, 5,
+                                   config.cp.sample_density,
+                                   0.1, 20, 1, 5, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config.cp.sample_density);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                              _("Spa_tial oversample:"), SCALE_WIDTH, 5,
-                              config.cp.spatial_oversample,
-                              1, 4, 0.01, 0.1, 0,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
+                                   _("Spa_tial oversample:"), SCALE_WIDTH, 5,
+                                   config.cp.spatial_oversample,
+                                   1, 4, 0.01, 0.1, 0,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.cp.spatial_oversample);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                              _("Spatial _filter radius:"), SCALE_WIDTH, 5,
-                              config.cp.spatial_filter_radius,
-                              0, 4, 0.2, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 5,
+                                   _("Spatial _filter radius:"), SCALE_WIDTH, 5,
+                                   config.cp.spatial_filter_radius,
+                                   0, 4, 0.2, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1225,21 +1228,21 @@ flame_dialog (void)
     set_cmap_preview ();
   }
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
 
   label = gtk_label_new_with_mnemonic(_("C_amera"));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
-  gtk_widget_show (table);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), grid, label);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Zoom:"), SCALE_WIDTH, 0,
-                              config.cp.zoom,
-                              -4, 4, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Zoom:"), SCALE_WIDTH, 0,
+                                   config.cp.zoom,
+                                   -4, 4, 0.5, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1248,12 +1251,12 @@ flame_dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("_X:"), SCALE_WIDTH, 0,
-                              config.cp.center[0],
-                              -2, 2, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                   _("_X:"), SCALE_WIDTH, 0,
+                                   config.cp.center[0],
+                                   -2, 2, 0.5, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -1262,12 +1265,12 @@ flame_dialog (void)
                     G_CALLBACK (set_flame_preview),
                     NULL);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                              _("_Y:"), SCALE_WIDTH, 0,
-                              config.cp.center[1],
-                              -2, 2, 0.5, 1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+                                   _("_Y:"), SCALE_WIDTH, 0,
+                                   config.cp.center[1],
+                                   -2, 2, 0.5, 1, 2,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
