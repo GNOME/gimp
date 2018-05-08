@@ -423,7 +423,7 @@ dialog (void)
   GtkWidget     *dialog;
   GtkWidget     *hbox;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *frame;
   GtkWidget     *button;
   GtkWidget     *combo;
@@ -457,15 +457,14 @@ dialog (void)
   frame = gimp_frame_new (_("Curl Location"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (3, 2, TRUE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   curl_image = gtk_image_new ();
 
-  gtk_table_attach (GTK_TABLE (table), curl_image, 0, 2, 1, 2,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), curl_image, 0, 1, 2, 1);
   gtk_widget_show (curl_image);
 
   curl_pixbuf_update ();
@@ -495,12 +494,11 @@ dialog (void)
         g_object_set_data (G_OBJECT (button),
                            "gimp-item-data", GINT_TO_POINTER (i));
 
-        gtk_table_attach (GTK_TABLE (table), button,
-                          CURL_EDGE_LEFT  (i) ? 0 : 1,
-                          CURL_EDGE_LEFT  (i) ? 1 : 2,
-                          CURL_EDGE_UPPER (i) ? 0 : 2,
-                          CURL_EDGE_UPPER (i) ? 1 : 3,
-                          GTK_FILL | GTK_EXPAND, GTK_SHRINK, 0, 0);
+        gtk_grid_attach (GTK_GRID (grid), button,
+                         CURL_EDGE_LEFT  (i) ? 0 : 1,
+                         CURL_EDGE_UPPER (i) ? 0 : 2,
+                         1, 1);
+                         // GTK_FILL | GTK_EXPAND, GTK_SHRINK, 0, 0);
         gtk_widget_show (button);
 
         g_signal_connect (button, "toggled",
@@ -513,7 +511,7 @@ dialog (void)
       }
   }
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   frame = gimp_frame_new (_("Curl Orientation"));
@@ -598,17 +596,17 @@ dialog (void)
 
   gtk_widget_show (dialog);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                     _("_Opacity:"), 100, 0,
-                                     curl.opacity * 100.0, 0.0, 100.0,
-                                     1.0, 1.0, 0.0,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  adjustment = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                          _("_Opacity:"), 100, 0,
+                                          curl.opacity * 100.0, 0.0, 100.0,
+                                          1.0, 1.0, 0.0,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (dialog_scale_update),
                     &curl.opacity);
