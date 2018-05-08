@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-06 11:14+0000\n"
-"PO-Revision-Date: 2018-05-06 17:44+0200\n"
+"POT-Creation-Date: 2018-05-07 20:53+0000\n"
+"PO-Revision-Date: 2018-05-08 14:22+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -16914,7 +16914,7 @@ msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
 #: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
-#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:277
+#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
 #: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
@@ -17070,7 +17070,7 @@ msgid "Click-Drag to rotate"
 msgstr "Klicka och dra för att rotera"
 
 #: ../app/display/gimptoolgyroscope.c:717 ../app/display/gimptoolline.c:1490
-#: ../app/tools/gimppainttool.c:569
+#: ../app/tools/gimppainttool.c:582
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -18384,7 +18384,7 @@ msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 msgid "No paint dynamics available for use with this tool."
 msgstr "Ingen målningsdynamik tillgänglig för detta verktyg."
 
-#: ../app/paint/gimpclone.c:87 ../app/tools/gimpclonetool.c:56
+#: ../app/paint/gimpclone.c:87 ../app/tools/gimpclonetool.c:62
 msgid "Clone"
 msgstr "Klona"
 
@@ -18421,7 +18421,7 @@ msgstr "Typ"
 msgid "Exposure"
 msgstr "Exponering"
 
-#: ../app/paint/gimperaser.c:64 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:64 ../app/tools/gimperasertool.c:69
 msgid "Eraser"
 msgstr "Suddgummi"
 
@@ -18437,7 +18437,7 @@ msgstr "Läk"
 msgid "Healing does not operate on indexed layers."
 msgstr "Läkning fungerar inte på indexerade lager."
 
-#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:67
 msgid "Ink"
 msgstr "Bläck"
 
@@ -18514,7 +18514,7 @@ msgstr "Ingen suddningseffekt"
 msgid "Never decrease alpha of existing pixels"
 msgstr "Minska inte alfa för existerande bildpunkter"
 
-#: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
 msgstr "Pensel"
 
@@ -19283,7 +19283,7 @@ msgstr ""
 "Proceduren ”%s” har anropats med värdet ”%s” för argumentet ”%s” (nr. %d, "
 "typ %s). Det här värdet är utanför intervallet."
 
-#: ../app/pdb/image-cmds.c:2339
+#: ../app/pdb/image-cmds.c:2523
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -20448,7 +20448,7 @@ msgstr "_Fyll"
 #: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpfiltertool.c:284
 #: ../app/tools/gimpforegroundselecttool.c:288
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:284
+#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
 #: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Det aktiva lagret är inte synligt."
@@ -20502,26 +20502,26 @@ msgstr "Beräkna burkoefficienter"
 msgid "Cage transform"
 msgstr "Burtransformering"
 
-#: ../app/tools/gimpclonetool.c:57
+#: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
 "Kloningsverktyg: Kopiera selektivt från en bild eller mönster med en pensel"
 
-#: ../app/tools/gimpclonetool.c:58
+#: ../app/tools/gimpclonetool.c:64
 msgid "_Clone"
 msgstr "_Klona"
 
-#: ../app/tools/gimpclonetool.c:81 ../app/tools/gimpclonetool.c:84
+#: ../app/tools/gimpclonetool.c:90 ../app/tools/gimpclonetool.c:93
 msgid "Click to clone"
 msgstr "Klicka för att klona"
 
-#: ../app/tools/gimpclonetool.c:82 ../app/tools/gimpclonetool.c:87
+#: ../app/tools/gimpclonetool.c:91 ../app/tools/gimpclonetool.c:96
 #, c-format
 msgid "%s to set a new clone source"
 msgstr "%s för att ställa in en ny kloningskälla"
 
 #. Translators: the translation of "Click" must be the first word
-#: ../app/tools/gimpclonetool.c:86
+#: ../app/tools/gimpclonetool.c:95
 msgid "Click to set a new clone source"
 msgstr "Klicka för att ställa in en ny kloningskälla"
 
@@ -20588,11 +20588,11 @@ msgstr "F_ärgväljare"
 msgid "Click in any image to view its color"
 msgstr "Klicka i en bild för att visa dess färg"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:412
+#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:424
 msgid "Click in any image to pick the foreground color"
 msgstr "Klicka i en bild för att välja förgrundsfärgen"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:418
+#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:430
 msgid "Click in any image to pick the background color"
 msgstr "Klicka i en bild för att välja bakgrundsfärgen"
 
@@ -20885,30 +20885,30 @@ msgstr "Elliptiskt markeringsverktyg: Markera en elliptisk region"
 msgid "_Ellipse Select"
 msgstr "_Ellipsmarkering"
 
-#: ../app/tools/gimperasertool.c:67
+#: ../app/tools/gimperasertool.c:70
 msgid "Eraser Tool: Erase to background or transparency using a brush"
 msgstr ""
 "Suddgummiverktyg: Sudda till bakgrunden eller transparens med en pensel"
 
-#: ../app/tools/gimperasertool.c:68
+#: ../app/tools/gimperasertool.c:71
 msgid "_Eraser"
 msgstr "_Suddgummi"
 
-#: ../app/tools/gimperasertool.c:97
+#: ../app/tools/gimperasertool.c:103
 msgid "Click to erase"
 msgstr "Klicka för att sudda"
 
-#: ../app/tools/gimperasertool.c:98
+#: ../app/tools/gimperasertool.c:104
 msgid "Click to erase the line"
 msgstr "Klicka för att sudda linjen"
 
-#: ../app/tools/gimperasertool.c:99
+#: ../app/tools/gimperasertool.c:105
 #, c-format
 msgid "%s to pick a background color"
 msgstr "%s för att välja en bakgrundsfärg"
 
 #. the anti_erase toggle
-#: ../app/tools/gimperasertool.c:146
+#: ../app/tools/gimperasertool.c:159
 #, c-format
 msgid "Anti erase  (%s)"
 msgstr "Antisudda  (%s)"
@@ -21463,11 +21463,11 @@ msgstr "Justering"
 msgid "Sensitivity"
 msgstr "Känslighet"
 
-#: ../app/tools/gimpinktool.c:62
+#: ../app/tools/gimpinktool.c:68
 msgid "Ink Tool: Calligraphy-style painting"
 msgstr "Bläckverktyg: Kalligrafi-liknande målning"
 
-#: ../app/tools/gimpinktool.c:63
+#: ../app/tools/gimpinktool.c:69
 msgid "In_k"
 msgstr "Bl_äck"
 
@@ -21791,11 +21791,11 @@ msgstr "Aux-ingång"
 msgid "Aux%d Input"
 msgstr "Aux%d-ingång"
 
-#: ../app/tools/gimppaintbrushtool.c:52
+#: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgstr "Målarpenselverktyg: Måla mjuka penseldrag med en pensel"
 
-#: ../app/tools/gimppaintbrushtool.c:53
+#: ../app/tools/gimppaintbrushtool.c:59
 msgid "_Paintbrush"
 msgstr "_Pensel"
 
@@ -21843,27 +21843,35 @@ msgstr "Färgalternativ"
 msgid "Link to brush default"
 msgstr "Länka till penselstandard"
 
-#: ../app/tools/gimppainttool.c:158
+#: ../app/tools/gimppainttool.c:163
 msgid "Click to paint"
 msgstr "Klicka för att måla"
 
-#: ../app/tools/gimppainttool.c:159
+#: ../app/tools/gimppainttool.c:164
 msgid "Click to draw the line"
 msgstr "Klicka för att rita linjen"
 
-#: ../app/tools/gimppainttool.c:160
+#: ../app/tools/gimppainttool.c:165
 #, c-format
 msgid "%s to pick a color"
 msgstr "%s för att välja en färg"
 
-#: ../app/tools/gimppainttool.c:270
+#: ../app/tools/gimppainttool.c:275
 msgid "Cannot paint on layer groups."
 msgstr "Kan inte måla på lagergrupper."
 
-#: ../app/tools/gimppainttool.c:600
+#: ../app/tools/gimppainttool.c:613
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
+
+#: ../app/tools/gimppainttool.c:806
+msgid "The active layer does not have an alpha channel."
+msgstr "Det aktiva lagret har ingen alfakanal."
+
+#: ../app/tools/gimppainttool.c:816
+msgid "The active layer's alpha channel is locked."
+msgstr "Det aktiva lagrets alfakanal är låst."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
