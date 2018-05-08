@@ -36,6 +36,10 @@
 #include "gimp-intl.h"
 
 
+#define MEASURE_UPPER "1235678901234567890"
+#define MEASURE_LOWER "12356789012345678901234567890"
+
+
 typedef struct
 {
   GtkWidget      *window;
@@ -106,6 +110,7 @@ splash_create (gboolean   be_verbose,
   GtkWidget          *frame;
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
+  PangoRectangle      ink;
   gint                max_width;
   gint                max_height;
 
@@ -157,9 +162,31 @@ splash_create (gboolean   be_verbose,
   gtk_widget_set_size_request (splash->area, splash->width, splash->height);
 
   /*  create the pango layouts  */
-  splash->upper = gtk_widget_create_pango_layout (splash->area, "");
-  splash->lower = gtk_widget_create_pango_layout (splash->area, "");
-  gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
+  splash->upper = gtk_widget_create_pango_layout (splash->area,
+                                                  MEASURE_UPPER);
+  pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
+
+  if (splash->width > 4 * ink.width)
+    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_X_LARGE);
+  else if (splash->width > 3 * ink.width)
+    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_LARGE);
+  else if (splash->width > 2 * ink.width)
+    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
+  else
+    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
+
+  splash->lower = gtk_widget_create_pango_layout (splash->area,
+                                                  MEASURE_LOWER);
+  pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
+
+  if (splash->width > 4 * ink.width)
+    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_LARGE);
+  else if (splash->width > 3 * ink.width)
+    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_MEDIUM);
+  else if (splash->width > 2 * ink.width)
+    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
+  else
+    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_X_SMALL);
 
   /*  this sets the initial layout positions  */
   splash_position_layouts (splash, "", "", NULL);
@@ -291,36 +318,42 @@ splash_position_layouts (GimpSplash   *splash,
                          const gchar  *text2,
                          GdkRectangle *area)
 {
-  PangoRectangle  ink;
-  PangoRectangle  logical;
+  PangoRectangle  upper_ink;
+  PangoRectangle  upper_logical;
+  PangoRectangle  lower_ink;
+  PangoRectangle  lower_logical;
   gint            text_height = 0;
 
   if (text1)
     {
-      pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
+      pango_layout_get_pixel_extents (splash->upper, &upper_ink, NULL);
 
       if (area)
-        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+        splash_rectangle_union (area, &upper_ink,
+                                splash->upper_x, splash->upper_y);
 
       pango_layout_set_text (splash->upper, text1, -1);
-      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
+      pango_layout_get_pixel_extents (splash->upper,
+                                      &upper_ink, &upper_logical);
 
-      splash->upper_x = (splash->width - logical.width) / 2;
-      text_height += logical.height;
+      splash->upper_x = (splash->width - upper_logical.width) / 2;
+      text_height += upper_logical.height;
     }
 
   if (text2)
     {
-      pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
+      pango_layout_get_pixel_extents (splash->lower, &lower_ink, NULL);
 
       if (area)
-        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+        splash_rectangle_union (area, &lower_ink,
+                                splash->lower_x, splash->lower_y);
 
       pango_layout_set_text (splash->lower, text2, -1);
-      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
+      pango_layout_get_pixel_extents (splash->lower,
+                                      &lower_ink, &lower_logical);
 
-      splash->lower_x = (splash->width - logical.width) / 2;
-      text_height += logical.height;
+      splash->lower_x = (splash->width - lower_logical.width) / 2;
+      text_height += lower_logical.height;
     }
 
   /* For pretty printing, let's say we want at least double space. */
@@ -338,21 +371,23 @@ splash_position_layouts (GimpSplash   *splash,
    */
   if (text1)
     {
-      pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
       splash->upper_y = MIN (splash->height - text_height,
-                             splash->height * 13 / 16 - logical.height / 2);
+                             splash->height * 13 / 16 -
+                             upper_logical.height / 2);
 
       if (area)
-        splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
+        splash_rectangle_union (area, &upper_ink,
+                                splash->upper_x, splash->upper_y);
     }
+
   if (text2)
     {
-      pango_layout_get_pixel_extents (splash->lower, &ink, &logical);
-      splash->lower_y = MIN (splash->height - text_height / 2,
-                             splash->height * 15 / 16 - logical.height / 2);
+      splash->lower_y = ((splash->height + splash->upper_y) / 2 -
+                         lower_logical.height / 2);
 
       if (area)
-        splash_rectangle_union (area, &ink, splash->lower_x, splash->lower_y);
+        splash_rectangle_union (area, &lower_ink,
+                                splash->lower_x, splash->lower_y);
     }
 }
 
@@ -400,7 +435,7 @@ splash_average_text_area (GimpSplash *splash,
   channels     = gdk_pixbuf_get_n_channels (pixbuf);
   pixels       = gdk_pixbuf_get_pixels (pixbuf);
 
-  splash_position_layouts (splash, "Short text", "Somewhat longer text", &area);
+  splash_position_layouts (splash, MEASURE_UPPER, MEASURE_LOWER, &area);
   splash_position_layouts (splash, "", "", NULL);
 
   if (gdk_rectangle_intersect (&image, &area, &area))
