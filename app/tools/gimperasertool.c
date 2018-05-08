@@ -143,7 +143,12 @@ static gboolean
 gimp_eraser_tool_is_alpha_only (GimpPaintTool *paint_tool,
                                 GimpDrawable  *drawable)
 {
-  return gimp_drawable_has_alpha (drawable);
+  GimpEraserOptions *options = GIMP_ERASER_TOOL_GET_OPTIONS (paint_tool);
+
+  if (! options->anti_erase)
+    return gimp_drawable_has_alpha (drawable);
+  else
+    return TRUE;
 }
 
 

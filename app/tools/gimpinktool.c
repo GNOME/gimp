@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
-
 #include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "paint/gimpinkoptions.h"
