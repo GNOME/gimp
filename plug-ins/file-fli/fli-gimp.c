@@ -850,7 +850,7 @@ static gboolean
 load_dialog (const gchar *filename)
 {
   GtkWidget     *dialog;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
   gint32         width, height, nframes;
@@ -877,13 +877,13 @@ load_dialog (const gchar *filename)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+                      grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
@@ -892,9 +892,9 @@ load_dialog (const gchar *filename)
   adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             C_("frame-range", "From:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            C_("frame-range", "From:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
@@ -902,9 +902,9 @@ load_dialog (const gchar *filename)
   adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             C_("frame-range", "To:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            C_("frame-range", "To:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
@@ -922,7 +922,7 @@ static gboolean
 save_dialog (gint32 image_id)
 {
   GtkWidget     *dialog;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
   gint           nframes;
@@ -935,13 +935,13 @@ save_dialog (gint32 image_id)
 
   dialog = gimp_export_dialog_new (_("GFLI 1.3"), PLUG_IN_BINARY, SAVE_PROC);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+                      grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
@@ -950,9 +950,9 @@ save_dialog (gint32 image_id)
   adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             C_("frame-range", "From:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            C_("frame-range", "From:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
@@ -960,9 +960,9 @@ save_dialog (gint32 image_id)
   adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             C_("frame-range", "To:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            C_("frame-range", "To:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &to_frame);
