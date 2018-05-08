@@ -912,21 +912,34 @@ curves_get_channel_color (GtkWidget            *widget,
     { 0.5, 0.5, 0.5, 1.0 }
   };
 
+  GdkRGBA rgba;
+
   if (channel == GIMP_HISTOGRAM_VALUE)
     return FALSE;
 
   if (channel == GIMP_HISTOGRAM_ALPHA)
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      gdouble          lum;
 
-      gimp_rgba_set (color,
-                     style->text_aa[GTK_STATE_NORMAL].red / 65535.0,
-                     style->text_aa[GTK_STATE_NORMAL].green / 65535.0,
-                     style->text_aa[GTK_STATE_NORMAL].blue / 65535.0,
-                     1.0);
+      gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                                   &rgba);
+
+      lum = GIMP_RGB_LUMINANCE (rgba.red, rgba.green, rgba.blue);
+
+      if (lum > 0.5)
+        {
+          gimp_rgba_set (color, lum - 0.3, lum - 0.3, lum - 0.3, 1.0);
+        }
+      else
+        {
+          gimp_rgba_set (color, lum + 0.3, lum + 0.3, lum + 0.3, 1.0);
+        }
+
       return TRUE;
     }
 
   *color = channel_colors[channel];
+
   return TRUE;
 }
