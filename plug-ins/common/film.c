@@ -951,7 +951,7 @@ create_selection_tab (GtkWidget *notebook,
   GtkWidget       *vbox;
   GtkWidget       *vbox2;
   GtkWidget       *hbox;
-  GtkWidget       *table;
+  GtkWidget       *grid;
   GtkWidget       *label;
   GtkWidget       *frame;
   GtkWidget       *toggle;
@@ -970,6 +970,7 @@ create_selection_tab (GtkWidget *notebook,
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_set_hexpand (vbox2, FALSE);
   gtk_widget_show (vbox2);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -992,11 +993,11 @@ create_selection_tab (GtkWidget *notebook,
                     G_CALLBACK (gimp_toggle_button_update),
                     &filmvals.keep_height);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* Film height */
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.film_height, 10,
@@ -1004,9 +1005,9 @@ create_selection_tab (GtkWidget *notebook,
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("_Height:"), 0.0, 0.5,
-                                     spinbutton, 1, TRUE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                    _("_Height:"), 0.0, 0.5,
+                                    spinbutton, 1);
   gtk_size_group_add_widget (group, label);
   g_object_unref (group);
 
@@ -1019,7 +1020,7 @@ create_selection_tab (GtkWidget *notebook,
                           G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
   g_object_bind_property (toggle,     "active",
                           /* FIXME: eeeeeek */
-                          g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (table)), 1), "sensitive",
+                          g_list_nth_data (gtk_container_get_children (GTK_CONTAINER (grid)), 1), "sensitive",
                           G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -1030,9 +1031,9 @@ create_selection_tab (GtkWidget *notebook,
                                   COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
                                   &filmvals.film_color,
                                   GIMP_COLOR_AREA_FLAT);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                     _("Co_lor:"), 0.0, 0.5,
-                                     button, 1, FALSE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                    _("Co_lor:"), 0.0, 0.5,
+                                    button, 1);
   gtk_size_group_add_widget (group, label);
 
   g_signal_connect (button, "color-changed",
@@ -1051,11 +1052,11 @@ create_selection_tab (GtkWidget *notebook,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* Startindex */
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.number_start, 0,
@@ -1063,9 +1064,9 @@ create_selection_tab (GtkWidget *notebook,
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                     _("Start _index:"), 0.0, 0.5,
-                                     spinbutton, 1, TRUE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                    _("Start _index:"), 0.0, 0.5,
+                                    spinbutton, 1);
   gtk_size_group_add_widget (group, label);
 
   g_signal_connect (adj, "value-changed",
@@ -1076,9 +1077,9 @@ create_selection_tab (GtkWidget *notebook,
   font_button = gimp_font_select_button_new (NULL, filmvals.number_font);
   g_signal_connect (font_button, "font-set",
                     G_CALLBACK (film_font_select_callback), &filmvals);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                     _("_Font:"), 0.0, 0.5,
-                                     font_button, 1, FALSE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                    _("_Font:"), 0.0, 0.5,
+                                    font_button, 1);
   gtk_size_group_add_widget (group, label);
 
   /* Numbering color */
@@ -1086,9 +1087,9 @@ create_selection_tab (GtkWidget *notebook,
                                   COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
                                   &filmvals.number_color,
                                   GIMP_COLOR_AREA_FLAT);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                                     _("Co_lor:"), 0.0, 0.5,
-                                     button, 1, FALSE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                                    _("Co_lor:"), 0.0, 0.5,
+                                    button, 1);
   gtk_size_group_add_widget (group, label);
 
   g_signal_connect (button, "color-changed",
@@ -1115,6 +1116,7 @@ create_selection_tab (GtkWidget *notebook,
 
   /*** The right frame keeps the image selection ***/
   frame = gimp_frame_new (_("Image Selection"));
+  gtk_widget_set_hexpand (frame, TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -1137,7 +1139,7 @@ create_advanced_tab (GtkWidget *notebook)
 {
   GtkWidget     *vbox;
   GtkWidget     *hbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *frame;
   GtkAdjustment *adj;
   GtkWidget     *button;
@@ -1153,89 +1155,93 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 12);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   row = 0;
 
   filmint.advanced_adj[0] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("Image _height:"), 0, 0,
-                          filmvals.picture_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("Image _height:"), 0, 0,
+                               filmvals.picture_height,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_height);
 
   filmint.advanced_adj[1] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("Image spac_ing:"), 0, 0,
-                          filmvals.picture_space,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("Image spac_ing:"), 0, 0,
+                               filmvals.picture_space,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 1), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 1), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 1), 6);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_space);
 
   filmint.advanced_adj[2] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("_Hole offset:"), 0, 0,
-                          filmvals.hole_offset,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("_Hole offset:"), 0, 0,
+                               filmvals.hole_offset,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_offset);
 
   filmint.advanced_adj[3] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("Ho_le width:"), 0, 0,
-                          filmvals.hole_width,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("Ho_le width:"), 0, 0,
+                               filmvals.hole_width,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_width);
 
   filmint.advanced_adj[4] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("Hol_e height:"), 0, 0,
-                          filmvals.hole_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("Hol_e height:"), 0, 0,
+                               filmvals.hole_height,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_height);
 
   filmint.advanced_adj[5] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("Hole sp_acing:"), 0, 0,
-                          filmvals.hole_space,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("Hole sp_acing:"), 0, 0,
+                               filmvals.hole_space,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 5), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 5), 6);
+  gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 5), 6);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_space);
 
   filmint.advanced_adj[6] = adj =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-                          _("_Number height:"), 0, 0,
-                          filmvals.number_height,
-                          0.0, 1.0, 0.001, 0.01, 3,
-                          TRUE, 0, 0,
-                          NULL, NULL);
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
+                               _("_Number height:"), 0, 0,
+                               filmvals.number_height,
+                               0.0, 1.0, 0.001, 0.01, 3,
+                               TRUE, 0, 0,
+                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);
