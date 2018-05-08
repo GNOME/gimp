@@ -471,7 +471,7 @@ send_dialog (void)
   GtkWidget     *dlg;
   GtkWidget     *main_vbox;
   GtkWidget     *entry;
-  GtkWidget     *table;
+  GtkWidget     *grid;
 #ifdef SENDMAIL
   GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
@@ -514,23 +514,22 @@ send_dialog (void)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  /* table */
-  table = gtk_table_new (5, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /* grid */
+  grid = gtk_grid_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 12);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
 
   /* Filename entry */
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.filename);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_Filename:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Filename:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.filename);
@@ -542,9 +541,9 @@ send_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.receipt);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             C_("email-address", "_To:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            C_("email-address", "_To:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.receipt);
@@ -556,9 +555,9 @@ send_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.from);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             C_("email-address", "_From:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            C_("email-address", "_From:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.from);
@@ -568,9 +567,9 @@ send_dialog (void)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.subject);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("S_ubject:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("S_ubject:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
                     mail_info.subject);
