@@ -1,25 +1,6 @@
 /* GIMP theme css file */
 
 * {
-/*
-  stock["gtk-dialog-error"] =
-    {
-      { "images/stock-error-64.png", *, *, "gtk-dialog" }
-    }
-  stock["gtk-dialog-info"] =
-    {
-      { "images/stock-info-64.png", *, *, "gtk-dialog" }
-    }
-  stock["gtk-dialog-question"] =
-    {
-      { "images/stock-question-64.png", *, *, "gtk-dialog" }
-    }
-  stock["gtk-dialog-warning"] =
-    {
-      { "images/stock-warning-64.png", *, *, "gtk-dialog" }
-    }
-*/
-
     -GtkPaned-handle-size:             6;
     -GimpDockWindow-default-height:    300;
     -GimpMenuDock-minimal-width:       200;
@@ -62,6 +43,26 @@ GimpDisplayShell button {
     padding: 0 0 0 0;
 }
 
+/* i hate the statusar
+GimpDisplayShell statusbar {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+
+GimpDisplayShell statusbar {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+
+GimpDisplayShell statusbar {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+*/
+
 GimpDock {
     font-size: smaller;
 }
@@ -81,44 +82,23 @@ GimpDock spinbutton entry {
 GimpDockable {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
-/*    -GtkWidget-focus-line-width: 1; */
-/*    -GtkWidget-focus-padding:    0; */
 }
 
 GimpDisplayShell {
     -GimpUnitComboBox-label-scale:  0.8333;
     -GimpScaleComboBox-label-scale: 0.8333;
     -GtkComboBox-arrow-size:        8;
-/*    -GtkButton-inner-border:        0 0 0 0; */
-/*    -GtkWidget-focus-line_width:    0; */
-/*    -GtkWidget-focus-padding:       0; */
 }
 
 GimpColorFrame {
     -GimpColorFrame-number-color: lighter (@bg_color);
 }
 
-GimpHistogramView {
-    color: @text_color;
-    background-color: @base_color;
-    -GimpHistogramView-grid-color: darker (@bg_color);
-    -GimpHistogramView-fg-color: @fg_color;
-    -GimpHistogramView-fg-color-selected: @selected_fg_color;
-    -GimpHistogramView-bg-color: mix (lighter (@bg_color),
-				      darker (@bg_color), 0.5);
-    -GimpHistogramView-bg-color-selected: mix (lighter (@selected_bg_color),
-					       darker (@selected_bg_color), 0.5);
-}
-
-GimpHistogramView:selected {
-    background-color: @selected_bg_color;
-}
-
-GimpOverlayFrame {
-/*    -GtkButton-focus-line-width: 1; */
+.grid {
+    /* why does this not work */
+    color: rgba (1.0, 0.0, 0.0, 1.0);
 }
 
 GimpRuler {
     font-size: smaller;
-    background-color: @bg_color;
 }
