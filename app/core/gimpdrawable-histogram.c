@@ -33,6 +33,7 @@
 #include "gimpdrawable-histogram.h"
 #include "gimphistogram.h"
 #include "gimpimage.h"
+#include "gimpprojectable.h"
 
 
 void
@@ -110,7 +111,8 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
     }
   else
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+      GeglBuffer      *buffer      = gimp_drawable_get_buffer (drawable);
+      GimpProjectable *projectable = NULL;
 
       if (with_filters && gimp_drawable_has_filters (drawable))
         {
@@ -141,11 +143,17 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
                                    G_CALLBACK (gimp_tile_handler_validate_invalidate),
                                    validate, G_CONNECT_SWAPPED);
 #endif
+
+          if (GIMP_IS_PROJECTABLE (drawable))
+            projectable = GIMP_PROJECTABLE (drawable);
         }
       else
         {
           g_object_ref (buffer);
         }
+
+      if (projectable)
+        gimp_projectable_begin_render (projectable);
 
       if (! gimp_channel_is_empty (mask))
         {
@@ -165,6 +173,9 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
                                     GEGL_RECTANGLE (x, y, width, height),
                                     NULL, NULL);
         }
+
+      if (projectable)
+        gimp_projectable_end_render (projectable);
 
       g_object_unref (buffer);
     }
