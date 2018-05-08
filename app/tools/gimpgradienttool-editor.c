@@ -572,6 +572,9 @@ gimp_gradient_tool_editor_endpoint_se_value_changed (GimpSizeEntry    *se,
   selection =
     gimp_tool_line_get_selection (GIMP_TOOL_LINE (gradient_tool->widget));
 
+  if (selection == GIMP_TOOL_LINE_HANDLE_NONE)
+    return;
+
   x = gimp_size_entry_get_refval (se, 0);
   y = gimp_size_entry_get_refval (se, 1);
 
