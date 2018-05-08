@@ -139,12 +139,16 @@ print_page_layout_gui (PrintData   *data,
   /* size entry area for the image's print size */
 
   frame = print_size_frame (data, label_group, entry_group);
+  gtk_widget_set_vexpand (frame, FALSE);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* offset entry area for the image's offset position */
 
   frame = print_offset_frame (data, label_group, entry_group);
+  gtk_widget_set_vexpand (frame, FALSE);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -273,7 +277,7 @@ print_size_frame (PrintData    *data,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
-  gtk_grid_attach (GTK_TABLE (entry), height, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (entry), height, 1, 0, 1, 1);
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
@@ -372,7 +376,7 @@ print_offset_frame (PrintData    *data,
   GtkWidget *spinner;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *combo;
@@ -387,13 +391,11 @@ print_offset_frame (PrintData    *data,
 
   entry = GTK_WIDGET (info.size_entry);
 
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* left */
   info.left_adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -402,13 +404,13 @@ print_offset_frame (PrintData    *data,
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinner, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   label = gtk_label_new_with_mnemonic (_("_Left:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
 
@@ -423,13 +425,13 @@ print_offset_frame (PrintData    *data,
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinner, 3, 4, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 3, 0, 1, 1);
   gtk_widget_show (spinner);
 
   label = gtk_label_new_with_mnemonic (_("_Right:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
   gtk_widget_show (label);
 
   /* top */
@@ -439,13 +441,13 @@ print_offset_frame (PrintData    *data,
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinner, 1, 2, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 1, 1, 1);
   gtk_widget_show (spinner);
 
   label = gtk_label_new_with_mnemonic (_("_Top:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
 
@@ -460,13 +462,13 @@ print_offset_frame (PrintData    *data,
 
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (table), spinner, 3, 4, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 3, 1, 1, 1);
   gtk_widget_show (spinner);
 
   label = gtk_label_new_with_mnemonic (_("_Bottom:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
   gtk_widget_show (label);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), LEFT,   72.0, FALSE);
