@@ -63,7 +63,7 @@ enum
 struct _GimpPreviewPrivate
 {
   GtkWidget *area;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *controls;
@@ -242,10 +242,9 @@ gimp_preview_init (GimpPreview *preview)
   gtk_box_pack_start (GTK_BOX (preview), priv->frame, TRUE, TRUE, 0);
   gtk_widget_show (priv->frame);
 
-  priv->table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (priv->table), 1, 3);
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->table);
-  gtk_widget_show (priv->table);
+  priv->grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (priv->frame), priv->grid);
+  gtk_widget_show (priv->grid);
 
   priv->timeout_id = 0;
 
@@ -262,8 +261,9 @@ gimp_preview_init (GimpPreview *preview)
   /*  preview area  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (priv->table), frame, 0, 1, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+  gtk_widget_set_hexpand (frame, TRUE);
+  gtk_widget_set_vexpand (frame, TRUE);
+  gtk_grid_attach (GTK_GRID (priv->grid), frame, 0, 0, 1, 1);
   gtk_widget_show (frame);
 
   priv->area = gimp_preview_area_new ();
@@ -307,8 +307,8 @@ gimp_preview_init (GimpPreview *preview)
                          preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   priv->controls = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_table_attach (GTK_TABLE (priv->table), priv->controls, 0, 2, 2, 3,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_set_margin_top (priv->controls, 3);
+  gtk_grid_attach (GTK_GRID (priv->grid), priv->controls, 0, 2, 2, 1);
   gtk_widget_show (priv->controls);
 
   /*  toggle button to (de)activate the instant preview  */
@@ -831,19 +831,19 @@ gimp_preview_get_frame (GimpPreview  *preview)
 }
 
 /**
- * gimp_preview_get_table:
+ * gimp_preview_get_grid:
  * @preview: a #GimpPreview widget
  *
- * Return value: a pointer to the #GtkTable used in the @preview.
+ * Return value: a pointer to the #GtkGrid used in the @preview.
  *
  * Since: 3.0
  **/
 GtkWidget *
-gimp_preview_get_table (GimpPreview  *preview)
+gimp_preview_get_grid (GimpPreview  *preview)
 {
   g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
 
-  return GET_PRIVATE (preview)->table;
+  return GET_PRIVATE (preview)->grid;
 }
 
 /**
