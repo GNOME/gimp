@@ -328,6 +328,8 @@ gfig_dialog (void)
   gtk_widget_show (gfig_context->preview);
 
   right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_widget_set_hexpand (right_vbox, FALSE);
+  gtk_widget_set_halign (right_vbox, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
@@ -1234,7 +1236,7 @@ gfig_prefs_action_callback (GtkAction *widget,
   if (!dialog)
     {
       GtkWidget     *main_vbox;
-      GtkWidget     *table;
+      GtkWidget     *grid;
       GtkWidget     *toggle;
       GtkAdjustment *size_data;
       GtkWidget     *scale;
@@ -1301,18 +1303,18 @@ gfig_prefs_action_callback (GtkAction *widget,
                         NULL);
       gtk_widget_show (toggle);
 
-      table = gtk_table_new (4, 4, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 6);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 6);
+      gtk_widget_show (grid);
 
-      size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                        _("Max undo:"), 100, 50,
-                                        selvals.maxundo,
-                                        MIN_UNDO, MAX_UNDO, 1, 2, 0,
-                                        TRUE, 0, 0,
-                                        NULL, NULL);
+      size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                             _("Max undo:"), 100, 50,
+                                             selvals.maxundo,
+                                             MIN_UNDO, MAX_UNDO, 1, 2, 0,
+                                             TRUE, 0, 0,
+                                             NULL, NULL);
       g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.maxundo);
@@ -1335,13 +1337,12 @@ gfig_prefs_action_callback (GtkAction *widget,
                                  "draw is performed."),
                                NULL);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Background:"), 0.0, 0.5,
-                                 page_menu_bg, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("Background:"), 0.0, 0.5,
+                                page_menu_bg, 2);
 
       toggle = gtk_check_button_new_with_label (_("Feather"));
-      gtk_table_attach (GTK_TABLE (table), toggle, 2, 3, 2, 3,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), toggle, 2, 2, 1, 1);
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &selopt.feather);
@@ -1361,8 +1362,8 @@ gfig_prefs_action_callback (GtkAction *widget,
       g_signal_connect (scale_data, "value-changed",
                         G_CALLBACK (gfig_paint_delayed),
                         NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                                 _("Radius:"), 0.0, 1.0, scale, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                                _("Radius:"), 0.0, 1.0, scale, 1);
 
       gtk_widget_show (dialog);
     }
@@ -1382,7 +1383,7 @@ gfig_grid_action_callback (GtkAction *action,
     {
       GtkWidget     *main_vbox;
       GtkWidget     *hbox;
-      GtkWidget     *table;
+      GtkWidget     *grid;
       GtkWidget     *combo;
       GtkAdjustment *size_data;
       GtkAdjustment *sectors_data;
@@ -1413,18 +1414,18 @@ gfig_grid_action_callback (GtkAction *action,
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      table = gtk_table_new (3, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-      gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-      gtk_widget_show (table);
+      grid = gtk_grid_new ();
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
 
-      size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                        _("Grid spacing:"), 100, 50,
-                                        selvals.opts.gridspacing,
-                                        MIN_GRID, MAX_GRID, 1, 10, 0,
-                                        TRUE, 0, 0,
-                                        NULL, NULL);
+      size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                             _("Grid spacing:"), 100, 50,
+                                             selvals.opts.gridspacing,
+                                             MIN_GRID, MAX_GRID, 1, 10, 0,
+                                             TRUE, 0, 0,
+                                             NULL, NULL);
       g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.gridspacing);
@@ -1436,12 +1437,12 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
-      sectors_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                                        _("Polar grid sectors desired:"), 1, 5,
-                                        selvals.opts.grid_sectors_desired,
-                                        5, 360, 5, 1, 0,
-                                        TRUE, 0, 0,
-                                        NULL, NULL);
+      sectors_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
+                                                _("Polar grid sectors desired:"), 1, 5,
+                                                selvals.opts.grid_sectors_desired,
+                                                5, 360, 5, 1, 0,
+                                                TRUE, 0, 0,
+                                                NULL, NULL);
       g_signal_connect (sectors_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.grid_sectors_desired);
@@ -1458,12 +1459,12 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
-      radius_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                                        _("Polar grid radius interval:"), 1, 5,
-                                        selvals.opts.grid_radius_interval,
-                                        5, 50, 5, 1, 0,
-                                        TRUE, 0, 0,
-                                        NULL, NULL);
+      radius_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
+                                               _("Polar grid radius interval:"), 1, 5,
+                                               selvals.opts.grid_radius_interval,
+                                               5, 50, 5, 1, 0,
+                                               TRUE, 0, 0,
+                                               NULL, NULL);
       g_signal_connect (radius_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selvals.opts.grid_radius_interval);
@@ -1485,9 +1486,9 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (gridtype_combo_callback),
                         GINT_TO_POINTER (GRID_TYPE_MENU));
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Grid type:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("Grid type:"), 0.0, 0.5,
+                                combo, 2);
 
       gfig_opt_widget.gridtypemenu = combo;
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridtypemenu),
@@ -1507,9 +1508,9 @@ gfig_grid_action_callback (GtkAction *action,
                         G_CALLBACK (gridtype_combo_callback),
                         GINT_TO_POINTER (GRID_RENDER_MENU));
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                                 _("Grid color:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                                _("Grid color:"), 0.0, 0.5,
+                                combo, 2);
 
       gtk_widget_show (dialog);
     }
@@ -1718,20 +1719,20 @@ num_sides_widget (const gchar *d_title,
                   gint         adj_min,
                   gint         adj_max)
 {
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *size_data;
 
-  table = gtk_table_new (which_way ? 2 : 1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                    _("Sides:"), 0, 0,
-                                    *num_sides, adj_min, adj_max, 1, 10, 0,
-                                    TRUE, 0, 0,
-                                    NULL, NULL);
+  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                         _("Sides:"), 0, 0,
+                                         *num_sides, adj_min, adj_max, 1, 10, 0,
+                                         TRUE, 0, 0,
+                                         NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     num_sides);
@@ -1748,11 +1749,11 @@ num_sides_widget (const gchar *d_title,
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         which_way);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Orientation:"), 0.0, 0.5,
-                                 combo, 1, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("Orientation:"), 0.0, 0.5,
+                                combo, 1);
     }
-  return table;
+  return grid;
 }
 
 void
