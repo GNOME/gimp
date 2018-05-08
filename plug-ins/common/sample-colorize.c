@@ -1297,7 +1297,7 @@ smp_dialog (void)
   GtkWidget     *hbox;
   GtkWidget     *vbox2;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *check_button;
   GtkWidget     *label;
   GtkWidget     *combo;
@@ -1346,20 +1346,19 @@ smp_dialog (void)
                     G_CALLBACK (smp_response_callback),
                     NULL);
 
-  /* table for values */
-  table = gtk_table_new (7, 5, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  /* grid for values */
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 12);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, TRUE, TRUE, 0);
+                      grid, TRUE, TRUE, 0);
 
   ty = 0;
   /* layer combo_box (Dst) */
   label = gtk_label_new (_("Destination:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, ty, ty + 1,
-                    GTK_FILL, GTK_FILL, 4, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, ty, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_layer_combo_box_new (smp_constrain, NULL);
@@ -1367,15 +1366,13 @@ smp_dialog (void)
                               G_CALLBACK (smp_dest_combo_callback),
                               NULL);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 1, 2, ty, ty + 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, ty, 1, 1);
   gtk_widget_show (combo);
 
   /* layer combo_box (Sample) */
   label = gtk_label_new (_("Sample:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 3, 4, ty, ty + 1,
-                    GTK_FILL, GTK_FILL, 4, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, ty, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_layer_combo_box_new (smp_constrain, NULL);
@@ -1395,16 +1392,14 @@ smp_dialog (void)
                               G_CALLBACK (smp_sample_combo_callback),
                               NULL);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 4, 5, ty, ty + 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 4, ty, 1, 1);
   gtk_widget_show (combo);
 
   ty++;
 
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty + 1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
   gtk_widget_show (hbox);
 
   /* check button */
@@ -1430,8 +1425,7 @@ smp_dialog (void)
                                 g_di.dst_show_color);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty + 1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
   gtk_widget_show (hbox);
 
   /* check button */
@@ -1462,11 +1456,12 @@ smp_dialog (void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table),
-                    frame, 0, 2, ty, ty + 1, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), frame, 0, ty, 2, 1);
   gtk_widget_show (frame);
 
   g_di.dst_preview = gimp_preview_area_new ();
+  gtk_widget_set_halign (g_di.dst_preview, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.dst_preview, TRUE);
   gtk_widget_set_size_request (g_di.dst_preview,
                                PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.dst_preview);
@@ -1476,11 +1471,12 @@ smp_dialog (void)
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table),
-                    frame, 3, 5, ty, ty + 1, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), frame, 3, ty, 2, 1);
   gtk_widget_show (frame);
 
   g_di.sample_preview = gimp_preview_area_new ();
+  gtk_widget_set_halign (g_di.sample_preview, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.sample_preview, TRUE);
   gtk_widget_set_size_request (g_di.sample_preview,
                                PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_container_add (GTK_CONTAINER (frame), g_di.sample_preview);
@@ -1493,10 +1489,11 @@ smp_dialog (void)
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_table_attach (GTK_TABLE (table),
-                    frame, 0, 2, ty, ty + 1, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), frame, 0, ty, 2, 1);
 
   g_di.in_lvl_gray_preview = gimp_preview_area_new ();
+  gtk_widget_set_halign (g_di.in_lvl_gray_preview, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.in_lvl_gray_preview, TRUE);
   gtk_widget_set_size_request (g_di.in_lvl_gray_preview,
                                DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_gray_preview, LEVELS_DA_MASK);
@@ -1509,6 +1506,8 @@ smp_dialog (void)
 
   /*  The levels drawing area  */
   g_di.in_lvl_drawarea = gtk_drawing_area_new ();
+  gtk_widget_set_halign (g_di.in_lvl_drawarea, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.in_lvl_drawarea, TRUE);
   gtk_widget_set_size_request (g_di.in_lvl_drawarea,
                                DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (g_di.in_lvl_drawarea, LEVELS_DA_MASK);
@@ -1527,10 +1526,11 @@ smp_dialog (void)
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_table_attach (GTK_TABLE (table),
-                    frame, 3, 5, ty, ty + 1, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), frame, 3, ty, 2, 1);
 
   g_di.sample_colortab_preview = gimp_preview_area_new ();
+  gtk_widget_set_halign (g_di.sample_colortab_preview, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.sample_colortab_preview, TRUE);
   gtk_widget_set_size_request (g_di.sample_colortab_preview,
                                DA_WIDTH, GRADIENT_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox2), g_di.sample_colortab_preview, FALSE, TRUE, 0);
@@ -1538,6 +1538,8 @@ smp_dialog (void)
 
   /*  The levels drawing area  */
   g_di.sample_drawarea = gtk_drawing_area_new ();
+  gtk_widget_set_halign (g_di.sample_drawarea, GTK_ALIGN_CENTER);
+  gtk_widget_set_hexpand (g_di.sample_drawarea, TRUE);
   gtk_widget_set_size_request (g_di.sample_drawarea,
                                DA_WIDTH, CONTROL_HEIGHT);
   gtk_widget_set_events (g_di.sample_drawarea, LEVELS_DA_MASK);
@@ -1557,8 +1559,7 @@ smp_dialog (void)
   /*  Horizontal box for INPUT levels text widget  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty+1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
 
   label = gtk_label_new (_("Input levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -1608,8 +1609,7 @@ smp_dialog (void)
   /*  Horizontal box for OUTPUT levels text widget  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty+1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
 
   label = gtk_label_new (_("Output levels:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -1646,8 +1646,7 @@ smp_dialog (void)
   ty++;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, ty, ty+1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 0, ty, 2, 1);
   gtk_widget_show (hbox);
 
   /* check button */
@@ -1675,8 +1674,7 @@ smp_dialog (void)
                                 g_values.orig_inten);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_table_attach (GTK_TABLE (table), hbox, 3, 5, ty, ty+1,
-                    GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 3, ty, 2, 1);
   gtk_widget_show (hbox);
 
   /* check button */
@@ -1703,7 +1701,7 @@ smp_dialog (void)
 
   ty++;
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   gtk_widget_show (dialog);
