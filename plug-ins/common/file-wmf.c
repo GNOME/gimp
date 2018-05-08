@@ -483,8 +483,8 @@ load_dialog (const gchar *filename)
   GtkWidget     *hbox;
   GtkWidget     *vbox;
   GtkWidget     *image;
-  GtkWidget     *table;
-  GtkWidget     *table2;
+  GtkWidget     *grid;
+  GtkWidget     *grid2;
   GtkWidget     *abox;
   GtkWidget     *res;
   GtkWidget     *label;
@@ -559,30 +559,25 @@ load_dialog (const gchar *filename)
   wmf_width  = vals.width;
   wmf_height = vals.height;
 
-  table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 2);
-  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (hbox), grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
   /*  Width and Height  */
   label = gtk_label_new (_("Width:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Height:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 1);
   gtk_widget_show (hbox);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -593,8 +588,7 @@ load_dialog (const gchar *filename)
   gtk_widget_show (spinbutton);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 1, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 1, 1, 1);
   gtk_widget_show (hbox);
 
   size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
@@ -625,14 +619,11 @@ load_dialog (const gchar *filename)
 
   /*  Scale ratio  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 4,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox, 1, 2, 1, 2);
   gtk_widget_show (hbox);
 
-  table2 = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table2), 0, 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
+  grid2 = gtk_grid_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), grid2, FALSE, FALSE, 0);
 
   xadj = (GtkAdjustment *)
     gtk_adjustment_new (ratio_x,
@@ -642,7 +633,7 @@ load_dialog (const gchar *filename)
   spinbutton = gtk_spin_button_new (xadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (xadj, "value-changed",
@@ -652,8 +643,7 @@ load_dialog (const gchar *filename)
   label = gtk_label_new_with_mnemonic (_("_X ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
   yadj = (GtkAdjustment *)
@@ -664,7 +654,7 @@ load_dialog (const gchar *filename)
   spinbutton = gtk_spin_button_new (yadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
-  gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
+  gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 1, 1, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (yadj, "value-changed",
@@ -674,34 +664,31 @@ load_dialog (const gchar *filename)
   label = gtk_label_new_with_mnemonic (_("_Y ratio:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
   gtk_widget_show (label);
 
   /*  the constrain ratio chainbutton  */
   constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (constrain), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (table2), constrain, 1, 2, 0, 2);
+  gtk_grid_attach (GTK_GRID (grid2), constrain, 1, 0, 1, 2);
   gtk_widget_show (constrain);
 
   gimp_help_set_help_data (gimp_chain_button_get_button (GIMP_CHAIN_BUTTON (constrain)),
                            _("Constrain aspect ratio"), NULL);
 
-  gtk_widget_show (table2);
+  gtk_widget_show (grid2);
 
   /*  Resolution   */
   label = gtk_label_new (_("Resolution:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 4, 1, 1);
   gtk_widget_show (label);
 
   res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
                              FALSE, FALSE, FALSE, 10,
                              GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
-  gtk_table_attach (GTK_TABLE (table), res, 1, 2, 4, 5,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), res, 1, 4, 1, 1);
   gtk_widget_show (res);
 
   /* don't let the resolution become too small ? does libwmf tend to
