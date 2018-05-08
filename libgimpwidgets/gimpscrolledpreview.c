@@ -152,7 +152,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 {
   GimpScrolledPreviewPrivate *priv;
   GtkWidget                  *image;
-  GtkWidget                  *table;
+  GtkWidget                  *grid;
   GtkWidget                  *area;
   GtkAdjustment              *adj;
   gint                        width;
@@ -172,7 +172,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   priv->in_drag     = FALSE;
   priv->frozen      = 1;  /* we are frozen during init */
 
-  table = gimp_preview_get_table (GIMP_PREVIEW (preview));
+  grid = gimp_preview_get_grid (GIMP_PREVIEW (preview));
 
   gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
 
@@ -185,9 +185,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview);
 
   priv->hscr = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, adj);
-  gtk_table_attach (GTK_TABLE (table),
-                    priv->hscr, 0, 1, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_set_hexpand (priv->hscr, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), priv->hscr, 0, 1, 1, 1);
 
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, height - 1, 1.0,
                                             height, height));
@@ -197,9 +196,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview);
 
   priv->vscr = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, adj);
-  gtk_table_attach (GTK_TABLE (table),
-                    priv->vscr, 1, 2, 0, 1,
-                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_vexpand (priv->vscr, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), priv->vscr, 1, 0, 1, 1);
 
   area = gimp_preview_get_area (GIMP_PREVIEW (preview));
 
@@ -223,9 +221,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
 
   /*  navigation icon  */
   priv->nav_icon = gtk_event_box_new ();
-  gtk_table_attach (GTK_TABLE (table),
-                    priv->nav_icon, 1,2, 1,2,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), priv->nav_icon, 1, 1, 1, 1);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                         GTK_ICON_SIZE_MENU);

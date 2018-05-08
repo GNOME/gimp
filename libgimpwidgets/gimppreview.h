@@ -137,7 +137,7 @@ void        gimp_preview_untransform        (GimpPreview *preview,
                                              gint        *dest_y);
 
 GtkWidget * gimp_preview_get_frame          (GimpPreview  *preview);
-GtkWidget * gimp_preview_get_table          (GimpPreview  *preview);
+GtkWidget * gimp_preview_get_grid           (GimpPreview  *preview);
 GtkWidget * gimp_preview_get_area           (GimpPreview  *preview);
 
 void        gimp_preview_draw               (GimpPreview  *preview);
