@@ -67,7 +67,7 @@ struct _GimpDeviceEditorPrivate
   GtkWidget *label;
   GtkWidget *image;
 
-  GtkWidget *notebook;
+  GtkWidget *stack;
 };
 
 
@@ -102,10 +102,6 @@ static void   gimp_device_editor_select_device  (GimpContainerView *view,
                                                  gpointer           insert_data,
                                                  GimpDeviceEditor  *editor);
 
-static void   gimp_device_editor_switch_page    (GtkNotebook       *notebook,
-                                                 gpointer           page,
-                                                 guint              page_num,
-                                                 GimpDeviceEditor  *editor);
 static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
 
@@ -147,6 +143,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_HORIZONTAL);
+  gtk_paned_set_wide_handle (GTK_PANED (editor), TRUE);
 
   gtk_icon_size_lookup (GTK_ICON_SIZE_BUTTON, &icon_width, &icon_height);
   private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
@@ -174,16 +171,19 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_show (vbox);
 
   ebox = gtk_event_box_new ();
-  gtk_widget_set_state (ebox, GTK_STATE_SELECTED);
+  gtk_widget_set_state_flags (ebox, GTK_STATE_FLAG_SELECTED, TRUE);
+  gtk_style_context_add_class (gtk_widget_get_style_context (ebox),
+                               GTK_STYLE_CLASS_VIEW);
   gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, FALSE, 0);
   gtk_widget_show (ebox);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);
 
   private->label = gtk_label_new (NULL);
+  gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (private->label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (private->label),
@@ -193,19 +193,16 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_show (private->label);
 
   private->image = gtk_image_new ();
+  gtk_widget_set_state_flags (private->image, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_widget_set_size_request (private->image, -1, 24);
   gtk_box_pack_end (GTK_BOX (hbox), private->image, FALSE, FALSE, 0);
   gtk_widget_show (private->image);
 
-  private->notebook = gtk_notebook_new ();
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), private->notebook, TRUE, TRUE, 0);
-  gtk_widget_show (private->notebook);
-
-  g_signal_connect (private->notebook, "switch-page",
-                    G_CALLBACK (gimp_device_editor_switch_page),
-                    editor);
+  private->stack = gtk_stack_new ();
+  gtk_stack_set_transition_type (GTK_STACK (private->stack),
+                                 GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN);
+  gtk_box_pack_start (GTK_BOX (vbox), private->stack, TRUE, TRUE, 0);
+  gtk_widget_show (private->stack);
 }
 
 static void
@@ -224,7 +221,7 @@ gimp_device_editor_constructed (GObject *object)
   devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 
   /*  connect to "remove" before the container view does so we can get
-   *  the notebook child stored in its model
+   *  the stack child stored in its model
    */
   g_signal_connect (devices, "remove",
                     G_CALLBACK (gimp_device_editor_remove_device),
@@ -330,7 +327,8 @@ gimp_device_editor_add_device (GimpContainer    *container,
   GtkTreeIter             *iter;
 
   widget = gimp_device_info_editor_new (info);
-  gtk_notebook_append_page (GTK_NOTEBOOK (private->notebook), widget, NULL);
+  gtk_stack_add_named (GTK_STACK (private->stack), widget,
+                       gimp_object_get_name (info));
   gtk_widget_show (widget);
 
   iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
@@ -421,42 +419,27 @@ gimp_device_editor_select_device (GimpContainerView *view,
 
       if (widget)
         {
-          gint page_num = gtk_notebook_page_num (GTK_NOTEBOOK (private->notebook),
-                                                 widget);
+          GimpDeviceInfo *info;
+          gboolean        delete_sensitive = FALSE;
 
-          gtk_notebook_set_current_page (GTK_NOTEBOOK (private->notebook),
-                                         page_num);
+          gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
+
+          g_object_get (widget ,"info", &info, NULL);
+
+          gtk_label_set_text (GTK_LABEL (private->label),
+                              gimp_object_get_name (info));
+          gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
+                                        gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
+                                        GTK_ICON_SIZE_BUTTON);
+
+          if (! gimp_device_info_get_device (info, NULL))
+            delete_sensitive = TRUE;
+
+          gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
+
+          g_object_unref (info);
         }
     }
-}
-
-static void
-gimp_device_editor_switch_page (GtkNotebook      *notebook,
-                                gpointer          page,
-                                guint             page_num,
-                                GimpDeviceEditor *editor)
-{
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GtkWidget               *widget;
-  GimpDeviceInfo          *info;
-  gboolean                 delete_sensitive = FALSE;
-
-  widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
-
-  g_object_get (widget ,"info", &info, NULL);
-
-  gtk_label_set_text (GTK_LABEL (private->label),
-                      gimp_object_get_name (info));
-  gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
-                                GTK_ICON_SIZE_BUTTON);
-
-  if (! gimp_device_info_get_device (info, NULL))
-    delete_sensitive = TRUE;
-
-  gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
-
-  g_object_unref (info);
 }
 
 static void
