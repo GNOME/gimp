@@ -52,7 +52,7 @@ GtkWidget   * gimp_prefs_box_new                   (void);
 
 GtkWidget   * gimp_prefs_box_add_page              (GimpPrefsBox *box,
                                                     const gchar  *icon_name,
-                                                    const gchar  *notebook_label,
+                                                    const gchar  *page_title,
                                                     const gchar  *tree_label,
                                                     const gchar  *help_id,
                                                     GtkTreeIter  *parent,
