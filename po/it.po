@@ -36,7 +36,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-10 00:32+0200\n"
-"PO-Revision-Date: 2018-05-10 00:31+0200\n"
+"PO-Revision-Date: 2018-05-10 00:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -18193,7 +18193,7 @@ msgstr "Dividi"
 #: ../app/operations/operations-enums.c:286
 msgctxt "layer-mode"
 msgid "Pass through"
-msgstr "Attraverso"
+msgstr "Passa attraverso"
 
 #: ../app/operations/operations-enums.c:287
 msgctxt "layer-mode"
