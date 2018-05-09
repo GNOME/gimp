@@ -249,6 +249,9 @@ gimp_fonts_add_directories (Gimp      *gimp,
 
   for (list = path; list; list = list->next)
     {
+      /* The configured directories must exist or be created. */
+      g_file_make_directory_with_parents (list->data, NULL, NULL);
+
       /* Do not use FcConfigAppFontAddDir(). Instead use
        * FcConfigAppFontAddFile() with our own recursive loop.
        * Otherwise, when some fonts fail to load (e.g. permission
