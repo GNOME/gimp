@@ -409,51 +409,6 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
   gimp_radio_group_set_active (radio_button, GINT_TO_POINTER (item_data));
 }
 
-/**
- * gimp_spin_button_new:
- * @adjustment:     Returns the spinbutton's #GtkAdjustment.
- * @value:          The initial value of the spinbutton.
- * @lower:          The lower boundary.
- * @upper:          The upper boundary.
- * @step_increment: The spinbutton's step increment.
- * @page_increment: The spinbutton's page increment (mouse button 2).
- * @page_size:      Ignored, spin buttons must always have a zero page size.
- * @climb_rate:     The spinbutton's climb rate.
- * @digits:         The spinbutton's number of decimal digits.
- *
- * This function is a shortcut for gtk_adjustment_new() and a
- * subsequent gtk_spin_button_new(). It also calls
- * gtk_spin_button_set_numeric() so that non-numeric text cannot be
- * entered.
- *
- * Deprecated: 2.10: Use gtk_spin_button_new() instead.
- *
- * Returns: A #GtkSpinButton and its #GtkAdjustment.
- **/
-GtkWidget *
-gimp_spin_button_new (GtkAdjustment **adjustment,  /* return value */
-                      gdouble         value,
-                      gdouble         lower,
-                      gdouble         upper,
-                      gdouble         step_increment,
-                      gdouble         page_increment,
-                      gdouble         page_size,
-                      gdouble         climb_rate,
-                      guint           digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-                                    step_increment, page_increment, 0);
-
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-                                    climb_rate, digits);
-
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  return spinbutton;
-}
-
 static void
 gimp_random_seed_update (GtkWidget *widget,
                          gpointer   data)

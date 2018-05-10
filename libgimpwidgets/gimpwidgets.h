@@ -140,18 +140,6 @@ void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);
 
 
-GIMP_DEPRECATED_FOR(gtk_spin_button_new)
-GtkWidget * gimp_spin_button_new   (/* return value: */
-                                    GtkAdjustment     **adjustment,
-
-                                    gdouble             value,
-                                    gdouble             lower,
-                                    gdouble             upper,
-                                    gdouble             step_increment,
-                                    gdouble             page_increment,
-                                    gdouble             page_size,
-                                    gdouble             climb_rate,
-                                    guint               digits);
 
 /**
  * GIMP_RANDOM_SEED_SPINBUTTON:
