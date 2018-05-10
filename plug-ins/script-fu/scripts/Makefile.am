@@ -66,5 +66,8 @@ test_scripts = \
 
 scriptdata_DATA = $(scripts)
 
+if GIMP_UNSTABLE
+scriptdata_DATA += $(test_scripts)
+endif
 
 EXTRA_DIST = $(scripts) $(test_scripts)
