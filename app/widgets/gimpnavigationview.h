@@ -49,7 +49,7 @@ struct _GimpNavigationViewClass
   void (* zoom)           (GimpNavigationView *view,
                            GimpZoomType        direction);
   void (* scroll)         (GimpNavigationView *view,
-                           GdkScrollDirection  direction);
+                           GdkEventScroll     *sevent);
 };
 
 

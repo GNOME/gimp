@@ -82,7 +82,7 @@ static void        gimp_navigation_editor_zoom              (GimpNavigationView 
                                                              GimpZoomType          direction,
                                                              GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_scroll            (GimpNavigationView   *view,
-                                                             GdkScrollDirection    direction,
+                                                             GdkEventScroll       *sevent,
                                                              GimpNavigationEditor *editor);
 
 static void        gimp_navigation_editor_zoom_adj_changed  (GtkAdjustment        *adj,
@@ -569,50 +569,21 @@ gimp_navigation_editor_zoom (GimpNavigationView   *view,
 
 static void
 gimp_navigation_editor_scroll (GimpNavigationView   *view,
-                               GdkScrollDirection    direction,
+                               GdkEventScroll       *sevent,
                                GimpNavigationEditor *editor)
 {
   if (editor->shell)
     {
-      GtkAdjustment *adj = NULL;
-      gdouble        value;
+      gdouble value_x;
+      gdouble value_y;
 
-      switch (direction)
-        {
-        case GDK_SCROLL_LEFT:
-        case GDK_SCROLL_RIGHT:
-          adj = editor->shell->hsbdata;
-          break;
+      gimp_scroll_adjustment_values (sevent,
+                                     editor->shell->hsbdata,
+                                     editor->shell->vsbdata,
+                                     &value_x, &value_y);
 
-        case GDK_SCROLL_UP:
-        case GDK_SCROLL_DOWN:
-          adj = editor->shell->vsbdata;
-          break;
-        }
-
-      gimp_assert (adj != NULL);
-
-      value = gtk_adjustment_get_value (adj);
-
-      switch (direction)
-        {
-        case GDK_SCROLL_LEFT:
-        case GDK_SCROLL_UP:
-          value -= gtk_adjustment_get_page_increment (adj) / 2;
-          break;
-
-        case GDK_SCROLL_RIGHT:
-        case GDK_SCROLL_DOWN:
-          value += gtk_adjustment_get_page_increment (adj) / 2;
-          break;
-        }
-
-      value = CLAMP (value,
-                     gtk_adjustment_get_lower (adj),
-                     gtk_adjustment_get_upper (adj) -
-                     gtk_adjustment_get_page_size (adj));
-
-      gtk_adjustment_set_value (adj, value);
+      gtk_adjustment_set_value (editor->shell->hsbdata, value_x);
+      gtk_adjustment_set_value (editor->shell->vsbdata, value_y);
     }
 }
 

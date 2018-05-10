@@ -148,9 +148,9 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNavigationViewClass, scroll),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
+                  gimp_marshal_VOID__BOXED,
                   G_TYPE_NONE, 1,
-                  GDK_TYPE_SCROLL_DIRECTION);
+                  GDK_TYPE_EVENT);
 
   widget_class->size_allocate        = gimp_navigation_view_size_allocate;
   widget_class->draw                 = gimp_navigation_view_draw;
@@ -313,18 +313,7 @@ gimp_navigation_view_scroll (GtkWidget      *widget,
     }
   else
     {
-      GdkScrollDirection direction = sevent->direction;
-
-      if (sevent->state & GDK_SHIFT_MASK)
-        switch (direction)
-          {
-          case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
-          case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
-          case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
-          case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
-          }
-
-      g_signal_emit (widget, view_signals[SCROLL], 0, direction);
+      g_signal_emit (widget, view_signals[SCROLL], 0, sevent);
     }
 
   return TRUE;
