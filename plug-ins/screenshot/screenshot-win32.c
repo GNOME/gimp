@@ -38,6 +38,7 @@
 #include "screenshot-win32.h"
 #include "screenshot-win32-resource.h"
 
+#include "capture-window_common_structs.h" // This file must be exact copy of the file in capture-window project at https://github.com/gileli121/capture-window
 #include "libgimp/stdplugins-intl.h"
 
 /*
@@ -74,6 +75,8 @@ static void sendBMPToGimp   (HBITMAP hBMP,
                              RECT    rect);
 static void doWindowCapture (void);
 static int  doCapture       (HWND    selectedHwnd);
+static int  doCaptureNormalMethod(HWND, RECT);
+static int  doCaptureWithScript(HWND selectedHwnd);
 
 BOOL CALLBACK dialogProc(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -208,7 +211,6 @@ flipRedAndBlueBytes (int width,
   int      i, j;
   guchar  *bufp;
   guchar   temp;
-
   j = 0;
   while (j < height) {
     i = width;
@@ -220,6 +222,25 @@ flipRedAndBlueBytes (int width,
       bufp += 3;
     }
     j++;
+  }
+}
+
+/*
+ * rgbaToRgbBytes
+ *
+ * Convert rgba array to rgb array
+ */
+static void
+rgbaToRgbBytes(  guchar *rgbBufp,
+        guchar *rgbaBufp,
+        int rgbaBufSize)
+{
+  int rgbPoint = 0, rgbaPoint;
+  for (rgbaPoint = 0; rgbaPoint < rgbaBufSize; rgbaPoint += 4)  
+  {
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint];
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint + 1];
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint + 2];
   }
 }
 
@@ -427,86 +448,121 @@ primDoWindowCapture (HDC  hdcWindow,
  * Do the capture.  Accepts the window
  * handle to be captured or the NULL value
  * to specify the root window.
- */
+*/
 static int
-doCapture (HWND selectedHwnd)
+doCapture(HWND selectedHwnd)
 {
+  RECT rect;
+
+  /* Get the device context for the whole screen
+  * even if we just want to capture a window.
+  * this will allow to capture applications that
+  * don't render to their main window's device
+  * context (e.g. browsers).
+  */
+
+  /* Try and get everything out of the way before the
+  * capture.
+  */
+  Sleep(500 + winsnapvals.delay * 1000);
+
+  /* Are we capturing a window or the whole screen */
+  if (selectedHwnd)
+  {
+
+    if (!doCaptureWithScript(selectedHwnd))
+    {
+      if (!GetWindowRect(selectedHwnd, &rect))
+      {
+        g_error("Error: unable to get the window size");
+        return FALSE;
+      }
+
+      SetForegroundWindow(selectedHwnd);
+      BringWindowToTop(selectedHwnd);
+
+      return doCaptureNormalMethod(selectedHwnd, rect);
+    }
+
+    return TRUE;
+
+  }
+  else
+  {
+    /* Get the screen's rectangle */
+    rect.top = GetSystemMetrics(SM_YVIRTUALSCREEN);
+    rect.bottom = GetSystemMetrics(SM_YVIRTUALSCREEN) + GetSystemMetrics(SM_CYVIRTUALSCREEN);
+    rect.left = GetSystemMetrics(SM_XVIRTUALSCREEN);
+    rect.right = GetSystemMetrics(SM_XVIRTUALSCREEN) + GetSystemMetrics(SM_CXVIRTUALSCREEN);
+
+    return doCaptureNormalMethod(selectedHwnd, rect);
+
+  }
+
+  return FALSE; /* we should never get here... */
+}
+
+static int
+doCaptureNormalMethod(HWND    selectedHwnd,
+  RECT    rect)
+{
+
   HDC     hdcSrc;
   HDC     hdcCompat;
   HWND    oldForeground;
-  RECT    rect;
   HBITMAP hbm;
-
-  /* Try and get everything out of the way before the
-   * capture.
-   */
-  Sleep (500 + winsnapvals.delay * 1000);
-
   /* Get the device context for the whole screen
    * even if we just want to capture a window.
    * this will allow to capture applications that
    * don't render to their main window's device
    * context (e.g. browsers).
   */
-  hdcSrc = CreateDC (TEXT("DISPLAY"), NULL, NULL, NULL);
-
-  /* Are we capturing a window or the whole screen */
-  if (selectedHwnd)
-    {
-      /* Set to foreground window */
-      oldForeground = GetForegroundWindow ();
-      SetForegroundWindow (selectedHwnd);
-      BringWindowToTop (selectedHwnd);
-
-      Sleep (500);
-
-      /* Build a region for the capture */
-      GetWindowRect (selectedHwnd, &rect);
-
-    }
-  else
-    {
-      /* Get the screen's rectangle */
-      rect.top    = GetSystemMetrics (SM_YVIRTUALSCREEN);
-      rect.bottom = GetSystemMetrics (SM_YVIRTUALSCREEN) + GetSystemMetrics (SM_CYVIRTUALSCREEN);
-      rect.left   = GetSystemMetrics (SM_XVIRTUALSCREEN);
-      rect.right  = GetSystemMetrics (SM_XVIRTUALSCREEN) + GetSystemMetrics (SM_CXVIRTUALSCREEN);
-    }
+  hdcSrc = CreateDC(TEXT("DISPLAY"), NULL, NULL, NULL);
 
   if (!hdcSrc)
-    {
-      formatWindowsError(buffer, sizeof buffer);
-      g_error ("Error getting device context: %s", buffer);
-      return FALSE;
-    }
-  hdcCompat = CreateCompatibleDC (hdcSrc);
+  {
+    formatWindowsError(buffer, sizeof buffer);
+    g_error("Error getting device context: %s", buffer);
+    return FALSE;
+  }
+  hdcCompat = CreateCompatibleDC(hdcSrc);
   if (!hdcCompat)
-    {
-      formatWindowsError (buffer, sizeof buffer);
-      g_error ("Error getting compat device context: %s", buffer);
-      return FALSE;
-    }
+  {
+    formatWindowsError(buffer, sizeof buffer);
+    g_error("Error getting compat device context: %s", buffer);
+    return FALSE;
+  }
 
   /* Do the window capture */
-  hbm = primDoWindowCapture (hdcSrc, hdcCompat, rect);
+  hbm = primDoWindowCapture(hdcSrc, hdcCompat, rect);
   if (!hbm)
     return FALSE;
 
   /* Release the device context */
   ReleaseDC(selectedHwnd, hdcSrc);
 
-  /* Replace the previous foreground window */
-  if (selectedHwnd && oldForeground)
-    SetForegroundWindow (oldForeground);
+  if (hbm == NULL) return FALSE;
 
-  /* Send the bitmap
-   * TODO: Change this
-   */
-  if (hbm != NULL)
-    {
-      sendBMPToGimp (hbm, hdcCompat, rect);
-    }
+  sendBMPToGimp(hbm, hdcCompat, rect);
+  
+  return TRUE;
 
+}
+
+static int
+doCaptureWithScript(HWND selectedHwnd)
+{
+  char cmdSend[256];
+  /* Here we capturing the window using capture-window.exe script */
+  sprintf(cmdSend, "%x %x", mainHwnd, selectedHwnd);
+  if (ShellExecute(NULL, NULL, "capture-window.exe", cmdSend, NULL, SW_HIDE) <= 32)
+  {
+    g_error("Error: Failed to run capture-window.exe");
+    return FALSE;
+  }
+
+  /* Wait for capture-window.exe to return the image*/
+  Sleep(3000);
   return TRUE;
 }
 
@@ -858,7 +914,6 @@ InitApplication (HINSTANCE hInstance)
 
   return retValue;
 }
-
 /*
  * InitInstance
  *
@@ -930,7 +985,32 @@ WndProc (HWND   hwnd,
   HWND selectedHwnd;
 
   switch (message)
-    {
+  {
+  case WM_COPYDATA:
+  {
+
+    /* Load the capture object info */
+    magCapturedData* capturedDat = (magCapturedData*)((COPYDATASTRUCT*)lParam)->lpData;;
+    /* Get the pixels pointer */
+    guchar* capturedPixels = (guchar*)capturedDat->pixels;
+    /* Init rectImage  */
+    RECT rectImage;
+    rectImage.left = 0;
+    rectImage.top = 0;
+    rectImage.right = capturedDat->width;
+    rectImage.bottom = capturedDat->height;
+
+    capBytes = (guchar*)malloc(sizeof(guchar)*capturedDat->cbsize);
+    if (!capBytes) return (DefWindowProc(hwnd, message, wParam, lParam));
+
+    rgbaToRgbBytes(capBytes, capturedPixels, capturedDat->cbsize);
+
+    sendBMPToGimp(NULL, NULL, rectImage);
+
+    return (DefWindowProc(hwnd, message, wParam, lParam));
+
+  }
+  break;
 
     case WM_CREATE:
       /* The window is created... Send the capture message */
@@ -945,7 +1025,7 @@ WndProc (HWND   hwnd,
         doCapture (selectedHwnd);
 
       PostQuitMessage (0);
-
+	  
       break;
 
     case WM_DESTROY:
@@ -958,5 +1038,4 @@ WndProc (HWND   hwnd,
 
   return 0;
 }
-
 #endif /* G_OS_WIN32 */
