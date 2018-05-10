@@ -84,6 +84,13 @@ void   gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
 void   gimp_scrolled_preview_freeze          (GimpScrolledPreview  *preview);
 void   gimp_scrolled_preview_thaw            (GimpScrolledPreview  *preview);
 
+/*  utility function for scrolled-window like gimp widgets like the canvas  */
+void   gimp_scroll_adjustment_values         (GdkEventScroll       *sevent,
+                                              GtkAdjustment        *hadj,
+                                              GtkAdjustment        *vadj,
+                                              gdouble              *hvalue,
+                                              gdouble              *vvalue);
+
 
 G_END_DECLS
 

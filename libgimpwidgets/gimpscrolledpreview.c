@@ -470,58 +470,25 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 
     case GDK_SCROLL:
       {
-        GdkEventScroll     *sevent    = (GdkEventScroll *) event;
-        GdkScrollDirection  direction = sevent->direction;
-        GtkAdjustment      *adj;
-        gfloat              value;
+        GdkEventScroll *sevent = (GdkEventScroll *) event;
+        GtkAdjustment  *adj_x;
+        GtkAdjustment  *adj_y;
+        gdouble         value_x;
+        gdouble         value_y;
 
         /*  Ctrl-Scroll is reserved for zooming  */
         if (sevent->state & GDK_CONTROL_MASK)
           return FALSE;
 
-        if (sevent->state & GDK_SHIFT_MASK)
-          switch (direction)
-            {
-            case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
-            case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
-            case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
-            case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
-            }
+        adj_x = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
+        adj_y = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
 
-        switch (direction)
-          {
-          case GDK_SCROLL_UP:
-          case GDK_SCROLL_DOWN:
-          default:
-            adj = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
-            break;
+        gimp_scroll_adjustment_values (sevent,
+                                       adj_x, adj_y,
+                                       &value_x, &value_y);
 
-          case GDK_SCROLL_RIGHT:
-          case GDK_SCROLL_LEFT:
-            adj = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
-            break;
-          }
-
-        value = gtk_adjustment_get_value (adj);
-
-        switch (direction)
-          {
-          case GDK_SCROLL_UP:
-          case GDK_SCROLL_LEFT:
-            value -= gtk_adjustment_get_page_increment (adj) / 2;
-            break;
-
-          case GDK_SCROLL_DOWN:
-          case GDK_SCROLL_RIGHT:
-            value += gtk_adjustment_get_page_increment (adj) / 2;
-            break;
-          }
-
-        gtk_adjustment_set_value (adj,
-                                  CLAMP (value,
-                                         gtk_adjustment_get_lower (adj),
-                                         gtk_adjustment_get_upper (adj) -
-                                         gtk_adjustment_get_page_size (adj)));
+        gtk_adjustment_set_value (adj_x, value_x);
+        gtk_adjustment_set_value (adj_y, value_y);
       }
       break;
 
@@ -984,5 +951,83 @@ gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)
     {
       gimp_preview_draw (GIMP_PREVIEW (preview));
       gimp_preview_invalidate (GIMP_PREVIEW (preview));
+    }
+}
+
+void
+gimp_scroll_adjustment_values (GdkEventScroll *sevent,
+                               GtkAdjustment  *hadj,
+                               GtkAdjustment  *vadj,
+                               gdouble        *hvalue,
+                               gdouble        *vvalue)
+{
+  GtkAdjustment *adj_x;
+  GtkAdjustment *adj_y;
+  gdouble        page_size_x;
+  gdouble        page_size_y;
+  gdouble        value_x = 0.0;
+  gdouble        value_y = 0.0;
+
+  g_return_if_fail (sevent != NULL);
+  g_return_if_fail (GTK_IS_ADJUSTMENT (hadj));
+  g_return_if_fail (GTK_IS_ADJUSTMENT (vadj));
+
+  if (sevent->state & GDK_SHIFT_MASK)
+    {
+      adj_x = vadj;
+      adj_y = hadj;
+    }
+  else
+    {
+      adj_x = hadj;
+      adj_y = vadj;
+    }
+
+  page_size_x = gtk_adjustment_get_page_size (adj_x);
+  page_size_y = gtk_adjustment_get_page_size (adj_y);
+
+  switch (sevent->direction)
+    {
+    case GDK_SCROLL_LEFT:
+      value_x = -pow (page_size_x, 2.0 / 3.0);
+      break;
+
+    case GDK_SCROLL_RIGHT:
+      value_x = pow (page_size_x, 2.0 / 3.0);
+      break;
+
+    case GDK_SCROLL_UP:
+      value_y = -pow (page_size_y, 2.0 / 3.0);
+      break;
+
+    case GDK_SCROLL_DOWN:
+      value_y = pow (page_size_y, 2.0 / 3.0);
+      break;
+
+    case GDK_SCROLL_SMOOTH:
+      gdk_event_get_scroll_deltas ((GdkEvent *) sevent, &value_x, &value_y);
+    }
+
+  value_x = CLAMP (value_x +
+                   gtk_adjustment_get_value (adj_x),
+                   gtk_adjustment_get_lower (adj_x),
+                   gtk_adjustment_get_upper (adj_x) -
+                   gtk_adjustment_get_page_size (adj_x));
+
+  value_y = CLAMP (value_y +
+                   gtk_adjustment_get_value (adj_y),
+                   gtk_adjustment_get_lower (adj_y),
+                   gtk_adjustment_get_upper (adj_y) -
+                   gtk_adjustment_get_page_size (adj_y));
+
+  if (sevent->state & GDK_SHIFT_MASK)
+    {
+      if (hvalue) *hvalue = value_y;
+      if (vvalue) *vvalue = value_x;
+    }
+  else
+    {
+      if (hvalue) *hvalue = value_x;
+      if (vvalue) *vvalue = value_y;
     }
 }
