@@ -3,25 +3,29 @@
 pluginexecdir = $(gimpplugindir)/plug-ins
 
 scripts = \
-	colorxhtml.py		\
-	file-openraster.py	\
-	foggify.py		\
-	gradients-save-as-css.py\
-	histogram-export.py     \
-	palette-offset.py	\
-	palette-sort.py		\
-	palette-to-gradient.py	\
-	py-slice.py		\
+	colorxhtml.py			\
+	file-openraster.py		\
+	foggify.py			\
+	gradients-save-as-css.py	\
+	histogram-export.py     	\
+	palette-offset.py		\
+	palette-sort.py			\
+	palette-to-gradient.py		\
+	py-slice.py			\
 	python-eval.py
 
 test_scripts = \
 	benchmark-foreground-extract.py	\
-	clothify.py		\
-	shadow_bevel.py		\
-	sphere.py		\
+	clothify.py			\
+	shadow_bevel.py			\
+	sphere.py			\
 	whirlpinch.py
 
 pluginexec_SCRIPTS = $(scripts)
+
+if GIMP_UNSTABLE
+pluginexec_SCRIPTS += $(test_scripts)
+endif
 
 # python-console has a data file.
 # Therefore let's move it to its own sub-directory.
