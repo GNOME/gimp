@@ -166,6 +166,7 @@ gimp_navigation_view_init (GimpNavigationView *view)
 {
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
+                         GDK_SCROLL_MASK         |
                          GDK_POINTER_MOTION_MASK |
                          GDK_KEY_PRESS_MASK);
 
