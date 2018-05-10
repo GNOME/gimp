@@ -351,6 +351,30 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
+static GtkWidget *
+spin_button_new (GtkAdjustment **adjustment,  /* return value */
+                 gdouble         value,
+                 gdouble         lower,
+                 gdouble         upper,
+                 gdouble         step_increment,
+                 gdouble         page_increment,
+                 gdouble         page_size,
+                 gdouble         climb_rate,
+                 guint           digits)
+{
+  GtkWidget *spinbutton;
+
+  *adjustment = gtk_adjustment_new (value, lower, upper,
+                                    step_increment, page_increment, 0);
+
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+                                    climb_rate, digits);
+
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
+  return spinbutton;
+}
+
 static gboolean
 warp_dialog (GimpDrawable *drawable)
 {
@@ -407,9 +431,9 @@ warp_dialog (GimpDrawable *drawable)
   label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /*  amount, iter */
-  spinbutton = gimp_spin_button_new (&adj, dvals.amount,
-                                     -1000, 1000, /* ??? */
-                                     1, 10, 0, 1, 2);
+  spinbutton = spin_button_new (&adj, dvals.amount,
+                                -1000, 1000, /* ??? */
+                                1, 10, 0, 1, 2);
   gtk_size_group_add_widget (spin_group, spinbutton);
   g_object_unref (spin_group);
 
@@ -423,8 +447,8 @@ warp_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.amount);
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.iter,
-                                     1, 100, 1, 5, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, dvals.iter,
+                                1, 100, 1, 5, 0, 1, 0);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -544,8 +568,8 @@ warp_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.dither,
-                                     0, 100, 1, 10, 0, 1, 2);
+  spinbutton = spin_button_new (&adj, dvals.dither,
+                                0, 100, 1, 10, 0, 1, 2);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
@@ -557,8 +581,8 @@ warp_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.dither);
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.angle,
-                                     0, 360, 1, 15, 0, 1, 1);
+  spinbutton = spin_button_new (&adj, dvals.angle,
+                                0, 360, 1, 15, 0, 1, 1);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -570,8 +594,8 @@ warp_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.angle);
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.substeps,
-                                     1, 100, 1, 5, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, dvals.substeps,
+                                1, 100, 1, 5, 0, 1, 0);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
@@ -633,9 +657,9 @@ warp_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.grad_scale,
-                                     -1000, 1000, /* ??? */
-                                     0.01, 0.1, 0, 1, 3);
+  spinbutton = spin_button_new (&adj, dvals.grad_scale,
+                                -1000, 1000, /* ??? */
+                                0.01, 0.1, 0, 1, 3);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
@@ -663,9 +687,9 @@ warp_dialog (GimpDrawable *drawable)
 
   /* ---------------------------------------------- */
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.vector_scale,
-                                     -1000, 1000, /* ??? */
-                                     0.01, 0.1, 0, 1, 3);
+  spinbutton = spin_button_new (&adj, dvals.vector_scale,
+                                -1000, 1000, /* ??? */
+                                0.01, 0.1, 0, 1, 3);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -679,8 +703,8 @@ warp_dialog (GimpDrawable *drawable)
 
   /* -------------------------------------------------------- */
 
-  spinbutton = gimp_spin_button_new (&adj, dvals.vector_angle,
-                                     0, 360, 1, 15, 0, 1, 1);
+  spinbutton = spin_button_new (&adj, dvals.vector_angle,
+                                0, 360, 1, 15, 0, 1, 1);
   gtk_size_group_add_widget (spin_group, spinbutton);
 
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
