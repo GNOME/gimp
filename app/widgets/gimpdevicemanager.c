@@ -44,18 +44,15 @@ enum
 };
 
 
-typedef struct _GimpDeviceManagerPrivate GimpDeviceManagerPrivate;
 
 struct _GimpDeviceManagerPrivate
 {
   Gimp           *gimp;
+  GHashTable     *displays;
   GimpDeviceInfo *current_device;
 };
 
-#define GET_PRIVATE(manager) \
-        G_TYPE_INSTANCE_GET_PRIVATE (manager, \
-                                     GIMP_TYPE_DEVICE_MANAGER, \
-                                     GimpDeviceManagerPrivate)
+#define GET_PRIVATE(obj) (((GimpDeviceManager *) (obj))->priv)
 
 
 static void   gimp_device_manager_constructed    (GObject           *object);
@@ -126,6 +123,12 @@ gimp_device_manager_class_init (GimpDeviceManagerClass *klass)
 static void
 gimp_device_manager_init (GimpDeviceManager *manager)
 {
+  manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
+                                               GIMP_TYPE_DEVICE_MANAGER,
+                                               GimpDeviceManagerPrivate);
+
+  manager->priv->displays = g_hash_table_new (g_direct_hash,
+                                              g_direct_equal);
 }
 
 static void
@@ -183,6 +186,10 @@ gimp_device_manager_dispose (GObject *object)
 static void
 gimp_device_manager_finalize (GObject *object)
 {
+  GimpDeviceManagerPrivate *private = GET_PRIVATE (object);
+
+  g_clear_pointer (&private->displays, g_hash_table_unref);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -297,7 +304,19 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
                                     GdkDisplay        *gdk_display,
                                     GimpDeviceManager *manager)
 {
-  GList *list;
+  GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
+  GList                    *list;
+  gint                      count;
+
+  count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
+                                                gdk_display));
+
+  g_hash_table_insert (private->displays, gdk_display,
+                       GINT_TO_POINTER (count + 1));
+
+  /*  don't add the same display twice  */
+  if (count > 0)
+    return;
 
   /*  create device info structures for present devices */
   for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
@@ -317,7 +336,22 @@ gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
                                     gboolean           is_error,
                                     GimpDeviceManager *manager)
 {
-  GList *list;
+  GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
+  GList                    *list;
+  gint                      count;
+
+  count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
+                                                gdk_display));
+
+  /*  don't remove the same display twice  */
+  if (count > 1)
+    {
+      g_hash_table_insert (private->displays, gdk_display,
+                           GINT_TO_POINTER (count - 1));
+      return;
+    }
+
+  g_hash_table_remove (private->displays, gdk_display);
 
   for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
     {
