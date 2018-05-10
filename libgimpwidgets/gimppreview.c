@@ -280,6 +280,7 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_add_events (priv->area,
                          GDK_BUTTON_PRESS_MASK        |
                          GDK_BUTTON_RELEASE_MASK      |
+                         GDK_SCROLL_MASK              |
                          GDK_POINTER_MOTION_HINT_MASK |
                          GDK_BUTTON_MOTION_MASK);
 
