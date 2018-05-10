@@ -6,6 +6,7 @@
 _WizardInfoBefore=License Agreement
 _AboutSetupNote=Setup built by Jernej Simonèiè, jernej-gimp@ena.si
 _WinVersionTooLowError=This version of GIMP requires Windows 7, or a newer version of Windows.
+_WindowsVersionNotSupported=This version of GIMP requires Windows 7, or a newer version of Windows.
 
 [CustomMessages]
 ;shown before the wizard starts on development versions of GIMP
