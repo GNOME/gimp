@@ -343,6 +343,30 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+static GtkWidget *
+spin_button_new (GtkAdjustment **adjustment,  /* return value */
+                 gdouble         value,
+                 gdouble         lower,
+                 gdouble         upper,
+                 gdouble         step_increment,
+                 gdouble         page_increment,
+                 gdouble         page_size,
+                 gdouble         climb_rate,
+                 guint           digits)
+{
+  GtkWidget *spinbutton;
+
+  *adjustment = gtk_adjustment_new (value, lower, upper,
+                                    step_increment, page_increment, 0);
+
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+                                    climb_rate, digits);
+
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
+  return spinbutton;
+}
+
 static gboolean
 tileit_dialog (void)
 {
@@ -505,7 +529,7 @@ tileit_dialog (void)
                           label,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 2, 1, 1);
@@ -530,7 +554,7 @@ tileit_dialog (void)
                           label,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 3, 1, 1);
