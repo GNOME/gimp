@@ -97,6 +97,20 @@ gint        gimp_dialog_run                (GimpDialog     *dialog);
 void        gimp_dialogs_show_help_button  (gboolean        show);
 
 
+/*  since we don't know yet what to do about alternative button order,
+ *  just hide the warnings for now...
+ */
+#define gimp_dialog_set_alternative_button_order(d,f...) \
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                      \
+  gtk_dialog_set_alternative_button_order(d,f);          \
+  G_GNUC_END_IGNORE_DEPRECATIONS;
+
+#define gimp_dialog_set_alternative_button_order_from_array(d,n,o) \
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                                \
+  gtk_dialog_set_alternative_button_order_from_array(d,n,o);       \
+  G_GNUC_END_IGNORE_DEPRECATIONS;
+
+
 G_END_DECLS
 
 #endif /* __GIMP_DIALOG_H__ */
