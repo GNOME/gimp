@@ -501,8 +501,9 @@ gimp_dialog_add_button (GimpDialog  *dialog,
                 NULL);
 
   if (use_header_bar &&
-      (response_id == GTK_RESPONSE_OK ||
-       response_id == GTK_RESPONSE_CANCEL))
+      (response_id == GTK_RESPONSE_OK     ||
+       response_id == GTK_RESPONSE_CANCEL ||
+       response_id == GTK_RESPONSE_CLOSE))
     {
       GtkWidget *header = gtk_dialog_get_header_bar (GTK_DIALOG (dialog));
 
