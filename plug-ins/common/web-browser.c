@@ -49,7 +49,8 @@ static void     run              (const gchar      *name,
                                   const GimpParam  *param,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
-static gboolean browser_open_url (const gchar      *url,
+static gboolean browser_open_url (GtkWindow        *window,
+                                  const gchar      *url,
                                   GError          **error);
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -105,7 +106,7 @@ run (const gchar      *name,
       param[0].data.d_string != NULL &&
       strlen (param[0].data.d_string))
     {
-      if (! browser_open_url (param[0].data.d_string, &error))
+      if (! browser_open_url (NULL, param[0].data.d_string, &error))
         {
           status                  = GIMP_PDB_EXECUTION_ERROR;
           *nreturn_vals           = 2;
@@ -123,7 +124,8 @@ run (const gchar      *name,
 }
 
 static gboolean
-browser_open_url (const gchar  *url,
+browser_open_url (GtkWindow    *window,
+                  const gchar  *url,
                   GError      **error)
 {
 #ifdef G_OS_WIN32
@@ -204,10 +206,10 @@ browser_open_url (const gchar  *url,
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-  return gtk_show_uri (gdk_screen_get_default (),
-                       url,
-                       gtk_get_current_event_time(),
-                       error);
+  return gtk_show_uri_on_window (window,
+                                 url,
+                                 GDK_CURRENT_TIME,
+                                 error);
 
 #endif
 }

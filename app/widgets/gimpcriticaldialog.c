@@ -58,7 +58,8 @@ static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
                                               gint         response_id);
 
-static gboolean browser_open_url             (const gchar  *url,
+static gboolean browser_open_url             (GtkWindow    *window,
+                                              const gchar  *url,
                                               GError      **error);
 
 
@@ -208,7 +209,8 @@ gimp_critical_dialog_finalize (GObject *object)
  * cross-platform way need to be a plug-in?
  */
 static gboolean
-browser_open_url (const gchar  *url,
+browser_open_url (GtkWindow    *window,
+                  const gchar  *url,
                   GError      **error)
 {
 #ifdef G_OS_WIN32
@@ -287,10 +289,10 @@ browser_open_url (const gchar  *url,
 
 #else
 
-  return gtk_show_uri (gdk_screen_get_default (),
-                       url,
-                       gtk_get_current_event_time(),
-                       error);
+  return gtk_show_uri_on_window (window,
+                                 url,
+                                 GDK_CURRENT_TIME,
+                                 error);
 
 #endif
 }
@@ -346,7 +348,7 @@ gimp_critical_dialog_response (GtkDialog *dialog,
 
         g_free (temp);
 
-        browser_open_url (url, NULL);
+        browser_open_url (GTK_WINDOW (dialog), url, NULL);
       }
       break;
 
