@@ -62,6 +62,8 @@ typedef struct
   gchar      *last_command;
   gint        command_count;
   gint        consec_command_count;
+
+  gboolean    running;
 } SFInterface;
 
 
@@ -752,11 +754,7 @@ script_fu_response (GtkWidget *widget,
                     gint       response_id,
                     SFScript  *script)
 {
-  GtkWidget *action_area;
-
-  action_area = gtk_dialog_get_action_area (GTK_DIALOG (sf_interface->dialog));
-
-  if (! gtk_widget_is_sensitive (action_area))
+  if (sf_interface->running)
     return;
 
   switch (response_id)
@@ -766,8 +764,21 @@ script_fu_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:
+      sf_interface->running = TRUE;
+
       gtk_widget_set_sensitive (sf_interface->grid, FALSE);
-      gtk_widget_set_sensitive (action_area, FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (sf_interface->dialog),
+                                         GTK_RESPONSE_HELP,
+                                         FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (sf_interface->dialog),
+                                         RESPONSE_RESET,
+                                         FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (sf_interface->dialog),
+                                         GTK_RESPONSE_CANCEL,
+                                         FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (sf_interface->dialog),
+                                         GTK_RESPONSE_OK,
+                                         FALSE);
 
       script_fu_ok (script);
 
