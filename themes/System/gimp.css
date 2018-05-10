@@ -1,7 +1,6 @@
 /* GIMP theme css file */
 
 * {
-    -GtkPaned-handle-size:             6;
     -GimpDockWindow-default-height:    300;
     -GimpMenuDock-minimal-width:       200;
     -GimpDockWindow-menu-preview-size: button;
@@ -87,7 +86,6 @@ GimpDockable {
 GimpDisplayShell {
     -GimpUnitComboBox-label-scale:  0.8333;
     -GimpScaleComboBox-label-scale: 0.8333;
-    -GtkComboBox-arrow-size:        8;
 }
 
 GimpColorFrame {
