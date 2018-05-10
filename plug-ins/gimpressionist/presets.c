@@ -644,7 +644,7 @@ create_save_preset (GtkWidget *parent)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

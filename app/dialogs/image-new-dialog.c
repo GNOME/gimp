@@ -108,7 +108,7 @@ image_new_dialog_new (GimpContext *context)
 
                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -327,7 +327,7 @@ image_new_confirm_dialog (ImageNewDialog *private)
 
                                       NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (private->confirm_dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (private->confirm_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

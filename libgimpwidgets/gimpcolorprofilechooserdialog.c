@@ -36,6 +36,7 @@
 
 #include "gimpcolorprofilechooserdialog.h"
 #include "gimpcolorprofileview.h"
+#include "gimpdialog.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -178,7 +179,7 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
                               NULL);
     }
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_ACCEPT,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

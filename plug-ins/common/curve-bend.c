@@ -1229,7 +1229,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
                                NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -2067,7 +2067,7 @@ bender_load_callback (GtkWidget    *w,
 
                                      NULL);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);

@@ -665,7 +665,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
 
       g_free (title);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (editor->edit_dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (editor->edit_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);

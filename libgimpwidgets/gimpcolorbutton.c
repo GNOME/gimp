@@ -581,7 +581,7 @@ gimp_color_button_clicked (GtkButton *button)
 
       g_object_set_data (G_OBJECT (dialog), COLOR_BUTTON_KEY, button);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                RESPONSE_RESET,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,

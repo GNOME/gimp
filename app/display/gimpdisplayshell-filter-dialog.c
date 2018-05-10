@@ -89,7 +89,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
                                           NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (cdd->dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (cdd->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

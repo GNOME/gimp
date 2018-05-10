@@ -449,7 +449,7 @@ gimp_help_browser_error (Gimp         *gimp,
 
                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -848,7 +848,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
   if (manuals != NULL)
     {
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_ACCEPT,
                                                GTK_RESPONSE_YES,
                                                GTK_RESPONSE_CANCEL,
@@ -857,7 +857,7 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
     }
   else
     {
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_ACCEPT,
                                                GTK_RESPONSE_CANCEL,
                                                -1);

@@ -212,7 +212,7 @@ image_scale_confirm_dialog (ImageScaleDialog *private)
 
                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (widget),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (widget),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

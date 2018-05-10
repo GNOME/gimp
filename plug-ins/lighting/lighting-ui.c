@@ -1041,7 +1041,7 @@ main_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1167,7 +1167,7 @@ save_lighting_preset (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -1311,7 +1311,7 @@ load_lighting_preset (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
