@@ -73,6 +73,7 @@ static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
                                                   const GimpRGB      *rgb,
                                                   GimpColorDialog    *dialog);
 
+
 G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
 
 #define parent_class gimp_color_dialog_parent_class
@@ -105,31 +106,6 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
 static void
 gimp_color_dialog_init (GimpColorDialog *dialog)
 {
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-
-                          _("_Reset"),  RESPONSE_RESET,
-                          _("_Cancel"), GTK_RESPONSE_CANCEL,
-                          _("_OK"),     GTK_RESPONSE_OK,
-
-                          NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           RESPONSE_RESET,
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  dialog->selection = gimp_color_selection_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      dialog->selection, TRUE, TRUE, 0);
-  gtk_widget_show (dialog->selection);
-
-  g_signal_connect (dialog->selection, "color-changed",
-                    G_CALLBACK (gimp_color_dialog_color_changed),
-                    dialog);
 }
 
 static void
@@ -142,6 +118,30 @@ gimp_color_dialog_constructed (GObject *object)
   GtkWidget          *button;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
+
+                           _("_Reset"),  RESPONSE_RESET,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           _("_OK"),     GTK_RESPONSE_OK,
+
+                           NULL);
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
+
+  dialog->selection = gimp_color_selection_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      dialog->selection, TRUE, TRUE, 0);
+  gtk_widget_show (dialog->selection);
+
+  g_signal_connect (dialog->selection, "color-changed",
+                    G_CALLBACK (gimp_color_dialog_color_changed),
+                    dialog);
 
   /* Color history box. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
