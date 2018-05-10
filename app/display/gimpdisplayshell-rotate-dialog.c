@@ -124,7 +124,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 
                               NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

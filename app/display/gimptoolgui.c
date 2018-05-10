@@ -853,7 +853,7 @@ gimp_tool_gui_update_buttons (GimpToolGui *gui)
         }
       else
         {
-          gtk_dialog_set_alternative_button_order_from_array (GTK_DIALOG (private->dialog),
+          gimp_dialog_set_alternative_button_order_from_array (GTK_DIALOG (private->dialog),
                                                               n_ids, ids);
         }
     }

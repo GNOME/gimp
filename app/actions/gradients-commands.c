@@ -83,7 +83,7 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
       g_free (title);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);

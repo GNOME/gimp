@@ -1333,7 +1333,7 @@ smp_dialog (void)
 
                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_GET_COLORS,
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_APPLY,

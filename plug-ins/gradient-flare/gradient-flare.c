@@ -2362,7 +2362,7 @@ dlg_run (void)
 
                                         NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -3325,7 +3325,7 @@ ed_run (GtkWindow            *parent,
 
                              NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (shell),
                                            RESPONSE_RESCAN,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,

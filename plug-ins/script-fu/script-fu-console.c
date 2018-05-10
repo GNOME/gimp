@@ -135,7 +135,7 @@ script_fu_console_interface (void)
 
                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (console.dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (console.dialog),
                                            GTK_RESPONSE_CLOSE,
                                            RESPONSE_CLEAR,
                                            RESPONSE_SAVE,
@@ -299,7 +299,7 @@ script_fu_console_save_dialog (ConsoleInterface *console)
 
       gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
                                        GTK_RESPONSE_OK);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -377,7 +377,7 @@ script_fu_browse_callback (GtkWidget        *widget,
 
       gtk_dialog_set_default_response (GTK_DIALOG (console->proc_browser),
                                        GTK_RESPONSE_APPLY);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->proc_browser),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (console->proc_browser),
                                                GTK_RESPONSE_CLOSE,
                                                GTK_RESPONSE_APPLY,
                                                -1);

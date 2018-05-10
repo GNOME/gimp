@@ -150,7 +150,7 @@ create_query_box (const gchar   *title,
 
                                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

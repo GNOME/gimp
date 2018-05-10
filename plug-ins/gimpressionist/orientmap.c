@@ -530,7 +530,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (orient_map_window),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (orient_map_window),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_APPLY,
                                            GTK_RESPONSE_CANCEL,

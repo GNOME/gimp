@@ -293,7 +293,7 @@ gfig_dialog (void)
 
                                    NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -643,7 +643,7 @@ gfig_load_action_callback (GtkAction *action,
 
                                      NULL);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -692,7 +692,7 @@ gfig_save_action_callback (GtkAction *action,
 
                                      NULL);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);

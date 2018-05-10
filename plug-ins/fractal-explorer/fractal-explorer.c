@@ -1116,7 +1116,7 @@ fractalexplorer_rescan_list (GtkWidget *widget,
 
                          NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

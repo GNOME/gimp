@@ -289,7 +289,7 @@ prefs_response (GtkWidget *widget,
 
                                            NULL);
 
-        gtk_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
+        gimp_dialog_set_alternative_button_order (GTK_DIALOG (confirm),
                                                  GTK_RESPONSE_OK,
                                                  GTK_RESPONSE_CANCEL,
                                                  -1);
@@ -638,7 +638,7 @@ prefs_menus_remove_callback (GtkWidget *widget,
 
                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1096,7 +1096,7 @@ prefs_dialog_new (Gimp       *gimp,
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,

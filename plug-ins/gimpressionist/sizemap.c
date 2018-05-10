@@ -403,7 +403,7 @@ create_sizemap_dialog (GtkWidget *parent)
 
                               NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
                                            GTK_RESPONSE_OK,
                                            RESPONSE_APPLY,
                                            GTK_RESPONSE_CANCEL,

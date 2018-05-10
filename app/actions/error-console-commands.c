@@ -99,7 +99,7 @@ error_console_save_cmd_callback (GtkAction *action,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
