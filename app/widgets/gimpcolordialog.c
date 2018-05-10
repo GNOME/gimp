@@ -245,7 +245,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "icon-name",      icon_name,
                          "description",    desc,
                          "context",        context,
-                         "parent",         parent,
+                         "parent",         gtk_widget_get_toplevel (parent),
                          "use-header-bar", use_header_bar,
                          NULL);
 
