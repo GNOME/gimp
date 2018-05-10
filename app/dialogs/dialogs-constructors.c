@@ -195,7 +195,7 @@ dialogs_about_get (GimpDialogFactory *factory,
                    GimpUIManager     *ui_manager,
                    gint               view_size)
 {
-  return about_dialog_create (context);
+  return about_dialog_create ();
 }
 
 GtkWidget *

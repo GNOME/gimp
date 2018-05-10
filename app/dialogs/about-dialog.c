@@ -28,11 +28,6 @@
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-
-#include "pdb/gimppdb.h"
-
 #include "about.h"
 #include "git-version.h"
 
@@ -63,7 +58,6 @@ typedef struct
 
   gint         index;
   gint         animstep;
-  gint         textrange[2];
   gint         state;
   gboolean     visible;
 } GimpAboutDialog;
@@ -89,11 +83,9 @@ static void        about_dialog_add_unstable_message
 
 
 GtkWidget *
-about_dialog_create (GimpContext *context)
+about_dialog_create (void)
 {
   static GimpAboutDialog dialog;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (! dialog.dialog)
     {
@@ -283,17 +275,29 @@ about_dialog_anim_draw (GtkWidget       *widget,
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GdkRGBA          color;
+  gdouble          alpha = 0.0;
   gint             x, y;
   gint             width, height;
 
   if (! dialog->visible)
     return FALSE;
 
-  gtk_style_context_save (style);
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
-  gtk_style_context_get_color (style, 0, &color);
+  if (dialog->animstep < 16)
+    {
+      alpha = (gfloat) dialog->animstep / 15.0;
+    }
+  else if (dialog->animstep < 18)
+    {
+      alpha = 1.0;
+    }
+  else if (dialog->animstep < 33)
+    {
+      alpha = 1.0 - ((gfloat) (dialog->animstep - 17)) / 15.0;
+    }
+
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &color);
   gdk_cairo_set_source_rgba (cr, &color);
-  gtk_style_context_restore (style);
 
   gtk_widget_get_allocation (widget, &allocation);
   pango_layout_get_pixel_size (dialog->layout, &width, &height);
@@ -301,23 +305,14 @@ about_dialog_anim_draw (GtkWidget       *widget,
   x = (allocation.width  - width)  / 2;
   y = (allocation.height - height) / 2;
 
-  if (dialog->textrange[1] > 0)
-    {
-      cairo_region_t *covered_region;
-
-      covered_region = gdk_pango_layout_get_clip_region (dialog->layout,
-                                                         x, y,
-                                                         dialog->textrange, 1);
-
-      gdk_cairo_region (cr, covered_region);
-      cairo_clip (cr);
-
-      cairo_region_destroy (covered_region);
-    }
-
   cairo_move_to (cr, x, y);
 
+  cairo_push_group (cr);
+
   pango_cairo_show_layout (cr, dialog->layout);
+
+  cairo_pop_group_to_source (cr);
+  cairo_paint_with_alpha (cr, alpha);
 
   return FALSE;
 }
@@ -345,77 +340,37 @@ insert_spacers (const gchar *string)
   return g_string_free (str, FALSE);
 }
 
-static inline void
-mix_colors (const GdkRGBA *start,
-            const GdkRGBA *end,
-            GdkRGBA       *target,
-            gdouble        pos)
-{
-  target->red   = start->red   * (1.0 - pos) + end->red   * pos;
-  target->green = start->green * (1.0 - pos) + end->green * pos;
-  target->blue  = start->blue  * (1.0 - pos) + end->blue  * pos;
-  target->alpha = start->alpha * (1.0 - pos) + end->alpha * pos;
-}
-
 static void
 decorate_text (GimpAboutDialog *dialog,
                gint             anim_type,
                gdouble          time)
 {
-  GtkStyleContext *style = gtk_widget_get_style_context (dialog->anim_area);
-  const gchar     *text;
-  const gchar     *ptr;
-  gint             letter_count = 0;
-  gint             text_length  = 0;
-  gint             text_bytelen = 0;
-  gint             cluster_start, cluster_end;
-  gunichar         unichr;
-  PangoAttrList   *attrlist = NULL;
-  PangoAttribute  *attr;
-  PangoRectangle   irect = {0, 0, 0, 0};
-  PangoRectangle   lrect = {0, 0, 0, 0};
-  GdkRGBA          fg;
-  GdkRGBA          bg;
-  GdkRGBA          mix;
-
-  gtk_style_context_get_color (style, 0, &fg);
-  gtk_style_context_get_background_color (style, 0, &bg);
-
-  mix_colors (&bg, &fg, &mix, time);
+  const gchar    *text;
+  const gchar    *ptr;
+  gint            letter_count = 0;
+  gint            cluster_start, cluster_end;
+  gunichar        unichr;
+  PangoAttrList  *attrlist = NULL;
+  PangoAttribute *attr;
+  PangoRectangle  irect = {0, 0, 0, 0};
+  PangoRectangle  lrect = {0, 0, 0, 0};
 
   text = pango_layout_get_text (dialog->layout);
+
   g_return_if_fail (text != NULL);
 
-  text_length = g_utf8_strlen (text, -1);
-  text_bytelen = strlen (text);
-
   attrlist = pango_attr_list_new ();
-
-  dialog->textrange[0] = 0;
-  dialog->textrange[1] = text_bytelen;
 
   switch (anim_type)
     {
     case 0: /* Fade in */
-      attr = pango_attr_foreground_new (mix.red   * 0xffff,
-                                        mix.green * 0xffff,
-                                        mix.blue  * 0xffff);
-      attr->start_index = 0;
-      attr->end_index = text_bytelen;
-      pango_attr_list_insert (attrlist, attr);
       break;
 
     case 1: /* Fade in, spread */
-      attr = pango_attr_foreground_new (mix.red   * 0xffff,
-                                        mix.green * 0xffff,
-                                        mix.blue  * 0xffff);
-      attr->start_index = 0;
-      attr->end_index = text_bytelen;
-      pango_attr_list_change (attrlist, attr);
-
       ptr = text;
 
       cluster_start = 0;
+
       while ((unichr = g_utf8_get_char (ptr)))
         {
           ptr = g_utf8_next_char (ptr);
@@ -434,13 +389,6 @@ decorate_text (GimpAboutDialog *dialog,
       break;
 
     case 2: /* Fade in, sinewave */
-      attr = pango_attr_foreground_new (mix.red   * 0xffff,
-                                        mix.green * 0xffff,
-                                        mix.blue  * 0xffff);
-      attr->start_index = 0;
-      attr->end_index = text_bytelen;
-      pango_attr_list_change (attrlist, attr);
-
       ptr = text;
 
       cluster_start = 0;
@@ -463,46 +411,6 @@ decorate_text (GimpAboutDialog *dialog,
 
           ptr = g_utf8_next_char (ptr);
         }
-      break;
-
-    case 3: /* letterwise Fade in */
-      ptr = text;
-
-      letter_count  = 0;
-      cluster_start = 0;
-
-      while ((unichr = g_utf8_get_char (ptr)))
-        {
-          gint    border = (text_length + 15) * time - 15;
-          gdouble pos;
-
-          if (letter_count < border)
-            pos = 0;
-          else if (letter_count > border + 15)
-            pos = 1;
-          else
-            pos = ((gdouble) (letter_count - border)) / 15;
-
-          mix_colors (&fg, &bg, &mix, pos);
-
-          ptr = g_utf8_next_char (ptr);
-
-          cluster_end = ptr - text;
-
-          attr = pango_attr_foreground_new (mix.red   * 0xffff,
-                                            mix.green * 0xffff,
-                                            mix.blue  * 0xffff);
-          attr->start_index = cluster_start;
-          attr->end_index = cluster_end;
-          pango_attr_list_change (attrlist, attr);
-
-          if (pos < 1.0)
-            dialog->textrange[1] = cluster_end;
-
-          letter_count++;
-          cluster_start = cluster_end;
-        }
-
       break;
 
     default:
