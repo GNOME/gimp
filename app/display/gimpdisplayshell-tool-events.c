@@ -730,11 +730,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             ! gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),
                                             sevent))
           {
-            GdkScrollDirection  direction = sevent->direction;
-
             if (state & gimp_get_toggle_behavior_mask ())
               {
-                switch (direction)
+                switch (sevent->direction)
                   {
                   case GDK_SCROLL_UP:
                     gimp_display_shell_scale (shell,
@@ -756,42 +754,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
             else
               {
-                GtkAdjustment *adj = NULL;
-                gdouble        value;
+                gdouble value_x;
+                gdouble value_y;
 
-                if (state & GDK_SHIFT_MASK)
-                  switch (direction)
-                    {
-                    case GDK_SCROLL_UP:    direction = GDK_SCROLL_LEFT;  break;
-                    case GDK_SCROLL_DOWN:  direction = GDK_SCROLL_RIGHT; break;
-                    case GDK_SCROLL_LEFT:  direction = GDK_SCROLL_UP;    break;
-                    case GDK_SCROLL_RIGHT: direction = GDK_SCROLL_DOWN;  break;
-                    }
+                gimp_scroll_adjustment_values (sevent,
+                                               shell->hsbdata,
+                                               shell->vsbdata,
+                                               &value_x, &value_y);
 
-                switch (direction)
-                  {
-                  case GDK_SCROLL_LEFT:
-                  case GDK_SCROLL_RIGHT:
-                    adj = shell->hsbdata;
-                    break;
-
-                  case GDK_SCROLL_UP:
-                  case GDK_SCROLL_DOWN:
-                    adj = shell->vsbdata;
-                    break;
-                  }
-
-                value = (gtk_adjustment_get_value (adj) +
-                         ((direction == GDK_SCROLL_UP ||
-                           direction == GDK_SCROLL_LEFT) ?
-                          -gtk_adjustment_get_page_increment (adj) / 2 :
-                          gtk_adjustment_get_page_increment (adj) / 2));
-                value = CLAMP (value,
-                               gtk_adjustment_get_lower (adj),
-                               gtk_adjustment_get_upper (adj) -
-                               gtk_adjustment_get_page_size (adj));
-
-                gtk_adjustment_set_value (adj, value);
+                gtk_adjustment_set_value (shell->hsbdata, value_x);
+                gtk_adjustment_set_value (shell->vsbdata, value_y);
               }
           }
 
