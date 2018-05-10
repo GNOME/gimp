@@ -127,8 +127,9 @@ gimp_device_manager_init (GimpDeviceManager *manager)
                                                GIMP_TYPE_DEVICE_MANAGER,
                                                GimpDeviceManagerPrivate);
 
-  manager->priv->displays = g_hash_table_new (g_direct_hash,
-                                              g_direct_equal);
+  manager->priv->displays = g_hash_table_new_full (g_str_hash,
+                                                   g_str_equal,
+                                                   g_free, NULL);
 }
 
 static void
@@ -306,12 +307,15 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
 {
   GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
   GList                    *list;
+  const gchar              *display_name;
   gint                      count;
 
-  count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
-                                                gdk_display));
+  display_name = gdk_display_get_name (gdk_display);
 
-  g_hash_table_insert (private->displays, gdk_display,
+  count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
+                                                display_name));
+
+  g_hash_table_insert (private->displays, g_strdup (display_name),
                        GINT_TO_POINTER (count + 1));
 
   /*  don't add the same display twice  */
@@ -338,20 +342,23 @@ gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
 {
   GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
   GList                    *list;
+  const gchar              *display_name;
   gint                      count;
 
+  display_name = gdk_display_get_name (gdk_display);
+
   count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
-                                                gdk_display));
+                                                display_name));
 
   /*  don't remove the same display twice  */
   if (count > 1)
     {
-      g_hash_table_insert (private->displays, gdk_display,
+      g_hash_table_insert (private->displays, g_strdup (display_name),
                            GINT_TO_POINTER (count - 1));
       return;
     }
 
-  g_hash_table_remove (private->displays, gdk_display);
+  g_hash_table_remove (private->displays, display_name);
 
   for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
     {
