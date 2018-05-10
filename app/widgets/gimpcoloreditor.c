@@ -218,10 +218,8 @@ gimp_color_editor_init (GimpColorEditor *editor)
       gtk_box_pack_start (GTK_BOX (editor->hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      g_printerr ("ICON NAME: %s\n", selector_class->icon_name);
-
       image = gtk_image_new_from_icon_name (selector_class->icon_name,
-                                            GTK_ICON_SIZE_BUTTON);
+                                            GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
 
