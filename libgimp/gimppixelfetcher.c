@@ -151,35 +151,6 @@ gimp_pixel_fetcher_set_edge_mode (GimpPixelFetcher         *pf,
 }
 
 /**
- * gimp_pixel_fetcher_set_bg_color:
- * @pf:    a pointer to a previously initialized #GimpPixelFetcher.
- * @color: the color to be used as bg color.
- *
- * Change the background color of a previously initialized pixel region.
- **/
-void
-gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf,
-                                 const GimpRGB    *color)
-{
-  g_return_if_fail (pf != NULL);
-  g_return_if_fail (color != NULL);
-
-  switch (pf->img_bpp)
-    {
-    case 2: pf->bg_color[1] = 255;
-    case 1:
-      pf->bg_color[0] = gimp_rgb_luminance_uchar (color);
-      break;
-
-    case 4: pf->bg_color[3] = 255;
-    case 3:
-      gimp_rgb_get_uchar (color,
-                          pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
-      break;
-    }
-}
-
-/**
  * gimp_pixel_fetcher_get_pixel:
  * @pf:    a pointer to a previously initialized #GimpPixelFetcher.
  * @x:     the x coordinate of the pixel to get.
