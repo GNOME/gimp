@@ -326,7 +326,7 @@ sparkle_dialog (GimpDrawable *drawable)
   GtkWidget     *preview;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *toggle;
   GtkWidget     *r1, *r2, *r3;
   GtkAdjustment *scale_data;
@@ -363,14 +363,14 @@ sparkle_dialog (GimpDrawable *drawable)
                             G_CALLBACK (sparkle),
                             drawable);
 
-  table = gtk_table_new (9, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
               _("Luminosity _threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.lum_threshold, 0.0, 0.1, 0.001, 0.01, 3,
               TRUE, 0, 0,
@@ -383,7 +383,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
               _("F_lare intensity:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.flare_inten, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
@@ -396,7 +396,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
               _("_Spike length:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_len, 1, 100, 1, 10, 0,
               TRUE, 0, 0,
@@ -409,7 +409,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
               _("Sp_ike points:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_pts, 0, 16, 1, 4, 0,
               TRUE, 0, 0,
@@ -422,7 +422,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
               _("Spi_ke angle (-1: random):"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.spike_angle, -1, 360, 1, 15, 0,
               TRUE, 0, 0,
@@ -436,7 +436,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 5,
               _("Spik_e density:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.density, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
@@ -449,7 +449,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 6,
               _("Tr_ansparency:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.transparency, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
@@ -462,7 +462,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 7,
               _("_Random hue:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_hue, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
@@ -475,7 +475,7 @@ sparkle_dialog (GimpDrawable *drawable)
                             preview);
 
   scale_data =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 8,
+    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 8,
               _("Rando_m saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
               svals.random_saturation, 0.0, 1.0, 0.01, 0.1, 2,
               TRUE, 0, 0,
