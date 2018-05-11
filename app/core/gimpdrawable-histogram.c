@@ -28,6 +28,7 @@
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimptilehandlervalidate.h"
 
+#include "gimpasync.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-filters.h"
 #include "gimpdrawable-histogram.h"
@@ -36,21 +37,30 @@
 #include "gimpprojectable.h"
 
 
-void
-gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-                                   GimpHistogram *histogram,
-                                   gboolean       with_filters)
+/*  local function prototypes  */
+
+static GimpAsync * gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
+                                                               GimpHistogram *histogram,
+                                                               gboolean       with_filters,
+                                                               gboolean       run_async);
+
+
+/*  private functions  */
+
+
+static GimpAsync *
+gimp_drawable_calculate_histogram_internal (GimpDrawable  *drawable,
+                                            GimpHistogram *histogram,
+                                            gboolean       with_filters,
+                                            gboolean       run_async)
 {
+  GimpAsync   *async = NULL;
   GimpImage   *image;
   GimpChannel *mask;
   gint         x, y, width, height;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (histogram != NULL);
-
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
-    return;
+    goto end;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   mask  = gimp_image_get_mask (image);
@@ -161,17 +171,41 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-          gimp_histogram_calculate (histogram, buffer,
-                                    GEGL_RECTANGLE (x, y, width, height),
-                                    gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
-                                    GEGL_RECTANGLE (x + off_x, y + off_y,
-                                                    width, height));
+          if (run_async)
+            {
+              async = gimp_histogram_calculate_async (
+                histogram, buffer,
+                GEGL_RECTANGLE (x, y, width, height),
+                gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                GEGL_RECTANGLE (x + off_x, y + off_y,
+                                width, height));
+            }
+          else
+            {
+              gimp_histogram_calculate (
+                histogram, buffer,
+                GEGL_RECTANGLE (x, y, width, height),
+                gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
+                GEGL_RECTANGLE (x + off_x, y + off_y,
+                                width, height));
+            }
         }
       else
         {
-          gimp_histogram_calculate (histogram, buffer,
-                                    GEGL_RECTANGLE (x, y, width, height),
-                                    NULL, NULL);
+          if (run_async)
+            {
+              async = gimp_histogram_calculate_async (
+                histogram, buffer,
+                GEGL_RECTANGLE (x, y, width, height),
+                NULL, NULL);
+            }
+          else
+            {
+              gimp_histogram_calculate (
+                histogram, buffer,
+                GEGL_RECTANGLE (x, y, width, height),
+                NULL, NULL);
+            }
         }
 
       if (projectable)
@@ -179,4 +213,46 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
 
       g_object_unref (buffer);
     }
+
+end:
+  if (run_async && ! async)
+    {
+      async = gimp_async_new ();
+
+      gimp_async_finish (async, NULL);
+    }
+
+  return async;
+}
+
+
+/*  public functions  */
+
+
+void
+gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
+                                   GimpHistogram *histogram,
+                                   gboolean       with_filters)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  g_return_if_fail (histogram != NULL);
+
+  gimp_drawable_calculate_histogram_internal (drawable,
+                                              histogram, with_filters,
+                                              FALSE);
+}
+
+GimpAsync *
+gimp_drawable_calculate_histogram_async (GimpDrawable  *drawable,
+                                         GimpHistogram *histogram,
+                                         gboolean       with_filters)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (histogram != NULL, NULL);
+
+  return gimp_drawable_calculate_histogram_internal (drawable,
+                                                     histogram, with_filters,
+                                                     TRUE);
 }

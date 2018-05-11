@@ -21,9 +21,12 @@
 #define __GIMP_DRAWABLE_HISTOGRAM_H__
 
 
-void   gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-                                          GimpHistogram *histogram,
-                                          gboolean       with_filters);
+void        gimp_drawable_calculate_histogram       (GimpDrawable  *drawable,
+                                                     GimpHistogram *histogram,
+                                                     gboolean       with_filters);
+GimpAsync * gimp_drawable_calculate_histogram_async (GimpDrawable  *drawable,
+                                                     GimpHistogram *histogram,
+                                                     gboolean       with_filters);
 
 
 #endif /* __GIMP_HISTOGRAM_H__ */
