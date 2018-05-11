@@ -53,8 +53,6 @@ GIMP_DEPRECATED
 void    gimp_tile_flush        (GimpTile  *tile);
 
 GIMP_DEPRECATED
-void    gimp_tile_cache_size   (gulong     kilobytes);
-GIMP_DEPRECATED
 void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 
