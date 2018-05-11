@@ -21,7 +21,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/map-object
 
 libexec_PROGRAMS = map-object
 

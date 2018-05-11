@@ -39,7 +39,7 @@ LDADD = \
 	$(INTLLIBS)		\
 	$(print_RC)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/print
 
 libexec_PROGRAMS = print
 

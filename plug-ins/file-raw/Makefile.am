@@ -20,7 +20,9 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+dt_libexecdir = $(gimpplugindir)/plug-ins/file-darktable
+rt_libexecdir = $(gimpplugindir)/plug-ins/file-rawtherapee
+rp_libexecdir = $(gimpplugindir)/plug-ins/file-raw-placeholder
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
@@ -28,10 +30,9 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)
 
-libexec_PROGRAMS = \
-	file-darktable		\
-	file-rawtherapee	\
-	file-raw-placeholder
+dt_libexec_PROGRAMS = file-darktable
+rt_libexec_PROGRAMS = file-rawtherapee
+rp_libexec_PROGRAMS = file-raw-placeholder
 
 file_darktable_SOURCES = \
 	file-darktable.c	\

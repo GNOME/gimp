@@ -31,7 +31,7 @@ AM_CPPFLAGS = \
 AM_LDFLAGS = $(mwindows)
 
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/gimpressionist
 
 libexec_PROGRAMS = gimpressionist
 

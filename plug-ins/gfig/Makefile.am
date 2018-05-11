@@ -23,7 +23,7 @@ AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = gfig-examples images
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/gfig
 
 libexec_PROGRAMS = gfig
 

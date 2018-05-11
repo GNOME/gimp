@@ -23,7 +23,7 @@ AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = images
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/lighting
 
 libexec_PROGRAMS = lighting
 

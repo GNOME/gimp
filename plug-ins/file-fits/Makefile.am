@@ -20,7 +20,7 @@ endif
 AM_LDFLAGS = $(mwindows)
 AM_CFLAGS = -fno-strict-aliasing
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/file-fits
 
 libexec_PROGRAMS = file-fits
 
