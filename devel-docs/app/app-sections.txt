@@ -12991,7 +12991,6 @@ gimp_stock_button_new
 <FILE>gimpwidgets-utils</FILE>
 gimp_menu_position
 gimp_button_menu_position
-gimp_table_attach_stock
 gimp_enum_radio_box_add
 gimp_enum_radio_frame_add
 gimp_get_icon_size
