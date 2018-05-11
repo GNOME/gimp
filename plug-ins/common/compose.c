@@ -1212,10 +1212,10 @@ compose_dialog (const gchar *compose_type,
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-      scale = gimp_color_scale_entry_new_grid (GTK_GRID (grid), 2, j, NULL,
-                                               100, 4,
-                                               255.0, 0.0, 255.0, 1.0, 10.0, 0,
-                                               NULL, NULL);
+      scale = gimp_color_scale_entry_new (GTK_GRID (grid), 2, j, NULL,
+                                          100, 4,
+                                          255.0, 0.0, 255.0, 1.0, 10.0, 0,
+                                          NULL, NULL);
       composeint.color_scales[j] = GIMP_SCALE_ENTRY_SCALE (scale);
       composeint.color_spins[j]  = GIMP_SCALE_ENTRY_SPINBUTTON (scale);
 

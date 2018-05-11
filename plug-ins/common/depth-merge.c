@@ -755,41 +755,41 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   /* Numeric parameters */
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
-                                   _("O_verlap:"), 0, 6,
-                                   dm->params.overlap, 0, 2, 0.001, 0.01, 3,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
+                              _("O_verlap:"), 0, 6,
+                              dm->params.overlap, 0, 2, 0.001, 0.01, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 5,
-                                   _("O_ffset:"), 0, 6,
-                                   dm->params.offset, -1, 1, 0.001, 0.01, 3,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 5,
+                              _("O_ffset:"), 0, 6,
+                              dm->params.offset, -1, 1, 0.001, 0.01, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 6,
-                                   _("Sc_ale 1:"), 0, 6,
-                                   dm->params.scale1, -1, 1, 0.001, 0.01, 3,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 6,
+                              _("Sc_ale 1:"), 0, 6,
+                              dm->params.scale1, -1, 1, 0.001, 0.01, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 7,
-                                   _("Sca_le 2:"), 0, 6,
-                                   dm->params.scale2, -1, 1, 0.001, 0.01, 3,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 7,
+                              _("Sca_le 2:"), 0, 6,
+                              dm->params.scale2, -1, 1, 0.001, 0.01, 3,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));

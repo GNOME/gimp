@@ -665,46 +665,46 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (grid2);
 
   angle_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
-                               _("A_ngle:"),
-                               150, 6, 0.0,
-                               0.0, 360.0, 1.0, 10.0, 1,
-                               TRUE, 0, 0,
-                               _("Change the angle of the selected vector"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
+                          _("A_ngle:"),
+                          150, 6, 0.0,
+                          0.0, 360.0, 1.0, 10.0, 1,
+                          TRUE, 0, 0,
+                          _("Change the angle of the selected vector"),
+                          NULL);
   g_signal_connect (angle_adjust, "value-changed",
                     G_CALLBACK (angle_adjust_move_callback), NULL);
 
   angle_offset_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 1,
-                               _("Ang_le offset:"),
-                               150, 6, 0.0,
-                               0.0, 360.0, 1.0, 10.0, 1,
-                               TRUE, 0, 0,
-                               _("Offset all vectors with a given angle"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 1,
+                          _("Ang_le offset:"),
+                          150, 6, 0.0,
+                          0.0, 360.0, 1.0, 10.0, 1,
+                          TRUE, 0, 0,
+                          _("Offset all vectors with a given angle"),
+                          NULL);
   g_signal_connect (angle_offset_adjust, "value-changed",
                     G_CALLBACK (angle_offset_adjust_move_callback), NULL);
 
   strength_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 2,
-                               _("_Strength:"),
-                               150, 6, 1.0,
-                               0.1, 5.0, 0.1, 1.0, 1,
-                               TRUE, 0, 0,
-                               _("Change the strength of the selected vector"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 2,
+                          _("_Strength:"),
+                          150, 6, 1.0,
+                          0.1, 5.0, 0.1, 1.0, 1,
+                          TRUE, 0, 0,
+                          _("Change the strength of the selected vector"),
+                          NULL);
   g_signal_connect (strength_adjust, "value-changed",
                     G_CALLBACK (strength_adjust_move_callback), NULL);
 
   orient_map_str_exp_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 3,
-                               _("S_trength exp.:"),
-                               150, 6, 1.0,
-                               0.1, 10.9, 0.1, 1.0, 1,
-                               TRUE, 0, 0,
-                               _("Change the exponent of the strength"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 3,
+                          _("S_trength exp.:"),
+                          150, 6, 1.0,
+                          0.1, 10.9, 0.1, 1.0, 1,
+                          TRUE, 0, 0,
+                          _("Change the exponent of the strength"),
+                          NULL);
   g_signal_connect (orient_map_str_exp_adjust, "value-changed",
                     G_CALLBACK (strength_exponent_adjust_move_callback), NULL);
 

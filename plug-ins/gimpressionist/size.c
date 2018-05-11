@@ -104,37 +104,37 @@ create_sizepage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   sizenumadjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                               _("Size variants:"),
-                               150, -1, pcvals.size_num,
-                               1.0, 30.0, 1.0, 1.0, 0,
-                               TRUE, 0, 0,
-                               _("The number of sizes of brushes to use"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                          _("Size variants:"),
+                          150, -1, pcvals.size_num,
+                          1.0, 30.0, 1.0, 1.0, 0,
+                          TRUE, 0, 0,
+                          _("The number of sizes of brushes to use"),
+                          NULL);
   g_signal_connect (sizenumadjust, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pcvals.size_num);
 
   sizefirstadjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                               _("Minimum size:"),
-                               150, -1, pcvals.size_first,
-                               0.0, 360.0, 1.0, 10.0, 0,
-                               TRUE, 0, 0,
-                               _("The smallest brush to create"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                          _("Minimum size:"),
+                          150, -1, pcvals.size_first,
+                          0.0, 360.0, 1.0, 10.0, 0,
+                          TRUE, 0, 0,
+                          _("The smallest brush to create"),
+                          NULL);
   g_signal_connect (sizefirstadjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.size_first);
 
   sizelastadjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                               _("Maximum size:"),
-                               150, -1, pcvals.size_last,
-                               0.0, 360.0, 1.0, 10.0, 0,
-                               TRUE, 0, 0,
-                               _("The largest brush to create"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                          _("Maximum size:"),
+                          150, -1, pcvals.size_last,
+                          0.0, 360.0, 1.0, 10.0, 0,
+                          TRUE, 0, 0,
+                          _("The largest brush to create"),
+                          NULL);
   g_signal_connect (sizelastadjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.size_last);

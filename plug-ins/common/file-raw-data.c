@@ -1971,11 +1971,11 @@ load_dialog (const gchar *filename,
                               G_CALLBACK (preview_update),
                               preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("O_ffset:"), -1, 9,
-                                   runtime->file_offset, 0, file_size, 1, 1000, 0,
-                                   TRUE, 0.0, 0.0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("O_ffset:"), -1, 9,
+                              runtime->file_offset, 0, file_size, 1, 1000, 0,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1986,11 +1986,11 @@ load_dialog (const gchar *filename,
 
   if (! is_hgt)
     {
-      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                       _("_Width:"), -1, 9,
-                                       runtime->image_width, 1, file_size, 1, 10, 0,
-                                       TRUE, 0.0, 0.0,
-                                       NULL, NULL);
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                                  _("_Width:"), -1, 9,
+                                  runtime->image_width, 1, file_size, 1, 10, 0,
+                                  TRUE, 0.0, 0.0,
+                                  NULL, NULL);
 
       g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
@@ -2002,11 +2002,11 @@ load_dialog (const gchar *filename,
                                 G_CALLBACK (preview_update),
                                 preview);
 
-      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                       _("_Height:"), -1, 9,
-                                       runtime->image_height, 1, file_size, 1, 10, 0,
-                                       TRUE, 0.0, 0.0,
-                                       NULL, NULL);
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                                  _("_Height:"), -1, 9,
+                                  runtime->image_height, 1, file_size, 1, 10, 0,
+                                  TRUE, 0.0, 0.0,
+                                  NULL, NULL);
 
       g_signal_connect (adj, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
@@ -2046,11 +2046,11 @@ load_dialog (const gchar *filename,
                             G_CALLBACK (palette_update),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("Off_set:"), -1, 0,
-                                   runtime->palette_offset, 0, 1 << 24, 1, 768, 0,
-                                   TRUE, 0.0, 0.0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("Off_set:"), -1, 0,
+                              runtime->palette_offset, 0, 1 << 24, 1, 768, 0,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),

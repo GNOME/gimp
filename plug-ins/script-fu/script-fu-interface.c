@@ -411,17 +411,17 @@ script_fu_interface (SFScript  *script,
             {
             case SF_SLIDER:
               arg->value.sfa_adjustment.adj = (GtkAdjustment *)
-                gimp_scale_entry_new_grid (GTK_GRID (sf_interface->grid),
-                                           0, row,
-                                           label_text, SLIDER_WIDTH, -1,
-                                           arg->value.sfa_adjustment.value,
-                                           arg->default_value.sfa_adjustment.lower,
-                                           arg->default_value.sfa_adjustment.upper,
-                                           arg->default_value.sfa_adjustment.step,
-                                           arg->default_value.sfa_adjustment.page,
-                                           arg->default_value.sfa_adjustment.digits,
-                                           TRUE, 0.0, 0.0,
-                                           NULL, NULL);
+                gimp_scale_entry_new (GTK_GRID (sf_interface->grid),
+                                      0, row,
+                                      label_text, SLIDER_WIDTH, -1,
+                                      arg->value.sfa_adjustment.value,
+                                      arg->default_value.sfa_adjustment.lower,
+                                      arg->default_value.sfa_adjustment.upper,
+                                      arg->default_value.sfa_adjustment.step,
+                                      arg->default_value.sfa_adjustment.page,
+                                      arg->default_value.sfa_adjustment.digits,
+                                      TRUE, 0.0, 0.0,
+                                      NULL, NULL);
               gtk_entry_set_activates_default (GIMP_SCALE_ENTRY_SPINBUTTON (arg->value.sfa_adjustment.adj), TRUE);
               break;
 

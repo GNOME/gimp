@@ -312,7 +312,7 @@ palette_import_dialog_new (GimpContext *context)
                             private->entry, 2);
 
   /*  The # of colors  */
-  private->num_colors = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+  private->num_colors = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                                               _("N_umber of colors:"), -1, 5,
                                               256, 2, 10000, 1, 10, 0,
                                               TRUE, 0.0, 0.0,
@@ -325,7 +325,7 @@ palette_import_dialog_new (GimpContext *context)
                             private);
 
   /*  The columns  */
-  private->columns = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
+  private->columns = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                                            _("C_olumns:"), -1, 5,
                                            16, 0, 64, 1, 8, 0,
                                            TRUE, 0.0, 0.0,
@@ -336,7 +336,7 @@ palette_import_dialog_new (GimpContext *context)
                     private);
 
   /*  The interval  */
-  private->threshold = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
+  private->threshold = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
                                              _("I_nterval:"), -1, 5,
                                              1, 1, 128, 1, 8, 0,
                                              TRUE, 0.0, 0.0,

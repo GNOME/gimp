@@ -771,13 +771,13 @@ save_dialog (void)
   gtk_widget_show (grid);
 
   pg.quality = entry = (GtkAdjustment *)
-                       gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                                  _("_Quality:"),
-                                                  SCALE_WIDTH, 0, jsvals.quality,
-                                                  0.0, 100.0, 1.0, 10.0, 0,
-                                                  TRUE, 0.0, 0.0,
-                                                  _("JPEG quality parameter"),
-                                                  "file-jpeg-save-quality");
+                       gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                             _("_Quality:"),
+                                             SCALE_WIDTH, 0, jsvals.quality,
+                                             0.0, 100.0, 1.0, 10.0, 0,
+                                             TRUE, 0.0, 0.0,
+                                             _("JPEG quality parameter"),
+                                             "file-jpeg-save-quality");
 
   g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -838,13 +838,13 @@ save_dialog (void)
   gtk_widget_show (grid2);
 
   pg.smoothing = entry = (GtkAdjustment *)
-                         gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
-                                                    _("S_moothing:"),
-                                                    100, 0, jsvals.smoothing,
-                                                    0.0, 1.0, 0.01, 0.1, 2,
-                                                    TRUE, 0.0, 0.0,
-                                                    NULL,
-                                                    "file-jpeg-save-smoothing");
+                         gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
+                                               _("S_moothing:"),
+                                               100, 0, jsvals.smoothing,
+                                               0.0, 1.0, 0.01, 0.1, 2,
+                                               TRUE, 0.0, 0.0,
+                                               NULL,
+                                               "file-jpeg-save-smoothing");
   g_signal_connect (entry, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &jsvals.smoothing);

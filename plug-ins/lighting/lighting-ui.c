@@ -353,13 +353,13 @@ create_options_page (void)
   gtk_widget_show (grid);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("Distance:"), 100, 6,
-                                   mapvals.viewpoint.z,
-                                   0.0, 2.0, 0.01, 0.05,
-                                   3, TRUE, 0.0, 0.0,
-                                   "Distance of observer from surface",
-                                   "plug-in-lighting");
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("Distance:"), 100, 6,
+                              mapvals.viewpoint.z,
+                              0.0, 2.0, 0.01, 0.05,
+                              3, TRUE, 0.0, 0.0,
+                              "Distance of observer from surface",
+                              "plug-in-lighting");
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (distance_update),
                     NULL);

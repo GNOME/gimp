@@ -550,12 +550,12 @@ create_options_page (void)
                           G_BINDING_SYNC_CREATE);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("_Depth:"), 0, 0,
-                                   mapvals.maxdepth, 1.0, 5.0, 0.1, 1.0,
-                                   1, TRUE, 0, 0,
-                                   _("Antialiasing quality. Higher is better, "
-                                    "but slower"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("_Depth:"), 0, 0,
+                              mapvals.maxdepth, 1.0, 5.0, 0.1, 1.0,
+                              1, TRUE, 0, 0,
+                              _("Antialiasing quality. Higher is better, "
+                               "but slower"), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.maxdepth);
@@ -968,11 +968,11 @@ create_orientation_page (void)
   gtk_widget_show (grid);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("X:"), 0, 0,
-                                   mapvals.position.x, -1.0, 2.0, 0.01, 0.1, 5,
-                                   TRUE, 0, 0,
-                                   _("Object X position in XYZ space"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("X:"), 0, 0,
+                              mapvals.position.x, -1.0, 2.0, 0.01, 0.1, 5,
+                              TRUE, 0, 0,
+                              _("Object X position in XYZ space"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
@@ -982,11 +982,11 @@ create_orientation_page (void)
                     &mapvals.position.x);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("Y:"), 0, 0,
-                                   mapvals.position.y, -1.0, 2.0, 0.01, 0.1, 5,
-                                   TRUE, 0, 0,
-                                   _("Object Y position in XYZ space"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("Y:"), 0, 0,
+                              mapvals.position.y, -1.0, 2.0, 0.01, 0.1, 5,
+                              TRUE, 0, 0,
+                              _("Object Y position in XYZ space"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
@@ -996,11 +996,11 @@ create_orientation_page (void)
                     &mapvals.position.y);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("Z:"), 0, 0,
-                                   mapvals.position.z, -1.0, 2.0, 0.01, 0.1, 5,
-                                   TRUE, 0, 0,
-                                   _("Object Z position in XYZ space"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("Z:"), 0, 0,
+                              mapvals.position.z, -1.0, 2.0, 0.01, 0.1, 5,
+                              TRUE, 0, 0,
+                              _("Object Z position in XYZ space"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.01, 5);
@@ -1020,11 +1020,11 @@ create_orientation_page (void)
   gtk_widget_show (grid);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("X:"), 0, 0,
-                                   mapvals.alpha, -180.0, 180.0, 1.0, 15.0, 1,
-                                   TRUE, 0, 0,
-                                   _("Rotation angle about X axis"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("X:"), 0, 0,
+                              mapvals.alpha, -180.0, 180.0, 1.0, 15.0, 1,
+                              TRUE, 0, 0,
+                              _("Rotation angle about X axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
   g_signal_connect (adj, "value-changed",
@@ -1032,11 +1032,11 @@ create_orientation_page (void)
                     &mapvals.alpha);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("Y:"), 0, 0,
-                                   mapvals.beta, -180.0, 180.0, 1.0, 15.0, 1,
-                                   TRUE, 0, 0,
-                                   _("Rotation angle about Y axis"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("Y:"), 0, 0,
+                              mapvals.beta, -180.0, 180.0, 1.0, 15.0, 1,
+                              TRUE, 0, 0,
+                              _("Rotation angle about Y axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
   g_signal_connect (adj, "value-changed",
@@ -1044,11 +1044,11 @@ create_orientation_page (void)
                     &mapvals.beta);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("Z:"), 0, 0,
-                                   mapvals.gamma, -180.0, 180.0, 1.0, 15.0, 1,
-                                   TRUE, 0, 0,
-                                   _("Rotation angle about Z axis"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("Z:"), 0, 0,
+                              mapvals.gamma, -180.0, 180.0, 1.0, 15.0, 1,
+                              TRUE, 0, 0,
+                              _("Rotation angle about Z axis"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_SPINBUTTON (adj));
 
   g_signal_connect (adj, "value-changed",
@@ -1120,11 +1120,11 @@ create_box_page (void)
   gtk_widget_show (grid);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("Scale X:"), 0, 0,
-                                   mapvals.scale.x, 0.0, 5.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   _("X scale (size)"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("Scale X:"), 0, 0,
+                              mapvals.scale.x, 0.0, 5.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("X scale (size)"), NULL);
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
@@ -1133,11 +1133,11 @@ create_box_page (void)
                     &mapvals.scale.x);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("Y:"), 0, 0,
-                                   mapvals.scale.y, 0.0, 5.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   _("Y scale (size)"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("Y:"), 0, 0,
+                              mapvals.scale.y, 0.0, 5.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("Y scale (size)"), NULL);
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
@@ -1146,11 +1146,11 @@ create_box_page (void)
                     &mapvals.scale.y);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("Z:"), 0, 0,
-                                   mapvals.scale.z, 0.0, 5.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   _("Z scale (size)"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("Z:"), 0, 0,
+                              mapvals.scale.z, 0.0, 5.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("Z scale (size)"), NULL);
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
 
@@ -1218,12 +1218,12 @@ create_cylinder_page (void)
   gtk_widget_show (grid);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("R_adius:"), 0, 0,
-                                   mapvals.cylinder_radius,
-                                   0.0, 2.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   _("Cylinder radius"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("R_adius:"), 0, 0,
+                              mapvals.cylinder_radius,
+                              0.0, 2.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("Cylinder radius"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);
@@ -1233,12 +1233,12 @@ create_cylinder_page (void)
                     &mapvals.cylinder_radius);
 
   adj = (GtkAdjustment *)
-        gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("L_ength:"), 0, 0,
-                                   mapvals.cylinder_length,
-                                   0.0, 2.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   _("Cylinder length"), NULL);
+        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("L_ength:"), 0, 0,
+                              mapvals.cylinder_length,
+                              0.0, 2.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              _("Cylinder length"), NULL);
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
   gtk_spin_button_configure (GIMP_SCALE_ENTRY_SPINBUTTON (adj),
                              GIMP_SCALE_ENTRY_SPINBUTTON_ADJ (adj), 0.1, 2);

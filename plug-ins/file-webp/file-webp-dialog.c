@@ -133,18 +133,18 @@ save_dialog (WebPSaveParams *params,
                     &params->lossless);
 
   /* Create the slider for image quality */
-  quality_scale = gimp_scale_entry_new_grid (GTK_GRID (grid),
-                                             0, row++,
-                                             _("Image quality:"),
-                                             125,
-                                             0,
-                                             params->quality,
-                                             0.0, 100.0,
-                                             1.0, 10.0,
-                                             0, TRUE,
-                                             0.0, 0.0,
-                                             _("Image quality"),
-                                             NULL);
+  quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
+                                        0, row++,
+                                        _("Image quality:"),
+                                        125,
+                                        0,
+                                        params->quality,
+                                        0.0, 100.0,
+                                        1.0, 10.0,
+                                        0, TRUE,
+                                        0.0, 0.0,
+                                        _("Image quality"),
+                                        NULL);
   gimp_scale_entry_set_sensitive (quality_scale, ! params->lossless);
 
   g_signal_connect (quality_scale, "value-changed",
@@ -152,18 +152,18 @@ save_dialog (WebPSaveParams *params,
                     &params->quality);
 
   /* Create the slider for alpha channel quality */
-  alpha_quality_scale = gimp_scale_entry_new_grid (GTK_GRID (grid),
-                                                   0, row++,
-                                                   _("Alpha quality:"),
-                                                   125,
-                                                   0,
-                                                   params->alpha_quality,
-                                                   0.0, 100.0,
-                                                   1.0, 10.0,
-                                                   0, TRUE,
-                                                   0.0, 0.0,
-                                                   _("Alpha channel quality"),
-                                                   NULL);
+  alpha_quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
+                                              0, row++,
+                                              _("Alpha quality:"),
+                                              125,
+                                              0,
+                                              params->alpha_quality,
+                                              0.0, 100.0,
+                                              1.0, 10.0,
+                                              0, TRUE,
+                                              0.0, 0.0,
+                                              _("Alpha channel quality"),
+                                              NULL);
   gimp_scale_entry_set_sensitive (alpha_quality_scale, ! params->lossless);
 
   g_signal_connect (alpha_quality_scale, "value-changed",

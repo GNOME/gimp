@@ -871,11 +871,11 @@ unsharp_mask_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   unsharp_params.radius, 0.1, 500.0, 0.1, 1.0, 1,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.radius, 0.1, 500.0, 0.1, 1.0, 1,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -884,11 +884,11 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   unsharp_params.amount, 0.0, 10.0, 0.01, 0.1, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.amount, 0.0, 10.0, 0.01, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -897,11 +897,11 @@ unsharp_mask_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   unsharp_params.threshold,
-                                   0.0, 255.0, 1.0, 10.0, 0,
-                                   TRUE, 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              unsharp_params.threshold,
+                              0.0, 255.0, 1.0, 10.0, 0,
+                              TRUE, 0, 0,
                               NULL, NULL);
 
   g_signal_connect (adj, "value-changed",

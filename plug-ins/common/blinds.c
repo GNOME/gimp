@@ -303,11 +303,11 @@ blinds_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                         _("_Displacement:"), SCALE_WIDTH, 0,
-                                         bvals.angledsp, 1, 90, 1, 15, 0,
-                                         TRUE, 0, 0,
-                                         NULL, NULL);
+  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                    _("_Displacement:"), SCALE_WIDTH, 0,
+                                    bvals.angledsp, 1, 90, 1, 15, 0,
+                                    TRUE, 0, 0,
+                                    NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.angledsp);
@@ -315,11 +315,11 @@ blinds_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                         _("_Number of segments:"), SCALE_WIDTH, 0,
-                                         bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
-                                         TRUE, 0, 0,
-                                         NULL, NULL);
+  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                                    _("_Number of segments:"), SCALE_WIDTH, 0,
+                                    bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
+                                    TRUE, 0, 0,
+                                    NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.numsegs);

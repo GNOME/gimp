@@ -377,12 +377,12 @@ wavelet_decompose_dialog (void)
 
   /* scales */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("Scales:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   wavelet_params.scales,
-                                   1.0, 7.0, 1.0, 1.0, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("Scales:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              wavelet_params.scales,
+                              1.0, 7.0, 1.0, 1.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),

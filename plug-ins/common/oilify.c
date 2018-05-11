@@ -816,11 +816,11 @@ oilify_dialog (GimpDrawable *drawable)
    * Mask-size scale
    */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("_Mask size:"), SCALE_WIDTH, 0,
-                                   ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
-                                   TRUE, 0.0, 0.0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("_Mask size:"), SCALE_WIDTH, 0,
+                              ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.mask_size);
@@ -869,11 +869,11 @@ oilify_dialog (GimpDrawable *drawable)
    * Exponent scale
    */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                   _("_Exponent:"), SCALE_WIDTH, 0,
-                                   ovals.exponent, 1.0, 20.0, 1.0, 4.0, 0,
-                                   TRUE, 0.0, 0.0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                              _("_Exponent:"), SCALE_WIDTH, 0,
+                              ovals.exponent, 1.0, 20.0, 1.0, 4.0, 0,
+                              TRUE, 0.0, 0.0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.exponent);

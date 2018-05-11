@@ -1377,25 +1377,25 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   if (! limit_scale)
     {
-      adjustment = gimp_scale_entry_new_grid (grid, column, row,
-                                              label, -1, -1,
-                                              value, lower, upper,
-                                              step_increment, page_increment,
-                                              digits,
-                                              TRUE, 0.0, 0.0,
-                                              tooltip,
-                                              NULL);
+      adjustment = gimp_scale_entry_new (grid, column, row,
+                                         label, -1, -1,
+                                         value, lower, upper,
+                                         step_increment, page_increment,
+                                         digits,
+                                         TRUE, 0.0, 0.0,
+                                         tooltip,
+                                         NULL);
     }
   else
     {
-      adjustment = gimp_scale_entry_new_grid (grid, column, row,
-                                              label, -1, -1,
-                                              value, lower_limit, upper_limit,
-                                              step_increment, page_increment,
-                                              digits,
-                                              FALSE, lower, upper,
-                                              tooltip,
-                                              NULL);
+      adjustment = gimp_scale_entry_new (grid, column, row,
+                                         label, -1, -1,
+                                         value, lower_limit, upper_limit,
+                                         step_increment, page_increment,
+                                         digits,
+                                         FALSE, lower, upper,
+                                         tooltip,
+                                         NULL);
     }
 
   set_param_spec (G_OBJECT (adjustment), NULL,  param_spec);

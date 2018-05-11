@@ -101,37 +101,37 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   orient_num_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                               _("Directions:"),
-                               150, -1, pcvals.orient_num,
-                               1.0, 30.0, 1.0, 1.0, 0,
-                               TRUE, 0, 0,
-                               _("The number of directions (i.e. brushes) to use"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                          _("Directions:"),
+                          150, -1, pcvals.orient_num,
+                          1.0, 30.0, 1.0, 1.0, 0,
+                          TRUE, 0, 0,
+                          _("The number of directions (i.e. brushes) to use"),
+                          NULL);
   g_signal_connect (orient_num_adjust, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pcvals.orient_num);
 
   orient_first_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                               _("Start angle:"),
-                               150, -1, pcvals.orient_first,
-                               0.0, 360.0, 1.0, 10.0, 0,
-                               TRUE, 0, 0,
-                               _("The starting angle of the first brush to create"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                          _("Start angle:"),
+                          150, -1, pcvals.orient_first,
+                          0.0, 360.0, 1.0, 10.0, 0,
+                          TRUE, 0, 0,
+                          _("The starting angle of the first brush to create"),
+                          NULL);
   g_signal_connect (orient_first_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.orient_first);
 
   orient_last_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                               _("Angle span:"),
-                               150, -1, pcvals.orient_last,
-                               0.0, 360.0, 1.0, 10.0, 0,
-                               TRUE, 0, 0,
-                               _("The angle span of the first brush to create"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                          _("Angle span:"),
+                          150, -1, pcvals.orient_last,
+                          0.0, 360.0, 1.0, 10.0, 0,
+                          TRUE, 0, 0,
+                          _("The angle span of the first brush to create"),
+                          NULL);
   g_signal_connect (orient_last_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.orient_last);

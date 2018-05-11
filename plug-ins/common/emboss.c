@@ -499,11 +499,11 @@ emboss_dialog (GimpDrawable *drawable)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("_Azimuth:"), 100, 6,
-                                   evals.azimuth, 0.0, 360.0, 1.0, 10.0, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("_Azimuth:"), 100, 6,
+                              evals.azimuth, 0.0, 360.0, 1.0, 10.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.azimuth);
@@ -511,11 +511,11 @@ emboss_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("E_levation:"), 100, 6,
-                                   evals.elevation, 0.0, 180.0, 1.0, 10.0, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("E_levation:"), 100, 6,
+                              evals.elevation, 0.0, 180.0, 1.0, 10.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.elevation);
@@ -523,11 +523,11 @@ emboss_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("_Depth:"), 100, 6,
-                                   evals.depth, 1.0, 100.0, 1.0, 5.0, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("_Depth:"), 100, 6,
+                              evals.depth, 1.0, 100.0, 1.0, 5.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &evals.depth);
