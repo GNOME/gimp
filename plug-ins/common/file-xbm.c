@@ -1229,7 +1229,7 @@ save_dialog (gint32 drawable_ID)
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *toggle;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *entry;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
@@ -1257,19 +1257,19 @@ save_dialog (gint32 drawable_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &xsvals.x10_format);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* prefix */
   entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_PREFIX);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.prefix);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Identifier prefix:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Identifier prefix:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (prefix_entry_callback),
                     NULL);
@@ -1281,9 +1281,9 @@ save_dialog (gint32 drawable_ID)
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_COMMENT);
   gtk_widget_set_size_request (entry, 240, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.comment);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Comment:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Comment:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (comment_entry_callback),
                     NULL);
@@ -1299,14 +1299,14 @@ save_dialog (gint32 drawable_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &xsvals.use_hot);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   g_object_bind_property (toggle, "active",
-                          table,  "sensitive",
+                          grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
   adj = (GtkAdjustment *)
@@ -1315,9 +1315,9 @@ save_dialog (gint32 drawable_ID)
                         1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Hot spot _X:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Hot spot _X:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1329,9 +1329,9 @@ save_dialog (gint32 drawable_ID)
                         1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Hot spot _Y:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Hot spot _Y:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1342,14 +1342,14 @@ save_dialog (gint32 drawable_ID)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   toggle = gtk_check_button_new_with_mnemonic (_("W_rite extra mask file"));
-  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 2, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), xsvals.write_mask);
   gtk_widget_show (toggle);
 
@@ -1360,9 +1360,9 @@ save_dialog (gint32 drawable_ID)
   entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_MASK_EXT);
   gtk_entry_set_text (GTK_ENTRY (entry), xsvals.mask_ext);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Mask file extension:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Mask file extension:"), 0.0, 0.5,
+                            entry, 1);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mask_ext_entry_callback),
                     NULL);
