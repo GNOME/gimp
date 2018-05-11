@@ -843,11 +843,11 @@ cartoon_dialog (GimpDrawable *drawable)
   gtk_widget_show (grid);
 
   /*  Label, scale, entry for cvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                          _("_Mask radius:"), 100, 5,
-                                          cvals.mask_radius, 1.0, 50.0, 1, 5.0, 2,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                     _("_Mask radius:"), 100, 5,
+                                     cvals.mask_radius, 1.0, 50.0, 1, 5.0, 2,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -857,11 +857,11 @@ cartoon_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for cvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                          _("_Percent black:"), 50, 5,
-                                          cvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                                     _("_Percent black:"), 50, 5,
+                                     cvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

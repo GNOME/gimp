@@ -115,13 +115,13 @@ create_placementpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   brush_density_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                               _("Stroke _density:"),
-                               100, -1, pcvals.brush_density,
-                               1.0, 50.0, 1.0, 5.0, 0,
-                               TRUE, 0, 0,
-                               _("The relative density of the brush strokes"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                          _("Stroke _density:"),
+                          100, -1, pcvals.brush_density,
+                          1.0, 50.0, 1.0, 5.0, 0,
+                          TRUE, 0, 0,
+                          _("The relative density of the brush strokes"),
+                          NULL);
   g_signal_connect (brush_density_adjust, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pcvals.brush_density);

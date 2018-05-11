@@ -472,11 +472,11 @@ destripe_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("_Width:"), SCALE_WIDTH, 0,
-                                   vals.avg_width, 2, MAX_AVG, 1, 10, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("_Width:"), SCALE_WIDTH, 0,
+                              vals.avg_width, 2, MAX_AVG, 1, 10, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &vals.avg_width);

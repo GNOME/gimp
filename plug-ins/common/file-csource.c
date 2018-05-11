@@ -1001,11 +1001,11 @@ run_save_dialog (Config *config)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("Op_acity:"), 100, 0,
-                                   config->opacity, 0, 100, 1, 10, 1,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("Op_acity:"), 100, 0,
+                              config->opacity, 0, 100, 1, 10, 1,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config->opacity);

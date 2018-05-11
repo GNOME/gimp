@@ -505,35 +505,35 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (grid2);
 
   sizadjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
-                               _("_Size:"),
-                               150, 6, 50.0,
-                               0.0, 100.0, 1.0, 10.0, 1,
-                               TRUE, 0, 0,
-                               _("Change the angle of the selected smvector"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
+                          _("_Size:"),
+                          150, 6, 50.0,
+                          0.0, 100.0, 1.0, 10.0, 1,
+                          TRUE, 0, 0,
+                          _("Change the angle of the selected smvector"),
+                          NULL);
   g_signal_connect (sizadjust, "value-changed",
                     G_CALLBACK (angsmadjmove), NULL);
 
   smstradjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 1,
-                               _("S_trength:"),
-                               150, 6, 1.0,
-                               0.1, 5.0, 0.1, 0.5, 1,
-                               TRUE, 0, 0,
-                               _("Change the strength of the selected smvector"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 1,
+                          _("S_trength:"),
+                          150, 6, 1.0,
+                          0.1, 5.0, 0.1, 0.5, 1,
+                          TRUE, 0, 0,
+                          _("Change the strength of the selected smvector"),
+                          NULL);
   g_signal_connect (smstradjust, "value-changed",
                     G_CALLBACK (strsmadjmove), NULL);
 
   smstrexpadjust = (GtkAdjustment *)
-    gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 2,
-                               _("St_rength exp.:"),
-                               150, 6, 1.0,
-                               0.1, 10.9, 0.1, 0.5, 1,
-                               TRUE, 0, 0,
-                               _("Change the exponent of the strength"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid2), 0, 2,
+                          _("St_rength exp.:"),
+                          150, 6, 1.0,
+                          0.1, 10.9, 0.1, 0.5, 1,
+                          TRUE, 0, 0,
+                          _("Change the exponent of the strength"),
+                          NULL);
   g_signal_connect (smstrexpadjust, "value-changed",
                     G_CALLBACK (smstrexpsmadjmove), NULL);
 

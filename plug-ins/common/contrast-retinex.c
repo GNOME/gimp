@@ -335,11 +335,11 @@ retinex_dialog (GimpDrawable *drawable)
                             combo, 2);
   gtk_widget_show (combo);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("_Scale:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   rvals.scale,
-                                   MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
-                                   TRUE, 0, 0, NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("_Scale:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              rvals.scale,
+                              MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
+                              TRUE, 0, 0, NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -348,11 +348,11 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("Scale _division:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   rvals.nscales,
-                                   0, MAX_RETINEX_SCALES, 1, 1, 0,
-                                   TRUE, 0, 0, NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("Scale _division:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              rvals.nscales,
+                              0, MAX_RETINEX_SCALES, 1, 1, 0,
+                              TRUE, 0, 0, NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -361,10 +361,10 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                   _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   rvals.cvar, 0, 4, 0.1, 0.1, 1,
-                                   TRUE, 0, 0, NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                              _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              rvals.cvar, 0, 4, 0.1, 0.1, 1,
+                              TRUE, 0, 0, NULL, NULL);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_float_adjustment_update),

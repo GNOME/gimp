@@ -870,11 +870,11 @@ photocopy_dialog (GimpDrawable *drawable)
   gtk_widget_show (grid);
 
   /*  Label, scale, entry for pvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                          _("_Mask radius:"), 100, 5,
-                                          pvals.mask_radius, 3.0, 50.0, 1, 5.0, 2,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                     _("_Mask radius:"), 100, 5,
+                                     pvals.mask_radius, 3.0, 50.0, 1, 5.0, 2,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -884,11 +884,11 @@ photocopy_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for pvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                          _("_Sharpness:"), 50, 5,
-                                          pvals.sharpness, 0.0, 1.0, 0.01, 0.1, 3,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                                     _("_Sharpness:"), 50, 5,
+                                     pvals.sharpness, 0.0, 1.0, 0.01, 0.1, 3,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -898,11 +898,11 @@ photocopy_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for pvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                          _("Percent _black:"), 50, 5,
-                                          pvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                                     _("Percent _black:"), 50, 5,
+                                     pvals.pct_black, 0.0, 1.0, 0.01, 0.1, 3,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -912,11 +912,11 @@ photocopy_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for pvals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                          _("Percent _white:"), 50, 5,
-                                          pvals.pct_white, 0.0, 1.0, 0.01, 0.1, 3,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                                     _("Percent _white:"), 50, 5,
+                                     pvals.pct_white, 0.0, 1.0, 0.01, 0.1, 3,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

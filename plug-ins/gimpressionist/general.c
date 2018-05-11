@@ -235,49 +235,49 @@ create_generalpage (GtkNotebook *notebook)
   gtk_widget_show (grid);
 
   general_dark_edge_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                               _("Edge darken:"),
-                               150, 6, pcvals.general_dark_edge,
-                               0.0, 1.0, 0.01, 0.1, 2,
-                               TRUE, 0, 0,
-                               _("How much to \"darken\" the edges of each brush stroke"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                          _("Edge darken:"),
+                          150, 6, pcvals.general_dark_edge,
+                          0.0, 1.0, 0.01, 0.1, 2,
+                          TRUE, 0, 0,
+                          _("How much to \"darken\" the edges of each brush stroke"),
+                          NULL);
 
   general_shadow_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                               _("Shadow darken:"),
-                               150, 6, pcvals.general_shadow_darkness,
-                               0.0, 99.0, 0.1, 1, 2,
-                               TRUE, 0, 0,
-                               _("How much to \"darken\" the drop shadow"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                          _("Shadow darken:"),
+                          150, 6, pcvals.general_shadow_darkness,
+                          0.0, 99.0, 0.1, 1, 2,
+                          TRUE, 0, 0,
+                          _("How much to \"darken\" the drop shadow"),
+                          NULL);
 
   general_shadow_depth =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                               _("Shadow depth:"),
-                               150, 6, pcvals.general_shadow_depth,
-                               0, 99, 1, 5, 0,
-                               TRUE, 0, 0,
-                               _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                          _("Shadow depth:"),
+                          150, 6, pcvals.general_shadow_depth,
+                          0, 99, 1, 5, 0,
+                          TRUE, 0, 0,
+                          _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
+                          NULL);
 
   general_shadow_blur =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                               _("Shadow blur:"),
-                               150, 6, pcvals.general_shadow_blur,
-                               0, 99, 1, 5, 0,
-                               TRUE, 0, 0,
-                               _("How much to blur the drop shadow"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                          _("Shadow blur:"),
+                          150, 6, pcvals.general_shadow_blur,
+                          0, 99, 1, 5, 0,
+                          TRUE, 0, 0,
+                          _("How much to blur the drop shadow"),
+                          NULL);
 
   dev_thresh_adjust =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
-                               _("Deviation threshold:"),
-                               150, 6, pcvals.devthresh,
-                               0.0, 1.0, 0.01, 0.01, 2,
-                               TRUE, 0, 0,
-                               _("A bailout-value for adaptive selections"),
-                               NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
+                          _("Deviation threshold:"),
+                          150, 6, pcvals.devthresh,
+                          0.0, 1.0, 0.01, 0.01, 2,
+                          TRUE, 0, 0,
+                          _("A bailout-value for adaptive selections"),
+                          NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

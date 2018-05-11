@@ -1164,23 +1164,23 @@ create_advanced_tab (GtkWidget *notebook)
   row = 0;
 
   filmint.advanced_adj[0] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("Image _height:"), 0, 0,
-                               filmvals.picture_height,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("Image _height:"), 0, 0,
+                          filmvals.picture_height,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.picture_height);
 
   filmint.advanced_adj[1] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("Image spac_ing:"), 0, 0,
-                               filmvals.picture_space,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("Image spac_ing:"), 0, 0,
+                          filmvals.picture_space,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 1), 6);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 1), 6);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 1), 6);
@@ -1189,45 +1189,45 @@ create_advanced_tab (GtkWidget *notebook)
                     &filmvals.picture_space);
 
   filmint.advanced_adj[2] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("_Hole offset:"), 0, 0,
-                               filmvals.hole_offset,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("_Hole offset:"), 0, 0,
+                          filmvals.hole_offset,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_offset);
 
   filmint.advanced_adj[3] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("Ho_le width:"), 0, 0,
-                               filmvals.hole_width,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("Ho_le width:"), 0, 0,
+                          filmvals.hole_width,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_width);
 
   filmint.advanced_adj[4] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("Hol_e height:"), 0, 0,
-                               filmvals.hole_height,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("Hol_e height:"), 0, 0,
+                          filmvals.hole_height,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.hole_height);
 
   filmint.advanced_adj[5] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("Hole sp_acing:"), 0, 0,
-                               filmvals.hole_space,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("Hole sp_acing:"), 0, 0,
+                          filmvals.hole_space,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 0, 5), 6);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 1, 5), 6);
   gtk_widget_set_margin_bottom (gtk_grid_get_child_at (GTK_GRID (grid), 2, 5), 6);
@@ -1236,12 +1236,12 @@ create_advanced_tab (GtkWidget *notebook)
                     &filmvals.hole_space);
 
   filmint.advanced_adj[6] = adj =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                               _("_Number height:"), 0, 0,
-                               filmvals.number_height,
-                               0.0, 1.0, 0.001, 0.01, 3,
-                               TRUE, 0, 0,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                          _("_Number height:"), 0, 0,
+                          filmvals.number_height,
+                          0.0, 1.0, 0.001, 0.01, 3,
+                          TRUE, 0, 0,
+                          NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &filmvals.number_height);

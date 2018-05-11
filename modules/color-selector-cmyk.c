@@ -167,16 +167,16 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 1, i,
-                                       gettext (cmyk_labels[i]),
-                                       -1, -1,
-                                       0.0,
-                                       0.0, 100.0,
-                                       1.0, 10.0,
-                                       0,
-                                       TRUE, 0.0, 0.0,
-                                       gettext (cmyk_tips[i]),
-                                       NULL);
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 1, i,
+                                  gettext (cmyk_labels[i]),
+                                  -1, -1,
+                                  0.0,
+                                  0.0, 100.0,
+                                  1.0, 10.0,
+                                  0,
+                                  TRUE, 0.0, 0.0,
+                                  gettext (cmyk_tips[i]),
+                                  NULL);
 
       g_signal_connect (adj, "value-changed",
                         G_CALLBACK (colorsel_cmyk_adj_update),

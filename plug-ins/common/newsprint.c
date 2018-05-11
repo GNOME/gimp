@@ -988,12 +988,12 @@ new_channel (const chan_tmpl *ct, GtkWidget *preview)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* angle slider */
-  chst->angle_adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                               _("_Angle:"), SCALE_WIDTH, 0,
-                                               *ct->angle,
-                                               -90, 90, 1, 15, 1,
-                                               TRUE, 0, 0,
-                                               NULL, NULL);
+  chst->angle_adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                          _("_Angle:"), SCALE_WIDTH, 0,
+                                          *ct->angle,
+                                          -90, 90, 1, 15, 1,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
   g_object_set_data (G_OBJECT (chst->angle_adj), "angle", ct->angle);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (chst->angle_adj));
@@ -1243,12 +1243,12 @@ newsprint_dialog (GimpDrawable *drawable)
   pvals_ui.input_spi = xres;
 
   st.input_spi =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                               _("_Input SPI:"), SCALE_WIDTH, 7,
-                               pvals_ui.input_spi,
-                               1.0, 1200.0, 1.0, 10.0, 0,
-                               FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                          _("_Input SPI:"), SCALE_WIDTH, 7,
+                          pvals_ui.input_spi,
+                          1.0, 1200.0, 1.0, 10.0, 0,
+                          FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                          NULL, NULL);
   g_signal_connect (st.input_spi, "value-changed",
                     G_CALLBACK (spi_callback),
                     &st);
@@ -1257,12 +1257,12 @@ newsprint_dialog (GimpDrawable *drawable)
                             preview);
 
   st.output_lpi =
-    gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                               _("O_utput LPI:"), SCALE_WIDTH, 7,
-                               pvals_ui.output_lpi,
-                               1.0, 1200.0, 1.0, 10.0, 1,
-                               FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                               NULL, NULL);
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                          _("O_utput LPI:"), SCALE_WIDTH, 7,
+                          pvals_ui.output_lpi,
+                          1.0, 1200.0, 1.0, 10.0, 1,
+                          FALSE, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                          NULL, NULL);
   g_signal_connect (st.output_lpi, "value-changed",
                     G_CALLBACK (lpi_callback),
                     &st);
@@ -1270,12 +1270,12 @@ newsprint_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  st.cellsize = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                           _("C_ell size:"), SCALE_WIDTH, 7,
-                                           pvals.cell_width,
-                                           3.0, 100.0, 1.0, 5.0, 0,
-                                           FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
-                                           NULL, NULL);
+  st.cellsize = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                                      _("C_ell size:"), SCALE_WIDTH, 7,
+                                      pvals.cell_width,
+                                      3.0, 100.0, 1.0, 5.0, 0,
+                                      FALSE, 3.0, GIMP_MAX_IMAGE_SIZE,
+                                      NULL, NULL);
   g_signal_connect (st.cellsize, "value-changed",
                     G_CALLBACK (cellsize_callback),
                     &st);
@@ -1302,12 +1302,12 @@ newsprint_dialog (GimpDrawable *drawable)
       gtk_grid_set_column_spacing (GTK_GRID (st.pull_grid), 6);
 
       /* black pullout */
-      st.pull = gimp_scale_entry_new_grid (GTK_GRID (st.pull_grid), 0, 0,
-                                           _("B_lack pullout (%):"), SCALE_WIDTH, 0,
-                                           pvals.k_pullout,
-                                           0, 100, 1, 10, 0,
-                                           TRUE, 0, 0,
-                                           NULL, NULL);
+      st.pull = gimp_scale_entry_new (GTK_GRID (st.pull_grid), 0, 0,
+                                      _("B_lack pullout (%):"), SCALE_WIDTH, 0,
+                                      pvals.k_pullout,
+                                      0, 100, 1, 10, 0,
+                                      TRUE, 0, 0,
+                                      NULL, NULL);
       gtk_widget_set_sensitive (st.pull_grid, (pvals.colorspace == CS_CMYK));
       gtk_widget_show (st.pull_grid);
 
@@ -1434,12 +1434,12 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_add (GTK_CONTAINER (frame), grid);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("O_versample:"), SCALE_WIDTH, 0,
-                                   pvals.oversample,
-                                   1.0, 15.0, 1.0, 5.0, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("O_versample:"), SCALE_WIDTH, 0,
+                              pvals.oversample,
+                              1.0, 15.0, 1.0, 5.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pvals.oversample);

@@ -78,7 +78,7 @@ G_BEGIN_DECLS
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
 
 
-GtkAdjustment * gimp_scale_entry_new_grid        (GtkGrid     *grid,
+GtkAdjustment * gimp_scale_entry_new             (GtkGrid     *grid,
                                                   gint         column,
                                                   gint         row,
                                                   const gchar *text,
@@ -96,7 +96,7 @@ GtkAdjustment * gimp_scale_entry_new_grid        (GtkGrid     *grid,
                                                   const gchar *tooltip,
                                                   const gchar *help_id);
 
-GtkAdjustment * gimp_color_scale_entry_new_grid  (GtkGrid     *grid,
+GtkAdjustment * gimp_color_scale_entry_new       (GtkGrid     *grid,
                                                   gint         column,
                                                   gint         row,
                                                   const gchar *text,

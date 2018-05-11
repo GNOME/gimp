@@ -838,11 +838,11 @@ save_dialog (void)
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                          _("_Alpha threshold:"), SCALE_WIDTH, 0,
-                                          xpmvals.threshold, 0, 255, 1, 8, 0,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                     _("_Alpha threshold:"), SCALE_WIDTH, 0,
+                                     xpmvals.threshold, 0, 255, 1, 8, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),

@@ -726,47 +726,47 @@ create_main_dialog (void)
 
   row = 0;
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                                          _("_Filter length:"), 0, 6,
-                                          licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                                     _("_Filter length:"), 0, 6,
+                                     licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.filtlen);
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                                          _("_Noise magnitude:"), 0, 6,
-                                          licvals.noisemag, 1, 5, 0.1, 1.0, 1,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                                     _("_Noise magnitude:"), 0, 6,
+                                     licvals.noisemag, 1, 5, 0.1, 1.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.noisemag);
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                                          _("In_tegration steps:"), 0, 6,
-                                          licvals.intsteps, 1, 40, 1.0, 5.0, 1,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                                     _("In_tegration steps:"), 0, 6,
+                                     licvals.intsteps, 1, 40, 1.0, 5.0, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.intsteps);
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                                          _("_Minimum value:"), 0, 6,
-                                          licvals.minv, -100, 0, 1, 10, 1,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                                     _("_Minimum value:"), 0, 6,
+                                     licvals.minv, -100, 0, 1, 10, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.minv);
 
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, row++,
-                                          _("M_aximum value:"), 0, 6,
-                                          licvals.maxv, 0, 100, 1, 10, 1,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
+                                     _("M_aximum value:"), 0, 6,
+                                     licvals.maxv, 0, 100, 1, 10, 1,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.maxv);

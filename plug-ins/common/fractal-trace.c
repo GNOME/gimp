@@ -773,47 +773,47 @@ dialog_show (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("X_1:"), 0, 6,
-                                   parameters.x1, -50, 50, 0.1, 0.5, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("X_1:"), 0, 6,
+                              parameters.x1, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x1);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("X_2:"), 0, 6,
-                                   parameters.x2, -50, 50, 0.1, 0.5, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("X_2:"), 0, 6,
+                              parameters.x2, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x2);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("Y_1:"), 0, 6,
-                                   parameters.y1, -50, 50, 0.1, 0.5, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("Y_1:"), 0, 6,
+                              parameters.y1, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y1);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                   _("Y_2:"), 0, 6,
-                                   parameters.y2, -50, 50, 0.1, 0.5, 2,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                              _("Y_2:"), 0, 6,
+                              parameters.y2, -50, 50, 0.1, 0.5, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y2);
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
-                                   _("_Depth:"), 0, 6,
-                                   parameters.depth, 1, 50, 1, 5, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
+                              _("_Depth:"), 0, 6,
+                              parameters.depth, 1, 50, 1, 5, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialog_int_adjustment_update),
                     &parameters.depth);

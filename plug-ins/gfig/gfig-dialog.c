@@ -1309,12 +1309,12 @@ gfig_prefs_action_callback (GtkAction *widget,
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 6);
       gtk_widget_show (grid);
 
-      size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                             _("Max undo:"), 100, 50,
-                                             selvals.maxundo,
-                                             MIN_UNDO, MAX_UNDO, 1, 2, 0,
-                                             TRUE, 0, 0,
-                                             NULL, NULL);
+      size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                        _("Max undo:"), 100, 50,
+                                        selvals.maxundo,
+                                        MIN_UNDO, MAX_UNDO, 1, 2, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
       g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.maxundo);
@@ -1420,12 +1420,12 @@ gfig_grid_action_callback (GtkAction *action,
       gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
       gtk_widget_show (grid);
 
-      size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                             _("Grid spacing:"), 100, 50,
-                                             selvals.opts.gridspacing,
-                                             MIN_GRID, MAX_GRID, 1, 10, 0,
-                                             TRUE, 0, 0,
-                                             NULL, NULL);
+      size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                        _("Grid spacing:"), 100, 50,
+                                        selvals.opts.gridspacing,
+                                        MIN_GRID, MAX_GRID, 1, 10, 0,
+                                        TRUE, 0, 0,
+                                        NULL, NULL);
       g_signal_connect (size_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.gridspacing);
@@ -1437,12 +1437,12 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
-      sectors_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
-                                                _("Polar grid sectors desired:"), 1, 5,
-                                                selvals.opts.grid_sectors_desired,
-                                                5, 360, 5, 1, 0,
-                                                TRUE, 0, 0,
-                                                NULL, NULL);
+      sectors_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
+                                           _("Polar grid sectors desired:"), 1, 5,
+                                           selvals.opts.grid_sectors_desired,
+                                           5, 360, 5, 1, 0,
+                                           TRUE, 0, 0,
+                                           NULL, NULL);
       g_signal_connect (sectors_data, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &selvals.opts.grid_sectors_desired);
@@ -1459,12 +1459,12 @@ gfig_grid_action_callback (GtkAction *action,
       g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
                                  (gpointer) &gfig_opt_widget.gridspacing);
 
-      radius_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
-                                               _("Polar grid radius interval:"), 1, 5,
-                                               selvals.opts.grid_radius_interval,
-                                               5, 50, 5, 1, 0,
-                                               TRUE, 0, 0,
-                                               NULL, NULL);
+      radius_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
+                                          _("Polar grid radius interval:"), 1, 5,
+                                          selvals.opts.grid_radius_interval,
+                                          5, 50, 5, 1, 0,
+                                          TRUE, 0, 0,
+                                          NULL, NULL);
       g_signal_connect (radius_data, "value-changed",
                         G_CALLBACK (gimp_double_adjustment_update),
                         &selvals.opts.grid_radius_interval);
@@ -1728,11 +1728,11 @@ num_sides_widget (const gchar *d_title,
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                         _("Sides:"), 0, 0,
-                                         *num_sides, adj_min, adj_max, 1, 10, 0,
-                                         TRUE, 0, 0,
-                                         NULL, NULL);
+  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                    _("Sides:"), 0, 0,
+                                    *num_sides, adj_min, adj_max, 1, 10, 0,
+                                    TRUE, 0, 0,
+                                    NULL, NULL);
   g_signal_connect (size_data, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     num_sides);

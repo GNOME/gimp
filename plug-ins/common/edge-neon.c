@@ -730,12 +730,12 @@ neon_dialog (GimpDrawable *drawable)
   gtk_widget_show (grid);
 
   /*  Label, scale, entry for evals.radius  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                          _("_Radius:"), 100, 8,
-                                          evals.radius, 0.0, 64.0, 1, 10, 2,
-                                          FALSE, 0.0,
-                                          8 * MAX (drawable->width, drawable->height),
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                     _("_Radius:"), 100, 8,
+                                     evals.radius, 0.0, 64.0, 1, 10, 2,
+                                     FALSE, 0.0,
+                                     8 * MAX (drawable->width, drawable->height),
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -745,11 +745,11 @@ neon_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for evals.amount  */
-  scale_data = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                          _("_Amount:"), 100, 8,
-                                          evals.amount, 0.0, 1.0, 0.01, 0.1, 2,
-                                          TRUE, 0, 0,
-                                          NULL, NULL);
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                                     _("_Amount:"), 100, 8,
+                                     evals.amount, 0.0, 1.0, 0.01, 0.1, 2,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
 
   g_signal_connect (scale_data, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),

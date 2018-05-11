@@ -598,11 +598,11 @@ tileit_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid2, FALSE, FALSE, 0);
   gtk_widget_show (grid2);
 
-  scale = gimp_scale_entry_new_grid (GTK_GRID (grid2), 0, 0,
-                                     _("O_pacity:"), SCALE_WIDTH, -1,
-                                     opacity, 0, 100, 1, 10, 0,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  scale = gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
+                                _("O_pacity:"), SCALE_WIDTH, -1,
+                                opacity, 0, 100, 1, 10, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
@@ -619,11 +619,11 @@ tileit_dialog (void)
 
   gtk_widget_set_sensitive (grid2, has_alpha);
 
-  scale = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                     "_n²", SCALE_WIDTH, -1,
-                                     itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
-                                     TRUE, 0, 0,
-                                     NULL, NULL);
+  scale = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                                "_n²", SCALE_WIDTH, -1,
+                                itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
+                                TRUE, 0, 0,
+                                NULL, NULL);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);

@@ -210,7 +210,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 }
 
 /**
- * gimp_scale_entry_new_grid:
+ * gimp_scale_entry_new:
  * @grid:                The #GtkGrid the widgets will be attached to.
  * @column:              The column to start with.
  * @row:                 The row to attach the widgets.
@@ -239,23 +239,23 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
 GtkAdjustment *
-gimp_scale_entry_new_grid (GtkGrid     *grid,
-                           gint         column,
-                           gint         row,
-                           const gchar *text,
-                           gint         scale_width,
-                           gint         spinbutton_width,
-                           gdouble      value,
-                           gdouble      lower,
-                           gdouble      upper,
-                           gdouble      step_increment,
-                           gdouble      page_increment,
-                           guint        digits,
-                           gboolean     constrain,
-                           gdouble      unconstrained_lower,
-                           gdouble      unconstrained_upper,
-                           const gchar *tooltip,
-                           const gchar *help_id)
+gimp_scale_entry_new (GtkGrid     *grid,
+                      gint         column,
+                      gint         row,
+                      const gchar *text,
+                      gint         scale_width,
+                      gint         spinbutton_width,
+                      gdouble      value,
+                      gdouble      lower,
+                      gdouble      upper,
+                      gdouble      step_increment,
+                      gdouble      page_increment,
+                      guint        digits,
+                      gboolean     constrain,
+                      gdouble      unconstrained_lower,
+                      gdouble      unconstrained_upper,
+                      const gchar *tooltip,
+                      const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (FALSE,
                                         grid, column, row,
@@ -270,7 +270,7 @@ gimp_scale_entry_new_grid (GtkGrid     *grid,
 }
 
 /**
- * gimp_color_scale_entry_new_grid:
+ * gimp_color_scale_entry_new:
  * @grid:                The #GtkGrid the widgets will be attached to.
  * @column:              The column to start with.
  * @row:                 The row to attach the widgets.
@@ -293,20 +293,20 @@ gimp_scale_entry_new_grid (GtkGrid     *grid,
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
 GtkAdjustment *
-gimp_color_scale_entry_new_grid (GtkGrid     *grid,
-                                 gint         column,
-                                 gint         row,
-                                 const gchar *text,
-                                 gint         scale_width,
-                                 gint         spinbutton_width,
-                                 gdouble      value,
-                                 gdouble      lower,
-                                 gdouble      upper,
-                                 gdouble      step_increment,
-                                 gdouble      page_increment,
-                                 guint        digits,
-                                 const gchar *tooltip,
-                                 const gchar *help_id)
+gimp_color_scale_entry_new (GtkGrid     *grid,
+                            gint         column,
+                            gint         row,
+                            const gchar *text,
+                            gint         scale_width,
+                            gint         spinbutton_width,
+                            gdouble      value,
+                            gdouble      lower,
+                            gdouble      upper,
+                            gdouble      step_increment,
+                            gdouble      page_increment,
+                            guint        digits,
+                            const gchar *tooltip,
+                            const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (TRUE,
                                         grid, column, row,

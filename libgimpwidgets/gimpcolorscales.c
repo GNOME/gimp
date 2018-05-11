@@ -309,17 +309,17 @@ create_group (GimpColorScales           *scales,
       gtk_size_group_add_widget (size_group0, scales->toggles[i]);
 
       scales->adjustments[i] = (GtkAdjustment *)
-        gimp_color_scale_entry_new_grid (GTK_GRID (grid), 1, row,
-                                         gettext (enum_desc->value_desc),
-                                         -1, -1,
-                                         scale_defs[i].default_value,
-                                         scale_defs[i].scale_min_value,
-                                         scale_defs[i].scale_max_value,
-                                         1.0,
-                                         scale_defs[i].scale_inc,
-                                         1,
-                                         gettext (enum_desc->value_help),
-                                         NULL);
+        gimp_color_scale_entry_new (GTK_GRID (grid), 1, row,
+                                    gettext (enum_desc->value_desc),
+                                    -1, -1,
+                                    scale_defs[i].default_value,
+                                    scale_defs[i].scale_min_value,
+                                    scale_defs[i].scale_max_value,
+                                    1.0,
+                                    scale_defs[i].scale_inc,
+                                    1,
+                                    gettext (enum_desc->value_help),
+                                    NULL);
 
       gtk_adjustment_configure (scales->adjustments[i],
                                 scale_defs[i].default_value,

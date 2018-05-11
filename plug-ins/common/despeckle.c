@@ -506,11 +506,11 @@ despeckle_dialog (void)
    * Box size (diameter) control...
    */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
-                                   _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+                              _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &despeckle_radius);
@@ -522,11 +522,11 @@ despeckle_dialog (void)
    * Black level control...
    */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
-                                   _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   black_level, -1, 255, 1, 8, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+                              _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              black_level, -1, 255, 1, 8, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &black_level);
@@ -538,11 +538,11 @@ despeckle_dialog (void)
    * White level control...
    */
 
-  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 2,
-                                   _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                                   white_level, 0, 256, 1, 8, 0,
-                                   TRUE, 0, 0,
-                                   NULL, NULL);
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+                              _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              white_level, 0, 256, 1, 8, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &white_level);
