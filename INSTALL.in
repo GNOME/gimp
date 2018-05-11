@@ -108,29 +108,37 @@ header files installed.
      to check that the following libraries are installed: libjasper,
      webkit, libmng, librsvg, libwmf, libaa and libgs (Ghostscript).
 
- 13. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
+ 13. HEIF support depends on the libheif library. If you don't have
+     access to pre-built packages, the code is available at:
+
+        https://github.com/strukturag/libheif
+
+     Make sure you build libheif with libde265 support, otherwise the
+     plug-in is mostly useless.
+
+ 14. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
 
- 14. Windows builds can now generate backtrace logs upon a crash.
+ 15. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
      The feature depends on Dr.MinGW's ExcHndl library:
 
         https://github.com/jrfonseca/drmingw
 
- 15. Configure GIMP by running the `configure' script. You may want
+ 16. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 16. Build GIMP by running `make'. The use of GNU make is recommended.
+ 17. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 17. Install GIMP by running `make install'. In order to avoid clashes
+ 18. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 18. Summary of required packages and what version you need:
+ 19. Summary of required packages and what version you need:
 
      Package Name         Version
 
@@ -160,7 +168,7 @@ header files installed.
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
- 19. Summary of optional packages:
+ 20. Summary of optional packages:
 
      Package Name        Version        Feature
 
@@ -168,6 +176,7 @@ header files installed.
      ExcHndl             -              Crash logs on Windows with Dr. MinGW
      gs                  -              ghostscript
      libaa               -              ASCII art
+     libheif             @LIBHEIF_REQUIRED_VERSION@          HEIF
      libjasper           -              JPEG 2000
      libmng              -              MNG
      libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
@@ -178,7 +187,7 @@ header files installed.
      python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
      webkit              @WEBKIT_REQUIRED_VERSION@          Help browser & webpage
 
- 20. Summary of optional runtime dependencies:
+ 21. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      RawTherapee >= 5.2 for raw loading
