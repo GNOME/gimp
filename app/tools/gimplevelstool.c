@@ -32,6 +32,7 @@
 #include "operations/gimplevelsconfig.h"
 #include "operations/gimpoperationlevels.h"
 
+#include "core/gimpasync.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
@@ -168,6 +169,7 @@ gimp_levels_tool_finalize (GObject *object)
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
 
   g_clear_object (&tool->histogram);
+  g_clear_object (&tool->histogram_async);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -199,9 +201,11 @@ gimp_levels_tool_initialize (GimpTool     *tool,
                  NULL);
 
   g_clear_object (&l_tool->histogram);
+  g_clear_object (&l_tool->histogram_async);
   l_tool->histogram = gimp_histogram_new (config->linear);
 
-  gimp_drawable_calculate_histogram (drawable, l_tool->histogram, FALSE);
+  l_tool->histogram_async = gimp_drawable_calculate_histogram_async (
+    drawable, l_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
                                      l_tool->histogram);
 
@@ -687,10 +691,11 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
                      NULL);
 
       g_clear_object (&levels_tool->histogram);
+      g_clear_object (&levels_tool->histogram_async);
       levels_tool->histogram = gimp_histogram_new (levels_config->linear);
 
-      gimp_drawable_calculate_histogram (GIMP_TOOL (filter_tool)->drawable,
-                                         levels_tool->histogram, FALSE);
+      levels_tool->histogram_async = gimp_drawable_calculate_histogram_async (
+        GIMP_TOOL (filter_tool)->drawable, levels_tool->histogram, FALSE);
       gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
                                          levels_tool->histogram);
     }
@@ -995,6 +1000,8 @@ levels_stretch_callback (GtkWidget      *widget,
 {
   GimpTool       *tool        = GIMP_TOOL (levels_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (levels_tool);
+
+  gimp_async_wait (levels_tool->histogram_async);
 
   gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
                               levels_tool->histogram,
