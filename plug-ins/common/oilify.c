@@ -764,7 +764,7 @@ oilify_dialog (GimpDrawable *drawable)
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *preview;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *toggle;
   GtkWidget     *combo;
   GtkAdjustment *adj;
@@ -806,21 +806,21 @@ oilify_dialog (GimpDrawable *drawable)
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (oilify), drawable);
 
-  table = gtk_table_new (7, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*
    * Mask-size scale
    */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Mask size:"), SCALE_WIDTH, 0,
-                              ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Mask size:"), SCALE_WIDTH, 0,
+                                   ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
+                                   TRUE, 0.0, 0.0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.mask_size);
@@ -833,7 +833,7 @@ oilify_dialog (GimpDrawable *drawable)
    */
 
   toggle = gtk_check_button_new_with_mnemonic (_("Use m_ask-size map:"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 3, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 ovals.use_mask_size_map);
   gtk_widget_show (toggle);
@@ -857,8 +857,8 @@ oilify_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 0, 3, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 0, 2, 3, 1);
+                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   g_object_bind_property (toggle, "active",
@@ -869,11 +869,11 @@ oilify_dialog (GimpDrawable *drawable)
    * Exponent scale
    */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-                              _("_Exponent:"), SCALE_WIDTH, 0,
-                              ovals.exponent, 1.0, 20.0, 1.0, 4.0, 0,
-                              TRUE, 0.0, 0.0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 3,
+                                   _("_Exponent:"), SCALE_WIDTH, 0,
+                                   ovals.exponent, 1.0, 20.0, 1.0, 4.0, 0,
+                                   TRUE, 0.0, 0.0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &ovals.exponent);
@@ -886,7 +886,7 @@ oilify_dialog (GimpDrawable *drawable)
    */
 
   toggle = gtk_check_button_new_with_mnemonic (_("Use e_xponent map:"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 4, 5, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 4, 3, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 ovals.use_exponent_map);
   gtk_widget_show (toggle);
@@ -910,8 +910,8 @@ oilify_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 0, 3, 5, 6,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 0, 5, 3, 1);
+                    // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (combo);
 
   g_object_bind_property (toggle, "active",
@@ -923,7 +923,7 @@ oilify_dialog (GimpDrawable *drawable)
    */
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Use intensity algorithm"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 6, 7, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 6, 3, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_set_sensitive (toggle, can_use_mode_inten);
   gtk_widget_show (toggle);
