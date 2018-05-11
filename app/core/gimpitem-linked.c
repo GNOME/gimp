@@ -55,18 +55,13 @@ gimp_item_linked_is_locked (GimpItem *item)
 
   for (l = list; l && ! locked; l = g_list_next (l))
     {
-      GimpItem *item = l->data;
-
-      /*  temporarily set the item to not being linked, or we will
-       *  run into a recursion because gimp_item_is_position_locked()
-       *  call this function if the item is linked
+      /* We must not use gimp_item_is_position_locked(), especially
+       * since a child implementation may call the current function and
+       * end up in infinite loop.
+       * We are only interested in the value of `lock_position` flag.
        */
-      gimp_item_set_linked (item, FALSE, FALSE);
-
-      if (gimp_item_is_position_locked (item))
+      if (gimp_item_get_lock_position (l->data))
         locked = TRUE;
-
-      gimp_item_set_linked (item, TRUE, FALSE);
     }
 
   g_list_free (list);
