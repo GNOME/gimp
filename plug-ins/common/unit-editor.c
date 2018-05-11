@@ -188,7 +188,7 @@ new_unit_dialog (GtkWidget *main_dialog,
                  GimpUnit   template)
 {
   GtkWidget     *dialog;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *entry;
   GtkWidget     *spinbutton;
 
@@ -216,13 +216,13 @@ new_unit_dialog (GtkWidget *main_dialog,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  table = gtk_table_new (7, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+                      grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   entry = identifier_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
@@ -230,9 +230,9 @@ new_unit_dialog (GtkWidget *main_dialog,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_identifier (template));
     }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_ID:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_ID:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[IDENTIFIER].help), NULL);
 
@@ -243,9 +243,9 @@ new_unit_dialog (GtkWidget *main_dialog,
                         0.01, 0.1, 0.0);
   spinbutton = gtk_spin_button_new (factor_adj, 0.01, 5);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Factor:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Factor:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   gimp_help_set_help_data (spinbutton, gettext (columns[FACTOR].help), NULL);
 
@@ -255,9 +255,9 @@ new_unit_dialog (GtkWidget *main_dialog,
                         0, 5, 1, 1, 0);
   spinbutton = gtk_spin_button_new (digits_adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Digits:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("_Digits:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   gimp_help_set_help_data (spinbutton, gettext (columns[DIGITS].help), NULL);
 
@@ -267,9 +267,9 @@ new_unit_dialog (GtkWidget *main_dialog,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_symbol (template));
     }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("_Symbol:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("_Symbol:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[SYMBOL].help), NULL);
 
@@ -279,9 +279,9 @@ new_unit_dialog (GtkWidget *main_dialog,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_abbreviation (template));
     }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("_Abbreviation:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("_Abbreviation:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[ABBREVIATION].help), NULL);
 
@@ -291,9 +291,9 @@ new_unit_dialog (GtkWidget *main_dialog,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_singular (template));
     }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Si_ngular:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+                            _("Si_ngular:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[SINGULAR].help), NULL);
 
@@ -303,9 +303,9 @@ new_unit_dialog (GtkWidget *main_dialog,
       gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_plural (template));
     }
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("_Plural:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
+                            _("_Plural:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry, gettext (columns[PLURAL].help), NULL);
 
