@@ -103,36 +103,36 @@ query (void)
   };
 
   gimp_install_procedure (LOAD_PROC,
-			  _("Loads HEIF images"),
+                          _("Loads HEIF images"),
                           _("Load image stored in HEIF format (High "
                             "Efficiency Image File Format). Typical "
                             "suffices for HEIF files are .heif, .heic."),
-			  "Dirk Farin <farin@struktur.de>",
-			  "Dirk Farin <farin@struktur.de>",
-			  "2018",
-			  _("HEIF/HEIC"),
-			  NULL,
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (load_args),
-			  G_N_ELEMENTS (load_return_vals),
-			  load_args, load_return_vals);
+                          "Dirk Farin <farin@struktur.de>",
+                          "Dirk Farin <farin@struktur.de>",
+                          "2018",
+                          _("HEIF/HEIC"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
 
   gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
   gimp_register_file_handler_uri (LOAD_PROC);
 
   gimp_install_procedure (SAVE_PROC,
-			  _("Exports HEIF images"),
+                          _("Exports HEIF images"),
                           _("Save image in HEIF format (High Efficiency "
                             "Image File Format)."),
-			  "Dirk Farin <farin@struktur.de>",
-			  "Dirk Farin <farin@struktur.de>",
-			  "2018",
-			  _("HEIF/HEIC"),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args), 0,
-			  save_args, NULL);
+                          "Dirk Farin <farin@struktur.de>",
+                          "Dirk Farin <farin@struktur.de>",
+                          "2018",
+                          _("HEIF/HEIC"),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
 
   gimp_register_save_handler (SAVE_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (SAVE_PROC, "image/heif");
@@ -202,7 +202,7 @@ run (const gchar      *name,
 
       g_object_unref (file);
     }
-  else if (strcmp(name, SAVE_PROC) == 0)
+  else if (strcmp (name, SAVE_PROC) == 0)
     {
       gint32           image_ID    = param[1].data.d_int32;
       gint32           drawable_ID = param[2].data.d_int32;
@@ -1058,13 +1058,13 @@ save_dialog (SaveParams *params)
   hbox = gtk_hbox_new (FALSE, 6);
   label = gtk_label_new (_("Quality:"));
   quality_slider = gtk_hscale_new_with_range (0, 100, 5);
-  gtk_scale_set_value_pos (GTK_SCALE(quality_slider), GTK_POS_RIGHT);
+  gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
 
   gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lossless_button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_button),
                                 params->lossless);
   gtk_widget_set_sensitive (quality_slider, !params->lossless);
 
