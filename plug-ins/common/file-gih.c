@@ -896,8 +896,8 @@ static gboolean
 gih_save_dialog (gint32 image_ID)
 {
   GtkWidget          *dialog;
-  GtkWidget          *table;
-  GtkWidget          *dimtable;
+  GtkWidget          *grid;
+  GtkWidget          *dimgrid;
   GtkWidget          *label;
   GtkAdjustment      *adjustment;
   GtkWidget          *spinbutton;
@@ -914,14 +914,14 @@ gih_save_dialog (gint32 image_ID)
 
   dialog = gimp_export_dialog_new (_("Brush Pipe"), PLUG_IN_BINARY, SAVE_PROC);
 
-  /* The main table */
-  table = gtk_table_new (8, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  /* The main grid */
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
   /*
    * Description: ___________
@@ -929,9 +929,9 @@ gih_save_dialog (gint32 image_ID)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Description:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Description:"), 0.0, 0.5,
+                            entry, 1);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
@@ -943,9 +943,9 @@ gih_save_dialog (gint32 image_ID)
   adjustment = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Spacing (percent):"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Spacing (percent):"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1001,9 +1001,9 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Cell size:"), 0.0, 0.5,
-                             box, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("Cell size:"), 0.0, 0.5,
+                            box, 1);
 
   g_free (layer_ID);
 
@@ -1013,9 +1013,9 @@ gih_save_dialog (gint32 image_ID)
   adjustment = gtk_adjustment_new (gihparams.ncells, 1, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Number of cells:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("Number of cells:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -1063,9 +1063,9 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellh_adjust.warning_label = label;
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Display as:"), 0.0, 0.5,
-                             box, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("Display as:"), 0.0, 0.5,
+                            box, 1);
 
   /*
    * Dimension: ___
@@ -1074,9 +1074,9 @@ gih_save_dialog (gint32 image_ID)
                                    1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Dimension:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+                            _("Dimension:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (dim_callback),
@@ -1086,8 +1086,8 @@ gih_save_dialog (gint32 image_ID)
    * Ranks / Selection: ______ ______ ______ ______ ______
    */
 
-  dimtable = gtk_table_new (2, GIMP_PIXPIPE_MAXDIM, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (dimtable), 4);
+  dimgrid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (dimgrid), 4);
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
     {
       gint j;
@@ -1095,8 +1095,7 @@ gih_save_dialog (gint32 image_ID)
       adjustment = gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
       spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-      gtk_table_attach (GTK_TABLE (dimtable), spinbutton, 0, 1, i, i + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (dimgrid), spinbutton, 0, i, 1, 1);
 
       gtk_widget_show (spinbutton);
 
@@ -1132,8 +1131,7 @@ gih_save_dialog (gint32 image_ID)
               break;
             }
 
-      gtk_table_attach (GTK_TABLE (dimtable), cb, 1, 2, i, i + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (dimgrid), cb, 1, i, 1, 1);
 
       gtk_widget_show (cb);
 
@@ -1149,9 +1147,9 @@ gih_save_dialog (gint32 image_ID)
 
     }
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
-                             _("Ranks:"), 0.0, 0.0,
-                             dimtable, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
+                            _("Ranks:"), 0.0, 0.0,
+                            dimgrid, 1);
 
   gtk_widget_show (dialog);
 
