@@ -435,6 +435,7 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
   if (event->state & GDK_CONTROL_MASK)
     {
       GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
+      gdouble                 delta;
 
       gimp_scrolled_preview_freeze (GIMP_SCROLLED_PREVIEW (preview));
 
@@ -446,6 +447,11 @@ gimp_zoom_preview_scroll_event (GtkWidget       *widget,
 
         case GDK_SCROLL_DOWN:
           gimp_zoom_model_zoom (priv->model, GIMP_ZOOM_OUT, 0.0);
+          break;
+
+        case GDK_SCROLL_SMOOTH:
+          gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &delta);
+          gimp_zoom_model_zoom (priv->model, GIMP_ZOOM_SMOOTH, delta);
           break;
 
         default:

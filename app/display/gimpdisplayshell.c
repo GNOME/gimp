@@ -334,7 +334,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                               GDK_KEY_RELEASE_MASK       |
                                               GDK_FOCUS_CHANGE_MASK      |
                                               GDK_VISIBILITY_NOTIFY_MASK |
-                                              GDK_SCROLL_MASK));
+                                              GDK_SCROLL_MASK            |
+                                              GDK_SMOOTH_SCROLL_MASK));
 
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",

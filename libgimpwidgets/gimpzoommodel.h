@@ -86,7 +86,8 @@ GtkWidget     * gimp_zoom_button_new         (GimpZoomModel      *model,
                                               GtkIconSize         icon_size);
 
 gdouble         gimp_zoom_model_zoom_step    (GimpZoomType        zoom_type,
-                                              gdouble             scale);
+                                              gdouble             scale,
+                                              gdouble             delta);
 
 G_END_DECLS
 

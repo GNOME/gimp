@@ -370,7 +370,8 @@ gimp_search_popup_constructed (GObject *object)
                          GDK_KEY_RELEASE_MASK  |
                          GDK_KEY_PRESS_MASK    |
                          GDK_BUTTON_PRESS_MASK |
-                         GDK_SCROLL_MASK);
+                         GDK_SCROLL_MASK       |
+                         GDK_SMOOTH_SCROLL_MASK);
 
   g_signal_connect (popup->priv->keyword_entry, "key-press-event",
                     G_CALLBACK (keyword_entry_key_press_event),

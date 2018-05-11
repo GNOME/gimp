@@ -371,13 +371,18 @@ gimp_zoom_model_zoom (GimpZoomModel *model,
                       GimpZoomType   zoom_type,
                       gdouble        scale)
 {
+  gdouble delta = 0.0;
+
   g_return_if_fail (GIMP_IS_ZOOM_MODEL (model));
+
+  if (zoom_type == GIMP_ZOOM_SMOOTH)
+    delta = scale;
 
   if (zoom_type != GIMP_ZOOM_TO)
     scale = gimp_zoom_model_get_factor (model);
 
   g_object_set (model,
-                "value", gimp_zoom_model_zoom_step (zoom_type, scale),
+                "value", gimp_zoom_model_zoom_step (zoom_type, scale, delta),
                 NULL);
 }
 
@@ -605,6 +610,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
  * gimp_zoom_model_zoom_step:
  * @zoom_type: the zoom type
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
+ * @delta:     the delta from a smooth zoom event
  *
  * Utility function to calculate a new scale factor.
  *
@@ -614,7 +620,8 @@ gimp_zoom_button_new (GimpZoomModel *model,
  **/
 gdouble
 gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
-                           gdouble      scale)
+                           gdouble      scale,
+                           gdouble      delta)
 {
   gint    i, n_presets;
   gdouble new_scale = 1.0;
@@ -669,16 +676,16 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
       break;
 
     case GIMP_ZOOM_IN_MORE:
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale, 0.0);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale, 0.0);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_IN, scale, 0.0);
       new_scale = scale;
       break;
 
     case GIMP_ZOOM_OUT_MORE:
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
-      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale, 0.0);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale, 0.0);
+      scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, scale, 0.0);
       new_scale = scale;
       break;
 
@@ -693,6 +700,16 @@ gimp_zoom_model_zoom_step (GimpZoomType zoom_type,
     case GIMP_ZOOM_TO:
       new_scale = scale;
       break;
+
+    case GIMP_ZOOM_SMOOTH:
+      if (delta > 0.0)
+        new_scale = scale * (1.0 + 0.1 * delta);
+      else if (delta < 0.0)
+        new_scale = scale / (1.0 + 0.1 * -delta);
+      else
+        new_scale = scale;
+      break;
+
     }
 
   return CLAMP (new_scale, ZOOM_MIN, ZOOM_MAX);
