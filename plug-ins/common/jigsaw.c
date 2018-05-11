@@ -2384,7 +2384,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   GtkWidget     *frame;
   GtkWidget     *rbutton1;
   GtkWidget     *rbutton2;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkAdjustment *adj;
   gboolean       run;
 
@@ -2423,19 +2423,19 @@ jigsaw_dialog (GimpDrawable *drawable)
   frame = gimp_frame_new (_("Number of Tiles"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* xtiles */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Horizontal:"), SCALE_WIDTH, 0,
-                              config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
-                              TRUE, 0, 0,
-                              _("Number of pieces going across"), NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Horizontal:"), SCALE_WIDTH, 0,
+                                   config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
+                                   TRUE, 0, 0,
+                                   _("Number of pieces going across"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
   g_object_unref (group);
@@ -2448,11 +2448,11 @@ jigsaw_dialog (GimpDrawable *drawable)
                             preview);
 
   /* ytiles */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("_Vertical:"), SCALE_WIDTH, 0,
-                              config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
-                              TRUE, 0, 0,
-                              _("Number of pieces going down"), NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                   _("_Vertical:"), SCALE_WIDTH, 0,
+                                   config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
+                                   TRUE, 0, 0,
+                                   _("Number of pieces going down"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2463,24 +2463,24 @@ jigsaw_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   frame = gimp_frame_new (_("Bevel Edges"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   /* number of blending lines */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Bevel width:"), SCALE_WIDTH, 4,
-                              config.blend_lines,
-                              MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
-                              TRUE, 0, 0,
-                              _("Degree of slope of each piece's edge"), NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 0,
+                                   _("_Bevel width:"), SCALE_WIDTH, 4,
+                                   config.blend_lines,
+                                   MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
+                                   TRUE, 0, 0,
+                                   _("Degree of slope of each piece's edge"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2492,13 +2492,13 @@ jigsaw_dialog (GimpDrawable *drawable)
                             preview);
 
   /* blending amount */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("H_ighlight:"), SCALE_WIDTH, 4,
-                              config.blend_amount,
-                              MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              _("The amount of highlighting on the edges "
-                                "of each piece"), NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 1,
+                                   _("H_ighlight:"), SCALE_WIDTH, 4,
+                                   config.blend_amount,
+                                   MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
+                                   TRUE, 0, 0,
+                                   _("The amount of highlighting on the edges "
+                                     "of each piece"), NULL);
 
   gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
@@ -2509,7 +2509,7 @@ jigsaw_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   /* frame for primitive radio buttons */
