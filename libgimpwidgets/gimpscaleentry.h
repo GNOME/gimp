@@ -78,24 +78,6 @@ G_BEGIN_DECLS
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
 
 
-GtkAdjustment * gimp_scale_entry_new             (GtkTable    *table,
-                                                  gint         column,
-                                                  gint         row,
-                                                  const gchar *text,
-                                                  gint         scale_width,
-                                                  gint         spinbutton_width,
-                                                  gdouble      value,
-                                                  gdouble      lower,
-                                                  gdouble      upper,
-                                                  gdouble      step_increment,
-                                                  gdouble      page_increment,
-                                                  guint        digits,
-                                                  gboolean     constrain,
-                                                  gdouble      unconstrained_lower,
-                                                  gdouble      unconstrained_upper,
-                                                  const gchar *tooltip,
-                                                  const gchar *help_id);
-
 GtkAdjustment * gimp_scale_entry_new_grid        (GtkGrid     *grid,
                                                   gint         column,
                                                   gint         row,
@@ -111,21 +93,6 @@ GtkAdjustment * gimp_scale_entry_new_grid        (GtkGrid     *grid,
                                                   gboolean     constrain,
                                                   gdouble      unconstrained_lower,
                                                   gdouble      unconstrained_upper,
-                                                  const gchar *tooltip,
-                                                  const gchar *help_id);
-
-GtkAdjustment * gimp_color_scale_entry_new       (GtkTable    *table,
-                                                  gint         column,
-                                                  gint         row,
-                                                  const gchar *text,
-                                                  gint         scale_width,
-                                                  gint         spinbutton_width,
-                                                  gdouble      value,
-                                                  gdouble      lower,
-                                                  gdouble      upper,
-                                                  gdouble      step_increment,
-                                                  gdouble      page_increment,
-                                                  guint        digits,
                                                   const gchar *tooltip,
                                                   const gchar *help_id);
 
