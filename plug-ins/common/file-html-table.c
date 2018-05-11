@@ -454,7 +454,7 @@ save_dialog (gint32 image_ID)
   GtkWidget     *main_vbox;
   GtkWidget     *frame;
   GtkWidget     *vbox;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
   GtkWidget     *entry;
@@ -525,13 +525,13 @@ save_dialog (gint32 image_ID)
   frame = gimp_frame_new (_("Table Creation Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Use cellspan"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 2, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
 
@@ -546,7 +546,7 @@ save_dialog (gint32 image_ID)
                     &gtmvals.spantags);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Co_mpress TD tags"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 2, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
 
@@ -562,7 +562,7 @@ save_dialog (gint32 image_ID)
                     &gtmvals.tdcomp);
 
   toggle = gtk_check_button_new_with_mnemonic (_("C_aption"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 2, 1, 1);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
 
@@ -578,8 +578,7 @@ save_dialog (gint32 image_ID)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.captiontxt);
-  gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 2, 3,
-                    GTK_FILL | GTK_EXPAND, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), entry, 1, 2, 1, 1);
   gtk_widget_show (entry);
 
   gimp_help_set_help_data (entry, _("The text for the table caption."), NULL);
@@ -595,9 +594,9 @@ save_dialog (gint32 image_ID)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("C_ell content:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("C_ell content:"), 0.0, 0.5,
+                            entry, 1);
   gtk_widget_show (entry);
 
   gimp_help_set_help_data (entry, _("The text to go into each cell."), NULL);
@@ -606,25 +605,25 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (entry_changed_callback),
                     gtmvals.cellcontent);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   /* HTML Table Options */
   frame = gimp_frame_new (_("Table Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  table = gtk_table_new (5, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (gtmvals.border,
                                               0, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Border:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Border:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   gimp_help_set_help_data (spinbutton,
                            _("The number of pixels in the table border."),
@@ -637,9 +636,9 @@ save_dialog (gint32 image_ID)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Width:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("_Width:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry,
                            _("The width for each table cell.  "
@@ -653,9 +652,9 @@ save_dialog (gint32 image_ID)
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Height:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("_Height:"), 0.0, 0.5,
+                            entry, 1);
 
   gimp_help_set_help_data (entry,
                            _("The height for each table cell.  "
@@ -670,9 +669,9 @@ save_dialog (gint32 image_ID)
                                               0, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-                             _("Cell-_padding:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("Cell-_padding:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   gimp_help_set_help_data (spinbutton,
                            _("The amount of cell padding."), NULL);
@@ -685,9 +684,9 @@ save_dialog (gint32 image_ID)
                                               0, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-                             _("Cell-_spacing:"), 0.0, 0.5,
-                             spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("Cell-_spacing:"), 0.0, 0.5,
+                            spinbutton, 1);
 
   gimp_help_set_help_data (spinbutton,
                            _("The amount of cell spacing."), NULL);
@@ -696,7 +695,7 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellspacing);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
   gtk_widget_show (frame);
 
   gtk_widget_show (dialog);
