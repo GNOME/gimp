@@ -636,7 +636,7 @@ DepthMerge_dialog (DepthMerge *dm)
   GtkWidget     *dialog;
   GtkWidget     *vbox;
   GtkWidget     *frame;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GtkWidget     *hbox;
   GtkWidget     *label;
   GtkWidget     *combo;
@@ -692,18 +692,15 @@ DepthMerge_dialog (DepthMerge *dm)
   DepthMerge_buildPreviewSourceImage (dm);
 
   /* Source and Depth Map selection */
-  table = gtk_table_new (8, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 12);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   label = gtk_label_new (_("Source 1:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (dm_constraint, dm);
@@ -711,29 +708,27 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogSource1ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 2, 1);
   gtk_widget_show (combo);
 
   label = gtk_label_new(_("Depth map:"));
+  gtk_widget_set_margin_bottom (label, 6);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gtk_widget_set_margin_bottom (combo, 6);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap1,
                               G_CALLBACK (dialogDepthMap1ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, 1, 2, 1);
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Source 2:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (dm_constraint, dm);
@@ -741,61 +736,60 @@ DepthMerge_dialog (DepthMerge *dm)
                               G_CALLBACK (dialogSource2ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, 2, 2, 1);
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Depth map:"));
+  gtk_widget_set_margin_bottom (label, 6);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
   gtk_widget_show (label);
 
   combo = gimp_drawable_combo_box_new (dm_constraint, dm);
+  gtk_widget_set_margin_bottom (combo, 6);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap2,
                               G_CALLBACK (dialogDepthMap2ChangedCallback),
                               dm);
 
-  gtk_table_attach (GTK_TABLE (table), combo, 1, 3, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, 3, 2, 1);
   gtk_widget_show (combo);
 
   /* Numeric parameters */
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-                              _("O_verlap:"), 0, 6,
-                              dm->params.overlap, 0, 2, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 4,
+                                   _("O_verlap:"), 0, 6,
+                                   dm->params.overlap, 0, 2, 0.001, 0.01, 3,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-                              _("O_ffset:"), 0, 6,
-                              dm->params.offset, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 5,
+                                   _("O_ffset:"), 0, 6,
+                                   dm->params.offset, -1, 1, 0.001, 0.01, 3,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-                              _("Sc_ale 1:"), 0, 6,
-                              dm->params.scale1, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 6,
+                                   _("Sc_ale 1:"), 0, 6,
+                                   dm->params.scale1, -1, 1, 0.001, 0.01, 3,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
   g_object_set_data (G_OBJECT (adj), "dm", dm);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 7,
-                              _("Sca_le 2:"), 0, 6,
-                              dm->params.scale2, -1, 1, 0.001, 0.01, 3,
-                              TRUE, 0, 0,
-                              NULL, NULL);
+  adj = gimp_scale_entry_new_grid (GTK_GRID (grid), 0, 7,
+                                   _("Sca_le 2:"), 0, 6,
+                                   dm->params.scale2, -1, 1, 0.001, 0.01, 3,
+                                   TRUE, 0, 0,
+                                   NULL, NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));
