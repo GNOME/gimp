@@ -55,7 +55,7 @@
         {
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html", "--enable-vector-icons" ],
-            "cleanup": [ "/bin/gimptool-2.0", "/bin/gimp-console-2.9" ],
+            "cleanup": [ "/bin/gimptool-2.0", "/bin/gimp-console-2.10" ],
             "sources": [
                 {
                     "type": "git",
