@@ -249,7 +249,6 @@ gimp_dash_editor_draw (GtkWidget *widget,
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GdkRGBA          fg_color;
-  GdkRGBA          bg_color;
   GdkRGBA          mid_color;
   gint             x;
   gint             w, h;
@@ -265,19 +264,15 @@ gimp_dash_editor_draw (GtkWidget *widget,
   gtk_style_context_get_color (style,
                                gtk_widget_get_state_flags (widget),
                                &fg_color);
-  gtk_style_context_get_background_color (style,
-                                          gtk_widget_get_state_flags (widget),
-                                          &bg_color);
 
-  mid_color.red   = (fg_color.red   + bg_color.red)   / 2.0;
-  mid_color.green = (fg_color.green + bg_color.green) / 2.0;
-  mid_color.blue  = (fg_color.blue  + bg_color.blue)  / 2.0;
-  mid_color.alpha = (fg_color.alpha + bg_color.alpha) / 2.0;
+  mid_color        = fg_color;
+  mid_color.alpha *= 0.5;
 
   /*  draw the background  */
 
-  gdk_cairo_set_source_rgba (cr, &bg_color);
-  cairo_paint (cr);
+  gtk_render_background (style, cr,
+                         allocation.x, allocation.y,
+                         allocation.width, allocation.height);
 
   w = editor->block_width;
   h = editor->block_height;
