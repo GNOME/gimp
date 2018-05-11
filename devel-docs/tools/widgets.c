@@ -202,7 +202,7 @@ create_chain_button (void)
 {
   GtkWidget *vbox;
   GtkWidget *align;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *label;
   GtkWidget *chain;
   GtkWidget *separator;
@@ -210,33 +210,26 @@ create_chain_button (void)
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.8);
   gtk_box_pack_start (GTK_BOX (vbox), align, TRUE, TRUE, 0);
-  table = gtk_table_new (2, 5, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (align), table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_colummn_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (align), grid);
   chain = gimp_chain_button_new (GIMP_CHAIN_LEFT);
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach (GTK_TABLE (table), chain, 0,1, 0,2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), chain, 0, 0, 1, 2);
   label = gtk_label_new ("Linked ");
-  gtk_table_attach (GTK_TABLE (table), label, 1,2, 0,1,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 0, 1, 1);
   label = gtk_label_new ("Linked ");
-  gtk_table_attach (GTK_TABLE (table), label, 1,2, 1,2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 1, 1, 1);
   separator = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
-  gtk_table_attach (GTK_TABLE (table), separator, 2,3, 0,2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), separator, 2, 0, 1, 2);
   label = gtk_label_new (" Unlinked");
-  gtk_table_attach (GTK_TABLE (table), label, 3,4, 0,1,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 0, 1, 1);
   label = gtk_label_new (" Unlinked");
-  gtk_table_attach (GTK_TABLE (table), label, 3,4, 1,2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 3, 1, 1, 1);
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), FALSE);
-  gtk_table_attach (GTK_TABLE (table), chain, 4,5, 0,2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), chain, 4, 0, 1, 2);
 
   gtk_box_pack_end (GTK_BOX (vbox), gtk_label_new ("Chain Button"),
                     TRUE, TRUE, 0);
