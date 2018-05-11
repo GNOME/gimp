@@ -128,8 +128,6 @@ static void     gimp_file_dialog_proc_changed            (GimpFileProcView    *v
 
 static void     gimp_file_dialog_help_func               (const gchar         *help_id,
                                                           gpointer             help_data);
-static void     gimp_file_dialog_help_clicked            (GtkWidget           *widget,
-                                                          gpointer             dialog);
 
 static gchar  * gimp_file_dialog_pattern_from_extension  (const gchar         *extension);
 
@@ -342,26 +340,9 @@ gimp_file_dialog_constructed (GObject *object)
 
       if (GIMP_GUI_CONFIG (dialog->gimp->config)->show_help_button)
         {
-          GtkWidget *action_area;
-          GtkWidget *button;
-
-          action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
-
-          button = gtk_button_new_with_mnemonic (_("_Help"));
-          gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
-          gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
-                                              button, TRUE);
-          gtk_widget_show (button);
-
-          g_object_set_data_full (G_OBJECT (dialog), "gimp-dialog-help-id",
-                                  g_strdup (dialog->help_id),
-                                  (GDestroyNotify) g_free);
-
-          g_signal_connect (button, "clicked",
-                            G_CALLBACK (gimp_file_dialog_help_clicked),
-                            dialog);
-
-          g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
+          gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                                  _("_Help"), GTK_RESPONSE_HELP,
+                                  NULL);
         }
     }
 
@@ -426,6 +407,12 @@ gimp_file_dialog_response (GtkDialog *dialog,
                            gint       response_id)
 {
   GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
+
+  if (response_id == GTK_RESPONSE_HELP)
+    {
+      gimp_standard_help_func (file_dialog->help_id, NULL);
+      return;
+    }
 
   if (response_id != GTK_RESPONSE_OK && file_dialog->busy)
     {
@@ -1062,14 +1049,6 @@ gimp_file_dialog_help_func (const gchar *help_id,
     {
       gimp_standard_help_func (help_id, NULL);
     }
-}
-
-static void
-gimp_file_dialog_help_clicked (GtkWidget *widget,
-                               gpointer   dialog)
-{
-  gimp_standard_help_func (g_object_get_data (dialog, "gimp-dialog-help-id"),
-                           NULL);
 }
 
 static gchar *
