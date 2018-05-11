@@ -37,7 +37,7 @@ LDADD = \
 	$(INTLLIBS)		\
 	$(screenshot_RC)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/screenshot
 
 libexec_PROGRAMS = screenshot
 

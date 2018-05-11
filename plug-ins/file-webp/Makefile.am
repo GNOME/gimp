@@ -19,7 +19,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/file-webp
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\

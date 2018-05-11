@@ -23,7 +23,7 @@ AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = flares
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/gradient-flare
 
 libexec_PROGRAMS = gradient-flare
 

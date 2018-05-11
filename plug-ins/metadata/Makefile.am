@@ -22,11 +22,11 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+me_libexecdir = $(gimpplugindir)/plug-ins/metadata-editor
+mv_libexecdir = $(gimpplugindir)/plug-ins/metadata-viewer
 
-libexec_PROGRAMS = \
-	metadata-editor		\
-	metadata-viewer
+me_libexec_PROGRAMS = metadata-editor
+mv_libexec_PROGRAMS = metadata-viewer
 
 metadata_editor_SOURCES = \
 	metadata-editor.c	\
