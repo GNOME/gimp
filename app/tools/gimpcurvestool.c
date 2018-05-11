@@ -203,7 +203,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                  NULL);
 
   histogram = gimp_histogram_new (config->linear);
-  gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+  g_object_unref (gimp_drawable_calculate_histogram_async (
+    drawable, histogram, FALSE));
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);
   g_object_unref (histogram);
@@ -628,8 +629,8 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
                      NULL);
 
       histogram = gimp_histogram_new (curves_config->linear);
-      gimp_drawable_calculate_histogram (GIMP_TOOL (filter_tool)->drawable,
-                                         histogram, FALSE);
+      g_object_unref (gimp_drawable_calculate_histogram_async (
+        GIMP_TOOL (filter_tool)->drawable, histogram, FALSE));
       gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (curves_tool->graph),
                                           histogram);
       g_object_unref (histogram);
