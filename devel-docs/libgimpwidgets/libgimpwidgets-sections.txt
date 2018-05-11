@@ -1597,7 +1597,7 @@ GIMP_SCROLLED_PREVIEW_GET_CLASS
 
 <SECTION>
 <FILE>gimpwidgetsutils</FILE>
-gimp_table_attach_aligned
+gimp_grid_attach_aligned
 gimp_label_set_attributes
 gimp_widget_get_monitor
 gimp_get_monitor_at_pointer

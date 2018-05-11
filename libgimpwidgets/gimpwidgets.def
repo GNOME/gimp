@@ -189,6 +189,7 @@ EXPORTS
 	gimp_frame_get_type
 	gimp_frame_new
 	gimp_get_monitor_at_pointer
+	gimp_grid_attach_aligned
 	gimp_help_connect
 	gimp_help_disable_tooltips
 	gimp_help_enable_tooltips
@@ -393,7 +394,6 @@ EXPORTS
 	gimp_string_combo_box_get_type
 	gimp_string_combo_box_new
 	gimp_string_combo_box_set_active
-	gimp_table_attach_aligned
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
 	gimp_unit_combo_box_get_active
