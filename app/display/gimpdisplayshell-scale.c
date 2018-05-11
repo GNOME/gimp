@@ -353,6 +353,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 {
   GimpDisplayConfig *config;
   gdouble            current_scale;
+  gdouble            delta;
   gboolean           resize_window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -360,8 +361,11 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
+  if (zoom_type == GIMP_ZOOM_SMOOTH)
+    delta = new_scale;
+
   if (zoom_type != GIMP_ZOOM_TO)
-    new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale);
+    new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale, delta);
 
   if (SCALE_EQUALS (new_scale, current_scale))
     return;
@@ -760,14 +764,14 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
           new_scale = current * MIN (((gdouble) monitor_height) / shell_height,
                                      ((gdouble) monitor_width)  / shell_width);
 
-          new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, new_scale);
+          new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, new_scale, 0.0);
 
           /*  Since zooming out might skip a zoom step we zoom in
            *  again and test if we are small enough.
            */
           gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO,
                                 gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
-                                                           new_scale));
+                                                           new_scale, 0.0));
 
           if (SCALEX (shell, image_width)  > monitor_width ||
               SCALEY (shell, image_height) > monitor_height)

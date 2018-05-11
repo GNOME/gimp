@@ -963,8 +963,8 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
 {
   GtkAdjustment *adj_x;
   GtkAdjustment *adj_y;
-  gdouble        page_size_x;
-  gdouble        page_size_y;
+  gdouble        scroll_unit_x;
+  gdouble        scroll_unit_y;
   gdouble        value_x = 0.0;
   gdouble        value_y = 0.0;
 
@@ -983,29 +983,31 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
       adj_y = vadj;
     }
 
-  page_size_x = gtk_adjustment_get_page_size (adj_x);
-  page_size_y = gtk_adjustment_get_page_size (adj_y);
+  scroll_unit_x = pow (gtk_adjustment_get_page_size (adj_x), 2.0 / 3.0);
+  scroll_unit_y = pow (gtk_adjustment_get_page_size (adj_y), 2.0 / 3.0);
 
   switch (sevent->direction)
     {
     case GDK_SCROLL_LEFT:
-      value_x = -pow (page_size_x, 2.0 / 3.0);
+      value_x = -scroll_unit_x;
       break;
 
     case GDK_SCROLL_RIGHT:
-      value_x = pow (page_size_x, 2.0 / 3.0);
+      value_x = scroll_unit_x;
       break;
 
     case GDK_SCROLL_UP:
-      value_y = -pow (page_size_y, 2.0 / 3.0);
+      value_y = -scroll_unit_y;
       break;
 
     case GDK_SCROLL_DOWN:
-      value_y = pow (page_size_y, 2.0 / 3.0);
+      value_y = scroll_unit_y;
       break;
 
     case GDK_SCROLL_SMOOTH:
       gdk_event_get_scroll_deltas ((GdkEvent *) sevent, &value_x, &value_y);
+      value_x *= scroll_unit_x;
+      value_y *= scroll_unit_y;
     }
 
   value_x = CLAMP (value_x +

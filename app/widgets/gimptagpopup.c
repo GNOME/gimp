@@ -162,7 +162,8 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_KEY_RELEASE_MASK    |
-                         GDK_SCROLL_MASK);
+                         GDK_SCROLL_MASK         |
+                         GDK_SMOOTH_SCROLL_MASK);
 
   gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (popup)),
                                GTK_STYLE_CLASS_MENU);

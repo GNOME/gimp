@@ -732,6 +732,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             if (state & gimp_get_toggle_behavior_mask ())
               {
+                gdouble delta;
+
                 switch (sevent->direction)
                   {
                   case GDK_SCROLL_UP:
@@ -745,6 +747,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     gimp_display_shell_scale (shell,
                                               GIMP_ZOOM_OUT,
                                               0.0,
+                                              GIMP_ZOOM_FOCUS_POINTER);
+                    break;
+
+                  case GDK_SCROLL_SMOOTH:
+                    gdk_event_get_scroll_deltas (event, NULL, &delta);
+                    gimp_display_shell_scale (shell,
+                                              GIMP_ZOOM_SMOOTH,
+                                              delta,
                                               GIMP_ZOOM_FOCUS_POINTER);
                     break;
 

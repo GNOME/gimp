@@ -138,9 +138,10 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpNavigationViewClass, zoom),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_ZOOM_TYPE);
+                  gimp_marshal_VOID__ENUM_DOUBLE,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_ZOOM_TYPE,
+                  G_TYPE_DOUBLE);
 
   view_signals[SCROLL] =
     g_signal_new ("scroll",
@@ -167,6 +168,7 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
   gtk_widget_add_events (GTK_WIDGET (view),
                          GDK_SCROLL_MASK         |
+                         GDK_SMOOTH_SCROLL_MASK  |
                          GDK_POINTER_MOTION_MASK |
                          GDK_KEY_PRESS_MASK);
 
@@ -297,14 +299,21 @@ gimp_navigation_view_scroll (GtkWidget      *widget,
 {
   if (sevent->state & gimp_get_toggle_behavior_mask ())
     {
+      gdouble delta;
+
       switch (sevent->direction)
         {
         case GDK_SCROLL_UP:
-          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_IN);
+          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_IN, 0.0);
           break;
 
         case GDK_SCROLL_DOWN:
-          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_OUT);
+          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_OUT, 0.0);
+          break;
+
+        case GDK_SCROLL_SMOOTH:
+          gdk_event_get_scroll_deltas ((GdkEvent *) sevent, NULL, &delta);
+          g_signal_emit (widget, view_signals[ZOOM], 0, GIMP_ZOOM_SMOOTH, delta);
           break;
 
         default:

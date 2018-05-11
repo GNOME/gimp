@@ -80,6 +80,7 @@ static void        gimp_navigation_editor_marker_changed    (GimpNavigationView 
                                                              GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_zoom              (GimpNavigationView   *view,
                                                              GimpZoomType          direction,
+                                                             gdouble               delta,
                                                              GimpNavigationEditor *editor);
 static void        gimp_navigation_editor_scroll            (GimpNavigationView   *view,
                                                              GdkEventScroll       *sevent,
@@ -553,6 +554,7 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
 static void
 gimp_navigation_editor_zoom (GimpNavigationView   *view,
                              GimpZoomType          direction,
+                             gdouble               delta,
                              GimpNavigationEditor *editor)
 {
   g_return_if_fail (direction != GIMP_ZOOM_TO);
@@ -562,7 +564,7 @@ gimp_navigation_editor_zoom (GimpNavigationView   *view,
       if (gimp_display_get_image (editor->shell->display))
         gimp_display_shell_scale (editor->shell,
                                   direction,
-                                  0.0,
+                                  delta,
                                   GIMP_ZOOM_FOCUS_BEST_GUESS);
     }
 }
