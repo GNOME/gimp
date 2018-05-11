@@ -194,6 +194,10 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_CANCEL;
             }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
         }
 
       g_object_unref (file);
