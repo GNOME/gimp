@@ -72,6 +72,24 @@
   </provides>
 
   <releases>
+    <!--
+    <release version="2.10.2" date="TODO">
+      <description>
+        <_p>
+          This second release in the GIMP 2.10 series, so soon after
+          2.10.0, is mostly the usual bug-fixing version after a major
+          release, with a few dozen bugs fixed.
+        </_p>
+        <_p>
+          As a bonus, it also features a new plug-in for the support of
+          the HEIF format, both for importing and exporting, which is a
+          nice example of our relaxed feature policy inside minor
+          releases.
+        </_p>
+      </description>
+    </release>
+    -->
+
     <release version="2.10.0" date="2018-04-27">
       <description>
         <_p>
@@ -122,6 +140,7 @@
             And much, much more…
           </_li>
         </ul>
+        <_p>For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</_p>
       </description>
     </release>
   </releases>
