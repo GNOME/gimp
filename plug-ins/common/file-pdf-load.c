@@ -158,7 +158,7 @@ struct _GimpResolutionEntryField
 
 struct _GimpResolutionEntry
 {
-  GtkTable                  parent_instance;
+  GtkGrid                   parent_instance;
 
   GimpUnit                  size_unit;
   GimpUnit                  unit;
@@ -175,7 +175,7 @@ struct _GimpResolutionEntry
 
 struct _GimpResolutionEntryClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass   parent_class;
 
   void (* value_changed)  (GimpResolutionEntry *gse);
   void (* refval_changed) (GimpResolutionEntry *gse);
@@ -1408,7 +1408,7 @@ load_dialog (PopplerDocument  *doc,
 
 static guint gimp_resolution_entry_signals[LAST_SIGNAL] = { 0 };
 
-static GtkTableClass *parent_class = NULL;
+static GtkGridClass *parent_class = NULL;
 
 
 GType
@@ -1431,7 +1431,7 @@ gimp_resolution_entry_get_type (void)
         (GInstanceInitFunc) gimp_resolution_entry_init,
       };
 
-      gre_type = g_type_register_static (GTK_TYPE_TABLE,
+      gre_type = g_type_register_static (GTK_TYPE_GRID,
                                          "GimpResolutionEntry",
                                          &gre_info, 0);
     }
@@ -1500,8 +1500,8 @@ gimp_resolution_entry_init (GimpResolutionEntry *gre)
   gre->unitmenu = NULL;
   gre->unit     = GIMP_UNIT_INCH;
 
-  gtk_table_set_col_spacings (GTK_TABLE (gre), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (gre), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (gre), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (gre), 4);
 }
 
 static void
@@ -1593,7 +1593,7 @@ gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
  *
  * Creates a new #GimpResolutionEntry widget.
  *
- * The #GimpResolutionEntry is derived from #GtkTable and will have
+ * The #GimpResolutionEntry is derived from #GtkGrid and will have
  * an empty border of one cell width on each side plus an empty column left
  * of the #GimpUnitMenu to allow the caller to add labels or other widgets.
  *
@@ -1618,17 +1618,13 @@ gimp_resolution_entry_new (const gchar *width_label,
 
   gre->unit = initial_unit;
 
-  gtk_table_resize (GTK_TABLE (gre), 4, 4);
-
   gimp_resolution_entry_field_init (gre, &gre->x,
                                     &gre->width,
                                     X_CHANGED,
                                     initial_res, initial_unit,
                                     FALSE, 0);
 
-  gtk_table_attach_defaults (GTK_TABLE (gre), gre->x.spinbutton,
-                             1, 2,
-                             3, 4);
+  gtk_grid_attach (GTK_GRID (gre), gre->x.spinbutton, 1, 3, 1, 1);
 
   g_signal_connect (gre->x.adjustment, "value-changed",
                     G_CALLBACK (gimp_resolution_entry_value_callback),
@@ -1647,9 +1643,7 @@ gimp_resolution_entry_new (const gchar *width_label,
   gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gre->unitmenu),
                                   initial_unit);
 
-  gtk_table_attach (GTK_TABLE (gre), gre->unitmenu,
-                    3, 4, 3, 4,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (gre), gre->unitmenu, 3, 3, 1, 1);
   g_signal_connect (gre->unitmenu, "changed",
                     G_CALLBACK (gimp_resolution_entry_unit_callback),
                     gre);
@@ -1661,13 +1655,9 @@ gimp_resolution_entry_new (const gchar *width_label,
                                     width, size_unit,
                                     TRUE, 0);
 
-  gtk_table_attach_defaults (GTK_TABLE (gre), gre->width.spinbutton,
-                             1, 2,
-                             1, 2);
+  gtk_grid_attach (GTK_GRID (gre), gre->width.spinbutton, 1, 1, 1, 1);
 
-  gtk_table_attach_defaults (GTK_TABLE (gre), gre->width.label,
-                             3, 4,
-                             1, 2);
+  gtk_grid_attach (GTK_GRID (gre), gre->width.label, 3, 1, 1, 1);
 
   g_signal_connect (gre->width.adjustment, "value-changed",
                     G_CALLBACK (gimp_resolution_entry_value_callback),
@@ -1681,11 +1671,9 @@ gimp_resolution_entry_new (const gchar *width_label,
                                     height, size_unit,
                                     TRUE, 0);
 
-  gtk_table_attach_defaults (GTK_TABLE (gre), gre->height.spinbutton,
-                             1, 2, 2, 3);
+  gtk_grid_attach (GTK_GRID (gre), gre->height.spinbutton, 1, 2, 1, 1);
 
-  gtk_table_attach_defaults (GTK_TABLE (gre), gre->height.label,
-                             3, 4, 2, 3);
+  gtk_grid_attach (GTK_GRID (gre), gre->height.label, 3, 2, 1, 1);
 
   g_signal_connect (gre->height.adjustment, "value-changed",
                     G_CALLBACK (gimp_resolution_entry_value_callback),
@@ -1714,7 +1702,7 @@ gimp_resolution_entry_new (const gchar *width_label,
  * @column:    The column where the label will be attached.
  * @alignment: The horizontal alignment of the label.
  *
- * Attaches a #GtkLabel to the #GimpResolutionEntry (which is a #GtkTable).
+ * Attaches a #GtkLabel to the #GimpResolutionEntry (which is a #GtkGrid).
  *
  * Returns: A pointer to the new #GtkLabel widget.
  **/
@@ -1762,8 +1750,7 @@ gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
 
   gtk_label_set_xalign (GTK_LABEL (label), alignment);
 
-  gtk_table_attach (GTK_TABLE (gre), label, column, column+1, row, row+1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (gre), label, column, row, 1, 1);
   gtk_widget_show (label);
 
   return label;
