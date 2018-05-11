@@ -615,12 +615,13 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
                                   GdkMonitor      *current_monitor,
                                   gboolean         apply_stored_monitor)
 {
-  GdkMonitor   *monitor;
-  GdkRectangle  rect;
-  GdkRectangle  work_rect;
-  gchar         geom[32];
-  gint          width;
-  gint          height;
+  GdkMonitor     *monitor;
+  GdkRectangle    rect;
+  GdkRectangle    work_rect;
+  GdkGravity      gravity;
+  GdkWindowHints  hints;
+  gint            width;
+  gint            height;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
@@ -663,7 +664,7 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
     {
       GtkRequisition requisition;
 
-      gtk_widget_size_request (info->p->widget, &requisition);
+      gtk_widget_get_preferred_size (info->p->widget, NULL, &requisition);
 
       width  = requisition.width;
       height = requisition.height;
@@ -676,25 +677,6 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
                       work_rect.y,
                       work_rect.y + work_rect.height - height);
 
-  if (info->p->right_align && info->p->bottom_align)
-    {
-      g_strlcpy (geom, "-0-0", sizeof (geom));
-    }
-  else if (info->p->right_align)
-    {
-      g_snprintf (geom, sizeof (geom), "-0%+d", info->p->y);
-    }
-  else if (info->p->bottom_align)
-    {
-      g_snprintf (geom, sizeof (geom), "%+d-0", info->p->x);
-    }
-  else
-    {
-      g_snprintf (geom, sizeof (geom), "%+d%+d", info->p->x, info->p->y);
-    }
-
-  gtk_window_parse_geometry (GTK_WINDOW (info->p->widget), geom);
-
   if (gimp_session_info_get_remember_size (info) &&
       info->p->width  > 0 &&
       info->p->height > 0)
@@ -702,6 +684,42 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
       gtk_window_set_default_size (GTK_WINDOW (info->p->widget),
                                    info->p->width, info->p->height);
     }
+
+  gtk_window_get_size (GTK_WINDOW (info->p->widget), &width, &height);
+
+  gravity = GDK_GRAVITY_NORTH_WEST;
+
+  if (info->p->right_align && info->p->bottom_align)
+    {
+      gravity = GDK_GRAVITY_SOUTH_EAST;
+    }
+  else if (info->p->right_align)
+    {
+      gravity = GDK_GRAVITY_NORTH_EAST;
+    }
+  else if (info->p->bottom_align)
+    {
+      gravity = GDK_GRAVITY_SOUTH_WEST;
+    }
+
+  if (gravity == GDK_GRAVITY_SOUTH_EAST ||
+      gravity == GDK_GRAVITY_NORTH_EAST)
+    info->p->x = work_rect.x + work_rect.width - width;
+
+  if (gravity == GDK_GRAVITY_SOUTH_WEST ||
+      gravity == GDK_GRAVITY_SOUTH_EAST)
+    info->p->y = work_rect.y + work_rect.height - height;
+
+  gtk_window_set_gravity (GTK_WINDOW (info->p->widget), gravity);
+  gtk_window_move (GTK_WINDOW (info->p->widget),
+                   info->p->x, info->p->y);
+
+  hints = GDK_HINT_USER_POS;
+  if (gimp_session_info_get_remember_size (info))
+    hints |= GDK_HINT_USER_SIZE;
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (info->p->widget),
+                                 NULL, NULL, hints);
 
   /*  Window managers and windowing systems suck. They have their own
    *  ideas about WM standards and when it's appropriate to honor
@@ -743,7 +761,7 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
       GdkMonitor   *monitor;
       GdkRectangle  geometry;
 
-      gdk_window_get_root_origin (window, &x, &y);
+      gtk_window_get_position (GTK_WINDOW (info->p->widget), &x, &y);
 
       /* Don't write negative values to the sessionrc, they are
        * interpreted as relative to the right, respective bottom edge
@@ -762,26 +780,8 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
 
       if (gimp_session_info_get_remember_size (info))
         {
-          int width;
-          int height;
-
-          if (cevent)
-            {
-              width  = cevent->width;
-              height = cevent->height;
-            }
-          else
-            {
-              GtkAllocation allocation;
-
-              gtk_widget_get_allocation (info->p->widget, &allocation);
-
-              width  = allocation.width;
-              height = allocation.height;
-            }
-
-          info->p->width  = width;
-          info->p->height = height;
+          gtk_window_get_size (GTK_WINDOW (info->p->widget),
+                               &info->p->width, &info->p->height);
         }
       else
         {
