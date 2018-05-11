@@ -25,6 +25,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpasync.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimphistogram.h"
@@ -456,6 +457,14 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
   gimp_histogram_editor_name_update (editor);
 }
 
+static void
+gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
+                                                GimpHistogramEditor *editor)
+{
+  if (gimp_async_is_finished (async))
+    gimp_histogram_editor_info_update (editor);
+}
+
 static gboolean
 gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 {
@@ -463,6 +472,8 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
     {
       if (editor->drawable)
         {
+          GimpAsync *async;
+
           if (! editor->histogram)
             {
               GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
@@ -472,16 +483,24 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
               gimp_histogram_view_set_histogram (view, editor->histogram);
             }
 
-          gimp_drawable_calculate_histogram (editor->drawable,
-                                             editor->histogram,
-                                             TRUE);
+          async = gimp_drawable_calculate_histogram_async (editor->drawable,
+                                                           editor->histogram,
+                                                           TRUE);
+
+          gimp_async_add_callback (
+            async,
+            (GimpAsyncCallback) gimp_histogram_editor_calculate_async_callback,
+            editor);
+
+          g_object_unref (async);
         }
       else if (editor->histogram)
         {
           gimp_histogram_clear_values (editor->histogram);
+
+          gimp_histogram_editor_info_update (editor);
         }
 
-      gimp_histogram_editor_info_update (editor);
       editor->recompute = FALSE;
     }
 
