@@ -41,7 +41,7 @@ static gboolean        gimp_scale_entry_log_to_linear (GBinding     *binding,
                                                        gpointer      user_data);
 
 static GtkAdjustment * gimp_scale_entry_new_internal  (gboolean      color_scale,
-                                                       GtkWidget    *grid,
+                                                       GtkGrid      *grid,
                                                        gint          column,
                                                        gint          row,
                                                        const gchar  *text,
@@ -104,7 +104,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
 
 static GtkAdjustment *
 gimp_scale_entry_new_internal (gboolean     color_scale,
-                               GtkWidget   *parent,
+                               GtkGrid     *grid,
                                gint         column,
                                gint         row,
                                const gchar *text,
@@ -188,32 +188,11 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
     gtk_widget_set_size_request (scale, scale_width, -1);
   gtk_widget_show (scale);
 
-  if (GTK_IS_GRID (parent))
-    {
-      GtkGrid *grid = GTK_GRID (parent);
+  gtk_widget_set_hexpand (scale, TRUE);
 
-      gtk_widget_set_hexpand (scale, TRUE);
-
-      gtk_grid_attach (grid, label,      column,     row, 1, 1);
-      gtk_grid_attach (grid, scale,      column + 1, row, 1, 1);
-      gtk_grid_attach (grid, spinbutton, column + 2, row, 1, 1);
-    }
-  else
-    {
-      GtkTable *table = GTK_TABLE (parent);
-
-      gtk_table_attach (table, label,
-                        column, column + 1, row, row + 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-
-      gtk_table_attach (table, scale,
-                        column + 1, column + 2, row, row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-
-      gtk_table_attach (table, spinbutton,
-                        column + 2, column + 3, row, row + 1,
-                        GTK_FILL | GTK_SHRINK, GTK_SHRINK, 0, 0);
-    }
+  gtk_grid_attach (grid, label,      column,     row, 1, 1);
+  gtk_grid_attach (grid, scale,      column + 1, row, 1, 1);
+  gtk_grid_attach (grid, spinbutton, column + 2, row, 1, 1);
 
   if (tooltip || help_id)
     {
@@ -228,66 +207,6 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (spin_adjustment), "binding",    binding);
 
   return spin_adjustment;
-}
-
-/**
- * gimp_scale_entry_new:
- * @table:               The #GtkTable the widgets will be attached to.
- * @column:              The column to start with.
- * @row:                 The row to attach the widgets.
- * @text:                The text for the #GtkLabel which will appear
- *                       left of the #GtkHScale.
- * @scale_width:         The minimum horizontal size of the #GtkHScale.
- * @spinbutton_width:    The minimum horizontal size of the #GtkSpinButton.
- * @value:               The initial value.
- * @lower:               The lower boundary.
- * @upper:               The upper boundary.
- * @step_increment:      The step increment.
- * @page_increment:      The page increment.
- * @digits:              The number of decimal digits.
- * @constrain:           %TRUE if the range of possible values of the
- *                       #GtkSpinButton should be the same as of the #GtkHScale.
- * @unconstrained_lower: The spinbutton's lower boundary
- *                       if @constrain == %FALSE.
- * @unconstrained_upper: The spinbutton's upper boundary
- *                       if @constrain == %FALSE.
- * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
- *
- * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
- * attaches them to a 3-column #GtkTable.
- *
- * Returns: The #GtkSpinButton's #GtkAdjustment.
- **/
-GtkAdjustment *
-gimp_scale_entry_new (GtkTable    *table,
-                      gint         column,
-                      gint         row,
-                      const gchar *text,
-                      gint         scale_width,
-                      gint         spinbutton_width,
-                      gdouble      value,
-                      gdouble      lower,
-                      gdouble      upper,
-                      gdouble      step_increment,
-                      gdouble      page_increment,
-                      guint        digits,
-                      gboolean     constrain,
-                      gdouble      unconstrained_lower,
-                      gdouble      unconstrained_upper,
-                      const gchar *tooltip,
-                      const gchar *help_id)
-{
-  return gimp_scale_entry_new_internal (FALSE,
-                                        GTK_WIDGET (table), column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        constrain,
-                                        unconstrained_lower,
-                                        unconstrained_upper,
-                                        tooltip, help_id);
 }
 
 /**
@@ -339,7 +258,7 @@ gimp_scale_entry_new_grid (GtkGrid     *grid,
                            const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (FALSE,
-                                        GTK_WIDGET (grid), column, row,
+                                        grid, column, row,
                                         text, scale_width, spinbutton_width,
                                         value, lower, upper,
                                         step_increment, page_increment,
@@ -347,55 +266,6 @@ gimp_scale_entry_new_grid (GtkGrid     *grid,
                                         constrain,
                                         unconstrained_lower,
                                         unconstrained_upper,
-                                        tooltip, help_id);
-}
-
-/**
- * gimp_color_scale_entry_new:
- * @table:               The #GtkTable the widgets will be attached to.
- * @column:              The column to start with.
- * @row:                 The row to attach the widgets.
- * @text:                The text for the #GtkLabel which will appear
- *                       left of the #GtkHScale.
- * @scale_width:         The minimum horizontal size of the #GtkHScale.
- * @spinbutton_width:    The minimum horizontal size of the #GtkSpinButton.
- * @value:               The initial value.
- * @lower:               The lower boundary.
- * @upper:               The upper boundary.
- * @step_increment:      The step increment.
- * @page_increment:      The page increment.
- * @digits:              The number of decimal digits.
- * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
- *
- * This function creates a #GtkLabel, a #GimpColorScale and a
- * #GtkSpinButton and attaches them to a 3-column #GtkTable.
- *
- * Returns: The #GtkSpinButton's #GtkAdjustment.
- **/
-GtkAdjustment *
-gimp_color_scale_entry_new (GtkTable    *table,
-                            gint         column,
-                            gint         row,
-                            const gchar *text,
-                            gint         scale_width,
-                            gint         spinbutton_width,
-                            gdouble      value,
-                            gdouble      lower,
-                            gdouble      upper,
-                            gdouble      step_increment,
-                            gdouble      page_increment,
-                            guint        digits,
-                            const gchar *tooltip,
-                            const gchar *help_id)
-{
-  return gimp_scale_entry_new_internal (TRUE,
-                                        GTK_WIDGET (table), column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        TRUE, 0.0, 0.0,
                                         tooltip, help_id);
 }
 
@@ -439,7 +309,7 @@ gimp_color_scale_entry_new_grid (GtkGrid     *grid,
                                  const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (TRUE,
-                                        GTK_WIDGET (grid), column, row,
+                                        grid, column, row,
                                         text, scale_width, spinbutton_width,
                                         value, lower, upper,
                                         step_increment, page_increment,
