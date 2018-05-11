@@ -1040,7 +1040,7 @@ save_dialog (const gint32   image_ID,
 {
   GtkWidget      *dialog;
   GtkWidget      *frame;
-  GtkWidget      *table;
+  GtkWidget      *grid;
   GtkWidget      *box;
   GtkAdjustment  *adjustment;
   GtkWidget      *alignment;
@@ -1064,12 +1064,12 @@ save_dialog (const gint32   image_ID,
                       frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (9, 3, FALSE);
-  gtk_widget_show (table);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_widget_show (grid);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   /*
    *  Hotspot
@@ -1083,8 +1083,8 @@ save_dialog (const gint32   image_ID,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Hot spot _X:"), 0, 0.5, tmpwidget, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Hot spot _X:"), 0, 0.5, tmpwidget, 1);
   gtk_widget_show (tmpwidget);
 
   g_signal_connect (adjustment, "value-changed",
@@ -1105,8 +1105,8 @@ save_dialog (const gint32   image_ID,
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 0,
-                             "_Y:", 1.0, 0.5, tmpwidget, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 1, 0,
+                            "_Y:", 1.0, 0.5, tmpwidget, 1);
   gtk_widget_show (tmpwidget);
 
   g_signal_connect (adjustment, "value-changed",
@@ -1124,8 +1124,7 @@ save_dialog (const gint32   image_ID,
   /* check button */
   tmpwidget =
   gtk_check_button_new_with_mnemonic (_("_Auto-Crop all frames."));
-  gtk_table_attach (GTK_TABLE (table),
-                    tmpwidget, 0, 3, 1, 2, GTK_FILL, 0, 0, 10);
+  gtk_grid_attach (GTK_GRID (grid), tmpwidget, 0, 1, 3, 1);
   gtk_widget_show (tmpwidget);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpwidget),
@@ -1170,8 +1169,8 @@ save_dialog (const gint32   image_ID,
                              "\"gtk-cursor-theme-size\"."),
                            NULL);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Size:"), 0, 0.5, tmpwidget, 3, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("_Size:"), 0, 0.5, tmpwidget, 3);
   /* Replace size ? */
   tmpwidget =
     gimp_int_radio_group_new (FALSE, NULL, G_CALLBACK (gimp_radio_button_update),
@@ -1185,7 +1184,7 @@ save_dialog (const gint32   image_ID,
                              NULL);
   alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   gtk_widget_show (alignment);
-  gtk_table_attach (GTK_TABLE (table), alignment, 0, 3, 3, 4, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 3, 3, 1);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
   gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
   gtk_widget_show (tmpwidget);
@@ -1195,8 +1194,8 @@ save_dialog (const gint32   image_ID,
    */
   /* spin button */
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4, _("_Delay:"),
-                             0, 0.5, box, 3, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4, _("_Delay:"),
+                            0, 0.5, box, 3);
   gtk_widget_show (box);
 
   gimp_help_set_help_data (box,
@@ -1236,7 +1235,7 @@ save_dialog (const gint32   image_ID,
                              NULL);
   alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   gtk_widget_show (alignment);
-  gtk_table_attach (GTK_TABLE (table), alignment, 0, 3, 5, 6, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 5, 3, 1);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
   gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
   gtk_widget_show (tmpwidget);
@@ -1267,8 +1266,8 @@ save_dialog (const gint32   image_ID,
   gimp_help_set_help_data (tmpwidget,
                         _("Enter copyright information."),
                         NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6, _("_Copyright:"),
-                             0, 0.5, tmpwidget, 3, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6, _("_Copyright:"),
+                            0, 0.5, tmpwidget, 3);
   /*
    *  License
    */
@@ -1295,8 +1294,8 @@ save_dialog (const gint32   image_ID,
   gimp_help_set_help_data (tmpwidget,
                         _("Enter license information."),
                         NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7, _("_License:"),
-                             0, 0.5, tmpwidget, 3, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 7, _("_License:"),
+                            0, 0.5, tmpwidget, 3);
   /*
    *  Other
    */
@@ -1306,7 +1305,7 @@ save_dialog (const gint32   image_ID,
   gtk_widget_show (label);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0); /*align top-left*/
   gtk_label_set_yalign (GTK_LABEL (label), 0.0); /*align top-left*/
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 8, 1, 1);
   /* content of Other */
   /* scrolled window */
   box = gtk_scrolled_window_new (NULL, NULL);
@@ -1315,7 +1314,7 @@ save_dialog (const gint32   image_ID,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_table_attach (GTK_TABLE (table), box, 1, 3, 8, 9, GTK_FILL, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), box, 1, 8, 2, 1);
   gtk_widget_show (box);
   /* textbuffer */
   textbuffer = gtk_text_buffer_new (NULL);
