@@ -2795,7 +2795,7 @@ p_add_layer (gint       width,
   /* add the copied layer to the temp. working image */
   gimp_image_insert_layer (image_id, l_new_layer_id, -1, stack_position);
 
-  /* copy visiblity state */
+  /* copy visibility state */
   gimp_item_set_visible (l_new_layer_id, l_visible);
 
   return l_new_drawable;

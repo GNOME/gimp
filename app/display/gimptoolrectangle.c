@@ -3937,7 +3937,7 @@ gimp_tool_rectangle_pending_size_set (GimpToolRectangle *rectangle,
  * @height_property: Option property to set to current constraint height.
  *
  * Sets specified rectangle tool options properties to the width and
- * height of the current contraint size.
+ * height of the current constraint size.
  */
 void
 gimp_tool_rectangle_constraint_size_set (GimpToolRectangle *rectangle,

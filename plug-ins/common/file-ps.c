@@ -1482,7 +1482,7 @@ static char *psfgets (char *s, int size, FILE *stream)
           *(sptr++) = '\n';
           break;
         }
-      else if (c == '\r')  /* Got a carriage return. Check next charcater */
+      else if (c == '\r')  /* Got a carriage return. Check next character */
         {
           c = getc (stream);
           if ((c == EOF) || (c == '\n')) /* EOF or DOS line end ? */

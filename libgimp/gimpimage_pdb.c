@@ -933,7 +933,7 @@ gimp_image_remove_layer (gint32 image_ID,
  *
  * Freeze the image's layer list.
  *
- * This procedure freezes the layer list of the image, supressing any
+ * This procedure freezes the layer list of the image, suppressing any
  * updates to the Layers dialog in response to changes to the image's
  * layers. This can significantly improve performance while applying
  * changes affecting the layer list.
@@ -1114,7 +1114,7 @@ gimp_image_remove_channel (gint32 image_ID,
  *
  * Freeze the image's channel list.
  *
- * This procedure freezes the channel list of the image, supressing any
+ * This procedure freezes the channel list of the image, suppressing any
  * updates to the Channels dialog in response to changes to the image's
  * channels. This can significantly improve performance while applying
  * changes affecting the channel list.
@@ -1155,7 +1155,7 @@ gimp_image_freeze_channels (gint32 image_ID)
  * This procedure thaws the channel list of the image, re-enabling
  * updates to the Channels dialog.
  *
- * This procedure should match a corresponing call to
+ * This procedure should match a corresponding call to
  * gimp_image_freeze_channels().
  *
  * Returns: TRUE on success.
@@ -1298,7 +1298,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  *
  * Freeze the image's vectors list.
  *
- * This procedure freezes the vectors list of the image, supressing any
+ * This procedure freezes the vectors list of the image, suppressing any
  * updates to the Paths dialog in response to changes to the image's
  * vectors. This can significantly improve performance while applying
  * changes affecting the vectors list.

@@ -2457,7 +2457,7 @@ fill_missing_colors (void)
     }
 }
 
-/* get 256 samples of active gradient (optional in invers order) */
+/* get 256 samples of active gradient (optional in inverse order) */
 static void
 get_gradient (gint mode)
 {

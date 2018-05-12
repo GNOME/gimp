@@ -334,7 +334,7 @@ gimp_cage_config_get_point_coordinate (GimpCageConfig *gcc,
  * @x: x displacement value
  * @y: y displacement value
  *
- * Add a displacement for all slected point of the cage.
+ * Add a displacement for all selected points of the cage.
  * This displacement need to be committed to become effective.
  */
 void

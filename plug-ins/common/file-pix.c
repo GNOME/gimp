@@ -219,7 +219,7 @@ run (const gchar      *name,
         }
       else
         {
-          /* The image load falied */
+          /* The image load failed */
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }

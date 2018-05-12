@@ -14,8 +14,8 @@
                                              100 LAYER-MODE-NORMAL)))
         (original-layer-for-darker 0)
         (original-layer-for-lighter 0)
-        (blured-layer-for-darker 0)
-        (blured-layer-for-lighter 0)
+        (blurred-layer-for-darker 0)
+        (blurred-layer-for-lighter 0)
         (darker-layer 0)
         (lighter-layer 0)
         )
@@ -31,16 +31,16 @@
 
     (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))
-    (set! blured-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
+    (set! blurred-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (gimp-item-set-visible original-layer FALSE)
     (gimp-display-new new-image)
 
     ;; make darker mask
-    (gimp-image-insert-layer new-image blured-layer-for-darker 0 -1)
+    (gimp-image-insert-layer new-image blurred-layer-for-darker 0 -1)
     (plug-in-gauss-iir RUN-NONINTERACTIVE
-		       new-image blured-layer-for-darker mask-size TRUE TRUE)
-    (set! blured-layer-for-lighter
-          (car (gimp-layer-copy blured-layer-for-darker TRUE)))
+		       new-image blurred-layer-for-darker mask-size TRUE TRUE)
+    (set! blurred-layer-for-lighter
+          (car (gimp-layer-copy blurred-layer-for-darker TRUE)))
     (gimp-image-insert-layer new-image original-layer-for-darker 0 -1)
     (gimp-layer-set-mode original-layer-for-darker LAYER-MODE-SUBTRACT)
     (set! darker-layer
@@ -50,8 +50,8 @@
 
     ;; make lighter mask
     (gimp-image-insert-layer new-image original-layer-for-lighter 0 -1)
-    (gimp-image-insert-layer new-image blured-layer-for-lighter 0 -1)
-    (gimp-layer-set-mode blured-layer-for-lighter LAYER-MODE-SUBTRACT)
+    (gimp-image-insert-layer new-image blurred-layer-for-lighter 0 -1)
+    (gimp-layer-set-mode blurred-layer-for-lighter LAYER-MODE-SUBTRACT)
     (set! lighter-layer
           (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
     (gimp-item-set-name lighter-layer "lighter mask")

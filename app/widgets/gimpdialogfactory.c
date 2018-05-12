@@ -473,7 +473,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       return NULL;
     }
 
-  /*  a singleton dialog is always returned if it already exisits  */
+  /*  a singleton dialog is always returned if it already exists  */
   if (return_existing || entry->singleton)
     {
       dialog = gimp_dialog_factory_find_widget (factory, identifier);

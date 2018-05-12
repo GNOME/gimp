@@ -219,7 +219,7 @@ void
 d_ellipse_end (GdkPoint *pnt,
                gboolean  shift_down)
 {
-  /* Under contrl point */
+  /* Under control point */
   if (!obj_creating->points->next)
     {
       /* No circle created */

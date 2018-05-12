@@ -1023,7 +1023,7 @@ sub image_freeze_layers {
     $blurb = "Freeze the image's layer list.";
 
     $help = <<'HELP';
-This procedure freezes the layer list of the image, supressing any
+This procedure freezes the layer list of the image, suppressing any
 updates to the Layers dialog in response to changes to the image's
 layers.  This can significantly improve performance while applying
 changes affecting the layer list.
@@ -1205,7 +1205,7 @@ sub image_freeze_channels {
     &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
-This procedure freezes the channel list of the image, supressing any
+This procedure freezes the channel list of the image, suppressing any
 updates to the Channels dialog in response to changes to the image's
 channels.  This can significantly improve performance while applying
 changes affecting the channel list.
@@ -1247,7 +1247,7 @@ This procedure thaws the channel list of the image, re-enabling
 updates to the Channels dialog.
 
 
-This procedure should match a corresponing call to
+This procedure should match a corresponding call to
 gimp_image_freeze_channels().
 HELP
 
@@ -1383,7 +1383,7 @@ sub image_freeze_vectors {
     &ell_pdb_misc('2018', '2.10');
 
     $help = <<'HELP';
-This procedure freezes the vectors list of the image, supressing any
+This procedure freezes the vectors list of the image, suppressing any
 updates to the Paths dialog in response to changes to the image's
 vectors.  This can significantly improve performance while applying
 changes affecting the vectors list.

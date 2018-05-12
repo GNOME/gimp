@@ -771,7 +771,7 @@ gimp_rgb_to_hsl_int (gint *red,
  * Calculates the lightness value of an RGB triplet with the formula
  * L = (max(R, G, B) + min (R, G, B)) / 2
  *
- * Return value: Luminance vaue corresponding to the input RGB value
+ * Return value: Luminance value corresponding to the input RGB value
  **/
 gint
 gimp_rgb_to_l_int (gint red,

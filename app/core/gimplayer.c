@@ -656,7 +656,7 @@ gimp_layer_dispose (GObject *object)
       GimpDrawable *fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
 
       /* only detach if this is actually the drawable's fs because the
-       * layer might be on the undo stack and not attached to anyhing
+       * layer might be on the undo stack and not attached to anything
        */
       if (gimp_drawable_get_floating_sel (fs_drawable) == layer)
         gimp_drawable_detach_floating_sel (fs_drawable);
