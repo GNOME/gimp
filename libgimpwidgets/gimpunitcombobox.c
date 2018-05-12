@@ -55,15 +55,6 @@ gimp_unit_combo_box_class_init (GimpUnitComboBoxClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   widget_class->style_updated = gimp_unit_combo_box_style_updated;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_double ("label-scale",
-                                                                "Label Scale",
-                                                                "The scale for the text cell renderer",
-                                                                0.0,
-                                                                G_MAXDOUBLE,
-                                                                1.0,
-                                                                GIMP_PARAM_READABLE));
 }
 
 static void
@@ -88,23 +79,18 @@ gimp_unit_combo_box_style_updated (GtkWidget *widget)
 {
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
-  gdouble          scale;
-
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
-
-  gtk_widget_style_get (widget, "label-scale", &scale, NULL);
 
   /*  hackedehack ...  */
   layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (widget)));
   gtk_cell_layout_clear (layout);
 
-  cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-                       "scale", scale,
-                       NULL);
+  cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text",  GIMP_UNIT_STORE_UNIT_SHORT_FORMAT,
                                   NULL);
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 }
 
 static void

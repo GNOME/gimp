@@ -56,8 +56,6 @@ enum
 static void      gimp_scale_combo_box_constructed     (GObject           *object);
 static void      gimp_scale_combo_box_finalize        (GObject           *object);
 
-static void      gimp_scale_combo_box_style_updated   (GtkWidget         *widget);
-
 static void      gimp_scale_combo_box_changed         (GimpScaleComboBox *combo_box);
 static void      gimp_scale_combo_box_entry_activate  (GtkWidget         *entry,
                                                        GimpScaleComboBox *combo_box);
@@ -82,8 +80,7 @@ static guint scale_combo_box_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   scale_combo_box_signals[ENTRY_ACTIVATED] =
     g_signal_new ("entry-activated",
@@ -94,20 +91,8 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed   = gimp_scale_combo_box_constructed;
-  object_class->finalize      = gimp_scale_combo_box_finalize;
-
-  widget_class->style_updated = gimp_scale_combo_box_style_updated;
-
-  klass->entry_activated      = NULL;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_double ("label-scale",
-                                                                NULL, NULL,
-                                                                0.0,
-                                                                G_MAXDOUBLE,
-                                                                1.0,
-                                                                GIMP_PARAM_READABLE));
+  object_class->constructed = gimp_scale_combo_box_constructed;
+  object_class->finalize    = gimp_scale_combo_box_finalize;
 }
 
 static void
@@ -206,37 +191,6 @@ gimp_scale_combo_box_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_scale_combo_box_style_updated (GtkWidget *widget)
-{
-  GtkWidget *entry;
-
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
-
-  entry = gtk_bin_get_child (GTK_BIN (widget));
-
-  if (entry)
-    {
-      PangoContext         *context;
-      PangoFontDescription *font_desc;
-      gint                  font_size;
-      gdouble               scale;
-
-      gtk_widget_style_get (widget, "label-scale", &scale, NULL);
-
-      context = gtk_widget_get_pango_context (entry);
-      font_desc = pango_context_get_font_description (context);
-      font_desc = pango_font_description_copy (font_desc);
-
-      font_size = pango_font_description_get_size (font_desc);
-      pango_font_description_set_size (font_desc, scale * font_size);
-
-      gtk_widget_override_font (entry, font_desc);
-
-      pango_font_description_free (font_desc);
-    }
 }
 
 static void
