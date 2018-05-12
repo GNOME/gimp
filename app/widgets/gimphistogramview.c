@@ -643,11 +643,11 @@ gimp_histogram_view_set_histogram (GimpHistogramView *view,
                             G_CALLBACK (gimp_histogram_view_notify),
                             view);
 
-          gimp_histogram_view_update_bins (view);
-
           if (view->channel >= gimp_histogram_n_channels (histogram))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
         }
+
+      gimp_histogram_view_update_bins (view);
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
@@ -693,11 +693,11 @@ gimp_histogram_view_set_background (GimpHistogramView *view,
                             G_CALLBACK (gimp_histogram_view_notify),
                             view);
 
-          gimp_histogram_view_update_bins (view);
-
           if (view->channel >= gimp_histogram_n_channels (histogram))
             gimp_histogram_view_set_channel (view, GIMP_HISTOGRAM_VALUE);
         }
+
+      gimp_histogram_view_update_bins (view);
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
