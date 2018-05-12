@@ -83,9 +83,12 @@ GimpDockable {
     -GimpFrame-label-spacing:    2;
 }
 
-GimpDisplayShell {
-    -GimpUnitComboBox-label-scale:  0.8333;
-    -GimpScaleComboBox-label-scale: 0.8333;
+GimpDisplayShell combobox entry {
+    font-size: smaller;
+}
+
+GimpDisplayShell combobox button {
+    font-size: smaller;
 }
 
 GimpColorFrame {
