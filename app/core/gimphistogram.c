@@ -69,7 +69,6 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void      gimp_histogram_dispose                  (GObject             *object);
 static void      gimp_histogram_finalize                 (GObject             *object);
 static void      gimp_histogram_set_property             (GObject             *object,
                                                           guint                property_id,
@@ -108,7 +107,6 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
-  object_class->dispose          = gimp_histogram_dispose;
   object_class->finalize         = gimp_histogram_finalize;
   object_class->set_property     = gimp_histogram_set_property;
   object_class->get_property     = gimp_histogram_get_property;
@@ -142,20 +140,6 @@ gimp_histogram_init (GimpHistogram *histogram)
                                                  GimpHistogramPrivate);
 
   histogram->priv->n_bins = 256;
-}
-
-static void
-gimp_histogram_dispose (GObject *object)
-{
-  GimpHistogram *histogram = GIMP_HISTOGRAM (object);
-
-  if (histogram->priv->calculate_async)
-    {
-      gimp_async_cancel (histogram->priv->calculate_async);
-      gimp_async_wait (histogram->priv->calculate_async);
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -368,6 +352,12 @@ void
 gimp_histogram_clear_values (GimpHistogram *histogram)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
+
+  if (histogram->priv->calculate_async)
+    {
+      gimp_async_cancel (histogram->priv->calculate_async);
+      gimp_async_wait (histogram->priv->calculate_async);
+    }
 
   if (histogram->priv->values)
     {
