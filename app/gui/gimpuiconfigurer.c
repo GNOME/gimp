@@ -333,12 +333,13 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
 {
   GdkMonitor    *monitor;
   GdkRectangle   monitor_rect;
+  GdkGravity     gravity;
   GList         *docks;
   GList         *iter;
   gboolean       contains_toolbox = FALSE;
   GtkWidget     *dock_window;
   GtkAllocation  original_size;
-  gchar          geometry[32];
+  gint           x, y;
 
   docks = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
   if (! docks)
@@ -395,22 +396,25 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   /* Position the window */
   if (screen_side == GIMP_ALIGN_LEFT)
     {
-      g_snprintf (geometry, sizeof (geometry), "%+d%+d",
-                  monitor_rect.x,
-                  monitor_rect.y);
+      gravity = GDK_GRAVITY_NORTH_WEST;
+
+      x = monitor_rect.x;
+      y = monitor_rect.y;
     }
   else if (screen_side == GIMP_ALIGN_RIGHT)
     {
-      g_snprintf (geometry, sizeof (geometry), "%+d%+d",
-                  monitor_rect.x + monitor_rect.width - original_size.width,
-                  monitor_rect.y);
+      gravity = GDK_GRAVITY_NORTH_EAST;
+
+      x = monitor_rect.x + monitor_rect.width - original_size.width;
+      y = monitor_rect.y;
     }
   else
     {
       gimp_assert_not_reached ();
     }
 
-  gtk_window_parse_geometry (GTK_WINDOW (dock_window), geometry);
+  gtk_window_set_gravity (GTK_WINDOW (dock_window), gravity);
+  gtk_window_move (GTK_WINDOW (dock_window), x, y);
 
   /* Try to keep the same size */
   gtk_window_set_default_size (GTK_WINDOW (dock_window),
