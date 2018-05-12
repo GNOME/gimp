@@ -43,7 +43,9 @@
  * and the "async thread" is the thread calling 'gimp_async_finish()' or
  * 'gimp_async_abort()' (which may be the main thread).  The main thread is
  * said to be "synced" with the async thread if both are the same thread, or
- * after calling 'gimp_async_wait()' on the main thread.
+ * after the execution of any of the callbacks added through
+ * 'gimp_async_add_callback()' had started, or after calling
+ * 'gimp_async_wait()' on the main thread.
  */
 
 
