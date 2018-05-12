@@ -82,7 +82,7 @@ static void     gimp_histogram_editor_menu_update   (GimpHistogramEditor *editor
 static void     gimp_histogram_editor_name_update   (GimpHistogramEditor *editor);
 static void     gimp_histogram_editor_info_update   (GimpHistogramEditor *editor);
 
-static gboolean gimp_histogram_view_expose          (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_editor_view_expose   (GimpHistogramEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
@@ -185,7 +185,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             editor);
 
   g_signal_connect_swapped (view, "expose-event",
-                            G_CALLBACK (gimp_histogram_view_expose),
+                            G_CALLBACK (gimp_histogram_editor_view_expose),
                             editor);
 
   table = gtk_table_new (3, 4, FALSE);
@@ -470,7 +470,17 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 {
   if (editor->recompute || ! editor->histogram)
     {
-      if (editor->drawable)
+      if (editor->drawable &&
+          /* avoid calculating the histogram of a detached layer.  this can
+           * happen during gimp_image_remove_layer(), as a result of a pending
+           * "expose-event" signal (handled in
+           * gimp_histogram_editor_view_expose()) executed through
+           * gtk_tree_view_clamp_node_visible(), as a result of the
+           * GimpLayerTreeView in the Layers dialog receiving the image's
+           * "active-layer-changed" signal before us.  See bug #795716,
+           * comment 6.
+           */
+          gimp_item_is_attached (GIMP_ITEM (editor->drawable)))
         {
           GimpAsync *async;
 
@@ -693,7 +703,7 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_view_expose (GimpHistogramEditor *editor)
+gimp_histogram_editor_view_expose (GimpHistogramEditor *editor)
 {
   gimp_histogram_editor_validate (editor);
 
