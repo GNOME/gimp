@@ -23,20 +23,21 @@ open RC, "> $outrc";
 
 require './plugin-defs.pl';
 
-$bins = ""; $opts = "";
+$bins = ""; $opts = ""; $dirs = "";
 
 foreach (sort keys %plugins) {
-    $bins .= "\t";
+    my $makename = $_;
+    $makename =~ s/-/_/g;
+
     if (exists $plugins{$_}->{optional}) {
-        my $makename = $_;
-        $makename =~ s/-/_/g;
-	$bins .= "\$(\U$makename\E)";
+	$bins .= "${makename}_libexec_PROGRAMS = \$(\U$makename\E)\n";
 	$opts .= "\t$_ \\\n";
     }
     else {
-	$bins .= $_;
+	$bins .= "${makename}_libexec_PROGRAMS = $_\n";
     }
-    $bins .= " \\\n";
+
+    $dirs .= "${makename}_libexecdir = \$(gimpplugindir)/plug-ins/$_\n";
 }
 
 $extra = "";
@@ -86,8 +87,6 @@ libgimpwidgets = \$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(GIMP_API_VERS
 
 AM_LDFLAGS = \$(mwindows)
 
-libexecdir = \$(gimpplugindir)/plug-ins
-
 EXTRA_DIST = \\
 	mkgen.pl	\\
 	plugin-defs.pl$extra	\\
@@ -99,7 +98,8 @@ AM_CPPFLAGS = \\
 	\$(GEGL_CFLAGS)	\\
 	-I\$(includedir)
 
-libexec_PROGRAMS = \\
+$dirs
+
 $bins
 
 EXTRA_PROGRAMS = \\
