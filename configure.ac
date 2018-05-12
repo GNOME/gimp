@@ -685,7 +685,15 @@ PKG_CHECK_MODULES(GEGL, gegl-gegl_major_minor_version >= gegl_required_version,,
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version,,
                   [add_deps_error([atk >= atk_required_version])])
 
-AM_PATH_GLIB_2_0(glib_required_version, :,
+# glib 2.56.0 and 2.56.1 have a bad bug on Win32, breaking the file
+# chooser dialogs. This has been fixed, but no release made yet. When
+# 2.56.2 is released, the additional test for these broken versions can
+# be removed and we can bump the requirement to glib 2.56.2.
+AM_PATH_GLIB_2_0(glib_required_version,
+                 [if test "x$platform_win32" = "xyes"; then
+                   PKG_CHECK_MODULES(GLIB_WIN_BUG, glib-2.0 >= 2.56.0 glib-2.0 < 2.56.2,
+                                     [add_deps_error([glib >= glib_required_version except glib 2.56.0 and 2.56.1 (broken on Win32 - bug 795855)])],:)
+                 fi],
                  [add_deps_error([glib >= glib_required_version],
                                  [Test for GLIB failed])],
                  gobject)
