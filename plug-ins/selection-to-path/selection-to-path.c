@@ -78,11 +78,11 @@ const GimpPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static gint        sel_x1, sel_y1, sel_x2, sel_y2;
-static gint        has_sel, sel_width, sel_height;
-static SELVALS     selVals;
-static GeglBuffer *sel_buffer;
-static gboolean    retVal = TRUE;  /* Toggle if cancle button clicked */
+static gint         sel_x1, sel_y1, sel_x2, sel_y2;
+static gint         has_sel, sel_width, sel_height;
+static SELVALS      selVals;
+static GeglSampler *sel_sampler;
+static gboolean     retVal = TRUE;  /* Toggle if cancle button clicked */
 
 MAIN ()
 
@@ -372,9 +372,8 @@ sel_pixel_value (gint row,
       return 0;
     }
 
-  gegl_buffer_sample (sel_buffer, col + sel_x1, row + sel_y1, NULL,
-                      &ret, babl_format ("Y u8"),
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+  gegl_sampler_get (sel_sampler,
+                    col + sel_x1, row + sel_y1, NULL, &ret, GEGL_ABYSS_NONE);
 
   return ret;
 }
@@ -489,6 +488,7 @@ static gboolean
 sel2path (gint32 image_ID)
 {
   gint32                   selection_ID;
+  GeglBuffer              *sel_buffer;
   pixel_outline_list_type  olt;
   spline_list_array_type   splines;
 
@@ -505,7 +505,10 @@ sel2path (gint32 image_ID)
   if (selection_ID < 0)
     return FALSE;
 
-  sel_buffer = gimp_drawable_get_buffer (selection_ID);
+  sel_buffer  = gimp_drawable_get_buffer (selection_ID);
+  sel_sampler = gegl_buffer_sampler_new (sel_buffer,
+                                         babl_format ("Y u8"),
+                                         GEGL_SAMPLER_NEAREST);
 
   olt = find_outline_pixels ();
 
@@ -513,6 +516,7 @@ sel2path (gint32 image_ID)
 
   do_points (splines, image_ID);
 
+  g_object_unref (sel_sampler);
   g_object_unref (sel_buffer);
 
   gimp_displays_flush ();
