@@ -584,7 +584,18 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
              *  HALTing it like calling COMMIT would do
              */
             gimp_rectangle_select_tool_commit (rect_tool);
-          }
+
+            gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (widget),
+                                                 &x1, &y1, &x2, &y2);
+            if (x1 == x2 && y1 == y2)
+              {
+                /*  if there still is no rectangle after the
+                 *  tool_commit(), the click was outside the selection
+                 *  and we HALT to get rid of a zero-size tool widget.
+                 */
+                gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+              }
+         }
         else
           {
             gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
