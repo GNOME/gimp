@@ -1186,34 +1186,36 @@ gimp_highlight_widget_draw (GtkWidget *widget,
                             cairo_t   *cr,
                             gpointer   data)
 {
-  /* this code is a modified version of gtk+'s gtk_drag_highlight_expose(),
-   * changing the highlight color from black to the widget's text color, which
-   * improves its visibility when using a dark theme.
+  /* this code is a straight copy of draw_flash() from gtk-inspector's
+   * inspect-button.c
    */
 
-  GtkAllocation    allocation;
-  GtkStyleContext *style;
-  const GdkColor  *color;
+  GtkAllocation alloc;
 
-  style  = gtk_widget_get_style_context (widget);
+  if (GTK_IS_WINDOW (widget))
+    {
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
+      /* We don't want to draw the drag highlight around the
+       * CSD window decorations
+       */
+      if (child == NULL)
+        return FALSE;
 
-  gtk_widget_get_allocation (widget, &allocation);
+      gtk_widget_get_allocation (child, &alloc);
+    }
+  else
+    {
+      alloc.x = 0;
+      alloc.y = 0;
+      alloc.width = gtk_widget_get_allocated_width (widget);
+      alloc.height = gtk_widget_get_allocated_height (widget);
+    }
 
-  gtk_render_frame (style, cr,
-                    allocation.x, allocation.y,
-                    allocation.width, allocation.height);
-
-  color = &(gtk_widget_get_style (widget)->text[GTK_STATE_NORMAL]);
-
-  cairo_set_source_rgb (cr,
-                        (gdouble) color->red   / 0xffff,
-                        (gdouble) color->green / 0xffff,
-                        (gdouble) color->blue  / 0xffff);
-  cairo_set_line_width (cr, 1.0);
+  cairo_set_source_rgba (cr, 0.0, 0.0, 1.0, 0.2);
   cairo_rectangle (cr,
-                   allocation.x + 0.5, allocation.y + 0.5,
-                   allocation.width - 1, allocation.height - 1);
-  cairo_stroke (cr);
+                   alloc.x + 0.5, alloc.y + 0.5,
+                   alloc.width - 1, alloc.height - 1);
+  cairo_fill (cr);
 
   return FALSE;
 }
