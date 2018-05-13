@@ -64,8 +64,8 @@ gpointer
 gimp_atomic_slist_pop_head (GSList **list)
 {
   GSList   *old_head;
-  GSList   *new_head = NULL;
-  gpointer  data     = NULL;
+  GSList   *new_head;
+  gpointer  data;
 
   g_return_val_if_fail (list != NULL, NULL);
 
@@ -76,23 +76,20 @@ gimp_atomic_slist_pop_head (GSList **list)
           old_head = g_atomic_pointer_get (list);
         }
       while (old_head == &gimp_atomic_slist_sentinel);
+
+      if (! old_head)
+        return NULL;
     }
   while (! g_atomic_pointer_compare_and_exchange (list,
                                                   old_head,
                                                   &gimp_atomic_slist_sentinel));
 
-  g_warn_if_fail (old_head != NULL);
-
-  if (old_head)
-    {
-      new_head = old_head->next;
-      data     = old_head->data;
-    }
+  new_head = old_head->next;
+  data     = old_head->data;
 
   g_atomic_pointer_set (list, new_head);
 
-  if (old_head)
-    g_slist_free1 (old_head);
+  g_slist_free1 (old_head);
 
   return data;
 }
