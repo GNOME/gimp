@@ -54,11 +54,12 @@ struct _GimpFreeSelectToolClass
 };
 
 
-void    gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
-                                        gpointer                  data);
+void    gimp_free_select_tool_register     (GimpToolRegisterCallback  callback,
+                                            gpointer                  data);
 
-GType   gimp_free_select_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_free_select_tool_get_type     (void) G_GNUC_CONST;
 
 gint    gimp_free_select_tool_get_n_points (GimpFreeSelectTool *tool);
+
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */
