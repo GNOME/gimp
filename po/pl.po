@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-13 21:22+0200\n"
-"PO-Revision-Date: 2018-05-13 21:23+0200\n"
+"POT-Creation-Date: 2018-05-13 22:07+0200\n"
+"PO-Revision-Date: 2018-05-13 22:08+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -21259,8 +21259,8 @@ msgid "Roughly outline the object to extract"
 msgstr "Nierówno obrysowuje obiekt do wydobycia"
 
 #: ../app/tools/gimpforegroundselecttool.c:616
-msgid "press Enter to validate."
-msgstr "naciśnięcie klawisza Enter sprawdzi poprawność."
+msgid "press Enter to refine."
+msgstr "naciśnięcie klawisza Enter umożliwi poprawienie."
 
 #: ../app/tools/gimpforegroundselecttool.c:643
 msgid "Selecting foreground"
