@@ -613,7 +613,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
           if (gimp_free_select_tool_get_n_points (GIMP_FREE_SELECT_TOOL (tool)) > 2)
             {
               status_mode = _("Roughly outline the object to extract");
-              status_stage = _("press Enter to validate.");
+              status_stage = _("press Enter to refine.");
             }
           else
             {
