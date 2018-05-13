@@ -36,7 +36,7 @@ typedef struct _GimpStatusbarClass GimpStatusbarClass;
 
 struct _GimpStatusbar
 {
-  GtkStatusbar         parent_instance;
+  GtkFrame             parent_instance;
 
   GimpDisplayShell    *shell;
 
@@ -73,7 +73,7 @@ struct _GimpStatusbar
 
 struct _GimpStatusbarClass
 {
-  GtkStatusbarClass parent_class;
+  GtkFrameClass parent_class;
 };
 
 
