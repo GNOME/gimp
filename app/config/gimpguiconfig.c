@@ -64,7 +64,6 @@ enum
   PROP_RESTORE_MONITOR,
   PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TOOLTIPS,
-  PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
   PROP_SAVE_ACCELS,
   PROP_RESTORE_ACCELS,
@@ -235,13 +234,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_CONFIG_PARAM_RESTART);
-
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
-                            "tearoff-menus",
-                            "Tearoff menus",
-                            TEAROFF_MENUS_BLURB,
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
                             "can-change-accels",
@@ -615,9 +607,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SHOW_TOOLTIPS:
       gui_config->show_tooltips = g_value_get_boolean (value);
       break;
-    case PROP_TEAROFF_MENUS:
-      gui_config->tearoff_menus = g_value_get_boolean (value);
-      break;
     case PROP_CAN_CHANGE_ACCELS:
       gui_config->can_change_accels = g_value_get_boolean (value);
       break;
@@ -802,9 +791,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SHOW_TOOLTIPS:
       g_value_set_boolean (value, gui_config->show_tooltips);
-      break;
-    case PROP_TEAROFF_MENUS:
-      g_value_set_boolean (value, gui_config->tearoff_menus);
       break;
     case PROP_CAN_CHANGE_ACCELS:
       g_value_set_boolean (value, gui_config->can_change_accels);

@@ -69,9 +69,7 @@ void              gimp_menu_factory_manager_register     (GimpMenuFactory   *fac
 GList           * gimp_menu_factory_get_registered_menus (GimpMenuFactory   *factory);
 GimpUIManager   * gimp_menu_factory_manager_new          (GimpMenuFactory   *factory,
                                                           const gchar       *identifier,
-                                                          gpointer           callback_data,
-                                                          gboolean           create_tearoff);
-
+                                                          gpointer           callback_data);
 
 
 #endif  /*  __GIMP_MENU_FACTORY_H__  */

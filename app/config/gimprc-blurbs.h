@@ -429,9 +429,6 @@ _("Sets the swap file location. GIMP uses a tile based memory allocation " \
   "a folder that is mounted over NFS.  For these reasons, it may be " \
   "desirable to put your swap file in \"/tmp\".")
 
-#define TEAROFF_MENUS_BLURB \
-_("When enabled, menus can be torn off.")
-
 #define CAN_CHANGE_ACCELS_BLURB \
 _("When enabled, you can change keyboard shortcuts for menu items " \
   "by hitting a key combination while the menu item is highlighted.")

@@ -53,7 +53,6 @@ struct _GimpGuiConfig
   gboolean             restore_monitor;
   gboolean             save_tool_options;
   gboolean             show_tooltips;
-  gboolean             tearoff_menus;
   gboolean             can_change_accels;
   gboolean             save_accels;
   gboolean             restore_accels;
