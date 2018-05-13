@@ -409,6 +409,9 @@ gimp_eek (const gchar *reason,
                   sigemptyset (&sigset);
                   sigprocmask (SIG_SETMASK, &sigset, NULL);
 
+                  if (the_errors_gimp)
+                    gimp_gui_ungrab (the_errors_gimp);
+
                   gimp_stack_trace_query ((const gchar *) full_prog_name);
                 }
               break;
