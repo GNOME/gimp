@@ -63,7 +63,7 @@ struct _GimpAsyncPrivate
   GMutex          mutex;
   GCond           cond;
 
-  GSList         *callbacks;
+  GQueue          callbacks;
 
   gpointer        result;
   GDestroyNotify  result_destroy_func;
@@ -78,12 +78,11 @@ struct _GimpAsyncPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_async_dispose       (GObject      *object);
-static void       gimp_async_finalize      (GObject      *object);
+static void       gimp_async_finalize (GObject   *object);
 
-static gboolean   gimp_async_idle          (GimpAsync    *async);
+static gboolean   gimp_async_idle     (GimpAsync *async);
 
-static void       gimp_async_stop          (GimpAsync    *async);
+static void       gimp_async_stop     (GimpAsync *async);
 
 
 G_DEFINE_TYPE (GimpAsync, gimp_async, G_TYPE_OBJECT)
@@ -99,7 +98,6 @@ gimp_async_class_init (GimpAsyncClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose  = gimp_async_dispose;
   object_class->finalize = gimp_async_finalize;
 
   g_type_class_add_private (klass, sizeof (GimpAsyncPrivate));
@@ -114,14 +112,18 @@ gimp_async_init (GimpAsync *async)
 
   g_mutex_init (&async->priv->mutex);
   g_cond_init  (&async->priv->cond);
+
+  g_queue_init (&async->priv->callbacks);
 }
 
 static void
-gimp_async_dispose (GObject *object)
+gimp_async_finalize (GObject *object)
 {
   GimpAsync *async = GIMP_ASYNC (object);
 
-  g_return_if_fail (async->priv->stopped);
+  g_warn_if_fail (async->priv->stopped);
+  g_warn_if_fail (async->priv->idle_id == 0);
+  g_warn_if_fail (g_queue_is_empty (&async->priv->callbacks));
 
   if (async->priv->finished &&
       async->priv->result   &&
@@ -132,14 +134,6 @@ gimp_async_dispose (GObject *object)
       async->priv->result = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_async_finalize (GObject *object)
-{
-  GimpAsync *async = GIMP_ASYNC (object);
-
   g_cond_clear  (&async->priv->cond);
   g_mutex_clear (&async->priv->mutex);
 
@@ -149,25 +143,7 @@ gimp_async_finalize (GObject *object)
 static gboolean
 gimp_async_idle (GimpAsync *async)
 {
-  GSList *iter;
-
-  async->priv->idle_id = 0;
-
-  async->priv->callbacks = g_slist_reverse (async->priv->callbacks);
-
-  for (iter = async->priv->callbacks; iter; iter = g_slist_next (iter))
-    {
-      GimpAsyncCallbackInfo *callback_info = iter->data;
-
-      callback_info->callback (async, callback_info->data);
-
-      g_slice_free (GimpAsyncCallbackInfo, callback_info);
-    }
-
-  g_slist_free (async->priv->callbacks);
-  async->priv->callbacks = NULL;
-
-  g_object_unref (async);
+  gimp_async_wait (async);
 
   return G_SOURCE_REMOVE;
 }
@@ -175,7 +151,7 @@ gimp_async_idle (GimpAsync *async)
 static void
 gimp_async_stop (GimpAsync *async)
 {
-  if (async->priv->callbacks)
+  if (! g_queue_is_empty (&async->priv->callbacks))
     {
       g_object_ref (async);
 
@@ -232,19 +208,29 @@ gimp_async_wait (GimpAsync *async)
 
   if (async->priv->idle_id)
     {
-      g_source_remove (async->priv->idle_id);
+      GimpAsyncCallbackInfo *callback_info;
 
-      gimp_async_idle (async);
+      g_source_remove (async->priv->idle_id);
+      async->priv->idle_id = 0;
+
+      while ((callback_info = g_queue_pop_head (&async->priv->callbacks)))
+        {
+          callback_info->callback (async, callback_info->data);
+
+          g_slice_free (GimpAsyncCallbackInfo, callback_info);
+        }
+
+      g_object_unref (async);
     }
 }
 
 /* registers a callback to be called when 'async' transitions to the "stopped"
- * state.  if 'async' is already stopped, the callback is called directly.
+ * state.  if 'async' is already stopped, the callback may be called directly.
  *
- * callbacks added before 'async' was stopped are called in the order in which
- * they were added.  'async' is guaranteed to be kept alive, even without an
- * external reference, between the point where it was stopped, and until all
- * previously added callbacks have been called.
+ * callbacks are called in the order in which they were added.  'async' is
+ * guaranteed to be kept alive, even without an external reference, between the
+ * point where it was stopped, and until all callbacks added while 'async' was
+ * externally referenced have been called.
  *
  * the callback is guaranteed to be called on the main thread.
  *
@@ -262,7 +248,7 @@ gimp_async_add_callback (GimpAsync         *async,
 
   g_mutex_lock (&async->priv->mutex);
 
-  if (async->priv->stopped && ! async->priv->idle_id)
+  if (async->priv->stopped && g_queue_is_empty (&async->priv->callbacks))
     {
       g_mutex_unlock (&async->priv->mutex);
 
@@ -275,8 +261,7 @@ gimp_async_add_callback (GimpAsync         *async,
   callback_info->callback = callback;
   callback_info->data     = data;
 
-  async->priv->callbacks = g_slist_prepend (async->priv->callbacks,
-                                            callback_info);
+  g_queue_push_tail (&async->priv->callbacks, callback_info);
 
   g_mutex_unlock (&async->priv->mutex);
 }
@@ -329,6 +314,7 @@ gboolean
 gimp_async_is_finished (GimpAsync *async)
 {
   g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+  g_return_val_if_fail (async->priv->stopped, FALSE);
 
   return async->priv->finished;
 }
@@ -344,31 +330,10 @@ gpointer
 gimp_async_get_result (GimpAsync *async)
 {
   g_return_val_if_fail (GIMP_IS_ASYNC (async), NULL);
+  g_return_val_if_fail (async->priv->stopped, NULL);
   g_return_val_if_fail (async->priv->finished, NULL);
 
   return async->priv->result;
-}
-
-/* requests the cancellation of the task managed by 'async'. */
-void
-gimp_async_cancel (GimpAsync *async)
-{
-  g_return_if_fail (GIMP_IS_ASYNC (async));
-
-  async->priv->canceled = TRUE;
-}
-
-/* checks if cancellation of 'async' have been requested.
- *
- * note that a return value of TRUE only indicates that 'gimp_async_cancel()'
- * has been called for 'async', and not that 'async' is stopped.
- */
-gboolean
-gimp_async_is_canceled (GimpAsync *async)
-{
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
-
-  return async->priv->canceled;
 }
 
 /* transitions 'async' to the "stopped" state, indicating that the task
@@ -390,4 +355,33 @@ gimp_async_abort (GimpAsync *async)
   gimp_async_stop (async);
 
   g_mutex_unlock (&async->priv->mutex);
+}
+
+/* requests the cancellation of the task managed by 'async'.
+ *
+ * note that 'gimp_async_cancel()' doesn't directly cause 'async' to be
+ * stopped, nor does it cause the main thread to become synced with the async
+ * thread.  furthermore, 'async' may still complete successfully even when
+ * cancellation has been requested.
+ */
+void
+gimp_async_cancel (GimpAsync *async)
+{
+  g_return_if_fail (GIMP_IS_ASYNC (async));
+
+  async->priv->canceled = TRUE;
+}
+
+/* checks if cancellation of 'async' has been requested.
+ *
+ * note that a return value of TRUE only indicates that 'gimp_async_cancel()'
+ * has been called for 'async', and not that 'async' is stopped, or, if it is
+ * stopped, that it was aborted.
+ */
+gboolean
+gimp_async_is_canceled (GimpAsync *async)
+{
+  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+
+  return async->priv->canceled;
 }
