@@ -609,7 +609,17 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
   if (fg_select->state == MATTING_STATE_FREE_SELECT)
     {
       if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
-        status_stage = _("Roughly outline the object to extract");
+        {
+          if (gimp_free_select_tool_get_n_points (GIMP_FREE_SELECT_TOOL (tool)) > 2)
+            {
+              status_mode = _("Roughly outline the object to extract");
+              status_stage = _("press Enter to validate.");
+            }
+          else
+            {
+              status_stage = _("Roughly outline the object to extract");
+            }
+        }
     }
   else
     {
@@ -630,11 +640,11 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
       gimp_draw_tool_resume (draw_tool);
 
       if (options->draw_mode == GIMP_MATTING_DRAW_MODE_FOREGROUND)
-        status_mode = _("Selecting foreground,");
+        status_mode = _("Selecting foreground");
       else if (options->draw_mode == GIMP_MATTING_DRAW_MODE_BACKGROUND)
-        status_mode = _("Selecting background,");
+        status_mode = _("Selecting background");
       else
-        status_mode = _("Selecting unknown,");
+        status_mode = _("Selecting unknown");
 
       if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
         status_stage = _("press Enter to preview.");
@@ -645,7 +655,7 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
   if (proximity && status_stage)
     {
       if (status_mode)
-        gimp_tool_replace_status (tool, display, "%s %s", status_mode, status_stage);
+        gimp_tool_replace_status (tool, display, "%s, %s", status_mode, status_stage);
       else
         gimp_tool_replace_status (tool, display, "%s", status_stage);
     }
