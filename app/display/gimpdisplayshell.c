@@ -364,11 +364,7 @@ gimp_display_shell_constructed (GObject *object)
   GimpDisplayConfig     *config;
   GimpImage             *image;
   GimpColorDisplayStack *filter;
-  GtkWidget             *main_vbox;
-  GtkWidget             *upper_hbox;
-  GtkWidget             *right_vbox;
-  GtkWidget             *lower_hbox;
-  GtkWidget             *inner_grid;
+  GtkWidget             *grid;
   GtkWidget             *gtk_image;
   GtkAction             *action;
   gint                   image_width;
@@ -428,77 +424,10 @@ gimp_display_shell_constructed (GObject *object)
 
   gimp_display_shell_sync_config (shell, config);
 
-  /*  GtkTable widgets are not able to shrink a row/column correctly if
-   *  widgets are attached with GTK_EXPAND even if those widgets have
-   *  other rows/columns in their rowspan/colspan where they could
-   *  nicely expand without disturbing the row/column which is supposed
-   *  to shrink. --Mitch
-   *
-   *  Changed the packing to use hboxes and vboxes which behave nicer:
-   *
-   *  shell
-   *     |
-   *     +-- main_vbox
-   *            |
-   *            +-- upper_hbox
-   *            |      |
-   *            |      +-- inner_grid
-   *            |      |      |
-   *            |      |      +-- origin
-   *            |      |      +-- hruler
-   *            |      |      +-- vruler
-   *            |      |      +-- canvas
-   *            |      |
-   *            |      +-- right_vbox
-   *            |             |
-   *            |             +-- zoom_on_resize_button
-   *            |             +-- vscrollbar
-   *            |
-   *            +-- lower_hbox
-   *            |      |
-   *            |      +-- quick_mask
-   *            |      +-- hscrollbar
-   *            |      +-- navbutton
-   *            |
-   *            +-- statusbar
-   *
-   *  Note that we separate "shell" and "main_vbox", so that we can make
-   *  "shell" a GtkEventBox, giving it its own window.  This isolates our
-   *  events from those of our ancestors, avoiding some potential slowdowns,
-   *  and making things generally smoother.  See bug #778966.
-   */
-
-  /*  first, set up the container hierarchy  *********************************/
-
-  /*  the root vbox  */
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (shell), main_vbox);
-  gtk_widget_show (main_vbox);
-
-  /*  a hbox for the inner_grid and the vertical scrollbar  */
-  upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), upper_hbox, TRUE, TRUE, 0);
-  gtk_widget_show (upper_hbox);
-
-  /*  the table containing origin, rulers and the canvas  */
-  inner_grid = gtk_grid_new ();
-  gtk_box_pack_start (GTK_BOX (upper_hbox), inner_grid, TRUE, TRUE, 0);
-  gtk_widget_show (inner_grid);
-
-  /*  the vbox containing the color button and the vertical scrollbar  */
-  right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-  gtk_box_pack_start (GTK_BOX (upper_hbox), right_vbox, FALSE, FALSE, 0);
-  gtk_widget_show (right_vbox);
-
-  /*  the hbox containing the quickmask button, vertical scrollbar and
-   *  the navigation button
-   */
-  lower_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), lower_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (lower_hbox);
-
-  /*  create the scrollbars  *************************************************/
+  /*  the grid containing everything  */
+  grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (shell), grid);
+  gtk_widget_show (grid);
 
   /*  the horizontal scrollbar  */
   shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
@@ -512,11 +441,8 @@ gimp_display_shell_constructed (GObject *object)
   shell->vsb = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, shell->vsbdata);
   gtk_widget_set_can_focus (shell->vsb, FALSE);
 
-  /*  create the contents of the inner_grif * ********************************/
-
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
-
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_RIGHT,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
@@ -530,6 +456,7 @@ gimp_display_shell_constructed (GObject *object)
                            _("Access the image menu"),
                            GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
+  /*  the canvas  */
   shell->canvas = gimp_canvas_new (config);
   gtk_widget_set_size_request (shell->canvas, shell_width, shell_height);
   gtk_container_set_border_width (GTK_CONTAINER (shell->canvas), 10);
@@ -544,9 +471,10 @@ gimp_display_shell_constructed (GObject *object)
   /*  the horizontal ruler  */
   shell->hrule = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-
+                         GDK_BUTTON_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK);
   gimp_ruler_add_track_widget (GIMP_RULER (shell->hrule), shell->canvas);
+
   g_signal_connect (shell->hrule, "button-press-event",
                     G_CALLBACK (gimp_display_shell_hruler_button_press),
                     shell);
@@ -556,9 +484,10 @@ gimp_display_shell_constructed (GObject *object)
   /*  the vertical ruler  */
   shell->vrule = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_events (GTK_WIDGET (shell->vrule),
-                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-
+                         GDK_BUTTON_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK);
   gimp_ruler_add_track_widget (GIMP_RULER (shell->vrule), shell->canvas);
+
   g_signal_connect (shell->vrule, "button-press-event",
                     G_CALLBACK (gimp_display_shell_vruler_button_press),
                     shell);
@@ -626,8 +555,7 @@ gimp_display_shell_constructed (GObject *object)
                     G_CALLBACK (gimp_display_shell_canvas_tool_events),
                     shell);
 
-  /*  create the contents of the right_vbox  *********************************/
-
+  /*  the zoom button  */
   shell->zoom_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
                                      "draw-indicator", FALSE,
                                      "relief",         GTK_RELIEF_NONE,
@@ -635,21 +563,18 @@ gimp_display_shell_constructed (GObject *object)
                                      "height-request", 18,
                                      NULL);
   gtk_widget_set_can_focus (shell->zoom_button, FALSE);
-
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_ZOOM_FOLLOW_WINDOW,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
   gtk_widget_show (gtk_image);
 
-  gimp_help_set_help_data (shell->zoom_button,
-                           _("Zoom image when window size changes"),
-                           GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON);
-
   g_signal_connect_swapped (shell->zoom_button, "toggled",
                             G_CALLBACK (gimp_display_shell_zoom_button_callback),
                             shell);
 
-  /*  create the contents of the lower_hbox  *********************************/
+  gimp_help_set_help_data (shell->zoom_button,
+                           _("Zoom image when window size changes"),
+                           GIMP_HELP_IMAGE_WINDOW_ZOOM_FOLLOW_BUTTON);
 
   /*  the quick mask button  */
   shell->quick_mask_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
@@ -659,11 +584,17 @@ gimp_display_shell_constructed (GObject *object)
                                            "height-request", 18,
                                            NULL);
   gtk_widget_set_can_focus (shell->quick_mask_button, FALSE);
-
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_QUICK_MASK_OFF,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
   gtk_widget_show (gtk_image);
+
+  g_signal_connect (shell->quick_mask_button, "toggled",
+                    G_CALLBACK (gimp_display_shell_quick_mask_toggled),
+                    shell);
+  g_signal_connect (shell->quick_mask_button, "button-press-event",
+                    G_CALLBACK (gimp_display_shell_quick_mask_button_press),
+                    shell);
 
   action = gimp_ui_manager_find_action (shell->popup_manager,
                                         "quick-mask", "quick-mask-toggle");
@@ -674,16 +605,8 @@ gimp_display_shell_constructed (GObject *object)
                              _("Toggle Quick Mask"),
                              GIMP_HELP_IMAGE_WINDOW_QUICK_MASK_BUTTON);
 
-  g_signal_connect (shell->quick_mask_button, "toggled",
-                    G_CALLBACK (gimp_display_shell_quick_mask_toggled),
-                    shell);
-  g_signal_connect (shell->quick_mask_button, "button-press-event",
-                    G_CALLBACK (gimp_display_shell_quick_mask_button_press),
-                    shell);
-
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
-
   gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
@@ -697,45 +620,37 @@ gimp_display_shell_constructed (GObject *object)
                            _("Navigate the image display"),
                            GIMP_HELP_IMAGE_WINDOW_NAV_BUTTON);
 
-  /*  the statusbar  ********************************************************/
-
+  /*  the statusbar  */
   shell->statusbar = gimp_statusbar_new ();
   gimp_statusbar_set_shell (GIMP_STATUSBAR (shell->statusbar), shell);
   gimp_help_set_help_data (shell->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
-  gtk_box_pack_end (GTK_BOX (main_vbox), shell->statusbar, FALSE, FALSE, 0);
 
-  /*  pack all the widgets  **************************************************/
-
-  /*  fill the inner_grid  */
-  gtk_grid_attach (GTK_GRID (inner_grid), shell->origin, 0, 0, 1, 1);
+  /*  pack all the widgets  */
+  gtk_grid_attach (GTK_GRID (grid), shell->origin, 0, 0, 1, 1);
 
   gtk_widget_set_hexpand (shell->hrule, TRUE);
-  gtk_grid_attach (GTK_GRID (inner_grid), shell->hrule, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), shell->hrule, 1, 0, 1, 1);
 
   gtk_widget_set_vexpand (shell->vrule, TRUE);
-  gtk_grid_attach (GTK_GRID (inner_grid), shell->vrule, 0, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), shell->vrule, 0, 1, 1, 1);
 
   gtk_widget_set_hexpand (shell->canvas, TRUE);
   gtk_widget_set_vexpand (shell->canvas, TRUE);
-  gtk_grid_attach (GTK_GRID (inner_grid), shell->canvas, 1, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), shell->canvas, 1, 1, 1, 1);
 
-  /*  fill the right_vbox  */
-  gtk_box_pack_start (GTK_BOX (right_vbox),
-                      shell->zoom_button, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (right_vbox),
-                      shell->vsb, TRUE, TRUE, 0);
+  gtk_grid_attach (GTK_GRID (grid), shell->zoom_button, 2, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), shell->quick_mask_button, 0, 2, 1, 1);
 
-  /*  fill the lower_hbox  */
-  gtk_box_pack_start (GTK_BOX (lower_hbox),
-                      shell->quick_mask_button, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox),
-                      shell->hsb, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox),
-                      shell->nav_ebox, FALSE, FALSE, 0);
+  gtk_grid_attach (GTK_GRID (grid), shell->vsb, 2, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), shell->hsb, 1, 2, 1, 1);
 
-  /*  show everything that is always shown ***********************************/
+  gtk_grid_attach (GTK_GRID (grid), shell->nav_ebox, 2, 2, 1, 1);
 
+  gtk_widget_set_hexpand (shell->statusbar, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), shell->statusbar, 0, 3, 3, 1);
+
+  /*  show everything that is always shown */
   gtk_widget_show (GTK_WIDGET (shell->canvas));
 
   /*  add display filters  */
