@@ -2300,6 +2300,19 @@ if test "x$have_appstream_util" = "xyes"; then
 fi
 
 
+#################################
+# Check for desktop-file-validate
+#################################
+
+AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate, no)
+if test "x$APPSTREAM_UTIL" != "xno"; then
+  have_desktop_file_validate="yes"
+else
+  have_desktop_file_validate="no (desktop-file-validate not found)"
+fi
+AM_CONDITIONAL(HAVE_DESKTOP_FILE_VALIDATE, test "x$DESKTOP_FILE_VALIDATE" != "xno")
+
+
 ######################################
 # Checks for gtk-doc and docbook-tools
 ######################################
@@ -2815,6 +2828,7 @@ Optional Modules:
 Tests:
   Use xvfb-run             $have_xvfb_run
   Test appdata             $have_appstream_util
+  Test desktop file        $have_desktop_file_validate
 $have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then

@@ -74,7 +74,13 @@ validate: gimp.desktop
 
 dist-hook: validate
 
-if HAVE_APPSTREAM_UTIL
 TESTS_ENVIRONMENT = GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
-TESTS = test-appdata.sh
+TESTS =
+
+if HAVE_APPSTREAM_UTIL
+TESTS += test-appdata.sh
+endif
+
+if HAVE_APPSTREAM_UTIL
+TESTS += test-desktop.sh
 endif
