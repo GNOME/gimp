@@ -177,7 +177,7 @@ gimp_text_editor_new (const gchar     *title,
 
   editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                       "<TextEditor>",
-                                                      editor, FALSE);
+                                                      editor);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (editor));
 

@@ -251,8 +251,7 @@ gimp_editor_constructed (GObject *object)
       editor->priv->ui_manager =
         gimp_menu_factory_manager_new (editor->priv->menu_factory,
                                        editor->priv->menu_identifier,
-                                       editor->priv->popup_data,
-                                       FALSE);
+                                       editor->priv->popup_data);
       g_signal_connect (editor->priv->ui_manager->gimp->config,
                         "size-changed",
                         G_CALLBACK (gimp_editor_config_size_changed),
@@ -451,8 +450,7 @@ gimp_editor_create_menu (GimpEditor      *editor,
 
   editor->priv->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                             menu_identifier,
-                                                            popup_data,
-                                                            FALSE);
+                                                            popup_data);
   g_signal_connect (editor->priv->ui_manager->gimp->config,
                     "size-changed",
                     G_CALLBACK (gimp_editor_config_size_changed),

@@ -131,9 +131,6 @@ static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
 static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GimpUIConfigurer   *ui_configurer);
-static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 GtkUIManager       *manager);
 
 static void       gui_clipboard_changed         (Gimp               *gimp);
 
@@ -597,8 +594,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
   image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
                                                     "<Image>",
-                                                    gimp,
-                                                    gui_config->tearoff_menus);
+                                                    gimp);
   gimp_ui_manager_update (image_ui_manager, gimp);
 
   /* Check that every accelerator is unique. */
@@ -664,9 +660,6 @@ gui_restore_after_callback (Gimp               *gimp,
   g_signal_connect_object (gui_config, "notify::single-window-mode",
                            G_CALLBACK (gui_single_window_mode_notify),
                            ui_configurer, 0);
-  g_signal_connect_object (gui_config, "notify::tearoff-menus",
-                           G_CALLBACK (gui_tearoff_menus_notify),
-                           image_ui_manager, 0);
   g_signal_connect (image_ui_manager, "show-tooltip",
                     G_CALLBACK (gui_menu_show_tooltip),
                     gimp);
@@ -849,13 +842,6 @@ gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
 {
   gimp_ui_configurer_configure (ui_configurer,
                                 gui_config->single_window_mode);
-}
-static void
-gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
-                          GParamSpec    *pspec,
-                          GtkUIManager  *manager)
-{
-  gtk_ui_manager_set_add_tearoffs (manager, gui_config->tearoff_menus);
 }
 
 static void

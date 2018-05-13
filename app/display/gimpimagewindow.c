@@ -373,8 +373,7 @@ gimp_image_window_constructed (GObject *object)
 
   private->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
                                                             "<Image>",
-                                                            window,
-                                                            FALSE);
+                                                            window);
 
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
                            G_CALLBACK (gimp_image_window_update_ui_manager),

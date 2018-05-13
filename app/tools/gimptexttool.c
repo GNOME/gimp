@@ -788,7 +788,7 @@ gimp_text_tool_get_popup (GimpTool         *tool,
           text_tool->ui_manager =
             gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
                                            "<TextTool>",
-                                           text_tool, FALSE);
+                                           text_tool);
 
           im_menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
                                                "/text-tool-popup/text-tool-input-methods-menu");
