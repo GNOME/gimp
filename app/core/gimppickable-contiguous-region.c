@@ -64,6 +64,7 @@ static void     pop_segment               (GQueue              *segment_queue,
                                            gint                *end);
 static gboolean find_contiguous_segment   (const gfloat        *col,
                                            GeglBuffer          *src_buffer,
+                                           GeglSampler         *src_sampler,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *src_format,
                                            const Babl          *mask_format,
@@ -477,6 +478,7 @@ pop_segment (GQueue *segment_queue,
 static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
+                         GeglSampler         *src_sampler,
                          GeglBuffer          *mask_buffer,
                          const Babl          *src_format,
                          const Babl          *mask_format,
@@ -505,8 +507,8 @@ find_contiguous_segment (const gfloat        *col,
 #else
   s = g_alloca (n_components * sizeof (gfloat));
 
-  gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, src_format,
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+  gegl_sampler_get (src_sampler,
+                    initial_x, initial_y, NULL, s, GEGL_ABYSS_NONE);
 #endif
 
   diff = pixel_difference (col, s, antialias, threshold,
@@ -527,8 +529,8 @@ find_contiguous_segment (const gfloat        *col,
   while (*start >= 0)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, src_format,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+      gegl_sampler_get (src_sampler,
+                        *start, initial_y, NULL, s, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
@@ -553,8 +555,8 @@ find_contiguous_segment (const gfloat        *col,
   while (*end < width)
     {
 #ifndef FETCH_ROW
-      gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, src_format,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+      gegl_sampler_get (src_sampler,
+                        *end, initial_y, NULL, s, GEGL_ABYSS_NONE);
 #endif
 
       diff = pixel_difference (col, s, antialias, threshold,
@@ -594,16 +596,23 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         gint                 y,
                         const gfloat        *col)
 {
-  const Babl *mask_format = babl_format ("Y float");
-  gint        old_y;
-  gint        start, end;
-  gint        new_start, new_end;
-  GQueue     *segment_queue;
-  gfloat     *row = NULL;
+  const Babl  *mask_format = babl_format ("Y float");
+  GeglSampler *src_sampler;
+  GeglSampler *mask_sampler;
+  gint         old_y;
+  gint         start, end;
+  gint         new_start, new_end;
+  GQueue      *segment_queue;
+  gfloat      *row = NULL;
 
 #ifdef FETCH_ROW
   row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
 #endif
+
+  src_sampler  = gegl_buffer_sampler_new (src_buffer,
+                                          format, GEGL_SAMPLER_NEAREST);
+  mask_sampler = gegl_buffer_sampler_new (mask_buffer,
+                                          mask_format, GEGL_SAMPLER_NEAREST);
 
   segment_queue = g_queue_new ();
 
@@ -620,9 +629,8 @@ find_contiguous_region (GeglBuffer          *src_buffer,
         {
           gfloat val;
 
-          gegl_buffer_sample (mask_buffer, x, y, NULL, &val,
-                              mask_format,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+          gegl_sampler_get (mask_sampler, x, y, NULL, &val, GEGL_ABYSS_NONE);
+
           if (val != 0.0)
             {
               /* If the current pixel is selected, then we've already visited
@@ -633,7 +641,8 @@ find_contiguous_region (GeglBuffer          *src_buffer,
               continue;
             }
 
-          if (! find_contiguous_segment (col, src_buffer, mask_buffer,
+          if (! find_contiguous_segment (col,
+                                         src_buffer, src_sampler, mask_buffer,
                                          format, mask_format,
                                          n_components,
                                          has_alpha,
@@ -680,6 +689,9 @@ find_contiguous_region (GeglBuffer          *src_buffer,
   while (! g_queue_is_empty (segment_queue));
 
   g_queue_free (segment_queue);
+
+  g_object_unref (mask_sampler);
+  g_object_unref (src_sampler);
 
 #ifdef FETCH_ROW
   g_free (row);
