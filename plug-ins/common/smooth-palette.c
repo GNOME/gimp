@@ -243,6 +243,7 @@ smooth_palette (gint32  drawable_id,
   gint          sel_x1, sel_y1;
   gint          width, height;
   GeglBuffer   *buffer;
+  GeglSampler  *sampler;
   gfloat       *pal;
   GRand        *gr;
 
@@ -273,6 +274,8 @@ smooth_palette (gint32  drawable_id,
 
   buffer = gimp_drawable_get_buffer (drawable_id);
 
+  sampler = gegl_buffer_sampler_new (buffer, format, GEGL_SAMPLER_NEAREST);
+
   bpp = babl_format_get_n_components (gegl_buffer_get_format (buffer));
 
   pal = g_new (gfloat, psize * bpp);
@@ -284,11 +287,12 @@ smooth_palette (gint32  drawable_id,
       gint x = sel_x1 + g_rand_int_range (gr, 0, width);
       gint y = sel_y1 + g_rand_int_range (gr, 0, height);
 
-      gegl_buffer_sample (buffer, (gdouble) x, (gdouble) y, NULL, pal + i * bpp,
-                          format, GEGL_SAMPLER_NEAREST,
-                          GEGL_ABYSS_NONE);
+      gegl_sampler_get (sampler,
+                        (gdouble) x, (gdouble) y, NULL, pal + i * bpp,
+                        GEGL_ABYSS_NONE);
     }
 
+  g_object_unref (sampler);
   g_object_unref (buffer);
 
   /* reorder */
