@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-11 21:59+0200\n"
-"PO-Revision-Date: 2018-05-11 22:00+0200\n"
+"POT-Creation-Date: 2018-05-13 21:22+0200\n"
+"PO-Revision-Date: 2018-05-13 21:23+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -165,6 +165,14 @@ msgstr "Oraz wiele, wiele więcej…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
+"For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
+"released/"
+msgstr ""
+"https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/ zawiera więcej "
+"informacji (w języku angielskim)."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
@@ -173,7 +181,7 @@ msgstr ""
 "nadal głównym celem, skupiliśmy się także na prędkości i optymalizacji, aby "
 "rysowanie było płynniejsze. Większe zmiany w tym wydaniu:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
@@ -181,13 +189,13 @@ msgstr ""
 "Duże optymalizacje rdzenia programu w zakresie rysowania i wyświetlania, "
 "w tym wielowątkowy kod rysowania."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
 "Symetrie w plikach XCF są teraz zachowywane (zapisywane jako dane "
 "pasożytnicze obrazu)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -195,7 +203,7 @@ msgstr ""
 "„Jasny” i „Ciemny” motyw zostały przepisane od zera, aby pozbyć się różnych "
 "problemów z interfejsem. Usunięto motywy „Jaśniejszy” i „Ciemniejszy”."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -205,7 +213,7 @@ msgstr ""
 "przez filtr rzutu panoramy. Ten widżet zapewnia sterowanie obrotem 3D na "
 "płótnie (odchylenie, kąt, walec)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -216,7 +224,7 @@ msgstr ""
 "ale także po ostrzeżeniach i błędach krytycznych, kiedy ustawiony jest klucz "
 "debugowania „fatal-warnings”."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
@@ -224,7 +232,7 @@ msgstr ""
 "https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/ zawiera "
 "więcej informacji (w języku angielskim)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -234,12 +242,12 @@ msgstr ""
 "GIMP 2.10.0, skupiające się na debugowaniu i stabilności. Oprócz wielu "
 "poprawek błędów najważniejsze ulepszenia to:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Nowy panel wydajności do monitorowania użycia zasobów przez program GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -247,33 +255,33 @@ msgstr ""
 "Nowe okno debugowania do generowania wyjątków i innych danych debugowania, "
 "zachęcające do zgłaszania błędów"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Po awarii można teraz odzyskać niezapisane obrazy"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Layer masks on layer groups"
 msgstr "Maski warstw w grupach warstw"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Ulepszona obsługa formatu JPEG 2000 o głębię wysokobitową i różne "
 "przestrzenie kolorów"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Screenshot and color picking improved on various platforms"
 msgstr "Ulepszenia zrzutów ekranu i wyboru kolorów na różnych platformach"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "Metadata defaults preferences now available"
 msgstr "Preferencje domyślnego zachowania metadanych są teraz dostępne"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Various GUI polishing"
 msgstr "Różne poprawki interfejsu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
@@ -281,7 +289,7 @@ msgstr ""
 "https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/ zawiera "
 "więcej informacji (w języku angielskim)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -289,53 +297,53 @@ msgstr ""
 "GIMP 2.9.8 dodaje modyfikowanie gradientów na obszarze rysowania oraz różne "
 "ulepszenia, jednocześnie skupiając się na poprawkach błędów i stabilności."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "On-canvas gradient editing"
 msgstr "Modyfikowanie gradientów na obszarze rysowania"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Notification when an image is over/underexposed"
 msgstr "Powiadomienie, kiedy obraz jest prześwietlony/niedoświetlony"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Better and faster color management"
 msgstr "Lepsze i szybsze zarządzania kolorami"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Wybieranie kolorów i wykonywanie zrzutów ekranu w środowisku KDE Plasma "
 "używającym technologii Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Paste in place feature"
 msgstr "Wklejanie w tym samym miejscu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Many usability improvements"
 msgstr "Wiele ulepszeń użyteczności"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Podręcznik może być wyświetlany w preferowanym języku użytkownika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Ulepszenia filtru rozkład falki"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Ulepszona zgodność z plikami .psd programu Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New support for password-protected PDF"
 msgstr "Obsługa plików PDF chronionych hasłem"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Obsługa formatu HGT (dane cyfrowego modelu wysokościowego)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -15040,7 +15048,7 @@ msgstr "Ok_res:"
 
 #. The "Preview" frame
 #: ../app/dialogs/palette-import-dialog.c:360
-#: ../app/tools/gimpforegroundselecttool.c:1223
+#: ../app/tools/gimpforegroundselecttool.c:1233
 msgid "Preview"
 msgstr "Podgląd"
 
@@ -18932,7 +18940,7 @@ msgstr "Progowanie"
 msgid "Plug-in"
 msgstr "Wtyczka"
 
-#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:993
+#: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:1003
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
@@ -21245,33 +21253,38 @@ msgstr "_Podgląd maski"
 msgid "Select foreground pixels"
 msgstr "Zaznacza piksele pierwszego planu"
 
-#: ../app/tools/gimpforegroundselecttool.c:612
+#: ../app/tools/gimpforegroundselecttool.c:615
+#: ../app/tools/gimpforegroundselecttool.c:620
 msgid "Roughly outline the object to extract"
 msgstr "Nierówno obrysowuje obiekt do wydobycia"
 
-#: ../app/tools/gimpforegroundselecttool.c:633
-msgid "Selecting foreground,"
-msgstr "Zaznaczenie pierwszego planu,"
+#: ../app/tools/gimpforegroundselecttool.c:616
+msgid "press Enter to validate."
+msgstr "naciśnięcie klawisza Enter sprawdzi poprawność."
 
-#: ../app/tools/gimpforegroundselecttool.c:635
-msgid "Selecting background,"
-msgstr "Zaznaczenie tła,"
+#: ../app/tools/gimpforegroundselecttool.c:643
+msgid "Selecting foreground"
+msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/tools/gimpforegroundselecttool.c:637
-msgid "Selecting unknown,"
-msgstr "Zaznaczenie nieznanego,"
+#: ../app/tools/gimpforegroundselecttool.c:645
+msgid "Selecting background"
+msgstr "Zaznaczenie tła"
 
-#: ../app/tools/gimpforegroundselecttool.c:640
+#: ../app/tools/gimpforegroundselecttool.c:647
+msgid "Selecting unknown"
+msgstr "Zaznaczenie nieznanego"
+
+#: ../app/tools/gimpforegroundselecttool.c:650
 msgid "press Enter to preview."
 msgstr "naciśnięcie klawisza Enter wyświetli podgląd."
 
-#: ../app/tools/gimpforegroundselecttool.c:642
+#: ../app/tools/gimpforegroundselecttool.c:652
 msgid "press Escape to exit preview or Enter to apply."
 msgstr ""
 "naciśnięcie klawisza Escape wyłączy podgląd, a naciśnięcie klawisza Enter "
 "zastosuje."
 
-#: ../app/tools/gimpforegroundselecttool.c:1219
+#: ../app/tools/gimpforegroundselecttool.c:1229
 msgid "Paint mask"
 msgstr "Maska rysowania"
 
@@ -21286,7 +21299,7 @@ msgstr ""
 msgid "_Free Select"
 msgstr "Zaznaczenie od_ręczne"
 
-#: ../app/tools/gimpfreeselecttool.c:494
+#: ../app/tools/gimpfreeselecttool.c:508
 msgctxt "command"
 msgid "Free Select"
 msgstr "Zaznaczanie odręczne"
