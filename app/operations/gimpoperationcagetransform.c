@@ -71,8 +71,7 @@ static void         gimp_operation_cage_transform_interpolate_source_coords_recu
                                                                            gfloat              *coords);
 static GimpVector2  gimp_cage_transform_compute_destination               (GimpCageConfig      *config,
                                                                            gfloat              *coef,
-                                                                           const Babl          *format_coef,
-                                                                           GeglBuffer          *coef_buf,
+                                                                           GeglSampler         *coef_sampler,
                                                                            GimpVector2          coords);
 GeglRectangle       gimp_operation_cage_transform_get_cached_region       (GeglOperation       *operation,
                                                                            const GeglRectangle *roi);
@@ -225,6 +224,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   gfloat                     *coords;
   gfloat                     *coef;
   const Babl                 *format_coef;
+  GeglSampler                *coef_sampler;
   GimpVector2                 plain_color;
   GeglBufferIterator         *it;
   gint                        x, y;
@@ -291,9 +291,11 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   gegl_operation_progress (operation, 0.0, "");
 
   /* pre-allocate memory outside of the loop */
-  coords      = g_slice_alloc (2 * sizeof (gfloat));
-  coef        = g_malloc (n_cage_vertices * 2 * sizeof (gfloat));
-  format_coef = babl_format_n (babl_type ("float"), 2 * n_cage_vertices);
+  coords       = g_slice_alloc (2 * sizeof (gfloat));
+  coef         = g_malloc (n_cage_vertices * 2 * sizeof (gfloat));
+  format_coef  = babl_format_n (babl_type ("float"), 2 * n_cage_vertices);
+  coef_sampler = gegl_buffer_sampler_new (aux_buf,
+                                          format_coef, GEGL_SAMPLER_NEAREST);
 
   /* compute, reverse and interpolate the transformation */
   for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
@@ -308,8 +310,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
       p4_s.y = y;
       p4_s.x = cage_bb.x;
 
-      p3_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p3_s);
-      p4_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p4_s);
+      p3_d = gimp_cage_transform_compute_destination (config, coef, coef_sampler, p3_s);
+      p4_d = gimp_cage_transform_compute_destination (config, coef, coef_sampler, p4_s);
 
       for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
         {
@@ -320,8 +322,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
           p1_d = p4_d;
           p2_d = p3_d;
-          p3_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p3_s);
-          p4_d = gimp_cage_transform_compute_destination (config, coef, format_coef, aux_buf, p4_s);
+          p3_d = gimp_cage_transform_compute_destination (config, coef, coef_sampler, p3_s);
+          p4_d = gimp_cage_transform_compute_destination (config, coef, coef_sampler, p4_s);
 
           if (gimp_cage_config_point_inside (config, x, y))
             {
@@ -358,6 +360,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
+  g_object_unref (coef_sampler);
   g_free (coef);
   g_slice_free1 (2 * sizeof (gfloat), coords);
 
@@ -536,8 +539,7 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
 static GimpVector2
 gimp_cage_transform_compute_destination (GimpCageConfig *config,
                                          gfloat         *coef,
-                                         const Babl     *format_coef,
-                                         GeglBuffer     *coef_buf,
+                                         GeglSampler    *coef_sampler,
                                          GimpVector2     coords)
 {
   GimpVector2    result = {0, 0};
@@ -545,10 +547,8 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   gint           i;
   GimpCagePoint *point;
 
-  g_return_val_if_fail (coef_buf != NULL, result);
-
-  gegl_buffer_sample (coef_buf, coords.x, coords.y, NULL, coef, format_coef,
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+  gegl_sampler_get (coef_sampler,
+                    coords.x, coords.y, NULL, coef, GEGL_ABYSS_NONE);
 
   for (i = 0; i < n_cage_vertices; i++)
     {
