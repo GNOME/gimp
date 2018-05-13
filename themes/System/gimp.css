@@ -42,25 +42,9 @@ GimpDisplayShell button {
     padding: 0 0 0 0;
 }
 
-/* i hate the statusar
 GimpDisplayShell statusbar {
-    min-height: 0;
-    min-width: 0;
-    padding: 0 0 0 0;
+    min-height: 3em;
 }
-
-GimpDisplayShell statusbar {
-    min-height: 0;
-    min-width: 0;
-    padding: 0 0 0 0;
-}
-
-GimpDisplayShell statusbar {
-    min-height: 0;
-    min-width: 0;
-    padding: 0 0 0 0;
-}
-*/
 
 GimpDock {
     font-size: smaller;
