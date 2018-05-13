@@ -31,9 +31,14 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimp-atomic.h"
 #include "gimp-parallel.h"
 #include "gimpasync.h"
 #include "gimphistogram.h"
+
+
+#define MIN_PARALLEL_SUB_SIZE 64
+#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
 
 
 enum
@@ -55,16 +60,27 @@ struct _GimpHistogramPrivate
 
 typedef struct
 {
+  /*  input  */
   GimpHistogram *histogram;
   GeglBuffer    *buffer;
   GeglRectangle  buffer_rect;
   GeglBuffer    *mask;
   GeglRectangle  mask_rect;
 
+  /*  output  */
   gint           n_components;
   gint           n_bins;
   gdouble       *values;
 } CalculateContext;
+
+typedef struct
+{
+  GimpAsync        *async;
+  CalculateContext *context;
+
+  const Babl       *format;
+  GSList           *values_list;
+} CalculateData;
 
 
 /*  local function prototypes  */
@@ -82,9 +98,6 @@ static void      gimp_histogram_get_property             (GObject             *o
 static gint64    gimp_histogram_get_memsize              (GimpObject          *object,
                                                           gint64              *gui_size);
 
-static gdouble * gimp_histogram_alloc_values             (GimpHistogram       *histogram,
-                                                          gint                 n_components,
-                                                          gint                 n_bins);
 static void      gimp_histogram_set_values               (GimpHistogram       *histogram,
                                                           gint                 n_components,
                                                           gint                 n_bins,
@@ -92,6 +105,8 @@ static void      gimp_histogram_set_values               (GimpHistogram       *h
 
 static void      gimp_histogram_calculate_internal       (GimpAsync           *async,
                                                           CalculateContext    *context);
+static void      gimp_histogram_calculate_area           (const GeglRectangle *area,
+                                                          CalculateData       *data);
 static void      gimp_histogram_calculate_async_callback (GimpAsync           *async,
                                                           CalculateContext    *context);
 
@@ -813,27 +828,6 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 
 /*  private functions  */
 
-static gdouble *
-gimp_histogram_alloc_values (GimpHistogram *histogram,
-                             gint           n_components,
-                             gint           n_bins)
-{
-  GimpHistogramPrivate *priv = histogram->priv;
-
-  if (n_components + 2 != priv->n_channels ||
-      n_bins           != priv->n_bins)
-    {
-      return g_new0 (gdouble, (n_components + 2) * n_bins);
-    }
-  else
-    {
-      memset (priv->values, 0,
-              priv->n_channels * priv->n_bins * sizeof (gdouble));
-
-      return priv->values;
-    }
-}
-
 static void
 gimp_histogram_set_values (GimpHistogram *histogram,
                            gint           n_components,
@@ -879,23 +873,18 @@ static void
 gimp_histogram_calculate_internal (GimpAsync        *async,
                                    CalculateContext *context)
 {
+  CalculateData         data;
   GimpHistogramPrivate *priv;
-  GeglBufferIterator   *iter;
   const Babl           *format;
-  gdouble              *values;
-  gint                  n_components;
-  gint                  n_bins;
-  gfloat                n_bins_1f;
-  gfloat                temp;
 
   priv = context->histogram->priv;
 
   format = gegl_buffer_get_format (context->buffer);
 
   if (babl_format_get_type (format, 0) == babl_type ("u8"))
-    n_bins = 256;
+    context->n_bins = 256;
   else
-    n_bins = 1024;
+    context->n_bins = 1024;
 
   if (babl_format_is_palette (format))
     {
@@ -959,26 +948,96 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
         }
     }
 
-  n_components = babl_format_get_n_components (format);
+  context->n_components = babl_format_get_n_components (format);
 
-  if (async)
+  data.async       = async;
+  data.context     = context;
+  data.format      = format;
+  data.values_list = NULL;
+
+  gimp_parallel_distribute_area (
+    &context->buffer_rect, MIN_PARALLEL_SUB_AREA,
+    (GimpParallelDistributeAreaFunc) gimp_histogram_calculate_area,
+    &data);
+
+  if (! async || ! gimp_async_is_canceled (async))
     {
-      values = g_new0 (gdouble, (n_components + 2) * n_bins);
+      gdouble *total_values = NULL;
+      gint     n_values     = (context->n_components + 2) * context->n_bins;
+      GSList  *iter;
+
+      for (iter = data.values_list; iter; iter = g_slist_next (iter))
+        {
+          gdouble *values = iter->data;
+
+          if (! total_values)
+            {
+              total_values = values;
+            }
+          else
+            {
+              gint i;
+
+              for (i = 0; i < n_values; i++)
+                total_values[i] += values[i];
+
+              g_free (values);
+            }
+        }
+
+      g_slist_free (data.values_list);
+
+      context->values = total_values;
+
+      if (async)
+        gimp_async_finish (async, NULL);
     }
   else
     {
-      values = gimp_histogram_alloc_values (context->histogram,
-                                            n_components, n_bins);
-    }
+      g_slist_free_full (data.values_list, g_free);
 
-  iter = gegl_buffer_iterator_new (context->buffer, &context->buffer_rect, 0,
-                                   format,
+      if (async)
+        gimp_async_abort (async);
+    }
+}
+
+static void
+gimp_histogram_calculate_area (const GeglRectangle *area,
+                               CalculateData       *data)
+{
+  GimpAsync            *async;
+  CalculateContext     *context;
+  GeglBufferIterator   *iter;
+  gdouble              *values;
+  gint                  n_components;
+  gint                  n_bins;
+  gfloat                n_bins_1f;
+  gfloat                temp;
+
+  async   = data->async;
+  context = data->context;
+
+  n_bins       = context->n_bins;
+  n_components = context->n_components;
+
+  values = g_new0 (gdouble, (n_components + 2) * n_bins);
+  gimp_atomic_slist_push_head (&data->values_list, values);
+
+  iter = gegl_buffer_iterator_new (context->buffer, area, 0,
+                                   data->format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   if (context->mask)
-    gegl_buffer_iterator_add (iter, context->mask, &context->mask_rect, 0,
-                              babl_format ("Y float"),
-                              GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+    {
+      GeglRectangle mask_area = *area;
+
+      mask_area.x += context->mask_rect.x - context->buffer_rect.x;
+      mask_area.y += context->mask_rect.y - context->buffer_rect.y;
+
+      gegl_buffer_iterator_add (iter, context->mask, &mask_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+    }
 
   n_bins_1f = n_bins - 1;
 
@@ -991,11 +1050,11 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
 #define CHECK_CANCELED(length)                                                 \
   G_STMT_START                                                                 \
     {                                                                          \
-      if ((length) % 32 == 0 && async && gimp_async_is_canceled (async))       \
+      if ((length) % 128 == 0 && async && gimp_async_is_canceled (async))      \
         {                                                                      \
           gegl_buffer_iterator_stop (iter);                                    \
                                                                                \
-          goto end;                                                            \
+          return;                                                              \
         }                                                                      \
     }                                                                          \
   G_STMT_END
@@ -1168,23 +1227,6 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
             }
         }
     }
-end:
-
-  context->n_components = n_components;
-  context->n_bins       = n_bins;
-  context->values       = values;
-
-  if (async)
-    {
-      if (! gimp_async_is_canceled (async))
-        {
-          gimp_async_finish (async, NULL);
-        }
-      else
-        {
-          gimp_async_abort (async);
-        }
-    }
 
 #undef VALUE
 #undef CHECK_CANCELED
@@ -1201,10 +1243,6 @@ gimp_histogram_calculate_async_callback (GimpAsync        *async,
       gimp_histogram_set_values (context->histogram,
                                  context->n_components, context->n_bins,
                                  context->values);
-    }
-  else
-    {
-      g_free (context->values);
     }
 
   g_object_unref (context->buffer);
