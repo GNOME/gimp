@@ -143,9 +143,7 @@
         <_p>For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</_p>
       </description>
     </release>
-  </releases>
 
-  <releases>
     <release version="2.10.0~rc2" date="2018-04-17" type="development">
       <description>
         <_p>
