@@ -1579,25 +1579,21 @@ calculate_segment (GimpIscissorsTool *iscissors,
 
 /* badly need to get a replacement - this is _way_ too expensive */
 static gboolean
-gradient_map_value (GeglBuffer *map,
-                    gint        x,
-                    gint        y,
-                    guint8     *grad,
-                    guint8     *dir)
+gradient_map_value (GeglSampler         *map_sampler,
+                    const GeglRectangle *map_extent,
+                    gint                 x,
+                    gint                 y,
+                    guint8              *grad,
+                    guint8              *dir)
 {
-  const GeglRectangle *extents;
-
-  extents = gegl_buffer_get_extent (map);
-
-  if (x >= extents->x     &&
-      y >= extents->y     &&
-      x <  extents->width &&
-      y <  extents->height)
+  if (x >= map_extent->x     &&
+      y >= map_extent->y     &&
+      x <  map_extent->width &&
+      y <  map_extent->height)
     {
       guint8 sample[2];
 
-      gegl_buffer_sample (map, x, y, NULL, sample, NULL,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+      gegl_sampler_get (map_sampler, x, y, NULL, sample, GEGL_ABYSS_NONE);
 
       *grad = sample[0];
       *dir  = sample[1];
@@ -1609,16 +1605,17 @@ gradient_map_value (GeglBuffer *map,
 }
 
 static gint
-calculate_link (GeglBuffer *gradient_map,
-                gint        x,
-                gint        y,
-                guint32     pixel,
-                gint        link)
+calculate_link (GeglSampler         *map_sampler,
+                const GeglRectangle *map_extent,
+                gint                 x,
+                gint                 y,
+                guint32              pixel,
+                gint                 link)
 {
   gint   value = 0;
   guint8 grad1, dir1, grad2, dir2;
 
-  if (! gradient_map_value (gradient_map, x, y, &grad1, &dir1))
+  if (! gradient_map_value (map_sampler, map_extent, x, y, &grad1, &dir1))
     {
       grad1 = 0;
       dir1 = 255;
@@ -1638,7 +1635,7 @@ calculate_link (GeglBuffer *gradient_map,
   x += (gint8)(pixel & 0xff);
   y += (gint8)((pixel & 0xff00) >> 8);
 
-  if (! gradient_map_value (gradient_map, x, y, &grad2, &dir2))
+  if (! gradient_map_value (map_sampler, map_extent, x, y, &grad2, &dir2))
     {
       grad2 = 0;
       dir2 = 255;
@@ -1709,22 +1706,30 @@ find_optimal_path (GeglBuffer  *gradient_map,
                    gint         xs,
                    gint         ys)
 {
-  gint     i, j, k;
-  gint     x, y;
-  gint     link;
-  gint     linkdir;
-  gint     dirx, diry;
-  gint     min_cost;
-  gint     new_cost;
-  gint     offset;
-  gint     cum_cost[8];
-  gint     link_cost[8];
-  gint     pixel_cost[8];
-  guint32  pixel[8];
-  guint32 *data;
-  guint32 *d;
-  gint     dp_buf_width  = gimp_temp_buf_get_width  (dp_buf);
-  gint     dp_buf_height = gimp_temp_buf_get_height (dp_buf);
+  GeglSampler         *map_sampler;
+  const GeglRectangle *map_extent;
+  gint                 i, j, k;
+  gint                 x, y;
+  gint                 link;
+  gint                 linkdir;
+  gint                 dirx, diry;
+  gint                 min_cost;
+  gint                 new_cost;
+  gint                 offset;
+  gint                 cum_cost[8];
+  gint                 link_cost[8];
+  gint                 pixel_cost[8];
+  guint32              pixel[8];
+  guint32             *data;
+  guint32             *d;
+  gint                 dp_buf_width  = gimp_temp_buf_get_width  (dp_buf);
+  gint                 dp_buf_height = gimp_temp_buf_get_height (dp_buf);
+
+  /*  initialize the gradient map sampler and extent  */
+  map_sampler = gegl_buffer_sampler_new (gradient_map,
+                                         gegl_buffer_get_format (gradient_map),
+                                         GEGL_SAMPLER_NEAREST);
+  map_extent  = gegl_buffer_get_extent (gradient_map);
 
   /*  initialize the dynamic programming buffer  */
   data = (guint32 *) gimp_temp_buf_data_clear (dp_buf);
@@ -1780,7 +1785,7 @@ find_optimal_path (GeglBuffer  *gradient_map,
           for (k = 0; k < 8; k ++)
             if (pixel[k])
               {
-                link_cost[k] = calculate_link (gradient_map,
+                link_cost[k] = calculate_link (map_sampler, map_extent,
                                                xs + j*dirx, ys + i*diry,
                                                pixel [k],
                                                ((k > 3) ? k - 4 : k));
@@ -1835,6 +1840,8 @@ find_optimal_path (GeglBuffer  *gradient_map,
       /*  increment the y counter  */
       y += diry;
     }
+
+  g_object_unref (map_sampler);
 }
 
 static GeglBuffer *

@@ -49,6 +49,9 @@
  */
 
 
+/* #define TIME_ASYNC_OPS */
+
+
 typedef struct _GimpAsyncCallbackInfo GimpAsyncCallbackInfo;
 
 
@@ -73,6 +76,11 @@ struct _GimpAsyncPrivate
   gboolean        stopped;
   gboolean        finished;
   gboolean        canceled;
+
+
+#ifdef TIME_ASYNC_OPS
+  guint64         start_time;
+#endif
 };
 
 
@@ -114,6 +122,10 @@ gimp_async_init (GimpAsync *async)
   g_cond_init  (&async->priv->cond);
 
   g_queue_init (&async->priv->callbacks);
+
+#ifdef TIME_ASYNC_OPS
+  async->priv->start_time = g_get_monotonic_time ();
+#endif
 }
 
 static void
@@ -151,6 +163,16 @@ gimp_async_idle (GimpAsync *async)
 static void
 gimp_async_stop (GimpAsync *async)
 {
+#ifdef TIME_ASYNC_OPS
+  {
+    guint64 time = g_get_monotonic_time ();
+
+    g_printerr ("Asynchronous operation took %g seconds%s\n",
+                (time - async->priv->start_time) / 1000000.0,
+                async->priv->finished ? "" : " (aborted)");
+  }
+#endif
+
   if (! g_queue_is_empty (&async->priv->callbacks))
     {
       g_object_ref (async);

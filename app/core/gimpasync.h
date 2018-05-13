@@ -69,9 +69,10 @@ void        gimp_async_finish_full  (GimpAsync         *async,
 gboolean    gimp_async_is_finished  (GimpAsync         *async);
 gpointer    gimp_async_get_result   (GimpAsync         *async);
 
+void        gimp_async_abort        (GimpAsync         *async);
+
 void        gimp_async_cancel       (GimpAsync         *async);
 gboolean    gimp_async_is_canceled  (GimpAsync         *async);
-void        gimp_async_abort        (GimpAsync         *async);
 
 
 #endif /* __GIMP_ASYNC_H__ */
