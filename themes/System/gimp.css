@@ -36,16 +36,6 @@ GimpColorScales spinbutton entry {
     min-height: 0;
 }
 
-GimpDisplayShell button {
-    min-height: 0;
-    min-width: 0;
-    padding: 0 0 0 0;
-}
-
-GimpDisplayShell statusbar {
-    min-height: 3em;
-}
-
 GimpDock {
     font-size: smaller;
 }
@@ -67,11 +57,34 @@ GimpDockable {
     -GimpFrame-label-spacing:    2;
 }
 
+GimpDisplayShell grid>button {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+
+GimpDisplayShell statusbar {
+    min-height: 3em;
+}
+
 GimpDisplayShell combobox entry {
     font-size: smaller;
 }
 
 GimpDisplayShell combobox button {
+    font-size: smaller;
+}
+
+GimpDisplayShell progressbar text {
+    font-size: larger;
+}
+
+GimpDisplayShell progressbar trough,
+GimpDisplayShell progressbar progress {
+    min-height: 1em;
+}
+
+GimpRuler {
     font-size: smaller;
 }
 
@@ -84,6 +97,3 @@ GimpColorFrame {
     color: rgba (1.0, 0.0, 0.0, 1.0);
 }
 
-GimpRuler {
-    font-size: smaller;
-}
