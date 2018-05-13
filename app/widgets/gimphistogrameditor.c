@@ -512,6 +512,12 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
         }
 
       editor->recompute = FALSE;
+
+      if (editor->idle_id)
+        {
+          g_source_remove (editor->idle_id);
+          editor->idle_id = 0;
+        }
     }
 
   return (editor->histogram != NULL);
