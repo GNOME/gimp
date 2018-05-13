@@ -220,6 +220,7 @@ save_image (GFile       *file,
             GError     **error)
 {
   const Babl    *format = babl_format ("R'G'B'A u8");
+  GeglSampler   *sampler;
   GOutputStream *output;
   gint           row, col;
   gint           cols, rows;
@@ -252,6 +253,8 @@ save_image (GFile       *file,
     {
       return FALSE;
     }
+
+  sampler = gegl_buffer_sampler_new (buffer, format, GEGL_SAMPLER_NEAREST);
 
   palloc = g_new (int, rows * cols);
 
@@ -314,8 +317,7 @@ save_image (GFile       *file,
 
       for (x = 0; x < cols; x++)
         {
-          gegl_buffer_sample (buffer, x, y, NULL, buf, format,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+          gegl_sampler_get (sampler, x, y, NULL, buf, GEGL_ABYSS_NONE);
 
           /* Determine ROWSPAN and COLSPAN */
 
@@ -327,8 +329,7 @@ save_image (GFile       *file,
               colspan  = 0;
               rowspan  = 0;
 
-              gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+              gegl_sampler_get (sampler, col, row, NULL, buf2, GEGL_ABYSS_NONE);
 
               while (color_comp (buf, buf2) &&
                      palloc[cols * row + col] == 1 &&
@@ -341,8 +342,8 @@ save_image (GFile       *file,
                       colcount++;
                       col++;
 
-                      gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
-                                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+                      gegl_sampler_get (sampler,
+                                        col, row, NULL, buf2, GEGL_ABYSS_NONE);
                     }
 
                   if (colcount != 0)
@@ -357,8 +358,8 @@ save_image (GFile       *file,
                   col = x;
                   colcount = 0;
 
-                  gegl_buffer_sample (buffer, col, row, NULL, buf2, format,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+                  gegl_sampler_get (sampler,
+                                    col, row, NULL, buf2, GEGL_ABYSS_NONE);
                 }
 
               if (colspan > 1 || rowspan > 1)
@@ -426,6 +427,7 @@ save_image (GFile       *file,
     goto fail;
 
   g_object_unref (output);
+  g_object_unref (sampler);
   g_free (width);
   g_free (height);
   g_free (palloc);
@@ -437,6 +439,7 @@ save_image (GFile       *file,
  fail:
 
   g_object_unref (output);
+  g_object_unref (sampler);
   g_free (width);
   g_free (height);
   g_free (palloc);
