@@ -333,8 +333,6 @@ gimp_device_info_editor_constructed (GObject *object)
   GimpDeviceInfoEditor        *editor  = GIMP_DEVICE_INFO_EDITOR (object);
   GimpDeviceInfoEditorPrivate *private;
   GtkWidget                   *hbox;
-  GtkWidget                   *label;
-  GtkWidget                   *combo;
   gint                         n_axes;
   gint                         n_keys;
   gint                         i;
@@ -344,24 +342,6 @@ gimp_device_info_editor_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_DEVICE_INFO (private->info));
-
-  /*  the mode menu  */
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (private->vbox), hbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (private->vbox), hbox, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Mode:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (private->info), "mode",
-                                        0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   /*  the axes  */
 
