@@ -142,10 +142,16 @@ static const gchar *const axis_use_strings[] =
   N_("X tilt"),
   N_("Y tilt"),
   /* Wheel as in mouse or input device wheel.
-   * Some pens use the same axis for their rotation feature.
+   * Some pens would use the same axis for their rotation feature.
    * See bug 791455.
+   * Yet GTK+ has a different axis since v. 3.22.
+   * TODO: this should be actually tested with a device having such
+   * feature.
    */
-  N_("Wheel/Rotation")
+  N_("Wheel"),
+  N_("Distance"),
+  N_("Rotation"),
+  N_("Slider")
 };
 
 
