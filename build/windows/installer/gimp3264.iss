@@ -265,7 +265,7 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: g
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\9.21\lib\*.*"; DestDir: "{app}\share\ghostscript\9.21\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\ghostscript\9.23\lib\*.*"; DestDir: "{app}\share\ghostscript\9.23\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32-on-64bit
 #include "32on64.isi"
@@ -332,6 +332,8 @@ Type: filesandordirs; Name: "{app}\Python\*"
 ;remove incompatible version shipped with 2.8
 Type: files; Name: "{app}\bin\zlib1.dll"
 Type: files; Name: "{app}\32\bin\zlib1.dll"
+;old ghostscript
+Type: filesandordirs; Name: "{app}\share\ghostscript\*"
 ;obsolete plugins from gimp 2.8
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
