@@ -313,10 +313,6 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       GimpCoords   *coords   = gimp_symmetry_get_coords (sym, i);
       gdouble       pressure = coords->pressure;
 
-      /* libmypaint expects non-extended devices to default to 0.5 pressure */
-      if (! coords->extended)
-        pressure = 0.5f;
-
       mypaint_brush_stroke_to (brush,
                                (MyPaintSurface *) mybrush->private->surface,
                                coords->x,
