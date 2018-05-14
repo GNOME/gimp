@@ -455,11 +455,20 @@ gimp_device_status_notify_device (GimpDeviceManager *manager,
 
   for (list = status->devices; list; list = list->next)
     {
-      GimpDeviceStatusEntry *entry = list->data;
+      GimpDeviceStatusEntry *entry  = list->data;
+      GtkWidget             *widget = entry->ebox;
+      GtkStyleContext       *style  = gtk_widget_get_style_context (widget);
 
-      gtk_widget_set_state (entry->ebox,
-                            entry->device_info == status->current_device ?
-                            GTK_STATE_SELECTED : GTK_STATE_NORMAL);
+      if (entry->device_info == status->current_device)
+        {
+          gtk_widget_set_state_flags (widget, GTK_STATE_FLAG_SELECTED, TRUE);
+          gtk_style_context_add_class (style, GTK_STYLE_CLASS_VIEW);
+        }
+      else
+        {
+          gtk_widget_set_state_flags (widget, GTK_STATE_FLAG_NORMAL, TRUE);
+          gtk_style_context_remove_class (style, GTK_STYLE_CLASS_VIEW);
+        }
     }
 }
 
