@@ -145,7 +145,7 @@ InternalCompressLevel=ultra
 SolidCompression=yes
 LZMAUseSeparateProcess=yes
 LZMANumFastBytes=273
-LZMADictionarySize=1048576
+LZMADictionarySize=524288
 
 ;SignTool=Default
 SignedUninstaller=yes
