@@ -2312,6 +2312,34 @@ else
 fi
 AM_CONDITIONAL(HAVE_DESKTOP_FILE_VALIDATE, test "x$DESKTOP_FILE_VALIDATE" != "xno")
 
+####################
+# Set bug report URL
+####################
+
+# Allowing third-party packagers to set their own bugtracker URL, in
+# order to filter first packaging bugs from core bugs.
+
+AC_ARG_WITH(bug-report-url,
+            [  --with-bug-report-url           URL used by the debug dialog to report bugs],,
+            [with_bug_report_url="$PACKAGE_BUGREPORT"])
+
+if test "x$with_bug_report_url" = "x"; then
+  with_bug_report_url="$PACKAGE_BUGREPORT"
+fi
+
+AC_DEFINE_UNQUOTED(BUG_REPORT_URL, "$with_bug_report_url",
+                   [The URL to open in order to report bugs])
+
+override_bug_report_url=
+if test "x$with_bug_report_url" = "x$PACKAGE_BUGREPORT"; then
+override_bug_report_url="
+NOTE: if you plan on packaging GIMP for distribution, it is recommended
+      to override the bug report URL with option:
+        --with-bug-report-url=https://example.com/
+      so that you can filter packaging bugs from core bugs before
+      reporting upstream.
+"
+fi
 
 ######################################
 # Checks for gtk-doc and docbook-tools
@@ -2829,7 +2857,9 @@ Tests:
   Use xvfb-run             $have_xvfb_run
   Test appdata             $have_appstream_util
   Test desktop file        $have_desktop_file_validate
-$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+
+Bug report URL: $with_bug_report_url
+$override_bug_report_url$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT

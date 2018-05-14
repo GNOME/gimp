@@ -329,14 +329,23 @@ gimp_critical_dialog_response (GtkDialog *dialog,
     case GIMP_CRITICAL_RESPONSE_URL:
       {
         const gchar *url;
+        gchar       *temp = g_ascii_strdown (BUG_REPORT_URL, -1);
 
-        /* XXX Ideally I'd find a way to prefill the bug report
-         * through the URL or with POST data. But I could not find
-         * any. Anyway since we may soon ditch bugzilla to follow
-         * GNOME infrastructure changes, I don't want to waste too
-         * much time digging into it.
-         */
-        url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
+        /* Only accept custom web links. */
+        if (g_str_has_prefix (temp, "http://") ||
+            g_str_has_prefix (temp, "https://"))
+          url = BUG_REPORT_URL;
+        else
+          /* XXX Ideally I'd find a way to prefill the bug report
+           * through the URL or with POST data. But I could not find
+           * any. Anyway since we may soon ditch bugzilla to follow
+           * GNOME infrastructure changes, I don't want to waste too
+           * much time digging into it.
+           */
+          url = PACKAGE_BUGREPORT;
+
+        g_free (temp);
+
         browser_open_url (url, NULL);
       }
       break;
