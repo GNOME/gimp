@@ -21,10 +21,14 @@ Plug-ins:
   - New plug-in for importing and exporting HEIF images.
   - Enable visibility of rasterized vector layer from PSD.
 
-  
 Translations:
 
   - Updated translations: Catalan, German, Greek, Hungarian, Italian,
     Polish, Russian, Swedish, Ukrainian.
   - New translation: Chinese (Taiwan)
 
+Build:
+
+  - Add a --with-bug-report-url configure option allowing packagers to
+    set the address of their own bug tracker. This address will be the
+    one opened by the debug dialog for reporting bugs.
