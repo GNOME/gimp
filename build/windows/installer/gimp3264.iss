@@ -201,7 +201,7 @@ Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full com
 Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
 
 #ifdef DEBUG_SYMBOLS
-Name: debug; Description: "{cm:ComponentsDebug}"; Types: custom
+Name: debug; Description: "{cm:ComponentsDebug}"; Types: custom; Flags: disablenouninstallwarning
 #endif
 
 Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
@@ -1467,9 +1467,61 @@ begin
 end;
 
 
+procedure RemoveDebugFilesFromDir(pDir: String; var pDirectories: TArrayOfString);
+var FindRec: TFindRec;
+begin
+DebugMsg('RemoveDebugFilesFromDir', pDir);
+	if FindFirst(AddBackSlash(pDir) + '*', FindRec) then
+	begin
+		try
+			repeat
+				if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
+				begin
+					if (Length(FindRec.Name) > 6) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 5, 6)) = '.debug') then
+					begin
+						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
+						DeleteFile(AddBackSlash(pDir) + FindRec.Name);
+					end;
+				end else
+				begin
+					if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+					begin
+						SetArrayLength(pDirectories, GetArrayLength(pDirectories) + 1);
+						pDirectories[GetArrayLength(pDirectories) - 1] := AddBackSlash(pDir) + FindRec.Name;
+					end;
+				end;
+			until not FindNext(FindRec);
+		finally
+			FindClose(FindRec);
+		end;
+	end;
+end;
+
+//remove .debug files from previous installs - there's no built-in way in Inno to recursivly delete files with wildcard+extension
+procedure RemoveDebugFiles();
+var Directories: TArrayOfString;
+	Index: Integer;
+begin
+	SetArrayLength(Directories, 1);
+	Directories[0] := ExpandConstant('{app}');
+	Index := 0;
+
+	WizardForm.StatusLabel.Caption := CustomMessage('RemovingOldFiles');
+
+	repeat
+		RemoveDebugFilesFromDir(Directories[Index], Directories);
+		Inc(Index);
+	until Index = GetArrayLength(Directories);
+end;
+
+
 procedure CurStepChanged(pCurStep: TSetupStep);
 begin
 	case pCurStep of
+		ssInstall:
+		begin
+			RemoveDebugFiles();
+		end;
 		ssPostInstall:
 		begin
 			Associations_Create();

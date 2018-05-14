@@ -99,6 +99,8 @@ _RebootRequiredFirst=Previous GIMP version was removed successfully, but Windows
 ;displayed if restart settings couldn't be read, or if the setup couldn't re-run itself
 _ErrorRestartingSetup=There was an error restarting the Setup. (%1)
 
+_RemovingOldFiles=Cleaning up old files...
+
 ;displayed while the files are being extracted; note the capitalisation!
 _Billboard1=Remember: GIMP is Free Software.%n%nPlease visit
 ;www.gimp.org (displayed between Billboard1 and Billboard2)
