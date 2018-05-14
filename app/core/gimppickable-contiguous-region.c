@@ -598,7 +598,6 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 {
   const Babl  *mask_format = babl_format ("Y float");
   GeglSampler *src_sampler;
-  GeglSampler *mask_sampler;
   gint         old_y;
   gint         start, end;
   gint         new_start, new_end;
@@ -611,8 +610,6 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 
   src_sampler  = gegl_buffer_sampler_new (src_buffer,
                                           format, GEGL_SAMPLER_NEAREST);
-  mask_sampler = gegl_buffer_sampler_new (mask_buffer,
-                                          mask_format, GEGL_SAMPLER_NEAREST);
 
   segment_queue = g_queue_new ();
 
@@ -629,7 +626,9 @@ find_contiguous_region (GeglBuffer          *src_buffer,
         {
           gfloat val;
 
-          gegl_sampler_get (mask_sampler, x, y, NULL, &val, GEGL_ABYSS_NONE);
+          gegl_buffer_get (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
+                           mask_format, &val, GEGL_AUTO_ROWSTRIDE,
+                           GEGL_ABYSS_NONE);
 
           if (val != 0.0)
             {
@@ -690,7 +689,6 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 
   g_queue_free (segment_queue);
 
-  g_object_unref (mask_sampler);
   g_object_unref (src_sampler);
 
 #ifdef FETCH_ROW
