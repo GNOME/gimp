@@ -538,7 +538,8 @@ gimp_device_status_notify_info (GimpDeviceInfo        *device_info,
     }
 
   if (! gimp_device_info_get_device (device_info, NULL) ||
-      gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED)
+      (gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED &&
+       gdk_device_get_device_type (device_info->device) == GDK_DEVICE_TYPE_FLOATING))
     {
       gtk_widget_hide (entry->ebox);
     }

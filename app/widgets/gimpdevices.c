@@ -283,21 +283,15 @@ gimp_devices_get_from_event (Gimp            *gimp,
           return NULL;
 
         case GDK_DEVICE_TYPE_SLAVE:
-          /*  this is the tricky part: we do want to distingiugh slave
-           *  devices, but only if we actually enabled them ourselves
-           *  explicitely (like the pens of a tablet); however we
-           *  usually don't enable the different incarnations of the
-           *  mouse itself (like touchpad, trackpoint, usb mouse
-           *  etc.), so for these return their respective master so
-           *  its settings are used
+          /*
+           * Disabled mode is only meaningfull for floating devices.
+           * See docs of gdk_device_set_mode().
            */
-          if (gdk_device_get_mode (device) == GDK_MODE_DISABLED)
+          if (gdk_device_get_mode (device) == GDK_MODE_DISABLED &&
+              gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_FLOATING)
             {
               return gdk_device_get_associated_device (device);
             }
-
-          return device;
-
         case GDK_DEVICE_TYPE_FLOATING:
           /*  we only get events for floating devices which have
            *  enabled ourselves, so return the floating device
