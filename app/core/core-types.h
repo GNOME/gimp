@@ -255,7 +255,6 @@ struct _GimpCoords
   gdouble  yscale;
   gdouble  angle;   /* the view rotation angle       */
   gboolean reflect; /* whether the view is reflected */
-  gboolean extended;
 };
 
 /*  temp hack as replacement for GdkSegment  */

@@ -51,7 +51,6 @@ gimp_coords_mix (const gdouble     amul,
       ret_val->wheel     = amul * a->wheel     + bmul * b->wheel;
       ret_val->velocity  = amul * a->velocity  + bmul * b->velocity;
       ret_val->direction = amul * a->direction + bmul * b->direction;
-      ret_val->extended  = b->extended || a->extended;
     }
   else
     {
@@ -63,7 +62,6 @@ gimp_coords_mix (const gdouble     amul,
       ret_val->wheel     = amul * a->wheel;
       ret_val->velocity  = amul * a->velocity;
       ret_val->direction = amul * a->direction;
-      ret_val->extended  = a->extended;
     }
 }
 
