@@ -15,15 +15,33 @@ Core:
 
   - Discard fonts which fail to load and popup an info dialog to allow
     people debug their fonts.
+  - New API to suppress updates in UI until plug-ins are done
+    introducing changes.
+  - New API to calculate histograms in separate threads, with possible further
+    extension to handle similar cases elsewhere in GIMP.
 
 Plug-ins:
 
   - New plug-in for importing and exporting HEIF images.
   - Enable visibility of rasterized vector layer from PSD.
 
+Filters:
+
+  - New Spherize filter to wrap an image around a spherical cap
+  - New Recursive Transform filter to create Droste effect.
+
+Usability:
+
+  - Warn users, when alpha-only painting has no effect. E.g. when target
+    drawable doesn't have an alpha channel, or the alpha channel is locked.
+  - Make the splash texts dynamic, so they are larger on larger splashes.
+  - Mention pressing Enter to complete Foreground selection in the status bar.
+  - Make sure that clicking outside any selection prevents Rectangle Select
+    and Ellipse Select tools from creating empty selections.
+
 Translations:
 
-  - Updated translations: Catalan, German, Greek, Hungarian, Italian,
+  - Updated translations: Catalan, Dutch, German, Greek, Hungarian, Italian,
     Polish, Russian, Swedish, Ukrainian.
   - New translation: Chinese (Taiwan)
 
