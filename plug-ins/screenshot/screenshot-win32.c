@@ -77,7 +77,6 @@ static HINSTANCE       hInst = NULL;
 static HCURSOR         selectCursor = 0;
 static ICONINFO        iconInfo;
 static MAGIMAGEHEADER  returnedSrcheader;
-static RECT           *rectScreens = NULL;
 static int             rectScreensCount = 0;
 
 static gint32    *image_id;
@@ -632,20 +631,24 @@ isWindowIsAboveCaptureRegion (HWND hwndWindow,
 
 static BOOL CALLBACK
 doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR hMonitor,
-                                           HDC hdcMonitor,
-                                           LPRECT lprcMonitor,
-                                           LPARAM dwData)
+                                           HDC      hdcMonitor,
+                                           LPRECT   lprcMonitor,
+                                           LPARAM   dwData)
 {
+  RECT **rectScreens = (RECT**) dwData;
+
   if (!lprcMonitor) return FALSE;
 
-  if (!rectScreens)
-    rectScreens = (RECT*)malloc(sizeof(RECT)*(rectScreensCount+1));
+  if (! (*rectScreens))
+    *rectScreens = (RECT*) g_malloc (sizeof (RECT)*(rectScreensCount+1));
   else
-    rectScreens = (RECT*)realloc(rectScreens,sizeof(RECT)*(rectScreensCount+1));
+    *rectScreens = (RECT*) g_realloc (rectScreens,
+                                      sizeof (RECT)*(rectScreensCount+1));
 
-  if (rectScreens == NULL) return FALSE;
+  if (*rectScreens == NULL)
+    return FALSE;
 
-  rectScreens[rectScreensCount] = *lprcMonitor;
+  (*rectScreens)[rectScreensCount] = *lprcMonitor;
 
   rectScreensCount++;
 
@@ -673,53 +676,55 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   /* If the window is maximized then we need to fix the rect variable */
   ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
   if (GetWindowPlacement (selectedHwnd, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
-  {
-    /* if this is not the first time we call this function for some reason then we reset the rectScreens array */
-    if (rectScreensCount)
     {
-      free (rectScreens);
-      rectScreens = NULL;
-      rectScreensCount = 0;
+      RECT *rectScreens = NULL;
+
+      /* if this is not the first time we call this function for some
+       * reason then we reset the rectScreens count
+       */
+      if (rectScreensCount)
+        rectScreensCount = 0;
+
+      /* Get the screens rects */
+      EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc,
+                           (LPARAM) &rectScreens);
+
+      /* If for some reason the array size is 0 then we fill it with the desktop rect */
+      if (! rectScreensCount)
+        {
+          rectScreens = (RECT*) g_malloc (sizeof (RECT));
+          if (! GetWindowRect (GetDesktopWindow (), rectScreens))
+            {
+              /* error: could not get rect screens */
+              g_free (rectScreens);
+              return FALSE;
+            }
+
+          rectScreensCount = 1;
+        }
+
+      xCenter = rect.left + (rect.right - rect.left) / 2;
+      yCenter = rect.top + (rect.bottom - rect.top) / 2;
+
+      /* find on which screen the window exist */
+      for (i = 0; i < rectScreensCount; i++)
+        if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
+            yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
+          break;
+
+      if (i == rectScreensCount)
+        /* Error: did not found on which screen the window exist */
+        return FALSE;
+
+      if (rectScreens[i].left > rect.left) rect.left = rectScreens[i].left;
+      if (rectScreens[i].right < rect.right) rect.right = rectScreens[i].right;
+      if (rectScreens[i].top > rect.top) rect.top = rectScreens[i].top;
+      if (rectScreens[i].bottom < rect.bottom) rect.bottom = rectScreens[i].bottom;
+
+      g_free (rectScreens);
     }
 
-    /* Get the screens rects */
-    EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc, 0);
-
-
-    /* If for some reason the array size is 0 then we fill it with the desktop rect */
-    if (!rectScreensCount)
-      {
-        rectScreens = (RECT*)malloc (sizeof(RECT));
-        if (!GetWindowRect (GetDesktopWindow (),rectScreens))
-          /* error: could not get rect screens */
-          return FALSE;
-
-        rectScreensCount = 1;
-      }
-
-    xCenter = rect.left + (rect.right - rect.left) / 2;
-    yCenter = rect.top + (rect.bottom - rect.top) / 2;
-
-    /* find on which screen the window exist */
-    for (i = 0; i < rectScreensCount; i++)
-      if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
-          yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
-            break;
-
-    if (i == rectScreensCount)
-      /* Error: did not found on which screen the window exist */
-      return FALSE;
-
-    if (rectScreens[i].left > rect.left) rect.left = rectScreens[i].left;
-    if (rectScreens[i].right < rect.right) rect.right = rectScreens[i].right;
-    if (rectScreens[i].top > rect.top) rect.top = rectScreens[i].top;
-    if (rectScreens[i].bottom < rect.bottom) rect.bottom = rectScreens[i].bottom;
-
-  }
-
-
   rect.right = rect.left + ROUND4(rect.right - rect.left);
-
 
   /* Create the host window that will store the mag child window */
   hwndHost = CreateWindowEx (0x08000000 | 0x080000 | 0x80 | 0x20, APP_NAME, NULL, 0x80000000,
