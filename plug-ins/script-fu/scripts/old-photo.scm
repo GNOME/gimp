@@ -25,17 +25,17 @@
 
 (define (script-fu-old-photo inImage inLayer inDefocus inBorderSize inSepia inMottle inCopy)
   (let (
-       (theImage 0)
+       (theImage (if (= inCopy TRUE) (car (gimp-image-duplicate inImage)) inImage))
        (theLayer 0)
        (theWidth 0)
        (theHeight 0)
        )
-  (gimp-image-undo-group-start inImage)
-  (gimp-selection-all inImage)
-  (set! theImage (if (= inCopy TRUE)
-                     (car (gimp-image-duplicate inImage))
-                     inImage)
+  (if (= inCopy TRUE)
+     (gimp-image-undo-disable theImage)
+     (gimp-image-undo-group-start theImage)
   )
+
+  (gimp-selection-all theImage)
 
   (set! theLayer (car (gimp-image-flatten theImage)))
   (if (= inDefocus TRUE)
@@ -71,16 +71,16 @@
              (set! theLayer (car (gimp-image-flatten theImage)))
       )
   )
-
-
+  (gimp-selection-none theImage)
 
   (if (= inCopy TRUE)
       (begin  (gimp-image-clean-all theImage)
               (gimp-display-new theImage)
+              (gimp-image-undo-enable theImage)
       )
+      (gimp-image-undo-group-end theImage)
   )
-  (gimp-selection-none inImage)
-  (gimp-image-undo-group-end inImage)
+
   (gimp-displays-flush theImage)
   )
 )
