@@ -244,7 +244,29 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
       /* In some cases we want to finish the rectangle select tool
        * and hand over responsibility to the selection tool
        */
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+
+      gboolean zero_rect = FALSE;
+
+      if (private->widget)
+        {
+          gdouble x1, y1, x2, y2;
+
+          gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (private->widget),
+                                               &x1, &y1, &x2, &y2);
+          if (x1 == x2 && y1 == y2)
+            zero_rect = TRUE;
+        }
+
+      /* Don't commit a zero-size rectangle, it would look like a
+       * click to commit() and that could anchor the floating
+       * selection or do other evil things. Instead, simply cancel a
+       * zero-size rectangle. See bug #796073.
+       */
+      if (zero_rect)
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      else
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+
       gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
       return;
     }
