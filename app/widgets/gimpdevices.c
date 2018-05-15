@@ -29,6 +29,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
@@ -87,7 +88,6 @@ void
 gimp_devices_restore (Gimp *gimp)
 {
   GimpDeviceManager *manager;
-  GimpContext       *user_context;
   GList             *list;
   GFile             *file;
   GError            *error = NULL;
@@ -98,17 +98,13 @@ gimp_devices_restore (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
-  user_context = gimp_get_user_context (gimp);
-
   for (list = GIMP_LIST (manager)->queue->head;
        list;
        list = g_list_next (list))
     {
       GimpDeviceInfo *device_info = list->data;
 
-      gimp_context_copy_properties (user_context, GIMP_CONTEXT (device_info),
-                                    GIMP_DEVICE_INFO_CONTEXT_MASK);
-
+      gimp_device_info_save_tool (device_info);
       gimp_device_info_set_default_tool (device_info);
     }
 
@@ -137,9 +133,7 @@ gimp_devices_restore (Gimp *gimp)
 
       current_device = gimp_device_manager_get_current_device (manager);
 
-      gimp_context_copy_properties (GIMP_CONTEXT (current_device), user_context,
-                                    GIMP_DEVICE_INFO_CONTEXT_MASK);
-      gimp_context_set_parent (GIMP_CONTEXT (current_device), user_context);
+      gimp_device_info_restore_tool (current_device);
     }
 }
 

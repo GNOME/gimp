@@ -34,6 +34,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
@@ -66,16 +67,23 @@ enum
 
 struct _GimpDeviceStatusEntry
 {
-  GimpDeviceInfo *device_info;
+  GimpDeviceInfo  *device_info;
+  GimpContext     *context;
+  GimpToolOptions *tool_options;
 
-  GtkWidget      *ebox;
-  GtkWidget      *options_hbox;
-  GtkWidget      *tool;
-  GtkWidget      *foreground;
-  GtkWidget      *background;
-  GtkWidget      *brush;
-  GtkWidget      *pattern;
-  GtkWidget      *gradient;
+  GtkWidget       *ebox;
+  GtkWidget       *options_hbox;
+  GtkWidget       *tool;
+  GtkWidget       *foreground;
+  GtkWidget       *foreground_none;
+  GtkWidget       *background;
+  GtkWidget       *background_none;
+  GtkWidget       *brush;
+  GtkWidget       *brush_none;
+  GtkWidget       *pattern;
+  GtkWidget       *pattern_none;
+  GtkWidget       *gradient;
+  GtkWidget       *gradient_none;
 };
 
 
@@ -99,7 +107,8 @@ static void gimp_device_status_notify_device   (GimpDeviceManager     *manager,
 static void gimp_device_status_config_notify   (GimpGuiConfig         *config,
                                                 const GParamSpec      *pspec,
                                                 GimpDeviceStatus      *status);
-static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_info,
+static void gimp_device_status_notify_info     (GimpDeviceInfo        *device_info,
+                                                const GParamSpec      *pspec,
                                                 GimpDeviceStatusEntry *entry);
 static void gimp_device_status_save_clicked    (GtkWidget             *button,
                                                 GimpDeviceStatus      *status);
@@ -199,9 +208,10 @@ gimp_device_status_dispose (GObject *object)
           GimpDeviceStatusEntry *entry = list->data;
 
           g_signal_handlers_disconnect_by_func (entry->device_info,
-                                                gimp_device_status_update_entry,
+                                                gimp_device_status_notify_info,
                                                 entry);
 
+          g_object_unref (entry->context);
           g_slice_free (GimpDeviceStatusEntry, entry);
         }
 
@@ -237,13 +247,31 @@ gimp_device_status_set_property (GObject      *object,
 }
 
 static void
+pack_prop_widget (GtkBox     *hbox,
+                  GtkWidget  *widget,
+                  GtkWidget **none_widget)
+{
+  GtkSizeGroup *size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (size_group, widget);
+  gtk_widget_show (widget);
+
+  *none_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), *none_widget, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (size_group, *none_widget);
+
+  g_object_unref (size_group);
+}
+
+static void
 gimp_device_status_device_add (GimpContainer    *devices,
                                GimpDeviceInfo   *device_info,
                                GimpDeviceStatus *status)
 {
-  GimpContext           *context = GIMP_CONTEXT (device_info);
   GimpDeviceStatusEntry *entry;
   GClosure              *closure;
+  GParamSpec            *pspec;
   GtkWidget             *vbox;
   GtkWidget             *hbox;
   GtkWidget             *label;
@@ -254,11 +282,24 @@ gimp_device_status_device_add (GimpContainer    *devices,
   status->devices = g_list_prepend (status->devices, entry);
 
   entry->device_info = device_info;
+  entry->context     = gimp_context_new (GIMP_TOOL_PRESET (device_info)->gimp,
+                                         gimp_object_get_name (device_info),
+                                         NULL);
 
-  closure = g_cclosure_new (G_CALLBACK (gimp_device_status_update_entry),
+  gimp_context_define_properties (entry->context,
+                                  GIMP_CONTEXT_PROP_MASK_TOOL       |
+                                  GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                  GIMP_CONTEXT_PROP_MASK_BACKGROUND |
+                                  GIMP_CONTEXT_PROP_MASK_BRUSH      |
+                                  GIMP_CONTEXT_PROP_MASK_PATTERN    |
+                                  GIMP_CONTEXT_PROP_MASK_GRADIENT,
+                                  FALSE);
+
+  closure = g_cclosure_new (G_CALLBACK (gimp_device_status_notify_info),
                             entry, NULL);
   g_object_watch_closure (G_OBJECT (status), closure);
-  g_signal_connect_closure (device_info, "changed", closure, FALSE);
+  g_signal_connect_closure (device_info, "notify", closure,
+                            FALSE);
 
   entry->ebox = gtk_event_box_new ();
   gtk_box_pack_start (GTK_BOX (status->vbox), entry->ebox,
@@ -299,41 +340,38 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the tool  */
 
-  entry->tool = gimp_prop_view_new (G_OBJECT (context), "tool",
-                                    context, CELL_SIZE);
+  entry->tool = gimp_prop_view_new (G_OBJECT (entry->context), "tool",
+                                    entry->context, CELL_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), entry->tool, FALSE, FALSE, 0);
   gtk_widget_show (entry->tool);
 
   /*  the foreground color  */
 
-  entry->foreground = gimp_prop_color_area_new (G_OBJECT (context),
+  entry->foreground = gimp_prop_color_area_new (G_OBJECT (entry->context),
                                                 "foreground",
                                                 CELL_SIZE, CELL_SIZE,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->foreground,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_box_pack_start (GTK_BOX (hbox), entry->foreground, FALSE, FALSE, 0);
-  gtk_widget_show (entry->foreground);
+  pack_prop_widget (GTK_BOX (hbox), entry->foreground, &entry->foreground_none);
 
   /*  the background color  */
 
-  entry->background = gimp_prop_color_area_new (G_OBJECT (context),
+  entry->background = gimp_prop_color_area_new (G_OBJECT (entry->context),
                                                 "background",
                                                 CELL_SIZE, CELL_SIZE,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->background,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_box_pack_start (GTK_BOX (hbox), entry->background, FALSE, FALSE, 0);
-  gtk_widget_show (entry->background);
+  pack_prop_widget (GTK_BOX (hbox), entry->background, &entry->background_none);
 
   /*  the brush  */
 
-  entry->brush = gimp_prop_view_new (G_OBJECT (context), "brush",
-                                     context, CELL_SIZE);
+  entry->brush = gimp_prop_view_new (G_OBJECT (entry->context), "brush",
+                                     entry->context, CELL_SIZE);
   GIMP_VIEW (entry->brush)->clickable  = TRUE;
   GIMP_VIEW (entry->brush)->show_popup = TRUE;
-  gtk_box_pack_start (GTK_BOX (hbox), entry->brush, FALSE, FALSE, 0);
-  gtk_widget_show (entry->brush);
+  pack_prop_widget (GTK_BOX (hbox), entry->brush, &entry->brush_none);
 
   g_signal_connect (entry->brush, "clicked",
                     G_CALLBACK (gimp_device_status_view_clicked),
@@ -341,12 +379,11 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the pattern  */
 
-  entry->pattern = gimp_prop_view_new (G_OBJECT (context), "pattern",
-                                       context, CELL_SIZE);
+  entry->pattern = gimp_prop_view_new (G_OBJECT (entry->context), "pattern",
+                                       entry->context, CELL_SIZE);
   GIMP_VIEW (entry->pattern)->clickable  = TRUE;
   GIMP_VIEW (entry->pattern)->show_popup = TRUE;
-  gtk_box_pack_start (GTK_BOX (hbox), entry->pattern, FALSE, FALSE, 0);
-  gtk_widget_show (entry->pattern);
+  pack_prop_widget (GTK_BOX (hbox), entry->pattern, &entry->pattern_none);
 
   g_signal_connect (entry->pattern, "clicked",
                     G_CALLBACK (gimp_device_status_view_clicked),
@@ -354,18 +391,19 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the gradient  */
 
-  entry->gradient = gimp_prop_view_new (G_OBJECT (context), "gradient",
-                                        context, 2 * CELL_SIZE);
+  entry->gradient = gimp_prop_view_new (G_OBJECT (entry->context), "gradient",
+                                        entry->context, 2 * CELL_SIZE);
   GIMP_VIEW (entry->gradient)->clickable  = TRUE;
   GIMP_VIEW (entry->gradient)->show_popup = TRUE;
-  gtk_box_pack_start (GTK_BOX (hbox), entry->gradient, FALSE, FALSE, 0);
-  gtk_widget_show (entry->gradient);
+  pack_prop_widget (GTK_BOX (hbox), entry->gradient, &entry->gradient_none);
 
   g_signal_connect (entry->gradient, "clicked",
                     G_CALLBACK (gimp_device_status_view_clicked),
                     "gimp-gradient-list|gimp-gradient-grid");
 
-  gimp_device_status_update_entry (device_info, entry);
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (device_info),
+                                        "tool-options");
+  gimp_device_status_notify_info (device_info, pspec, entry);
 }
 
 static void
@@ -384,9 +422,10 @@ gimp_device_status_device_remove (GimpContainer    *devices,
           status->devices = g_list_remove (status->devices, entry);
 
           g_signal_handlers_disconnect_by_func (entry->device_info,
-                                                gimp_device_status_update_entry,
+                                                gimp_device_status_notify_info,
                                                 entry);
 
+          g_object_unref (entry->context);
           g_slice_free (GimpDeviceStatusEntry, entry);
 
           return;
@@ -445,9 +484,52 @@ gimp_device_status_config_notify (GimpGuiConfig    *config,
 }
 
 static void
-gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
-                                 GimpDeviceStatusEntry *entry)
+toggle_prop_visible (GtkWidget *widget,
+                     GtkWidget *widget_none,
+                     gboolean   available)
 {
+  gtk_widget_set_visible (widget, available);
+  gtk_widget_set_visible (widget_none, ! available);
+}
+
+static void
+gimp_device_status_notify_info (GimpDeviceInfo        *device_info,
+                                const GParamSpec      *pspec,
+                                GimpDeviceStatusEntry *entry)
+{
+  GimpToolOptions *tool_options = GIMP_TOOL_PRESET (device_info)->tool_options;
+
+  if (tool_options != entry->tool_options)
+    {
+      GimpContextPropMask serialize_props;
+
+      entry->tool_options = tool_options;
+      gimp_context_set_parent (entry->context, GIMP_CONTEXT (tool_options));
+
+      serialize_props =
+        gimp_context_get_serialize_properties (GIMP_CONTEXT (tool_options));
+
+      toggle_prop_visible (entry->foreground,
+                           entry->foreground_none,
+                           serialize_props & GIMP_CONTEXT_PROP_MASK_FOREGROUND);
+
+      toggle_prop_visible (entry->background,
+                           entry->background_none,
+                           serialize_props & GIMP_CONTEXT_PROP_MASK_BACKGROUND);
+
+      toggle_prop_visible (entry->brush,
+                           entry->brush_none,
+                           serialize_props & GIMP_CONTEXT_PROP_MASK_BRUSH);
+
+      toggle_prop_visible (entry->pattern,
+                           entry->pattern_none,
+                           serialize_props & GIMP_CONTEXT_PROP_MASK_PATTERN);
+
+      toggle_prop_visible (entry->gradient,
+                           entry->gradient_none,
+                           serialize_props & GIMP_CONTEXT_PROP_MASK_GRADIENT);
+    }
+
   if (! gimp_device_info_get_device (device_info, NULL) ||
       gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED)
     {
@@ -455,22 +537,24 @@ gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
     }
   else
     {
-      GimpContext *context = GIMP_CONTEXT (device_info);
-      GimpRGB      color;
-      guchar       r, g, b;
-      gchar        buf[64];
+      gtk_widget_show (entry->ebox);
+    }
 
-      gimp_context_get_foreground (context, &color);
+  if (! strcmp (pspec->name, "tool-options"))
+    {
+      GimpRGB color;
+      guchar  r, g, b;
+      gchar   buf[64];
+
+      gimp_context_get_foreground (entry->context, &color);
       gimp_rgb_get_uchar (&color, &r, &g, &b);
       g_snprintf (buf, sizeof (buf), _("Foreground: %d, %d, %d"), r, g, b);
       gimp_help_set_help_data (entry->foreground, buf, NULL);
 
-      gimp_context_get_background (context, &color);
+      gimp_context_get_background (entry->context, &color);
       gimp_rgb_get_uchar (&color, &r, &g, &b);
       g_snprintf (buf, sizeof (buf), _("Background: %d, %d, %d"), r, g, b);
       gimp_help_set_help_data (entry->background, buf, NULL);
-
-      gtk_widget_show (entry->ebox);
     }
 }
 

@@ -31,6 +31,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcurve.h"
 #include "core/gimpcurve-map.h"
@@ -46,12 +47,6 @@
 
 #define GIMP_DEVICE_INFO_DATA_KEY "gimp-device-info"
 
-
-enum
-{
-  CHANGED,
-  LAST_SIGNAL
-};
 
 enum
 {
@@ -81,11 +76,9 @@ static void   gimp_device_info_get_property (GObject        *object,
 static void   gimp_device_info_guess_icon   (GimpDeviceInfo *info);
 
 
-G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_CONTEXT)
+G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_TOOL_PRESET)
 
 #define parent_class gimp_device_info_parent_class
-
-static guint device_info_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
@@ -94,15 +87,6 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
   GParamSpec        *param_spec;
-
-  device_info_signals[CHANGED] =
-    g_signal_new ("changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpDeviceInfoClass, changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
   object_class->constructed         = gimp_device_info_constructed;
   object_class->finalize            = gimp_device_info_finalize;
@@ -169,14 +153,9 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
 static void
 gimp_device_info_init (GimpDeviceInfo *info)
 {
-  info->device   = NULL;
-  info->display  = NULL;
-  info->mode     = GDK_MODE_DISABLED;
-  info->n_axes   = 0;
-  info->axes     = NULL;
-  info->n_keys   = 0;
-  info->keys     = NULL;
+  gimp_data_make_internal (GIMP_DATA (info), NULL);
 
+  info->mode           = GDK_MODE_DISABLED;
   info->pressure_curve = GIMP_CURVE (gimp_curve_new ("pressure curve"));
 
   g_signal_connect (info, "notify::name",
@@ -188,14 +167,11 @@ static void
 gimp_device_info_constructed (GObject *object)
 {
   GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
-  Gimp           *gimp;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert ((info->device == NULL         && info->display == NULL) ||
                (GDK_IS_DEVICE (info->device) && GDK_IS_DISPLAY (info->display)));
-
-  gimp = GIMP_CONTEXT (object)->gimp;
 
   if (info->device)
     {
@@ -208,38 +184,6 @@ gimp_device_info_constructed (GObject *object)
       info->n_axes  = info->device->num_axes;
       info->n_keys  = info->device->num_keys;
     }
-
-  gimp_context_define_properties (GIMP_CONTEXT (object),
-                                  GIMP_DEVICE_INFO_CONTEXT_MASK,
-                                  FALSE);
-  gimp_context_copy_properties (gimp_get_user_context (gimp),
-                                GIMP_CONTEXT (object),
-                                GIMP_DEVICE_INFO_CONTEXT_MASK);
-
-  gimp_context_set_serialize_properties (GIMP_CONTEXT (object),
-                                         GIMP_DEVICE_INFO_CONTEXT_MASK);
-
-  /*  FIXME: this is ugly and needs to be done via "notify" once
-   *  the contexts' properties are dynamic.
-   */
-  g_signal_connect (object, "foreground-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
-  g_signal_connect (object, "background-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
-  g_signal_connect (object, "tool-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
-  g_signal_connect (object, "brush-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
-  g_signal_connect (object, "pattern-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
-  g_signal_connect (object, "gradient-changed",
-                    G_CALLBACK (gimp_device_info_changed),
-                    NULL);
 }
 
 static void
@@ -517,7 +461,6 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
 }
 
 
-
 /*  public functions  */
 
 GimpDeviceInfo *
@@ -525,14 +468,23 @@ gimp_device_info_new (Gimp       *gimp,
                       GdkDevice  *device,
                       GdkDisplay *display)
 {
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GDK_IS_DEVICE (device), NULL);
   g_return_val_if_fail (GDK_IS_DISPLAY (display), NULL);
 
+  context   = gimp_get_user_context (gimp);
+  tool_info = gimp_context_get_tool (context);
+
+  g_return_val_if_fail (tool_info != NULL, NULL);
+
   return g_object_new (GIMP_TYPE_DEVICE_INFO,
-                       "gimp",    gimp,
-                       "device",  device,
-                       "display", display,
+                       "gimp",         gimp,
+                       "device",       device,
+                       "display",      display,
+                       "tool-options", tool_info->tool_options,
                        NULL);
 }
 
@@ -626,7 +578,6 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
   gimp_object_name_changed (GIMP_OBJECT (info));
 
   g_object_notify (G_OBJECT (info), "device");
-  gimp_device_info_changed (info);
 }
 
 void
@@ -637,7 +588,7 @@ gimp_device_info_set_default_tool (GimpDeviceInfo *info)
   if (info->device &&
       gdk_device_get_source (info->device) == GDK_SOURCE_ERASER)
     {
-      GimpContainer *tools = GIMP_CONTEXT (info)->gimp->tool_info_list;
+      GimpContainer *tools = GIMP_TOOL_PRESET (info)->gimp->tool_info_list;
       GimpToolInfo  *eraser;
 
       eraser =
@@ -645,7 +596,84 @@ gimp_device_info_set_default_tool (GimpDeviceInfo *info)
                                                           "gimp-eraser-tool"));
 
       if (eraser)
-        gimp_context_set_tool (GIMP_CONTEXT (info), eraser);
+        g_object_set (info,
+                      "tool-options", eraser->tool_options,
+                      NULL);
+    }
+}
+
+void
+gimp_device_info_save_tool (GimpDeviceInfo *info)
+{
+  GimpToolPreset      *preset = GIMP_TOOL_PRESET (info);
+  GimpContext         *user_context;
+  GimpToolInfo        *tool_info;
+  GimpContextPropMask  serialize_props;
+
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+
+  user_context = gimp_get_user_context (GIMP_TOOL_PRESET (info)->gimp);
+
+  tool_info = gimp_context_get_tool (user_context);
+
+  g_object_set (info,
+                "tool-options", tool_info->tool_options,
+                NULL);
+
+  serialize_props =
+    gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+
+  g_object_set (preset,
+                "use-fg-bg",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_FOREGROUND) ||
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_BACKGROUND),
+
+                "use-brush",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_BRUSH) != 0,
+
+                "use-dynamics",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS) != 0,
+
+                "use-mypaint-brush",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_MYBRUSH) != 0,
+
+                "use-gradient",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_GRADIENT) != 0,
+
+                "use-pattern",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_PATTERN) != 0,
+
+                "use-palette",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_PALETTE) != 0,
+
+                "use-font",
+                (serialize_props & GIMP_CONTEXT_PROP_MASK_FONT) != 0,
+
+                NULL);
+}
+
+void
+gimp_device_info_restore_tool (GimpDeviceInfo *info)
+{
+  GimpToolPreset *preset;
+  GimpContext    *user_context;
+
+  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
+
+  preset = GIMP_TOOL_PRESET (info);
+
+  user_context = gimp_get_user_context (GIMP_TOOL_PRESET (info)->gimp);
+
+  if (preset->tool_options)
+    {
+      if (gimp_context_get_tool_preset (user_context) != preset)
+        {
+          gimp_context_set_tool_preset (user_context, preset);
+        }
+      else
+        {
+          gimp_context_tool_preset_changed (user_context);
+        }
     }
 }
 
@@ -674,7 +702,6 @@ gimp_device_info_set_mode (GimpDeviceInfo *info,
         info->mode = mode;
 
       g_object_notify (G_OBJECT (info), "mode");
-      gimp_device_info_changed (info);
     }
 }
 
@@ -843,14 +870,6 @@ gimp_device_info_map_axis (GimpDeviceInfo *info,
     }
 
   return value;
-}
-
-void
-gimp_device_info_changed (GimpDeviceInfo *info)
-{
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-
-  g_signal_emit (info, device_info_signals[CHANGED], 0);
 }
 
 GimpDeviceInfo *

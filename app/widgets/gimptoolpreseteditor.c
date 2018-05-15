@@ -281,13 +281,16 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
                                    gimp_tool_preset_editor_notify_model,
                                    editor);
 
-  gimp_config_copy (GIMP_CONFIG (data_editor->data),
-                    GIMP_CONFIG (priv->tool_preset_model),
+  gimp_config_sync (G_OBJECT (data_editor->data),
+                    G_OBJECT (priv->tool_preset_model),
                     GIMP_CONFIG_PARAM_SERIALIZE);
 
   g_signal_handlers_unblock_by_func (priv->tool_preset_model,
                                      gimp_tool_preset_editor_notify_model,
                                      editor);
+
+  if (! priv->tool_preset_model->tool_options)
+    return;
 
   tool_info = priv->tool_preset_model->tool_options->tool_info;
 
@@ -307,7 +310,8 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
 
   gtk_widget_set_sensitive (priv->fg_bg_toggle,
                             (serialize_props &
-                             GIMP_CONTEXT_PROP_MASK_FOREGROUND) != 0);
+                             (GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                              GIMP_CONTEXT_PROP_MASK_BACKGROUND)) != 0);
   gtk_widget_set_sensitive (priv->brush_toggle,
                             (serialize_props &
                              GIMP_CONTEXT_PROP_MASK_BRUSH) != 0);
@@ -344,8 +348,8 @@ gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
                                        gimp_tool_preset_editor_notify_data,
                                        editor);
 
-      gimp_config_copy (GIMP_CONFIG (editor->priv->tool_preset_model),
-                        GIMP_CONFIG (data_editor->data),
+      gimp_config_sync (G_OBJECT (editor->priv->tool_preset_model),
+                        G_OBJECT (data_editor->data),
                         GIMP_CONFIG_PARAM_SERIALIZE);
 
       g_signal_handlers_unblock_by_func (data_editor->data,
@@ -365,8 +369,8 @@ gimp_tool_preset_editor_notify_data (GimpToolPreset       *options,
                                    gimp_tool_preset_editor_notify_model,
                                    editor);
 
-  gimp_config_copy (GIMP_CONFIG (data_editor->data),
-                    GIMP_CONFIG (editor->priv->tool_preset_model),
+  gimp_config_sync (G_OBJECT (data_editor->data),
+                    G_OBJECT (editor->priv->tool_preset_model),
                     GIMP_CONFIG_PARAM_SERIALIZE);
 
   g_signal_handlers_unblock_by_func (editor->priv->tool_preset_model,
