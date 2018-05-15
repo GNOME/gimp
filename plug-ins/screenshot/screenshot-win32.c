@@ -85,22 +85,22 @@ static gint32    *image_id;
 static void sendBMPToGimp                      (HBITMAP         hBMP,
                                                 HDC             hDC,
                                                 RECT            rect);
-static void doWindowCapture                    (void);
-static int  doCapture                          (HWND            selectedHwnd);
-static BOOL isWindowIsAboveCaptureRegion       (HWND            hwndWindow,
-                                                RECT            rectCapture);
-static int  doCaptureMagnificationAPI          (HWND            selectedHwnd,
-                                                RECT            rect);
-static void doCaptureMagnificationAPI_callback (HWND            hwnd,
-                                                void           *srcdata,
-                                                MAGIMAGEHEADER  srcheader,
-                                                void           *destdata,
-                                                MAGIMAGEHEADER  destheader,
-                                                RECT            unclipped,
-                                                RECT            clipped,
-                                                HRGN            dirty);
-static int  doCaptureBitBlt                    (HWND            selectedHwnd,
-                                                RECT            rect);
+static void     doWindowCapture                    (void);
+static gboolean doCapture                          (HWND            selectedHwnd);
+static BOOL     isWindowIsAboveCaptureRegion       (HWND            hwndWindow,
+                                                    RECT            rectCapture);
+static gboolean doCaptureMagnificationAPI          (HWND            selectedHwnd,
+                                                    RECT            rect);
+static void     doCaptureMagnificationAPI_callback (HWND            hwnd,
+                                                    void           *srcdata,
+                                                    MAGIMAGEHEADER  srcheader,
+                                                    void           *destdata,
+                                                    MAGIMAGEHEADER  destheader,
+                                                    RECT            unclipped,
+                                                    RECT            clipped,
+                                                    HRGN            dirty);
+static gboolean doCaptureBitBlt                    (HWND            selectedHwnd,
+                                                    RECT            rect);
 
 BOOL CALLBACK dialogProc (HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
@@ -478,7 +478,7 @@ primDoWindowCapture (HDC  hdcWindow,
  * handle to be captured or the NULL value
  * to specify the root window.
  */
-static int
+static gboolean
 doCapture (HWND selectedHwnd)
 {
   RECT rect;
@@ -499,22 +499,23 @@ doCapture (HWND selectedHwnd)
       *  This will solve the bug https://bugzilla.gnome.org/show_bug.cgi?id=793722/
       */
 
-      if (!doCaptureMagnificationAPI (selectedHwnd, rect))
+      if (! doCaptureMagnificationAPI (selectedHwnd, rect))
         {
           /* If for some reason this capture method failed then
           *  capture the window with the normal method:
           */
+          HWND     previousHwnd = GetForegroundWindow ();
+          gboolean success;
 
-          /* Get the device context for the whole screen
-          * even if we just want to capture a window.
-          * this will allow to capture applications that
-          * don't render to their main window's device
-          * context (e.g. browsers).
-          */
           SetForegroundWindow (selectedHwnd);
           BringWindowToTop (selectedHwnd);
 
-          return doCaptureBitBlt (selectedHwnd, rect);
+          success = doCaptureBitBlt (selectedHwnd, rect);
+
+          if (previousHwnd)
+            SetForegroundWindow (previousHwnd);
+
+          return success;
         }
 
       return TRUE;
@@ -535,15 +536,15 @@ doCapture (HWND selectedHwnd)
   return FALSE; /* we should never get here... */
 }
 
-static int
+static gboolean
 doCaptureBitBlt (HWND selectedHwnd,
                  RECT rect)
 {
 
   HDC     hdcSrc;
   HDC     hdcCompat;
-  HWND    oldForeground;
   HBITMAP hbm;
+
   /* Get the device context for the whole screen
    * even if we just want to capture a window.
    * this will allow to capture applications that
@@ -651,7 +652,7 @@ doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR hMonitor,
   return TRUE;
 }
 
-static BOOL
+static gboolean
 doCaptureMagnificationAPI (HWND selectedHwnd,
                            RECT rect)
 {
