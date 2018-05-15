@@ -100,7 +100,10 @@
   (gimp-context-set-opacity 100.0)
   (gimp-context-set-feather FALSE)
 
-  (gimp-image-undo-disable image)
+  (if (= work-on-copy TRUE)
+      (gimp-image-undo-disable image)
+      (gimp-image-undo-group-start image)
+  )
 
 ; add an alpha channel to the image
   (gimp-layer-add-alpha pic-layer)
@@ -223,9 +226,13 @@
 
 ; clean up after the script
   (gimp-selection-none image)
-  (gimp-image-undo-enable image)
+
   (if (= work-on-copy TRUE)
+    (begin
       (gimp-display-new image)
+      (gimp-image-undo-enable image)
+    )
+    (gimp-image-undo-group-end image)
   )
 
   (gimp-displays-flush)
