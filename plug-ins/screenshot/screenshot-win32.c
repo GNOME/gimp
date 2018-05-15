@@ -683,7 +683,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
     }
 
     /* Get the screens rects */
-    EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc, NULL);
+    EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc, 0);
 
 
     /* If for some reason the array size is 0 then we fill it with the desktop rect */
@@ -723,7 +723,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
 
   /* Create the host window that will store the mag child window */
   hwndHost = CreateWindowEx (0x08000000 | 0x080000 | 0x80 | 0x20, APP_NAME, NULL, 0x80000000,
-                             NULL, NULL, NULL, NULL, NULL, NULL, GetModuleHandle (NULL), NULL);
+                             0, 0, 0, 0, NULL, NULL, GetModuleHandle (NULL), NULL);
 
   if (!hwndHost)
     {
@@ -736,7 +736,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   /* Create the mag child window inside the host window */
   hwndMag = CreateWindow (WC_MAGNIFIER, TEXT ("MagnifierWindow"),
                           WS_CHILD /*| MS_SHOWMAGNIFIEDCURSOR*/  /*| WS_VISIBLE*/,
-                          NULL, NULL, rect.right - rect.left, rect.bottom - rect.top,
+                          0, 0, rect.right - rect.left, rect.bottom - rect.top,
                           hwndHost, NULL, GetModuleHandle (NULL), NULL);
 
   /* Set the callback function that will be called by the api to get the pixels */
