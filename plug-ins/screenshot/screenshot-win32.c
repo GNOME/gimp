@@ -39,6 +39,7 @@
 #include "screenshot-win32-resource.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "magnification-api-win32.h"
 
 /*
  * Application definitions
@@ -59,24 +60,43 @@ BOOL InitInstance    (HINSTANCE hInstance,
 int  winsnapWinMain  (void);
 
 /* File variables */
-static int        captureType;
-static char       buffer[512];
-static guchar    *capBytes = NULL;
-static HWND       mainHwnd = NULL;
-static HINSTANCE  hInst = NULL;
-static HCURSOR    selectCursor = 0;
-static ICONINFO   iconInfo;
+static int             captureType;
+static char            buffer[512];
+static guchar         *capBytes = NULL;
+static HWND            mainHwnd = NULL;
+static HINSTANCE       hInst = NULL;
+static HCURSOR         selectCursor = 0;
+static ICONINFO        iconInfo;
+static MAGIMAGEHEADER  returnedSrcheader;
+static RECT           *rectScreens = NULL;
+static int             rectScreensCount = 0;
 
 static gint32    *image_id;
 
-static void sendBMPToGimp   (HBITMAP hBMP,
-                             HDC     hDC,
-                             RECT    rect);
-static void doWindowCapture (void);
-static int  doCapture       (HWND    selectedHwnd);
+static void sendBMPToGimp                      (HBITMAP         hBMP,
+                                                HDC             hDC,
+                                                RECT            rect);
+static void doWindowCapture                    (void);
+static int  doCapture                          (HWND            selectedHwnd);
+static BOOL isWindowIsAboveCaptureRegion       (HWND            hwndWindow,
+                                                RECT            rectCapture);
+static int  doCaptureMagnificationAPI          (HWND            selectedHwnd,
+                                                RECT            rect);
+static void doCaptureMagnificationAPI_callback (HWND            hwnd,
+                                                void           *srcdata,
+                                                MAGIMAGEHEADER  srcheader,
+                                                void           *destdata,
+                                                MAGIMAGEHEADER  destheader,
+                                                RECT            unclipped,
+                                                RECT            clipped,
+                                                HRGN            dirty);
+static int  doCaptureBitBlt                    (HWND            selectedHwnd,
+                                                RECT            rect);
 
-BOOL CALLBACK dialogProc(HWND, UINT, WPARAM, LPARAM);
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK dialogProc (HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
+
+static BOOL CALLBACK doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR, HDC, LPRECT, LPARAM);
 
 /* Data structure holding data between runs */
 typedef struct {
@@ -221,6 +241,26 @@ flipRedAndBlueBytes (int width,
     }
     j++;
   }
+}
+
+/*
+ * rgbaToRgbBytes
+ *
+ * Convert rgba array to rgb array
+ */
+static void
+rgbaToRgbBytes (guchar *rgbBufp,
+                guchar *rgbaBufp,
+                int     rgbaBufSize)
+{
+  int rgbPoint = 0, rgbaPoint;
+
+  for (rgbaPoint = 0; rgbaPoint < rgbaBufSize; rgbaPoint += 4)
+    {
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint];
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint + 1];
+      rgbBufp[rgbPoint++] = rgbaBufp[rgbaPoint + 2];
+    }
 }
 
 /*
@@ -421,6 +461,7 @@ primDoWindowCapture (HDC  hdcWindow,
   return hbmCopy;
 }
 
+
 /*
  * doCapture
  *
@@ -431,37 +472,43 @@ primDoWindowCapture (HDC  hdcWindow,
 static int
 doCapture (HWND selectedHwnd)
 {
-  HDC     hdcSrc;
-  HDC     hdcCompat;
-  HWND    oldForeground;
-  RECT    rect;
-  HBITMAP hbm;
+  RECT rect;
 
   /* Try and get everything out of the way before the
    * capture.
    */
   Sleep (500 + winsnapvals.delay * 1000);
 
-  /* Get the device context for the whole screen
-   * even if we just want to capture a window.
-   * this will allow to capture applications that
-   * don't render to their main window's device
-   * context (e.g. browsers).
-  */
-  hdcSrc = CreateDC (TEXT("DISPLAY"), NULL, NULL, NULL);
-
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd)
     {
-      /* Set to foreground window */
-      oldForeground = GetForegroundWindow ();
-      SetForegroundWindow (selectedHwnd);
-      BringWindowToTop (selectedHwnd);
+      if (!GetWindowRect (selectedHwnd, &rect))
+      /* For some reason it works only if we return here TRUE. strange... */
+          return TRUE;
 
-      Sleep (500);
+      /* First try to capture the window with the magnification api.
+      *  This will solve the bug https://bugzilla.gnome.org/show_bug.cgi?id=793722/
+      */
 
-      /* Build a region for the capture */
-      GetWindowRect (selectedHwnd, &rect);
+      if (!doCaptureMagnificationAPI (selectedHwnd, rect))
+        {
+          /* If for some reason this capture method failed then
+          *  capture the window with the normal method:
+          */
+
+          /* Get the device context for the whole screen
+          * even if we just want to capture a window.
+          * this will allow to capture applications that
+          * don't render to their main window's device
+          * context (e.g. browsers).
+          */
+          SetForegroundWindow (selectedHwnd);
+          BringWindowToTop (selectedHwnd);
+
+          return doCaptureBitBlt (selectedHwnd, rect);
+        }
+
+      return TRUE;
 
     }
   else
@@ -471,7 +518,30 @@ doCapture (HWND selectedHwnd)
       rect.bottom = GetSystemMetrics (SM_YVIRTUALSCREEN) + GetSystemMetrics (SM_CYVIRTUALSCREEN);
       rect.left   = GetSystemMetrics (SM_XVIRTUALSCREEN);
       rect.right  = GetSystemMetrics (SM_XVIRTUALSCREEN) + GetSystemMetrics (SM_CXVIRTUALSCREEN);
+
+      return doCaptureBitBlt (selectedHwnd, rect);
+
     }
+
+  return FALSE; /* we should never get here... */
+}
+
+static int
+doCaptureBitBlt (HWND selectedHwnd,
+                 RECT rect)
+{
+
+  HDC     hdcSrc;
+  HDC     hdcCompat;
+  HWND    oldForeground;
+  HBITMAP hbm;
+  /* Get the device context for the whole screen
+   * even if we just want to capture a window.
+   * this will allow to capture applications that
+   * don't render to their main window's device
+   * context (e.g. browsers).
+  */
+  hdcSrc = CreateDC (TEXT("DISPLAY"), NULL, NULL, NULL);
 
   if (!hdcSrc)
     {
@@ -495,17 +565,211 @@ doCapture (HWND selectedHwnd)
   /* Release the device context */
   ReleaseDC(selectedHwnd, hdcSrc);
 
-  /* Replace the previous foreground window */
-  if (selectedHwnd && oldForeground)
-    SetForegroundWindow (oldForeground);
+  if (hbm == NULL) return FALSE;
 
-  /* Send the bitmap
-   * TODO: Change this
-   */
-  if (hbm != NULL)
+  sendBMPToGimp (hbm, hdcCompat, rect);
+
+  return TRUE;
+
+}
+
+static void
+doCaptureMagnificationAPI_callback (HWND            hwnd,
+                                    void           *srcdata,
+                                    MAGIMAGEHEADER  srcheader,
+                                    void           *destdata,
+                                    MAGIMAGEHEADER  destheader,
+                                    RECT            unclipped,
+                                    RECT            clipped,
+                                    HRGN            dirty)
+{
+  if (!srcdata) return;
+  capBytes = (guchar*) malloc (sizeof (guchar)*srcheader.cbSize);
+  rgbaToRgbBytes (capBytes, srcdata, srcheader.cbSize);
+  returnedSrcheader = srcheader;
+}
+
+
+
+static BOOL
+isWindowIsAboveCaptureRegion (HWND hwndWindow,
+                              RECT rectCapture)
+{
+  RECT rectWindow;
+  ZeroMemory (&rectWindow, sizeof (RECT));
+  if (!GetWindowRect (hwndWindow, &rectWindow)) return FALSE;
+  if (
+      (
+       (rectWindow.left >= rectCapture.left && rectWindow.left < rectCapture.right)
+       ||
+       (rectWindow.right <= rectCapture.right && rectWindow.right > rectCapture.left)
+       ||
+       (rectWindow.left <= rectCapture.left && rectWindow.right >= rectCapture.right)
+      )
+      &&
+      (
+       (rectWindow.top >= rectCapture.top && rectWindow.top < rectCapture.bottom)
+       ||
+       (rectWindow.bottom <= rectCapture.bottom && rectWindow.bottom > rectCapture.top)
+       ||
+       (rectWindow.top <= rectCapture.top && rectWindow.bottom >= rectCapture.bottom)
+      )
+  )
+    return TRUE;
+  else
+    return FALSE;
+}
+
+static BOOL CALLBACK
+doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR hMonitor,
+                                           HDC hdcMonitor,
+                                           LPRECT lprcMonitor,
+                                           LPARAM dwData)
+{
+  if (!lprcMonitor) return FALSE;
+
+  if (!rectScreens)
+    rectScreens = (RECT*)malloc(sizeof(RECT)*(rectScreensCount+1));
+  else
+    rectScreens = (RECT*)realloc(rectScreens,sizeof(RECT)*(rectScreensCount+1));
+
+  if (rectScreens == NULL) return FALSE;
+
+  rectScreens[rectScreensCount] = *lprcMonitor;
+
+  rectScreensCount++;
+
+  return TRUE;
+}
+
+static BOOL
+doCaptureMagnificationAPI (HWND selectedHwnd,
+                           RECT rect)
+{
+  HWND            hwndMag;
+  HWND            hwndHost;
+  HWND            nextWindow;
+  HWND            excludeWins[24];
+  int             excludeWinsCount = 0;
+  WINDOWPLACEMENT windowplacment;
+  int             i;
+  int             xCenter;
+  int             yCenter;
+
+  if (!LoadMagnificationLibrary ()) return FALSE;
+
+  if (!MagInitialize ()) return FALSE;
+
+  /* If the window is maximized then we need to fix the rect variable */
+  ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
+  if (GetWindowPlacement (selectedHwnd, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
+  {
+    /* if this is not the first time we call this function for some reason then we reset the rectScreens array */
+    if (rectScreensCount)
     {
-      sendBMPToGimp (hbm, hdcCompat, rect);
+      free (rectScreens);
+      rectScreens = NULL;
+      rectScreensCount = 0;
     }
+
+    /* Get the screens rects */
+    EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc, NULL);
+
+
+    /* If for some reason the array size is 0 then we fill it with the desktop rect */
+    if (!rectScreensCount)
+      {
+        rectScreens = (RECT*)malloc (sizeof(RECT));
+        if (!GetWindowRect (GetDesktopWindow (),rectScreens))
+          /* error: could not get rect screens */
+          return FALSE;
+
+        rectScreensCount = 1;
+      }
+
+    xCenter = rect.left + (rect.right - rect.left) / 2;
+    yCenter = rect.top + (rect.bottom - rect.top) / 2;
+
+    /* find on which screen the window exist */
+    for (i = 0; i < rectScreensCount; i++)
+      if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
+          yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
+            break;
+
+    if (i == rectScreensCount)
+      /* Error: did not found on which screen the window exist */
+      return FALSE;
+
+    if (rectScreens[i].left > rect.left) rect.left = rectScreens[i].left;
+    if (rectScreens[i].right < rect.right) rect.right = rectScreens[i].right;
+    if (rectScreens[i].top > rect.top) rect.top = rectScreens[i].top;
+    if (rectScreens[i].bottom < rect.bottom) rect.bottom = rectScreens[i].bottom;
+
+  }
+
+
+  rect.right = rect.left + ROUND4(rect.right - rect.left);
+
+
+  /* Create the host window that will store the mag child window */
+  hwndHost = CreateWindowEx (0x08000000 | 0x080000 | 0x80 | 0x20, APP_NAME, NULL, 0x80000000,
+                             NULL, NULL, NULL, NULL, NULL, NULL, GetModuleHandle (NULL), NULL);
+
+  if (!hwndHost)
+    {
+      MagUninitialize ();
+      return FALSE;
+    }
+
+  SetLayeredWindowAttributes (hwndHost, (COLORREF)0, (BYTE)255, (DWORD)0x02);
+
+  /* Create the mag child window inside the host window */
+  hwndMag = CreateWindow (WC_MAGNIFIER, TEXT ("MagnifierWindow"),
+                          WS_CHILD /*| MS_SHOWMAGNIFIEDCURSOR*/  /*| WS_VISIBLE*/,
+                          NULL, NULL, rect.right - rect.left, rect.bottom - rect.top,
+                          hwndHost, NULL, GetModuleHandle (NULL), NULL);
+
+  /* Set the callback function that will be called by the api to get the pixels */
+  if (!MagSetImageScalingCallback (hwndMag, (MagImageScalingCallback)doCaptureMagnificationAPI_callback))
+    {
+      DestroyWindow (hwndHost);
+      MagUninitialize ();
+      return FALSE;
+    }
+
+  /* Add only windows that above the target window */
+  for (nextWindow = GetNextWindow (selectedHwnd, GW_HWNDPREV); nextWindow != NULL; nextWindow = GetNextWindow (nextWindow, GW_HWNDPREV))
+    if (isWindowIsAboveCaptureRegion (nextWindow, rect))
+    {
+      excludeWins[excludeWinsCount++] = nextWindow;
+      /* This api can't work with more than 24 windows. we stop on the 24 window */
+      if (excludeWinsCount >= 24) break;
+    }
+
+  if (excludeWinsCount)
+    MagSetWindowFilterList (hwndMag, MW_FILTERMODE_EXCLUDE, excludeWinsCount, excludeWins);
+
+  /* Call the api to capture the window */
+  capBytes = NULL;
+
+  if (!MagSetWindowSource (hwndMag, rect) || !capBytes)
+    {
+      DestroyWindow (hwndHost);
+      MagUninitialize ();
+      return FALSE;
+    }
+
+  /* Just to be safe, we reset the image size the size dimensions that the api gave*/
+  rect.left = 0;
+  rect.top = 0;
+  rect.right = ROUND4(returnedSrcheader.width);
+  rect.bottom = returnedSrcheader.height;
+
+  /* Send it to Gimp */
+  sendBMPToGimp (NULL, NULL, rect);
+
+  DestroyWindow (hwndHost);
+  MagUninitialize ();
 
   return TRUE;
 }
@@ -868,6 +1132,9 @@ BOOL
 InitInstance (HINSTANCE hInstance,
               int       nCmdShow)
 {
+  /* This line fix bug: https://bugzilla.gnome.org/show_bug.cgi?id=796121#c4 */
+  SetProcessDPIAware();
+
   /* Create our window */
   mainHwnd = CreateWindow (APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
                            CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
