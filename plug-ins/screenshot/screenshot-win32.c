@@ -29,6 +29,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/* Necessary in order to have SetProcessDPIAware() defined.
+ * This value of _WIN32_WINNT corresponds to Windows 7, which is our
+ * minimum supported platform.
+ */
+#ifdef _WIN32_WINNT
+#undef _WIN32_WINNT
+#endif
+#define _WIN32_WINNT 0x0601
 #include <windows.h>
 
 #include <libgimp/gimp.h>
@@ -1132,8 +1141,21 @@ BOOL
 InitInstance (HINSTANCE hInstance,
               int       nCmdShow)
 {
-  /* This line fix bug: https://bugzilla.gnome.org/show_bug.cgi?id=796121#c4 */
-  SetProcessDPIAware();
+  HINSTANCE User32Library = LoadLibrary ("user32.dll");
+
+  if (User32Library)
+    {
+      typedef BOOL (WINAPI* SET_PROC_DPI_AWARE)();
+      SET_PROC_DPI_AWARE SetProcessDPIAware;
+
+      /* This line fix bug: https://bugzilla.gnome.org/show_bug.cgi?id=796121#c4 */
+      SetProcessDPIAware = (SET_PROC_DPI_AWARE) GetProcAddress (User32Library,
+                                                                "SetProcessDPIAware");
+      if (SetProcessDPIAware)
+        SetProcessDPIAware();
+
+      FreeLibrary (User32Library);
+    }
 
   /* Create our window */
   mainHwnd = CreateWindow (APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
