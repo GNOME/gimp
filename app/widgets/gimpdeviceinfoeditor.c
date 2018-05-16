@@ -380,6 +380,21 @@ gimp_device_info_editor_constructed (GObject *object)
                             _("Product ID:"), 0.0, 0.5,
                             label, 1);
 
+  label = gimp_prop_enum_label_new (G_OBJECT (private->info), "tool-type");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("Tool type:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "tool-serial");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+                            _("Tool serial:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "tool-hardware-id");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
+                            _("Tool hardware ID:"), 0.0, 0.5,
+                            label, 1);
+
   /*  the axes  */
 
   n_axes = gimp_device_info_get_n_axes (private->info);

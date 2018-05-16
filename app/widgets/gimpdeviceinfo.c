@@ -55,6 +55,9 @@ enum
   PROP_SOURCE,
   PROP_VENDOR_ID,
   PROP_PRODUCT_ID,
+  PROP_TOOL_TYPE,
+  PROP_TOOL_SERIAL,
+  PROP_TOOL_HARDWARE_ID,
   PROP_AXES,
   PROP_KEYS,
   PROP_PRESSURE_CURVE
@@ -75,6 +78,10 @@ static void   gimp_device_info_get_property (GObject        *object,
                                              GParamSpec     *pspec);
 
 static void   gimp_device_info_guess_icon   (GimpDeviceInfo *info);
+
+static void   gimp_device_info_tool_changed (GdkDevice      *device,
+                                             GdkDeviceTool  *tool,
+                                             GimpDeviceInfo *info);
 
 
 G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_TOOL_PRESET)
@@ -139,6 +146,28 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                                    g_param_spec_string ("product-id",
                                                         NULL, NULL,
                                                         NULL,
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_TOOL_TYPE,
+                                   g_param_spec_enum ("tool-type",
+                                                      NULL, NULL,
+                                                      GDK_TYPE_DEVICE_TOOL_TYPE,
+                                                      GDK_DEVICE_TOOL_TYPE_UNKNOWN,
+                                                      GIMP_PARAM_STATIC_STRINGS |
+                                                      G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_TOOL_SERIAL,
+                                   g_param_spec_uint64 ("tool-serial",
+                                                        NULL, NULL,
+                                                        0, G_MAXUINT64, 0,
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_TOOL_HARDWARE_ID,
+                                   g_param_spec_uint64 ("tool-hardware-id",
+                                                        NULL, NULL,
+                                                        0, G_MAXUINT64, 0,
                                                         GIMP_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
 
@@ -237,7 +266,15 @@ gimp_device_info_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_DEVICE:
+      if (info->device)
+        g_signal_handlers_disconnect_by_func (info->device,
+                                              gimp_device_info_tool_changed,
+                                              info);
       info->device = g_value_get_object (value);
+      if (info->device)
+        g_signal_connect_object (info->device, "tool-changed",
+                                 G_CALLBACK (gimp_device_info_tool_changed),
+                                 G_OBJECT (info), 0);
       break;
 
     case PROP_DISPLAY:
@@ -374,6 +411,18 @@ gimp_device_info_get_property (GObject    *object,
       g_value_set_string (value, gimp_device_info_get_product_id (info));
       break;
 
+    case PROP_TOOL_TYPE:
+      g_value_set_enum (value, gimp_device_info_get_tool_type (info));
+      break;
+
+    case PROP_TOOL_SERIAL:
+      g_value_set_uint64 (value, gimp_device_info_get_tool_serial (info));
+      break;
+
+    case PROP_TOOL_HARDWARE_ID:
+      g_value_set_uint64 (value, gimp_device_info_get_tool_hardware_id (info));
+      break;
+
     case PROP_AXES:
       {
         GimpValueArray *array;
@@ -496,6 +545,20 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
     }
 }
 
+static void
+gimp_device_info_tool_changed (GdkDevice      *device,
+                               GdkDeviceTool  *tool,
+                               GimpDeviceInfo *info)
+{
+  g_object_freeze_notify (G_OBJECT (info));
+
+  g_object_notify (G_OBJECT (info), "tool-type");
+  g_object_notify (G_OBJECT (info), "tool-serial");
+  g_object_notify (G_OBJECT (info), "tool-hardware-id");
+
+  g_object_thaw_notify (G_OBJECT (info));
+}
+
 
 /*  public functions  */
 
@@ -557,8 +620,10 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
   if (device)
     {
-      info->device  = device;
-      info->display = display;
+      g_object_set (info,
+                    "device",  device,
+                    "display", display,
+                    NULL);
 
       g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, info);
 
@@ -588,8 +653,10 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       device  = info->device;
       display = info->display;
 
-      info->device  = NULL;
-      info->display = NULL;
+      g_object_set (info,
+                    "device",  NULL,
+                    "display", NULL,
+                    NULL);
 
       g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, NULL);
 
@@ -620,11 +687,12 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
   /*  sort order depends on device presence  */
   gimp_object_name_changed (GIMP_OBJECT (info));
 
-  g_object_notify (G_OBJECT (info), "device");
-  g_object_notify (G_OBJECT (info), "display");
   g_object_notify (G_OBJECT (info), "source");
   g_object_notify (G_OBJECT (info), "vendor-id");
   g_object_notify (G_OBJECT (info), "product-id");
+  g_object_notify (G_OBJECT (info), "tool-type");
+  g_object_notify (G_OBJECT (info), "tool-serial");
+  g_object_notify (G_OBJECT (info), "tool-hardware-id");
 
   g_object_thaw_notify (G_OBJECT (info));
 }
@@ -820,6 +888,75 @@ gimp_device_info_get_product_id (GimpDeviceInfo  *info)
 
           if (! (id && strlen (id)))
             id = _("(none)");
+        }
+    }
+
+  return id;
+}
+
+GdkDeviceToolType
+gimp_device_info_get_tool_type (GimpDeviceInfo *info)
+{
+  GdkDeviceToolType type = GDK_DEVICE_TOOL_TYPE_UNKNOWN;
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), type);
+
+  if (info->device)
+    {
+      GdkDeviceTool *tool;
+
+      g_object_get (info->device, "tool", &tool, NULL);
+
+      if (tool)
+        {
+          type = gdk_device_tool_get_tool_type (tool);
+          g_object_unref (tool);
+        }
+    }
+
+  return type;
+}
+
+guint64
+gimp_device_info_get_tool_serial (GimpDeviceInfo *info)
+{
+  guint64 serial = 0;
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), serial);
+
+  if (info->device)
+    {
+      GdkDeviceTool *tool;
+
+      g_object_get (info->device, "tool", &tool, NULL);
+
+      if (tool)
+        {
+          serial = gdk_device_tool_get_serial (tool);
+          g_object_unref (tool);
+        }
+    }
+
+  return serial;
+}
+
+guint64
+gimp_device_info_get_tool_hardware_id (GimpDeviceInfo *info)
+{
+  guint64 id = 0;
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), id);
+
+  if (info->device)
+    {
+      GdkDeviceTool *tool;
+
+      g_object_get (info->device, "tool", &tool, NULL);
+
+      if (tool)
+        {
+          id = gdk_device_tool_get_hardware_id (tool);
+          g_object_unref (tool);
         }
     }
 
