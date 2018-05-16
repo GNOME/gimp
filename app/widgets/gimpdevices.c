@@ -127,6 +127,21 @@ gimp_devices_restore (Gimp *gimp)
 
   g_object_unref (file);
 
+  for (list = GIMP_LIST (manager)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      GimpDeviceInfo *device_info = list->data;
+
+      if (! GIMP_TOOL_PRESET (device_info)->tool_options)
+        {
+          gimp_device_info_save_tool (device_info);
+
+          g_printerr ("%s: set default tool on loaded GimpDeviceInfo without tool options: %s\n",
+                      G_STRFUNC, gimp_object_get_name (device_info));
+        }
+    }
+
   if (! GIMP_GUI_CONFIG (gimp->config)->devices_share_tool)
     {
       GimpDeviceInfo *current_device;
