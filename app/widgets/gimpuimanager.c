@@ -890,21 +890,21 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
                                gint     *y,
                                gpointer  data)
 {
-  GdkDeviceManager *device_manager;
-  GdkDevice        *device;
-  GdkScreen        *screen;
-  GtkRequisition    requisition;
-  GdkRectangle      workarea;
-  gint              pointer_x;
-  gint              pointer_y;
+  GdkSeat        *seat;
+  GdkDevice      *device;
+  GdkScreen      *screen;
+  GtkRequisition  requisition;
+  GdkRectangle    workarea;
+  gint            pointer_x;
+  gint            pointer_y;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
   g_return_if_fail (GTK_IS_WIDGET (data));
 
-  device_manager = gdk_display_get_device_manager (gtk_widget_get_display (data));
-  device = gdk_device_manager_get_client_pointer (device_manager);
+  seat = gdk_display_get_default_seat (gtk_widget_get_display (data));
+  device = gdk_seat_get_pointer (seat);
 
   gdk_device_get_position (device, &screen, &pointer_x, &pointer_y);
 

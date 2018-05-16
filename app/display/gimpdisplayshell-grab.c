@@ -42,10 +42,10 @@ get_associated_pointer (GdkDevice *device)
 
     case GDK_DEVICE_TYPE_FLOATING:
       {
-        GdkDisplay       *display = gdk_device_get_display (device);
-        GdkDeviceManager *manager = gdk_display_get_device_manager (display);
+        GdkDisplay *display = gdk_device_get_display (device);
+        GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
-        return gdk_device_manager_get_client_pointer (manager);
+        return gdk_seat_get_pointer (seat);
       }
       break;
 
@@ -70,10 +70,10 @@ get_associated_keyboard (GdkDevice *device)
 
     case GDK_DEVICE_TYPE_FLOATING:
       {
-        GdkDisplay       *display = gdk_device_get_display (device);
-        GdkDeviceManager *manager = gdk_display_get_device_manager (display);
+        GdkDisplay *display = gdk_device_get_display (device);
+        GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
-        device = gdk_device_manager_get_client_pointer (manager);
+        device = gdk_seat_get_pointer (seat);
       }
       break;
 
