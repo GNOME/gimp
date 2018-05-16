@@ -168,8 +168,8 @@ gimp_enum_label_set_property (GObject      *object,
 
 /**
  * gimp_enum_label_new:
- * @enum_type: the #GType of an enum.
- * @value:
+ * @enum_type: the #GType of an enum
+ * @value:     an enum value
  *
  * Return value: a new #GimpEnumLabel.
  *
@@ -190,7 +190,7 @@ gimp_enum_label_new (GType enum_type,
 /**
  * gimp_enum_label_set_value
  * @label: a #GimpEnumLabel
- * @value:
+ * @value: an enum value
  *
  * Since: 2.4
  **/
@@ -198,18 +198,22 @@ void
 gimp_enum_label_set_value (GimpEnumLabel *label,
                            gint           value)
 {
+  const gchar *nick;
   const gchar *desc;
 
   g_return_if_fail (GIMP_IS_ENUM_LABEL (label));
 
   if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (label->enum_class), value,
-                             NULL, NULL, &desc, NULL))
+                             NULL, &nick, &desc, NULL))
     {
       g_warning ("%s: %d is not valid for enum of type '%s'",
                  G_STRLOC, value,
                  g_type_name (G_TYPE_FROM_CLASS (label->enum_class)));
       return;
     }
+
+  if (! desc)
+    desc = nick;
 
   gtk_label_set_text (GTK_LABEL (label), desc);
 }
