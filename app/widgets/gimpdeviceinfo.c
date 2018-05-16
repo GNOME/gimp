@@ -52,6 +52,9 @@ enum
   PROP_DEVICE,
   PROP_DISPLAY,
   PROP_MODE,
+  PROP_SOURCE,
+  PROP_VENDOR_ID,
+  PROP_PRODUCT_ID,
   PROP_AXES,
   PROP_KEYS,
   PROP_PRESSURE_CURVE
@@ -116,6 +119,28 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                          GDK_TYPE_INPUT_MODE,
                          GDK_MODE_DISABLED,
                          GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_SOURCE,
+                                   g_param_spec_enum ("source",
+                                                      NULL, NULL,
+                                                      GDK_TYPE_INPUT_SOURCE,
+                                                      GDK_SOURCE_MOUSE,
+                                                      GIMP_PARAM_STATIC_STRINGS |
+                                                      G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_VENDOR_ID,
+                                   g_param_spec_string ("vendor-id",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_PRODUCT_ID,
+                                   g_param_spec_string ("product-id",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_STATIC_STRINGS |
+                                                        G_PARAM_READABLE));
 
   param_spec = g_param_spec_enum ("axis",
                                   NULL, NULL,
@@ -337,6 +362,18 @@ gimp_device_info_get_property (GObject    *object,
       g_value_set_enum (value, gimp_device_info_get_mode (info));
       break;
 
+    case PROP_SOURCE:
+      g_value_set_enum (value, gimp_device_info_get_source (info));
+      break;
+
+    case PROP_VENDOR_ID:
+      g_value_set_string (value, gimp_device_info_get_vendor_id (info));
+      break;
+
+     case PROP_PRODUCT_ID:
+      g_value_set_string (value, gimp_device_info_get_product_id (info));
+      break;
+
     case PROP_AXES:
       {
         GimpValueArray *array;
@@ -516,6 +553,8 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
                     strcmp (gdk_device_get_name (device),
                             gimp_object_get_name (info)) == 0);
 
+  g_object_freeze_notify (G_OBJECT (info));
+
   if (device)
     {
       info->device  = device;
@@ -583,6 +622,11 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
   g_object_notify (G_OBJECT (info), "device");
   g_object_notify (G_OBJECT (info), "display");
+  g_object_notify (G_OBJECT (info), "source");
+  g_object_notify (G_OBJECT (info), "vendor-id");
+  g_object_notify (G_OBJECT (info), "product-id");
+
+  g_object_thaw_notify (G_OBJECT (info));
 }
 
 void
@@ -719,6 +763,67 @@ gimp_device_info_has_cursor (GimpDeviceInfo *info)
     return gdk_device_get_has_cursor (info->device);
 
   return FALSE;
+}
+
+GdkInputSource
+gimp_device_info_get_source (GimpDeviceInfo *info)
+{
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), GDK_SOURCE_MOUSE);
+
+  if (info->device)
+    return gdk_device_get_source (info->device);
+
+  return GDK_SOURCE_MOUSE;
+}
+
+const gchar *
+gimp_device_info_get_vendor_id (GimpDeviceInfo  *info)
+{
+  const gchar *id = _("(Device not present)");
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+
+  if (info->device)
+    {
+      if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
+        {
+          id = _("(Virtual decvice)");
+        }
+      else
+        {
+          id = gdk_device_get_vendor_id (info->device);
+
+          if (! (id && strlen (id)))
+            id = _("(none)");
+        }
+    }
+
+  return id;
+}
+
+const gchar *
+gimp_device_info_get_product_id (GimpDeviceInfo  *info)
+{
+  const gchar *id = _("(Device not present)");
+
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), NULL);
+
+  if (info->device)
+    {
+      if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
+        {
+          return _("(Virtual decvice)");
+        }
+      else
+        {
+          id = gdk_device_get_product_id (info->device);
+
+          if (! (id && strlen (id)))
+            id = _("(none)");
+        }
+    }
+
+  return id;
 }
 
 gint

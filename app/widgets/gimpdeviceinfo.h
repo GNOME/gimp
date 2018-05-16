@@ -93,6 +93,11 @@ void             gimp_device_info_set_mode          (GimpDeviceInfo  *info,
 
 gboolean         gimp_device_info_has_cursor        (GimpDeviceInfo  *info);
 
+GdkInputSource   gimp_device_info_get_source        (GimpDeviceInfo  *info);
+
+const gchar    * gimp_device_info_get_vendor_id     (GimpDeviceInfo  *info);
+const gchar    * gimp_device_info_get_product_id    (GimpDeviceInfo  *info);
+
 gint             gimp_device_info_get_n_axes        (GimpDeviceInfo  *info);
 GdkAxisUse       gimp_device_info_get_axis_use      (GimpDeviceInfo  *info,
                                                      gint             axis);
