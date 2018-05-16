@@ -351,6 +351,9 @@
                          thread-length
                          thread-density
                          thread-intensity)
+  (gimp-context-push)
+  (gimp-image-undo-group-start img)
+
   (let* (
         (d-img (car (gimp-item-get-image drawable)))
         (d-width (car (gimp-drawable-width drawable)))
@@ -370,7 +373,6 @@
         (w-layer (cadr weaving))
         )
 
-    (gimp-context-push)
     (gimp-context-set-paint-mode LAYER-MODE-NORMAL)
     (gimp-context-set-opacity 100.0)
     (gimp-context-set-feather FALSE)
@@ -385,11 +387,10 @@
       (gimp-layer-set-mode floating-sel LAYER-MODE-MULTIPLY)
       (gimp-floating-sel-to-layer floating-sel)
     )
-
-    (gimp-displays-flush)
-
-    (gimp-context-pop)
   )
+  (gimp-context-pop)
+  (gimp-image-undo-group-end img)
+  (gimp-displays-flush)
 )
 
 (script-fu-register "script-fu-weave"
