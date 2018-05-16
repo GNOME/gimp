@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimpmarshal.h"
 
@@ -216,6 +217,7 @@ gimp_device_editor_constructed (GObject *object)
   GimpDeviceEditor        *editor  = GIMP_DEVICE_EDITOR (object);
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GimpContainer           *devices;
+  GimpContext             *context;
   GList                   *list;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -234,8 +236,10 @@ gimp_device_editor_constructed (GObject *object)
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->treeview),
                                      devices);
 
+  context = gimp_context_new (private->gimp, "device-editor-list", NULL);
   gimp_container_view_set_context (GIMP_CONTAINER_VIEW (private->treeview),
-                                   gimp_get_user_context (private->gimp));
+                                   context);
+  g_object_unref (context);
 
   g_signal_connect (devices, "add",
                     G_CALLBACK (gimp_device_editor_add_device),
