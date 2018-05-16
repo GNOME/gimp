@@ -19,11 +19,16 @@ Core:
     introducing changes.
   - New API to calculate histograms in separate threads, with possible further
     extension to handle similar cases elsewhere in GIMP.
+  - Tool options are now properly saved and reloaded per-device at
+    startup.
 
 Plug-ins:
 
   - New plug-in for importing and exporting HEIF images.
   - Enable visibility of rasterized vector layer from PSD.
+  - Single-window screenshots in Windows fixed to correctly snap a
+    window even when it is partly off-screen or covered by another
+    window or when display scaling is not set to 100%.
 
 Filters:
 
