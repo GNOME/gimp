@@ -28,6 +28,29 @@
                 "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
         {
+            "name" : "libheif",
+            "modules": [
+                {
+                    "name": "libde265",
+                    "config-opts": [ "--disable-sherlock265" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/strukturag/libde265/releases/download/v1.0.3/libde265-1.0.3.tar.gz",
+                            "sha256": "e4206185a7c67d3b797d6537df8dcaa6e5fd5a5f93bd14e65a755c33cd645f7a"
+                        }
+                    ]
+                }
+            ],
+            "sources" : [
+                {
+                    "url" : "https://github.com/strukturag/libheif/releases/download/v1.1.0/libheif-1.1.0.tar.gz",
+                    "sha256" : "3f8e62e5481b38965b05d44cddc522b15c4820ee635205f826a6b15c0d4040cb",
+                    "type" : "archive"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
