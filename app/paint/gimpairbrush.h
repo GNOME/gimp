@@ -41,6 +41,7 @@ struct _GimpAirbrush
   GimpSymmetry     *sym;
   GimpDrawable     *drawable;
   GimpPaintOptions *paint_options;
+  GimpCoords        coords;
 };
 
 struct _GimpAirbrushClass
