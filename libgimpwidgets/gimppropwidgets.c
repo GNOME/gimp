@@ -976,6 +976,7 @@ gimp_prop_enum_label_new (GObject     *config,
                 NULL);
 
   label = gimp_enum_label_new (param_spec->value_type, value);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 
