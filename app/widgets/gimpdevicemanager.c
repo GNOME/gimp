@@ -76,10 +76,10 @@ static void   gimp_device_manager_display_closed  (GdkDisplay        *display,
                                                    gboolean           is_error,
                                                    GimpDeviceManager *manager);
 
-static void   gimp_device_manager_device_added    (GdkDeviceManager  *gdk_manager,
+static void   gimp_device_manager_device_added    (GdkSeat           *seat,
                                                    GdkDevice         *device,
                                                    GimpDeviceManager *manager);
-static void   gimp_device_manager_device_removed  (GdkDeviceManager  *gdk_manager,
+static void   gimp_device_manager_device_removed  (GdkSeat           *seat,
                                                    GdkDevice         *device,
                                                    GimpDeviceManager *manager);
 
@@ -150,8 +150,8 @@ gimp_device_manager_constructed (GObject *object)
   GSList                   *displays;
   GSList                   *list;
   GdkDisplay               *display;
-  GdkDeviceManager         *gdk_manager;
-  GdkDevice                *client_pointer;
+  GdkSeat                  *seat;
+  GdkDevice                *pointer;
   GimpDeviceInfo           *device_info;
   GimpContext              *user_context;
 
@@ -177,12 +177,12 @@ gimp_device_manager_constructed (GObject *object)
                     G_CALLBACK (gimp_device_manager_display_opened),
                     manager);
 
-  display     = gdk_display_get_default ();
-  gdk_manager = gdk_display_get_device_manager (display);
+  display = gdk_display_get_default ();
+  seat    = gdk_display_get_default_seat (display);
 
-  client_pointer = gdk_device_manager_get_client_pointer (gdk_manager);
+  pointer = gdk_seat_get_pointer (seat);
 
-  device_info = gimp_device_info_get_by_device (client_pointer);
+  device_info = gimp_device_info_get_by_device (pointer);
   gimp_device_manager_set_current_device (manager, device_info);
 
   g_signal_connect_object (private->gimp->config, "notify::devices-share-tool",
@@ -336,18 +336,18 @@ gimp_device_manager_set_current_device (GimpDeviceManager *manager,
 
 static void
 gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
-                                    GdkDisplay        *gdk_display,
+                                    GdkDisplay        *display,
                                     GimpDeviceManager *manager)
 {
   GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
-  GdkDeviceManager         *gdk_manager;
+  GdkSeat                  *seat;
   GdkDevice                *device;
   GList                    *devices;
   GList                    *list;
   const gchar              *display_name;
   gint                      count;
 
-  display_name = gdk_display_get_name (gdk_display);
+  display_name = gdk_display_get_name (display);
 
   count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
                                                 display_name));
@@ -359,63 +359,49 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
   if (count > 0)
     return;
 
-  gdk_manager = gdk_display_get_device_manager (gdk_display);
+  seat = gdk_display_get_default_seat (display);
 
-  device = gdk_device_manager_get_client_pointer (gdk_manager);
-  gimp_device_manager_device_added (gdk_manager, device, manager);
+  device = gdk_seat_get_pointer (seat);
+  gimp_device_manager_device_added (seat, device, manager);
 
-  devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_SLAVE);
-
-  /*  create device info structures for present devices */
-  for (list = devices; list; list = g_list_next (list))
-    {
-      device = list->data;
-
-      gimp_device_manager_device_added (gdk_manager, device, manager);
-    }
-
-  g_list_free (devices);
-
-  devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_FLOATING);
+  devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL_POINTING);
 
   /*  create device info structures for present devices */
   for (list = devices; list; list = g_list_next (list))
     {
       device = list->data;
 
-      gimp_device_manager_device_added (gdk_manager, device, manager);
+      gimp_device_manager_device_added (seat, device, manager);
     }
 
   g_list_free (devices);
 
-  g_signal_connect (gdk_manager, "device-added",
+  g_signal_connect (seat, "device-added",
                     G_CALLBACK (gimp_device_manager_device_added),
                     manager);
-  g_signal_connect (gdk_manager, "device-removed",
+  g_signal_connect (seat, "device-removed",
                     G_CALLBACK (gimp_device_manager_device_removed),
                     manager);
 
-  g_signal_connect (gdk_display, "closed",
+  g_signal_connect (display, "closed",
                     G_CALLBACK (gimp_device_manager_display_closed),
                     manager);
 }
 
 static void
-gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
+gimp_device_manager_display_closed (GdkDisplay        *display,
                                     gboolean           is_error,
                                     GimpDeviceManager *manager)
 {
   GimpDeviceManagerPrivate *private = GET_PRIVATE (manager);
-  GdkDeviceManager         *gdk_manager;
-  GdkDevice               *device;
+  GdkSeat                  *seat;
+  GdkDevice                *device;
   GList                    *devices;
   GList                    *list;
   const gchar              *display_name;
   gint                      count;
 
-  display_name = gdk_display_get_name (gdk_display);
+  display_name = gdk_display_get_name (display);
 
   count = GPOINTER_TO_INT (g_hash_table_lookup (private->displays,
                                                 display_name));
@@ -430,51 +416,36 @@ gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
 
   g_hash_table_remove (private->displays, display_name);
 
-  gdk_manager = gdk_display_get_device_manager (gdk_display);
+  seat = gdk_display_get_default_seat (display);
 
-  g_signal_handlers_disconnect_by_func (gdk_manager,
+  g_signal_handlers_disconnect_by_func (seat,
                                         gimp_device_manager_device_added,
                                         manager);
-  g_signal_handlers_disconnect_by_func (gdk_manager,
+  g_signal_handlers_disconnect_by_func (seat,
                                         gimp_device_manager_device_removed,
                                         manager);
 
-  g_signal_handlers_disconnect_by_func (gdk_display,
+  g_signal_handlers_disconnect_by_func (display,
                                         gimp_device_manager_display_closed,
                                         manager);
 
-  gdk_manager = gdk_display_get_device_manager (gdk_display);
+  device = gdk_seat_get_pointer (seat);
+  gimp_device_manager_device_removed (seat, device, manager);
 
-  device = gdk_device_manager_get_client_pointer (gdk_manager);
-  gimp_device_manager_device_removed (gdk_manager, device, manager);
-
-  devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_SLAVE);
+  devices = gdk_seat_get_slaves (seat, GDK_SEAT_CAPABILITY_ALL_POINTING);
 
   for (list = devices; list; list = list->next)
     {
       device = list->data;
 
-      gimp_device_manager_device_removed (gdk_manager, device, manager);
-    }
-
-  g_list_free (devices);
-
-  devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_FLOATING);
-
-  for (list = devices; list; list = list->next)
-    {
-      device = list->data;
-
-      gimp_device_manager_device_removed (gdk_manager, device, manager);
+      gimp_device_manager_device_removed (seat, device, manager);
     }
 
   g_list_free (devices);
 }
 
 static void
-gimp_device_manager_device_added (GdkDeviceManager  *gdk_manager,
+gimp_device_manager_device_added (GdkSeat           *seat,
                                   GdkDevice         *device,
                                   GimpDeviceManager *manager)
 {
@@ -485,11 +456,60 @@ gimp_device_manager_device_added (GdkDeviceManager  *gdk_manager,
   if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
     return;
 
-  if (device != gdk_device_manager_get_client_pointer (gdk_manager) &&
-      gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_MASTER)
-    return;
+  if (device == gdk_seat_get_pointer (seat))
+    {
+      gdk_device_set_mode (device, GDK_MODE_SCREEN);
+    }
+  else if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_MASTER)
+    {
+      return;
+    }
+  else /* slave or floating device */
+    {
+      /* default to enabling all devices */
+      GdkInputMode mode = GDK_MODE_SCREEN;
 
-  display = gdk_device_manager_get_display (gdk_manager);
+      switch (gdk_device_get_source (device))
+        {
+        case GDK_SOURCE_MOUSE:
+          mode = GDK_MODE_DISABLED;
+          break;
+
+        case GDK_SOURCE_PEN:
+        case GDK_SOURCE_ERASER:
+        case GDK_SOURCE_CURSOR:
+          break;
+
+        case GDK_SOURCE_TOUCHSCREEN:
+        case GDK_SOURCE_TOUCHPAD:
+        case GDK_SOURCE_TRACKPOINT:
+          mode = GDK_MODE_DISABLED;
+          break;
+
+        case GDK_SOURCE_TABLET_PAD:
+          break;
+
+        default:
+          break;
+        }
+
+      if (gdk_device_set_mode (device, mode))
+        {
+          g_printerr ("set device '%s' to mode: %s\n",
+                      gdk_device_get_name (device),
+                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
+                                        mode)->value_nick);
+        }
+      else
+        {
+          g_printerr ("failed to set device '%s' to mode: %s\n",
+                      gdk_device_get_name (device),
+                      g_enum_get_value (g_type_class_peek (GDK_TYPE_INPUT_MODE),
+                                        mode)->value_nick);
+         }
+    }
+
+  display = gdk_seat_get_display (seat);
 
   device_info =
     GIMP_DEVICE_INFO (gimp_container_get_child_by_name (GIMP_CONTAINER (manager),
@@ -511,7 +531,7 @@ gimp_device_manager_device_added (GdkDeviceManager  *gdk_manager,
 }
 
 static void
-gimp_device_manager_device_removed (GdkDeviceManager  *gdk_manager,
+gimp_device_manager_device_removed (GdkSeat           *seat,
                                     GdkDevice         *device,
                                     GimpDeviceManager *manager)
 {
@@ -528,7 +548,7 @@ gimp_device_manager_device_removed (GdkDeviceManager  *gdk_manager,
 
       if (device_info == private->current_device)
         {
-          device      = gdk_device_manager_get_client_pointer (gdk_manager);
+          device      = gdk_seat_get_pointer (seat);
           device_info = gimp_device_info_get_by_device (device);
 
           gimp_device_manager_set_current_device (manager, device_info);

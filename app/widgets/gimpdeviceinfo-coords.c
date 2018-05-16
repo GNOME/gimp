@@ -250,10 +250,10 @@ gimp_device_info_get_device_state (GimpDeviceInfo  *info,
 
     case GDK_DEVICE_TYPE_FLOATING:
       {
-        GdkDisplay       *display = gdk_device_get_display (device);
-        GdkDeviceManager *manager = gdk_display_get_device_manager (display);
+        GdkDisplay *display = gdk_device_get_display (device);
+        GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
-        device = gdk_device_manager_get_client_pointer (manager);
+        device = gdk_seat_get_pointer (seat);
       }
       break;
 
