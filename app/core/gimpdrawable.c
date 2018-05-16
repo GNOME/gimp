@@ -809,6 +809,21 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                    "buffer", gimp_drawable_get_buffer (drawable),
                    NULL);
 
+  if (drawable->private->convert_format)
+    {
+      const Babl *format = gimp_drawable_get_format (drawable);
+
+      if (babl_format_is_palette (format))
+        gegl_node_set (drawable->private->convert_format,
+                       "operation", "gegl:convert-format",
+                       "format",    gimp_drawable_get_format (drawable),
+                       NULL);
+      else
+        gegl_node_set (drawable->private->convert_format,
+                       "operation", "gegl:nop",
+                       NULL);
+    }
+
   gimp_item_set_offset (item, offset_x, offset_y);
   gimp_item_set_size (item,
                       gegl_buffer_get_width  (buffer),
@@ -1278,10 +1293,11 @@ gimp_drawable_steal_buffer (GimpDrawable *drawable,
 GeglNode *
 gimp_drawable_get_source_node (GimpDrawable *drawable)
 {
-  GeglNode *input;
-  GeglNode *source;
-  GeglNode *filter;
-  GeglNode *output;
+  const Babl *format;
+  GeglNode   *input;
+  GeglNode   *source;
+  GeglNode   *filter;
+  GeglNode   *output;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -1311,10 +1327,27 @@ gimp_drawable_get_source_node (GimpDrawable *drawable)
   gegl_node_connect_to (source, "output",
                         filter, "input");
 
+  format = gimp_drawable_get_format (drawable);
+
+  if (babl_format_is_palette (format))
+    drawable->private->convert_format =
+      gegl_node_new_child (drawable->private->source_node,
+                           "operation", "gegl:convert-format",
+                           "format",    gimp_drawable_get_format (drawable),
+                           NULL);
+  else
+    drawable->private->convert_format =
+      gegl_node_new_child (drawable->private->source_node,
+                           "operation", "gegl:nop",
+                           NULL);
+
+  gegl_node_connect_to (filter,                            "output",
+                        drawable->private->convert_format, "input");
+
   output = gegl_node_get_output_proxy (drawable->private->source_node, "output");
 
-  gegl_node_connect_to (filter, "output",
-                        output, "input");
+  gegl_node_connect_to (drawable->private->convert_format, "output",
+                        output,                            "input");
 
   if (gimp_drawable_get_floating_sel (drawable))
     _gimp_drawable_add_floating_sel_filter (drawable);
