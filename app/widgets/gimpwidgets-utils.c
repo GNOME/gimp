@@ -1436,6 +1436,52 @@ gimp_widget_set_fully_opaque (GtkWidget *widget,
                             GINT_TO_POINTER (fully_opaque));
 }
 
+void
+gimp_button_set_suggested (GtkWidget      *button,
+                           gboolean        suggested,
+                           GtkReliefStyle  default_relief)
+{
+  GtkStyleContext *style;
+
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  style = gtk_widget_get_style_context (button);
+
+  if (suggested)
+    {
+      gtk_style_context_add_class (style, "suggested-action");
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NORMAL);
+    }
+  else
+    {
+      gtk_style_context_remove_class (style, "suggested-action");
+      gtk_button_set_relief (GTK_BUTTON (button), default_relief);
+    }
+}
+
+void
+gimp_button_set_destructive (GtkWidget      *button,
+                             gboolean        destructive,
+                             GtkReliefStyle  default_relief)
+{
+  GtkStyleContext *style;
+
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  style = gtk_widget_get_style_context (button);
+
+  if (destructive)
+    {
+      gtk_style_context_add_class (style, "destructive-action");
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NORMAL);
+    }
+  else
+    {
+      gtk_style_context_remove_class (style, "destructive-action");
+      gtk_button_set_relief (GTK_BUTTON (button), default_relief);
+    }
+}
+
 static gboolean
 gimp_print_event_free (gpointer data)
 {

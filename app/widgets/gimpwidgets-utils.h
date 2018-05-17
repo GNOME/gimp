@@ -107,6 +107,13 @@ gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);
 
+void              gimp_button_set_suggested        (GtkWidget            *button,
+                                                    gboolean              suggested,
+                                                    GtkReliefStyle        default_relief);
+void              gimp_button_set_destructive      (GtkWidget            *button,
+                                                    gboolean              suggestes,
+                                                    GtkReliefStyle        default_relief);
+
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
 gboolean          gimp_color_profile_store_add_defaults
