@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp"
 "&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-03-09 23:31+0000\n"
-"PO-Revision-Date: 2018-03-10 18:10+0200\n"
+"POT-Creation-Date: 2018-05-04 18:53+0000\n"
+"PO-Revision-Date: 2018-05-17 21:17+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -48,6 +48,7 @@ msgstr "Līdzināt redzamos slāņus"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
@@ -60,9 +61,9 @@ msgstr "Līdzināt redzamos slāņus"
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
 #: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:434
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
@@ -97,8 +98,8 @@ msgstr "Līdzināt redzamos slāņus"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
 #: ../plug-ins/metadata/metadata-editor.c:765
-#: ../plug-ins/metadata/metadata-editor.c:5644
-#: ../plug-ins/metadata/metadata-editor.c:5679
+#: ../plug-ins/metadata/metadata-editor.c:5648
+#: ../plug-ins/metadata/metadata-editor.c:5683
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -120,14 +121,13 @@ msgstr "At_celt"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -417,18 +417,17 @@ msgstr "Pievieno žalūzijas"
 msgid "Blinds"
 msgstr "Žalūzijas"
 
-#. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:555
+#: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
 msgstr "Virziens"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:432
+#: ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Horizontāls"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Vertikāls"
 
@@ -439,9 +438,9 @@ msgstr "_Vertikāls"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:1048 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1079 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -450,7 +449,7 @@ msgstr "_Vertikāls"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -818,6 +817,7 @@ msgstr "Nejaušības sēkla"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
+#: ../plug-ins/common/file-jp2-load.c:950
 #: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
@@ -1033,7 +1033,7 @@ msgstr "Saglabāt CML pārlūka parametrus"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1582
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
@@ -1062,7 +1062,7 @@ msgstr "Ielādēt CML pārlūka parametrus"
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:927
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -1369,6 +1369,7 @@ msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/file-jp2-load.c:985
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -1609,9 +1610,7 @@ msgid "Automatic pre_view"
 msgstr "A_utomātiskais priekšskatījums"
 
 #. Options area, bottom of column
-#. Options section
-#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
-#: ../plug-ins/gfig/gfig-dialog.c:1243
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opcijas"
 
@@ -1627,7 +1626,6 @@ msgstr "G_ludināšana"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
-#: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "Nogludināš_ana"
 
@@ -2147,7 +2145,7 @@ msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
 #. KiSS file type
 #. Bits per pixel
 #. Dimensions of image
-#. Layer offets
+#. Layer offsets
 #. Number of colors
 #. Image
 #. Layer
@@ -2182,9 +2180,9 @@ msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:858 ../plug-ins/common/file-pat.c:336
+#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2274,10 +2272,10 @@ msgstr "“%s” — EOF (datnes beigas) kļūda, lasot paletes datus"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
@@ -2637,6 +2635,88 @@ msgstr "Pakāpes:"
 msgid "C source code header"
 msgstr "C pirmkoda galvene"
 
+#: ../plug-ins/common/file-heif.c:106
+#| msgid "Load Image Map"
+msgid "Loads HEIF images"
+msgstr "Ielādē HEIF attēlus"
+
+#: ../plug-ins/common/file-heif.c:107
+msgid ""
+"Load image stored in HEIF format (High Efficiency Image File Format). "
+"Typical suffices for HEIF files are .heif, .heic."
+msgstr ""
+"Ielādēt attēlu, kas ir saglabāts HEIF formātā (High Efficiency Image File"
+" Format). "
+"Parasti HEIF datņu nosaukumiem paplašinājums ir .heif vai .heic."
+
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:130
+msgid "HEIF/HEIC"
+msgstr "HEIF/HEIC"
+
+#: ../plug-ins/common/file-heif.c:124
+msgid "Exports HEIF images"
+msgstr "Eksportē HEIF attēlus"
+
+#: ../plug-ins/common/file-heif.c:125
+msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgstr "Saglabāt attēlu HEIF formātā (High Efficiency Image File Format)."
+
+#: ../plug-ins/common/file-heif.c:312 ../plug-ins/common/file-heif.c:338
+#: ../plug-ins/common/file-heif.c:377 ../plug-ins/common/file-heif.c:395
+#, c-format
+#| msgid "Writing to file '%s' failed: %s"
+msgid "Loading HEIF image failed: %s"
+msgstr "Neizdevās ielādēt HEIF attēlu — %s"
+
+#: ../plug-ins/common/file-heif.c:327
+msgid "Loading HEIF image failed: Input file contains no readable images"
+msgstr "Neizdevās ielādēt HEIF attēlu — ievades datne nesatur lasāmus attēlus"
+
+#: ../plug-ins/common/file-heif.c:414
+#| msgid "C_ell content:"
+msgid "image content"
+msgstr "attēla saturs"
+
+#: ../plug-ins/common/file-heif.c:573
+#, c-format
+msgid "Encoding HEIF image failed: %s"
+msgstr "Neizdevās iekodēt HEIF attēlu — %s"
+
+#: ../plug-ins/common/file-heif.c:585
+#, c-format
+#| msgid "Writing to file '%s' failed: %s"
+msgid "Writing HEIF image failed: %s"
+msgstr "Neizdevās rakstīt HEIF attēlu — %s"
+
+#: ../plug-ins/common/file-heif.c:666
+msgid "primary"
+msgstr "primārais"
+
+#: ../plug-ins/common/file-heif.c:802
+#| msgid "Load Image Map"
+msgid "Load HEIF Image"
+msgstr "Ielādēt HEIF attēlu"
+
+#: ../plug-ins/common/file-heif.c:816
+#| msgid "Select Image File"
+msgid "Select Image"
+msgstr "Izvēlieties attēlu"
+
+#: ../plug-ins/common/file-heif.c:929
+msgid "HEIF"
+msgstr "HEIF"
+
+#. Create the lossless checkbox
+#: ../plug-ins/common/file-heif.c:936
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
+msgid "Lossless"
+msgstr "Bezzudumu"
+
+#: ../plug-ins/common/file-heif.c:940
+#| msgid "_Quality:"
+msgid "Quality:"
+msgstr "Kvalitāte:"
+
 #: ../plug-ins/common/file-html-table.c:153
 #: ../plug-ins/common/file-html-table.c:463
 msgid "HTML table"
@@ -2769,75 +2849,102 @@ msgstr "Šūnu at_statums:"
 msgid "The amount of cell spacing."
 msgstr "Šūnu atstatumu apjoms."
 
-#: ../plug-ins/common/file-jp2-load.c:138
+#: ../plug-ins/common/file-jp2-load.c:154
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 attēls"
 
-#: ../plug-ins/common/file-jp2-load.c:164
-#| msgid "JPEG 2000 image"
+#: ../plug-ins/common/file-jp2-load.c:185
 msgid "JPEG 2000 codestream"
 msgstr "JPEG 2000 codestream"
 
-#: ../plug-ins/common/file-jp2-load.c:865 ../plug-ins/common/file-wmf.c:965
+#. Can be RGB, YUV and YCC.
+#. Can be RGB, YUV and YCC with alpha or CMYK.
+#: ../plug-ins/common/file-jp2-load.c:974
+#: ../plug-ins/common/file-jp2-load.c:982
+msgid "sRGB"
+msgstr "sRGB"
+
+#: ../plug-ins/common/file-jp2-load.c:975
+#: ../plug-ins/common/file-jp2-load.c:983
+msgid "YCbCr"
+msgstr "YCbCr"
+
+#: ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/file-jp2-load.c:984
+msgid "xvYCC"
+msgstr "xvYCC"
+
+#: ../plug-ins/common/file-jp2-load.c:991
+#, c-format
+msgid "Unsupported JPEG 2000%s '%s' with %d components."
+msgstr "Neatbalstīts JPEG 2000%s “%s” ar %d komponentēm."
+
+#: ../plug-ins/common/file-jp2-load.c:1000
+#| msgid "Colors:"
+msgid "Color space:"
+msgstr "Krāstelpa:"
+
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Nevar atvērt “%s” lasīšanai"
 
-#: ../plug-ins/common/file-jp2-load.c:876
+#: ../plug-ins/common/file-jp2-load.c:1082
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Nevarēja iestatīt “%s” dekodera parametrus."
 
-#: ../plug-ins/common/file-jp2-load.c:884
+#: ../plug-ins/common/file-jp2-load.c:1090
 #, c-format
-#| msgid "Could not read header from '%s'"
 msgid "Couldn't read JP2 header from '%s'."
 msgstr "Nevarēja nolasīt JP2 galveni no “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:892
+#: ../plug-ins/common/file-jp2-load.c:1098
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode JP2 image in '%s'."
 msgstr "Nevarēja atkodēt JP2 attēlu iekš “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:900
+#: ../plug-ins/common/file-jp2-load.c:1106
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "Nevarēja atspiest JP2 attēlu iekš “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:931
+#: ../plug-ins/common/file-jp2-load.c:1135
 #, c-format
-#| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
 msgstr "Nevarēja atkodēt CIELAB JP2 attēlu iekš “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:958
+#: ../plug-ins/common/file-jp2-load.c:1192
 #, c-format
-#| msgid "Convert image to sR_GB"
-msgid "Couldn't convert YUV JP2 image '%s' to RGB."
-msgstr "Nevarēja konvertēt YUV JP2 attēlu “%s” uz RGB."
+#| msgid "Unsupported color space in JP2 image '%s'."
+msgid "Unknown color space in JP2 codestream '%s'."
+msgstr "Nezināma krāstelpa JP2 codestream “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:968
+#: ../plug-ins/common/file-jp2-load.c:1203
+#, c-format
+#| msgid "Couldn't convert YCC JP2 image in '%s' to RGB."
+msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
+msgstr "Nevarēja konvertēt YCbCr JP2 attēlu “%s” uz RGB."
+
+#: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr "Nevarēja konvertēt CMYK JP2 attēlu iekš “%s” uz RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:978
+#: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
-msgid "Couldn't convert YCC JP2 image in '%s' to RGB."
-msgstr "Nevarēja konvertēt YCC JP2 attēlu iekš “%s” uz RGB."
+#| msgid "Couldn't convert YCC JP2 image in '%s' to RGB."
+msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
+msgstr "Nevarēja konvertēt xvYCC JP2 attēlu iekš “%s” uz RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:1027
+#: ../plug-ins/common/file-jp2-load.c:1250
 #, c-format
-#| msgid "Unsupported color mode: %s"
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "Neatbalstīta krāsu telpa JP2 attēlā “%s”."
+msgstr "Neatbalstīta krāstelpa JP2 attēlā “%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2285
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nevarēja bez zudumiem saglabāt caurspīdīgumu, tā vietā saglabā blīvumu."
@@ -2871,7 +2978,7 @@ msgid "Save creation time"
 msgstr "Saglabāt izveidošanas laiku"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2343
 msgid "PNG"
 msgstr "PNG"
 
@@ -3057,9 +3164,6 @@ msgstr "Pārvietojama Dokumenta Formāts"
 #.
 #: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-#| msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
-#| msgid_plural ""
-#| "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
@@ -3103,7 +3207,7 @@ msgstr "Importēt no PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5645
+#: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Importēt"
 
@@ -3237,43 +3341,51 @@ msgstr "Kļūda, ielādējot PNG datni — %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
-msgstr "Kļūda, veidojot PNG lasīšanas struktūru, eksportējot “%s”."
+#| msgid "Error creating PNG read struct while exporting '%s'."
+msgid "Error creating PNG read struct while loading '%s'."
+msgstr "Kļūda, veidojot PNG lasīšanas struktūru, ielādējot “%s”."
 
-#: ../plug-ins/common/file-png.c:895
+#: ../plug-ins/common/file-png.c:894
+#, c-format
+#| msgid "Error while exporting '%s'. Could not export image."
+msgid "Error while reading '%s'. Could not create PNG header info structure."
+msgstr ""
+"Kļūda, lasot “%s”. Nevarēja izveidot PNG galvenes informācijas struktūru."
+
+#: ../plug-ins/common/file-png.c:902
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Kļūda, lasot “%s” — vai datne ir bojāta?"
 
-#: ../plug-ins/common/file-png.c:1050
+#: ../plug-ins/common/file-png.c:1057
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nezināms krāsu modelis PNG datnē “%s”."
 
-#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Neizdevās izveidot jaunu “%s” attēlu — %s"
 
-#: ../plug-ins/common/file-png.c:1119
+#: ../plug-ins/common/file-png.c:1126
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "PNG datne norāda nobīdi, kuras dēļ slānis tika novietots ārpus attēla."
 
-#: ../plug-ins/common/file-png.c:1396
+#: ../plug-ins/common/file-png.c:1403
 msgid "Apply PNG Offset"
 msgstr "Pielietot PNG nobīdi"
 
-#: ../plug-ins/common/file-png.c:1400
+#: ../plug-ins/common/file-png.c:1407
 msgid "Ignore PNG offset"
 msgstr "Ignorēt PNG nobīdi"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG offset to layer"
 msgstr "Pielietot PNG nobīdi slānim"
 
-#: ../plug-ins/common/file-png.c:1426
+#: ../plug-ins/common/file-png.c:1433
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3282,23 +3394,31 @@ msgstr ""
 "PNG attēlam, ko importējat,  ir norādīta nobīde %d, %d. Vai vēlaties "
 "pielietot šo nobīdi slānim?"
 
-#: ../plug-ins/common/file-png.c:1534
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Kļūda, veidojot PNG rakstīšanas struktūru, eksportējot “%s”."
 
-#: ../plug-ins/common/file-png.c:1544
+#: ../plug-ins/common/file-png.c:1550
+#, c-format
+#| msgid "Error while exporting '%s'. Could not export image."
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgstr ""
+"Kļūda, eksportējot “%s”. Nevarēja izveidot PNG galvenes informācijas"
+" struktūru."
+
+#: ../plug-ins/common/file-png.c:1558
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Kļūda, eksportējot “%s”. Neizdevās eksportēt attēlu."
 
-#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Kļūda, ielādējot UI datni “%s” — %s"
 
-#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Nezināma kļūda"
@@ -3458,7 +3578,7 @@ msgstr "M/B"
 msgid "Gray"
 msgstr "Pelēks"
 
-#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:483
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -4474,25 +4594,25 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "X PixMap attēls"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:797
+#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Kļūda, atverot datni “%s”"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:803
+#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
 msgid "XPM file invalid"
 msgstr "XPM datne nav derīga"
 
-#: ../plug-ins/common/file-xpm.c:650
+#: ../plug-ins/common/file-xpm.c:653
 #, c-format
 msgid "Unsupported drawable type"
 msgstr "Neatbalstīts zīmējams tips"
 
-#: ../plug-ins/common/file-xpm.c:829
+#: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:839
+#: ../plug-ins/common/file-xpm.c:842
 msgid "_Alpha threshold:"
 msgstr "_Alfa slieksnis:"
 
@@ -4877,7 +4997,7 @@ msgstr "Fraktāļu izsekošana"
 msgid "Outside Type"
 msgstr "Ārpuses tips"
 
-#: ../plug-ins/common/fractal-trace.c:753 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
 msgstr "_Aplauzt"
 
@@ -5537,64 +5657,6 @@ msgstr "G-Qbist"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
 msgid "_Undo"
 msgstr "Atsa_ukt"
-
-#: ../plug-ins/common/ripple.c:126
-msgid "Displace pixels in a ripple pattern"
-msgstr "Pārvietot pikseļus vilnīšu rakstā"
-
-#: ../plug-ins/common/ripple.c:133
-msgid "_Ripple..."
-msgstr "_Vilnīši..."
-
-#: ../plug-ins/common/ripple.c:221
-msgid "Rippling"
-msgstr "Viļņo"
-
-#: ../plug-ins/common/ripple.c:483
-msgid "Ripple"
-msgstr "Vilnīši"
-
-#: ../plug-ins/common/ripple.c:542
-msgid "_Retain tilability"
-msgstr "Patu_rēt flīzējamību"
-
-#. Edges toggle box
-#: ../plug-ins/common/ripple.c:579
-msgid "Edges"
-msgstr "Malas"
-
-#: ../plug-ins/common/ripple.c:584
-msgid "_Smear"
-msgstr "Iz_smērēt"
-
-#: ../plug-ins/common/ripple.c:585
-msgid "_Blank"
-msgstr "_Tukšas"
-
-#. Wave toggle box
-#: ../plug-ins/common/ripple.c:608
-msgid "Wave Type"
-msgstr "Vilnīša tips"
-
-#: ../plug-ins/common/ripple.c:612
-msgid "Saw_tooth"
-msgstr "_Zāģveida"
-
-#: ../plug-ins/common/ripple.c:613
-msgid "S_ine"
-msgstr "S_inuss"
-
-#: ../plug-ins/common/ripple.c:636
-msgid "_Period:"
-msgstr "_Periods:"
-
-#: ../plug-ins/common/ripple.c:649
-msgid "A_mplitude:"
-msgstr "A_mplitūda:"
-
-#: ../plug-ins/common/ripple.c:662
-msgid "Phase _shift:"
-msgstr "Fāžu _nobīde:"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -6752,7 +6814,7 @@ msgstr "Savietoja_mības opcijas"
 
 #: ../plug-ins/file-bmp/bmp-save.c:933
 msgid "_Do not write color space information"
-msgstr "_Nerakstīt krāsu telpas informāciju"
+msgstr "_Nerakstīt krāstelpas informāciju"
 
 #: ../plug-ins/file-bmp/bmp-save.c:935
 msgid ""
@@ -6760,9 +6822,9 @@ msgid ""
 "information. GIMP writes color space information by default. Enabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
-"Dažas lietotnes nevar nolasīt BMP attēlus, kas iekļauj krāsu telpas "
-"informāciju. GIMP pēc noklusējuma raksta krāsu telpas informāciju. Šīs "
-"opcijas aktivēšana liks GIMP nerakstīt krāsu telpas informāciju datnē."
+"Dažas lietotnes nevar nolasīt BMP attēlus, kas iekļauj krāstelpas "
+"informāciju. GIMP pēc noklusējuma raksta krāstelpas informāciju. Šīs "
+"opcijas ieslēgšana liks GIMP nerakstīt krāstelpas informāciju datnē."
 
 #. Advanced Options
 #. Advanced options
@@ -7200,21 +7262,21 @@ msgstr "Neatbalstīts vai nederīgs maksas platums — %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Neatbalstīts vai nederīgs maskas izmērs — %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Neatbalstīts saspiešanas režīms — %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1892
+#: ../plug-ins/file-psd/psd-load.c:1904
 msgid "Extra"
 msgstr "Papildu"
 
-#: ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:2083
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Neatbalstīts vai nederīgs kanāla izmērs"
 
-#: ../plug-ins/file-psd/psd-load.c:2140
+#: ../plug-ins/file-psd/psd-load.c:2152
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Neizdevās atspiest datus"
@@ -7526,11 +7588,6 @@ msgstr "(visi kadri ir aslēgkadri)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
-
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Bezzudumu"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
@@ -11812,19 +11869,19 @@ msgstr "Kalendāra datums:"
 msgid "Set Date"
 msgstr "Iestatīt datumu"
 
-#: ../plug-ins/metadata/metadata-editor.c:1616
+#: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
 msgstr "Nenovērtēts"
 
-#: ../plug-ins/metadata/metadata-editor.c:5641
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"
 msgstr "Importēt metadatu datni"
 
-#: ../plug-ins/metadata/metadata-editor.c:5676
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "Export Metadata File"
 msgstr "Eksportēt metadatu datni"
 
-#: ../plug-ins/metadata/metadata-editor.c:5680
+#: ../plug-ins/metadata/metadata-editor.c:5684
 msgid "_Export"
 msgstr "_Eksportēt"
 
@@ -12569,6 +12626,52 @@ msgstr "_Skeneris/kamera..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Pārsūta datus no skenera vai kameras"
+
+#~| msgid "Convert image to sR_GB"
+#~ msgid "Couldn't convert YUV JP2 image '%s' to RGB."
+#~ msgstr "Nevarēja konvertēt YUV JP2 attēlu “%s” uz RGB."
+
+#~ msgid "Displace pixels in a ripple pattern"
+#~ msgstr "Pārvietot pikseļus vilnīšu rakstā"
+
+#~ msgid "_Ripple..."
+#~ msgstr "_Vilnīši..."
+
+#~ msgid "Rippling"
+#~ msgstr "Viļņo"
+
+#~ msgid "Ripple"
+#~ msgstr "Vilnīši"
+
+#~ msgid "_Retain tilability"
+#~ msgstr "Patu_rēt flīzējamību"
+
+#~ msgid "Edges"
+#~ msgstr "Malas"
+
+#~ msgid "_Smear"
+#~ msgstr "Iz_smērēt"
+
+#~ msgid "_Blank"
+#~ msgstr "_Tukšas"
+
+#~ msgid "Wave Type"
+#~ msgstr "Vilnīša tips"
+
+#~ msgid "Saw_tooth"
+#~ msgstr "_Zāģveida"
+
+#~ msgid "S_ine"
+#~ msgstr "S_inuss"
+
+#~ msgid "_Period:"
+#~ msgstr "_Periods:"
+
+#~ msgid "A_mplitude:"
+#~ msgstr "A_mplitūda:"
+
+#~ msgid "Phase _shift:"
+#~ msgstr "Fāžu _nobīde:"
 
 #~ msgid ""
 #~ "The image '%s' is in grayscale but does not contain any gray component."
