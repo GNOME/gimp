@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins HEAD fr\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-01 12:57+0000\n"
-"PO-Revision-Date: 2018-04-01 16:21+0100\n"
+"POT-Creation-Date: 2018-05-15 22:42+0000\n"
+"PO-Revision-Date: 2018-04-19 08:08+0100\n"
 "Last-Translator: julien <jhardlin@orange.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -72,13 +72,13 @@ msgstr "Aligner les calques visibles"
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
 #: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:438
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:350
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -132,14 +132,13 @@ msgstr "_Annuler"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:439 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -431,18 +430,17 @@ msgstr "Ajoute « stores sur la fenêtre »"
 msgid "Blinds"
 msgstr "Fenêtre avec stores"
 
-#. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:555
+#: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
 msgstr "Orientation"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:432
+#: ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -459,17 +457,17 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
-#: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
+#: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:258
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:264 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Arrière-plan"
 
@@ -1638,9 +1636,7 @@ msgid "Automatic pre_view"
 msgstr "Aperçu automati_que"
 
 #. Options area, bottom of column
-#. Options section
-#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
-#: ../plug-ins/gfig/gfig-dialog.c:1243
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Options"
 
@@ -1656,7 +1652,6 @@ msgstr "_Adoucissement"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
-#: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Lissage"
 
@@ -2046,10 +2041,10 @@ msgstr "Élimination des traînées"
 msgid "Destripe"
 msgstr "Anti-traînées"
 
-#: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
+#: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:641
 #: ../plug-ins/common/file-ps.c:3467 ../plug-ins/common/file-ps.c:3672
 #: ../plug-ins/common/file-raw-data.c:1986
-#: ../plug-ins/common/smooth-palette.c:454 ../plug-ins/common/tile.c:465
+#: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:284
@@ -2177,7 +2172,7 @@ msgstr "EOF ou erreur lors de la lecture de l’en-tête d’image"
 #. KiSS file type
 #. Bits per pixel
 #. Dimensions of image
-#. Layer offets
+#. Layer offsets
 #. Number of colors
 #. Image
 #. Layer
@@ -2212,18 +2207,18 @@ msgstr "EOF ou erreur lors de la lecture de l’en-tête d’image"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
-#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
-#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
-#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
+#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
+#: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
+#: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
+#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
+#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
+#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
+#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
+#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2302,16 +2297,17 @@ msgstr "« %s » : EOF ou erreur lors de la lecture des données de palette"
 #.
 #: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
-#: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
-#: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
-#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
-#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
+#: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
+#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
+#: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xpm.c:663
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
+#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:718
+#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:285
+#: ../plug-ins/file-psd/psd-save.c:1579 ../plug-ins/file-sgi/sgi.c:579
+#: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportation de « %s »"
@@ -2675,16 +2671,93 @@ msgstr "Rangs :"
 msgid "C source code header"
 msgstr "en-tête de code source C"
 
+#: ../plug-ins/common/file-heif.c:106
+msgid "Loads HEIF images"
+msgstr "Charge les images HEIF"
+
+#: ../plug-ins/common/file-heif.c:107
+msgid ""
+"Load image stored in HEIF format (High Efficiency Image File Format). "
+"Typical suffices for HEIF files are .heif, .heic."
+msgstr ""
+"Charger des images stockées au format HEIF (High Efficiency Image File "
+"Format). Les extensions typiques des fichiers HEIF sont .heif, .heic."
+
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
+msgid "HEIF/HEIC"
+msgstr "HEIF/HEIC"
+
+#: ../plug-ins/common/file-heif.c:125
+msgid "Exports HEIF images"
+msgstr "Exporte les images HEIF"
+
+#: ../plug-ins/common/file-heif.c:126
+msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgstr ""
+"Enregistrer l’image au format HEIF (High Efficiency Image File Format)."
+
+#: ../plug-ins/common/file-heif.c:371 ../plug-ins/common/file-heif.c:404
+#: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
+#, c-format
+msgid "Loading HEIF image failed: %s"
+msgstr "Le chargement de l’image HEIF a échoué : %s"
+
+#: ../plug-ins/common/file-heif.c:393
+msgid "Loading HEIF image failed: Input file contains no readable images"
+msgstr ""
+"Le chargement de l’image HEIF a échoué : le fichier en entrée ne contient "
+"aucune image lisible"
+
+#: ../plug-ins/common/file-heif.c:482
+msgid "image content"
+msgstr "contenu d’image"
+
+#: ../plug-ins/common/file-heif.c:677
+#, c-format
+msgid "Encoding HEIF image failed: %s"
+msgstr "Le codage de l’image HEIF a échoué : %s"
+
+#: ../plug-ins/common/file-heif.c:700
+#, c-format
+msgid "Writing HEIF image failed: %s"
+msgstr "L’écriture de l’image HEIF a échoué : %s"
+
+#: ../plug-ins/common/file-heif.c:785
+msgid "primary"
+msgstr "primaire"
+
+#: ../plug-ins/common/file-heif.c:921
+msgid "Load HEIF Image"
+msgstr "Charger une image HEIF"
+
+#: ../plug-ins/common/file-heif.c:935
+msgid "Select Image"
+msgstr "Sélectionner l’image"
+
+#: ../plug-ins/common/file-heif.c:1048
+msgid "HEIF"
+msgstr "HEIF"
+
+#. Create the lossless checkbox
+#: ../plug-ins/common/file-heif.c:1055
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
+msgid "Lossless"
+msgstr "Sans perte"
+
+#: ../plug-ins/common/file-heif.c:1059
+msgid "Quality:"
+msgstr "Qualité :"
+
 #: ../plug-ins/common/file-html-table.c:153
-#: ../plug-ins/common/file-html-table.c:463
+#: ../plug-ins/common/file-html-table.c:466
 msgid "HTML table"
 msgstr "Tableau HTML"
 
-#: ../plug-ins/common/file-html-table.c:476
+#: ../plug-ins/common/file-html-table.c:479
 msgid "Warning"
 msgstr "Avertissement"
 
-#: ../plug-ins/common/file-html-table.c:487
+#: ../plug-ins/common/file-html-table.c:490
 msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
@@ -2696,15 +2769,15 @@ msgstr ""
 "difficulté votre navigateur."
 
 #. HTML Page Options
-#: ../plug-ins/common/file-html-table.c:496
+#: ../plug-ins/common/file-html-table.c:499
 msgid "HTML Page Options"
 msgstr "Options de page HTML"
 
-#: ../plug-ins/common/file-html-table.c:503
+#: ../plug-ins/common/file-html-table.c:506
 msgid "_Generate full HTML document"
 msgstr "_Générer un document HTML complet"
 
-#: ../plug-ins/common/file-html-table.c:509
+#: ../plug-ins/common/file-html-table.c:512
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
@@ -2713,15 +2786,15 @@ msgstr ""
 "<BODY>, etc., en plus de la table elle-même."
 
 #. HTML Table Creation Options
-#: ../plug-ins/common/file-html-table.c:522
+#: ../plug-ins/common/file-html-table.c:525
 msgid "Table Creation Options"
 msgstr "Options de création de la table"
 
-#: ../plug-ins/common/file-html-table.c:530
+#: ../plug-ins/common/file-html-table.c:533
 msgid "_Use cellspan"
 msgstr "_Utiliser cellspan"
 
-#: ../plug-ins/common/file-html-table.c:536
+#: ../plug-ins/common/file-html-table.c:539
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
@@ -2729,11 +2802,11 @@ msgstr ""
 "Cochez ici pour que les blocs rectangulaires uniformément coloriés soient "
 "remplacés par une grosse case avec des valeurs ROWSPAN et COLSPAN."
 
-#: ../plug-ins/common/file-html-table.c:545
+#: ../plug-ins/common/file-html-table.c:548
 msgid "Co_mpress TD tags"
 msgstr "Com_presser les tags TD"
 
-#: ../plug-ins/common/file-html-table.c:551
+#: ../plug-ins/common/file-html-table.c:554
 msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
@@ -2743,73 +2816,73 @@ msgstr ""
 "de la case. Cela n’est nécessaire que pour un contrôle de position au pixel "
 "près."
 
-#: ../plug-ins/common/file-html-table.c:561
+#: ../plug-ins/common/file-html-table.c:564
 msgid "C_aption"
 msgstr "L_égende"
 
-#: ../plug-ins/common/file-html-table.c:567
+#: ../plug-ins/common/file-html-table.c:570
 msgid "Check if you would like to have the table captioned."
 msgstr "Cochez ici pour que la table ait une légende"
 
-#: ../plug-ins/common/file-html-table.c:582
+#: ../plug-ins/common/file-html-table.c:585
 msgid "The text for the table caption."
 msgstr "Le texte pour la légende de la table."
 
-#: ../plug-ins/common/file-html-table.c:596
+#: ../plug-ins/common/file-html-table.c:599
 msgid "C_ell content:"
 msgstr "Contenu de la c_ellule"
 
-#: ../plug-ins/common/file-html-table.c:600
+#: ../plug-ins/common/file-html-table.c:603
 msgid "The text to go into each cell."
 msgstr "Le texte à placer dans chaque cellule."
 
 #. HTML Table Options
-#: ../plug-ins/common/file-html-table.c:610
+#: ../plug-ins/common/file-html-table.c:613
 msgid "Table Options"
 msgstr "Options de la table"
 
-#: ../plug-ins/common/file-html-table.c:623
+#: ../plug-ins/common/file-html-table.c:626
 msgid "_Border:"
 msgstr "_Bordure :"
 
-#: ../plug-ins/common/file-html-table.c:627
+#: ../plug-ins/common/file-html-table.c:630
 msgid "The number of pixels in the table border."
 msgstr "Le nombre de pixels dans la bordure du tableau."
 
-#: ../plug-ins/common/file-html-table.c:642
+#: ../plug-ins/common/file-html-table.c:645
 msgid "The width for each table cell.  Can be a number or a percent."
 msgstr ""
 "La longueur pour chaque cellule du tableau. Elle peut être un nombre ou un "
 "pourcentage."
 
-#: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3480
+#: ../plug-ins/common/file-html-table.c:657 ../plug-ins/common/file-ps.c:3480
 #: ../plug-ins/common/file-ps.c:3684 ../plug-ins/common/file-raw-data.c:2002
-#: ../plug-ins/common/film.c:1008 ../plug-ins/common/smooth-palette.c:459
+#: ../plug-ins/common/film.c:1008 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:286
 msgid "_Height:"
 msgstr "_Hauteur :"
 
-#: ../plug-ins/common/file-html-table.c:658
+#: ../plug-ins/common/file-html-table.c:661
 msgid "The height for each table cell.  Can be a number or a percent."
 msgstr ""
 "La hauteur pour chaque cellule du tableau. Elle peut être un nombre ou un "
 "pourcentage."
 
-#: ../plug-ins/common/file-html-table.c:671
+#: ../plug-ins/common/file-html-table.c:674
 msgid "Cell-_padding:"
 msgstr "_Bourrage des cellules :"
 
-#: ../plug-ins/common/file-html-table.c:675
+#: ../plug-ins/common/file-html-table.c:678
 msgid "The amount of cell padding."
 msgstr "Importance du bourrage de cellule."
 
-#: ../plug-ins/common/file-html-table.c:686
+#: ../plug-ins/common/file-html-table.c:689
 msgid "Cell-_spacing:"
 msgstr "_Espacement des cellules :"
 
-#: ../plug-ins/common/file-html-table.c:690
+#: ../plug-ins/common/file-html-table.c:693
 msgid "The amount of cell spacing."
 msgstr "Importance de l’espacement entre les cellules."
 
@@ -3305,10 +3378,9 @@ msgstr "Erreur lors du chargement du fichier PNG : %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
+msgid "Error creating PNG read struct while loading '%s'."
 msgstr ""
-"Erreur de création d’une structure PNG « read » lors de l’exportation de "
-"« %s »."
+"Erreur de création d’une structure PNG « read » lors du chargement de « %s »."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format
@@ -4692,7 +4764,7 @@ msgstr "_Enlever"
 
 #. Create selection
 #: ../plug-ins/common/film.c:968 ../plug-ins/imagemap/imap_selection.c:338
-#: ../plug-ins/selection-to-path/selection-to-path.c:437
+#: ../plug-ins/selection-to-path/selection-to-path.c:436
 msgid "Selection"
 msgstr "Sélection"
 
@@ -4979,7 +5051,7 @@ msgstr "Fractaliser"
 msgid "Outside Type"
 msgstr "Type d’extérieur"
 
-#: ../plug-ins/common/fractal-trace.c:753 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
 msgstr "Enro_uler"
 
@@ -5639,64 +5711,6 @@ msgstr "Qbiste"
 msgid "_Undo"
 msgstr "A_nnuler"
 
-#: ../plug-ins/common/ripple.c:126
-msgid "Displace pixels in a ripple pattern"
-msgstr "Déplacer les pixels sur une forme ondulée"
-
-#: ../plug-ins/common/ripple.c:133
-msgid "_Ripple..."
-msgstr "Ond_uler…"
-
-#: ../plug-ins/common/ripple.c:221
-msgid "Rippling"
-msgstr "Ondulation en cours"
-
-#: ../plug-ins/common/ripple.c:483
-msgid "Ripple"
-msgstr "Onduler"
-
-#: ../plug-ins/common/ripple.c:542
-msgid "_Retain tilability"
-msgstr "_Reste raccordable"
-
-#. Edges toggle box
-#: ../plug-ins/common/ripple.c:579
-msgid "Edges"
-msgstr "Bordures"
-
-#: ../plug-ins/common/ripple.c:584
-msgid "_Smear"
-msgstr "É_taler"
-
-#: ../plug-ins/common/ripple.c:585
-msgid "_Blank"
-msgstr "_Incolore"
-
-#. Wave toggle box
-#: ../plug-ins/common/ripple.c:608
-msgid "Wave Type"
-msgstr "Type d’onde"
-
-#: ../plug-ins/common/ripple.c:612
-msgid "Saw_tooth"
-msgstr "_Dent de scie"
-
-#: ../plug-ins/common/ripple.c:613
-msgid "S_ine"
-msgstr "S_inus"
-
-#: ../plug-ins/common/ripple.c:636
-msgid "_Period:"
-msgstr "_Période :"
-
-#: ../plug-ins/common/ripple.c:649
-msgid "A_mplitude:"
-msgstr "A_mplitude :"
-
-#: ../plug-ins/common/ripple.c:662
-msgid "Phase _shift:"
-msgstr "Dép_hasage :"
-
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
 msgstr "Colorie l’image en utilisant un échantillon d’image comme guide"
@@ -5823,11 +5837,11 @@ msgstr "_Palette lissée…"
 msgid "Deriving smooth palette"
 msgstr "Dérivation de la palette lissée"
 
-#: ../plug-ins/common/smooth-palette.c:430
+#: ../plug-ins/common/smooth-palette.c:434
 msgid "Smooth Palette"
 msgstr "Palette lissée"
 
-#: ../plug-ins/common/smooth-palette.c:474
+#: ../plug-ins/common/smooth-palette.c:478
 msgid "_Search depth:"
 msgstr "Profondeur de _recherche :"
 
@@ -6630,7 +6644,7 @@ msgid "Flow step %d"
 msgstr "Étape de flot %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
-#: ../plug-ins/common/wavelet-decompose.c:346
+#: ../plug-ins/common/wavelet-decompose.c:350
 msgid "Wavelet decompose"
 msgstr "Décomposition en ondelettes"
 
@@ -6642,30 +6656,30 @@ msgstr "Décomposer en _ondelettes…"
 msgid "Wavelet-Decompose"
 msgstr "Décomposition-ondelettes"
 
-#: ../plug-ins/common/wavelet-decompose.c:184
+#: ../plug-ins/common/wavelet-decompose.c:186
 msgid "Decomposition"
 msgstr "Décomposition"
 
-#: ../plug-ins/common/wavelet-decompose.c:246
+#: ../plug-ins/common/wavelet-decompose.c:248
 #, c-format
 msgid "Scale %d"
 msgstr "Échelle %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:270
+#: ../plug-ins/common/wavelet-decompose.c:272
 msgid "Residual"
 msgstr "Résiduel"
 
-#: ../plug-ins/common/wavelet-decompose.c:377
+#: ../plug-ins/common/wavelet-decompose.c:381
 msgid "Scales:"
 msgstr "Échelles :"
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:389
+#: ../plug-ins/common/wavelet-decompose.c:393
 msgid "Create a layer group to store the decomposition"
 msgstr "Créer un groupe de calques pour stocker la décomposition"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:401
+#: ../plug-ins/common/wavelet-decompose.c:405
 msgid "Add a layer mask to each scales layers"
 msgstr "Ajouter un masque de calque à chaque calque d’échelle"
 
@@ -7316,21 +7330,21 @@ msgstr "Largeur de masque de calque non valide ou non prise en charge : %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Taille de masque de calque non valide ou non prise en charge : %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compression non pris en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1892
+#: ../plug-ins/file-psd/psd-load.c:1904
 msgid "Extra"
 msgstr "Supplémentaire"
 
-#: ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:2083
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Taille de canal non valide ou non prise en charge"
 
-#: ../plug-ins/file-psd/psd-load.c:2140
+#: ../plug-ins/file-psd/psd-load.c:2152
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Échec de décompression des données"
@@ -7644,11 +7658,6 @@ msgstr "(toutes les images sont des images-clés)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
-
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Sans perte"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
@@ -12446,7 +12455,7 @@ msgstr "Étiqueter l’image avec le profil du _moniteur"
 msgid "Convert image to sR_GB"
 msgstr "Convertir l’image en sR_VB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:251
+#: ../plug-ins/screenshot/screenshot-win32.c:299
 msgid "No data captured"
 msgstr "Aucune donnée capturée"
 
@@ -12740,3 +12749,45 @@ msgstr "_Scanneur/Appareil photo…"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Transfert des données depuis le scanneur ou l’appareil photo"
+
+#~ msgid "Displace pixels in a ripple pattern"
+#~ msgstr "Déplacer les pixels sur une forme ondulée"
+
+#~ msgid "_Ripple..."
+#~ msgstr "Ond_uler…"
+
+#~ msgid "Rippling"
+#~ msgstr "Ondulation en cours"
+
+#~ msgid "Ripple"
+#~ msgstr "Onduler"
+
+#~ msgid "_Retain tilability"
+#~ msgstr "_Reste raccordable"
+
+#~ msgid "Edges"
+#~ msgstr "Bordures"
+
+#~ msgid "_Smear"
+#~ msgstr "É_taler"
+
+#~ msgid "_Blank"
+#~ msgstr "_Incolore"
+
+#~ msgid "Wave Type"
+#~ msgstr "Type d’onde"
+
+#~ msgid "Saw_tooth"
+#~ msgstr "_Dent de scie"
+
+#~ msgid "S_ine"
+#~ msgstr "S_inus"
+
+#~ msgid "_Period:"
+#~ msgstr "_Période :"
+
+#~ msgid "A_mplitude:"
+#~ msgstr "A_mplitude :"
+
+#~ msgid "Phase _shift:"
+#~ msgstr "Dép_hasage :"
