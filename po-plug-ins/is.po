@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2018-05-04 18:53+0000\n"
-"PO-Revision-Date: 2018-05-17 12:19+0000\n"
+"PO-Revision-Date: 2018-05-17 12:25+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -551,7 +551,6 @@ msgid "Create a checkerboard pattern"
 msgstr "Búa til köflótta reiti"
 
 #: ../plug-ins/common/checkerboard.c:94
-#, fuzzy
 #| msgid "_Checkerboard..."
 msgid "_Checkerboard (legacy)..."
 msgstr "_Köflótt (eldra)..."
@@ -1143,7 +1142,6 @@ msgid "Stretch color saturation to cover maximum possible range"
 msgstr "Teygja litmettun yfir mesta mögulegt svið"
 
 #: ../plug-ins/common/color-enhance.c:80
-#, fuzzy
 #| msgid "_Color Enhance"
 msgid "_Color Enhance (legacy)"
 msgstr "_Bæta liti (eldra)"
@@ -2034,7 +2032,6 @@ msgid "Edge detection with control of edge thickness"
 msgstr ""
 
 #: ../plug-ins/common/edge-dog.c:142
-#, fuzzy
 #| msgid "_Difference of Gaussians..."
 msgid "_Difference of Gaussians (legacy)..."
 msgstr "_Mismunur Gaussískra (eldra)..."
@@ -2064,7 +2061,6 @@ msgid "Simulate the glowing boundary of a neon light"
 msgstr ""
 
 #: ../plug-ins/common/edge-neon.c:140
-#, fuzzy
 #| msgid "_Neon..."
 msgid "_Neon (legacy)..."
 msgstr "_Neon (eldra)..."
@@ -2086,10 +2082,9 @@ msgid "Simulate an image created by embossing"
 msgstr "Herma eftir upphleyptri lágmynd"
 
 #: ../plug-ins/common/emboss.c:131
-#, fuzzy
 #| msgid "_Emboss..."
 msgid "_Emboss (legacy)..."
-msgstr "Upphleypa (eldra)..."
+msgstr "Upphle_ypa (eldra)..."
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -3435,19 +3430,19 @@ msgstr "Ekki stuðningur við skráarsniðið."
 
 #: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
-msgstr ""
+msgstr "Ógild X-upplausn."
 
 #: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "Breidd myndarinnar er meiri en GIMP getur meðhöndlað."
 
 #: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
-msgstr ""
+msgstr "Ógild Y-upplausn."
 
 #: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "Hæð myndarinnar er meiri en GIMP getur meðhöndlað."
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
@@ -3979,7 +3974,7 @@ msgstr "Sun Raster mynd"
 #: ../plug-ins/common/file-sunras.c:447
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr ""
+msgstr "Gat ekki opnað '%s' sem SUN-rastaskrá"
 
 #: ../plug-ins/common/file-sunras.c:457
 msgid "The type of this SUN-rasterfile is not supported"
@@ -3988,7 +3983,7 @@ msgstr ""
 #: ../plug-ins/common/file-sunras.c:486
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr ""
+msgstr "Gat ekki lesið litafærslur úr '%s'"
 
 #: ../plug-ins/common/file-sunras.c:495
 msgid "Type of colormap not supported"
@@ -4028,7 +4023,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-sunras.c:562
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "Þessi litadýpt mynda er ekki studd"
 
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
@@ -4269,7 +4264,7 @@ msgstr ""
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1341
 msgid "Mask File"
-msgstr ""
+msgstr "Huluskrá"
 
 #: ../plug-ins/common/file-xbm.c:1351
 msgid "W_rite extra mask file"
@@ -4343,7 +4338,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1128
 msgid "_Auto-Crop all frames."
-msgstr ""
+msgstr "Sker_a sjálfvirkt utan af öllum römmum."
 
 #: ../plug-ins/common/file-xmc.c:1141
 msgid ""
@@ -4951,7 +4946,7 @@ msgstr ""
 
 #: ../plug-ins/common/gradient-map.c:90
 msgid "_Gradient Map"
-msgstr ""
+msgstr "Litsti_gulsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:99
 msgid "Recolor the image using colors from the active palette"
@@ -4959,15 +4954,15 @@ msgstr ""
 
 #: ../plug-ins/common/gradient-map.c:112
 msgid "_Palette Map"
-msgstr ""
+msgstr "Litas_pjaldsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:160
 msgid "Gradient Map"
-msgstr ""
+msgstr "Litstigulsvörpun"
 
 #: ../plug-ins/common/gradient-map.c:165
 msgid "Palette Map"
-msgstr ""
+msgstr "Litaspjaldsvörpun"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
@@ -5591,7 +5586,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
-msgstr ""
+msgstr "Virkj_a"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1359
@@ -6609,7 +6604,7 @@ msgstr "Búa til út frá vefsíðu"
 
 #: ../plug-ins/common/web-page.c:235
 msgid "Cre_ate"
-msgstr ""
+msgstr "Bú_a til"
 
 #: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
@@ -8025,7 +8020,7 @@ msgstr ""
 #. Color Density frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:943
 msgid "Color Density"
-msgstr ""
+msgstr "Þéttleiki litar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the red channel"
@@ -8081,7 +8076,7 @@ msgstr ""
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1062
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1103
 msgid "Inversion"
-msgstr ""
+msgstr "Umsnúningur"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1029
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1070
@@ -8931,15 +8926,15 @@ msgstr "_Venjulegt"
 
 #: ../plug-ins/gimpressionist/orientmap.c:645
 msgid "Vorte_x"
-msgstr ""
+msgstr "_Hringiða"
 
 #: ../plug-ins/gimpressionist/orientmap.c:646
 msgid "Vortex_2"
-msgstr ""
+msgstr "Hringiða_2"
 
 #: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_3"
-msgstr ""
+msgstr "Hringiða_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
 #: ../plug-ins/gimpressionist/sizemap.c:540
@@ -9039,7 +9034,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/placement.c:119
 msgid "Stroke _density:"
-msgstr ""
+msgstr "Þéttleiki stro_ku:"
 
 #: ../plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
@@ -9068,7 +9063,7 @@ msgstr "For_stillingar:"
 
 #: ../plug-ins/gimpressionist/presets.c:1029
 msgid "Save Current..."
-msgstr ""
+msgstr "Vista núverandi..."
 
 #: ../plug-ins/gimpressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
@@ -11299,7 +11294,7 @@ msgstr "Z stefna ljósgjafa í XYZ-rúmi"
 
 #: ../plug-ins/lighting/lighting-ui.c:578
 msgid "I_solate"
-msgstr ""
+msgstr "E_inangra"
 
 #: ../plug-ins/lighting/lighting-ui.c:587
 msgid "Lighting preset:"
