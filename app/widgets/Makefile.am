@@ -224,8 +224,6 @@ libappwidgets_a_sources = \
 	gimphelp.c			\
 	gimphelp.h			\
 	gimphelp-ids.h			\
-	gimphighlightablebutton.c	\
-	gimphighlightablebutton.h	\
 	gimphistogrambox.c		\
 	gimphistogrambox.h		\
 	gimphistogrameditor.c		\

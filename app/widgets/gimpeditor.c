@@ -34,7 +34,6 @@
 #include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimpdnd.h"
-#include "gimphighlightablebutton.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -503,7 +502,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  button = gimp_highlightable_button_new ();
+  button = gimp_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -654,7 +653,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   if (GTK_IS_TOGGLE_ACTION (action))
     button = gtk_toggle_button_new ();
   else
-    button = gimp_highlightable_button_new ();
+    button = gimp_button_new ();
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
