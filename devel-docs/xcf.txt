@@ -642,6 +642,44 @@ The image structure always starts at offset 0 in the XCF file.
                          2: Indexed color
                        (see enum GimpImageBaseType
                        in libgimpbase/gimpbaseenums.h)
+  uint32  precision    Image precision; this field is only present for
+                       XCF 4 or over (since GIMP 2.10.0). Its value for
+                       XCF 7 or over is one of:
+                         100: 8-bit linear integer
+                         150: 8-bit gamma integer
+                         200: 16-bit linear integer
+                         250: 16-bit gamma integer
+                         300: 32-bit linear integer
+                         350: 32-bit gamma integer
+                         500: 16-bit linear floating point
+                         550: 16-bit gamma floating point
+                         600: 32-bit linear floating point
+                         650: 32-bit gamma floating point
+                         700: 64-bit linear floating point
+                         750: 64-bit gamma floating point
+                       For XCF 4 (which was a development version, hence
+                       this format should not be found often and may be
+                       ignored by readers), its value may be one of:
+                         0: 8-bit gamma integer
+                         1: 16-bit gamma integer
+                         2: 32-bit linear integer
+                         3: 16-bit linear floating point
+                         4: 32-bit linear floating point
+                       For XCF 5 or 6 (which were development versions,
+                       hence these formats may be ignored by readers),
+                       its value may be one of:
+                         100: 8-bit linear integer
+                         150: 8-bit gamma integer
+                         200: 16-bit linear integer
+                         250: 16-bit gamma integer
+                         300: 32-bit linear integer
+                         350: 32-bit gamma integer
+                         400: 16-bit linear floating point
+                         450: 16-bit gamma floating point
+                         500: 32-bit linear floating point
+                         550: 32-bit gamma floating point
+                       NOTE: XCF 3 or older's precision was always
+                       "8-bit gamma integer".
   property-list        Image properties
   ,-----------------   Repeat once for each layer, topmost layer first:
   | uint32 lptr        Pointer to the layer structure
