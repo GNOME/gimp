@@ -46,8 +46,9 @@ Usability:
 
 Translations:
 
-  - Updated translations: Catalan, Dutch, German, Greek, Hungarian, Italian,
-    Polish, Russian, Swedish, Ukrainian.
+  - Updated translations: Catalan, Dutch, French, German, Greek,
+    Hungarian, Icelandic, Italian, Latvian, Polish, Russian, Spanish,
+    Swedish, Ukrainian.
   - New translation: Chinese (Taiwan)
 
 Build:
@@ -55,3 +56,4 @@ Build:
   - Add a --with-bug-report-url configure option allowing packagers to
     set the address of their own bug tracker. This address will be the
     one opened by the debug dialog for reporting bugs.
+  - Add a flatpak manifest for the gtk3-port branch.
