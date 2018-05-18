@@ -714,7 +714,7 @@ PROP_COMPRESSION (essential)
   byte    comp     Compression indicator; one of
                      0: No compression
                      1: RLE encoding
-                     2: (Never used, but reserved for zlib compression)
+                     2: zlib compression
                      3: (Never used, but reserved for some fractal compression)
 
   PROP_COMPRESSION defines the encoding of pixels in tile data blocks in the
@@ -727,8 +727,6 @@ PROP_COMPRESSION (essential)
   Contemporary GIMP versions always write files with comp=1. It is unknown to
   the author of this document whether versions that wrote completely
   uncompressed (comp=0) files ever existed.
-  TODO: Why do we use zlib compression to compress only the whole file (.xcf.gz)
-  if it is a built-in feature?
 
 PROP_GUIDES (editing state)
   uint32  18       Type identification
@@ -1229,8 +1227,9 @@ Ceil(x) is the smallest integer not smaller than x.
 The format of the data blocks pointed to by the tile pointers in the
 level structure of hierarchy differs according to the value of the
 PROP_COMPRESSION property of the main image structure. Current
-GIMP versions always use RLE compression, but readers should nevertheless
-be prepared to meet the older uncompressed format.
+GIMP versions use RLE compression by default, and zlib compression
+optionally. Readers should nevertheless be prepared to meet the
+older uncompressed format.
 
 Both formats assume the width, height and byte depth of the tile are
 known from the context (namely, they are stored explicitly in the
@@ -1252,6 +1251,11 @@ Uncompressed tile data
 In the uncompressed format the file first contains all the bytes for
 the first pixel, then all the bytes for the second pixel, and so on.
 
+zlib compressed tile data
+------------------------
+
+In the zlib compressed format, each tile is compressed as-is (pixel
+after pixel) with zlib.
 
 RLE compressed tile data
 ------------------------
