@@ -100,5 +100,12 @@ void   gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                         gboolean                  bpc,
                                         GimpProgress             *progress);
 
+void   gimp_gegl_average_color         (GeglBuffer               *buffer,
+                                        const GeglRectangle      *rect,
+                                        gboolean                  clip_to_buffer,
+                                        GeglAbyssPolicy           abyss_policy,
+                                        const Babl               *format,
+                                        gpointer                  color);
+
 
 #endif /* __GIMP_GEGL_LOOPS_H__ */
