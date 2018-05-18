@@ -204,6 +204,8 @@ A STRING is stored as follows:
 Exception: the empty string is stored simply as an uint32 with the
 value 0.
 
+A POINTER is 32-bit for XCF up to 10, and 64-bit for XCF 11 and over
+(since GIMP 2.10.0), allowing higher than 4GB XCF files.
 
 Canvas
 ------
@@ -628,66 +630,69 @@ Header
 
 The image structure always starts at offset 0 in the XCF file.
 
-  byte[9] "gimp xcf " File type identification
-  byte[4] version     XCF version
-                         "file": version 0
-                         "v001": version 1
-                         "v002": version 2
-                         "v003": version 3
-  byte    0            Zero marks the end of the version tag.
-  uint32  width        Width of canvas
-  uint32  height       Height of canvas
-  uint32  base_type    Color mode of the image; one of
-                         0: RGB color
-                         1: Grayscale
-                         2: Indexed color
-                       (see enum GimpImageBaseType
-                       in libgimpbase/gimpbaseenums.h)
-  uint32  precision    Image precision; this field is only present for
-                       XCF 4 or over (since GIMP 2.10.0). Its value for
-                       XCF 7 or over is one of:
-                         100: 8-bit linear integer
-                         150: 8-bit gamma integer
-                         200: 16-bit linear integer
-                         250: 16-bit gamma integer
-                         300: 32-bit linear integer
-                         350: 32-bit gamma integer
-                         500: 16-bit linear floating point
-                         550: 16-bit gamma floating point
-                         600: 32-bit linear floating point
-                         650: 32-bit gamma floating point
-                         700: 64-bit linear floating point
-                         750: 64-bit gamma floating point
-                       For XCF 4 (which was a development version, hence
-                       this format should not be found often and may be
-                       ignored by readers), its value may be one of:
-                         0: 8-bit gamma integer
-                         1: 16-bit gamma integer
-                         2: 32-bit linear integer
-                         3: 16-bit linear floating point
-                         4: 32-bit linear floating point
-                       For XCF 5 or 6 (which were development versions,
-                       hence these formats may be ignored by readers),
-                       its value may be one of:
-                         100: 8-bit linear integer
-                         150: 8-bit gamma integer
-                         200: 16-bit linear integer
-                         250: 16-bit gamma integer
-                         300: 32-bit linear integer
-                         350: 32-bit gamma integer
-                         400: 16-bit linear floating point
-                         450: 16-bit gamma floating point
-                         500: 32-bit linear floating point
-                         550: 32-bit gamma floating point
-                       NOTE: XCF 3 or older's precision was always
-                       "8-bit gamma integer".
+  byte[9]     "gimp xcf " File type identification
+  byte[4]     version     XCF version
+                             "file": version 0
+                             "v001": version 1
+                             "v002": version 2
+                             "v003": version 3
+  byte        0            Zero marks the end of the version tag.
+  uint32      width        Width of canvas
+  uint32      height       Height of canvas
+  uint32      base_type    Color mode of the image; one of
+                             0: RGB color
+                             1: Grayscale
+                             2: Indexed color
+                           (see enum GimpImageBaseType
+                           in libgimpbase/gimpbaseenums.h)
+  uint32      precision    Image precision; this field is only present for
+                           XCF 4 or over (since GIMP 2.10.0). Its value for
+                           XCF 7 or over is one of:
+                             100: 8-bit linear integer
+                             150: 8-bit gamma integer
+                             200: 16-bit linear integer
+                             250: 16-bit gamma integer
+                             300: 32-bit linear integer
+                             350: 32-bit gamma integer
+                             500: 16-bit linear floating point
+                             550: 16-bit gamma floating point
+                             600: 32-bit linear floating point
+                             650: 32-bit gamma floating point
+                             700: 64-bit linear floating point
+                             750: 64-bit gamma floating point
+                           For XCF 4 (which was a development version, hence
+                           this format should not be found often and may be
+                           ignored by readers), its value may be one of:
+                             0: 8-bit gamma integer
+                             1: 16-bit gamma integer
+                             2: 32-bit linear integer
+                             3: 16-bit linear floating point
+                             4: 32-bit linear floating point
+                           For XCF 5 or 6 (which were development versions,
+                           hence these formats may be ignored by readers),
+                           its value may be one of:
+                             100: 8-bit linear integer
+                             150: 8-bit gamma integer
+                             200: 16-bit linear integer
+                             250: 16-bit gamma integer
+                             300: 32-bit linear integer
+                             350: 32-bit gamma integer
+                             400: 16-bit linear floating point
+                             450: 16-bit gamma floating point
+                             500: 32-bit linear floating point
+                             550: 32-bit gamma floating point
+                           NOTE: XCF 3 or older's precision was always
+                           "8-bit gamma integer".
   property-list        Image properties
   ,-----------------   Repeat once for each layer, topmost layer first:
-  | uint32 lptr        Pointer to the layer structure
+  | uint32/64 lptr     Pointer to the layer structure.
+  |                    The field will be 32-bit for XCF until version 10,
+  |                    and 64-bit for XCF 11 or over.
   `--
   uint32   0           Zero marks the end of the array of layer pointers.
   ,------------------  Repeat once for each channel, in no particular order:
-  | uint32 cptr        Pointer to the channel structure
+  | uint32/64 cptr     Pointer to the channel structure.
+  |                    Same remark as "lptr" about field length.
   `--
   uint32   0           Zero marks the end of the array of channel pointers.
 
@@ -952,11 +957,13 @@ Channel structures are pointed to from layer structures (in case of
 layer masks) or from the master image structure (for all other
 channels).
 
-  uint32  width  Width of the channel
-  uint32  height Height of the channel
-  string  name   Name of the channel
-  property-list  Channel properties
-  uint32  hptr   Pointer to the hierarchy structure with the pixels
+  uint32    width  Width of the channel
+  uint32    height Height of the channel
+  string    name   Name of the channel
+  property-list    Channel properties
+  uint32/64 hptr   Pointer to the hierarchy structure with the pixels.
+                   The field will be 32-bit for XCF until version 10,
+                   and 64-bit for XCF 11 or over.
 
 The width and height of the channel must be the same as those of its
 parent structure (the layer in the case of layer masks; the canvas for
@@ -1013,20 +1020,24 @@ PROP_SHOW_MASKED (editing state)
 Layer structures are pointed to from a list of layer pointers in the
 master image structure.
 
-  uint32  width  Width of the layer
-  uint32  height Height of the layer
-  uint32  type   Color mode of the layer: one of
-                   0: RGB color without alpha
-                   1: RGB color with alpha
-                   2: Grayscale without alpha
-                   3: Grayscale with alpha
-                   4: Indexed without alpha
-                   5: Indexed with alpha
-                 (see enum GimpImageType in libgimpbase/gimpbaseenums.h)
-  string  name   Name of the layer
-  property-list  Layer properties
-  uint32  hptr   Pointer to the hierarchy structure with the pixels
-  uint32  mptr   Pointer to the layer mask (a channel structure), or 0
+  uint32     width  Width of the layer
+  uint32     height Height of the layer
+  uint32     type   Color mode of the layer: one of
+                      0: RGB color without alpha
+                      1: RGB color with alpha
+                      2: Grayscale without alpha
+                      3: Grayscale with alpha
+                      4: Indexed without alpha
+                      5: Indexed with alpha
+                    (see enum GimpImageType in libgimpbase/gimpbaseenums.h)
+  string     name   Name of the layer
+  property-list     Layer properties
+  uint32/64  hptr   Pointer to the hierarchy structure with the pixels
+                    The field will be 32-bit for XCF until version 10,
+                    and 64-bit for XCF 11 or over.
+  uint32/64  mptr   Pointer to the layer mask (a channel structure), or 0
+                    The field will be 32-bit for XCF until version 10,
+                    and 64-bit for XCF 11 or over.
 
 The color mode of a layer must match that of the entire image.
 All layers except the bottommost one _must_ have an alpha channel. The bottom
@@ -1082,10 +1093,12 @@ PROP_EDIT_MASK (editing state)
   layer mask.
 
 PROP_FLOATING_SELECTION (essential)
-  uint32  5        Type identification
-  uint32  4        Four bytes of payload
-  uint32  ptr      Pointer to the layer or channel the floating selection is
-                   attached to
+  uint32    5      Type identification
+  uint32    4      Four bytes of payload
+  uint32/64 ptr    Pointer to the layer or channel the floating selection is
+                   attached to.
+                   The field will be 32-bit for XCF until version 10,
+                   and 64-bit for XCF 11 or over.
 
   PROP_FLOATING_SELECTION indicates that the layer is the floating selection
   and specifies the pointer to the layer, channel and layer mask it is attached
@@ -1267,21 +1280,25 @@ PROP_TEXT_LAYER_FLAGS
 A hierarchy contains data for a rectangular array of pixels.
 It appears in a context: each layer and channel has a pointer to its hierarchy.
 
-  uint32   width   Width of the pixel array
-  uint32   height  Height of the pixel array
-  uint32   bpp     Number of bytes per pixel given
-                     3: RGB color without alpha
-                     4: RGB color with alpha
-                     1: Grayscale without alpha
-                     2: Grayscale with alpha
-                     1: Indexed without alpha
-                     2: Indexed with alpha
+  uint32      width   Width of the pixel array
+  uint32      height  Height of the pixel array
+  uint32      bpp     Number of bytes per pixel given
+                        3: RGB color without alpha
+                        4: RGB color with alpha
+                        1: Grayscale without alpha
+                        2: Grayscale with alpha
+                        1: Indexed without alpha
+                        2: Indexed with alpha
 
-  uint32   lptr    Pointer to the "level" structure
-  ,--------------- Repeat zero or more times
-  | uint32 dlevel  Pointer to an unused level structure (dummy level)
+  uint32/64   lptr    Pointer to the "level" structure
+                      The field will be 32-bit for XCF until version 10,
+                      and 64-bit for XCF 11 or over.
+  ,--------   ------  Repeat zero or more times
+  | uint32/64 dlevel  Pointer to an unused level structure (dummy level)
+  |                   Same remark as "lptr" for field length.
   `--
-  uint32   0       Zero marks the end of the list of level pointers.
+  uint32/64   0       Zero marks the end of the list of level pointers.
+                      Same remark as "lptr" for field length.
 
 The width, height and bpp values are for consistency checking; their
 correct values can always be inferred from the context, and are
@@ -1293,12 +1310,15 @@ Levels
 
 The level structure is laid out as follows:
 
-  uint32   width  Width of the pixel array
-  uint32   height Height of the pixel array
-  ,-------------- Repeat for each of the ceil(width/64)*ceil(height/64) tiles
-  | uint32 tptr   Pointer to tile data
+  uint32      width  Width of the pixel array
+  uint32      height Height of the pixel array
+  ,----------------- Repeat for each of the ceil(width/64)*ceil(height/64) tiles
+  | uint32/64 tptr   Pointer to tile data
+  |                  The field will be 32-bit for XCF until version 10,
+  |                  and 64-bit for XCF 11 or over.
   `--
-  uint32   0      Zero marks the end of the array of tile pointers.
+  uint32/64   0      Zero marks the end of the array of tile pointers.
+                     Same remark as "tptr" for field length.
 
 The width and height must be the same as the ones recorded in the
 hierarchy structure (except for the aforementioned dummy levels).
