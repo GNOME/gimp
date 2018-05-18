@@ -367,7 +367,8 @@ a layer group flag and various editing state flags.
 Layer mask
 ----------
 
-The layer mask can be attached to a layer.
+The layer mask can be attached to a layer (since GIMP 2.10.0, layer
+group can also have a layer mask).
 Actually it is represented as a channel structure in the XCF file.
 It is referred to from its parent layer and not listed in the master list
 of channels.
@@ -1216,9 +1217,7 @@ PROP_MODE (essential)
   none) of the canvas, it will be the only layer to have its mode
   forced to Normal.
 
-TODO: The layer modes 'Overlay' and 'Soft light' are identical.
-If this information is still valid - is this state subject to change in GEGL?
-Should we continue providing two different names for the same thing?
+NOTE: The layer modes 'Old broken Overlay' and 'Soft light (legacy)' are identical.
 
 PROP_OFFSETS (essential)
   uint32  15       Type identification
@@ -1328,8 +1327,22 @@ In color modes with alpha information, the alpha value is the last of
 the 2 or 4 bytes for each pixel. In RGB color modes, the 3 (first)
 bytes for each pixel is the red intensity, the green intensity, and
 the blue intensity, in that order.
-TODO: How is this in master, when we work with higher bit depths?
 
+Tile data, as other data in XCF format, is big-endian. In particular it
+means that pixel values are stored as big-endian when the precision is
+over 8-bit per channel.
+
+Warning: a bug during development was having pixel data saved in the
+host byte order before version 12, which means that any XCF file from
+version 7 to 11 may be broken when saved then loaded on machines with
+different byte orders (and we cannot know for sure which byte order was
+used for storage for these XCF versions, though little-endian may be a
+safe assumption, considering most end-user processors are little-endian
+nowadays). The stable GIMP 2.10.0 always outputs in big-endian and would
+only use XCF version 7 to 11 when precision is 8-bit. Therefore if a XCF
+reader tries to load a XCF 7 to 11 using over 8-bit precision, this XCF
+was created with a development version of GIMP (therefore unsupported)
+and byte-order is unspecified.
 
 Uncompressed tile data
 ----------------------
