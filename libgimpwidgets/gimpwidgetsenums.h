@@ -124,12 +124,14 @@ typedef enum
 
 /**
  * GimpColorSelectorModel:
- * @GIMP_COLOR_SELECTOR_RGB:            RGB color model
- * @GIMP_COLOR_SELECTOR_LCH:            CIELCh color model
- * @GIMP_COLOR_SELECTOR_HSV:            HSV color model
+ * @GIMP_COLOR_SELECTOR_MODEL_RGB: RGB color model
+ * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIELCh color model
+ * @GIMP_COLOR_SELECTOR_MODEL_HSV: HSV color model
  *
  * An enum to specify the types of color spaces edited in
  * #GimpColorSelector widgets.
+ *
+ * Since: 2.10
  **/
 #define GIMP_TYPE_COLOR_SELECTOR_MODEL (gimp_color_selector_model_get_type ())
 
