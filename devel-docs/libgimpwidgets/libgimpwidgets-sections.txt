@@ -786,6 +786,7 @@ gimp_stock_init
 gimp_icons_init
 gimp_icons_set_icon_theme
 <SUBSECTION Icons>
+GIMP_ICON_ATTACH
 GIMP_ICON_DETACH
 GIMP_ICON_INVERT
 GIMP_ICON_RESET
@@ -849,6 +850,8 @@ GIMP_ICON_COLOR_PICK_FROM_SCREEN
 GIMP_ICON_COLOR_SELECTOR_CMYK
 GIMP_ICON_COLOR_SELECTOR_TRIANGLE
 GIMP_ICON_COLOR_SELECTOR_WATER
+GIMP_ICON_COLOR_SPACE_LINEAR
+GIMP_ICON_COLOR_SPACE_PERCEPTUAL
 GIMP_ICON_COLORS_DEFAULT
 GIMP_ICON_COLORS_SWAP
 GIMP_ICON_CONTROLLER
@@ -1050,6 +1053,7 @@ GIMP_ICON_TOOL_RECT_SELECT
 GIMP_ICON_TOOL_ROTATE
 GIMP_ICON_TOOL_SCALE
 GIMP_ICON_TOOL_SEAMLESS_CLONE
+GIMP_ICON_TOOL_SHADOWS_HIGHLIGHTS
 GIMP_ICON_TOOL_SHEAR
 GIMP_ICON_TOOL_SMUDGE
 GIMP_ICON_TOOL_TEXT
@@ -1430,6 +1434,7 @@ GimpColorSelector
 GIMP_COLOR_SELECTOR_SIZE
 GIMP_COLOR_SELECTOR_BAR_SIZE
 GimpColorSelectorChannel
+GimpColorSelectorModel
 gimp_color_selector_new
 gimp_color_selector_set_toggles_visible
 gimp_color_selector_get_toggles_visible
@@ -1441,8 +1446,11 @@ gimp_color_selector_set_color
 gimp_color_selector_get_color
 gimp_color_selector_set_channel
 gimp_color_selector_get_channel
+gimp_color_selector_set_model_visible
+gimp_color_selector_get_model_visible
 gimp_color_selector_color_changed
 gimp_color_selector_channel_changed
+gimp_color_selector_model_visible_changed
 gimp_color_selector_set_config
 <SUBSECTION Standard>
 GimpColorSelectorClass
@@ -1454,7 +1462,9 @@ GIMP_COLOR_SELECTOR_CLASS
 GIMP_IS_COLOR_SELECTOR_CLASS
 GIMP_COLOR_SELECTOR_GET_CLASS
 GIMP_TYPE_COLOR_SELECTOR_CHANNEL
+GIMP_TYPE_COLOR_SELECTOR_MODEL
 gimp_color_selector_channel_get_type
+gimp_color_selector_model_get_type
 </SECTION>
 
 <SECTION>
@@ -1477,6 +1487,8 @@ GIMP_COLOR_NOTEBOOK_GET_CLASS
 <FILE>gimpcolorscales</FILE>
 <TITLE>GimpColorScales</TITLE>
 GimpColorScales
+gimp_color_scales_set_show_rgb_u8
+gimp_color_scales_get_show_rgb_u8
 <SUBSECTION Standard>
 GIMP_COLOR_SCALES
 GIMP_IS_COLOR_SCALES
