@@ -2,7 +2,18 @@
 DOCUMENTATION OF THE XCF FILE FORMAT
 ====================================
 
+Introduction
+------------
+
 This document describes the native image file format of GIMP.
+
+Note that the XCF format is a "living" format which follows closely the
+GIMP software and evolves together. The ultimate reference for the
+format is therefore its code, even though we will try to update this
+documentation regularly, to make life simpler to ourselves as well as
+third-party XCF-reader's developers.
+
+The code for reading and writing XCF is found in: app/xcf/
 
 
 License
@@ -204,8 +215,9 @@ A STRING is stored as follows:
 Exception: the empty string is stored simply as an uint32 with the
 value 0.
 
-A POINTER is 32-bit for XCF up to 10, and 64-bit for XCF 11 and over
-(since GIMP 2.10.0), allowing higher than 4GB XCF files.
+A POINTER is stored as a 32-bit integer (4 bytes) in big-endian order
+for XCF up to 10, and 64-bit (8 bytes), still big-endian, for XCF 11
+and over, allowing higher than 4GB XCF files since GIMP 2.10.0.
 
 Canvas
 ------
@@ -685,14 +697,11 @@ The image structure always starts at offset 0 in the XCF file.
                            "8-bit gamma integer".
   property-list        Image properties
   ,-----------------   Repeat once for each layer, topmost layer first:
-  | uint32/64 lptr     Pointer to the layer structure.
-  |                    The field will be 32-bit for XCF until version 10,
-  |                    and 64-bit for XCF 11 or over.
+  | pointer lptr       Pointer to the layer structure.
   `--
   uint32   0           Zero marks the end of the array of layer pointers.
   ,------------------  Repeat once for each channel, in no particular order:
-  | uint32/64 cptr     Pointer to the channel structure.
-  |                    Same remark as "lptr" about field length.
+  | pointer cptr       Pointer to the channel structure.
   `--
   uint32   0           Zero marks the end of the array of channel pointers.
 
@@ -961,9 +970,7 @@ channels).
   uint32    height Height of the channel
   string    name   Name of the channel
   property-list    Channel properties
-  uint32/64 hptr   Pointer to the hierarchy structure with the pixels.
-                   The field will be 32-bit for XCF until version 10,
-                   and 64-bit for XCF 11 or over.
+  pointer   hptr   Pointer to the hierarchy structure with the pixels.
 
 The width and height of the channel must be the same as those of its
 parent structure (the layer in the case of layer masks; the canvas for
@@ -1032,12 +1039,8 @@ master image structure.
                     (see enum GimpImageType in libgimpbase/gimpbaseenums.h)
   string     name   Name of the layer
   property-list     Layer properties
-  uint32/64  hptr   Pointer to the hierarchy structure with the pixels
-                    The field will be 32-bit for XCF until version 10,
-                    and 64-bit for XCF 11 or over.
-  uint32/64  mptr   Pointer to the layer mask (a channel structure), or 0
-                    The field will be 32-bit for XCF until version 10,
-                    and 64-bit for XCF 11 or over.
+  pointer    hptr   Pointer to the hierarchy structure with the pixels
+  pointer    mptr   Pointer to the layer mask (a channel structure), or 0
 
 The color mode of a layer must match that of the entire image.
 All layers except the bottommost one _must_ have an alpha channel. The bottom
@@ -1095,10 +1098,8 @@ PROP_EDIT_MASK (editing state)
 PROP_FLOATING_SELECTION (essential)
   uint32    5      Type identification
   uint32    4      Four bytes of payload
-  uint32/64 ptr    Pointer to the layer or channel the floating selection is
-                   attached to.
-                   The field will be 32-bit for XCF until version 10,
-                   and 64-bit for XCF 11 or over.
+  pointer   ptr    Pointer to the layer or channel the floating selection is
+                   attached to
 
   PROP_FLOATING_SELECTION indicates that the layer is the floating selection
   and specifies the pointer to the layer, channel and layer mask it is attached
@@ -1299,15 +1300,11 @@ It appears in a context: each layer and channel has a pointer to its hierarchy.
                         1: Indexed without alpha
                         2: Indexed with alpha
 
-  uint32/64   lptr    Pointer to the "level" structure
-                      The field will be 32-bit for XCF until version 10,
-                      and 64-bit for XCF 11 or over.
+  pointer     lptr    Pointer to the "level" structure
   ,--------   ------  Repeat zero or more times
-  | uint32/64 dlevel  Pointer to an unused level structure (dummy level)
-  |                   Same remark as "lptr" for field length.
+  | pointer   dlevel  Pointer to an unused level structure (dummy level)
   `--
-  uint32/64   0       Zero marks the end of the list of level pointers.
-                      Same remark as "lptr" for field length.
+  pointer     0       Zero marks the end of the list of level pointers.
 
 The width, height and bpp values are for consistency checking; their
 correct values can always be inferred from the context, and are
@@ -1322,12 +1319,9 @@ The level structure is laid out as follows:
   uint32      width  Width of the pixel array
   uint32      height Height of the pixel array
   ,----------------- Repeat for each of the ceil(width/64)*ceil(height/64) tiles
-  | uint32/64 tptr   Pointer to tile data
-  |                  The field will be 32-bit for XCF until version 10,
-  |                  and 64-bit for XCF 11 or over.
+  | pointer   tptr   Pointer to tile data
   `--
-  uint32/64   0      Zero marks the end of the array of tile pointers.
-                     Same remark as "tptr" for field length.
+  pointer     0      Zero marks the end of the array of tile pointers.
 
 The width and height must be the same as the ones recorded in the
 hierarchy structure (except for the aforementioned dummy levels).
