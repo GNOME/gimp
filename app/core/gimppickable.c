@@ -33,6 +33,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -41,7 +42,17 @@
 #include "gimppickable.h"
 
 
-static void   gimp_pickable_interface_base_init (GimpPickableInterface *iface);
+/*  local function prototypes  */
+
+static void   gimp_pickable_interface_base_init    (GimpPickableInterface *iface);
+
+static void   gimp_pickable_real_get_pixel_average (GimpPickable          *pickable,
+                                                    const GeglRectangle   *rect,
+                                                    const Babl            *format,
+                                                    gpointer               pixel);
+
+
+/*  private functions  */
 
 
 GType
@@ -84,7 +95,53 @@ gimp_pickable_interface_base_init (GimpPickableInterface *iface)
 
       initialized = TRUE;
     }
+
+  if (! iface->get_pixel_average)
+    iface->get_pixel_average = gimp_pickable_real_get_pixel_average;
 }
+
+static void
+gimp_pickable_real_get_pixel_average (GimpPickable        *pickable,
+                                      const GeglRectangle *rect,
+                                      const Babl          *format,
+                                      gpointer             pixel)
+{
+  const Babl *average_format = babl_format ("RaGaBaA double");
+  gdouble     average[4]     = {};
+  gint        n              = 0;
+  gint        x;
+  gint        y;
+  gint        c;
+
+  for (y = rect->y; y < rect->y + rect->height; y++)
+    {
+      for (x = rect->x; x < rect->x + rect->width; x++)
+        {
+          gdouble sample[4];
+
+          if (gimp_pickable_get_pixel_at (pickable,
+                                          x, y, average_format, sample))
+            {
+              for (c = 0; c < 4; c++)
+                average[c] += sample[c];
+
+              n++;
+            }
+        }
+    }
+
+  if (n > 0)
+    {
+      for (c = 0; c < 4; c++)
+        average[c] /= n;
+    }
+
+  babl_process (babl_fish (average_format, format), average, pixel, 1);
+}
+
+
+/*  public functions  */
+
 
 void
 gimp_pickable_flush (GimpPickable *pickable)
@@ -180,6 +237,29 @@ gimp_pickable_get_pixel_at (GimpPickable *pickable,
     return pickable_iface->get_pixel_at (pickable, x, y, format, pixel);
 
   return FALSE;
+}
+
+void
+gimp_pickable_get_pixel_average (GimpPickable        *pickable,
+                                 const GeglRectangle *rect,
+                                 const Babl          *format,
+                                 gpointer             pixel)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_if_fail (GIMP_IS_PICKABLE (pickable));
+  g_return_if_fail (rect != NULL);
+  g_return_if_fail (pixel != NULL);
+
+  if (! format)
+    format = gimp_pickable_get_format (pickable);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_pixel_average)
+    pickable_iface->get_pixel_average (pickable, rect, format, pixel);
+  else
+    memset (pixel, 0, babl_format_get_bytes_per_pixel (format));
 }
 
 gboolean
@@ -300,45 +380,31 @@ gimp_pickable_pick_color (GimpPickable *pickable,
   gdouble     sample[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
   format = gimp_pickable_get_format (pickable);
 
   if (! gimp_pickable_get_pixel_at (pickable, x, y, format, sample))
     return FALSE;
 
-  gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
-
   if (pixel)
     memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
 
   if (sample_average)
     {
-      gint    count        = 0;
-      gdouble color_avg[4] = { 0.0, 0.0, 0.0, 0.0 };
-      gint    radius       = (gint) average_radius;
-      gint    i, j;
+      gint radius = floor (average_radius);
 
       format = babl_format ("RaGaBaA double");
 
-      for (i = x - radius; i <= x + radius; i++)
-        for (j = y - radius; j <= y + radius; j++)
-          if (gimp_pickable_get_pixel_at (pickable, i, j, format, sample))
-            {
-              count++;
-
-              color_avg[RED]   += sample[RED];
-              color_avg[GREEN] += sample[GREEN];
-              color_avg[BLUE]  += sample[BLUE];
-              color_avg[ALPHA] += sample[ALPHA];
-            }
-
-      sample[RED]   = color_avg[RED]   / count;
-      sample[GREEN] = color_avg[GREEN] / count;
-      sample[BLUE]  = color_avg[BLUE]  / count;
-      sample[ALPHA] = color_avg[ALPHA] / count;
-
-      gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
+      gimp_pickable_get_pixel_average (pickable,
+                                       GEGL_RECTANGLE (x - radius,
+                                                       y - radius,
+                                                       2 * radius + 1,
+                                                       2 * radius + 1),
+                                       format, sample);
     }
+
+  gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
 
   return TRUE;
 }
