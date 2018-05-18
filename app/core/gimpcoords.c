@@ -49,6 +49,9 @@ gimp_coords_mix (const gdouble     amul,
       ret_val->xtilt     = amul * a->xtilt     + bmul * b->xtilt;
       ret_val->ytilt     = amul * a->ytilt     + bmul * b->ytilt;
       ret_val->wheel     = amul * a->wheel     + bmul * b->wheel;
+      ret_val->distance  = amul * a->distance  + bmul * b->distance;
+      ret_val->rotation  = amul * a->rotation  + bmul * b->rotation;
+      ret_val->slider    = amul * a->slider    + bmul * b->slider;
       ret_val->velocity  = amul * a->velocity  + bmul * b->velocity;
       ret_val->direction = amul * a->direction + bmul * b->direction;
     }
@@ -60,6 +63,9 @@ gimp_coords_mix (const gdouble     amul,
       ret_val->xtilt     = amul * a->xtilt;
       ret_val->ytilt     = amul * a->ytilt;
       ret_val->wheel     = amul * a->wheel;
+      ret_val->distance  = amul * a->distance;
+      ret_val->rotation  = amul * a->rotation;
+      ret_val->slider    = amul * a->slider;
       ret_val->velocity  = amul * a->velocity;
       ret_val->direction = amul * a->direction;
     }
@@ -122,6 +128,9 @@ gimp_coords_scalarprod (const GimpCoords *a,
           a->xtilt     * b->xtilt    +
           a->ytilt     * b->ytilt    +
           a->wheel     * b->wheel    +
+          a->distance  * b->distance +
+          a->rotation  * b->rotation +
+          a->slider    * b->slider   +
           a->velocity  * b->velocity +
           a->direction * b->direction);
 }
@@ -144,6 +153,9 @@ gimp_coords_length_squared (const GimpCoords *a)
   upscaled_a.xtilt     = a->xtilt     * INPUT_RESOLUTION;
   upscaled_a.ytilt     = a->ytilt     * INPUT_RESOLUTION;
   upscaled_a.wheel     = a->wheel     * INPUT_RESOLUTION;
+  upscaled_a.distance  = a->distance  * INPUT_RESOLUTION;
+  upscaled_a.rotation  = a->rotation  * INPUT_RESOLUTION;
+  upscaled_a.slider    = a->slider    * INPUT_RESOLUTION;
   upscaled_a.velocity  = a->velocity  * INPUT_RESOLUTION;
   upscaled_a.direction = a->direction * INPUT_RESOLUTION;
 
@@ -168,11 +180,14 @@ gimp_coords_manhattan_dist (const GimpCoords *a,
 {
   gdouble dist = 0;
 
-  dist += ABS (a->pressure - b->pressure);
-  dist += ABS (a->xtilt - b->xtilt);
-  dist += ABS (a->ytilt - b->ytilt);
-  dist += ABS (a->wheel - b->wheel);
-  dist += ABS (a->velocity - b->velocity);
+  dist += ABS (a->pressure  - b->pressure);
+  dist += ABS (a->xtilt     - b->xtilt);
+  dist += ABS (a->ytilt     - b->ytilt);
+  dist += ABS (a->wheel     - b->wheel);
+  dist += ABS (a->distance  - b->distance);
+  dist += ABS (a->rotation  - b->rotation);
+  dist += ABS (a->slider    - b->slider);
+  dist += ABS (a->velocity  - b->velocity);
   dist += ABS (a->direction - b->direction);
 
   dist *= INPUT_RESOLUTION;
@@ -193,6 +208,9 @@ gimp_coords_equal (const GimpCoords *a,
           a->xtilt     == b->xtilt    &&
           a->ytilt     == b->ytilt    &&
           a->wheel     == b->wheel    &&
+          a->distance  == b->distance &&
+          a->rotation  == b->rotation &&
+          a->slider    == b->slider   &&
           a->velocity  == b->velocity &&
           a->direction == b->direction);
 

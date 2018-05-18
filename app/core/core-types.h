@@ -60,6 +60,10 @@
 #define GIMP_COORDS_MAX_WHEEL         1.0
 #define GIMP_COORDS_DEFAULT_WHEEL     0.5
 
+#define GIMP_COORDS_DEFAULT_DISTANCE  0.0
+#define GIMP_COORDS_DEFAULT_ROTATION  0.0
+#define GIMP_COORDS_DEFAULT_SLIDER    0.0
+
 #define GIMP_COORDS_DEFAULT_VELOCITY  0.0
 
 #define GIMP_COORDS_DEFAULT_DIRECTION 0.0
@@ -72,6 +76,9 @@
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_WHEEL,    \
+                                        GIMP_COORDS_DEFAULT_DISTANCE, \
+                                        GIMP_COORDS_DEFAULT_ROTATION, \
+                                        GIMP_COORDS_DEFAULT_SLIDER,   \
                                         GIMP_COORDS_DEFAULT_VELOCITY, \
                                         GIMP_COORDS_DEFAULT_DIRECTION,\
                                         GIMP_COORDS_DEFAULT_XSCALE,   \
@@ -243,14 +250,22 @@ typedef gint64   (* GimpMemsizeFunc)       (gpointer     instance,
 
 struct _GimpCoords
 {
+  /* axes as reported by the device */
   gdouble  x;
   gdouble  y;
   gdouble  pressure;
   gdouble  xtilt;
   gdouble  ytilt;
   gdouble  wheel;
+  gdouble  distance;
+  gdouble  rotation;
+  gdouble  slider;
+
+  /* synthetic axes */
   gdouble  velocity;
   gdouble  direction;
+
+  /* view transform */
   gdouble  xscale;  /* the view scale                */
   gdouble  yscale;
   gdouble  angle;   /* the view rotation angle       */

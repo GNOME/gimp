@@ -101,6 +101,27 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
                                                      coords->wheel);
         }
 
+      if (gdk_event_get_axis (event, GDK_AXIS_DISTANCE, &coords->distance))
+        {
+          coords->distance = gimp_device_info_map_axis (info,
+                                                        GDK_AXIS_DISTANCE,
+                                                        coords->distance);
+        }
+
+      if (gdk_event_get_axis (event, GDK_AXIS_ROTATION, &coords->rotation))
+        {
+          coords->rotation = gimp_device_info_map_axis (info,
+                                                        GDK_AXIS_ROTATION,
+                                                        coords->rotation);
+        }
+
+      if (gdk_event_get_axis (event, GDK_AXIS_SLIDER, &coords->slider))
+        {
+          coords->slider = gimp_device_info_map_axis (info,
+                                                      GDK_AXIS_SLIDER,
+                                                      coords->slider);
+        }
+
       return TRUE;
     }
 
@@ -172,6 +193,30 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                                  GDK_AXIS_WHEEL,
                                                  coords->wheel);
     }
+
+  if (gdk_device_get_axis (info->device,
+                           axes, GDK_AXIS_DISTANCE, &coords->distance))
+    {
+      coords->distance = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_DISTANCE,
+                                                    coords->distance);
+    }
+
+  if (gdk_device_get_axis (info->device,
+                           axes, GDK_AXIS_ROTATION, &coords->rotation))
+    {
+      coords->rotation = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_ROTATION,
+                                                    coords->rotation);
+    }
+
+  if (gdk_device_get_axis (info->device,
+                           axes, GDK_AXIS_SLIDER, &coords->slider))
+    {
+      coords->slider = gimp_device_info_map_axis (info,
+                                                  GDK_AXIS_SLIDER,
+                                                  coords->slider);
+    }
 }
 
 void
@@ -218,6 +263,30 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
       coords->wheel = gimp_device_info_map_axis (info,
                                                  GDK_AXIS_WHEEL,
                                                  coords->wheel);
+    }
+
+  if (gdk_device_get_axis (info->device,
+                           event->axes, GDK_AXIS_DISTANCE, &coords->distance))
+    {
+      coords->distance = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_DISTANCE,
+                                                    coords->distance);
+    }
+
+  if (gdk_device_get_axis (info->device,
+                           event->axes, GDK_AXIS_ROTATION, &coords->rotation))
+    {
+      coords->rotation = gimp_device_info_map_axis (info,
+                                                    GDK_AXIS_ROTATION,
+                                                    coords->rotation);
+    }
+
+  if (gdk_device_get_axis (info->device,
+                           event->axes, GDK_AXIS_SLIDER, &coords->slider))
+    {
+      coords->slider = gimp_device_info_map_axis (info,
+                                                  GDK_AXIS_SLIDER,
+                                                  coords->slider);
     }
 }
 
