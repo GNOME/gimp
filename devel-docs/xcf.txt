@@ -557,11 +557,41 @@ files from GIMP up to version 1.2.
 This chapter describes the formats of the defined property records that
 can appear in more than one context in an XCF file.
 
+PROP_COLOR_TAG (since GIMP 2.10.0, commit 4f9095798d0)
+  uint32  34         Type identification
+  uint32  4          Four bytes of payload
+  uint32  tag        Color tag of the layer; one of
+                       0: None
+                       1: Blue
+                       2: Green
+                       3: Yellow
+                       4: Orange
+                       5: Brown
+                       6: Red
+                       7: Violet
+                       8: Gray
+
+  PROP_COLOR_TAG can be assigned to layers, channels and paths. They are
+  only organisational properties and have no consequence on render.
+
 PROP_END
   uint32  0          Type identification
   uint32  0          PROP_END has no payload.
 
   The PROP_END pseudo-property marks the end of any property list.
+
+PROP_FLOAT_OPACITY (essential, since GIMP 2.10.0, commit a2ad257711a)
+  uint32  33         Type identification
+  uint32  4          Four bytes of payload
+  float   opacity    Opacity on a scale from 0.0 (fully transparent) to
+                     1.0 (fully opaque)
+
+  PROP_FLOAT_OPACITY records the overall opacity setting for the layer
+  or channel. Since GIMP 2.10.0, it always appears in the property list
+  of layers and channels after PROP_OPACITY, which saves the same value,
+  yet with integer precision. This way, new readers can overwrite the
+  8-bit value with proper precision whereas older readers can simply
+  skip PROP_FLOAT_OPACITY if unknown.
 
 PROP_LINKED (editing state)
   uint32  9          Type identification
@@ -581,6 +611,14 @@ PROP_LOCK_CONTENT (since version 3, editing state)
   PROP_LOCK_CONTENT specifies whether the layer, channel or path is locked,
   i.e. cannot be edited.
 
+PROP_LOCK_POSITION (since GIMP 2.10.0, commit d4933b30526, editing state)
+  uint32  32         Type identification
+  uint32  4          Four bytes of payload
+  uint32  locked     1 if the position is locked; 0 if not
+
+  PROP_LOCK_POSITION specifies whether the layer, channel or path's
+  position is locked, i.e. cannot be transformed (translation, etc.).
+
 PROP_OPACITY (essential)
   uint32  6          Type identification
   uint32  4          Four bytes of payload
@@ -597,6 +635,10 @@ PROP_OPACITY (essential)
 
   When reading old XCF files that lack this property, full opacity
   should be assumed.
+
+  While this property continues to be stored for compatibility, the new
+  property PROP_FLOAT_OPACITY since GIMP 2.10.0 must override the value
+  of PROP_OPACITY with float precision.
 
 PROP_PARASITES
   uint32    21       Type identification
@@ -981,8 +1023,9 @@ Channel properties
 ------------------
 
 The following properties are found only in the property list of
-channel structures. Additionally the list can also contain the properties
-PROP_END, PROP_LINKED, PROP_LOCK_CONTENT, PROP_OPACITY, PROP_PARASITES,
+channel structures. Additionally the list can also contain the
+properties: PROP_COLOR_TAG, PROP_END, PROP_FLOAT_OPACITY, PROP_LINKED,
+PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_OPACITY, PROP_PARASITES,
 PROP_TATTOO and PROP_VISIBLE, defined in chapter 2.
 
 PROP_ACTIVE_CHANNEL (editing state)
@@ -1005,6 +1048,26 @@ PROP_COLOR
   when it is visible in the UI.
   (The alpha of the screen is given as the channel's PROP_OPACITY).
   TODO: What exactly does "screen" mean here?
+
+  While this property continues to be stored for compatibility, the new
+  property PROP_FLOAT_COLOR since GIMP 2.10.0 must override the value
+  of PROP_COLOR with float precision.
+
+PROP_FLOAT_COLOR (since GIMP 2.10.0, essential, commit 10360c9e130)
+  uint32  38       Type identification
+  uint32  12       Twelve bytes of payload
+  float   r        Red component of color
+  float   g        Green component of color
+  float   b        Blue component of color
+
+  PROP_FLOAT_COLOR gives the color of the screen that is used to
+  represent the channel when it is visible in the UI. Each component is
+  in the range 0.0 to 1.0.
+  PROP_FLOAT_COLOR stores the same property as PROP_COLOR with float
+  precision. Since GIMP 2.10.0, it always appears in the property list
+  of channels after PROP_COLOR. This way, new readers can overwrite the
+  8-bit value with proper precision whereas older readers can simply
+  skip PROP_FLOAT_COLOR if unknown.
 
 PROP_SELECTION (editing state?)
   uint32  4        Type identification
@@ -1056,8 +1119,9 @@ Layer properties
 ----------------
 
 The following properties are found only in the property list of layer
-structures. Additionally the list can also contain the properties
-PROP_END, PROP_LINKED, PROP_LOCK_CONTENT, PROP_OPACITY, PROP_PARASITES,
+structures. Additionally the list can also contain the properties:
+PROP_COLOR_TAG, PROP_END, PROP_FLOAT_OPACITY, PROP_LINKED,
+PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_OPACITY, PROP_PARASITES,
 PROP_TATTOO and PROP_VISIBLE, defined in chapter 2.
 
 PROP_ACTIVE_LAYER (editing state)
@@ -1081,6 +1145,76 @@ PROP_APPLY_MASK (essential)
   Robust readers should force this to false if the layer has no layer
   mask. Writers should never save this as true unless the layer has a
   layer mask.
+
+PROP_COMPOSITE_MODE (since GIMP 2.10.0, essential, commit 8634b5cbc31)
+  uint32  35         Type identification
+  uint32  4          Four bytes of payload
+  int32   mode       Composite mode of the layer; one of:
+                       1: Union
+                       2: Clip to backdrop
+                       3: Clip to layer
+                       4: Intersection
+                       See below for meaning of negative values.
+
+  PROP_COMPOSITE_MODE records the composite mode, for layers only. A
+  negative value means that the composite mode was left to "Auto",
+  rather than explicitly set, while we still store the mapping of "Auto"
+  at the time of saving the XCF, by inverting it. For instance if "mode"
+  is -2, it means that "Auto" was set, which corresponds to "Clip to
+  backdrop" for this specific layer mode.
+  The reason for this is that we must always keep the expected output,
+  even if we were to change the mapping of "Auto" in the future.
+
+  Note: as you may guess, "Auto" maps to different actual composite
+  modes, depending on PROP_MODE. This system makes so you don't have to
+  know this mapping. A XCF reader may just use the absolute value of
+  PROP_COMPOSITE_MODE.
+
+PROP_COMPOSITE_SPACE (since GIMP 2.10.0, essential, commit 8634b5cbc31)
+  uint32  36         Type identification
+  uint32  4          Four bytes of payload
+  int32   space      Composite space of the layer; one of:
+                       1: RGB (linear)
+                       2: RGB (perceptual)
+                       3: LAB
+                       See below for meaning of negative values.
+
+  PROP_COMPOSITE_SPACE records the composite mode, for layers only. A
+  negative value means that the composite space was left to "Auto",
+  rather than explicitly set, while we still store the mapping of "Auto"
+  at the time of saving the XCF, by inverting it. For instance if "space"
+  is -3, it means that "Auto" was set, which corresponds to "LAB"
+  composite space for this specific layer mode.
+  The reason for this is that we must always keep the expected output,
+  even if we were to change the mapping of "Auto" in the future.
+
+  Note: as you may guess, "Auto" maps to different actual composite
+  spaces, depending on PROP_MODE. This system makes so you don't have to
+  know this mapping. A XCF reader may just use the absolute value of
+  PROP_COMPOSITE_SPACE.
+
+PROP_BLEND_SPACE (since GIMP 2.10.0, essential, commit 8634b5cbc31)
+  uint32  36         Type identification
+  uint32  4          Four bytes of payload
+  int32   space      Composite space of the layer; one of:
+                       1: RGB (linear)
+                       2: RGB (perceptual)
+                       3: LAB
+                       See below for meaning of negative values.
+
+  PROP_BLEND_SPACE records the blend mode, for layers only. A negative
+  value means that the composite space was left to "Auto", rather than
+  explicitly set, while we still store the mapping of "Auto" at the time
+  of saving the XCF, by inverting it. For instance if "space" is -3, it
+  means that "Auto" was set, which corresponds to "LAB" composite space
+  for this specific layer mode.
+  The reason for this is that we must always keep the expected output,
+  even if we were to change the mapping of "Auto" in the future.
+
+  Note: as you may guess, "Auto" maps to different actual blend spaces,
+  depending on PROP_MODE. This system makes so you don't have to know
+  this mapping. A XCF reader may just use the absolute value of
+  PROP_BLEND_SPACE.
 
 PROP_EDIT_MASK (editing state)
   uint32  12       Type identification
