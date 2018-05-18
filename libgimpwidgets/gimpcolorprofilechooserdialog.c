@@ -295,7 +295,7 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
       }
 
     if (! folder_set)
-      add_shortcut (dialog, "/usr/share/color/icc");
+      add_shortcut (dialog, COLOR_PROFILE_DIRECTORY);
   }
 #endif
 }

@@ -2320,7 +2320,7 @@ AM_CONDITIONAL(HAVE_DESKTOP_FILE_VALIDATE, test "x$DESKTOP_FILE_VALIDATE" != "xn
 # order to filter first packaging bugs from core bugs.
 
 AC_ARG_WITH(bug-report-url,
-            [  --with-bug-report-url           URL used by the debug dialog to report bugs],,
+            [  --with-bug-report-url   URL used by the debug dialog to report bugs],,
             [with_bug_report_url="$PACKAGE_BUGREPORT"])
 
 if test "x$with_bug_report_url" = "x"; then
@@ -2339,6 +2339,30 @@ NOTE: if you plan on packaging GIMP for distribution, it is recommended
       so that you can filter packaging bugs from core bugs before
       reporting upstream.
 "
+fi
+
+#########################
+# Default ICC directory #
+#########################
+
+# This is necessary because some Unix systems may have a different
+# standard path for color profiles. And in particular, sandbox builds
+# might mount the host system at a different root. This is for
+# instance the case of flatpak which mount the host root at /run/host/.
+if test "x$platform_osx" = "xno" &&
+   test "x$platform_win32" = "xno"; then
+  AC_MSG_CHECKING([default directory for color profiles])
+  AC_ARG_WITH(icc-directory,
+              [  --with-icc-directory    Path to default color profiles for this system],,
+              [with_icc_directory="/usr/share/color/icc"])
+
+  if test "x$with_icc_directory" = "x"; then
+    with_icc_directory="/usr/share/color/icc"
+  fi
+
+  AC_DEFINE_UNQUOTED(COLOR_PROFILE_DIRECTORY,
+                     "$with_icc_directory",
+                     [The path to default color profiles for this system])
 fi
 
 ######################################
@@ -2827,6 +2851,7 @@ Optional Features:
   Vector icons:            $enable_vector_icons
   Dr. Mingw (Win32):       $enable_drmingw
   Bundled MyPaint Brushes: $enable_bundled_mypaint_brushes (at $mypaint_brushes_dir)
+  Default ICC directory:   $with_icc_directory
 
 Optional Plug-Ins:
   Ascii Art:               $have_libaa
