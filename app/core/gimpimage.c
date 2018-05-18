@@ -207,6 +207,10 @@ static gboolean     gimp_image_get_pixel_at      (GimpPickable      *pickable,
 static gdouble      gimp_image_get_opacity_at    (GimpPickable      *pickable,
                                                   gint               x,
                                                   gint               y);
+static void         gimp_image_get_pixel_average (GimpPickable      *pickable,
+                                                  const GeglRectangle *rect,
+                                                  const Babl        *format,
+                                                  gpointer           pixel);
 static void         gimp_image_pixel_to_srgb     (GimpPickable      *pickable,
                                                   const Babl        *format,
                                                   gpointer           pixel,
@@ -679,6 +683,7 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_buffer            = gimp_image_get_buffer;
   iface->get_pixel_at          = gimp_image_get_pixel_at;
   iface->get_opacity_at        = gimp_image_get_opacity_at;
+  iface->get_pixel_average     = gimp_image_get_pixel_average;
   iface->pixel_to_srgb         = gimp_image_pixel_to_srgb;
   iface->srgb_to_pixel         = gimp_image_srgb_to_pixel;
 }
@@ -1489,6 +1494,18 @@ gimp_image_get_opacity_at (GimpPickable *pickable,
 
   return gimp_pickable_get_opacity_at (GIMP_PICKABLE (private->projection),
                                        x, y);
+}
+
+static void
+gimp_image_get_pixel_average (GimpPickable        *pickable,
+                              const GeglRectangle *rect,
+                              const Babl          *format,
+                              gpointer             pixel)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
+
+  return gimp_pickable_get_pixel_average (GIMP_PICKABLE (private->projection),
+                                          rect, format, pixel);
 }
 
 static void

@@ -30,6 +30,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -135,6 +136,10 @@ static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *picka
 static gdouble     gimp_projection_get_opacity_at        (GimpPickable    *pickable,
                                                           gint             x,
                                                           gint             y);
+static void        gimp_projection_get_pixel_average     (GimpPickable    *pickable,
+                                                          const GeglRectangle *rect,
+                                                          const Babl      *format,
+                                                          gpointer         pixel);
 static void        gimp_projection_pixel_to_srgb         (GimpPickable    *pickable,
                                                           const Babl      *format,
                                                           gpointer         pixel,
@@ -255,6 +260,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_buffer            = gimp_projection_get_buffer;
   iface->get_pixel_at          = gimp_projection_get_pixel_at;
   iface->get_opacity_at        = gimp_projection_get_opacity_at;
+  iface->get_pixel_average     = gimp_projection_get_pixel_average;
   iface->pixel_to_srgb         = gimp_projection_pixel_to_srgb;
   iface->srgb_to_pixel         = gimp_projection_srgb_to_pixel;
 }
@@ -457,6 +463,18 @@ gimp_projection_get_opacity_at (GimpPickable *pickable,
                                 gint          y)
 {
   return GIMP_OPACITY_OPAQUE;
+}
+
+static void
+gimp_projection_get_pixel_average (GimpPickable        *pickable,
+                                   const GeglRectangle *rect,
+                                   const Babl          *format,
+                                   gpointer             pixel)
+{
+  GeglBuffer *buffer = gimp_projection_get_buffer (pickable);
+
+  return gimp_gegl_average_color (buffer, rect, TRUE, GEGL_ABYSS_NONE, format,
+                                  pixel);
 }
 
 static void

@@ -29,6 +29,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-memsize.h"
@@ -149,6 +150,11 @@ static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
                                                     gint               y,
                                                     const Babl        *format,
                                                     gpointer           pixel);
+static void       gimp_drawable_get_pixel_average  (GimpPickable      *pickable,
+                                                    const GeglRectangle *rect,
+                                                    const Babl        *format,
+                                                    gpointer           pixel);
+
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
                                                     gint               y,
@@ -302,6 +308,7 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_format_with_alpha = (const Babl    * (*) (GimpPickable *pickable)) gimp_drawable_get_format_with_alpha;
   iface->get_buffer            = (GeglBuffer    * (*) (GimpPickable *pickable)) gimp_drawable_get_buffer;
   iface->get_pixel_at          = gimp_drawable_get_pixel_at;
+  iface->get_pixel_average     = gimp_drawable_get_pixel_average;
 }
 
 static void
@@ -708,6 +715,18 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   return TRUE;
+}
+
+static void
+gimp_drawable_get_pixel_average (GimpPickable        *pickable,
+                                 const GeglRectangle *rect,
+                                 const Babl          *format,
+                                 gpointer             pixel)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
+
+  return gimp_gegl_average_color (gimp_drawable_get_buffer (drawable),
+                                  rect, TRUE, GEGL_ABYSS_NONE, format, pixel);
 }
 
 static void
