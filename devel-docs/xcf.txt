@@ -20,6 +20,7 @@ License
 -------
 
 Copyright Henning Makholm <henning@makholm.net>, 2006-07-11
+Copyright various GIMP developers (see git log), 2009-2018
 
 This is free documentation; you can modify and/or redistribute
 it according to the terms of the GNU General Public License
@@ -92,20 +93,22 @@ one image (i.e., not the cut buffer, tool options, key bindings, etc.) and
 is not undo data. This makes the full collection of data stored in an XCF file
 rather heterogeneous and tied to the internals of GIMP.
 
-Use of the XCF format by third-party software is recommended only as a way
-to get data into and out of GIMP for which it would be impossible or
-inconvenient to use a more standard interchange format.
-Authors of third-party XCF-creating software in particular should take
-care to write files that are as indistinguishable as possible from
-ones saved by GIMP. The GIMP developers take care to make each
-version of GIMP able to read XCF files produced by older GIMP versions,
-but they make no special efforts to allow reading of XCF files created by
-other software.
+Use of the XCF format by third-party software is recommended only as a
+way to get data into and out of GIMP for which it would be impossible or
+inconvenient to use a more standard interchange format. Authors of
+third-party XCF-creating software in particular should take care to
+write files that are as indistinguishable as possible from ones saved by
+GIMP. The GIMP developers take care to make each version of GIMP able to
+read XCF files produced by older GIMP versions, but they make no special
+efforts to allow reading of XCF files created by other software.
 
-Interchanging image data with other applications is not goal of the XCF format.
-For this use case GIMP opens and exports common images formats, like JPEG,
-PNG and PSD.
-TODO: Role of the ORA format in this context?
+Interchanging image data with other applications is not the goal of the
+XCF format.  Other formats may be more appropriate. For this use case
+GIMP opens and exports common images formats, like JPEG, PNG and PSD,
+though they may all miss various features of XCF.
+OpenRaster (ORA) in particular is meant to be a generic interchange
+format between software, with as few feature loss as possible, though
+its standardization is still quite slow.
 
 For the stated reasons and clarification GIMP _saves_ XCF files,
 but _exports_ to other image formats.
@@ -114,20 +117,20 @@ Beware that CinePaint's native file format is called XCF, too. While it is
 derived from the format described here, both formats differ in many details
 and are _not_ mutually compatible.
 This document does not describe the CinePaint XCF format.
-For more information on that see http://www.cinepaint.org/more/docs/xcf.html
+For more information on that see:
+https://web.archive.org/web/20161024115140/http://www.cinepaint.org/more/docs/xcf.html
 
 
 Status
 ------
 
 This specification is an unofficial condensation and extrapolation of
-the XCF-writing and -reading code in version 2.8.10 of GIMP. As of
-this writing, it has not been approved or proofread by any GIMP
-developer, though it has been written with the intention of
-contributing it to the GIMP project for use as official documentation.
+the XCF-writing and -reading code in version 2.10.0 of GIMP. Yet we
+remind that the ultimate reference is the loading and saving code of the
+XCF format.
 
 Some of the normative statements made below are enforced by the XCF
-code in GIMP; others are just the author's informed guess about
+code in GIMP; others are just the authors' informed guess about
 "best practices" that would be likely to maximize interoperability
 with future versions of GIMP.
 
@@ -138,17 +141,17 @@ This section lists the changes between file format versions in bigger terms.
 Details are denoted in the text.
 
 Version 0:
-Since GIMP 0.99.16, released on 15.12.1997.
+Since GIMP 0.99.16, released on 1997-12-15.
 The initial file format. Everything that is not listed in the following versions
 is part of this.
 
 Version 1:
-Since GIMP 0.99.16, released on 15.12.1997.
+Since GIMP 0.99.16, released on 1997-12-15.
 Adds color maps. Chapter 3 "The image structure" describes the PROP_COLOR_MAP
 property.
 
 Version 2:
-Since GIMP 1.3.10, released on 07.11.2002.
+Since GIMP 1.3.10, released on 2002-11-07.
 Adds layer modes "Soft light", "Grain extract", "Grain merge" and painting
 mode "Color Erase". In chapter 5 "The layer structure" the description of
 the property PROP_MODE contains the new layer modes.
@@ -157,10 +160,15 @@ Chapter 1 "Basic concepts" describes the path handling in general and
 chapter 2 "General concepts" introduces the PROP_VECTORS property.
 
 Version 3:
-Since GIMP 2.7.1, released on 29.06.2010.
+Since GIMP 2.7.1, released on 2010-06-29.
 Adds layer groups. The chapter 5 "The layer structure" describes the new
 properties PROP_GROUP_ITEM, PROP_GROUP_ITEM_FLAGS and PROP_ITEM_PATH.
 
+Version 4 to 13:
+Since GIMP 2.10.0, released on 2018-04-27.
+Adds many layer modes, layer group masks, high-bit depth (precisions
+other than 8-bit gamma), zlib compression and 64-bit offsets for XCF
+files bigger than 4GB.
 
 1. BASIC CONCEPTS
 =================
