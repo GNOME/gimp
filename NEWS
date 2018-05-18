@@ -49,7 +49,7 @@ Translations:
   - Updated translations: Catalan, Dutch, French, German, Greek,
     Hungarian, Icelandic, Italian, Latvian, Polish, Russian, Spanish,
     Swedish, Ukrainian.
-  - New translation: Chinese (Taiwan)
+  - New translation of Windows installer: Chinese (Taiwan)
 
 Build:
 
@@ -58,3 +58,11 @@ Build:
     one opened by the debug dialog for reporting bugs.
   - Add a flatpak manifest for the gtk3-port branch.
   - Remove the possibility to disable script-fu.
+  - Add a --with-icc-directory configure option to customize the color
+    profile directory. By default, it is set to the common path
+    /usr/share/color/icc.
+
+Documentation:
+
+  - Updating the description of the XCF format "devel-docs/xcf.txt", for
+    third-party readers wishing to support GIMP 2.10 XCF files.
