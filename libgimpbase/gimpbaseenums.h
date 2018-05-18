@@ -34,6 +34,25 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpAddMaskType:
+ * @GIMP_ADD_MASK_WHITE:           White (full opacity)
+ * @GIMP_ADD_MASK_BLACK:           Black (full transparency)
+ * @GIMP_ADD_MASK_ALPHA:           Layer's alpha channel
+ * @GIMP_ADD_MASK_ALPHA_TRANSFER:  Transfer layer's alpha channel
+ * @GIMP_ADD_MASK_SELECTION:       Selection
+ * @GIMP_ADD_MASK_COPY:            Grayscale copy of layer
+ * @GIMP_ADD_MASK_CHANNEL:         Channel
+ * @GIMP_ADD_WHITE_MASK:           Deprecated alias
+ * @GIMP_ADD_BLACK_MASK:           Deprecated alias
+ * @GIMP_ADD_ALPHA_MASK:           Deprecated alias
+ * @GIMP_ADD_ALPHA_TRANSFER_MASK:  Deprecated alias
+ * @GIMP_ADD_SELECTION_MASK:       Deprecated alias
+ * @GIMP_ADD_COPY_MASK:            Deprecated alias
+ * @GIMP_ADD_CHANNEL_MASK:         Deprecated aliaa
+ *
+ * Modes of initialising a layer mask.
+ **/
 #define GIMP_TYPE_ADD_MASK_TYPE (gimp_add_mask_type_get_type ())
 
 GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
@@ -60,6 +79,15 @@ typedef enum
 } GimpAddMaskType;
 
 
+/**
+ * GimpBlendMode:
+ * @GIMP_BLEND_FG_BG_RGB:      FG to BG (RGB)
+ * @GIMP_BLEND_FG_BG_HSV:      FG to BG (HSV)
+ * @GIMP_BLEND_FG_TRANSPARENT: FG to transparent
+ * @GIMP_BLEND_CUSTOM:         Custom gradient
+ *
+ * Types of gradients.
+ **/
 #define GIMP_TYPE_BLEND_MODE (gimp_blend_mode_get_type ())
 
 GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
@@ -80,6 +108,14 @@ typedef enum
 } GimpBlendMode;
 
 
+/**
+ * GimpBrushGeneratedShape:
+ * @GIMP_BRUSH_GENERATED_CIRCLE:  Circle
+ * @GIMP_BRUSH_GENERATED_SQUARE:  Square
+ * @GIMP_BRUSH_GENERATED_DIAMOND: Diamond
+ *
+ * Shapes of generated brushes.
+ **/
 #define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
 
 GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
@@ -92,6 +128,14 @@ typedef enum
 } GimpBrushGeneratedShape;
 
 
+/**
+ * GimpBucketFillMode:
+ * @GIMP_BUCKET_FILL_FG:      FG color fill
+ * @GIMP_BUCKET_FILL_BG:      BG color fill
+ * @GIMP_BUCKET_FILL_PATTERN: Pattern fill
+ *
+ * Bucket fill modes.
+ */
 #define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
 
 GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
@@ -110,6 +154,14 @@ typedef enum
 } GimpBucketFillMode;
 
 
+/**
+ * GimpCapStyle:
+ * @GIMP_CAP_BUTT:   Butt
+ * @GIMP_CAP_ROUND:  Round
+ * @GIMP_CAP_SQUARE: Square
+ *
+ * Style of line endings.
+ **/
 #define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
 
 GType gimp_cap_style_get_type (void) G_GNUC_CONST;
@@ -122,6 +174,15 @@ typedef enum
 } GimpCapStyle;
 
 
+/**
+ * GimpChannelOps:
+ * @GIMP_CHANNEL_OP_ADD:       Add to the current selection
+ * @GIMP_CHANNEL_OP_SUBTRACT:  Subtract from the current selection
+ * @GIMP_CHANNEL_OP_REPLACE:   Replace the current selection
+ * @GIMP_CHANNEL_OP_INTERSECT: Intersect with the current selection
+ *
+ * Operations to combine channels and selections.
+ **/
 #define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
 
 GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
@@ -135,6 +196,17 @@ typedef enum
 } GimpChannelOps;
 
 
+/**
+ * GimpChannelType:
+ * @GIMP_CHANNEL_RED:     Red
+ * @GIMP_CHANNEL_GREEN:   Green
+ * @GIMP_CHANNEL_BLUE:    Blue
+ * @GIMP_CHANNEL_GRAY:    Gray
+ * @GIMP_CHANNEL_INDEXED: Indexed
+ * @GIMP_CHANNEL_ALPHA:   Alpha
+ *
+ * Channels (as in color components).
+ **/
 #define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
 
 GType gimp_channel_type_get_type (void) G_GNUC_CONST;
@@ -159,6 +231,14 @@ typedef enum
 } GimpChannelType;
 
 
+/**
+ * GimpCheckSize:
+ * @GIMP_CHECK_SIZE_SMALL_CHECKS:  Small
+ * @GIMP_CHECK_SIZE_MEDIUM_CHECKS: Medium
+ * @GIMP_CHECK_SIZE_LARGE_CHECKS:  Large
+ *
+ * Size of the checkerboard indicating transparency.
+ **/
 #define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
 
 GType gimp_check_size_get_type (void) G_GNUC_CONST;
@@ -171,6 +251,17 @@ typedef enum  /*< pdb-skip >*/
 } GimpCheckSize;
 
 
+/**
+ * GimpCheckType:
+ * @GIMP_CHECK_TYPE_LIGHT_CHECKS: Light checks
+ * @GIMP_CHECK_TYPE_GRAY_CHECKS:  Mid-tone checks
+ * @GIMP_CHECK_TYPE_DARK_CHECKS:  Dark checks
+ * @GIMP_CHECK_TYPE_WHITE_ONLY:   White only
+ * @GIMP_CHECK_TYPE_GRAY_ONLY:    Gray only
+ * @GIMP_CHECK_TYPE_BLACK_ONLY:   Black only
+ *
+ * Color/Brightness of the checkerboard indicating transparency.
+ **/
 #define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
 
 GType gimp_check_type_get_type (void) G_GNUC_CONST;
@@ -186,6 +277,13 @@ typedef enum  /*< pdb-skip >*/
 } GimpCheckType;
 
 
+/**
+ * GimpCloneType:
+ * @GIMP_CLONE_IMAGE:   Image
+ * @GIMP_CLONE_PATTERN: Pattern
+ *
+ * Clone sources.
+ **/
 #define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
 
 GType gimp_clone_type_get_type (void) G_GNUC_CONST;
@@ -202,6 +300,20 @@ typedef enum
 } GimpCloneType;
 
 
+/**
+ * GimpColorTag:
+ * @GIMP_COLOR_TAG_NONE:   None
+ * @GIMP_COLOR_TAG_BLUE:   Blue
+ * @GIMP_COLOR_TAG_GREEN:  Green
+ * @GIMP_COLOR_TAG_YELLOW: Yellow
+ * @GIMP_COLOR_TAG_ORANGE: Orange
+ * @GIMP_COLOR_TAG_BROWN:  Brown
+ * @GIMP_COLOR_TAG_RED:    Red
+ * @GIMP_COLOR_TAG_VIOLET: Violet
+ * @GIMP_COLOR_TAG_GRAY:   Gray
+ *
+ * Possible tag colors.
+ **/
 #define GIMP_TYPE_COLOR_TAG (gimp_color_tag_get_type ())
 
 GType gimp_color_tag_get_type (void) G_GNUC_CONST;
@@ -220,6 +332,17 @@ typedef enum
 } GimpColorTag;
 
 
+/**
+ * GimpComponentType:
+ * @GIMP_COMPONENT_TYPE_U8:     8-bit integer
+ * @GIMP_COMPONENT_TYPE_U16:    16-bit integer
+ * @GIMP_COMPONENT_TYPE_U32:    32-bit integer
+ * @GIMP_COMPONENT_TYPE_HALF:   16-bit floating point
+ * @GIMP_COMPONENT_TYPE_FLOAT:  32-bit floating point
+ * @GIMP_COMPONENT_TYPE_DOUBLE: 64-bit floating point
+ *
+ * Encoding types of image components.
+ **/
 #define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
 
 GType gimp_component_type_get_type (void) G_GNUC_CONST;
@@ -235,6 +358,16 @@ typedef enum
 } GimpComponentType;
 
 
+/**
+ * GimpConvertPaletteType:
+ * @GIMP_CONVERT_PALETTE_GENERATE: Generate optimum palette
+ * @GIMP_CONVERT_PALETTE_REUSE:    Don't use this one
+ * @GIMP_CONVERT_PALETTE_WEB:      Use web-optimized palette
+ * @GIMP_CONVERT_PALETTE_MONO:     Use black and white (1-bit) palette
+ * @GIMP_CONVERT_PALETTE_CUSTOM:   Use custom palette
+ *
+ * Types of palettes for indexed conversion.
+ **/
 #define GIMP_TYPE_CONVERT_PALETTE_TYPE (gimp_convert_palette_type_get_type ())
 
 GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
@@ -257,6 +390,13 @@ typedef enum
 } GimpConvertPaletteType;
 
 
+/**
+ * GimpConvolveType:
+ * @GIMP_CONVOLVE_BLUR:    Blur
+ * @GIMP_CONVOLVE_SHARPEN: Sharpen
+ *
+ * Types of convolutions.
+ **/
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
 
 GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
@@ -273,6 +413,16 @@ typedef enum
 } GimpConvolveType;
 
 
+/**
+ * GimpDesaturateMode:
+ * @GIMP_DESATURATE_LIGHTNESS: Lightness (HSL)
+ * @GIMP_DESATURATE_LUMA:      Luma
+ * @GIMP_DESATURATE_AVERAGE:   Average (HSI Intensity)
+ * @GIMP_DESATURATE_LUMINANCE: Luminance
+ * @GIMP_DESATURATE_VALUE:     Value (HSV)
+ *
+ * Grayscale conversion methods.
+ **/
 #define GIMP_TYPE_DESATURATE_MODE (gimp_desaturate_mode_get_type ())
 
 GType gimp_desaturate_mode_get_type (void) G_GNUC_CONST;
@@ -291,6 +441,13 @@ typedef enum
 } GimpDesaturateMode;
 
 
+/**
+ * GimpDodgeBurnType:
+ * @GIMP_DODGE_BURN_TYPE_DODGE: Dodge
+ * @GIMP_DODGE_BURN_TYPE_BURN:  Burn
+ *
+ * Methods for the dodge/burn operation.
+ **/
 #define GIMP_TYPE_DODGE_BURN_TYPE (gimp_dodge_burn_type_get_type ())
 
 GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
@@ -307,6 +464,16 @@ typedef enum
 } GimpDodgeBurnType;
 
 
+/**
+ * GimpFillType:
+ * @GIMP_FILL_FOREGROUND:  Foreground color
+ * @GIMP_FILL_BACKGROUND:  Background color
+ * @GIMP_FILL_WHITE:       White
+ * @GIMP_FILL_TRANSPARENT: Transparency
+ * @GIMP_FILL_PATTERN:     Pattern
+ *
+ * Types of filling.
+ **/
 #define GIMP_TYPE_FILL_TYPE (gimp_fill_type_get_type ())
 
 GType gimp_fill_type_get_type (void) G_GNUC_CONST;
@@ -329,6 +496,13 @@ typedef enum
 } GimpFillType;
 
 
+/**
+ * GimpForegroundExtractMode:
+ * @GIMP_FOREGROUND_EXTRACT_SIOX:    Siox
+ * @GIMP_FOREGROUND_EXTRACT_MATTING: Matting
+ *
+ * Foreground extraxt engines.
+ **/
 #define GIMP_TYPE_FOREGROUND_EXTRACT_MODE (gimp_foreground_extract_mode_get_type ())
 
 GType gimp_foreground_extract_mode_get_type (void) G_GNUC_CONST;
@@ -340,6 +514,14 @@ typedef enum
 } GimpForegroundExtractMode;
 
 
+/**
+ * GimpGradientBlendColorSpace:
+ * @GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL: Perceptual RGB
+ * @GIMP_GRADIENT_BLEND_RGB_LINEAR:     Linear RGB
+ * @GIMP_GRADIENT_BLEND_CIE_LAB:        CIE Lab
+ *
+ * Color space for blending gradients.
+ */
 #define GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE (gimp_gradient_blend_color_space_get_type ())
 
 GType gimp_gradient_blend_color_space_get_type (void) G_GNUC_CONST;
@@ -352,6 +534,14 @@ typedef enum
 } GimpGradientBlendColorSpace;
 
 
+/**
+ * GimpGradientSegmentColor:
+ * @GIMP_GRADIENT_SEGMENT_RGB:     RGB
+ * @GIMP_GRADIENT_SEGMENT_HSV_CCW: HSV (counter-clockwise hue)
+ * @GIMP_GRADIENT_SEGMENT_HSV_CW:  HSV (clockwise hue)
+ *
+ * Coloring types for gradient segments.
+ **/
 #define GIMP_TYPE_GRADIENT_SEGMENT_COLOR (gimp_gradient_segment_color_get_type ())
 
 GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
@@ -364,6 +554,16 @@ typedef enum
 } GimpGradientSegmentColor;
 
 
+/**
+ * GimpGradientSegmentType:
+ * @GIMP_GRADIENT_SEGMENT_LINEAR:            Linear
+ * @GIMP_GRADIENT_SEGMENT_CURVED:            Curved
+ * @GIMP_GRADIENT_SEGMENT_SINE:              Sinusoidal
+ * @GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: Spherical (increasing)
+ * @GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: Spherical (decreasing)
+ *
+ * Transition functions for gradient segments.
+ **/
 #define GIMP_TYPE_GRADIENT_SEGMENT_TYPE (gimp_gradient_segment_type_get_type ())
 
 GType gimp_gradient_segment_type_get_type (void) G_GNUC_CONST;
@@ -378,6 +578,22 @@ typedef enum
 } GimpGradientSegmentType;
 
 
+/**
+ * GimpGradientType:
+ * @GIMP_GRADIENT_LINEAR:               Linear
+ * @GIMP_GRADIENT_BILINEAR:             Bi-linear
+ * @GIMP_GRADIENT_RADIAL:               Radial
+ * @GIMP_GRADIENT_SQUARE:               Square
+ * @GIMP_GRADIENT_CONICAL_SYMMETRIC:    Conical (symmetric)
+ * @GIMP_GRADIENT_CONICAL_ASYMMETRIC:   Conical (asymmetric)
+ * @GIMP_GRADIENT_SHAPEBURST_ANGULAR:   Shaped (angular)
+ * @GIMP_GRADIENT_SHAPEBURST_SPHERICAL: Shaped (spherical)
+ * @GIMP_GRADIENT_SHAPEBURST_DIMPLED:   Shaped (dimpled)
+ * @GIMP_GRADIENT_SPIRAL_CLOCKWISE:     Spiral (clockwise)
+ * @GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE: Spiral (counter-clockwise)
+ *
+ * Gradient shapes.
+ **/
 #define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
 
 GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
@@ -398,6 +614,16 @@ typedef enum
 } GimpGradientType;
 
 
+/**
+ * GimpGridStyle:
+ * @GIMP_GRID_DOTS:          Intersections (dots)
+ * @GIMP_GRID_INTERSECTIONS: Intersections (crosshairs)
+ * @GIMP_GRID_ON_OFF_DASH:   Dashed
+ * @GIMP_GRID_DOUBLE_DASH:   Double dashed
+ * @GIMP_GRID_SOLID:         Solid
+ *
+ * Rendering types for the display grid.
+ **/
 #define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
 
 GType gimp_grid_style_get_type (void) G_GNUC_CONST;
@@ -412,6 +638,18 @@ typedef enum
 } GimpGridStyle;
 
 
+/**
+ * GimpHueRange:
+ * @GIMP_HUE_RANGE_ALL:     All hues
+ * @GIMP_HUE_RANGE_RED:     Red hues
+ * @GIMP_HUE_RANGE_YELLOW:  Yellow hues
+ * @GIMP_HUE_RANGE_GREEN:   Green hues
+ * @GIMP_HUE_RANGE_CYAN:    Cyan hues
+ * @GIMP_HUE_RANGE_BLUE:    Blue hues
+ * @GIMP_HUE_RANGE_MAGENTA: Magenta hues
+ *
+ * Hue ranges.
+ **/
 #define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
 
 GType gimp_hue_range_get_type (void) G_GNUC_CONST;
@@ -438,6 +676,14 @@ typedef enum
 } GimpHueRange;
 
 
+/**
+ * GimpIconType:
+ * @GIMP_ICON_TYPE_ICON_NAME:     Icon name
+ * @GIMP_ICON_TYPE_INLINE_PIXBUF: Inline pixbuf
+ * @GIMP_ICON_TYPE_IMAGE_FILE:    Image file
+ *
+ * Icon types for plug-ins to register.
+ **/
 #define GIMP_TYPE_ICON_TYPE (gimp_icon_type_get_type ())
 
 GType gimp_icon_type_get_type (void) G_GNUC_CONST;
@@ -454,6 +700,14 @@ typedef enum
 } GimpIconType;
 
 
+/**
+ * GimpImageBaseType:
+ * @GIMP_RGB:     RGB color
+ * @GIMP_GRAY:    Grayscale
+ * @GIMP_INDEXED: Indexed color
+ *
+ * Image color models.
+ **/
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
@@ -466,6 +720,17 @@ typedef enum
 } GimpImageBaseType;
 
 
+/**
+ * GimpImageType:
+ * @GIMP_RGB_IMAGE:      RGB
+ * @GIMP_RGBA_IMAGE:     RGB-alpha
+ * @GIMP_GRAY_IMAGE:     Grayscale
+ * @GIMP_GRAYA_IMAGE:    Grayscale-alpha
+ * @GIMP_INDEXED_IMAGE:  Indexed
+ * @GIMP_INDEXEDA_IMAGE: Indexed-alpha
+ *
+ * Possible drawable types.
+ **/
 #define GIMP_TYPE_IMAGE_TYPE (gimp_image_type_get_type ())
 
 GType gimp_image_type_get_type (void) G_GNUC_CONST;
@@ -481,6 +746,14 @@ typedef enum
 } GimpImageType;
 
 
+/**
+ * GimpInkBlobType:
+ * @GIMP_INK_BLOB_TYPE_CIRCLE:  Circle
+ * @GIMP_INK_BLOB_TYPE_SQUARE:  Square
+ * @GIMP_INK_BLOB_TYPE_DIAMOND: Diamond
+ *
+ * Ink tool tips.
+ **/
 #define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
 
 GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
@@ -493,6 +766,16 @@ typedef enum
 } GimpInkBlobType;
 
 
+/**
+ * GimpInterpolationType:
+ * @GIMP_INTERPOLATION_NONE:   None
+ * @GIMP_INTERPOLATION_LINEAR: Linear
+ * @GIMP_INTERPOLATION_CUBIC:  Cubic
+ * @GIMP_INTERPOLATION_NOHALO: NoHalo
+ * @GIMP_INTERPOLATION_LOHALO: LoHalo
+ *
+ * Interpolation types.
+ **/
 #define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())
 
 GType gimp_interpolation_type_get_type (void) G_GNUC_CONST;
@@ -511,6 +794,14 @@ typedef enum
 } GimpInterpolationType;
 
 
+/**
+ * GimpJoinStyle:
+ * @GIMP_JOIN_MITER: Miter
+ * @GIMP_JOIN_ROUND: Round
+ * @GIMP_JOIN_BEVEL: Bevel
+ *
+ * Line join styles.
+ **/
 #define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
 
 GType gimp_join_style_get_type (void) G_GNUC_CONST;
@@ -523,6 +814,13 @@ typedef enum
 } GimpJoinStyle;
 
 
+/**
+ * GimpMaskApplyMode:
+ * @GIMP_MASK_APPLY:   Apply the mask
+ * @GIMP_MASK_DISCARD: Discard the mask
+ *
+ * Layer mask apply modes.
+ **/
 #define GIMP_TYPE_MASK_APPLY_MODE (gimp_mask_apply_mode_get_type ())
 
 GType gimp_mask_apply_mode_get_type (void) G_GNUC_CONST;
