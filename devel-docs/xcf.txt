@@ -1093,28 +1093,76 @@ PROP_MODE (essential)
   uint32  7        Type identification
   uint32  4        Four bytes of payload
   unit32  mode     Layer mode; one of
-                     0: Normal
-                     1: Dissolve (random dithering to discrete alpha)
-                     2: (Behind: not selectable in the GIMP UI. TODO: why not?)
-                     3: Multiply
-                     4: Screen
-                     5: Overlay
-                     6: Difference
-                     7: Addition
-                     8: Subtract
-                     9: Darken Only
-                   10: Lighten Only
-                   11: Hue (H of HSV)
-                   12: Saturation (S of HSV)
-                   13: Color (H and S of HSL)
-                   14: Value (V of HSV)
-                   15: Divide
-                   16: Dodge
-                   17: Burn
-                   18: Hard Light
-                   19: Soft Light (since version 2)
-                   20: Grain Extract (since version 2)
-                   21: Grain Merge (since version 2)
+                   * Since "ancient times":
+
+                       0: Normal (legacy)
+                       1: Dissolve (legacy) [random dithering to discrete alpha)
+                       2: Behind (legacy) [not selectable in the GIMP UI]
+                       3: Multiply (legacy)
+                       4: Screen (legacy)
+                       5: Old broken Overlay
+                       6: Difference (legacy)
+                       7: Addition (legacy)
+                       8: Subtract (legacy)
+                       9: Darken only (legacy)
+                     10: Lighten only (legacy)
+                     11: Hue (HSV) (legacy)
+                     12: Saturation (HSV) (legacy)
+                     13: Color (HSL) (legacy)
+                     14: Value (HSV) (legacy)
+                     15: Divide (legacy)
+                     16: Dodge (legacy)
+                     17: Burn (legacy)
+                     18: Hard Light (legacy)
+
+                   * Since XCF 2 (GIMP 2.8)
+                     19: Soft light (legacy)
+                     20: Grain extract (legacy)
+                     21: Grain merge (legacy)
+                     22: Color erase (legacy)
+
+                   * Since XCF 9 (GIMP 2.10.0)
+                     23: Overlay
+                     24: Hue (LCH)
+                     25: Chroma (LCH)
+                     26: Color (LCH)
+                     27: Lightness (LCH)
+
+                   * Since XCF 10 (GIMP 2.10.0)
+                     28: Normal
+                     29: Behind
+                     30: Multiply
+                     31: Screen
+                     32: Difference
+                     33: Addition
+                     34: Substract
+                     35: Darken only
+                     36: Lighten only
+                     37: Hue (HSV)
+                     38: Saturation (HSV)
+                     39: Color (HSL)
+                     40: Value (HSV)
+                     41: Divide
+                     42: Dodge
+                     43: Burn
+                     44: Hard light
+                     45: Soft light
+                     46: Grain extract
+                     47: Grain merge
+                     48: Vivid light
+                     49: Pin light
+                     50: Linear light
+                     51: Hard mix
+                     52: Exclusion
+                     53: Linear burn
+                     54: Luma/Luminance darken only
+                     55: Luma/Luminance lighten only
+                     56: Luminance
+                     57: Color erase
+                     58: Erase
+                     59: Merge
+                     60: Split
+                     61: Pass through
 
   PROP_MODE specifies the layer mode.
 
