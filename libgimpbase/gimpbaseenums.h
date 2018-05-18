@@ -313,6 +313,8 @@ typedef enum
  * @GIMP_COLOR_TAG_GRAY:   Gray
  *
  * Possible tag colors.
+ *
+ * Since: 2.10
  **/
 #define GIMP_TYPE_COLOR_TAG (gimp_color_tag_get_type ())
 
@@ -342,6 +344,8 @@ typedef enum
  * @GIMP_COMPONENT_TYPE_DOUBLE: 64-bit floating point
  *
  * Encoding types of image components.
+ *
+ * Since: 2.10
  **/
 #define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
 
@@ -499,7 +503,7 @@ typedef enum
 /**
  * GimpForegroundExtractMode:
  * @GIMP_FOREGROUND_EXTRACT_SIOX:    Siox
- * @GIMP_FOREGROUND_EXTRACT_MATTING: Matting
+ * @GIMP_FOREGROUND_EXTRACT_MATTING: Matting (Since 2.10)
  *
  * Foreground extraxt engines.
  **/
@@ -521,6 +525,8 @@ typedef enum
  * @GIMP_GRADIENT_BLEND_CIE_LAB:        CIE Lab
  *
  * Color space for blending gradients.
+ *
+ * Since: 2.10
  */
 #define GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE (gimp_gradient_blend_color_space_get_type ())
 
