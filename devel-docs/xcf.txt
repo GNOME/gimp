@@ -1230,6 +1230,15 @@ PROP_MODE (essential)
   none) of the canvas, it will be the only layer to have its mode
   forced to Normal.
 
+  Implementation note: all layer modes are implemented as GEGL
+  operations. The list can be found at:
+    app/operations/layer-modes/gimp-layer-modes.c
+  The "op_name" value in particular gives the operation name allowing
+  reader developers to search for this string. For instance, the
+  "Normal" layer mode is implemented as the "gimp:normal" GEGL operation
+  whose implementation can be found at:
+    app/operations/layer-modes/gimpoperationnormal.c
+
 NOTE: The layer modes 'Old broken Overlay' and 'Soft light (legacy)' are identical.
 
 PROP_OFFSETS (essential)
