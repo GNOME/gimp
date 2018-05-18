@@ -16,10 +16,6 @@ if BUILD_PYTHON
 pygimp = pygimp
 endif
 
-if BUILD_SCRIPT_FU
-script_fu = script-fu
-endif
-
 if OS_WIN32
 twain = twain
 endif
@@ -29,7 +25,7 @@ file_webp = file-webp
 endif
 
 SUBDIRS = \
-	$(script_fu)		\
+	script-fu		\
 	$(pygimp)		\
 	file-bmp		\
 	$(file_darktable)	\

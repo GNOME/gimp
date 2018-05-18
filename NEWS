@@ -57,3 +57,4 @@ Build:
     set the address of their own bug tracker. This address will be the
     one opened by the debug dialog for reporting bugs.
   - Add a flatpak manifest for the gtk3-port branch.
+  - Remove the possibility to disable script-fu.

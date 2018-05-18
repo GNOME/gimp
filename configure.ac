@@ -2115,21 +2115,6 @@ fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
 
-#########################################
-# Check whether Script-Fu should be built
-#########################################
-
-have_script_fu=yes
-AC_ARG_WITH(script-fu,
-  AS_HELP_STRING([--without-script-fu],
-                 [do not build the script-fu extension]))
-
-if test "x$with_script_fu" = "xno"; then
-  have_script_fu="no (script-fu extension disabled)"
-fi
-AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$with_script_fu" != "xno")
-
-
 ###########################################################
 # Some plug-ins don't build on Win32, others are Win32-only
 ###########################################################
@@ -2865,7 +2850,6 @@ Optional Plug-Ins:
   PDF (export):            $have_cairo_pdf
   Print:                   $enable_print
   Python 2:                $enable_python
-  Script-Fu:               $have_script_fu
   TWAIN (Win32):           $os_win32
   Webpage:                 $have_webkit
   WMF:                     $have_libwmf
