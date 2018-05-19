@@ -294,6 +294,7 @@
         <separator />
         <menuitem action="view-rotate-other" />
       </menu>
+      <menuitem action="view-scroll-center" />
       <separator />
       <menuitem action="view-shrink-wrap" />
       <menuitem action="view-fullscreen" />

@@ -126,6 +126,17 @@ view_close_cmd_callback (GtkAction *action,
 }
 
 void
+view_scroll_center_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  gimp_display_shell_scroll_center_image (gimp_display_get_shell (display),
+                                          TRUE, TRUE);
+}
+
+void
 view_zoom_fit_in_cmd_callback (GtkAction *action,
                                gpointer   data)
 {

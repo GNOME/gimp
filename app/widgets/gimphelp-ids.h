@@ -85,6 +85,7 @@
 
 #define GIMP_HELP_VIEW_NEW                        "gimp-view-new"
 #define GIMP_HELP_VIEW_DOT_FOR_DOT                "gimp-view-dot-for-dot"
+#define GIMP_HELP_VIEW_SCROLL_CENTER              "gimp-view-scroll-center"
 #define GIMP_HELP_VIEW_ZOOM_REVERT                "gimp-view-zoom-revert"
 #define GIMP_HELP_VIEW_ZOOM_OUT                   "gimp-view-zoom-out"
 #define GIMP_HELP_VIEW_ZOOM_IN                    "gimp-view-zoom-in"

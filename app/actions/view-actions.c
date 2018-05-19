@@ -97,6 +97,12 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
+  { "view-scroll-center", GIMP_ICON_CENTER,
+    NC_("view-action", "Center Image in Window"), "<shift>J",
+    NC_("view-action", "Scroll the image so that it is centered in the window"),
+    G_CALLBACK (view_scroll_center_cmd_callback),
+    GIMP_HELP_VIEW_SCROLL_CENTER },
+
   { "view-zoom-fit-in", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
@@ -896,6 +902,8 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-dot-for-dot", image);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);
+
+  SET_SENSITIVE ("view-scroll-center", image);
 
   SET_SENSITIVE ("view-zoom-revert", revert_enabled);
   if (revert_enabled)
