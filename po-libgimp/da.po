@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-14 16:14+0000\n"
-"PO-Revision-Date: 2018-04-18 08:00+0200\n"
+"POT-Creation-Date: 2018-04-26 14:09+0000\n"
+"PO-Revision-Date: 2018-05-17 13:22+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -255,8 +255,8 @@ msgid "Gradient Selection"
 msgstr "Farveovergangsvalg"
 
 #: ../libgimp/gimpimagemetadata.c:487
-msgid "GIMP 2.9/2.10"
-msgstr "GIMP 2.9/2.10"
+msgid "GIMP 2.10"
+msgstr "GIMP 2.10"
 
 #: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
@@ -1822,17 +1822,22 @@ msgid "Cannot expand ${%s}"
 msgstr "Kan ikke udfolde ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:88
-#: ../libgimpconfig/gimpconfigwriter.c:658
+#: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fejl under skrivning til \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:184
+#: ../libgimpconfig/gimpconfigwriter.c:183
+#, c-format
+msgid "Could not create directory '%s' for '%s': "
+msgstr "Kunne ikke oprette mappen \"%s\" for “%s”: "
+
+#: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
 msgstr "Kunne ikke oprette midlertidig fil for \"%s\": "
 
-#: ../libgimpconfig/gimpconfigwriter.c:761
+#: ../libgimpconfig/gimpconfigwriter.c:776
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Fejl under skrivning af \"%s\": %s"
