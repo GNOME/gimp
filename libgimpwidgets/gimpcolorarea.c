@@ -97,12 +97,9 @@ static void      gimp_color_area_set_property        (GObject           *object,
 
 static void      gimp_color_area_size_allocate       (GtkWidget         *widget,
                                                       GtkAllocation     *allocation);
-static void      gimp_color_area_state_flags_changed (GtkWidget         *widget,
-                                                      GtkStateFlags      previous_state);
 static gboolean  gimp_color_area_draw                (GtkWidget         *widget,
                                                       cairo_t           *cr);
 static void      gimp_color_area_render_buf          (GtkWidget         *widget,
-                                                      gboolean           insensitive,
                                                       GimpColorAreaType  type,
                                                       guchar            *buf,
                                                       guint              width,
@@ -163,7 +160,6 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   object_class->set_property        = gimp_color_area_set_property;
 
   widget_class->size_allocate       = gimp_color_area_size_allocate;
-  widget_class->state_flags_changed = gimp_color_area_state_flags_changed;
   widget_class->draw                = gimp_color_area_draw;
 
   widget_class->drag_begin          = gimp_color_area_drag_begin;
@@ -376,23 +372,6 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
     }
 }
 
-static void
-gimp_color_area_state_flags_changed (GtkWidget     *widget,
-                                     GtkStateFlags  previous_state)
-{
-  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
-
-  if ((gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_INSENSITIVE) !=
-      (previous_state & GTK_STATE_FLAG_INSENSITIVE))
-    {
-      priv->needs_render = TRUE;
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->state_flags_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_flags_changed (widget,
-                                                          previous_state);
-}
-
 static gboolean
 gimp_color_area_draw (GtkWidget *widget,
                       cairo_t   *cr)
@@ -449,7 +428,35 @@ gimp_color_area_draw (GtkWidget *widget,
 
   cairo_set_source_surface (cr, buffer, 0.0, 0.0);
   cairo_surface_destroy (buffer);
-  cairo_paint (cr);
+
+  if (! gtk_widget_is_sensitive (widget))
+    {
+      static cairo_pattern_t *pattern = NULL;
+
+      if (! pattern)
+        {
+          static const guchar  stipple[] = { 0,   255, 0, 0,
+                                             255, 0,   0, 0 };
+          cairo_surface_t     *surface;
+          gint                 stride;
+
+          stride = cairo_format_stride_for_width (CAIRO_FORMAT_A8, 2);
+
+          surface = cairo_image_surface_create_for_data ((guchar *) stipple,
+                                                         CAIRO_FORMAT_A8,
+                                                         2, 2, stride);
+          pattern = cairo_pattern_create_for_surface (surface);
+          cairo_surface_destroy (surface);
+
+          cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+        }
+
+      cairo_mask (cr, pattern);
+    }
+  else
+    {
+      cairo_paint (cr);
+    }
 
   if (priv->config &&
       (priv->color.r < 0.0 || priv->color.r > 1.0 ||
@@ -697,7 +704,6 @@ gimp_color_area_set_color_config (GimpColorArea   *area,
 
 static void
 gimp_color_area_render_buf (GtkWidget         *widget,
-                            gboolean           insensitive,
                             GimpColorAreaType  type,
                             guchar            *buf,
                             guint              width,
@@ -705,16 +711,13 @@ gimp_color_area_render_buf (GtkWidget         *widget,
                             guint              rowstride,
                             GimpRGB           *color)
 {
-  GtkStyleContext *context = gtk_widget_get_style_context (widget);
-  GdkRGBA          bg;
-  guint            x, y;
-  guint            check_size = 0;
-  guchar           light[3];
-  guchar           dark[3];
-  guchar           opaque[3];
-  guchar           insens[3];
-  guchar          *p;
-  gdouble          frac;
+  guint    x, y;
+  guint    check_size = 0;
+  guchar   light[3];
+  guchar   dark[3];
+  guchar   opaque[3];
+  guchar  *p;
+  gdouble  frac;
 
   switch (type)
     {
@@ -733,11 +736,7 @@ gimp_color_area_render_buf (GtkWidget         *widget,
 
   gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  gtk_style_context_get_background_color (context, GTK_STATE_FLAG_INSENSITIVE,
-                                          &bg);
-  gimp_rgb_get_uchar ((GimpRGB *) &bg, insens, insens + 1, insens + 2);
-
-  if (insensitive || check_size == 0 || color->a == 1.0)
+  if (check_size == 0 || color->a == 1.0)
     {
       for (y = 0; y < height; y++)
         {
@@ -745,20 +744,10 @@ gimp_color_area_render_buf (GtkWidget         *widget,
 
           for (x = 0; x < width; x++)
             {
-              if (insensitive && ((x + y) % 2))
-                {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
-                                              insens[0],
-                                              insens[1],
-                                              insens[2]);
-                }
-              else
-                {
-                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
-                                              opaque[0],
-                                              opaque[1],
-                                              opaque[2]);
-                }
+              GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                          opaque[0],
+                                          opaque[1],
+                                          opaque[2]);
 
               p += 4;
             }
@@ -855,7 +844,6 @@ gimp_color_area_render (GimpColorArea *area)
     return;
 
   gimp_color_area_render_buf (GTK_WIDGET (area),
-                              ! gtk_widget_is_sensitive (GTK_WIDGET (area)),
                               priv->type,
                               priv->buf,
                               priv->width, priv->height, priv->rowstride,
