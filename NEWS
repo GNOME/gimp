@@ -21,8 +21,6 @@ Core:
     extension to handle similar cases elsewhere in GIMP.
   - Tool options are now properly saved and reloaded per-device at
     startup.
-  - Add new action "view-scroll-center" with shortcut Shift+J to center
-    the image in the window.
 
 Plug-ins:
 
