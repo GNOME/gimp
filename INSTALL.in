@@ -59,12 +59,6 @@ header files installed.
      and fontconfig @FONTCONFIG_REQUIRED_VERSION@ or newer. Older versions are known to have
      bugs that seriously affect the stability of GIMP.
 
-     On Windows platforms in particular, we recommend fontconfig @FONTCONFIG_WIN32_RECOMMENDED_VERSION@
-     or newer. Older versions may end up in broken font handling, due to
-     inadequate font configuration: font aliases not configured,
-     synthetic bold/italic variants unavailable, cache folder in temp
-     directory resulting in slow startups, etc.
-
      We also require HarfBuzz @HARFBUZZ_REQUIRED_VERSION@ or newer, an
      OpenType text shaping tool. As this is a dependency for Pango, you
      will likely have it installed, but you may have to install a
