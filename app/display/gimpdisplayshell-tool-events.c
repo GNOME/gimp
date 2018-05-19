@@ -944,14 +944,14 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
                     gimp_display_shell_scale (shell,
                                               GIMP_ZOOM_IN,
                                               0.0,
-                                              GIMP_ZOOM_FOCUS_BEST_GUESS);
+                                              GIMP_ZOOM_FOCUS_POINTER);
                     break;
 
                   case GDK_SCROLL_DOWN:
                     gimp_display_shell_scale (shell,
                                               GIMP_ZOOM_OUT,
                                               0.0,
-                                              GIMP_ZOOM_FOCUS_BEST_GUESS);
+                                              GIMP_ZOOM_FOCUS_POINTER);
                     break;
 
                   default:

@@ -351,7 +351,9 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                           gdouble           new_scale,
                           GimpZoomFocus     zoom_focus)
 {
-  gdouble current_scale;
+  GimpDisplayConfig *config;
+  gdouble            current_scale;
+  gboolean           resize_window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->canvas != NULL);
@@ -361,25 +363,44 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   if (zoom_type != GIMP_ZOOM_TO)
     new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale);
 
-  if (! SCALE_EQUALS (new_scale, current_scale))
+  if (SCALE_EQUALS (new_scale, current_scale))
+    return;
+
+  config = shell->display->config;
+
+  /* Resize windows only in multi-window mode */
+  resize_window = (config->resize_windows_on_zoom &&
+                   ! GIMP_GUI_CONFIG (config)->single_window_mode);
+
+  if (resize_window)
     {
-      GimpDisplayConfig *config = shell->display->config;
-      gboolean           resize_window;
+      /* If the window is resized on zoom, simply do the zoom and get
+       * things rolling
+       */
+      gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
 
-      /* Resize windows only in multi-window mode */
-      resize_window = (config->resize_windows_on_zoom &&
-                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+      gimp_display_shell_scale_resize (shell, TRUE, FALSE);
+    }
+  else
+    {
+      gdouble  x, y;
+      gint     image_center_x;
+      gint     image_center_y;
 
-      if (resize_window)
-        {
-          /* If the window is resized on zoom, simply do the zoom and
-           * get things rolling
-           */
-          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
+      gimp_display_shell_scale_get_zoom_focus (shell,
+                                               new_scale,
+                                               current_scale,
+                                               &x,
+                                               &y,
+                                               zoom_focus);
+      gimp_display_shell_scale_get_image_center_viewport (shell,
+                                                          &image_center_x,
+                                                          &image_center_y);
 
-          gimp_display_shell_scale_resize (shell, TRUE, FALSE);
-        }
-      else
+      gimp_display_shell_scale_to (shell, new_scale, x, y);
+
+      /* skip centering magic if pointer focus was requested */
+      if (zoom_focus != GIMP_ZOOM_FOCUS_POINTER)
         {
           gboolean starts_fitting_horiz;
           gboolean starts_fitting_vert;
@@ -387,22 +408,6 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           gboolean zoom_focus_almost_centered_vert;
           gboolean image_center_almost_centered_horiz;
           gboolean image_center_almost_centered_vert;
-          gdouble  x, y;
-          gint     image_center_x;
-          gint     image_center_y;
-
-          gimp_display_shell_scale_get_zoom_focus (shell,
-                                                   new_scale,
-                                                   current_scale,
-                                                   &x,
-                                                   &y,
-                                                   zoom_focus);
-          gimp_display_shell_scale_get_image_center_viewport (shell,
-                                                              &image_center_x,
-                                                              &image_center_y);
-
-          gimp_display_shell_scale_to (shell, new_scale, x, y);
-
 
           /* If an image axis started to fit due to zooming out or if
            * the focus point is as good as in the center, center on
@@ -1218,7 +1223,6 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
         }
     }
 
-  /* Decide which one to use for each axis */
   if (zoom_focus == GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS)
     {
       if (gimp_display_shell_scale_viewport_coord_almost_centered (shell,

@@ -43,6 +43,9 @@ Usability:
   - Mention pressing Enter to complete Foreground selection in the status bar.
   - Make sure that clicking outside any selection prevents Rectangle Select
     and Ellipse Select tools from creating empty selections.
+  - Improve mouse wheel zooming behavior to keep the same point
+    centered under the pointer even if the image is completely visible
+    in the canvas.
 
 Translations:
 
