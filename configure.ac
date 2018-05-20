@@ -1,4 +1,49 @@
-babl_required_version], [0.1.50])
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.54)
+
+# Making releases on the stable branch:
+#   gimp_micro_version += 1;
+#   gimp_interface_age += 1;
+#
+# For a description of libtool version variables, see:
+# devel-docs/libtool-instructions.txt
+
+m4_define([gimp_major_version], [2])
+m4_define([gimp_minor_version], [10])
+m4_define([gimp_micro_version], [1])
+m4_define([gimp_real_version],
+          [gimp_major_version.gimp_minor_version.gimp_micro_version])
+m4_define([gimp_version], [gimp_real_version])
+m4_define([gimp_interface_age], [1])
+m4_define([gimp_binary_age],
+          [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
+
+# For overriding the version string. Comment out if not needed.
+# m4_define([gimp_version], [2.10.0])
+
+# This is the X.Y used in -lgimp-X.Y
+m4_define([gimp_api_version], [2.0])
+
+# Versions used for apps, plugins, tools, pkg-config files, and data,
+# as well as global and user prefs
+m4_define([gimp_app_version], [2.10])
+m4_define([gimp_plugin_version], [2.0])
+m4_define([gimp_tool_version], [2.0])
+m4_define([gimp_pkgconfig_version], [2.0])
+m4_define([gimp_data_version], [2.0])
+m4_define([gimp_sysconf_version], [2.0])
+m4_define([gimp_user_version], [2.10])
+
+m4_define([gimp_unstable],
+          m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))
+m4_define([gimp_stable],
+          m4_if(m4_eval(gimp_minor_version % 2), [0], [yes], [no]))
+
+m4_define([gimp_full_name], [GNU Image Manipulation Program])
+
+# required versions of other packages
+m4_define([babl_required_version], [0.1.48])
 m4_define([gegl_major_minor_version], [0.4])
 m4_define([gegl_micro_version], [2])
 m4_define([gegl_required_version],
