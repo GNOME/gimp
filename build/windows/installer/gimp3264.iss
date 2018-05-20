@@ -582,15 +582,15 @@ begin
 end;
 
 
-procedure PrepareGimpPath();
-var DefaultEnv,Env: String;
+procedure PrepareGimpEnvironment();
+var EnvFile,Env: String;
 begin
 	
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	DefaultEnv := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
-	DebugMsg('PrepareGimpPath','Setting environment in ' + DefaultEnv);
+	EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
+	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
 	
@@ -610,14 +610,29 @@ begin
 	end;
 
 	if IsComponentSelected('py') then
-		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python' + #10;
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
 
-	DebugMsg('PrepareGimpPath','Appending ' + Env);
+	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
-	if not SaveStringToUTF8File(DefaultEnv,Env,True) then
+	if not SaveStringToUTF8File(EnvFile,Env,True) then
 	begin
-		DebugMsg('PrepareGimpPath','Problem appending');
-		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[DefaultEnv]),mbInformation,mb_ok,IDOK);
+		DebugMsg('PrepareGimpEnvironment','Problem appending');
+		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+	end;
+
+	//workaround for high-DPI awareness of Python plug-ins
+	if IsComponentSelected('gimp32on64\py') or IsComponentSelected('py') then
+	begin
+		EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\pygimp.env');
+		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+
+		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
+
+		if not SaveStringToUTF8File(EnvFile,Env,True) then
+		begin
+			DebugMsg('PrepareGimpEnvironment','Problem appending');
+			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+		end;
 	end;
 end;
 
@@ -1530,7 +1545,7 @@ begin
 		begin
 			Associations_Create();
 			PreparePyGimp();
-			PrepareGimpPath();
+			PrepareGimpEnvironment();
 			//PrepareGimpRC();
 		end;
 	end;
