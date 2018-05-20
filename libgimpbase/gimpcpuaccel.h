@@ -26,6 +26,23 @@
 G_BEGIN_DECLS
 
 
+/**
+ * GimpCpuAccelFlags:
+ * @GIMP_CPU_ACCEL_NONE:        None
+ * @GIMP_CPU_ACCEL_X86_MMX:     MMX
+ * @GIMP_CPU_ACCEL_X86_3DNOW:   3dNow
+ * @GIMP_CPU_ACCEL_X86_MMXEXT:  MMXEXT
+ * @GIMP_CPU_ACCEL_X86_SSE:     SSE
+ * @GIMP_CPU_ACCEL_X86_SSE2:    SSE2
+ * @GIMP_CPU_ACCEL_X86_SSE3:    SSE3
+ * @GIMP_CPU_ACCEL_X86_SSSE3:   SSSE3
+ * @GIMP_CPU_ACCEL_X86_SSE4_1:  SSE4_1
+ * @GIMP_CPU_ACCEL_X86_SSE4_2:  SSE4_2
+ * @GIMP_CPU_ACCEL_X86_AVX:     AVX
+ * @GIMP_CPU_ACCEL_PPC_ALTIVEC: Altivec
+ *
+ * Types of detectable CPU accelerations
+ **/
 typedef enum
 {
   GIMP_CPU_ACCEL_NONE        = 0x0,
