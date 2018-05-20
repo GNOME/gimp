@@ -57,8 +57,6 @@ GtkWidget * gimp_prop_color_button_new      (GObject       *config,
 
 /*  GParamDouble  */
 
-GtkWidget * gimp_prop_scale_button_new      (GObject       *config,
-                                             const gchar   *property_name);
 GtkWidget * gimp_prop_spin_scale_new        (GObject       *config,
                                              const gchar   *property_name,
                                              const gchar   *label,
