@@ -341,6 +341,8 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
 Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
+;DLLs in plug-ins directory (see bug 796225)
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
