@@ -22,9 +22,9 @@
      sort out issues with their builds.
 
  ( ) Make sure we have a <release> tag inside
-     desktop/org.gimp.GIMP.appdata.xml.in for this upcoming version,
-     with type="development" for development or RC releases (set
-     type="stable", or just no type for stable releases).
+     desktop/org.gimp.GIMP.appdata.xml.in.in for this upcoming
+     version, with type="development" for development or RC releases
+     (set type="stable", or just no type for stable releases).
 
      Some installers may feature more prominently software with recent
      releases if the appropriate tag was set (e.g. GNOME Software has a
