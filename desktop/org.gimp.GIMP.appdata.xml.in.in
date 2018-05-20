@@ -72,8 +72,7 @@
   </provides>
 
   <releases>
-    <!--
-    <release version="2.10.2" date="TODO">
+    <release version="2.10.2" date="2018-05-20">
       <description>
         <_p>
           This second release in the GIMP 2.10 series, so soon after
@@ -81,14 +80,14 @@
           release, with a few dozen bugs fixed.
         </_p>
         <_p>
-          As a bonus, it also features a new plug-in for the support of
-          the HEIF format, both for importing and exporting, which is a
-          nice example of our relaxed feature policy inside minor
+          It also features a new plug-in for the support of the HEIF
+          format, both for importing and exporting, as well as 2 new
+          filters: "Spherize" and "Recursive Transform". These are
+          nice examples of our relaxed feature policy inside minor
           releases.
         </_p>
       </description>
     </release>
-    -->
 
     <release version="2.10.0" date="2018-04-27">
       <description>
