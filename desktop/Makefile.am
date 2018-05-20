@@ -47,6 +47,7 @@ endif
 EXTRA_DIST = \
 	$(appstream_in_files) \
 	test-appdata.sh       \
+	test-desktop.sh       \
 	gimp.desktop.in.in    \
 	16x16/gimp.png        \
 	22x22/gimp.png        \
