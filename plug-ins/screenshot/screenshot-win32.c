@@ -5,6 +5,7 @@
  * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
  * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
  * Copyright 2012      Simone Karin Lehmann - OS X patches
+ * Copyright 2018      Gil Eliyahu <gileli121@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +50,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 #include "magnification-api-win32.h"
+#include "dwm-api-win32.h"
 
 /*
  * Application definitions
@@ -103,8 +105,6 @@ static gboolean doCaptureBitBlt                    (HWND            selectedHwnd
 
 BOOL CALLBACK dialogProc (HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);
-
-static BOOL CALLBACK doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR, HDC, LPRECT, LPARAM);
 
 /* Data structure holding data between runs */
 typedef struct {
@@ -469,6 +469,112 @@ primDoWindowCapture (HDC  hdcWindow,
   return hbmCopy;
 }
 
+static BOOL CALLBACK
+GetAccurateWindowRect_MonitorEnumProc (HMONITOR hMonitor,
+                                       HDC      hdcMonitor,
+                                       LPRECT   lprcMonitor,
+                                       LPARAM   dwData)
+{
+  RECT **rectScreens = (RECT**) dwData;
+
+  if (!lprcMonitor) return FALSE;
+
+  if (! (*rectScreens))
+    *rectScreens = (RECT*) g_malloc (sizeof (RECT)*(rectScreensCount+1));
+  else
+    *rectScreens = (RECT*) g_realloc (rectScreens,
+                                      sizeof (RECT)*(rectScreensCount+1));
+
+  if (*rectScreens == NULL)
+    {
+      rectScreensCount = 0;
+      return FALSE;
+    }
+
+  (*rectScreens)[rectScreensCount] = *lprcMonitor;
+
+  rectScreensCount++;
+
+  return TRUE;
+}
+
+static BOOL
+GetAccurateWindowRect (HWND hwndTarget,
+                       RECT *outRect)
+{
+  HRESULT dwmResult;
+  WINDOWPLACEMENT windowplacment;
+
+  ZeroMemory (outRect, sizeof (RECT));
+
+  /* First we try to get the rect using the dwm api. it will also avoid us from doing more ugly fixes when the window is maximized */
+  if (LoadRequiredDwmFunctions ())
+    {
+      dwmResult = DwmGetWindowAttribute (hwndTarget, DWMWA_EXTENDED_FRAME_BOUNDS, (PVOID) outRect, sizeof (RECT));
+      UnloadRequiredDwmFunctions ();
+      if (dwmResult == S_OK) return TRUE;
+    }
+
+  /* In this case, we did not got the rect from the dwm api so we try to get the rect with the normal function */
+  if (GetWindowRect (hwndTarget, outRect))
+    {
+      /* If the window is maximized then we need and can fix the rect variable (we need to do this if the rect not comming from dwm api) */
+      ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
+      if (GetWindowPlacement (hwndTarget, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
+        {
+          RECT *rectScreens = NULL;
+
+          /* if this is not the first time we call this function for some
+           * reason then we reset the rectScreens count
+           */
+          if (rectScreensCount)
+            rectScreensCount = 0;
+
+          /* Get the screens rects */
+          EnumDisplayMonitors (NULL, NULL, GetAccurateWindowRect_MonitorEnumProc,
+                               (LPARAM) &rectScreens);
+
+          /* If for some reason the array size is 0 then we fill it with the desktop rect */
+          if (! rectScreensCount)
+            {
+              rectScreens = (RECT*) g_malloc (sizeof (RECT));
+              if (! GetWindowRect (GetDesktopWindow (), rectScreens))
+                {
+                  /* error: could not get rect screens */
+                  g_free (rectScreens);
+                  return FALSE;
+                }
+
+              rectScreensCount = 1;
+            }
+
+          int xCenter = outRect->left + (outRect->right - outRect->left) / 2;
+          int yCenter = outRect->top + (outRect->bottom - outRect->top) / 2;
+
+          /* find on which screen the window exist */
+          int i;
+          for (i = 0; i < rectScreensCount; i++)
+            if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
+                yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
+              break;
+
+          if (i == rectScreensCount)
+            /* Error: did not found on which screen the window exist */
+            return FALSE;
+
+          if (rectScreens[i].left > outRect->left) outRect->left = rectScreens[i].left;
+          if (rectScreens[i].right < outRect->right) outRect->right = rectScreens[i].right;
+          if (rectScreens[i].top > outRect->top) outRect->top = rectScreens[i].top;
+          if (rectScreens[i].bottom < outRect->bottom) outRect->bottom = rectScreens[i].bottom;
+
+          g_free (rectScreens);
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 /*
  * doCapture
@@ -490,7 +596,7 @@ doCapture (HWND selectedHwnd)
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd)
     {
-      if (!GetWindowRect (selectedHwnd, &rect))
+      if (! GetAccurateWindowRect (selectedHwnd, &rect))
       /* For some reason it works only if we return here TRUE. strange... */
           return TRUE;
 
@@ -598,8 +704,6 @@ doCaptureMagnificationAPI_callback (HWND            hwnd,
   returnedSrcheader = srcheader;
 }
 
-
-
 static BOOL
 isWindowIsAboveCaptureRegion (HWND hwndWindow,
                               RECT rectCapture)
@@ -629,32 +733,6 @@ isWindowIsAboveCaptureRegion (HWND hwndWindow,
     return FALSE;
 }
 
-static BOOL CALLBACK
-doCaptureMagnificationAPI_MonitorEnumProc (HMONITOR hMonitor,
-                                           HDC      hdcMonitor,
-                                           LPRECT   lprcMonitor,
-                                           LPARAM   dwData)
-{
-  RECT **rectScreens = (RECT**) dwData;
-
-  if (!lprcMonitor) return FALSE;
-
-  if (! (*rectScreens))
-    *rectScreens = (RECT*) g_malloc (sizeof (RECT)*(rectScreensCount+1));
-  else
-    *rectScreens = (RECT*) g_realloc (rectScreens,
-                                      sizeof (RECT)*(rectScreensCount+1));
-
-  if (*rectScreens == NULL)
-    return FALSE;
-
-  (*rectScreens)[rectScreensCount] = *lprcMonitor;
-
-  rectScreensCount++;
-
-  return TRUE;
-}
-
 static gboolean
 doCaptureMagnificationAPI (HWND selectedHwnd,
                            RECT rect)
@@ -663,68 +741,15 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   HWND            hwndHost;
   HWND            nextWindow;
   HWND            excludeWins[24];
+  RECT            round4Rect;
   int             excludeWinsCount = 0;
-  WINDOWPLACEMENT windowplacment;
-  int             i;
-  int             xCenter;
-  int             yCenter;
 
   if (!LoadMagnificationLibrary ()) return FALSE;
 
   if (!MagInitialize ()) return FALSE;
 
-  /* If the window is maximized then we need to fix the rect variable */
-  ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
-  if (GetWindowPlacement (selectedHwnd, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
-    {
-      RECT *rectScreens = NULL;
-
-      /* if this is not the first time we call this function for some
-       * reason then we reset the rectScreens count
-       */
-      if (rectScreensCount)
-        rectScreensCount = 0;
-
-      /* Get the screens rects */
-      EnumDisplayMonitors (NULL, NULL, doCaptureMagnificationAPI_MonitorEnumProc,
-                           (LPARAM) &rectScreens);
-
-      /* If for some reason the array size is 0 then we fill it with the desktop rect */
-      if (! rectScreensCount)
-        {
-          rectScreens = (RECT*) g_malloc (sizeof (RECT));
-          if (! GetWindowRect (GetDesktopWindow (), rectScreens))
-            {
-              /* error: could not get rect screens */
-              g_free (rectScreens);
-              return FALSE;
-            }
-
-          rectScreensCount = 1;
-        }
-
-      xCenter = rect.left + (rect.right - rect.left) / 2;
-      yCenter = rect.top + (rect.bottom - rect.top) / 2;
-
-      /* find on which screen the window exist */
-      for (i = 0; i < rectScreensCount; i++)
-        if (xCenter > rectScreens[i].left && xCenter < rectScreens[i].right &&
-            yCenter > rectScreens[i].top && yCenter < rectScreens[i].bottom)
-          break;
-
-      if (i == rectScreensCount)
-        /* Error: did not found on which screen the window exist */
-        return FALSE;
-
-      if (rectScreens[i].left > rect.left) rect.left = rectScreens[i].left;
-      if (rectScreens[i].right < rect.right) rect.right = rectScreens[i].right;
-      if (rectScreens[i].top > rect.top) rect.top = rectScreens[i].top;
-      if (rectScreens[i].bottom < rect.bottom) rect.bottom = rectScreens[i].bottom;
-
-      g_free (rectScreens);
-    }
-
-  rect.right = rect.left + ROUND4(rect.right - rect.left);
+  round4Rect = rect;
+  round4Rect.right = round4Rect.left + ROUND4(round4Rect.right - round4Rect.left);
 
   /* Create the host window that will store the mag child window */
   hwndHost = CreateWindowEx (0x08000000 | 0x080000 | 0x80 | 0x20, APP_NAME, NULL, 0x80000000,
@@ -741,7 +766,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   /* Create the mag child window inside the host window */
   hwndMag = CreateWindow (WC_MAGNIFIER, TEXT ("MagnifierWindow"),
                           WS_CHILD /*| MS_SHOWMAGNIFIEDCURSOR*/  /*| WS_VISIBLE*/,
-                          0, 0, rect.right - rect.left, rect.bottom - rect.top,
+                          0, 0, round4Rect.right - round4Rect.left, round4Rect.bottom - round4Rect.top,
                           hwndHost, NULL, GetModuleHandle (NULL), NULL);
 
   /* Set the callback function that will be called by the api to get the pixels */
@@ -767,18 +792,12 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   /* Call the api to capture the window */
   capBytes = NULL;
 
-  if (!MagSetWindowSource (hwndMag, rect) || !capBytes)
+  if (!MagSetWindowSource (hwndMag, round4Rect) || !capBytes)
     {
       DestroyWindow (hwndHost);
       MagUninitialize ();
       return FALSE;
     }
-
-  /* Just to be safe, we reset the image size the size dimensions that the api gave*/
-  rect.left = 0;
-  rect.top = 0;
-  rect.right = ROUND4(returnedSrcheader.width);
-  rect.bottom = returnedSrcheader.height;
 
   /* Send it to Gimp */
   sendBMPToGimp (NULL, NULL, rect);
