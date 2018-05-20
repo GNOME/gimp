@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1565502976)
+# (undo-size 1g)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and

@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1565502976)
+(undo-size 1g)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
