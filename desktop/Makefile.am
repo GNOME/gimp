@@ -81,6 +81,6 @@ if HAVE_APPSTREAM_UTIL
 TESTS += test-appdata.sh
 endif
 
-if HAVE_APPSTREAM_UTIL
+if HAVE_DESKTOP_FILE_VALIDATE
 TESTS += test-desktop.sh
 endif

@@ -2290,7 +2290,7 @@ fi
 #################################
 
 AC_PATH_PROG(DESKTOP_FILE_VALIDATE, desktop-file-validate, no)
-if test "x$APPSTREAM_UTIL" != "xno"; then
+if test "x$DESKTOP_FILE_VALIDATE" != "xno"; then
   have_desktop_file_validate="yes"
 else
   have_desktop_file_validate="no (desktop-file-validate not found)"
