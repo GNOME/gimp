@@ -71,3 +71,5 @@ Documentation:
 
   - Updating the description of the XCF format "devel-docs/xcf.txt", for
     third-party readers wishing to support GIMP 2.10 XCF files.
+  - Add documentation skeletons for all enums in libgimpbase/, there is
+    much room for improvement.
