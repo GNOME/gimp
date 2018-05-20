@@ -339,6 +339,8 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
 Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
+Type: files: Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
+Type: files: Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -596,7 +598,7 @@ begin
 		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
 
 		if IsComponentSelected('gimp32on64\py') then
-			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python' + #10;
+			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
 
 	end else
 	begin
