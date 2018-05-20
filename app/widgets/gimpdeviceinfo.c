@@ -828,7 +828,19 @@ gimp_device_info_has_cursor (GimpDeviceInfo *info)
   g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), FALSE);
 
   if (info->device)
-    return gdk_device_get_has_cursor (info->device);
+    {
+      /*  this should really be
+       *
+       *  "is slave, *and* the associated master is gdk_seat_get_pointer()"
+       *
+       *  but who knows if future multiple masters will all have their
+       *  own visible pointer or not, and what the API for figuring
+       *  that will be, so for now let's simply assume that all
+       *  devices except floating ones move the pointer on screen.
+       */
+      return gdk_device_get_device_type (info->device) !=
+             GDK_DEVICE_TYPE_FLOATING;
+    }
 
   return FALSE;
 }
