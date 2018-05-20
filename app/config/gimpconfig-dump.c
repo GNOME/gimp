@@ -171,6 +171,12 @@ dump_gimprc_system (GimpConfig       *rc,
           gimp_config_writer_printf (writer, "2g");
           gimp_config_writer_close (writer);
         }
+      else if (! strcmp (prop_spec->name, "undo-size"))
+        {
+          gimp_config_writer_open (writer, "undo-size");
+          gimp_config_writer_printf (writer, "1g");
+          gimp_config_writer_close (writer);
+        }
       else if (! strcmp (prop_spec->name, "mypaint-brush-path"))
         {
           gchar *path = g_strdup_printf ("@mypaint_brushes_dir@%s"
@@ -323,6 +329,14 @@ dump_gimprc_manpage (GimpConfig       *rc,
         {
           gimp_config_writer_open (writer, "tile-cache-size");
           gimp_config_writer_printf (writer, "2g");
+          gimp_config_writer_close (writer);
+
+          success = TRUE;
+        }
+      else if (! strcmp (prop_spec->name, "undo-size"))
+        {
+          gimp_config_writer_open (writer, "undo-size");
+          gimp_config_writer_printf (writer, "1g");
           gimp_config_writer_close (writer);
 
           success = TRUE;
