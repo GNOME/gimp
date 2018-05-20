@@ -379,12 +379,46 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
     {
       GimpToolInfo  *tool_info = list->data;
       GtkToolItem   *item;
-      const gchar   *icon_name;
+      GtkIconTheme  *icon_theme;
+      gchar         *icon_name;
+      GtkIconInfo   *icon_info;
+      GtkIconSize    icon_size;
+      gint           icon_width;
+      gint           icon_height;
 
-      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+      icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (group));
+      icon_name  = g_strdup_printf ("%s-symbolic",
+                                    gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
+      icon_size = gtk_tool_palette_get_icon_size (GTK_TOOL_PALETTE (palette));
+      gtk_icon_size_lookup (icon_size, &icon_width, &icon_height);
+
+      icon_info = gtk_icon_theme_lookup_icon (icon_theme, icon_name,
+                                              MAX (icon_width, icon_height),
+                                              GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+      g_free (icon_name);
 
       item = gtk_radio_tool_button_new (item_group);
-      gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_name);
+      if (icon_info)
+        {
+          GdkPixbuf *pixbuf;
+          GtkWidget *image;
+
+          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                            gtk_widget_get_style_context (group),
+                                                            NULL, NULL);
+          image = gtk_image_new_from_pixbuf (pixbuf);
+          gtk_widget_show (image);
+
+          gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (item), image);
+
+          g_object_unref (icon_info);
+          g_object_unref (pixbuf);
+        }
+      else
+        {
+          gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_name);
+        }
+
       item_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (item));
       gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
       gtk_widget_show (GTK_WIDGET (item));
