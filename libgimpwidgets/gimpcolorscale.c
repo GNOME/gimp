@@ -96,8 +96,6 @@ static void     gimp_color_scale_set_property        (GObject          *object,
 
 static void     gimp_color_scale_size_allocate       (GtkWidget        *widget,
                                                       GtkAllocation    *allocation);
-static void     gimp_color_scale_state_flags_changed (GtkWidget        *widget,
-                                                      GtkStateFlags     previous_state);
 static gboolean gimp_color_scale_scroll              (GtkWidget        *widget,
                                                       GdkEventScroll   *event);
 static gboolean gimp_color_scale_draw                (GtkWidget        *widget,
@@ -105,7 +103,6 @@ static gboolean gimp_color_scale_draw                (GtkWidget        *widget,
 
 static void     gimp_color_scale_render              (GimpColorScale   *scale);
 static void     gimp_color_scale_render_alpha        (GimpColorScale   *scale);
-static void     gimp_color_scale_render_stipple      (GimpColorScale   *scale);
 
 static void     gimp_color_scale_create_transform    (GimpColorScale   *scale);
 static void     gimp_color_scale_destroy_transform   (GimpColorScale   *scale);
@@ -128,15 +125,14 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose              = gimp_color_scale_dispose;
-  object_class->finalize             = gimp_color_scale_finalize;
-  object_class->get_property         = gimp_color_scale_get_property;
-  object_class->set_property         = gimp_color_scale_set_property;
+  object_class->dispose       = gimp_color_scale_dispose;
+  object_class->finalize      = gimp_color_scale_finalize;
+  object_class->get_property  = gimp_color_scale_get_property;
+  object_class->set_property  = gimp_color_scale_set_property;
 
-  widget_class->size_allocate        = gimp_color_scale_size_allocate;
-  widget_class->state_flags_changed  = gimp_color_scale_state_flags_changed;
-  widget_class->scroll_event         = gimp_color_scale_scroll;
-  widget_class->draw                 = gimp_color_scale_draw;
+  widget_class->size_allocate = gimp_color_scale_size_allocate;
+  widget_class->scroll_event  = gimp_color_scale_scroll;
+  widget_class->draw          = gimp_color_scale_draw;
 
   /**
    * GimpColorScale:channel:
@@ -347,21 +343,6 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
     }
 }
 
-static void
-gimp_color_scale_state_flags_changed (GtkWidget     *widget,
-                                      GtkStateFlags  previous_state)
-{
-  if ((gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_INSENSITIVE) !=
-      (previous_state & GTK_STATE_FLAG_INSENSITIVE))
-    {
-      GET_PRIVATE (widget)->needs_render = TRUE;
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->state_flags_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_flags_changed (widget,
-                                                          previous_state);
-}
-
 static gboolean
 gimp_color_scale_scroll (GtkWidget      *widget,
                          GdkEventScroll *event)
@@ -406,7 +387,6 @@ gimp_color_scale_draw (GtkWidget *widget,
   GimpColorScalePrivate *priv      = GET_PRIVATE (widget);
   GtkRange              *range     = GTK_RANGE (widget);
   GtkStyleContext       *context   = gtk_widget_get_style_context (widget);
-  gboolean               sensitive = gtk_widget_is_sensitive (widget);
   GdkRectangle           range_rect;
   GdkRectangle           area      = { 0, };
   cairo_surface_t       *buffer;
@@ -454,9 +434,6 @@ gimp_color_scale_draw (GtkWidget *widget,
   if (priv->needs_render)
     {
       gimp_color_scale_render (scale);
-
-      if (! sensitive)
-        gimp_color_scale_render_stipple (scale);
 
       priv->needs_render = FALSE;
     }
@@ -521,7 +498,35 @@ gimp_color_scale_draw (GtkWidget *widget,
     }
 
   cairo_surface_destroy (buffer);
-  cairo_paint (cr);
+
+  if (! gtk_widget_is_sensitive (widget))
+    {
+      static cairo_pattern_t *pattern = NULL;
+
+      if (! pattern)
+        {
+          static const guchar  stipple[] = { 0,   255, 0, 0,
+                                             255, 0,   0, 0 };
+          cairo_surface_t     *surface;
+          gint                 stride;
+
+          stride = cairo_format_stride_for_width (CAIRO_FORMAT_A8, 2);
+
+          surface = cairo_image_surface_create_for_data ((guchar *) stipple,
+                                                         CAIRO_FORMAT_A8,
+                                                         2, 2, stride);
+          pattern = cairo_pattern_create_for_surface (surface);
+          cairo_surface_destroy (surface);
+
+          cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+        }
+
+      cairo_mask (cr, pattern);
+    }
+  else
+    {
+      cairo_paint (cr);
+    }
 
   if (gtk_widget_has_focus (widget))
     gtk_render_focus (context, cr,
@@ -1037,46 +1042,6 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           }
       }
       break;
-    }
-}
-
-/*
- * This could be integrated into the render functions which might be
- * slightly faster. But we trade speed for keeping the code simple.
- */
-static void
-gimp_color_scale_render_stipple (GimpColorScale *scale)
-{
-  GimpColorScalePrivate *priv    = GET_PRIVATE (scale);
-  GtkWidget             *widget  = GTK_WIDGET (scale);
-  GtkStyleContext       *context = gtk_widget_get_style_context (widget);
-  GdkRGBA                color;
-  guchar                 r, g, b;
-  guchar                *buf;
-  guchar                 insensitive[4] = { 0, };
-  guint                  x, y;
-
-  if ((buf = priv->buf) == NULL)
-    return;
-
-  gtk_style_context_get_background_color (context,
-                                          gtk_widget_get_state_flags (widget),
-                                          &color);
-  gimp_rgb_get_uchar ((GimpRGB *) &color, &r, &g, &b);
-
-  GIMP_CAIRO_RGB24_SET_PIXEL (insensitive, r, g, b);
-
-  for (y = 0; y < priv->height; y++, buf += priv->rowstride)
-    {
-      guchar *d = buf + 4 * (y % 2);
-
-      for (x = 0; x < priv->width - (y % 2); x += 2, d += 8)
-        {
-          d[0] = insensitive[0];
-          d[1] = insensitive[1];
-          d[2] = insensitive[2];
-          d[3] = insensitive[3];
-        }
     }
 }
 
