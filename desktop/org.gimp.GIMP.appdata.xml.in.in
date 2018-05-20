@@ -83,7 +83,7 @@
           It also features a new plug-in for the support of the HEIF
           format, both for importing and exporting, as well as 2 new
           filters: "Spherize" and "Recursive Transform". These are
-          nice examples of our relaxed feature policy inside minor
+          nice examples of our relaxed feature policy in stable micro
           releases.
         </_p>
       </description>
