@@ -339,8 +339,8 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
 Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
-Type: files: Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
-Type: files: Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
