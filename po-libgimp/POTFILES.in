@@ -4,17 +4,12 @@
 [encoding: UTF-8]
 
 libgimp/gimp.c
-libgimp/gimpbrushmenu.c
 libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfontselectbutton.c
-libgimp/gimpgradientmenu.c
 libgimp/gimpgradientselectbutton.c
 libgimp/gimpimagemetadata.c
-libgimp/gimpmenu.c
-libgimp/gimppalettemenu.c
 libgimp/gimppaletteselectbutton.c
-libgimp/gimppatternmenu.c
 libgimp/gimppatternselectbutton.c
 libgimp/gimpprocbrowserdialog.c
 libgimp/gimpprocview.c
