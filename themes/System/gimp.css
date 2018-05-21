@@ -92,8 +92,11 @@ GimpColorFrame {
     -GimpColorFrame-number-color: lighter (@bg_color);
 }
 
+entry.italic {
+    font-style: italic;
+}
+
 .grid {
     /* why does this not work */
     color: rgba (1.0, 0.0, 0.0, 1.0);
 }
-

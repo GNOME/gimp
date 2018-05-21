@@ -756,23 +756,17 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
                                     gboolean             italic)
 {
   GimpNumberPairEntryPrivate *priv = GET_PRIVATE (entry);
-  PangoContext               *context;
-  PangoFontDescription       *font_desc;
+  GtkStyleContext            *style;
 
   if (priv->font_italic == italic)
     return;
 
-  context = gtk_widget_get_pango_context (GTK_WIDGET (entry));
-  font_desc = pango_context_get_font_description (context);
-  font_desc = pango_font_description_copy (font_desc);
+  style = gtk_widget_get_style_context (GTK_WIDGET (entry));
 
-  pango_font_description_set_style (font_desc,
-                                    italic ?
-                                    PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
-
-  gtk_widget_override_font (GTK_WIDGET (entry), font_desc);
-
-  pango_font_description_free (font_desc);
+  if (italic)
+    gtk_style_context_add_class (style, "italic");
+  else
+    gtk_style_context_remove_class (style, "italic");
 
   gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),
                                 GTK_ENTRY_ICON_SECONDARY,
