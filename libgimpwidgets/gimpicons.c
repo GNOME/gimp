@@ -180,6 +180,39 @@ gimp_icons_sanity_check (GFile       *path,
   return exists;
 }
 
+static void
+gimp_prop_size_icon_notify (GObject    *config,
+                            GParamSpec *param_spec,
+                            GtkWidget  *image)
+{
+  GtkIconTheme *icon_theme;
+  GtkIconInfo  *icon_info;
+  gchar        *icon_name;
+  gint          icon_size;
+
+  icon_name = g_object_get_data (G_OBJECT (image), "icon-name");
+  g_object_get (config,
+                param_spec->name, &icon_size,
+                NULL);
+
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (image));
+  icon_info = gtk_icon_theme_lookup_icon (icon_theme, icon_name, icon_size,
+                                          GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+
+  if (icon_info)
+    {
+      /* Only update the image if we found it. */
+      GdkPixbuf *pixbuf;
+
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (image),
+                                                        NULL, NULL);
+      gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
+      g_object_unref (icon_info);
+      g_object_unref (pixbuf);
+    }
+}
+
 void
 gimp_icons_set_icon_theme (GFile *path)
 {
@@ -313,4 +346,104 @@ gimp_icons_init (void)
     }
 
   initialized = TRUE;
+}
+
+/**
+ * gimp_icons_get_image:
+ * @icon_name: the icon name (without "-symbolic" prefix).
+ * @parent: a parent from which styling will be derived.
+ * @icon_size: initial requested size for the icon.
+ * @config: optional object from which size can be synced.
+ * @property_name: Name of int property of @config from which size is
+ *                 synced.
+ *
+ * Lookup an icon in the current icon theme, possibly getting the
+ * symbolic version and matching the theme background (for instance in
+ * case of dark theme).
+ * @parent is used to determine the style information, and in particular
+ * this function does not add the image to @parent in any way.
+ *
+ * The returned image is synced to the theme and the displayed icon will
+ * be automatically updated if the theme changes.
+ *
+ * If @config and @property_name is set, the returned image's size will
+ * sync to this property (which must therefore be an int property).
+ * In such case @icon_size is useless and can be set to any value.
+ *
+ * Returns: a #GtkImage displaying @icon_name at @icon_size, or NULL if
+ *          the lookup failed.
+ *          gtk_widget_show() has been called already on the returned
+ *          image, allowing to add it directly to a container.
+ */
+GtkWidget *
+gimp_icon_get_image (const gchar *icon_name,
+                     GtkWidget   *parent,
+                     gint         icon_size,
+                     GObject     *config,
+                     const gchar *property_name)
+{
+  GtkWidget     *image      = NULL;
+  GParamSpec    *param_spec = NULL;
+  GtkIconTheme  *icon_theme;
+  gchar         *symbolic_name;
+  GtkIconInfo   *icon_info;
+
+  g_return_val_if_fail (icon_name != NULL, NULL);
+  g_return_val_if_fail (parent != NULL, NULL);
+  g_return_val_if_fail (icon_size >= 10 || (config && property_name), NULL);
+
+  if (config && property_name)
+    {
+      param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                 property_name);
+
+      g_return_val_if_fail (param_spec != NULL, NULL);
+      g_return_val_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec),
+                                         G_TYPE_PARAM_INT), NULL);
+
+      /* Override the icon size parameter with the current property
+       * value.
+       */
+      g_object_get (config,
+                    property_name, &icon_size,
+                    NULL);
+    }
+
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (parent));
+  symbolic_name  = g_strdup_printf ("%s-symbolic", icon_name);
+
+  icon_info = gtk_icon_theme_lookup_icon (icon_theme, symbolic_name, icon_size,
+                                          GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+
+  if (icon_info)
+    {
+      GdkPixbuf *pixbuf;
+
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (parent),
+                                                        NULL, NULL);
+      image = gtk_image_new_from_pixbuf (pixbuf);
+      gtk_widget_show (image);
+
+      g_object_set_data_full (G_OBJECT (image),
+                              "icon-name", symbolic_name,
+                              g_free);
+      g_object_unref (icon_info);
+      g_object_unref (pixbuf);
+
+      if (param_spec)
+        {
+          gchar *notify_name = g_strconcat ("notify::", property_name, NULL);
+
+          g_signal_connect_object (config, notify_name,
+                                   G_CALLBACK (gimp_prop_size_icon_notify),
+                                   image, 0);
+
+          g_free (notify_name);
+        }
+    }
+  else
+    g_free (symbolic_name);
+
+  return image;
 }

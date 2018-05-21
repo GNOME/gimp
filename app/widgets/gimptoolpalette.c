@@ -49,6 +49,13 @@
 #define TOOL_INFO_DATA_KEY     "gimp-tool-info"
 
 
+enum
+{
+  PROP_0,
+  PROP_PIXEL_ICON_SIZE
+};
+
+
 typedef struct _GimpToolPalettePrivate GimpToolPalettePrivate;
 
 struct _GimpToolPalettePrivate
@@ -57,6 +64,8 @@ struct _GimpToolPalettePrivate
 
   gint         tool_rows;
   gint         tool_columns;
+
+  gint         pixel_icon_size;
 };
 
 #define GET_PRIVATE(p) G_TYPE_INSTANCE_GET_PRIVATE (p, \
@@ -65,6 +74,14 @@ struct _GimpToolPalettePrivate
 
 
 static void     gimp_tool_palette_dispose             (GObject        *object);
+static void     gimp_tool_palette_get_property        (GObject        *object,
+                                                       guint           property_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
+static void     gimp_tool_palette_set_property        (GObject        *object,
+                                                       guint           property_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
 
 static GtkSizeRequestMode
                 gimp_tool_palette_get_request_mode    (GtkWidget       *widget);
@@ -110,7 +127,9 @@ gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose           = gimp_tool_palette_dispose;
+  object_class->dispose      = gimp_tool_palette_dispose;
+  object_class->get_property = gimp_tool_palette_get_property;
+  object_class->set_property = gimp_tool_palette_set_property;
 
   widget_class->get_request_mode               = gimp_tool_palette_get_request_mode;
   widget_class->get_preferred_width            = gimp_tool_palette_get_preferred_width;
@@ -118,6 +137,11 @@ gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
   widget_class->get_preferred_height_for_width = gimp_tool_palette_height_for_width;
   widget_class->style_updated                  = gimp_tool_palette_style_updated;
   widget_class->hierarchy_changed              = gimp_tool_palette_hierarchy_changed;
+
+  g_object_class_install_property (object_class, PROP_PIXEL_ICON_SIZE,
+                                   g_param_spec_int ("pixel-icon-size", NULL, NULL,
+                                                     16, 200, 16,
+                                                     GIMP_PARAM_READWRITE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tool-icon-size",
@@ -179,6 +203,46 @@ gimp_tool_palette_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_tool_palette_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpToolPalettePrivate *priv = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_PIXEL_ICON_SIZE:
+      g_value_set_int (value, priv->pixel_icon_size);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_palette_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpToolPalettePrivate *priv = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_PIXEL_ICON_SIZE:
+      priv->pixel_icon_size = g_value_get_int (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -379,45 +443,23 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
     {
       GimpToolInfo  *tool_info = list->data;
       GtkToolItem   *item;
-      GtkIconTheme  *icon_theme;
-      gchar         *icon_name;
-      GtkIconInfo   *icon_info;
+      GtkWidget     *image;
       GtkIconSize    icon_size;
       gint           icon_width;
       gint           icon_height;
 
-      icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (group));
-      icon_name  = g_strdup_printf ("%s-symbolic",
-                                    gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
       icon_size = gtk_tool_palette_get_icon_size (GTK_TOOL_PALETTE (palette));
       gtk_icon_size_lookup (icon_size, &icon_width, &icon_height);
 
-      icon_info = gtk_icon_theme_lookup_icon (icon_theme, icon_name,
-                                              MAX (icon_width, icon_height),
-                                              GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-      g_free (icon_name);
-
       item = gtk_radio_tool_button_new (item_group);
-      if (icon_info)
-        {
-          GdkPixbuf *pixbuf;
-          GtkWidget *image;
-
-          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                            gtk_widget_get_style_context (group),
-                                                            NULL, NULL);
-          image = gtk_image_new_from_pixbuf (pixbuf);
-          gtk_widget_show (image);
-
-          gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (item), image);
-
-          g_object_unref (icon_info);
-          g_object_unref (pixbuf);
-        }
+      image = gimp_icon_get_image (gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)),
+                                   group, MAX (icon_width, icon_height),
+                                   (GObject *) palette, "pixel-icon-size");
+      if (image)
+        gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (item), image);
       else
-        {
-          gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_name);
-        }
+        gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item),
+                                       gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
 
       item_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (item));
       gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
@@ -585,6 +627,8 @@ gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
 {
   GimpIconSize size;
   GtkIconSize  tool_icon_size;
+  gint         icon_width;
+  gint         icon_height;
 
   size = gimp_gui_config_detect_icon_size (config);
   /* Match GimpIconSize with GtkIconSize for the toolbox icons. */
@@ -610,6 +654,9 @@ gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
                             NULL);
       break;
     }
+  gtk_icon_size_lookup (tool_icon_size, &icon_width, &icon_height);
 
-  gtk_tool_palette_set_icon_size (GTK_TOOL_PALETTE (palette), tool_icon_size);
+  g_object_set (palette,
+                "pixel-icon-size", MAX (icon_width, icon_height),
+                NULL);
 }

@@ -390,9 +390,15 @@ G_BEGIN_DECLS
 #define GIMP_ICON_ZOOM_FOLLOW_WINDOW        "gimp-zoom-follow-window"
 
 
-void   gimp_icons_init           (void);
+void        gimp_icons_init           (void);
 
-void   gimp_icons_set_icon_theme (GFile *path);
+void        gimp_icons_set_icon_theme (GFile       *path);
+
+GtkWidget * gimp_icon_get_image       (const gchar *icon_name,
+                                       GtkWidget   *parent,
+                                       gint         icon_size,
+                                       GObject     *config,
+                                       const gchar *property_name);
 
 
 G_END_DECLS
