@@ -447,7 +447,7 @@ static GtkWidget *
 gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
                                        GimpContext  *context,
                                        GimpTabStyle  tab_style,
-                                       GtkIconSize   size,
+                                       gint          size,
                                        gboolean      dnd)
 {
   GtkWidget *tab_widget = NULL;
@@ -477,7 +477,10 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
     case GIMP_TAB_STYLE_ICON:
     case GIMP_TAB_STYLE_ICON_NAME:
     case GIMP_TAB_STYLE_ICON_BLURB:
-      icon = gimp_dockable_get_icon (dockable, size);
+      icon = gimp_icon_get_image (dockable->p->icon_name,
+                                  GTK_WIDGET (dockable), size,
+                                  G_OBJECT (dockable->p->dockbook),
+                                  "tab-icon-size");
       break;
 
     case GIMP_TAB_STYLE_PREVIEW:
@@ -491,7 +494,10 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
                                           context, size);
 
         if (! icon)
-          icon = gimp_dockable_get_icon (dockable, size);
+          icon = gimp_icon_get_image (dockable->p->icon_name,
+                                      GTK_WIDGET (dockable), size,
+                                      G_OBJECT (dockable->p->dockbook),
+                                      "tab-icon-size");
       }
       break;
 
@@ -643,15 +649,6 @@ gimp_dockable_get_icon_name (GimpDockable *dockable)
   return dockable->p->icon_name;
 }
 
-GtkWidget *
-gimp_dockable_get_icon (GimpDockable *dockable,
-                        GtkIconSize   size)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-
-  return gtk_image_new_from_icon_name (dockable->p->icon_name, size);
-}
-
 gboolean
 gimp_dockable_get_locked (GimpDockable *dockable)
 {
@@ -761,7 +758,7 @@ GtkWidget *
 gimp_dockable_create_tab_widget (GimpDockable *dockable,
                                  GimpContext  *context,
                                  GimpTabStyle  tab_style,
-                                 GtkIconSize   size)
+                                 gint          size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -775,16 +772,19 @@ gimp_dockable_create_drag_widget (GimpDockable *dockable)
 {
   GtkWidget *frame;
   GtkWidget *widget;
+  gint       icon_width;
+  gint       icon_height;
 
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
+  gtk_icon_size_lookup (GTK_ICON_SIZE_DND, &icon_width, &icon_height);
   widget = gimp_dockable_new_tab_widget_internal (dockable,
                                                   dockable->p->context,
                                                   GIMP_TAB_STYLE_ICON_BLURB,
-                                                  GTK_ICON_SIZE_DND,
+                                                  MAX (icon_width, icon_height),
                                                   TRUE);
   gtk_container_set_border_width (GTK_CONTAINER (widget), 6);
   gtk_container_add (GTK_CONTAINER (frame), widget);

@@ -179,7 +179,7 @@ gimp_docked_get_aux_info (GimpDocked *docked)
 GtkWidget *
 gimp_docked_get_preview (GimpDocked  *docked,
                          GimpContext *context,
-                         GtkIconSize  size)
+                         gint         size)
 {
   GimpDockedInterface *docked_iface;
 

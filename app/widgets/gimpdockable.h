@@ -70,8 +70,6 @@ const gchar   * gimp_dockable_get_name             (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_blurb            (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_help_id          (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_icon_name        (GimpDockable   *dockable);
-GtkWidget     * gimp_dockable_get_icon             (GimpDockable   *dockable,
-                                                    GtkIconSize     size);
 
 gboolean        gimp_dockable_get_locked           (GimpDockable   *dockable);
 void            gimp_dockable_set_drag_pos         (GimpDockable   *dockable,
@@ -94,7 +92,7 @@ GimpTabStyle    gimp_dockable_get_actual_tab_style (GimpDockable   *dockable);
 GtkWidget     * gimp_dockable_create_tab_widget    (GimpDockable   *dockable,
                                                     GimpContext    *context,
                                                     GimpTabStyle    tab_style,
-                                                    GtkIconSize     size);
+                                                    gint            size);
 GtkWidget     * gimp_dockable_create_drag_widget   (GimpDockable   *dockable);
 void            gimp_dockable_set_context          (GimpDockable   *dockable,
                                                     GimpContext    *context);

@@ -72,7 +72,7 @@ static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
 static GList *gimp_color_editor_get_aux_info     (GimpDocked       *docked);
 static GtkWidget *gimp_color_editor_get_preview (GimpDocked        *docked,
                                                  GimpContext       *context,
-                                                 GtkIconSize        size);
+                                                 gint               size);
 static void   gimp_color_editor_set_context     (GimpDocked        *docked,
                                                  GimpContext       *context);
 
@@ -344,16 +344,12 @@ gimp_color_editor_get_property (GObject    *object,
 static GtkWidget *
 gimp_color_editor_get_preview (GimpDocked  *docked,
                                GimpContext *context,
-                               GtkIconSize  size)
+                               gint         size)
 {
   GtkWidget *preview;
-  gint       width;
-  gint       height;
 
   preview = gimp_fg_bg_view_new (context);
-
-  if (gtk_icon_size_lookup (size, &width, &height))
-    gtk_widget_set_size_request (preview, width, height);
+  gtk_widget_set_size_request (preview, size, size);
 
   return preview;
 }

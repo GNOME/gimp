@@ -98,7 +98,7 @@ static void   gimp_container_editor_real_context_item(GimpContainerEditor *edito
 
 static GtkWidget * gimp_container_editor_get_preview (GimpDocked       *docked,
                                                       GimpContext      *context,
-                                                      GtkIconSize       size);
+                                                      gint              size);
 static void        gimp_container_editor_set_context (GimpDocked       *docked,
                                                       GimpContext      *context);
 static GimpUIManager * gimp_container_editor_get_menu(GimpDocked       *docked,
@@ -478,7 +478,7 @@ gimp_container_editor_real_context_item (GimpContainerEditor *editor,
 static GtkWidget *
 gimp_container_editor_get_preview (GimpDocked   *docked,
                                    GimpContext  *context,
-                                   GtkIconSize   size)
+                                   gint          size)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
 

@@ -48,7 +48,7 @@ static void   gimp_container_box_constructed       (GObject      *object);
 
 static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
                                                     GimpContext  *context,
-                                                    GtkIconSize   size);
+                                                    gint          size);
 static void        gimp_container_box_set_context  (GimpDocked   *docked,
                                                     GimpContext  *context);
 
@@ -187,13 +187,11 @@ gimp_container_box_set_context (GimpDocked  *docked,
 static GtkWidget *
 gimp_container_box_get_preview (GimpDocked   *docked,
                                 GimpContext  *context,
-                                GtkIconSize   size)
+                                gint          size)
 {
   GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
   GimpContainer     *container;
   GtkWidget         *preview;
-  gint               width;
-  gint               height;
   gint               border_width = 1;
   const gchar       *prop_name;
 
@@ -201,12 +199,10 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   g_return_val_if_fail (container != NULL, NULL);
 
-  gtk_icon_size_lookup (size, &width, &height);
-
   prop_name = gimp_context_type_to_prop_name (gimp_container_get_children_type (container));
 
   preview = gimp_prop_view_new (G_OBJECT (context), prop_name,
-                                context, height);
+                                context, size);
   GIMP_VIEW (preview)->renderer->size = -1;
 
   gimp_container_view_get_view_size (view, &border_width);
@@ -214,7 +210,7 @@ gimp_container_box_get_preview (GimpDocked   *docked,
   border_width = MIN (1, border_width);
 
   gimp_view_renderer_set_size_full (GIMP_VIEW (preview)->renderer,
-                                    width, height, border_width);
+                                    size, size, border_width);
 
   return preview;
 }
