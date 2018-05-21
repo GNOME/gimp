@@ -114,11 +114,12 @@ typedef struct _GimpDisplayShellOverlay GimpDisplayShellOverlay;
 
 struct _GimpDisplayShellOverlay
 {
-  gdouble          image_x;
-  gdouble          image_y;
-  GimpHandleAnchor anchor;
-  gint             spacing_x;
-  gint             spacing_y;
+  GimpDisplayShell *shell;
+  gdouble           image_x;
+  gdouble           image_y;
+  GimpHandleAnchor  anchor;
+  gint              spacing_x;
+  gint              spacing_y;
 };
 
 
@@ -160,6 +161,9 @@ static void      gimp_display_shell_zoom_button_callback
 static void      gimp_display_shell_sync_config    (GimpDisplayShell  *shell,
                                                     GimpDisplayConfig *config);
 
+static void    gimp_display_shell_overlay_allocate (GtkWidget        *child,
+                                                    GtkAllocation    *allocation,
+                                                    GimpDisplayShellOverlay *overlay);
 static void      gimp_display_shell_remove_overlay (GtkWidget        *canvas,
                                                     GtkWidget        *child,
                                                     GimpDisplayShell *shell);
@@ -1041,10 +1045,31 @@ gimp_display_shell_sync_config (GimpDisplayShell  *shell,
 }
 
 static void
+gimp_display_shell_overlay_allocate (GtkWidget               *child,
+                                     GtkAllocation           *allocation,
+                                     GimpDisplayShellOverlay *overlay)
+{
+  gdouble x, y;
+
+  gimp_display_shell_transform_overlay (overlay->shell, child, &x, &y);
+
+  gimp_overlay_box_set_child_position (GIMP_OVERLAY_BOX (overlay->shell->canvas),
+                                       child, x, y);
+}
+
+static void
 gimp_display_shell_remove_overlay (GtkWidget        *canvas,
                                    GtkWidget        *child,
                                    GimpDisplayShell *shell)
 {
+  GimpDisplayShellOverlay *overlay;
+
+  overlay = g_object_get_data (G_OBJECT (child), "image-coords-overlay");
+
+  g_signal_handlers_disconnect_by_func (child,
+                                        gimp_display_shell_overlay_allocate,
+                                        overlay);
+
   shell->children = g_list_remove (shell->children, child);
 }
 
@@ -1154,6 +1179,7 @@ gimp_display_shell_add_overlay (GimpDisplayShell *shell,
 
   overlay = g_new0 (GimpDisplayShellOverlay, 1);
 
+  overlay->shell     = shell;
   overlay->image_x   = image_x;
   overlay->image_y   = image_y;
   overlay->anchor    = anchor;
@@ -1164,6 +1190,10 @@ gimp_display_shell_add_overlay (GimpDisplayShell *shell,
                           (GDestroyNotify) g_free);
 
   shell->children = g_list_prepend (shell->children, child);
+
+  g_signal_connect (child, "size-allocate",
+                    G_CALLBACK (gimp_display_shell_overlay_allocate),
+                    overlay);
 
   gimp_display_shell_transform_overlay (shell, child, &x, &y);
 
