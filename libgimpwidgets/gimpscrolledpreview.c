@@ -325,7 +325,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
   gimp_scrolled_preview_freeze (preview);
 
 #if 0
-  GIMP_PREVIEW (preview)->width  = MIN (xmax - xmin,  allocation->width);
+  GIMP_PREVIEW (preview)->width  = MIN (xmax - xmin, allocation->width);
   GIMP_PREVIEW (preview)->height = MIN (ymax - ymin, allocation->height);
 #endif
 
@@ -342,6 +342,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       break;
 
     case GTK_POLICY_NEVER:
+    case GTK_POLICY_EXTERNAL:
       gtk_widget_hide (priv->hscr);
       break;
     }
@@ -359,6 +360,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       break;
 
     case GTK_POLICY_NEVER:
+    case GTK_POLICY_EXTERNAL:
       gtk_widget_hide (priv->vscr);
       break;
     }
@@ -378,8 +380,11 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
 {
   GimpScrolledPreviewPrivate *priv = GET_PRIVATE (preview);
   GdkEventButton             *button_event = (GdkEventButton *) event;
+  GdkSeat                    *seat;
   GdkCursor                  *cursor;
   gint                        xoff, yoff;
+
+  seat = gdk_display_get_default_seat (gtk_widget_get_display (area));
 
   gimp_preview_get_offsets (GIMP_PREVIEW (preview), &xoff, &yoff);
 
@@ -393,14 +398,15 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
           cursor = gdk_cursor_new_for_display (gtk_widget_get_display (area),
                                                GDK_FLEUR);
 
-          if (gdk_pointer_grab (gtk_widget_get_window (area), TRUE,
-                                GDK_BUTTON_RELEASE_MASK |
-                                GDK_BUTTON_MOTION_MASK  |
-                                GDK_POINTER_MOTION_HINT_MASK,
-                                NULL, cursor,
-                                gdk_event_get_time (event)) == GDK_GRAB_SUCCESS)
+          if (gdk_seat_grab (seat, gtk_widget_get_window (area),
+                             GDK_SEAT_CAPABILITY_ALL_POINTING, TRUE,
+                             cursor, event,
+                             NULL, NULL) == GDK_GRAB_SUCCESS)
             {
-              gtk_widget_get_pointer (area, &priv->drag_x, &priv->drag_y);
+              gdk_window_get_device_position (gtk_widget_get_window (area),
+                                              gdk_event_get_device (event),
+                                              &priv->drag_x, &priv->drag_y,
+                                              NULL);
 
               priv->drag_xoff = xoff;
               priv->drag_yoff = yoff;
@@ -409,7 +415,6 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
             }
 
           g_object_unref (cursor);
-
           break;
 
         case 3:
@@ -421,8 +426,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
       if (priv->in_drag &&
           (button_event->button == 1 || button_event->button == 2))
         {
-          gdk_display_pointer_ungrab (gtk_widget_get_display (area),
-                                      gdk_event_get_time (event));
+          gdk_seat_ungrab (seat);
 
           gtk_grab_remove (area);
           priv->in_drag = FALSE;
@@ -440,7 +444,10 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
           hadj = gtk_range_get_adjustment (GTK_RANGE (priv->hscr));
           vadj = gtk_range_get_adjustment (GTK_RANGE (priv->vscr));
 
-          gtk_widget_get_pointer (area, &x, &y);
+          gdk_window_get_device_position (gtk_widget_get_window (area),
+                                          gdk_event_get_device (event),
+                                          &x, &y,
+                                          NULL);
 
           x = priv->drag_xoff - (x - priv->drag_x);
           y = priv->drag_yoff - (y - priv->drag_y);
@@ -634,7 +641,9 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       x += event->x - h * (gdouble) area_width;
       y += event->y - v * (gdouble) area_height;
 
-      gtk_style_context_get_border (context, 0, &border);
+      gtk_style_context_get_border (context,
+                                    gtk_style_context_get_state (context),
+                                    &border);
 
       gtk_window_move (GTK_WINDOW (priv->nav_popup),
                        x - (border.left + border.right),
@@ -647,12 +656,11 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
                                            GDK_FLEUR);
 
-      gdk_pointer_grab (gtk_widget_get_window (area), TRUE,
-                        GDK_BUTTON_RELEASE_MASK |
-                        GDK_BUTTON_MOTION_MASK  |
-                        GDK_POINTER_MOTION_HINT_MASK,
-                        gtk_widget_get_window (area), cursor,
-                        event->time);
+      gdk_seat_grab (gdk_display_get_default_seat (gtk_widget_get_display (widget)),
+                     gtk_widget_get_window (area),
+                     GDK_SEAT_CAPABILITY_ALL_POINTING, TRUE,
+                     cursor, (GdkEvent *) event,
+                     NULL, NULL);
 
       g_object_unref (cursor);
     }
@@ -675,9 +683,10 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 
         if (button_event->button == 1)
           {
+            GdkSeat *seat = gdk_display_get_default_seat (gtk_widget_get_display (widget));
+
             gtk_grab_remove (widget);
-            gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                        button_event->time);
+            gdk_seat_ungrab (seat);
 
             gtk_widget_destroy (priv->nav_popup);
             priv->nav_popup = NULL;
@@ -699,7 +708,9 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 
         gtk_widget_get_allocation (widget, &allocation);
 
-        gtk_widget_get_pointer (widget, &cx, &cy);
+        gdk_window_get_device_position (gtk_widget_get_window (widget),
+                                        gdk_event_get_device (event),
+                                        &cx, &cy, NULL);
 
         x = cx * (gtk_adjustment_get_upper (hadj) -
                   gtk_adjustment_get_lower (hadj)) / allocation.width;
@@ -723,7 +734,6 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
                                          gtk_adjustment_get_page_size (vadj)));
 
         gtk_widget_queue_draw (widget);
-        gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
 
         gdk_event_request_motions (mevent);
       }
