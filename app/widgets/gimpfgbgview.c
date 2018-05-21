@@ -157,16 +157,24 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GtkBorder        border;
+  gint             outline_width;
+  gint             outline_offset;
   gint             rect_w, rect_h;
   GimpRGB          color;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   gtk_style_context_save (style);
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
 
-  gtk_style_context_get_border (style, gtk_style_context_get_state (style),
-                                &border);
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         "outline-width",  &outline_width,
+                         "outline-offset", &outline_offset,
+                         NULL);
+
+  border.left   = outline_width + ABS (outline_offset);
+  border.right  = outline_width + ABS (outline_offset);
+  border.top    = outline_width + ABS (outline_offset);
+  border.bottom = outline_width + ABS (outline_offset);
 
   rect_w = allocation.width  * 3 / 4;
   rect_h = allocation.height * 3 / 4;
