@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-18 12:38+0200\n"
-"PO-Revision-Date: 2018-05-18 12:40+0200\n"
+"POT-Creation-Date: 2018-05-21 15:28+0200\n"
+"PO-Revision-Date: 2018-05-21 15:33+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -100,6 +100,21 @@ msgstr "Fotoritocco in GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
+"the usual bug-fixing version after a major release, with a few dozen bugs "
+"fixed."
+msgstr "Questo secondo rilascio nella serie di GIMP 2.10, appena dopo il 2.10.0, è in gran parte costituito dalle solite correzioni rilevate dopo un cambio di versione importante, con diverse dozzine di bug corretti."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid ""
+"It also features a new plug-in for the support of the HEIF format, both for "
+"importing and exporting, as well as 2 new filters: \"Spherize\" and "
+"\"Recursive Transform\". These are nice examples of our relaxed feature "
+"policy in stable micro releases."
+msgstr "It also features a new plug-in for the support of the HEIF format, both for importing and exporting, as well as 2 new filters: \"Spherize\" and \"Recursive Transform\". These are nice examples of our relaxed feature policy in stable micro releases."
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
@@ -107,11 +122,11 @@ msgstr ""
 "nuovo motore di elaborazione immagini, GEGL. I cambiamenti più di spicco "
 "sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Elaborazione ad alta profondità di colore (16/32 bit per canale)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -119,35 +134,35 @@ msgstr ""
 "Ora la gestione del colore è una funzionalità di base, il colore di buona "
 "parte delle finestre e delle aree di anteprima è gestito"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Anteprima automatica, con vista divisa prima/dopo dell'elaborazione dei pixel"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Elaborazione del disegno e del rendering multi thread e accelerato in "
 "hardware"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Most tools improved, several new transformation tools"
 msgstr "Molti strumenti migliorati, diversi nuovi strumenti di trasformazione"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Migliorato il supporto a molti formati immagine, in particolare "
 "l'importazione di PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Nuovi formati immagine supportati: OpenEXR, WebP, HGT..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -155,30 +170,32 @@ msgstr ""
 "Migliorato il disegno digitale: rotazione e ribaltamento immagini, disegno "
 "simmetrico, pennelli MyPaint..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Visualizzazione metadati per Exif, MXP, IPTC, e DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Supporto base HiDPI: dimensione icone automatica o selezionabile dall'utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nuovi temi per GIMP: Light, Gray, Dark, e System"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "And much, much more…"
 msgstr "E molto, molto altro ancora..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
 "released/"
-msgstr "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/"
+msgstr ""
+"Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/27/"
+"gimp-2-10-0-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -189,7 +206,7 @@ msgstr ""
 "velocità e all'ottimizzazione in modo da fornire un'esperienza di disegno "
 "ancora migliore. I cambiamenti maggiori sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
@@ -197,13 +214,13 @@ msgstr ""
 "Grande ottimizzazione del nucleo nel disegno e nella visualizzazione, "
 "comprendente la parallelizzazione del codice di disegno."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
 "Le simmetrie ora vengono mantenute nei file XCF (salvate come parassiti "
 "dell'immagine)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -212,7 +229,7 @@ msgstr ""
 "diversi problemi di usabilità. I temi \"Lighter\" e \"Darker\" sono stati "
 "rimossi."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -223,7 +240,7 @@ msgstr ""
 "fornisce interazione sul disegno per la rotazione 3D (imbardata, beccheggio, "
 "rollio)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -234,7 +251,7 @@ msgstr ""
 "ricezione di segnali ma anche quando ci sono avvertimenti e errori critici, "
 "se viene impostata la chiave di debug \"fatal-warnings\"."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
@@ -242,7 +259,7 @@ msgstr ""
 "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/17/"
 "gimp-2-10-rc2-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -252,12 +269,12 @@ msgstr ""
 "2.10.0, con l'obiettivo dell'assenza di difetti e stabilità. Oltre alle "
 "molte correzioni difetti, i miglioramenti più evidenti sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Nuovo cruscotto agganciabile per controllare l'uso delle risorse di GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -265,35 +282,35 @@ msgstr ""
 "Una nuova finestra di dialogo di debug per produrre back trace ed altri dati "
 "utili per il debug, che incoraggia a riportare i difetti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Le immagini non salvate ora possono essere recuperate dopo un crash"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Layer masks on layer groups"
 msgstr "Maschere di livello sui gruppi livello."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Il supporto a JPEG 2000 è stato migliorato nella gestione della profondità e "
 "negli spazi di colore"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "La cattura schermate e il prelievo colore sono stati migliorati in molte "
 "piattaforme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Metadata defaults preferences now available"
 msgstr "Le preferenze predefinite dei metadati sono ora disponibili"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Various GUI polishing"
 msgstr "Diversi miglioramenti all'interfaccia utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
@@ -301,7 +318,7 @@ msgstr ""
 "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/03/26/"
 "gimp-2-10-rc1-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -309,53 +326,53 @@ msgstr ""
 "GIMP 2.9.8 introduce la modifica dei gradienti sul disegno e vari altri "
 "miglioramenti mantenendo l'obiettivo di correzione dei difetti e stabilità."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "On-canvas gradient editing"
 msgstr "Modifica del gradiente sul disegno"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Notification when an image is over/underexposed"
 msgstr "Notifica quando un'immagine è sovra o sotto esposta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Better and faster color management"
 msgstr "Gestione del colore migliorata e velocizzata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Supporto per il prelievo colore e cattura schermate in Wayland su KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Paste in place feature"
 msgstr "Funzione di incolla sul posto"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Many usability improvements"
 msgstr "Molti miglioramenti di usabilità"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Il manuale può essere mostrato nella lingua preferita dall'utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Miglioramenti nel filtro di decomposizione Wavelet"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Migliorata la compatibilità con i file .psd di Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "New support for password-protected PDF"
 msgstr "Nuovo supporto per i PDF protetti da password"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
 "Nuovo supporto per il formato HGT (dati di elevazione del modello digitale)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -2742,7 +2759,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1971
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1988
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -9151,168 +9168,178 @@ msgstr "Chiudi la vista immagine attiva"
 
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
+msgid "Center Image in Window"
+msgstr "Centra immagine nella finestra"
+
+#: ../app/actions/view-actions.c:102
+msgctxt "view-action"
+msgid "Scroll the image so that it is centered in the window"
+msgstr "Sposta l'immagine in modo da centrarla nella finestra"
+
+#: ../app/actions/view-actions.c:107
+msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "Adatta immagine alla _finestra"
 
-#: ../app/actions/view-actions.c:102
+#: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr ""
 "Regola l'ingrandimento in modo da rendere l'immagine completamente visibile"
 
-#: ../app/actions/view-actions.c:107
+#: ../app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Riempi _la finestra"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Regola l'ingrandimento in modo da usare l'intera finestra"
 
-#: ../app/actions/view-actions.c:113
+#: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Zoom alla _selezione"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Regola l'ingrandimento cosicché la selezione usi l'intera finestra"
 
-#: ../app/actions/view-actions.c:119
+#: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Ri_pristina zoom"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Ripristina il livello di zoom precedente"
 
-#: ../app/actions/view-actions.c:125
+#: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
 msgstr "Altro angolo di _rotazione..."
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Imposta un angolo di rotazione personalizzato"
 
-#: ../app/actions/view-actions.c:131
+#: ../app/actions/view-actions.c:137
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Finestra di na_vigazione"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:138
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Mostra una finestra panoramica per questa immagine"
 
-#: ../app/actions/view-actions.c:137
+#: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Mostra _filtri..."
 
-#: ../app/actions/view-actions.c:138
+#: ../app/actions/view-actions.c:144
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Configura i filtri applicati a questa vista"
 
-#: ../app/actions/view-actions.c:143
+#: ../app/actions/view-actions.c:149
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "Come nelle _preferenze"
 
-#: ../app/actions/view-actions.c:145
+#: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr ""
 "Reimposta la gestione del colore al valore configurato nelle preferenze"
 
-#: ../app/actions/view-actions.c:150
+#: ../app/actions/view-actions.c:156
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
 msgstr "Profilo _softproof..."
 
-#: ../app/actions/view-actions.c:151
+#: ../app/actions/view-actions.c:157
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
 msgstr "Imposta il profilo softproof"
 
-#: ../app/actions/view-actions.c:156
+#: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "_Adatta la finestra all'immagine"
 
-#: ../app/actions/view-actions.c:157
+#: ../app/actions/view-actions.c:163
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Riduce la finestra alla dimensione dell'immagine visualizzata"
 
-#: ../app/actions/view-actions.c:162
+#: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "Apri displa_y..."
 
-#: ../app/actions/view-actions.c:163
+#: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Collega ad un altro display"
 
-#: ../app/actions/view-actions.c:171
+#: ../app/actions/view-actions.c:177
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Punto per punto"
 
-#: ../app/actions/view-actions.c:172
+#: ../app/actions/view-actions.c:178
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Un pixel sullo schermo rappresenta un pixel dell'immagine"
 
-#: ../app/actions/view-actions.c:178
+#: ../app/actions/view-actions.c:184
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "Gestisci il _colore di questa vista"
 
-#: ../app/actions/view-actions.c:179
+#: ../app/actions/view-actions.c:185
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Usa la gestione del colore per questa vista"
 
-#: ../app/actions/view-actions.c:185
+#: ../app/actions/view-actions.c:191
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "Colori del _proof"
 
-#: ../app/actions/view-actions.c:186
+#: ../app/actions/view-actions.c:192
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Usa questa vista per il softproof"
 
-#: ../app/actions/view-actions.c:192 ../app/actions/view-actions.c:199
+#: ../app/actions/view-actions.c:198 ../app/actions/view-actions.c:205
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "Compensazione del _punto nero"
 
-#: ../app/actions/view-actions.c:193
+#: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
 msgstr ""
 "Usa la compensazione del punto nero per la visualizzazione dell'immagine"
 
-#: ../app/actions/view-actions.c:200
+#: ../app/actions/view-actions.c:206
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Usa la compensazione del punto nero per il softproof"
 
-#: ../app/actions/view-actions.c:206
+#: ../app/actions/view-actions.c:212
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "Evidenzia i colori fuori ga_mut"
 
-#: ../app/actions/view-actions.c:207
+#: ../app/actions/view-actions.c:213
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -9321,606 +9348,606 @@ msgstr ""
 "Durante il softproof, evidenzia i colori che non possono venir rappresentati "
 "nello spazio colore del risultato"
 
-#: ../app/actions/view-actions.c:214
+#: ../app/actions/view-actions.c:220
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "_Selezione"
 
-#: ../app/actions/view-actions.c:215
+#: ../app/actions/view-actions.c:221
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Mostra il bordo della selezione"
 
-#: ../app/actions/view-actions.c:221
+#: ../app/actions/view-actions.c:227
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Mostra margini del _livello"
 
-#: ../app/actions/view-actions.c:222
+#: ../app/actions/view-actions.c:228
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Disegna un bordo intorno al livello attivo"
 
-#: ../app/actions/view-actions.c:228
+#: ../app/actions/view-actions.c:234
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "_Guide"
 
-#: ../app/actions/view-actions.c:229
+#: ../app/actions/view-actions.c:235
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Mostra le guide dell'immagine"
 
-#: ../app/actions/view-actions.c:235
+#: ../app/actions/view-actions.c:241
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Grig_lia"
 
-#: ../app/actions/view-actions.c:236
+#: ../app/actions/view-actions.c:242
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Mostra la griglia immagine"
 
-#: ../app/actions/view-actions.c:242
+#: ../app/actions/view-actions.c:248
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Punti di campionamento"
 
-#: ../app/actions/view-actions.c:243
+#: ../app/actions/view-actions.c:249
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Mostra i punti di campionamento di colore dell'immagine"
 
-#: ../app/actions/view-actions.c:249
+#: ../app/actions/view-actions.c:255
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "Guide mag_netiche"
 
-#: ../app/actions/view-actions.c:250
+#: ../app/actions/view-actions.c:256
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Guide magnetiche per gli strumenti"
 
-#: ../app/actions/view-actions.c:256
+#: ../app/actions/view-actions.c:262
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Griglia ma_gnetica"
 
-#: ../app/actions/view-actions.c:257
+#: ../app/actions/view-actions.c:263
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Griglia magnetica per gli strumenti"
 
-#: ../app/actions/view-actions.c:263
+#: ../app/actions/view-actions.c:269
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Bordi della superficie mag_netici"
 
-#: ../app/actions/view-actions.c:264
+#: ../app/actions/view-actions.c:270
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Bordi della superficie magnetici per gli strumenti"
 
-#: ../app/actions/view-actions.c:270
+#: ../app/actions/view-actions.c:276
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Tracciat_o attivo magnetico"
 
-#: ../app/actions/view-actions.c:271
+#: ../app/actions/view-actions.c:277
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Tracciato attivo magnetico per gli strumenti"
 
-#: ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:283
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Barra dei _menu"
 
-#: ../app/actions/view-actions.c:278
+#: ../app/actions/view-actions.c:284
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Mostra la barra dei menu di questa finestra"
 
-#: ../app/actions/view-actions.c:284
+#: ../app/actions/view-actions.c:290
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "_Righelli"
 
-#: ../app/actions/view-actions.c:285
+#: ../app/actions/view-actions.c:291
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Mostra i righelli di questa finestra"
 
-#: ../app/actions/view-actions.c:291
+#: ../app/actions/view-actions.c:297
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "_Barre di scorrimento"
 
-#: ../app/actions/view-actions.c:292
+#: ../app/actions/view-actions.c:298
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Mostra le barre di scorrimento di questa finestra"
 
-#: ../app/actions/view-actions.c:298
+#: ../app/actions/view-actions.c:304
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Barra di s_tato"
 
-#: ../app/actions/view-actions.c:299
+#: ../app/actions/view-actions.c:305
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Mostra la barra di stato di questa finestra"
 
-#: ../app/actions/view-actions.c:305
+#: ../app/actions/view-actions.c:311
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "A tutto sch_ermo"
 
-#: ../app/actions/view-actions.c:306
+#: ../app/actions/view-actions.c:312
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Commuta la visualizzazione a schermo pieno"
 
-#: ../app/actions/view-actions.c:315
+#: ../app/actions/view-actions.c:321
 msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "Imposta un livello di zoom"
 
-#: ../app/actions/view-actions.c:320
+#: ../app/actions/view-actions.c:326
 msgctxt "view-action"
 msgid "Zoom out as far as possible"
 msgstr "Rimpicciolisci al massimo"
 
-#: ../app/actions/view-actions.c:325
+#: ../app/actions/view-actions.c:331
 msgctxt "view-action"
 msgid "Zoom in as far as possible"
 msgstr "Ingrandisci al massimo"
 
-#: ../app/actions/view-actions.c:330
+#: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Zoom indietr_o"
 
-#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Zoom indietro"
 
-#: ../app/actions/view-actions.c:336
+#: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "Zoom avant_i"
 
-#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:349
+#: ../app/actions/view-actions.c:343 ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Zoom avanti"
 
-#: ../app/actions/view-actions.c:342
+#: ../app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Zoom indietro"
 
-#: ../app/actions/view-actions.c:348
+#: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Zoom avanti"
 
-#: ../app/actions/view-actions.c:354
+#: ../app/actions/view-actions.c:360
 msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "Zoom indietro molto"
 
-#: ../app/actions/view-actions.c:359
+#: ../app/actions/view-actions.c:365
 msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "Zoom avanti molto"
 
-#: ../app/actions/view-actions.c:367 ../app/actions/view-actions.c:373
+#: ../app/actions/view-actions.c:373 ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:368 ../app/actions/view-actions.c:374
+#: ../app/actions/view-actions.c:374 ../app/actions/view-actions.c:380
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Zoom 16:1"
 
-#: ../app/actions/view-actions.c:379 ../app/actions/view-actions.c:385
+#: ../app/actions/view-actions.c:385 ../app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:380 ../app/actions/view-actions.c:386
+#: ../app/actions/view-actions.c:386 ../app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Zoom 8:1"
 
-#: ../app/actions/view-actions.c:391 ../app/actions/view-actions.c:397
+#: ../app/actions/view-actions.c:397 ../app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:392 ../app/actions/view-actions.c:398
+#: ../app/actions/view-actions.c:398 ../app/actions/view-actions.c:404
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Zoom 4:1"
 
-#: ../app/actions/view-actions.c:403 ../app/actions/view-actions.c:409
+#: ../app/actions/view-actions.c:409 ../app/actions/view-actions.c:415
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:404 ../app/actions/view-actions.c:410
+#: ../app/actions/view-actions.c:410 ../app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Zoom 2:1"
 
-#: ../app/actions/view-actions.c:415 ../app/actions/view-actions.c:421
+#: ../app/actions/view-actions.c:421 ../app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:416 ../app/actions/view-actions.c:422
+#: ../app/actions/view-actions.c:422 ../app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:433
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:428
+#: ../app/actions/view-actions.c:434
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Zoom 1:2"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:434
+#: ../app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Zoom 1:4"
 
-#: ../app/actions/view-actions.c:439
+#: ../app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:440
+#: ../app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Zoom 1:8"
 
-#: ../app/actions/view-actions.c:445
+#: ../app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:446
+#: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Zoom 1:16"
 
-#: ../app/actions/view-actions.c:451
+#: ../app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "Alt_ro fattore di zoom..."
 
-#: ../app/actions/view-actions.c:452
+#: ../app/actions/view-actions.c:458
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Imposta un livello di zoom personalizzato"
 
-#: ../app/actions/view-actions.c:460
+#: ../app/actions/view-actions.c:466
 msgctxt "view-action"
 msgid "Flip Horizontally"
 msgstr "Rifletti orizzontalmente"
 
-#: ../app/actions/view-actions.c:461
+#: ../app/actions/view-actions.c:467
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Rifletti la vista orizzontalmente"
 
-#: ../app/actions/view-actions.c:467
+#: ../app/actions/view-actions.c:473
 msgctxt "view-action"
 msgid "Flip Vertically"
 msgstr "Rifletti verticalmente"
 
-#: ../app/actions/view-actions.c:468
+#: ../app/actions/view-actions.c:474
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Rifletti la vista verticalmente"
 
-#: ../app/actions/view-actions.c:482
+#: ../app/actions/view-actions.c:488
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Reimposta rifletti e ruota"
 
-#: ../app/actions/view-actions.c:484
+#: ../app/actions/view-actions.c:490
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Annulla la riflessione e imposta l'angolo di rotazione a 0°"
 
-#: ../app/actions/view-actions.c:492
+#: ../app/actions/view-actions.c:498
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Ruota di 15° in senso _orario"
 
-#: ../app/actions/view-actions.c:493
+#: ../app/actions/view-actions.c:499
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Ruota la vista di 15 gradi a destra"
 
-#: ../app/actions/view-actions.c:498
+#: ../app/actions/view-actions.c:504
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Ruota di 90° in senso _orario"
 
-#: ../app/actions/view-actions.c:499
+#: ../app/actions/view-actions.c:505
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Ruota la vista di 90 gradi a destra"
 
-#: ../app/actions/view-actions.c:504
+#: ../app/actions/view-actions.c:510
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Ruota di _180°"
 
-#: ../app/actions/view-actions.c:505
+#: ../app/actions/view-actions.c:511
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Gira la vista sottosopra"
 
-#: ../app/actions/view-actions.c:510
+#: ../app/actions/view-actions.c:516
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Ruota di 90° in senso _antiorario"
 
-#: ../app/actions/view-actions.c:511
+#: ../app/actions/view-actions.c:517
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Ruota la vista di 90 gradi a sinistra"
 
-#: ../app/actions/view-actions.c:516
+#: ../app/actions/view-actions.c:522
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Ruota di 15° in senso _antiorario"
 
-#: ../app/actions/view-actions.c:517
+#: ../app/actions/view-actions.c:523
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Ruota la vista di 15 gradi a sinistra"
 
-#: ../app/actions/view-actions.c:525 ../app/actions/view-actions.c:552
+#: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Percettivo"
 
-#: ../app/actions/view-actions.c:526
+#: ../app/actions/view-actions.c:532
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "L'intento di rendering del display è percettivo"
 
-#: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
+#: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "Colorimetrico _relativo"
 
-#: ../app/actions/view-actions.c:532
+#: ../app/actions/view-actions.c:538
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "L'intento di rendering del display è colorimetrico relativo"
 
-#: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
+#: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Saturazione"
 
-#: ../app/actions/view-actions.c:538
+#: ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "L'intento di rendering del display è saturazione"
 
-#: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
+#: ../app/actions/view-actions.c:549 ../app/actions/view-actions.c:576
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "Colorimetrico _assoluto"
 
-#: ../app/actions/view-actions.c:544
+#: ../app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "L'intento di rendering del display è colorimetrico assoluto"
 
-#: ../app/actions/view-actions.c:553
+#: ../app/actions/view-actions.c:559
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "L'intento di rendering del softproof è percettivo"
 
-#: ../app/actions/view-actions.c:559
+#: ../app/actions/view-actions.c:565
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr "L'intento di rendering del softproof è colorimetrico relativo"
 
-#: ../app/actions/view-actions.c:565
+#: ../app/actions/view-actions.c:571
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
 msgstr "L'intento di rendering per il softproof è saturazione"
 
-#: ../app/actions/view-actions.c:571
+#: ../app/actions/view-actions.c:577
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "L'intento di rendering per il softproof è colorimetrico assoluto"
 
-#: ../app/actions/view-actions.c:579
+#: ../app/actions/view-actions.c:585
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Dal _tema"
 
-#: ../app/actions/view-actions.c:580
+#: ../app/actions/view-actions.c:586
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Usa il colore di sfondo del tema corrente"
 
-#: ../app/actions/view-actions.c:585
+#: ../app/actions/view-actions.c:591
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Co_lore a scacchi chiaro"
 
-#: ../app/actions/view-actions.c:586
+#: ../app/actions/view-actions.c:592
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Usa il colore a scacchi chiaro"
 
-#: ../app/actions/view-actions.c:591
+#: ../app/actions/view-actions.c:597
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Colore a scacchi _scuro"
 
-#: ../app/actions/view-actions.c:592
+#: ../app/actions/view-actions.c:598
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Usa il colore a scacchi scuro"
 
-#: ../app/actions/view-actions.c:597
+#: ../app/actions/view-actions.c:603
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "_Colore personalizzato..."
 
-#: ../app/actions/view-actions.c:598
+#: ../app/actions/view-actions.c:604
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Usa un colore arbitrario"
 
-#: ../app/actions/view-actions.c:603
+#: ../app/actions/view-actions.c:609
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Come nelle _preferenze"
 
-#: ../app/actions/view-actions.c:605
+#: ../app/actions/view-actions.c:611
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr ""
 "Reimposta il colore di riempimento al valore configurato nelle preferenze"
 
-#: ../app/actions/view-actions.c:613
+#: ../app/actions/view-actions.c:619
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Imposta lo spostamento dello scorrimento orizzontale"
 
-#: ../app/actions/view-actions.c:618
+#: ../app/actions/view-actions.c:624
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Scorri fino al bordo a sinistra"
 
-#: ../app/actions/view-actions.c:623
+#: ../app/actions/view-actions.c:629
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Scorri fino al bordo a destra"
 
-#: ../app/actions/view-actions.c:628
+#: ../app/actions/view-actions.c:634
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Scorri a sinistra"
 
-#: ../app/actions/view-actions.c:633
+#: ../app/actions/view-actions.c:639
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Scorri a destra"
 
-#: ../app/actions/view-actions.c:638
+#: ../app/actions/view-actions.c:644
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Scorri la pagina a sinistra"
 
-#: ../app/actions/view-actions.c:643
+#: ../app/actions/view-actions.c:649
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Scorri la pagina a destra"
 
-#: ../app/actions/view-actions.c:651
+#: ../app/actions/view-actions.c:657
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Imposta lo spostamento dello scorrimento verticale"
 
-#: ../app/actions/view-actions.c:656
+#: ../app/actions/view-actions.c:662
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Scorri fino al bordo in cima"
 
-#: ../app/actions/view-actions.c:661
+#: ../app/actions/view-actions.c:667
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Scorri fino al bordo in fondo"
 
-#: ../app/actions/view-actions.c:666
+#: ../app/actions/view-actions.c:672
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Scorri su"
 
-#: ../app/actions/view-actions.c:671
+#: ../app/actions/view-actions.c:677
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Scorri giù"
 
-#: ../app/actions/view-actions.c:676
+#: ../app/actions/view-actions.c:682
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Scorri una pagina in su"
 
-#: ../app/actions/view-actions.c:681
+#: ../app/actions/view-actions.c:687
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Scorri una pagina in giù"
 
-#: ../app/actions/view-actions.c:903
+#: ../app/actions/view-actions.c:911
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Ri_pristina zoom (%d%%)"
 
-#: ../app/actions/view-actions.c:911
+#: ../app/actions/view-actions.c:919
 msgid "Re_vert Zoom"
 msgstr "Ri_pristina zoom"
 
-#: ../app/actions/view-actions.c:1098
+#: ../app/actions/view-actions.c:1106
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Alt_ro (%s)..."
 
-#: ../app/actions/view-actions.c:1107
+#: ../app/actions/view-actions.c:1115
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1128
+#: ../app/actions/view-actions.c:1136
 msgid "(H+V) "
 msgstr "(O+V)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1133
+#: ../app/actions/view-actions.c:1141
 msgid "(H) "
 msgstr "(O)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1138
+#: ../app/actions/view-actions.c:1146
 msgid "(V) "
 msgstr "(V) "
 
-#: ../app/actions/view-actions.c:1145
+#: ../app/actions/view-actions.c:1153
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "Ri_fletti %s e Ruota (%d°)"
 
-#: ../app/actions/view-commands.c:1005
+#: ../app/actions/view-commands.c:1016
 msgid "Set Canvas Padding Color"
 msgstr "Seleziona colore di riempimento superficie"
 
-#: ../app/actions/view-commands.c:1007
+#: ../app/actions/view-commands.c:1018
 msgid "Set Custom Canvas Padding Color"
 msgstr "Imposta colore personalizzato di riempimento superficie"
 
@@ -12704,7 +12731,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:480
+#: ../app/core/gimpdrawable.c:487
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -12974,33 +13001,33 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo livelli"
 
-#: ../app/core/gimpimage.c:645 ../app/widgets/gimpsymmetryeditor.c:179
+#: ../app/core/gimpimage.c:649 ../app/widgets/gimpsymmetryeditor.c:179
 msgid "Symmetry"
 msgstr "Simmetria"
 
-#: ../app/core/gimpimage.c:2223
+#: ../app/core/gimpimage.c:2240
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:2227
+#: ../app/core/gimpimage.c:2244
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:2236
+#: ../app/core/gimpimage.c:2253
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:2564
+#: ../app/core/gimpimage.c:2581
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2616
+#: ../app/core/gimpimage.c:2633
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:3500
+#: ../app/core/gimpimage.c:3517
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13008,47 +13035,47 @@ msgstr ""
 "validazione parassita 'gimp-comment' fallita: il commento contiene UTF-8 non "
 "valido"
 
-#: ../app/core/gimpimage.c:3552
+#: ../app/core/gimpimage.c:3569
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:3593
+#: ../app/core/gimpimage.c:3610
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:4320
+#: ../app/core/gimpimage.c:4337
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:4362 ../app/core/gimpimage.c:4393
+#: ../app/core/gimpimage.c:4379 ../app/core/gimpimage.c:4410
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:4387
+#: ../app/core/gimpimage.c:4404
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:4554
+#: ../app/core/gimpimage.c:4571
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:4582 ../app/core/gimpimage.c:4606
+#: ../app/core/gimpimage.c:4599 ../app/core/gimpimage.c:4623
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:4662
+#: ../app/core/gimpimage.c:4679
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:4692 ../app/core/gimpimage.c:4699
+#: ../app/core/gimpimage.c:4709 ../app/core/gimpimage.c:4716
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"

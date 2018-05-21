@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 00:57+0200\n"
-"PO-Revision-Date: 2018-05-08 00:58+0200\n"
+"POT-Creation-Date: 2018-05-21 15:46+0200\n"
+"PO-Revision-Date: 2018-05-21 15:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -25,7 +25,9 @@ msgstr "Installazione creata da Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "Questa versione di GIMP richiede Windows 7, o una versione più recente di Windows."
+msgstr ""
+"Questa versione di GIMP richiede Windows 7, o una versione più recente di "
+"Windows."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:4
 msgid "Development version"
@@ -346,49 +348,53 @@ msgstr ""
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Si è verificato un errore durante il riavvio dell'installatore. (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:72
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "Cancellazione vecchi file..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Ricorda: GIMP è Software Libero.%n%nVisita"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: ../build/windows/installer/lang/setup.isl.in.h:74
 msgid "for free updates."
 msgstr "per aggiornarlo in libertà."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
 msgstr "Impostaione delle associazioni di file..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Impostazione dell'ambiente per l'estensione Python di GIMP..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
 msgstr "Impostazione dei pennelli MyPaint..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP environment..."
 msgstr "Impostazione dell'ambiente di GIMP..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Impostazione del supporto ai plugin di GIMP a 32-bit..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:79
+#: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
 msgstr "Avvio di GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
 msgstr "Rimozione aggiunte"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:82
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "Errore interno (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:83
+#: ../build/windows/installer/lang/setup.isl.in.h:84
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
