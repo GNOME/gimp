@@ -812,7 +812,7 @@ gimp_view_update_callback (GimpViewRenderer *renderer,
   gint            width;
   gint            height;
 
-  gtk_widget_get_requisition (widget, &requisition);
+  gtk_widget_get_preferred_size (widget, &requisition, NULL);
 
   width  = renderer->width  + 2 * renderer->border_width;
   height = renderer->height + 2 * renderer->border_width;
