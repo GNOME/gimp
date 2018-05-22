@@ -271,14 +271,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
 #define parent_class gimp_image_window_parent_class
 
 
-static const gchar image_window_rc_style[] =
-  "style \"fullscreen-menubar-style\"\n"
-  "{\n"
-  "  GtkMenuBar::shadow-type      = none\n"
-  "  GtkMenuBar::internal-padding = 0\n"
-  "}\n"
-  "widget \"*.gimp-menubar-fullscreen\" style \"fullscreen-menubar-style\"\n";
-
 static void
 gimp_image_window_class_init (GimpImageWindowClass *klass)
 {
@@ -322,8 +314,6 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
-
-  gtk_rc_parse_string (image_window_rc_style);
 }
 
 static void
@@ -697,10 +687,6 @@ gimp_image_window_window_state_event (GtkWidget           *widget,
                 gtk_window_get_title (GTK_WINDOW (widget)),
                 widget,
                 fullscreen ? "TRUE" : "FALSE");
-
-      if (private->menubar)
-        gtk_widget_set_name (private->menubar,
-                             fullscreen ? "gimp-menubar-fullscreen" : NULL);
 
       gimp_image_window_suspend_keep_pos (window);
       gimp_display_shell_appearance_update (shell);
