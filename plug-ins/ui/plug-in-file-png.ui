@@ -221,6 +221,7 @@
           <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
             <child>
               <object class="GtkCheckButton" id="sv_exif">
                 <property name="label" translatable="yes">Save Exif data</property>
