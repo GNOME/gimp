@@ -1120,9 +1120,7 @@ gimp_image_window_new (Gimp              *gimp,
 
   if (! GIMP_GUI_CONFIG (private->gimp->config)->single_window_mode)
     {
-      GdkMonitor *pointer_monitor;
-
-      pointer_monitor = gimp_get_monitor_at_pointer ();
+      GdkMonitor *pointer_monitor = gimp_get_monitor_at_pointer ();
 
       /*  If we are supposed to go to a monitor other than where the
        *  pointer is, place the window on that monitor manually,
@@ -1132,18 +1130,13 @@ gimp_image_window_new (Gimp              *gimp,
       if (pointer_monitor != monitor)
         {
           GdkRectangle rect;
-          gchar        geom[32];
 
           gdk_monitor_get_workarea (monitor, &rect);
 
-          /*  FIXME: image window placement
-           *
-           *  This is ugly beyond description but better than showing
-           *  the window on the wrong monitor
-           */
-          g_snprintf (geom, sizeof (geom), "%+d%+d",
-                      rect.x + 300, rect.y + 30);
-          gtk_window_parse_geometry (GTK_WINDOW (window), geom);
+          gtk_window_move (GTK_WINDOW (window),
+                           rect.x + 300, rect.y + 30);
+          gtk_window_set_geometry_hints (GTK_WINDOW (window),
+                                         NULL, NULL, GDK_HINT_USER_POS);
         }
     }
 
