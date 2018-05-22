@@ -169,9 +169,6 @@ gimp_overlay_box_realize (GtkWidget *widget)
                     G_CALLBACK (gimp_overlay_box_pick_embedded_child),
                     widget);
 
-  gtk_style_context_set_background (gtk_widget_get_style_context (widget),
-                                    gtk_widget_get_window (widget));
-
   for (list = box->children; list; list = g_list_next (list))
     gimp_overlay_child_realize (box, list->data);
 }
@@ -196,11 +193,27 @@ gimp_overlay_box_get_preferred_width (GtkWidget *widget,
   GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
   GList          *list;
 
-  *minimum_width = *natural_width =
-    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
+  *minimum_width = *natural_width = 0;
 
   for (list = box->children; list; list = g_list_next (list))
-    gimp_overlay_child_get_preferred_width (box, list->data);
+    {
+      gint minimum;
+      gint natural;
+
+      gimp_overlay_child_get_preferred_width (box, list->data,
+                                              &minimum, &natural);
+
+      *minimum_width = MAX (*minimum_width, minimum);
+      *natural_width = MAX (*natural_width, natural);
+    }
+
+  *minimum_width = 0;
+
+  *minimum_width +=
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
+
+  *natural_width +=
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 }
 
 static void
@@ -211,11 +224,27 @@ gimp_overlay_box_get_preferred_height (GtkWidget *widget,
   GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
   GList          *list;
 
-  *minimum_height = *natural_height =
-    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
+  *minimum_height = *natural_height = 0;
 
   for (list = box->children; list; list = g_list_next (list))
-    gimp_overlay_child_get_preferred_height (box, list->data);
+    {
+      gint minimum;
+      gint natural;
+
+      gimp_overlay_child_get_preferred_height (box, list->data,
+                                               &minimum, &natural);
+
+      *minimum_height = MAX (*minimum_height, minimum);
+      *natural_height = MAX (*natural_height, natural);
+    }
+
+  *minimum_height = 0;
+
+  *minimum_height +=
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
+
+  *natural_height +=
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 }
 
 static void

@@ -178,7 +178,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
                      GDK_WA_VISUAL   |
                      GDK_WA_CURSOR);
 
-  child->window = gdk_window_new (gtk_widget_get_root_window (widget),
+  child->window = gdk_window_new (gdk_screen_get_root_window (screen),
                                   &attributes, attributes_mask);
   gdk_window_set_user_data (child->window, widget);
   gtk_widget_set_parent_window (child->widget, child->window);
@@ -194,8 +194,6 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
                     G_CALLBACK (gimp_overlay_child_to_embedder),
                     child);
 
-  gtk_style_context_set_background (gtk_widget_get_style_context (widget),
-                                    child->window);
   gdk_window_show (child->window);
 }
 
@@ -214,28 +212,26 @@ gimp_overlay_child_unrealize (GimpOverlayBox   *box,
 
 void
 gimp_overlay_child_get_preferred_width (GimpOverlayBox   *box,
-                                        GimpOverlayChild *child)
+                                        GimpOverlayChild *child,
+                                        gint             *minimum,
+                                        gint             *natural)
 {
-  gint minimum;
-  gint natural;
-
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
-  gtk_widget_get_preferred_width (child->widget, &minimum, &natural);
+  gtk_widget_get_preferred_width (child->widget, minimum, natural);
 }
 
 void
 gimp_overlay_child_get_preferred_height (GimpOverlayBox   *box,
-                                         GimpOverlayChild *child)
+                                         GimpOverlayChild *child,
+                                         gint             *minimum,
+                                         gint             *natural)
 {
-  gint minimum;
-  gint natural;
-
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
-  gtk_widget_get_preferred_height (child->widget, &minimum, &natural);
+  gtk_widget_get_preferred_height (child->widget, minimum, natural);
 }
 
 void

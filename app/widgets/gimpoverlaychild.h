@@ -60,9 +60,13 @@ void               gimp_overlay_child_realize              (GimpOverlayBox   *bo
 void               gimp_overlay_child_unrealize            (GimpOverlayBox   *box,
                                                             GimpOverlayChild *child);
 void               gimp_overlay_child_get_preferred_width  (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
+                                                            GimpOverlayChild *child,
+                                                            gint             *minimum,
+                                                            gint             *natural);
 void               gimp_overlay_child_get_preferred_height (GimpOverlayBox   *box,
-                                                            GimpOverlayChild *child);
+                                                            GimpOverlayChild *child,
+                                                            gint             *minimum,
+                                                            gint             *natural);
 void               gimp_overlay_child_size_allocate        (GimpOverlayBox   *box,
                                                             GimpOverlayChild *child);
 gboolean           gimp_overlay_child_draw                 (GimpOverlayBox   *box,
