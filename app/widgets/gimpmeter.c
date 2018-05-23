@@ -455,18 +455,21 @@ static gboolean
 gimp_meter_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
-  GimpMeter     *meter = GIMP_METER (widget);
-  GtkAllocation  allocation;
-  gint           size  = meter->priv->size;
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkStateType   state = gtk_widget_get_state (widget);
-  gint           i;
-  gint           j;
-  gint           k;
+  GimpMeter       *meter = GIMP_METER (widget);
+  GtkAllocation    allocation;
+  gint             size  = meter->priv->size;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkStateFlags    state = gtk_style_context_get_state (style);
+  GdkRGBA          fg;
+  gint             i;
+  gint             j;
+  gint             k;
 
   g_mutex_lock (&meter->priv->mutex);
 
   gtk_widget_get_allocation (widget, &allocation);
+
+  gtk_style_context_get_color (style, state, &fg);
 
   /* translate to gauge center */
   cairo_translate (cr,
@@ -500,8 +503,8 @@ gimp_meter_draw (GtkWidget *widget,
   cairo_clip (cr);
 
   /* paint gauge background */
-  gdk_cairo_set_source_color (cr, &style->light[state]);
-  cairo_paint (cr);
+  gdk_cairo_set_source_rgba (cr, &fg);
+  cairo_paint_with_alpha (cr, 0.2);
 
   /* paint values of last sample */
   if (meter->priv->range_min < meter->priv->range_max)
@@ -532,7 +535,7 @@ gimp_meter_draw (GtkWidget *widget,
   cairo_restore (cr);
 
   /* paint gauge border */
-  gdk_cairo_set_source_color (cr, &style->fg[state]);
+  gdk_cairo_set_source_rgba (cr, &fg);
   cairo_set_line_width (cr, BORDER_WIDTH);
   cairo_arc          (cr,
                       0.0, 0.0,
@@ -581,8 +584,8 @@ gimp_meter_draw (GtkWidget *widget,
       history_y2 = ceil  (history_y2);
 
       /* paint history background */
-      gdk_cairo_set_source_color (cr, &style->light[state]);
-      cairo_paint (cr);
+      gdk_cairo_set_source_rgba (cr, &fg);
+      cairo_paint_with_alpha (cr, 0.2);
 
       /* history graph */
       if (meter->priv->range_min < meter->priv->range_max)
@@ -697,11 +700,7 @@ gimp_meter_draw (GtkWidget *widget,
 
       /* paint history grid */
       cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
-      cairo_set_source_rgba (cr,
-                             (gdouble) style->fg[state].red   / 0xffff,
-                             (gdouble) style->fg[state].green / 0xffff,
-                             (gdouble) style->fg[state].blue  / 0xffff,
-                             0.3);
+      cairo_set_source_rgba (cr, fg.red, fg.green, fg.blue, 0.3);
 
       for (i = 1; i < 4; i++)
         {
