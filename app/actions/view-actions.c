@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -1014,27 +1013,16 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-snap-to-vectors",     image);
   SET_ACTIVE    ("view-snap-to-vectors",     display && options->snap_to_path);
 
+  if (display && options->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    SET_COLOR ("view-padding-color-menu", &options->padding_color);
+  else
+    SET_COLOR ("view-padding-color-menu", NULL);
+
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);
   SET_SENSITIVE ("view-padding-color-dark-check",  image);
   SET_SENSITIVE ("view-padding-color-custom",      image);
   SET_SENSITIVE ("view-padding-color-prefs",       image);
-
-  if (display)
-    {
-      SET_COLOR ("view-padding-color-menu", &options->padding_color);
-
-      if (shell->canvas)
-        {
-          GtkStyleContext *style = gtk_widget_get_style_context (shell->canvas);
-          GdkRGBA          color;
-
-          gtk_style_context_get_background_color (style, 0, &color);
-          gimp_rgb_set_alpha ((GimpRGB *) &color, GIMP_OPACITY_OPAQUE);
-
-          SET_COLOR ("view-padding-color-theme", (GimpRGB *) &color);
-        }
-    }
 
   SET_SENSITIVE ("view-show-menubar",    image);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);

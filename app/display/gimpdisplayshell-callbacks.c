@@ -423,29 +423,10 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                            &image_rect.width,
                                            &image_rect.height);
 
-
-  /*  first, clear the exposed part of the region that is outside the
-   *  image, which is the exposed region minus the image rectangle
+  /*  first, draw the background
    */
 
-  cairo_save (cr);
-
-  if (shell->rotate_transform)
-    cairo_transform (cr, shell->rotate_transform);
-
-  cairo_rectangle (cr,
-                   image_rect.x,
-                   image_rect.y,
-                   image_rect.width,
-                   image_rect.height);
-
-  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
-  cairo_clip (cr);
-
-  if (gdk_cairo_get_clip_rectangle (cr, NULL))
-    gimp_display_shell_draw_background (shell, cr);
-
-  cairo_restore (cr);
+  gimp_display_shell_draw_background (shell, cr);
 
 
   /*  then, draw the exposed part of the region that is inside the

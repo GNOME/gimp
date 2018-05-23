@@ -156,9 +156,9 @@ gimp_canvas_style_updated (GtkWidget *widget)
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
-
   g_clear_object (&canvas->layout);
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 }
 
 static gboolean
@@ -265,7 +265,7 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 }
 
 /**
- * gimp_canvas_set_bg_color:
+ * gimp_canvas_set_padding:
  * @canvas:   a #GimpCanvas widget
  * @color:    a color in #GimpRGB format
  *
@@ -273,16 +273,15 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
  * is the color the canvas is set to if it is cleared.
  **/
 void
-gimp_canvas_set_bg_color (GimpCanvas *canvas,
-                          GimpRGB    *color)
+gimp_canvas_set_padding (GimpCanvas            *canvas,
+                         GimpCanvasPaddingMode  padding_mode,
+                         const GimpRGB         *padding_color)
 {
-  GtkWidget *widget = GTK_WIDGET (canvas);
+  g_return_if_fail (GIMP_IS_CANVAS (canvas));
+  g_return_if_fail (padding_color != NULL);
 
-  if (! gtk_widget_get_realized (widget))
-    return;
-
-  gdk_window_set_background_rgba (gtk_widget_get_window (widget),
-                                  (GdkRGBA *) color);
+  canvas->padding_mode  = padding_mode;
+  canvas->padding_color = *padding_color;
 
   gtk_widget_queue_draw (GTK_WIDGET (canvas));
 }

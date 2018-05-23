@@ -432,12 +432,6 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
   switch (padding_mode)
     {
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
-      if (shell->canvas)
-        {
-          GtkStyleContext *style = gtk_widget_get_style_context (shell->canvas);
-
-          gtk_style_context_get_background_color (style, 0, (GdkRGBA *) &color);
-        }
       break;
 
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
@@ -458,16 +452,21 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                 "padding-color", &color,
                 NULL);
 
-  gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
+  gimp_canvas_set_padding (GIMP_CANVAS (shell->canvas),
+                           padding_mode, &color);
 
-  gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
-                                       &options->padding_color);
+  if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+                                         &options->padding_color);
+  else
+    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+                                         NULL);
 }
 
 void
-gimp_display_shell_get_padding (GimpDisplayShell       *shell,
-                                GimpCanvasPaddingMode  *padding_mode,
-                                GimpRGB                *padding_color)
+gimp_display_shell_get_padding (GimpDisplayShell      *shell,
+                                GimpCanvasPaddingMode *padding_mode,
+                                GimpRGB               *padding_color)
 {
   GimpDisplayOptions *options;
 

@@ -84,17 +84,18 @@ void
 gimp_display_shell_draw_background (GimpDisplayShell *shell,
                                     cairo_t          *cr)
 {
-  GdkWindow       *window;
-  cairo_pattern_t *bg_pattern;
+  GimpCanvas *canvas;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  window     = gtk_widget_get_window (shell->canvas);
-  bg_pattern = gdk_window_get_background_pattern (window);
+  canvas = GIMP_CANVAS (shell->canvas);
 
-  cairo_set_source (cr, bg_pattern);
-  cairo_paint (cr);
+  if (canvas->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    {
+      gimp_cairo_set_source_rgb (cr, &canvas->padding_color);
+      cairo_paint (cr);
+    }
 }
 
 void

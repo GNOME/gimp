@@ -49,10 +49,13 @@ typedef struct _GimpCanvasClass GimpCanvasClass;
 
 struct _GimpCanvas
 {
-  GimpOverlayBox     parent_instance;
+  GimpOverlayBox         parent_instance;
 
-  GimpDisplayConfig *config;
-  PangoLayout       *layout;
+  GimpDisplayConfig     *config;
+  PangoLayout           *layout;
+
+  GimpCanvasPaddingMode  padding_mode;
+  GimpRGB                padding_color;
 };
 
 struct _GimpCanvasClass
@@ -63,14 +66,15 @@ struct _GimpCanvasClass
 
 GType         gimp_canvas_get_type     (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_canvas_new          (GimpDisplayConfig *config);
+GtkWidget   * gimp_canvas_new          (GimpDisplayConfig     *config);
 
-PangoLayout * gimp_canvas_get_layout   (GimpCanvas        *canvas,
-                                        const gchar       *format,
+PangoLayout * gimp_canvas_get_layout   (GimpCanvas            *canvas,
+                                        const gchar           *format,
                                         ...) G_GNUC_PRINTF (2, 3);
 
-void          gimp_canvas_set_bg_color (GimpCanvas        *canvas,
-                                        GimpRGB           *color);
+void          gimp_canvas_set_padding  (GimpCanvas            *canvas,
+                                        GimpCanvasPaddingMode  padding_mode,
+                                        const GimpRGB         *padding_color);
 
 
 #endif /*  __GIMP_CANVAS_H__  */
