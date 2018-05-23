@@ -206,10 +206,7 @@ gui_ungrab (Gimp *gimp)
   GdkDisplay *display = gdk_display_get_default ();
 
   if (display)
-    {
-      gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
-      gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
-    }
+    gdk_seat_ungrab (gdk_display_get_default_seat (display));
 }
 
 static void
