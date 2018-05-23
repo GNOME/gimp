@@ -84,10 +84,10 @@ gimp_menu_item_set_image (GtkMenuItem *item,
         return;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      g_object_set_data (G_OBJECT (hbox), "gimp-menu-item-hbox", hbox);
+      g_object_set_data (G_OBJECT (item), "gimp-menu-item-hbox", hbox);
 
       label = gtk_bin_get_child (GTK_BIN (item));
-      g_object_set_data (G_OBJECT (hbox), "gimp-menu-item-label", label);
+      g_object_set_data (G_OBJECT (item), "gimp-menu-item-label", label);
 
       g_object_ref (label);
       gtk_container_remove (GTK_CONTAINER (item), label);
