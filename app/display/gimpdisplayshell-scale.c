@@ -353,7 +353,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 {
   GimpDisplayConfig *config;
   gdouble            current_scale;
-  gdouble            delta;
+  gdouble            delta = 0.0;
   gboolean           resize_window;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -1206,9 +1206,14 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
         }
       else
         {
-          gtk_widget_get_pointer (shell->canvas,
-                                  &canvas_pointer_x,
-                                  &canvas_pointer_y);
+          GdkDisplay *display = gtk_widget_get_display (shell->canvas);
+          GdkSeat    *seat    = gdk_display_get_default_seat (display);
+
+          gdk_window_get_device_position (gtk_widget_get_window (shell->canvas),
+                                          gdk_seat_get_pointer (seat),
+                                          &canvas_pointer_x,
+                                          &canvas_pointer_y,
+                                          NULL);
         }
 
       if (canvas_pointer_x >= 0 &&
