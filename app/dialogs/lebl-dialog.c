@@ -177,13 +177,26 @@ inv_queue_draw (GtkWidget *window)
 static void
 inv_draw_explosion (int x, int y)
 {
+        GdkDrawingContext *context;
+        cairo_rectangle_int_t rect;
+        cairo_region_t *region;
         cairo_t *cr;
         int i;
 
         if ( ! gtk_widget_is_drawable (geginv_canvas))
                 return;
 
-        cr = gdk_cairo_create ( gtk_widget_get_window (geginv_canvas));
+        rect.x      = x - 100;
+        rect.y      = y - 100;
+        rect.width  = 200;
+        rect.height = 200;
+
+        region = cairo_region_create_rectangle (&rect);
+        context = gdk_window_begin_draw_frame (gtk_widget_get_window (geginv_canvas),
+                                               region);
+        cairo_region_destroy (region);
+
+        cr = gdk_drawing_context_get_cairo_context (context);
 
         cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
 
@@ -203,7 +216,8 @@ inv_draw_explosion (int x, int y)
                 g_usleep (50000);
         }
 
-        cairo_destroy (cr);
+        gdk_window_end_draw_frame (gtk_widget_get_window (geginv_canvas),
+                                   context);
 
 	inv_queue_draw (geginv);
 }
