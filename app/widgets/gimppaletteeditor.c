@@ -540,6 +540,9 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
                        (gdouble) rows - SPACING) / ENTRY_HEIGHT;
       }
       break;
+
+    case GIMP_ZOOM_SMOOTH: /* can't happen */
+      g_return_if_reached ();
     }
 
   zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
