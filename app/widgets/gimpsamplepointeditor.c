@@ -520,21 +520,20 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
        i < n_points;
        i++, list = g_list_next (list))
     {
-      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (editor->color_frames[i]),
+      GimpColorFrame  *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+
+      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_frame),
                                               "dirty")))
         {
           GimpSamplePoint *sample_point = list->data;
-          GimpColorFrame  *color_frame;
           const Babl      *format;
           guchar           pixel[32];
           GimpRGB          color;
           gint             x;
           gint             y;
 
-          g_object_set_data (G_OBJECT (editor->color_frames[i]),
-                             "dirty", GINT_TO_POINTER (TRUE));
-
-          color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+          g_object_set_data (G_OBJECT (color_frame),
+                             "dirty", GINT_TO_POINTER (FALSE));
 
           gimp_sample_point_get_position (sample_point, &x, &y);
 
