@@ -1233,22 +1233,36 @@ void
 gimp_highlight_widget (GtkWidget *widget,
                        gboolean   highlight)
 {
+  gboolean old_highlight;
+
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (highlight)
-    {
-      g_signal_connect_after (widget, "draw",
-                              G_CALLBACK (gimp_highlight_widget_draw),
-                              NULL);
-    }
-  else
-    {
-      g_signal_handlers_disconnect_by_func (widget,
-                                            gimp_highlight_widget_draw,
-                                            NULL);
-    }
+  highlight = highlight ? TRUE : FALSE;
 
-  gtk_widget_queue_draw (widget);
+  old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                      "gimp-widget-highlight"));
+
+  if (highlight != old_highlight)
+    {
+      if (highlight)
+        {
+          g_signal_connect_after (widget, "draw",
+                                  G_CALLBACK (gimp_highlight_widget_draw),
+                                  NULL);
+        }
+      else
+        {
+          g_signal_handlers_disconnect_by_func (widget,
+                                                gimp_highlight_widget_draw,
+                                                NULL);
+        }
+
+      g_object_set_data (G_OBJECT (widget),
+                         "gimp-widget-highlight",
+                         GINT_TO_POINTER (highlight));
+
+      gtk_widget_queue_draw (widget);
+    }
 }
 
 typedef struct
@@ -1311,6 +1325,8 @@ gimp_widget_blink (GtkWidget *widget)
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
+  gimp_widget_blink_cancel (widget);
+
   blink = widget_blink_new ();
 
   g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
@@ -1323,7 +1339,8 @@ gimp_widget_blink (GtkWidget *widget)
   gimp_highlight_widget (widget, TRUE);
 }
 
-void gimp_widget_blink_cancel (GtkWidget *widget)
+void
+gimp_widget_blink_cancel (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
