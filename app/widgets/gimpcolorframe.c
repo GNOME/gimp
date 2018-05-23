@@ -129,12 +129,6 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("number-color",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -346,15 +340,16 @@ gimp_color_frame_draw (GtkWidget *widget,
 
   if (frame->has_number)
     {
-      GtkAllocation  allocation;
-      GtkAllocation  menu_allocation;
-      GtkAllocation  color_area_allocation;
-      GtkAllocation  coords_box_x_allocation;
-      GtkAllocation  coords_box_y_allocation;
-      GdkRGBA       *color;
-      gchar          buf[8];
-      gint           w, h;
-      gdouble        scale;
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      GtkAllocation    allocation;
+      GtkAllocation    menu_allocation;
+      GtkAllocation    color_area_allocation;
+      GtkAllocation    coords_box_x_allocation;
+      GtkAllocation    coords_box_y_allocation;
+      GdkRGBA          color;
+      gchar            buf[8];
+      gint             w, h;
+      gdouble          scale;
 
       cairo_save (cr);
 
@@ -364,15 +359,10 @@ gimp_color_frame_draw (GtkWidget *widget,
       gtk_widget_get_allocation (frame->coords_box_x, &coords_box_x_allocation);
       gtk_widget_get_allocation (frame->coords_box_y, &coords_box_y_allocation);
 
-      gtk_widget_style_get (widget,
-                            "number-color", &color,
-                            NULL);
-
-      if (color)
-        {
-          gdk_cairo_set_source_rgba (cr, color);
-          gdk_rgba_free (color);
-        }
+      gtk_style_context_get_color (style,
+                                   gtk_style_context_get_state (style),
+                                   &color);
+      gdk_cairo_set_source_rgba (cr, &color);
 
       g_snprintf (buf, sizeof (buf), "%d", frame->number);
 
@@ -398,7 +388,11 @@ gimp_color_frame_draw (GtkWidget *widget,
                       color_area_allocation.height / 2.0 +
                       coords_box_x_allocation.height / 2.0 +
                       coords_box_y_allocation.height / 2.0) / scale - h / 2.0);
+
+      cairo_push_group (cr);
       pango_cairo_show_layout (cr, frame->number_layout);
+      cairo_pop_group_to_source (cr);
+      cairo_paint_with_alpha (cr, 0.2);
 
       cairo_restore (cr);
     }

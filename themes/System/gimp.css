@@ -88,10 +88,6 @@ GimpRuler {
     font-size: smaller;
 }
 
-GimpColorFrame {
-    -GimpColorFrame-number-color: lighter (@bg_color);
-}
-
 entry.italic {
     font-style: italic;
 }
