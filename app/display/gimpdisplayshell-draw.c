@@ -81,23 +81,6 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
 }
 
 void
-gimp_display_shell_draw_background (GimpDisplayShell *shell,
-                                    cairo_t          *cr)
-{
-  GdkWindow       *window;
-  cairo_pattern_t *bg_pattern;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-
-  window     = gtk_widget_get_window (shell->canvas);
-  bg_pattern = gdk_window_get_background_pattern (window);
-
-  cairo_set_source (cr, bg_pattern);
-  cairo_paint (cr);
-}
-
-void
 gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
