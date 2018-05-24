@@ -22,6 +22,12 @@
 #define __GIMP_GEGL_LOOPS_H__
 
 
+void   gimp_gegl_buffer_copy           (GeglBuffer               *src_buffer,
+                                        const GeglRectangle      *src_rect,
+                                        GeglAbyssPolicy           abyss_policy,
+                                        GeglBuffer               *dest_buffer,
+                                        const GeglRectangle      *dest_rect);
+
 /*  this is a pretty stupid port of concolve_region() that only works
  *  on a linear source buffer
  */
