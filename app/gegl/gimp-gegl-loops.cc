@@ -58,6 +58,41 @@ extern "C"
 
 
 void
+gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
+                       const GeglRectangle *src_rect,
+                       GeglAbyssPolicy      abyss_policy,
+                       GeglBuffer          *dest_buffer,
+                       const GeglRectangle *dest_rect)
+{
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  if (gegl_buffer_get_format (src_buffer) ==
+      gegl_buffer_get_format (dest_buffer))
+    {
+      gegl_buffer_copy (src_buffer, src_rect, abyss_policy,
+                        dest_buffer, dest_rect);
+    }
+  else
+    {
+      if (! src_rect)
+        src_rect = gegl_buffer_get_extent (src_buffer);
+
+      if (! dest_rect)
+        dest_rect = src_rect;
+
+      gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
+                                     [=] (const GeglRectangle *src_area)
+        {
+          SHIFTED_AREA (dest, src);
+
+          gegl_buffer_copy (src_buffer, src_area, abyss_policy,
+                            dest_buffer, dest_area);
+        });
+    }
+}
+
+void
 gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     const GeglRectangle *src_rect,
                     GeglBuffer          *dest_buffer,
