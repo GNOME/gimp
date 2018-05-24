@@ -33,6 +33,7 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 
 #include "core/gimp.h"
@@ -1285,9 +1286,10 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
   undo->saved_trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                         gegl_buffer_get_format (trimap));
 
-  gegl_buffer_copy (trimap,             GEGL_RECTANGLE (x1, y1, width, height),
-                    GEGL_ABYSS_NONE,
-                    undo->saved_trimap, GEGL_RECTANGLE (0, 0, width, height));
+  gimp_gegl_buffer_copy (
+    trimap,             GEGL_RECTANGLE (x1, y1, width, height),
+    GEGL_ABYSS_NONE,
+    undo->saved_trimap, GEGL_RECTANGLE (0, 0, width, height));
 
   undo->trimap_x = x1;
   undo->trimap_y = y1;
@@ -1310,19 +1312,19 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  gegl_buffer_copy (trimap,
-                    GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
-                                    width, height),
-                    GEGL_ABYSS_NONE,
-                    undo->saved_trimap,
-                    GEGL_RECTANGLE (0, 0, width, height));
+  gimp_gegl_buffer_copy (trimap,
+                         GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
+                                         width, height),
+                         GEGL_ABYSS_NONE,
+                         undo->saved_trimap,
+                         GEGL_RECTANGLE (0, 0, width, height));
 
-  gegl_buffer_copy (buffer,
-                    GEGL_RECTANGLE (0, 0, width, height),
-                    GEGL_ABYSS_NONE,
-                    trimap,
-                    GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
-                                    width, height));
+  gimp_gegl_buffer_copy (buffer,
+                         GEGL_RECTANGLE (0, 0, width, height),
+                         GEGL_ABYSS_NONE,
+                         trimap,
+                         GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
+                                         width, height));
 
   g_object_unref (buffer);
 }

@@ -34,6 +34,7 @@
 #include "text-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -772,8 +773,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
     }
   else
     {
-      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
-                        gimp_drawable_get_buffer (drawable), NULL);
+      gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                             gimp_drawable_get_buffer (drawable), NULL);
     }
 
   g_object_unref (buffer);

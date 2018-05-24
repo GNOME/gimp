@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimperror.h"
 #include "gimpimage.h"
@@ -231,7 +232,7 @@ gimp_layer_mask_new_from_buffer (GeglBuffer    *buffer,
                                     name, color);
 
   dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask));
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
+  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   return layer_mask;
 }

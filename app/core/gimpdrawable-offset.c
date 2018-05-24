@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -136,11 +137,11 @@ gimp_drawable_offset (GimpDrawable   *drawable,
   /*  Copy the center region  */
   if (width && height)
     {
-      gegl_buffer_copy (src_buffer,
-                        GEGL_RECTANGLE (src_x,  src_y,  width, height),
-                        GEGL_ABYSS_NONE,
-                        new_buffer,
-                        GEGL_RECTANGLE (dest_x,dest_y,  width, height));
+      gimp_gegl_buffer_copy (src_buffer,
+                             GEGL_RECTANGLE (src_x,  src_y,  width, height),
+                             GEGL_ABYSS_NONE,
+                             new_buffer,
+                             GEGL_RECTANGLE (dest_x,dest_y,  width, height));
     }
 
   if (wrap_around)
@@ -179,12 +180,13 @@ gimp_drawable_offset (GimpDrawable   *drawable,
       /*  intersecting region  */
       if (offset_x != 0 && offset_y != 0)
         {
-          gegl_buffer_copy (src_buffer,
-                            GEGL_RECTANGLE (src_x, src_y,
-                                            ABS (offset_x), ABS (offset_y)),
-                            GEGL_ABYSS_NONE,
-                            new_buffer,
-                            GEGL_RECTANGLE (dest_x, dest_y, 0, 0));
+          gimp_gegl_buffer_copy (
+            src_buffer,
+            GEGL_RECTANGLE (src_x, src_y,
+                            ABS (offset_x), ABS (offset_y)),
+            GEGL_ABYSS_NONE,
+            new_buffer,
+            GEGL_RECTANGLE (dest_x, dest_y, 0, 0));
         }
 
       /*  X offset  */
@@ -211,8 +213,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
               dest_rect.y = 0;
             }
 
-          gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE,
-                            new_buffer, &dest_rect);
+          gimp_gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE,
+                                 new_buffer, &dest_rect);
         }
 
       /*  X offset  */
@@ -239,8 +241,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
               dest_rect.y = dest_y;
             }
 
-          gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE,
-                            new_buffer, &dest_rect);
+          gimp_gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE,
+                                 new_buffer, &dest_rect);
         }
     }
 

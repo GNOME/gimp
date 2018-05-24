@@ -199,14 +199,15 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       convolve_buffer = gimp_temp_buf_create_buffer (temp_buf);
       gimp_temp_buf_unref (temp_buf);
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (paint_buffer_x,
-                                        paint_buffer_y,
-                                        gegl_buffer_get_width  (paint_buffer),
-                                        gegl_buffer_get_height (paint_buffer)),
-                        GEGL_ABYSS_NONE,
-                        convolve_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (
+        gimp_drawable_get_buffer (drawable),
+        GEGL_RECTANGLE (paint_buffer_x,
+                        paint_buffer_y,
+                        gegl_buffer_get_width  (paint_buffer),
+                        gegl_buffer_get_height (paint_buffer)),
+        GEGL_ABYSS_NONE,
+        convolve_buffer,
+        GEGL_RECTANGLE (0, 0, 0, 0));
 
       gimp_gegl_convolve (convolve_buffer,
                           GEGL_RECTANGLE (0, 0,

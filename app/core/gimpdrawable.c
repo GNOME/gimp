@@ -559,14 +559,15 @@ gimp_drawable_resize (GimpItem     *item,
   if (intersect && copy_width && copy_height)
     {
       /*  Copy the pixels in the intersection  */
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (copy_x - gimp_item_get_offset_x (item),
-                                        copy_y - gimp_item_get_offset_y (item),
-                                        copy_width,
-                                        copy_height), GEGL_ABYSS_NONE,
-                        new_buffer,
-                        GEGL_RECTANGLE (copy_x - new_offset_x,
-                                        copy_y - new_offset_y, 0, 0));
+      gimp_gegl_buffer_copy (
+        gimp_drawable_get_buffer (drawable),
+        GEGL_RECTANGLE (copy_x - gimp_item_get_offset_x (item),
+                        copy_y - gimp_item_get_offset_y (item),
+                        copy_width,
+                        copy_height), GEGL_ABYSS_NONE,
+        new_buffer,
+        GEGL_RECTANGLE (copy_x - new_offset_x,
+                        copy_y - new_offset_y, 0, 0));
     }
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
@@ -779,8 +780,9 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
-                    dest_buffer, NULL);
+  gimp_gegl_buffer_copy (
+    gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
+    dest_buffer, NULL);
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
@@ -870,10 +872,11 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 gimp_drawable_get_format (drawable));
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
-                        buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (
+        gimp_drawable_get_buffer (drawable),
+        GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
+        buffer,
+        GEGL_RECTANGLE (0, 0, 0, 0));
     }
   else
     {
@@ -899,14 +902,14 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
 
   tmp = gegl_buffer_dup (buffer);
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
-                    buffer,
-                    GEGL_RECTANGLE (0, 0, 0, 0));
-  gegl_buffer_copy (tmp,
-                    GEGL_RECTANGLE (0, 0, width, height), GEGL_ABYSS_NONE,
-                    gimp_drawable_get_buffer (drawable),
-                    GEGL_RECTANGLE (x, y, 0, 0));
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                         GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
+                         buffer,
+                         GEGL_RECTANGLE (0, 0, 0, 0));
+  gimp_gegl_buffer_copy (tmp,
+                         GEGL_RECTANGLE (0, 0, width, height), GEGL_ABYSS_NONE,
+                         gimp_drawable_get_buffer (drawable),
+                         GEGL_RECTANGLE (x, y, 0, 0));
 
   g_object_unref (tmp);
 
@@ -1691,7 +1694,7 @@ gimp_drawable_flush_paint (GimpDrawable *drawable)
           cairo_region_get_rectangle (drawable->private->paint_copy_region,
                                       i, (cairo_rectangle_int_t *) &rect);
 
-          gegl_buffer_copy (
+          gimp_gegl_buffer_copy (
             drawable->private->paint_buffer, &rect, GEGL_ABYSS_NONE,
             buffer, NULL);
         }

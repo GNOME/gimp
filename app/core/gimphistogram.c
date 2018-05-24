@@ -30,6 +30,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp-atomic.h"
 #include "gimp-parallel.h"
@@ -334,8 +335,8 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
                                           gegl_buffer_get_format (buffer));
   context->buffer_rect = *buffer_rect;
 
-  gegl_buffer_copy (buffer, buffer_rect, GEGL_ABYSS_NONE,
-                    context->buffer, NULL);
+  gimp_gegl_buffer_copy (buffer, buffer_rect, GEGL_ABYSS_NONE,
+                         context->buffer, NULL);
 
   if (mask)
     {
@@ -347,8 +348,8 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
       context->mask = gegl_buffer_new (&context->mask_rect,
                                        gegl_buffer_get_format (mask));
 
-      gegl_buffer_copy (mask, &context->mask_rect, GEGL_ABYSS_NONE,
-                        context->mask, NULL);
+      gimp_gegl_buffer_copy (mask, &context->mask_rect, GEGL_ABYSS_NONE,
+                             context->mask, NULL);
     }
 
   histogram->priv->calculate_async = gimp_parallel_run_async (

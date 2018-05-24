@@ -29,6 +29,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
@@ -189,9 +190,9 @@ gimp_image_convert_precision (GimpImage        *image,
                                                     gimp_image_get_height (image)),
                                     gimp_image_get_mask_format (image));
 
-          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                            GEGL_ABYSS_NONE,
-                            buffer, NULL);
+          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                                 GEGL_ABYSS_NONE,
+                                 buffer, NULL);
 
           gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
           g_object_unref (buffer);

@@ -27,6 +27,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -731,9 +732,9 @@ gimp_selection_extract (GimpSelection *selection,
                                  dest_format);
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
-  gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
-                    GEGL_ABYSS_NONE,
-                    dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
+  gimp_gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                         GEGL_ABYSS_NONE,
+                         dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
   if (non_empty)
     {

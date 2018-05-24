@@ -1720,7 +1720,8 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
     }
   else
     {
-      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
+                             dest_buffer, NULL);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
@@ -1947,9 +1948,9 @@ gimp_layer_create_mask (GimpLayer       *layer,
             gimp_image_get_component_format (image, GIMP_CHANNEL_ALPHA);
 
           gegl_buffer_set_format (dest_buffer, component_format);
-          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                            GEGL_ABYSS_NONE,
-                            dest_buffer, NULL);
+          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                                 GEGL_ABYSS_NONE,
+                                 dest_buffer, NULL);
           gegl_buffer_set_format (dest_buffer, NULL);
 
           if (add_mask_type == GIMP_ADD_MASK_ALPHA_TRANSFER)
@@ -2006,14 +2007,14 @@ gimp_layer_create_mask (GimpLayer       *layer,
             src  = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
             dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-            gegl_buffer_copy (src,
-                              GEGL_RECTANGLE (copy_x, copy_y,
-                                              copy_width, copy_height),
-                              GEGL_ABYSS_NONE,
-                              dest,
-                              GEGL_RECTANGLE (copy_x - offset_x,
-                                              copy_y - offset_y,
-                                              0, 0));
+            gimp_gegl_buffer_copy (src,
+                                   GEGL_RECTANGLE (copy_x, copy_y,
+                                                   copy_width, copy_height),
+                                   GEGL_ABYSS_NONE,
+                                   dest,
+                                   GEGL_RECTANGLE (copy_x - offset_x,
+                                                   copy_y - offset_y,
+                                                   0, 0));
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }
@@ -2038,9 +2039,9 @@ gimp_layer_create_mask (GimpLayer       *layer,
                                                gimp_item_get_height (item)),
                                copy_format);
 
-            gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                              GEGL_ABYSS_NONE,
-                              src_buffer, NULL);
+            gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                                   GEGL_ABYSS_NONE,
+                                   src_buffer, NULL);
           }
         else
           {
@@ -2062,8 +2063,8 @@ gimp_layer_create_mask (GimpLayer       *layer,
           }
         else
           {
-            gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
-                              dest_buffer, NULL);
+            gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
+                                   dest_buffer, NULL);
           }
 
         g_object_unref (src_buffer);
@@ -2359,8 +2360,9 @@ gimp_layer_add_alpha (GimpLayer *layer)
                                                 gimp_item_get_height (item)),
                                 gimp_drawable_get_format_with_alpha (drawable));
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
-                    new_buffer, NULL);
+  gimp_gegl_buffer_copy (
+    gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
+    new_buffer, NULL);
 
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),
                             gimp_item_is_attached (GIMP_ITEM (layer)),

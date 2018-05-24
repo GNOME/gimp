@@ -20,9 +20,13 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "gegl/gimp-gegl-loops.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -43,8 +47,6 @@
 #include "gimplayer-floating-selection.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
-
-#include "vectors/gimpvectors.h"
 
 
 static void          gimp_image_duplicate_resolution       (GimpImage *image,
@@ -399,8 +401,8 @@ gimp_image_duplicate_mask (GimpImage *image,
   mask     = GIMP_DRAWABLE (gimp_image_get_mask (image));
   new_mask = GIMP_DRAWABLE (gimp_image_get_mask (new_image));
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (mask), NULL, GEGL_ABYSS_NONE,
-                    gimp_drawable_get_buffer (new_mask), NULL);
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (mask), NULL, GEGL_ABYSS_NONE,
+                         gimp_drawable_get_buffer (new_mask), NULL);
 
   GIMP_CHANNEL (new_mask)->bounds_known   = FALSE;
   GIMP_CHANNEL (new_mask)->boundary_known = FALSE;
