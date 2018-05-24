@@ -541,11 +541,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 gimp_drawable_get_format (drawable));
 
-      gegl_buffer_copy (core->undo_buffer,
-                        GEGL_RECTANGLE (x, y, width, height),
-                        GEGL_ABYSS_NONE,
-                        buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (core->undo_buffer,
+                             GEGL_RECTANGLE (x, y, width, height),
+                             GEGL_ABYSS_NONE,
+                             buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
 
       gimp_drawable_push_undo (drawable, NULL,
                                buffer, x, y, width, height);
@@ -586,11 +586,11 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                                 gimp_item_get_height (GIMP_ITEM (drawable)),
                                 &x, &y, &width, &height))
     {
-      gegl_buffer_copy (core->undo_buffer,
-                        GEGL_RECTANGLE (x, y, width, height),
-                        GEGL_ABYSS_NONE,
-                        gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, width, height));
+      gimp_gegl_buffer_copy (core->undo_buffer,
+                             GEGL_RECTANGLE (x, y, width, height),
+                             GEGL_ABYSS_NONE,
+                             gimp_drawable_get_buffer (drawable),
+                             GEGL_RECTANGLE (x, y, width, height));
     }
 
   g_clear_object (&core->undo_buffer);

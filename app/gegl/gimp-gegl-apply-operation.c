@@ -33,8 +33,9 @@
 #include "core/gimpprogress.h"
 
 #include "gimp-gegl-apply-operation.h"
+#include "gimp-gegl-loops.h"
 #include "gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gimp-gegl-utils.h"
 
 
 void
@@ -211,8 +212,8 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
       for (i = 0; i < n_valid_rects; i++)
         {
-          gegl_buffer_copy (cache,       valid_rects + i, GEGL_ABYSS_NONE,
-                            dest_buffer, valid_rects + i);
+          gimp_gegl_buffer_copy (cache,       valid_rects + i, GEGL_ABYSS_NONE,
+                                 dest_buffer, valid_rects + i);
 
           cairo_region_subtract_rectangle (region,
                                            (cairo_rectangle_int_t *)

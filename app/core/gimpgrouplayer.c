@@ -31,6 +31,7 @@
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimpgrouplayer.h"
 #include "gimpgrouplayerundo.h"
@@ -2000,17 +2001,17 @@ gimp_group_layer_update_mask_size (GimpGroupLayer *group)
 
   if (intersect)
     {
-      gegl_buffer_copy (mask_buffer,
-                        GEGL_RECTANGLE (copy_bounds.x - mask_bounds.x,
-                                        copy_bounds.y - mask_bounds.y,
-                                        copy_bounds.width,
-                                        copy_bounds.height),
-                        GEGL_ABYSS_NONE,
-                        buffer,
-                        GEGL_RECTANGLE (copy_bounds.x - bounds.x,
-                                        copy_bounds.y - bounds.y,
-                                        copy_bounds.width,
-                                        copy_bounds.height));
+      gimp_gegl_buffer_copy (mask_buffer,
+                             GEGL_RECTANGLE (copy_bounds.x - mask_bounds.x,
+                                             copy_bounds.y - mask_bounds.y,
+                                             copy_bounds.width,
+                                             copy_bounds.height),
+                             GEGL_ABYSS_NONE,
+                             buffer,
+                             GEGL_RECTANGLE (copy_bounds.x - bounds.x,
+                                             copy_bounds.y - bounds.y,
+                                             copy_bounds.width,
+                                             copy_bounds.height));
     }
 
   gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),

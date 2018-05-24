@@ -27,6 +27,8 @@
 
 #include "paint-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
@@ -166,16 +168,16 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
   if (gimp_source_core_use_source (source_core, source_options))
     {
-      gegl_buffer_copy (src_buffer,
-                        GEGL_RECTANGLE (src_rect->x,
-                                        src_rect->y,
-                                        paint_area_width,
-                                        paint_area_height),
-                        GEGL_ABYSS_NONE,
-                        paint_buffer,
-                        GEGL_RECTANGLE (paint_area_offset_x,
-                                        paint_area_offset_y,
-                                        0, 0));
+      gimp_gegl_buffer_copy (src_buffer,
+                             GEGL_RECTANGLE (src_rect->x,
+                                             src_rect->y,
+                                             paint_area_width,
+                                             paint_area_height),
+                             GEGL_ABYSS_NONE,
+                             paint_buffer,
+                             GEGL_RECTANGLE (paint_area_offset_x,
+                                             paint_area_offset_y,
+                                             0, 0));
       if (op)
         {
           GeglNode    *graph, *source, *target;

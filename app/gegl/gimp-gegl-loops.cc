@@ -944,8 +944,8 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
     }
   else
     {
-      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
-                        dest_buffer, dest_rect);
+      gimp_gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                             dest_buffer, dest_rect);
 
       if (progress)
         gimp_progress_set_value (progress, 1.0);

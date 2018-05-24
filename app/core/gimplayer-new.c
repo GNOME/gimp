@@ -226,7 +226,8 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
 
   if (! gimp_image_get_is_color_managed (image))
     {
-      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
+                             dest_buffer, NULL);
       return;
     }
 

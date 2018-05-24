@@ -278,16 +278,17 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
         }
 
       /* copy the region under the original painthit. */
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (paint_buffer_x,
-                                        paint_buffer_y,
-                                        gegl_buffer_get_width  (paint_buffer),
-                                        gegl_buffer_get_height (paint_buffer)),
-                        GEGL_ABYSS_NONE,
-                        accum_buffer,
-                        GEGL_RECTANGLE (paint_buffer_x - x,
-                                        paint_buffer_y - y,
-                                        0, 0));
+      gimp_gegl_buffer_copy (
+        gimp_drawable_get_buffer (drawable),
+        GEGL_RECTANGLE (paint_buffer_x,
+                        paint_buffer_y,
+                        gegl_buffer_get_width  (paint_buffer),
+                        gegl_buffer_get_height (paint_buffer)),
+        GEGL_ABYSS_NONE,
+        accum_buffer,
+        GEGL_RECTANGLE (paint_buffer_x - x,
+                        paint_buffer_y - y,
+                        0, 0));
     }
 
   smudge->accum_buffers = g_list_reverse (smudge->accum_buffers);

@@ -22,6 +22,7 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-memsize.h"
@@ -110,11 +111,11 @@ gimp_mask_undo_constructed (GObject *object)
       mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                            gimp_drawable_get_format (drawable));
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, w, h),
-                        GEGL_ABYSS_NONE,
-                        mask_undo->buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                             GEGL_RECTANGLE (x, y, w, h),
+                             GEGL_ABYSS_NONE,
+                             mask_undo->buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
 
       mask_undo->x = x;
       mask_undo->y = y;
@@ -198,11 +199,11 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                     gimp_drawable_get_format (drawable));
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, w, h),
-                        GEGL_ABYSS_NONE,
-                        new_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                             GEGL_RECTANGLE (x, y, w, h),
+                             GEGL_ABYSS_NONE,
+                             new_buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
 
       gegl_buffer_clear (gimp_drawable_get_buffer (drawable),
                          GEGL_RECTANGLE (x, y, w, h));
@@ -233,11 +234,11 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       width  = gegl_buffer_get_width  (mask_undo->buffer);
       height = gegl_buffer_get_height (mask_undo->buffer);
 
-      gegl_buffer_copy (mask_undo->buffer,
-                        NULL,
-                        GEGL_ABYSS_NONE,
-                        gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (mask_undo->x, mask_undo->y, 0, 0));
+      gimp_gegl_buffer_copy (mask_undo->buffer,
+                             NULL,
+                             GEGL_ABYSS_NONE,
+                             gimp_drawable_get_buffer (drawable),
+                             GEGL_RECTANGLE (mask_undo->x, mask_undo->y, 0, 0));
 
       g_object_unref (mask_undo->buffer);
     }

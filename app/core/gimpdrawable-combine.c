@@ -115,13 +115,14 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
             gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                              gegl_buffer_get_format (buffer));
 
-          gegl_buffer_copy (buffer,
-                            GEGL_RECTANGLE (buffer_region->x + (x - base_x),
-                                            buffer_region->y + (y - base_y),
-                                            width, height),
-                            GEGL_ABYSS_NONE,
-                            undo->applied_buffer,
-                            GEGL_RECTANGLE (0, 0, width, height));
+          gimp_gegl_buffer_copy (
+            buffer,
+            GEGL_RECTANGLE (buffer_region->x + (x - base_x),
+                            buffer_region->y + (y - base_y),
+                            width, height),
+            GEGL_ABYSS_NONE,
+            undo->applied_buffer,
+            GEGL_RECTANGLE (0, 0, width, height));
         }
     }
 
@@ -233,12 +234,12 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
       dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                      gegl_buffer_get_format (src_buffer));
 
-      gegl_buffer_copy (src_buffer,
-                        GEGL_RECTANGLE (x + offset_x, y + offset_y,
-                                        width, height),
-                        GEGL_ABYSS_NONE,
-                        dest_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (src_buffer,
+                             GEGL_RECTANGLE (x + offset_x, y + offset_y,
+                                             width, height),
+                             GEGL_ABYSS_NONE,
+                             dest_buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
 
       gimp_gegl_combine_mask (mask_buffer, mask_buffer_region,
                               dest_buffer, GEGL_RECTANGLE (0, 0, width, height),

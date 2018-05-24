@@ -33,6 +33,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-nodes.h"
 
@@ -553,9 +554,9 @@ gimp_channel_duplicate (GimpItem *item,
 
               gegl_buffer_set_format (new_buffer,
                                       gimp_drawable_get_format (new_drawable));
-              gegl_buffer_copy (gimp_drawable_get_buffer (new_drawable), NULL,
-                                GEGL_ABYSS_NONE,
-                                new_buffer, NULL);
+              gimp_gegl_buffer_copy (gimp_drawable_get_buffer (new_drawable),
+                                     NULL, GEGL_ABYSS_NONE,
+                                     new_buffer, NULL);
               gegl_buffer_set_format (new_buffer, NULL);
 
               gimp_drawable_set_buffer (new_drawable, FALSE, NULL, new_buffer);
@@ -665,22 +666,22 @@ gimp_channel_translate (GimpItem *item,
         gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                          gimp_drawable_get_format (GIMP_DRAWABLE (channel)));
 
-      gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x - SIGNED_ROUND (off_x),
-                                        y - SIGNED_ROUND (off_y),
-                                        width, height),
-                        GEGL_ABYSS_NONE,
-                        tmp_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             GEGL_RECTANGLE (x - SIGNED_ROUND (off_x),
+                                             y - SIGNED_ROUND (off_y),
+                                             width, height),
+                             GEGL_ABYSS_NONE,
+                             tmp_buffer,
+                             GEGL_RECTANGLE (0, 0, 0, 0));
 
       /*  clear the mask  */
       gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                          NULL);
 
       /*  copy the temp mask back to the mask  */
-      gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
-                        gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                        GEGL_RECTANGLE (x, y, 0, 0));
+      gimp_gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
+                             gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
+                             GEGL_RECTANGLE (x, y, 0, 0));
 
       /*  free the temporary mask  */
       g_object_unref (tmp_buffer);
@@ -965,9 +966,9 @@ gimp_channel_convert_type (GimpDrawable     *drawable,
 
   if (mask_dither_type == GEGL_DITHER_NONE)
     {
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                        GEGL_ABYSS_NONE,
-                        dest_buffer, NULL);
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                             GEGL_ABYSS_NONE,
+                             dest_buffer, NULL);
     }
   else
     {
@@ -1600,7 +1601,7 @@ gimp_channel_new_from_buffer (GimpImage     *image,
                               name, color);
 
   dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
+  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   return channel;
 }
@@ -1632,9 +1633,9 @@ gimp_channel_new_from_alpha (GimpImage     *image,
   gegl_buffer_set_format (dest_buffer,
                           gimp_drawable_get_component_format (drawable,
                                                               GIMP_CHANNEL_ALPHA));
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                    GEGL_ABYSS_NONE,
-                    dest_buffer, NULL);
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                         GEGL_ABYSS_NONE,
+                         dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
   return channel;
@@ -1670,7 +1671,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   gegl_buffer_set_format (dest_buffer, format);
-  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+  gimp_gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
   return channel;
