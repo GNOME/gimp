@@ -793,6 +793,7 @@ if bug_report_url == ''
 
   bug_report_url = project_url_issues
 endif
+conf.set_quoted('PACKAGE_BUGREPORT', project_url_issues)
 conf.set_quoted('BUG_REPORT_URL', bug_report_url)
 
 # Default ICC directory #
