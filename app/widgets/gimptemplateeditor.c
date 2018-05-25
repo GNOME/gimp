@@ -373,7 +373,7 @@ gimp_template_editor_constructed (GObject *object)
                                  1.0, 1.0);
 
   focus_chain = g_list_prepend (focus_chain,
-                                GIMP_SIZE_ENTRY (private->resolution_se)->unitmenu);
+                                gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (private->resolution_se)));
   focus_chain = g_list_prepend (focus_chain, private->chain_button);
   focus_chain = g_list_prepend (focus_chain, yres);
   focus_chain = g_list_prepend (focus_chain, xres);

@@ -2869,7 +2869,9 @@ gimp_prop_size_entry_new (GObject                   *config,
                   param_spec);
 
   if (unit_param_spec)
-    set_param_spec (NULL, GIMP_SIZE_ENTRY (entry)->unitmenu, unit_param_spec);
+    set_param_spec (NULL,
+                    gimp_size_entry_get_unit_combo  (GIMP_SIZE_ENTRY (entry)),
+                    unit_param_spec);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (entry), unit_value);
 
@@ -3175,7 +3177,8 @@ gimp_prop_coordinates_connect (GObject     *config,
   gboolean    chain_checked;
 
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (entry), FALSE);
-  g_return_val_if_fail (GIMP_SIZE_ENTRY (entry)->number_of_fields == 2, FALSE);
+  g_return_val_if_fail (gimp_size_entry_get_n_fields (GIMP_SIZE_ENTRY (entry)) == 2,
+                        FALSE);
   g_return_val_if_fail (chainbutton == NULL ||
                         GIMP_IS_CHAIN_BUTTON (chainbutton), FALSE);
 
@@ -3219,11 +3222,12 @@ gimp_prop_coordinates_connect (GObject     *config,
 
   if (unit_param_spec)
     set_param_spec (NULL,
-                    GIMP_SIZE_ENTRY (entry)->unitmenu, unit_param_spec);
+                    gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (entry)),
+                    unit_param_spec);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (entry), unit_value);
 
-  switch (GIMP_SIZE_ENTRY (entry)->update_policy)
+  switch (gimp_size_entry_get_update_policy (GIMP_SIZE_ENTRY (entry)))
     {
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,

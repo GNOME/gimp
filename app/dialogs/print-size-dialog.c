@@ -277,7 +277,7 @@ print_size_dialog_new (GimpImage              *image,
 
   private->chain = GIMP_CHAIN_BUTTON (chain);
 
-  focus_chain = g_list_prepend (focus_chain, GIMP_SIZE_ENTRY (entry)->unitmenu);
+  focus_chain = g_list_prepend (focus_chain, gimp_size_entry_get_unit_combo (GIMP_SIZE_ENTRY (entry)));
   focus_chain = g_list_prepend (focus_chain, chain);
   focus_chain = g_list_prepend (focus_chain, height);
   focus_chain = g_list_prepend (focus_chain, width);

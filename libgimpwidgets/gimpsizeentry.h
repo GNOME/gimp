@@ -50,18 +50,6 @@ struct _GimpSizeEntry
   GtkGrid               parent_instance;
 
   GimpSizeEntryPrivate *priv;
-
-  /* FIXME MOVE TO PRIVATE */
-  GSList    *fields;
-  gint       number_of_fields;
-
-  GtkWidget *unitmenu;
-  GimpUnit   unit;
-  gboolean   menu_show_pixels;
-  gboolean   menu_show_percent;
-
-  gboolean                   show_refval;
-  GimpSizeEntryUpdatePolicy  update_policy;
 };
 
 struct _GimpSizeEntryClass
@@ -100,6 +88,11 @@ GtkWidget * gimp_size_entry_new (gint                       number_of_fields,
 void        gimp_size_entry_add_field  (GimpSizeEntry   *gse,
                                         GtkSpinButton   *value_spinbutton,
                                         GtkSpinButton   *refval_spinbutton);
+
+GimpSizeEntryUpdatePolicy
+            gimp_size_entry_get_update_policy     (GimpSizeEntry *gse);
+gint        gimp_size_entry_get_n_fields          (GimpSizeEntry *gse);
+GtkWidget * gimp_size_entry_get_unit_combo        (GimpSizeEntry *gse);
 
 GtkWidget * gimp_size_entry_attach_label          (GimpSizeEntry *gse,
                                                    const gchar   *text,

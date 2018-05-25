@@ -74,10 +74,10 @@ find_mnemonic_widget (GtkWidget *widget,
 
   if (GIMP_IS_SIZE_ENTRY (widget))
     {
-      GimpSizeEntry *entry = GIMP_SIZE_ENTRY (widget);
+      GimpSizeEntry *entry    = GIMP_SIZE_ENTRY (widget);
+      gint           n_fields = gimp_size_entry_get_n_fields (entry);
 
-      return gimp_size_entry_get_help_widget (entry,
-                                              entry->number_of_fields - 1);
+      return gimp_size_entry_get_help_widget (entry, n_fields - 1);
     }
   else if (GTK_IS_CONTAINER (widget))
     {
