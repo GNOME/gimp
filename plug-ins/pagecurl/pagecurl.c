@@ -47,7 +47,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "pagecurl-icons.c"
+#include "pagecurl-icons.h"
 
 
 #define PLUG_IN_PROC    "plug-in-pagecurl"
