@@ -1416,7 +1416,7 @@ subdir('pdb')
 subdir('app-tools')
 
 # Docs
-subdir('devel-docs')
+# subdir('devel-docs')
 subdir('docs')
 
 
