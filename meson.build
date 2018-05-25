@@ -1,7 +1,6 @@
 # Meson build file
 
-# http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
-project('gimp', ['c', 'cpp'], version: '2.10.1',
+project('gimp', ['c', 'cpp'], version: '2.10.2',
   meson_version: '>=0.44.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -10,6 +9,10 @@ project('gimp', ['c', 'cpp'], version: '2.10.1',
     'sharedstatedir=/var/lib',
   ],
 )
+
+project_url = 'https://gitlab.gnome.org/GNOME/gimp'
+project_url_issues = project_url + '/issues/new'
+# http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP
 
 conf = configuration_data()
 
@@ -238,7 +241,7 @@ math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.2.0')
 
-babl              = dependency('babl',               version: '>=0.1.46')
+babl              = dependency('babl',               version: '>=0.1.50')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -252,7 +255,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.1')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.2')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -261,6 +264,15 @@ gio_specific_name = platform_win32 ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
 glib              = dependency('glib-2.0',           version: '>=2.54.2')
+# glib 2.56.0 and 2.56.1 have a bad bug on Win32, breaking the file
+# chooser dialogs. This has been fixed, but no release made yet. When
+# 2.56.2 is released, the additional test for these broken versions can
+# be removed and we can bump the requirement to glib 2.56.2.
+if platform_win32 and (glib.version().version_compare('==2.56.0')
+                    or glib.version().version_compare('==2.56.1'))
+  error('GLib2 2.56.0 and 2.56.1 are broken on Windows (bug 795855).')
+endif
+
 gobject           = dependency('gobject-2.0',        version: '>=2.54.2')
 gmodule           = dependency('gmodule-no-export-2.0')
 
@@ -524,6 +536,15 @@ else
   webp = dependency('', required: false)
 endif
 
+if get_option('with-heif')
+  libheif = dependency('libheif',   version: '>=1.1.0')
+  MIMEtypes += [
+    'image/heif',
+    'image/heic',
+  ]
+else
+  libheif = dependency('', required: false)
+endif
 
 if get_option('with-webkit')
   webkit = dependency('webkit-1.0', version: '>=1.6.1')
@@ -708,10 +729,6 @@ if have_python
 endif
 
 
-# Script-fu
-have_scriptfu = get_option('with-script-fu')
-
-
 # Check for GTK Mac Integration
 if platform_osx and (gtk2.get_pkgconfig_variable('target') == 'xquartz')
   gtk2_macos = dependency('gtk-mac-integration-gtk2', version: '>=2.0.0',
@@ -761,6 +778,43 @@ else
   xvfb_run = dependency('', required: false)
 endif
 conf.set('HAVE_XVFB_RUN', xvfb_run.found())
+
+# Set bug report URL
+
+# Allowing third-party packagers to set their own bugtracker URL, in
+# order to filter first packaging bugs from core bugs.
+bug_report_url = get_option('bug-report-url')
+
+if bug_report_url == ''
+  message('''
+    NOTE: if you plan on packaging GIMP for distribution, it is recommended
+    to override the bug report URL with option:
+      --with-bug-report-url=https://example.com/
+    so that you can filter packaging bugs from core bugs before reporting upstream.
+  ''')
+
+  bug_report_url = project_url_issues
+endif
+conf.set_quoted('BUG_REPORT_URL', bug_report_url)
+
+icc_directory
+
+# Default ICC directory #
+
+# This is necessary because some Unix systems may have a different
+# standard path for color profiles. And in particular, sandbox builds
+# might mount the host system at a different root. This is for
+# instance the case of flatpak which mount the host root at /run/host/.
+
+# if not (platform_osx or platform_win32)
+
+icc_directory = get_option('icc-directory')
+if icc_directory == ''
+  icc_directory = '/usr/share/color/icc'
+endif
+conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
+
+# endif
 
 
 if get_option('with-gtk-doc')
@@ -1489,6 +1543,8 @@ Optional Features:
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
   Bundled MyPaint Brushes: @0@ (at @1@)'''.format('enable_bundled_mypaint_brushes', libmypaint_brushes_dir)+'''
+  Default ICC directory:   @0@'''.format(icc_directory)+'''
+
 Optional Plug-Ins:
   Ascii Art:           @0@'''.format(libaa.found()) +'''
   Ghostscript:         @0@'''.format(ghostscript.found()) +'''
@@ -1497,10 +1553,10 @@ Optional Plug-Ins:
   MNG:                 @0@'''.format(libmng.found()) +'''
   OpenEXR:             @0@'''.format(openexr.found()) +'''
   WebP:                @0@'''.format(webp.found()) +'''
+  Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
   Python 2:            @0@'''.format(have_python) +'''
-  Script-Fu:           @0@'''.format(have_scriptfu) +'''
   TWAIN (Win32):       @0@'''.format(platform_win32) +'''
   Webpage:             @0@'''.format(webkit.found()) +'''
   WMF:                 @0@'''.format(wmf.found()) +'''
@@ -1517,5 +1573,7 @@ Optional Modules:
 Tests:
   Use xvfb-run         @0@'''.format(xvfb_run.found()) +'''
   Test appdata         @0@'''.format(appstream_util.found()) +'''
+
+Bug report URL: @0@'''.format(bug_report_url) +'''
 '''
 )
