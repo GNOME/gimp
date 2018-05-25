@@ -74,7 +74,7 @@ typedef struct
   gdouble                      dist;
   gdouble                      vec[2];
   GimpRepeatMode               repeat;
-  GeglBuffer                  *dist_buffer;
+  GeglSampler                 *dist_sampler;
 } RenderBlendData;
 
 
@@ -140,13 +140,13 @@ static gdouble         gradient_calc_spiral_factor               (gdouble       
                                                                   gdouble                y,
                                                                   gboolean               clockwise);
 
-static gdouble         gradient_calc_shapeburst_angular_factor   (GeglBuffer            *dist_buffer,
+static gdouble         gradient_calc_shapeburst_angular_factor   (GeglSampler           *dist_sampler,
                                                                   gdouble                x,
                                                                   gdouble                y);
-static gdouble         gradient_calc_shapeburst_spherical_factor (GeglBuffer            *dist_buffer,
+static gdouble         gradient_calc_shapeburst_spherical_factor (GeglSampler           *dist_sampler,
                                                                   gdouble                x,
                                                                   gdouble                y);
-static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglBuffer            *dist_buffer,
+static gdouble         gradient_calc_shapeburst_dimpled_factor   (GeglSampler           *dist_sampler,
                                                                   gdouble                x,
                                                                   gdouble                y);
 
@@ -794,15 +794,13 @@ gradient_calc_spiral_factor (gdouble   dist,
 }
 
 static gdouble
-gradient_calc_shapeburst_angular_factor (GeglBuffer *dist_buffer,
-                                         gdouble     x,
-                                         gdouble     y)
+gradient_calc_shapeburst_angular_factor (GeglSampler *dist_sampler,
+                                         gdouble      x,
+                                         gdouble      y)
 {
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
-                   NULL, &value,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
 
   value = 1.0 - value;
 
@@ -811,15 +809,13 @@ gradient_calc_shapeburst_angular_factor (GeglBuffer *dist_buffer,
 
 
 static gdouble
-gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
-                                           gdouble     x,
-                                           gdouble     y)
+gradient_calc_shapeburst_spherical_factor (GeglSampler *dist_sampler,
+                                           gdouble      x,
+                                           gdouble      y)
 {
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
-                   NULL, &value,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
 
   value = 1.0 - sin (0.5 * G_PI * value);
 
@@ -828,15 +824,13 @@ gradient_calc_shapeburst_spherical_factor (GeglBuffer *dist_buffer,
 
 
 static gdouble
-gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
-                                         gdouble     x,
-                                         gdouble     y)
+gradient_calc_shapeburst_dimpled_factor (GeglSampler *dist_sampler,
+                                         gdouble      x,
+                                         gdouble      y)
 {
   gfloat value;
 
-  gegl_buffer_get (dist_buffer, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
-                   NULL, &value,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gegl_sampler_get (dist_sampler, x, y, NULL, &value, GEGL_ABYSS_NONE);
 
   value = cos (0.5 * G_PI * value);
 
@@ -896,15 +890,18 @@ gradient_render_pixel (gdouble   x,
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
-      factor = gradient_calc_shapeburst_angular_factor (rbd->dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_angular_factor (rbd->dist_sampler,
+                                                        x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
-      factor = gradient_calc_shapeburst_spherical_factor (rbd->dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_spherical_factor (rbd->dist_sampler,
+                                                          x, y);
       break;
 
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
-      factor = gradient_calc_shapeburst_dimpled_factor (rbd->dist_buffer, x, y);
+      factor = gradient_calc_shapeburst_dimpled_factor (rbd->dist_sampler,
+                                                        x, y);
       break;
 
     case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
@@ -1081,7 +1078,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      rbd.dist_buffer = input;
+      rbd.dist_sampler = gegl_buffer_sampler_new_at_level (
+        input, babl_format ("Y float"), GEGL_SAMPLER_NEAREST, level);
       break;
 
     default:
@@ -1195,6 +1193,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
       if (self->dither)
         g_rand_free (seed);
     }
+
+  g_clear_object (&rbd.dist_sampler);
 
   return TRUE;
 }
