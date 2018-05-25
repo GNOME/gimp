@@ -7,6 +7,24 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
+===================================================
+
+Core:
+
+  - Remove gimp_display_shell_draw_background() and all clipping hacks
+    for drawing the canvas background. This optimizes away one entire
+    step of drawing of image size, for each expose.
+
+Build:
+
+  - Installer: set compatibility options to run Python plugins
+    in HiDPI-aware mode.
+  - Put back compatibility DLLs for really old plugins.
+  
+Translations:
+
+  - Updated translations: Czech, Finnish, Italian, Romanian, Spanish.
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
