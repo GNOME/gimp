@@ -122,7 +122,7 @@ gimp_drawable_gradient (GimpDrawable                *drawable,
                                 "dither",                     dither,
                                 NULL);
 
-  gimp_gegl_apply_operation (shapeburst, progress, NULL,
+  gimp_gegl_apply_operation (shapeburst, progress, C_("undo-type", "Gradient"),
                              render,
                              buffer, GEGL_RECTANGLE (x, y, width, height),
                              FALSE);
