@@ -1,10 +1,10 @@
 /*
  * Written 1997 Jens Ch. Restemeier <jrestemeier@currantbun.com>
  * This program is based on an algorithm / article by
- * Jörn Loviscach.
+ * JÃ¶rn Loviscach.
  *
  * It appeared in c't 10/95, page 326 and is called
- * "Ausgewürfelt - Moderne Kunst algorithmisch erzeugen"
+ * "AusgewÃ¼rfelt - Moderne Kunst algorithmisch erzeugen"
  * (~modern art created with algorithms).
  *
  * It generates one main formula (the middle button) and 8 variations of it.
