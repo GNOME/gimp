@@ -59,7 +59,6 @@ app_tests = [
   'core',
   'gimpidtable',
   'save-and-export',
-  'session-2-6-compatibility',
   'session-2-8-compatibility-multi-window',
   'session-2-8-compatibility-single-window',
   'single-window-mode',
