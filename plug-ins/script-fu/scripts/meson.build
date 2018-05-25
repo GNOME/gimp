@@ -55,11 +55,13 @@ scripts = [
   'xach-effect.scm',
 ]
 
-test_scripts = [
-  'contactsheet.scm',
-  'test-sphere.scm',
-  'ts-helloworld.scm',
-]
+if not stable
+  scripts += [
+    'contactsheet.scm',
+    'test-sphere.scm',
+    'ts-helloworld.scm',
+  ]
+endif
 
 install_data(
   scripts,

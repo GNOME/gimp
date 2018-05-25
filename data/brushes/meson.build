@@ -1,7 +1,6 @@
 brushes_types = [
   'Basic',
   'Fun',
-  'gimp-obsolete-files',
   'Legacy',
   'Media',
   'Sketch',
