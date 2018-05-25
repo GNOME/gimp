@@ -120,7 +120,7 @@ BEGIN
             VALUE "FileDescription", "snappy\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "snappy\0"
-            VALUE "LegalCopyright", "Copyright © 1999\0"
+            VALUE "LegalCopyright", "Copyright Â© 1999\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "snappy.exe\0"
             VALUE "PrivateBuild", "\0"
