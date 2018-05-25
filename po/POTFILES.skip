@@ -3,6 +3,7 @@ build/windows/installer/lang/setup.isl.in
 data/tags/gimp-tags-default.xml.in
 data/tips/gimp-tips.xml.in
 desktop/org.gimp.GIMP.appdata.xml.in
+desktop/gimp-data-extras.metainfo.xml.in
 desktop/gimp.desktop.in
 libgimp
 libgimpbase
