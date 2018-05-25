@@ -3,7 +3,7 @@ bugzilla-milestones.txt
 
 This document describes how the GIMP project uses milestones in the
 Bugzilla bugtracker found at:
-https://bugzilla.gnome.org/browse.cgi?product=GIMP.
+https://gitlab.gnome.org/GNOME/gimp
 
 
 Stable milestone

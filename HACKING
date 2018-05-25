@@ -99,9 +99,10 @@ The best way to submit patches is to provide files created with
 git-format-patch.
 
 It is recommended that you file a bug report at
-http://bugzilla.gnome.org/ and attach your patch to it as a plain text
-file, not compressed. If your patch is reasonably small you can submit
-it to the gimp-developer-list@gnome.org mailing list.
+https://gitlab.gnome.org/GNOME/gimp
+and either create a merge request or attach your patch to it as a plain
+text file, not compressed. If your patch is reasonably small you can
+submit it to the gimp-developer-list@gnome.org mailing list.
 
 If the patch needs to be discussed, you should also consider using the
 mailing list instead of Bugzilla because bug reports tend to be hard

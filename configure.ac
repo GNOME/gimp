@@ -88,7 +88,7 @@ m4_define([libheif_required_version], [1.1.0])
 m4_define([xgettext_recommended_version], [0.19])
 
 AC_INIT([GIMP], [gimp_version],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
+        [https://gitlab.gnome.org/GNOME/gimp/issues/new],
         [gimp])
 
 AC_CONFIG_HEADERS([config.h])
@@ -2312,8 +2312,10 @@ if test "x$with_bug_report_url" = "x"; then
   with_bug_report_url="$PACKAGE_BUGREPORT"
 fi
 
+BUG_REPORT_URL="$with_bug_report_url"
 AC_DEFINE_UNQUOTED(BUG_REPORT_URL, "$with_bug_report_url",
                    [The URL to open in order to report bugs])
+AC_SUBST(BUG_REPORT_URL)
 
 override_bug_report_url=
 if test "x$with_bug_report_url" = "x$PACKAGE_BUGREPORT"; then
@@ -2769,6 +2771,7 @@ data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
 desktop/Makefile
+desktop/gimp-data-extras.metainfo.xml.in
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
 etc/Makefile
