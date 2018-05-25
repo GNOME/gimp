@@ -2,7 +2,6 @@ EXPORTS
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_parasite
-	gimp_brightness_contrast
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
 	gimp_brush_duplicate
@@ -54,8 +53,6 @@ EXPORTS
 	gimp_check_type
 	gimp_clone
 	gimp_clone_default
-	gimp_color_balance
-	gimp_colorize
 	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
@@ -172,13 +169,9 @@ EXPORTS
 	gimp_convert_dither_type_get_type
 	gimp_convolve
 	gimp_convolve_default
-	gimp_curves_explicit
-	gimp_curves_spline
 	gimp_debug_timer_end
 	gimp_debug_timer_start
 	gimp_default_display
-	gimp_desaturate
-	gimp_desaturate_full
 	gimp_destroy_paramdefs
 	gimp_destroy_params
 	gimp_detach_parasite
@@ -258,7 +251,6 @@ EXPORTS
 	gimp_edit_paste_as_new_image
 	gimp_enums_get_type_names
 	gimp_enums_init
-	gimp_equalize
 	gimp_eraser
 	gimp_eraser_default
 	gimp_export_exif
@@ -272,7 +264,6 @@ EXPORTS
 	gimp_file_load_layers
 	gimp_file_save
 	gimp_file_save_thumbnail
-	gimp_flip
 	gimp_floating_sel_anchor
 	gimp_floating_sel_attach
 	gimp_floating_sel_remove
@@ -293,7 +284,6 @@ EXPORTS
 	gimp_get_monitor_resolution
 	gimp_get_parasite
 	gimp_get_parasite_list
-	gimp_get_path_by_tattoo
 	gimp_get_pdb_error
 	gimp_get_pdb_status
 	gimp_get_progname
@@ -342,9 +332,7 @@ EXPORTS
 	gimp_heal
 	gimp_heal_default
 	gimp_help
-	gimp_histogram
 	gimp_histogram_channel_get_type
-	gimp_hue_saturation
 	gimp_image_add_hguide
 	gimp_image_add_sample_point
 	gimp_image_add_vguide
@@ -378,7 +366,6 @@ EXPORTS
 	gimp_image_get_active_vectors
 	gimp_image_get_channel_by_name
 	gimp_image_get_channel_by_tattoo
-	gimp_image_get_channel_position
 	gimp_image_get_channels
 	gimp_image_get_color_profile
 	gimp_image_get_colormap
@@ -412,7 +399,6 @@ EXPORTS
 	gimp_image_get_vectors
 	gimp_image_get_vectors_by_name
 	gimp_image_get_vectors_by_tattoo
-	gimp_image_get_vectors_position
 	gimp_image_get_xcf_uri
 	gimp_image_grid_get_background_color
 	gimp_image_grid_get_foreground_color
@@ -483,7 +469,6 @@ EXPORTS
 	gimp_image_width
 	gimp_install_procedure
 	gimp_install_temp_proc
-	gimp_invert
 	gimp_item_attach_parasite
 	gimp_item_delete
 	gimp_item_detach_parasite
@@ -567,9 +552,6 @@ EXPORTS
 	gimp_layer_set_offsets
 	gimp_layer_set_opacity
 	gimp_layer_set_show_mask
-	gimp_levels
-	gimp_levels_auto
-	gimp_levels_stretch
 	gimp_main
 	gimp_message
 	gimp_message_get_handler
@@ -609,19 +591,16 @@ EXPORTS
 	gimp_patterns_refresh
 	gimp_patterns_set_popup
 	gimp_pencil
-	gimp_perspective
 	gimp_pixel_fetcher_destroy
 	gimp_pixel_fetcher_get_pixel
 	gimp_pixel_fetcher_new
 	gimp_pixel_fetcher_put_pixel
-	gimp_pixel_fetcher_set_bg_color
 	gimp_pixel_fetcher_set_edge_mode
 	gimp_pixel_rgn_get_col
 	gimp_pixel_rgn_get_pixel
 	gimp_pixel_rgn_get_rect
 	gimp_pixel_rgn_get_row
 	gimp_pixel_rgn_init
-	gimp_pixel_rgn_resize
 	gimp_pixel_rgn_set_col
 	gimp_pixel_rgn_set_pixel
 	gimp_pixel_rgn_set_rect
@@ -638,7 +617,6 @@ EXPORTS
 	gimp_plugin_menu_register
 	gimp_plugin_precision_enabled
 	gimp_plugin_set_pdb_error_handler
-	gimp_posterize
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
@@ -654,7 +632,6 @@ EXPORTS
 	gimp_progress_get_window_handle
 	gimp_progress_init
 	gimp_progress_init_printf
-	gimp_progress_install
 	gimp_progress_install_vtable
 	gimp_progress_pulse
 	gimp_progress_set_text
@@ -675,12 +652,8 @@ EXPORTS
 	gimp_rgn_iterator_dest
 	gimp_rgn_iterator_free
 	gimp_rgn_iterator_new
-	gimp_rgn_iterator_src
-	gimp_rgn_iterator_src_dest
-	gimp_rotate
 	gimp_run_procedure
 	gimp_run_procedure2
-	gimp_scale
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
@@ -696,7 +669,6 @@ EXPORTS
 	gimp_selection_shrink
 	gimp_selection_translate
 	gimp_selection_value
-	gimp_shear
 	gimp_shm_ID
 	gimp_shm_addr
 	gimp_show_help_button
@@ -735,16 +707,12 @@ EXPORTS
 	gimp_text_layer_set_letter_spacing
 	gimp_text_layer_set_line_spacing
 	gimp_text_layer_set_text
-	gimp_threshold
 	gimp_tile_cache_ntiles
-	gimp_tile_cache_size
 	gimp_tile_flush
 	gimp_tile_height
 	gimp_tile_ref
-	gimp_tile_ref_zero
 	gimp_tile_unref
 	gimp_tile_width
-	gimp_transform_2d
 	gimp_uninstall_temp_proc
 	gimp_user_time
 	gimp_vectors_bezier_stroke_conicto

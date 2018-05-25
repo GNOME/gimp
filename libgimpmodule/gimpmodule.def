@@ -1,10 +1,13 @@
 EXPORTS
 	gimp_module_db_get_load_inhibit
+	gimp_module_db_get_modules
 	gimp_module_db_get_type
+	gimp_module_db_get_verbose
 	gimp_module_db_load
 	gimp_module_db_new
 	gimp_module_db_refresh
 	gimp_module_db_set_load_inhibit
+	gimp_module_db_set_verbose
 	gimp_module_error_quark
 	gimp_module_get_type
 	gimp_module_info_copy

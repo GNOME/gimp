@@ -7,6 +7,7 @@ EXPORTS
 	gimp_color_config_get_display_profile_from_gdk
 	gimp_color_config_get_gray_color_profile
 	gimp_color_config_get_mode
+	gimp_color_config_get_out_of_gamut_color
 	gimp_color_config_get_rgb_color_profile
 	gimp_color_config_get_simulation_bpc
 	gimp_color_config_get_simulation_color_profile

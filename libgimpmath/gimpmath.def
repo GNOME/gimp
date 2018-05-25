@@ -19,7 +19,6 @@ EXPORTS
 	gimp_matrix3_xshear
 	gimp_matrix3_yshear
 	gimp_matrix4_to_deg
-	gimp_md5_get_digest
 	gimp_param_matrix2_get_type
 	gimp_param_matrix3_get_type
 	gimp_param_spec_matrix2
