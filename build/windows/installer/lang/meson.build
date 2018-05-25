@@ -36,6 +36,7 @@ languages = [
   [ 'sv',   '[sv]',     'WINDOWS-1252', ],
   [ 'tr',   '[tr]',     'WINDOWS-1254', ],
   [ 'zh_CN','[zh_CN]',  'WINDOWS-936',  ],
+  [ 'zh_TW','[zh_TW]',  'CP950',        ],
 ]
 
 extractlang = find_program('extractlang.sh')

@@ -109,4 +109,12 @@ if appstream_util.found()
     ],
     suite: 'desktop',
   )
+
+  test('desktop_file',
+    find_program('test-desktop.sh'),
+    env: [
+      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
+    ],
+    suite: 'desktop',
+  )
 endif
