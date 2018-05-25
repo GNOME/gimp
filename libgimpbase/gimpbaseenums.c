@@ -1959,48 +1959,6 @@ gimp_transform_resize_get_type (void)
 }
 
 GType
-gimp_user_directory_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_USER_DIRECTORY_DESKTOP, "GIMP_USER_DIRECTORY_DESKTOP", "desktop" },
-    { GIMP_USER_DIRECTORY_DOCUMENTS, "GIMP_USER_DIRECTORY_DOCUMENTS", "documents" },
-    { GIMP_USER_DIRECTORY_DOWNLOAD, "GIMP_USER_DIRECTORY_DOWNLOAD", "download" },
-    { GIMP_USER_DIRECTORY_MUSIC, "GIMP_USER_DIRECTORY_MUSIC", "music" },
-    { GIMP_USER_DIRECTORY_PICTURES, "GIMP_USER_DIRECTORY_PICTURES", "pictures" },
-    { GIMP_USER_DIRECTORY_PUBLIC_SHARE, "GIMP_USER_DIRECTORY_PUBLIC_SHARE", "public-share" },
-    { GIMP_USER_DIRECTORY_TEMPLATES, "GIMP_USER_DIRECTORY_TEMPLATES", "templates" },
-    { GIMP_USER_DIRECTORY_VIDEOS, "GIMP_USER_DIRECTORY_VIDEOS", "videos" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_USER_DIRECTORY_DESKTOP, "GIMP_USER_DIRECTORY_DESKTOP", NULL },
-    { GIMP_USER_DIRECTORY_DOCUMENTS, "GIMP_USER_DIRECTORY_DOCUMENTS", NULL },
-    { GIMP_USER_DIRECTORY_DOWNLOAD, "GIMP_USER_DIRECTORY_DOWNLOAD", NULL },
-    { GIMP_USER_DIRECTORY_MUSIC, "GIMP_USER_DIRECTORY_MUSIC", NULL },
-    { GIMP_USER_DIRECTORY_PICTURES, "GIMP_USER_DIRECTORY_PICTURES", NULL },
-    { GIMP_USER_DIRECTORY_PUBLIC_SHARE, "GIMP_USER_DIRECTORY_PUBLIC_SHARE", NULL },
-    { GIMP_USER_DIRECTORY_TEMPLATES, "GIMP_USER_DIRECTORY_TEMPLATES", NULL },
-    { GIMP_USER_DIRECTORY_VIDEOS, "GIMP_USER_DIRECTORY_VIDEOS", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpUserDirectory", values);
-      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
-      gimp_type_set_translation_context (type, "user-directory");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_vectors_stroke_type_get_type (void)
 {
   static const GEnumValue values[] =

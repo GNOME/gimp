@@ -43,6 +43,8 @@ struct _GimpHistogramView
 
   gint                   border_width;
   gint                   subdivisions;
+
+  GdkSeat               *grab_seat;
 };
 
 struct _GimpHistogramViewClass

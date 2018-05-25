@@ -274,18 +274,9 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
 
           child = g_file_enumerator_get_child (enumerator, info);
 
-          if (gimp_file_is_executable (child))
-            {
-              guint64 mtime;
-
-              mtime = g_file_info_get_attribute_uint64 (info,
-                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
-              gimp_plug_in_manager_add_from_file (manager, child, mtime);
-            }
-          else if (g_file_query_file_type (child,
-                                           G_FILE_QUERY_INFO_NONE,
-                                           NULL) == G_FILE_TYPE_DIRECTORY)
+          if (g_file_query_file_type (child,
+                                      G_FILE_QUERY_INFO_NONE,
+                                      NULL) == G_FILE_TYPE_DIRECTORY)
             {
               /* Search in subdirectory the first executable file with
                * the same name as the directory (except extension).
@@ -347,6 +338,17 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
 
                   g_object_unref (enumerator2);
                 }
+            }
+          else if (gimp_file_is_executable (child))
+            {
+              g_printerr (_("Skipping potential plug-in '%s': "
+                            "plug-ins must be installed in subdirectories.\n"),
+                          g_file_peek_path (child));
+            }
+          else
+            {
+              g_printerr (_("Skipping unknown file '%s' in plug-in directory.\n"),
+                          g_file_peek_path (child));
             }
 
           g_object_unref (child);

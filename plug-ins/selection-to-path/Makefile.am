@@ -21,7 +21,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/selection-to-path
 
 libexec_PROGRAMS = selection-to-path
 

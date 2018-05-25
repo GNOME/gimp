@@ -19,7 +19,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/file-psd
 
 libexec_PROGRAMS = \
 	file-psd

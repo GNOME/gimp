@@ -156,11 +156,11 @@ typedef struct
 {
   AppliedTo  type;
 
-  gint       x;        /* X - pos of tile   */
-  gint       y;        /* Y - pos of tile   */
-  GtkObject *r_adj;    /* row adjustment    */
-  GtkObject *c_adj;    /* column adjustment */
-  GtkWidget *applybut; /* The apply button  */
+  gint           x;        /* X - pos of tile   */
+  gint           y;        /* Y - pos of tile   */
+  GtkAdjustment *r_adj;    /* row adjustment    */
+  GtkAdjustment *c_adj;    /* column adjustment */
+  GtkWidget     *applybut; /* The apply button  */
 } Exp_Call;
 
 static Exp_Call exp_call =
@@ -343,24 +343,48 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+static GtkWidget *
+spin_button_new (GtkAdjustment **adjustment,  /* return value */
+                 gdouble         value,
+                 gdouble         lower,
+                 gdouble         upper,
+                 gdouble         step_increment,
+                 gdouble         page_increment,
+                 gdouble         page_size,
+                 gdouble         climb_rate,
+                 guint           digits)
+{
+  GtkWidget *spinbutton;
+
+  *adjustment = gtk_adjustment_new (value, lower, upper,
+                                    step_increment, page_increment, 0);
+
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+                                    climb_rate, digits);
+
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+
+  return spinbutton;
+}
+
 static gboolean
 tileit_dialog (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkObject *scale;
-  GtkWidget *toggle;
-  GSList    *orientation_group = NULL;
-  gboolean   run;
+  GtkWidget     *dlg;
+  GtkWidget     *main_vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *grid;
+  GtkWidget     *grid2;
+  GtkWidget     *button;
+  GtkWidget     *label;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkAdjustment *scale;
+  GtkWidget     *toggle;
+  GSList        *orientation_group = NULL;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -375,7 +399,7 @@ tileit_dialog (void)
 
                          NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -457,18 +481,17 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_reset),
                     &res_call);
 
-  /* Table for the inner widgets..*/
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /* Grid for the inner widgets..*/
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
                                                _("A_ll tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 4, 1);
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -481,8 +504,7 @@ tileit_dialog (void)
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
                                                _("Al_ternate tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 1, 2,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 4, 1);
   gtk_widget_show (toggle);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
@@ -495,24 +517,22 @@ tileit_dialog (void)
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
                                                _("_Explicit tile"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 4,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, 2, 1, 2);
   gtk_widget_show (toggle);
 
   label = gtk_label_new_with_mnemonic (_("Ro_w:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
-                    GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 2, 1, 1);
   gtk_widget_show (label);
 
   g_object_bind_property (toggle, "active",
                           label,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
-                    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 2, 1, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
@@ -528,17 +548,16 @@ tileit_dialog (void)
   label = gtk_label_new_with_mnemonic (_("Col_umn:"));
   gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
-                    GTK_FILL , GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 1, 3, 1, 1);
 
   g_object_bind_property (toggle, "active",
                           label,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  spinbutton = spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
+  gtk_widget_set_hexpand (spinbutton, TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinbutton, 2, 3, 1, 1);
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
@@ -559,7 +578,7 @@ tileit_dialog (void)
                     &exp_call.type);
 
   button = gtk_button_new_with_mnemonic (_("_Apply"));
-  gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 4, 0, 0, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), button, 3, 2, 1, 2);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -574,12 +593,12 @@ tileit_dialog (void)
 
   /* Widget for selecting the Opacity */
 
-  table2 = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table2, FALSE, FALSE, 0);
-  gtk_widget_show (table2);
+  grid2 = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid2, FALSE, FALSE, 0);
+  gtk_widget_show (grid2);
 
-  scale = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
+  scale = gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
                                 _("O_pacity:"), SCALE_WIDTH, -1,
                                 opacity, 0, 100, 1, 10, 0,
                                 TRUE, 0, 0,
@@ -593,14 +612,14 @@ tileit_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  gtk_widget_set_sensitive (table2, has_alpha);
+  gtk_widget_set_sensitive (grid2, has_alpha);
 
-  scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  scale = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                 "_n²", SCALE_WIDTH, -1,
                                 itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
                                 TRUE, 0, 0,

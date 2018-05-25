@@ -183,7 +183,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (title);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_SAVE,
                                            GTK_RESPONSE_CLOSE,
                                            GTK_RESPONSE_CANCEL,

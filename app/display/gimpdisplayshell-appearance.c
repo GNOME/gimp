@@ -61,25 +61,10 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   if (window)
     {
-      GimpDockColumns *left_docks;
-      GimpDockColumns *right_docks;
-      gboolean         fullscreen;
-      gboolean         has_grip;
-
-      fullscreen = gimp_image_window_get_fullscreen (window);
+      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
 
       gimp_display_shell_set_action_active (shell, "view-fullscreen",
                                             fullscreen);
-
-      left_docks  = gimp_image_window_get_left_docks (window);
-      right_docks = gimp_image_window_get_right_docks (window);
-
-      has_grip = (! fullscreen &&
-                  ! (left_docks  && gimp_dock_columns_get_docks (left_docks)) &&
-                  ! (right_docks && gimp_dock_columns_get_docks (right_docks)));
-
-      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
-                                         has_grip);
     }
 
   gimp_display_shell_set_show_menubar       (shell,
@@ -447,16 +432,6 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
   switch (padding_mode)
     {
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
-      if (shell->canvas)
-        {
-          GtkStyle *style;
-
-          gtk_widget_ensure_style (shell->canvas);
-
-          style = gtk_widget_get_style (shell->canvas);
-
-          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
-        }
       break;
 
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
@@ -477,16 +452,21 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
                 "padding-color", &color,
                 NULL);
 
-  gimp_canvas_set_bg_color (GIMP_CANVAS (shell->canvas), &color);
+  gimp_canvas_set_padding (GIMP_CANVAS (shell->canvas),
+                           padding_mode, &color);
 
-  gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
-                                       &options->padding_color);
+  if (padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+                                         &options->padding_color);
+  else
+    gimp_display_shell_set_action_color (shell, "view-padding-color-menu",
+                                         NULL);
 }
 
 void
-gimp_display_shell_get_padding (GimpDisplayShell       *shell,
-                                GimpCanvasPaddingMode  *padding_mode,
-                                GimpRGB                *padding_color)
+gimp_display_shell_get_padding (GimpDisplayShell      *shell,
+                                GimpCanvasPaddingMode *padding_mode,
+                                GimpRGB               *padding_color)
 {
   GimpDisplayOptions *options;
 

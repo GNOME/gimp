@@ -60,28 +60,27 @@ static void                run                 (const gchar      *name,
                                                 gint             *nreturn_vals,
                                                 GimpParam       **return_vals);
 
-static GimpPDBStatusType   shoot               (GdkScreen        *screen,
+static GimpPDBStatusType   shoot               (GdkMonitor       *monitor,
                                                 gint32           *image_ID,
                                                 GError          **error);
 
-static gboolean            shoot_dialog        (GdkScreen       **screen);
+static gboolean            shoot_dialog        (GdkMonitor      **monitor);
 static gboolean            shoot_quit_timeout  (gpointer          data);
 static gboolean            shoot_delay_timeout (gpointer          data);
 
 
 /* Global Variables */
 
-static ScreenshotBackend       backend            = SCREENSHOT_BACKEND_NONE;
-static ScreenshotCapabilities  capabilities       = 0;
-static GtkWidget              *select_delay_table = NULL;
-static GtkWidget              *shot_delay_table   = NULL;
+static ScreenshotBackend       backend           = SCREENSHOT_BACKEND_NONE;
+static ScreenshotCapabilities  capabilities      = 0;
+static GtkWidget              *select_delay_grid = NULL;
+static GtkWidget              *shot_delay_grid   = NULL;
 
 static ScreenshotValues shootvals =
 {
   SHOOT_WINDOW, /* root window            */
   TRUE,         /* include WM decorations */
   0,            /* window ID              */
-  0,            /* monitor                */
   0,            /* select delay           */
   0,            /* screenshot delay       */
   0,            /* coords of region dragged out by pointer */
@@ -168,7 +167,7 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
-  GdkScreen         *screen = NULL;
+  GdkMonitor        *monitor = NULL;
   gint32             image_ID;
   GError            *error  = NULL;
 
@@ -247,7 +246,7 @@ run (const gchar      *name,
         }
 
       /* Get information from the dialog */
-      if (! shoot_dialog (&screen))
+      if (! shoot_dialog (&monitor))
         status = GIMP_PDB_CANCEL;
       break;
 
@@ -299,7 +298,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      status = shoot (screen, &image_ID, &error);
+      status = shoot (monitor, &image_ID, &error);
     }
 
   if (status == GIMP_PDB_SUCCESS)
@@ -343,8 +342,9 @@ run (const gchar      *name,
           /* Give some sort of feedback that the shot is done */
           if (shootvals.select_delay > 0)
             {
-              gdk_display_beep (gdk_screen_get_display (screen));
-              gdk_flush (); /* flush so the beep makes it to the server */
+              gdk_display_beep (gdk_monitor_get_display (monitor));
+              /* flush so the beep makes it to the server */
+              gdk_display_flush (gdk_monitor_get_display (monitor));
             }
         }
 
@@ -368,30 +368,30 @@ run (const gchar      *name,
 /* The main Screenshot function */
 
 static GimpPDBStatusType
-shoot (GdkScreen  *screen,
+shoot (GdkMonitor *monitor,
        gint32     *image_ID,
        GError    **error)
 {
 #ifdef PLATFORM_OSX
   if (backend == SCREENSHOT_BACKEND_OSX)
-    return screenshot_osx_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_osx_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
 #ifdef G_OS_WIN32
   if (backend == SCREENSHOT_BACKEND_WIN32)
-    return screenshot_win32_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_win32_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
   if (backend == SCREENSHOT_BACKEND_FREEDESKTOP)
-    return screenshot_freedesktop_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_freedesktop_shoot (&shootvals, monitor, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_GNOME_SHELL)
-    return screenshot_gnome_shell_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_gnome_shell_shoot (&shootvals, monitor, image_ID, error);
   else if (backend == SCREENSHOT_BACKEND_KWIN)
-    return screenshot_kwin_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_kwin_shoot (&shootvals, monitor, image_ID, error);
 
 #ifdef GDK_WINDOWING_X11
   if (backend == SCREENSHOT_BACKEND_X11)
-    return screenshot_x11_shoot (&shootvals, screen, image_ID, error);
+    return screenshot_x11_shoot (&shootvals, monitor, image_ID, error);
 #endif
 
   return GIMP_PDB_CALLING_ERROR; /* silence compiler */
@@ -428,37 +428,37 @@ shoot_radio_button_toggled (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, &shootvals.shoot_type);
 
-  if (select_delay_table)
+  if (select_delay_grid)
     {
       if (shootvals.shoot_type == SHOOT_ROOT ||
           (shootvals.shoot_type == SHOOT_WINDOW &&
            ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW)))
         {
-          gtk_widget_hide (select_delay_table);
+          gtk_widget_hide (select_delay_grid);
         }
       else
         {
-          gtk_widget_show (select_delay_table);
+          gtk_widget_show (select_delay_grid);
         }
     }
-  if (shot_delay_table)
+  if (shot_delay_grid)
     {
       if (shootvals.shoot_type == SHOOT_WINDOW        &&
           (capabilities & SCREENSHOT_CAN_PICK_WINDOW) &&
           ! (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
         {
-          gtk_widget_hide (shot_delay_table);
+          gtk_widget_hide (shot_delay_grid);
         }
       else
         {
-          gtk_widget_show (shot_delay_table);
+          gtk_widget_show (shot_delay_grid);
         }
     }
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 }
 
 static gboolean
-shoot_dialog (GdkScreen **screen)
+shoot_dialog (GdkMonitor **monitor)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -471,7 +471,7 @@ shoot_dialog (GdkScreen **screen)
   GtkWidget     *button;
   GtkWidget     *toggle;
   GtkWidget     *spinner;
-  GtkWidget     *table;
+  GtkWidget     *grid;
   GSList        *radio_group = NULL;
   GtkAdjustment *adj;
   gboolean       run;
@@ -488,7 +488,7 @@ shoot_dialog (GdkScreen **screen)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -667,20 +667,19 @@ shoot_dialog (GdkScreen **screen)
   gtk_widget_show (vbox);
 
   /* Selection delay  */
-  table = gtk_table_new (2, 3, FALSE);
-  select_delay_table = table;
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  grid = gtk_grid_new ();
+  select_delay_grid = grid;
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   /* Check if this delay must be hidden from start. */
   if (shootvals.shoot_type == SHOOT_REGION ||
       (shootvals.shoot_type == SHOOT_WINDOW &&
        capabilities & SCREENSHOT_CAN_PICK_WINDOW))
     {
-      gtk_widget_show (select_delay_table);
+      gtk_widget_show (select_delay_grid);
     }
 
   label = gtk_label_new (_("Selection delay: "));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   adj = (GtkAdjustment *)
@@ -688,8 +687,7 @@ shoot_dialog (GdkScreen **screen)
                         0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
-  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
@@ -698,14 +696,13 @@ shoot_dialog (GdkScreen **screen)
 
   /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+  gtk_widget_set_hexpand (label, TRUE);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Selection delay hints  */
-  gtk_table_attach (GTK_TABLE (table), notebook1, 0, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), notebook1, 0, 1, 3, 1);
   gtk_widget_show (notebook1);
 
   /* No selection delay for full-screen. */
@@ -731,19 +728,18 @@ shoot_dialog (GdkScreen **screen)
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook1), shootvals.shoot_type);
 
   /* Screenshot delay  */
-  table = gtk_table_new (2, 3, FALSE);
-  shot_delay_table = table;
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  grid = gtk_grid_new ();
+  shot_delay_grid = grid;
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   if (shootvals.shoot_type != SHOOT_WINDOW          ||
       ! (capabilities & SCREENSHOT_CAN_PICK_WINDOW) ||
       (capabilities & SCREENSHOT_CAN_DELAY_WINDOW_SHOT))
     {
-      gtk_widget_show (table);
+      gtk_widget_show (grid);
     }
 
   label = gtk_label_new (_("Screenshot delay: "));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
   adj = (GtkAdjustment *)
@@ -751,8 +747,7 @@ shoot_dialog (GdkScreen **screen)
                         0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
-  gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
@@ -761,14 +756,13 @@ shoot_dialog (GdkScreen **screen)
 
   /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1.0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.1, 0.5);
+  gtk_grid_attach (GTK_GRID (grid), label, 2, 0, 1, 1);
+  gtk_widget_set_hexpand (label, TRUE);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
   gtk_widget_show (label);
 
   /*  Screenshot delay hints  */
-  gtk_table_attach (GTK_TABLE (table), notebook2, 0, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), notebook2, 0, 1, 3, 1);
   gtk_widget_show (notebook2);
 
   shoot_dialog_add_hint (GTK_NOTEBOOK (notebook2), SHOOT_ROOT,
@@ -817,7 +811,7 @@ shoot_dialog (GdkScreen **screen)
   if (run)
     {
       /* get the screen on which we are running */
-      *screen = gtk_widget_get_screen (dialog);
+      *monitor = gimp_widget_get_monitor (dialog);
     }
 
   gtk_widget_destroy (dialog);

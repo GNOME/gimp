@@ -61,8 +61,7 @@ static void   gimp_sample_point_editor_get_property   (GObject               *ob
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-static void   gimp_sample_point_editor_style_set      (GtkWidget             *widget,
-                                                       GtkStyle              *prev_style);
+static void   gimp_sample_point_editor_style_updated  (GtkWidget             *widget);
 static void   gimp_sample_point_editor_set_image      (GimpImageEditor       *editor,
                                                        GimpImage             *image);
 
@@ -106,7 +105,7 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
   object_class->get_property    = gimp_sample_point_editor_get_property;
   object_class->set_property    = gimp_sample_point_editor_set_property;
 
-  widget_class->style_set       = gimp_sample_point_editor_style_set;
+  widget_class->style_updated   = gimp_sample_point_editor_style_updated;
 
   image_editor_class->set_image = gimp_sample_point_editor_set_image;
 
@@ -162,11 +161,11 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), editor->empty_label, TRUE, TRUE, 0);
 
-  editor->table = gtk_table_new (1, 2, TRUE);
-  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_box_pack_start (GTK_BOX (vbox), editor->table, FALSE, FALSE, 0);
-  gtk_widget_show (editor->table);
+  editor->grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (editor->grid), content_spacing);
+  gtk_grid_set_column_spacing (GTK_GRID (editor->grid), content_spacing);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->grid, FALSE, FALSE, 0);
+  gtk_widget_show (editor->grid);
 }
 
 static void
@@ -233,20 +232,23 @@ gimp_sample_point_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_sample_point_editor_style_set (GtkWidget *widget,
-                                    GtkStyle  *prev_style)
+gimp_sample_point_editor_style_updated (GtkWidget *widget)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (widget);
-  gint                   content_spacing;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget,
-                        "content-spacing", &content_spacing,
-                        NULL);
+  if (editor->grid)
+    {
+      gint content_spacing;
 
-  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
+      gtk_widget_style_get (widget,
+                            "content-spacing", &content_spacing,
+                            NULL);
+
+      gtk_grid_set_row_spacing (GTK_GRID (editor->grid), content_spacing);
+      gtk_grid_set_column_spacing (GTK_GRID (editor->grid), content_spacing);
+    }
 }
 
 static void
@@ -451,14 +453,14 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
                           "number",         i + 1,
                           "has-color-area", TRUE,
                           "has-coords",     TRUE,
+                          "hexpand",        TRUE,
                           NULL);
 
           gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (editor->color_frames[i]),
                                              config);
 
-          gtk_table_attach (GTK_TABLE (editor->table), editor->color_frames[i],
-                            column, column + 1, row, row + 1,
-                            GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+          gtk_grid_attach (GTK_GRID (editor->grid), editor->color_frames[i],
+                           column, row, 1, 1);
           gtk_widget_show (editor->color_frames[i]);
 
           g_object_set_data (G_OBJECT (editor->color_frames[i]),
@@ -520,21 +522,20 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
        i < n_points;
        i++, list = g_list_next (list))
     {
-      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (editor->color_frames[i]),
+      GimpColorFrame  *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+
+      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_frame),
                                               "dirty")))
         {
           GimpSamplePoint *sample_point = list->data;
-          GimpColorFrame  *color_frame;
           const Babl      *format;
           guchar           pixel[32];
           GimpRGB          color;
           gint             x;
           gint             y;
 
-          g_object_set_data (G_OBJECT (editor->color_frames[i]),
-                             "dirty", GINT_TO_POINTER (TRUE));
-
-          color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+          g_object_set_data (G_OBJECT (color_frame),
+                             "dirty", GINT_TO_POINTER (FALSE));
 
           gimp_sample_point_get_position (sample_point, &x, &y);
 

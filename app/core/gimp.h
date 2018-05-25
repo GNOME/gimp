@@ -175,7 +175,8 @@ void           gimp_load_config            (Gimp                *gimp,
 void           gimp_initialize             (Gimp                *gimp,
                                             GimpInitStatusFunc   status_callback);
 void           gimp_restore                (Gimp                *gimp,
-                                            GimpInitStatusFunc   status_callback);
+                                            GimpInitStatusFunc   status_callback,
+                                            GError             **error);
 gboolean       gimp_is_restored            (Gimp                *gimp);
 
 void           gimp_exit                   (Gimp                *gimp,

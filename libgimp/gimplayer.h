@@ -52,11 +52,6 @@ gint32   gimp_layer_new_from_surface   (gint32           image_ID,
                                         gdouble          progress_start,
                                         gdouble          progress_end);
 
-GIMP_DEPRECATED_FOR(gimp_layer_get_lock_alpha)
-gboolean gimp_layer_get_preserve_trans (gint32           layer_ID);
-GIMP_DEPRECATED_FOR(gimp_layer_set_lock_alpha)
-gboolean gimp_layer_set_preserve_trans (gint32           layer_ID,
-                                        gboolean         preserve_trans);
 
 G_END_DECLS
 

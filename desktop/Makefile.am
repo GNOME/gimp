@@ -47,6 +47,7 @@ endif
 EXTRA_DIST = \
 	$(appstream_in_files) \
 	test-appdata.sh       \
+	test-desktop.sh       \
 	gimp.desktop.in.in    \
 	16x16/gimp.png        \
 	22x22/gimp.png        \
@@ -74,7 +75,13 @@ validate: gimp.desktop
 
 dist-hook: validate
 
-if HAVE_APPSTREAM_UTIL
 TESTS_ENVIRONMENT = GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
-TESTS = test-appdata.sh
+TESTS =
+
+if HAVE_APPSTREAM_UTIL
+TESTS += test-appdata.sh
+endif
+
+if HAVE_DESKTOP_FILE_VALIDATE
+TESTS += test-desktop.sh
 endif

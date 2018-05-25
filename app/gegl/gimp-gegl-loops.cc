@@ -39,6 +39,7 @@ extern "C"
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-loops-sse2.h"
 
+#include "core/gimp-atomic.h"
 #include "core/gimp-parallel.h"
 #include "core/gimp-utils.h"
 #include "core/gimpprogress.h"
@@ -914,6 +915,101 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
       if (progress)
         gimp_progress_set_value (progress, 1.0);
     }
+}
+
+void
+gimp_gegl_average_color (GeglBuffer          *buffer,
+                         const GeglRectangle *rect,
+                         gboolean             clip_to_buffer,
+                         GeglAbyssPolicy      abyss_policy,
+                         const Babl          *format,
+                         gpointer             color)
+{
+  typedef struct
+  {
+    gfloat color[4];
+    gint   n;
+  } Sum;
+
+  const Babl        *average_format = babl_format ("RaGaBaA float");
+  GeglRectangle      roi;
+  GSList * volatile  sums           = NULL;
+  GSList            *list;
+  Sum                average        = {};
+  gint               c;
+
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (color != NULL);
+
+  if (! rect)
+    rect = gegl_buffer_get_extent (buffer);
+
+  if (! format)
+    format = gegl_buffer_get_format (buffer);
+
+  if (clip_to_buffer)
+    gegl_rectangle_intersect (&roi, rect, gegl_buffer_get_extent (buffer));
+  else
+    roi = *rect;
+
+  gimp_parallel_distribute_area (&roi, MIN_PARALLEL_SUB_AREA,
+                                 [&] (const GeglRectangle *area)
+    {
+      Sum                *sum;
+      GeglBufferIterator *iter;
+      gfloat              color[4] = {};
+      gint                n        = 0;
+
+      iter = gegl_buffer_iterator_new (buffer, area, 0, average_format,
+                                       GEGL_BUFFER_READ, abyss_policy);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          const gfloat *p = (const gfloat *) iter->data[0];
+          gint          i;
+
+          for (i = 0; i < iter->length; i++)
+            {
+              gint c;
+
+              for (c = 0; c < 4; c++)
+                color[c] += p[c];
+
+              p += 4;
+            }
+
+          n += iter->length;
+        }
+
+      sum = g_slice_new (Sum);
+
+      memcpy (sum->color, color, sizeof (color));
+      sum->n = n;
+
+      gimp_atomic_slist_push_head (&sums, sum);
+    });
+
+  for (list = sums; list; list = g_slist_next (list))
+    {
+      Sum *sum = (Sum *) list->data;
+
+      for (c = 0; c < 4; c++)
+        average.color[c] += sum->color[c];
+
+      average.n += sum->n;
+
+      g_slice_free (Sum, sum);
+    }
+
+  g_slist_free (sums);
+
+  if (average.n > 0)
+    {
+      for (c = 0; c < 4; c++)
+        average.color[c] /= average.n;
+    }
+
+  babl_process (babl_fish (average_format, format), average.color, color, 1);
 }
 
 } /* extern "C" */

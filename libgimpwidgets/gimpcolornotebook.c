@@ -34,7 +34,6 @@
 #include "gimpcolornotebook.h"
 #include "gimpcolorscales.h"
 #include "gimpwidgetsmarshal.h"
-#include "gimp3migration.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -50,12 +49,21 @@
  **/
 
 
-#define DEFAULT_TAB_BORDER     0
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 
-static void   gimp_color_notebook_style_set       (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style);
+struct _GimpColorNotebookPrivate
+{
+  GtkWidget         *notebook;
+
+  GList             *selectors;
+  GimpColorSelector *cur_page;
+};
+
+#define GET_PRIVATE(obj) (((GimpColorNotebook *) obj)->priv)
+
+
+static void   gimp_color_notebook_style_updated   (GtkWidget         *widget);
 
 static void   gimp_color_notebook_togg_visible    (GimpColorSelector *selector,
                                                    gboolean           visible);
@@ -110,10 +118,11 @@ G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
 static void
 gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 {
+  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  widget_class->style_set               = gimp_color_notebook_style_set;
+  widget_class->style_updated           = gimp_color_notebook_style_updated;
 
   selector_class->name                  = "Notebook";
   selector_class->help_id               = "gimp-colorselector-notebook";
@@ -125,13 +134,7 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   selector_class->set_model_visible     = gimp_color_notebook_set_model_visible;
   selector_class->set_config            = gimp_color_notebook_set_config;
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab-border",
-                                                             NULL,
-                                                             "Width of the border around the tab contents",
-                                                             0, G_MAXINT,
-                                                             DEFAULT_TAB_BORDER,
-                                                             G_PARAM_READABLE));
+  gtk_widget_class_set_css_name (widget_class, "GimpColorNotebook");
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tab-icon-size",
@@ -140,24 +143,33 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TAB_ICON_SIZE,
                                                               G_PARAM_READABLE));
+
+  g_type_class_add_private (object_class, sizeof (GimpColorNotebookPrivate));
 }
 
 static void
 gimp_color_notebook_init (GimpColorNotebook *notebook)
 {
-  GType *selector_types;
-  guint  n_selector_types;
-  guint  i;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (notebook);
+  GType                    *selector_types;
+  guint                     n_selector_types;
+  guint                     i;
 
-  notebook->notebook = gtk_notebook_new ();
-  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
-  gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);
-  gtk_widget_show (notebook->notebook);
+  notebook->priv = G_TYPE_INSTANCE_GET_PRIVATE (notebook,
+                                                GIMP_TYPE_COLOR_NOTEBOOK,
+                                                GimpColorNotebookPrivate);
 
-  g_signal_connect (notebook->notebook, "switch-page",
+  private = notebook->priv;
+
+  private->notebook = gtk_notebook_new ();
+  gtk_notebook_popup_enable (GTK_NOTEBOOK (private->notebook));
+  gtk_box_pack_start (GTK_BOX (notebook), private->notebook, TRUE, TRUE, 0);
+  gtk_widget_show (private->notebook);
+
+  g_signal_connect (private->notebook, "switch-page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
                     notebook);
-  g_signal_connect (notebook->notebook, "remove",
+  g_signal_connect (private->notebook, "remove",
                     G_CALLBACK (gimp_color_notebook_remove_selector),
                     notebook);
 
@@ -166,8 +178,8 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
   if (n_selector_types == 2)
     {
-      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook->notebook), FALSE);
-      gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook->notebook), FALSE);
+      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
+      gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
     }
 
   for (i = 0; i < n_selector_types; i++)
@@ -187,27 +199,19 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 }
 
 static void
-gimp_color_notebook_style_set (GtkWidget *widget,
-                               GtkStyle  *prev_style)
+gimp_color_notebook_style_updated (GtkWidget *widget)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (widget);
-  GList             *list;
-  gint               tab_border;
-  GtkIconSize        icon_size;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (widget);
+  GList                    *list;
+  GtkIconSize               icon_size;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
-                        "tab-border",    &tab_border,
-                        "tab-icon_size", &icon_size,
+                        "tab-icon-size", &icon_size,
                         NULL);
 
-  g_object_set (notebook->notebook,
-                "tab-border", tab_border,
-                NULL);
-
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = private->selectors; list; list = g_list_next (list))
     {
       GimpColorSelectorClass *selector_class;
       GtkWidget              *image;
@@ -217,7 +221,7 @@ gimp_color_notebook_style_set (GtkWidget *widget,
       image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                             icon_size);
 
-      gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook->notebook),
+      gtk_notebook_set_tab_label (GTK_NOTEBOOK (private->notebook),
                                   GTK_WIDGET (list->data),
                                   image);
     }
@@ -227,10 +231,10 @@ static void
 gimp_color_notebook_togg_visible (GimpColorSelector *selector,
                                   gboolean           visible)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
-  GList             *list;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
+  GList                    *list;
 
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = private->selectors; list; list = g_list_next (list))
     {
       GimpColorSelector *child = list->data;
 
@@ -242,10 +246,10 @@ static void
 gimp_color_notebook_togg_sensitive (GimpColorSelector *selector,
                                     gboolean           sensitive)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
-  GList             *list;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
+  GList                    *list;
 
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = private->selectors; list; list = g_list_next (list))
     {
       GimpColorSelector *child = list->data;
 
@@ -257,10 +261,10 @@ static void
 gimp_color_notebook_set_show_alpha (GimpColorSelector *selector,
                                     gboolean           show_alpha)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
-  GList             *list;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
+  GList                    *list;
 
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = private->selectors; list; list = g_list_next (list))
     {
       GimpColorSelector *child = list->data;
 
@@ -273,34 +277,34 @@ gimp_color_notebook_set_color (GimpColorSelector *selector,
                                const GimpRGB     *rgb,
                                const GimpHSV     *hsv)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
 
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_color_changed,
-                                   notebook);
+                                   selector);
 
-  gimp_color_selector_set_color (notebook->cur_page, rgb, hsv);
+  gimp_color_selector_set_color (private->cur_page, rgb, hsv);
 
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_color_changed,
-                                     notebook);
+                                     selector);
 }
 
 static void
 gimp_color_notebook_set_channel (GimpColorSelector        *selector,
                                  GimpColorSelectorChannel  channel)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
 
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_channel_changed,
-                                   notebook);
+                                   selector);
 
-  gimp_color_selector_set_channel (notebook->cur_page, channel);
+  gimp_color_selector_set_channel (private->cur_page, channel);
 
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_channel_changed,
-                                     notebook);
+                                     selector);
 }
 
 static void
@@ -308,27 +312,27 @@ gimp_color_notebook_set_model_visible (GimpColorSelector      *selector,
                                        GimpColorSelectorModel  model,
                                        gboolean                visible)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
 
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_model_visible_changed,
-                                   notebook);
+                                   selector);
 
-  gimp_color_selector_set_model_visible (notebook->cur_page, model, visible);
+  gimp_color_selector_set_model_visible (private->cur_page, model, visible);
 
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_model_visible_changed,
-                                     notebook);
+                                     selector);
 }
 
 static void
 gimp_color_notebook_set_config (GimpColorSelector *selector,
                                 GimpColorConfig   *config)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selector);
-  GList             *list;
+  GimpColorNotebookPrivate *private = GET_PRIVATE (selector);
+  GList                    *list;
 
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = private->selectors; list; list = g_list_next (list))
     {
       GimpColorSelector *child = list->data;
 
@@ -342,28 +346,29 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
                                  guint              page_num,
                                  GimpColorNotebook *notebook)
 {
-  GimpColorSelector      *selector = GIMP_COLOR_SELECTOR (notebook);
-  GtkWidget              *page_widget;
-  GimpColorSelectorModel  model;
+  GimpColorNotebookPrivate *private  = GET_PRIVATE (notebook);
+  GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (notebook);
+  GtkWidget                *page_widget;
+  GimpColorSelectorModel    model;
 
   page_widget = gtk_notebook_get_nth_page (gtk_notebook, page_num);
 
-  notebook->cur_page = GIMP_COLOR_SELECTOR (page_widget);
+  private->cur_page = GIMP_COLOR_SELECTOR (page_widget);
 
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_color_changed,
                                    notebook);
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_channel_changed,
                                    notebook);
-  g_signal_handlers_block_by_func (notebook->cur_page,
+  g_signal_handlers_block_by_func (private->cur_page,
                                    gimp_color_notebook_model_visible_changed,
                                    notebook);
 
-  gimp_color_selector_set_color (notebook->cur_page,
+  gimp_color_selector_set_color (private->cur_page,
                                  &selector->rgb,
                                  &selector->hsv);
-  gimp_color_selector_set_channel (notebook->cur_page,
+  gimp_color_selector_set_channel (private->cur_page,
                                    gimp_color_selector_get_channel (selector));
 
   for (model = GIMP_COLOR_SELECTOR_MODEL_RGB;
@@ -372,17 +377,17 @@ gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
     {
       gboolean visible = gimp_color_selector_get_model_visible (selector, model);
 
-      gimp_color_selector_set_model_visible (notebook->cur_page, model,
+      gimp_color_selector_set_model_visible (private->cur_page, model,
                                              visible);
     }
 
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_color_changed,
                                      notebook);
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_channel_changed,
                                      notebook);
-  g_signal_handlers_unblock_by_func (notebook->cur_page,
+  g_signal_handlers_unblock_by_func (private->cur_page,
                                      gimp_color_notebook_model_visible_changed,
                                      notebook);
 }
@@ -426,13 +431,14 @@ static GtkWidget *
 gimp_color_notebook_add_page (GimpColorNotebook *notebook,
                               GType              page_type)
 {
-  GimpColorSelector      *selector = GIMP_COLOR_SELECTOR (notebook);
-  GimpColorSelectorClass *selector_class;
-  GtkWidget              *page;
-  GtkWidget              *menu_widget;
-  GtkWidget              *image;
-  GtkWidget              *label;
-  gboolean                show_alpha;
+  GimpColorNotebookPrivate *private  = GET_PRIVATE (notebook);
+  GimpColorSelector        *selector = GIMP_COLOR_SELECTOR (notebook);
+  GimpColorSelectorClass   *selector_class;
+  GtkWidget                *page;
+  GtkWidget                *menu_widget;
+  GtkWidget                *image;
+  GtkWidget                *label;
+  gboolean                  show_alpha;
 
   page = gimp_color_selector_new (page_type,
                                   &selector->rgb,
@@ -461,13 +467,13 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         DEFAULT_TAB_ICON_SIZE);
 
-  gtk_notebook_append_page_menu (GTK_NOTEBOOK (notebook->notebook),
+  gtk_notebook_append_page_menu (GTK_NOTEBOOK (private->notebook),
                                  page, image, menu_widget);
 
-  if (! notebook->cur_page)
-    notebook->cur_page = GIMP_COLOR_SELECTOR (page);
+  if (! private->cur_page)
+    private->cur_page = GIMP_COLOR_SELECTOR (page);
 
-  notebook->selectors = g_list_append (notebook->selectors, page);
+  private->selectors = g_list_append (private->selectors, page);
 
   gtk_widget_show (page);
 
@@ -489,10 +495,11 @@ gimp_color_notebook_remove_selector (GtkContainer      *container,
                                      GtkWidget         *widget,
                                      GimpColorNotebook *notebook)
 {
-  notebook->selectors = g_list_remove (notebook->selectors, widget);
+  notebook->priv->selectors = g_list_remove (notebook->priv->selectors,
+                                             widget);
 
-  if (! notebook->selectors)
-    notebook->cur_page = NULL;
+  if (! notebook->priv->selectors)
+    notebook->priv->cur_page = NULL;
 }
 
 
@@ -521,7 +528,7 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
   g_return_val_if_fail (! g_type_is_a (page_type, GIMP_TYPE_COLOR_NOTEBOOK),
                         NULL);
 
-  for (list = notebook->selectors; list; list = g_list_next (list))
+  for (list = notebook->priv->selectors; list; list = g_list_next (list))
     {
       GimpColorSelector *page = list->data;
 
@@ -530,7 +537,7 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
           if (has_page)
             return GTK_WIDGET (page);
 
-          gtk_container_remove (GTK_CONTAINER (notebook->notebook),
+          gtk_container_remove (GTK_CONTAINER (notebook->priv->notebook),
                                 GTK_WIDGET (page));
 
           return NULL;
@@ -541,4 +548,52 @@ gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
     return NULL;
 
   return gimp_color_notebook_add_page (notebook, page_type);
+}
+
+/**
+ * gimp_color_notebook_get_notebook:
+ * @notebook:  A #GimpColorNotebook widget.
+ *
+ * Return value: The #GtkNotebook inside.
+ *
+ * Since: GIMP 3.0
+ **/
+GtkWidget *
+gimp_color_notebook_get_notebook (GimpColorNotebook *notebook)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook), NULL);
+
+  return notebook->priv->notebook;
+}
+
+/**
+ * gimp_color_notebook_get_selectors:
+ * @notebook:  A #GimpColorNotebook widget.
+ *
+ * Return value: The notebook's list of #GimpColorSelector's.
+ *
+ * Since: GIMP 3.0
+ **/
+GList *
+gimp_color_notebook_get_selectors (GimpColorNotebook *notebook)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook), NULL);
+
+  return notebook->priv->selectors;
+}
+
+/**
+ * gimp_color_notebook_get_current_selector:
+ * @notebook:  A #GimpColorNotebook widget.
+ *
+ * Return value: The active page's #GimpColorSelector.
+ *
+ * Since: GIMP 3.0
+ **/
+GimpColorSelector *
+gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook), NULL);
+
+  return notebook->priv->cur_page;
 }

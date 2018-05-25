@@ -170,8 +170,10 @@ print ENUMFILE <<CODE;
 
 static gboolean enums_initialized = FALSE;
 
+#if 0
+/*  keep around as documentation how to do compat enums  */
 GType gimp_convert_dither_type_compat_get_type (void);
-GType gimp_layer_mode_effects_get_type         (void);
+#endif
 
 /**
  * gimp_enums_init:
@@ -188,7 +190,9 @@ void
 gimp_enums_init (void)
 {
   const GimpGetTypeFunc *funcs = get_type_funcs;
+#if 0
   GQuark                 quark;
+#endif
   gint                   i;
 
   if (enums_initialized)
@@ -201,13 +205,15 @@ gimp_enums_init (void)
       g_type_class_ref (type);
     }
 
+#if 0
+  /*  keep around as documentation how to do compat enums  */
+
   /*  keep compat enum code in sync with app/app.c (app_libs_init)  */
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
 		    (gpointer) gimp_convert_dither_type_compat_get_type ());
-  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
-		    (gpointer) gimp_layer_mode_effects_get_type ());
+#endif
 
   gimp_base_compat_enums_init ();
 

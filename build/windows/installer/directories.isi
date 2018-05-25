@@ -14,14 +14,17 @@
 #endif
 
 #ifndef DIR32
-#define DIR32 "i686"
+#define DIR32 "i686-w64-mingw32"
 #endif
 #ifndef DIR64
-#define DIR64 "amd64"
+#define DIR64 "x86_64-w64-mingw32"
 #endif
 
 #ifndef GIMP_DIR
-	#define GIMP_DIR "N:\_newdev\output\gimp\" + VER_DIR
+	#define GIMP_DIR "N:\gimp\output\" + VER_DIR
+#endif
+#ifndef DEPS_DIR
+	#define DEPS_DIR "N:\gimp\deps"
 #endif
 
 //32-bit GIMP base directory (result of make install)
@@ -33,13 +36,26 @@
 	#define GIMP_DIR64 GIMP_DIR + "\" + DIR64
 #endif
 
-#define DDIR32 DIR32 + "-w64-mingw32\sys-root\mingw"
-#define DDIR64 DIR64 + "-w64-mingw32\sys-root\mingw"
+#ifndef DDIR32
+	#define DDIR32 DIR32
+#endif
+#ifndef DDIR64
+	#define DDIR64 DIR64
+#endif
+
+//32-bit dependencies directory
+#ifndef DEPS_DIR32
+	#define DEPS_DIR32 DEPS_DIR + "\" + DDIR32
+#endif
+//64-bit dependencies directory
+#ifndef DEPS_DIR64
+	#define DEPS_DIR64 DEPS_DIR + "\" + DDIR64
+#endif
 
 #ifdef PYTHON
 
 	//python source directory
 	#ifndef PY_DIR
-		#define PY_DIR "N:\_newdev\deps\gimp\python"
+		#define PY_DIR "N:\common\python2.7"
 	#endif
 #endif

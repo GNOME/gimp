@@ -1,0 +1,98 @@
+/* GIMP theme css file */
+
+* {
+    -GimpDockWindow-default-height:    300;
+    -GimpMenuDock-minimal-width:       200;
+    -GimpDockWindow-menu-preview-size: button;
+    -GimpToolPalette-tool-icon-size:   button;
+    -GimpToolPalette-button-relief:    none;
+    -GimpDockbook-tab-icon-size:       button;
+    -GimpColorNotebook-tab-icon-size:  button;
+    -GimpDeviceEditor-handle-size:     12;
+    -GimpDockable-content-border:      2;
+    -GimpEditor-content-spacing:       2;
+    -GimpEditor-button-spacing:        2;
+    -GimpEditor-button-icon-size:      menu;
+    -GimpDataEditor-minimal-height:    96;
+    -GtkDialog-content-area-border:    0;
+    -GtkDialog-button-spacing:         6;
+    -GtkDialog-action-area-border:     12;
+    -GimpUnitComboBox-appears-as-list: 0;
+}
+
+GimpToolDialog {
+    -GtkDialog-action-area-border: 6;
+}
+
+GimpColorNotebook tab {
+    padding: 0 0 0 0;
+}
+
+GimpColorScales spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpColorScales spinbutton entry {
+    min-height: 0;
+}
+
+GimpDock {
+    font-size: smaller;
+}
+
+GimpDock notebook tab {
+    padding: 0 0 0 0;
+}
+
+GimpDock spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpDock spinbutton entry {
+    min-height: 0;
+}
+
+GimpDockable {
+    -GimpFrame-label-bold:       0;
+    -GimpFrame-label-spacing:    2;
+}
+
+GimpDisplayShell grid>button {
+    min-height: 0;
+    min-width: 0;
+    padding: 0 0 0 0;
+}
+
+GimpDisplayShell statusbar {
+    min-height: 3em;
+}
+
+GimpDisplayShell combobox entry {
+    font-size: smaller;
+}
+
+GimpDisplayShell combobox button {
+    font-size: smaller;
+}
+
+GimpDisplayShell progressbar text {
+    font-size: larger;
+}
+
+GimpDisplayShell progressbar trough,
+GimpDisplayShell progressbar progress {
+    min-height: 1em;
+}
+
+GimpRuler {
+    font-size: smaller;
+}
+
+entry.italic {
+    font-style: italic;
+}
+
+.grid {
+    /* why does this not work */
+    color: rgba (1.0, 0.0, 0.0, 1.0);
+}

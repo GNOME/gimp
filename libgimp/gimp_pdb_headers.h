@@ -33,14 +33,12 @@
 #include <libgimp/gimpbrushselect_pdb.h>
 #include <libgimp/gimpbuffer_pdb.h>
 #include <libgimp/gimpchannel_pdb.h>
-#include <libgimp/gimpcolor_pdb.h>
 #include <libgimp/gimpcontext_pdb.h>
 #include <libgimp/gimpdebug_pdb.h>
 #include <libgimp/gimpdisplay_pdb.h>
 #include <libgimp/gimpdrawable_pdb.h>
 #include <libgimp/gimpdrawablecolor_pdb.h>
 #include <libgimp/gimpdrawableedit_pdb.h>
-#include <libgimp/gimpdrawabletransform_pdb.h>
 #include <libgimp/gimpdynamics_pdb.h>
 #include <libgimp/gimpedit_pdb.h>
 #include <libgimp/gimpfileops_pdb.h>
@@ -69,7 +67,6 @@
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>
 #include <libgimp/gimppaletteselect_pdb.h>
-#include <libgimp/gimppaths_pdb.h>
 #include <libgimp/gimppattern_pdb.h>
 #include <libgimp/gimppatterns_pdb.h>
 #include <libgimp/gimppatternselect_pdb.h>
@@ -77,10 +74,8 @@
 #include <libgimp/gimpproceduraldb_pdb.h>
 #include <libgimp/gimpprogress_pdb.h>
 #include <libgimp/gimpselection_pdb.h>
-#include <libgimp/gimpselectiontools_pdb.h>
 #include <libgimp/gimptextlayer_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
-#include <libgimp/gimptransformtools_pdb.h>
 #include <libgimp/gimpunit_pdb.h>
 #include <libgimp/gimpvectors_pdb.h>
 

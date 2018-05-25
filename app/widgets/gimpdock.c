@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.c
- * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,9 +45,6 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_DOCK_FONT_SCALE  PANGO_SCALE_SMALL
-
-
 enum
 {
   BOOK_ADDED,
@@ -67,13 +64,12 @@ struct _GimpDockPrivate
   GList             *dockbooks;
 
   gint               ID;
+  GtkCssProvider    *css_provider;
 };
 
 
 static void       gimp_dock_dispose                (GObject      *object);
 
-static void       gimp_dock_style_set              (GtkWidget    *widget,
-                                                    GtkStyle     *prev_style);
 static gchar    * gimp_dock_real_get_description   (GimpDock     *dock,
                                                     gboolean      complete);
 static void       gimp_dock_real_book_added        (GimpDock     *dock,
@@ -139,8 +135,6 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   object_class->dispose          = gimp_dock_dispose;
 
-  widget_class->style_set        = gimp_dock_style_set;
-
   klass->get_description         = gimp_dock_real_get_description;
   klass->set_host_geometry_hints = NULL;
   klass->book_added              = gimp_dock_real_book_added;
@@ -148,13 +142,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   klass->description_invalidated = NULL;
   klass->geometry_invalidated    = NULL;
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_double ("font-scale",
-                                                                NULL, NULL,
-                                                                0.0,
-                                                                G_MAXDOUBLE,
-                                                                DEFAULT_DOCK_FONT_SCALE,
-                                                                GIMP_PARAM_READABLE));
+  gtk_widget_class_set_css_name (widget_class, "GimpDock");
 
   g_type_class_add_private (klass, sizeof (GimpDockPrivate));
 }
@@ -171,7 +159,7 @@ gimp_dock_init (GimpDock *dock)
   dock->p = G_TYPE_INSTANCE_GET_PRIVATE (dock,
                                          GIMP_TYPE_DOCK,
                                          GimpDockPrivate);
-  dock->p->ID             = dock_ID++;
+  dock->p->ID = dock_ID++;
 
   name = g_strdup_printf ("gimp-internal-dock-%d", dock->p->ID);
   gtk_widget_set_name (GTK_WIDGET (dock), name);
@@ -209,56 +197,17 @@ gimp_dock_dispose (GObject *object)
       g_object_unref (dockbook);
     }
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_dock_style_set (GtkWidget *widget,
-                     GtkStyle  *prev_style)
-{
-  GimpDock *dock       = GIMP_DOCK (widget);
-  gdouble   font_scale = 1.0;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  gtk_widget_style_get (widget,
-                        "font-scale", &font_scale,
-                        NULL);
-
-  if (font_scale != 1.0)
+  if (dock->p->css_provider)
     {
-      PangoContext         *context;
-      PangoFontDescription *font_desc;
-      gint                  font_size;
-      gchar                *font_str;
-      gchar                *rc_string;
+      GtkWidget *widget = GTK_WIDGET (object);
 
-      context = gtk_widget_get_pango_context (widget);
-      font_desc = pango_context_get_font_description (context);
-      font_desc = pango_font_description_copy (font_desc);
-
-      font_size = pango_font_description_get_size (font_desc);
-      font_size = font_scale * font_size;
-      pango_font_description_set_size (font_desc, font_size);
-
-      font_str = pango_font_description_to_string (font_desc);
-      pango_font_description_free (font_desc);
-
-      rc_string =
-        g_strdup_printf ("style \"gimp-dock-style\""
-                         "{"
-                         "  font_name = \"%s\""
-                         "}"
-                         "widget \"*.gimp-internal-dock-%d.*\" style \"gimp-dock-style\"",
-                         font_str,
-                         dock->p->ID);
-      g_free (font_str);
-
-      gtk_rc_parse_string (rc_string);
-      g_free (rc_string);
-
-      gtk_widget_reset_rc_styles (widget);
+      gtk_style_context_remove_provider_for_screen (gtk_widget_get_screen (widget),
+                                                    GTK_STYLE_PROVIDER (dock->p->css_provider));
+      g_object_unref (dock->p->css_provider);
+      dock->p->css_provider = NULL;
     }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static gchar *

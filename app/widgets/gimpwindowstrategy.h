@@ -38,8 +38,7 @@ struct _GimpWindowStrategyInterface
   GtkWidget * (* show_dockable_dialog) (GimpWindowStrategy *strategy,
                                         Gimp               *gimp,
                                         GimpDialogFactory  *factory,
-                                        GdkScreen          *screen,
-                                        gint                monitor,
+                                        GdkMonitor         *monitor,
                                         const gchar        *identifiers);
 };
 
@@ -48,8 +47,7 @@ GType       gimp_window_strategy_interface_get_type   (void) G_GNUC_CONST;
 GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                        Gimp               *gimp,
                                                        GimpDialogFactory  *factory,
-                                                       GdkScreen          *screen,
-                                                       gint                monitor,
+                                                       GdkMonitor         *monitor,
                                                        const gchar        *identifiers);
 
 

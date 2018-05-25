@@ -25,6 +25,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
@@ -334,19 +336,18 @@ gimp_container_entry_select_item (GimpContainerView *view,
       g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
                                  (gpointer) &container_entry->viewable);
 
-      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
+      gtk_entry_set_icon_from_icon_name (entry,
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         NULL);
     }
   else
     {
       /* The selected item does not exist. */
-      GdkColor     gdk_red;
-
-      gdk_red.red = 65535;
-      gdk_red.green = 0;
-      gdk_red.blue = 0;
-
-      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, &gdk_red);
+      gtk_entry_set_icon_from_icon_name (entry,
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         GIMP_ICON_WILBER_EEK);
     }
+
   gtk_entry_set_text (entry, viewable? gimp_object_get_name (viewable) : "");
 
   g_signal_handlers_unblock_by_func (entry,
@@ -405,19 +406,18 @@ gimp_container_entry_changed (GtkEntry          *entry,
       g_object_add_weak_pointer (G_OBJECT (container_entry->viewable),
                                  (gpointer) &container_entry->viewable);
 
-      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, NULL);
       gimp_container_view_item_selected (view, GIMP_VIEWABLE (object));
+
+      gtk_entry_set_icon_from_icon_name (entry,
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         NULL);
     }
   else
     {
-      /* While editing the entry, contents shows in red for non-existent item. */
-      GdkColor     gdk_red;
-
-      gdk_red.red = 65535;
-      gdk_red.green = 0;
-      gdk_red.blue = 0;
-
-      gtk_widget_modify_text (GTK_WIDGET (entry), GTK_STATE_NORMAL, &gdk_red);
+      /* While editing the entry, show EEK for non-existent item. */
+      gtk_entry_set_icon_from_icon_name (entry,
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         GIMP_ICON_WILBER_EEK);
     }
 }
 

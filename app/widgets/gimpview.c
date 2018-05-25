@@ -59,14 +59,17 @@ static void        gimp_view_realize              (GtkWidget        *widget);
 static void        gimp_view_unrealize            (GtkWidget        *widget);
 static void        gimp_view_map                  (GtkWidget        *widget);
 static void        gimp_view_unmap                (GtkWidget        *widget);
-static void        gimp_view_size_request         (GtkWidget        *widget,
-                                                   GtkRequisition   *requisition);
+static void        gimp_view_get_preferred_width  (GtkWidget        *widget,
+                                                   gint             *minimum_width,
+                                                   gint             *natural_width);
+static void        gimp_view_get_preferred_height (GtkWidget        *widget,
+                                                   gint             *minimum_height,
+                                                   gint             *natural_height);
 static void        gimp_view_size_allocate        (GtkWidget        *widget,
                                                    GtkAllocation    *allocation);
-static void        gimp_view_style_set            (GtkWidget        *widget,
-                                                   GtkStyle         *prev_style);
-static gboolean    gimp_view_expose_event         (GtkWidget        *widget,
-                                                   GdkEventExpose   *event);
+static void        gimp_view_style_updated        (GtkWidget        *widget);
+static gboolean    gimp_view_draw                 (GtkWidget        *widget,
+                                                   cairo_t          *cr);
 static gboolean    gimp_view_button_press_event   (GtkWidget        *widget,
                                                    GdkEventButton   *bevent);
 static gboolean    gimp_view_button_release_event (GtkWidget        *widget,
@@ -150,10 +153,11 @@ gimp_view_class_init (GimpViewClass *klass)
   widget_class->unrealize            = gimp_view_unrealize;
   widget_class->map                  = gimp_view_map;
   widget_class->unmap                = gimp_view_unmap;
-  widget_class->size_request         = gimp_view_size_request;
+  widget_class->get_preferred_width  = gimp_view_get_preferred_width;
+  widget_class->get_preferred_height = gimp_view_get_preferred_height;
   widget_class->size_allocate        = gimp_view_size_allocate;
-  widget_class->style_set            = gimp_view_style_set;
-  widget_class->expose_event         = gimp_view_expose_event;
+  widget_class->style_updated        = gimp_view_style_updated;
+  widget_class->draw                 = gimp_view_draw;
   widget_class->button_press_event   = gimp_view_button_press_event;
   widget_class->button_release_event = gimp_view_button_release_event;
   widget_class->enter_notify_event   = gimp_view_enter_notify_event;
@@ -273,22 +277,38 @@ gimp_view_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_view_size_request (GtkWidget      *widget,
-                        GtkRequisition *requisition)
+gimp_view_get_preferred_width (GtkWidget *widget,
+                               gint      *minimum_width,
+                               gint      *natural_width)
 {
   GimpView *view = GIMP_VIEW (widget);
 
   if (view->expand)
     {
-      requisition->width  = 2 * view->renderer->border_width + 1;
-      requisition->height = 2 * view->renderer->border_width + 1;
+      *minimum_width = *natural_width = 2 * view->renderer->border_width + 1;
     }
   else
     {
-      requisition->width  = (view->renderer->width +
-                             2 * view->renderer->border_width);
-      requisition->height = (view->renderer->height +
-                             2 * view->renderer->border_width);
+      *minimum_width = *natural_width = (view->renderer->width +
+                                         2 * view->renderer->border_width);
+    }
+}
+
+static void
+gimp_view_get_preferred_height (GtkWidget *widget,
+                                gint      *minimum_height,
+                                gint      *natural_height)
+{
+  GimpView *view = GIMP_VIEW (widget);
+
+  if (view->expand)
+    {
+      *minimum_height = *natural_height = 2 * view->renderer->border_width + 1;
+    }
+  else
+    {
+      *minimum_height = *natural_height = (view->renderer->height +
+                                           2 * view->renderer->border_width);
     }
 }
 
@@ -383,40 +403,27 @@ gimp_view_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_view_style_set (GtkWidget *widget,
-                     GtkStyle  *prev_style)
+gimp_view_style_updated (GtkWidget *widget)
 {
   GimpView *view = GIMP_VIEW (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gimp_view_renderer_invalidate (view->renderer);
 }
 
 static gboolean
-gimp_view_expose_event (GtkWidget      *widget,
-                        GdkEventExpose *event)
+gimp_view_draw (GtkWidget *widget,
+                cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      GtkAllocation  allocation;
-      cairo_t       *cr;
+  GtkAllocation allocation;
 
-      gtk_widget_get_allocation (widget, &allocation);
+  gtk_widget_get_allocation (widget, &allocation);
 
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
-
-      gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               widget, cr,
-                               allocation.width,
-                               allocation.height);
-
-      cairo_destroy (cr);
-    }
+  gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
+                           widget, cr,
+                           allocation.width,
+                           allocation.height);
 
   return FALSE;
 }
@@ -805,7 +812,7 @@ gimp_view_update_callback (GimpViewRenderer *renderer,
   gint            width;
   gint            height;
 
-  gtk_widget_get_requisition (widget, &requisition);
+  gtk_widget_get_preferred_size (widget, &requisition, NULL);
 
   width  = renderer->width  + 2 * renderer->border_width;
   height = renderer->height + 2 * renderer->border_width;

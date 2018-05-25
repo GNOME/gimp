@@ -40,6 +40,7 @@ struct _GimpBlobEditor
   gdouble              angle;
 
   /*<  private  >*/
+  gboolean             in_handle;
   gboolean             active;
 };
 

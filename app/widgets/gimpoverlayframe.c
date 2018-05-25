@@ -32,12 +32,8 @@
 #include "gimpwidgets-utils.h"
 
 
-static void       gimp_overlay_frame_size_request  (GtkWidget      *widget,
-                                                    GtkRequisition *requisition);
-static void       gimp_overlay_frame_size_allocate (GtkWidget      *widget,
-                                                    GtkAllocation  *allocation);
-static gboolean   gimp_overlay_frame_expose        (GtkWidget      *widget,
-                                                    GdkEventExpose *eevent);
+static gboolean   gimp_overlay_frame_draw (GtkWidget *widget,
+                                           cairo_t   *cr);
 
 
 G_DEFINE_TYPE (GimpOverlayFrame, gimp_overlay_frame, GTK_TYPE_BIN)
@@ -50,81 +46,30 @@ gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->size_request  = gimp_overlay_frame_size_request;
-  widget_class->size_allocate = gimp_overlay_frame_size_allocate;
-  widget_class->expose_event  = gimp_overlay_frame_expose;
+  widget_class->draw = gimp_overlay_frame_draw;
+
+  gtk_widget_class_set_css_name (widget_class, "popover");
 }
 
 static void
 gimp_overlay_frame_init (GimpOverlayFrame *frame)
 {
   gtk_widget_set_app_paintable (GTK_WIDGET (frame), TRUE);
-}
 
-static void
-gimp_overlay_frame_size_request (GtkWidget      *widget,
-                                 GtkRequisition *requisition)
-{
-  GtkWidget      *child = gtk_bin_get_child (GTK_BIN (widget));
-  GtkRequisition  child_requisition;
-  gint            border_width;
-
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-  requisition->width  = border_width * 2;
-  requisition->height = border_width * 2;
-
-  if (child && gtk_widget_get_visible (child))
-    {
-      gtk_widget_size_request (child, &child_requisition);
-    }
-  else
-    {
-      child_requisition.width  = 0;
-      child_requisition.height = 0;
-    }
-
-  requisition->width  += child_requisition.width;
-  requisition->height += child_requisition.height;
-}
-
-static void
-gimp_overlay_frame_size_allocate (GtkWidget     *widget,
-                                  GtkAllocation *allocation)
-{
-  GtkWidget     *child = gtk_bin_get_child (GTK_BIN (widget));
-  GtkAllocation  child_allocation;
-  gint           border_width;
-
-  gtk_widget_set_allocation (widget, allocation);
-
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-  if (child && gtk_widget_get_visible (child))
-    {
-      child_allocation.x      = allocation->x + border_width;
-      child_allocation.y      = allocation->y + border_width;
-      child_allocation.width  = MAX (allocation->width  - 2 * border_width, 0);
-      child_allocation.height = MAX (allocation->height - 2 * border_width, 0);
-
-      gtk_widget_size_allocate (child, &child_allocation);
-    }
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (frame)),
+                               "background");
 }
 
 static gboolean
-gimp_overlay_frame_expose (GtkWidget      *widget,
-                           GdkEventExpose *eevent)
+gimp_overlay_frame_draw (GtkWidget *widget,
+                         cairo_t   *cr)
 {
-  cairo_t       *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  gboolean       rgba;
-  gint           border_width;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  gboolean         rgba;
+  gint             border_radius;
 
-  rgba = gdk_screen_get_rgba_colormap (gtk_widget_get_screen (widget)) != NULL;
-
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
+  rgba = gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)) != NULL;
 
   if (rgba)
     {
@@ -134,35 +79,36 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
     }
 
   gtk_widget_get_allocation (widget, &allocation);
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         "border-radius", &border_radius,
+                         NULL);
 
   if (rgba)
     {
       gimp_cairo_rounded_rectangle (cr,
                                     0.0,              0.0,
                                     allocation.width, allocation.height,
-                                    border_width);
+                                    border_radius);
     }
   else
     {
       cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
     }
 
-  cairo_clip_preserve (cr);
+  cairo_clip (cr);
 
-  gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
-  cairo_paint (cr);
+  gtk_render_background (style, cr,
+                         0, 0,
+                         allocation.width,
+                         allocation.height);
 
-  if (border_width > 0)
-    {
-      cairo_set_line_width (cr, 2.0);
-      gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
-      cairo_stroke (cr);
-    }
+  gtk_render_frame (style, cr,
+                    0, 0,
+                    allocation.width,
+                    allocation.height);
 
-  cairo_destroy (cr);
-
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+  return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 }
 
 GtkWidget *

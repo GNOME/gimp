@@ -25,6 +25,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpasync.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimphistogram.h"
@@ -81,7 +82,8 @@ static void     gimp_histogram_editor_menu_update   (GimpHistogramEditor *editor
 static void     gimp_histogram_editor_name_update   (GimpHistogramEditor *editor);
 static void     gimp_histogram_editor_info_update   (GimpHistogramEditor *editor);
 
-static gboolean gimp_histogram_view_expose          (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_editor_view_draw     (GimpHistogramEditor *editor,
+                                                     cairo_t             *cr);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
@@ -120,7 +122,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   GtkWidget         *hbox;
   GtkWidget         *label;
   GtkWidget         *menu;
-  GtkWidget         *table;
+  GtkWidget         *grid;
   gint               i;
 
   const gchar *gimp_histogram_editor_labels[] =
@@ -183,15 +185,14 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             G_CALLBACK (gimp_histogram_editor_info_update),
                             editor);
 
-  g_signal_connect_swapped (view, "expose-event",
-                            G_CALLBACK (gimp_histogram_view_expose),
+  g_signal_connect_swapped (view, "draw",
+                            G_CALLBACK (gimp_histogram_editor_view_draw),
                             editor);
 
-  table = gtk_table_new (3, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (editor), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   for (i = 0; i < 6; i++)
     {
@@ -204,8 +205,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                                  PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                                  -1);
       gtk_label_set_xalign (GTK_LABEL (label), 1.0);
-      gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+      gtk_widget_set_hexpand (label, TRUE);
+      gtk_grid_attach (GTK_GRID (grid), label, x, y, 1, 1);
       gtk_widget_show (label);
 
       editor->labels[i] =
@@ -217,8 +218,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       gimp_label_set_attributes (GTK_LABEL (editor->labels[i]),
                                  PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                                  -1);
-      gtk_table_attach (GTK_TABLE (table), label, x + 1, x + 2, y, y + 1,
-                        GTK_FILL, GTK_FILL, 2, 2);
+      gtk_grid_attach (GTK_GRID (grid), label, x + 1, y, 1, 1);
       gtk_widget_show (label);
     }
 }
@@ -456,13 +456,33 @@ gimp_histogram_editor_layer_changed (GimpImage           *image,
   gimp_histogram_editor_name_update (editor);
 }
 
+static void
+gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
+                                                GimpHistogramEditor *editor)
+{
+  if (gimp_async_is_finished (async))
+    gimp_histogram_editor_info_update (editor);
+}
+
 static gboolean
 gimp_histogram_editor_validate (GimpHistogramEditor *editor)
 {
   if (editor->recompute || ! editor->histogram)
     {
-      if (editor->drawable)
+      if (editor->drawable &&
+          /* avoid calculating the histogram of a detached layer.  this can
+           * happen during gimp_image_remove_layer(), as a result of a pending
+           * "expose-event" signal (handled in
+           * gimp_histogram_editor_view_expose()) executed through
+           * gtk_tree_view_clamp_node_visible(), as a result of the
+           * GimpLayerTreeView in the Layers dialog receiving the image's
+           * "active-layer-changed" signal before us.  See bug #795716,
+           * comment 6.
+           */
+          gimp_item_is_attached (GIMP_ITEM (editor->drawable)))
         {
+          GimpAsync *async;
+
           if (! editor->histogram)
             {
               GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
@@ -472,17 +492,31 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
               gimp_histogram_view_set_histogram (view, editor->histogram);
             }
 
-          gimp_drawable_calculate_histogram (editor->drawable,
-                                             editor->histogram,
-                                             TRUE);
+          async = gimp_drawable_calculate_histogram_async (editor->drawable,
+                                                           editor->histogram,
+                                                           TRUE);
+
+          gimp_async_add_callback (
+            async,
+            (GimpAsyncCallback) gimp_histogram_editor_calculate_async_callback,
+            editor);
+
+          g_object_unref (async);
         }
       else if (editor->histogram)
         {
           gimp_histogram_clear_values (editor->histogram);
+
+          gimp_histogram_editor_info_update (editor);
         }
 
-      gimp_histogram_editor_info_update (editor);
       editor->recompute = FALSE;
+
+      if (editor->idle_id)
+        {
+          g_source_remove (editor->idle_id);
+          editor->idle_id = 0;
+        }
     }
 
   return (editor->histogram != NULL);
@@ -674,7 +708,8 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_view_expose (GimpHistogramEditor *editor)
+gimp_histogram_editor_view_draw (GimpHistogramEditor *editor,
+                                 cairo_t             *cr)
 {
   gimp_histogram_editor_validate (editor);
 

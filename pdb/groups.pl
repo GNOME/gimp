@@ -5,14 +5,12 @@
     brushes
     buffer
     channel
-    color
     context
     debug
     display
     drawable
     drawable_color
     drawable_edit
-    drawable_transform
     dynamics
     edit
     fileops
@@ -42,7 +40,6 @@
     palette
     palette_select
     palettes
-    paths
     pattern
     pattern_select
     patterns
@@ -51,10 +48,8 @@
     procedural_db
     progress
     selection
-    selection_tools
     text_layer
     text_tool
-    transform_tools
     unit
     vectors
 );

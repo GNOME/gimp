@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-04-04 00:23+0000\n"
-"PO-Revision-Date: 2018-04-14 20:43+0200\n"
+"POT-Creation-Date: 2018-05-04 18:53+0000\n"
+"PO-Revision-Date: 2018-05-05 13:29+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -66,9 +66,9 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
 #: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:434
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
@@ -126,14 +126,13 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -424,18 +423,17 @@ msgstr "Lägger till persienner"
 msgid "Blinds"
 msgstr "Persienner"
 
-#. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:555
+#: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
 msgstr "Orientering"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:432
+#: ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Horisontell"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Vertikal"
 
@@ -457,7 +455,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1622,9 +1620,7 @@ msgstr "Automatisk _förhandsgranskning"
 
 # src/menus.c:311
 #. Options area, bottom of column
-#. Options section
-#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
-#: ../plug-ins/gfig/gfig-dialog.c:1243
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Alternativ"
 
@@ -1640,7 +1636,6 @@ msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
-#: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
@@ -2162,7 +2157,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #. KiSS file type
 #. Bits per pixel
 #. Dimensions of image
-#. Layer offets
+#. Layer offsets
 #. Number of colors
 #. Image
 #. Layer
@@ -2653,6 +2648,82 @@ msgstr "Ranger:"
 #: ../plug-ins/common/file-header.c:82
 msgid "C source code header"
 msgstr "C-källkodshuvud"
+
+#: ../plug-ins/common/file-heif.c:106
+msgid "Loads HEIF images"
+msgstr "Läser in HEIF-bilder"
+
+#: ../plug-ins/common/file-heif.c:107
+msgid ""
+"Load image stored in HEIF format (High Efficiency Image File Format). "
+"Typical suffices for HEIF files are .heif, .heic."
+msgstr ""
+"Läs in bild lagrad i HEIF-format (High Efficiency Image File). Typiska "
+"filändelser för HEIF-filer är .heif, .heic."
+
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:130
+msgid "HEIF/HEIC"
+msgstr "HEIF/HEIC"
+
+#: ../plug-ins/common/file-heif.c:124
+msgid "Exports HEIF images"
+msgstr "Exporterar HEIF-bilder"
+
+#: ../plug-ins/common/file-heif.c:125
+msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgstr "Spara bild i HEIF-format (High Efficiency Image File)."
+
+#: ../plug-ins/common/file-heif.c:312 ../plug-ins/common/file-heif.c:338
+#: ../plug-ins/common/file-heif.c:377 ../plug-ins/common/file-heif.c:395
+#, c-format
+msgid "Loading HEIF image failed: %s"
+msgstr "Inläsning av HEIF-bild misslyckades: %s"
+
+#: ../plug-ins/common/file-heif.c:327
+msgid "Loading HEIF image failed: Input file contains no readable images"
+msgstr ""
+"Inläsning av HEIF-bild misslyckades: Indatafil innehåller inga läsbara "
+"bilder "
+
+#: ../plug-ins/common/file-heif.c:414
+msgid "image content"
+msgstr "bildinnehåll"
+
+#: ../plug-ins/common/file-heif.c:573
+#, c-format
+msgid "Encoding HEIF image failed: %s"
+msgstr "Kodning av HEIF-bild misslyckades: %s"
+
+#: ../plug-ins/common/file-heif.c:585
+#, c-format
+msgid "Writing HEIF image failed: %s"
+msgstr "Skrivning av HEIF-bild misslyckades: %s"
+
+#: ../plug-ins/common/file-heif.c:666
+msgid "primary"
+msgstr "primär"
+
+#: ../plug-ins/common/file-heif.c:802
+msgid "Load HEIF Image"
+msgstr "Läs in HEIF-bild"
+
+#: ../plug-ins/common/file-heif.c:816
+msgid "Select Image"
+msgstr "Välj bild"
+
+#: ../plug-ins/common/file-heif.c:929
+msgid "HEIF"
+msgstr "HEIF"
+
+#. Create the lossless checkbox
+#: ../plug-ins/common/file-heif.c:936
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
+msgid "Lossless"
+msgstr "Förlustfri"
+
+#: ../plug-ins/common/file-heif.c:940
+msgid "Quality:"
+msgstr "Kvalitet:"
 
 #: ../plug-ins/common/file-html-table.c:153
 #: ../plug-ins/common/file-html-table.c:463
@@ -4934,7 +5005,7 @@ msgid "Outside Type"
 msgstr "Typ av utsida"
 
 # ?
-#: ../plug-ins/common/fractal-trace.c:753 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
 msgstr "_Wrap"
 
@@ -5593,64 +5664,6 @@ msgstr "G-Qbist"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
 msgid "_Undo"
 msgstr "_Ångra"
-
-#: ../plug-ins/common/ripple.c:126
-msgid "Displace pixels in a ripple pattern"
-msgstr "Förskjut bildpunkter i ett krusmönster"
-
-#: ../plug-ins/common/ripple.c:133
-msgid "_Ripple..."
-msgstr "_Krusar…"
-
-#: ../plug-ins/common/ripple.c:221
-msgid "Rippling"
-msgstr "Krusar"
-
-#: ../plug-ins/common/ripple.c:483
-msgid "Ripple"
-msgstr "Krusning"
-
-#: ../plug-ins/common/ripple.c:542
-msgid "_Retain tilability"
-msgstr "_Bevara upprepningsbarhet"
-
-#. Edges toggle box
-#: ../plug-ins/common/ripple.c:579
-msgid "Edges"
-msgstr "Kanter"
-
-#: ../plug-ins/common/ripple.c:584
-msgid "_Smear"
-msgstr "_Smeta ut"
-
-#: ../plug-ins/common/ripple.c:585
-msgid "_Blank"
-msgstr "_Blank"
-
-#. Wave toggle box
-#: ../plug-ins/common/ripple.c:608
-msgid "Wave Type"
-msgstr "Vågtyp"
-
-#: ../plug-ins/common/ripple.c:612
-msgid "Saw_tooth"
-msgstr "Såg_tand"
-
-#: ../plug-ins/common/ripple.c:613
-msgid "S_ine"
-msgstr "S_inus"
-
-#: ../plug-ins/common/ripple.c:636
-msgid "_Period:"
-msgstr "_Period:"
-
-#: ../plug-ins/common/ripple.c:649
-msgid "A_mplitude:"
-msgstr "A_mplitud:"
-
-#: ../plug-ins/common/ripple.c:662
-msgid "Phase _shift:"
-msgstr "Fas_skifte:"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -7259,21 +7272,21 @@ msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1892
+#: ../plug-ins/file-psd/psd-load.c:1904
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:2083
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: ../plug-ins/file-psd/psd-load.c:2140
+#: ../plug-ins/file-psd/psd-load.c:2152
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
@@ -7586,11 +7599,6 @@ msgstr "(alla bildrutor är nyckelbilder)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
-
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Förlustfri"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
@@ -12661,6 +12669,48 @@ msgstr "_Bildläsare/Kamera…"
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
 
+#~ msgid "Displace pixels in a ripple pattern"
+#~ msgstr "Förskjut bildpunkter i ett krusmönster"
+
+#~ msgid "_Ripple..."
+#~ msgstr "_Krusar…"
+
+#~ msgid "Rippling"
+#~ msgstr "Krusar"
+
+#~ msgid "Ripple"
+#~ msgstr "Krusning"
+
+#~ msgid "_Retain tilability"
+#~ msgstr "_Bevara upprepningsbarhet"
+
+#~ msgid "Edges"
+#~ msgstr "Kanter"
+
+#~ msgid "_Smear"
+#~ msgstr "_Smeta ut"
+
+#~ msgid "_Blank"
+#~ msgstr "_Blank"
+
+#~ msgid "Wave Type"
+#~ msgstr "Vågtyp"
+
+#~ msgid "Saw_tooth"
+#~ msgstr "Såg_tand"
+
+#~ msgid "S_ine"
+#~ msgstr "S_inus"
+
+#~ msgid "_Period:"
+#~ msgstr "_Period:"
+
+#~ msgid "A_mplitude:"
+#~ msgstr "A_mplitud:"
+
+#~ msgid "Phase _shift:"
+#~ msgstr "Fas_skifte:"
+
 #~ msgid ""
 #~ "The image '%s' is in grayscale but does not contain any gray component."
 #~ msgstr "Bilden ”%s” är i gråskala men innehåller ingen grå komponent."
@@ -14613,9 +14663,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "Downloading image (%s of %s)"
 #~ msgstr "Hämtar bild (%s av %s)"
-
-#~ msgid "Uploading image (%s of %s)"
-#~ msgstr "Skickar upp bild (%s av %s)"
 
 #~ msgid "Downloaded %s of image data"
 #~ msgstr "Hämtade %s bilddata"

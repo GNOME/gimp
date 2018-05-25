@@ -65,14 +65,17 @@ struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
 
-  void             (* paint_start) (GimpPaintTool *paint_tool);
-  void             (* paint_end)   (GimpPaintTool *paint_tool);
-  void             (* paint_flush) (GimpPaintTool *paint_tool);
+  void             (* paint_start)   (GimpPaintTool *paint_tool);
+  void             (* paint_end)     (GimpPaintTool *paint_tool);
+  void             (* paint_flush)   (GimpPaintTool *paint_tool);
 
-  GimpCanvasItem * (* get_outline) (GimpPaintTool *paint_tool,
-                                    GimpDisplay   *display,
-                                    gdouble        x,
-                                    gdouble        y);
+  GimpCanvasItem * (* get_outline)   (GimpPaintTool *paint_tool,
+                                      GimpDisplay   *display,
+                                      gdouble        x,
+                                      gdouble        y);
+
+  gboolean         (* is_alpha_only) (GimpPaintTool *paint_tool,
+                                      GimpDrawable  *drawable);
 };
 
 

@@ -41,4 +41,3 @@ gint32  gimp_channel_new (gint32         image_ID,
 G_END_DECLS
 
 #endif /* __GIMP_CHANNEL_H__ */
-

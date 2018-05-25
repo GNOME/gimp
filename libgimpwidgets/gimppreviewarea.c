@@ -56,23 +56,30 @@ enum
 #define DEFAULT_CHECK_SIZE  GIMP_CHECK_SIZE_MEDIUM_CHECKS
 #define DEFAULT_CHECK_TYPE  GIMP_CHECK_TYPE_GRAY_CHECKS
 
-#define CHECK_COLOR(area, row, col)        \
-  (((((area)->offset_y + (row)) & size) ^  \
-    (((area)->offset_x + (col)) & size)) ? dark : light)
+#define CHECK_COLOR(priv, row, col)        \
+  (((((priv)->offset_y + (row)) & size) ^  \
+    (((priv)->offset_x + (col)) & size)) ? dark : light)
 
-
-typedef struct _GimpPreviewAreaPrivate GimpPreviewAreaPrivate;
 
 struct _GimpPreviewAreaPrivate
 {
+  GimpCheckSize       check_size;
+  GimpCheckType       check_type;
+  gint                width;
+  gint                height;
+  gint                rowstride;
+  gint                offset_x;
+  gint                offset_y;
+  gint                max_width;
+  gint                max_height;
+  guchar             *buf;
+  guchar             *colormap;
+
   GimpColorConfig    *config;
   GimpColorTransform *transform;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_PREVIEW_AREA, \
-                                     GimpPreviewAreaPrivate)
+#define GET_PRIVATE(obj) (((GimpPreviewArea *) (obj))->priv)
 
 
 static void      gimp_preview_area_dispose           (GObject          *object);
@@ -88,8 +95,8 @@ static void      gimp_preview_area_get_property      (GObject          *object,
 
 static void      gimp_preview_area_size_allocate     (GtkWidget        *widget,
                                                       GtkAllocation    *allocation);
-static gboolean  gimp_preview_area_expose            (GtkWidget        *widget,
-                                                      GdkEventExpose   *event);
+static gboolean  gimp_preview_area_widget_draw       (GtkWidget        *widget,
+                                                      cairo_t          *cr);
 
 static void      gimp_preview_area_queue_draw        (GimpPreviewArea  *area,
                                                       gint              x,
@@ -119,7 +126,7 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
   object_class->get_property  = gimp_preview_area_get_property;
 
   widget_class->size_allocate = gimp_preview_area_size_allocate;
-  widget_class->expose_event  = gimp_preview_area_expose;
+  widget_class->draw          = gimp_preview_area_widget_draw;
 
   g_object_class_install_property (object_class, PROP_CHECK_SIZE,
                                    g_param_spec_enum ("check-size",
@@ -143,17 +150,18 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
 static void
 gimp_preview_area_init (GimpPreviewArea *area)
 {
-  area->check_size = DEFAULT_CHECK_SIZE;
-  area->check_type = DEFAULT_CHECK_TYPE;
-  area->buf        = NULL;
-  area->colormap   = NULL;
-  area->offset_x   = 0;
-  area->offset_y   = 0;
-  area->width      = 0;
-  area->height     = 0;
-  area->rowstride  = 0;
-  area->max_width  = -1;
-  area->max_height = -1;
+  GimpPreviewAreaPrivate *priv;
+
+  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
+                                            GIMP_TYPE_PREVIEW_AREA,
+                                            GimpPreviewAreaPrivate);
+
+  priv = area->priv;
+
+  priv->check_size = DEFAULT_CHECK_SIZE;
+  priv->check_type = DEFAULT_CHECK_TYPE;
+  priv->max_width  = -1;
+  priv->max_height = -1;
 
   gimp_widget_track_monitor (GTK_WIDGET (area),
                              G_CALLBACK (gimp_preview_area_destroy_transform),
@@ -173,10 +181,10 @@ gimp_preview_area_dispose (GObject *object)
 static void
 gimp_preview_area_finalize (GObject *object)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
-  g_clear_pointer (&area->buf,      g_free);
-  g_clear_pointer (&area->colormap, g_free);
+  g_clear_pointer (&priv->buf,      g_free);
+  g_clear_pointer (&priv->colormap, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -187,15 +195,15 @@ gimp_preview_area_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_CHECK_SIZE:
-      area->check_size = g_value_get_enum (value);
+      priv->check_size = g_value_get_enum (value);
       break;
     case PROP_CHECK_TYPE:
-      area->check_type = g_value_get_enum (value);
+      priv->check_type = g_value_get_enum (value);
       break;
 
     default:
@@ -210,15 +218,15 @@ gimp_preview_area_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_CHECK_SIZE:
-      g_value_set_enum (value, area->check_size);
+      g_value_set_enum (value, priv->check_size);
       break;
     case PROP_CHECK_TYPE:
-      g_value_set_enum (value, area->check_type);
+      g_value_set_enum (value, priv->check_type);
       break;
 
     default:
@@ -231,53 +239,52 @@ static void
 gimp_preview_area_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
-  GimpPreviewArea *area = GIMP_PREVIEW_AREA (widget);
-  gint             width;
-  gint             height;
+  GimpPreviewAreaPrivate *priv = GET_PRIVATE (widget);
+  gint                    width;
+  gint                    height;
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  width  = (area->max_width > 0 ?
-            MIN (allocation->width, area->max_width) : allocation->width);
-  height = (area->max_height > 0 ?
-            MIN (allocation->height, area->max_height) : allocation->height);
+  width  = (priv->max_width > 0 ?
+            MIN (allocation->width, priv->max_width) : allocation->width);
+  height = (priv->max_height > 0 ?
+            MIN (allocation->height, priv->max_height) : allocation->height);
 
-  if (width  != area->width || height != area->height)
+  if (width  != priv->width || height != priv->height)
     {
-      if (area->buf)
+      if (priv->buf)
         {
-          g_free (area->buf);
+          g_free (priv->buf);
 
-          area->buf       = NULL;
-          area->rowstride = 0;
+          priv->buf       = NULL;
+          priv->rowstride = 0;
         }
 
-      area->width  = width;
-      area->height = height;
+      priv->width  = width;
+      priv->height = height;
     }
 }
 
 static gboolean
-gimp_preview_area_expose (GtkWidget      *widget,
-                          GdkEventExpose *event)
+gimp_preview_area_widget_draw (GtkWidget *widget,
+                               cairo_t   *cr)
 {
   GimpPreviewArea        *area = GIMP_PREVIEW_AREA (widget);
   GimpPreviewAreaPrivate *priv = GET_PRIVATE (area);
   GtkAllocation           allocation;
   GdkPixbuf              *pixbuf;
   GdkRectangle            rect;
-  cairo_t                *cr;
 
-  if (! area->buf)
+  if (! priv->buf)
     return FALSE;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  rect.x      = (allocation.width  - area->width)  / 2;
-  rect.y      = (allocation.height - area->height) / 2;
-  rect.width  = area->width;
-  rect.height = area->height;
+  rect.x      = (allocation.width  - priv->width)  / 2;
+  rect.y      = (allocation.height - priv->height) / 2;
+  rect.width  = priv->width;
+  rect.height = priv->height;
 
   if (! priv->transform)
     gimp_preview_area_create_transform (area);
@@ -285,20 +292,20 @@ gimp_preview_area_expose (GtkWidget      *widget,
   if (priv->transform)
     {
       const Babl *format    = babl_format ("R'G'B' u8");
-      gint        rowstride = ((area->width * 3) + 3) & ~3;
-      guchar     *buf       = g_new (guchar, rowstride * area->height);
-      guchar     *src       = area->buf;
+      gint        rowstride = ((priv->width * 3) + 3) & ~3;
+      guchar     *buf       = g_new (guchar, rowstride * priv->height);
+      guchar     *src       = priv->buf;
       guchar     *dest      = buf;
       gint        i;
 
-      for (i = 0; i < area->height; i++)
+      for (i = 0; i < priv->height; i++)
         {
           gimp_color_transform_process_pixels (priv->transform,
                                                format, src,
                                                format, dest,
-                                               area->width);
+                                               priv->width);
 
-          src  += area->rowstride;
+          src  += priv->rowstride;
           dest += rowstride;
         }
 
@@ -313,25 +320,19 @@ gimp_preview_area_expose (GtkWidget      *widget,
     }
   else
     {
-      pixbuf = gdk_pixbuf_new_from_data (area->buf,
+      pixbuf = gdk_pixbuf_new_from_data (priv->buf,
                                          GDK_COLORSPACE_RGB,
                                          FALSE,
                                          8,
                                          rect.width,
                                          rect.height,
-                                         area->rowstride,
+                                         priv->rowstride,
                                          NULL, NULL);
     }
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   gdk_cairo_set_source_pixbuf (cr, pixbuf, rect.x, rect.y);
   cairo_paint (cr);
 
-  cairo_destroy (cr);
   g_object_unref (pixbuf);
 
   return FALSE;
@@ -344,13 +345,14 @@ gimp_preview_area_queue_draw (GimpPreviewArea *area,
                               gint             width,
                               gint             height)
 {
-  GtkWidget     *widget = GTK_WIDGET (area);
-  GtkAllocation  allocation;
+  GimpPreviewAreaPrivate *priv   = GET_PRIVATE (area);
+  GtkWidget              *widget = GTK_WIDGET (area);
+  GtkAllocation           allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  x += (allocation.width  - area->width)  / 2;
-  y += (allocation.height - area->height) / 2;
+  x += (allocation.width  - priv->width)  / 2;
+  y += (allocation.height - priv->height) / 2;
 
   gtk_widget_queue_draw_area (widget, x, y, width, height);
 }
@@ -457,16 +459,19 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                         const guchar    *buf,
                         gint             rowstride)
 {
-  const guchar *src;
-  guchar       *dest;
-  guint         size;
-  guchar        light;
-  guchar        dark;
-  gint          row;
-  gint          col;
+  GimpPreviewAreaPrivate *priv;
+  const guchar           *src;
+  guchar                 *dest;
+  guint                   size;
+  guchar                  light;
+  guchar                  dark;
+  gint                    row;
+  gint                    col;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  priv = GET_PRIVATE (area);
 
   if (width == 0 || height == 0)
     return;
@@ -474,10 +479,10 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   g_return_if_fail (buf != NULL);
   g_return_if_fail (rowstride > 0);
 
-  if (x + width < 0 || x >= area->width)
+  if (x + width < 0 || x >= priv->width)
     return;
 
-  if (y + height < 0 || y >= area->height)
+  if (y + height < 0 || y >= priv->height)
     return;
 
   if (x < 0)
@@ -490,8 +495,8 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       x = 0;
     }
 
-  if (x + width > area->width)
-    width = area->width - x;
+  if (x + width > priv->width)
+    width = priv->width - x;
 
   if (y < 0)
     {
@@ -501,20 +506,20 @@ gimp_preview_area_draw (GimpPreviewArea *area,
       y = 0;
     }
 
-  if (y + height > area->height)
-    height = area->height - y;
+  if (y + height > priv->height)
+    height = priv->height - y;
 
-  if (! area->buf)
+  if (! priv->buf)
     {
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new (guchar, area->rowstride * area->height);
+      priv->rowstride = ((priv->width * 3) + 3) & ~3;
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
     }
 
-  size = 1 << (2 + area->check_size);
-  gimp_checks_get_shades (area->check_type, &light, &dark);
+  size = 1 << (2 + priv->check_size);
+  gimp_checks_get_shades (priv->check_type, &light, &dark);
 
   src  = buf;
-  dest = area->buf + x * 3 + y * area->rowstride;
+  dest = priv->buf + x * 3 + y * priv->rowstride;
 
   switch (type)
     {
@@ -524,7 +529,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
           memcpy (dest, src, 3 * width);
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
@@ -539,7 +544,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
               switch (s[3])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -551,7 +556,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[3] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = ((check << 8) + (s[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (s[1] - check) * alpha) >> 8;
@@ -562,7 +567,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
             }
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
        break;
 
@@ -578,7 +583,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
             }
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
@@ -593,7 +598,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
               switch (s[1])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -603,7 +608,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[1] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = d[1] = d[2] =
                       ((check << 8) + (s[0] - check) * alpha) >> 8;
@@ -613,12 +618,12 @@ gimp_preview_area_draw (GimpPreviewArea *area,
             }
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s = src;
@@ -626,7 +631,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s++, d += 3)
             {
-              const guchar *colormap = area->colormap + 3 * s[0];
+              const guchar *colormap = priv->colormap + 3 * s[0];
 
               d[0] = colormap[0];
               d[1] = colormap[1];
@@ -634,12 +639,12 @@ gimp_preview_area_draw (GimpPreviewArea *area,
             }
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s = src;
@@ -647,12 +652,12 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s += 2, d += 3)
             {
-              const guchar *colormap  = area->colormap + 3 * s[0];
+              const guchar *colormap  = priv->colormap + 3 * s[0];
 
               switch (s[1])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -664,7 +669,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[3] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = ((check << 8) + (colormap[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (colormap[1] - check) * alpha) >> 8;
@@ -675,7 +680,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
             }
 
           src  += rowstride;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
     }
@@ -717,18 +722,21 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                          gint             rowstride2,
                          guchar           opacity)
 {
-  const guchar *src1;
-  const guchar *src2;
-  guchar       *dest;
-  guint         size;
-  guchar        light;
-  guchar        dark;
-  gint          row;
-  gint          col;
-  gint          i;
+  GimpPreviewAreaPrivate *priv;
+  const guchar           *src1;
+  const guchar           *src2;
+  guchar                 *dest;
+  guint                   size;
+  guchar                  light;
+  guchar                  dark;
+  gint                    row;
+  gint                    col;
+  gint                    i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  priv = GET_PRIVATE (area);
 
   if (width == 0 || height == 0)
     return;
@@ -754,10 +762,10 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       break;
     }
 
-  if (x + width < 0 || x >= area->width)
+  if (x + width < 0 || x >= priv->width)
     return;
 
-  if (y + height < 0 || y >= area->height)
+  if (y + height < 0 || y >= priv->height)
     return;
 
   if (x < 0)
@@ -771,8 +779,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       x = 0;
     }
 
-  if (x + width > area->width)
-    width = area->width - x;
+  if (x + width > priv->width)
+    width = priv->width - x;
 
   if (y < 0)
     {
@@ -783,21 +791,21 @@ gimp_preview_area_blend (GimpPreviewArea *area,
       y = 0;
     }
 
-  if (y + height > area->height)
-    height = area->height - y;
+  if (y + height > priv->height)
+    height = priv->height - y;
 
-  if (! area->buf)
+  if (! priv->buf)
     {
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new (guchar, area->rowstride * area->height);
+      priv->rowstride = ((priv->width * 3) + 3) & ~3;
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
     }
 
-  size = 1 << (2 + area->check_size);
-  gimp_checks_get_shades (area->check_type, &light, &dark);
+  size = 1 << (2 + priv->check_size);
+  gimp_checks_get_shades (priv->check_type, &light, &dark);
 
   src1 = buf1;
   src2 = buf2;
-  dest = area->buf + x * 3 + y * area->rowstride;
+  dest = priv->buf + x * 3 + y * priv->rowstride;
 
   switch (type)
     {
@@ -817,7 +825,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
@@ -859,7 +867,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
               switch (inter[3])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -871,7 +879,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = inter[3] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
@@ -883,7 +891,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
@@ -902,7 +910,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
@@ -939,7 +947,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
               switch (inter[1])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -949,7 +957,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = inter[1] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = d[1] = d[2] =
                       ((check << 8) + (inter[0] - check) * alpha) >> 8;
@@ -960,12 +968,12 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -974,8 +982,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s1++, s2++, d += 3)
             {
-              const guchar *cmap1 = area->colormap + 3 * s1[0];
-              const guchar *cmap2 = area->colormap + 3 * s2[0];
+              const guchar *cmap1 = priv->colormap + 3 * s1[0];
+              const guchar *cmap2 = priv->colormap + 3 * s2[0];
 
               d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * opacity) >> 8;
               d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * opacity) >> 8;
@@ -984,12 +992,12 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -998,8 +1006,8 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s1 += 2, s2 += 2, d += 3)
             {
-              const guchar *cmap1  = area->colormap + 3 * s1[0];
-              const guchar *cmap2  = area->colormap + 3 * s2[0];
+              const guchar *cmap1  = priv->colormap + 3 * s1[0];
+              const guchar *cmap2  = priv->colormap + 3 * s2[0];
               guchar        inter[4];
 
               if (s1[1] == s2[1])
@@ -1032,7 +1040,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
               switch (inter[3])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                   break;
 
                 case 255:
@@ -1044,7 +1052,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = inter[3] + 1;
-                    register guint check = CHECK_COLOR (area, row, col);
+                    register guint check = CHECK_COLOR (priv, row, col);
 
                     d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
@@ -1056,7 +1064,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           src1 += rowstride1;
           src2 += rowstride2;
-          dest += area->rowstride;
+          dest += priv->rowstride;
         }
       break;
     }
@@ -1101,19 +1109,22 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                         const guchar    *mask,
                         gint             rowstride_mask)
 {
-  const guchar *src1;
-  const guchar *src2;
-  const guchar *src_mask;
-  guchar       *dest;
-  guint         size;
-  guchar        light;
-  guchar        dark;
-  gint          row;
-  gint          col;
-  gint          i;
+  GimpPreviewAreaPrivate *priv;
+  const guchar           *src1;
+  const guchar           *src2;
+  const guchar           *src_mask;
+  guchar                 *dest;
+  guint                   size;
+  guchar                  light;
+  guchar                  dark;
+  gint                    row;
+  gint                    col;
+  gint                    i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  priv = GET_PRIVATE (area);
 
   if (width == 0 || height == 0)
     return;
@@ -1125,10 +1136,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   g_return_if_fail (rowstride2 > 0);
   g_return_if_fail (rowstride_mask > 0);
 
-  if (x + width < 0 || x >= area->width)
+  if (x + width < 0 || x >= priv->width)
     return;
 
-  if (y + height < 0 || y >= area->height)
+  if (y + height < 0 || y >= priv->height)
     return;
 
   if (x < 0)
@@ -1143,8 +1154,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       x = 0;
     }
 
-  if (x + width > area->width)
-    width = area->width - x;
+  if (x + width > priv->width)
+    width = priv->width - x;
 
   if (y < 0)
     {
@@ -1156,22 +1167,22 @@ gimp_preview_area_mask (GimpPreviewArea *area,
       y = 0;
     }
 
-  if (y + height > area->height)
-    height = area->height - y;
+  if (y + height > priv->height)
+    height = priv->height - y;
 
-  if (! area->buf)
+  if (! priv->buf)
     {
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new (guchar, area->rowstride * area->height);
+      priv->rowstride = ((priv->width * 3) + 3) & ~3;
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
     }
 
-  size = 1 << (2 + area->check_size);
-  gimp_checks_get_shades (area->check_type, &light, &dark);
+  size = 1 << (2 + priv->check_size);
+  gimp_checks_get_shades (priv->check_type, &light, &dark);
 
   src1     = buf1;
   src2     = buf2;
   src_mask = mask;
-  dest     = area->buf + x * 3 + y * area->rowstride;
+  dest     = priv->buf + x * 3 + y * priv->rowstride;
 
   switch (type)
     {
@@ -1193,7 +1204,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
       break;
 
@@ -1213,7 +1224,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s1[3])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1225,7 +1236,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s1[3] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = ((check << 8) + (s1[0] - check) * alpha) >> 8;
                         d[1] = ((check << 8) + (s1[1] - check) * alpha) >> 8;
@@ -1239,7 +1250,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s2[3])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1251,7 +1262,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s2[3] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = ((check << 8) + (s2[0] - check) * alpha) >> 8;
                         d[1] = ((check << 8) + (s2[1] - check) * alpha) >> 8;
@@ -1292,7 +1303,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     switch (inter[3])
                       {
                       case 0:
-                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                         break;
 
                       case 255:
@@ -1304,7 +1315,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                       default:
                         {
                           register guint alpha = inter[3] + 1;
-                          register guint check = CHECK_COLOR (area, row, col);
+                          register guint check = CHECK_COLOR (priv, row, col);
 
                           d[0] = (((check << 8) +
                                    (inter[0] - check) * alpha) >> 8);
@@ -1323,7 +1334,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
        break;
 
@@ -1341,7 +1352,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
       break;
 
@@ -1361,7 +1372,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s1[1])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1371,7 +1382,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s1[1] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = d[1] = d[2] =
                           ((check << 8) + (s1[0] - check) * alpha) >> 8;
@@ -1384,7 +1395,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s2[1])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1394,7 +1405,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s2[1] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = d[1] = d[2] =
                           ((check << 8) + (s2[0] - check) * alpha) >> 8;
@@ -1429,7 +1440,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     switch (inter[1])
                       {
                       case 0:
-                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                         break;
 
                       case 255:
@@ -1439,7 +1450,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                       default:
                         {
                           register guint alpha = inter[1] + 1;
-                          register guint check = CHECK_COLOR (area, row, col);
+                          register guint check = CHECK_COLOR (priv, row, col);
 
                           d[0] = d[1] = d[2] =
                             ((check << 8) + (inter[0] - check) * alpha) >> 8;
@@ -1454,12 +1465,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXED_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = 0; row < height; row++)
         {
           const guchar *s1 = src1;
@@ -1469,8 +1480,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
           for (col = 0; col < width; col++, s1++, s2++, m++, d += 3)
             {
-              const guchar *cmap1 = area->colormap + 3 * s1[0];
-              const guchar *cmap2 = area->colormap + 3 * s2[0];
+              const guchar *cmap1 = priv->colormap + 3 * s1[0];
+              const guchar *cmap2 = priv->colormap + 3 * s2[0];
 
               d[0] = ((cmap1[0] << 8) + (cmap2[0] - cmap1[0]) * m[0]) >> 8;
               d[1] = ((cmap1[1] << 8) + (cmap2[1] - cmap1[1]) * m[0]) >> 8;
@@ -1480,12 +1491,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
       break;
 
     case GIMP_INDEXEDA_IMAGE:
-      g_return_if_fail (area->colormap != NULL);
+      g_return_if_fail (priv->colormap != NULL);
       for (row = y; row < y + height; row++)
         {
           const guchar *s1 = src1;
@@ -1495,8 +1506,8 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s1 += 2, s2 += 2, m++, d += 3)
             {
-              const guchar *cmap1  = area->colormap + 3 * s1[0];
-              const guchar *cmap2  = area->colormap + 3 * s2[0];
+              const guchar *cmap1  = priv->colormap + 3 * s1[0];
+              const guchar *cmap2  = priv->colormap + 3 * s2[0];
 
               switch (m[0])
                 {
@@ -1504,7 +1515,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s1[1])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1516,7 +1527,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s1[1] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = ((check << 8) + (cmap1[0] - check) * alpha) >> 8;
                         d[1] = ((check << 8) + (cmap1[1] - check) * alpha) >> 8;
@@ -1530,7 +1541,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                   switch (s2[1])
                     {
                     case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                      d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                       break;
 
                     case 255:
@@ -1542,7 +1553,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     default:
                       {
                         register guint alpha = s2[1] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                        register guint check = CHECK_COLOR (priv, row, col);
 
                         d[0] = ((check << 8) + (cmap2[0] - check) * alpha) >> 8;
                         d[1] = ((check << 8) + (cmap2[1] - check) * alpha) >> 8;
@@ -1586,7 +1597,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                     switch (inter[3])
                       {
                       case 0:
-                        d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                        d[0] = d[1] = d[2] = CHECK_COLOR (priv, row, col);
                         break;
 
                       case 255:
@@ -1598,7 +1609,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
                       default:
                         {
                           register guint alpha = inter[3] + 1;
-                          register guint check = CHECK_COLOR (area, row, col);
+                          register guint check = CHECK_COLOR (priv, row, col);
 
                           d[0] =
                             ((check << 8) + (inter[0] - check) * alpha) >> 8;
@@ -1617,7 +1628,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
           src1     += rowstride1;
           src2     += rowstride2;
           src_mask += rowstride_mask;
-          dest     += area->rowstride;
+          dest     += priv->rowstride;
         }
       break;
     }
@@ -1651,21 +1662,24 @@ gimp_preview_area_fill (GimpPreviewArea *area,
                         guchar           green,
                         guchar           blue)
 {
-  guchar *dest;
-  guchar *d;
-  gint    row;
-  gint    col;
+  GimpPreviewAreaPrivate *priv;
+  guchar                 *dest;
+  guchar                 *d;
+  gint                    row;
+  gint                    col;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
 
+  priv = GET_PRIVATE (area);
+
   if (width == 0 || height == 0)
     return;
 
-  if (x + width < 0 || x >= area->width)
+  if (x + width < 0 || x >= priv->width)
     return;
 
-  if (y + height < 0 || y >= area->height)
+  if (y + height < 0 || y >= priv->height)
     return;
 
   if (x < 0)
@@ -1674,8 +1688,8 @@ gimp_preview_area_fill (GimpPreviewArea *area,
       x = 0;
     }
 
-  if (x + width > area->width)
-    width = area->width - x;
+  if (x + width > priv->width)
+    width = priv->width - x;
 
   if (y < 0)
     {
@@ -1683,16 +1697,16 @@ gimp_preview_area_fill (GimpPreviewArea *area,
       y = 0;
     }
 
-  if (y + height > area->height)
-    height = area->height - y;
+  if (y + height > priv->height)
+    height = priv->height - y;
 
-  if (! area->buf)
+  if (! priv->buf)
     {
-      area->rowstride = ((area->width * 3) + 3) & ~3;
-      area->buf = g_new (guchar, area->rowstride * area->height);
+      priv->rowstride = ((priv->width * 3) + 3) & ~3;
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
     }
 
-  dest = area->buf + x * 3 + y * area->rowstride;
+  dest = priv->buf + x * 3 + y * priv->rowstride;
 
   /*  colorize first row  */
   for (col = 0, d = dest; col < width; col++, d+= 3)
@@ -1705,7 +1719,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
   /*  copy first row to remaining rows  */
   for (row = 1, d = dest; row < height; row++)
     {
-      d += area->rowstride;
+      d += priv->rowstride;
       memcpy (d, dest, width * 3);
     }
 
@@ -1728,10 +1742,14 @@ gimp_preview_area_set_offsets (GimpPreviewArea *area,
                                gint             x,
                                gint             y)
 {
+  GimpPreviewAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
 
-  area->offset_x = x;
-  area->offset_y = y;
+  priv = GET_PRIVATE (area);
+
+  priv->offset_x = x;
+  priv->offset_y = y;
 }
 
 /**
@@ -1751,23 +1769,27 @@ gimp_preview_area_set_colormap (GimpPreviewArea *area,
                                 const guchar    *colormap,
                                 gint             num_colors)
 {
+  GimpPreviewAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (colormap != NULL || num_colors == 0);
   g_return_if_fail (num_colors >= 0 && num_colors <= 256);
 
+  priv = GET_PRIVATE (area);
+
   if (num_colors > 0)
     {
-      if (area->colormap)
-        memset (area->colormap, 0, 3 * 256);
+      if (priv->colormap)
+        memset (priv->colormap, 0, 3 * 256);
       else
-        area->colormap = g_new0 (guchar, 3 * 256);
+        priv->colormap = g_new0 (guchar, 3 * 256);
 
-      memcpy (area->colormap, colormap, 3 * num_colors);
+      memcpy (priv->colormap, colormap, 3 * num_colors);
     }
   else
     {
-      g_free (area->colormap);
-      area->colormap = NULL;
+      g_free (priv->colormap);
+      priv->colormap = NULL;
     }
 }
 
@@ -1816,6 +1838,21 @@ gimp_preview_area_set_color_config (GimpPreviewArea *area,
     }
 }
 
+void
+gimp_preview_area_get_size (GimpPreviewArea *area,
+                            gint            *width,
+                            gint            *height)
+{
+  GimpPreviewAreaPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+
+  priv = GET_PRIVATE (area);
+
+  if (width)  *width  = priv->width;
+  if (height) *height = priv->height;
+}
+
 /**
  * gimp_preview_area_set_max_size:
  * @area:   a #GimpPreviewArea widget
@@ -1834,10 +1871,14 @@ gimp_preview_area_set_max_size (GimpPreviewArea *area,
                                 gint             width,
                                 gint             height)
 {
+  GimpPreviewAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
 
-  area->max_width  = width;
-  area->max_height = height;
+  priv = GET_PRIVATE (area);
+
+  priv->max_width  = width;
+  priv->max_height = height;
 }
 
 
@@ -1953,10 +1994,5 @@ gimp_preview_area_menu_popup (GimpPreviewArea *area,
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-size"));
 
-  if (event)
-    gtk_menu_popup (GTK_MENU (menu),
-                    NULL, NULL, NULL, NULL, event->button, event->time);
-  else
-    gtk_menu_popup (GTK_MENU (menu),
-                    NULL, NULL, NULL, NULL, 0, gtk_get_current_event_time ());
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 }

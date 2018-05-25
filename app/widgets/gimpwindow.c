@@ -46,8 +46,8 @@ enum
 
 struct _GimpWindowPrivate
 {
-  gint       monitor;
-  GtkWidget *primary_focus_widget;
+  GdkMonitor *monitor;
+  GtkWidget  *primary_focus_widget;
 };
 
 
@@ -80,10 +80,9 @@ gimp_window_class_init (GimpWindowClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpWindowClass, monitor_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__OBJECT_INT,
-                  G_TYPE_NONE, 2,
-                  GDK_TYPE_SCREEN,
-                  G_TYPE_INT);
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GDK_TYPE_MONITOR);
 
   object_class->dispose         = gimp_window_dispose;
 
@@ -100,8 +99,6 @@ gimp_window_init (GimpWindow *window)
   window->private = G_TYPE_INSTANCE_GET_PRIVATE (window,
                                                  GIMP_TYPE_WINDOW,
                                                  GimpWindowPrivate);
-
-  window->private->monitor = -1;
 }
 
 static void
@@ -116,16 +113,15 @@ static void
 gimp_window_monitor_changed (GtkWidget *widget)
 {
   GimpWindow *window     = GIMP_WINDOW (widget);
-  GdkScreen  *screen     = gtk_widget_get_screen (widget);
+  GdkDisplay *display    = gtk_widget_get_display (widget);
   GdkWindow  *gdk_window = gtk_widget_get_window (widget);
 
   if (gdk_window)
     {
-      window->private->monitor = gdk_screen_get_monitor_at_window (screen,
-                                                                   gdk_window);
+      window->private->monitor = gdk_display_get_monitor_at_window (display,
+                                                                    gdk_window);
 
       g_signal_emit (widget, window_signals[MONITOR_CHANGED], 0,
-                     screen,
                      window->private->monitor);
     }
 }
@@ -145,7 +141,7 @@ gimp_window_configure_event (GtkWidget         *widget,
                              GdkEventConfigure *cevent)
 {
   GimpWindow *window     = GIMP_WINDOW (widget);
-  GdkScreen  *screen     = gtk_widget_get_screen (widget);
+  GdkDisplay *display    = gtk_widget_get_display (widget);
   GdkWindow  *gdk_window = gtk_widget_get_window (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->configure_event)
@@ -153,7 +149,7 @@ gimp_window_configure_event (GtkWidget         *widget,
 
   if (gdk_window &&
       window->private->monitor !=
-      gdk_screen_get_monitor_at_window (screen, gdk_window))
+      gdk_display_get_monitor_at_window (display, gdk_window))
     {
       gimp_window_monitor_changed (widget);
     }

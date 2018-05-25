@@ -342,7 +342,6 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                                         NULL,
                                         _("Color Picker Information"),
                                         NULL, NULL,
-                                        gtk_widget_get_screen (GTK_WIDGET (shell)),
                                         gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                         TRUE,
 

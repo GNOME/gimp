@@ -2853,39 +2853,6 @@ CODE
     );
 }
 
-sub context_get_transform_recursion {
-    &std_pdb_deprecated();
-
-    @outargs = (
-        { name => 'transform_recursion', type => '1 <= int32',
-          desc => 'This returns always 3 and is meaningless' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  transform_recursion = 3;
-}
-CODE
-    );
-}
-
-sub context_set_transform_recursion {
-    &std_pdb_deprecated();
-
-    @inargs = (
-        { name => 'transform_recursion', type => '1 <= int32', dead => 1,
-          desc => 'This parameter is ignored' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-}
-CODE
-    );
-}
-
 sub context_get_ink_size {
     $blurb = 'Get ink blob size in pixels.';
     $help = 'Get the ink blob size in pixels for ink tool.';
@@ -3437,7 +3404,6 @@ CODE
             context_get_interpolation context_set_interpolation
             context_get_transform_direction context_set_transform_direction
             context_get_transform_resize context_set_transform_resize
-            context_get_transform_recursion context_set_transform_recursion
             context_get_ink_size context_set_ink_size
             context_get_ink_angle context_set_ink_angle
             context_get_ink_size_sensitivity context_set_ink_size_sensitivity

@@ -951,50 +951,6 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
 }
 
 /**
- * gimp_vectors_to_selection:
- * @vectors_ID: The vectors object to render to the selection.
- * @operation: The desired operation with current selection.
- * @antialias: Antialias selection.
- * @feather: Feather selection.
- * @feather_radius_x: Feather radius x.
- * @feather_radius_y: Feather radius y.
- *
- * Deprecated: Use gimp_image_select_item() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.4
- **/
-gboolean
-gimp_vectors_to_selection (gint32         vectors_ID,
-                           GimpChannelOps operation,
-                           gboolean       antialias,
-                           gboolean       feather,
-                           gdouble        feather_radius_x,
-                           gdouble        feather_radius_y)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-to-selection",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, operation,
-                                    GIMP_PDB_INT32, antialias,
-                                    GIMP_PDB_INT32, feather,
-                                    GIMP_PDB_FLOAT, feather_radius_x,
-                                    GIMP_PDB_FLOAT, feather_radius_y,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_vectors_import_from_file:
  * @image_ID: The image.
  * @filename: The name of the SVG file to import.

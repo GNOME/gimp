@@ -149,7 +149,7 @@
                                10
                                (gen_bottom_array xsize ysize owidth oheight width height))
 
-    (gimp-drawableedit-fill layer FILL-BACKGROUND)
+    (gimp-drawable-edit-fill layer FILL-BACKGROUND)
     (gimp-selection-none img)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)

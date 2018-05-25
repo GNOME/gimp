@@ -38,7 +38,6 @@ G_BEGIN_DECLS
  * @GIMP_INT_STORE_USER_DATA:   arbitrary user data
  * @GIMP_INT_STORE_ABBREV:      an abbreviated label
  * @GIMP_INT_STORE_NUM_COLUMNS: the number of columns
- * @GIMP_INT_STORE_STOCK_ID:    compat alias for @GIMP_INT_STORE_ICON_NAME
  *
  * The column types of #GimpIntStore.
  **/
@@ -50,10 +49,7 @@ typedef enum
   GIMP_INT_STORE_PIXBUF,
   GIMP_INT_STORE_USER_DATA,
   GIMP_INT_STORE_ABBREV,
-  GIMP_INT_STORE_NUM_COLUMNS,
-
-  /* deprecated */
-  GIMP_INT_STORE_STOCK_ID = GIMP_INT_STORE_ICON_NAME
+  GIMP_INT_STORE_NUM_COLUMNS
 } GimpIntStoreColumns;
 
 
@@ -65,14 +61,14 @@ typedef enum
 #define GIMP_INT_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INT_STORE, GimpIntStoreClass))
 
 
-typedef struct _GimpIntStoreClass  GimpIntStoreClass;
+typedef struct _GimpIntStorePrivate GimpIntStorePrivate;
+typedef struct _GimpIntStoreClass   GimpIntStoreClass;
 
 struct _GimpIntStore
 {
-  GtkListStore  parent_instance;
+  GtkListStore         parent_instance;
 
-  /*< private >*/
-  GtkTreeIter  *empty_iter;
+  GimpIntStorePrivate *priv;
 };
 
 struct _GimpIntStoreClass
@@ -84,6 +80,10 @@ struct _GimpIntStoreClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

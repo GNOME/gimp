@@ -108,7 +108,7 @@ image_new_dialog_new (GimpContext *context)
 
                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -327,7 +327,7 @@ image_new_confirm_dialog (ImageNewDialog *private)
 
                                       NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (private->confirm_dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (private->confirm_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -368,8 +368,7 @@ image_new_create_image (ImageNewDialog *private)
   image = gimp_image_new_from_template (gimp, template,
                                         gimp_get_user_context (gimp));
   gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0,
-                       G_OBJECT (gtk_widget_get_screen (private->dialog)),
-                       gimp_widget_get_monitor (private->dialog));
+                       G_OBJECT (gimp_widget_get_monitor (private->dialog)));
   g_object_unref (image);
 
   gtk_widget_destroy (private->dialog);

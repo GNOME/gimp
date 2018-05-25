@@ -65,7 +65,6 @@
 #include <libgimpwidgets/gimppageselector.h>
 #include <libgimpwidgets/gimppatheditor.h>
 #include <libgimpwidgets/gimppickbutton.h>
-#include <libgimpwidgets/gimppixmap.h>
 #include <libgimpwidgets/gimppreview.h>
 #include <libgimpwidgets/gimppreviewarea.h>
 #include <libgimpwidgets/gimppropwidgets.h>
@@ -76,14 +75,10 @@
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstringcombobox.h>
 #include <libgimpwidgets/gimpunitcombobox.h>
-#include <libgimpwidgets/gimpunitmenu.h>
 #include <libgimpwidgets/gimpunitstore.h>
 #include <libgimpwidgets/gimpwidgets-error.h>
 #include <libgimpwidgets/gimpwidgetsutils.h>
 #include <libgimpwidgets/gimpzoommodel.h>
-
-#include <libgimpwidgets/gimp3migration.h>
-#include <libgimpwidgets/gimpoldwidgets.h>
 
 #undef __GIMP_WIDGETS_H_INSIDE__
 
@@ -145,18 +140,6 @@ void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);
 
 
-GIMP_DEPRECATED_FOR(gtk_spin_button_new)
-GtkWidget * gimp_spin_button_new   (/* return value: */
-                                    GtkObject         **adjustment,
-
-                                    gdouble             value,
-                                    gdouble             lower,
-                                    gdouble             upper,
-                                    gdouble             step_increment,
-                                    gdouble             page_increment,
-                                    gdouble             page_size,
-                                    gdouble             climb_rate,
-                                    guint               digits);
 
 /**
  * GIMP_RANDOM_SEED_SPINBUTTON:

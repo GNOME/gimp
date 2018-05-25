@@ -1042,7 +1042,7 @@ compose_dialog (const gchar *compose_type,
   GtkWidget    *hbox;
   GtkWidget    *label;
   GtkWidget    *combo;
-  GtkWidget    *table;
+  GtkWidget    *grid;
   GtkSizeGroup *size_group;
   gint32       *layer_list;
   gint          nlayers;
@@ -1078,7 +1078,7 @@ compose_dialog (const gchar *compose_type,
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1137,7 +1137,7 @@ compose_dialog (const gchar *compose_type,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  /* Channel representation table */
+  /* Channel representation grid */
 
   frame = gimp_frame_new (_("Channel Representations"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
@@ -1147,25 +1147,25 @@ compose_dialog (const gchar *compose_type,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (MAX_COMPOSE_IMAGES, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     {
-      GtkWidget    *image;
-      GtkWidget    *label;
-      GtkWidget    *combo;
-      GtkObject    *scale;
-      GtkTreeIter   iter;
-      GtkTreeModel *model;
-      GdkPixbuf    *ico;
+      GtkWidget     *image;
+      GtkWidget     *label;
+      GtkWidget     *combo;
+      GtkAdjustment *scale;
+      GtkTreeIter    iter;
+      GtkTreeModel  *model;
+      GdkPixbuf     *ico;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, j, j + 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), hbox, 0, j, 1, 1);
+                        // GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (hbox);
 
       gtk_size_group_add_widget (size_group, hbox);
@@ -1195,9 +1195,9 @@ compose_dialog (const gchar *compose_type,
       combo = gimp_drawable_combo_box_new (check_gray, NULL);
       composeint.channel_menu[j] = combo;
 
-      ico = gtk_widget_render_icon (dialog,
-                                    GIMP_ICON_CHANNEL_GRAY,
-                                    GTK_ICON_SIZE_BUTTON, NULL);
+      ico = gtk_widget_render_icon_pixbuf (dialog,
+                                           GIMP_ICON_CHANNEL_GRAY,
+                                           GTK_ICON_SIZE_BUTTON);
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
@@ -1206,13 +1206,13 @@ compose_dialog (const gchar *compose_type,
                           GIMP_INT_STORE_PIXBUF, ico,
                           -1);
       g_object_unref (ico);
-      gtk_table_attach (GTK_TABLE (table), combo, 1, 2, j, j + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+      gtk_grid_attach (GTK_GRID (grid), combo, 1, j, 1, 1);
+                        // GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (combo);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-      scale = gimp_color_scale_entry_new (GTK_TABLE (table), 2, j, NULL,
+      scale = gimp_color_scale_entry_new (GTK_GRID (grid), 2, j, NULL,
                                           100, 4,
                                           255.0, 0.0, 255.0, 1.0, 10.0, 0,
                                           NULL, NULL);

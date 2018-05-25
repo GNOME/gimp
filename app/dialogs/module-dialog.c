@@ -70,7 +70,7 @@ struct _ModuleDialog
   GtkListStore *list;
 
   GtkWidget    *hint;
-  GtkWidget    *table;
+  GtkWidget    *grid;
   GtkWidget    *label[N_INFOS];
   GtkWidget    *error_box;
   GtkWidget    *error_label;
@@ -101,7 +101,7 @@ static void   dialog_info_update      (GimpModuleDB          *db,
                                        GimpModule            *module,
                                        ModuleDialog          *private);
 static void   dialog_info_init        (ModuleDialog          *private,
-                                       GtkWidget             *table);
+                                       GtkWidget             *grid);
 
 
 /*  public functions  */
@@ -135,7 +135,7 @@ module_dialog_new (Gimp *gimp)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_CLOSE,
                                            RESPONSE_REFRESH,
                                            -1);
@@ -176,7 +176,8 @@ module_dialog_new (Gimp *gimp)
 
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
-  g_list_foreach (gimp->module_db->modules, make_list_item, private);
+  g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
+                  make_list_item, private);
 
   rend = gtk_cell_renderer_toggle_new ();
 
@@ -199,10 +200,10 @@ module_dialog_new (Gimp *gimp)
   gtk_container_add (GTK_CONTAINER (sw), view);
   gtk_widget_show (view);
 
-  private->table = gtk_table_new (2, N_INFOS, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (private->table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), private->table, FALSE, FALSE, 0);
-  gtk_widget_show (private->table);
+  private->grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (private->grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), private->grid, FALSE, FALSE, 0);
+  gtk_widget_show (private->grid);
 
   private->error_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), private->error_box, FALSE, FALSE, 0);
@@ -218,7 +219,7 @@ module_dialog_new (Gimp *gimp)
                       private->error_label, TRUE, TRUE, 0);
   gtk_widget_show (private->error_label);
 
-  dialog_info_init (private, private->table);
+  dialog_info_init (private, private->grid);
 
   dialog_info_update (gimp->module_db, private->selected, private);
 
@@ -492,7 +493,7 @@ dialog_info_update (GimpModuleDB *db,
 
 static void
 dialog_info_init (ModuleDialog *private,
-                  GtkWidget    *table)
+                  GtkWidget    *grid)
 {
   GtkWidget *label;
   gint       i;
@@ -510,17 +511,14 @@ dialog_info_init (ModuleDialog *private,
     {
       label = gtk_label_new (gettext (text[i]));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+      gtk_grid_attach (GTK_GRID (grid), label, 0, i, 1, 1);
       gtk_widget_show (label);
 
       private->label[i] = gtk_label_new ("");
       gtk_label_set_xalign (GTK_LABEL (private->label[i]), 0.0);
       gtk_label_set_ellipsize (GTK_LABEL (private->label[i]),
                                PANGO_ELLIPSIZE_END);
-      gtk_table_attach (GTK_TABLE (private->table), private->label[i],
-                        1, 2, i, i + 1,
-                        GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+      gtk_grid_attach (GTK_GRID (grid), private->label[i], 1, i, 1, 1);
       gtk_widget_show (private->label[i]);
     }
 }

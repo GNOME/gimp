@@ -383,33 +383,3 @@ gimp_layer_new_from_surface (gint32                image_ID,
 
   return layer;
 }
-
-/**
- * gimp_layer_get_preserve_trans:
- * @layer_ID: The layer.
- *
- * This procedure is deprecated! Use gimp_layer_get_lock_alpha() instead.
- *
- * Returns: The layer's preserve transperancy setting.
- */
-gboolean
-gimp_layer_get_preserve_trans (gint32 layer_ID)
-{
-  return gimp_layer_get_lock_alpha (layer_ID);
-}
-
-/**
- * gimp_layer_set_preserve_trans:
- * @layer_ID: The layer.
- * @preserve_trans: The new layer's preserve transperancy setting.
- *
- * This procedure is deprecated! Use gimp_layer_set_lock_alpha() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_layer_set_preserve_trans (gint32   layer_ID,
-                               gboolean preserve_trans)
-{
-  return gimp_layer_set_lock_alpha (layer_ID, preserve_trans);
-}

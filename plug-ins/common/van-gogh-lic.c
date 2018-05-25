@@ -629,14 +629,14 @@ effect_image_constrain (gint32    image_id,
 static gboolean
 create_main_dialog (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkObject *scale_data;
-  gint       row;
-  gboolean   run;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *grid;
+  GtkWidget     *combo;
+  GtkAdjustment *scale_data;
+  gint           row;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -649,7 +649,7 @@ create_main_dialog (void)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -704,10 +704,10 @@ create_main_dialog (void)
   gtk_widget_show (frame);
 
   /* Effect image menu */
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   combo = gimp_drawable_combo_box_new (effect_image_constrain, NULL);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
@@ -715,18 +715,18 @@ create_main_dialog (void)
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &licvals.effect_image_id);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Effect image:"), 0.0, 0.5, combo, 2, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Effect image:"), 0.0, 0.5, combo, 2);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   row = 0;
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                                      _("_Filter length:"), 0, 6,
                                      licvals.filtlen, 0.1, 64, 1.0, 8.0, 1,
                                      TRUE, 0, 0,
@@ -735,7 +735,7 @@ create_main_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.filtlen);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                                      _("_Noise magnitude:"), 0, 6,
                                      licvals.noisemag, 1, 5, 0.1, 1.0, 1,
                                      TRUE, 0, 0,
@@ -744,7 +744,7 @@ create_main_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.noisemag);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                                      _("In_tegration steps:"), 0, 6,
                                      licvals.intsteps, 1, 40, 1.0, 5.0, 1,
                                      TRUE, 0, 0,
@@ -753,7 +753,7 @@ create_main_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.intsteps);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                                      _("_Minimum value:"), 0, 6,
                                      licvals.minv, -100, 0, 1, 10, 1,
                                      TRUE, 0, 0,
@@ -762,7 +762,7 @@ create_main_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &licvals.minv);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, row++,
                                      _("M_aximum value:"), 0, 6,
                                      licvals.maxv, 0, 100, 1, 10, 1,
                                      TRUE, 0, 0,

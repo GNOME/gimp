@@ -28,43 +28,6 @@
                 "/bin/pygtk*", "/bin/pygobject*"],
     "modules": [
         {
-            "name": "mypaint-brushes",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/Jehan/mypaint-brushes.git",
-                    "branch": "v1.3.0",
-                    "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
-                }
-            ]
-        },
-        {
-            "name": "lcms2",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/share" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
-                    "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
-                }
-            ]
-	},
-        {
-            "name": "openjpeg",
-            "cmake": true,
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
-                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
-                }
-            ]
-        },
-        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
@@ -92,19 +55,13 @@
         {
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html", "--enable-vector-icons" ],
-            "cleanup": [ "/bin/gimptool-2.0", "/bin/gimp-console-2.9" ],
+            "cleanup": [ "/bin/gimptool-2.0", "/bin/gimp-console-2.10" ],
             "sources": [
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gimp",
                     "branch": "GIMP_2_10_0_RC2",
                     "commit": "6582692ec6c8196108b2d42f6758c62076a88d13"
-                },
-                {
-                    /* Fix only the forgotten splash screen! */
-                    "type": "patch",
-                    "use-git": true,
-                    "path": "0001-data-update-splash-screen-text-for-2.10.0-RC2.patch"
                 }
             ],
 	    "post-install": [

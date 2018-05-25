@@ -54,9 +54,6 @@ static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface
 static void     gimp_thumb_box_dispose            (GObject           *object);
 static void     gimp_thumb_box_finalize           (GObject           *object);
 
-static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style);
-
 static GimpProgress *
                 gimp_thumb_box_progress_start     (GimpProgress      *progress,
                                                    gboolean           cancellable,
@@ -108,10 +105,10 @@ gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose     = gimp_thumb_box_dispose;
-  object_class->finalize    = gimp_thumb_box_finalize;
+  object_class->dispose  = gimp_thumb_box_dispose;
+  object_class->finalize = gimp_thumb_box_finalize;
 
-  widget_class->style_set   = gimp_thumb_box_style_set;
+  gtk_widget_class_set_css_name (widget_class, "treeview");
 }
 
 static void
@@ -160,29 +157,6 @@ gimp_thumb_box_finalize (GObject *object)
   g_clear_object (&box->imagefile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_thumb_box_style_set (GtkWidget *widget,
-                          GtkStyle  *prev_style)
-{
-  GimpThumbBox *box   = GIMP_THUMB_BOX (widget);
-  GtkStyle     *style = gtk_widget_get_style (widget);
-  GtkWidget    *ebox;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
-
-  ebox = gtk_bin_get_child (GTK_BIN (widget));
-
-  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
 }
 
 static GimpProgress *
@@ -290,6 +264,31 @@ gimp_thumb_box_progress_message (GimpProgress        *progress,
 }
 
 
+/*  stupid GimpHeader class just so we get a "header" CSS node  */
+
+#define GIMP_TYPE_HEADER (gimp_header_get_type ())
+
+typedef struct _GtkBox      GimpHeader;
+typedef struct _GtkBoxClass GimpHeaderClass;
+
+static GType gimp_header_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_TYPE (GimpHeader, gimp_header, GTK_TYPE_BOX)
+
+static void
+gimp_header_class_init (GimpHeaderClass *klass)
+{
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "header");
+}
+
+static void
+gimp_header_init (GimpHeader *header)
+{
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (header),
+                                  GTK_ORIENTATION_VERTICAL);
+}
+
+
 /*  public functions  */
 
 GtkWidget *
@@ -299,17 +298,17 @@ gimp_thumb_box_new (GimpContext *context)
   GtkWidget      *vbox;
   GtkWidget      *vbox2;
   GtkWidget      *ebox;
-  GtkWidget      *hbox;
   GtkWidget      *button;
   GtkWidget      *label;
   gchar          *str;
   gint            h, v;
-  GtkRequisition  info_requisition;
-  GtkRequisition  progress_requisition;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
+
+  gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (box)),
+                               GTK_STYLE_CLASS_VIEW);
 
   box->context = context;
 
@@ -334,8 +333,12 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_container_add (GTK_CONTAINER (ebox), vbox);
   gtk_widget_show (vbox);
 
+  vbox2 = g_object_new (GIMP_TYPE_HEADER, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
+
   button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   label = gtk_label_new_with_mnemonic (_("Pr_eview"));
@@ -357,14 +360,9 @@ gimp_thumb_box_new (GimpContext *context)
                     NULL);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 4);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   box->imagefile = gimp_imagefile_new (context->gimp, NULL);
 
@@ -386,7 +384,9 @@ gimp_thumb_box_new (GimpContext *context)
                                 MAX (h, v),
                                 0, FALSE);
 
-  gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 2);
+  gtk_style_context_add_class (gtk_widget_get_style_context (box->preview),
+                               GTK_STYLE_CLASS_VIEW);
+  gtk_box_pack_start (GTK_BOX (vbox2), box->preview, FALSE, FALSE, 0);
   gtk_widget_show (box->preview);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), box->preview);
@@ -396,6 +396,7 @@ gimp_thumb_box_new (GimpContext *context)
                     box);
 
   box->filename = gtk_label_new (_("No selection"));
+  gtk_label_set_max_width_chars (GTK_LABEL (box->filename), 1);
   gtk_label_set_ellipsize (GTK_LABEL (box->filename), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
   gimp_label_set_attributes (GTK_LABEL (box->filename),
@@ -419,18 +420,11 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_set_no_show_all (box->progress, TRUE);
   /* don't gtk_widget_show (box->progress); */
 
-  /* eek */
-  gtk_widget_size_request (box->info,     &info_requisition);
-  gtk_widget_size_request (box->progress, &progress_requisition);
-
-  gtk_widget_set_size_request (box->info,
-                               -1, info_requisition.height);
-  gtk_widget_set_size_request (box->filename,
-                               progress_requisition.width, -1);
-
-  gtk_widget_set_size_request (box->progress,
-                               -1, progress_requisition.height);
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
+  gtk_widget_set_size_request (GTK_WIDGET (box),
+                               MAX ((gint) GIMP_THUMB_SIZE_NORMAL,
+                                    (gint) context->gimp->config->thumbnail_size) +
+                               2 * MAX (h, v),
+                               -1);
 
   return GTK_WIDGET (box);
 }

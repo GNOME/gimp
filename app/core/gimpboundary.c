@@ -138,7 +138,7 @@ static void       simplify_subdivide  (const GimpBoundSeg  *segs,
  * @x1:        left side of bounds
  * @y1:        top side of bounds
  * @x2:        right side of bounds
- * @y2:        botton side of bounds
+ * @y2:        bottom side of bounds
  * @threshold: pixel value of boundary line
  * @num_segs:  number of returned #GimpBoundSeg's
  *

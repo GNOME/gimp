@@ -170,6 +170,8 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           /* Base our timeout on the original stroke. */
           coords = gimp_symmetry_get_origin (sym);
 
+          airbrush->coords = *coords;
+
           dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
                                                          GIMP_DYNAMICS_OUTPUT_RATE,
                                                          coords,
@@ -246,9 +248,14 @@ gimp_airbrush_stamp (GimpAirbrush *airbrush)
 {
   g_return_if_fail (GIMP_IS_AIRBRUSH (airbrush));
 
+  gimp_symmetry_set_origin (airbrush->sym,
+                            airbrush->drawable, &airbrush->coords);
+
   gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
                        airbrush->drawable,
                        airbrush->paint_options,
                        airbrush->sym,
                        GIMP_PAINT_STATE_MOTION, 0);
+
+  gimp_symmetry_clear_origin (airbrush->sym);
 }

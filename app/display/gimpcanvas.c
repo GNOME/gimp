@@ -56,8 +56,7 @@ static void       gimp_canvas_get_property    (GObject         *object,
                                                GParamSpec      *pspec);
 
 static void       gimp_canvas_unrealize       (GtkWidget       *widget);
-static void       gimp_canvas_style_set       (GtkWidget       *widget,
-                                               GtkStyle        *prev_style);
+static void       gimp_canvas_style_updated   (GtkWidget       *widget);
 static gboolean   gimp_canvas_focus_in_event  (GtkWidget       *widget,
                                                GdkEventFocus   *event);
 static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
@@ -81,7 +80,7 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   object_class->get_property    = gimp_canvas_get_property;
 
   widget_class->unrealize       = gimp_canvas_unrealize;
-  widget_class->style_set       = gimp_canvas_style_set;
+  widget_class->style_updated   = gimp_canvas_style_updated;
   widget_class->focus_in_event  = gimp_canvas_focus_in_event;
   widget_class->focus_out_event = gimp_canvas_focus_out_event;
   widget_class->focus           = gimp_canvas_focus;
@@ -100,7 +99,6 @@ gimp_canvas_init (GimpCanvas *canvas)
 
   gtk_widget_set_can_focus (widget, TRUE);
   gtk_widget_add_events (widget, GIMP_CANVAS_EVENT_MASK);
-  gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
 }
 
 static void
@@ -154,14 +152,13 @@ gimp_canvas_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_canvas_style_set (GtkWidget *widget,
-                       GtkStyle  *prev_style)
+gimp_canvas_style_updated (GtkWidget *widget)
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
   g_clear_object (&canvas->layout);
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 }
 
 static gboolean
@@ -268,7 +265,7 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 }
 
 /**
- * gimp_canvas_set_bg_color:
+ * gimp_canvas_set_padding:
  * @canvas:   a #GimpCanvas widget
  * @color:    a color in #GimpRGB format
  *
@@ -276,23 +273,15 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
  * is the color the canvas is set to if it is cleared.
  **/
 void
-gimp_canvas_set_bg_color (GimpCanvas *canvas,
-                          GimpRGB    *color)
+gimp_canvas_set_padding (GimpCanvas            *canvas,
+                         GimpCanvasPaddingMode  padding_mode,
+                         const GimpRGB         *padding_color)
 {
-  GtkWidget   *widget = GTK_WIDGET (canvas);
-  GdkColormap *colormap;
-  GdkColor     gdk_color;
+  g_return_if_fail (GIMP_IS_CANVAS (canvas));
+  g_return_if_fail (padding_color != NULL);
 
-  if (! gtk_widget_get_realized (widget))
-    return;
-
-  gimp_rgb_get_gdk_color (color, &gdk_color);
-
-  colormap = gdk_drawable_get_colormap (gtk_widget_get_window (widget));
-  g_return_if_fail (colormap != NULL);
-  gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
-
-  gdk_window_set_background (gtk_widget_get_window (widget), &gdk_color);
+  canvas->padding_mode  = padding_mode;
+  canvas->padding_color = *padding_color;
 
   gtk_widget_queue_draw (GTK_WIDGET (canvas));
 }

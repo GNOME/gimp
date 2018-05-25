@@ -128,9 +128,9 @@ colorsel_cmyk_class_finalize (ColorselCmykClass *klass)
 static void
 colorsel_cmyk_init (ColorselCmyk *module)
 {
-  GtkWidget *table;
-  GtkObject *adj;
-  gint       i;
+  GtkWidget     *grid;
+  GtkAdjustment *adj;
+  gint           i;
 
   static const gchar * const cmyk_labels[] =
   {
@@ -157,18 +157,17 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   gtk_box_set_spacing (GTK_BOX (module), 6);
 
-  table = gtk_table_new (4, 4, FALSE);
+  grid = gtk_grid_new ();
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 1);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
 
-  gtk_box_pack_start (GTK_BOX (module), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  gtk_box_pack_start (GTK_BOX (module), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   for (i = 0; i < 4; i++)
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 1, i,
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 1, i,
                                   gettext (cmyk_labels[i]),
                                   -1, -1,
                                   0.0,

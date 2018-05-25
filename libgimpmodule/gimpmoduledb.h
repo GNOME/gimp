@@ -34,17 +34,14 @@ G_BEGIN_DECLS
 #define GIMP_MODULE_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE_DB, GimpModuleDBClass))
 
 
-typedef struct _GimpModuleDBClass GimpModuleDBClass;
+typedef struct _GimpModuleDBPrivate GimpModuleDBPrivate;
+typedef struct _GimpModuleDBClass   GimpModuleDBClass;
 
 struct _GimpModuleDB
 {
-  GObject   parent_instance;
+  GObject              parent_instance;
 
-  /*< private >*/
-  GList    *modules;
-
-  gchar    *load_inhibit;
-  gboolean  verbose;
+  GimpModuleDBPrivate *priv;
 };
 
 struct _GimpModuleDBClass
@@ -63,11 +60,21 @@ struct _GimpModuleDBClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
 GType          gimp_module_db_get_type         (void) G_GNUC_CONST;
 GimpModuleDB * gimp_module_db_new              (gboolean      verbose);
+
+GList        * gimp_module_db_get_modules      (GimpModuleDB *db);
+
+void           gimp_module_db_set_verbose      (GimpModuleDB *db,
+                                                gboolean      verbose);
+gboolean       gimp_module_db_get_verbose      (GimpModuleDB *db);
 
 void           gimp_module_db_set_load_inhibit (GimpModuleDB *db,
                                                 const gchar  *load_inhibit);

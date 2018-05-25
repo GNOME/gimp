@@ -35,16 +35,16 @@
 
 #define NUMGENERALBGRADIO 4
 
-static GtkWidget *general_bg_radio[NUMGENERALBGRADIO];
-static GtkWidget *general_paint_edges      = NULL;
-static GtkObject *general_dark_edge_adjust = NULL;
-static GtkWidget *general_tileable;
-static GtkWidget *general_drop_shadow      = NULL;
-static GtkWidget *general_color_button;
-static GtkObject *general_shadow_adjust    = NULL;
-static GtkObject *general_shadow_depth     = NULL;
-static GtkObject *general_shadow_blur      = NULL;
-static GtkObject *dev_thresh_adjust        = NULL;
+static GtkWidget     *general_bg_radio[NUMGENERALBGRADIO];
+static GtkWidget     *general_paint_edges      = NULL;
+static GtkAdjustment *general_dark_edge_adjust = NULL;
+static GtkWidget     *general_tileable;
+static GtkWidget     *general_drop_shadow      = NULL;
+static GtkWidget     *general_color_button;
+static GtkAdjustment *general_shadow_adjust    = NULL;
+static GtkAdjustment *general_shadow_depth     = NULL;
+static GtkAdjustment *general_shadow_blur      = NULL;
+static GtkAdjustment *dev_thresh_adjust        = NULL;
 
 static int
 normalize_bg (int n)
@@ -127,7 +127,7 @@ void
 create_generalpage (GtkNotebook *notebook)
 {
   GtkWidget *box1, *box2, *box3, *box4, *thispage;
-  GtkWidget *label, *tmpw, *frame, *table;
+  GtkWidget *label, *tmpw, *frame, *grid;
   GSList    * radio_group = NULL;
 
   label = gtk_label_new_with_mnemonic (_("_General"));
@@ -228,14 +228,14 @@ create_generalpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.general_drop_shadow);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (box1), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (box1), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   general_dark_edge_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                           _("Edge darken:"),
                           150, 6, pcvals.general_dark_edge,
                           0.0, 1.0, 0.01, 0.1, 2,
@@ -244,7 +244,7 @@ create_generalpage (GtkNotebook *notebook)
                           NULL);
 
   general_shadow_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                           _("Shadow darken:"),
                           150, 6, pcvals.general_shadow_darkness,
                           0.0, 99.0, 0.1, 1, 2,
@@ -253,7 +253,7 @@ create_generalpage (GtkNotebook *notebook)
                           NULL);
 
   general_shadow_depth =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                           _("Shadow depth:"),
                           150, 6, pcvals.general_shadow_depth,
                           0, 99, 1, 5, 0,
@@ -262,7 +262,7 @@ create_generalpage (GtkNotebook *notebook)
                           NULL);
 
   general_shadow_blur =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
                           _("Shadow blur:"),
                           150, 6, pcvals.general_shadow_blur,
                           0, 99, 1, 5, 0,
@@ -271,7 +271,7 @@ create_generalpage (GtkNotebook *notebook)
                           NULL);
 
   dev_thresh_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
                           _("Deviation threshold:"),
                           150, 6, pcvals.devthresh,
                           0.0, 1.0, 0.01, 0.01, 2,

@@ -19,7 +19,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/file-bmp
 
 libexec_PROGRAMS = file-bmp
 

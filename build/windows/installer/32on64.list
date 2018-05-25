@@ -3,7 +3,11 @@
 etc\fonts\
 lib\gtk-2.0\2.10.0\engines\
 lib\gtk-2.0\modules\
+lib\gdk-pixbuf-2.0\2.10.0\loaders\*.dll
+lib\gdk-pixbuf-2.0\2.10.0\loaders.cache
 share\themes\
 bin\gspawn*.exe
+bin\*.dll
+!GIMP
 bin\*.dll
 !end

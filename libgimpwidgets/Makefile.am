@@ -151,16 +151,13 @@ libgimpwidgets_sources = \
 	gimpnumberpairentry.h		\
 	gimpoffsetarea.c		\
 	gimpoffsetarea.h		\
-	gimpoldwidgets.c		\
-	gimpoldwidgets.h		\
 	gimppageselector.c		\
 	gimppageselector.h		\
 	gimppatheditor.c		\
 	gimppatheditor.h		\
 	gimppickbutton.c		\
 	gimppickbutton.h		\
-	gimppixmap.c			\
-	gimppixmap.h			\
+	gimppickbutton-private.h	\
 	gimppreview.c			\
 	gimppreview.h			\
 	gimppreviewarea.c		\
@@ -181,8 +178,6 @@ libgimpwidgets_sources = \
 	gimpstringcombobox.h		\
 	gimpunitcombobox.c		\
 	gimpunitcombobox.h		\
-	gimpunitmenu.c			\
-	gimpunitmenu.h			\
 	gimpunitstore.c			\
 	gimpunitstore.h			\
 	gimpwidgets-error.c		\
@@ -196,9 +191,7 @@ libgimpwidgets_sources = \
 	gimpwidgetsutils.c		\
 	gimpwidgetsutils.h		\
 	gimpzoommodel.c			\
-	gimpzoommodel.h			\
-	gimp3migration.c		\
-	gimp3migration.h
+	gimpzoommodel.h
 
 libgimpwidgets_built_sources = \
 	gimpwidgetsenums.c	\
@@ -249,11 +242,9 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpmemsizeentry.h		\
 	gimpnumberpairentry.h		\
 	gimpoffsetarea.h		\
-	gimpoldwidgets.h		\
 	gimppageselector.h		\
 	gimppatheditor.h		\
 	gimppickbutton.h		\
-	gimppixmap.h			\
 	gimppreview.h			\
 	gimppreviewarea.h		\
 	gimppropwidgets.h		\
@@ -264,15 +255,13 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpsizeentry.h			\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
-	gimpunitmenu.h			\
 	gimpunitstore.h			\
 	gimpwidgets-error.h		\
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
 	gimpwidgetsutils.h		\
-	gimpzoommodel.h			\
-	gimp3migration.h
+	gimpzoommodel.h
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\

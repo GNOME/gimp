@@ -523,6 +523,12 @@ gimp_text_tool_button_press (GimpTool            *tool,
       /*  create a new text layer  */
       text_tool->text_box_fixed = FALSE;
 
+      /* make sure the text tool has an image, even if the user didn't click
+       * inside the active drawable, in particular, so that the text style
+       * editor picks the correct resolution.
+       */
+      gimp_text_tool_set_image (text_tool, image);
+
       gimp_text_tool_connect (text_tool, NULL, NULL);
       gimp_text_tool_editor_start (text_tool);
     }
@@ -782,7 +788,7 @@ gimp_text_tool_get_popup (GimpTool         *tool,
           text_tool->ui_manager =
             gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
                                            "<TextTool>",
-                                           text_tool, FALSE);
+                                           text_tool);
 
           im_menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
                                                "/text-tool-popup/text-tool-input-methods-menu");
@@ -1603,7 +1609,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
 
                                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_NEW,
                                            GTK_RESPONSE_ACCEPT,
                                            GTK_RESPONSE_CANCEL,

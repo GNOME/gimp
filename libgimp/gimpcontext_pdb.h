@@ -134,10 +134,6 @@ GimpTransformDirection      gimp_context_get_transform_direction        (void);
 gboolean                    gimp_context_set_transform_direction        (GimpTransformDirection         transform_direction);
 GimpTransformResize         gimp_context_get_transform_resize           (void);
 gboolean                    gimp_context_set_transform_resize           (GimpTransformResize            transform_resize);
-GIMP_DEPRECATED
-gint                        gimp_context_get_transform_recursion        (void);
-GIMP_DEPRECATED
-gboolean                    gimp_context_set_transform_recursion        (gint                           transform_recursion);
 gdouble                     gimp_context_get_ink_size                   (void);
 gboolean                    gimp_context_set_ink_size                   (gdouble                        size);
 gdouble                     gimp_context_get_ink_angle                  (void);

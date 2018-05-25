@@ -101,9 +101,9 @@ AppVerName=GIMP {#VERSION}
 #else
 AppVerName=GIMP {#VERSION}-{#REVISION}
 #endif
-AppPublisherURL=http://gimp-win.sourceforge.net/
-AppSupportURL=http://www.gimp.org/docs/
-AppUpdatesURL=http://gimp-win.sourceforge.net/
+AppPublisherURL=https://www.gimp.org/
+AppSupportURL=https://www.gimp.org/docs/
+AppUpdatesURL=https://www.gimp.org/
 AppPublisher=The GIMP Team
 AppVersion={#VERSION}
 DisableProgramGroupPage=yes
@@ -130,8 +130,8 @@ WizardSmallImageFile=wilber.bmp
 UninstallDisplayIcon={app}\bin\gimp-{#MAJOR}.{#MINOR}.exe
 UninstallFilesDir={app}\uninst
 
-MinVersion=0,5.01sp3
-//MinVersion=0,5.0
+MinVersion=6.1
+ArchitecturesInstallIn64BitMode=x64
 
 #ifdef NOCOMPRESSION
 UseSetupLdr=no
@@ -147,18 +147,16 @@ LZMAUseSeparateProcess=yes
 LZMANumFastBytes=273
 LZMADictionarySize=524288
 
+;SignTool=Default
+SignedUninstaller=yes
+SignedUninstallerDir=_Uninst
+#endif //NOCOMPRESSION
+
 #if !defined(REVISION)
 OutputBaseFileName=gimp-{#VERSION}-setup
 #else
 OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
 #endif
-ArchitecturesInstallIn64BitMode=x64
-
-;SignTool=Default
-SignedUninstaller=yes
-SignedUninstallerDir=_Uninst
-
-#endif //NOCOMPRESSION
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
@@ -168,11 +166,11 @@ Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
 Name: "el"; MessagesFile: "compiler:Languages\Greek.isl,lang\el.setup.isl"
 ;Name: "eo"; MessagesFile: "compiler:Languages\Unofficial\Esperanto.isl,lang\eo.setup.isl"
 Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl,lang\es.setup.isl"
-Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
+;;Name: "eu"; MessagesFile: "compiler:Languages\Unofficial\Basque.isl,lang\eu.setup.isl"
 Name: "fr"; MessagesFile: "compiler:Languages\French.isl,lang\fr.setup.isl"
 Name: "hu"; MessagesFile: "compiler:Languages\Hungarian.isl,lang\hu.setup.isl"
-Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
-Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
+;;Name: "id"; MessagesFile: "compiler:Languages\Unofficial\Indonesian.isl,lang\id.setup.isl"
+;;Name: "is"; MessagesFile: "compiler:Languages\Unofficial\Icelandic.isl,lang\is.setup.isl"
 Name: "it"; MessagesFile: "compiler:Languages\Italian.isl,lang\it.setup.isl"
 ;Name: "lv"; MessagesFile: "compiler:Languages\Unofficial\Latvian.isl,lang\lv.setup.isl"
 Name: "nl"; MessagesFile: "compiler:Languages\Dutch.isl,lang\nl.setup.isl"
@@ -180,9 +178,10 @@ Name: "pl"; MessagesFile: "compiler:Languages\Polish.isl,lang\pl.setup.isl"
 Name: "pt_BR"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl,lang\pt_BR.setup.isl"
 Name: "ru"; MessagesFile: "compiler:Languages\Russian.isl,lang\ru.setup.isl"
 Name: "sl"; MessagesFile: "compiler:Languages\Slovenian.isl,lang\sl.setup.isl"
-Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
+;;Name: "sv"; MessagesFile: "compiler:Languages\Unofficial\Swedish.isl,lang\sv.setup.isl"
 Name: "tr"; MessagesFile: "compiler:Languages\Turkish.isl,lang\tr.setup.isl"
-Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
+;;Name: "zh_CN"; MessagesFile: "compiler:Languages\Unofficial\ChineseSimplified.isl,lang\zh_CN.setup.isl"
+;;Name: "zh_TW"; MessagesFile: "compiler:Languages\Unofficial\ChineseTraditional.isl,lang\zh_TW.setup.isl"
 ;Name: "ro"; MessagesFile: "Romanian.islu,ro.setup.islu"
 
 [Types]
@@ -195,9 +194,21 @@ Name: custom; Description: "{cm:TypeCustom}"; Flags: iscustom
 Name: gimp32; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('32')
 Name: gimp64; Description: "{cm:ComponentsGimp,{#VERSION}}"; Types: full compact custom; Flags: fixed; Check: Check3264('64')
 
-Name: wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning
+Name: deps32; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('32')
+Name: deps32\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('32')
+Name: deps32\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('32')
+Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full compact custom; Flags: checkablealone fixed; Check: Check3264('64')
+Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
+
+#ifdef DEBUG_SYMBOLS
+Name: debug; Description: "{cm:ComponentsDebug}"; Types: custom; Flags: disablenouninstallwarning
+#endif
+
+Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
 
 Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
+
+Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 
 #ifdef PYTHON
 Name: py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
@@ -207,6 +218,7 @@ Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flag
 #ifdef PYTHON
 Name: gimp32on64\py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('64')
 #endif
+Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('64')
 
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
@@ -234,24 +246,27 @@ Source: "installsplash_small.bmp"; Flags: dontcopy
 Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\environ\*"; DestDir: "{app}\lib\gimp\2.0\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\interpreters\*"; DestDir: "{app}\lib\gimp\2.0\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-;Source: "{#GIMP_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-;Source: "{#GIMP_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#GIMP_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
+Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete
 
-Source: "{#GIMP_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
+;configure gimp with --enable-bundled-mypaint-brushes for the correct path to
+;be picked by gimp
+Source: "{#DEPS_DIR32}\share\mypaint-data\*"; DestDir: "{app}\share\mypaint-data"; Components: mypaint; Flags: recursesubdirs restartreplace uninsrestartdelete
+
+Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;ghostscript TODO: detect version automatically
-Source: "{#GIMP_DIR32}\share\ghostscript\8.71\lib\*.*"; DestDir: "{app}\share\ghostscript\8.71\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\share\ghostscript\8.71\Resource"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\share\ghostscript\9.23\lib\*.*"; DestDir: "{app}\share\ghostscript\9.23\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32-on-64bit
 #include "32on64.isi"
@@ -259,13 +274,15 @@ Source: "{#GIMP_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\sha
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: (not gimp32on64) and gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;special case due to MS-Windows engine
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
 ;python scripts
 #ifdef PYTHON
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif
+;compat libraries
+Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32bit
 #define PLATFORM 32
@@ -275,8 +292,9 @@ Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gim
 ;python scripts
 #ifdef PYTHON
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif
+Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;64bit
 #define PLATFORM 64
@@ -284,30 +302,51 @@ Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; DestDir: "{app}\lib\gimp\2.0\p
 
 ;upgrade zlib1.dll in System32 if it's present there to avoid breaking plugins
 ;sharedfile flag will ensure that the upgraded file is left behind on uninstall to avoid breaking other programs that use the file
-Source: "{#GIMP_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete; Check: BadSysDLL('zlib1.dll',32)
-Source: "{#GIMP_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete; Check: BadSysDLL('zlib1.dll',64)
+Source: "{#DEPS_DIR32}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp32 or gimp64; Flags: restartreplace sharedfile 32bit uninsrestartdelete; Check: BadSysDLL('zlib1.dll',32)
+Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Flags: restartreplace sharedfile uninsrestartdelete; Check: BadSysDLL('zlib1.dll',64)
 
 ;overridden configuration files
 #include "configoverride.isi"
 
 ;python
 #ifdef PYTHON
-Source: "{#PY_DIR}\pythonw.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\python.exe"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\python27.dll"; DestDir: "{app}\Python"; Components: py or gimp32on64\py; Flags: restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\DLLs\*"; DestDir: "{app}\Python\DLLs"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#PY_DIR}\Lib\*"; DestDir: "{app}\Python\Lib"; Components: py or gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\bin"; Components: py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\lib\python2.7"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete
+
+Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\32\bin"; DestName: "pythonw.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\32\bin"; DestName: "python.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\32\bin"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete
+Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\32\lib\python2.7"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete
 #endif
 #endif //NOFILES
 
 [InstallDelete]
 Type: files; Name: "{app}\bin\gimp-?.?.exe"
+Type: files; Name: "{app}\bin\gimp-?.??.exe"
 Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
 Type: files; Name: "{app}\lib\gegl-0.1\*.dll"
 ;obsolete plugins from gimp 2.6
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee-zoom.exe"
+;old Python
+Type: filesandordirs; Name: "{app}\Python\*"
+;remove incompatible version shipped with 2.8
+Type: files; Name: "{app}\bin\zlib1.dll"
+Type: files; Name: "{app}\32\bin\zlib1.dll"
+;old ghostscript
+Type: filesandordirs; Name: "{app}\share\ghostscript\*"
+;obsolete plugins from gimp 2.8
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-save.exe"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-psd-load.exe"
+Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
+;DLLs in plug-ins directory (see bug 796225)
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -352,7 +391,7 @@ const
 	BITSPIXEL = 12;
 	PLANES = 14;
 
-	GIMP_URL = 'http://www.gimp.org/';
+	GIMP_URL = 'https://www.gimp.org/';
 
 	RTFHeader = '{\rtf1\deff0{\fonttbl{\f0\fswiss\fprq2\fcharset0 Tahoma;}{\f1\fnil\fcharset2 Symbol;}}\viewkind4\uc1\fs16';
 	//RTFBullet = '{\pntext\f1\''B7\tab}';
@@ -526,9 +565,17 @@ begin
 		PyGimpInterp := ExpandConstant('{app}\lib\gimp\2.0\interpreters\pygimp.interp');
         DebugMsg('PreparePyGimp','Writing interpreter file for gimp-python: ' + PyGimpInterp);
 		
-		Interp := 'python=' + ExpandConstant('{app}\Python\pythonw.exe') + #10 + 
-		           '/usr/bin/python=' + ExpandConstant('{app}\Python\pythonw.exe') + #10':Python:E::py::python:'#10
+		if IsComponentSelected('py') then
+		begin
+			Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 + 
+			           '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+		end else
+		begin
+			Interp := 'python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 + 
+			           '/usr/bin/python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+		end;
 
+		
 		if not SaveStringToUTF8File(PyGimpInterp,Interp,False) then
 		begin
 			DebugMsg('PreparePyGimp','Problem writing the file. [' + Interp + ']');
@@ -539,15 +586,15 @@ begin
 end;
 
 
-procedure PrepareGimpPath();
-var DefaultEnv,Env: String;
+procedure PrepareGimpEnvironment();
+var EnvFile,Env: String;
 begin
 	
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
-	DefaultEnv := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
-	DebugMsg('PrepareGimpPath','Setting environment in ' + DefaultEnv);
+	EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\default.env');
+	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
 	
@@ -557,7 +604,7 @@ begin
 		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
 
 		if IsComponentSelected('gimp32on64\py') then
-			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python' + #10;
+			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
 
 	end else
 	begin
@@ -567,14 +614,29 @@ begin
 	end;
 
 	if IsComponentSelected('py') then
-		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python' + #10;
+		Env := Env + 'PYTHONPATH=${gimp_installation_dir}\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
 
-	DebugMsg('PrepareGimpPath','Appending ' + Env);
+	DebugMsg('PrepareGimpEnvironment','Appending ' + Env);
 
-	if not SaveStringToUTF8File(DefaultEnv,Env,True) then
+	if not SaveStringToUTF8File(EnvFile,Env,True) then
 	begin
-		DebugMsg('PrepareGimpPath','Problem appending');
-		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[DefaultEnv]),mbInformation,mb_ok,IDOK);
+		DebugMsg('PrepareGimpEnvironment','Problem appending');
+		SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+	end;
+
+	//workaround for high-DPI awareness of Python plug-ins
+	if IsComponentSelected('gimp32on64\py') or IsComponentSelected('py') then
+	begin
+		EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\pygimp.env');
+		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
+
+		Env := '__COMPAT_LAYER=HIGHDPIAWARE' + #10
+
+		if not SaveStringToUTF8File(EnvFile,Env,True) then
+		begin
+			DebugMsg('PrepareGimpEnvironment','Problem appending');
+			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+		end;
 	end;
 end;
 
@@ -986,7 +1048,7 @@ begin
 
 		OnClick := @lblURL_OnClick;
 
-		Caption := 'http://www.gimp.org/';
+		Caption := GIMP_URL;
 
 		Left := Integer(WizardForm.InstallingPage.ClientWidth / 2 - Width / 2);
 	end;
@@ -1020,7 +1082,7 @@ var i,j: Integer;
 begin
 	DebugMsg('ComponentsListOnClick','');
 
-	Components := ['Gimp','Deps','GtkWimp','Translations','Python','Ghostscript','Gimp32','Compat'];
+	Components := ['Gimp','Deps','Debug','GtkWimp','Translations','MyPaint','Python','Ghostscript','Gimp32','Compat'];
 	ComponentDesc := '';
 	
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
@@ -1428,14 +1490,66 @@ begin
 end;
 
 
+procedure RemoveDebugFilesFromDir(pDir: String; var pDirectories: TArrayOfString);
+var FindRec: TFindRec;
+begin
+DebugMsg('RemoveDebugFilesFromDir', pDir);
+	if FindFirst(AddBackSlash(pDir) + '*', FindRec) then
+	begin
+		try
+			repeat
+				if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then
+				begin
+					if (Length(FindRec.Name) > 6) and (LowerCase(Copy(FindRec.Name, Length(FindRec.Name) - 5, 6)) = '.debug') then
+					begin
+						DebugMsg('RemoveDebugFilesFromDir', '> ' + FindRec.Name);
+						DeleteFile(AddBackSlash(pDir) + FindRec.Name);
+					end;
+				end else
+				begin
+					if (FindRec.Name <> '.') and (FindRec.Name <> '..') then
+					begin
+						SetArrayLength(pDirectories, GetArrayLength(pDirectories) + 1);
+						pDirectories[GetArrayLength(pDirectories) - 1] := AddBackSlash(pDir) + FindRec.Name;
+					end;
+				end;
+			until not FindNext(FindRec);
+		finally
+			FindClose(FindRec);
+		end;
+	end;
+end;
+
+//remove .debug files from previous installs - there's no built-in way in Inno to recursivly delete files with wildcard+extension
+procedure RemoveDebugFiles();
+var Directories: TArrayOfString;
+	Index: Integer;
+begin
+	SetArrayLength(Directories, 1);
+	Directories[0] := ExpandConstant('{app}');
+	Index := 0;
+
+	WizardForm.StatusLabel.Caption := CustomMessage('RemovingOldFiles');
+
+	repeat
+		RemoveDebugFilesFromDir(Directories[Index], Directories);
+		Inc(Index);
+	until Index = GetArrayLength(Directories);
+end;
+
+
 procedure CurStepChanged(pCurStep: TSetupStep);
 begin
 	case pCurStep of
+		ssInstall:
+		begin
+			RemoveDebugFiles();
+		end;
 		ssPostInstall:
 		begin
 			Associations_Create();
 			PreparePyGimp();
-			PrepareGimpPath();
+			PrepareGimpEnvironment();
 			//PrepareGimpRC();
 		end;
 	end;

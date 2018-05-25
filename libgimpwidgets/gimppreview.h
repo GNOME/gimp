@@ -39,28 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW, GimpPreviewClass))
 
 
-typedef struct _GimpPreviewClass  GimpPreviewClass;
+typedef struct _GimpPreviewPrivate GimpPreviewPrivate;
+typedef struct _GimpPreviewClass   GimpPreviewClass;
 
 struct _GimpPreview
 {
-  GtkBox        parent_instance;
+  GtkBox              parent_instance;
 
-  gboolean      update_preview;
-
-  /*< protected >*/
-  GtkWidget    *area;
-  GtkWidget    *table;
-  GtkWidget    *frame;
-  GtkWidget    *toggle;
-  GdkCursor    *cursor_busy;
-  GdkCursor    *default_cursor;
-
-  /*< private >*/
-  gint          xoff, yoff;
-  gint          xmin, xmax, ymin, ymax;
-  gint          width, height;
-
-  guint         timeout_id;
+  GimpPreviewPrivate *priv;
 };
 
 struct _GimpPreviewClass
@@ -78,10 +64,6 @@ struct _GimpPreviewClass
                           gint             rowstride);
   void   (* set_cursor)  (GimpPreview     *preview);
 
-  /* signal */
-  void   (* invalidated) (GimpPreview     *preview);
-
-  /* virtual methods */
   void   (* transform)   (GimpPreview     *preview,
                           gint             src_x,
                           gint             src_y,
@@ -93,9 +75,18 @@ struct _GimpPreviewClass
                           gint            *dest_x,
                           gint            *dest_y);
 
+  /* signal */
+  void   (* invalidated) (GimpPreview     *preview);
+
   /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -110,13 +101,29 @@ void        gimp_preview_set_bounds         (GimpPreview  *preview,
                                              gint          ymin,
                                              gint          xmax,
                                              gint          ymax);
+void        gimp_preview_get_bounds         (GimpPreview  *preview,
+                                             gint         *xmin,
+                                             gint         *ymin,
+                                             gint         *xmax,
+                                             gint         *ymax);
+
+void        gimp_preview_set_size           (GimpPreview  *preview,
+                                             gint          width,
+                                             gint          height);
+void        gimp_preview_get_size           (GimpPreview  *preview,
+                                             gint         *width,
+                                             gint         *height);
+
+void        gimp_preview_set_offsets        (GimpPreview  *preview,
+                                             gint          xoff,
+                                             gint          yoff);
+void        gimp_preview_get_offsets        (GimpPreview  *preview,
+                                             gint         *xoff,
+                                             gint         *yoff);
 
 void        gimp_preview_get_position       (GimpPreview  *preview,
                                              gint         *x,
                                              gint         *y);
-void        gimp_preview_get_size           (GimpPreview  *preview,
-                                             gint         *width,
-                                             gint         *height);
 
 void        gimp_preview_transform          (GimpPreview *preview,
                                              gint         src_x,
@@ -129,6 +136,8 @@ void        gimp_preview_untransform        (GimpPreview *preview,
                                              gint        *dest_x,
                                              gint        *dest_y);
 
+GtkWidget * gimp_preview_get_frame          (GimpPreview  *preview);
+GtkWidget * gimp_preview_get_grid           (GimpPreview  *preview);
 GtkWidget * gimp_preview_get_area           (GimpPreview  *preview);
 
 void        gimp_preview_draw               (GimpPreview  *preview);
@@ -140,6 +149,7 @@ void        gimp_preview_invalidate         (GimpPreview  *preview);
 
 void        gimp_preview_set_default_cursor (GimpPreview  *preview,
                                              GdkCursor    *cursor);
+GdkCursor * gimp_preview_get_default_cursor (GimpPreview  *preview);
 
 GtkWidget * gimp_preview_get_controls       (GimpPreview  *preview);
 

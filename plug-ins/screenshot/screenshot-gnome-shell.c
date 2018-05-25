@@ -77,7 +77,7 @@ screenshot_gnome_shell_get_capabilities (void)
 
 GimpPDBStatusType
 screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
-                              GdkScreen         *screen,
+                              GdkMonitor        *monitor,
                               gint32            *image_ID,
                               GError           **error)
 {
@@ -85,7 +85,6 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
   const gchar *method = NULL;
   GVariant    *args   = NULL;
   GVariant    *retval;
-  gint         monitor = shootvals->monitor;
   gboolean     success;
 
   filename = gimp_temp_name ("png");
@@ -135,9 +134,9 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               filename);
 
       monitor =
-        gdk_screen_get_monitor_at_point (screen,
-                                         (shootvals->x1 + shootvals->x2) / 2,
-                                         (shootvals->y1 + shootvals->y2) / 2);
+        gdk_display_get_monitor_at_point (gdk_monitor_get_display (monitor),
+                                          (shootvals->x1 + shootvals->x2) / 2,
+                                          (shootvals->y1 + shootvals->y2) / 2);
 
       if (shootvals->screenshot_delay > 0)
         screenshot_delay (shootvals->screenshot_delay);
@@ -181,7 +180,7 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                                   filename, filename);
       gimp_image_set_filename (*image_ID, "screenshot.png");
 
-      profile = gimp_screen_get_color_profile (screen, monitor);
+      profile = gimp_monitor_get_color_profile (monitor);
 
       if (profile)
         {

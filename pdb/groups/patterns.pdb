@@ -68,85 +68,6 @@ CODE
     );
 }
 
-sub patterns_get_pattern {
-    &std_pdb_deprecated ('gimp-context-get-pattern');
-
-    @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The pattern name' },
-	{ name => 'width', type => 'int32',
-	  desc => 'The pattern width' },
-	{ name => 'height', type => 'int32',
-	  desc => 'The pattern height' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpPattern *pattern = gimp_context_get_pattern (context);
-
-  if (pattern)
-    {
-      name   = g_strdup (gimp_object_get_name (pattern));
-      width  = gimp_temp_buf_get_width  (pattern->mask);
-      height = gimp_temp_buf_get_height (pattern->mask);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub patterns_get_pattern_data {
-    &std_pdb_deprecated ('gimp-pattern-get-pixels');
-
-    @inargs = (
-	{ name => 'name', type => 'string', null_ok => 1,
-	  desc => 'The pattern name ("" means currently active pattern)' }
-    );
-
-    @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => 'The pattern name' },
-	{ name => 'width', type => 'int32',
-	  desc => 'The pattern width' },
-	{ name => 'height', type => 'int32',
-	  desc => 'The pattern height' },
-	{ name => 'mask_bpp', type => 'int32',
-	  desc => 'Pattern bytes per pixel' },
-	{ name => 'mask_data', type => 'int8array',
-	  desc => 'The pattern mask data',
-	  array => { name => 'length',
-		     desc => 'Length of pattern mask data' } }
-    );
-    
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpPattern *pattern;
-
-  if (name && strlen (name))
-    pattern = gimp_pdb_get_pattern (gimp, name, error);
-  else
-    pattern = gimp_context_get_pattern (context);
-
-  if (pattern)
-    {
-      actual_name = g_strdup (gimp_object_get_name (pattern));
-      width       = gimp_temp_buf_get_width  (pattern->mask);
-      height      = gimp_temp_buf_get_height (pattern->mask);
-      mask_bpp    = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
-      length      = gimp_temp_buf_get_data_size (pattern->mask);
-      mask_data   = g_memdup (gimp_temp_buf_get_data (pattern->mask), length);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 
 @headers = qw(<string.h>
               "core/gimp.h"
@@ -157,9 +78,7 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(patterns_refresh
-            patterns_get_list
-            patterns_get_pattern
-            patterns_get_pattern_data);
+            patterns_get_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -769,9 +769,19 @@ gimp_initialize (Gimp               *gimp,
   g_signal_emit (gimp, gimp_signals[INITIALIZE], 0, status_callback);
 }
 
+/**
+ * gimp_restore:
+ * @gimp: a #Gimp object
+ * @error: a #GError for uncessful loading.
+ *
+ * This function always succeeds. If present, @error may be filled for
+ * possible feedback on data which failed to load. It doesn't imply any
+ * fatale error.
+ **/
 void
-gimp_restore (Gimp               *gimp,
-              GimpInitStatusFunc  status_callback)
+gimp_restore (Gimp                *gimp,
+              GimpInitStatusFunc   status_callback,
+              GError             **error)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (status_callback != NULL);
@@ -790,7 +800,7 @@ gimp_restore (Gimp               *gimp,
   if (! gimp->no_fonts)
     {
       status_callback (NULL, _("Fonts (this may take a while)"), 0.7);
-      gimp_fonts_load (gimp, status_callback);
+      gimp_fonts_load (gimp, status_callback, error);
     }
 
   /*  initialize the template list  */

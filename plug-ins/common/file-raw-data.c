@@ -1463,17 +1463,21 @@ preview_update_size (GimpPreviewArea *preview)
 static void
 preview_update (GimpPreviewArea *preview)
 {
+  gint     preview_width;
+  gint     preview_height;
   gint     width;
   gint     height;
   gint32   pos;
   gint     x, y;
   gint     bitspp = 0;
 
-  width  = MIN (runtime->image_width,  preview->width);
-  height = MIN (runtime->image_height, preview->height);
+  gimp_preview_area_get_size (preview, &preview_width, &preview_height);
+
+  width  = MIN (runtime->image_width,  preview_width);
+  height = MIN (runtime->image_height, preview_height);
 
   gimp_preview_area_fill (preview,
-                          0, 0, preview->width, preview->height,
+                          0, 0, preview_width, preview_height,
                           255, 255, 255);
 
   switch (runtime->image_type)
@@ -1809,18 +1813,18 @@ static gboolean
 load_dialog (const gchar *filename,
              gboolean     is_hgt)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *sw;
-  GtkWidget *viewport;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkWidget *button;
-  GtkObject *adj;
-  goffset    file_size;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *sw;
+  GtkWidget     *viewport;
+  GtkWidget     *frame;
+  GtkWidget     *grid;
+  GtkWidget     *combo;
+  GtkWidget     *button;
+  GtkAdjustment *adj;
+  goffset        file_size;
+  gboolean       run;
 
   file_size = get_file_info (filename);
 
@@ -1835,7 +1839,7 @@ load_dialog (const gchar *filename,
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1888,11 +1892,11 @@ load_dialog (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   combo = NULL;
   if (is_hgt                       &&
@@ -1916,9 +1920,9 @@ load_dialog (const gchar *filename,
       combo = gimp_int_combo_box_new (_("SRTM-1 (1 arc-second)"),  3601,
                                       _("SRTM-3 (3 arc-seconds)"), 1201,
                                       NULL);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("_Sample Spacing:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("_Sample Spacing:"), 0.0, 0.5,
+                                combo, 2);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gimp_int_combo_box_get_active),
@@ -1954,9 +1958,9 @@ load_dialog (const gchar *filename,
                                       NULL);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                      runtime->image_type);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Image _Type:"), 0.0, 0.5,
-                                 combo, 2, FALSE);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("Image _Type:"), 0.0, 0.5,
+                                combo, 2);
 
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gimp_int_combo_box_get_active),
@@ -1967,7 +1971,7 @@ load_dialog (const gchar *filename,
                               G_CALLBACK (preview_update),
                               preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("O_ffset:"), -1, 9,
                               runtime->file_offset, 0, file_size, 1, 1000, 0,
                               TRUE, 0.0, 0.0,
@@ -1982,7 +1986,7 @@ load_dialog (const gchar *filename,
 
   if (! is_hgt)
     {
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                                   _("_Width:"), -1, 9,
                                   runtime->image_width, 1, file_size, 1, 10, 0,
                                   TRUE, 0.0, 0.0,
@@ -1998,7 +2002,7 @@ load_dialog (const gchar *filename,
                                 G_CALLBACK (preview_update),
                                 preview);
 
-      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+      adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
                                   _("_Height:"), -1, 9,
                                   runtime->image_height, 1, file_size, 1, 10, 0,
                                   TRUE, 0.0, 0.0,
@@ -2020,20 +2024,20 @@ load_dialog (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   combo = gimp_int_combo_box_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
                                   _("B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  runtime->palette_type);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Palette Type:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Palette Type:"), 0.0, 0.5,
+                            combo, 2);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_int_combo_box_get_active),
@@ -2042,7 +2046,7 @@ load_dialog (const gchar *filename,
                             G_CALLBACK (palette_update),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("Off_set:"), -1, 0,
                               runtime->palette_offset, 0, 1 << 24, 1, 768, 0,
                               TRUE, 0.0, 0.0,
@@ -2060,9 +2064,9 @@ load_dialog (const gchar *filename,
   if (palfile)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), palfile);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Pal_ette File:"), 0.0, 0.5,
-                             button, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("Pal_ette File:"), 0.0, 0.5,
+                            button, 2);
 
   g_signal_connect (button, "selection-changed",
                     G_CALLBACK (palette_callback),

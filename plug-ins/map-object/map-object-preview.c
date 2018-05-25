@@ -292,23 +292,20 @@ compute_preview_image (void)
 
   cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 
   compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
   cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
   gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 gboolean
-preview_expose (GtkWidget      *widget,
-                GdkEventExpose *eevent)
+preview_draw (GtkWidget *widget,
+              cairo_t   *cr)
 {
   gint startx, starty, pw, ph;
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (eevent->window);
 
   pw = PREVIEW_WIDTH * mapvals.zoom;
   ph = PREVIEW_HEIGHT * mapvals.zoom;
@@ -328,8 +325,6 @@ preview_expose (GtkWidget      *widget,
 
   cairo_reset_clip (cr);
   draw_lights (cr, startx, starty, pw, ph);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }

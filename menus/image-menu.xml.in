@@ -294,6 +294,7 @@
         <separator />
         <menuitem action="view-rotate-other" />
       </menu>
+      <menuitem action="view-scroll-center" />
       <separator />
       <menuitem action="view-shrink-wrap" />
       <menuitem action="view-fullscreen" />
@@ -719,6 +720,7 @@
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
         <menuitem action="filters-shift" />
+        <menuitem action="filters-spherize" />
         <menuitem action="filters-value-propagate" />
         <menuitem action="filters-video-degradation" />
         <menuitem action="filters-waves" />
@@ -781,6 +783,7 @@
         <menuitem action="filters-fractal-trace" />
         <menuitem action="filters-illusion" />
         <menuitem action="filters-panorama-projection" />
+        <menuitem action="filters-recursive-transform" />
         <menuitem action="filters-tile-paper" />
         <menuitem action="filters-tile-seamless" />
       </menu>

@@ -31,7 +31,14 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimp-atomic.h"
+#include "gimp-parallel.h"
+#include "gimpasync.h"
 #include "gimphistogram.h"
+
+
+#define MIN_PARALLEL_SUB_SIZE 64
+#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
 
 
 enum
@@ -44,31 +51,64 @@ enum
 
 struct _GimpHistogramPrivate
 {
-  gboolean  linear;
-  gint      n_channels;
-  gint      n_bins;
-  gdouble  *values;
+  gboolean   linear;
+  gint       n_channels;
+  gint       n_bins;
+  gdouble   *values;
+  GimpAsync *calculate_async;
 };
+
+typedef struct
+{
+  /*  input  */
+  GimpHistogram *histogram;
+  GeglBuffer    *buffer;
+  GeglRectangle  buffer_rect;
+  GeglBuffer    *mask;
+  GeglRectangle  mask_rect;
+
+  /*  output  */
+  gint           n_components;
+  gint           n_bins;
+  gdouble       *values;
+} CalculateContext;
+
+typedef struct
+{
+  GimpAsync        *async;
+  CalculateContext *context;
+
+  const Babl       *format;
+  GSList           *values_list;
+} CalculateData;
 
 
 /*  local function prototypes  */
 
-static void     gimp_histogram_finalize     (GObject       *object);
-static void     gimp_histogram_set_property (GObject       *object,
-                                             guint          property_id,
-                                             const GValue  *value,
-                                             GParamSpec    *pspec);
-static void     gimp_histogram_get_property (GObject       *object,
-                                             guint          property_id,
-                                             GValue        *value,
-                                             GParamSpec    *pspec);
+static void      gimp_histogram_finalize                 (GObject             *object);
+static void      gimp_histogram_set_property             (GObject             *object,
+                                                          guint                property_id,
+                                                          const GValue        *value,
+                                                          GParamSpec          *pspec);
+static void      gimp_histogram_get_property             (GObject             *object,
+                                                          guint                property_id,
+                                                          GValue              *value,
+                                                          GParamSpec          *pspec);
 
-static gint64   gimp_histogram_get_memsize  (GimpObject    *object,
-                                             gint64        *gui_size);
+static gint64    gimp_histogram_get_memsize              (GimpObject          *object,
+                                                          gint64              *gui_size);
 
-static void     gimp_histogram_alloc_values (GimpHistogram *histogram,
-                                             gint           n_components,
-                                             gint           n_bins);
+static void      gimp_histogram_set_values               (GimpHistogram       *histogram,
+                                                          gint                 n_components,
+                                                          gint                 n_bins,
+                                                          gdouble             *values);
+
+static void      gimp_histogram_calculate_internal       (GimpAsync           *async,
+                                                          CalculateContext    *context);
+static void      gimp_histogram_calculate_area           (const GeglRectangle *area,
+                                                          CalculateData       *data);
+static void      gimp_histogram_calculate_async_callback (GimpAsync           *async,
+                                                          CalculateContext    *context);
 
 
 G_DEFINE_TYPE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
@@ -213,6 +253,9 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
 
+  if (histogram->priv->calculate_async)
+    gimp_async_wait (histogram->priv->calculate_async);
+
   dup = gimp_histogram_new (histogram->priv->linear);
 
   dup->priv->n_channels = histogram->priv->n_channels;
@@ -232,270 +275,104 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
                           GeglBuffer          *mask,
                           const GeglRectangle *mask_rect)
 {
-  GimpHistogramPrivate *priv;
-  GeglBufferIterator   *iter;
-  const Babl           *format;
-  gint                  n_components;
-  gint                  n_bins;
-  gfloat                n_bins_1f;
-  gfloat                temp;
+  CalculateContext context = {};
 
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (buffer_rect != NULL);
 
-  priv = histogram->priv;
-
-  format = gegl_buffer_get_format (buffer);
-
-  if (babl_format_get_type (format, 0) == babl_type ("u8"))
-    n_bins = 256;
-  else
-    n_bins = 1024;
-
-  if (babl_format_is_palette (format))
+  if (histogram->priv->calculate_async)
     {
-      if (babl_format_has_alpha (format))
-        {
-          if (priv->linear)
-            format = babl_format ("RGB float");
-          else
-            format = babl_format ("R'G'B' float");
-        }
-      else
-        {
-          if (priv->linear)
-            format = babl_format ("RGBA float");
-          else
-            format = babl_format ("R'G'B'A float");
-        }
-    }
-  else
-    {
-      const Babl *model = babl_format_get_model (format);
-
-      if (model == babl_model ("Y") ||
-          model == babl_model ("Y'"))
-        {
-          if (priv->linear)
-            format = babl_format ("Y float");
-          else
-            format = babl_format ("Y' float");
-        }
-      else if (model == babl_model ("YA") ||
-               model == babl_model ("Y'A"))
-        {
-          if (priv->linear)
-            format = babl_format ("YA float");
-          else
-            format = babl_format ("Y'A float");
-        }
-      else if (model == babl_model ("RGB") ||
-               model == babl_model ("R'G'B'"))
-        {
-          if (priv->linear)
-            format = babl_format ("RGB float");
-          else
-            format = babl_format ("R'G'B' float");
-        }
-      else if (model == babl_model ("RGBA") ||
-               model == babl_model ("R'G'B'A"))
-        {
-          if (priv->linear)
-            format = babl_format ("RGBA float");
-          else
-            format = babl_format ("R'G'B'A float");
-        }
-      else
-        {
-          g_return_if_reached ();
-        }
+      gimp_async_cancel (histogram->priv->calculate_async);
+      gimp_async_wait (histogram->priv->calculate_async);
     }
 
-  n_components = babl_format_get_n_components (format);
-
-  g_object_freeze_notify (G_OBJECT (histogram));
-
-  gimp_histogram_alloc_values (histogram, n_components, n_bins);
-
-  iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+  context.histogram   = histogram;
+  context.buffer      = buffer;
+  context.buffer_rect = *buffer_rect;
 
   if (mask)
-    gegl_buffer_iterator_add (iter, mask, mask_rect, 0,
-                              babl_format ("Y float"),
-                              GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-  n_bins_1f = priv->n_bins - 1;
-
-#define VALUE(c,i) (*(temp = (i) * n_bins_1f,                                  \
-                      &priv->values[(c) * priv->n_bins +                       \
-                                    SIGNED_ROUND (SAFE_CLAMP (temp,            \
-                                                              0.0f,            \
-                                                              n_bins_1f))]))
-
-  while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *data   = iter->data[0];
-      gint          length = iter->length;
-      gfloat        max;
-      gfloat        luminance;
+      context.mask = mask;
 
-      if (mask)
-        {
-          const gfloat *mask_data = iter->data[1];
-
-          switch (n_components)
-            {
-            case 1:
-              while (length--)
-                {
-                  const gdouble masked = *mask_data;
-
-                  VALUE (0, data[0]) += masked;
-
-                  data += n_components;
-                  mask_data += 1;
-                }
-              break;
-
-            case 2:
-              while (length--)
-                {
-                  const gdouble masked = *mask_data;
-                  const gdouble weight = data[1];
-
-                  VALUE (0, data[0]) += weight * masked;
-                  VALUE (1, data[1]) += masked;
-
-                  data += n_components;
-                  mask_data += 1;
-                }
-              break;
-
-            case 3: /* calculate separate value values */
-              while (length--)
-                {
-                  const gdouble masked = *mask_data;
-
-                  VALUE (1, data[0]) += masked;
-                  VALUE (2, data[1]) += masked;
-                  VALUE (3, data[2]) += masked;
-
-                  max = MAX (data[0], data[1]);
-                  max = MAX (data[2], max);
-                  VALUE (0, max) += masked;
-
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
-                  VALUE (4, luminance) += masked;
-
-                  data += n_components;
-                  mask_data += 1;
-                }
-              break;
-
-            case 4: /* calculate separate value values */
-              while (length--)
-                {
-                  const gdouble masked = *mask_data;
-                  const gdouble weight = data[3];
-
-                  VALUE (1, data[0]) += weight * masked;
-                  VALUE (2, data[1]) += weight * masked;
-                  VALUE (3, data[2]) += weight * masked;
-                  VALUE (4, data[3]) += masked;
-
-                  max = MAX (data[0], data[1]);
-                  max = MAX (data[2], max);
-                  VALUE (0, max) += weight * masked;
-
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
-                  VALUE (5, luminance) += weight * masked;
-
-                  data += n_components;
-                  mask_data += 1;
-                }
-              break;
-            }
-        }
-      else /* no mask */
-        {
-          switch (n_components)
-            {
-            case 1:
-              while (length--)
-                {
-                  VALUE (0, data[0]) += 1.0;
-
-                  data += n_components;
-                }
-              break;
-
-            case 2:
-              while (length--)
-                {
-                  const gdouble weight = data[1];
-
-                  VALUE (0, data[0]) += weight;
-                  VALUE (1, data[1]) += 1.0;
-
-                  data += n_components;
-                }
-              break;
-
-            case 3: /* calculate separate value values */
-              while (length--)
-                {
-                  VALUE (1, data[0]) += 1.0;
-                  VALUE (2, data[1]) += 1.0;
-                  VALUE (3, data[2]) += 1.0;
-
-                  max = MAX (data[0], data[1]);
-                  max = MAX (data[2], max);
-                  VALUE (0, max) += 1.0;
-
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
-                  VALUE (4, luminance) += 1.0;
-
-                  data += n_components;
-                }
-              break;
-
-            case 4: /* calculate separate value values */
-              while (length--)
-                {
-                  const gdouble weight = data[3];
-
-                  VALUE (1, data[0]) += weight;
-                  VALUE (2, data[1]) += weight;
-                  VALUE (3, data[2]) += weight;
-                  VALUE (4, data[3]) += 1.0;
-
-                  max = MAX (data[0], data[1]);
-                  max = MAX (data[2], max);
-                  VALUE (0, max) += weight;
-
-                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
-                  VALUE (5, luminance) += weight;
-
-                  data += n_components;
-                }
-              break;
-            }
-        }
+      if (mask_rect)
+        context.mask_rect = *mask_rect;
+      else
+        context.mask_rect = *gegl_buffer_get_extent (mask);
     }
 
-  g_object_notify (G_OBJECT (histogram), "values");
+  gimp_histogram_calculate_internal (NULL, &context);
 
-  g_object_thaw_notify (G_OBJECT (histogram));
+  gimp_histogram_set_values (histogram,
+                             context.n_components, context.n_bins,
+                             context.values);
+}
 
-#undef VALUE
+GimpAsync *
+gimp_histogram_calculate_async (GimpHistogram       *histogram,
+                                GeglBuffer          *buffer,
+                                const GeglRectangle *buffer_rect,
+                                GeglBuffer          *mask,
+                                const GeglRectangle *mask_rect)
+{
+  CalculateContext *context;
+
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (buffer_rect != NULL, NULL);
+
+  if (histogram->priv->calculate_async)
+    {
+      gimp_async_cancel (histogram->priv->calculate_async);
+      gimp_async_wait (histogram->priv->calculate_async);
+    }
+
+  context = g_slice_new0 (CalculateContext);
+
+  context->histogram   = histogram;
+  context->buffer      = gegl_buffer_new (buffer_rect,
+                                          gegl_buffer_get_format (buffer));
+  context->buffer_rect = *buffer_rect;
+
+  gegl_buffer_copy (buffer, buffer_rect, GEGL_ABYSS_NONE,
+                    context->buffer, NULL);
+
+  if (mask)
+    {
+      if (mask_rect)
+        context->mask_rect = *mask_rect;
+      else
+        context->mask_rect = *gegl_buffer_get_extent (mask);
+
+      context->mask = gegl_buffer_new (&context->mask_rect,
+                                       gegl_buffer_get_format (mask));
+
+      gegl_buffer_copy (mask, &context->mask_rect, GEGL_ABYSS_NONE,
+                        context->mask, NULL);
+    }
+
+  histogram->priv->calculate_async = gimp_parallel_run_async (
+    (GimpParallelRunAsyncFunc) gimp_histogram_calculate_internal,
+    context);
+
+  gimp_async_add_callback (
+    histogram->priv->calculate_async,
+    (GimpAsyncCallback) gimp_histogram_calculate_async_callback,
+    context);
+
+  return histogram->priv->calculate_async;
 }
 
 void
 gimp_histogram_clear_values (GimpHistogram *histogram)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
+
+  if (histogram->priv->calculate_async)
+    {
+      gimp_async_cancel (histogram->priv->calculate_async);
+      gimp_async_wait (histogram->priv->calculate_async);
+    }
 
   if (histogram->priv->values)
     {
@@ -952,36 +829,425 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
 /*  private functions  */
 
 static void
-gimp_histogram_alloc_values (GimpHistogram *histogram,
-                             gint           n_components,
-                             gint           n_bins)
+gimp_histogram_set_values (GimpHistogram *histogram,
+                           gint           n_components,
+                           gint           n_bins,
+                           gdouble       *values)
 {
-  GimpHistogramPrivate *priv = histogram->priv;
+  GimpHistogramPrivate *priv              = histogram->priv;
+  gboolean              notify_n_channels = FALSE;
+  gboolean              notify_n_bins     = FALSE;
 
-  if (n_components + 2 != priv->n_channels ||
-      n_bins           != priv->n_bins)
+  if (n_components + 2 != priv->n_channels)
     {
-      gimp_histogram_clear_values (histogram);
+      priv->n_channels = n_components + 2;
 
-      if (n_components + 2 != priv->n_channels)
+      notify_n_channels = TRUE;
+    }
+
+  if (n_bins != priv->n_bins)
+    {
+      priv->n_bins = n_bins;
+
+      notify_n_bins = TRUE;
+    }
+
+  if (values != priv->values)
+    {
+      if (priv->values)
+        g_free (priv->values);
+
+      priv->values = values;
+    }
+
+  if (notify_n_channels)
+    g_object_notify (G_OBJECT (histogram), "n-channels");
+
+  if (notify_n_bins)
+    g_object_notify (G_OBJECT (histogram), "n-bins");
+
+  g_object_notify (G_OBJECT (histogram), "values");
+}
+
+static void
+gimp_histogram_calculate_internal (GimpAsync        *async,
+                                   CalculateContext *context)
+{
+  CalculateData         data;
+  GimpHistogramPrivate *priv;
+  const Babl           *format;
+
+  priv = context->histogram->priv;
+
+  format = gegl_buffer_get_format (context->buffer);
+
+  if (babl_format_get_type (format, 0) == babl_type ("u8"))
+    context->n_bins = 256;
+  else
+    context->n_bins = 1024;
+
+  if (babl_format_is_palette (format))
+    {
+      if (babl_format_has_alpha (format))
         {
-          priv->n_channels = n_components + 2;
-
-          g_object_notify (G_OBJECT (histogram), "n-channels");
+          if (priv->linear)
+            format = babl_format ("RGB float");
+          else
+            format = babl_format ("R'G'B' float");
         }
-
-      if (n_bins != priv->n_bins)
+      else
         {
-          priv->n_bins = n_bins;
-
-          g_object_notify (G_OBJECT (histogram), "n-bins");
+          if (priv->linear)
+            format = babl_format ("RGBA float");
+          else
+            format = babl_format ("R'G'B'A float");
         }
-
-      priv->values = g_new0 (gdouble, priv->n_channels * priv->n_bins);
     }
   else
     {
-      memset (priv->values, 0,
-              priv->n_channels * priv->n_bins * sizeof (gdouble));
+      const Babl *model = babl_format_get_model (format);
+
+      if (model == babl_model ("Y") ||
+          model == babl_model ("Y'"))
+        {
+          if (priv->linear)
+            format = babl_format ("Y float");
+          else
+            format = babl_format ("Y' float");
+        }
+      else if (model == babl_model ("YA") ||
+               model == babl_model ("Y'A"))
+        {
+          if (priv->linear)
+            format = babl_format ("YA float");
+          else
+            format = babl_format ("Y'A float");
+        }
+      else if (model == babl_model ("RGB") ||
+               model == babl_model ("R'G'B'"))
+        {
+          if (priv->linear)
+            format = babl_format ("RGB float");
+          else
+            format = babl_format ("R'G'B' float");
+        }
+      else if (model == babl_model ("RGBA") ||
+               model == babl_model ("R'G'B'A"))
+        {
+          if (priv->linear)
+            format = babl_format ("RGBA float");
+          else
+            format = babl_format ("R'G'B'A float");
+        }
+      else
+        {
+          if (async)
+            gimp_async_abort (async);
+
+          g_return_if_reached ();
+        }
     }
+
+  context->n_components = babl_format_get_n_components (format);
+
+  data.async       = async;
+  data.context     = context;
+  data.format      = format;
+  data.values_list = NULL;
+
+  gimp_parallel_distribute_area (
+    &context->buffer_rect, MIN_PARALLEL_SUB_AREA,
+    (GimpParallelDistributeAreaFunc) gimp_histogram_calculate_area,
+    &data);
+
+  if (! async || ! gimp_async_is_canceled (async))
+    {
+      gdouble *total_values = NULL;
+      gint     n_values     = (context->n_components + 2) * context->n_bins;
+      GSList  *iter;
+
+      for (iter = data.values_list; iter; iter = g_slist_next (iter))
+        {
+          gdouble *values = iter->data;
+
+          if (! total_values)
+            {
+              total_values = values;
+            }
+          else
+            {
+              gint i;
+
+              for (i = 0; i < n_values; i++)
+                total_values[i] += values[i];
+
+              g_free (values);
+            }
+        }
+
+      g_slist_free (data.values_list);
+
+      context->values = total_values;
+
+      if (async)
+        gimp_async_finish (async, NULL);
+    }
+  else
+    {
+      g_slist_free_full (data.values_list, g_free);
+
+      if (async)
+        gimp_async_abort (async);
+    }
+}
+
+static void
+gimp_histogram_calculate_area (const GeglRectangle *area,
+                               CalculateData       *data)
+{
+  GimpAsync            *async;
+  CalculateContext     *context;
+  GeglBufferIterator   *iter;
+  gdouble              *values;
+  gint                  n_components;
+  gint                  n_bins;
+  gfloat                n_bins_1f;
+  gfloat                temp;
+
+  async   = data->async;
+  context = data->context;
+
+  n_bins       = context->n_bins;
+  n_components = context->n_components;
+
+  values = g_new0 (gdouble, (n_components + 2) * n_bins);
+  gimp_atomic_slist_push_head (&data->values_list, values);
+
+  iter = gegl_buffer_iterator_new (context->buffer, area, 0,
+                                   data->format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+  if (context->mask)
+    {
+      GeglRectangle mask_area = *area;
+
+      mask_area.x += context->mask_rect.x - context->buffer_rect.x;
+      mask_area.y += context->mask_rect.y - context->buffer_rect.y;
+
+      gegl_buffer_iterator_add (iter, context->mask, &mask_area, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+    }
+
+  n_bins_1f = n_bins - 1;
+
+#define VALUE(c,i) (*(temp = (i) * n_bins_1f,                                  \
+                      &values[(c) * n_bins +                                   \
+                              SIGNED_ROUND (SAFE_CLAMP (temp,                  \
+                                                        0.0f,                  \
+                                                        n_bins_1f))]))
+
+#define CHECK_CANCELED(length)                                                 \
+  G_STMT_START                                                                 \
+    {                                                                          \
+      if ((length) % 128 == 0 && async && gimp_async_is_canceled (async))      \
+        {                                                                      \
+          gegl_buffer_iterator_stop (iter);                                    \
+                                                                               \
+          return;                                                              \
+        }                                                                      \
+    }                                                                          \
+  G_STMT_END
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const gfloat *data   = iter->data[0];
+      gint          length = iter->length;
+      gfloat        max;
+      gfloat        luminance;
+
+      CHECK_CANCELED (0);
+
+      if (context->mask)
+        {
+          const gfloat *mask_data = iter->data[1];
+
+          switch (n_components)
+            {
+            case 1:
+              while (length--)
+                {
+                  const gdouble masked = *mask_data;
+
+                  VALUE (0, data[0]) += masked;
+
+                  data += n_components;
+                  mask_data += 1;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 2:
+              while (length--)
+                {
+                  const gdouble masked = *mask_data;
+                  const gdouble weight = data[1];
+
+                  VALUE (0, data[0]) += weight * masked;
+                  VALUE (1, data[1]) += masked;
+
+                  data += n_components;
+                  mask_data += 1;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 3: /* calculate separate value values */
+              while (length--)
+                {
+                  const gdouble masked = *mask_data;
+
+                  VALUE (1, data[0]) += masked;
+                  VALUE (2, data[1]) += masked;
+                  VALUE (3, data[2]) += masked;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+                  VALUE (0, max) += masked;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (4, luminance) += masked;
+
+                  data += n_components;
+                  mask_data += 1;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 4: /* calculate separate value values */
+              while (length--)
+                {
+                  const gdouble masked = *mask_data;
+                  const gdouble weight = data[3];
+
+                  VALUE (1, data[0]) += weight * masked;
+                  VALUE (2, data[1]) += weight * masked;
+                  VALUE (3, data[2]) += weight * masked;
+                  VALUE (4, data[3]) += masked;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+                  VALUE (0, max) += weight * masked;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (5, luminance) += weight * masked;
+
+                  data += n_components;
+                  mask_data += 1;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+            }
+        }
+      else /* no mask */
+        {
+          switch (n_components)
+            {
+            case 1:
+              while (length--)
+                {
+                  VALUE (0, data[0]) += 1.0;
+
+                  data += n_components;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 2:
+              while (length--)
+                {
+                  const gdouble weight = data[1];
+
+                  VALUE (0, data[0]) += weight;
+                  VALUE (1, data[1]) += 1.0;
+
+                  data += n_components;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 3: /* calculate separate value values */
+              while (length--)
+                {
+                  VALUE (1, data[0]) += 1.0;
+                  VALUE (2, data[1]) += 1.0;
+                  VALUE (3, data[2]) += 1.0;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+                  VALUE (0, max) += 1.0;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (4, luminance) += 1.0;
+
+                  data += n_components;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+
+            case 4: /* calculate separate value values */
+              while (length--)
+                {
+                  const gdouble weight = data[3];
+
+                  VALUE (1, data[0]) += weight;
+                  VALUE (2, data[1]) += weight;
+                  VALUE (3, data[2]) += weight;
+                  VALUE (4, data[3]) += 1.0;
+
+                  max = MAX (data[0], data[1]);
+                  max = MAX (data[2], max);
+                  VALUE (0, max) += weight;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (5, luminance) += weight;
+
+                  data += n_components;
+
+                  CHECK_CANCELED (length);
+                }
+              break;
+            }
+        }
+    }
+
+#undef VALUE
+#undef CHECK_CANCELED
+}
+
+static void
+gimp_histogram_calculate_async_callback (GimpAsync        *async,
+                                         CalculateContext *context)
+{
+  context->histogram->priv->calculate_async = NULL;
+
+  if (gimp_async_is_finished (async))
+    {
+      gimp_histogram_set_values (context->histogram,
+                                 context->n_components, context->n_bins,
+                                 context->values);
+    }
+
+  g_object_unref (context->buffer);
+  if (context->mask)
+    g_object_unref (context->mask);
+
+  g_slice_free (CalculateContext, context);
 }

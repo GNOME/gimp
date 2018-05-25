@@ -10,3 +10,66 @@ Otherwise, this branch is only for bug-fixes.
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
+
+Core:
+
+  - Discard fonts which fail to load and popup an info dialog to allow
+    people debug their fonts.
+  - New API to suppress updates in UI until plug-ins are done
+    introducing changes.
+  - New API to calculate histograms in separate threads, with possible further
+    extension to handle similar cases elsewhere in GIMP.
+  - Tool options are now properly saved and reloaded per-device at
+    startup.
+
+Plug-ins:
+
+  - New plug-in for importing and exporting HEIF images.
+  - Enable visibility of rasterized vector layer from PSD.
+  - Single-window screenshots in Windows fixed to correctly snap a
+    window even when it is partly off-screen or covered by another
+    window or when display scaling is not set to 100%.
+
+Filters:
+
+  - New Spherize filter to wrap an image around a spherical cap
+  - New Recursive Transform filter to create Droste effect.
+
+Usability:
+
+  - Warn users, when alpha-only painting has no effect. E.g. when target
+    drawable doesn't have an alpha channel, or the alpha channel is locked.
+  - Make the splash texts dynamic, so they are larger on larger splashes.
+  - Mention pressing Enter to complete Foreground selection in the status bar.
+  - Make sure that clicking outside any selection prevents Rectangle Select
+    and Ellipse Select tools from creating empty selections.
+  - Improve mouse wheel zooming behavior to keep the same point
+    centered under the pointer even if the image is completely visible
+    in the canvas.
+  - Add "View -> Center Image in Window" (Shift+J) as a quick way to
+    center the image at any zoom level.
+
+Translations:
+
+  - Updated translations: Catalan, Danish, Dutch, French, German, Greek,
+    Hungarian, Icelandic, Italian, Latvian, Polish, Russian, Spanish,
+    Swedish, Ukrainian.
+  - New translation of Windows installer: Chinese (Taiwan)
+
+Build:
+
+  - Add a --with-bug-report-url configure option allowing packagers to
+    set the address of their own bug tracker. This address will be the
+    one opened by the debug dialog for reporting bugs.
+  - Add a flatpak manifest for the gtk3-port branch.
+  - Remove the possibility to disable script-fu.
+  - Add a --with-icc-directory configure option to customize the color
+    profile directory. By default, it is set to the common path
+    /usr/share/color/icc.
+
+Documentation:
+
+  - Updating the description of the XCF format "devel-docs/xcf.txt", for
+    third-party readers wishing to support GIMP 2.10 XCF files.
+  - Add documentation skeletons for all enums in libgimpbase/, there is
+    much room for improvement.

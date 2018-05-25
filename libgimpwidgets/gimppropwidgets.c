@@ -20,8 +20,6 @@
 #include <string.h>
 
 #include <gegl.h>
-/* FIXME: #undef GTK_DISABLE_DEPRECATED */
-#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -29,14 +27,6 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "gimpwidgetstypes.h"
-
-#undef GIMP_DISABLE_DEPRECATED
-#include "gimpoldwidgets.h"
-#include "gimppropwidgets.h"
-#include "gimpunitmenu.h"
-
-#define GIMP_DISABLE_DEPRECATED
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -167,11 +157,7 @@ gimp_prop_check_button_callback (GtkWidget *widget,
   g_object_get (config, param_spec->name, &v, NULL);
 
   if (v != value)
-    {
-      g_object_set (config, param_spec->name, value, NULL);
-
-      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
-    }
+    g_object_set (config, param_spec->name, value, NULL);
 }
 
 static void
@@ -192,7 +178,6 @@ gimp_prop_check_button_notify (GObject    *config,
                                        config);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), value);
-      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
 
       g_signal_handlers_unblock_by_func (button,
                                          gimp_prop_check_button_callback,
@@ -306,8 +291,6 @@ gimp_prop_enum_check_button_callback (GtkWidget *widget,
       g_object_set (config, param_spec->name, value, NULL);
 
       gtk_toggle_button_set_inconsistent (GTK_TOGGLE_BUTTON (widget), FALSE);
-
-      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
     }
 }
 
@@ -346,7 +329,6 @@ gimp_prop_enum_check_button_notify (GObject    *config,
                                        config);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), active);
-      gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (button));
 
       g_signal_handlers_unblock_by_func (button,
                                          gimp_prop_enum_check_button_callback,
@@ -994,6 +976,7 @@ gimp_prop_enum_label_new (GObject     *config,
                 NULL);
 
   label = gimp_enum_label_new (param_spec->value_type, value);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 
@@ -1082,37 +1065,6 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   g_object_set_data (G_OBJECT (frame), "radio-button", button);
 
   return frame;
-}
-
-/**
- * gimp_prop_enum_stock_box_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of enum property controlled by the radio buttons.
- * @stock_prefix:  The prefix of the group of stock ids to use.
- * @minimum:       Smallest value of enum to be included.
- * @maximum:       Largest value of enum to be included.
- *
- * Creates a horizontal box of radio buttons with stock icons, which
- * function to set and display the value of the specified Enum
- * property.  The stock_id for each icon is created by appending the
- * enum_value's nick to the given @stock_prefix.  See
- * gimp_enum_stock_box_new() for more information.
- *
- * Return value: A #libgimpwidgets-gimpenumstockbox containing the radio buttons.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_enum_stock_box_new (GObject     *config,
-                              const gchar *property_name,
-                              const gchar *stock_prefix,
-                              gint         minimum,
-                              gint         maximum)
-{
-  return gimp_prop_enum_icon_box_new (config, property_name,
-                                      stock_prefix, minimum, maximum);
 }
 
 /**
@@ -1364,7 +1316,7 @@ gimp_prop_hscale_new (GObject     *config,
  * gimp_prop_scale_entry_new:
  * @config:         Object to which property is attached.
  * @property_name:  Name of double property controlled by the spin button.
- * @table:          The #GtkTable the widgets will be attached to.
+ * @grid:           The #GtkGrid the widgets will be attached to.
  * @column:         The column to start with.
  * @row:            The row to attach the widgets.
  * @label:          The text for the #GtkLabel which will appear left of
@@ -1390,10 +1342,10 @@ gimp_prop_hscale_new (GObject     *config,
  *
  * Since: 2.4
  */
-GtkObject *
+GtkAdjustment *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
-                           GtkTable    *table,
+                           GtkGrid     *grid,
                            gint         column,
                            gint         row,
                            const gchar *label,
@@ -1404,12 +1356,12 @@ gimp_prop_scale_entry_new (GObject     *config,
                            gdouble      lower_limit,
                            gdouble      upper_limit)
 {
-  GParamSpec  *param_spec;
-  GtkObject   *adjustment;
-  const gchar *tooltip;
-  gdouble      value;
-  gdouble      lower;
-  gdouble      upper;
+  GParamSpec    *param_spec;
+  GtkAdjustment *adjustment;
+  const gchar   *tooltip;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1426,7 +1378,7 @@ gimp_prop_scale_entry_new (GObject     *config,
 
   if (! limit_scale)
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
+      adjustment = gimp_scale_entry_new (grid, column, row,
                                          label, -1, -1,
                                          value, lower, upper,
                                          step_increment, page_increment,
@@ -1437,7 +1389,7 @@ gimp_prop_scale_entry_new (GObject     *config,
     }
   else
     {
-      adjustment = gimp_scale_entry_new (table, column, row,
+      adjustment = gimp_scale_entry_new (grid, column, row,
                                          label, -1, -1,
                                          value, lower_limit, upper_limit,
                                          step_increment, page_increment,
@@ -1521,7 +1473,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  * gimp_prop_opacity_entry_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of double property controlled by the spin button.
- * @table:         The #GtkTable the widgets will be attached to.
+ * @grid:          The #GtkGrid the widgets will be attached to.
  * @column:        The column to start with.
  * @row:           The row to attach the widgets.
  * @label:         The text for the #GtkLabel which will appear left of the
@@ -1536,21 +1488,21 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  *
  * Since: 2.4
  */
-GtkObject *
+GtkAdjustment *
 gimp_prop_opacity_entry_new (GObject     *config,
                              const gchar *property_name,
-                             GtkTable    *table,
+                             GtkGrid     *grid,
                              gint         column,
                              gint         row,
                              const gchar *label)
 {
-  GtkObject *adjustment;
+  GtkAdjustment *adjustment;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
   adjustment = gimp_prop_scale_entry_new (config, property_name,
-                                          table, column, row, label,
+                                          grid, column, row, label,
                                           0.01, 0.1, 1,
                                           FALSE, 0.0, 0.0);
 
@@ -1794,7 +1746,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
                                   uint64_spec->maximum);
 
   set_param_spec (G_OBJECT (entry),
-                  GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
+                  gimp_memsize_entry_get_spinbutton (GIMP_MEMSIZE_ENTRY (entry)),
                   param_spec);
 
   g_signal_connect (entry, "value-changed",
@@ -1844,7 +1796,7 @@ gimp_prop_memsize_notify (GObject          *config,
                 param_spec->name, &value,
                 NULL);
 
-  if (entry->value != value)
+  if (gimp_memsize_entry_get_value (entry) != value)
     {
       g_signal_handlers_block_by_func (entry,
                                        gimp_prop_memsize_callback,
@@ -1906,6 +1858,7 @@ gimp_prop_label_new (GObject     *config,
     }
 
   label = gtk_label_new (NULL);
+  gtk_widget_set_halign (label, GTK_ALIGN_START);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 
@@ -2910,7 +2863,6 @@ gimp_prop_size_entry_new (GObject                   *config,
                                gimp_prop_size_entry_num_chars (lower, upper) + 1 +
                                gimp_unit_get_scaled_digits (unit_value, resolution),
                                update_policy);
-  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
 
   set_param_spec (NULL,
                   gimp_size_entry_get_help_widget (GIMP_SIZE_ENTRY (entry), 0),
@@ -3181,7 +3133,7 @@ gimp_prop_coordinates_new (GObject                   *config,
   if (has_chainbutton)
     {
       chainbutton = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-      gtk_table_attach_defaults (GTK_TABLE (entry), chainbutton, 1, 3, 3, 4);
+      gtk_grid_attach (GTK_GRID (entry), chainbutton, 1, 3, 2, 1);
       gtk_widget_show (chainbutton);
     }
 
@@ -3834,159 +3786,12 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
 
 
 /***************/
-/*  unit menu  */
-/***************/
-
-static void   gimp_prop_unit_menu_callback (GtkWidget  *menu,
-                                            GObject    *config);
-static void   gimp_prop_unit_menu_notify   (GObject    *config,
-                                            GParamSpec *param_spec,
-                                            GtkWidget  *menu);
-
-/**
- * gimp_prop_unit_menu_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of Unit property.
- * @unit_format:   A printf-like format string which is used to create
- *                 the unit strings.
- *
- * Creates a #GimpUnitMenu to set and display the value of a Unit
- * property.  See gimp_unit_menu_new() for more information.
- *
- * Return value:  A new #GimpUnitMenu widget.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_unit_menu_new (GObject     *config,
-                         const gchar *property_name,
-                         const gchar *unit_format)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  GimpUnit    unit;
-  GValue      value = G_VALUE_INIT;
-  gboolean    show_pixels;
-  gboolean    show_percent;
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  g_value_init (&value, param_spec->value_type);
-
-  g_value_set_int (&value, GIMP_UNIT_PIXEL);
-  show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
-
-  g_value_set_int (&value, GIMP_UNIT_PERCENT);
-  show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
-
-  g_value_unset (&value);
-
-  g_object_get (config,
-                property_name, &unit,
-                NULL);
-
-  menu = gimp_unit_menu_new (unit_format,
-                             unit, show_pixels, show_percent, TRUE);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  g_signal_connect (menu, "unit-changed",
-                    G_CALLBACK (gimp_prop_unit_menu_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_unit_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-static void
-gimp_prop_unit_menu_callback (GtkWidget *menu,
-                              GObject   *config)
-{
-  GParamSpec *param_spec;
-  GimpUnit    unit;
-
-  param_spec = get_param_spec (G_OBJECT (menu));
-  if (! param_spec)
-    return;
-
-  gimp_unit_menu_update (menu, &unit);
-
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_unit_menu_notify,
-                                   menu);
-
-  g_object_set (config,
-                param_spec->name, unit,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_unit_menu_notify,
-                                     menu);
-}
-
-static void
-gimp_prop_unit_menu_notify (GObject    *config,
-                            GParamSpec *param_spec,
-                            GtkWidget  *menu)
-{
-  GimpUnit  unit;
-
-  g_object_get (config,
-                param_spec->name, &unit,
-                NULL);
-
-  g_signal_handlers_block_by_func (menu,
-                                   gimp_prop_unit_menu_callback,
-                                   config);
-
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (menu), unit);
-  gimp_unit_menu_update (menu, &unit);
-
-  g_signal_handlers_unblock_by_func (menu,
-                                     gimp_prop_unit_menu_callback,
-                                     config);
-}
-
-
-/***************/
 /*  icon name  */
 /***************/
 
 static void   gimp_prop_icon_image_notify (GObject    *config,
                                            GParamSpec *param_spec,
                                            GtkWidget  *image);
-
-/**
- * gimp_prop_stock_image_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of string property.
- * @icon_size:     Size of desired stock image.
- *
- * Creates a widget to display a stock image representing the value of the
- * specified string property, which should encode a Stock ID.
- * See gtk_image_new_from_stock() for more information.
- *
- * Return value:  A new #GtkImage widget.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_stock_image_new (GObject     *config,
-                           const gchar *property_name,
-                           GtkIconSize  icon_size)
-{
-  return gimp_prop_icon_image_new (config, property_name, icon_size);
-}
 
 /**
  * gimp_prop_icon_image_new:

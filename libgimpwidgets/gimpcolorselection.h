@@ -39,26 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_SELECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SELECTION, GimpColorSelectionClass))
 
 
-typedef struct _GimpColorSelectionClass GimpColorSelectionClass;
+typedef struct _GimpColorSelectionPrivate GimpColorSelectionPrivate;
+typedef struct _GimpColorSelectionClass   GimpColorSelectionClass;
 
 struct _GimpColorSelection
 {
-  GtkBox                    parent_instance;
+  GtkBox                     parent_instance;
 
-  gboolean                  show_alpha;
-
-  GimpHSV                   hsv;
-  GimpRGB                   rgb;
-  GimpColorSelectorChannel  channel;
-
-  GtkWidget                *left_vbox;
-  GtkWidget                *right_vbox;
-
-  GtkWidget                *notebook;
-  GtkWidget                *scales;
-
-  GtkWidget                *new_color;
-  GtkWidget                *old_color;
+  GimpColorSelectionPrivate *priv;
 };
 
 struct _GimpColorSelectionClass
@@ -72,6 +60,10 @@ struct _GimpColorSelectionClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -99,6 +91,9 @@ void        gimp_color_selection_color_changed  (GimpColorSelection *selection);
 
 void        gimp_color_selection_set_config     (GimpColorSelection *selection,
                                                  GimpColorConfig    *config);
+
+GtkWidget * gimp_color_selection_get_notebook   (GimpColorSelection *selection);
+GtkWidget * gimp_color_selection_get_right_vbox (GimpColorSelection *selection);
 
 
 G_END_DECLS

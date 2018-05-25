@@ -30,8 +30,8 @@
 
 #define NUMCOLORRADIO 2
 
-static GtkWidget *colorradio[NUMCOLORRADIO];
-static GtkObject *colornoiseadjust = NULL;
+static GtkWidget     *colorradio[NUMCOLORRADIO];
+static GtkAdjustment *colornoiseadjust = NULL;
 
 void
 color_restore (void)
@@ -53,7 +53,7 @@ void
 create_colorpage (GtkNotebook *notebook)
 {
   GtkWidget *vbox;
-  GtkWidget *label, *table;
+  GtkWidget *label, *grid;
   GtkWidget *frame;
 
   label = gtk_label_new_with_mnemonic (_("Co_lor"));
@@ -83,13 +83,13 @@ create_colorpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   colornoiseadjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                           _("Color _noise:"),
                           100, -1, pcvals.color_noise,
                           0.0, 100.0, 1.0, 5.0, 0,

@@ -65,8 +65,7 @@ static void   gimp_color_editor_get_property    (GObject           *object,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
 
-static void   gimp_color_editor_style_set       (GtkWidget         *widget,
-                                                 GtkStyle          *prev_style);
+static void   gimp_color_editor_style_updated   (GtkWidget         *widget);
 
 static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
                                                  GList             *aux_info);
@@ -117,12 +116,12 @@ gimp_color_editor_class_init (GimpColorEditorClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_color_editor_constructed;
-  object_class->dispose      = gimp_color_editor_dispose;
-  object_class->set_property = gimp_color_editor_set_property;
-  object_class->get_property = gimp_color_editor_get_property;
+  object_class->constructed   = gimp_color_editor_constructed;
+  object_class->dispose       = gimp_color_editor_dispose;
+  object_class->set_property  = gimp_color_editor_set_property;
+  object_class->get_property  = gimp_color_editor_get_property;
 
-  widget_class->style_set    = gimp_color_editor_style_set;
+  widget_class->style_updated = gimp_color_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
@@ -191,7 +190,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     G_CALLBACK (gimp_color_editor_color_changed),
                     editor);
 
-  notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+  notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
@@ -201,7 +200,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   group = NULL;
 
-  for (list = GIMP_COLOR_NOTEBOOK (editor->notebook)->selectors;
+  for (list = gimp_color_notebook_get_selectors (GIMP_COLOR_NOTEBOOK (editor->notebook));
        list;
        list = g_list_next (list))
     {
@@ -220,7 +219,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
       gtk_widget_show (button);
 
       image = gtk_image_new_from_icon_name (selector_class->icon_name,
-                                            GTK_ICON_SIZE_BUTTON);
+                                            GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
 
@@ -347,14 +346,13 @@ gimp_color_editor_get_preview (GimpDocked  *docked,
                                GimpContext *context,
                                GtkIconSize  size)
 {
-  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (docked));
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
+  GtkWidget *preview;
+  gint       width;
+  gint       height;
 
   preview = gimp_fg_bg_view_new (context);
 
-  if (gtk_icon_size_lookup_for_settings (settings, size, &width, &height))
+  if (gtk_icon_size_lookup (size, &width, &height))
     gtk_widget_set_size_request (preview, width, height);
 
   return preview;
@@ -367,8 +365,10 @@ gimp_color_editor_set_aux_info (GimpDocked *docked,
                                 GList      *aux_info)
 {
   GimpColorEditor *editor   = GIMP_COLOR_EDITOR (docked);
-  GtkWidget       *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+  GtkWidget       *notebook;
   GList           *list;
+
+  notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
@@ -409,16 +409,19 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
 {
   GimpColorEditor    *editor   = GIMP_COLOR_EDITOR (docked);
   GimpColorNotebook  *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook);
+  GimpColorSelector  *current;
   GList              *aux_info;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
-  if (notebook->cur_page)
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  if (current)
     {
       GimpSessionInfoAux *aux;
 
       aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_PAGE,
-                                       G_OBJECT_TYPE_NAME (notebook->cur_page));
+                                       G_OBJECT_TYPE_NAME (current));
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -494,12 +497,11 @@ gimp_color_editor_new (GimpContext *context)
 }
 
 static void
-gimp_color_editor_style_set (GtkWidget *widget,
-                             GtkStyle  *prev_style)
+gimp_color_editor_style_updated (GtkWidget *widget)
 {
   GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (editor->hbox)
     gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));
@@ -616,7 +618,7 @@ gimp_color_editor_tab_toggled (GtkWidget       *widget,
           GtkWidget *notebook;
           gint       page_num;
 
-          notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+          notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
           page_num = gtk_notebook_page_num (GTK_NOTEBOOK (notebook), selector);
 

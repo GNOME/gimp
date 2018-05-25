@@ -188,9 +188,9 @@ image_new_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
 
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                           gtk_widget_get_screen (widget),
                                            gimp_widget_get_monitor (widget),
                                            NULL /*ui_manager*/,
+                                           widget,
                                            "gimp-image-new-dialog", -1, FALSE);
 
   if (dialog)
@@ -220,8 +220,7 @@ image_duplicate_cmd_callback (GtkAction *action,
 
   gimp_create_display (new_image->gimp, new_image, shell->unit,
                        gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
-                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
+                       G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell))));
 
   g_object_unref (new_image);
 }

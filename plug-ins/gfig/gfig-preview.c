@@ -70,7 +70,7 @@ make_preview (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *table;
+  GtkWidget *grid;
   GtkWidget *ruler;
 
   gfig_context->preview = gtk_drawing_area_new ();
@@ -95,18 +95,16 @@ make_preview (void)
 
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_attach (GTK_TABLE (table), gfig_context->preview, 1, 2, 1, 2,
-                    GTK_FILL , GTK_FILL , 0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  grid = gtk_grid_new ();
+  gtk_grid_attach (GTK_GRID (grid), gfig_context->preview, 1, 1, 1, 1);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, preview_width, PREVIEW_SIZE);
   g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
-  gtk_table_attach (GTK_TABLE (table), ruler, 1, 2, 0, 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 1, 1);
   gtk_widget_show (ruler);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
@@ -114,12 +112,11 @@ make_preview (void)
   g_signal_connect_swapped (gfig_context->preview, "motion-notify-event",
                             G_CALLBACK (GTK_WIDGET_CLASS (G_OBJECT_GET_CLASS (ruler))->motion_notify_event),
                             ruler);
-  gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 2,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 1);
   gtk_widget_show (ruler);
 
   gtk_widget_show (frame);
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);

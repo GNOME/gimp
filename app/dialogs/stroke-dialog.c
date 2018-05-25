@@ -130,7 +130,7 @@ stroke_dialog_new (GimpItem           *item,
 
                                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -166,20 +166,12 @@ stroke_dialog_new (GimpItem           *item,
   g_object_ref_sink (radio_box);
   g_object_unref (radio_box);
 
-  {
-    PangoFontDescription *font_desc;
-
-    font_desc = pango_font_description_new ();
-    pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
-
-    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (cairo_radio)),
-                            font_desc);
-    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (paint_radio)),
-                            font_desc);
-
-    pango_font_description_free (font_desc);
-  }
-
+  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (cairo_radio))),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gimp_label_set_attributes (GTK_LABEL (gtk_bin_get_child (GTK_BIN (paint_radio))),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
 
   /*  the stroke frame  */
 

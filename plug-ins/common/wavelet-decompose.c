@@ -178,6 +178,8 @@ run (const gchar      *name,
 
       gimp_image_undo_group_start (image_id);
 
+      gimp_image_freeze_layers (image_id);
+
       if (wavelet_params.create_group)
         {
           gint32 group_id = gimp_layer_group_new (image_id);
@@ -291,6 +293,8 @@ run (const gchar      *name,
 
       g_free (scale_ids);
 
+      gimp_image_thaw_layers (image_id);
+
       gimp_image_undo_group_end (image_id);
 
       gimp_progress_update (1.0);
@@ -334,12 +338,12 @@ wavelet_blur (gint32 drawable_id,
 static gboolean
 wavelet_decompose_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *table;
-  GtkWidget *button;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *grid;
+  GtkWidget     *button;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -352,7 +356,7 @@ wavelet_decompose_dialog (void)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -365,15 +369,15 @@ wavelet_decompose_dialog (void)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  table = gtk_table_new (3, 1, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* scales */
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("Scales:"), SCALE_WIDTH, ENTRY_WIDTH,
                               wavelet_params.scales,
                               1.0, 7.0, 1.0, 1.0, 0,

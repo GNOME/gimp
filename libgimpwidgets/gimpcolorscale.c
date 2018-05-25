@@ -62,57 +62,56 @@ struct _GimpLCH
 };
 
 
-typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
-
 struct _GimpColorScalePrivate
 {
-  GimpColorConfig    *config;
-  GimpColorTransform *transform;
-  guchar              oog_color[3];
+  GimpColorConfig          *config;
+  GimpColorTransform       *transform;
+  guchar                    oog_color[3];
+
+  GimpColorSelectorChannel  channel;
+  GimpRGB                   rgb;
+  GimpHSV                   hsv;
+
+  guchar                   *buf;
+  guint                     width;
+  guint                     height;
+  guint                     rowstride;
+
+  gboolean                  needs_render;
 };
 
-#define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_SCALE, \
-                                     GimpColorScalePrivate)
+#define GET_PRIVATE(obj) (((GimpColorScale *) (obj))->priv)
 
 
-static void     gimp_color_scale_dispose           (GObject          *object);
-static void     gimp_color_scale_finalize          (GObject          *object);
-static void     gimp_color_scale_get_property      (GObject          *object,
-                                                    guint             property_id,
-                                                    GValue           *value,
-                                                    GParamSpec       *pspec);
-static void     gimp_color_scale_set_property      (GObject          *object,
-                                                    guint             property_id,
-                                                    const GValue     *value,
-                                                    GParamSpec       *pspec);
+static void     gimp_color_scale_dispose             (GObject          *object);
+static void     gimp_color_scale_finalize            (GObject          *object);
+static void     gimp_color_scale_get_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
+static void     gimp_color_scale_set_property        (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
 
-static void     gimp_color_scale_size_allocate     (GtkWidget        *widget,
-                                                    GtkAllocation    *allocation);
-static void     gimp_color_scale_state_changed     (GtkWidget        *widget,
-                                                    GtkStateType      previous_state);
-static gboolean gimp_color_scale_button_press      (GtkWidget        *widget,
-                                                    GdkEventButton   *event);
-static gboolean gimp_color_scale_button_release    (GtkWidget        *widget,
-                                                    GdkEventButton   *event);
-static gboolean gimp_color_scale_scroll            (GtkWidget        *widget,
-                                                    GdkEventScroll   *event);
-static gboolean gimp_color_scale_expose            (GtkWidget        *widget,
-                                                    GdkEventExpose   *event);
+static void     gimp_color_scale_size_allocate       (GtkWidget        *widget,
+                                                      GtkAllocation    *allocation);
+static gboolean gimp_color_scale_scroll              (GtkWidget        *widget,
+                                                      GdkEventScroll   *event);
+static gboolean gimp_color_scale_draw                (GtkWidget        *widget,
+                                                      cairo_t          *cr);
 
-static void     gimp_color_scale_render            (GimpColorScale   *scale);
-static void     gimp_color_scale_render_alpha      (GimpColorScale   *scale);
-static void     gimp_color_scale_render_stipple    (GimpColorScale   *scale);
+static void     gimp_color_scale_render              (GimpColorScale   *scale);
+static void     gimp_color_scale_render_alpha        (GimpColorScale   *scale);
 
-static void     gimp_color_scale_create_transform  (GimpColorScale   *scale);
-static void     gimp_color_scale_destroy_transform (GimpColorScale   *scale);
-static void     gimp_color_scale_notify_config     (GimpColorConfig  *config,
-                                                    const GParamSpec *pspec,
-                                                    GimpColorScale   *scale);
+static void     gimp_color_scale_create_transform    (GimpColorScale   *scale);
+static void     gimp_color_scale_destroy_transform   (GimpColorScale   *scale);
+static void     gimp_color_scale_notify_config       (GimpColorConfig  *config,
+                                                      const GParamSpec *pspec,
+                                                      GimpColorScale   *scale);
 
 
-G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
+G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_RANGE)
 
 #define parent_class gimp_color_scale_parent_class
 
@@ -126,17 +125,14 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose              = gimp_color_scale_dispose;
-  object_class->finalize             = gimp_color_scale_finalize;
-  object_class->get_property         = gimp_color_scale_get_property;
-  object_class->set_property         = gimp_color_scale_set_property;
+  object_class->dispose       = gimp_color_scale_dispose;
+  object_class->finalize      = gimp_color_scale_finalize;
+  object_class->get_property  = gimp_color_scale_get_property;
+  object_class->set_property  = gimp_color_scale_set_property;
 
-  widget_class->size_allocate        = gimp_color_scale_size_allocate;
-  widget_class->state_changed        = gimp_color_scale_state_changed;
-  widget_class->button_press_event   = gimp_color_scale_button_press;
-  widget_class->button_release_event = gimp_color_scale_button_release;
-  widget_class->scroll_event         = gimp_color_scale_scroll;
-  widget_class->expose_event         = gimp_color_scale_expose;
+  widget_class->size_allocate = gimp_color_scale_size_allocate;
+  widget_class->scroll_event  = gimp_color_scale_scroll;
+  widget_class->draw          = gimp_color_scale_draw;
 
   /**
    * GimpColorScale:channel:
@@ -154,12 +150,62 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
+
   g_type_class_add_private (object_class, sizeof (GimpColorScalePrivate));
 
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
                                babl_format ("CIE LCH(ab) double"));
   fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) double"),
                                babl_format ("R'G'B' double"));
+}
+
+static void
+gimp_color_scale_init (GimpColorScale *scale)
+{
+  GimpColorScalePrivate *priv;
+  GtkRange              *range = GTK_RANGE (scale);
+  GtkCssProvider        *css;
+
+  scale->priv = G_TYPE_INSTANCE_GET_PRIVATE (scale,
+                                             GIMP_TYPE_COLOR_SCALE,
+                                             GimpColorScalePrivate);
+
+  priv = scale->priv;
+
+  gtk_widget_set_can_focus (GTK_WIDGET (scale), TRUE);
+
+  gtk_range_set_slider_size_fixed (range, TRUE);
+  gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
+
+  priv->channel      = GIMP_COLOR_SELECTOR_VALUE;
+  priv->needs_render = TRUE;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (range),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
+  gimp_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
+
+  gimp_widget_track_monitor (GTK_WIDGET (scale),
+                             G_CALLBACK (gimp_color_scale_destroy_transform),
+                             NULL);
+
+  css = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css,
+                                   "GimpColorScale contents {"
+                                   "  min-width:  24px;"
+                                   "  min-height: 24px;"
+                                   "}\n"
+                                   "GimpColorScale contents trough slider {"
+                                   "  min-width:  14px;"
+                                   "  min-height: 14px;"
+                                   "}",
+                                   -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (scale)),
+                                  GTK_STYLE_PROVIDER (css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (css);
 }
 
 static void
@@ -173,38 +219,14 @@ gimp_color_scale_dispose (GObject *object)
 }
 
 static void
-gimp_color_scale_init (GimpColorScale *scale)
-{
-  GtkRange *range = GTK_RANGE (scale);
-
-  gtk_range_set_slider_size_fixed (range, TRUE);
-  gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
-
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-
-  scale->channel      = GIMP_COLOR_SELECTOR_VALUE;
-  scale->needs_render = TRUE;
-
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (range),
-                                  GTK_ORIENTATION_HORIZONTAL);
-
-  gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
-
-  gimp_widget_track_monitor (GTK_WIDGET (scale),
-                             G_CALLBACK (gimp_color_scale_destroy_transform),
-                             NULL);
-}
-
-static void
 gimp_color_scale_finalize (GObject *object)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+  GimpColorScalePrivate *priv = GET_PRIVATE (object);
 
-  g_clear_pointer (&scale->buf, g_free);
-  scale->width     = 0;
-  scale->height    = 0;
-  scale->rowstride = 0;
+  g_clear_pointer (&priv->buf, g_free);
+  priv->width     = 0;
+  priv->height    = 0;
+  priv->rowstride = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -215,12 +237,12 @@ gimp_color_scale_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+  GimpColorScalePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_CHANNEL:
-      g_value_set_enum (value, scale->channel);
+      g_value_set_enum (value, priv->channel);
       break;
 
     default:
@@ -253,13 +275,16 @@ static void
 gimp_color_scale_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
-  GtkRange       *range = GTK_RANGE (widget);
-  GdkRectangle    range_rect;
-  gint            focus = 0;
-  gint            trough_border;
-  gint            scale_width;
-  gint            scale_height;
+  GimpColorScalePrivate *priv  = GET_PRIVATE (widget);
+  GtkRange              *range = GTK_RANGE (widget);
+  GdkRectangle           range_rect;
+  gint                   focus = 0;
+  gint                   trough_border;
+  gint                   scale_width;
+  gint                   scale_height;
+  gint                   slider_start;
+  gint                   slider_end;
+  gint                   slider_size;
 
   gtk_widget_style_get (widget,
                         "trough-border", &trough_border,
@@ -276,14 +301,17 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
       focus += focus_padding;
     }
 
-  gtk_range_set_min_slider_size (range,
-                                 (MIN (allocation->width,
-                                       allocation->height) - 2 * focus) / 2);
+  gtk_range_set_min_slider_size (range, 14);
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   gtk_range_get_range_rect (range, &range_rect);
+  gtk_range_get_slider_range (range, &slider_start, &slider_end);
+  slider_size = slider_end - slider_start;
+
+  g_printerr ("slider_size = %d   min = %d\n",
+              slider_size, gtk_range_get_min_slider_size (range));
 
   scale_width  = range_rect.width  - 2 * (focus + trough_border);
   scale_height = range_rect.height - 2 * (focus + trough_border);
@@ -291,88 +319,28 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      scale_width  -= gtk_range_get_min_slider_size (range) - 1;
+      scale_width  -= slider_size / 2;
       scale_height -= 2;
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       scale_width  -= 2;
-      scale_height -= gtk_range_get_min_slider_size (range) - 1;
+      scale_height -= slider_size / 2;
       break;
     }
 
-  if (scale_width != scale->width || scale_height != scale->height)
+  if (scale_width != priv->width || scale_height != priv->height)
     {
-      scale->width  = scale_width;
-      scale->height = scale_height;
+      priv->width  = scale_width;
+      priv->height = scale_height;
 
-      scale->rowstride = scale->width * 4;
+      priv->rowstride = priv->width * 4;
 
-      g_free (scale->buf);
-      scale->buf = g_new (guchar, scale->rowstride * scale->height);
+      g_free (priv->buf);
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
 
-      scale->needs_render = TRUE;
+      priv->needs_render = TRUE;
     }
-}
-
-static void
-gimp_color_scale_state_changed (GtkWidget    *widget,
-                                GtkStateType  previous_state)
-{
-  if (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||
-      previous_state == GTK_STATE_INSENSITIVE)
-    {
-      GIMP_COLOR_SCALE (widget)->needs_render = TRUE;
-    }
-
-  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
-}
-
-static gboolean
-gimp_color_scale_button_press (GtkWidget      *widget,
-                               GdkEventButton *event)
-{
-  if (event->button == 1)
-    {
-      GdkEventButton *my_event;
-      gboolean        retval;
-
-      my_event = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
-      my_event->button = 2;
-
-      retval = GTK_WIDGET_CLASS (parent_class)->button_press_event (widget,
-                                                                    my_event);
-
-      gdk_event_free ((GdkEvent *) my_event);
-
-      return retval;
-    }
-
-  return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
-}
-
-static gboolean
-gimp_color_scale_button_release (GtkWidget      *widget,
-                                 GdkEventButton *event)
-{
-  if (event->button == 1)
-    {
-      GdkEventButton *my_event;
-      gboolean        retval;
-
-      my_event = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
-      my_event->button = 2;
-
-      retval = GTK_WIDGET_CLASS (parent_class)->button_release_event (widget,
-                                                                      my_event);
-
-      gdk_event_free ((GdkEvent *) my_event);
-
-      return retval;
-    }
-
-  return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 }
 
 static gboolean
@@ -412,36 +380,30 @@ gimp_color_scale_scroll (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_color_scale_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_color_scale_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
   GimpColorScale        *scale     = GIMP_COLOR_SCALE (widget);
   GimpColorScalePrivate *priv      = GET_PRIVATE (widget);
   GtkRange              *range     = GTK_RANGE (widget);
-  GtkStyle              *style     = gtk_widget_get_style (widget);
-  GdkWindow             *window    = gtk_widget_get_window (widget);
-  gboolean               sensitive = gtk_widget_is_sensitive (widget);
-  GtkAllocation          allocation;
+  GtkStyleContext       *context   = gtk_widget_get_style_context (widget);
   GdkRectangle           range_rect;
   GdkRectangle           area      = { 0, };
   cairo_surface_t       *buffer;
   gint                   focus = 0;
   gint                   trough_border;
   gint                   slider_start;
+  gint                   slider_end;
   gint                   slider_size;
   gint                   x, y;
   gint                   w, h;
-  cairo_t               *cr;
 
-  if (! scale->buf || ! gtk_widget_is_drawable (widget))
+  if (! priv->buf)
     return FALSE;
 
-  gtk_widget_get_allocation (widget, &allocation);
+  gtk_style_context_save (context);
 
-  cr = gdk_cairo_create (window);
-  gdk_cairo_region (cr, event->region);
-  cairo_translate (cr, allocation.x, allocation.y);
-  cairo_clip (cr);
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_TROUGH);
 
   gtk_widget_style_get (widget,
                         "trough-border", &trough_border,
@@ -459,32 +421,27 @@ gimp_color_scale_expose (GtkWidget      *widget,
     }
 
   gtk_range_get_range_rect (range, &range_rect);
-  gtk_range_get_slider_range (range, &slider_start, NULL);
+  gtk_range_get_slider_range (range, &slider_start, &slider_end);
+  slider_size = slider_end - slider_start;
 
   x = range_rect.x + focus;
   y = range_rect.y + focus;
   w = range_rect.width  - 2 * focus;
   h = range_rect.height - 2 * focus;
 
-  slider_size = gtk_range_get_min_slider_size (range) / 2;
+  slider_size /= 2;
 
-  if (scale->needs_render)
+  if (priv->needs_render)
     {
       gimp_color_scale_render (scale);
 
-      if (! sensitive)
-        gimp_color_scale_render_stipple (scale);
-
-      scale->needs_render = FALSE;
+      priv->needs_render = FALSE;
     }
 
-  gtk_paint_box (style, window,
-                 sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
-                 GTK_SHADOW_IN,
-                 &event->area, widget, "trough",
-                 x + allocation.x,
-                 y + allocation.y,
-                 w, h);
+  gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
+
+  gtk_render_background (context, cr, x, y, w, h);
+  gtk_render_frame (context, cr, x, y, w, h);
 
   if (! priv->transform)
     gimp_color_scale_create_transform (scale);
@@ -492,64 +449,91 @@ gimp_color_scale_expose (GtkWidget      *widget,
   if (priv->transform)
     {
       const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *buf    = g_new (guchar, scale->rowstride * scale->height);
-      guchar     *src    = scale->buf;
+      guchar     *buf    = g_new (guchar, priv->rowstride * priv->height);
+      guchar     *src    = priv->buf;
       guchar     *dest   = buf;
       gint        i;
 
-      for (i = 0; i < scale->height; i++)
+      for (i = 0; i < priv->height; i++)
         {
           gimp_color_transform_process_pixels (priv->transform,
                                                format, src,
                                                format, dest,
-                                               scale->width);
+                                               priv->width);
 
-          src  += scale->rowstride;
-          dest += scale->rowstride;
+          src  += priv->rowstride;
+          dest += priv->rowstride;
         }
 
       buffer = cairo_image_surface_create_for_data (buf,
                                                     CAIRO_FORMAT_RGB24,
-                                                    scale->width,
-                                                    scale->height,
-                                                    scale->rowstride);
+                                                    priv->width,
+                                                    priv->height,
+                                                    priv->rowstride);
       cairo_surface_set_user_data (buffer, NULL,
                                    buf, (cairo_destroy_func_t) g_free);
     }
   else
     {
-      buffer = cairo_image_surface_create_for_data (scale->buf,
+      buffer = cairo_image_surface_create_for_data (priv->buf,
                                                     CAIRO_FORMAT_RGB24,
-                                                    scale->width,
-                                                    scale->height,
-                                                    scale->rowstride);
+                                                    priv->width,
+                                                    priv->height,
+                                                    priv->rowstride);
     }
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
       cairo_set_source_surface (cr, buffer,
-                                x + trough_border + slider_size,
+                                x + trough_border + slider_size / 2 + 1,
                                 y + trough_border + 1);
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       cairo_set_source_surface (cr, buffer,
                                 x + trough_border + 1,
-                                y + trough_border + slider_size);
+                                y + trough_border + slider_size / 2 + 1);
       break;
     }
 
   cairo_surface_destroy (buffer);
-  cairo_paint (cr);
+
+  if (! gtk_widget_is_sensitive (widget))
+    {
+      static cairo_pattern_t *pattern = NULL;
+
+      if (! pattern)
+        {
+          static const guchar  stipple[] = { 0,   255, 0, 0,
+                                             255, 0,   0, 0 };
+          cairo_surface_t     *surface;
+          gint                 stride;
+
+          stride = cairo_format_stride_for_width (CAIRO_FORMAT_A8, 2);
+
+          surface = cairo_image_surface_create_for_data ((guchar *) stipple,
+                                                         CAIRO_FORMAT_A8,
+                                                         2, 2, stride);
+          pattern = cairo_pattern_create_for_surface (surface);
+          cairo_surface_destroy (surface);
+
+          cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+        }
+
+      cairo_mask (cr, pattern);
+    }
+  else
+    {
+      cairo_paint (cr);
+    }
 
   if (gtk_widget_has_focus (widget))
-    gtk_paint_focus (style, window, gtk_widget_get_state (widget),
-                     &event->area, widget, "trough",
-                     range_rect.x + allocation.x,
-                     range_rect.y + allocation.y,
-                     range_rect.width,
-                     range_rect.height);
+    gtk_render_focus (context, cr,
+                      range_rect.x,
+                      range_rect.y,
+                      range_rect.width,
+                      range_rect.height);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -569,9 +553,9 @@ gimp_color_scale_expose (GtkWidget      *widget,
     }
 
   if (gtk_widget_is_sensitive (widget))
-    gdk_cairo_set_source_color (cr, &style->black);
+    cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   else
-    gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_INSENSITIVE]);
+    cairo_set_source_rgb (cr, 0.2, 0.2, 0.2);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -596,9 +580,9 @@ gimp_color_scale_expose (GtkWidget      *widget,
   cairo_fill (cr);
 
   if (gtk_widget_is_sensitive (widget))
-    gdk_cairo_set_source_color (cr, &style->white);
+    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
   else
-    gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_INSENSITIVE]);
+    cairo_set_source_rgb (cr, 0.8, 0.8, 0.8);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -622,7 +606,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   cairo_close_path (cr);
   cairo_fill (cr);
 
-  cairo_destroy (cr);
+  gtk_style_context_restore (context);
 
   return FALSE;
 }
@@ -662,13 +646,17 @@ void
 gimp_color_scale_set_channel (GimpColorScale           *scale,
                               GimpColorSelectorChannel  channel)
 {
+  GimpColorScalePrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
 
-  if (channel != scale->channel)
-    {
-      scale->channel = channel;
+  priv = GET_PRIVATE (scale);
 
-      scale->needs_render = TRUE;
+  if (channel != priv->channel)
+    {
+      priv->channel = channel;
+
+      priv->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (scale));
 
       g_object_notify (G_OBJECT (scale), "channel");
@@ -688,14 +676,18 @@ gimp_color_scale_set_color (GimpColorScale *scale,
                             const GimpRGB  *rgb,
                             const GimpHSV  *hsv)
 {
+  GimpColorScalePrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
-  scale->rgb = *rgb;
-  scale->hsv = *hsv;
+  priv = GET_PRIVATE (scale);
 
-  scale->needs_render = TRUE;
+  priv->rgb = *rgb;
+  priv->hsv = *hsv;
+
+  priv->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (scale));
 }
 
@@ -787,20 +779,20 @@ gimp_color_scale_render (GimpColorScale *scale)
   guchar                *buf;
   guchar                *d;
 
-  if ((buf = scale->buf) == NULL)
+  if ((buf = priv->buf) == NULL)
     return;
 
-  if (scale->channel == GIMP_COLOR_SELECTOR_ALPHA)
+  if (priv->channel == GIMP_COLOR_SELECTOR_ALPHA)
     {
       gimp_color_scale_render_alpha (scale);
       return;
     }
 
-  rgb = scale->rgb;
-  hsv = scale->hsv;
+  rgb = priv->rgb;
+  hsv = priv->hsv;
   babl_process (fish_rgb_to_lch, &rgb, &lch, 1);
 
-  switch (scale->channel)
+  switch (priv->channel)
     {
     case GIMP_COLOR_SELECTOR_HUE:        channel_value = &hsv.h; break;
     case GIMP_COLOR_SELECTOR_SATURATION: channel_value = &hsv.s; break;
@@ -816,7 +808,7 @@ gimp_color_scale_render (GimpColorScale *scale)
     case GIMP_COLOR_SELECTOR_LCH_HUE:       channel_value = &lch.h; break;
     }
 
-  switch (scale->channel)
+  switch (priv->channel)
     {
     case GIMP_COLOR_SELECTOR_HUE:
     case GIMP_COLOR_SELECTOR_SATURATION:
@@ -846,9 +838,9 @@ gimp_color_scale_render (GimpColorScale *scale)
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      for (x = 0, d = buf; x < scale->width; x++, d += 4)
+      for (x = 0, d = buf; x < priv->width; x++, d += 4)
         {
-          gdouble value = (gdouble) x * multiplier / (gdouble) (scale->width - 1);
+          gdouble value = (gdouble) x * multiplier / (gdouble) (priv->width - 1);
           guchar  r, g, b;
 
           if (invert)
@@ -877,18 +869,18 @@ gimp_color_scale_render (GimpColorScale *scale)
           GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
         }
 
-      d = buf + scale->rowstride;
-      for (y = 1; y < scale->height; y++)
+      d = buf + priv->rowstride;
+      for (y = 1; y < priv->height; y++)
         {
-          memcpy (d, buf, scale->rowstride);
-          d += scale->rowstride;
+          memcpy (d, buf, priv->rowstride);
+          d += priv->rowstride;
         }
       break;
 
     case GTK_ORIENTATION_VERTICAL:
-      for (y = 0; y < scale->height; y++)
+      for (y = 0; y < priv->height; y++)
         {
-          gdouble value = (gdouble) y * multiplier / (gdouble) (scale->height - 1);
+          gdouble value = (gdouble) y * multiplier / (gdouble) (priv->height - 1);
           guchar  r, g, b;
 
           if (invert)
@@ -914,12 +906,12 @@ gimp_color_scale_render (GimpColorScale *scale)
               gimp_rgb_get_uchar (&rgb, &r, &g, &b);
             }
 
-          for (x = 0, d = buf; x < scale->width; x++, d += 4)
+          for (x = 0, d = buf; x < priv->width; x++, d += 4)
             {
               GIMP_CAIRO_RGB24_SET_PIXEL (d, r, g, b);
             }
 
-          buf += scale->rowstride;
+          buf += priv->rowstride;
         }
       break;
     }
@@ -928,18 +920,19 @@ gimp_color_scale_render (GimpColorScale *scale)
 static void
 gimp_color_scale_render_alpha (GimpColorScale *scale)
 {
-  GtkRange *range = GTK_RANGE (scale);
-  GimpRGB   rgb;
-  gboolean  invert;
-  gdouble   a;
-  guint     x, y;
-  guchar   *buf;
-  guchar   *d, *l;
+  GimpColorScalePrivate *priv  = GET_PRIVATE (scale);
+  GtkRange              *range = GTK_RANGE (scale);
+  GimpRGB                rgb;
+  gboolean               invert;
+  gdouble                a;
+  guint                  x, y;
+  guchar                *buf;
+  guchar                *d, *l;
 
   invert = should_invert (range);
 
-  buf = scale->buf;
-  rgb = scale->rgb;
+  buf = priv->buf;
+  rgb = priv->rgb;
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
@@ -950,10 +943,10 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
 
         light = buf;
         /* this won't work correctly for very thin scales */
-        dark  = (scale->height > GIMP_CHECK_SIZE_SM ?
-                 buf + GIMP_CHECK_SIZE_SM * scale->rowstride : light);
+        dark  = (priv->height > GIMP_CHECK_SIZE_SM ?
+                 buf + GIMP_CHECK_SIZE_SM * priv->rowstride : light);
 
-        for (x = 0, d = light, l = dark; x < scale->width; x++)
+        for (x = 0, d = light, l = dark; x < priv->width; x++)
           {
             if ((x % GIMP_CHECK_SIZE_SM) == 0)
               {
@@ -964,7 +957,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
                 l = t;
               }
 
-            a = (gdouble) x / (gdouble) (scale->width - 1);
+            a = (gdouble) x / (gdouble) (priv->width - 1);
 
             if (invert)
               a = 1.0 - a;
@@ -988,15 +981,15 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             d += 4;
           }
 
-        for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
+        for (y = 0, d = buf; y < priv->height; y++, d += priv->rowstride)
           {
             if (y == 0 || y == GIMP_CHECK_SIZE_SM)
               continue;
 
             if ((y / GIMP_CHECK_SIZE_SM) & 1)
-              memcpy (d, dark, scale->rowstride);
+              memcpy (d, dark, priv->rowstride);
             else
-              memcpy (d, light, scale->rowstride);
+              memcpy (d, light, priv->rowstride);
           }
       }
       break;
@@ -1006,9 +999,9 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
         guchar  light[4] = {0xff, 0xff, 0xff, 0xff};
         guchar  dark[4] = {0xff, 0xff, 0xff, 0xff};
 
-        for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
+        for (y = 0, d = buf; y < priv->height; y++, d += priv->rowstride)
           {
-            a = (gdouble) y / (gdouble) (scale->height - 1);
+            a = (gdouble) y / (gdouble) (priv->height - 1);
 
             if (invert)
               a = 1.0 - a;
@@ -1029,7 +1022,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
                                         (GIMP_CHECK_DARK +
                                          (rgb.b - GIMP_CHECK_DARK) * a) * 255.999);
 
-            for (x = 0, l = d; x < scale->width; x++, l += 4)
+            for (x = 0, l = d; x < priv->width; x++, l += 4)
               {
                 if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) & 1)
                   {
@@ -1049,41 +1042,6 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           }
       }
       break;
-    }
-}
-
-/*
- * This could be integrated into the render functions which might be
- * slightly faster. But we trade speed for keeping the code simple.
- */
-static void
-gimp_color_scale_render_stipple (GimpColorScale *scale)
-{
-  GtkWidget *widget = GTK_WIDGET (scale);
-  GtkStyle  *style  = gtk_widget_get_style (widget);
-  guchar    *buf;
-  guchar     insensitive[4] = {0xff, 0xff, 0xff, 0xff};
-  guint      x, y;
-
-  if ((buf = scale->buf) == NULL)
-    return;
-
-  GIMP_CAIRO_RGB24_SET_PIXEL (insensitive,
-                              style->bg[GTK_STATE_INSENSITIVE].red   >> 8,
-                              style->bg[GTK_STATE_INSENSITIVE].green >> 8,
-                              style->bg[GTK_STATE_INSENSITIVE].blue  >> 8);
-
-  for (y = 0; y < scale->height; y++, buf += scale->rowstride)
-    {
-      guchar *d = buf + 4 * (y % 2);
-
-      for (x = 0; x < scale->width - (y % 2); x += 2, d += 8)
-        {
-          d[0] = insensitive[0];
-          d[1] = insensitive[1];
-          d[2] = insensitive[2];
-          d[3] = insensitive[3];
-        }
     }
 }
 
@@ -1129,12 +1087,14 @@ gimp_color_scale_notify_config (GimpColorConfig  *config,
                                 GimpColorScale   *scale)
 {
   GimpColorScalePrivate *priv = GET_PRIVATE (scale);
+  GimpRGB                color;
 
   gimp_color_scale_destroy_transform (scale);
 
-  gimp_rgb_get_uchar (&config->out_of_gamut_color,
+  gimp_color_config_get_out_of_gamut_color (config, &color);
+  gimp_rgb_get_uchar (&color,
                       priv->oog_color,
                       priv->oog_color + 1,
                       priv->oog_color + 2);
-  scale->needs_render = TRUE;
+  priv->needs_render = TRUE;
 }

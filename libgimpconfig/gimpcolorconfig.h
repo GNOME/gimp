@@ -34,47 +34,28 @@
 #define GIMP_IS_COLOR_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_CONFIG))
 
 
-typedef struct _GimpColorConfigClass GimpColorConfigClass;
+typedef struct _GimpColorConfigPrivate GimpColorConfigPrivate;
+typedef struct _GimpColorConfigClass   GimpColorConfigClass;
 
 struct _GimpColorConfig
 {
-  GObject                     parent_instance;
+  GObject                 parent_instance;
 
-  /*< public >*/
-  GimpColorManagementMode     mode;
-  gchar                      *rgb_profile;
-  gchar                      *cmyk_profile;
-  gchar                      *display_profile;
-  gboolean                    display_profile_from_gdk;
-  gchar                      *printer_profile;
-  GimpColorRenderingIntent    display_intent;
-  GimpColorRenderingIntent    simulation_intent;
+  GimpColorConfigPrivate *priv;
+};
 
-  gchar                      *display_module;
+struct _GimpColorConfigClass
+{
+  GObjectClass  parent_class;
 
-  gboolean                    simulation_gamut_check;
-  GimpRGB                     out_of_gamut_color;
-
-  gboolean                    display_use_black_point_compensation;
-  gboolean                    simulation_use_black_point_compensation;
-
-  gchar                      *gray_profile;
-
-  /*< private >*/
-  /* Padding for future expansion */
-#if (GLIB_SIZEOF_VOID_P == 8)
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
-#endif
   void (* _gimp_reserved4) (void);
   void (* _gimp_reserved5) (void);
   void (* _gimp_reserved6) (void);
   void (* _gimp_reserved7) (void);
   void (* _gimp_reserved8) (void);
-};
-
-struct _GimpColorConfigClass
-{
-  GObjectClass                parent_class;
 };
 
 
@@ -94,6 +75,8 @@ GimpColorRenderingIntent
 gboolean           gimp_color_config_get_simulation_bpc           (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_optimize      (GimpColorConfig  *config);
 gboolean           gimp_color_config_get_simulation_gamut_check   (GimpColorConfig  *config);
+void               gimp_color_config_get_out_of_gamut_color       (GimpColorConfig  *config,
+                                                                   GimpRGB          *color);
 
 GimpColorProfile * gimp_color_config_get_rgb_color_profile        (GimpColorConfig  *config,
                                                                    GError          **error);

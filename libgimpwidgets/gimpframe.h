@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FRAME, GimpFrameClass))
 
 
-typedef struct _GimpFrameClass  GimpFrameClass;
+typedef struct _GimpFramePrivate GimpFramePrivate;
+typedef struct _GimpFrameClass   GimpFrameClass;
 
 struct _GimpFrame
 {
-  GtkFrame       parent_instance;
+  GtkFrame          parent_instance;
+
+  GimpFramePrivate *priv;
 };
 
 struct _GimpFrameClass
@@ -55,6 +58,10 @@ struct _GimpFrameClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

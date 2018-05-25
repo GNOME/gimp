@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "paint/gimpclone.h"
 #include "paint/gimpcloneoptions.h"
 
@@ -36,6 +38,10 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+
+
+static gboolean   gimp_clone_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                                                 GimpDrawable  *drawable);
 
 
 G_DEFINE_TYPE (GimpCloneTool, gimp_clone_tool, GIMP_TYPE_SOURCE_TOOL)
@@ -64,6 +70,9 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 {
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+
+  paint_tool_class->is_alpha_only = gimp_clone_tool_is_alpha_only;
 }
 
 static void
@@ -85,4 +94,15 @@ gimp_clone_tool_init (GimpCloneTool *clone)
   /* Translators: the translation of "Click" must be the first word */
   source_tool->status_set_source      = _("Click to set a new clone source");
   source_tool->status_set_source_ctrl = _("%s to set a new clone source");
+}
+
+static gboolean
+gimp_clone_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                               GimpDrawable  *drawable)
+{
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  GimpContext      *context       = GIMP_CONTEXT (paint_options);
+  GimpLayerMode     paint_mode    = gimp_context_get_paint_mode (context);
+
+  return gimp_layer_mode_is_alpha_only (paint_mode);
 }

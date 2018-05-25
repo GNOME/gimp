@@ -218,8 +218,6 @@ file_actions_setup (GimpActionGroup *group)
   for (i = 0; i < n_entries; i++)
     {
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
-      gimp_action_group_set_action_always_show_image (group, entries[i].name,
-                                                      TRUE);
       gimp_action_group_set_action_context (group, entries[i].name,
                                             gimp_get_user_context (group->gimp));
 

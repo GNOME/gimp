@@ -557,10 +557,7 @@ remap_popup_menu (GtkWidget      *widget,
   GtkWidget *menu = gtk_ui_manager_get_widget (remap_ui, "/remap-popup");
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-  gtk_menu_popup (GTK_MENU (menu),
-                  NULL, NULL, NULL, NULL,
-                  event ? event->button : 0,
-                  event ? event->time   : gtk_get_current_event_time ());
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
   return TRUE;
 }
@@ -623,7 +620,7 @@ remap_dialog (gint32  image_ID,
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -682,8 +679,8 @@ remap_dialog (gint32  image_ID,
 
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (iconview),
                                     GTK_SELECTION_SINGLE);
-  gtk_icon_view_set_orientation (GTK_ICON_VIEW (iconview),
-                                 GTK_ORIENTATION_VERTICAL);
+  gtk_icon_view_set_item_orientation (GTK_ICON_VIEW (iconview),
+                                      GTK_ORIENTATION_VERTICAL);
   gtk_icon_view_set_columns (GTK_ICON_VIEW (iconview), 16);
   gtk_icon_view_set_row_spacing (GTK_ICON_VIEW (iconview), 0);
   gtk_icon_view_set_column_spacing (GTK_ICON_VIEW (iconview), 0);

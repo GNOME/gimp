@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include <gegl.h>
-#undef GSEAL_ENABLE
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -588,7 +587,7 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
                           GDestroyNotify        popdown_func,
                           gpointer              popdown_data)
 {
-  GtkWidget *widget;
+  GtkWidget *menu;
   GdkEvent  *current_event;
   gint       x, y;
   guint      button;
@@ -599,15 +598,15 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
   g_return_if_fail (ui_path != NULL);
   g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
 
-  widget = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), ui_path);
+  menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), ui_path);
 
-  if (GTK_IS_MENU_ITEM (widget))
-    widget = gtk_menu_item_get_submenu (GTK_MENU_ITEM (widget));
+  if (GTK_IS_MENU_ITEM (menu))
+    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-  if (! widget)
+  if (! menu)
     return;
 
-  g_return_if_fail (GTK_IS_MENU (widget));
+  g_return_if_fail (GTK_IS_MENU (menu));
 
   if (! position_func)
     {
@@ -615,7 +614,7 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
       position_data = parent;
     }
 
-  (* position_func) (GTK_MENU (widget), &x, &y, position_data);
+  (* position_func) (GTK_MENU (menu), &x, &y, position_data);
 
   current_event = gtk_get_current_event ();
 
@@ -635,12 +634,12 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
   if (current_event)
     gdk_event_free (current_event);
 
-  menu_pos = g_object_get_data (G_OBJECT (widget), "menu-pos");
+  menu_pos = g_object_get_data (G_OBJECT (menu), "menu-pos");
 
   if (! menu_pos)
     {
       menu_pos = g_slice_new0 (MenuPos);
-      g_object_set_data_full (G_OBJECT (widget), "menu-pos", menu_pos,
+      g_object_set_data_full (G_OBJECT (menu), "menu-pos", menu_pos,
                               (GDestroyNotify) menu_pos_free);
     }
 
@@ -651,15 +650,90 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
     {
       g_object_set_data_full (G_OBJECT (manager), "popdown-data",
                               popdown_data, popdown_func);
-      g_signal_connect (widget, "selection-done",
+      g_signal_connect (menu, "selection-done",
                         G_CALLBACK (gimp_ui_manager_delete_popdown_data),
                         manager);
     }
 
-  gtk_menu_popup (GTK_MENU (widget),
+  gtk_menu_popup (GTK_MENU (menu),
                   NULL, NULL,
                   gimp_ui_manager_menu_pos, menu_pos,
                   button, activate_time);
+}
+
+void
+gimp_ui_manager_ui_popup_at_widget (GimpUIManager  *manager,
+                                    const gchar    *ui_path,
+                                    GtkWidget      *widget,
+                                    GdkGravity      widget_anchor,
+                                    GdkGravity      menu_anchor,
+                                    const GdkEvent *trigger_event,
+                                    GDestroyNotify  popdown_func,
+                                    gpointer        popdown_data)
+{
+  GtkWidget *menu;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (ui_path != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), ui_path);
+
+  if (GTK_IS_MENU_ITEM (menu))
+    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+
+  if (! menu)
+    return;
+
+  g_return_if_fail (GTK_IS_MENU (menu));
+
+  if (popdown_func && popdown_data)
+    {
+      g_object_set_data_full (G_OBJECT (manager), "popdown-data",
+                              popdown_data, popdown_func);
+      g_signal_connect (menu, "selection-done",
+                        G_CALLBACK (gimp_ui_manager_delete_popdown_data),
+                        manager);
+    }
+
+  gtk_menu_popup_at_widget (GTK_MENU (menu), widget,
+                            widget_anchor,
+                            menu_anchor,
+                            trigger_event);
+}
+
+void
+gimp_ui_manager_ui_popup_at_pointer (GimpUIManager  *manager,
+                                     const gchar    *ui_path,
+                                     const GdkEvent *trigger_event,
+                                     GDestroyNotify  popdown_func,
+                                     gpointer        popdown_data)
+{
+  GtkWidget *menu;
+
+  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (ui_path != NULL);
+
+  menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), ui_path);
+
+  if (GTK_IS_MENU_ITEM (menu))
+    menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+
+  if (! menu)
+    return;
+
+  g_return_if_fail (GTK_IS_MENU (menu));
+
+  if (popdown_func && popdown_data)
+    {
+      g_object_set_data_full (G_OBJECT (manager), "popdown-data",
+                              popdown_data, popdown_func);
+      g_signal_connect (menu, "selection-done",
+                        G_CALLBACK (gimp_ui_manager_delete_popdown_data),
+                        manager);
+    }
+
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), trigger_event);
 }
 
 
@@ -816,10 +890,11 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
                                gint     *y,
                                gpointer  data)
 {
+  GdkSeat        *seat;
+  GdkDevice      *device;
   GdkScreen      *screen;
   GtkRequisition  requisition;
-  GdkRectangle    rect;
-  gint            monitor;
+  GdkRectangle    workarea;
   gint            pointer_x;
   gint            pointer_y;
 
@@ -828,38 +903,39 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
   g_return_if_fail (y != NULL);
   g_return_if_fail (GTK_IS_WIDGET (data));
 
-  gdk_display_get_pointer (gtk_widget_get_display (GTK_WIDGET (data)),
-                           &screen, &pointer_x, &pointer_y, NULL);
+  seat = gdk_display_get_default_seat (gtk_widget_get_display (data));
+  device = gdk_seat_get_pointer (seat);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gdk_device_get_position (device, &screen, &pointer_x, &pointer_y);
+
+  gdk_monitor_get_workarea (gimp_get_monitor_at_pointer (), &workarea);
 
   gtk_menu_set_screen (menu, screen);
 
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+  gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 
   if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_RTL)
     {
       *x = pointer_x - 2 - requisition.width;
 
-      if (*x < rect.x)
+      if (*x < workarea.x)
         *x = pointer_x + 2;
     }
   else
     {
       *x = pointer_x + 2;
 
-      if (*x + requisition.width > rect.x + rect.width)
+      if (*x + requisition.width > workarea.x + workarea.width)
         *x = pointer_x - 2 - requisition.width;
     }
 
   *y = pointer_y + 2;
 
-  if (*y + requisition.height > rect.y + rect.height)
+  if (*y + requisition.height > workarea.y + workarea.height)
     *y = pointer_y - 2 - requisition.height;
 
-  if (*x < rect.x) *x = rect.x;
-  if (*y < rect.y) *y = rect.y;
+  if (*x < workarea.x) *x = workarea.x;
+  if (*y < workarea.y) *y = workarea.y;
 }
 
 static void
@@ -959,7 +1035,9 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 
   while (! help_id)
     {
-      GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+      GtkWidget *menu_item;
+
+      menu_item = gtk_menu_shell_get_selected_item (GTK_MENU_SHELL (widget));
 
       if (! menu_item && GTK_IS_MENU (widget))
         {

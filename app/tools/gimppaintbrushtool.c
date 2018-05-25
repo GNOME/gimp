@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -33,6 +35,10 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+
+
+static gboolean   gimp_paintbrush_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                                                      GimpDrawable  *drawable);
 
 
 G_DEFINE_TYPE (GimpPaintbrushTool, gimp_paintbrush_tool, GIMP_TYPE_BRUSH_TOOL)
@@ -59,6 +65,9 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+
+  paint_tool_class->is_alpha_only = gimp_paintbrush_tool_is_alpha_only;
 }
 
 static void
@@ -71,4 +80,15 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+}
+
+static gboolean
+gimp_paintbrush_tool_is_alpha_only (GimpPaintTool *paint_tool,
+                                    GimpDrawable  *drawable)
+{
+  GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (paint_tool);
+  GimpContext      *context       = GIMP_CONTEXT (paint_options);
+  GimpLayerMode     paint_mode    = gimp_context_get_paint_mode (context);
+
+  return gimp_layer_mode_is_alpha_only (paint_mode);
 }

@@ -58,16 +58,22 @@ gimp_message_dialog_new (const gchar    *title,
 {
   GimpMessageDialog *dialog;
   va_list            args;
+  gboolean           use_header_bar;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_MESSAGE_DIALOG,
-                         "title",     title,
-                         "role",      "gimp-message-dialog",
-                         "modal",     (flags & GTK_DIALOG_MODAL),
-                         "help-func", help_func,
-                         "help-id",   help_id,
+                         "title",          title,
+                         "role",           "gimp-message-dialog",
+                         "modal",          (flags & GTK_DIALOG_MODAL),
+                         "help-func",      help_func,
+                         "help-id",        help_id,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   if (parent)

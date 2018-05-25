@@ -285,15 +285,6 @@ edit_actions_setup (GimpActionGroup *group)
 
   pattern = gimp_context_get_pattern (context);
   edit_actions_pattern_changed (context, pattern, group);
-
-#define SET_ALWAYS_SHOW_IMAGE(action,show) \
-        gimp_action_group_set_action_always_show_image (group, action, show)
-
-  SET_ALWAYS_SHOW_IMAGE ("edit-fill-fg",      TRUE);
-  SET_ALWAYS_SHOW_IMAGE ("edit-fill-bg",      TRUE);
-  SET_ALWAYS_SHOW_IMAGE ("edit-fill-pattern", TRUE);
-
-#undef SET_ALWAYS_SHOW_IMAGE
 }
 
 void

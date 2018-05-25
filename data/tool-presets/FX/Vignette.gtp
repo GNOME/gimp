@@ -5,7 +5,7 @@
 (tool-options "GimpGradientOptions"
     (tool "gimp-gradient-tool")
     (opacity 0.750000)
-    (paint-mode multiply-mode)
+    (paint-mode multiply)
     (gradient "FG to Transparent")
     (brush-size 250.000000)
     (dynamics-expanded yes)

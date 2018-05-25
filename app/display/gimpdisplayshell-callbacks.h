@@ -21,13 +21,11 @@
 
 void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
                                                        GimpDisplayShell *shell);
-void       gimp_display_shell_canvas_realize_after    (GtkWidget        *widget,
-                                                       GimpDisplayShell *shell);
 void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,
                                                        GtkAllocation    *alloc,
                                                        GimpDisplayShell *shell);
-gboolean   gimp_display_shell_canvas_expose           (GtkWidget        *widget,
-                                                       GdkEventExpose   *eevent,
+gboolean   gimp_display_shell_canvas_draw             (GtkWidget        *widget,
+                                                       cairo_t          *cr,
                                                        GimpDisplayShell *shell);
 
 gboolean   gimp_display_shell_origin_button_press     (GtkWidget        *widget,

@@ -48,6 +48,19 @@ But this happens only for crashes, so it still requires to use
 Note: on Windows, even the debugging GUI happens only for crashes and
 requires that you built with Dr. Mingw dependency.
 
+## Debugging GTK+ ##
+
+You can use GtkInspector by running GIMP with:
+
+> GTK_DEBUG=interactive gimp-2.99
+
+Alternatively you may also start it at anytime with ctrl-shift-d
+shortcut, if you first enable with:
+
+> gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+
+See also: https://wiki.gnome.org/Projects/GTK%2B/Inspector
+
 ## Debugging GEGL code ##
 
 You may encounter this kind of warning upon exiting GIMP:

@@ -53,7 +53,6 @@ struct _GimpGuiConfig
   gboolean             restore_monitor;
   gboolean             save_tool_options;
   gboolean             show_tooltips;
-  gboolean             tearoff_menus;
   gboolean             can_change_accels;
   gboolean             save_accels;
   gboolean             restore_accels;
@@ -65,6 +64,7 @@ struct _GimpGuiConfig
   gboolean             toolbox_wilber;
   gchar               *theme_path;
   gchar               *theme;
+  gboolean             prefer_dark_theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
   GimpIconSize         icon_size;

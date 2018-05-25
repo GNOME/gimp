@@ -94,6 +94,7 @@ gboolean     gimp_container_reorder            (GimpContainer *container,
 void         gimp_container_freeze             (GimpContainer *container);
 void         gimp_container_thaw               (GimpContainer *container);
 gboolean     gimp_container_frozen             (GimpContainer *container);
+gint         gimp_container_freeze_count       (GimpContainer *container);
 
 void         gimp_container_clear              (GimpContainer *container);
 gboolean     gimp_container_is_empty           (GimpContainer *container);

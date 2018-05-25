@@ -20,7 +20,7 @@
  */
 
 /*
- * This implements a widget derived from GtkTable that visualizes
+ * This implements a widget derived from GtkGrid that visualizes
  * it's state with two different pixmaps showing a closed and a
  * broken chain. It's intended to be used with the GimpSizeEntry
  * widget. The usage is quite similar to the one the GtkToggleButton
@@ -45,24 +45,19 @@ G_BEGIN_DECLS
 #define GIMP_CHAIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
 
 
-typedef struct _GimpChainButtonClass  GimpChainButtonClass;
+typedef struct _GimpChainButtonPrivate GimpChainButtonPrivate;
+typedef struct _GimpChainButtonClass   GimpChainButtonClass;
 
 struct _GimpChainButton
 {
-  GtkTable           parent_instance;
+  GtkGrid                 parent_instance;
 
-  GimpChainPosition  position;
-  gboolean           active;
-
-  GtkWidget         *button;
-  GtkWidget         *line1;
-  GtkWidget         *line2;
-  GtkWidget         *image;
+  GimpChainButtonPrivate *priv;
 };
 
 struct _GimpChainButtonClass
 {
-  GtkTableClass  parent_class;
+  GtkGridClass  parent_class;
 
   void (* toggled)  (GimpChainButton *button);
 
@@ -71,6 +66,10 @@ struct _GimpChainButtonClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -81,6 +80,8 @@ GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 void        gimp_chain_button_set_active (GimpChainButton   *button,
                                           gboolean           active);
 gboolean    gimp_chain_button_get_active (GimpChainButton   *button);
+
+GtkWidget * gimp_chain_button_get_button (GimpChainButton   *button);
 
 
 G_END_DECLS

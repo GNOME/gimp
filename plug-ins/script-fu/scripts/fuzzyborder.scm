@@ -46,19 +46,21 @@
   (let (
        (theWidth (car (gimp-image-width inImage)))
        (theHeight (car (gimp-image-height inImage)))
-       (theImage 0)
+       (theImage (if (= inCopy TRUE) (car (gimp-image-duplicate inImage))
+                                      inImage))
        (theLayer 0)
        )
 
     (gimp-context-push)
     (gimp-context-set-defaults)
 
-    (gimp-selection-all inImage)
-    (set! theImage (if (= inCopy TRUE)
-                     (car (gimp-image-duplicate inImage))
-                     inImage
-                   )
+    (if (= inCopy TRUE)
+        (gimp-image-undo-disable theImage)
+        (gimp-image-undo-group-start theImage)
     )
+
+    (gimp-selection-all theImage)
+
     (if (> (car (gimp-drawable-type inLayer)) 1)
         (gimp-image-convert-rgb theImage)
     )
@@ -97,7 +99,7 @@
     (gimp-drawable-edit-clear theLayer)
     (gimp-context-set-background inColor)
     (gimp-drawable-edit-fill theLayer FILL-BACKGROUND)
-    (gimp-selection-none inImage)
+    (gimp-selection-none theImage)
     (chris-color-edge theImage theLayer inColor 1)
 
     (if (= inBlur TRUE)
@@ -131,10 +133,11 @@
         (gimp-image-flatten theImage)
     )
     (if (= inCopy TRUE)
-      (begin
-        (gimp-image-clean-all theImage)
-        (gimp-display-new theImage)
-      )
+        (begin  (gimp-image-clean-all theImage)
+                (gimp-display-new theImage)
+                (gimp-image-undo-enable theImage)
+         )
+        (gimp-image-undo-group-end theImage)
     )
     (gimp-displays-flush)
 

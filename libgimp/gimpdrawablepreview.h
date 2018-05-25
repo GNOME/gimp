@@ -39,13 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_DRAWABLE_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE_PREVIEW, GimpDrawablePreviewClass))
 
 
-typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
+typedef struct _GimpDrawablePreviewPrivate GimpDrawablePreviewPrivate;
+typedef struct _GimpDrawablePreviewClass   GimpDrawablePreviewClass;
 
 struct _GimpDrawablePreview
 {
-  GimpScrolledPreview  parent_instance;
+  GimpScrolledPreview         parent_instance;
 
-  GimpDrawable        *drawable;
+  GimpDrawablePreviewPrivate *priv;
 };
 
 struct _GimpDrawablePreviewClass
@@ -57,6 +58,10 @@ struct _GimpDrawablePreviewClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -64,12 +69,6 @@ GType          gimp_drawable_preview_get_type             (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_drawable_preview_new_from_drawable_id (gint32               drawable_ID);
 gint32         gimp_drawable_preview_get_drawable_id      (GimpDrawablePreview *preview);
-
-GIMP_DEPRECATED_FOR(gimp_drawable_preview_new_from_drawable_id)
-GtkWidget    * gimp_drawable_preview_new                  (GimpDrawable        *drawable,
-                                                           gboolean            *toggle);
-GIMP_DEPRECATED_FOR(gimp_drawable_preview_get_drawable_id)
-GimpDrawable * gimp_drawable_preview_get_drawable         (GimpDrawablePreview *preview);
 
 void           gimp_drawable_preview_draw_region          (GimpDrawablePreview *preview,
                                                            const GimpPixelRgn  *region);

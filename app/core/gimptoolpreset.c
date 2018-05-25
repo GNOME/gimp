@@ -516,7 +516,8 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
                                              serialize_props |
                                              GIMP_CONTEXT_PROP_MASK_TOOL);
 
-      if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_FOREGROUND))
+      if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_FOREGROUND) &&
+          ! (serialize_props & GIMP_CONTEXT_PROP_MASK_BACKGROUND))
         g_object_set (preset, "use-fg-bg", FALSE, NULL);
 
       if (! (serialize_props & GIMP_CONTEXT_PROP_MASK_BRUSH))

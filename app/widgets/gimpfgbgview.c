@@ -57,8 +57,8 @@ static void     gimp_fg_bg_view_get_property      (GObject        *object,
                                                    GValue         *value,
                                                    GParamSpec     *pspec);
 
-static gboolean gimp_fg_bg_view_expose            (GtkWidget      *widget,
-                                                   GdkEventExpose *eevent);
+static gboolean gimp_fg_bg_view_draw              (GtkWidget      *widget,
+                                                   cairo_t        *cr);
 
 static void     gimp_fg_bg_view_create_transform  (GimpFgBgView   *view);
 static void     gimp_fg_bg_view_destroy_transform (GimpFgBgView   *view);
@@ -79,7 +79,7 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
   object_class->set_property = gimp_fg_bg_view_set_property;
   object_class->get_property = gimp_fg_bg_view_get_property;
 
-  widget_class->expose_event = gimp_fg_bg_view_expose;
+  widget_class->draw         = gimp_fg_bg_view_draw;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
@@ -150,28 +150,31 @@ gimp_fg_bg_view_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_fg_bg_view_expose (GtkWidget      *widget,
-                        GdkEventExpose *eevent)
+gimp_fg_bg_view_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
-  GimpFgBgView *view   = GIMP_FG_BG_VIEW (widget);
-  GtkStyle     *style  = gtk_widget_get_style (widget);
-  GdkWindow    *window = gtk_widget_get_window (widget);
-  cairo_t      *cr;
-  GtkAllocation allocation;
-  gint          rect_w, rect_h;
-  GimpRGB       color;
-
-  if (! gtk_widget_is_drawable (widget))
-    return FALSE;
-
-  cr = gdk_cairo_create (eevent->window);
-
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
+  GimpFgBgView    *view   = GIMP_FG_BG_VIEW (widget);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GtkBorder        border;
+  gint             outline_width;
+  gint             outline_offset;
+  gint             rect_w, rect_h;
+  GimpRGB          color;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  cairo_translate (cr, allocation.x, allocation.y);
+  gtk_style_context_save (style);
+
+  gtk_style_context_get (style, gtk_style_context_get_state (style),
+                         "outline-width",  &outline_width,
+                         "outline-offset", &outline_offset,
+                         NULL);
+
+  border.left   = outline_width + ABS (outline_offset);
+  border.right  = outline_width + ABS (outline_offset);
+  border.top    = outline_width + ABS (outline_offset);
+  border.bottom = outline_width + ABS (outline_offset);
 
   rect_w = allocation.width  * 3 / 4;
   rect_h = allocation.height * 3 / 4;
@@ -196,18 +199,18 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_cairo_set_source_rgb (cr, &color);
 
       cairo_rectangle (cr,
-                       allocation.width  - rect_w + 1,
-                       allocation.height - rect_h + 1,
-                       rect_w - 2,
-                       rect_h - 2);
+                       allocation.width  - rect_w + border.left,
+                       allocation.height - rect_h + border.top,
+                       rect_w - (border.left + border.right),
+                       rect_h - (border.top + border.bottom));
       cairo_fill (cr);
     }
 
-  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
-                    GTK_SHADOW_IN,
-                    NULL, widget, NULL,
-                    allocation.x + allocation.width  - rect_w,
-                    allocation.y + allocation.height - rect_h,
+  gtk_style_context_set_state (style, GTK_STATE_FLAG_ACTIVE);
+
+  gtk_render_frame (style, cr,
+                    allocation.width  - rect_w,
+                    allocation.height - rect_h,
                     rect_w, rect_h);
 
   /*  draw the foreground area  */
@@ -226,16 +229,20 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
 
       gimp_cairo_set_source_rgb (cr, &color);
 
-      cairo_rectangle (cr, 1, 1, rect_w - 2, rect_h - 2);
+      cairo_rectangle (cr,
+                       border.left,
+                       border.top,
+                       rect_w - (border.left + border.right),
+                       rect_h - (border.top + border.bottom));
       cairo_fill (cr);
     }
 
-  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
-                    GTK_SHADOW_OUT,
-                    NULL, widget, NULL,
-                    allocation.x, allocation.y, rect_w, rect_h);
+  gtk_style_context_set_state (style, 0);
 
-  cairo_destroy (cr);
+  gtk_render_frame (style, cr,
+                    0, 0, rect_w, rect_h);
+
+  gtk_style_context_restore (style);
 
   return TRUE;
 }

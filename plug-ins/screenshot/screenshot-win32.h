@@ -34,7 +34,7 @@ gboolean               screenshot_win32_available        (void);
 ScreenshotCapabilities screenshot_win32_get_capabilities (void);
 
 GimpPDBStatusType      screenshot_win32_shoot            (ScreenshotValues  *shootvals,
-                                                          GdkScreen         *screen,
+                                                          GdkMonitor        *monitor,
                                                           gint32            *image_ID,
                                                           GError           **error);
 

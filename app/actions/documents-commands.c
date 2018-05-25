@@ -232,7 +232,7 @@ documents_clear_cmd_callback (GtkAction *action,
 
                                     NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -373,8 +373,7 @@ documents_open_image (GtkWidget     *editor,
   file = gimp_imagefile_get_file (imagefile);
 
   image = file_open_with_display (context->gimp, context, NULL, file, FALSE,
-                                  G_OBJECT (gtk_widget_get_screen (editor)),
-                                  gimp_widget_get_monitor (editor),
+                                  G_OBJECT (gimp_widget_get_monitor (editor)),
                                   &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)

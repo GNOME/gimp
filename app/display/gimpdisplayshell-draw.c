@@ -42,7 +42,7 @@
 #include "gimpdisplayxfer.h"
 
 
-/* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
+#define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1
 
 
 /*  public functions  */
@@ -84,17 +84,18 @@ void
 gimp_display_shell_draw_background (GimpDisplayShell *shell,
                                     cairo_t          *cr)
 {
-  GdkWindow       *window;
-  cairo_pattern_t *bg_pattern;
+  GimpCanvas *canvas;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  window     = gtk_widget_get_window (shell->canvas);
-  bg_pattern = gdk_window_get_background_pattern (window);
+  canvas = GIMP_CANVAS (shell->canvas);
 
-  cairo_set_source (cr, bg_pattern);
-  cairo_paint (cr);
+  if (canvas->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    {
+      gimp_cairo_set_source_rgb (cr, &canvas->padding_color);
+      cairo_paint (cr);
+    }
 }
 
 void
@@ -160,7 +161,10 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   chunk_height = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
-  /* if we had this future API, things would look pretty on hires (retina) */
+  /* multiply the image scale-factor by the window scale-factor, and divide
+   * the cairo scale-factor by the same amount (further down), so that we make
+   * full use of the screen resolution, even on hidpi displays.
+   */
   scale *=
     gdk_window_get_scale_factor (
       gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));

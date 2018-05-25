@@ -56,9 +56,6 @@ enum
 static void      gimp_scale_combo_box_constructed     (GObject           *object);
 static void      gimp_scale_combo_box_finalize        (GObject           *object);
 
-static void      gimp_scale_combo_box_style_set       (GtkWidget         *widget,
-                                                       GtkStyle          *prev_style);
-
 static void      gimp_scale_combo_box_changed         (GimpScaleComboBox *combo_box);
 static void      gimp_scale_combo_box_entry_activate  (GtkWidget         *entry,
                                                        GimpScaleComboBox *combo_box);
@@ -83,8 +80,7 @@ static guint scale_combo_box_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   scale_combo_box_signals[ENTRY_ACTIVATED] =
     g_signal_new ("entry-activated",
@@ -97,18 +93,6 @@ gimp_scale_combo_box_class_init (GimpScaleComboBoxClass *klass)
 
   object_class->constructed = gimp_scale_combo_box_constructed;
   object_class->finalize    = gimp_scale_combo_box_finalize;
-
-  widget_class->style_set   = gimp_scale_combo_box_style_set;
-
-  klass->entry_activated    = NULL;
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_double ("label-scale",
-                                                                NULL, NULL,
-                                                                0.0,
-                                                                G_MAXDOUBLE,
-                                                                1.0,
-                                                                GIMP_PARAM_READABLE));
 }
 
 static void
@@ -207,38 +191,6 @@ gimp_scale_combo_box_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_scale_combo_box_style_set (GtkWidget *widget,
-                                GtkStyle  *prev_style)
-{
-  GtkWidget            *entry;
-  GtkRcStyle           *rc_style;
-  PangoContext         *context;
-  PangoFontDescription *font_desc;
-  gint                  font_size;
-  gdouble               label_scale;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  gtk_widget_style_get (widget, "label-scale", &label_scale, NULL);
-
-  entry = gtk_bin_get_child (GTK_BIN (widget));
-
-  rc_style = gtk_widget_get_modifier_style (GTK_WIDGET (entry));
-
-  if (rc_style->font_desc)
-    pango_font_description_free (rc_style->font_desc);
-
-  context = gtk_widget_get_pango_context (widget);
-  font_desc = pango_context_get_font_description (context);
-  rc_style->font_desc = pango_font_description_copy (font_desc);
-
-  font_size = pango_font_description_get_size (rc_style->font_desc);
-  pango_font_description_set_size (rc_style->font_desc, label_scale * font_size);
-
-  gtk_widget_modify_style (GTK_WIDGET (entry), rc_style);
 }
 
 static void

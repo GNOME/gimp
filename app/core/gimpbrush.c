@@ -184,8 +184,8 @@ gimp_brush_finalize (GObject *object)
 
   g_clear_pointer (&brush->priv->mask,          gimp_temp_buf_unref);
   g_clear_pointer (&brush->priv->pixmap,        gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
 
   g_clear_object (&brush->priv->mask_cache);
   g_clear_object (&brush->priv->pixmap_cache);
@@ -398,8 +398,8 @@ gimp_brush_dirty (GimpData *data)
   if (brush->priv->boundary_cache)
     gimp_brush_cache_clear (brush->priv->boundary_cache);
 
-  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
 
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
@@ -430,8 +430,8 @@ gimp_brush_real_end_use (GimpBrush *brush)
   g_clear_object (&brush->priv->pixmap_cache);
   g_clear_object (&brush->priv->boundary_cache);
 
-  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
 }
 
 static GimpBrush *
@@ -629,12 +629,12 @@ gimp_brush_transform_mask (GimpBrush *brush,
        * (all of them but generated) are blurred once and no more.
        * It also makes hardnes dynamics not work for these brushes.
        * This is intentional. Confoliving for each stamp is too expensive.*/
-      if (! brush->priv->blured_mask &&
+      if (! brush->priv->blurred_mask &&
           ! GIMP_IS_BRUSH_GENERATED(brush) &&
           ! GIMP_IS_BRUSH_PIPE(brush) && /*Can't cache pipes. Sanely anyway*/
           hardness < 1.0)
         {
-           brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+           brush->priv->blurred_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                              1.0,
                                                              0.0,
                                                              0.0,
@@ -643,7 +643,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
            brush->priv->blur_hardness = hardness;
         }
 
-      if (brush->priv->blured_mask)
+      if (brush->priv->blurred_mask)
         {
           effective_hardness = 1.0; /*Hardness has already been applied*/
         }
@@ -722,12 +722,12 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
   if (! pixmap)
     {
 #if 0
-     if (! brush->priv->blured_pixmap &&
+     if (! brush->priv->blurred_pixmap &&
          ! GIMP_IS_BRUSH_GENERATED(brush) &&
          ! GIMP_IS_BRUSH_PIPE(brush) /*Can't cache pipes. Sanely anyway*/
          && hardness < 1.0)
       {
-         brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
+         brush->priv->blurred_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                   1.0,
                                                                   0.0,
                                                                   0.0,
@@ -736,7 +736,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
          brush->priv->blur_hardness = hardness;
        }
 
-      if (brush->priv->blured_pixmap) {
+      if (brush->priv->blurred_pixmap) {
         effective_hardness = 1.0; /*Hardness has already been applied*/
       }
 #endif
@@ -842,9 +842,9 @@ gimp_brush_get_mask (GimpBrush *brush)
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
 
-  if (brush->priv->blured_mask)
+  if (brush->priv->blurred_mask)
     {
-      return brush->priv->blured_mask;
+      return brush->priv->blurred_mask;
     }
   return brush->priv->mask;
 }
@@ -855,9 +855,9 @@ gimp_brush_get_pixmap (GimpBrush *brush)
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
 
-  if(brush->priv->blured_pixmap)
+  if(brush->priv->blurred_pixmap)
     {
-      return brush->priv->blured_pixmap;
+      return brush->priv->blurred_pixmap;
     }
   return brush->priv->pixmap;
 }
@@ -866,8 +866,8 @@ void
 gimp_brush_flush_blur_caches (GimpBrush *brush)
 {
 #if 0
-  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
-  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blurred_pixmap, gimp_temp_buf_unref);
 
   if (brush->priv->mask_cache)
     gimp_brush_cache_clear (brush->priv->mask_cache);
@@ -893,11 +893,11 @@ gimp_brush_get_width (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
-  if (brush->priv->blured_mask)
-    return gimp_temp_buf_get_width (brush->priv->blured_mask);
+  if (brush->priv->blurred_mask)
+    return gimp_temp_buf_get_width (brush->priv->blurred_mask);
 
-  if (brush->priv->blured_pixmap)
-    return gimp_temp_buf_get_width (brush->priv->blured_pixmap);
+  if (brush->priv->blurred_pixmap)
+    return gimp_temp_buf_get_width (brush->priv->blurred_pixmap);
 
   return gimp_temp_buf_get_width (brush->priv->mask);
 }
@@ -907,11 +907,11 @@ gimp_brush_get_height (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
-  if (brush->priv->blured_mask)
-    return gimp_temp_buf_get_height (brush->priv->blured_mask);
+  if (brush->priv->blurred_mask)
+    return gimp_temp_buf_get_height (brush->priv->blurred_mask);
 
-  if (brush->priv->blured_pixmap)
-    return gimp_temp_buf_get_height (brush->priv->blured_pixmap);
+  if (brush->priv->blurred_pixmap)
+    return gimp_temp_buf_get_height (brush->priv->blurred_pixmap);
 
   return gimp_temp_buf_get_height (brush->priv->mask);
 }

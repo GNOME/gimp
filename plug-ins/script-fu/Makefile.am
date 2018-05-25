@@ -53,7 +53,7 @@ AM_LDFLAGS = \
 SUBDIRS = tinyscheme ftx scripts
 
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/script-fu
 
 libexec_PROGRAMS = script-fu
 

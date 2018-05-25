@@ -38,34 +38,29 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SCALE, GimpColorScaleClass))
 
 
-typedef struct _GimpColorScaleClass  GimpColorScaleClass;
+typedef struct _GimpColorScalePrivate GimpColorScalePrivate;
+typedef struct _GimpColorScaleClass   GimpColorScaleClass;
 
 struct _GimpColorScale
 {
-  GtkScale                  parent_instance;
+  GtkRange               parent_instance;
 
-  /*< private >*/
-  GimpColorSelectorChannel  channel;
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
-
-  guchar                   *buf;
-  guint                     width;
-  guint                     height;
-  guint                     rowstride;
-
-  gboolean                  needs_render;
+  GimpColorScalePrivate *priv;
 };
 
 struct _GimpColorScaleClass
 {
-  GtkScaleClass             parent_class;
+  GtkRangeClass  parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

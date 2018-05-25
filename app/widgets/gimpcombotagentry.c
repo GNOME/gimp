@@ -44,10 +44,9 @@
 static void     gimp_combo_tag_entry_constructed       (GObject              *object);
 static void     gimp_combo_tag_entry_dispose           (GObject              *object);
 
-static gboolean gimp_combo_tag_entry_expose            (GtkWidget            *widget,
-                                                        GdkEventExpose       *event);
-static void     gimp_combo_tag_entry_style_set         (GtkWidget            *widget,
-                                                        GtkStyle             *previous_style);
+static gboolean gimp_combo_tag_entry_draw              (GtkWidget            *widget,
+                                                        cairo_t              *cr);
+static void     gimp_combo_tag_entry_style_updated     (GtkWidget            *widget);
 
 static void     gimp_combo_tag_entry_icon_press        (GtkWidget            *widget,
                                                         GtkEntryIconPosition  icon_pos,
@@ -73,11 +72,11 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_combo_tag_entry_constructed;
-  object_class->dispose      = gimp_combo_tag_entry_dispose;
+  object_class->constructed   = gimp_combo_tag_entry_constructed;
+  object_class->dispose       = gimp_combo_tag_entry_dispose;
 
-  widget_class->expose_event = gimp_combo_tag_entry_expose;
-  widget_class->style_set    = gimp_combo_tag_entry_style_set;
+  widget_class->draw          = gimp_combo_tag_entry_draw;
+  widget_class->style_updated = gimp_combo_tag_entry_style_updated;
 }
 
 static void
@@ -119,8 +118,6 @@ gimp_combo_tag_entry_dispose (GObject *object)
 {
   GimpComboTagEntry *combo_entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  g_clear_object (&combo_entry->arrow_pixbuf);
-
   if (combo_entry->normal_item_attr)
     {
       pango_attr_list_unref (combo_entry->normal_item_attr);
@@ -143,93 +140,85 @@ gimp_combo_tag_entry_dispose (GObject *object)
 }
 
 static gboolean
-gimp_combo_tag_entry_expose (GtkWidget      *widget,
-                             GdkEventExpose *event)
+gimp_combo_tag_entry_draw (GtkWidget *widget,
+                           cairo_t   *cr)
 {
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GdkRectangle     icon_area;
+  gint             x, y;
 
-  if (! entry->arrow_pixbuf)
-    {
-      GtkStyle  *style = gtk_widget_get_style (widget);
-      GdkPixmap *pixmap;
-      cairo_t   *cr;
+  cairo_save (cr);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  cairo_restore (cr);
 
-      pixmap = gdk_pixmap_new (gtk_widget_get_window (widget), 8, 8, -1);
+  gtk_entry_get_icon_area (GTK_ENTRY (widget), GTK_ENTRY_ICON_SECONDARY,
+                           &icon_area);
 
-      cr = gdk_cairo_create (pixmap);
-      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
-      cairo_paint (cr);
-      cairo_destroy (cr);
+  x = icon_area.x + (icon_area.width  - 8) / 2;
+  y = icon_area.y + (icon_area.height - 8) / 2;
 
-      gtk_paint_arrow (style, pixmap,
-                       GTK_STATE_NORMAL,
-                       GTK_SHADOW_NONE, NULL, widget, NULL,
-                       GTK_ARROW_DOWN, TRUE,
-                       0, 0, 8, 8);
+  gtk_render_arrow (style, cr, G_PI, x, y, 8);
 
-      entry->arrow_pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, NULL,
-                                                          0, 0, 0, 0, 8, 8);
-
-      g_object_unref (pixmap);
-
-      gtk_entry_set_icon_from_pixbuf (GTK_ENTRY (entry),
-                                      GTK_ENTRY_ICON_SECONDARY,
-                                      entry->arrow_pixbuf);
-    }
-
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  return FALSE;
 }
 
 static void
-gimp_combo_tag_entry_style_set (GtkWidget *widget,
-                                GtkStyle  *previous_style)
+gimp_combo_tag_entry_style_updated (GtkWidget *widget)
 {
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
-  GtkStyle          *style = gtk_widget_get_style (widget);
-  GdkColor           color;
-  PangoAttribute    *attribute;
+  GimpComboTagEntry          *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  GtkStyleContext            *style = gtk_widget_get_style_context (widget);
+  GdkRGBA                     color;
+  const PangoFontDescription *font_desc;
+  PangoAttribute             *attribute;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (entry->normal_item_attr)
     pango_attr_list_unref (entry->normal_item_attr);
   entry->normal_item_attr = pango_attr_list_new ();
 
-  if (style->font_desc)
-    {
-      attribute = pango_attr_font_desc_new (style->font_desc);
-      pango_attr_list_insert (entry->normal_item_attr, attribute);
-    }
-  color = style->text[GTK_STATE_NORMAL];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  font_desc = gtk_style_context_get_font (style, 0);
+  attribute = pango_attr_font_desc_new (font_desc);
+  pango_attr_list_insert (entry->normal_item_attr, attribute);
+
+  gtk_style_context_get_color (style, 0, &color);
+  attribute = pango_attr_foreground_new (color.red   * 65535.99,
+                                         color.green * 65535.99,
+                                         color.blue  * 65535.99);
   pango_attr_list_insert (entry->normal_item_attr, attribute);
 
   if (entry->selected_item_attr)
     pango_attr_list_unref (entry->selected_item_attr);
   entry->selected_item_attr = pango_attr_list_copy (entry->normal_item_attr);
 
-  color = style->text[GTK_STATE_SELECTED];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  gtk_style_context_get_color (style, GTK_STATE_FLAG_SELECTED, &color);
+  attribute = pango_attr_foreground_new (color.red   * 65535.99,
+                                         color.green * 65535.99,
+                                         color.blue  * 65535.99);
   pango_attr_list_insert (entry->selected_item_attr, attribute);
-  color = style->base[GTK_STATE_SELECTED];
-  attribute = pango_attr_background_new (color.red, color.green, color.blue);
+  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED, &color);
+  attribute = pango_attr_background_new (color.red   * 65535.99,
+                                         color.green * 65535.99,
+                                         color.blue  * 65535.99);
   pango_attr_list_insert (entry->selected_item_attr, attribute);
 
   if (entry->insensitive_item_attr)
     pango_attr_list_unref (entry->insensitive_item_attr);
   entry->insensitive_item_attr = pango_attr_list_copy (entry->normal_item_attr);
 
-  color = style->text[GTK_STATE_INSENSITIVE];
-  attribute = pango_attr_foreground_new (color.red, color.green, color.blue);
+  gtk_style_context_get_color (style, GTK_STATE_FLAG_INSENSITIVE, &color);
+  attribute = pango_attr_foreground_new (color.red   * 65535.99,
+                                         color.green * 65535.99,
+                                         color.blue  * 65535.99);
   pango_attr_list_insert (entry->insensitive_item_attr, attribute);
-  color = style->base[GTK_STATE_INSENSITIVE];
-  attribute = pango_attr_background_new (color.red, color.green, color.blue);
+  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_INSENSITIVE, &color);
+  attribute = pango_attr_background_new (color.red   * 65535.99,
+                                         color.green * 65535.99,
+                                         color.blue  * 65535.99);
   pango_attr_list_insert (entry->insensitive_item_attr, attribute);
 
-  entry->selected_item_color = style->base[GTK_STATE_SELECTED];
-
-  g_clear_object (&entry->arrow_pixbuf);
+  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
+                                          &entry->selected_item_color);
 }
 
 /**
@@ -275,7 +264,7 @@ gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
           g_signal_connect (entry->popup, "destroy",
                             G_CALLBACK (gimp_combo_tag_entry_popup_destroy),
                             entry);
-          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup));
+          gimp_tag_popup_show (GIMP_TAG_POPUP (entry->popup), event);
         }
     }
   else

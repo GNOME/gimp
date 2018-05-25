@@ -28,6 +28,7 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
 #define public ConfigDir "etc\gimp\2.0"
 #expr ProcessConfigDir
 
+#define public BaseDir DEPS_DIR32
 #define public ConfigDir "etc\gtk-2.0"
 #expr ProcessConfigDir
 

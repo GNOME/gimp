@@ -25,6 +25,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimpasync.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimphistogram.h"
@@ -119,11 +120,8 @@ gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
 
-  if (t_tool->histogram)
-    {
-      g_object_unref (t_tool->histogram);
-      t_tool->histogram = NULL;
-    }
+  g_clear_object (&t_tool->histogram);
+  g_clear_object (&t_tool->histogram_async);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -133,18 +131,54 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpThresholdTool *t_tool   = GIMP_THRESHOLD_TOOL (tool);
-  GimpImage         *image    = gimp_display_get_image (display);
-  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
+  GimpThresholdTool *t_tool      = GIMP_THRESHOLD_TOOL (tool);
+  GimpFilterTool    *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpImage         *image       = gimp_display_get_image (display);
+  GimpDrawable      *drawable    = gimp_image_get_active_drawable (image);
+  gdouble            low;
+  gdouble            high;
+  gint               n_bins;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
 
-  gimp_drawable_calculate_histogram (drawable, t_tool->histogram, FALSE);
+  g_clear_object (&t_tool->histogram_async);
+
+  g_object_get (filter_tool->config,
+                "low",  &low,
+                "high", &high,
+                NULL);
+
+  /* this is a hack to make sure that
+   * 'gimp_histogram_n_bins (t_tool->histogram)' returns the correct value for
+   * 'drawable' before the asynchronous calculation of its histogram is
+   * finished.
+   */
+  {
+    GeglBuffer *temp;
+
+    temp = gegl_buffer_new (GEGL_RECTANGLE (0, 0, 1, 1),
+                            gimp_drawable_get_format (drawable));
+
+    gimp_histogram_calculate (t_tool->histogram,
+                              temp, GEGL_RECTANGLE (0, 0, 1, 1),
+                              NULL, NULL);
+
+    g_object_unref (temp);
+  }
+
+  n_bins = gimp_histogram_n_bins (t_tool->histogram);
+
+  t_tool->histogram_async = gimp_drawable_calculate_histogram_async (
+    drawable, t_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
                                      t_tool->histogram);
+
+  gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                 low  * (n_bins - 0.0001),
+                                 high * (n_bins - 0.0001));
 
   return TRUE;
 }
@@ -177,9 +211,6 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget            *box;
   GtkWidget            *button;
   GimpHistogramChannel  channel;
-  gdouble               low;
-  gdouble               high;
-  gint                  n_bins;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
@@ -230,16 +261,9 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
 
   g_object_get (filter_tool->config,
                 "channel", &channel,
-                "low",     &low,
-                "high",    &high,
                 NULL);
 
-  n_bins = gimp_histogram_n_bins (t_tool->histogram);
-
   gimp_histogram_view_set_channel (t_tool->histogram_box->view, channel);
-  gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 low  * (n_bins - 0.0001),
-                                 high * (n_bins - 0.0001));
 
   g_signal_connect (t_tool->histogram_box->view, "range-changed",
                     G_CALLBACK (gimp_threshold_tool_histogram_range),
@@ -377,6 +401,8 @@ gimp_threshold_tool_auto_clicked (GtkWidget         *button,
   GimpHistogramChannel  channel;
   gint                  n_bins;
   gdouble               low;
+
+  gimp_async_wait (t_tool->histogram_async);
 
   g_object_get (GIMP_FILTER_TOOL (t_tool)->config,
                 "channel", &channel,

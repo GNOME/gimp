@@ -104,8 +104,7 @@ view_new_cmd_callback (GtkAction *action,
   gimp_create_display (display->gimp,
                        gimp_display_get_image (display),
                        shell->unit, gimp_zoom_model_get_factor (shell->zoom),
-                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
-                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
+                       G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell))));
 }
 
 void
@@ -123,6 +122,17 @@ view_close_cmd_callback (GtkAction *action,
   /* Check for the image so we don't close the last display. */
   if (image)
     gimp_display_shell_close (shell, FALSE);
+}
+
+void
+view_scroll_center_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  gimp_display_shell_scroll_center_image (gimp_display_get_shell (display),
+                                          TRUE, TRUE);
 }
 
 void
@@ -472,7 +482,6 @@ view_navigation_window_cmd_callback (GtkAction *action,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
-                                             gtk_widget_get_screen (GTK_WIDGET (shell)),
                                              gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                              "gimp-navigation-view");
 }

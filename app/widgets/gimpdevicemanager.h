@@ -36,11 +36,14 @@ G_BEGIN_DECLS
 #define GIMP_DEVICE_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DEVICE_MANAGER, GimpDeviceManagerClass))
 
 
-typedef struct _GimpDeviceManagerClass GimpDeviceManagerClass;
+typedef struct _GimpDeviceManagerPrivate GimpDeviceManagerPrivate;
+typedef struct _GimpDeviceManagerClass   GimpDeviceManagerClass;
 
 struct _GimpDeviceManager
 {
-  GimpList  parent_instance;
+  GimpList                  parent_instance;
+
+  GimpDeviceManagerPrivate *priv;
 };
 
 struct _GimpDeviceManagerClass

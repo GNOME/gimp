@@ -551,7 +551,7 @@ metadata_editor_dialog (gint32        image_id,
   meta_args.dialog = dialog;
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
       GTK_RESPONSE_YES,
       GTK_RESPONSE_NO,
       -1);
@@ -768,7 +768,7 @@ on_date_button_clicked (GtkButton *widget,
 
   gtk_dialog_set_default_response (GTK_DIALOG (calendar_dialog),
                                    GTK_RESPONSE_YES);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (calendar_dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (calendar_dialog),
       GTK_RESPONSE_YES,
       GTK_RESPONSE_NO,
       -1);

@@ -142,6 +142,7 @@ gimp_text_editor_new (const gchar     *title,
   GtkWidget      *toolbar;
   GtkWidget      *style_editor;
   GtkWidget      *scrolled_window;
+  gboolean        use_header_bar;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WINDOW (parent), NULL);
@@ -150,12 +151,17 @@ gimp_text_editor_new (const gchar     *title,
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (text_buffer), NULL);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
-                         "title",         title,
-                         "role",          "gimp-text-editor",
-                         "transient-for", parent,
-                         "help-func",     gimp_standard_help_func,
-                         "help-id",       GIMP_HELP_TEXT_EDITOR_DIALOG,
+                         "title",          title,
+                         "role",           "gimp-text-editor",
+                         "transient-for",  parent,
+                         "help-func",      gimp_standard_help_func,
+                         "help-id",        GIMP_HELP_TEXT_EDITOR_DIALOG,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   gtk_dialog_add_button (GTK_DIALOG (editor),
@@ -171,7 +177,7 @@ gimp_text_editor_new (const gchar     *title,
 
   editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                       "<TextEditor>",
-                                                      editor, FALSE);
+                                                      editor);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (editor));
 
@@ -318,7 +324,7 @@ gimp_text_editor_set_font_name (GimpTextEditor *editor,
       if (font_name)
         font_desc = pango_font_description_from_string (font_name);
 
-      gtk_widget_modify_font (editor->view, font_desc);
+      gtk_widget_override_font (editor->view, font_desc);
 
       if (font_desc)
         pango_font_description_free (font_desc);
@@ -352,7 +358,7 @@ gimp_text_editor_font_toggled (GtkToggleButton *button,
   if (gtk_toggle_button_get_active (button) && editor->font_name)
     font_desc = pango_font_description_from_string (editor->font_name);
 
-  gtk_widget_modify_font (editor->view, font_desc);
+  gtk_widget_override_font (editor->view, font_desc);
 
   if (font_desc)
     pango_font_description_free (font_desc);

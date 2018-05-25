@@ -46,7 +46,6 @@
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimplayermodebox.h"
-#include "gimpscalebutton.h"
 #include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimppolar.h"
@@ -437,115 +436,6 @@ gimp_prop_color_button_notify (GObject    *config,
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_color_button_callback,
-                                     config);
-}
-
-
-/******************/
-/*  scale button  */
-/******************/
-
-static void   gimp_prop_scale_button_callback (GtkWidget  *widget,
-                                               gdouble     value,
-                                               GObject    *config);
-static void   gimp_prop_scale_button_notify   (GObject    *config,
-                                               GParamSpec *param_spec,
-                                               GtkWidget  *button);
-
-/**
- * gimp_prop_scale_button_new:
- * @config:        #GimpConfig object to which property is attached.
- * @property_name: Name of gdouble property
- *
- * Creates a #GimpScaleButton to set and display the value of a
- * gdouble property in a very space-efficient way.
- *
- * Return value:  A new #GimpScaleButton widget.
- *
- * Since GIMP 2.6
- */
-GtkWidget *
-gimp_prop_scale_button_new (GObject     *config,
-                            const gchar *property_name)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *button;
-  gdouble     value;
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
-
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  button = gimp_scale_button_new (value,
-                                  G_PARAM_SPEC_DOUBLE (param_spec)->minimum,
-                                  G_PARAM_SPEC_DOUBLE (param_spec)->maximum);
-
-  set_param_spec (G_OBJECT (button), button, param_spec);
-
-  g_signal_connect (button, "value-changed",
-                    G_CALLBACK (gimp_prop_scale_button_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_scale_button_notify),
-                  button);
-
-  return button;
-}
-
-static void
-gimp_prop_scale_button_callback (GtkWidget *button,
-                                 gdouble    value,
-                                 GObject   *config)
-{
-  GParamSpec *param_spec;
-  gdouble     v;
-
-  param_spec = get_param_spec (G_OBJECT (button));
-  if (! param_spec)
-    return;
-
-  g_object_get (config, param_spec->name, &v, NULL);
-
-  if (v != value)
-    {
-      g_signal_handlers_block_by_func (config,
-                                       gimp_prop_scale_button_notify,
-                                       button);
-
-      g_object_set (config, param_spec->name, value, NULL);
-
-      g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_scale_button_notify,
-                                         button);
-    }
-}
-
-static void
-gimp_prop_scale_button_notify (GObject    *config,
-                               GParamSpec *param_spec,
-                               GtkWidget  *button)
-{
-  gdouble value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  g_signal_handlers_block_by_func (button,
-                                   gimp_prop_scale_button_callback,
-                                   config);
-
-  gtk_scale_button_set_value (GTK_SCALE_BUTTON (button), value);
-
-  g_signal_handlers_unblock_by_func (button,
-                                     gimp_prop_scale_button_callback,
                                      config);
 }
 

@@ -34,7 +34,6 @@
 #include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimpdnd.h"
-#include "gimphighlightablebutton.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
@@ -87,8 +86,7 @@ static void            gimp_editor_get_property        (GObject        *object,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
 
-static void            gimp_editor_style_set           (GtkWidget      *widget,
-                                                        GtkStyle       *prev_style);
+static void            gimp_editor_style_updated       (GtkWidget      *widget);
 
 static GimpUIManager * gimp_editor_get_menu            (GimpDocked     *docked,
                                                         const gchar   **ui_path,
@@ -124,12 +122,12 @@ gimp_editor_class_init (GimpEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_editor_constructed;
-  object_class->dispose      = gimp_editor_dispose;
-  object_class->set_property = gimp_editor_set_property;
-  object_class->get_property = gimp_editor_get_property;
+  object_class->constructed   = gimp_editor_constructed;
+  object_class->dispose       = gimp_editor_dispose;
+  object_class->set_property  = gimp_editor_set_property;
+  object_class->get_property  = gimp_editor_get_property;
 
-  widget_class->style_set    = gimp_editor_style_set;
+  widget_class->style_updated = gimp_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
@@ -252,8 +250,7 @@ gimp_editor_constructed (GObject *object)
       editor->priv->ui_manager =
         gimp_menu_factory_manager_new (editor->priv->menu_factory,
                                        editor->priv->menu_identifier,
-                                       editor->priv->popup_data,
-                                       FALSE);
+                                       editor->priv->popup_data);
       g_signal_connect (editor->priv->ui_manager->gimp->config,
                         "size-changed",
                         G_CALLBACK (gimp_editor_config_size_changed),
@@ -362,13 +359,12 @@ gimp_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_editor_style_set (GtkWidget *widget,
-                       GtkStyle  *prev_style)
+gimp_editor_style_updated (GtkWidget *widget)
 {
   GimpEditor    *editor = GIMP_EDITOR (widget);
   GimpGuiConfig *config = NULL;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (editor->priv->ui_manager)
     config = GIMP_GUI_CONFIG (editor->priv->ui_manager->gimp->config);
@@ -453,8 +449,7 @@ gimp_editor_create_menu (GimpEditor      *editor,
 
   editor->priv->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                             menu_identifier,
-                                                            popup_data,
-                                                            FALSE);
+                                                            popup_data);
   g_signal_connect (editor->priv->ui_manager->gimp->config,
                     "size-changed",
                     G_CALLBACK (gimp_editor_config_size_changed),
@@ -507,7 +502,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  button = gimp_highlightable_button_new ();
+  button = gimp_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -658,7 +653,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   if (GTK_IS_TOGGLE_ACTION (action))
     button = gtk_toggle_button_new ();
   else
-    button = gimp_highlightable_button_new ();
+    button = gimp_button_new ();
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 

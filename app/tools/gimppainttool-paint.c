@@ -269,7 +269,7 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
 
   if ((display != tool->display) || ! paint_tool->draw_line)
     {
-      /*  If this is a new display, resest the "last stroke's endpoint"
+      /*  If this is a new display, reset the "last stroke's endpoint"
        *  because there is none
        */
       if (display != tool->display)

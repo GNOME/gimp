@@ -29,7 +29,6 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpdialog.h"
-#include "gimppixmap.h"
 #include "gimpquerybox.h"
 #include "gimpsizeentry.h"
 #include "gimpwidgets.h"
@@ -151,7 +150,7 @@ create_query_box (const gchar   *title,
 
                                      NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (query_box->qbox),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -191,7 +190,7 @@ create_query_box (const gchar   *title,
       gtk_widget_show (hbox);
 
       image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_DIALOG);
-      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+      gtk_widget_set_valign (image, GTK_ALIGN_START);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
     }

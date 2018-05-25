@@ -7,14 +7,12 @@ pdb_groups = \
 	groups/brushes.pdb		\
 	groups/buffer.pdb		\
 	groups/channel.pdb		\
-	groups/color.pdb		\
 	groups/context.pdb		\
 	groups/debug.pdb		\
 	groups/display.pdb		\
 	groups/drawable.pdb		\
 	groups/drawable_color.pdb	\
 	groups/drawable_edit.pdb	\
-	groups/drawable_transform.pdb	\
 	groups/dynamics.pdb		\
 	groups/edit.pdb			\
 	groups/fileops.pdb		\
@@ -44,7 +42,6 @@ pdb_groups = \
 	groups/palette.pdb		\
 	groups/palette_select.pdb	\
 	groups/palettes.pdb		\
-	groups/paths.pdb		\
 	groups/pattern.pdb		\
 	groups/pattern_select.pdb	\
 	groups/patterns.pdb		\
@@ -53,10 +50,8 @@ pdb_groups = \
 	groups/procedural_db.pdb	\
 	groups/progress.pdb		\
 	groups/selection.pdb		\
-	groups/selection_tools.pdb	\
 	groups/text_layer.pdb		\
 	groups/text_tool.pdb		\
-	groups/transform_tools.pdb	\
 	groups/unit.pdb			\
 	groups/vectors.pdb
 

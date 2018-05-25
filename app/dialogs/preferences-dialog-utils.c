@@ -57,24 +57,23 @@ prefs_frame_new (const gchar  *label,
 }
 
 GtkWidget *
-prefs_table_new (gint          rows,
-                 GtkContainer *parent)
+prefs_grid_new (GtkContainer *parent)
 {
-  GtkWidget *table;
+  GtkWidget *grid;
 
-  table = gtk_table_new (rows, 2, FALSE);
+  grid = gtk_grid_new ();
 
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
 
   if (GTK_IS_BOX (parent))
-    gtk_box_pack_start (GTK_BOX (parent), table, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (parent), grid, FALSE, FALSE, 0);
   else
-    gtk_container_add (parent, table);
+    gtk_container_add (parent, grid);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
-  return table;
+  return grid;
 }
 
 GtkWidget *
@@ -160,7 +159,12 @@ prefs_check_button_add_with_icon (GObject      *config,
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_padding (GTK_MISC (image), 2, 2);
+  g_object_set (image,
+                "margin-start",  2,
+                "margin-end",    2,
+                "margin-top",    2,
+                "margin-bottom", 2,
+                NULL);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
@@ -176,16 +180,19 @@ prefs_check_button_add_with_icon (GObject      *config,
 GtkWidget *
 prefs_widget_add_aligned (GtkWidget    *widget,
                           const gchar  *text,
-                          GtkTable     *table,
-                          gint          table_row,
+                          GtkGrid      *grid,
+                          gint          grid_top,
                           gboolean      left_align,
                           GtkSizeGroup *group)
 {
-  GtkWidget *label = gimp_table_attach_aligned (table, 0, table_row,
-                                                text, 0.0, 0.5,
-                                                widget, 1, left_align);
+  GtkWidget *label = gimp_grid_attach_aligned (grid, 0, grid_top,
+                                               text, 0.0, 0.5,
+                                               widget, 1);
   if (group)
     gtk_size_group_add_widget (group, label);
+
+  if (left_align == TRUE)
+    gtk_widget_set_halign (widget, GTK_ALIGN_START);
 
   return label;
 }
@@ -195,8 +202,8 @@ prefs_color_button_add (GObject      *config,
                         const gchar  *property_name,
                         const gchar  *label,
                         const gchar  *title,
-                        GtkTable     *table,
-                        gint          table_row,
+                        GtkGrid      *grid,
+                        gint          grid_top,
                         GtkSizeGroup *group,
                         GimpContext  *context)
 {
@@ -222,7 +229,7 @@ prefs_color_button_add (GObject      *config,
       if (context)
         gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
 
-      prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
+      prefs_widget_add_aligned (button, label, grid, grid_top, TRUE, group);
     }
 
   return button;
@@ -232,14 +239,14 @@ GtkWidget *
 prefs_entry_add (GObject      *config,
                  const gchar  *property_name,
                  const gchar  *label,
-                 GtkTable     *table,
-                 gint          table_row,
+                 GtkGrid      *grid,
+                 gint          grid_top,
                  GtkSizeGroup *group)
 {
   GtkWidget *entry = gimp_prop_entry_new (config, property_name, -1);
 
   if (entry)
-    prefs_widget_add_aligned (entry, label, table, table_row, FALSE, group);
+    prefs_widget_add_aligned (entry, label, grid, grid_top, FALSE, group);
 
   return entry;
 }
@@ -251,8 +258,8 @@ prefs_spin_button_add (GObject      *config,
                        gdouble       page_increment,
                        gint          digits,
                        const gchar  *label,
-                       GtkTable     *table,
-                       gint          table_row,
+                       GtkGrid      *grid,
+                       gint          grid_top,
                        GtkSizeGroup *group)
 {
   GtkWidget *button = gimp_prop_spin_button_new (config, property_name,
@@ -261,7 +268,7 @@ prefs_spin_button_add (GObject      *config,
                                                  digits);
 
   if (button)
-    prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
+    prefs_widget_add_aligned (button, label, grid, grid_top, TRUE, group);
 
   return button;
 }
@@ -270,14 +277,14 @@ GtkWidget *
 prefs_memsize_entry_add (GObject      *config,
                          const gchar  *property_name,
                          const gchar  *label,
-                         GtkTable     *table,
-                         gint          table_row,
+                         GtkGrid      *grid,
+                         gint          grid_top,
                          GtkSizeGroup *group)
 {
   GtkWidget *entry = gimp_prop_memsize_entry_new (config, property_name);
 
   if (entry)
-    prefs_widget_add_aligned (entry, label, table, table_row, TRUE, group);
+    prefs_widget_add_aligned (entry, label, grid, grid_top, TRUE, group);
 
   return entry;
 }
@@ -287,8 +294,8 @@ prefs_file_chooser_button_add (GObject      *config,
                                const gchar  *property_name,
                                const gchar  *label,
                                const gchar  *dialog_title,
-                               GtkTable     *table,
-                               gint          table_row,
+                               GtkGrid      *grid,
+                               gint          grid_top,
                                GtkSizeGroup *group)
 {
   GtkWidget *button;
@@ -298,7 +305,7 @@ prefs_file_chooser_button_add (GObject      *config,
                                               GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
 
   if (button)
-    prefs_widget_add_aligned (button, label, table, table_row, FALSE, group);
+    prefs_widget_add_aligned (button, label, grid, grid_top, FALSE, group);
 
   return button;
 }
@@ -309,15 +316,15 @@ prefs_enum_combo_box_add (GObject      *config,
                           gint          minimum,
                           gint          maximum,
                           const gchar  *label,
-                          GtkTable     *table,
-                          gint          table_row,
+                          GtkGrid      *grid,
+                          gint          grid_top,
                           GtkSizeGroup *group)
 {
   GtkWidget *combo = gimp_prop_enum_combo_box_new (config, property_name,
                                                    minimum, maximum);
 
   if (combo)
-    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
+    prefs_widget_add_aligned (combo, label, grid, grid_top, FALSE, group);
 
   return combo;
 }
@@ -328,15 +335,15 @@ prefs_boolean_combo_box_add (GObject      *config,
                              const gchar  *true_text,
                              const gchar  *false_text,
                              const gchar  *label,
-                             GtkTable     *table,
-                             gint          table_row,
+                             GtkGrid      *grid,
+                             gint          grid_top,
                              GtkSizeGroup *group)
 {
   GtkWidget *combo = gimp_prop_boolean_combo_box_new (config, property_name,
                                                       true_text, false_text);
 
   if (combo)
-    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
+    prefs_widget_add_aligned (combo, label, grid, grid_top, FALSE, group);
 
   return combo;
 }
@@ -365,8 +372,8 @@ prefs_profile_combo_box_add (GObject      *config,
                              GtkListStore *profile_store,
                              const gchar  *dialog_title,
                              const gchar  *label,
-                             GtkTable     *table,
-                             gint          table_row,
+                             GtkGrid      *grid,
+                             gint          grid_top,
                              GtkSizeGroup *group,
                              GObject      *profile_path_config,
                              const gchar  *profile_path_property_name)
@@ -379,7 +386,7 @@ prefs_profile_combo_box_add (GObject      *config,
                                                       profile_path_property_name);
 
   if (combo)
-    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
+    prefs_widget_add_aligned (combo, label, grid, grid_top, FALSE, group);
 
   return combo;
 }

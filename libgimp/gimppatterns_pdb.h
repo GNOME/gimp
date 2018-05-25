@@ -32,19 +32,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_patterns_refresh          (void);
-gchar**  gimp_patterns_get_list         (const gchar  *filter,
-                                         gint         *num_patterns);
-GIMP_DEPRECATED_FOR(gimp_context_get_pattern)
-gchar*   gimp_patterns_get_pattern      (gint         *width,
-                                         gint         *height);
-GIMP_DEPRECATED_FOR(gimp_pattern_get_pixels)
-gchar*   gimp_patterns_get_pattern_data (const gchar  *name,
-                                         gint         *width,
-                                         gint         *height,
-                                         gint         *mask_bpp,
-                                         gint         *length,
-                                         guint8      **mask_data);
+gboolean gimp_patterns_refresh  (void);
+gchar**  gimp_patterns_get_list (const gchar *filter,
+                                 gint        *num_patterns);
 
 
 G_END_DECLS

@@ -46,7 +46,7 @@ static void
 save_dialog_toggle_scale (GtkWidget *widget,
                           gpointer   data)
 {
-  gimp_scale_entry_set_sensitive (GTK_OBJECT (data),
+  gimp_scale_entry_set_sensitive (data,
                                   ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 }
 
@@ -84,22 +84,22 @@ save_dialog (WebPSaveParams *params,
              gint32          image_ID,
              gint32          n_layers)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *expander;
-  GtkWidget *frame;
-  GtkWidget *vbox2;
-  GtkWidget *label;
-  GtkWidget *toggle;
-  GtkWidget *toggle_minsize;
-  GtkWidget *combo;
-  GtkObject *quality_scale;
-  GtkObject *alpha_quality_scale;
-  gboolean   animation_supported = FALSE;
-  gboolean   run;
-  gchar     *text;
-  gint       row = 0;
+  GtkWidget     *dialog;
+  GtkWidget     *vbox;
+  GtkWidget     *grid;
+  GtkWidget     *expander;
+  GtkWidget     *frame;
+  GtkWidget     *vbox2;
+  GtkWidget     *label;
+  GtkWidget     *toggle;
+  GtkWidget     *toggle_minsize;
+  GtkWidget     *combo;
+  GtkAdjustment *quality_scale;
+  GtkAdjustment *alpha_quality_scale;
+  gboolean       animation_supported = FALSE;
+  gboolean       run;
+  gchar         *text;
+  gint           row = 0;
 
   animation_supported = n_layers > 1;
 
@@ -113,20 +113,18 @@ save_dialog (WebPSaveParams *params,
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  /* Create the table */
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  /* Create the grid */
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /* Create the lossless checkbox */
   toggle = gtk_check_button_new_with_label (_("Lossless"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 params->lossless);
-  gtk_table_attach (GTK_TABLE (table), toggle,
-                    0, 3, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), toggle, 0, row, 3, 1);
   gtk_widget_show (toggle);
   row++;
 
@@ -135,7 +133,7 @@ save_dialog (WebPSaveParams *params,
                     &params->lossless);
 
   /* Create the slider for image quality */
-  quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
+  quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
                                         0, row++,
                                         _("Image quality:"),
                                         125,
@@ -154,7 +152,7 @@ save_dialog (WebPSaveParams *params,
                     &params->quality);
 
   /* Create the slider for alpha channel quality */
-  alpha_quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
+  alpha_quality_scale = gimp_scale_entry_new (GTK_GRID (grid),
                                               0, row++,
                                               _("Alpha quality:"),
                                               125,
@@ -188,9 +186,9 @@ save_dialog (WebPSaveParams *params,
                                   "Icon",    WEBP_PRESET_ICON,
                                   "Text",    WEBP_PRESET_TEXT,
                                   NULL);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     _("Source type:"), 0.0, 0.5,
-                                     combo, 2, FALSE);
+  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                                    _("Source type:"), 0.0, 0.5,
+                                    combo, 2);
   gimp_help_set_help_data (label,
                            _("WebP encoder \"preset\""),
                            NULL);
@@ -334,8 +332,7 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label);
 
       /* default delay */
-      adj = (GtkAdjustment *) gtk_adjustment_new (params->delay,
-                                                  1, 10000, 1, 10, 0);
+      adj = gtk_adjustment_new (params->delay, 1, 10000, 1, 10, 0);
       delay = gtk_spin_button_new (adj, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);

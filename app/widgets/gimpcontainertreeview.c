@@ -60,8 +60,7 @@ static void          gimp_container_tree_view_view_iface_init   (GimpContainerVi
 static void          gimp_container_tree_view_constructed       (GObject                     *object);
 static void          gimp_container_tree_view_finalize          (GObject                     *object);
 
-static void          gimp_container_tree_view_style_set         (GtkWidget                   *widget,
-                                                                 GtkStyle                    *prev_style);
+static void          gimp_container_tree_view_style_updated     (GtkWidget                   *widget);
 static void          gimp_container_tree_view_unmap             (GtkWidget                   *widget);
 static gboolean      gimp_container_tree_view_popup_menu        (GtkWidget                   *widget);
 
@@ -158,21 +157,21 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
 
-  object_class->constructed = gimp_container_tree_view_constructed;
-  object_class->finalize    = gimp_container_tree_view_finalize;
+  object_class->constructed   = gimp_container_tree_view_constructed;
+  object_class->finalize      = gimp_container_tree_view_finalize;
 
-  widget_class->style_set   = gimp_container_tree_view_style_set;
-  widget_class->unmap       = gimp_container_tree_view_unmap;
-  widget_class->popup_menu  = gimp_container_tree_view_popup_menu;
+  widget_class->style_updated = gimp_container_tree_view_style_updated;
+  widget_class->unmap         = gimp_container_tree_view_unmap;
+  widget_class->popup_menu    = gimp_container_tree_view_popup_menu;
 
-  klass->edit_name          = gimp_container_tree_view_real_edit_name;
-  klass->drop_possible      = gimp_container_tree_view_real_drop_possible;
-  klass->drop_viewable      = gimp_container_tree_view_real_drop_viewable;
-  klass->drop_color         = NULL;
-  klass->drop_uri_list      = NULL;
-  klass->drop_svg           = NULL;
-  klass->drop_component     = NULL;
-  klass->drop_pixbuf        = NULL;
+  klass->edit_name            = gimp_container_tree_view_real_edit_name;
+  klass->drop_possible        = gimp_container_tree_view_real_drop_possible;
+  klass->drop_viewable        = gimp_container_tree_view_real_drop_viewable;
+  klass->drop_color           = NULL;
+  klass->drop_uri_list        = NULL;
+  klass->drop_svg             = NULL;
+  klass->drop_component       = NULL;
+  klass->drop_pixbuf          = NULL;
 
   tree_view_signals[EDIT_NAME] =
     g_signal_new ("edit-name",
@@ -363,10 +362,10 @@ gimp_container_tree_view_finalize (GObject *object)
 }
 
 static gboolean
-gimp_container_tree_view_style_set_foreach (GtkTreeModel *model,
-                                            GtkTreePath  *path,
-                                            GtkTreeIter  *iter,
-                                            gpointer      data)
+gimp_container_tree_view_style_updated_foreach (GtkTreeModel *model,
+                                                GtkTreePath  *path,
+                                                GtkTreeIter  *iter,
+                                                gpointer      data)
 {
   GimpViewRenderer *renderer;
 
@@ -384,16 +383,15 @@ gimp_container_tree_view_style_set_foreach (GtkTreeModel *model,
 }
 
 static void
-gimp_container_tree_view_style_set (GtkWidget *widget,
-                                    GtkStyle  *prev_style)
+gimp_container_tree_view_style_updated (GtkWidget *widget)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (tree_view->model)
     gtk_tree_model_foreach (tree_view->model,
-                            gimp_container_tree_view_style_set_foreach,
+                            gimp_container_tree_view_style_updated_foreach,
                             NULL);
 }
 
@@ -451,10 +449,13 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
     }
   else
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      GtkBorder        border;
 
-      *x += style->xthickness;
-      *y += style->ythickness;
+      gtk_style_context_get_border (style, 0, &border);
+
+      *x += border.left;
+      *y += border.top;
     }
 
   gimp_menu_position (menu, x, y);
@@ -954,15 +955,21 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
       if (icon_name)
         {
-          GtkStyle *style = gtk_widget_get_style (tree_widget);
+          GtkStyleContext *style = gtk_widget_get_style_context (tree_widget);
+          GtkBorder        border;
+
+          gtk_style_context_save (style);
+          gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
+          gtk_style_context_get_border (style, 0, &border);
+          gtk_style_context_restore (style);
 
           icon_size = gimp_get_icon_size (tree_widget,
                                           icon_name,
                                           GTK_ICON_SIZE_BUTTON,
                                           view_size -
-                                          2 * style->xthickness,
+                                          (border.left + border.right),
                                           view_size -
-                                          2 * style->ythickness);
+                                          (border.top + border.bottom));
 
           g_object_set (list->data, "stock-size", icon_size, NULL);
 

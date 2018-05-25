@@ -110,22 +110,22 @@ PngSaveVals;
 
 typedef struct
 {
-  gboolean   run;
+  gboolean       run;
 
-  GtkWidget *interlaced;
-  GtkWidget *bkgd;
-  GtkWidget *gama;
-  GtkWidget *offs;
-  GtkWidget *phys;
-  GtkWidget *time;
-  GtkWidget *comment;
-  GtkWidget *pixelformat;
-  GtkWidget *save_transp_pixels;
+  GtkWidget     *interlaced;
+  GtkWidget     *bkgd;
+  GtkWidget     *gama;
+  GtkWidget     *offs;
+  GtkWidget     *phys;
+  GtkWidget     *time;
+  GtkWidget     *comment;
+  GtkWidget     *pixelformat;
+  GtkWidget     *save_transp_pixels;
   GtkAdjustment *compression_level;
-  GtkWidget *save_exif;
-  GtkWidget *save_xmp;
-  GtkWidget *save_iptc;
-  GtkWidget *save_thumbnail;
+  GtkWidget     *save_exif;
+  GtkWidget     *save_xmp;
+  GtkWidget     *save_iptc;
+  GtkWidget     *save_thumbnail;
 }
 PngSaveGui;
 
@@ -1410,7 +1410,7 @@ offsets_dialog (gint offset_x,
                             NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_YES,
                                            GTK_RESPONSE_NO,
                                            -1);
@@ -1426,7 +1426,7 @@ offsets_dialog (gint offset_x,
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_QUESTION,
                                         GTK_ICON_SIZE_DIALOG);
-  gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
+  gtk_widget_set_valign (image, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
@@ -2365,9 +2365,9 @@ save_dialog (gint32    image_ID,
 
   g_free (ui_file);
 
-  /* Table */
+  /* Grid */
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      GTK_WIDGET (gtk_builder_get_object (builder, "table")),
+                      GTK_WIDGET (gtk_builder_get_object (builder, "grid")),
                       FALSE, FALSE, 0);
 
   /* Toggles */
@@ -2422,7 +2422,9 @@ save_dialog (gint32    image_ID,
   /* Compression level scale */
   pg.compression_level =
     GTK_ADJUSTMENT (gtk_builder_get_object (builder, "compression-level"));
+
   gtk_adjustment_set_value (pg.compression_level, pngvals.compression_level);
+
   g_signal_connect (pg.compression_level, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);

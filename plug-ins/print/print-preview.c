@@ -76,12 +76,16 @@ static void      print_preview_finalize             (GObject          *object);
 
 static void      print_preview_realize              (GtkWidget        *widget);
 static void      print_preview_unrealize            (GtkWidget        *widget);
-static void      print_preview_size_request         (GtkWidget        *widget,
-                                                     GtkRequisition   *requisition);
+static void      print_preview_get_preferred_width  (GtkWidget        *widget,
+                                                     gint             *minimum_width,
+                                                     gint             *natural_width);
+static void      print_preview_get_preferred_height (GtkWidget        *widget,
+                                                     gint             *minimum_height,
+                                                     gint             *natural_height);
 static void      print_preview_size_allocate        (GtkWidget        *widget,
                                                      GtkAllocation    *allocation);
-static gboolean  print_preview_expose_event         (GtkWidget        *widget,
-                                                     GdkEventExpose   *event);
+static gboolean  print_preview_draw                 (GtkWidget        *widget,
+                                                     cairo_t          *cr);
 static gboolean  print_preview_button_press_event   (GtkWidget        *widget,
                                                      GdkEventButton   *event);
 static gboolean  print_preview_button_release_event (GtkWidget        *widget,
@@ -180,9 +184,10 @@ print_preview_class_init (PrintPreviewClass *klass)
 
   widget_class->realize              = print_preview_realize;
   widget_class->unrealize            = print_preview_unrealize;
-  widget_class->size_request         = print_preview_size_request;
+  widget_class->get_preferred_width  = print_preview_get_preferred_width;
+  widget_class->get_preferred_height = print_preview_get_preferred_height;
   widget_class->size_allocate        = print_preview_size_allocate;
-  widget_class->expose_event         = print_preview_expose_event;
+  widget_class->draw                 = print_preview_draw;
   widget_class->button_press_event   = print_preview_button_press_event;
   widget_class->button_release_event = print_preview_button_release_event;
   widget_class->motion_notify_event  = print_preview_motion_notify_event;
@@ -240,7 +245,7 @@ print_preview_unrealize (GtkWidget *widget)
   PrintPreview *preview = PRINT_PREVIEW (widget);
 
   if (preview->cursor)
-    gdk_cursor_unref (preview->cursor);
+    g_object_unref (preview->cursor);
 
   GTK_WIDGET_CLASS (print_preview_parent_class)->unrealize (widget);
 }
@@ -273,6 +278,30 @@ print_preview_size_request (GtkWidget      *widget,
 
   requisition->width  += 2 * border;
   requisition->height += 2 * border;
+}
+
+static void
+print_preview_get_preferred_width (GtkWidget *widget,
+                                   gint      *minimum_width,
+                                   gint      *natural_width)
+{
+  GtkRequisition requisition;
+
+  print_preview_size_request (widget, &requisition);
+
+  *minimum_width = *natural_width = requisition.width;
+}
+
+static void
+print_preview_get_preferred_height (GtkWidget *widget,
+                                    gint      *minimum_height,
+                                    gint      *natural_height)
+{
+  GtkRequisition requisition;
+
+  print_preview_size_request (widget, &requisition);
+
+  *minimum_height = *natural_height = requisition.height;
 }
 
 static void
@@ -318,7 +347,7 @@ print_preview_button_press_event (GtkWidget      *widget,
           preview->dragging = TRUE;
         }
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
     }
 
   return FALSE;
@@ -398,13 +427,12 @@ print_preview_leave_notify_event (GtkWidget        *widget,
 }
 
 static gboolean
-print_preview_expose_event (GtkWidget      *widget,
-                            GdkEventExpose *event)
+print_preview_draw (GtkWidget *widget,
+                    cairo_t   *cr)
 {
   PrintPreview  *preview = PRINT_PREVIEW (widget);
   GtkStyle      *style   = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
-  cairo_t       *cr;
   gdouble        paper_width;
   gdouble        paper_height;
   gdouble        left_margin;
@@ -425,11 +453,7 @@ print_preview_expose_event (GtkWidget      *widget,
 
   scale = print_preview_get_scale (preview);
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  cairo_translate (cr,
-                   allocation.x + border,
-                   allocation.y + border);
+  cairo_translate (cr, border, border);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
@@ -500,8 +524,6 @@ print_preview_expose_event (GtkWidget      *widget,
       cairo_set_source_surface (cr, preview->thumbnail, 0, 0);
       cairo_fill (cr);
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }

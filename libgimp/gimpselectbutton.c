@@ -46,6 +46,7 @@ static void   gimp_select_button_dispose (GObject *object);
 
 G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_BOX)
 
+
 static void
 gimp_select_button_class_init (GimpSelectButtonClass *klass)
 {

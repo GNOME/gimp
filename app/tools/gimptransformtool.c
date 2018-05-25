@@ -267,7 +267,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
   if (! tr_tool->gui)
     gimp_transform_tool_dialog (tr_tool);
 
-  /*  Inizialize the tool-specific trans_info, and adjust the tool dialog  */
+  /*  Initialize the tool-specific trans_info, and adjust the tool dialog  */
   gimp_transform_tool_prepare (tr_tool, display);
 
   /*  Recalculate the transform tool  */
@@ -1207,7 +1207,6 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     NULL, NULL, NULL, NULL,
-                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,
 

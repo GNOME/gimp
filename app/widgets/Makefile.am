@@ -100,8 +100,6 @@ libappwidgets_a_sources = \
 	gimpcontainereditor.h		\
 	gimpcontainerentry.c		\
 	gimpcontainerentry.h		\
-	gimpcontainergridview.c		\
-	gimpcontainergridview.h		\
 	gimpcontainericonview.c		\
 	gimpcontainericonview.h		\
 	gimpcontainerpopup.c		\
@@ -226,8 +224,6 @@ libappwidgets_a_sources = \
 	gimphelp.c			\
 	gimphelp.h			\
 	gimphelp-ids.h			\
-	gimphighlightablebutton.c	\
-	gimphighlightablebutton.h	\
 	gimphistogrambox.c		\
 	gimphistogrambox.h		\
 	gimphistogrameditor.c		\
@@ -332,8 +328,6 @@ libappwidgets_a_sources = \
 	gimpsamplepointeditor.h		\
 	gimpsavedialog.c		\
 	gimpsavedialog.h		\
-	gimpscalebutton.c		\
-	gimpscalebutton.h		\
 	gimpsearchpopup.c		\
 	gimpsearchpopup.h		\
 	gimpselectiondata.c		\
@@ -460,11 +454,7 @@ libappwidgets_a_sources = \
 	gimpwindow.c			\
 	gimpwindow.h			\
 	gimpwindowstrategy.c		\
-	gimpwindowstrategy.h		\
-	gtkwrapbox.c			\
-	gtkwrapbox.h			\
-	gtkhwrapbox.c			\
-	gtkhwrapbox.h
+	gimpwindowstrategy.h
 
 libappwidgets_a_built_sources = widgets-enums.c
 

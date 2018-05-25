@@ -239,22 +239,6 @@ CODE
     );
 }
 
-sub image_free_shadow {
-    &std_pdb_deprecated ('gimp-drawable-free-shadow');
-
-    @inargs = (
-        { name => 'image', type => 'image', dead => 1,
-          desc => 'The image' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-}
-CODE
-    );
-}
-
 sub image_get_layers {
     $blurb = 'Returns the list of layers contained in the specified image.';
 
@@ -849,36 +833,6 @@ CODE
     );
 }
 
-sub image_add_layer {
-    &std_pdb_deprecated ('gimp-image-insert-layer');
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'layer', type => 'layer',
-          desc => 'The layer' },
-        { name => 'position', type => 'int32',
-          desc => 'The layer position' }
-    );
-
-    $invoke{code} = <<'CODE';
-{
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
-      gimp_pdb_image_is_base_type (image,
-                                   gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
-                                   error))
-    {
-      success = gimp_image_add_layer (image, layer,
-                                      NULL, MAX (position, -1), TRUE);
-    }
-  else
-    {
-      success = FALSE;
-    }
-}
-CODE
-}
-
 sub image_insert_layer {
     $blurb = 'Add the specified layer to the image.';
 
@@ -964,85 +918,77 @@ CODE
     );
 }
 
-sub image_add_layer_mask {
-    &std_pdb_deprecated ('gimp-layer-add-mask');
+sub image_freeze_layers {
+    $blurb = "Freeze the image's layer list.";
+
+    $help = <<'HELP';
+This procedure freezes the layer list of the image, suppressing any
+updates to the Layers dialog in response to changes to the image's
+layers.  This can significantly improve performance while applying
+changes affecting the layer list.
+
+
+Each call to gimp_image_freeze_layers() should be matched by a
+corresponding call to gimp_image_thaw_layers(), undoing its
+effects.
+HELP
+
+    &ell_pdb_misc('2018', '2.10');
 
     @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'layer', type => 'layer',
-          desc => 'The layer to receive the mask' },
-        { name => 'mask', type => 'layer_mask',
-          desc => 'The mask to add to the layer' }
+    { name => 'image', type => 'image',
+      desc => 'The image' }
     );
 
     %invoke = (
-        code => <<'CODE'
+    code => <<'CODE'
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-    success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
-  else
-    success = FALSE;
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_layers (image);
+
+  if (plug_in)
+    success = gimp_plug_in_cleanup_layers_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
 }
 CODE
     );
 }
 
-sub image_remove_layer_mask {
-    &std_pdb_deprecated ('gimp-layer-remove-mask');
+sub image_thaw_layers {
+    $blurb = "Thaw the image's layer list.";
+
+    $help = <<'HELP';
+This procedure thaws the layer list of the image, re-enabling
+updates to the Layers dialog.
+
+
+This procedure should match a corresponding call to
+gimp_image_freeze_layers().
+HELP
+
+    &ell_pdb_misc('2018', '2.10');
 
     @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'layer', type => 'layer',
-          desc => 'The layer from which to remove mask' },
-        { name => 'mode', type => 'enum GimpMaskApplyMode',
-          desc => 'Removal mode' }
+    { name => 'image', type => 'image',
+      desc => 'The image' }
     );
 
     %invoke = (
-        code => <<'CODE'
+    code => <<'CODE'
 {
-  GimpPDBItemModify modify = 0;
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_layers (image);
 
-  if (mode == GIMP_MASK_APPLY)
-    modify |= GIMP_PDB_ITEM_CONTENT;
+  if (plug_in)
+    success = gimp_plug_in_cleanup_layers_thaw (plug_in, image);
 
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, modify, error) &&
-      gimp_layer_get_mask (layer))
-    gimp_layer_apply_mask (layer, mode, TRUE);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
+  if (success)
+    success = gimp_container_frozen (container);
 
-sub image_add_channel {
-    &std_pdb_deprecated ('gimp-image-insert-channel');
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'channel', type => 'channel',
-          desc => 'The channel' },
-        { name => 'position', type => 'int32',
-          desc => 'The channel position' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
-    {
-      success = gimp_image_add_channel (image, channel,
-                                        NULL, MAX (position, -1), TRUE);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  if (success)
+    gimp_container_thaw (container);
 }
 CODE
     );
@@ -1123,31 +1069,80 @@ CODE
     );
 }
 
-sub image_add_vectors {
-    &std_pdb_deprecated ('gimp-image-insert-vectors');
+sub image_freeze_channels {
+    $blurb = "Freeze the image's channel list.";
+
+    &ell_pdb_misc('2018', '2.10');
+
+    $help = <<'HELP';
+This procedure freezes the channel list of the image, suppressing any
+updates to the Channels dialog in response to changes to the image's
+channels.  This can significantly improve performance while applying
+changes affecting the channel list.
+
+
+Each call to gimp_image_freeze_channels() should be matched by a
+corresponding call to gimp_image_thaw_channels(), undoing its
+effects.
+HELP
 
     @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'vectors', type => 'vectors',
-          desc => 'The vectors object' },
-        { name => 'position', type => 'int32',
-          desc => 'The vectors objects position' }
+    { name => 'image', type => 'image',
+      desc => 'The image' }
     );
 
-    $invoke{code} = <<'CODE';
+    %invoke = (
+    code => <<'CODE'
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
-    {
-      success = gimp_image_add_vectors (image, vectors,
-                                        NULL, MAX (position, -1), TRUE);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_channels (image);
+
+  if (plug_in)
+    success = gimp_plug_in_cleanup_channels_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
 }
 CODE
+    );
+}
+
+sub image_thaw_channels {
+    $blurb = "Thaw the image's channel list.";
+
+    &ell_pdb_misc('2018', '2.10');
+
+    $help = <<'HELP';
+This procedure thaws the channel list of the image, re-enabling
+updates to the Channels dialog.
+
+
+This procedure should match a corresponding call to
+gimp_image_freeze_channels().
+HELP
+
+    @inargs = (
+    { name => 'image', type => 'image',
+      desc => 'The image' }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_channels (image);
+
+  if (plug_in)
+    success = gimp_plug_in_cleanup_channels_thaw (plug_in, image);
+
+  if (success)
+    success = gimp_container_frozen (container);
+
+  if (success)
+    gimp_container_thaw (container);
+}
+CODE
+    );
 }
 
 sub image_insert_vectors {
@@ -1220,6 +1215,82 @@ HELP
     gimp_image_remove_vectors (image, vectors, TRUE, NULL);
   else
     success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_freeze_vectors {
+    $blurb = "Freeze the image's vectors list.";
+
+    &ell_pdb_misc('2018', '2.10');
+
+    $help = <<'HELP';
+This procedure freezes the vectors list of the image, suppressing any
+updates to the Paths dialog in response to changes to the image's
+vectors.  This can significantly improve performance while applying
+changes affecting the vectors list.
+
+
+Each call to gimp_image_freeze_vectors() should be matched by a
+corresponding call to gimp_image_thaw_vectors(), undoing its
+effects.
+HELP
+
+    @inargs = (
+    { name => 'image', type => 'image',
+      desc => 'The image' }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_vectors (image);
+
+  if (plug_in)
+    success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+
+  if (success)
+    gimp_container_freeze (container);
+}
+CODE
+    );
+}
+
+sub image_thaw_vectors {
+    $blurb = "Thaw the image's vectors list.";
+
+    &ell_pdb_misc('2018', '2.10');
+
+    $help = <<'HELP';
+This procedure thaws the vectors list of the image, re-enabling
+updates to the Paths dialog.
+
+
+This procedure should match a corresponding call to
+gimp_image_freeze_vectors().
+HELP
+
+    @inargs = (
+    { name => 'image', type => 'image',
+      desc => 'The image' }
+    );
+
+    %invoke = (
+    code => <<'CODE'
+{
+  GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+  GimpContainer *container = gimp_image_get_vectors (image);
+
+  if (plug_in)
+    success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+
+  if (success)
+    success = gimp_container_frozen (container);
+
+  if (success)
+    gimp_container_thaw (container);
 }
 CODE
     );
@@ -2853,6 +2924,7 @@ CODE
               "core/gimptempbuf.h"
               "file/file-utils.h"
               "plug-in/gimpplugin.h"
+              "plug-in/gimpplugin-cleanup.h"
               "plug-in/gimppluginmanager.h"
               "gimppdbcontext.h"
               "gimppdberror.h"
@@ -2867,7 +2939,6 @@ CODE
             image_get_precision
             image_get_default_new_layer_mode
             image_width image_height
-            image_free_shadow
             image_get_layers
             image_get_channels
             image_get_vectors
@@ -2877,15 +2948,17 @@ CODE
             image_floating_sel_attached_to
             image_pick_color
             image_pick_correlate_layer
-            image_add_layer image_insert_layer image_remove_layer
-            image_add_channel image_insert_channel image_remove_channel
-            image_add_vectors image_insert_vectors image_remove_vectors
+            image_insert_layer image_remove_layer
+            image_freeze_layers image_thaw_layers
+            image_insert_channel image_remove_channel
+            image_freeze_channels image_thaw_channels
+            image_insert_vectors image_remove_vectors
+            image_freeze_vectors image_thaw_vectors
             image_get_item_position
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
             image_flatten image_merge_visible_layers image_merge_down
-            image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty
@@ -2915,11 +2988,7 @@ CODE
             image_get_parasite
             image_get_parasite_list);
 
-# For the lib parameter EXCLUDE functions #43 and #44, which are
-# image_add_layer_mask and image_remove_layer_mask.
-# If adding or removing functions, make sure the range below is
-# updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..38,41..81]]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

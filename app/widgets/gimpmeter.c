@@ -112,10 +112,14 @@ static void       gimp_meter_get_property           (GObject        *object,
 
 static void       gimp_meter_map                    (GtkWidget      *widget);
 static void       gimp_meter_unmap                  (GtkWidget      *widget);
-static void       gimp_meter_size_request           (GtkWidget      *widget,
-                                                     GtkRequisition *requisition);
-static gboolean   gimp_meter_expose_event           (GtkWidget      *widget,
-                                                     GdkEventExpose *event);
+static void       gimp_meter_get_preferred_width    (GtkWidget      *widget,
+                                                     gint           *minimum_width,
+                                                     gint           *natural_width);
+static void       gimp_meter_get_preferred_height   (GtkWidget      *widget,
+                                                     gint           *minimum_height,
+                                                     gint           *natural_height);
+static gboolean   gimp_meter_draw                   (GtkWidget      *widget,
+                                                     cairo_t        *cr);
 
 static gboolean   gimp_meter_timeout                (GimpMeter      *meter);
 
@@ -142,15 +146,16 @@ gimp_meter_class_init (GimpMeterClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose      = gimp_meter_dispose;
-  object_class->finalize     = gimp_meter_finalize;
-  object_class->get_property = gimp_meter_get_property;
-  object_class->set_property = gimp_meter_set_property;
+  object_class->dispose              = gimp_meter_dispose;
+  object_class->finalize             = gimp_meter_finalize;
+  object_class->get_property         = gimp_meter_get_property;
+  object_class->set_property         = gimp_meter_set_property;
 
-  widget_class->map          = gimp_meter_map;
-  widget_class->unmap        = gimp_meter_unmap;
-  widget_class->size_request = gimp_meter_size_request;
-  widget_class->expose_event = gimp_meter_expose_event;
+  widget_class->map                  = gimp_meter_map;
+  widget_class->unmap                = gimp_meter_unmap;
+  widget_class->get_preferred_width  = gimp_meter_get_preferred_width;
+  widget_class->get_preferred_height = gimp_meter_get_preferred_height;
+  widget_class->draw                 = gimp_meter_draw;
 
   g_object_class_install_property (object_class, PROP_SIZE,
                                    g_param_spec_int ("size",
@@ -422,53 +427,49 @@ gimp_meter_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_meter_size_request (GtkWidget      *widget,
-                         GtkRequisition *requisition)
+gimp_meter_get_preferred_width (GtkWidget *widget,
+                                gint      *minimum_width,
+                                gint      *natural_width)
 {
-  gint hsize;
-  gint vsize;
-
   GimpMeter *meter = GIMP_METER (widget);
-
-  hsize = meter->priv->size;
-  vsize = meter->priv->size;
+  gint       hsize = meter->priv->size;
 
   if (meter->priv->history_visible)
     hsize *= 3;
 
-  requisition->width  = ceil (            hsize + 2.0 * BORDER_WIDTH);
-  requisition->height = ceil (3.0 / 4.0 * vsize + 4.0 * BORDER_WIDTH);
+  *minimum_width = *natural_width = ceil (hsize + 2.0 * BORDER_WIDTH);
+}
+
+static void
+gimp_meter_get_preferred_height (GtkWidget *widget,
+                                 gint      *minimum_height,
+                                 gint      *natural_height)
+{
+  GimpMeter *meter = GIMP_METER (widget);
+  gint       vsize = meter->priv->size;
+
+  *minimum_height = *natural_height = ceil (3.0 / 4.0 * vsize + 4.0 * BORDER_WIDTH);
 }
 
 static gboolean
-gimp_meter_expose_event (GtkWidget      *widget,
-                          GdkEventExpose *event)
+gimp_meter_draw (GtkWidget *widget,
+                 cairo_t   *cr)
 {
-  GimpMeter     *meter = GIMP_METER (widget);
-  GtkAllocation  allocation;
-  gint           size  = meter->priv->size;
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkStateType   state = gtk_widget_get_state (widget);
-  cairo_t       *cr;
-  gint           i;
-  gint           j;
-  gint           k;
-
-  if (! gtk_widget_is_drawable (widget))
-    return FALSE;
+  GimpMeter       *meter = GIMP_METER (widget);
+  GtkAllocation    allocation;
+  gint             size  = meter->priv->size;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkStateFlags    state = gtk_style_context_get_state (style);
+  GdkRGBA          fg;
+  gint             i;
+  gint             j;
+  gint             k;
 
   g_mutex_lock (&meter->priv->mutex);
 
-  cr = gdk_cairo_create (event->window);
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   gtk_widget_get_allocation (widget, &allocation);
 
-  /* translate to allocation top-left */
-  cairo_translate (cr, allocation.x, allocation.y);
-
-  cairo_save (cr);
+  gtk_style_context_get_color (style, state, &fg);
 
   /* translate to gauge center */
   cairo_translate (cr,
@@ -502,8 +503,8 @@ gimp_meter_expose_event (GtkWidget      *widget,
   cairo_clip (cr);
 
   /* paint gauge background */
-  gdk_cairo_set_source_color (cr, &style->light[state]);
-  cairo_paint (cr);
+  gdk_cairo_set_source_rgba (cr, &fg);
+  cairo_paint_with_alpha (cr, 0.2);
 
   /* paint values of last sample */
   if (meter->priv->range_min < meter->priv->range_max)
@@ -534,7 +535,7 @@ gimp_meter_expose_event (GtkWidget      *widget,
   cairo_restore (cr);
 
   /* paint gauge border */
-  gdk_cairo_set_source_color (cr, &style->fg[state]);
+  gdk_cairo_set_source_rgba (cr, &fg);
   cairo_set_line_width (cr, BORDER_WIDTH);
   cairo_arc          (cr,
                       0.0, 0.0,
@@ -583,8 +584,8 @@ gimp_meter_expose_event (GtkWidget      *widget,
       history_y2 = ceil  (history_y2);
 
       /* paint history background */
-      gdk_cairo_set_source_color (cr, &style->light[state]);
-      cairo_paint (cr);
+      gdk_cairo_set_source_rgba (cr, &fg);
+      cairo_paint_with_alpha (cr, 0.2);
 
       /* history graph */
       if (meter->priv->range_min < meter->priv->range_max)
@@ -699,11 +700,7 @@ gimp_meter_expose_event (GtkWidget      *widget,
 
       /* paint history grid */
       cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
-      cairo_set_source_rgba (cr,
-                             (gdouble) style->fg[state].red   / 0xffff,
-                             (gdouble) style->fg[state].green / 0xffff,
-                             (gdouble) style->fg[state].blue  / 0xffff,
-                             0.3);
+      cairo_set_source_rgba (cr, fg.red, fg.green, fg.blue, 0.3);
 
       for (i = 1; i < 4; i++)
         {
@@ -739,10 +736,6 @@ gimp_meter_expose_event (GtkWidget      *widget,
       cairo_close_path (cr);
       cairo_stroke (cr);
     }
-
-  cairo_restore (cr);
-
-  cairo_destroy (cr);
 
   g_mutex_unlock (&meter->priv->mutex);
 

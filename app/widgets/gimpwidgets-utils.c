@@ -57,6 +57,67 @@
 #define GIMP_TOOL_OPTIONS_GUI_KEY "gimp-tool-options-gui"
 
 
+GtkWidget *
+gimp_menu_item_get_image (GtkMenuItem *item)
+{
+  g_return_val_if_fail (GTK_IS_MENU_ITEM (item), NULL);
+
+  return g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+}
+
+void
+gimp_menu_item_set_image (GtkMenuItem *item,
+                          GtkWidget   *image)
+{
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *old_image;
+
+  g_return_if_fail (GTK_IS_MENU_ITEM (item));
+  g_return_if_fail (image == NULL || GTK_IS_WIDGET (image));
+
+  hbox = g_object_get_data (G_OBJECT (item), "gimp-menu-item-hbox");
+
+  if (! hbox)
+    {
+      if (! image)
+        return;
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      g_object_set_data (G_OBJECT (item), "gimp-menu-item-hbox", hbox);
+
+      label = gtk_bin_get_child (GTK_BIN (item));
+      g_object_set_data (G_OBJECT (item), "gimp-menu-item-label", label);
+
+      g_object_ref (label);
+      gtk_container_remove (GTK_CONTAINER (item), label);
+      gtk_container_add (GTK_CONTAINER (hbox), label);
+      g_object_unref (label);
+
+      gtk_container_add (GTK_CONTAINER (item), hbox);
+      gtk_widget_show (hbox);
+    }
+
+  old_image = g_object_get_data (G_OBJECT (item), "gimp-menu-item-image");
+
+  if (old_image != image)
+    {
+      if (old_image)
+        {
+          gtk_widget_destroy (old_image);
+          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", NULL);
+        }
+
+      if (image)
+        {
+          gtk_container_add (GTK_CONTAINER (hbox), image);
+          gtk_box_reorder_child (GTK_BOX (hbox), image, 0);
+          g_object_set_data (G_OBJECT (item), "gimp-menu-item-image", image);
+          gtk_widget_show (image);
+        }
+    }
+}
+
 /**
  * gimp_menu_position:
  * @menu: a #GtkMenu widget
@@ -79,10 +140,8 @@ gimp_menu_position (GtkMenu *menu,
                     gint    *y)
 {
   GtkWidget      *widget;
-  GdkScreen      *screen;
   GtkRequisition  requisition;
-  GdkRectangle    rect;
-  gint            monitor;
+  GdkRectangle    workarea;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
@@ -90,159 +149,53 @@ gimp_menu_position (GtkMenu *menu,
 
   widget = GTK_WIDGET (menu);
 
-  screen = gtk_widget_get_screen (widget);
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (widget), &workarea);
 
-  monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gtk_menu_set_screen (menu, gtk_widget_get_screen (widget));
 
-  gtk_menu_set_screen (menu, screen);
-
-  gtk_widget_size_request (widget, &requisition);
+  gtk_widget_get_preferred_size (widget, &requisition, NULL);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
       *x -= requisition.width;
-      if (*x < rect.x)
+      if (*x < workarea.x)
         *x += requisition.width;
     }
   else
     {
-      if (*x + requisition.width > rect.x + rect.width)
+      if (*x + requisition.width > workarea.x + workarea.width)
         *x -= requisition.width;
     }
 
-  if (*x < rect.x)
-    *x = rect.x;
+  if (*x < workarea.x)
+    *x = workarea.x;
 
-  if (*y + requisition.height > rect.y + rect.height)
+  if (*y + requisition.height > workarea.y + workarea.height)
     *y -= requisition.height;
 
-  if (*y < rect.y)
-    *y = rect.y;
-}
-
-/**
- * gimp_button_menu_position:
- * @button: a button widget to popup the menu from
- * @menu: the menu to position
- * @position: the preferred popup direction for the menu (left or right)
- * @x: return location for x coordinate
- * @y: return location for y coordinate
- *
- * Utility function to position a menu that pops up from a button.
- **/
-void
-gimp_button_menu_position (GtkWidget       *button,
-                           GtkMenu         *menu,
-                           GtkPositionType  position,
-                           gint            *x,
-                           gint            *y)
-{
-  GdkScreen      *screen;
-  GtkAllocation   button_allocation;
-  GtkRequisition  menu_requisition;
-  GdkRectangle    rect;
-  gint            monitor;
-
-  g_return_if_fail (GTK_IS_WIDGET (button));
-  g_return_if_fail (gtk_widget_get_realized (button));
-  g_return_if_fail (GTK_IS_MENU (menu));
-  g_return_if_fail (x != NULL);
-  g_return_if_fail (y != NULL);
-
-  gtk_widget_get_allocation (button, &button_allocation);
-
-  if (gtk_widget_get_direction (button) == GTK_TEXT_DIR_RTL)
-    {
-      switch (position)
-        {
-        case GTK_POS_LEFT:   position = GTK_POS_RIGHT;  break;
-        case GTK_POS_RIGHT:  position = GTK_POS_LEFT;   break;
-        default:
-          break;
-        }
-    }
-
-  *x = 0;
-  *y = 0;
-
-  if (! gtk_widget_get_has_window (button))
-    {
-      *x += button_allocation.x;
-      *y += button_allocation.y;
-    }
-
-  gdk_window_get_root_coords (gtk_widget_get_window (button), *x, *y, x, y);
-
-  gtk_widget_size_request (GTK_WIDGET (menu), &menu_requisition);
-
-  screen = gtk_widget_get_screen (button);
-
-  monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
-
-  gtk_menu_set_screen (menu, screen);
-
-  switch (position)
-    {
-    case GTK_POS_LEFT:
-      *x -= menu_requisition.width;
-      if (*x < rect.x)
-        *x += menu_requisition.width + button_allocation.width;
-      break;
-
-    case GTK_POS_RIGHT:
-      *x += button_allocation.width;
-      if (*x + menu_requisition.width > rect.x + rect.width)
-        *x -= button_allocation.width + menu_requisition.width;
-      break;
-
-    default:
-      g_warning ("%s: unhandled position (%d)", G_STRFUNC, position);
-      break;
-    }
-
-  *y += button_allocation.height / 2;
-
-  if (*y + menu_requisition.height > rect.y + rect.height)
-    *y -= menu_requisition.height;
-
-  if (*y < rect.y)
-    *y = rect.y;
+  if (*y < workarea.y)
+    *y = workarea.y;
 }
 
 void
-gimp_table_attach_icon (GtkTable    *table,
-                        gint         row,
-                        const gchar *icon_name,
-                        GtkWidget   *widget,
-                        gint         colspan,
-                        gboolean     left_align)
+gimp_grid_attach_icon (GtkGrid     *grid,
+                       gint         row,
+                       const gchar *icon_name,
+                       GtkWidget   *widget,
+                       gint         columns)
 {
   GtkWidget *image;
 
-  g_return_if_fail (GTK_IS_TABLE (table));
+  g_return_if_fail (GTK_IS_GRID (grid));
   g_return_if_fail (icon_name != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
-  gtk_table_attach (table, image, 0, 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_set_halign (image, GTK_ALIGN_END);
+  gtk_grid_attach (grid, image, 0, row, 1, 1);
   gtk_widget_show (image);
 
-  if (left_align)
-    {
-      GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-
-      gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
-      gtk_widget_show (widget);
-
-      widget = hbox;
-    }
-
-  gtk_table_attach (table, widget, 1, 1 + colspan, row, row + 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (grid, widget, 1, row, columns, 1);
   gtk_widget_show (widget);
 }
 
@@ -422,32 +375,30 @@ gimp_get_icon_size (GtkWidget   *widget,
                     gint         width,
                     gint         height)
 {
-  GtkIconSet   *icon_set;
-  GtkIconSize  *sizes;
-  gint          n_sizes;
-  gint          i;
-  gint          width_diff  = 1024;
-  gint          height_diff = 1024;
-  gint          max_width;
-  gint          max_height;
-  GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
-  GtkSettings  *settings;
+  GtkStyleContext *style;
+  GtkIconSet      *icon_set;
+  GtkIconSize     *sizes;
+  gint             n_sizes;
+  gint             i;
+  gint             width_diff  = 1024;
+  gint             height_diff = 1024;
+  gint             max_width;
+  gint             max_height;
+  GtkIconSize      icon_size = GTK_ICON_SIZE_MENU;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
   g_return_val_if_fail (icon_name != NULL, icon_size);
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
-  icon_set = gtk_style_lookup_icon_set (gtk_widget_get_style (widget),
-                                        icon_name);
+  style = gtk_widget_get_style_context (widget);
+
+  icon_set = gtk_style_context_lookup_icon_set (style, icon_name);
 
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;
 
-  settings = gtk_widget_get_settings (widget);
-
-  if (! gtk_icon_size_lookup_for_settings (settings, max_size,
-                                           &max_width, &max_height))
+  if (! gtk_icon_size_lookup (max_size, &max_width, &max_height))
     {
       max_width  = 1024;
       max_height = 1024;
@@ -460,8 +411,7 @@ gimp_get_icon_size (GtkWidget   *widget,
       gint icon_width;
       gint icon_height;
 
-      if (gtk_icon_size_lookup_for_settings (settings, sizes[i],
-                                             &icon_width, &icon_height))
+      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
         {
           if (icon_width  <= width      &&
               icon_height <= height     &&
@@ -785,24 +735,23 @@ gimp_get_all_modifiers_mask (void)
  * Retrieves the monitor's resolution from GDK.
  **/
 void
-gimp_get_monitor_resolution (GdkScreen *screen,
-                             gint       monitor,
-                             gdouble   *xres,
-                             gdouble   *yres)
+gimp_get_monitor_resolution (GdkMonitor *monitor,
+                             gdouble    *xres,
+                             gdouble    *yres)
 {
   GdkRectangle size_pixels;
   gint         width_mm, height_mm;
   gdouble      x = 0.0;
   gdouble      y = 0.0;
 
-  g_return_if_fail (GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_MONITOR (monitor));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
-  gdk_screen_get_monitor_geometry (screen, monitor, &size_pixels);
+  gdk_monitor_get_geometry (monitor, &size_pixels);
 
-  width_mm  = gdk_screen_get_monitor_width_mm  (screen, monitor);
-  height_mm = gdk_screen_get_monitor_height_mm (screen, monitor);
+  width_mm  = gdk_monitor_get_width_mm  (monitor);
+  height_mm = gdk_monitor_get_height_mm (monitor);
 
   /*
    * From xdpyinfo.c:
@@ -835,54 +784,36 @@ gimp_get_monitor_resolution (GdkScreen *screen,
   *yres = ROUND (y);
 }
 
-
-/**
- * gimp_rgb_get_gdk_color:
- * @rgb: the source color as #GimpRGB
- * @gdk_color: pointer to a #GdkColor
- *
- * Initializes @gdk_color from a #GimpRGB. This function does not
- * allocate the color for you. Depending on how you want to use it,
- * you may have to call gdk_colormap_alloc_color().
- **/
-void
-gimp_rgb_get_gdk_color (const GimpRGB *rgb,
-                        GdkColor      *gdk_color)
+gboolean
+gimp_get_style_color (GtkWidget   *widget,
+                      const gchar *property_name,
+                      GdkRGBA     *color)
 {
-  guchar r, g, b;
+  GdkRGBA *c = NULL;
 
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (gdk_color != NULL);
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+  g_return_val_if_fail (property_name != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_rgb_get_uchar (rgb, &r, &g, &b);
+  gtk_widget_style_get (widget,
+                        property_name, &c,
+                        NULL);
 
-  gdk_color->red   = (r << 8) | r;
-  gdk_color->green = (g << 8) | g;
-  gdk_color->blue  = (b << 8) | b;
-}
+  if (c)
+    {
+      *color = *c;
+      gdk_rgba_free (c);
 
-/**
- * gimp_rgb_set_gdk_color:
- * @rgb: a #GimpRGB that is to be set
- * @gdk_color: pointer to the source #GdkColor
- *
- * Initializes @rgb from a #GdkColor. This function does not touch
- * the alpha value of @rgb.
- **/
-void
-gimp_rgb_set_gdk_color (GimpRGB        *rgb,
-                        const GdkColor *gdk_color)
-{
-  guchar r, g, b;
+      return TRUE;
+    }
 
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (gdk_color != NULL);
+  /* return ugly magenta to indicate that something is wrong */
+  color->red   = 1.0;
+  color->green = 1.0;
+  color->blue  = 0.0;
+  color->alpha = 1.0;
 
-  r = gdk_color->red   >> 8;
-  g = gdk_color->green >> 8;
-  b = gdk_color->blue  >> 8;
-
-  gimp_rgb_set_uchar (rgb, r, g, b);
+  return FALSE;
 }
 
 void
@@ -1251,65 +1182,40 @@ gimp_pango_layout_set_weight (PangoLayout *layout,
 }
 
 static gboolean
-gimp_highlight_widget_expose (GtkWidget      *widget,
-                              GdkEventExpose *event,
-                              gpointer        data)
+gimp_highlight_widget_draw (GtkWidget *widget,
+                            cairo_t   *cr,
+                            gpointer   data)
 {
-  /* this code is a modified version of gtk+'s gtk_drag_highlight_expose(),
-   * changing the highlight color from black to the widget's text color, which
-   * improves its visibility when using a dark theme.
+  /* this code is a straight copy of draw_flash() from gtk-inspector's
+   * inspect-button.c
    */
 
-  gint x, y, width, height;
+  GtkAllocation alloc;
 
-  if (gtk_widget_is_drawable (widget))
+  if (GTK_IS_WINDOW (widget))
     {
-      GdkWindow      *window;
-      GtkStyle       *style;
-      const GdkColor *color;
-      cairo_t        *cr;
+      GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
+      /* We don't want to draw the drag highlight around the
+       * CSD window decorations
+       */
+      if (child == NULL)
+        return FALSE;
 
-      window = gtk_widget_get_window (widget);
-      style  = gtk_widget_get_style (widget);
-
-      if (!gtk_widget_get_has_window (widget))
-        {
-          GtkAllocation allocation;
-
-          gtk_widget_get_allocation (widget, &allocation);
-
-          x = allocation.x;
-          y = allocation.y;
-          width = allocation.width;
-          height = allocation.height;
-        }
-      else
-        {
-          x = 0;
-          y = 0;
-          width = gdk_window_get_width (window);
-          height = gdk_window_get_height (window);
-        }
-
-      gtk_paint_shadow (style, window,
-                        GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-                        &event->area, widget, "dnd",
-                        x, y, width, height);
-
-      color = &style->text[GTK_STATE_NORMAL];
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      cairo_set_source_rgb (cr,
-                            (gdouble) color->red   / 0xffff,
-                            (gdouble) color->green / 0xffff,
-                            (gdouble) color->blue  / 0xffff);
-      cairo_set_line_width (cr, 1.0);
-      cairo_rectangle (cr,
-                       x + 0.5, y + 0.5,
-                       width - 1, height - 1);
-      cairo_stroke (cr);
-      cairo_destroy (cr);
+      gtk_widget_get_allocation (child, &alloc);
     }
+  else
+    {
+      alloc.x = 0;
+      alloc.y = 0;
+      alloc.width = gtk_widget_get_allocated_width (widget);
+      alloc.height = gtk_widget_get_allocated_height (widget);
+    }
+
+  cairo_set_source_rgba (cr, 0.0, 0.0, 1.0, 0.2);
+  cairo_rectangle (cr,
+                   alloc.x + 0.5, alloc.y + 0.5,
+                   alloc.width - 1, alloc.height - 1);
+  cairo_fill (cr);
 
   return FALSE;
 }
@@ -1327,22 +1233,36 @@ void
 gimp_highlight_widget (GtkWidget *widget,
                        gboolean   highlight)
 {
+  gboolean old_highlight;
+
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (highlight)
-    {
-      g_signal_connect_after (widget, "expose-event",
-                              G_CALLBACK (gimp_highlight_widget_expose),
-                              NULL);
-    }
-  else
-    {
-      g_signal_handlers_disconnect_by_func (widget,
-                                            gimp_highlight_widget_expose,
-                                            NULL);
-    }
+  highlight = highlight ? TRUE : FALSE;
 
-  gtk_widget_queue_draw (widget);
+  old_highlight = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                      "gimp-widget-highlight"));
+
+  if (highlight != old_highlight)
+    {
+      if (highlight)
+        {
+          g_signal_connect_after (widget, "draw",
+                                  G_CALLBACK (gimp_highlight_widget_draw),
+                                  NULL);
+        }
+      else
+        {
+          g_signal_handlers_disconnect_by_func (widget,
+                                                gimp_highlight_widget_draw,
+                                                NULL);
+        }
+
+      g_object_set_data (G_OBJECT (widget),
+                         "gimp-widget-highlight",
+                         GINT_TO_POINTER (highlight));
+
+      gtk_widget_queue_draw (widget);
+    }
 }
 
 typedef struct
@@ -1405,6 +1325,8 @@ gimp_widget_blink (GtkWidget *widget)
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
+  gimp_widget_blink_cancel (widget);
+
   blink = widget_blink_new ();
 
   g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
@@ -1417,7 +1339,8 @@ gimp_widget_blink (GtkWidget *widget)
   gimp_highlight_widget (widget, TRUE);
 }
 
-void gimp_widget_blink_cancel (GtkWidget *widget)
+void
+gimp_widget_blink_cancel (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -1429,7 +1352,7 @@ void gimp_widget_blink_cancel (GtkWidget *widget)
 /**
  * gimp_dock_with_window_new:
  * @factory: a #GimpDialogFacotry
- * @screen:  the #GdkScreen the dock window should appear on
+ * @monitor: the #GdkMonitor the dock window should appear on
  * @toolbox: if %TRUE; gives a "gimp-toolbox-window" with a
  *           "gimp-toolbox", "gimp-dock-window"+"gimp-dock"
  *           otherwise
@@ -1438,8 +1361,7 @@ void gimp_widget_blink_cancel (GtkWidget *widget)
  **/
 GtkWidget *
 gimp_dock_with_window_new (GimpDialogFactory *factory,
-                           GdkScreen         *screen,
-                           gint               monitor,
+                           GdkMonitor        *monitor,
                            gboolean           toolbox)
 {
   GtkWidget         *dock_window;
@@ -1448,14 +1370,15 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
   GimpUIManager     *ui_manager;
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
   /* Create a dock window to put the dock in. We need to create the
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window = gimp_dialog_factory_dialog_new (factory, screen, monitor,
+  dock_window = gimp_dialog_factory_dialog_new (factory, monitor,
                                                 NULL /*ui_manager*/,
+                                                NULL,
                                                 (toolbox ?
                                                  "gimp-toolbox-window" :
                                                  "gimp-dock-window"),
@@ -1464,10 +1387,9 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
 
   dock_container = GIMP_DOCK_CONTAINER (dock_window);
   ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
-  dock           = gimp_dialog_factory_dialog_new (factory,
-                                                   screen,
-                                                   monitor,
+  dock           = gimp_dialog_factory_dialog_new (factory, monitor,
                                                    ui_manager,
+                                                   dock_window,
                                                    (toolbox ?
                                                     "gimp-toolbox" :
                                                     "gimp-dock"),
@@ -1508,7 +1430,7 @@ gimp_widget_flush_expose (GtkWidget *widget)
     return;
 
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (widget));
 }
 
 gboolean
@@ -1531,6 +1453,52 @@ gimp_widget_set_fully_opaque (GtkWidget *widget,
                             GINT_TO_POINTER (fully_opaque));
 }
 
+void
+gimp_button_set_suggested (GtkWidget      *button,
+                           gboolean        suggested,
+                           GtkReliefStyle  default_relief)
+{
+  GtkStyleContext *style;
+
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  style = gtk_widget_get_style_context (button);
+
+  if (suggested)
+    {
+      gtk_style_context_add_class (style, "suggested-action");
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NORMAL);
+    }
+  else
+    {
+      gtk_style_context_remove_class (style, "suggested-action");
+      gtk_button_set_relief (GTK_BUTTON (button), default_relief);
+    }
+}
+
+void
+gimp_button_set_destructive (GtkWidget      *button,
+                             gboolean        destructive,
+                             GtkReliefStyle  default_relief)
+{
+  GtkStyleContext *style;
+
+  g_return_if_fail (GTK_IS_BUTTON (button));
+
+  style = gtk_widget_get_style_context (button);
+
+  if (destructive)
+    {
+      gtk_style_context_add_class (style, "destructive-action");
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NORMAL);
+    }
+  else
+    {
+      gtk_style_context_remove_class (style, "destructive-action");
+      gtk_button_set_relief (GTK_BUTTON (button), default_relief);
+    }
+}
+
 static gboolean
 gimp_print_event_free (gpointer data)
 {
@@ -1543,15 +1511,18 @@ const gchar *
 gimp_print_event (const GdkEvent *event)
 {
   gchar *str;
+  gchar *tmp;
 
   switch (event->type)
     {
     case GDK_ENTER_NOTIFY:
-      str = g_strdup ("ENTER_NOTIFY");
+      str = g_strdup_printf ("ENTER_NOTIFY (mode %d)",
+                             event->crossing.mode);
       break;
 
     case GDK_LEAVE_NOTIFY:
-      str = g_strdup ("LEAVE_NOTIFY");
+      str = g_strdup_printf ("LEAVE_NOTIFY (mode %d)",
+                             event->crossing.mode);
       break;
 
     case GDK_PROXIMITY_IN:
@@ -1629,6 +1600,13 @@ gimp_print_event (const GdkEvent *event)
       break;
     }
 
+  tmp = g_strdup_printf ("%s (device '%s', source device '%s')",
+                         str,
+                         gdk_device_get_name (gdk_event_get_device (event)),
+                         gdk_device_get_name (gdk_event_get_source_device (event)));
+  g_free (str);
+  str = tmp;
+
   g_idle_add (gimp_print_event_free, str);
 
   return str;
@@ -1673,18 +1651,23 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
   if (profile)
     {
+      gchar *path;
       GFile *file;
 
       if (base_type == GIMP_GRAY)
         {
-          file = gimp_file_new_for_config_path (config->gray_profile, NULL);
+          g_object_get (config, "gray-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
         {
-          file = gimp_file_new_for_config_path (config->rgb_profile, NULL);
+          g_object_get (config, "rgb-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
                                    gimp_color_profile_get_label (profile));

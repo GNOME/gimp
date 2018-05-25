@@ -117,6 +117,7 @@ tool_options_editor_updates (gconstpointer data)
                                                                         gtk_widget_get_screen (toplevel),
                                                                         gimp_widget_get_monitor (toplevel),
                                                                         NULL /*ui_manager*/,
+                                                                        toplevel,
                                                                         "gimp-tool-options",
                                                                         -1 /*view_size*/,
                                                                         FALSE /*present*/);

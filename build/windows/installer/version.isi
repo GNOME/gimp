@@ -6,8 +6,11 @@
   #error "VERSION must be defined"
 #endif
 
+#define GTK_VER=GetFileVersion(AddBackslash(DEPS_DIR64) + "bin\libgtk-win32-2.0-0.dll")
+
 #define public
 //used in the component list
+#define GTK_VERSION=Copy(GTK_VER,1,RPos(".",GTK_VER)-1)
 
 #define MAJOR=Copy(VERSION,1,Pos(".",VERSION)-1)
 #define MINOR=Copy(VERSION,Pos(".",VERSION)+1)

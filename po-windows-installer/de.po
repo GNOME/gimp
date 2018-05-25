@@ -180,7 +180,7 @@ msgstr "MyPaint-Pinsel"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Install the default set of MyPaint brushes"
-msgstr "Den Standardsatz der MyPaint-Pnsel einrichten"
+msgstr "Den Standardsatz der MyPaint-Pinsel einrichten"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "PostScript support"

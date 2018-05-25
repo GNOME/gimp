@@ -155,44 +155,6 @@ gimp_image_scale (gint32 image_ID,
 }
 
 /**
- * gimp_image_scale_full:
- * @image_ID: The image.
- * @new_width: New image width.
- * @new_height: New image height.
- * @interpolation: Type of interpolation.
- *
- * Deprecated: Use gimp_image_scale() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: 2.6
- **/
-gboolean
-gimp_image_scale_full (gint32                image_ID,
-                       gint                  new_width,
-                       gint                  new_height,
-                       GimpInterpolationType interpolation)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-scale-full",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, new_width,
-                                    GIMP_PDB_INT32, new_height,
-                                    GIMP_PDB_INT32, interpolation,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_image_crop:
  * @image_ID: The image.
  * @new_width: New image width: (0 < new_width <= width).

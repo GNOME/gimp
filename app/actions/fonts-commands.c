@@ -39,5 +39,5 @@ fonts_refresh_cmd_callback (GtkAction *action,
   GimpContext *context = action_data_get_context (data);
 
   if (context)
-    gimp_fonts_load (context->gimp, NULL);
+    gimp_fonts_load (context->gimp, NULL, NULL);
 }

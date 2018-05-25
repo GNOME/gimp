@@ -171,8 +171,8 @@ static gchar *
 sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 54
-#define GLIB_REQUIRED_MICRO 2
+#define GLIB_REQUIRED_MINOR 56
+#define GLIB_REQUIRED_MICRO 0
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                               GLIB_REQUIRED_MINOR,
@@ -204,8 +204,8 @@ static gchar *
 sanity_check_cairo (void)
 {
 #define CAIRO_REQUIRED_MAJOR 1
-#define CAIRO_REQUIRED_MINOR 12
-#define CAIRO_REQUIRED_MICRO 2
+#define CAIRO_REQUIRED_MINOR 14
+#define CAIRO_REQUIRED_MICRO 0
 
   if (cairo_version () < CAIRO_VERSION_ENCODE (CAIRO_REQUIRED_MAJOR,
                                                CAIRO_REQUIRED_MINOR,
@@ -234,8 +234,8 @@ static gchar *
 sanity_check_pango (void)
 {
 #define PANGO_REQUIRED_MAJOR 1
-#define PANGO_REQUIRED_MINOR 29
-#define PANGO_REQUIRED_MICRO 4
+#define PANGO_REQUIRED_MINOR 42
+#define PANGO_REQUIRED_MICRO 0
 
   const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
                                                PANGO_REQUIRED_MINOR,
@@ -480,7 +480,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 46
+#define BABL_REQUIRED_MICRO 50
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
@@ -518,7 +518,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 4
-#define GEGL_REQUIRED_MICRO 1
+#define GEGL_REQUIRED_MICRO 2
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
@@ -681,6 +681,7 @@ sanity_check_gegl_ops (void)
     "gegl:photocopy",
     "gegl:pixelize",
     "gegl:polar-coordinates",
+    "gegl:recursive-transform",
     "gegl:red-eye-removal",
     "gegl:reinhard05",
     "gegl:rgb-clip",
@@ -697,6 +698,7 @@ sanity_check_gegl_ops (void)
     "gegl:slic",
     "gegl:snn-mean",
     "gegl:softglow",
+    "gegl:spherize",
     "gegl:spiral",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",

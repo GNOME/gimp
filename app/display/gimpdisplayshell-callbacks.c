@@ -116,31 +116,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
 
   shell->xfer = gimp_display_xfer_realize (GTK_WIDGET(shell));
-
-  /*  HACK: remove with GTK+ 3.x: this unconditionally maps the
-   *  rulers, if configured to be hidden they are never visible to the
-   *  user because they will be hidden again right away.
-   *
-   *  For some obscure reason, having the rulers mapped once prevents
-   *  crashes with tablets and on-canvas dialogs. See bug #784480 and
-   *  all its duplicates.
-   */
-  gtk_widget_show (shell->hrule);
-  gtk_widget_show (shell->vrule);
-}
-
-void
-gimp_display_shell_canvas_realize_after (GtkWidget        *canvas,
-                                         GimpDisplayShell *shell)
-{
-  GimpImageWindow *window = gimp_display_shell_get_window (shell);
-
-  /*  HACK: see above: must go with GTK+ 3.x too. Restore the rulers'
-   *  intended visibility again.
-   */
-  gimp_image_window_suspend_keep_pos (window);
-  gimp_display_shell_appearance_update (shell);
-  gimp_image_window_resume_keep_pos (window);
 }
 
 void
@@ -241,23 +216,17 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_canvas_expose (GtkWidget        *widget,
-                                  GdkEventExpose   *eevent,
-                                  GimpDisplayShell *shell)
+gimp_display_shell_canvas_draw (GtkWidget        *widget,
+                                cairo_t          *cr,
+                                GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
   /*  ignore events on overlays  */
-  if (eevent->window == gtk_widget_get_window (widget))
+  if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip (cr);
-
       if (gimp_display_get_image (shell->display))
         {
           gimp_display_shell_canvas_draw_image (shell, cr);
@@ -266,8 +235,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
         {
           gimp_display_shell_canvas_draw_drop_zone (shell, cr);
         }
-
-      cairo_destroy (cr);
     }
 
   return FALSE;
@@ -310,10 +277,13 @@ gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
         {
           GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
 
-          gimp_ui_manager_ui_popup (manager,
-                                    "/quick-mask-popup",
-                                    GTK_WIDGET (shell),
-                                    NULL, NULL, NULL, NULL);
+          gimp_ui_manager_ui_popup_at_widget (manager,
+                                              "/quick-mask-popup",
+                                              widget,
+                                              GDK_GRAVITY_EAST,
+                                              GDK_GRAVITY_SOUTH_WEST,
+                                              (GdkEvent *) bevent,
+                                              NULL, NULL);
         }
 
       return TRUE;
@@ -354,7 +324,9 @@ gimp_display_shell_navigation_button_press (GtkWidget        *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
     {
-      gimp_navigation_editor_popup (shell, widget, bevent->x, bevent->y);
+      gimp_navigation_editor_popup (shell, widget,
+                                    (GdkEvent *) bevent,
+                                    bevent->x, bevent->y);
     }
 
   return TRUE;
@@ -451,29 +423,10 @@ gimp_display_shell_canvas_draw_image (GimpDisplayShell *shell,
                                            &image_rect.width,
                                            &image_rect.height);
 
-
-  /*  first, clear the exposed part of the region that is outside the
-   *  image, which is the exposed region minus the image rectangle
+  /*  first, draw the background
    */
 
-  cairo_save (cr);
-
-  if (shell->rotate_transform)
-    cairo_transform (cr, shell->rotate_transform);
-
-  cairo_rectangle (cr,
-                   image_rect.x,
-                   image_rect.y,
-                   image_rect.width,
-                   image_rect.height);
-
-  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
-  cairo_clip (cr);
-
-  if (gdk_cairo_get_clip_rectangle (cr, NULL))
-    gimp_display_shell_draw_background (shell, cr);
-
-  cairo_restore (cr);
+  gimp_display_shell_draw_background (shell, cr);
 
 
   /*  then, draw the exposed part of the region that is inside the
@@ -553,12 +506,16 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
 #ifdef GIMP_UNSTABLE
   {
-    PangoLayout   *layout;
-    gchar         *msg;
-    GtkAllocation  allocation;
-    gint           width;
-    gint           height;
-    gdouble        scale;
+    GtkWidget       *widget  = GTK_WIDGET (shell);
+    GtkStyleContext *context = gtk_widget_get_style_context (widget);
+    GtkStateFlags    state   = gtk_widget_get_state_flags (widget);
+    PangoLayout     *layout;
+    gchar           *msg;
+    GtkAllocation    allocation;
+    gint             width;
+    gint             height;
+    gdouble          scale;
+    GdkRGBA          color;
 
     layout = gtk_widget_create_pango_layout (shell->canvas, NULL);
 
@@ -577,6 +534,9 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
     scale = MIN (((gdouble) allocation.width  / 2.0) / (gdouble) width,
                  ((gdouble) allocation.height / 2.0) / (gdouble) height);
+
+    gtk_style_context_get_color (context, state, &color);
+    gdk_cairo_set_source_rgba (cr, &color);
 
     cairo_move_to (cr,
                    (allocation.width  - (width  * scale)) / 2,

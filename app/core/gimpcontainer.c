@@ -600,7 +600,7 @@ gimp_container_add (GimpContainer *container,
   if (n_children == container->priv->n_children)
     {
       g_warning ("%s: GimpContainer::add() implementation did not "
-                 "chain up. Please report this at http://www.gimp.org/bugs/",
+                 "chain up. Please report this at https://www.gimp.org/bugs/",
                  G_STRFUNC);
 
       container->priv->n_children++;
@@ -767,6 +767,14 @@ gimp_container_frozen (GimpContainer *container)
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
 
   return (container->priv->freeze_count > 0) ? TRUE : FALSE;
+}
+
+gint
+gimp_container_freeze_count (GimpContainer *container)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
+
+  return container->priv->freeze_count;
 }
 
 void

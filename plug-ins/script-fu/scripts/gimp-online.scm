@@ -18,7 +18,7 @@
 ; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 (define (gimp-online-docs-web-site)
-  (plug-in-web-browser "http://docs.gimp.org/")
+  (plug-in-web-browser "https://docs.gimp.org/")
 )
 
 (define (gimp-help-concepts-usage)
@@ -162,15 +162,15 @@
 ;; Links to GIMP related web sites
 
 (define (gimp-online-main-web-site)
-  (plug-in-web-browser "http://www.gimp.org/")
+  (plug-in-web-browser "https://www.gimp.org/")
 )
 
 (define (gimp-online-developer-web-site)
-  (plug-in-web-browser "http://developer.gimp.org/")
+  (plug-in-web-browser "https://developer.gimp.org/")
 )
 
 (define (gimp-online-plug-in-web-site)
-  (plug-in-web-browser "http://registry.gimp.org/")
+  (plug-in-web-browser "https://registry.gimp.org/")
 )
 
 

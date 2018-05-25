@@ -39,13 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayClass))
 
 
-typedef struct _GimpColorDisplayClass GimpColorDisplayClass;
+typedef struct _GimpColorDisplayPrivate GimpColorDisplayPrivate;
+typedef struct _GimpColorDisplayClass   GimpColorDisplayClass;
 
 struct _GimpColorDisplay
 {
-  GObject  parent_instance;
+  GObject                 parent_instance;
 
-  gboolean enabled;
+  GimpColorDisplayPrivate *priv;
 };
 
 struct _GimpColorDisplayClass
@@ -54,87 +55,50 @@ struct _GimpColorDisplayClass
 
   const gchar  *name;
   const gchar  *help_id;
+  const gchar  *icon_name;
 
   /*  virtual functions  */
-
-  /*  implementing the GimpColorDisplay::clone method is deprecated       */
-  GimpColorDisplay * (* clone)           (GimpColorDisplay *display);
-
-  /*  implementing the GimpColorDisplay::convert method is deprecated     */
-  void               (* convert)         (GimpColorDisplay *display,
-                                          guchar           *buf,
-                                          gint              width,
-                                          gint              height,
-                                          gint              bpp,
-                                          gint              bpl);
-
-  /*  implementing the GimpColorDisplay::load_state method is deprecated  */
-  void               (* load_state)      (GimpColorDisplay *display,
-                                          GimpParasite     *state);
-
-  /*  implementing the GimpColorDisplay::save_state method is deprecated  */
-  GimpParasite     * (* save_state)      (GimpColorDisplay *display);
-
-  GtkWidget        * (* configure)       (GimpColorDisplay *display);
-
-  /*  implementing the GimpColorDisplay::configure_reset method is deprecated */
-  void               (* configure_reset) (GimpColorDisplay *display);
+  void        (* convert_buffer) (GimpColorDisplay *display,
+                                  GeglBuffer       *buffer,
+                                  GeglRectangle    *area);
+  GtkWidget * (* configure)      (GimpColorDisplay *display);
 
   /*  signals  */
-  void               (* changed)         (GimpColorDisplay *display);
+  void        (* changed)        (GimpColorDisplay *display);
 
-#ifdef GIMP_DISABLE_DEPRECATED
-  gpointer     deprecated_stock_id;
-#else
-  const gchar *stock_id;
-#endif
-
-  /*  implementing the GimpColorDisplay::convert_surface method is deprecated  */
-  void               (* convert_surface) (GimpColorDisplay *display,
-                                          cairo_surface_t  *surface);
-
-  void               (* convert_buffer)  (GimpColorDisplay *display,
-                                          GeglBuffer       *buffer,
-                                          GeglRectangle    *area);
-
-  /*  icon name  */
-  const gchar *icon_name;
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
-GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
+GType              gimp_color_display_get_type        (void) G_GNUC_CONST;
 
-GIMP_DEPRECATED_FOR(g_object_new)
-GimpColorDisplay * gimp_color_display_new         (GType             display_type);
-GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
+GimpColorDisplay * gimp_color_display_clone           (GimpColorDisplay *display);
 
-void           gimp_color_display_convert_buffer  (GimpColorDisplay *display,
-                                                   GeglBuffer       *buffer,
-                                                   GeglRectangle    *area);
-GIMP_DEPRECATED_FOR(gimp_color_display_convert_buffer)
-void           gimp_color_display_convert_surface (GimpColorDisplay *display,
-                                                   cairo_surface_t  *surface);
-GIMP_DEPRECATED_FOR(gimp_color_display_convert_buffer)
-void           gimp_color_display_convert         (GimpColorDisplay *display,
-                                                   guchar           *buf,
-                                                   gint              width,
-                                                   gint              height,
-                                                   gint              bpp,
-                                                   gint              bpl);
-void           gimp_color_display_load_state      (GimpColorDisplay *display,
-                                                   GimpParasite     *state);
-GimpParasite * gimp_color_display_save_state      (GimpColorDisplay *display);
-GtkWidget    * gimp_color_display_configure       (GimpColorDisplay *display);
-void           gimp_color_display_configure_reset (GimpColorDisplay *display);
+void               gimp_color_display_convert_buffer  (GimpColorDisplay *display,
+                                                       GeglBuffer       *buffer,
+                                                       GeglRectangle    *area);
+void               gimp_color_display_load_state      (GimpColorDisplay *display,
+                                                       GimpParasite     *state);
+GimpParasite     * gimp_color_display_save_state      (GimpColorDisplay *display);
+GtkWidget        * gimp_color_display_configure       (GimpColorDisplay *display);
+void               gimp_color_display_configure_reset (GimpColorDisplay *display);
 
-void           gimp_color_display_changed         (GimpColorDisplay *display);
+void               gimp_color_display_changed         (GimpColorDisplay *display);
 
-void           gimp_color_display_set_enabled     (GimpColorDisplay *display,
-                                                   gboolean          enabled);
-gboolean       gimp_color_display_get_enabled     (GimpColorDisplay *display);
+void               gimp_color_display_set_enabled     (GimpColorDisplay *display,
+                                                       gboolean          enabled);
+gboolean           gimp_color_display_get_enabled     (GimpColorDisplay *display);
 
-GimpColorConfig  * gimp_color_display_get_config  (GimpColorDisplay *display);
-GimpColorManaged * gimp_color_display_get_managed (GimpColorDisplay *display);
+GimpColorConfig  * gimp_color_display_get_config      (GimpColorDisplay *display);
+GimpColorManaged * gimp_color_display_get_managed     (GimpColorDisplay *display);
 
 
 G_END_DECLS

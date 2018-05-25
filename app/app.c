@@ -86,14 +86,15 @@ static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GMainLoop         **loop);
 
+#if 0
+/*  left here as documentation how to do compat enums  */
 GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
-GType gimp_layer_mode_effects_get_type         (void); /* compat cruft */
+#endif
 
 
 /*  local variables  */
 
-static GObject *initial_screen  = NULL;
-static gint     initial_monitor = 0;
+static GObject *initial_monitor = NULL;
 
 
 /*  public functions  */
@@ -102,7 +103,9 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
+#if 0
   GQuark quark;
+#endif
 
   /* disable OpenCL before GEGL is even initialized; this way we only
    * enable if wanted in gimprc, instead of always enabling, and then
@@ -122,13 +125,15 @@ app_libs_init (GOptionContext *context,
     }
 #endif
 
+#if 0
+  /*  left here as documentation how to do compat enums  */
+
   /*  keep compat enum code in sync with pdb/enumcode.pl  */
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
                     (gpointer) gimp_convert_dither_type_compat_get_type ());
-  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
-                    (gpointer) gimp_layer_mode_effects_get_type ());
+#endif
 }
 
 void
@@ -189,7 +194,8 @@ app_run (const gchar         *full_prog_name,
   GFile              *gimpdir;
   const gchar        *abort_message;
   GimpLangRc         *temprc;
-  gchar              *language = NULL;
+  gchar              *language   = NULL;
+  GError             *font_error = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -326,7 +332,7 @@ app_run (const gchar         *full_prog_name,
 
   /*  Load all data files
    */
-  gimp_restore (gimp, update_status_func);
+  gimp_restore (gimp, update_status_func, &font_error);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -365,7 +371,6 @@ app_run (const gchar         *full_prog_name,
                                               gimp_get_user_context (gimp),
                                               NULL,
                                               file, as_new,
-                                              initial_screen,
                                               initial_monitor,
                                               &status, &error);
               if (image)
@@ -378,6 +383,10 @@ app_run (const gchar         *full_prog_name,
                    * scratch, without anything to undo.
                    */
                   gimp_image_dirty (image, GIMP_DIRTY_IMAGE);
+                }
+              else
+                {
+                  g_error_free (error);
                 }
 
               g_object_unref (file);
@@ -404,12 +413,18 @@ app_run (const gchar         *full_prog_name,
               GFile *file = g_file_new_for_commandline_arg (filenames[i]);
 
               file_open_from_command_line (gimp, file, as_new,
-                                           initial_screen,
                                            initial_monitor);
 
               g_object_unref (file);
             }
         }
+    }
+  if (font_error)
+    {
+      gimp_message_literal (gimp, NULL,
+                            GIMP_MESSAGE_INFO,
+                            font_error->message);
+      g_error_free (font_error);
     }
 
   if (run_loop)
@@ -429,11 +444,12 @@ app_run (const gchar         *full_prog_name,
 
   gimp_gegl_exit (gimp);
 
+  errors_exit ();
+
   g_object_unref (gimp);
 
   gimp_debug_instances ();
 
-  errors_exit ();
   gegl_exit ();
 }
 
@@ -452,12 +468,14 @@ static void
 app_restore_after_callback (Gimp               *gimp,
                             GimpInitStatusFunc  status_callback)
 {
+  gint dummy;
+
   /*  Getting the display name for a -1 display returns the initial
    *  monitor during startup. Need to call this from a restore_after
    *  callback, because before restore(), the GUI can't return anything,
    *  after after restore() the initial monitor gets reset.
    */
-  g_free (gimp_get_display_name (gimp, -1, &initial_screen, &initial_monitor));
+  g_free (gimp_get_display_name (gimp, -1, &initial_monitor, &dummy));
 }
 
 static gboolean

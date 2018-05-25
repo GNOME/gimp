@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -96,6 +95,12 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Close the active image view"),
     G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
+
+  { "view-scroll-center", GIMP_ICON_CENTER,
+    NC_("view-action", "Center Image in Window"), "<shift>J",
+    NC_("view-action", "Scroll the image so that it is centered in the window"),
+    G_CALLBACK (view_scroll_center_cmd_callback),
+    GIMP_HELP_VIEW_SCROLL_CENTER },
 
   { "view-zoom-fit-in", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
@@ -897,6 +902,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-dot-for-dot", image);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);
 
+  SET_SENSITIVE ("view-scroll-center", image);
+
   SET_SENSITIVE ("view-zoom-revert", revert_enabled);
   if (revert_enabled)
     {
@@ -1006,28 +1013,16 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-snap-to-vectors",     image);
   SET_ACTIVE    ("view-snap-to-vectors",     display && options->snap_to_path);
 
+  if (display && options->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+    SET_COLOR ("view-padding-color-menu", &options->padding_color);
+  else
+    SET_COLOR ("view-padding-color-menu", NULL);
+
   SET_SENSITIVE ("view-padding-color-theme",       image);
   SET_SENSITIVE ("view-padding-color-light-check", image);
   SET_SENSITIVE ("view-padding-color-dark-check",  image);
   SET_SENSITIVE ("view-padding-color-custom",      image);
   SET_SENSITIVE ("view-padding-color-prefs",       image);
-
-  if (display)
-    {
-      SET_COLOR ("view-padding-color-menu", &options->padding_color);
-
-      if (shell->canvas)
-        {
-          GtkStyle *style = gtk_widget_get_style (shell->canvas);
-          GimpRGB   color;
-
-          gtk_widget_ensure_style (shell->canvas);
-          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
-          gimp_rgb_set_alpha (&color, GIMP_OPACITY_OPAQUE);
-
-          SET_COLOR ("view-padding-color-theme",  &color);
-        }
-    }
 
   SET_SENSITIVE ("view-show-menubar",    image);
   SET_ACTIVE    ("view-show-menubar",    display && options->show_menubar);

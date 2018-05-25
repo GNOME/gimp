@@ -24,9 +24,6 @@
 
 #include <libgimpmath/gimpmath.h>
 
-#include <gtk/gtklist.h>
-#include <gtk/gtkpreview.h>
-
 #include "gimpressionist.h"
 #include "ppmtool.h"
 #include "brush.h"
@@ -259,7 +256,7 @@ savebrush (GtkWidget *wg,
                                  NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -497,7 +494,7 @@ create_brushpage (GtkNotebook *notebook)
 {
   GtkWidget        *box1, *box2, *box3, *thispage;
   GtkWidget        *view;
-  GtkWidget        *tmpw, *table;
+  GtkWidget        *tmpw, *grid;
   GtkWidget        *frame;
   GtkWidget        *combo;
   GtkWidget        *label;
@@ -588,14 +585,14 @@ create_brushpage (GtkNotebook *notebook)
   g_signal_connect (tmpw, "clicked", G_CALLBACK (savebrush), NULL);
   gtk_widget_show (tmpw);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (thispage), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   brush_aspect_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                           _("Aspect ratio:"),
                           150, -1, pcvals.brush_aspect,
                           -1.0, 1.0, 0.1, 0.1, 2,
@@ -608,7 +605,7 @@ create_brushpage (GtkNotebook *notebook)
                     G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brush_aspect);
 
   brush_relief_adjust = (GtkAdjustment *)
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                           _("Relief:"),
                           150, -1, pcvals.brush_relief,
                           0.0, 100.0, 1.0, 10.0, 1,

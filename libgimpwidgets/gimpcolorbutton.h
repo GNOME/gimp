@@ -45,20 +45,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_BUTTON, GimpColorButtonClass))
 
 
-typedef struct _GimpColorButtonClass  GimpColorButtonClass;
+typedef struct _GimpColorButtonPrivate GimpColorButtonPrivate;
+typedef struct _GimpColorButtonClass   GimpColorButtonClass;
 
 struct _GimpColorButton
 {
-  GimpButton      parent_instance;
+  GimpButton              parent_instance;
 
-  gchar          *title;
-  gboolean        continuous_update;
-
-  GtkWidget      *color_area;
-  GtkWidget      *dialog;
-
-  /*< private >*/
-  gpointer        popup_menu;
+  GimpColorButtonPrivate *priv;
 };
 
 struct _GimpColorButtonClass
@@ -72,9 +66,14 @@ struct _GimpColorButtonClass
   GType (* get_action_type) (GimpColorButton *button);
 
   /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

@@ -1464,11 +1464,23 @@ add_layers (gint32     image_id,
                   /* Flags */
                   gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
                   gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
+#if 0
+                  /* according to the spec, the 'irrelevant' flag indicates
+                   * that the layer's "pixel data is irrelevant to the
+                   * appearance of the document".  what this seems to mean is
+                   * not that the layer doesn't contribute to the image, but
+                   * rather that its appearance can be entirely derived from
+                   * sources other than the pixel data, such as vector data.
+                   * in particular, this doesn't mean that the layer is
+                   * invisible. since we only support raster layers atm, we can
+                   * just ignore this flag.
+                   */
                   if (lyr_a[lidx]->layer_flags.irrelevant &&
                       lyr_a[lidx]->group_type == 0)
                     {
                       gimp_item_set_visible (layer_id, FALSE);
                     }
+#endif
 
                   /* Position */
                   if (l_x != 0 || l_y != 0)

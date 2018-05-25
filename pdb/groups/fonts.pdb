@@ -30,7 +30,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_fonts_load (gimp, NULL);
+  gimp_fonts_load (gimp, NULL, error);
 }
 CODE
     );

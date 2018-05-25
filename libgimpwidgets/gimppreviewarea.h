@@ -34,23 +34,14 @@ G_BEGIN_DECLS
 #define GIMP_PREVIEW_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW_AREA, GimpPreviewArea))
 
 
-typedef struct _GimpPreviewAreaClass  GimpPreviewAreaClass;
+typedef struct _GimpPreviewAreaPrivate GimpPreviewAreaPrivate;
+typedef struct _GimpPreviewAreaClass   GimpPreviewAreaClass;
 
 struct _GimpPreviewArea
 {
-  GtkDrawingArea   parent_instance;
+  GtkDrawingArea          parent_instance;
 
-  GimpCheckSize    check_size;
-  GimpCheckType    check_type;
-  gint             width;
-  gint             height;
-  gint             rowstride;
-  gint             offset_x;
-  gint             offset_y;
-  gint             max_width;
-  gint             max_height;
-  guchar          *buf;
-  guchar          *colormap;
+  GimpPreviewAreaPrivate *priv;
 };
 
 struct _GimpPreviewAreaClass
@@ -62,6 +53,10 @@ struct _GimpPreviewAreaClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -120,6 +115,9 @@ void        gimp_preview_area_set_colormap     (GimpPreviewArea *area,
 void        gimp_preview_area_set_color_config (GimpPreviewArea *area,
                                                 GimpColorConfig *config);
 
+void        gimp_preview_area_get_size         (GimpPreviewArea *area,
+                                                gint            *width,
+                                                gint            *height);
 void        gimp_preview_area_set_max_size     (GimpPreviewArea *area,
                                                 gint             width,
                                                 gint             height);

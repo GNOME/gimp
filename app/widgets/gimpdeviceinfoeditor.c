@@ -142,10 +142,16 @@ static const gchar *const axis_use_strings[] =
   N_("X tilt"),
   N_("Y tilt"),
   /* Wheel as in mouse or input device wheel.
-   * Some pens use the same axis for their rotation feature.
+   * Some pens would use the same axis for their rotation feature.
    * See bug 791455.
+   * Yet GTK+ has a different axis since v. 3.22.
+   * TODO: this should be actually tested with a device having such
+   * feature.
    */
-  N_("Wheel/Rotation")
+  N_("Wheel"),
+  N_("Distance"),
+  N_("Rotation"),
+  N_("Slider")
 };
 
 
@@ -189,7 +195,7 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 
-  private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  private->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_box_pack_start (GTK_BOX (editor), private->vbox, TRUE, TRUE, 0);
   gtk_widget_show (private->vbox);
 
@@ -326,7 +332,8 @@ gimp_device_info_editor_constructed (GObject *object)
 {
   GimpDeviceInfoEditor        *editor  = GIMP_DEVICE_INFO_EDITOR (object);
   GimpDeviceInfoEditorPrivate *private;
-  GtkWidget                   *hbox;
+  GtkWidget                   *frame;
+  GtkWidget                   *grid;
   GtkWidget                   *label;
   GtkWidget                   *combo;
   gint                         n_axes;
@@ -339,23 +346,54 @@ gimp_device_info_editor_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_DEVICE_INFO (private->info));
 
-  /*  the mode menu  */
+  /*  general device information  */
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (private->vbox), hbox, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (private->vbox), hbox, 0);
-  gtk_widget_show (hbox);
+  frame = gimp_frame_new (_("General"));
+  gtk_box_pack_start (GTK_BOX (private->vbox), frame, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (private->vbox), frame, 0);
+  gtk_widget_show (frame);
 
-  label = gtk_label_new_with_mnemonic (_("_Mode:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (private->info), "mode",
                                         0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Mode:"), 0.0, 0.5,
+                            combo, 1);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+  label = gimp_prop_enum_label_new (G_OBJECT (private->info), "source");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("Source:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "vendor-id");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+                            _("Vendor ID:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "product-id");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                            _("Product ID:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_enum_label_new (G_OBJECT (private->info), "tool-type");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+                            _("Tool type:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "tool-serial");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+                            _("Tool serial:"), 0.0, 0.5,
+                            label, 1);
+
+  label = gimp_prop_label_new (G_OBJECT (private->info), "tool-hardware-id");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 6,
+                            _("Tool hardware ID:"), 0.0, 0.5,
+                            label, 1);
 
   /*  the axes  */
 
@@ -410,7 +448,6 @@ gimp_device_info_editor_constructed (GObject *object)
 
   for (i = GDK_AXIS_X; i < GDK_AXIS_LAST; i++)
     {
-      GtkWidget *frame;
       GimpCurve *curve;
       gchar     *title;
 
@@ -428,6 +465,7 @@ gimp_device_info_editor_constructed (GObject *object)
       if (curve)
         {
           GtkWidget *vbox;
+          GtkWidget *hbox;
           GtkWidget *view;
           GtkWidget *label;
           GtkWidget *combo;
@@ -445,7 +483,7 @@ gimp_device_info_editor_constructed (GObject *object)
 
           view = gimp_curve_view_new ();
           g_object_set (view,
-                        "gimp",         GIMP_CONTEXT (private->info)->gimp,
+                        "gimp",         GIMP_TOOL_PRESET (private->info)->gimp,
                         "border-width", CURVE_BORDER,
                         NULL);
           gtk_widget_set_size_request (view,
@@ -458,7 +496,7 @@ gimp_device_info_editor_constructed (GObject *object)
 
           hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
           gtk_box_set_spacing (GTK_BOX (hbox), 6);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
           gtk_widget_show (hbox);
 
           label = gtk_label_new_with_mnemonic (_("Curve _type:"));

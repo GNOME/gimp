@@ -131,9 +131,10 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 {
   GimpContainerView      *view;
   GtkScrolledWindowClass *sw_class;
-  GtkStyle               *sw_style;
+  GtkStyleContext        *sw_style;
   GtkWidget              *sb;
   GtkRequisition          req;
+  GtkBorder               border;
   gint                    view_size;
   gint                    scrollbar_width;
   gint                    border_x;
@@ -159,15 +160,17 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
   sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
-  gtk_widget_size_request (sb, &req);
+  gtk_widget_get_preferred_size (sb, &req, NULL);
   scrollbar_width += req.width;
 
   border_x = border_y = gtk_container_get_border_width (GTK_CONTAINER (box));
 
-  sw_style = gtk_widget_get_style (box->scrolled_win);
+  sw_style = gtk_widget_get_style_context (box->scrolled_win);
 
-  border_x += sw_style->xthickness * 2 + scrollbar_width;
-  border_y += sw_style->ythickness * 2;
+  gtk_style_context_get_border (sw_style, 0, &border);
+
+  border_x += border.left + border.right + scrollbar_width;
+  border_y += border.top + border.bottom;
 
   gtk_widget_set_size_request (box->scrolled_win,
                                width  > 0 ? width  + border_x : -1,
@@ -186,7 +189,6 @@ gimp_container_box_get_preview (GimpDocked   *docked,
                                 GimpContext  *context,
                                 GtkIconSize   size)
 {
-  GimpContainerBox  *box  = GIMP_CONTAINER_BOX (docked);
   GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
   GimpContainer     *container;
   GtkWidget         *preview;
@@ -199,8 +201,7 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   g_return_val_if_fail (container != NULL, NULL);
 
-  gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (GTK_WIDGET (box)),
-                                     size, &width, &height);
+  gtk_icon_size_lookup (size, &width, &height);
 
   prop_name = gimp_context_type_to_prop_name (gimp_container_get_children_type (container));
 

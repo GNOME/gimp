@@ -33,10 +33,6 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*  hack: declare prototype here instead of #undef GIMP_DISABLE_DEPRECATED  */
-void   gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
-
-
 /**
  * SECTION: gimpwidgets
  * @title: GimpWidgets
@@ -413,51 +409,6 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
   gimp_radio_group_set_active (radio_button, GINT_TO_POINTER (item_data));
 }
 
-/**
- * gimp_spin_button_new:
- * @adjustment:     Returns the spinbutton's #GtkAdjustment.
- * @value:          The initial value of the spinbutton.
- * @lower:          The lower boundary.
- * @upper:          The upper boundary.
- * @step_increment: The spinbutton's step increment.
- * @page_increment: The spinbutton's page increment (mouse button 2).
- * @page_size:      Ignored, spin buttons must always have a zero page size.
- * @climb_rate:     The spinbutton's climb rate.
- * @digits:         The spinbutton's number of decimal digits.
- *
- * This function is a shortcut for gtk_adjustment_new() and a
- * subsequent gtk_spin_button_new(). It also calls
- * gtk_spin_button_set_numeric() so that non-numeric text cannot be
- * entered.
- *
- * Deprecated: 2.10: Use gtk_spin_button_new() instead.
- *
- * Returns: A #GtkSpinButton and its #GtkAdjustment.
- **/
-GtkWidget *
-gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-                      gdouble     value,
-                      gdouble     lower,
-                      gdouble     upper,
-                      gdouble     step_increment,
-                      gdouble     page_increment,
-                      gdouble     page_size,
-                      gdouble     climb_rate,
-                      guint       digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-                                    step_increment, page_increment, 0);
-
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-                                    climb_rate, digits);
-
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-
-  return spinbutton;
-}
-
 static void
 gimp_random_seed_update (GtkWidget *widget,
                          gpointer   data)
@@ -523,7 +474,10 @@ gimp_random_seed_new (guint    *seed,
                              "given \"random\" operation"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("_New Seed"));
-  gtk_misc_set_padding (GTK_MISC (gtk_bin_get_child (GTK_BIN (button))), 2, 0);
+  g_object_set (gtk_bin_get_child (GTK_BIN (button)),
+                "margin-start", 2,
+                "margin-end",   2,
+                NULL);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -758,11 +712,9 @@ gimp_coordinates_new (GimpUnit         unit,
                                    FALSE,
                                    spinbutton_width,
                                    update_policy);
-  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);
-  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 2, 4);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
+  gtk_grid_attach (GTK_GRID (sizeentry), spinbutton, 1, 0, 1, 1);
   gtk_widget_show (spinbutton);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
@@ -798,8 +750,7 @@ gimp_coordinates_new (GimpUnit         unit,
   if (chainbutton_active)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
 
-  gtk_table_attach (GTK_TABLE (sizeentry), chainbutton, 2, 3, 0, 2,
-                    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (sizeentry), chainbutton, 2, 0, 1, 2);
   gtk_widget_show (chainbutton);
 
   data = g_slice_new (GimpCoordinatesData);
@@ -834,61 +785,10 @@ gimp_coordinates_new (GimpUnit         unit,
  */
 
 /**
- * gimp_toggle_button_sensitive_update:
- * @toggle_button: The #GtkToggleButton the "set_sensitive" and
- *                 "inverse_sensitive" lists are attached to.
- *
- * If you attached a pointer to a #GtkWidget with g_object_set_data() and
- * the "set_sensitive" key to the #GtkToggleButton, the sensitive state of
- * the attached widget will be set according to the toggle button's
- * "active" state.
- *
- * You can attach an arbitrary list of widgets by attaching another
- * "set_sensitive" data pointer to the first widget (and so on...).
- *
- * This function can also set the sensitive state according to the toggle
- * button's inverse "active" state by attaching widgets with the
- * "inverse_sensitive" key.
- *
- * Deprecated: use g_object_bind_property() instead of using the
- *             "set_sensitive" and "inverse_sensitive" data pointers.
- **/
-void
-gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
-{
-  GtkWidget *set_sensitive;
-  gboolean   active;
-
-  active = gtk_toggle_button_get_active (toggle_button);
-
-  set_sensitive =
-    g_object_get_data (G_OBJECT (toggle_button), "set_sensitive");
-  while (set_sensitive)
-    {
-      gtk_widget_set_sensitive (set_sensitive, active);
-      set_sensitive =
-        g_object_get_data (G_OBJECT (set_sensitive), "set_sensitive");
-    }
-
-  set_sensitive =
-    g_object_get_data (G_OBJECT (toggle_button), "inverse_sensitive");
-  while (set_sensitive)
-    {
-      gtk_widget_set_sensitive (set_sensitive, ! active);
-      set_sensitive =
-        g_object_get_data (G_OBJECT (set_sensitive), "inverse_sensitive");
-    }
-}
-
-/**
  * gimp_toggle_button_update:
  * @widget: A #GtkToggleButton.
  * @data:   A pointer to a #gint variable which will store the value of
  *          gtk_toggle_button_get_active().
- *
- * Note that this function calls gimp_toggle_button_sensitive_update()
- * which is a deprecated hack you shouldn't use. See that function's
- * documentation for a proper replacement of its functionality.
  **/
 void
 gimp_toggle_button_update (GtkWidget *widget,
@@ -900,8 +800,6 @@ gimp_toggle_button_update (GtkWidget *widget,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
-
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
 /**
@@ -909,10 +807,6 @@ gimp_toggle_button_update (GtkWidget *widget,
  * @widget: A #GtkRadioButton.
  * @data:   A pointer to a #gint variable which will store the value of
  *          GPOINTER_TO_INT (g_object_get_data (@widget, "gimp-item-data")).
- *
- * Note that this function calls gimp_toggle_button_sensitive_update()
- * which is a deprecated hack you shouldn't use. See that function's
- * documentation for a proper replacement of its functionality.
  **/
 void
 gimp_radio_button_update (GtkWidget *widget,
@@ -925,8 +819,6 @@ gimp_radio_button_update (GtkWidget *widget,
       *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                         "gimp-item-data"));
     }
-
-  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
 /**

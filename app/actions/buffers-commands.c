@@ -118,8 +118,7 @@ buffers_paste_as_new_image_cmd_callback (GtkAction *action,
                                                 GIMP_OBJECT (buffer));
       gimp_create_display (context->gimp, new_image,
                            GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gtk_widget_get_screen (widget)),
-                           gimp_widget_get_monitor (widget));
+                           G_OBJECT (gimp_widget_get_monitor (widget)));
       g_object_unref (new_image);
     }
 }

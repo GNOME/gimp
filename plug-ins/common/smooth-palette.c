@@ -243,6 +243,7 @@ smooth_palette (gint32  drawable_id,
   gint          sel_x1, sel_y1;
   gint          width, height;
   GeglBuffer   *buffer;
+  GeglSampler  *sampler;
   gfloat       *pal;
   GRand        *gr;
 
@@ -273,6 +274,8 @@ smooth_palette (gint32  drawable_id,
 
   buffer = gimp_drawable_get_buffer (drawable_id);
 
+  sampler = gegl_buffer_sampler_new (buffer, format, GEGL_SAMPLER_NEAREST);
+
   bpp = babl_format_get_n_components (gegl_buffer_get_format (buffer));
 
   pal = g_new (gfloat, psize * bpp);
@@ -284,11 +287,12 @@ smooth_palette (gint32  drawable_id,
       gint x = sel_x1 + g_rand_int_range (gr, 0, width);
       gint y = sel_y1 + g_rand_int_range (gr, 0, height);
 
-      gegl_buffer_sample (buffer, (gdouble) x, (gdouble) y, NULL, pal + i * bpp,
-                          format, GEGL_SAMPLER_NEAREST,
-                          GEGL_ABYSS_NONE);
+      gegl_sampler_get (sampler,
+                        (gdouble) x, (gdouble) y, NULL, pal + i * bpp,
+                        GEGL_ABYSS_NONE);
     }
 
+  g_object_unref (sampler);
   g_object_unref (buffer);
 
   /* reorder */
@@ -436,7 +440,7 @@ dialog (gint32 drawable_id)
 
                          NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -470,9 +474,9 @@ dialog (gint32 drawable_id)
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
-  gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,
-                             _("_Search depth:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (sizeentry), 0, 2,
+                            _("_Search depth:"), 0.0, 0.5,
+                            spinbutton, 1);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &config.ntries);

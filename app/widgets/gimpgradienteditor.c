@@ -91,7 +91,9 @@
                               GDK_POINTER_MOTION_MASK      | \
                               GDK_POINTER_MOTION_HINT_MASK | \
                               GDK_BUTTON_PRESS_MASK        | \
-                              GDK_BUTTON_RELEASE_MASK)
+                              GDK_BUTTON_RELEASE_MASK      | \
+                              GDK_SCROLL_MASK              | \
+                              GDK_SMOOTH_SCROLL_MASK)
 
 #define GRAD_CONTROL_EVENT_MASK (GDK_EXPOSURE_MASK            | \
                                  GDK_LEAVE_NOTIFY_MASK        | \
@@ -99,6 +101,8 @@
                                  GDK_POINTER_MOTION_HINT_MASK | \
                                  GDK_BUTTON_PRESS_MASK        | \
                                  GDK_BUTTON_RELEASE_MASK      | \
+                                 GDK_SCROLL_MASK              | \
+                                 GDK_SMOOTH_SCROLL_MASK       | \
                                  GDK_BUTTON1_MOTION_MASK)
 
 
@@ -161,8 +165,8 @@ static void      view_pick_color                  (GimpGradientEditor *editor,
 static gboolean  control_events                   (GtkWidget          *widget,
                                                    GdkEvent           *event,
                                                    GimpGradientEditor *editor);
-static gboolean  control_expose                   (GtkWidget          *widget,
-                                                   GdkEventExpose     *event,
+static gboolean  control_draw                     (GtkWidget          *widget,
+                                                   cairo_t            *cr,
                                                    GimpGradientEditor *editor);
 static void      control_do_hint                  (GimpGradientEditor *editor,
                                                    gint                x,
@@ -203,7 +207,7 @@ static double    control_move                     (GimpGradientEditor  *editor,
 static void      control_update                   (GimpGradientEditor *editor,
                                                    GimpGradient       *gradient,
                                                    gboolean            recalculate);
-static void      control_draw                     (GimpGradientEditor *editor,
+static void      control_draw_all                 (GimpGradientEditor *editor,
                                                    GimpGradient       *gradient,
                                                    cairo_t            *cr,
                                                    gint                width,
@@ -221,8 +225,8 @@ static void      control_draw_middle_handle       (GimpGradientEditor *editor,
                                                    gint                height,
                                                    gboolean            selected);
 static void      control_draw_handle              (cairo_t            *cr,
-                                                   GdkColor           *border,
-                                                   GdkColor           *fill,
+                                                   const GdkRGBA      *border,
+                                                   const GdkRGBA      *fill,
                                                    gint                xpos,
                                                    gint                height);
 
@@ -269,6 +273,17 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
   editor_class->title       = _("Gradient Editor");
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("handle-color",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("handle-color-selected",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
 }
 
 static void
@@ -291,6 +306,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   GtkWidget      *hbox;
   GtkWidget      *hint_vbox;
   GimpRGB         transp;
+  GtkCssProvider *css;
+  const gchar    *str;
 
   gimp_rgba_set (&transp, 0.0, 0.0, 0.0, 0.0);
 
@@ -354,8 +371,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     G_CALLBACK (control_events),
                     editor);
 
-  g_signal_connect (editor->control, "expose-event",
-                    G_CALLBACK (control_expose),
+  g_signal_connect (editor->control, "draw",
+                    G_CALLBACK (control_draw),
                     editor);
 
   gimp_dnd_color_dest_add (GTK_WIDGET (editor->control),
@@ -432,6 +449,19 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gimp_rgba_set (&editor->saved_colors[7], 0.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[8], 0.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[9], 1.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
+
+  str =
+    "GimpGradientEditor {\n"
+    "  -GimpGradientEditor-handle-color: mix (@text_color, @base_color, 0.5);\n"
+    "  -GimpGradientEditor-handle-color-selected: mix (@selected_fg_color, @selected_bg_color, 0.5);\n"
+    "}\n";
+
+  css = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css, str, -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (editor)),
+                                  GTK_STYLE_PROVIDER (css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (css);
 }
 
 static void
@@ -1080,8 +1110,7 @@ control_events (GtkWidget          *widget,
         else
           {
             GtkAdjustment *adj = editor->scroll_data;
-
-            gfloat new_value;
+            gfloat         new_value;
 
             new_value = (gtk_adjustment_get_value (adj) +
                          ((sevent->direction == GDK_SCROLL_UP) ?
@@ -1182,26 +1211,23 @@ control_events (GtkWidget          *widget,
 }
 
 static gboolean
-control_expose (GtkWidget          *widget,
-                GdkEventExpose     *event,
-                GimpGradientEditor *editor)
+control_draw (GtkWidget          *widget,
+              cairo_t            *cr,
+              GimpGradientEditor *editor)
 {
   GtkAdjustment *adj = editor->scroll_data;
-  cairo_t       *cr  = gdk_cairo_create (gtk_widget_get_window (widget));
   GtkAllocation  allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  control_draw (editor,
-                GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
-                cr,
-                allocation.width,
-                allocation.height,
-                gtk_adjustment_get_value (adj),
-                gtk_adjustment_get_value (adj) +
-                gtk_adjustment_get_page_size (adj));
-
-  cairo_destroy (cr);
+  control_draw_all (editor,
+                    GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
+                    cr,
+                    allocation.width,
+                    allocation.height,
+                    gtk_adjustment_get_value (adj),
+                    gtk_adjustment_get_value (adj) +
+                    gtk_adjustment_get_page_size (adj));
 
   return TRUE;
 }
@@ -1692,17 +1718,18 @@ control_update (GimpGradientEditor *editor,
 }
 
 static void
-control_draw (GimpGradientEditor *editor,
-              GimpGradient       *gradient,
-              cairo_t            *cr,
-              gint                width,
-              gint                height,
-              gdouble             left,
-              gdouble             right)
+control_draw_all (GimpGradientEditor *editor,
+                  GimpGradient       *gradient,
+                  cairo_t            *cr,
+                  gint                width,
+                  gint                height,
+                  gdouble             left,
+                  gdouble             right)
 {
-  GtkStyle               *control_style;
+  GtkStyleContext        *control_style;
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
+  GdkRGBA                 color;
   gint                    sel_l;
   gint                    sel_r;
   gdouble                 g_pos;
@@ -1713,20 +1740,26 @@ control_draw (GimpGradientEditor *editor,
 
   /* Draw selection */
 
-  control_style = gtk_widget_get_style (editor->control);
+  control_style = gtk_widget_get_style_context (editor->control);
 
   sel_l = control_calc_p_pos (editor, editor->control_sel_l->left);
   sel_r = control_calc_p_pos (editor, editor->control_sel_r->right);
 
-  gdk_cairo_set_source_color (cr,
-                              &control_style->base[GTK_STATE_NORMAL]);
+  gtk_style_context_add_class (control_style, GTK_STYLE_CLASS_ENTRY);
+
+  gtk_style_context_get_background_color (control_style, 0,
+                                          &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_rectangle (cr, 0, 0, width, height);
   cairo_fill (cr);
 
-  gdk_cairo_set_source_color (cr,
-                              &control_style->base[GTK_STATE_SELECTED]);
+  gtk_style_context_get_background_color (control_style, GTK_STATE_FLAG_SELECTED,
+                                          &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_rectangle (cr, sel_l, 0, sel_r - sel_l + 1, height);
   cairo_fill (cr);
+
+  gtk_style_context_remove_class (control_style, GTK_STYLE_CLASS_ENTRY);
 
   /* Draw handles */
 
@@ -1792,12 +1825,14 @@ control_draw_normal_handle (GimpGradientEditor *editor,
                             gint                height,
                             gboolean            selected)
 {
-  GtkStyle     *style = gtk_widget_get_style (editor->control);
-  GtkStateType  state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+  GdkRGBA border;
+  GdkRGBA fill = { 0.0, 0.0, 0.0, 1.0 };
 
-  control_draw_handle (cr,
-                       &style->text_aa[state],
-                       &style->black,
+  gimp_get_style_color (GTK_WIDGET (editor),
+                        selected ? "handle-color-selected" : "handle-color",
+                        &border);
+
+  control_draw_handle (cr, &border, &fill,
                        control_calc_p_pos (editor, pos), height);
 }
 
@@ -1808,31 +1843,33 @@ control_draw_middle_handle (GimpGradientEditor *editor,
                             gint                height,
                             gboolean            selected)
 {
-  GtkStyle     *style = gtk_widget_get_style (editor->control);
-  GtkStateType  state = selected ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+  GdkRGBA border;
+  GdkRGBA fill = { 1.0, 1.0, 1.0, 1.0 };
 
-  control_draw_handle (cr,
-                       &style->text_aa[state],
-                       &style->white,
+  gimp_get_style_color (GTK_WIDGET (editor),
+                        selected ? "handle-color-selected" : "handle-color",
+                        &border);
+
+  control_draw_handle (cr, &border, &fill,
                        control_calc_p_pos (editor, pos), height);
 }
 
 static void
-control_draw_handle (cairo_t  *cr,
-                     GdkColor *border,
-                     GdkColor *fill,
-                     gint      xpos,
-                     gint      height)
+control_draw_handle (cairo_t        *cr,
+                     const GdkRGBA *border,
+                     const GdkRGBA *fill,
+                     gint           xpos,
+                     gint           height)
 {
   cairo_move_to (cr, xpos, 0);
   cairo_line_to (cr, xpos - height / 2.0, height);
   cairo_line_to (cr, xpos + height / 2.0, height);
   cairo_line_to (cr, xpos, 0);
 
-  gdk_cairo_set_source_color (cr, fill);
+  gdk_cairo_set_source_rgba (cr, fill);
   cairo_fill_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, border);
+  gdk_cairo_set_source_rgba (cr, border);
   cairo_set_line_width (cr, 1);
   cairo_stroke (cr);
 }

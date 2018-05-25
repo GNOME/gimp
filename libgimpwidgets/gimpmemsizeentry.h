@@ -37,22 +37,14 @@ G_BEGIN_DECLS
 #define GIMP_MEMSIZE_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEMSIZE_ENTRY, GimpMemsizeEntryClass))
 
 
-typedef struct _GimpMemsizeEntryClass  GimpMemsizeEntryClass;
+typedef struct _GimpMemsizeEntryPrivate GimpMemsizeEntryPrivate;
+typedef struct _GimpMemsizeEntryClass   GimpMemsizeEntryClass;
 
 struct _GimpMemsizeEntry
 {
-  GtkBox         parent_instance;
+  GtkBox  parent_instance;
 
-  /*< private >*/
-  guint64        value;
-  guint64        lower;
-  guint64        upper;
-
-  guint          shift;
-
-  GtkAdjustment *adjustment;
-  GtkWidget     *spinbutton;
-  GtkWidget     *menu;
+  GimpMemsizeEntryPrivate *priv;
 };
 
 struct _GimpMemsizeEntryClass
@@ -66,17 +58,23 @@ struct _GimpMemsizeEntryClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
-GType       gimp_memsize_entry_get_type  (void) G_GNUC_CONST;
+GType       gimp_memsize_entry_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_memsize_entry_new       (guint64           value,
-                                          guint64           lower,
-                                          guint64           upper);
-void        gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-                                          guint64           value);
-guint64     gimp_memsize_entry_get_value (GimpMemsizeEntry *entry);
+GtkWidget * gimp_memsize_entry_new            (guint64           value,
+                                               guint64           lower,
+                                               guint64           upper);
+void        gimp_memsize_entry_set_value      (GimpMemsizeEntry *entry,
+                                               guint64           value);
+guint64     gimp_memsize_entry_get_value      (GimpMemsizeEntry *entry);
+
+GtkWidget * gimp_memsize_entry_get_spinbutton (GimpMemsizeEntry *entry);
 
 
 G_END_DECLS

@@ -203,8 +203,7 @@ gimp_menu_factory_manager_action_added (GimpActionGroup *group,
 GimpUIManager *
 gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                const gchar     *identifier,
-                               gpointer         callback_data,
-                               gboolean         create_tearoff)
+                               gpointer         callback_data)
 {
   GList *list;
 
@@ -222,9 +221,6 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
           GList         *list;
 
           manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-          gtk_ui_manager_set_add_tearoffs (GTK_UI_MANAGER (manager),
-                                           create_tearoff);
-
           accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
 
           for (list = entry->action_groups; list; list = g_list_next (list))

@@ -87,19 +87,6 @@ gimp_tile_ref (GimpTile *tile)
 }
 
 void
-gimp_tile_ref_zero (GimpTile *tile)
-{
-  g_return_if_fail (tile != NULL);
-
-  tile->ref_count++;
-
-  if (tile->ref_count == 1)
-    tile->data = g_new0 (guchar, tile->ewidth * tile->eheight * tile->bpp);
-
-  gimp_tile_cache_insert (tile);
-}
-
-void
 gimp_tile_unref (GimpTile *tile,
                  gboolean  dirty)
 {
@@ -130,20 +117,6 @@ gimp_tile_flush (GimpTile *tile)
 }
 
 /**
- * gimp_tile_cache_size:
- * @kilobytes: new cache size in kilobytes
- *
- * Sets the size of the tile cache on the plug-in side. The tile cache
- * is used to reduce the number of tiles exchanged between the GIMP core
- * and the plug-in. See also gimp_tile_cache_ntiles().
- **/
-void
-gimp_tile_cache_size (gulong kilobytes)
-{
-  max_cache_size = kilobytes * 1024;
-}
-
-/**
  * gimp_tile_cache_ntiles:
  * @ntiles: number of tiles that should fit into the cache
  *
@@ -160,9 +133,9 @@ gimp_tile_cache_size (gulong kilobytes)
 void
 gimp_tile_cache_ntiles (gulong ntiles)
 {
-  gimp_tile_cache_size ((ntiles *
-                         gimp_tile_width () *
-                         gimp_tile_height () * 4 + 1023) / 1024);
+  max_cache_size = (ntiles *
+                    gimp_tile_width () *
+                    gimp_tile_height () * 4);
 }
 
 void

@@ -47,6 +47,14 @@ enum
 };
 
 
+struct _GimpEnumLabelPrivate
+{
+  GEnumClass *enum_class;
+};
+
+#define GET_PRIVATE(obj) (((GimpEnumLabel *) (obj))->priv)
+
+
 static void   gimp_enum_label_finalize     (GObject      *object);
 static void   gimp_enum_label_get_property (GObject      *object,
                                             guint         property_id,
@@ -101,20 +109,28 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
                                                      G_MININT, G_MAXINT, 0,
                                                      GIMP_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
+
+  g_type_class_add_private (object_class, sizeof (GimpEnumLabelPrivate));
 }
 
 static void
 gimp_enum_label_init (GimpEnumLabel *enum_label)
 {
+  enum_label->priv = G_TYPE_INSTANCE_GET_PRIVATE (enum_label,
+                                                  GIMP_TYPE_ENUM_LABEL,
+                                                  GimpEnumLabelPrivate);
 }
 
 static void
 gimp_enum_label_finalize (GObject *object)
 {
-  GimpEnumLabel *enum_label = GIMP_ENUM_LABEL (object);
+  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
 
-  if (enum_label->enum_class)
-    g_type_class_unref (enum_label->enum_class);
+  if (private->enum_class)
+    {
+      g_type_class_unref (private->enum_class);
+      private->enum_class = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -125,13 +141,13 @@ gimp_enum_label_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
+  GimpEnumLabelPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      if (label->enum_class)
-        g_value_set_gtype (value, G_TYPE_FROM_CLASS (label->enum_class));
+      if (private->enum_class)
+        g_value_set_gtype (value, G_TYPE_FROM_CLASS (private->enum_class));
       else
         g_value_set_gtype (value, G_TYPE_NONE);
       break;
@@ -148,12 +164,13 @@ gimp_enum_label_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
+  GimpEnumLabel        *label   = GIMP_ENUM_LABEL (object);
+  GimpEnumLabelPrivate *private = GET_PRIVATE (label);
 
   switch (property_id)
     {
     case PROP_ENUM_TYPE:
-      label->enum_class = g_type_class_ref (g_value_get_gtype (value));
+      private->enum_class = g_type_class_ref (g_value_get_gtype (value));
       break;
 
     case PROP_ENUM_VALUE:
@@ -168,8 +185,8 @@ gimp_enum_label_set_property (GObject      *object,
 
 /**
  * gimp_enum_label_new:
- * @enum_type: the #GType of an enum.
- * @value:
+ * @enum_type: the #GType of an enum
+ * @value:     an enum value
  *
  * Return value: a new #GimpEnumLabel.
  *
@@ -190,7 +207,7 @@ gimp_enum_label_new (GType enum_type,
 /**
  * gimp_enum_label_set_value
  * @label: a #GimpEnumLabel
- * @value:
+ * @value: an enum value
  *
  * Since: 2.4
  **/
@@ -198,18 +215,25 @@ void
 gimp_enum_label_set_value (GimpEnumLabel *label,
                            gint           value)
 {
-  const gchar *desc;
+  GimpEnumLabelPrivate *private;
+  const gchar          *nick;
+  const gchar          *desc;
 
   g_return_if_fail (GIMP_IS_ENUM_LABEL (label));
 
-  if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (label->enum_class), value,
-                             NULL, NULL, &desc, NULL))
+  private = GET_PRIVATE (label);
+
+  if (! gimp_enum_get_value (G_TYPE_FROM_CLASS (private->enum_class), value,
+                             NULL, &nick, &desc, NULL))
     {
       g_warning ("%s: %d is not valid for enum of type '%s'",
                  G_STRLOC, value,
-                 g_type_name (G_TYPE_FROM_CLASS (label->enum_class)));
+                 g_type_name (G_TYPE_FROM_CLASS (private->enum_class)));
       return;
     }
+
+  if (! desc)
+    desc = nick;
 
   gtk_label_set_text (GTK_LABEL (label), desc);
 }

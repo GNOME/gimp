@@ -21,7 +21,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/ifs-compose
 
 libexec_PROGRAMS = ifs-compose
 

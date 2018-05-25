@@ -204,17 +204,17 @@ run (const gchar      *name,
 static gboolean
 blinds_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *size_data;
-  GtkWidget *toggle;
-  GtkWidget *horizontal;
-  GtkWidget *vertical;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *grid;
+  GtkAdjustment *size_data;
+  GtkWidget     *toggle;
+  GtkWidget     *horizontal;
+  GtkWidget     *vertical;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -227,7 +227,7 @@ blinds_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -297,13 +297,13 @@ blinds_dialog (GimpDrawable *drawable)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                     _("_Displacement:"), SCALE_WIDTH, 0,
                                     bvals.angledsp, 1, 90, 1, 15, 0,
                                     TRUE, 0, 0,
@@ -315,7 +315,7 @@ blinds_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  size_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                                     _("_Number of segments:"), SCALE_WIDTH, 0,
                                     bvals.numsegs, 1, MAX_FANS, 1, 2, 0,
                                     TRUE, 0, 0,

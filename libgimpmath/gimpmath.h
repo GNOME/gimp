@@ -37,7 +37,6 @@
 #include <libgimpmath/gimpmathtypes.h>
 
 #include <libgimpmath/gimpmatrix.h>
-#include <libgimpmath/gimpmd5.h>
 #include <libgimpmath/gimpvector.h>
 
 #undef __GIMP_MATH_H_INSIDE__

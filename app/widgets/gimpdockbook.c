@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#undef GTK_DISABLE_DEPRECATED
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -54,7 +55,7 @@
 #include "gimp-log.h"
 #include "gimp-intl.h"
 
-#define DEFAULT_TAB_BORDER           0
+
 #define DEFAULT_TAB_ICON_SIZE        GTK_ICON_SIZE_BUTTON
 #define DND_WIDGET_ICON_SIZE         GTK_ICON_SIZE_BUTTON
 #define MENU_WIDGET_ICON_SIZE        GTK_ICON_SIZE_MENU
@@ -111,8 +112,7 @@ static void         gimp_dockbook_dispose                     (GObject        *o
 static void         gimp_dockbook_finalize                    (GObject        *object);
 static void         gimp_dockbook_size_allocate               (GtkWidget      *widget,
                                                                GtkAllocation  *allocation);
-static void         gimp_dockbook_style_set                   (GtkWidget      *widget,
-                                                               GtkStyle       *prev_style);
+static void         gimp_dockbook_style_updated               (GtkWidget      *widget);
 static void         gimp_dockbook_drag_leave                  (GtkWidget      *widget,
                                                                GdkDragContext *context,
                                                                guint           time);
@@ -170,7 +170,6 @@ static GtkWidget *  gimp_dockable_create_event_box_tab_widget (GimpDockable   *d
                                                                GimpTabStyle    tab_style,
                                                                GtkIconSize     size);
 static GtkIconSize  gimp_dockbook_get_tab_icon_size           (GimpDockbook   *dockbook);
-static gint         gimp_dockbook_get_tab_border              (GimpDockbook   *dockbook);
 static void         gimp_dockbook_add_tab_timeout             (GimpDockbook   *dockbook,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_remove_tab_timeout          (GimpDockbook   *dockbook);
@@ -235,7 +234,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   object_class->finalize    = gimp_dockbook_finalize;
 
   widget_class->size_allocate = gimp_dockbook_size_allocate;
-  widget_class->style_set     = gimp_dockbook_style_set;
+  widget_class->style_updated = gimp_dockbook_style_updated;
   widget_class->drag_leave    = gimp_dockbook_drag_leave;
   widget_class->drag_motion   = gimp_dockbook_drag_motion;
   widget_class->drag_drop     = gimp_dockbook_drag_drop;
@@ -245,12 +244,6 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   klass->dockable_removed   = gimp_dockbook_dockable_removed;
   klass->dockable_reordered = NULL;
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("tab-border",
-                                                             NULL, NULL,
-                                                             0, G_MAXINT,
-                                                             DEFAULT_TAB_BORDER,
-                                                             GIMP_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("tab-icon-size",
                                                               NULL, NULL,
@@ -352,17 +345,16 @@ gimp_dockbook_size_allocate (GtkWidget      *widget,
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-
   /* Update tab styles, also recreates if changed */
   gimp_dockbook_update_automatic_tab_style (dockbook);
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 }
 
 static void
-gimp_dockbook_style_set (GtkWidget *widget,
-                         GtkStyle  *prev_style)
+gimp_dockbook_style_updated (GtkWidget *widget)
 {
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   /* Don't attempt to construct widgets that require a GimpContext if
    * we are detached from a top-level, we're either on our way to
@@ -459,17 +451,6 @@ gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
   return handled;
 }
 
-static void
-gimp_dockbook_menu_position (GtkMenu  *menu,
-                             gint     *x,
-                             gint     *y,
-                             gpointer  data)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-
-  gimp_button_menu_position (dockbook->p->menu_button, menu, GTK_POS_LEFT, x, y);
-}
-
 static gboolean
 gimp_dockbook_show_menu (GimpDockbook *dockbook)
 {
@@ -558,11 +539,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
       {
         GtkWidget *image = gimp_dockable_get_icon (dockable,
                                                    GTK_ICON_SIZE_MENU);
-
-        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
-                                       image);
-        gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
-                                                   TRUE);
+        gimp_menu_item_set_image (GTK_MENU_ITEM (parent_menu_widget), image);
         gtk_widget_show (image);
       }
 
@@ -585,10 +562,15 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                           g_object_unref);
 
   gimp_ui_manager_update (dockbook_ui_manager, dockable);
-  gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
-                            GTK_WIDGET (dockable),
-                            gimp_dockbook_menu_position, dockbook,
-                            (GDestroyNotify) gimp_dockbook_menu_end, dockable);
+
+  gimp_ui_manager_ui_popup_at_widget (dockbook_ui_manager,
+                                      "/dockable-popup",
+                                      dockbook->p->menu_button,
+                                      GDK_GRAVITY_WEST,
+                                      GDK_GRAVITY_NORTH_EAST,
+                                      NULL,
+                                      (GDestroyNotify) gimp_dockbook_menu_end,
+                                      dockable);
 
   return TRUE;
 }
@@ -661,7 +643,7 @@ gimp_dockbook_get_dockable_tab_width (GimpDockbook *dockbook,
    */
   gimp_dock_temp_add (dockbook->p->dock, tab_widget);
 
-  gtk_widget_size_request (tab_widget, &dockable_request);
+  gtk_widget_get_preferred_size (tab_widget, &dockable_request, NULL);
 
   /* Also destroys the widget */
   gimp_dock_temp_remove (dockbook->p->dock, tab_widget);
@@ -786,9 +768,11 @@ gimp_dockbook_update_automatic_tab_style (GimpDockbook *dockbook)
   gint          action_widget_size  = 0;
 
   xthickness = gtk_widget_get_style (widget)->xthickness;
+#if 0
   g_object_get (widget,
                 "tab-hborder", &tab_hborder,
                 NULL);
+#endif
   gtk_widget_style_get (widget,
                         "tab-curvature",    &tab_curvature,
                         "focus-line-width", &focus_width,
@@ -880,8 +864,7 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
 
   dockbook->p->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                            "<Dockable>",
-                                                           dockbook,
-                                                           FALSE);
+                                                           dockbook);
 
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
                      GIMP_HELP_DOCK, dockbook);
@@ -1313,10 +1296,6 @@ gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook,
   GList *dockables = gtk_container_get_children (GTK_CONTAINER (dockbook));
   GList *iter      = NULL;
 
-  g_object_set (dockbook,
-                "tab-border", gimp_dockbook_get_tab_border (dockbook),
-                NULL);
-
   for (iter = dockables; iter; iter = g_list_next (iter))
     {
       GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
@@ -1386,7 +1365,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_container_add (GTK_CONTAINER (window), view);
   gtk_widget_show (view);
 
-  gtk_widget_size_request (view, &requisition);
+  gtk_widget_get_preferred_size (view, &requisition, NULL);
 
   if (requisition.width < allocation.width)
     gtk_widget_set_size_request (view, allocation.width, -1);
@@ -1634,41 +1613,6 @@ gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
   return tab_size;
 }
 
-static gint
-gimp_dockbook_get_tab_border (GimpDockbook *dockbook)
-{
-  Gimp         *gimp;
-  GimpIconSize  size;
-  gint          tab_border = DEFAULT_TAB_BORDER;
-
-  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
-
-  gtk_widget_style_get (GTK_WIDGET (dockbook),
-                        "tab-border", &tab_border,
-                        NULL);
-
-  size = gimp_gui_config_detect_icon_size (GIMP_GUI_CONFIG (gimp->config));
-  /* Match GimpIconSize with GtkIconSize. */
-  switch (size)
-    {
-    case GIMP_ICON_SIZE_SMALL:
-      tab_border /= 2;
-      break;
-    case GIMP_ICON_SIZE_LARGE:
-      tab_border *= 2;
-      break;
-    case GIMP_ICON_SIZE_HUGE:
-      tab_border *= 3;
-      break;
-    default:
-      /* GIMP_ICON_SIZE_MEDIUM and GIMP_ICON_SIZE_DEFAULT:
-       * let's use the size set by the theme. */
-      break;
-    }
-
-  return tab_border;
-}
-
 static void
 gimp_dockbook_add_tab_timeout (GimpDockbook *dockbook,
                                GimpDockable *dockable)
@@ -1697,16 +1641,12 @@ gimp_dockbook_tab_timeout (GimpDockbook *dockbook)
 {
   gint page_num;
 
-  GDK_THREADS_ENTER ();
-
   page_num = gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
                                     GTK_WIDGET (dockbook->p->tab_hover_dockable));
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
 
   dockbook->p->tab_hover_timeout  = 0;
   dockbook->p->tab_hover_dockable = NULL;
-
-  GDK_THREADS_LEAVE ();
 
   return FALSE;
 }

@@ -39,29 +39,26 @@ static gint       ruler_height    = 1;
 /**
  * resolution_calibrate_dialog:
  * @resolution_entry: a #GimpSizeEntry to connect the dialog to
- * @pixbuf:           an optional #GdkPixbuf for the upper left corner
+ * @icon_name:        an optional icon-name for the upper left corner
  *
  * Displays a dialog that allows the user to interactively determine
  * her monitor resolution. This dialog runs it's own GTK main loop and
  * is connected to a #GimpSizeEntry handling the resolution to be set.
  **/
 void
-resolution_calibrate_dialog (GtkWidget *resolution_entry,
-                             GdkPixbuf *pixbuf)
+resolution_calibrate_dialog (GtkWidget   *resolution_entry,
+                             const gchar *icon_name)
 {
   GtkWidget    *dialog;
-  GtkWidget    *table;
+  GtkWidget    *grid;
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *ruler;
   GtkWidget    *label;
-  GdkScreen    *screen;
-  GdkRectangle  rect;
-  gint          monitor;
+  GdkRectangle  workarea;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (gtk_widget_get_realized (resolution_entry));
-  g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
 
   /*  this dialog can only exist once  */
   if (calibrate_entry)
@@ -78,51 +75,45 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  screen = gtk_widget_get_screen (dialog);
-  monitor = gdk_screen_get_monitor_at_window (screen,
-                                              gtk_widget_get_window (resolution_entry));
-  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
+  gdk_monitor_get_workarea (gimp_widget_get_monitor (dialog), &workarea);
 
-  ruler_width  = rect.width  - 300 - (rect.width  % 100);
-  ruler_height = rect.height - 300 - (rect.height % 100);
+  ruler_width  = workarea.width  - 300 - (workarea.width  % 100);
+  ruler_height = workarea.height - 300 - (workarea.height % 100);
 
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
-  if (pixbuf)
+  if (icon_name)
     {
-      GtkWidget *image = gtk_image_new_from_pixbuf (pixbuf);
+      GtkWidget *image = gtk_image_new_from_icon_name (icon_name,
+                                                       GTK_ICON_SIZE_DIALOG);
 
-      gtk_table_attach (GTK_TABLE (table), image, 0, 1, 0, 1,
-                        GTK_SHRINK, GTK_SHRINK, 4, 4);
+      gtk_grid_attach (GTK_GRID (grid), image, 0, 0, 1, 1);
       gtk_widget_show (image);
     }
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_width, ruler_width);
-  gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 1, 0, 2, 1);
   gtk_widget_show (ruler);
 
   ruler = gimp_ruler_new (GTK_ORIENTATION_VERTICAL);
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gimp_ruler_set_range (GIMP_RULER (ruler), 0, ruler_height, ruler_height);
-  gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), ruler, 0, 1, 1, 2);
   gtk_widget_show (ruler);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 1, 2,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), vbox, 1, 1, 1, 1);
   gtk_widget_show (vbox);
 
   label =

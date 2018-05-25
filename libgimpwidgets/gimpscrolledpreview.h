@@ -41,22 +41,14 @@ G_BEGIN_DECLS
 #define GIMP_SCROLLED_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewClass))
 
 
-typedef struct _GimpScrolledPreviewClass  GimpScrolledPreviewClass;
+typedef struct _GimpScrolledPreviewPrivate GimpScrolledPreviewPrivate;
+typedef struct _GimpScrolledPreviewClass   GimpScrolledPreviewClass;
 
 struct _GimpScrolledPreview
 {
-  GimpPreview   parent_instance;
+  GimpPreview                 parent_instance;
 
-  /*< protected >*/
-  GtkWidget    *hscr;
-  GtkWidget    *vscr;
-  GtkWidget    *nav_icon;
-  GtkWidget    *nav_popup;
-  GdkCursor    *cursor_move;
-  gpointer      nav_gc; /* unused */
-
-  /*< private >*/
-  gpointer      priv;
+  GimpScrolledPreviewPrivate *priv;
 };
 
 struct _GimpScrolledPreviewClass
@@ -68,21 +60,36 @@ struct _GimpScrolledPreviewClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
-GType  gimp_scrolled_preview_get_type  (void) G_GNUC_CONST;
+GType  gimp_scrolled_preview_get_type        (void) G_GNUC_CONST;
 
-void   gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
-                                           gint                 x,
-                                           gint                 y);
-void   gimp_scrolled_preview_set_policy   (GimpScrolledPreview *preview,
-                                           GtkPolicyType        hscrollbar_policy,
-                                           GtkPolicyType        vscrollbar_policy);
+void   gimp_scrolled_preview_set_position    (GimpScrolledPreview  *preview,
+                                              gint                  x,
+                                              gint                  y);
+void   gimp_scrolled_preview_set_policy      (GimpScrolledPreview  *preview,
+                                              GtkPolicyType         hscrollbar_policy,
+                                              GtkPolicyType         vscrollbar_policy);
+
+void   gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
+                                              GtkAdjustment       **hadj,
+                                              GtkAdjustment       **vadj);
 
 /*  only for use from derived widgets  */
-void   gimp_scrolled_preview_freeze       (GimpScrolledPreview *preview);
-void   gimp_scrolled_preview_thaw         (GimpScrolledPreview *preview);
+void   gimp_scrolled_preview_freeze          (GimpScrolledPreview  *preview);
+void   gimp_scrolled_preview_thaw            (GimpScrolledPreview  *preview);
+
+/*  utility function for scrolled-window like gimp widgets like the canvas  */
+void   gimp_scroll_adjustment_values         (GdkEventScroll       *sevent,
+                                              GtkAdjustment        *hadj,
+                                              GtkAdjustment        *vadj,
+                                              gdouble              *hvalue,
+                                              gdouble              *vvalue);
 
 
 G_END_DECLS

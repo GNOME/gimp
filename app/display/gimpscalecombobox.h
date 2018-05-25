@@ -32,13 +32,6 @@
 
 typedef struct _GimpScaleComboBoxClass  GimpScaleComboBoxClass;
 
-struct _GimpScaleComboBoxClass
-{
-  GtkComboBoxClass  parent_instance;
-
-  void (* entry_activated) (GimpScaleComboBox *combo_box);
-};
-
 struct _GimpScaleComboBox
 {
   GtkComboBox  parent_instance;
@@ -46,6 +39,13 @@ struct _GimpScaleComboBox
   gdouble      scale;
   GtkTreePath *last_path;
   GList       *mru;
+};
+
+struct _GimpScaleComboBoxClass
+{
+  GtkComboBoxClass  parent_instance;
+
+  void (* entry_activated) (GimpScaleComboBox *combo_box);
 };
 
 

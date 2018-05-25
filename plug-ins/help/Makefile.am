@@ -43,7 +43,7 @@ libgimphelp_a_SOURCES = \
 	gimphelpprogress.h	\
 	gimphelpprogress-private.h
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/help
 
 libexec_PROGRAMS = help
 

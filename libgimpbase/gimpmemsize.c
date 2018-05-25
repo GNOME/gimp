@@ -159,21 +159,6 @@ gimp_memsize_deserialize (const gchar *string,
 }
 
 
-/**
- * gimp_memsize_to_string:
- * @memsize: A memory size in bytes.
- *
- * This function is deprecated! Use g_format_size() instead.
- *
- * Return value: A newly allocated human-readable, translated string.
- **/
-gchar *
-gimp_memsize_to_string (guint64 memsize)
-{
-  return g_format_size (memsize);
-}
-
-
 static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)

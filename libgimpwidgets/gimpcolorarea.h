@@ -42,22 +42,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_AREA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
 
 
-typedef struct _GimpColorAreaClass  GimpColorAreaClass;
+typedef struct _GimpColorAreaPrivate GimpColorAreaPrivate;
+typedef struct _GimpColorAreaClass   GimpColorAreaClass;
 
 struct _GimpColorArea
 {
-  GtkDrawingArea       parent_instance;
+  GtkDrawingArea        parent_instance;
 
-  /*< private >*/
-  guchar              *buf;
-  guint                width;
-  guint                height;
-  guint                rowstride;
-
-  GimpColorAreaType    type;
-  GimpRGB              color;
-  guint                draw_border  : 1;
-  guint                needs_render : 1;
+  GimpColorAreaPrivate *priv;
 };
 
 struct _GimpColorAreaClass
@@ -71,6 +63,10 @@ struct _GimpColorAreaClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 

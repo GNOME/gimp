@@ -693,14 +693,14 @@ dialog_outside_type_callback (GtkWidget *widget,
 static gboolean
 dialog_show (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *mainbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *abox;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *mainbox;
+  GtkWidget     *hbox;
+  GtkWidget     *grid;
+  GtkWidget     *frame;
+  GtkWidget     *abox;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
@@ -713,7 +713,7 @@ dialog_show (void)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -767,13 +767,13 @@ dialog_show (void)
   gtk_box_pack_start (GTK_BOX (mainbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (5, 3, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_widget_show (grid);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("X_1:"), 0, 6,
                               parameters.x1, -50, 50, 0.1, 0.5, 2,
                               TRUE, 0, 0,
@@ -782,7 +782,7 @@ dialog_show (void)
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x1);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("X_2:"), 0, 6,
                               parameters.x2, -50, 50, 0.1, 0.5, 2,
                               TRUE, 0, 0,
@@ -791,7 +791,7 @@ dialog_show (void)
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.x2);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                               _("Y_1:"), 0, 6,
                               parameters.y1, -50, 50, 0.1, 0.5, 2,
                               TRUE, 0, 0,
@@ -800,7 +800,7 @@ dialog_show (void)
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y1);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
                               _("Y_2:"), 0, 6,
                               parameters.y2, -50, 50, 0.1, 0.5, 2,
                               TRUE, 0, 0,
@@ -809,7 +809,7 @@ dialog_show (void)
                     G_CALLBACK (dialog_double_adjustment_update),
                     &parameters.y2);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 4,
                               _("_Depth:"), 0, 6,
                               parameters.depth, 1, 50, 1, 5, 0,
                               TRUE, 0, 0,

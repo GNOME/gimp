@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-15 17:51+0200\n"
-"PO-Revision-Date: 2018-04-15 17:51+0200\n"
+"POT-Creation-Date: 2018-05-08 00:49+0200\n"
+"PO-Revision-Date: 2018-05-08 00:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -59,13 +59,13 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
 #: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:434
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:350
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -119,14 +119,13 @@ msgstr "_Annulla"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -418,18 +417,17 @@ msgstr "Aggiunta strisce"
 msgid "Blinds"
 msgstr "Strisce"
 
-#. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:555
+#: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
 msgstr "Orientamento"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:432
+#: ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "_Orizzontale"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "_Verticale"
 
@@ -451,7 +449,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1620,9 +1618,7 @@ msgid "Automatic pre_view"
 msgstr "Anteprima a_utomatica"
 
 #. Options area, bottom of column
-#. Options section
-#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
-#: ../plug-ins/gfig/gfig-dialog.c:1243
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opzioni"
 
@@ -1638,7 +1634,6 @@ msgstr "Smussamen_to"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
-#: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -2160,7 +2155,7 @@ msgstr ""
 #. KiSS file type
 #. Bits per pixel
 #. Dimensions of image
-#. Layer offets
+#. Layer offsets
 #. Number of colors
 #. Image
 #. Layer
@@ -2195,18 +2190,18 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
-#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
-#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
-#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
-#: ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/common/file-heif.c:337 ../plug-ins/common/file-jp2-load.c:1064
+#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
+#: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
+#: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
+#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
+#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
+#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
+#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
+#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2288,16 +2283,17 @@ msgstr ""
 #.
 #: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
-#: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
-#: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
-#: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
-#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
+#: ../plug-ins/common/file-heif.c:618 ../plug-ins/common/file-html-table.c:236
+#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
+#: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xpm.c:663
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
+#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:718
+#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:285
+#: ../plug-ins/file-psd/psd-save.c:1579 ../plug-ins/file-sgi/sgi.c:579
+#: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Esportazione di \"%s\""
@@ -2658,6 +2654,78 @@ msgstr "Ranghi:"
 #: ../plug-ins/common/file-header.c:82
 msgid "C source code header"
 msgstr "Intestazione codice sorgente C"
+
+#: ../plug-ins/common/file-heif.c:106
+msgid "Loads HEIF images"
+msgstr "Carica immagini HEIF"
+
+#: ../plug-ins/common/file-heif.c:107
+msgid ""
+"Load image stored in HEIF format (High Efficiency Image File Format). "
+"Typical suffices for HEIF files are .heif, .heic."
+msgstr "Carica l'immagine salvata in formato HEIF (formato immagine ad alta efficienza). I suffissi tipici per le immagini HEIF sono .heif e .heic."
+
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
+msgid "HEIF/HEIC"
+msgstr "HEIF/HEIC"
+
+#: ../plug-ins/common/file-heif.c:125
+msgid "Exports HEIF images"
+msgstr "Esporta immagini HEIF"
+
+#: ../plug-ins/common/file-heif.c:126
+msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgstr "Salva l'immagine in formato HEIF (formato immagine ad alta efficienza)."
+
+#: ../plug-ins/common/file-heif.c:367 ../plug-ins/common/file-heif.c:400
+#: ../plug-ins/common/file-heif.c:439 ../plug-ins/common/file-heif.c:457
+#, c-format
+msgid "Loading HEIF image failed: %s"
+msgstr "Caricamento dell'immagine HEIF fallito: %s"
+
+#: ../plug-ins/common/file-heif.c:389
+msgid "Loading HEIF image failed: Input file contains no readable images"
+msgstr "Caricamento immagine HEIF fallito: il file in ingresso non contiene immagini leggibili"
+
+#: ../plug-ins/common/file-heif.c:478
+msgid "image content"
+msgstr "contenuto immagine"
+
+#: ../plug-ins/common/file-heif.c:673
+#, c-format
+msgid "Encoding HEIF image failed: %s"
+msgstr "Codifica immagine HEIF fallita: %s"
+
+#: ../plug-ins/common/file-heif.c:696
+#, c-format
+msgid "Writing HEIF image failed: %s"
+msgstr "Scrittura immagine HEIF fallita: %s"
+
+#: ../plug-ins/common/file-heif.c:781
+msgid "primary"
+msgstr "primario"
+
+#: ../plug-ins/common/file-heif.c:917
+msgid "Load HEIF Image"
+msgstr "Carica immagine HEIF"
+
+#: ../plug-ins/common/file-heif.c:931
+msgid "Select Image"
+msgstr "Seleziona immagine"
+
+#: ../plug-ins/common/file-heif.c:1044
+msgid "HEIF"
+msgstr "HEIF"
+
+#. Create the lossless checkbox
+#: ../plug-ins/common/file-heif.c:1051
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
+msgid "Lossless"
+msgstr "Senza perdite"
+
+#: ../plug-ins/common/file-heif.c:1055
+msgid "Quality:"
+msgstr "Qualità:"
 
 #: ../plug-ins/common/file-html-table.c:153
 #: ../plug-ins/common/file-html-table.c:463
@@ -3279,7 +3347,9 @@ msgstr "Errore durante il caricamento del file PNG: %s"
 #: ../plug-ins/common/file-png.c:885
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "Errore nella creazione delle strutture di lettura del PNG durante il caricamento di \"%s\"."
+msgstr ""
+"Errore nella creazione delle strutture di lettura del PNG durante il "
+"caricamento di \"%s\"."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format
@@ -4956,7 +5026,7 @@ msgstr "Traccia frattale"
 msgid "Outside Type"
 msgstr "Tipo di contorno"
 
-#: ../plug-ins/common/fractal-trace.c:753 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
 msgstr "_Avvolto"
 
@@ -5616,64 +5686,6 @@ msgstr "G-Qbista"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
 msgid "_Undo"
 msgstr "Ripristi_na"
-
-#: ../plug-ins/common/ripple.c:126
-msgid "Displace pixels in a ripple pattern"
-msgstr "Distribuisce i pixel con un motivo a onde"
-
-#: ../plug-ins/common/ripple.c:133
-msgid "_Ripple..."
-msgstr "Inc_respature..."
-
-#: ../plug-ins/common/ripple.c:221
-msgid "Rippling"
-msgstr "Increspature"
-
-#: ../plug-ins/common/ripple.c:483
-msgid "Ripple"
-msgstr "Increspature"
-
-#: ../plug-ins/common/ripple.c:542
-msgid "_Retain tilability"
-msgstr "_Mantieni affiancabilità"
-
-#. Edges toggle box
-#: ../plug-ins/common/ripple.c:579
-msgid "Edges"
-msgstr "Contorni"
-
-#: ../plug-ins/common/ripple.c:584
-msgid "_Smear"
-msgstr "_Macchia"
-
-#: ../plug-ins/common/ripple.c:585
-msgid "_Blank"
-msgstr "_Cancella"
-
-#. Wave toggle box
-#: ../plug-ins/common/ripple.c:608
-msgid "Wave Type"
-msgstr "Tipo di onde"
-
-#: ../plug-ins/common/ripple.c:612
-msgid "Saw_tooth"
-msgstr "Den_te di sega"
-
-#: ../plug-ins/common/ripple.c:613
-msgid "S_ine"
-msgstr "S_eno"
-
-#: ../plug-ins/common/ripple.c:636
-msgid "_Period:"
-msgstr "_Periodo:"
-
-#: ../plug-ins/common/ripple.c:649
-msgid "A_mplitude:"
-msgstr "A_mpiezza:"
-
-#: ../plug-ins/common/ripple.c:662
-msgid "Phase _shift:"
-msgstr "_Spostamento di fase:"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -6603,7 +6615,7 @@ msgid "Flow step %d"
 msgstr "Passo di flusso %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
-#: ../plug-ins/common/wavelet-decompose.c:346
+#: ../plug-ins/common/wavelet-decompose.c:350
 msgid "Wavelet decompose"
 msgstr "Scomposizione Wavelet"
 
@@ -6615,30 +6627,30 @@ msgstr "Scomposizione-_Wavelet..."
 msgid "Wavelet-Decompose"
 msgstr "Scomposizione-Wavelet"
 
-#: ../plug-ins/common/wavelet-decompose.c:184
+#: ../plug-ins/common/wavelet-decompose.c:186
 msgid "Decomposition"
 msgstr "Scomposizione"
 
-#: ../plug-ins/common/wavelet-decompose.c:246
+#: ../plug-ins/common/wavelet-decompose.c:248
 #, c-format
 msgid "Scale %d"
 msgstr "Scala %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:270
+#: ../plug-ins/common/wavelet-decompose.c:272
 msgid "Residual"
 msgstr "Residuo"
 
-#: ../plug-ins/common/wavelet-decompose.c:377
+#: ../plug-ins/common/wavelet-decompose.c:381
 msgid "Scales:"
 msgstr "Scala:"
 
 #. create group layer
-#: ../plug-ins/common/wavelet-decompose.c:389
+#: ../plug-ins/common/wavelet-decompose.c:393
 msgid "Create a layer group to store the decomposition"
 msgstr "Crea un gruppo di livelli per memorizzare la scomposizione"
 
 #. create layer masks
-#: ../plug-ins/common/wavelet-decompose.c:401
+#: ../plug-ins/common/wavelet-decompose.c:405
 msgid "Add a layer mask to each scales layers"
 msgstr "Aggiungi una maschera di livello per ogni livello scalato"
 
@@ -7289,21 +7301,21 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1892
+#: ../plug-ins/file-psd/psd-load.c:1904
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:2083
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2140
+#: ../plug-ins/file-psd/psd-load.c:2152
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
@@ -7618,11 +7630,6 @@ msgstr "(tutti i quadri sono quadri chiave)"
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
-
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Senza perdite"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"

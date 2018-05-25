@@ -22,9 +22,9 @@
 struct _GimpBrushPrivate
 {
   GimpTempBuf    *mask;           /*  the actual mask                    */
-  GimpTempBuf    *blured_mask;    /*  blured actual mask cached          */
+  GimpTempBuf    *blurred_mask;    /*  blurred actual mask cached          */
   GimpTempBuf    *pixmap;         /*  optional pixmap data               */
-  GimpTempBuf    *blured_pixmap;  /*  optional pixmap data blured cache  */
+  GimpTempBuf    *blurred_pixmap;  /*  optional pixmap data blurred cache  */
 
   gdouble         blur_hardness;
 

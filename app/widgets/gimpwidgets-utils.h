@@ -22,20 +22,18 @@
 #define __APP_GIMP_WIDGETS_UTILS_H__
 
 
+GtkWidget       * gimp_menu_item_get_image         (GtkMenuItem          *item);
+void              gimp_menu_item_set_image         (GtkMenuItem          *item,
+                                                    GtkWidget            *image);
+
 void              gimp_menu_position               (GtkMenu              *menu,
                                                     gint                 *x,
                                                     gint                 *y);
-void              gimp_button_menu_position        (GtkWidget            *button,
-                                                    GtkMenu              *menu,
-                                                    GtkPositionType       position,
-                                                    gint                 *x,
-                                                    gint                 *y);
-void              gimp_table_attach_icon           (GtkTable             *table,
+void              gimp_grid_attach_icon            (GtkGrid              *grid,
                                                     gint                  row,
                                                     const gchar          *icon_name,
                                                     GtkWidget            *widget,
-                                                    gint                  colspan,
-                                                    gboolean              left_align);
+                                                    gint                  columns);
 void              gimp_enum_radio_box_add          (GtkBox               *box,
                                                     GtkWidget            *widget,
                                                     gint                  enum_value,
@@ -69,14 +67,12 @@ GdkModifierType   gimp_get_toggle_behavior_mask    (void);
 GdkModifierType   gimp_get_constrain_behavior_mask (void);
 GdkModifierType   gimp_get_all_modifiers_mask      (void);
 
-void              gimp_get_monitor_resolution      (GdkScreen            *screen,
-                                                    gint                  monitor,
+void              gimp_get_monitor_resolution      (GdkMonitor           *monitor,
                                                     gdouble              *xres,
                                                     gdouble              *yres);
-void              gimp_rgb_get_gdk_color           (const GimpRGB        *rgb,
-                                                    GdkColor             *gdk_color);
-void              gimp_rgb_set_gdk_color           (GimpRGB              *rgb,
-                                                    const GdkColor       *gdk_color);
+gboolean          gimp_get_style_color             (GtkWidget            *widget,
+                                                    const gchar          *property_name,
+                                                    GdkRGBA              *color);
 void              gimp_window_set_hint             (GtkWindow            *window,
                                                     GimpWindowHint        hint);
 guint32           gimp_window_get_native_id        (GtkWindow            *window);
@@ -99,8 +95,7 @@ void              gimp_highlight_widget            (GtkWidget            *widget
 void              gimp_widget_blink                (GtkWidget             *widget);
 void              gimp_widget_blink_cancel         (GtkWidget             *widget);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
-                                                    GdkScreen            *screen,
-                                                    gint                  monitor,
+                                                    GdkMonitor           *monitor,
                                                     gboolean              toolbox);
 GtkWidget       * gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
@@ -111,6 +106,13 @@ void              gimp_widget_flush_expose         (GtkWidget            *widget
 gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget);
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);
+
+void              gimp_button_set_suggested        (GtkWidget            *button,
+                                                    gboolean              suggested,
+                                                    GtkReliefStyle        default_relief);
+void              gimp_button_set_destructive      (GtkWidget            *button,
+                                                    gboolean              suggestes,
+                                                    GtkReliefStyle        default_relief);
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 

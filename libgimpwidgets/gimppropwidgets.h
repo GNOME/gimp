@@ -84,13 +84,6 @@ GtkWidget     * gimp_prop_enum_radio_box_new      (GObject      *config,
                                                    gint          minimum,
                                                    gint          maximum);
 
-GIMP_DEPRECATED_FOR(gimp_prop_enum_icon_box_new)
-GtkWidget     * gimp_prop_enum_stock_box_new      (GObject      *config,
-                                                   const gchar  *property_name,
-                                                   const gchar  *stock_prefix,
-                                                   gint          minimum,
-                                                   gint          maximum);
-
 GtkWidget     * gimp_prop_enum_icon_box_new       (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *icon_prefix,
@@ -115,9 +108,9 @@ GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
                                                    gdouble       page_increment,
                                                    gint          digits);
 
-GtkObject     * gimp_prop_scale_entry_new         (GObject      *config,
+GtkAdjustment * gimp_prop_scale_entry_new         (GObject      *config,
                                                    const gchar  *property_name,
-                                                   GtkTable     *table,
+                                                   GtkGrid      *grid,
                                                    gint          column,
                                                    gint          row,
                                                    const gchar  *label,
@@ -130,9 +123,9 @@ GtkObject     * gimp_prop_scale_entry_new         (GObject      *config,
 
 /*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
 
-GtkObject     * gimp_prop_opacity_entry_new       (GObject       *config,
+GtkAdjustment * gimp_prop_opacity_entry_new       (GObject       *config,
                                                    const gchar   *property_name,
-                                                   GtkTable      *table,
+                                                   GtkGrid       *grid,
                                                    gint           column,
                                                    gint           row,
                                                    const gchar   *label);
@@ -221,18 +214,10 @@ GtkWidget     * gimp_prop_color_area_new          (GObject       *config,
 
 GtkWidget     * gimp_prop_unit_combo_box_new      (GObject       *config,
                                                    const gchar   *property_name);
-GIMP_DEPRECATED_FOR(gimp_prop_unit_combo_box_new)
-GtkWidget     * gimp_prop_unit_menu_new           (GObject       *config,
-                                                   const gchar   *property_name,
-                                                   const gchar   *unit_format);
 
 
 /*  GParamString (icon name)  */
 
-GIMP_DEPRECATED_FOR(gimp_prop_stock_image_new)
-GtkWidget     * gimp_prop_stock_image_new         (GObject       *config,
-                                                   const gchar   *property_name,
-                                                   GtkIconSize    icon_size);
 GtkWidget     * gimp_prop_icon_image_new          (GObject       *config,
                                                    const gchar   *property_name,
                                                    GtkIconSize    icon_size);

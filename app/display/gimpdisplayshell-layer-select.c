@@ -116,7 +116,6 @@ layer_select_new (GimpDisplayShell *shell,
   GtkWidget   *frame1;
   GtkWidget   *frame2;
   GtkWidget   *hbox;
-  GtkWidget   *alignment;
 
   layer_select = g_slice_new0 (LayerSelect);
 
@@ -151,11 +150,7 @@ layer_select_new (GimpDisplayShell *shell,
   gtk_container_add (GTK_CONTAINER (frame2), hbox);
   gtk_widget_show (hbox);
 
-  /*  The view  */
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
-
+  /*  the view  */
   layer_select->view =
     gimp_view_new_by_types (gimp_get_user_context (image->gimp),
                             GIMP_TYPE_VIEW,
@@ -165,9 +160,8 @@ layer_select_new (GimpDisplayShell *shell,
                                        gimp_display_shell_get_color_config (shell));
   gimp_view_set_viewable (GIMP_VIEW (layer_select->view),
                           GIMP_VIEWABLE (layer));
-  gtk_container_add (GTK_CONTAINER (alignment), layer_select->view);
+  gtk_box_pack_start (GTK_BOX (hbox), layer_select->view, FALSE, FALSE, 0);
   gtk_widget_show (layer_select->view);
-  gtk_widget_show (alignment);
 
   /*  the layer name label */
   layer_select->label = gtk_label_new (gimp_object_get_name (layer));

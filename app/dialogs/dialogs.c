@@ -211,12 +211,10 @@ GimpContainer *global_recent_docks = NULL;
 
 
 static GtkWidget * dialogs_restore_dialog (GimpDialogFactory *factory,
-                                           GdkScreen         *screen,
-                                           gint               monitor,
+                                           GdkMonitor        *monitor,
                                            GimpSessionInfo   *info);
 static GtkWidget * dialogs_restore_window (GimpDialogFactory *factory,
-                                           GdkScreen         *screen,
-                                           gint               monitor,
+                                           GdkMonitor        *monitor,
                                            GimpSessionInfo   *info);
 
 
@@ -448,7 +446,6 @@ static const GimpDialogFactoryEntry entries[] =
  * dialogs_restore_dialog:
  * @factory:
  * @screen:
- * @monitor:
  * @info:
  *
  * Creates a top level widget based on the given session info object
@@ -459,20 +456,23 @@ static const GimpDialogFactoryEntry entries[] =
  **/
 static GtkWidget *
 dialogs_restore_dialog (GimpDialogFactory *factory,
-                        GdkScreen         *screen,
-                        gint               monitor,
+                        GdkMonitor        *monitor,
                         GimpSessionInfo   *info)
 {
-  GtkWidget      *dialog;
-  GimpCoreConfig *config = gimp_dialog_factory_get_context (factory)->gimp->config;
+  GtkWidget        *dialog;
+  Gimp             *gimp    = gimp_dialog_factory_get_context (factory)->gimp;
+  GimpCoreConfig   *config  = gimp->config;
+  GimpDisplay      *display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
   GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
             gimp_session_info_get_factory_entry (info)->identifier,
             info);
 
   dialog =
-    gimp_dialog_factory_dialog_new (factory, screen, monitor,
+    gimp_dialog_factory_dialog_new (factory, monitor,
                                     NULL /*ui_manager*/,
+                                    GTK_WIDGET (gimp_display_shell_get_window (shell)),
                                     gimp_session_info_get_factory_entry (info)->identifier,
                                     gimp_session_info_get_factory_entry (info)->view_size,
                                     ! GIMP_GUI_CONFIG (config)->hide_docks);
@@ -488,7 +488,6 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
 /**
  * dialogs_restore_window:
  * @factory:
- * @screen:
  * @monitor:
  * @info:
  *
@@ -500,8 +499,7 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
  **/
 static GtkWidget *
 dialogs_restore_window (GimpDialogFactory *factory,
-                        GdkScreen         *screen,
-                        gint               monitor,
+                        GdkMonitor        *monitor,
                         GimpSessionInfo   *info)
 {
   Gimp             *gimp    = gimp_dialog_factory_get_context (factory)->gimp;

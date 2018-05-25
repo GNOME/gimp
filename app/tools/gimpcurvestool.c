@@ -203,7 +203,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                  NULL);
 
   histogram = gimp_histogram_new (config->linear);
-  gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
+  g_object_unref (gimp_drawable_calculate_histogram_async (
+    drawable, histogram, FALSE));
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);
   g_object_unref (histogram);
@@ -377,7 +378,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget        *label;
   GtkWidget        *main_frame;
   GtkWidget        *frame;
-  GtkWidget        *table;
+  GtkWidget        *grid;
   GtkWidget        *button;
   GtkWidget        *bar;
   GtkWidget        *combo;
@@ -458,16 +459,15 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
   gtk_widget_show (frame_vbox);
 
-  /*  The table for the color bars and the graph  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (frame_vbox), table, TRUE, TRUE, 0);
+  /*  The grid for the color bars and the graph  */
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), grid, TRUE, TRUE, 0);
 
   /*  The left color bar  */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_table_attach (GTK_TABLE (table), vbox, 0, 1, 0, 1,
-                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), vbox, 0, 0, 1, 1);
   gtk_widget_show (vbox);
 
   frame = gtk_frame_new (NULL);
@@ -483,8 +483,9 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_hexpand (frame, TRUE);
+  gtk_widget_set_vexpand (frame, TRUE);
+  gtk_grid_attach (GTK_GRID (grid), frame, 1, 0, 1, 1);
   gtk_widget_show (frame);
 
   tool->graph = gimp_curve_view_new ();
@@ -511,8 +512,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox2, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_grid_attach (GTK_GRID (grid), hbox2, 1, 1, 1, 1);
   gtk_widget_show (hbox2);
 
   frame = gtk_frame_new (NULL);
@@ -534,7 +534,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox), bar, TRUE, TRUE, 0);
   gtk_widget_show (bar);
 
-  gtk_widget_show (table);
+  gtk_widget_show (grid);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_end (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
@@ -628,8 +628,8 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
                      NULL);
 
       histogram = gimp_histogram_new (curves_config->linear);
-      gimp_drawable_calculate_histogram (GIMP_TOOL (filter_tool)->drawable,
-                                         histogram, FALSE);
+      g_object_unref (gimp_drawable_calculate_histogram_async (
+        GIMP_TOOL (filter_tool)->drawable, histogram, FALSE));
       gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (curves_tool->graph),
                                           histogram);
       g_object_unref (histogram);
@@ -912,21 +912,34 @@ curves_get_channel_color (GtkWidget            *widget,
     { 0.5, 0.5, 0.5, 1.0 }
   };
 
+  GdkRGBA rgba;
+
   if (channel == GIMP_HISTOGRAM_VALUE)
     return FALSE;
 
   if (channel == GIMP_HISTOGRAM_ALPHA)
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      gdouble          lum;
 
-      gimp_rgba_set (color,
-                     style->text_aa[GTK_STATE_NORMAL].red / 65535.0,
-                     style->text_aa[GTK_STATE_NORMAL].green / 65535.0,
-                     style->text_aa[GTK_STATE_NORMAL].blue / 65535.0,
-                     1.0);
+      gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                                   &rgba);
+
+      lum = GIMP_RGB_LUMINANCE (rgba.red, rgba.green, rgba.blue);
+
+      if (lum > 0.5)
+        {
+          gimp_rgba_set (color, lum - 0.3, lum - 0.3, lum - 0.3, 1.0);
+        }
+      else
+        {
+          gimp_rgba_set (color, lum + 0.3, lum + 0.3, lum + 0.3, 1.0);
+        }
+
       return TRUE;
     }
 
   *color = channel_colors[channel];
+
   return TRUE;
 }

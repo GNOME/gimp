@@ -225,16 +225,13 @@ gui_message_error_console (Gimp                *gimp,
 
   if (! dockable)
     {
-      GdkScreen *screen;
-      gint       monitor;
-
-      monitor = gimp_get_monitor_at_pointer (&screen);
+      GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
 
       dockable =
         gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
                                                    gimp,
                                                    gimp_dialog_factory_get_singleton (),
-                                                   screen, monitor,
+                                                   monitor,
                                                    "gimp-error-console");
     }
 
@@ -455,14 +452,12 @@ gui_message_format (GimpMessageSeverity  severity,
 static GtkWidget *
 global_error_dialog (void)
 {
-  GdkScreen *screen;
-  gint       monitor;
-
-  monitor = gimp_get_monitor_at_pointer (&screen);
+  GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
 
   return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                         screen, monitor,
+                                         monitor,
                                          NULL /*ui_manager*/,
+                                         NULL,
                                          "gimp-error-dialog", -1,
                                          FALSE);
 }
@@ -470,15 +465,13 @@ global_error_dialog (void)
 static GtkWidget *
 global_critical_dialog (void)
 {
-  GtkWidget *dialog;
-  GdkScreen *screen;
-  gint       monitor;
-
-  monitor = gimp_get_monitor_at_pointer (&screen);
+  GdkMonitor *monitor = gimp_get_monitor_at_pointer ();
+  GtkWidget  *dialog;
 
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                           screen, monitor,
+                                           monitor,
                                            NULL /*ui_manager*/,
+                                           NULL,
                                            "gimp-critical-dialog", -1,
                                            FALSE);
   g_signal_handlers_disconnect_by_func (dialog,

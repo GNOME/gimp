@@ -305,10 +305,7 @@ popup_menu (GtkWidget      *widget,
   GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager, "/anim-play-popup");
 
   gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-  gtk_menu_popup (GTK_MENU (menu),
-                  NULL, NULL, NULL, NULL,
-                  event ? event->button : 0,
-                  event ? event->time   : gtk_get_current_event_time ());
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
   return TRUE;
 }
@@ -453,7 +450,7 @@ shape_released (GtkWidget *widget)
 {
   gtk_grab_remove (widget);
   gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (widget));
 
   return FALSE;
 }
@@ -964,7 +961,7 @@ build_dialog (gchar             *imagename)
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
                                        GDK_HAND2);
   gdk_window_set_cursor (gtk_widget_get_window (shape_window), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 
   g_signal_connect(shape_drawing_area, "size-allocate",
                    G_CALLBACK(sda_size_callback),

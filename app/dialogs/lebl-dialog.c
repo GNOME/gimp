@@ -160,7 +160,7 @@ inv_show_status (void)
 }
 
 static gboolean
-inv_draw (gpointer data)
+inv_queue_draw_idle (gpointer data)
 {
         gtk_widget_queue_draw (data);
 
@@ -171,26 +171,39 @@ static void
 inv_queue_draw (GtkWidget *window)
 {
        if (inv_draw_idle == 0)
-               inv_draw_idle = g_idle_add (inv_draw, window);
+               inv_draw_idle = g_idle_add (inv_queue_draw_idle, window);
 }
 
 static void
 inv_draw_explosion (int x, int y)
 {
+        GdkDrawingContext *context;
+        cairo_rectangle_int_t rect;
+        cairo_region_t *region;
         cairo_t *cr;
         int i;
 
         if ( ! gtk_widget_is_drawable (geginv_canvas))
                 return;
 
-        cr = gdk_cairo_create ( gtk_widget_get_window (geginv_canvas));
+        rect.x      = x - 100;
+        rect.y      = y - 100;
+        rect.width  = 200;
+        rect.height = 200;
+
+        region = cairo_region_create_rectangle (&rect);
+        context = gdk_window_begin_draw_frame (gtk_widget_get_window (geginv_canvas),
+                                               region);
+        cairo_region_destroy (region);
+
+        cr = gdk_drawing_context_get_cairo_context (context);
 
         cairo_set_source_rgb (cr, 1.0, 0.0, 0.0);
 
         for (i = 5; i < 100; i += 5) {
                 cairo_arc (cr, x, y, i, 0, 2 * G_PI);
                 cairo_fill (cr);
-                gdk_flush ();
+                gdk_display_flush (gtk_widget_get_display (geginv_canvas));
                 g_usleep (50000);
         }
 
@@ -199,11 +212,12 @@ inv_draw_explosion (int x, int y)
         for (i = 5; i < 100; i += 5) {
                 cairo_arc (cr, x, y, i, 0, 2 * G_PI);
                 cairo_fill (cr);
-                gdk_flush ();
+                gdk_display_flush (gtk_widget_get_display (geginv_canvas));
                 g_usleep (50000);
         }
 
-        cairo_destroy (cr);
+        gdk_window_end_draw_frame (gtk_widget_get_window (geginv_canvas),
+                                   context);
 
 	inv_queue_draw (geginv);
 }
@@ -681,9 +695,8 @@ geginv_destroyed (GtkWidget *w, gpointer data)
 }
 
 static gboolean
-inv_expose (GtkWidget *widget, GdkEventExpose *event)
+inv_draw (GtkWidget *widget, cairo_t *cr)
 {
-        cairo_t *cr;
 	GdkPixbuf *goat;
 	GSList *li;
 	int i, j;
@@ -692,11 +705,6 @@ inv_expose (GtkWidget *widget, GdkEventExpose *event)
 		inv_draw_idle = 0;
 		return TRUE;
 	}
-
-	if ( ! gtk_widget_is_drawable (geginv_canvas))
-		return TRUE;
-
-        cr = gdk_cairo_create (gtk_widget_get_window (geginv_canvas));
 
         cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
         cairo_paint (cr);
@@ -755,10 +763,6 @@ inv_expose (GtkWidget *widget, GdkEventExpose *event)
                 cairo_fill (cr);
 	}
 
-        cairo_destroy (cr);
-
-	gdk_flush ();
-
 	if (inv_do_pause) {
 		g_usleep (G_USEC_PER_SEC);
 		inv_do_pause = FALSE;
@@ -773,6 +777,8 @@ gboolean gimp_lebl_dialog (void);
 gboolean
 gimp_lebl_dialog (void)
 {
+        GdkMonitor *monitor;
+        GdkRectangle workarea;
 	GtkWidget *vbox;
 	int i, j;
 
@@ -784,13 +790,16 @@ gimp_lebl_dialog (void)
 	inv_width = 800;
 	inv_height = 600;
 
-	if (inv_width > gdk_screen_get_width (gdk_screen_get_default ()) * 0.9) {
-		inv_width = gdk_screen_get_width (gdk_screen_get_default ()) * 0.9;
+        monitor = gimp_get_monitor_at_pointer ();
+        gdk_monitor_get_workarea (monitor, &workarea);
+
+	if (inv_width > workarea.width * 0.9) {
+		inv_width = workarea.width * 0.9;
 		inv_height = inv_width * (600.0/800.0);
 	}
 
-	if (inv_height > gdk_screen_get_height (gdk_screen_get_default ()) * 0.9) {
-		inv_height = gdk_screen_get_height (gdk_screen_get_default ()) * 0.9;
+	if (inv_height > workarea.height * 0.9) {
+		inv_height = workarea.height * 0.9;
 		inv_width = inv_height * (800.0/600.0);
 	}
 
@@ -840,8 +849,8 @@ gimp_lebl_dialog (void)
 			  G_CALLBACK (inv_key_press), NULL);
 	g_signal_connect (G_OBJECT (geginv), "key_release_event",
 			  G_CALLBACK (inv_key_release), NULL);
-	g_signal_connect (G_OBJECT (geginv_canvas), "expose_event",
-			  G_CALLBACK (inv_expose), NULL);
+	g_signal_connect (G_OBJECT (geginv_canvas), "draw",
+			  G_CALLBACK (inv_draw), NULL);
 
 	g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
 	g_slist_free (inv_shots);

@@ -142,7 +142,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
 {
   GtkWidget   *main_vbox;
   GtkWidget   *vbox;
-  GtkWidget   *table;
+  GtkWidget   *grid;
   GtkWidget   *hbox;
   GtkWidget   *scale;
   GtkWidget   *vbox2;
@@ -162,11 +162,11 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
 
   /* matrix */
 
-  table = gtk_table_new (5, 5, TRUE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   for (y = 0; y < 5; y++)
     {
@@ -178,10 +178,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
                                             convolution_matrix_prop_name (x, y),
                                             1.0, 10.0, 2);
           gtk_entry_set_width_chars (GTK_ENTRY (spin), 8);
-          gtk_table_attach (GTK_TABLE (table), spin,
-                            x, x + 1, y, y + 1,
-                            GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND,
-                            0, 0);
+          gtk_grid_attach (GTK_GRID (grid), spin, y, x, 1, 1);
           gtk_widget_show (spin);
         }
     }

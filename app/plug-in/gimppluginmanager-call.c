@@ -173,8 +173,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       GPConfig           config;
       GPProcRun          proc_run;
       gint               display_ID;
-      GObject           *screen;
-      gint               monitor;
+      GObject           *monitor;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
@@ -195,7 +194,6 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
       display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
 
-      config.version          = GIMP_PROTOCOL_VERSION;
       config.tile_width       = GIMP_PLUG_IN_TILE_WIDTH;
       config.tile_height      = GIMP_PLUG_IN_TILE_HEIGHT;
       config.shm_ID           = (manager->shm ?
@@ -209,16 +207,14 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.export_exif      = core_config->export_metadata_exif;
       config.export_xmp       = core_config->export_metadata_xmp;
       config.export_iptc      = core_config->export_metadata_iptc;
-      config.install_cmap     = FALSE;
       config.show_tooltips    = gui_config->show_tooltips;
-      config.min_colors       = 144;
       config.gdisp_ID         = display_ID;
       config.app_name         = (gchar *) g_get_application_name ();
       config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
       config.display_name     = gimp_get_display_name (manager->gimp,
                                                        display_ID,
-                                                       &screen, &monitor);
-      config.monitor_number   = monitor;
+                                                       &monitor,
+                                                       &config.monitor_number);
       config.timestamp        = gimp_get_user_time (manager->gimp);
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;

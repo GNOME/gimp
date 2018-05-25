@@ -824,21 +824,21 @@ save_image (const gchar  *filename,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkObject *scale_data;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *grid;
+  GtkAdjustment *scale_data;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("XPM"), PLUG_IN_BINARY, SAVE_PROC);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
+                      grid, TRUE, TRUE, 0);
+  gtk_widget_show (grid);
 
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                      _("_Alpha threshold:"), SCALE_WIDTH, 0,
                                      xpmvals.threshold, 0, 255, 1, 8, 0,
                                      TRUE, 0, 0,

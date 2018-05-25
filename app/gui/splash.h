@@ -20,8 +20,7 @@
 
 
 void   splash_create    (gboolean     be_verbose,
-                         GdkScreen   *screen,
-                         gint         monitor);
+                         GdkMonitor  *mointor);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,

@@ -7,6 +7,7 @@ SIGNED_ROUND
 SQR
 MAX255
 CLAMP0255
+SAFE_CLAMP
 gimp_deg_to_rad
 gimp_rad_to_deg
 </SECTION>

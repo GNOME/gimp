@@ -52,8 +52,7 @@ struct _GimpDisplayShell
   GimpDisplay       *display;
 
   GimpUIManager     *popup_manager;
-  GdkScreen         *initial_screen;
-  gint               initial_monitor;
+  GdkMonitor        *initial_monitor;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
@@ -181,13 +180,13 @@ struct _GimpDisplayShell
   gboolean           size_allocate_from_configure_event;
 
   /*  the state of gimp_display_shell_tool_events()  */
-  gboolean           pointer_grabbed;
-  guint32            pointer_grab_time;
+  GdkDevice         *grab_pointer;
+  GdkDevice         *grab_pointer_source;
+  guint32            grab_pointer_time;
 
-  gboolean           keyboard_grabbed;
-  guint32            keyboard_grab_time;
-
-  gboolean           inferior_ignore_mode;
+  GdkDevice         *grab_keyboard;
+  GdkDevice         *grab_keyboard_source;
+  guint32            grab_keyboard_time;
 
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),
@@ -237,8 +236,7 @@ GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
                                                     GimpUIManager      *popup_manager,
-                                                    GdkScreen          *screen,
-                                                    gint                monitor);
+                                                    GdkMonitor         *monitor);
 
 void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,

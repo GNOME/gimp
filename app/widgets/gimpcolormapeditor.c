@@ -74,8 +74,8 @@ static PangoLayout *
 
 static void   gimp_colormap_editor_update_entries  (GimpColormapEditor *editor);
 
-static gboolean gimp_colormap_preview_expose       (GtkWidget          *widget,
-                                                    GdkEventExpose     *event,
+static gboolean gimp_colormap_preview_draw         (GtkWidget          *widget,
+                                                    cairo_t            *cr,
                                                     GimpColormapEditor *editor);
 
 static void   gimp_colormap_editor_entry_clicked   (GimpPaletteView    *view,
@@ -149,7 +149,7 @@ static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *grid;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -165,8 +165,8 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
   gtk_widget_show (editor->view);
 
-  g_signal_connect (editor->view, "expose-event",
-                    G_CALLBACK (gimp_colormap_preview_expose),
+  g_signal_connect (editor->view, "draw",
+                    G_CALLBACK (gimp_colormap_preview_draw),
                     editor);
 
   g_signal_connect (editor->view, "entry-clicked",
@@ -186,32 +186,32 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                     editor);
 
   /*  Some helpful hints  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 4);
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 2);
+  gtk_box_pack_end (GTK_BOX (editor), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
-  editor->index_adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (0, 0, 0, 1, 10, 0);
+  editor->index_adjustment = gtk_adjustment_new (0, 0, 0, 1, 10, 0);
   editor->index_spinbutton = gtk_spin_button_new (editor->index_adjustment,
                                                   1.0, 0);
+  gtk_widget_set_halign (editor->index_spinbutton, GTK_ALIGN_START);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (editor->index_spinbutton),
                                TRUE);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Color index:"), 0.0, 0.5,
-                             editor->index_spinbutton, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("Color index:"), 0.0, 0.5,
+                            editor->index_spinbutton, 1);
 
   g_signal_connect (editor->index_adjustment, "value-changed",
                     G_CALLBACK (gimp_colormap_adjustment_changed),
                     editor);
 
   editor->color_entry = gimp_color_hex_entry_new ();
+  gtk_widget_set_halign (editor->color_entry, GTK_ALIGN_START);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 12);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("HTML notation:"), 0.0, 0.5,
-                             editor->color_entry, 1, TRUE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                            _("HTML notation:"), 0.0, 0.5,
+                            editor->color_entry, 1);
 
   g_signal_connect (editor->color_entry, "color-changed",
                     G_CALLBACK (gimp_colormap_hex_entry_changed),
@@ -497,14 +497,14 @@ gimp_colormap_editor_create_layout (GtkWidget *widget)
 }
 
 static gboolean
-gimp_colormap_preview_expose (GtkWidget          *widget,
-                              GdkEventExpose     *event,
-                              GimpColormapEditor *editor)
+gimp_colormap_preview_draw (GtkWidget          *widget,
+                            cairo_t            *cr,
+                            GimpColormapEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GtkStyle        *style;
-  cairo_t         *cr;
+  GtkStyleContext *style        = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
+  GdkRGBA          color;
   gint             width, height;
   gint             y;
 
@@ -512,17 +512,11 @@ gimp_colormap_preview_expose (GtkWidget          *widget,
       gimp_image_get_base_type (image_editor->image) == GIMP_INDEXED)
     return FALSE;
 
-  cr = gdk_cairo_create (event->window);
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  style = gtk_widget_get_style (widget);
-  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
+  gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  if (! gtk_widget_get_has_window (widget))
-    cairo_translate (cr, allocation.x, allocation.y);
 
   if (! editor->layout)
     editor->layout = gimp_colormap_editor_create_layout (editor->view);
@@ -536,8 +530,6 @@ gimp_colormap_preview_expose (GtkWidget          *widget,
 
   cairo_move_to (cr, BORDER, MAX (y, 0));
   pango_cairo_show_layout (cr, editor->layout);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }

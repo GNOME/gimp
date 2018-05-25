@@ -35,11 +35,10 @@ struct _GimpSessionInfoPrivate
   gint                    height;
   gboolean                right_align;
   gboolean                bottom_align;
-  gint                    monitor;
+  GdkMonitor             *monitor;
 
   /*  only valid while restoring and saving the session  */
   gboolean                open;
-  gint                    screen;
 
   /*  dialog specific list of GimpSessionInfoAux  */
   GList                  *aux_info;

@@ -486,49 +486,6 @@ CODE
     );
 }
 
-sub layer_scale_full {
-    &std_pdb_deprecated('gimp-layer-scale');
-    &neo_pdb_misc('2008', '2.6');
-
-    @inargs = (
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' },
-	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
-	  desc => 'New layer width' },
-	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
-	  desc => 'New layer height' },
-	{ name => 'local_origin', type => 'boolean',
-	  desc => 'Use a local origin (as opposed to the image origin)' },
-	{ name => 'interpolation', type => 'enum GimpInterpolationType',
-	  desc => 'Type of interpolation' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
-                                 error))
-    {
-      if (progress)
-        gimp_progress_start (progress, FALSE, _("Scaling"));
-
-      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                 interpolation, progress,
-                                 local_origin);
-
-      if (progress)
-        gimp_progress_end (progress);
-    }
-  else
-    {
-      success = FALSE;
-    }
-}
-CODE
-    );
-}
-
 sub layer_resize {
     $blurb = 'Resize the layer to the specified extents.';
 
@@ -593,52 +550,6 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                  error))
     gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub layer_translate {
-    $blurb = 'Translate the layer by the specified offsets.';
-
-    $help = <<'HELP';
-This procedure translates the layer by the amounts specified in the x and y
-arguments. These can be negative, and are considered offsets from the current
-position. This command only works if the layer has been added to an image. All
-additional layers contained in the image which have the linked flag set to TRUE
-w ill also be translated by the specified offsets.
-HELP
-
-    &std_pdb_misc;
-
-    $deprecated = 'gimp-item-transform-translate';
-
-    @inargs = (
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' },
-	{ name => 'offx', type => 'int32',
-	  desc => "Offset in x direction" },
-	{ name => 'offy', type => 'int32',
-	  desc => "Offset in y direction" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                   GIMP_PDB_ITEM_POSITION, error))
-    {
-      if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        {
-          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-        }
-      else
-        {
-          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-        }
-    }
   else
     success = FALSE;
 }
@@ -1380,9 +1291,8 @@ CODE
             layer_copy
             layer_add_alpha
             layer_flatten
-            layer_scale layer_scale_full
+            layer_scale
             layer_resize layer_resize_to_image_size
-	    layer_translate
             layer_set_offsets
             layer_create_mask
             layer_get_mask

@@ -58,7 +58,8 @@ static void    gimp_critical_dialog_finalize (GObject     *object);
 static void    gimp_critical_dialog_response (GtkDialog   *dialog,
                                               gint         response_id);
 
-static gboolean browser_open_url             (const gchar  *url,
+static gboolean browser_open_url             (GtkWindow    *window,
+                                              const gchar  *url,
                                               GError      **error);
 
 
@@ -99,7 +100,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
   gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
@@ -107,7 +108,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 
   /* The error label. */
   dialog->top_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (dialog->top_label), 0.0, 0.5);
+  gtk_widget_set_halign (dialog->top_label, GTK_ALIGN_START);
   gtk_label_set_ellipsize (GTK_LABEL (dialog->top_label), PANGO_ELLIPSIZE_END);
   gtk_label_set_selectable (GTK_LABEL (dialog->top_label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->top_label,
@@ -144,7 +145,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   dialog->bottom_label = gtk_label_new (text);
   g_free (text);
 
-  gtk_misc_set_alignment (GTK_MISC (dialog->bottom_label), 0.0, 0.5);
+  gtk_widget_set_halign (dialog->bottom_label, GTK_ALIGN_START);
   gtk_label_set_selectable (GTK_LABEL (dialog->bottom_label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->bottom_label,
                       FALSE, FALSE, 0);
@@ -153,7 +154,7 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
   widget = gtk_label_new (_("You can also close the dialog directly but "
                             "reporting bugs is the best way to make your "
                             "software awesome."));
-  gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
+  gtk_widget_set_halign (widget, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
 
   attrs = pango_attr_list_new ();
@@ -208,7 +209,8 @@ gimp_critical_dialog_finalize (GObject *object)
  * cross-platform way need to be a plug-in?
  */
 static gboolean
-browser_open_url (const gchar  *url,
+browser_open_url (GtkWindow    *window,
+                  const gchar  *url,
                   GError      **error)
 {
 #ifdef G_OS_WIN32
@@ -287,10 +289,10 @@ browser_open_url (const gchar  *url,
 
 #else
 
-  return gtk_show_uri (gdk_screen_get_default (),
-                       url,
-                       gtk_get_current_event_time(),
-                       error);
+  return gtk_show_uri_on_window (window,
+                                 url,
+                                 GDK_CURRENT_TIME,
+                                 error);
 
 #endif
 }
@@ -329,15 +331,24 @@ gimp_critical_dialog_response (GtkDialog *dialog,
     case GIMP_CRITICAL_RESPONSE_URL:
       {
         const gchar *url;
+        gchar       *temp = g_ascii_strdown (BUG_REPORT_URL, -1);
 
-        /* XXX Ideally I'd find a way to prefill the bug report
-         * through the URL or with POST data. But I could not find
-         * any. Anyway since we may soon ditch bugzilla to follow
-         * GNOME infrastructure changes, I don't want to waste too
-         * much time digging into it.
-         */
-        url = "https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP";
-        browser_open_url (url, NULL);
+        /* Only accept custom web links. */
+        if (g_str_has_prefix (temp, "http://") ||
+            g_str_has_prefix (temp, "https://"))
+          url = BUG_REPORT_URL;
+        else
+          /* XXX Ideally I'd find a way to prefill the bug report
+           * through the URL or with POST data. But I could not find
+           * any. Anyway since we may soon ditch bugzilla to follow
+           * GNOME infrastructure changes, I don't want to waste too
+           * much time digging into it.
+           */
+          url = PACKAGE_BUGREPORT;
+
+        g_free (temp);
+
+        browser_open_url (GTK_WINDOW (dialog), url, NULL);
       }
       break;
 

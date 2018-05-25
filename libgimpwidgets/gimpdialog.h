@@ -39,11 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG, GimpDialogClass))
 
 
-typedef struct _GimpDialogClass  GimpDialogClass;
+typedef struct _GimpDialogPrivate GimpDialogPrivate;
+typedef struct _GimpDialogClass   GimpDialogClass;
 
 struct _GimpDialog
 {
-  GtkDialog  parent_instance;
+  GtkDialog          parent_instance;
+
+  GimpDialogPrivate *priv;
 };
 
 struct _GimpDialogClass
@@ -55,6 +58,10 @@ struct _GimpDialogClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -88,6 +95,20 @@ gint        gimp_dialog_run                (GimpDialog     *dialog);
 
 /*  for internal use only!  */
 void        gimp_dialogs_show_help_button  (gboolean        show);
+
+
+/*  since we don't know yet what to do about alternative button order,
+ *  just hide the warnings for now...
+ */
+#define gimp_dialog_set_alternative_button_order(d,f...) \
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                      \
+  gtk_dialog_set_alternative_button_order(d,f);          \
+  G_GNUC_END_IGNORE_DEPRECATIONS;
+
+#define gimp_dialog_set_alternative_button_order_from_array(d,n,o) \
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS;                                \
+  gtk_dialog_set_alternative_button_order_from_array(d,n,o);       \
+  G_GNUC_END_IGNORE_DEPRECATIONS;
 
 
 G_END_DECLS

@@ -62,6 +62,8 @@ struct _GimpDrawableFilter
   GimpDrawable           *drawable;
   GeglNode               *operation;
 
+  gboolean                has_input;
+
   GimpFilterRegion        region;
   gboolean                preview_enabled;
   GimpAlignmentType       preview_alignment;
@@ -189,8 +191,6 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 {
   GimpDrawableFilter *filter;
   GeglNode           *node;
-  GeglNode           *input;
-  GeglNode           *effect;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -213,22 +213,43 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   gimp_filter_set_applicator (GIMP_FILTER (filter), filter->applicator);
 
-  filter->translate = gegl_node_new_child (node,
-                                           "operation", "gegl:translate",
-                                           NULL);
-  filter->crop_before = gegl_node_new_child (node,
-                                             "operation", "gegl:crop",
-                                             NULL);
+  filter->has_input = gegl_node_has_pad (filter->operation, "input");
 
-  filter->cast_before = gegl_node_new_child (node,
-                                             "operation", "gegl:nop",
-                                             NULL);
-  filter->transform_before = gegl_node_new_child (node,
-                                                  "operation", "gegl:nop",
-                                                  NULL);
+  if (filter->has_input)
+    {
+      GeglNode *input;
+
+      input = gegl_node_get_input_proxy (node, "input");
+
+      filter->translate = gegl_node_new_child (node,
+                                               "operation", "gegl:translate",
+                                               NULL);
+
+      filter->crop_before = gegl_node_new_child (node,
+                                                 "operation", "gegl:crop",
+                                                 NULL);
+
+      filter->cast_before = gegl_node_new_child (node,
+                                                 "operation", "gegl:nop",
+                                                 NULL);
+
+      filter->transform_before = gegl_node_new_child (node,
+                                                      "operation", "gegl:nop",
+                                                      NULL);
+
+      gegl_node_link_many (input,
+                           filter->translate,
+                           filter->crop_before,
+                           filter->cast_before,
+                           filter->transform_before,
+                           filter->operation,
+                           NULL);
+    }
+
   filter->transform_after = gegl_node_new_child (node,
                                                  "operation", "gegl:nop",
                                                  NULL);
+
   filter->cast_after = gegl_node_new_child (node,
                                             "operation", "gegl:nop",
                                             NULL);
@@ -237,28 +258,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                             "operation", "gegl:crop",
                                             NULL);
 
-  input = gegl_node_get_input_proxy (node, "input");
-
-  if (gegl_node_has_pad (filter->operation, "input"))
-    {
-      effect = filter->operation;
-    }
-  else
-    {
-      effect = gegl_node_new_child (node,
-                                    "operation", "gegl:over",
-                                    NULL);
-
-      gegl_node_connect_to (filter->operation, "output",
-                            effect,            "aux");
-    }
-
-  gegl_node_link_many (input,
-                       filter->translate,
-                       filter->crop_before,
-                       filter->cast_before,
-                       filter->transform_before,
-                       effect,
+  gegl_node_link_many (filter->operation,
                        filter->transform_after,
                        filter->cast_after,
                        filter->crop_after,
@@ -455,15 +455,19 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
 {
   if (filter->region == GIMP_FILTER_REGION_SELECTION)
     {
-      gegl_node_set (filter->translate,
-                     "x", (gdouble) -filter->filter_area.x,
-                     "y", (gdouble) -filter->filter_area.y,
-                     NULL);
+      if (filter->has_input)
+        {
+          gegl_node_set (filter->translate,
+                         "x", (gdouble) -filter->filter_area.x,
+                         "y", (gdouble) -filter->filter_area.y,
+                         NULL);
 
-      gegl_node_set (filter->crop_before,
-                     "width",  (gdouble) filter->filter_area.width,
-                     "height", (gdouble) filter->filter_area.height,
-                     NULL);
+          gegl_node_set (filter->crop_before,
+                         "width",  (gdouble) filter->filter_area.width,
+                         "height", (gdouble) filter->filter_area.height,
+                         NULL);
+        }
+
       gegl_node_set (filter->crop_after,
                      "width",  (gdouble) filter->filter_area.width,
                      "height", (gdouble) filter->filter_area.height,
@@ -479,15 +483,19 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
       gdouble   width  = gimp_item_get_width (item);
       gdouble   height = gimp_item_get_height (item);
 
-      gegl_node_set (filter->translate,
-                     "x", (gdouble) 0.0,
-                     "y", (gdouble) 0.0,
-                     NULL);
+      if (filter->has_input)
+        {
+          gegl_node_set (filter->translate,
+                         "x", (gdouble) 0.0,
+                         "y", (gdouble) 0.0,
+                         NULL);
 
-      gegl_node_set (filter->crop_before,
-                     "width",  width,
-                     "height", height,
-                     NULL);
+          gegl_node_set (filter->crop_before,
+                         "width",  width,
+                         "height", height,
+                         NULL);
+        }
+
       gegl_node_set (filter->crop_after,
                      "width",  width,
                      "height", height,
@@ -608,8 +616,19 @@ gimp_drawable_filter_sync_opacity (GimpDrawableFilter *filter)
 static void
 gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
 {
+  GimpLayerMode paint_mode = filter->paint_mode;
+
+  if (! filter->has_input && paint_mode == GIMP_LAYER_MODE_REPLACE)
+    {
+      /* if the filter's op has no input, use NORMAL instead of REPLACE, so
+       * that we composite the op's output on top of the input, instead of
+       * completely replacing it.
+       */
+      paint_mode = GIMP_LAYER_MODE_NORMAL;
+    }
+
   gimp_applicator_set_mode (filter->applicator,
-                            filter->paint_mode,
+                            paint_mode,
                             filter->blend_space,
                             filter->composite_space,
                             filter->composite_mode);
@@ -670,24 +689,21 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
 
   if (filter->color_managed)
     {
-      gboolean          has_input;
-      const Babl       *drawable_format;
-      const Babl       *input_format;
-      const Babl       *output_format;
-      GimpColorProfile *drawable_profile;
-      GimpColorProfile *input_profile;
-      GimpColorProfile *output_profile;
+      const Babl       *drawable_format  = NULL;
+      const Babl       *input_format     = NULL;
+      const Babl       *output_format    = NULL;
+      GimpColorProfile *drawable_profile = NULL;
+      GimpColorProfile *input_profile    = NULL;
+      GimpColorProfile *output_profile   = NULL;
       guint32           dummy;
 
-      has_input = gegl_node_has_pad (filter->operation, "input");
-
       drawable_format = gimp_drawable_get_format (filter->drawable);
-      if (has_input)
+      if (filter->has_input)
         input_format  = gimp_gegl_node_get_format (filter->operation, "input");
       output_format   = gimp_gegl_node_get_format (filter->operation, "output");
 
       g_printerr ("drawable format:      %s\n", babl_get_name (drawable_format));
-      if (has_input)
+      if (filter->has_input)
         g_printerr ("filter input format:  %s\n", babl_get_name (input_format));
       g_printerr ("filter output format: %s\n", babl_get_name (output_format));
 
@@ -704,31 +720,32 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
        *  built-in color profiles for (see the get_color_profile()
        *  calls below)
        */
-      if (has_input)
+      if (filter->has_input)
         input_format = gimp_color_profile_get_lcms_format (input_format,  &dummy);
       output_format  = gimp_color_profile_get_lcms_format (output_format, &dummy);
 
       g_printerr ("profile transform drawable format: %s\n",
                   babl_get_name (drawable_format));
-      if (has_input)
+      if (filter->has_input)
         g_printerr ("profile transform input format:    %s\n",
                     babl_get_name (input_format));
       g_printerr ("profile transform output format:   %s\n",
                   babl_get_name (output_format));
 
       drawable_profile = gimp_color_managed_get_color_profile (managed);
-      if (has_input)
+      if (filter->has_input)
         input_profile  = gimp_babl_format_get_color_profile (input_format);
       output_profile   = gimp_babl_format_get_color_profile (output_format);
 
-      if ((has_input && ! gimp_color_transform_can_gegl_copy (drawable_profile,
-                                                              input_profile)) ||
+      if ((filter->has_input &&
+           ! gimp_color_transform_can_gegl_copy (drawable_profile,
+                                                 input_profile)) ||
           ! gimp_color_transform_can_gegl_copy (output_profile,
                                                 drawable_profile))
         {
           g_printerr ("using gimp:profile-transform\n");
 
-          if (has_input)
+          if (filter->has_input)
             {
               gegl_node_set (filter->transform_before,
                              "operation",    "gimp:profile-transform",
@@ -753,9 +770,12 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
 
   g_printerr ("using gegl copy\n");
 
-  gegl_node_set (filter->transform_before,
-                 "operation", "gegl:nop",
-                 NULL);
+  if (filter->has_input)
+    {
+      gegl_node_set (filter->transform_before,
+                     "operation", "gegl:nop",
+                     NULL);
+    }
 
   gegl_node_set (filter->transform_after,
                  "operation", "gegl:nop",
@@ -779,11 +799,14 @@ gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
                                                ! gimp_babl_format_get_linear (drawable_format)),
                           TRUE);
 
-      gegl_node_set (filter->cast_before,
-                     "operation",     "gegl:cast-format",
-                     "input-format",  drawable_format,
-                     "output-format", cast_format,
-                     NULL);
+      if (filter->has_input)
+        {
+          gegl_node_set (filter->cast_before,
+                         "operation",     "gegl:cast-format",
+                         "input-format",  drawable_format,
+                         "output-format", cast_format,
+                         NULL);
+        }
 
       gegl_node_set (filter->cast_after,
                      "operation",     "gegl:cast-format",
@@ -793,9 +816,12 @@ gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
     }
   else
     {
-      gegl_node_set (filter->cast_before,
-                     "operation", "gegl:nop",
-                     NULL);
+      if (filter->has_input)
+        {
+          gegl_node_set (filter->cast_before,
+                         "operation", "gegl:nop",
+                         NULL);
+        }
 
       gegl_node_set (filter->cast_after,
                      "operation", "gegl:nop",

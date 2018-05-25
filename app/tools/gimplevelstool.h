@@ -39,6 +39,7 @@ struct _GimpLevelsTool
 
   /* dialog */
   GimpHistogram  *histogram;
+  GimpAsync      *histogram_async;
 
   GtkWidget      *channel_menu;
 

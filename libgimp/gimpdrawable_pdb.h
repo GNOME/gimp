@@ -45,9 +45,6 @@ gint                     gimp_drawable_height             (gint32               
 gboolean                 gimp_drawable_offsets            (gint32                      drawable_ID,
                                                            gint                       *offset_x,
                                                            gint                       *offset_y);
-GIMP_DEPRECATED
-gboolean                 gimp_drawable_set_image          (gint32                      drawable_ID,
-                                                           gint32                      image_ID);
 gboolean                 gimp_drawable_mask_bounds        (gint32                      drawable_ID,
                                                            gint                       *x1,
                                                            gint                       *y1,

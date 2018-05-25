@@ -9,7 +9,7 @@
   versus a combined or derived work.  The intention is to make it
   clear that arbitrarily-licensed programs such as GIMP plug-ins do
   not automatically assume the GNU General Public License (GPL)
-  themselves simply because of their invokation of (or by) procedures
+  themselves simply because of their invocation of (or by) procedures
   implemented in GPL-licensed code, via libgimp or a similar interface
   to methods provided by the pdb: ]
 

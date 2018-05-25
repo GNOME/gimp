@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP Plug-Ins 2.9\n"
+"Project-Id-Version: GIMP plug-Ins 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-18 13:27+0300\n"
-"PO-Revision-Date: 2018-02-18 14:29+0300\n"
+"POT-Creation-Date: 2018-05-05 02:29+0300\n"
+"PO-Revision-Date: 2018-05-05 02:38+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -53,6 +53,7 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
@@ -65,9 +66,9 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
 #: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
-#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
-#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:632
-#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:434
+#: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
+#: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
@@ -102,8 +103,8 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/metadata/metadata-editor.c:547
 #: ../plug-ins/metadata/metadata-editor.c:765
-#: ../plug-ins/metadata/metadata-editor.c:5644
-#: ../plug-ins/metadata/metadata-editor.c:5679
+#: ../plug-ins/metadata/metadata-editor.c:5648
+#: ../plug-ins/metadata/metadata-editor.c:5683
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
@@ -125,14 +126,13 @@ msgstr "О_тмена"
 #: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
 #: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
 #: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/ripple.c:488
-#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:435
-#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
-#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:351 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:351
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -425,18 +425,17 @@ msgstr "Добавление жалюзи"
 msgid "Blinds"
 msgstr "Жалюзи"
 
-#. Orientation toggle box
-#: ../plug-ins/common/blinds.c:256 ../plug-ins/common/ripple.c:555
+#: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
 msgstr "Ориентация"
 
-#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/ripple.c:559
-#: ../plug-ins/common/tile-small.c:432 ../plug-ins/pagecurl/pagecurl.c:530
+#: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:432
+#: ../plug-ins/pagecurl/pagecurl.c:530
 msgid "_Horizontal"
 msgstr "По _горизонтали"
 
-#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:562
-#: ../plug-ins/common/tile-small.c:442 ../plug-ins/pagecurl/pagecurl.c:529
+#: ../plug-ins/common/blinds.c:263 ../plug-ins/common/tile-small.c:442
+#: ../plug-ins/pagecurl/pagecurl.c:529
 msgid "_Vertical"
 msgstr "По _вертикали"
 
@@ -447,9 +446,9 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1072 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1079 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -458,7 +457,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1821 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -829,6 +828,7 @@ msgstr "Случайное зерно"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
+#: ../plug-ins/common/file-jp2-load.c:950
 #: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
@@ -1044,7 +1044,7 @@ msgstr "Сохранить параметры CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1568
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1582
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
@@ -1072,10 +1072,8 @@ msgstr "Загрузить параметры CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
-#: ../plug-ins/common/file-gif-load.c:361
-#: ../plug-ins/common/file-jp2-load.c:234
-#: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:920
+#: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:927
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -1385,6 +1383,7 @@ msgid "CMY"
 msgstr "CMY"
 
 #: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/file-jp2-load.c:985
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -1628,9 +1627,7 @@ msgid "Automatic pre_view"
 msgstr "_Автообновление просмотра"
 
 #. Options area, bottom of column
-#. Options section
-#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/common/ripple.c:521
-#: ../plug-ins/gfig/gfig-dialog.c:1243
+#: ../plug-ins/common/curve-bend.c:1308 ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Параметры"
 
@@ -1646,7 +1643,6 @@ msgstr "С_глаживание изображения"
 
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
-#: ../plug-ins/common/ripple.c:530
 msgid "_Antialiasing"
 msgstr "Сглаживание _края"
 
@@ -2169,7 +2165,7 @@ msgstr "Ошибка при чтении '%s'. %s"
 #. KiSS file type
 #. Bits per pixel
 #. Dimensions of image
-#. Layer offets
+#. Layer offsets
 #. Number of colors
 #. Image
 #. Layer
@@ -2204,9 +2200,9 @@ msgstr "Ошибка при чтении '%s'. %s"
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
+#: ../plug-ins/common/file-jp2-load.c:1064 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:912
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:919
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
 #: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2294,10 +2290,10 @@ msgstr ""
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:535
 #: ../plug-ins/common/file-pcx.c:743 ../plug-ins/common/file-pix.c:537
-#: ../plug-ins/common/file-png.c:1561 ../plug-ins/common/file-pnm.c:1246
+#: ../plug-ins/common/file-png.c:1575 ../plug-ins/common/file-pnm.c:1246
 #: ../plug-ins/common/file-ps.c:1236 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1033
-#: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1579
@@ -2664,6 +2660,83 @@ msgstr "Количество кадров:"
 msgid "C source code header"
 msgstr "Заголовок исходного кода C"
 
+#: ../plug-ins/common/file-heif.c:106
+#, fuzzy
+msgid "Loads HEIF images"
+msgstr "Загрузка карты изображения"
+
+#: ../plug-ins/common/file-heif.c:107
+msgid ""
+"Load image stored in HEIF format (High Efficiency Image File Format). "
+"Typical suffices for HEIF files are .heif, .heic."
+msgstr ""
+
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:130
+msgid "HEIF/HEIC"
+msgstr "HEIF/HEIC"
+
+#: ../plug-ins/common/file-heif.c:124
+msgid "Exports HEIF images"
+msgstr "Экспортирует изображения HEIF"
+
+#: ../plug-ins/common/file-heif.c:125
+msgid "Save image in HEIF format (High Efficiency Image File Format)."
+msgstr ""
+"Сохранить изображение в формате HEIF (High Efficiency Image File Format)."
+
+#: ../plug-ins/common/file-heif.c:312 ../plug-ins/common/file-heif.c:338
+#: ../plug-ins/common/file-heif.c:377 ../plug-ins/common/file-heif.c:395
+#, fuzzy, c-format
+msgid "Loading HEIF image failed: %s"
+msgstr "Закачивается изображение (%s из %s)"
+
+#: ../plug-ins/common/file-heif.c:327
+msgid "Loading HEIF image failed: Input file contains no readable images"
+msgstr ""
+
+#: ../plug-ins/common/file-heif.c:414
+#, fuzzy
+msgid "image content"
+msgstr "Содержимое ячейки:"
+
+#: ../plug-ins/common/file-heif.c:547
+#, c-format
+msgid "Encoding HEIF image failed: %s"
+msgstr ""
+
+#: ../plug-ins/common/file-heif.c:559
+#, fuzzy, c-format
+msgid "Writing HEIF image failed: %s"
+msgstr "Ошибка при записи файла '%s': %s"
+
+#: ../plug-ins/common/file-heif.c:640
+msgid "primary"
+msgstr ""
+
+#: ../plug-ins/common/file-heif.c:776
+#, fuzzy
+msgid "Load HEIF Image"
+msgstr "Загрузка карты изображения"
+
+#: ../plug-ins/common/file-heif.c:790
+#, fuzzy
+msgid "Select Image"
+msgstr "Выбрать файл изображения"
+
+#: ../plug-ins/common/file-heif.c:903
+msgid "HEIF"
+msgstr "HEIF"
+
+#. Create the lossless checkbox
+#: ../plug-ins/common/file-heif.c:910
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
+msgid "Lossless"
+msgstr "Cжать без потери качества"
+
+#: ../plug-ins/common/file-heif.c:914
+msgid "Quality:"
+msgstr "Качество:"
+
 #: ../plug-ins/common/file-html-table.c:153
 #: ../plug-ins/common/file-html-table.c:463
 msgid "HTML table"
@@ -2801,83 +2874,100 @@ msgstr ""
 msgid "The amount of cell spacing."
 msgstr "Размер интервала ячеек"
 
-#: ../plug-ins/common/file-jp2-load.c:98
+#: ../plug-ins/common/file-jp2-load.c:154
 msgid "JPEG 2000 image"
 msgstr "Изображение JPEG 2000"
 
-#: ../plug-ins/common/file-jp2-load.c:252
+#: ../plug-ins/common/file-jp2-load.c:185
+#, fuzzy
+msgid "JPEG 2000 codestream"
+msgstr "Изображение JPEG 2000"
+
+#. Can be RGB, YUV and YCC.
+#. Can be RGB, YUV and YCC with alpha or CMYK.
+#: ../plug-ins/common/file-jp2-load.c:974
+#: ../plug-ins/common/file-jp2-load.c:982
+msgid "sRGB"
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:975
+#: ../plug-ins/common/file-jp2-load.c:983
+msgid "YCbCr"
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:976
+#: ../plug-ins/common/file-jp2-load.c:984
+msgid "xvYCC"
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
-msgid "Couldn't decode '%s'."
+msgid "Unsupported JPEG 2000%s '%s' with %d components."
+msgstr ""
+
+#: ../plug-ins/common/file-jp2-load.c:1000
+#, fuzzy
+msgid "Color space:"
+msgstr "Цвета:"
+
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
+#, c-format
+msgid "Could not open '%s' for reading"
+msgstr "Не удалось открыть \"%s\" для чтения"
+
+#: ../plug-ins/common/file-jp2-load.c:1082
+#, fuzzy, c-format
+msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Не удалось декодировать '%s'."
 
-#: ../plug-ins/common/file-jp2-load.c:275
+#: ../plug-ins/common/file-jp2-load.c:1090
+#, fuzzy, c-format
+msgid "Couldn't read JP2 header from '%s'."
+msgstr "Невозможно прочесть заголовок из '%s'"
+
+#: ../plug-ins/common/file-jp2-load.c:1098
+#, fuzzy, c-format
+msgid "Couldn't decode JP2 image in '%s'."
+msgstr "Не удалось декодировать '%s'."
+
+#: ../plug-ins/common/file-jp2-load.c:1106
+#, fuzzy, c-format
+msgid "Couldn't decompress JP2 image in '%s'."
+msgstr "Не удалось декодировать '%s'."
+
+#: ../plug-ins/common/file-jp2-load.c:1135
+#, fuzzy, c-format
+msgid "Couldn't decode CIELAB JP2 image in '%s'."
+msgstr "Не удалось декодировать '%s'."
+
+#: ../plug-ins/common/file-jp2-load.c:1192
+#, fuzzy, c-format
+msgid "Unknown color space in JP2 codestream '%s'."
+msgstr "Неизвестная цветовая модель в файле PNG '%s'."
+
+#: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
-msgid "The image '%s' is in grayscale but does not contain any gray component."
+msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
 msgstr ""
-"Изображение '%s' использует градации серого, но не содержит серый компонент."
 
-#: ../plug-ins/common/file-jp2-load.c:302
+#: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
-msgid "The image '%s' is in RGB, but is missing some of the components."
+msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
 msgstr ""
-"Изображение '%s' использует цветовое пространство RGB, но некоторые его "
-"компоненты отсутствуют."
 
-#: ../plug-ins/common/file-jp2-load.c:328
+#: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
-msgid ""
-"The image '%s' is in the CIEXYZ color space, but there is no code in place "
-"to convert it to RGB."
+msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr ""
-"Изображение '%s' использует цветовое пространство CIE XYZ, которое пока что "
-"невозможно преобразовать в RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:335
-#, c-format
-msgid ""
-"The image '%s' is in the CIELAB color space, but there is no code in place "
-"to convert it to RGB."
-msgstr ""
-"Изображение '%s' использует цветовое пространство CIE LAB, которое пока что "
-"невозможно преобразовать в RGB."
-
-#: ../plug-ins/common/file-jp2-load.c:342
-#, c-format
-msgid ""
-"The image '%s' is in the YCbCr color space, but there is no code in place to "
-"convert it to RGB."
-msgstr ""
-"Изображение '%s' использует цветовое пространство YCbCr, которое пока что "
-"невозможно преобразовать в RGB."
-
-#: ../plug-ins/common/file-jp2-load.c:350
-#, c-format
-msgid "The image '%s' is in an unknown color space."
-msgstr "Изображение '%s' использует неизвестное цветовое пространство."
-
-#: ../plug-ins/common/file-jp2-load.c:364
-#, c-format
-msgid ""
-"Image component %d of image '%s' does not have the same size as the image. "
-"This is currently not supported."
-msgstr ""
-"Размер компонента %d изображения '%s' отличается от размера изображения. Это "
-"пока что не поддерживается."
-
-#: ../plug-ins/common/file-jp2-load.c:375
-#, c-format
-msgid "Image component %d of image '%s' does not have both a hstep and vstep."
-msgstr "У компонента %d изображения '%s' нет ни hstep, ни vstep."
-
-#: ../plug-ins/common/file-jp2-load.c:384
-#, c-format
-msgid ""
-"Image component %d of image '%s' is signed. This is currently not supported."
-msgstr ""
+#: ../plug-ins/common/file-jp2-load.c:1250
+#, fuzzy, c-format
+msgid "Unsupported color space in JP2 image '%s'."
+msgstr "Неподдерживаемая цветовая модель: %s"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2271
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2285
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Невозможно сохранить прозрачность,\n"
@@ -2912,7 +3002,7 @@ msgid "Save creation time"
 msgstr "Сохранить время создания"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2329
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2343
 msgid "PNG"
 msgstr "PNG"
 
@@ -3145,7 +3235,7 @@ msgstr "Импорт из PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
-#: ../plug-ins/metadata/metadata-editor.c:5645
+#: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Импортировать"
 
@@ -3276,25 +3366,30 @@ msgstr "Ошибка при открытии файла PNG: %s"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
-msgid "Error creating PNG read struct while exporting '%s'."
+msgid "Error creating PNG read struct while loading '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:895
+#: ../plug-ins/common/file-png.c:894
+#, fuzzy, c-format
+msgid "Error while reading '%s'. Could not create PNG header info structure."
+msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
+
+#: ../plug-ins/common/file-png.c:902
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Ошибка при чтении '%s'. Файл поврежден?"
 
-#: ../plug-ins/common/file-png.c:1050
+#: ../plug-ins/common/file-png.c:1057
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Неизвестная цветовая модель в файле PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:1063 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
 #, fuzzy, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Невозможно создать рабочий каталог '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1119
+#: ../plug-ins/common/file-png.c:1126
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3302,19 +3397,19 @@ msgstr ""
 "В файле формата PNG указано смещение, которое располагает слой за пределами "
 "изображения."
 
-#: ../plug-ins/common/file-png.c:1396
+#: ../plug-ins/common/file-png.c:1403
 msgid "Apply PNG Offset"
 msgstr "Применить смещение PNG"
 
-#: ../plug-ins/common/file-png.c:1400
+#: ../plug-ins/common/file-png.c:1407
 msgid "Ignore PNG offset"
 msgstr "Проигнорировать смещение PNG"
 
-#: ../plug-ins/common/file-png.c:1401
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG offset to layer"
 msgstr "Применить смещение PNG к слою"
 
-#: ../plug-ins/common/file-png.c:1426
+#: ../plug-ins/common/file-png.c:1433
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3323,23 +3418,28 @@ msgstr ""
 "Импортируемое изображение PNG содержит смещение на %d, %d. Вы хотите "
 "применить его к слою?"
 
-#: ../plug-ins/common/file-png.c:1534
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1544
+#: ../plug-ins/common/file-png.c:1550
+#, fuzzy, c-format
+msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
+
+#: ../plug-ins/common/file-png.c:1558
 #, fuzzy, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
 
-#: ../plug-ins/common/file-png.c:2346 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Ошибка при загрузке файла описания интерфейса '%s': %s"
 
-#: ../plug-ins/common/file-png.c:2347 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Ошибка по неизвестной причине"
@@ -3500,7 +3600,7 @@ msgstr "Ч/Б"
 msgid "Gray"
 msgstr "Серый"
 
-#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:480
+#: ../plug-ins/common/file-ps.c:3534 ../plug-ins/common/file-xpm.c:483
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
@@ -4161,11 +4261,6 @@ msgstr ""
 msgid "Render Windows Metafile"
 msgstr "Создание файла в формате Windows Metafile"
 
-#: ../plug-ins/common/file-wmf.c:965
-#, c-format
-msgid "Could not open '%s' for reading"
-msgstr "Не удалось открыть \"%s\" для чтения"
-
 #: ../plug-ins/common/file-wmf.c:998
 msgid "Rendered WMF"
 msgstr "Созданный WMF"
@@ -4515,25 +4610,25 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "Изображение X PixMap"
 
-#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:797
+#: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Ошибка при открытии файла %s"
 
-#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:803
+#: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
 msgid "XPM file invalid"
 msgstr "Неверный файл XPM"
 
-#: ../plug-ins/common/file-xpm.c:650
+#: ../plug-ins/common/file-xpm.c:653
 #, fuzzy, c-format
 msgid "Unsupported drawable type"
 msgstr "Неподдерживаемая или некорректная разрядность цветового представления."
 
-#: ../plug-ins/common/file-xpm.c:829
+#: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:839
+#: ../plug-ins/common/file-xpm.c:842
 msgid "_Alpha threshold:"
 msgstr "Порог альфа-канала:"
 
@@ -4919,7 +5014,7 @@ msgstr "Фрактальный след"
 msgid "Outside Type"
 msgstr "Тип вывода"
 
-#: ../plug-ins/common/fractal-trace.c:753 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/fractal-trace.c:753
 msgid "_Wrap"
 msgstr "З_авернуть"
 
@@ -5584,64 +5679,6 @@ msgstr "G-Q-бист"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1035
 msgid "_Undo"
 msgstr "О_тменить"
-
-#: ../plug-ins/common/ripple.c:126
-msgid "Displace pixels in a ripple pattern"
-msgstr "Перемешать точки для создания текстуры, имитирующей рябь"
-
-#: ../plug-ins/common/ripple.c:133
-msgid "_Ripple..."
-msgstr "_Рябь..."
-
-#: ../plug-ins/common/ripple.c:221
-msgid "Rippling"
-msgstr "Создание ряби"
-
-#: ../plug-ins/common/ripple.c:483
-msgid "Ripple"
-msgstr "Создать рябь"
-
-#: ../plug-ins/common/ripple.c:542
-msgid "_Retain tilability"
-msgstr "Сохранить _бесшовность"
-
-#. Edges toggle box
-#: ../plug-ins/common/ripple.c:579
-msgid "Edges"
-msgstr "Края"
-
-#: ../plug-ins/common/ripple.c:584
-msgid "_Smear"
-msgstr "_Размыть"
-
-#: ../plug-ins/common/ripple.c:585
-msgid "_Blank"
-msgstr "О_чистить"
-
-#. Wave toggle box
-#: ../plug-ins/common/ripple.c:608
-msgid "Wave Type"
-msgstr "Тип волны"
-
-#: ../plug-ins/common/ripple.c:612
-msgid "Saw_tooth"
-msgstr "_Пилообразная"
-
-#: ../plug-ins/common/ripple.c:613
-msgid "S_ine"
-msgstr "_Синус"
-
-#: ../plug-ins/common/ripple.c:636
-msgid "_Period:"
-msgstr "_Период:"
-
-#: ../plug-ins/common/ripple.c:649
-msgid "A_mplitude:"
-msgstr "_Амплитуда:"
-
-#: ../plug-ins/common/ripple.c:662
-msgid "Phase _shift:"
-msgstr "Cдвиг по _фазе:"
 
 #: ../plug-ins/common/sample-colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -7261,21 +7298,21 @@ msgstr "Неподдерживаемая или некорректная шир�
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Неподдерживаемый или некорректный размер маски слоя: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1796
+#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Неподдерживаемый режим сжатия: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1892
+#: ../plug-ins/file-psd/psd-load.c:1904
 msgid "Extra"
 msgstr "Дополнительно"
 
-#: ../plug-ins/file-psd/psd-load.c:2071
+#: ../plug-ins/file-psd/psd-load.c:2083
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Неподдерживаемый или некорректный размер канала"
 
-#: ../plug-ins/file-psd/psd-load.c:2140
+#: ../plug-ins/file-psd/psd-load.c:2152
 #, fuzzy, c-format
 msgid "Failed to decompress data"
 msgstr "Не удалось открыть '%s': %s"
@@ -7582,11 +7619,6 @@ msgstr ""
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
-
-#. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
-msgid "Lossless"
-msgstr "Без потери качества"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
@@ -8674,7 +8706,6 @@ msgid "Orientation:"
 msgstr "Ориентация:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:580
-#, fuzzy
 msgid "Hey, where has the object gone?"
 msgstr "Эй, куда делся объект?"
 
@@ -11923,19 +11954,19 @@ msgstr "Дата:"
 msgid "Set Date"
 msgstr "Установить дату"
 
-#: ../plug-ins/metadata/metadata-editor.c:1616
+#: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
 msgstr "Без оценки"
 
-#: ../plug-ins/metadata/metadata-editor.c:5641
+#: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"
 msgstr "Импортировать метаданные из файла"
 
-#: ../plug-ins/metadata/metadata-editor.c:5676
+#: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "Export Metadata File"
 msgstr "Экспортировать метаданные в файл"
 
-#: ../plug-ins/metadata/metadata-editor.c:5680
+#: ../plug-ins/metadata/metadata-editor.c:5684
 msgid "_Export"
 msgstr "_Экспортировать"
 
@@ -12664,6 +12695,94 @@ msgstr "_Сканер/Камера..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Получение данных со сканера/камеры"
+
+#~ msgid ""
+#~ "The image '%s' is in grayscale but does not contain any gray component."
+#~ msgstr ""
+#~ "Изображение '%s' использует градации серого, но не содержит серый "
+#~ "компонент."
+
+#~ msgid "The image '%s' is in RGB, but is missing some of the components."
+#~ msgstr ""
+#~ "Изображение '%s' использует цветовое пространство RGB, но некоторые его "
+#~ "компоненты отсутствуют."
+
+#~ msgid ""
+#~ "The image '%s' is in the CIEXYZ color space, but there is no code in "
+#~ "place to convert it to RGB."
+#~ msgstr ""
+#~ "Изображение '%s' использует цветовое пространство CIE XYZ, которое пока "
+#~ "что невозможно преобразовать в RGB."
+
+#~ msgid ""
+#~ "The image '%s' is in the CIELAB color space, but there is no code in "
+#~ "place to convert it to RGB."
+#~ msgstr ""
+#~ "Изображение '%s' использует цветовое пространство CIE LAB, которое пока "
+#~ "что невозможно преобразовать в RGB."
+
+#~ msgid ""
+#~ "The image '%s' is in the YCbCr color space, but there is no code in place "
+#~ "to convert it to RGB."
+#~ msgstr ""
+#~ "Изображение '%s' использует цветовое пространство YCbCr, которое пока что "
+#~ "невозможно преобразовать в RGB."
+
+#~ msgid "The image '%s' is in an unknown color space."
+#~ msgstr "Изображение '%s' использует неизвестное цветовое пространство."
+
+#~ msgid ""
+#~ "Image component %d of image '%s' does not have the same size as the "
+#~ "image. This is currently not supported."
+#~ msgstr ""
+#~ "Размер компонента %d изображения '%s' отличается от размера изображения. "
+#~ "Это пока что не поддерживается."
+
+#~ msgid ""
+#~ "Image component %d of image '%s' does not have both a hstep and vstep."
+#~ msgstr "У компонента %d изображения '%s' нет ни hstep, ни vstep."
+
+#~ msgid "Displace pixels in a ripple pattern"
+#~ msgstr "Перемешать точки для создания текстуры, имитирующей рябь"
+
+#~ msgid "_Ripple..."
+#~ msgstr "_Рябь..."
+
+#~ msgid "Rippling"
+#~ msgstr "Создание ряби"
+
+#~ msgid "Ripple"
+#~ msgstr "Создать рябь"
+
+#~ msgid "_Retain tilability"
+#~ msgstr "Сохранить _бесшовность"
+
+#~ msgid "Edges"
+#~ msgstr "Края"
+
+#~ msgid "_Smear"
+#~ msgstr "_Размыть"
+
+#~ msgid "_Blank"
+#~ msgstr "О_чистить"
+
+#~ msgid "Wave Type"
+#~ msgstr "Тип волны"
+
+#~ msgid "Saw_tooth"
+#~ msgstr "_Пилообразная"
+
+#~ msgid "S_ine"
+#~ msgstr "_Синус"
+
+#~ msgid "_Period:"
+#~ msgstr "_Период:"
+
+#~ msgid "A_mplitude:"
+#~ msgstr "_Амплитуда:"
+
+#~ msgid "Phase _shift:"
+#~ msgstr "Cдвиг по _фазе:"
 
 #~ msgid "PDF document"
 #~ msgstr "Документ PDF"
@@ -14589,9 +14708,6 @@ msgstr "Получение данных со сканера/камеры"
 
 #~ msgid "Downloading image (%s of %s)"
 #~ msgstr "Скачивается изображение (%s из %s)"
-
-#~ msgid "Uploading image (%s of %s)"
-#~ msgstr "Закачивается изображение (%s из %s)"
 
 #~ msgid "Downloaded %s of image data"
 #~ msgstr "Загружено %s изображения"

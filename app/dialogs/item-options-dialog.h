@@ -55,7 +55,7 @@ GtkWidget * item_options_dialog_new (GimpImage               *image,
                                      gpointer                 user_data);
 
 GtkWidget * item_options_dialog_get_vbox             (GtkWidget   *dialog);
-GtkWidget * item_options_dialog_get_table            (GtkWidget   *dialog,
+GtkWidget * item_options_dialog_get_grid             (GtkWidget   *dialog,
                                                       gint        *next_row);
 GtkWidget * item_options_dialog_get_name_entry       (GtkWidget   *dialog);
 GtkWidget * item_options_dialog_get_lock_position    (GtkWidget   *dialog);

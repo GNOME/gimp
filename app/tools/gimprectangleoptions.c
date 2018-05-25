@@ -824,7 +824,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
 
   *entry = gimp_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
                                 SB_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacings (GTK_TABLE (*entry), 0);
+  gtk_grid_set_column_spacing (GTK_GRID (*entry), 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (*entry), FALSE);
   gtk_box_pack_end (GTK_BOX (hbox), *entry, TRUE, TRUE, 0);
   gtk_widget_show (*entry);

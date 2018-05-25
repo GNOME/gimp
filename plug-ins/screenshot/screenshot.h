@@ -62,7 +62,7 @@ typedef struct
   ShootType               shoot_type;
   gboolean                decorate;
   guint                   window_id;
-  gint                    monitor;
+  GdkMonitor             *monitor;
   guint                   select_delay;
   guint                   screenshot_delay;
   gint                    x1;

@@ -151,24 +151,24 @@ GIMP respects a number of environment variables.
 .B DISPLAY
 to get the default host and display number.
 .TP 8
-.B GIMP2_DIRECTORY
+.B GIMP3_DIRECTORY
 to get the name of the personal GIMP directory. If unset @manpage_gimpdir@ is
 used.  If this is an absolute path, it is used as is.  If it is a
 relative path, it is taken to be a subdirectory of \fB$XDG_CONFIG_HOME\fP.
 .TP 8
-.B GIMP2_DATADIR
+.B GIMP3_DATADIR
 to get the base location for data files such as brushes and patterns.
 If unset @gimpdatadir@ is used.
 .TP 8
-.B GIMP2_LOCALEDIR
+.B GIMP3_LOCALEDIR
 to get the base location for translations. If unset @gimplocaledir@
 is used.
 .TP 8
-.B GIMP2_PLUGINDIR
+.B GIMP3_PLUGINDIR
 to get the base location for plug-ins and modules. If unset
 @gimpplugindir@ is used.
 .TP 8
-.B GIMP2_SYSCONFDIR
+.B GIMP3_SYSCONFDIR
 to get the location of configuration files. If unset @gimpsysconfdir@
 is used.
 

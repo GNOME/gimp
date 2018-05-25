@@ -684,7 +684,7 @@ gimp_viewable_box_new (GimpContainer *container,
 
       image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT,
                                             GTK_ICON_SIZE_BUTTON);
-      gtk_misc_set_alignment (GTK_MISC (image), 0.5, 1.0);
+      gtk_widget_set_valign (image, GTK_ALIGN_END);
       gtk_container_add (GTK_CONTAINER (edit_button), image);
       gtk_widget_show (image);
 
@@ -730,7 +730,6 @@ gimp_viewable_box_edit_clicked (GtkWidget          *widget,
   gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (button->context->gimp)),
                                              button->context->gimp,
                                              gimp_dialog_factory_get_singleton (),
-                                             gtk_widget_get_screen (widget),
                                              gimp_widget_get_monitor (widget),
                                              editor_id);
 }

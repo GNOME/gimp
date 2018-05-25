@@ -46,13 +46,13 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"
-#include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "file/file-utils.h"
+#include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 #include "vectors/gimpvectors.h"
@@ -422,22 +422,6 @@ image_height_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_free_shadow_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
-{
-  gboolean success = TRUE;
-  if (success)
-    {
-    }
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_get_layers_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -787,43 +771,6 @@ image_pick_correlate_layer_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_add_layer_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  gint32 position;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
-          gimp_pdb_image_is_base_type (image,
-                                       gimp_drawable_get_base_type (GIMP_DRAWABLE (layer)),
-                                       error))
-        {
-          success = gimp_image_add_layer (image, layer,
-                                          NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 image_insert_layer_invoker (GimpProcedure         *procedure,
                             Gimp                  *gimp,
                             GimpContext           *context,
@@ -896,7 +843,36 @@ image_remove_layer_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_add_channel_invoker (GimpProcedure         *procedure,
+image_freeze_layers_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_layers (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_layers_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_layers_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
                            GimpProgress          *progress,
@@ -905,24 +881,22 @@ image_add_channel_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpChannel *channel;
-  gint32 position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  channel = gimp_value_get_channel (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
-        {
-          success = gimp_image_add_channel (image, channel,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_layers (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_layers_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
+        gimp_container_thaw (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -999,33 +973,60 @@ image_remove_channel_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_add_vectors_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
+image_freeze_channels_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpVectors *vectors;
-  gint32 position;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  vectors = gimp_value_get_vectors (gimp_value_array_index (args, 1), gimp);
-  position = g_value_get_int (gimp_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
-        {
-          success = gimp_image_add_vectors (image, vectors,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_channels (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_channels_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_channels_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_channels (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_channels_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
+        gimp_container_thaw (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1095,6 +1096,67 @@ image_remove_vectors_invoker (GimpProcedure         *procedure,
         gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_freeze_vectors_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_vectors_freeze (plug_in, image);
+
+      if (success)
+        gimp_container_freeze (container);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_thaw_vectors_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpPlugIn    *plug_in   = gimp->plug_in_manager->current_plug_in;
+      GimpContainer *container = gimp_image_get_vectors (image);
+
+      if (plug_in)
+        success = gimp_plug_in_cleanup_vectors_thaw (plug_in, image);
+
+      if (success)
+        success = gimp_container_frozen (container);
+
+      if (success)
+        gimp_container_thaw (container);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1388,71 +1450,6 @@ image_merge_down_invoker (GimpProcedure         *procedure,
     gimp_value_set_layer (gimp_value_array_index (return_vals, 1), layer);
 
   return return_vals;
-}
-
-static GimpValueArray *
-image_add_layer_mask_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
-                              GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  GimpLayerMask *mask;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  mask = gimp_value_get_layer_mask (gimp_value_array_index (args, 2), gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (mask), image, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
-image_remove_layer_mask_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpLayer *layer;
-  gint32 mode;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  layer = gimp_value_get_layer (gimp_value_array_index (args, 1), gimp);
-  mode = g_value_get_enum (gimp_value_array_index (args, 2));
-
-  if (success)
-    {
-      GimpPDBItemModify modify = 0;
-
-      if (mode == GIMP_MASK_APPLY)
-        modify |= GIMP_PDB_ITEM_CONTENT;
-
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, modify, error) &&
-          gimp_layer_get_mask (layer))
-        gimp_layer_apply_mask (layer, mode, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -3116,29 +3113,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-free-shadow
-   */
-  procedure = gimp_procedure_new (image_free_shadow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-free-shadow");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-free-shadow",
-                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
-                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-drawable-free-shadow");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-get-layers
    */
   procedure = gimp_procedure_new (image_get_layers_invoker);
@@ -3458,41 +3432,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-add-layer
-   */
-  procedure = gimp_procedure_new (image_add_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer",
-                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-layer");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The layer position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-insert-layer
    */
   procedure = gimp_procedure_new (image_insert_layer_invoker);
@@ -3563,37 +3502,52 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-add-channel
+   * gimp-image-freeze-layers
    */
-  procedure = gimp_procedure_new (image_add_channel_invoker);
+  procedure = gimp_procedure_new (image_freeze_layers_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-channel");
+                               "gimp-image-freeze-layers");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-channel",
-                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-channel");
+                                     "gimp-image-freeze-layers",
+                                     "Freeze the image's layer list.",
+                                     "This procedure freezes the layer list of the image, suppressing any updates to the Layers dialog in response to changes to the image's layers. This can significantly improve performance while applying changes affecting the layer list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-layers' should be matched by a corresponding call to 'gimp-image-thaw-layers', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-layers
+   */
+  procedure = gimp_procedure_new (image_thaw_layers_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-layers");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-layers",
+                                     "Thaw the image's layer list.",
+                                     "This procedure thaws the layer list of the image, re-enabling updates to the Layers dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponding call to 'gimp-image-freeze-layers'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The channel position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3668,37 +3622,52 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-add-vectors
+   * gimp-image-freeze-channels
    */
-  procedure = gimp_procedure_new (image_add_vectors_invoker);
+  procedure = gimp_procedure_new (image_freeze_channels_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-vectors");
+                               "gimp-image-freeze-channels");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-vectors",
-                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
-                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-image-insert-vectors");
+                                     "gimp-image-freeze-channels",
+                                     "Freeze the image's channel list.",
+                                     "This procedure freezes the channel list of the image, suppressing any updates to the Channels dialog in response to changes to the image's channels. This can significantly improve performance while applying changes affecting the channel list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-channels' should be matched by a corresponding call to 'gimp-image-thaw-channels', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-channels
+   */
+  procedure = gimp_procedure_new (image_thaw_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-channels");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-channels",
+                                     "Thaw the image's channel list.",
+                                     "This procedure thaws the channel list of the image, re-enabling updates to the Channels dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponding call to 'gimp-image-freeze-channels'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("position",
-                                                      "position",
-                                                      "The vectors objects position",
-                                                      G_MININT32, G_MAXINT32, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -3769,6 +3738,56 @@ register_image_procs (GimpPDB *pdb)
                                                            "The vectors object",
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-freeze-vectors
+   */
+  procedure = gimp_procedure_new (image_freeze_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-freeze-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-freeze-vectors",
+                                     "Freeze the image's vectors list.",
+                                     "This procedure freezes the vectors list of the image, suppressing any updates to the Paths dialog in response to changes to the image's vectors. This can significantly improve performance while applying changes affecting the vectors list.\n"
+                                     "\n"
+                                     "Each call to 'gimp-image-freeze-vectors' should be matched by a corresponding call to 'gimp-image-thaw-vectors', undoing its effects.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-thaw-vectors
+   */
+  procedure = gimp_procedure_new (image_thaw_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-thaw-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-thaw-vectors",
+                                     "Thaw the image's vectors list.",
+                                     "This procedure thaws the vectors list of the image, re-enabling updates to the Paths dialog.\n"
+                                     "\n"
+                                     "This procedure should match a corresponding call to 'gimp-image-freeze-vectors'.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -4072,77 +4091,6 @@ register_image_procs (GimpPDB *pdb)
                                                              "The resulting layer",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-add-layer-mask
-   */
-  procedure = gimp_procedure_new (image_add_layer_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-add-layer-mask");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-add-layer-mask",
-                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
-                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-layer-add-mask");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to receive the mask",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_mask_id ("mask",
-                                                              "mask",
-                                                              "The mask to add to the layer",
-                                                              pdb->gimp, FALSE,
-                                                              GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-remove-layer-mask
-   */
-  procedure = gimp_procedure_new (image_remove_layer_mask_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-remove-layer-mask");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-remove-layer-mask",
-                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
-                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
-                                     "",
-                                     "",
-                                     "",
-                                     "gimp-layer-remove-mask");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer from which to remove mask",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("mode",
-                                                  "mode",
-                                                  "Removal mode",
-                                                  GIMP_TYPE_MASK_APPLY_MODE,
-                                                  GIMP_MASK_APPLY,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

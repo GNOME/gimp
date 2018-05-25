@@ -30,9 +30,9 @@
 
 #define NUM_PLACE_RADIO 2
 
-static GtkWidget *placement_radio[NUM_PLACE_RADIO];
-static GtkWidget *placement_center = NULL;
-static GtkObject *brush_density_adjust = NULL;
+static GtkWidget     *placement_radio[NUM_PLACE_RADIO];
+static GtkWidget     *placement_center = NULL;
+static GtkAdjustment *brush_density_adjust = NULL;
 
 void
 place_restore (void)
@@ -61,7 +61,7 @@ void
 create_placementpage (GtkNotebook *notebook)
 {
   GtkWidget *vbox;
-  GtkWidget *label, *tmpw, *table, *frame;
+  GtkWidget *label, *tmpw, *grid, *frame;
 
   label = gtk_label_new_with_mnemonic (_("Pl_acement"));
 
@@ -109,13 +109,13 @@ create_placementpage (GtkNotebook *notebook)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.placement_center);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   brush_density_adjust =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+    gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                           _("Stroke _density:"),
                           100, -1, pcvals.brush_density,
                           1.0, 50.0, 1.0, 5.0, 0,

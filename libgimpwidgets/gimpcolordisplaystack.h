@@ -39,13 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_DISPLAY_STACK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_DISPLAY_STACK, GimpColorDisplayStackClass))
 
 
-typedef struct _GimpColorDisplayStackClass GimpColorDisplayStackClass;
+typedef struct _GimpColorDisplayStackPrivate GimpColorDisplayStackPrivate;
+typedef struct _GimpColorDisplayStackClass   GimpColorDisplayStackClass;
 
 struct _GimpColorDisplayStack
 {
-  GObject  parent_instance;
+  GObject                       parent_instance;
 
-  GList   *filters;
+  GimpColorDisplayStackPrivate *priv;
 };
 
 struct _GimpColorDisplayStackClass
@@ -68,6 +69,10 @@ struct _GimpColorDisplayStackClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -75,29 +80,22 @@ GType                   gimp_color_display_stack_get_type (void) G_GNUC_CONST;
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
 GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
 
-void   gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
+void    gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
 
-void   gimp_color_display_stack_add             (GimpColorDisplayStack *stack,
-                                                 GimpColorDisplay      *display);
-void   gimp_color_display_stack_remove          (GimpColorDisplayStack *stack,
-                                                 GimpColorDisplay      *display);
-void   gimp_color_display_stack_reorder_up      (GimpColorDisplayStack *stack,
-                                                 GimpColorDisplay      *display);
-void   gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
-                                                 GimpColorDisplay      *display);
-void   gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
-                                                 GeglBuffer            *buffer,
-                                                 GeglRectangle         *area);
-GIMP_DEPRECATED_FOR(gimp_color_display_stack_convert_buffer)
-void   gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
-                                                 cairo_surface_t       *surface);
-GIMP_DEPRECATED_FOR(gimp_color_display_stack_convert_buffer)
-void   gimp_color_display_stack_convert         (GimpColorDisplayStack *stack,
-                                                 guchar                *buf,
-                                                 gint                   width,
-                                                 gint                   height,
-                                                 gint                   bpp,
-                                                 gint                   bpl);
+GList * gimp_color_display_stack_get_filters     (GimpColorDisplayStack *stack);
+
+void    gimp_color_display_stack_add             (GimpColorDisplayStack *stack,
+                                                  GimpColorDisplay      *display);
+void    gimp_color_display_stack_remove          (GimpColorDisplayStack *stack,
+                                                  GimpColorDisplay      *display);
+void    gimp_color_display_stack_reorder_up      (GimpColorDisplayStack *stack,
+                                                  GimpColorDisplay      *display);
+void    gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
+                                                  GimpColorDisplay      *display);
+void    gimp_color_display_stack_convert_buffer  (GimpColorDisplayStack *stack,
+                                                  GeglBuffer            *buffer,
+                                                  GeglRectangle         *area);
+
 
 G_END_DECLS
 

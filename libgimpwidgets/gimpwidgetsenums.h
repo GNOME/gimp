@@ -124,12 +124,14 @@ typedef enum
 
 /**
  * GimpColorSelectorModel:
- * @GIMP_COLOR_SELECTOR_RGB:            RGB color model
- * @GIMP_COLOR_SELECTOR_LCH:            CIELCh color model
- * @GIMP_COLOR_SELECTOR_HSV:            HSV color model
+ * @GIMP_COLOR_SELECTOR_MODEL_RGB: RGB color model
+ * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIELCh color model
+ * @GIMP_COLOR_SELECTOR_MODEL_HSV: HSV color model
  *
  * An enum to specify the types of color spaces edited in
  * #GimpColorSelector widgets.
+ *
+ * Since: 2.10
  **/
 #define GIMP_TYPE_COLOR_SELECTOR_MODEL (gimp_color_selector_model_get_type ())
 
@@ -190,6 +192,7 @@ typedef enum
  * @GIMP_ZOOM_IN_MAX:   zoom in as far as possible
  * @GIMP_ZOOM_OUT_MAX:  zoom out as far as possible
  * @GIMP_ZOOM_TO:       zoom to a specific zoom factor
+ * @GIMP_ZOOM_SMOOTH:   zoom smoothly from a smooth scroll event
  *
  * the zoom types for #GimpZoomModel.
  **/
@@ -205,7 +208,8 @@ typedef enum
   GIMP_ZOOM_OUT_MORE,  /*< skip >*/
   GIMP_ZOOM_IN_MAX,    /*< skip >*/
   GIMP_ZOOM_OUT_MAX,   /*< skip >*/
-  GIMP_ZOOM_TO         /*< skip >*/
+  GIMP_ZOOM_TO,        /*< skip >*/
+  GIMP_ZOOM_SMOOTH     /*< skip >*/
 } GimpZoomType;
 
 

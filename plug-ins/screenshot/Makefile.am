@@ -37,7 +37,7 @@ LDADD = \
 	$(INTLLIBS)		\
 	$(screenshot_RC)
 
-libexecdir = $(gimpplugindir)/plug-ins
+libexecdir = $(gimpplugindir)/plug-ins/screenshot
 
 libexec_PROGRAMS = screenshot
 
@@ -60,6 +60,7 @@ screenshot_SOURCES = \
 	screenshot-win32.rc		\
 	screenshot-win32.c		\
 	screenshot-win32.h		\
+	magnification-api-win32.h	\
 	screenshot-win32-resource.h
 
 EXTRA_DIST = \

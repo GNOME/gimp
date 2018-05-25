@@ -227,7 +227,8 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
       GtkRequisition    requisition;
       gdouble           x, y;
 
-      gtk_widget_size_request (text_tool->style_overlay, &requisition);
+      gtk_widget_get_preferred_size (text_tool->style_overlay,
+                                     &requisition, NULL);
 
       g_object_get (text_tool->widget,
                     "x1", &x,
@@ -464,7 +465,7 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
 
   gimp_text_tool_ensure_proxy (text_tool);
 
-  if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
+  if (gtk_bindings_activate_event (G_OBJECT (text_tool->proxy_text_view),
                                    kevent))
     {
       GIMP_LOG (TEXT_EDITING, "binding handled event");
@@ -520,7 +521,7 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
 
   gimp_text_tool_ensure_proxy (text_tool);
 
-  if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
+  if (gtk_bindings_activate_event (G_OBJECT (text_tool->proxy_text_view),
                                    kevent))
     {
       GIMP_LOG (TEXT_EDITING, "binding handled event");
@@ -1299,7 +1300,6 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
                                    text_tool->editor_dialog,
-                                   gtk_widget_get_screen (GTK_WIDGET (image_window)),
                                    gimp_widget_get_monitor (GTK_WIDGET (image_window)));
 
   g_signal_connect (text_tool->editor_dialog, "destroy",

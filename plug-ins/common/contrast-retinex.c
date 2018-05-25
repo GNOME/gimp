@@ -272,13 +272,13 @@ run (const gchar      *name,
 static gboolean
 retinex_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *grid;
+  GtkWidget     *combo;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -291,7 +291,7 @@ retinex_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -312,11 +312,11 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (retinex),
                             drawable);
 
-  table = gtk_table_new (4, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   combo = gimp_int_combo_box_new (_("Uniform"), filter_uniform,
                                   _("Low"),     filter_low,
@@ -330,12 +330,12 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Level:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                            _("_Level:"), 0.0, 0.5,
+                            combo, 2);
   gtk_widget_show (combo);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("_Scale:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.scale,
                               MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
@@ -348,7 +348,7 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                               _("Scale _division:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.nscales,
                               0, MAX_RETINEX_SCALES, 1, 1, 0,
@@ -361,7 +361,7 @@ retinex_dialog (GimpDrawable *drawable)
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 3,
                               _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.cvar, 0, 4, 0.1, 0.1, 1,
                               TRUE, 0, 0, NULL, NULL);

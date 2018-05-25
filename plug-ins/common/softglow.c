@@ -616,12 +616,12 @@ find_constants (gdouble n_p[],
 static gboolean
 softglow_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *table;
-  GtkObject *scale_data;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *grid;
+  GtkAdjustment *scale_data;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -634,7 +634,7 @@ softglow_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -655,14 +655,14 @@ softglow_dialog (GimpDrawable *drawable)
                             G_CALLBACK (softglow),
                             drawable);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), grid, FALSE, FALSE, 0);
+  gtk_widget_show (grid);
 
   /*  Label, scale, entry for svals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                      _("_Glow radius:"), 100, 5,
                                      svals.glow_radius, 1.0, 50.0, 1, 5.0, 2,
                                      TRUE, 0, 0,
@@ -676,7 +676,7 @@ softglow_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for svals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                                      _("_Brightness:"), 100, 5,
                                      svals.brightness, 0.0, 1.0, 0.01, 0.1, 2,
                                      TRUE, 0, 0,
@@ -690,7 +690,7 @@ softglow_dialog (GimpDrawable *drawable)
                             preview);
 
   /*  Label, scale, entry for svals.amount  */
-  scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+  scale_data = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                                      _("_Sharpness:"), 100, 5,
                                      svals.sharpness, 0.0, 1.0, 0.01, 0.1, 2,
                                      TRUE, 0, 0,

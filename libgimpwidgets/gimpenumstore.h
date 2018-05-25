@@ -39,13 +39,14 @@ G_BEGIN_DECLS
 #define GIMP_ENUM_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStoreClass))
 
 
-typedef struct _GimpEnumStoreClass  GimpEnumStoreClass;
+typedef struct _GimpEnumStorePrivate GimpEnumStorePrivate;
+typedef struct _GimpEnumStoreClass   GimpEnumStoreClass;
 
 struct _GimpEnumStore
 {
-  GimpIntStore       parent_instance;
+  GimpIntStore          parent_instance;
 
-  GEnumClass        *enum_class;
+  GimpEnumStorePrivate *priv;
 };
 
 struct _GimpEnumStoreClass
@@ -56,6 +57,10 @@ struct _GimpEnumStoreClass
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
@@ -71,10 +76,6 @@ GtkListStore * gimp_enum_store_new_with_values        (GType    enum_type,
 GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
-
-GIMP_DEPRECATED_FOR(gimp_enum_store_set_icon_prefix)
-void           gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
-                                                 const gchar   *stock_prefix);
 
 void           gimp_enum_store_set_icon_prefix  (GimpEnumStore *store,
                                                  const gchar   *icon_prefix);

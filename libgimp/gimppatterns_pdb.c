@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 
 
@@ -108,87 +106,4 @@ gimp_patterns_get_list (const gchar *filter,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return pattern_list;
-}
-
-/**
- * gimp_patterns_get_pattern:
- * @width: The pattern width.
- * @height: The pattern height.
- *
- * Deprecated: Use gimp_context_get_pattern() instead.
- *
- * Returns: The pattern name.
- **/
-gchar *
-gimp_patterns_get_pattern (gint *width,
-                           gint *height)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp-patterns-get-pattern",
-                                    &nreturn_vals,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      name = g_strdup (return_vals[1].data.d_string);
-      *width = return_vals[2].data.d_int32;
-      *height = return_vals[3].data.d_int32;
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return name;
-}
-
-/**
- * gimp_patterns_get_pattern_data:
- * @name: The pattern name (\"\" means currently active pattern).
- * @width: The pattern width.
- * @height: The pattern height.
- * @mask_bpp: Pattern bytes per pixel.
- * @length: Length of pattern mask data.
- * @mask_data: The pattern mask data.
- *
- * Deprecated: Use gimp_pattern_get_pixels() instead.
- *
- * Returns: The pattern name.
- **/
-gchar *
-gimp_patterns_get_pattern_data (const gchar  *name,
-                                gint         *width,
-                                gint         *height,
-                                gint         *mask_bpp,
-                                gint         *length,
-                                guint8      **mask_data)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *actual_name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp-patterns-get-pattern-data",
-                                    &nreturn_vals,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  *length = 0;
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    {
-      actual_name = g_strdup (return_vals[1].data.d_string);
-      *width = return_vals[2].data.d_int32;
-      *height = return_vals[3].data.d_int32;
-      *mask_bpp = return_vals[4].data.d_int32;
-      *length = return_vals[5].data.d_int32;
-      *mask_data = g_new (guint8, *length);
-      memcpy (*mask_data,
-              return_vals[6].data.d_int8array,
-              *length * sizeof (guint8));
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return actual_name;
 }

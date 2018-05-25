@@ -134,6 +134,20 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 data);
 }
 
+gint
+gimp_free_select_tool_get_n_points (GimpFreeSelectTool *tool)
+{
+  GimpFreeSelectToolPrivate *private = tool->private;
+  const GimpVector2         *points;
+  gint                       n_points = 0;
+
+  if (private->widget)
+    gimp_tool_polygon_get_points (GIMP_TOOL_POLYGON (private->widget),
+                                  &points, &n_points);
+
+  return n_points;
+}
+
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {

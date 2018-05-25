@@ -129,7 +129,12 @@ gimp_font_list_add_font (GimpFontList         *list,
 
   name = pango_font_description_to_string (desc);
 
-  if (g_utf8_validate (name, -1, NULL))
+  /* It doesn't look like pango_font_description_to_string() could ever
+   * return NULL. But just to be double sure and avoid a segfault, I
+   * check before validating the string.
+   */
+  if (name && strlen (name) > 0 &&
+      g_utf8_validate (name, -1, NULL))
     {
       GimpFont *font;
 
@@ -201,16 +206,28 @@ gimp_font_list_load_names (GimpFontList *list,
   FcFontSet   *fontset;
   gint         i;
 
+  g_return_if_fail (GIMP_IS_FONT_LIST (list));
+  g_return_if_fail (PANGO_IS_CONTEXT (context));
+
   os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
                          FC_SLANT, FC_WEIGHT, FC_WIDTH,
                          NULL);
+  g_return_if_fail (os);
 
   pat = FcPatternCreate ();
+  if (! pat)
+    {
+      FcObjectSetDestroy (os);
+      g_critical ("%s: FcPatternCreate() returned NULL.", G_STRFUNC);
+      return;
+    }
 
   fontset = FcFontList (NULL, pat, os);
 
   FcPatternDestroy (pat);
   FcObjectSetDestroy (os);
+
+  g_return_if_fail (fontset);
 
   for (i = 0; i < fontset->nfont; i++)
     {

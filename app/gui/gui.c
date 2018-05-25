@@ -131,9 +131,6 @@ static void       gui_user_manual_notify        (GimpGuiConfig      *gui_config,
 static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GimpUIConfigurer   *ui_configurer);
-static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 GtkUIManager       *manager);
 
 static void       gui_clipboard_changed         (Gimp               *gimp);
 
@@ -165,8 +162,7 @@ static gboolean  gui_check_action_exists        (const gchar *accel_path);
 static Gimp             *the_gui_gimp     = NULL;
 static GimpUIManager    *image_ui_manager = NULL;
 static GimpUIConfigurer *ui_configurer    = NULL;
-static GdkScreen        *initial_screen   = NULL;
-static gint              initial_monitor  = -1;
+static GdkMonitor       *initial_monitor  = NULL;
 
 
 /*  public functions  */
@@ -228,21 +224,13 @@ gui_init (Gimp     *gimp,
 
   the_gui_gimp = gimp;
 
-  /* TRANSLATORS: there is no need to translate this in GIMP. This uses
-   * "gtk20" domain as a special trick to determine language direction,
-   * but xgettext extracts it anyway mistakenly into GIMP po files.
-   * Leave an empty string as translation. It does not matter.
+  /* Normally this should have been taken care of during command line
+   * parsing as a post-parse hook of gtk_get_option_group(), using the
+   * system locales.
+   * But user config may have overriden the language, therefore we must
+   * check the widget directions again.
    */
-  if (g_strcmp0 (dgettext ("gtk20", "default:LTR"), "default:RTL") == 0)
-    /* Normally this should have been taken care of during command line
-     * parsing as a post-parse hook of gtk_get_option_group(), using the
-     * system locales.
-     * But user config may have overridden the language, therefore we must
-     * check the widget directions again.
-     */
-    gtk_widget_set_default_direction (GTK_TEXT_DIR_RTL);
-  else
-    gtk_widget_set_default_direction (GTK_TEXT_DIR_LTR);
+  gtk_widget_set_default_direction (gtk_get_locale_direction ());
 
   gui_unique_init (gimp);
   gimp_language_store_parser_init ();
@@ -277,12 +265,11 @@ gui_init (Gimp     *gimp,
 
   themes_init (gimp);
 
-  initial_monitor = gimp_get_monitor_at_pointer (&initial_screen);
-  gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (initial_screen));
+  initial_monitor = gimp_get_monitor_at_pointer ();
 
   if (! no_splash)
     {
-      splash_create (gimp->be_verbose, initial_screen, initial_monitor);
+      splash_create (gimp->be_verbose, initial_monitor);
       status_callback = splash_update;
     }
 
@@ -358,14 +345,10 @@ gui_recover (gint n_recoveries)
   return recover;
 }
 
-gint
-gui_get_initial_monitor (Gimp       *gimp,
-                         GdkScreen **screen)
+GdkMonitor *
+gui_get_initial_monitor (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
-  g_return_val_if_fail (screen != NULL, 0);
-
-  *screen = initial_screen;
 
   return initial_monitor;
 }
@@ -376,9 +359,9 @@ gui_get_initial_monitor (Gimp       *gimp,
 static gchar *
 gui_sanity_check (void)
 {
-#define GTK_REQUIRED_MAJOR 2
-#define GTK_REQUIRED_MINOR 24
-#define GTK_REQUIRED_MICRO 10
+#define GTK_REQUIRED_MAJOR 3
+#define GTK_REQUIRED_MINOR 22
+#define GTK_REQUIRED_MICRO 29
 
   const gchar *mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                              GTK_REQUIRED_MINOR,
@@ -458,11 +441,10 @@ gui_initialize_after_callback (Gimp               *gimp,
 
   if (name)
     {
-      gchar *display = gdk_get_display ();
+      const gchar *display = gdk_display_get_name (gdk_display_get_default ());
 
       gimp_environ_table_add (gimp->plug_in_manager->environ_table,
                               name, display, NULL);
-      g_free (display);
     }
 
   gimp_tools_init (gimp);
@@ -514,9 +496,7 @@ gui_restore_callback (Gimp               *gimp,
     {
       gdouble xres, yres;
 
-      gimp_get_monitor_resolution (initial_screen,
-                                   initial_monitor,
-                                   &xres, &yres);
+      gimp_get_monitor_resolution (initial_monitor, &xres, &yres);
 
       g_object_set (gimp->config,
                     "monitor-xresolution",                      xres,
@@ -614,8 +594,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
   image_ui_manager = gimp_menu_factory_manager_new (global_menu_factory,
                                                     "<Image>",
-                                                    gimp,
-                                                    gui_config->tearoff_menus);
+                                                    gimp);
   gimp_ui_manager_update (image_ui_manager, gimp);
 
   /* Check that every accelerator is unique. */
@@ -681,9 +660,6 @@ gui_restore_after_callback (Gimp               *gimp,
   g_signal_connect_object (gui_config, "notify::single-window-mode",
                            G_CALLBACK (gui_single_window_mode_notify),
                            ui_configurer, 0);
-  g_signal_connect_object (gui_config, "notify::tearoff-menus",
-                           G_CALLBACK (gui_tearoff_menus_notify),
-                           image_ui_manager, 0);
   g_signal_connect (image_ui_manager, "show-tooltip",
                     G_CALLBACK (gui_menu_show_tooltip),
                     gimp);
@@ -705,15 +681,12 @@ gui_restore_after_callback (Gimp               *gimp,
       /*  create the empty display  */
       display = GIMP_DISPLAY (gimp_create_display (gimp, NULL,
                                                    GIMP_UNIT_PIXEL, 1.0,
-                                                   G_OBJECT (initial_screen),
-                                                   initial_monitor));
+                                                   G_OBJECT (initial_monitor)));
 
       shell = gimp_display_get_shell (display);
 
       if (gui_config->restore_session)
-        session_restore (gimp,
-                         initial_screen,
-                         initial_monitor);
+        session_restore (gimp, initial_monitor);
 
       /*  move keyboard focus to the display  */
       toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
@@ -724,8 +697,7 @@ gui_restore_after_callback (Gimp               *gimp,
   gdk_notify_startup_complete ();
 
   /*  clear startup monitor variables  */
-  initial_screen  = NULL;
-  initial_monitor = -1;
+  initial_monitor = NULL;
 }
 
 static gboolean
@@ -739,14 +711,20 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! force && gimp_displays_dirty (gimp))
     {
-      GdkScreen *screen;
-      gint       monitor;
+      GimpContext *context = gimp_get_user_context (gimp);
+      GimpDisplay *display = gimp_context_get_display (context);
+      GdkMonitor  *monitor = gimp_get_monitor_at_pointer ();
+      GtkWidget   *parent  = NULL;
 
-      monitor = gimp_get_monitor_at_pointer (&screen);
+      if (display)
+        {
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
+
+          parent = GTK_WIDGET (gimp_display_shell_get_window (shell));
+        }
 
       gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                        screen, monitor,
-                                        "gimp-quit-dialog", -1);
+                                        monitor, parent, "gimp-quit-dialog", -1);
 
       return TRUE; /* stop exit for now */
     }
@@ -864,13 +842,6 @@ gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
 {
   gimp_ui_configurer_configure (ui_configurer,
                                 gui_config->single_window_mode);
-}
-static void
-gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
-                          GParamSpec    *pspec,
-                          GtkUIManager  *manager)
-{
-  gtk_ui_manager_set_add_tearoffs (manager, gui_config->tearoff_menus);
 }
 
 static void

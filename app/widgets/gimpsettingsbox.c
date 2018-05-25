@@ -39,7 +39,6 @@
 #include "gimpcontainerview.h"
 #include "gimpsettingsbox.h"
 #include "gimpsettingseditor.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -107,7 +106,6 @@ static void      gimp_settings_box_get_property  (GObject           *object,
 
 static GtkWidget *
                  gimp_settings_box_menu_item_add (GimpSettingsBox   *box,
-                                                  const gchar       *icon_name,
                                                   const gchar       *label,
                                                   GCallback          callback);
 static gboolean
@@ -356,20 +354,17 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_ICON_DOCUMENT_OPEN,
                                      _("_Import Current Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     GIMP_ICON_DOCUMENT_SAVE,
                                      _("_Export Current Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
-  gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
+  gimp_settings_box_menu_item_add (box, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   GIMP_ICON_EDIT,
                                    _("_Manage Saved Presets..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }
@@ -515,7 +510,6 @@ gimp_settings_box_get_property (GObject    *object,
 
 static GtkWidget *
 gimp_settings_box_menu_item_add (GimpSettingsBox *box,
-                                 const gchar     *icon_name,
                                  const gchar     *label,
                                  GCallback        callback)
 {
@@ -524,11 +518,7 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
 
   if (label)
     {
-      GtkWidget *image;
-
-      item = gtk_image_menu_item_new_with_mnemonic (label);
-      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-      gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+      item = gtk_menu_item_new_with_mnemonic (label);
 
       g_signal_connect (item, "activate",
                         callback,
@@ -575,16 +565,6 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
     }
 }
 
-static void
-gimp_settings_box_menu_position (GtkMenu  *menu,
-                                 gint     *x,
-                                 gint     *y,
-                                 gboolean *push_in,
-                                 gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_LEFT, x, y);
-}
-
 static gboolean
 gimp_settings_box_menu_press (GtkWidget       *widget,
                               GdkEventButton  *bevent,
@@ -594,10 +574,10 @@ gimp_settings_box_menu_press (GtkWidget       *widget,
 
   if (bevent->type == GDK_BUTTON_PRESS)
     {
-      gtk_menu_popup (GTK_MENU (private->menu),
-                      NULL, NULL,
-                      gimp_settings_box_menu_position, widget,
-                      bevent->button, bevent->time);
+      gtk_menu_popup_at_widget (GTK_MENU (private->menu), widget,
+                                GDK_GRAVITY_WEST,
+                                GDK_GRAVITY_NORTH_EAST,
+                                (GdkEvent *) bevent);
     }
 
   return TRUE;
@@ -738,7 +718,7 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                  NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);

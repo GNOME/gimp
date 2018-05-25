@@ -29,6 +29,8 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpdialog.h"
+
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpfileentry.h"
 
@@ -437,7 +439,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
                                      NULL);
 
-        gtk_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
+        gimp_dialog_set_alternative_button_order (GTK_DIALOG (entry->file_dialog),
                                                 GTK_RESPONSE_OK,
                                                 GTK_RESPONSE_CANCEL,
                                                 -1);

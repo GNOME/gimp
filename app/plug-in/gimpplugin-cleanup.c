@@ -48,6 +48,9 @@ struct _GimpPlugInCleanupImage
   gint       image_ID;
 
   gint       undo_group_count;
+  gint       layers_freeze_count;
+  gint       channels_freeze_count;
+  gint       vectors_freeze_count;
 };
 
 
@@ -65,22 +68,30 @@ struct _GimpPlugInCleanupItem
 /*  local function prototypes  */
 
 static GimpPlugInCleanupImage *
-              gimp_plug_in_cleanup_image_new  (GimpImage              *image);
-static void   gimp_plug_in_cleanup_image_free (GimpPlugInCleanupImage *cleanup);
+              gimp_plug_in_cleanup_image_new      (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpImage              *image);
+static void   gimp_plug_in_cleanup_image_free     (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpPlugInCleanupImage *cleanup);
+static gboolean
+              gimp_plug_in_cleanup_image_is_clean (GimpPlugInCleanupImage *cleanup);
 static GimpPlugInCleanupImage *
-              gimp_plug_in_cleanup_image_get  (GimpPlugInProcFrame    *proc_frame,
-                                               GimpImage              *image);
-static void   gimp_plug_in_cleanup_image      (GimpPlugInProcFrame    *proc_frame,
-                                               GimpPlugInCleanupImage *cleanup);
+              gimp_plug_in_cleanup_image_get      (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpImage              *image);
+static void   gimp_plug_in_cleanup_image          (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpPlugInCleanupImage *cleanup);
 
 static GimpPlugInCleanupItem *
-              gimp_plug_in_cleanup_item_new   (GimpItem               *item);
-static void   gimp_plug_in_cleanup_item_free  (GimpPlugInCleanupItem  *cleanup);
+              gimp_plug_in_cleanup_item_new       (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpItem               *item);
+static void   gimp_plug_in_cleanup_item_free      (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpPlugInCleanupItem  *cleanup);
+static gboolean
+              gimp_plug_in_cleanup_item_is_clean  (GimpPlugInCleanupItem  *cleanup);
 static GimpPlugInCleanupItem *
-              gimp_plug_in_cleanup_item_get   (GimpPlugInProcFrame    *proc_frame,
-                                               GimpItem               *item);
-static void   gimp_plug_in_cleanup_item       (GimpPlugInProcFrame    *proc_frame,
-                                               GimpPlugInCleanupItem  *cleanup);
+              gimp_plug_in_cleanup_item_get       (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpItem               *item);
+static void   gimp_plug_in_cleanup_item           (GimpPlugInProcFrame    *proc_frame,
+                                                   GimpPlugInCleanupItem  *cleanup);
 
 
 /*  public functions  */
@@ -99,14 +110,9 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
   cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
 
   if (! cleanup)
-    {
-      cleanup = gimp_plug_in_cleanup_image_new (image);
+    cleanup = gimp_plug_in_cleanup_image_new (proc_frame, image);
 
-      cleanup->undo_group_count = gimp_image_get_undo_group_count (image);
-
-      proc_frame->image_cleanups = g_list_prepend (proc_frame->image_cleanups,
-                                                   cleanup);
-    }
+  cleanup->undo_group_count++;
 
   return TRUE;
 }
@@ -127,14 +133,167 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   if (! cleanup)
     return FALSE;
 
-  if (cleanup->undo_group_count == gimp_image_get_undo_group_count (image) - 1)
+  if (cleanup->undo_group_count > 0)
     {
-      proc_frame->image_cleanups = g_list_remove (proc_frame->image_cleanups,
-                                                  cleanup);
-      gimp_plug_in_cleanup_image_free (cleanup);
+      cleanup->undo_group_count--;
+
+      if (gimp_plug_in_cleanup_image_is_clean (cleanup))
+        gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
+
+      return TRUE;
     }
 
+  return FALSE;
+}
+
+gboolean
+gimp_plug_in_cleanup_layers_freeze (GimpPlugIn *plug_in,
+                                    GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    cleanup = gimp_plug_in_cleanup_image_new (proc_frame, image);
+
+  cleanup->layers_freeze_count++;
+
   return TRUE;
+}
+
+gboolean
+gimp_plug_in_cleanup_layers_thaw (GimpPlugIn *plug_in,
+                                  GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    return FALSE;
+
+  if (cleanup->layers_freeze_count > 0)
+    {
+      cleanup->layers_freeze_count--;
+
+      if (gimp_plug_in_cleanup_image_is_clean (cleanup))
+        gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_plug_in_cleanup_channels_freeze (GimpPlugIn *plug_in,
+                                      GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    cleanup = gimp_plug_in_cleanup_image_new (proc_frame, image);
+
+  cleanup->channels_freeze_count++;
+
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_cleanup_channels_thaw (GimpPlugIn *plug_in,
+                                    GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    return FALSE;
+
+  if (cleanup->channels_freeze_count > 0)
+    {
+      cleanup->channels_freeze_count--;
+
+      if (gimp_plug_in_cleanup_image_is_clean (cleanup))
+        gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_plug_in_cleanup_vectors_freeze (GimpPlugIn *plug_in,
+                                     GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    cleanup = gimp_plug_in_cleanup_image_new (proc_frame, image);
+
+  cleanup->vectors_freeze_count++;
+
+  return TRUE;
+}
+
+gboolean
+gimp_plug_in_cleanup_vectors_thaw (GimpPlugIn *plug_in,
+                                   GimpImage  *image)
+{
+  GimpPlugInProcFrame    *proc_frame;
+  GimpPlugInCleanupImage *cleanup;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  cleanup    = gimp_plug_in_cleanup_image_get (proc_frame, image);
+
+  if (! cleanup)
+    return FALSE;
+
+  if (cleanup->vectors_freeze_count > 0)
+    {
+      cleanup->vectors_freeze_count--;
+
+      if (gimp_plug_in_cleanup_image_is_clean (cleanup))
+        gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 gboolean
@@ -151,12 +310,7 @@ gimp_plug_in_cleanup_add_shadow (GimpPlugIn   *plug_in,
   cleanup    = gimp_plug_in_cleanup_item_get (proc_frame, GIMP_ITEM (drawable));
 
   if (! cleanup)
-    {
-      cleanup = gimp_plug_in_cleanup_item_new (GIMP_ITEM (drawable));
-
-      proc_frame->item_cleanups = g_list_prepend (proc_frame->item_cleanups,
-                                                  cleanup);
-    }
+    cleanup = gimp_plug_in_cleanup_item_new (proc_frame, GIMP_ITEM (drawable));
 
   cleanup->shadow_buffer = TRUE;
 
@@ -179,28 +333,29 @@ gimp_plug_in_cleanup_remove_shadow (GimpPlugIn   *plug_in,
   if (! cleanup)
     return FALSE;
 
-  if (! cleanup->shadow_buffer)
-    return FALSE;
+  if (cleanup->shadow_buffer)
+    {
+      cleanup->shadow_buffer = FALSE;
 
-  proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
-                                             cleanup);
-  gimp_plug_in_cleanup_item_free (cleanup);
+      if (gimp_plug_in_cleanup_item_is_clean (cleanup))
+        gimp_plug_in_cleanup_item_free (proc_frame, cleanup);
 
-  return TRUE;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 void
 gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
                       GimpPlugInProcFrame *proc_frame)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (proc_frame != NULL);
 
-  for (list = proc_frame->image_cleanups; list; list = g_list_next (list))
+  while (proc_frame->image_cleanups)
     {
-      GimpPlugInCleanupImage *cleanup = list->data;
+      GimpPlugInCleanupImage *cleanup = proc_frame->image_cleanups->data;
 
       if (gimp_image_get_by_ID (plug_in->manager->gimp,
                                 cleanup->image_ID) == cleanup->image)
@@ -208,15 +363,12 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
           gimp_plug_in_cleanup_image (proc_frame, cleanup);
         }
 
-      gimp_plug_in_cleanup_image_free (cleanup);
+      gimp_plug_in_cleanup_image_free (proc_frame, cleanup);
     }
 
-  g_list_free (proc_frame->image_cleanups);
-  proc_frame->image_cleanups = NULL;
-
-  for (list = proc_frame->item_cleanups; list; list = g_list_next (list))
+  while (proc_frame->item_cleanups)
     {
-      GimpPlugInCleanupItem *cleanup = list->data;
+      GimpPlugInCleanupItem *cleanup = proc_frame->item_cleanups->data;
 
       if (gimp_item_get_by_ID (plug_in->manager->gimp,
                                cleanup->item_ID) == cleanup->item)
@@ -224,31 +376,54 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
           gimp_plug_in_cleanup_item (proc_frame, cleanup);
         }
 
-      gimp_plug_in_cleanup_item_free (cleanup);
+      gimp_plug_in_cleanup_item_free (proc_frame, cleanup);
     }
-
-  g_list_free (proc_frame->item_cleanups);
-  proc_frame->item_cleanups = NULL;
 }
 
 
 /*  private functions  */
 
 static GimpPlugInCleanupImage *
-gimp_plug_in_cleanup_image_new (GimpImage *image)
+gimp_plug_in_cleanup_image_new (GimpPlugInProcFrame *proc_frame,
+                                GimpImage           *image)
 {
   GimpPlugInCleanupImage *cleanup = g_slice_new0 (GimpPlugInCleanupImage);
 
   cleanup->image    = image;
   cleanup->image_ID = gimp_image_get_ID (image);
 
+  proc_frame->image_cleanups = g_list_prepend (proc_frame->image_cleanups,
+                                               cleanup);
+
   return cleanup;
 }
 
 static void
-gimp_plug_in_cleanup_image_free (GimpPlugInCleanupImage *cleanup)
+gimp_plug_in_cleanup_image_free (GimpPlugInProcFrame    *proc_frame,
+                                 GimpPlugInCleanupImage *cleanup)
 {
+  proc_frame->image_cleanups = g_list_remove (proc_frame->image_cleanups,
+                                              cleanup);
+
   g_slice_free (GimpPlugInCleanupImage, cleanup);
+}
+
+static gboolean
+gimp_plug_in_cleanup_image_is_clean (GimpPlugInCleanupImage *cleanup)
+{
+  if (cleanup->undo_group_count > 0)
+    return FALSE;
+
+  if (cleanup->layers_freeze_count > 0)
+    return FALSE;
+
+  if (cleanup->channels_freeze_count > 0)
+    return FALSE;
+
+  if (cleanup->vectors_freeze_count > 0)
+    return FALSE;
+
+  return TRUE;
 }
 
 static GimpPlugInCleanupImage *
@@ -272,40 +447,98 @@ static void
 gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
                             GimpPlugInCleanupImage *cleanup)
 {
-  GimpImage *image = cleanup->image;
+  GimpImage     *image = cleanup->image;
+  GimpContainer *container;
 
-  if (gimp_image_get_undo_group_count (image) == 0)
-    return;
-
-  if (cleanup->undo_group_count != gimp_image_get_undo_group_count (image))
+  if (cleanup->undo_group_count > 0)
     {
       g_message ("Plug-in '%s' left image undo in inconsistent state, "
                  "closing open undo groups.",
                  gimp_procedure_get_label (proc_frame->procedure));
 
-      while (cleanup->undo_group_count < gimp_image_get_undo_group_count (image))
+      while (cleanup->undo_group_count--)
+        if (! gimp_image_undo_group_end (image))
+          break;
+    }
+
+  container = gimp_image_get_layers (image);
+
+  if (cleanup->layers_freeze_count > 0)
+    {
+      g_message ("Plug-in '%s' left image's layers frozen, "
+                 "thawing layers.",
+                 gimp_procedure_get_label (proc_frame->procedure));
+
+      while (cleanup->layers_freeze_count-- > 0 &&
+             gimp_container_frozen (container))
         {
-          if (! gimp_image_undo_group_end (image))
-            break;
+          gimp_container_thaw (container);
+        }
+    }
+
+  container = gimp_image_get_channels (image);
+
+  if (cleanup->channels_freeze_count > 0)
+    {
+      g_message ("Plug-in '%s' left image's channels frozen, "
+                 "thawing channels.",
+                 gimp_procedure_get_label (proc_frame->procedure));
+
+      while (cleanup->channels_freeze_count-- > 0 &&
+             gimp_container_frozen (container))
+        {
+          gimp_container_thaw (container);
+        }
+    }
+
+  container = gimp_image_get_vectors (image);
+
+  if (cleanup->vectors_freeze_count > 0)
+    {
+      g_message ("Plug-in '%s' left image's vectors frozen, "
+                 "thawing vectors.",
+                 gimp_procedure_get_label (proc_frame->procedure));
+
+      while (cleanup->vectors_freeze_count > 0 &&
+             gimp_container_frozen (container))
+        {
+          gimp_container_thaw (container);
         }
     }
 }
 
 static GimpPlugInCleanupItem *
-gimp_plug_in_cleanup_item_new (GimpItem *item)
+gimp_plug_in_cleanup_item_new (GimpPlugInProcFrame *proc_frame,
+                               GimpItem            *item)
 {
   GimpPlugInCleanupItem *cleanup = g_slice_new0 (GimpPlugInCleanupItem);
 
   cleanup->item    = item;
   cleanup->item_ID = gimp_item_get_ID (item);
 
+  proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
+                                             cleanup);
+
   return cleanup;
 }
 
 static void
-gimp_plug_in_cleanup_item_free (GimpPlugInCleanupItem *cleanup)
+gimp_plug_in_cleanup_item_free (GimpPlugInProcFrame   *proc_frame,
+                                GimpPlugInCleanupItem *cleanup)
 {
+  proc_frame->item_cleanups = g_list_remove (proc_frame->item_cleanups,
+                                             cleanup);
+
   g_slice_free (GimpPlugInCleanupItem, cleanup);
+}
+
+static gboolean
+gimp_plug_in_cleanup_item_is_clean (GimpPlugInCleanupItem *cleanup)
+{
+  if (cleanup->shadow_buffer)
+    return FALSE;
+
+  return TRUE;
 }
 
 static GimpPlugInCleanupItem *
@@ -339,5 +572,7 @@ gimp_plug_in_cleanup_item (GimpPlugInProcFrame   *proc_frame,
                 gimp_procedure_get_label (proc_frame->procedure));
 
       gimp_drawable_free_shadow_buffer (GIMP_DRAWABLE (item));
+
+      cleanup->shadow_buffer = FALSE;
     }
 }

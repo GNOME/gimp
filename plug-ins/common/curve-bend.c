@@ -1145,7 +1145,7 @@ do_dialog (GimpDrawable *drawable)
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 
   gtk_main ();
-  gdk_flush ();
+  gdk_display_flush (gtk_widget_get_display (cd->shell));
 
   gimp_image_delete(cd->preview_image_id);
   cd->preview_image_id = -1;
@@ -1229,7 +1229,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
                                NULL);
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->shell),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -1323,7 +1323,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  cd->rotate_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0));
+  cd->rotate_data = gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0);
   gtk_adjustment_set_value (cd->rotate_data, cd->rotation);
 
   spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);
@@ -1525,7 +1525,7 @@ bender_update (BenderDialog *cd,
     {
       gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (cd->shell)),
                              cd->cursor_busy);
-      gdk_flush ();
+      gdk_display_flush (gtk_widget_get_display (cd->shell));
 
       if (cd->preview_layer_id2 >= 0)
          gimp_image_remove_layer(cd->preview_image_id, cd->preview_layer_id2);
@@ -2067,7 +2067,7 @@ bender_load_callback (GtkWidget    *w,
 
                                      NULL);
 
-      gtk_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (cd->filechooser),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2795,7 +2795,7 @@ p_add_layer (gint       width,
   /* add the copied layer to the temp. working image */
   gimp_image_insert_layer (image_id, l_new_layer_id, -1, stack_position);
 
-  /* copy visiblity state */
+  /* copy visibility state */
   gimp_item_set_visible (l_new_layer_id, l_visible);
 
   return l_new_drawable;

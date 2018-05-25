@@ -40,7 +40,7 @@ enum
   PROP_LONG_FORMAT
 };
 
-typedef struct
+struct _GimpUnitStorePrivate
 {
   gint      num_values;
   gboolean  has_pixels;
@@ -53,11 +53,9 @@ typedef struct
   gdouble  *resolutions;
 
   GimpUnit  synced_unit;
-} GimpUnitStorePrivate;
+};
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_UNIT_STORE, \
-                                                      GimpUnitStorePrivate)
+#define GET_PRIVATE(obj) (((GimpUnitStore *) (obj))->priv)
 
 
 static void         gimp_unit_store_tree_model_init (GtkTreeModelIface *iface);
@@ -178,7 +176,13 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
 static void
 gimp_unit_store_init (GimpUnitStore *store)
 {
-  GimpUnitStorePrivate *private = GET_PRIVATE (store);
+  GimpUnitStorePrivate *private;
+
+  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
+                                             GIMP_TYPE_UNIT_STORE,
+                                             GimpUnitStorePrivate);
+
+  private = store->priv;
 
   private->has_pixels   = TRUE;
   private->has_percent  = FALSE;

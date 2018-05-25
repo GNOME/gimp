@@ -215,12 +215,12 @@ static void gimp_context_real_set_gradient   (GimpContext      *context,
 static void gimp_context_palette_dirty       (GimpPalette      *palette,
                                               GimpContext      *context);
 static void gimp_context_palette_removed     (GimpContainer    *container,
-                                              GimpPalette      *palatte,
+                                              GimpPalette      *palette,
                                               GimpContext      *context);
 static void gimp_context_palette_list_thaw   (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_palette    (GimpContext      *context,
-                                              GimpPalette      *palatte);
+                                              GimpPalette      *palette);
 
 /*  tool preset  */
 static void gimp_context_tool_preset_dirty     (GimpToolPreset   *tool_preset,

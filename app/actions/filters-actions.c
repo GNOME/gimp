@@ -548,6 +548,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gimp:posterize",
     GIMP_HELP_FILTER_POSTERIZE },
 
+  { "filters-recursive-transform", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Recursive Transform..."), NULL, NULL,
+    "gegl:recursive-transform",
+    GIMP_HELP_FILTER_RECURSIVE_TRANSFORM },
+
   { "filters-red-eye-removal", GIMP_ICON_GEGL,
     NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
     "gegl:red-eye-removal",
@@ -612,6 +617,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Softglow..."), NULL, NULL,
     "gegl:softglow",
     GIMP_HELP_FILTER_SOFTGLOW },
+
+  { "filters-spherize", GIMP_ICON_GEGL,
+    NC_("filters-action", "Spheri_ze..."), NULL, NULL,
+    "gegl:spherize",
+    GIMP_HELP_FILTER_SPHERIZE },
 
   { "filters-spiral", GIMP_ICON_GEGL,
     NC_("filters-action", "S_piral..."), NULL, NULL,
@@ -907,6 +917,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-plasma",                  writable);
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-posterize",               writable);
+  SET_SENSITIVE ("filters-recursive-transform",     writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
   SET_SENSITIVE ("filters-reinhard-2005",           writable);
   SET_SENSITIVE ("filters-rgb-clip",                writable);
@@ -920,6 +931,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-slic",                    writable);
   SET_SENSITIVE ("filters-snn-mean",                writable);
   SET_SENSITIVE ("filters-softglow",                writable);
+  SET_SENSITIVE ("filters-spherize",                writable);
   SET_SENSITIVE ("filters-spiral",                  writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
