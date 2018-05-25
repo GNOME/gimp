@@ -1,7 +1,7 @@
 [Code]
 (* MessageWithURL
  *
- * Copyright (c) 2010-2011 Jernej Simonüiü
+ * Copyright (c) 2010-2011 Jernej Simonƒçiƒç
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -288,7 +288,7 @@ begin
 		Blank.Right := Width;
 		Blank.Bottom := Height;
 		Bitmap.Canvas.Brush.Color := TPanel(Parent).Color;
-		Bitmap.Canvas.FillRect(Blank);		
+		Bitmap.Canvas.FillRect(Blank);
 	end;
 end;
 
@@ -310,7 +310,7 @@ begin
 				Top := TypImg.Top
 			else
 				Top := TextLabel[i-1].Top + TextLabel[i-1].Height + ScaleY(MWU_VERTSPACING);
-			
+
 			WordWrap := True;
 			AutoSize := True;
 			Width := DialogTextWidth;

@@ -34,7 +34,7 @@
  *          2       |    1,...,32  |      32
  */
 /* Event history:
- * PK = Peter Kirchgessner, ME = Mattias Engdegård
+ * PK = Peter Kirchgessner, ME = Mattias EngdegÃ¥rd
  * V 1.00, PK, xx-Aug-96: First try
  * V 1.01, PK, 03-Sep-96: Check for bitmap_bit_order
  * V 1.90, PK, 17-Mar-97: Upgrade to work with GIMP V0.99
