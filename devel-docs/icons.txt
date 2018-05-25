@@ -111,4 +111,12 @@ so, set the environment variable `GIMP_ICONS_LIKE_A_BOSS`.
 
 For instance, start GIMP like this:
 
-    GIMP_ICONS_LIKE_A_BOSS=1 gimp-2.10
+    GIMP_ICONS_LIKE_A_BOSS=1 gimp-2.99
+
+To test high (or low) density icons, without having to change the
+scaling factor of your whole desktop, just change the `GDK_SCALE`
+environment variable.
+For instance, run GIMP like this to simulate a scaling factor of 2
+(every icons and text would typically double):
+
+    GDK_SCALE=2 gimp-2.99
