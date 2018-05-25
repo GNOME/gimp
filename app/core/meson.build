@@ -15,6 +15,7 @@ appcoremarshal = gnome.genmarshal('gimpmarshal',
 
 
 libappcore_sources = [
+  'gimp-atomic.c',
   'gimp-batch.c',
   'gimp-cairo.c',
   'gimp-contexts.c',
@@ -38,6 +39,7 @@ libappcore_sources = [
   'gimp-user-install.c',
   'gimp-utils.c',
   'gimp.c',
+  'gimpasync.c',
   'gimpbezierdesc.c',
   'gimpboundary.c',
   'gimpbrush-boundary.c',
