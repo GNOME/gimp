@@ -186,6 +186,11 @@ common_exes_list = [
     [ gtk2, gegl, gdk_pixbuf, ],
   ],
   [
+    'file-heif',
+    [ 'file-heif.c', ],
+    [ gtk2, gegl, libheif, ],
+  ],
+  [
     'file-html-table',
     [ 'file-html-table.c', ],
     [ gtk2, gegl, gdk_pixbuf, ],
