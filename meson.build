@@ -1262,6 +1262,7 @@ install_conf.set('PYTHON2_REQUIRED_VERSION',      '2.5.0')
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
 install_conf.set('WEBKIT_REQUIRED_VERSION',       webkit      .version())
 install_conf.set('WEBP_REQUIRED_VERSION',         webp        .version())
+install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
 install_conf.set('XGETTEXT_RECOMMENDED_VERSION', '0.19')
 
