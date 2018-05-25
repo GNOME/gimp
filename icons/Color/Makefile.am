@@ -81,7 +81,7 @@ gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-icon-pixbufs.c: gimp-icon-pixbufs.gresource.xml
+gimp-icon-pixbufs.h: gimp-icon-pixbufs.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-icon-pixbufs.gresource.xml

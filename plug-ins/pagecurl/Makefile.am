@@ -27,7 +27,7 @@ libexec_PROGRAMS = pagecurl
 
 pagecurl_SOURCES = pagecurl.c
 
-BUILT_SOURCES = pagecurl-icons.c
+BUILT_SOURCES = pagecurl-icons.h
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
@@ -76,7 +76,7 @@ pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-pagecurl-icons.c: pagecurl-icons.gresource.xml
+pagecurl-icons.h: pagecurl-icons.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ pagecurl-icons.gresource.xml
