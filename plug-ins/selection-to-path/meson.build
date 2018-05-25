@@ -43,5 +43,5 @@ selection_to_path = executable(plugin_name,
   link_with:    plugin_selection_to_path_link,
   dependencies: plugin_selection_to_path_deps,
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
