@@ -1,5 +1,3 @@
-if have_scriptfu
-
 scriptfu_incdir = include_directories('.')
 
 subdir('tinyscheme')
@@ -64,5 +62,3 @@ executable(plugin_name,
   install: true,
   install_dir: join_paths(gimpplugindir, 'plug-ins'),
 )
-
-endif
