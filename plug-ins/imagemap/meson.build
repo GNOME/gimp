@@ -77,8 +77,8 @@ executable(plugin_name,
     'imap_statusbar.c',
     'imap_stock.c',
     'imap_string.c',
-    'imap_table.c',
     'imap_taglist.c',
+    'imap_ui_grid.c',
     imap_stock_pixbuf_h,
     rc_file,
   ],
@@ -96,7 +96,7 @@ executable(plugin_name,
     libgimpwidgets,
   ],
   install: true,
-  install_dir: join_paths(gimpplugindir, 'plug-ins'),
+  install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
 )
 
 

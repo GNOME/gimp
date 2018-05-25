@@ -39,7 +39,7 @@ foreach plugin_name : file_raw_exes
       libgimpwidgets,
     ],
     install: true,
-    install_dir: join_paths(gimpplugindir, 'plug-ins'),
+    install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
   )
 endforeach
 

@@ -1,6 +1,6 @@
 # Meson build file
 
-project('gimp', ['c', 'cpp'], version: '2.99.0',
+project('gimp', ['c', 'cpp'], version: '2.99.1',
   meson_version: '>=0.44.0',
   default_options: [
     'cpp_std=gnu++14',
@@ -794,8 +794,6 @@ if bug_report_url == ''
   bug_report_url = project_url_issues
 endif
 conf.set_quoted('BUG_REPORT_URL', bug_report_url)
-
-icc_directory
 
 # Default ICC directory #
 

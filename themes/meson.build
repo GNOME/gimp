@@ -1,9 +1,5 @@
 
 themes = [
-  # 'Dark',
-  # 'Gray',
-  # 'Light',
-  'Small',
   'System',
 ]
 

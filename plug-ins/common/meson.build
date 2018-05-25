@@ -183,7 +183,7 @@ common_exes_list = [
   [
     'file-heif',
     [ 'file-heif.c', ],
-    [ gtk2, gegl, libheif, ],
+    [ gtk3, gegl, libheif, ],
   ],
   [
     'file-html-table',
@@ -487,7 +487,7 @@ foreach exe : common_exes_list
   exe_sources = exe[1]
   exe_deps = exe[2]
 
-  plugin_name = 'file-exr'
+  plugin_name = exe_name
 
   rc_file = platform_win32 ? windows.compile_resources(
     gimp_plugins_rc,
@@ -515,6 +515,6 @@ foreach exe : common_exes_list
     ],
     dependencies: [ exe_deps, math ],
     install: true,
-    install_dir: join_paths(gimpplugindir, 'plug-ins'),
+    install_dir: join_paths(gimpplugindir, 'plug-ins', plugin_name),
   )
 endforeach
