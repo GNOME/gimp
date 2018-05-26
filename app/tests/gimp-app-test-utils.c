@@ -311,10 +311,10 @@ gimp_test_utils_create_image_from_dialog (Gimp *gimp)
                                       "gimp-image-new-dialog",
                                       -1 /*view_size*/);
 
-  /* Press the focused widget, it should be the Ok button. It will
-   * take a while for the image to be created so loop for a while
+  /* Press the OK button. It will take a while for the image to be
+   * created so loop for a while
    */
-  gtk_widget_activate (gtk_window_get_focus (GTK_WINDOW (new_image_dialog)));
+  gtk_dialog_response (GTK_DIALOG (new_image_dialog), GTK_RESPONSE_OK);
   do
     {
       g_usleep (20 * 1000);
