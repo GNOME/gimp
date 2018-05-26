@@ -62,7 +62,6 @@ struct _GimpDockablePrivate
   gchar        *icon_name;
   gchar        *help_id;
   GimpTabStyle  tab_style;
-  GimpTabStyle  actual_tab_style;
   gboolean      locked;
 
   GimpDockbook *dockbook;
@@ -183,10 +182,9 @@ gimp_dockable_init (GimpDockable *dockable)
                                              GIMP_TYPE_DOCKABLE,
                                              GimpDockablePrivate);
 
-  dockable->p->tab_style        = GIMP_TAB_STYLE_AUTOMATIC;
-  dockable->p->actual_tab_style = GIMP_TAB_STYLE_UNDEFINED;
-  dockable->p->drag_x           = GIMP_DOCKABLE_DRAG_OFFSET;
-  dockable->p->drag_y           = GIMP_DOCKABLE_DRAG_OFFSET;
+  dockable->p->tab_style = GIMP_TAB_STYLE_PREVIEW;
+  dockable->p->drag_x    = GIMP_DOCKABLE_DRAG_OFFSET;
+  dockable->p->drag_y    = GIMP_DOCKABLE_DRAG_OFFSET;
 
   gtk_drag_dest_set (GTK_WIDGET (dockable),
                      0,
@@ -528,11 +526,6 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
       gtk_box_pack_start (GTK_BOX (tab_widget), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
       break;
-
-    case GIMP_TAB_STYLE_UNDEFINED:
-    case GIMP_TAB_STYLE_AUTOMATIC:
-      g_warning ("Tab style error, unexpected code path taken, fix!");
-      break;
     }
 
   return tab_widget;
@@ -593,22 +586,6 @@ gimp_dockable_get_tab_style (GimpDockable *dockable)
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), -1);
 
   return dockable->p->tab_style;
-}
-
-/**
- * gimp_dockable_get_actual_tab_style:
- * @dockable:
- *
- * Get actual tab style, i.e. never "automatic". This state should
- * actually be hold on a per-dockbook basis, but at this point that
- * feels like over-engineering...
- **/
-GimpTabStyle
-gimp_dockable_get_actual_tab_style (GimpDockable *dockable)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), -1);
-
-  return dockable->p->actual_tab_style;
 }
 
 const gchar *
@@ -722,39 +699,6 @@ gimp_dockable_set_tab_style (GimpDockable *dockable,
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
   dockable->p->tab_style = gimp_dockable_convert_tab_style (dockable, tab_style);
-
-  if (tab_style == GIMP_TAB_STYLE_AUTOMATIC)
-    gimp_dockable_set_actual_tab_style (dockable, GIMP_TAB_STYLE_UNDEFINED);
-  else
-    gimp_dockable_set_actual_tab_style (dockable, tab_style);
-
-  if (dockable->p->dockbook)
-    gimp_dockbook_update_auto_tab_style (dockable->p->dockbook);
-}
-
-/**
- * gimp_dockable_set_actual_tab_style:
- * @dockable:
- * @tab_style:
- *
- * Sets actual tab style, meant for those that decides what
- * "automatic" tab style means.
- *
- * Returns: %TRUE if changed, %FALSE otherwise.
- **/
-gboolean
-gimp_dockable_set_actual_tab_style (GimpDockable *dockable,
-                                    GimpTabStyle  tab_style)
-{
-  GimpTabStyle new_tab_style = gimp_dockable_convert_tab_style (dockable, tab_style);
-  GimpTabStyle old_tab_style = dockable->p->actual_tab_style;
-
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
-  g_return_val_if_fail (tab_style != GIMP_TAB_STYLE_AUTOMATIC, FALSE);
-
-  dockable->p->actual_tab_style = new_tab_style;
-
-  return new_tab_style != old_tab_style;
 }
 
 GtkWidget *

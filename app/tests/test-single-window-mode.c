@@ -111,7 +111,7 @@ new_dockable_not_in_new_window (gconstpointer data)
   gimp_test_run_mainloop_until_idle ();
 
   /* Count dialogs after we created the dockable */
-  dialogs        = gimp_dialog_factory_get_open_dialogs (factory);
+  dialogs       = gimp_dialog_factory_get_open_dialogs (factory);
   dialogs_after = g_list_length (dialogs);
   for (iter = dialogs; iter; iter = g_list_next (iter))
     {

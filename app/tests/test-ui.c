@@ -185,7 +185,7 @@ automatic_tab_style (gconstpointer data)
    */
   g_assert_cmpint (GIMP_TAB_STYLE_ICON_BLURB,
                    ==,
-                   gimp_dockable_get_actual_tab_style (dockable));
+                   gimp_dockable_get_tab_style (dockable));
 
   /* Add some dockables to the channel dockable dockbook */
   ui_manager =
@@ -203,7 +203,7 @@ automatic_tab_style (gconstpointer data)
    */
   g_assert_cmpint (GIMP_TAB_STYLE_ICON,
                    ==,
-                   gimp_dockable_get_actual_tab_style (dockable));
+                   gimp_dockable_get_tab_style (dockable));
 
   /* Close the two dockables we added */
   gimp_ui_manager_activate_action (ui_manager,
@@ -217,7 +217,7 @@ automatic_tab_style (gconstpointer data)
   /* We should now be back on icon-blurb */
   g_assert_cmpint (GIMP_TAB_STYLE_ICON_BLURB,
                    ==,
-                   gimp_dockable_get_actual_tab_style (dockable));
+                   gimp_dockable_get_tab_style (dockable));
 }
 
 static void
