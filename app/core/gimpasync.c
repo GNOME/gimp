@@ -86,11 +86,12 @@ struct _GimpAsyncPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_async_finalize (GObject   *object);
+static void       gimp_async_finalize      (GObject   *object);
 
-static gboolean   gimp_async_idle     (GimpAsync *async);
+static gboolean   gimp_async_idle          (GimpAsync *async);
 
-static void       gimp_async_stop     (GimpAsync *async);
+static void       gimp_async_stop          (GimpAsync *async);
+static void       gimp_async_run_callbacks (GimpAsync *async);
 
 
 G_DEFINE_TYPE (GimpAsync, gimp_async, G_TYPE_OBJECT)
@@ -187,6 +188,27 @@ gimp_async_stop (GimpAsync *async)
   g_cond_broadcast (&async->priv->cond);
 }
 
+static void
+gimp_async_run_callbacks (GimpAsync *async)
+{
+  if (async->priv->idle_id)
+    {
+      GimpAsyncCallbackInfo *callback_info;
+
+      g_source_remove (async->priv->idle_id);
+      async->priv->idle_id = 0;
+
+      while ((callback_info = g_queue_pop_head (&async->priv->callbacks)))
+        {
+          callback_info->callback (async, callback_info->data);
+
+          g_slice_free (GimpAsyncCallbackInfo, callback_info);
+        }
+
+      g_object_unref (async);
+    }
+}
+
 
 /*  public functions  */
 
@@ -228,22 +250,40 @@ gimp_async_wait (GimpAsync *async)
 
   g_mutex_unlock (&async->priv->mutex);
 
-  if (async->priv->idle_id)
+  gimp_async_run_callbacks (async);
+}
+
+/* same as 'gimp_async_wait()', taking an additional 'end_time' parameter,
+ * specifying the maximal monotonic time until which to wait for 'async' for
+ * stop.
+ *
+ * returns TRUE if async has transitioned to the "stopped" state, or FALSE if
+ * the wait was interrupted before the transition.
+ */
+gboolean
+gimp_async_wait_until (GimpAsync *async,
+                       gint64     end_time)
+{
+  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+
+  g_mutex_lock (&async->priv->mutex);
+
+  while (! async->priv->stopped)
     {
-      GimpAsyncCallbackInfo *callback_info;
-
-      g_source_remove (async->priv->idle_id);
-      async->priv->idle_id = 0;
-
-      while ((callback_info = g_queue_pop_head (&async->priv->callbacks)))
+      if (! g_cond_wait_until (&async->priv->cond, &async->priv->mutex,
+                               end_time))
         {
-          callback_info->callback (async, callback_info->data);
+          g_mutex_unlock (&async->priv->mutex);
 
-          g_slice_free (GimpAsyncCallbackInfo, callback_info);
+          return FALSE;
         }
-
-      g_object_unref (async);
     }
+
+  g_mutex_unlock (&async->priv->mutex);
+
+  gimp_async_run_callbacks (async);
+
+  return TRUE;
 }
 
 /* registers a callback to be called when 'async' transitions to the "stopped"
