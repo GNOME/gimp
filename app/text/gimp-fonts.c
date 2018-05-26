@@ -32,6 +32,8 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-parallel.h"
+#include "core/gimpasync.h"
 
 #include "gimp-fonts.h"
 #include "gimpfontlist.h"
@@ -90,14 +92,6 @@ gimp_fonts_exit (Gimp *gimp)
     }
 }
 
-typedef struct
-{
-  FcConfig  *config;
-  GMutex     mutex;
-  GCond      cond;
-  gboolean   caching_complete : 1;
-} GimpFontsLoadFuncData;
-
 static void
 gimp_fonts_load_func (FcConfig *config)
 {
@@ -108,16 +102,12 @@ gimp_fonts_load_func (FcConfig *config)
 }
 
 static void
-gimp_fonts_load_thread (GimpFontsLoadFuncData *data)
+gimp_fonts_load_async (GimpAsync *async,
+                       FcConfig  *config)
 {
-  gimp_fonts_load_func (data->config);
+  gimp_fonts_load_func (config);
 
-  g_mutex_lock (&data->mutex);
-  data->caching_complete = TRUE;
-  g_cond_signal (&data->cond);
-  g_mutex_unlock (&data->mutex);
-
-  g_thread_exit (0);
+  gimp_async_finish (async, NULL);
 }
 
 void
@@ -159,40 +149,27 @@ gimp_fonts_load (Gimp                *gimp,
 
   if (status_callback)
     {
-      gint64                 end_time;
-      GThread               *cache_thread;
-      GimpFontsLoadFuncData  data;
+      GimpAsync *async;
+      gint64     end_time;
 
       /* We perform font cache initialization in a separate thread, so
        * in the case a cache rebuild is to be done it will not block
        * the UI.
        */
-      data.config = config;
-      g_mutex_init (&data.mutex);
-      g_cond_init (&data.cond);
-      data.caching_complete = FALSE;
 
-      cache_thread = g_thread_new ("font-cacher",
-                                   (GThreadFunc) gimp_fonts_load_thread,
-                                   &data);
+      async = gimp_parallel_run_async (
+        (GimpParallelRunAsyncFunc) gimp_fonts_load_async,
+        config);
 
-      g_mutex_lock (&data.mutex);
+      do
+        {
+          status_callback (NULL, NULL, 0.6);
 
-      end_time = g_get_monotonic_time () + 0.1 * G_TIME_SPAN_SECOND;
-      while (! data.caching_complete)
-        if (! g_cond_wait_until (&data.cond, &data.mutex, end_time))
-          {
-            status_callback (NULL, NULL, 0.6);
+          end_time = g_get_monotonic_time () + 0.1 * G_TIME_SPAN_SECOND;
+        }
+      while (! gimp_async_wait_until (async, end_time));
 
-            end_time += 0.1 * G_TIME_SPAN_SECOND;
-            continue;
-          }
-
-      g_mutex_unlock (&data.mutex);
-      g_thread_join (cache_thread);
-
-      g_mutex_clear (&data.mutex);
-      g_cond_clear (&data.cond);
+      g_object_unref (async);
     }
   else
     {
