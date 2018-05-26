@@ -328,6 +328,45 @@ gimp_async_add_callback (GimpAsync         *async,
   g_mutex_unlock (&async->priv->mutex);
 }
 
+/* removes all callbacks previously registered through
+ * 'gimp_async_add_callback()', matching 'callback' and 'data', which hasn't
+ * been called yet.
+ *
+ * may only be called on the main thread.
+ */
+void
+gimp_async_remove_callback (GimpAsync         *async,
+                            GimpAsyncCallback  callback,
+                            gpointer           data)
+{
+  GList *iter;
+
+  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (callback != NULL);
+
+  g_mutex_lock (&async->priv->mutex);
+
+  iter = g_queue_peek_head_link (&async->priv->callbacks);
+
+  while (iter)
+    {
+      GimpAsyncCallbackInfo *callback_info = iter->data;
+      GList                 *next          = g_list_next (iter);
+
+      if (callback_info->callback == callback &&
+          callback_info->data     == data)
+        {
+          g_queue_delete_link (&async->priv->callbacks, iter);
+
+          g_slice_free (GimpAsyncCallbackInfo, callback_info);
+        }
+
+      iter = next;
+    }
+
+  g_mutex_unlock (&async->priv->mutex);
+}
+
 /* transitions 'async' to the "stopped" state, indicating that the task
  * completed normally, possibly providing a result.
  *
