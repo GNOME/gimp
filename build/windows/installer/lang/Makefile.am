@@ -9,6 +9,7 @@ CLEANFILES = $(isl_files) $(stamp_files)
 
 languages = \
 	ca:[ca]:WINDOWS-1252		\
+	cs:[cs]:WINDOWS-1250		\
 	da:[da]:WINDOWS-1252		\
 	de:[de]:WINDOWS-1252		\
 	el:[el]:WINDOWS-1253		\

@@ -161,6 +161,7 @@ OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
 Name: "ca"; MessagesFile: "compiler:Languages\Catalan.isl,lang\ca.setup.isl"
+Name: "cs"; MessagesFile: "compiler:Languages\Czech.isl,lang\cs.setup.isl"
 Name: "da"; MessagesFile: "compiler:Languages\Danish.isl,lang\da.setup.isl"
 Name: "de"; MessagesFile: "compiler:Languages\German.isl,lang\de.setup.isl"
 Name: "el"; MessagesFile: "compiler:Languages\Greek.isl,lang\el.setup.isl"
