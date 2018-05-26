@@ -341,9 +341,21 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
             }
           else if (gimp_file_is_executable (child))
             {
-              g_printerr (_("Skipping potential plug-in '%s': "
-                            "plug-ins must be installed in subdirectories.\n"),
-                          g_file_peek_path (child));
+              if (g_getenv ("GIMP_TESTING_PLUGINDIRS"))
+                {
+                  guint64 mtime;
+
+                  mtime = g_file_info_get_attribute_uint64 (info,
+                                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+                  gimp_plug_in_manager_add_from_file (manager, child, mtime);
+                }
+              else
+                {
+                  g_printerr (_("Skipping potential plug-in '%s': "
+                                "plug-ins must be installed in subdirectories.\n"),
+                              g_file_peek_path (child));
+                }
             }
           else
             {
