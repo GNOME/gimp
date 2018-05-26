@@ -208,6 +208,7 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   GdkEvent   *event   = gdk_event_new (button_event_type);
   GdkWindow  *window  = gtk_widget_get_window (GTK_WIDGET (shell->canvas));
   GdkDisplay *display = gdk_window_get_display (window);
+  GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
   g_assert (button_event_type == GDK_BUTTON_PRESS ||
             button_event_type == GDK_BUTTON_RELEASE);
@@ -220,7 +221,7 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   event->button.axes       = NULL;
   event->button.state      = 0;
   event->button.button     = button;
-  event->button.device     = gdk_display_get_core_pointer (display);
+  event->button.device     = gdk_seat_get_pointer (seat);
   event->button.x_root     = -1;
   event->button.y_root     = -1;
 
@@ -239,6 +240,7 @@ gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
   GdkEvent   *event   = gdk_event_new (GDK_MOTION_NOTIFY);
   GdkWindow  *window  = gtk_widget_get_window (GTK_WIDGET (shell->canvas));
   GdkDisplay *display = gdk_window_get_display (window);
+  GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
   event->motion.window     = g_object_ref (window);
   event->motion.send_event = TRUE;
@@ -248,7 +250,7 @@ gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
   event->motion.axes       = NULL;
   event->motion.state      = GDK_BUTTON1_MASK | modifiers;
   event->motion.is_hint    = FALSE;
-  event->motion.device     = gdk_display_get_core_pointer (display);
+  event->motion.device     = gdk_seat_get_pointer (seat);
   event->motion.x_root     = -1;
   event->motion.y_root     = -1;
 

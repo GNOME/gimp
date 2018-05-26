@@ -114,7 +114,6 @@ tool_options_editor_updates (gconstpointer data)
   GimpImageWindow       *image_window = GIMP_IMAGE_WINDOW (toplevel);
   GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
   GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                                                        gtk_widget_get_screen (toplevel),
                                                                         gimp_widget_get_monitor (toplevel),
                                                                         NULL /*ui_manager*/,
                                                                         toplevel,
@@ -753,18 +752,18 @@ repeatedly_switch_window_mode (gconstpointer data)
 static void
 window_roles (gconstpointer data)
 {
+  GdkMonitor     *monitor        = NULL;
   GtkWidget      *dock           = NULL;
   GtkWidget      *toolbox        = NULL;
   GimpDockWindow *dock_window    = NULL;
   GimpDockWindow *toolbox_window = NULL;
 
+  monitor        = gdk_display_get_primary_monitor (gdk_display_get_default ());
   dock           = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
-                                              gdk_screen_get_default (),
-                                              0,
+                                              monitor,
                                               FALSE /*toolbox*/);
   toolbox        = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
-                                              gdk_screen_get_default (),
-                                              0,
+                                              monitor,
                                               TRUE /*toolbox*/);
   dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
