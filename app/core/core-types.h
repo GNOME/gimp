@@ -191,6 +191,7 @@ typedef struct _GimpTreeHandler     GimpTreeHandler;
 
 /*  interfaces  */
 
+typedef struct _GimpCancelable      GimpCancelable;  /* dummy typedef */
 typedef struct _GimpPickable        GimpPickable;    /* dummy typedef */
 typedef struct _GimpProgress        GimpProgress;    /* dummy typedef */
 typedef struct _GimpProjectable     GimpProjectable; /* dummy typedef */
