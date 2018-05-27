@@ -26,11 +26,15 @@
 #include "core-types.h"
 
 #include "gimpasync.h"
+#include "gimpcancelable.h"
+#include "gimpwaitable.h"
 
 
 /* GimpAsync represents an asynchronous task.  Both the public and the
  * protected interfaces are intentionally minimal at this point, to keep things
  * simple.  They may be extended in the future as needed.
+ *
+ * GimpAsync implements the GimpWaitable and GimpCancelable interfaces.
  *
  * Upon creation, a GimpAsync object is in the "running" state.  Once the task
  * is complete (and before the object's destruction), it should be transitioned
@@ -40,8 +44,8 @@
  * Similarly, upon creation, a GimpAsync object is said to be "unsynced".  It
  * becomes synced once the execution of any of the completion callbacks added
  * through 'gimp_async_add_callback()' had started, after a call to
- * 'gimp_async_wait()', or after a successful call to
- * 'gimp_async_wait_until()'.
+ * 'gimp_waitable_wait()', or after a successful call to
+ * 'gimp_waitable_wait_until()' or 'gimp_waitable_wait_for()'.
  *
  * Note that certain GimpAsync functions may only be called during a certain
  * state, on a certain thread, or depending on whether or nor the object is
@@ -89,15 +93,29 @@ struct _GimpAsyncPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_async_finalize      (GObject   *object);
+static void       gimp_async_waitable_iface_init   (GimpWaitableInterface *iface);
 
-static gboolean   gimp_async_idle          (GimpAsync *async);
+static void       gimp_async_cancelable_iface_init (GimpCancelableInterface *iface);
 
-static void       gimp_async_stop          (GimpAsync *async);
-static void       gimp_async_run_callbacks (GimpAsync *async);
+static void       gimp_async_finalize              (GObject               *object);
+
+static void       gimp_async_wait                  (GimpWaitable          *waitable);
+static gboolean   gimp_async_wait_until            (GimpWaitable          *waitable,
+                                                    gint64                 end_time);
+
+static void       gimp_async_cancel                (GimpCancelable        *cancelable);
+
+static gboolean   gimp_async_idle                  (GimpAsync             *async);
+
+static void       gimp_async_stop                  (GimpAsync             *async);
+static void       gimp_async_run_callbacks         (GimpAsync             *async);
 
 
-G_DEFINE_TYPE (GimpAsync, gimp_async, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE (GimpAsync, gimp_async, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_WAITABLE,
+                                                gimp_async_waitable_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CANCELABLE,
+                                                gimp_async_cancelable_iface_init))
 
 #define parent_class gimp_async_parent_class
 
@@ -113,6 +131,19 @@ gimp_async_class_init (GimpAsyncClass *klass)
   object_class->finalize = gimp_async_finalize;
 
   g_type_class_add_private (klass, sizeof (GimpAsyncPrivate));
+}
+
+static void
+gimp_async_waitable_iface_init (GimpWaitableInterface *iface)
+{
+  iface->wait       = gimp_async_wait;
+  iface->wait_until = gimp_async_wait_until;
+}
+
+static void
+gimp_async_cancelable_iface_init (GimpCancelableInterface *iface)
+{
+  iface->cancel = gimp_async_cancel;
 }
 
 static void
@@ -156,10 +187,82 @@ gimp_async_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+/* waits for 'waitable' to transition to the "stopped" state.  if 'waitable' is
+ * already stopped, returns immediately.
+ *
+ * after the call, all callbacks previously added through
+ * 'gimp_async_add_callback()' are guaranteed to have been called.
+ *
+ * may only be called on the main thread.
+ */
+static void
+gimp_async_wait (GimpWaitable *waitable)
+{
+  GimpAsync *async = GIMP_ASYNC (waitable);
+
+  g_mutex_lock (&async->priv->mutex);
+
+  while (! async->priv->stopped)
+    g_cond_wait (&async->priv->cond, &async->priv->mutex);
+
+  g_mutex_unlock (&async->priv->mutex);
+
+  gimp_async_run_callbacks (async);
+}
+
+/* same as 'gimp_async_wait()', taking an additional 'end_time' parameter,
+ * specifying the maximal monotonic time until which to wait for 'waitable' to
+ * stop.
+ *
+ * returns TRUE if 'waitable' has transitioned to the "stopped" state, or FALSE
+ * if the wait was interrupted before the transition.
+ */
+static gboolean
+gimp_async_wait_until (GimpWaitable *waitable,
+                       gint64        end_time)
+{
+  GimpAsync *async = GIMP_ASYNC (waitable);
+
+  g_mutex_lock (&async->priv->mutex);
+
+  while (! async->priv->stopped)
+    {
+      if (! g_cond_wait_until (&async->priv->cond, &async->priv->mutex,
+                               end_time))
+        {
+          g_mutex_unlock (&async->priv->mutex);
+
+          return FALSE;
+        }
+    }
+
+  g_mutex_unlock (&async->priv->mutex);
+
+  gimp_async_run_callbacks (async);
+
+  return TRUE;
+}
+
+/* requests the cancellation of the task managed by 'cancelable'.
+ *
+ * note that 'gimp_async_cancel()' doesn't directly cause 'cancelable' to be
+ * stopped, nor synced.  furthermore, 'cancelable' may still complete
+ * successfully even when cancellation has been requested.
+ *
+ * may only be called on the main thread.
+ */
+static void
+gimp_async_cancel (GimpCancelable *cancelable)
+{
+  GimpAsync *async = GIMP_ASYNC (cancelable);
+
+  async->priv->canceled = TRUE;
+}
+
 static gboolean
 gimp_async_idle (GimpAsync *async)
 {
-  gimp_async_wait (async);
+  gimp_waitable_wait (GIMP_WAITABLE (async));
 
   return G_SOURCE_REMOVE;
 }
@@ -242,62 +345,6 @@ gimp_async_is_synced (GimpAsync *async)
   g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
 
   return async->priv->synced;
-}
-
-/* waits for 'async' to transition to the "stopped" state.  if 'async' is
- * already stopped, returns immediately.
- *
- * after the call, all callbacks previously added through
- * 'gimp_async_add_callback()' are guaranteed to have been called.
- *
- * may only be called on the main thread.
- */
-void
-gimp_async_wait (GimpAsync *async)
-{
-  g_return_if_fail (GIMP_IS_ASYNC (async));
-
-  g_mutex_lock (&async->priv->mutex);
-
-  while (! async->priv->stopped)
-    g_cond_wait (&async->priv->cond, &async->priv->mutex);
-
-  g_mutex_unlock (&async->priv->mutex);
-
-  gimp_async_run_callbacks (async);
-}
-
-/* same as 'gimp_async_wait()', taking an additional 'end_time' parameter,
- * specifying the maximal monotonic time until which to wait for 'async' to
- * stop.
- *
- * returns TRUE if async has transitioned to the "stopped" state, or FALSE if
- * the wait was interrupted before the transition.
- */
-gboolean
-gimp_async_wait_until (GimpAsync *async,
-                       gint64     end_time)
-{
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
-
-  g_mutex_lock (&async->priv->mutex);
-
-  while (! async->priv->stopped)
-    {
-      if (! g_cond_wait_until (&async->priv->cond, &async->priv->mutex,
-                               end_time))
-        {
-          g_mutex_unlock (&async->priv->mutex);
-
-          return FALSE;
-        }
-    }
-
-  g_mutex_unlock (&async->priv->mutex);
-
-  gimp_async_run_callbacks (async);
-
-  return TRUE;
 }
 
 /* registers a callback to be called when 'async' transitions to the "stopped"
@@ -467,7 +514,7 @@ gimp_async_get_result (GimpAsync *async)
 
 /* transitions 'async' to the "stopped" state, indicating that the task
  * was stopped before completion (normally, in response to a
- * 'gimp_async_cancel()' call).
+ * 'gimp_cancelable_cancel()' call).
  *
  * 'async' shall be in the "running" state.
  *
@@ -486,25 +533,11 @@ gimp_async_abort (GimpAsync *async)
   g_mutex_unlock (&async->priv->mutex);
 }
 
-/* requests the cancellation of the task managed by 'async'.
- *
- * note that 'gimp_async_cancel()' doesn't directly cause 'async' to be
- * stopped, nor synced.  furthermore, 'async' may still complete successfully
- * even when cancellation has been requested.
- */
-void
-gimp_async_cancel (GimpAsync *async)
-{
-  g_return_if_fail (GIMP_IS_ASYNC (async));
-
-  async->priv->canceled = TRUE;
-}
-
 /* checks if cancellation of 'async' has been requested.
  *
- * note that a return value of TRUE only indicates that 'gimp_async_cancel()'
- * has been called for 'async', and not that 'async' is stopped, or, if it is
- * stopped, that it was aborted.
+ * note that a return value of TRUE only indicates that
+ * 'gimp_cancelable_cancel()' has been called for 'async', and not that 'async'
+ * is stopped, or, if it is stopped, that it was aborted.
  */
 gboolean
 gimp_async_is_canceled (GimpAsync *async)
@@ -512,4 +545,17 @@ gimp_async_is_canceled (GimpAsync *async)
   g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
 
   return async->priv->canceled;
+}
+
+/* a convenience function, canceling 'async' and waiting for it to stop.
+ *
+ * may only be called on the main thread.
+ */
+void
+gimp_async_cancel_and_wait (GimpAsync *async)
+{
+  g_return_if_fail (GIMP_IS_ASYNC (async));
+
+  gimp_cancelable_cancel (GIMP_CANCELABLE (async));
+  gimp_waitable_wait (GIMP_WAITABLE (async));
 }

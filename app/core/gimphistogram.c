@@ -36,6 +36,7 @@
 #include "gimp-parallel.h"
 #include "gimpasync.h"
 #include "gimphistogram.h"
+#include "gimpwaitable.h"
 
 
 #define MIN_PARALLEL_SUB_SIZE 64
@@ -255,7 +256,7 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
 
   if (histogram->priv->calculate_async)
-    gimp_async_wait (histogram->priv->calculate_async);
+    gimp_waitable_wait (GIMP_WAITABLE (histogram->priv->calculate_async));
 
   dup = gimp_histogram_new (histogram->priv->linear);
 
@@ -283,10 +284,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   g_return_if_fail (buffer_rect != NULL);
 
   if (histogram->priv->calculate_async)
-    {
-      gimp_async_cancel (histogram->priv->calculate_async);
-      gimp_async_wait (histogram->priv->calculate_async);
-    }
+    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
   context.histogram   = histogram;
   context.buffer      = buffer;
@@ -323,10 +321,7 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
   g_return_val_if_fail (buffer_rect != NULL, NULL);
 
   if (histogram->priv->calculate_async)
-    {
-      gimp_async_cancel (histogram->priv->calculate_async);
-      gimp_async_wait (histogram->priv->calculate_async);
-    }
+    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
   context = g_slice_new0 (CalculateContext);
 
@@ -370,10 +365,7 @@ gimp_histogram_clear_values (GimpHistogram *histogram)
   g_return_if_fail (GIMP_IS_HISTOGRAM (histogram));
 
   if (histogram->priv->calculate_async)
-    {
-      gimp_async_cancel (histogram->priv->calculate_async);
-      gimp_async_wait (histogram->priv->calculate_async);
-    }
+    gimp_async_cancel_and_wait (histogram->priv->calculate_async);
 
   if (histogram->priv->values)
     {

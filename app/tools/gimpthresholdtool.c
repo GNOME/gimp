@@ -30,6 +30,7 @@
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimphistogram.h"
 #include "core/gimpimage.h"
+#include "core/gimpwaitable.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
@@ -402,7 +403,7 @@ gimp_threshold_tool_auto_clicked (GtkWidget         *button,
   gint                  n_bins;
   gdouble               low;
 
-  gimp_async_wait (t_tool->histogram_async);
+  gimp_waitable_wait (GIMP_WAITABLE (t_tool->histogram_async));
 
   g_object_get (GIMP_FILTER_TOOL (t_tool)->config,
                 "channel", &channel,
