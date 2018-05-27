@@ -21,9 +21,6 @@
  * necessarily have any Bourne-compatible shell to run the gimptool
  * script in. Later fixed up to replace the gimptool script on all
  * platforms.
- *
- * Yes, this program leaks dynamically allocated strings without
- * hesitation. So what, it runs only for a minimal time.
  */
 
 #include <stdlib.h>
@@ -43,8 +40,8 @@
 
 static gboolean     silent  = FALSE;
 static gboolean     dry_run = FALSE;
-static gchar       *prefix;
-static const gchar *exec_prefix;
+static const gchar *cli_prefix;
+static const gchar *cli_exec_prefix;
 
 static gboolean     msvc_syntax = FALSE;
 static const gchar *env_cc;
@@ -115,10 +112,16 @@ win32_command (const gchar *command)
 
 static gboolean
 starts_with_dir (const gchar *string,
-                 const gchar *test)
+                 const gchar *dir)
 {
-  return g_str_has_prefix (string, g_strconcat (test, "/", NULL)) ||
-    strcmp (string, test) == 0;
+  gchar    *dirslash = g_strconcat (dir, "/", NULL);
+  gboolean  retval;
+
+  retval = (g_str_has_prefix (string, dirslash) ||
+            g_strcmp0 (string, dir) == 0);
+  g_free (dirslash);
+
+  return retval;
 }
 
 static gchar *
@@ -132,6 +135,7 @@ one_line_output (const gchar *program,
   if (pipe == NULL)
     {
       g_printerr ("Cannot run '%s'\n", command);
+      g_free (command);
       exit (EXIT_FAILURE);
     }
 
@@ -148,8 +152,10 @@ one_line_output (const gchar *program,
   if (strlen (line) == 0)
     {
       g_printerr ("No output from '%s'\n", command);
+      g_free (command);
       exit (EXIT_FAILURE);
     }
+  g_free (command);
 
   return g_strdup (line);
 }
@@ -165,7 +171,7 @@ pkg_config (const gchar *args)
   return one_line_output ("pkg-config", args);
 }
 
-static const gchar *
+static gchar *
 get_runtime_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
@@ -192,14 +198,13 @@ get_runtime_prefix (gchar slash)
               g_ascii_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
             {
               r[-4] = '\0';
-              prefix = path;
               if (slash == '/')
                 {
                   /* Use forward slashes, less quoting trouble in Makefiles */
-                  while ((p = strchr (prefix, '\\')) != NULL)
+                  while ((p = strchr (path, '\\')) != NULL)
                     *p = '/';
                 }
-              return prefix;
+              return path;
             }
         }
     }
@@ -213,27 +218,27 @@ get_runtime_prefix (gchar slash)
 #endif
 }
 
-static const gchar *
+static gchar *
 get_exec_prefix (gchar slash)
 {
 #ifdef G_OS_WIN32
-  if (exec_prefix != NULL)
-    return exec_prefix;
+  if (cli_exec_prefix != NULL)
+    return g_strdup (cli_exec_prefix);
 
   /* On Win32, exec_prefix is always same as prefix. Or is it? Maybe not,
    * but at least in tml's prebuilt stuff it is. If somebody else does
    * it another way, feel free to hack this.
    */
-  return (exec_prefix = get_runtime_prefix (slash));
+  return get_runtime_prefix (slash);
 #else
-  return EXEC_PREFIX;
+  return g_strdup (EXEC_PREFIX);
 #endif
 }
 
-static const gchar *
+static gchar *
 expand_and_munge (const gchar *value)
 {
-  const gchar *retval;
+  gchar *retval;
 
   if (starts_with_dir (value, "${prefix}"))
     retval = g_strconcat (PREFIX, value + strlen ("${prefix}"), NULL);
@@ -243,10 +248,20 @@ expand_and_munge (const gchar *value)
     retval = g_strdup (value);
 
   if (starts_with_dir (retval, EXEC_PREFIX))
-    retval = g_strconcat (get_exec_prefix ('/'), retval + strlen (EXEC_PREFIX), NULL);
+    {
+      gchar *exec_prefix = get_exec_prefix ('/');
+
+      retval = g_strconcat (exec_prefix, retval + strlen (EXEC_PREFIX), NULL);
+      g_free (exec_prefix);
+    }
 
   if (starts_with_dir (retval, PREFIX))
-    retval = g_strconcat (get_runtime_prefix ('/'), retval + strlen (PREFIX), NULL);
+    {
+      gchar *runtime_prefix = get_runtime_prefix ('/');
+
+      retval = g_strconcat (runtime_prefix, retval + strlen (PREFIX), NULL);
+      g_free (runtime_prefix);
+    }
 
   return retval;
 }
@@ -346,7 +361,10 @@ get_includedir (void)
 static void
 do_includedir (void)
 {
-  g_print ("%s\n", get_includedir ());
+  gchar *includedir = get_includedir ();
+
+  g_print ("%s\n", includedir);
+  g_free (includedir);
 }
 
 static gchar *
@@ -358,7 +376,10 @@ get_cflags (void)
 static void
 do_cflags (void)
 {
-  g_print ("%s\n", get_cflags ());
+  gchar *cflags = get_cflags ();
+
+  g_print ("%s\n", cflags);
+  g_free (cflags);
 }
 
 static gchar *
@@ -370,7 +391,10 @@ get_cflags_noui (void)
 static void
 do_cflags_noui (void)
 {
-  g_print ("%s\n", get_cflags_noui ());
+  gchar *cflags = get_cflags_noui ();
+
+  g_print ("%s\n", cflags);
+  g_free (cflags);
 }
 
 static gchar *
@@ -382,7 +406,10 @@ get_cflags_nogimpui (void)
 static void
 do_cflags_nogimpui (void)
 {
-  g_print ("%s\n", get_cflags_nogimpui ());
+  gchar *cflags = get_cflags_nogimpui ();
+
+  g_print ("%s\n", cflags);
+  g_free (cflags);
 }
 
 static gchar *
@@ -394,7 +421,10 @@ get_libs (void)
 static void
 do_libs (void)
 {
-  g_print ("%s\n", get_libs ());
+  gchar *libs = get_libs ();
+
+  g_print ("%s\n", libs);
+  g_free (libs);
 }
 
 static gchar *
@@ -406,7 +436,10 @@ get_libs_noui (void)
 static void
 do_libs_noui (void)
 {
-  g_print ("%s\n", get_libs_noui ());
+  gchar *libs = get_libs_noui ();
+
+  g_print ("%s\n", libs);
+  g_free (libs);
 }
 
 static gchar *
@@ -418,7 +451,10 @@ get_libs_nogimpui (void)
 static void
 do_libs_nogimpui (void)
 {
-  g_print ("%s\n", get_libs_nogimpui ());
+  gchar *libs = get_libs_nogimpui ();
+
+  g_print ("%s\n", libs);
+  g_free (libs);
 }
 
 static void
@@ -440,19 +476,22 @@ do_build_2 (const gchar *cflags,
             const gchar *install_dir,
             const gchar *what)
 {
-  gchar       *cmd;
-  const gchar *dest_dir;
   const gchar *lang_flag = "";
   const gchar *output_flag;
-  gchar       *dest_exe;
   const gchar *here_comes_linker_flags = "";
   const gchar *windows_subsystem_flag = "";
+  gchar       *cmd;
+  gchar       *dest_dir;
+  gchar       *dest_exe;
+  gchar       *source = g_shell_quote (what);
+
+  gchar       *tmp;
   gchar       *p, *q;
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);
   else
-    dest_dir = "";
+    dest_dir = g_strdup ("");
 
   dest_exe = g_strdup (what);
 
@@ -522,7 +561,14 @@ do_build_2 (const gchar *cflags,
   else
     q++;
 
+  tmp      = dest_exe;
   dest_exe = g_strconcat (dest_dir, q, EXEEXT, NULL);
+  g_free (dest_dir);
+  g_free (tmp);
+
+  tmp      = dest_exe;
+  dest_exe = g_shell_quote (dest_exe);
+  g_free (tmp);
 
   if (msvc_syntax)
     {
@@ -544,8 +590,8 @@ do_build_2 (const gchar *cflags,
                          env_cflags,
                          cflags,
                          output_flag,
-                         g_shell_quote (dest_exe),
-                         g_shell_quote (what),
+                         dest_exe,
+                         source,
                          here_comes_linker_flags,
                          env_ldflags,
                          windows_subsystem_flag,
@@ -553,18 +599,33 @@ do_build_2 (const gchar *cflags,
                          env_libs);
 
   maybe_run (cmd);
+
+  g_free (dest_exe);
+  g_free (source);
 }
 
 static void
 do_build (const gchar *what)
 {
-  do_build_2 (get_cflags (), get_libs (), NULL, what);
+  gchar *cflags = get_cflags ();
+  gchar *libs   = get_libs ();
+
+  do_build_2 (cflags, libs, NULL, what);
+
+  g_free (cflags);
+  g_free (libs);
 }
 
 static void
 do_build_noui (const gchar *what)
 {
-  do_build_2 (get_cflags_noui (), get_libs_noui (), NULL, what);
+  gchar *cflags = get_cflags_noui ();
+  gchar *libs   = get_libs_noui ();
+
+  do_build_2 (cflags, libs, NULL, what);
+
+  g_free (cflags);
+  g_free (libs);
 }
 
 static void
@@ -584,13 +645,29 @@ get_user_plugin_dir (void)
 static void
 do_install (const gchar *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_user_plugin_dir (), what);
+  gchar *cflags = get_cflags ();
+  gchar *libs   = get_libs ();
+  gchar *dir    = get_user_plugin_dir ();
+
+  do_build_2 (cflags, libs, dir, what);
+
+  g_free (cflags);
+  g_free (libs);
+  g_free (dir);
 }
 
 static void
 do_install_noui (const gchar *what)
 {
-  do_build_2 (get_cflags_noui (), get_libs_noui (), get_user_plugin_dir (), what);
+  gchar *cflags = get_cflags_noui ();
+  gchar *libs   = get_libs_noui ();
+  gchar *dir    = get_user_plugin_dir ();
+
+  do_build_2 (cflags, libs, dir, what);
+
+  g_free (cflags);
+  g_free (libs);
+  g_free (dir);
 }
 
 static void
@@ -602,83 +679,135 @@ do_install_nogimpui (const gchar *what)
 static gchar *
 get_sys_plugin_dir (gboolean forward_slashes)
 {
+  gchar *dir;
+
 #ifdef G_OS_WIN32
-  const gchar *rprefix;
+  gchar *rprefix;
 
   rprefix = get_runtime_prefix (forward_slashes ? '/' : G_DIR_SEPARATOR);
 
-  return g_build_path (forward_slashes ? "/" : G_DIR_SEPARATOR_S,
-                       rprefix,
-                       "lib", "gimp",
-                       GIMP_PLUGIN_VERSION,
-                       "plug-ins",
-                       NULL);
+  dir = g_build_path (forward_slashes ? "/" : G_DIR_SEPARATOR_S,
+                      rprefix,
+                      "lib", "gimp",
+                      GIMP_PLUGIN_VERSION,
+                      "plug-ins",
+                      NULL);
+  g_free (rprefix);
 #else
-  return g_build_path (forward_slashes ? "/" : G_DIR_SEPARATOR_S,
-                       LIBDIR,
-                       "gimp",
-                       GIMP_PLUGIN_VERSION,
-                       "plug-ins",
-                       NULL);
+  dir = g_build_path (forward_slashes ? "/" : G_DIR_SEPARATOR_S,
+                      LIBDIR,
+                      "gimp",
+                      GIMP_PLUGIN_VERSION,
+                      "plug-ins",
+                      NULL);
 #endif
+
+  return dir;
 }
 
 static void
 do_install_admin (const gchar *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
+  gchar *cflags = get_cflags ();
+  gchar *libs   = get_libs ();
+  gchar *dir    = get_sys_plugin_dir (TRUE);
+
+  do_build_2 (cflags, libs, dir, what);
+
+  g_free (cflags);
+  g_free (libs);
+  g_free (dir);
 }
 
 static void
 do_install_admin_noui (const gchar *what)
 {
-  do_build_2 (get_cflags_noui (), get_libs_noui (), get_sys_plugin_dir (TRUE), what);
+  gchar *cflags = get_cflags_noui ();
+  gchar *libs   = get_libs_noui ();
+  gchar *dir    = get_sys_plugin_dir (TRUE);
+
+  do_build_2 (cflags, libs, dir, what);
+
+  g_free (cflags);
+  g_free (libs);
+  g_free (dir);
 }
 
 static void
 do_install_admin_nogimpui (const gchar *what)
 {
-  do_build_2 (get_cflags (), get_libs (), get_sys_plugin_dir (TRUE), what);
+  gchar *cflags = get_cflags ();
+  gchar *libs   = get_libs ();
+  gchar *dir    = get_sys_plugin_dir (TRUE);
+
+  do_build_2 (cflags, libs, dir, what);
+
+  g_free (cflags);
+  g_free (libs);
+  g_free (dir);
 }
 
 static void
 do_install_bin_2 (const gchar *dir,
                   const gchar *what)
 {
+  gchar *cmd;
+  gchar *quoted_src;
+  gchar *quoted_dir;
+
   g_mkdir_with_parents (dir,
                         S_IRUSR | S_IXUSR | S_IWUSR |
                         S_IRGRP | S_IXGRP |
                         S_IROTH | S_IXOTH);
 
-  maybe_run (g_strconcat (COPY, " ",
-                          g_shell_quote (what), " ",
-                          g_shell_quote (dir),
-                          NULL));
+  quoted_src = g_shell_quote (what);
+  quoted_dir = g_shell_quote (dir);
+  cmd = g_strconcat (COPY, " ", quoted_src, " ", quoted_dir, NULL);
+  maybe_run (cmd);
+
+  g_free (cmd);
+  g_free (quoted_src);
+  g_free (quoted_dir);
 }
 
 static void
 do_install_bin (const gchar *what)
 {
-  do_install_bin_2 (get_user_plugin_dir (), what);
+  gchar *dir = get_user_plugin_dir ();
+
+  do_install_bin_2 (dir, what);
+  g_free (dir);
 }
 
 static void
 do_install_admin_bin (const gchar *what)
 {
-  do_install_bin_2 (get_sys_plugin_dir (FALSE), what);
+  gchar *dir = get_sys_plugin_dir (FALSE);
+
+  do_install_bin_2 (dir, what);
+  g_free (dir);
 }
 
 static void
 do_uninstall (const gchar *dir,
               const gchar *what)
 {
-  maybe_run (g_strconcat (REMOVE, " ",
-                          g_shell_quote (g_strconcat (dir, G_DIR_SEPARATOR_S,
-                                                      what, NULL)),
-                          NULL));
+  gchar *cmd;
+  gchar *quoted_src;
+  gchar *src;
+
+  src = g_strconcat (dir, G_DIR_SEPARATOR_S, what, NULL);
+  quoted_src = g_shell_quote (src);
+  g_free (src);
+
+  cmd = g_strconcat (REMOVE, " ", quoted_src, NULL);
+  maybe_run (cmd);
+
+  g_free (cmd);
+  g_free (quoted_src);
 }
 
-static const gchar *
+static gchar *
 maybe_append_exe (const gchar *what)
 {
 #ifdef G_OS_WIN32
@@ -688,19 +817,31 @@ maybe_append_exe (const gchar *what)
     return g_strconcat (what, ".exe", NULL);
 #endif
 
-  return what;
+  return g_strdup (what);
 }
 
 static void
 do_uninstall_bin (const gchar *what)
 {
-  do_uninstall (get_user_plugin_dir (), maybe_append_exe (what));
+  gchar *dir = get_user_plugin_dir ();
+  gchar *exe = maybe_append_exe (what);
+
+  do_uninstall (dir, exe);
+
+  g_free (dir);
+  g_free (exe);
 }
 
 static void
 do_uninstall_admin_bin (const gchar *what)
 {
-  do_uninstall (get_sys_plugin_dir (FALSE), maybe_append_exe (what));
+  gchar *dir = get_sys_plugin_dir (FALSE);
+  gchar *exe = maybe_append_exe (what);
+
+  do_uninstall (dir, exe);
+
+  g_free (dir);
+  g_free (exe);
 }
 
 static gchar *
@@ -714,35 +855,51 @@ get_user_script_dir (void)
 static void
 do_install_script (const gchar *what)
 {
-  do_install_bin_2 (get_user_script_dir (), what);
+  gchar *dir = get_user_script_dir ();
+
+  do_install_bin_2 (dir, what);
+  g_free (dir);
 }
 
 static gchar *
 get_sys_script_dir (void)
 {
-  return g_build_filename (get_runtime_prefix (G_DIR_SEPARATOR),
-                           "share", "gimp",
-                           GIMP_PLUGIN_VERSION,
-                           "scripts",
-                           NULL);
+  gchar *dir;
+  gchar *prefix = get_runtime_prefix (G_DIR_SEPARATOR);
+
+  dir = g_build_filename (prefix, "share", "gimp",
+                          GIMP_PLUGIN_VERSION, "scripts",
+                          NULL);
+  g_free (prefix);
+
+  return dir;
 }
 
 static void
 do_install_admin_script (const gchar *what)
 {
-  do_install_bin_2 (get_sys_script_dir (), what);
+  gchar *dir = get_sys_script_dir ();
+
+  do_install_bin_2 (dir, what);
+  g_free (dir);
 }
 
 static void
 do_uninstall_script (const gchar *what)
 {
-  do_uninstall (get_user_script_dir (), what);
+  gchar *dir = get_user_script_dir ();
+
+  do_uninstall (dir, what);
+  g_free (dir);
 }
 
 static void
 do_uninstall_admin_script (const gchar *what)
 {
-  do_uninstall (get_sys_script_dir (), what);
+  gchar *dir = get_sys_script_dir ();
+
+  do_uninstall (dir, what);
+  g_free (dir);
 }
 
 int
@@ -774,11 +931,11 @@ main (int    argc,
         }
       else if (g_str_has_prefix (argv[argi], "--prefix="))
         {
-          prefix = argv[argi] + strlen ("--prefix=");
+          cli_prefix = argv[argi] + strlen ("--prefix=");
         }
       else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
         {
-          exec_prefix = argv[argi] + strlen ("--exec_prefix=");
+          cli_exec_prefix = argv[argi] + strlen ("--exec_prefix=");
         }
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
         {
@@ -802,14 +959,23 @@ main (int    argc,
     {
       for (i = 0; i < G_N_ELEMENTS (dirs); i++)
         {
+          gchar *test = g_strconcat ("--", dirs[i].option, NULL);
+
           if (strcmp (argv[argi],
                       g_strconcat ("--", dirs[i].option, NULL)) == 0)
-            break;
+            {
+              g_free (test);
+              break;
+            }
+          g_free (test);
         }
 
       if (i < G_N_ELEMENTS (dirs))
         {
-          g_print ("%s\n", expand_and_munge (dirs[i].value));
+          gchar *expanded = expand_and_munge (dirs[i].value);
+
+          g_print ("%s\n", expanded);
+          g_free (expanded);
         }
       else if (strcmp (argv[argi], "--quiet") == 0 ||
                strcmp (argv[argi], "--silent") == 0)
