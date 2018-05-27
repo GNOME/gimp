@@ -489,6 +489,9 @@ gimp_parallel_run_async_cancel (GimpAsync *async)
 
   if (link)
     {
+      g_object_set_data (G_OBJECT (async),
+                         "gimp-parallel-run-async-link", NULL);
+
       g_slice_free (GimpParallelRunAsyncTask, link->data);
 
       g_queue_delete_link (&gimp_parallel_run_async_queue, link);
