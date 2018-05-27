@@ -95,6 +95,7 @@ struct _Gimp
   GimpContainer          *named_buffers;
 
   GimpContainer          *fonts;
+  gboolean                fonts_loading;
 
   GimpDataFactory        *brush_factory;
   GimpDataFactory        *dynamics_factory;
