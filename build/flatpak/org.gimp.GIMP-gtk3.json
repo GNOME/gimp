@@ -76,7 +76,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/babl",
+                    "url": "https://gitlab.gnome.org/GNOME/babl.git",
                     "branch": "master"
                 }
             ]
@@ -88,7 +88,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gegl",
+                    "url": "https://gitlab.gnome.org/GNOME/gegl.git",
                     "branch": "master"
                 }
             ]
@@ -100,7 +100,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gimp",
+                    "url": "https://gitlab.gnome.org/GNOME/gimp.git",
                     "branch": "gtk3-port"
                 }
             ],

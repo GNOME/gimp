@@ -33,7 +33,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/babl",
+                    "url": "https://gitlab.gnome.org/GNOME/babl.git",
                     "branch": "BABL_0_1_46",
                     "commit": "e92ced2c54250af1dddb58f76ff1678d74a30dcf"
                 }
@@ -46,7 +46,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gegl",
+                    "url": "https://gitlab.gnome.org/GNOME/gegl.git",
                     "branch": "GEGL_0_3_34",
                     "commit": "29254dcd875d271043aba57d0e6ebc48ec63c013"
                 }
@@ -59,7 +59,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gimp",
+                    "url": "https://gitlab.gnome.org/GNOME/gimp.git",
                     "branch": "GIMP_2_10_0_RC2",
                     "commit": "6582692ec6c8196108b2d42f6758c62076a88d13"
                 }
