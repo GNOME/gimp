@@ -31,6 +31,7 @@ EXPORTS
 	gimp_config_diff
 	gimp_config_duplicate
 	gimp_config_error_quark
+	gimp_config_get_type
 	gimp_config_interface_get_type
 	gimp_config_is_equal_to
 	gimp_config_path_expand
