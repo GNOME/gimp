@@ -35,7 +35,7 @@ typedef enum
 } GimpContainerViewProp;
 
 
-#define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_interface_get_type ())
+#define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_get_type ())
 #define GIMP_CONTAINER_VIEW(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerView))
 #define GIMP_IS_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
 #define GIMP_CONTAINER_VIEW_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewInterface))
@@ -98,71 +98,71 @@ struct _GimpContainerViewInterface
 };
 
 
-GType     gimp_container_view_interface_get_type  (void) G_GNUC_CONST;
+GType              gimp_container_view_get_type           (void) G_GNUC_CONST;
 
-GimpContainer * gimp_container_view_get_container (GimpContainerView *view);
-void            gimp_container_view_set_container (GimpContainerView *view,
-                                                   GimpContainer     *container);
+GimpContainer    * gimp_container_view_get_container      (GimpContainerView  *view);
+void               gimp_container_view_set_container      (GimpContainerView  *view,
+                                                           GimpContainer      *container);
 
-GimpContext   * gimp_container_view_get_context   (GimpContainerView *view);
-void            gimp_container_view_set_context   (GimpContainerView *view,
-                                                   GimpContext       *context);
+GimpContext      * gimp_container_view_get_context        (GimpContainerView  *view);
+void               gimp_container_view_set_context        (GimpContainerView  *view,
+                                                           GimpContext        *context);
 
-GtkSelectionMode gimp_container_view_get_selection_mode (GimpContainerView *view);
-void             gimp_container_view_set_selection_mode (GimpContainerView *view,
-                                                         GtkSelectionMode   mode);
+GtkSelectionMode   gimp_container_view_get_selection_mode (GimpContainerView  *view);
+void               gimp_container_view_set_selection_mode (GimpContainerView  *view,
+                                                           GtkSelectionMode    mode);
 
-gint         gimp_container_view_get_view_size (GimpContainerView *view,
-                                                gint              *view_border_width);
-void         gimp_container_view_set_view_size (GimpContainerView *view,
-                                                gint               view_size,
-                                                gint               view_border_width);
+gint               gimp_container_view_get_view_size      (GimpContainerView  *view,
+                                                           gint               *view_border_width);
+void               gimp_container_view_set_view_size      (GimpContainerView  *view,
+                                                           gint                view_size,
+                                                           gint                view_border_width);
 
-gboolean  gimp_container_view_get_reorderable  (GimpContainerView *view);
-void      gimp_container_view_set_reorderable  (GimpContainerView *view,
-                                                gboolean           reorderable);
+gboolean           gimp_container_view_get_reorderable    (GimpContainerView  *view);
+void               gimp_container_view_set_reorderable    (GimpContainerView  *view,
+                                                           gboolean            reorderable);
 
-GtkWidget * gimp_container_view_get_dnd_widget (GimpContainerView *view);
-void        gimp_container_view_set_dnd_widget (GimpContainerView *view,
-                                                GtkWidget         *dnd_widget);
+GtkWidget        * gimp_container_view_get_dnd_widget     (GimpContainerView  *view);
+void               gimp_container_view_set_dnd_widget     (GimpContainerView  *view,
+                                                           GtkWidget          *dnd_widget);
 
-void      gimp_container_view_enable_dnd       (GimpContainerView *editor,
-                                                GtkButton         *button,
-                                                GType              children_type);
+void               gimp_container_view_enable_dnd         (GimpContainerView  *editor,
+                                                           GtkButton          *button,
+                                                           GType               children_type);
 
-gboolean  gimp_container_view_select_item      (GimpContainerView *view,
-                                                GimpViewable      *viewable);
-void      gimp_container_view_activate_item    (GimpContainerView *view,
-                                                GimpViewable      *viewable);
-void      gimp_container_view_context_item     (GimpContainerView *view,
-                                                GimpViewable      *viewable);
-gint      gimp_container_view_get_selected     (GimpContainerView  *view,
-                                                GList             **list);
+gboolean           gimp_container_view_select_item        (GimpContainerView  *view,
+                                                           GimpViewable       *viewable);
+void               gimp_container_view_activate_item      (GimpContainerView  *view,
+                                                           GimpViewable       *viewable);
+void               gimp_container_view_context_item       (GimpContainerView  *view,
+                                                           GimpViewable       *viewable);
+gint               gimp_container_view_get_selected       (GimpContainerView  *view,
+                                                           GList             **list);
 
 /*  protected  */
 
-gpointer  gimp_container_view_lookup           (GimpContainerView *view,
-                                                GimpViewable      *viewable);
+gpointer           gimp_container_view_lookup             (GimpContainerView  *view,
+                                                           GimpViewable       *viewable);
 
-gboolean  gimp_container_view_item_selected    (GimpContainerView *view,
-                                                GimpViewable      *item);
-gboolean  gimp_container_view_multi_selected   (GimpContainerView *view,
-                                                GList             *items);
-void      gimp_container_view_item_activated   (GimpContainerView *view,
-                                                GimpViewable      *item);
-void      gimp_container_view_item_context     (GimpContainerView *view,
-                                                GimpViewable      *item);
+gboolean           gimp_container_view_item_selected      (GimpContainerView  *view,
+                                                           GimpViewable       *item);
+gboolean           gimp_container_view_multi_selected     (GimpContainerView  *view,
+                                                           GList              *items);
+void               gimp_container_view_item_activated     (GimpContainerView  *view,
+                                                           GimpViewable       *item);
+void               gimp_container_view_item_context       (GimpContainerView  *view,
+                                                           GimpViewable       *item);
 
 /*  convenience functions  */
 
-void      gimp_container_view_install_properties (GObjectClass *klass);
-void      gimp_container_view_set_property       (GObject      *object,
-                                                  guint         property_id,
-                                                  const GValue *value,
-                                                  GParamSpec   *pspec);
-void      gimp_container_view_get_property       (GObject      *object,
-                                                  guint         property_id,
-                                                  GValue       *value,
-                                                  GParamSpec   *pspec);
+void               gimp_container_view_install_properties (GObjectClass       *klass);
+void               gimp_container_view_set_property       (GObject            *object,
+                                                           guint               property_id,
+                                                           const GValue       *value,
+                                                           GParamSpec         *pspec);
+void               gimp_container_view_get_property       (GObject            *object,
+                                                           guint               property_id,
+                                                           GValue             *value,
+                                                           GParamSpec         *pspec);
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

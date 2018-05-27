@@ -37,64 +37,42 @@ enum
 };
 
 
-static void  gimp_tagged_base_init (gpointer klass);
+G_DEFINE_INTERFACE (GimpTagged, gimp_tagged, G_TYPE_OBJECT)
+
 
 static guint gimp_tagged_signals[LAST_SIGNAL] = { 0, };
 
 
-GType
-gimp_tagged_interface_get_type (void)
-{
-  static GType tagged_iface_type = 0;
+/*  private functions  */
 
-  if (! tagged_iface_type)
-    {
-      const GTypeInfo tagged_iface_info =
-      {
-        sizeof (GimpTaggedInterface),
-        gimp_tagged_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      tagged_iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                                  "GimpTaggedInterface",
-                                                  &tagged_iface_info,
-                                                  0);
-   }
-
-  return tagged_iface_type;
-}
 
 static void
-gimp_tagged_base_init (gpointer klass)
+gimp_tagged_default_init (GimpTaggedInterface *iface)
 {
-  static gboolean initialized = FALSE;
+  gimp_tagged_signals[TAG_ADDED] =
+    g_signal_new ("tag-added",
+                  GIMP_TYPE_TAGGED,
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpTaggedInterface, tag_added),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_TAG);
 
-  if (! initialized)
-    {
-      gimp_tagged_signals[TAG_ADDED] =
-        g_signal_new ("tag-added",
-                      GIMP_TYPE_TAGGED,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET (GimpTaggedInterface, tag_added),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__OBJECT,
-                      G_TYPE_NONE, 1,
-                      GIMP_TYPE_TAG);
-
-      gimp_tagged_signals[TAG_REMOVED] =
-        g_signal_new ("tag-removed",
-                      GIMP_TYPE_TAGGED,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET (GimpTaggedInterface, tag_removed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__OBJECT,
-                      G_TYPE_NONE, 1,
-                      GIMP_TYPE_TAG);
-
-      initialized = TRUE;
-    }
+  gimp_tagged_signals[TAG_REMOVED] =
+    g_signal_new ("tag-removed",
+                  GIMP_TYPE_TAGGED,
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpTaggedInterface, tag_removed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_TAG);
 }
+
+
+/*  public functions  */
+
 
 /**
  * gimp_tagged_add_tag:

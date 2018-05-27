@@ -22,7 +22,7 @@
 #define __GIMP_DOCKED_H__
 
 
-#define GIMP_TYPE_DOCKED               (gimp_docked_interface_get_type ())
+#define GIMP_TYPE_DOCKED               (gimp_docked_get_type ())
 #define GIMP_IS_DOCKED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKED))
 #define GIMP_DOCKED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKED, GimpDocked))
 #define GIMP_DOCKED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_DOCKED, GimpDockedInterface))
@@ -66,7 +66,7 @@ struct _GimpDockedInterface
 };
 
 
-GType           gimp_docked_interface_get_type  (void) G_GNUC_CONST;
+GType           gimp_docked_get_type            (void) G_GNUC_CONST;
 
 void            gimp_docked_title_changed       (GimpDocked   *docked);
 

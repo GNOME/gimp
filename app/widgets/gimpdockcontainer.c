@@ -27,46 +27,20 @@
 #include "gimpdockcontainer.h"
 
 
-static void   gimp_dock_container_iface_base_init (GimpDockContainerInterface *container_iface);
+G_DEFINE_INTERFACE (GimpDockContainer, gimp_dock_container, GTK_TYPE_WIDGET)
 
 
-GType
-gimp_dock_container_interface_get_type (void)
-{
-  static GType iface_type = 0;
+/*  private functions  */
 
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpDockContainerInterface),
-        (GBaseInitFunc)     gimp_dock_container_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpDockContainerInterface",
-                                           &iface_info,
-                                           0);
-
-      g_type_interface_add_prerequisite (iface_type, GTK_TYPE_WIDGET);
-    }
-
-  return iface_type;
-}
 
 static void
-gimp_dock_container_iface_base_init (GimpDockContainerInterface *container_iface)
+gimp_dock_container_default_init (GimpDockContainerInterface *iface)
 {
-  static gboolean initialized = FALSE;
-
-  if (initialized)
-    return;
-
-  initialized = TRUE;
-
-  container_iface->get_docks = NULL;
 }
+
+
+/*  public functions  */
+
 
 /**
  * gimp_dock_container_get_docks:

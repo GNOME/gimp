@@ -58,7 +58,7 @@ typedef enum
 } GimpRectangleOptionsProp;
 
 
-#define GIMP_TYPE_RECTANGLE_OPTIONS               (gimp_rectangle_options_interface_get_type ())
+#define GIMP_TYPE_RECTANGLE_OPTIONS               (gimp_rectangle_options_get_type ())
 #define GIMP_IS_RECTANGLE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS))
 #define GIMP_RECTANGLE_OPTIONS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptions))
 #define GIMP_RECTANGLE_OPTIONS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsInterface))
@@ -141,7 +141,7 @@ struct _GimpRectangleOptionsPrivate
 };
 
 
-GType       gimp_rectangle_options_interface_get_type (void) G_GNUC_CONST;
+GType       gimp_rectangle_options_get_type           (void) G_GNUC_CONST;
 
 GtkWidget * gimp_rectangle_options_gui                (GimpToolOptions      *tool_options);
 

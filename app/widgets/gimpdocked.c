@@ -41,66 +41,36 @@ enum
 };
 
 
-static void    gimp_docked_iface_base_init    (GimpDockedInterface *docked_iface);
+/*  local function prototypes  */
 
-static void    gimp_docked_iface_set_aux_info (GimpDocked          *docked,
-                                               GList               *aux_info);
-static GList * gimp_docked_iface_get_aux_info (GimpDocked          *docked);
+static void    gimp_docked_iface_set_aux_info (GimpDocked *docked,
+                                               GList      *aux_info);
+static GList * gimp_docked_iface_get_aux_info (GimpDocked *docked);
 
+
+G_DEFINE_INTERFACE (GimpDocked, gimp_docked, GTK_TYPE_WIDGET)
 
 
 static guint docked_signals[LAST_SIGNAL] = { 0 };
 
 
-GType
-gimp_docked_interface_get_type (void)
-{
-  static GType docked_iface_type = 0;
+/*  private functions  */
 
-  if (!docked_iface_type)
-    {
-      const GTypeInfo docked_iface_info =
-      {
-        sizeof (GimpDockedInterface),
-        (GBaseInitFunc)     gimp_docked_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      docked_iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                                  "GimpDockedInterface",
-                                                  &docked_iface_info,
-                                                  0);
-
-      g_type_interface_add_prerequisite (docked_iface_type, GTK_TYPE_WIDGET);
-    }
-
-  return docked_iface_type;
-}
 
 static void
-gimp_docked_iface_base_init (GimpDockedInterface *docked_iface)
+gimp_docked_default_init (GimpDockedInterface *iface)
 {
-  static gboolean initialized = FALSE;
+  docked_signals[TITLE_CHANGED] =
+    g_signal_new ("title-changed",
+                  GIMP_TYPE_DOCKED,
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDockedInterface, title_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
-  if (! docked_iface->get_aux_info)
-    {
-      docked_iface->get_aux_info = gimp_docked_iface_get_aux_info;
-      docked_iface->set_aux_info = gimp_docked_iface_set_aux_info;
-    }
-
-  if (! initialized)
-    {
-      docked_signals[TITLE_CHANGED] =
-        g_signal_new ("title-changed",
-                      GIMP_TYPE_DOCKED,
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpDockedInterface, title_changed),
-                      NULL, NULL,
-                      gimp_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0);
-
-      initialized = TRUE;
-    }
+  iface->get_aux_info = gimp_docked_iface_get_aux_info;
+  iface->set_aux_info = gimp_docked_iface_set_aux_info;
 }
 
 #define AUX_INFO_SHOW_BUTTON_BAR "show-button-bar"
@@ -138,6 +108,10 @@ gimp_docked_iface_get_aux_info (GimpDocked *docked)
 
   return NULL;
 }
+
+
+/*  public functions  */
+
 
 void
 gimp_docked_title_changed (GimpDocked *docked)

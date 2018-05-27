@@ -27,47 +27,20 @@
 #include "gimpsessionmanaged.h"
 
 
-static void   gimp_session_managed_iface_base_init   (GimpSessionManagedInterface *managed_iface);
+G_DEFINE_INTERFACE (GimpSessionManaged, gimp_session_managed, GTK_TYPE_WIDGET)
 
 
-GType
-gimp_session_managed_interface_get_type (void)
-{
-  static GType iface_type = 0;
+/*  private functions  */
 
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpSessionManagedInterface),
-        (GBaseInitFunc)     gimp_session_managed_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpSessionManagedInterface",
-                                           &iface_info,
-                                           0);
-
-      g_type_interface_add_prerequisite (iface_type, GTK_TYPE_WIDGET);
-    }
-
-  return iface_type;
-}
 
 static void
-gimp_session_managed_iface_base_init (GimpSessionManagedInterface *managed_iface)
+gimp_session_managed_default_init (GimpSessionManagedInterface *iface)
 {
-  static gboolean initialized = FALSE;
-
-  if (initialized)
-    return;
-
-  initialized = TRUE;
-
-  managed_iface->get_aux_info = NULL;
-  managed_iface->set_aux_info = NULL;
 }
+
+
+/*  public functions  */
+
 
 /**
  * gimp_session_managed_get_aux_info:

@@ -41,58 +41,31 @@ enum
 };
 
 
-/*  local function prototypes  */
-
-static void   gimp_progress_iface_base_init (GimpProgressInterface *progress_iface);
+G_DEFINE_INTERFACE (GimpProgress, gimp_progress, G_TYPE_OBJECT)
 
 
 static guint progress_signals[LAST_SIGNAL] = { 0 };
 
 
-GType
-gimp_progress_interface_get_type (void)
-{
-  static GType progress_iface_type = 0;
+/*  private functionss  */
 
-  if (! progress_iface_type)
-    {
-      const GTypeInfo progress_iface_info =
-      {
-        sizeof (GimpProgressInterface),
-        (GBaseInitFunc)     gimp_progress_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      progress_iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                                    "GimpProgressInterface",
-                                                    &progress_iface_info,
-                                                    0);
-
-      g_type_interface_add_prerequisite (progress_iface_type, G_TYPE_OBJECT);
-    }
-
-  return progress_iface_type;
-}
 
 static void
-gimp_progress_iface_base_init (GimpProgressInterface *progress_iface)
+gimp_progress_default_init (GimpProgressInterface *progress_iface)
 {
-  static gboolean initialized = FALSE;
-
-  if (! initialized)
-    {
-      progress_signals[CANCEL] =
-        g_signal_new ("cancel",
-                      G_TYPE_FROM_INTERFACE (progress_iface),
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpProgressInterface, cancel),
-                      NULL, NULL,
-                      gimp_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0);
-
-      initialized = TRUE;
-    }
+  progress_signals[CANCEL] =
+    g_signal_new ("cancel",
+                  G_TYPE_FROM_INTERFACE (progress_iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProgressInterface, cancel),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
+
+
+/*  public functions  */
+
 
 GimpProgress *
 gimp_progress_start (GimpProgress *progress,

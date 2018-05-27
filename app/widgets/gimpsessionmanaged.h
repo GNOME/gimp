@@ -22,7 +22,7 @@
 #define __GIMP_SESSION_MANAGED_H__
 
 
-#define GIMP_TYPE_SESSION_MANAGED               (gimp_session_managed_interface_get_type ())
+#define GIMP_TYPE_SESSION_MANAGED               (gimp_session_managed_get_type ())
 #define GIMP_SESSION_MANAGED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SESSION_MANAGED, GimpSessionManaged))
 #define GIMP_IS_SESSION_MANAGED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SESSION_MANAGED))
 #define GIMP_SESSION_MANAGED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_SESSION_MANAGED, GimpSessionManagedInterface))
@@ -35,16 +35,17 @@ struct _GimpSessionManagedInterface
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GList           * (* get_aux_info)      (GimpSessionManaged *session_managed);
-  void              (* set_aux_info)      (GimpSessionManaged *session_managed,
-                                           GList              *aux_info);
+  GList * (* get_aux_info) (GimpSessionManaged *session_managed);
+  void    (* set_aux_info) (GimpSessionManaged *session_managed,
+                            GList              *aux_info);
 };
 
 
-GType              gimp_session_managed_interface_get_type  (void) G_GNUC_CONST;
-GList            * gimp_session_managed_get_aux_info        (GimpSessionManaged *session_managed);
-void               gimp_session_managed_set_aux_info        (GimpSessionManaged *session_managed,
-                                                             GList              *aux_info);
+GType              gimp_session_managed_get_type     (void) G_GNUC_CONST;
+
+GList            * gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed);
+void               gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
+                                                      GList              *aux_info);
 
 
 #endif  /*  __GIMP_SESSION_MANAGED_H__  */

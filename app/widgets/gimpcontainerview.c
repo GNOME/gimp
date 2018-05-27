@@ -76,7 +76,7 @@ struct _GimpContainerViewPrivate
 };
 
 
-static void   gimp_container_view_iface_base_init   (GimpContainerViewInterface *view_iface);
+/*  local function prototypes  */
 
 static GimpContainerViewPrivate *
               gimp_container_view_get_private        (GimpContainerView *view);
@@ -141,43 +141,18 @@ static gint  gimp_container_view_real_get_selected (GimpContainerView    *view,
                                                     GList               **list);
 
 
+G_DEFINE_INTERFACE (GimpContainerView, gimp_container_view, GTK_TYPE_WIDGET)
+
+
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
-GType
-gimp_container_view_interface_get_type (void)
-{
-  static GType iface_type = 0;
-
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpContainerViewInterface),
-        (GBaseInitFunc)     gimp_container_view_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpContainerViewInterface",
-                                           &iface_info,
-                                           0);
-
-      g_type_interface_add_prerequisite (iface_type, GTK_TYPE_WIDGET);
-    }
-
-  return iface_type;
-}
-
 static void
-gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
+gimp_container_view_default_init (GimpContainerViewInterface *iface)
 {
-  if (view_iface->set_container)
-    return;
-
   view_signals[SELECT_ITEM] =
     g_signal_new ("select-item",
-                  G_TYPE_FROM_INTERFACE (view_iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, select_item),
                   NULL, NULL,
@@ -188,7 +163,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
 
   view_signals[ACTIVATE_ITEM] =
     g_signal_new ("activate-item",
-                  G_TYPE_FROM_INTERFACE (view_iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, activate_item),
                   NULL, NULL,
@@ -199,7 +174,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
 
   view_signals[CONTEXT_ITEM] =
     g_signal_new ("context-item",
-                  G_TYPE_FROM_INTERFACE (view_iface),
+                  G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpContainerViewInterface, context_item),
                   NULL, NULL,
@@ -208,52 +183,52 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   GIMP_TYPE_OBJECT,
                   G_TYPE_POINTER);
 
-  view_iface->select_item        = NULL;
-  view_iface->activate_item      = NULL;
-  view_iface->context_item       = NULL;
+  iface->select_item        = NULL;
+  iface->activate_item      = NULL;
+  iface->context_item       = NULL;
 
-  view_iface->set_container      = gimp_container_view_real_set_container;
-  view_iface->set_context        = gimp_container_view_real_set_context;
-  view_iface->set_selection_mode = gimp_container_view_real_set_selection_mode;
-  view_iface->insert_item        = NULL;
-  view_iface->insert_item_after  = NULL;
-  view_iface->remove_item        = NULL;
-  view_iface->reorder_item       = NULL;
-  view_iface->rename_item        = NULL;
-  view_iface->expand_item        = NULL;
-  view_iface->clear_items        = gimp_container_view_real_clear_items;
-  view_iface->set_view_size      = NULL;
-  view_iface->get_selected       = gimp_container_view_real_get_selected;
+  iface->set_container      = gimp_container_view_real_set_container;
+  iface->set_context        = gimp_container_view_real_set_context;
+  iface->set_selection_mode = gimp_container_view_real_set_selection_mode;
+  iface->insert_item        = NULL;
+  iface->insert_item_after  = NULL;
+  iface->remove_item        = NULL;
+  iface->reorder_item       = NULL;
+  iface->rename_item        = NULL;
+  iface->expand_item        = NULL;
+  iface->clear_items        = gimp_container_view_real_clear_items;
+  iface->set_view_size      = NULL;
+  iface->get_selected       = gimp_container_view_real_get_selected;
 
-  view_iface->insert_data_free   = NULL;
-  view_iface->model_is_tree      = FALSE;
+  iface->insert_data_free   = NULL;
+  iface->model_is_tree      = FALSE;
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_object ("container",
                                                             NULL, NULL,
                                                             GIMP_TYPE_CONTAINER,
                                                             GIMP_PARAM_READWRITE));
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_object ("context",
                                                             NULL, NULL,
                                                             GIMP_TYPE_CONTEXT,
                                                             GIMP_PARAM_READWRITE));
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_enum ("selection-mode",
                                                           NULL, NULL,
                                                           GTK_TYPE_SELECTION_MODE,
                                                           GTK_SELECTION_SINGLE,
                                                           GIMP_PARAM_READWRITE));
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("reorderable",
                                                              NULL, NULL,
                                                              FALSE,
                                                              GIMP_PARAM_READWRITE));
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_int ("view-size",
                                                          NULL, NULL,
                                                          1, GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
@@ -261,7 +236,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  g_object_interface_install_property (view_iface,
+  g_object_interface_install_property (iface,
                                        g_param_spec_int ("view-border-width",
                                                          NULL, NULL,
                                                          0,

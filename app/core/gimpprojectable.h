@@ -22,7 +22,7 @@
 #define __GIMP_PROJECTABLE_H__
 
 
-#define GIMP_TYPE_PROJECTABLE               (gimp_projectable_interface_get_type ())
+#define GIMP_TYPE_PROJECTABLE               (gimp_projectable_get_type ())
 #define GIMP_IS_PROJECTABLE(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROJECTABLE))
 #define GIMP_PROJECTABLE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROJECTABLE, GimpProjectable))
 #define GIMP_PROJECTABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_PROJECTABLE, GimpProjectableInterface))
@@ -60,7 +60,7 @@ struct _GimpProjectableInterface
 };
 
 
-GType        gimp_projectable_interface_get_type (void) G_GNUC_CONST;
+GType        gimp_projectable_get_type           (void) G_GNUC_CONST;
 
 void         gimp_projectable_invalidate         (GimpProjectable *projectable,
                                                   gint             x,
