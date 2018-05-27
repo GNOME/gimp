@@ -10,15 +10,21 @@ can share as much code as possible with the other builds.
 
 To prepare a new build:
 
-* A few hours before the release, test with the last master commit (even
-  if the release is not tagged yet) in the manifest.
-* Make it a branch, and create a pull-request instead of pushing to
-  master.
+* A few hours before the release, update the manifest to point to last
+  master commit (even if the release is not tagged yet).
+* Commit in a branch and push (DO NOT PUSH TO MASTER):
+
+> git checkout -b test-gimp-2-10-4-release
+> git commit -a
+> git push origin HEAD:test-gimp-2-10-4-release
+
+* Create a pull-request from this branch.
 * In the comment section, just write "bot, build".
   This will trigger test builds to test the manifest.
-* At release time, if the last test build succeeded, update the manifest
-  to track the release tag instead.
-* Merge to master.
+* Check the test build on https://flathub.org/builds/
+* At release time, assuming the last test build succeeded, update the
+  manifest to track the release tag instead.
+* Merge the pull request to master.
 * Check the final build on https://flathub.org/builds/
 
 See also:
@@ -57,13 +63,15 @@ Building and maintaining
   Check out the available versions at: http://flatpak.org/runtimes.html
   Verify that we use the last runtime version in `org.gimp.GIMP.json`:
 
-> "runtime-version": "3.24"
+> "runtime-version": "3.28"
 
 * Install this runtime and the corresponding SDK if you haven't already:
 
 > flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
-> flatpak install gnome org.gnome.Platform/x86_64/3.24 org.gnome.Sdk/x86_64/3.24
-> flatpak install gnome org.gnome.Platform/i386/3.24 org.gnome.Sdk/i386/3.24
+> flatpak install gnome org.gnome.Platform/x86_64/3.28 org.gnome.Sdk/x86_64/3.28
+> flatpak install gnome org.gnome.Platform/i386/3.28 org.gnome.Sdk/i386/3.28
+> flatpak install gnome org.gnome.Platform/arm/3.28 org.gnome.Sdk/arm/3.28
+> flatpak install gnome org.gnome.Platform/aarch64/3.28 org.gnome.Sdk/aarch64/3.28
 
 Or simply update them:
 
