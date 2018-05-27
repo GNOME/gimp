@@ -442,6 +442,7 @@ do_build_2 (const gchar *cflags,
 {
   gchar       *cmd;
   const gchar *dest_dir;
+  const gchar *lang_flag = "";
   const gchar *output_flag;
   gchar       *dest_exe;
   const gchar *here_comes_linker_flags = "";
@@ -461,8 +462,49 @@ do_build_2 (const gchar *cflags,
         strcmp (p, ".cc")  == 0 ||
         strcmp (p, ".cpp") == 0))
     {
-      g_printerr ("plug-in source %s is not a C or C++ file?\n", what);
-      exit (EXIT_FAILURE);
+      /* If the file doesn't have a "standard" C/C++ suffix and:
+       * 1) if the compiler is known as a C++ compiler, then treat the file as a
+       *    C++ file if possible.
+       *    It's known that G++ and Clang++ treat a file as a C file if they are
+       *    run with the "-x c++" option.
+       * 2) if the compiler is known as a C compiler or a multiple-language
+       *    compiler, then treat the file as a C file if possible.
+       *    It's known that GCC and Clang treat a file as a C file if they are
+       *    run with the "-x c" option.
+       * TODO We may want to further support compilation with a source file
+       * without a standard suffix in more compilers as far as possible.
+       */
+      if (strcmp (env_cc, "g++") == 0 ||
+          strncmp (env_cc, "g++-", sizeof ("g++-") - 1) == 0 ||
+          strcmp (env_cc, "clang++") == 0 ||
+          strncmp (env_cc, "clang++-", sizeof ("clang++-") - 1) == 0)
+        lang_flag = "-x c++ ";
+      else if (strcmp (env_cc, "gcc") == 0 ||
+               strncmp (env_cc, "gcc-", sizeof ("gcc-") - 1) == 0)
+        {
+          /* It's known GCC recognizes .CPP and .cxx, so bypass these suffixes */
+          if (p != NULL && strcmp (p, ".CPP") != 0 && strcmp (p, ".cxx") != 0)
+            lang_flag = "-x c ";
+        }
+      else if (strcmp (env_cc, "clang") == 0 ||
+               strncmp (env_cc, "clang-", sizeof ("clang-") - 1) == 0)
+        {
+          /* It's known Clang recognizes .CC, .CPP, .cxx and .CXX,
+           * so bypass these suffixes
+           */
+          if (p != NULL && strcmp (p, ".CC") != 0 && strcmp (p, ".CPP") != 0 &&
+              strcmp (p, ".cxx") != 0 && strcmp (p, ".CXX") != 0)
+            lang_flag = "-x c ";
+        }
+      else
+        {
+          g_printerr ("The source file(%s) doesn't have a \"standard\" C or C++ suffix, "
+                      "and the tool failed to confirm the language of the file.\n"
+                      "Please be explicit about the language of the file "
+                      "by renaming it with one of the suffixes: .c .cc .cpp\n",
+                      what);
+          exit (EXIT_FAILURE);
+        }
     }
 
   *p = '\0';
@@ -495,13 +537,14 @@ do_build_2 (const gchar *cflags,
 #endif
     }
 
-  cmd = g_strdup_printf ("%s %s %s %s%s %s%s %s%s %s %s",
+  cmd = g_strdup_printf ("%s %s%s %s %s%s %s%s %s%s %s %s",
 			 env_cc,
+			 lang_flag,
 			 env_cflags,
 			 cflags,
 			 output_flag,
 			 g_shell_quote (dest_exe),
-			 what,
+			 g_shell_quote (what),
 			 here_comes_linker_flags,
 			 env_ldflags,
 			 windows_subsystem_flag,
