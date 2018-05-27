@@ -53,26 +53,33 @@
  * The GimpConfig serialization and deserialization interface.
  */
 
-static void         gimp_config_iface_base_init (GimpConfigInterface  *config_iface);
 
-static gboolean     gimp_config_iface_serialize   (GimpConfig       *config,
-                                                   GimpConfigWriter *writer,
-                                                   gpointer          data);
-static gboolean     gimp_config_iface_deserialize (GimpConfig       *config,
-                                                   GScanner         *scanner,
-                                                   gint              nest_level,
-                                                   gpointer          data);
-static GimpConfig * gimp_config_iface_duplicate   (GimpConfig       *config);
-static gboolean     gimp_config_iface_equal       (GimpConfig       *a,
-                                                   GimpConfig       *b);
-static void         gimp_config_iface_reset       (GimpConfig       *config);
-static gboolean     gimp_config_iface_copy        (GimpConfig       *src,
-                                                   GimpConfig       *dest,
-                                                   GParamFlags       flags);
+/*  local function prototypes  */
+
+static void         gimp_config_iface_default_init (GimpConfigInterface *iface);
+static void         gimp_config_iface_base_init    (GimpConfigInterface *iface);
+
+static gboolean     gimp_config_iface_serialize    (GimpConfig          *config,
+                                                    GimpConfigWriter    *writer,
+                                                    gpointer             data);
+static gboolean     gimp_config_iface_deserialize  (GimpConfig          *config,
+                                                    GScanner            *scanner,
+                                                    gint                 nest_level,
+                                                    gpointer             data);
+static GimpConfig * gimp_config_iface_duplicate    (GimpConfig          *config);
+static gboolean     gimp_config_iface_equal        (GimpConfig          *a,
+                                                    GimpConfig          *b);
+static void         gimp_config_iface_reset        (GimpConfig          *config);
+static gboolean     gimp_config_iface_copy         (GimpConfig          *src,
+                                                    GimpConfig          *dest,
+                                                    GParamFlags          flags);
+
+
+/*  private functions  */
 
 
 GType
-gimp_config_interface_get_type (void)
+gimp_config_get_type (void)
 {
   static GType config_iface_type = 0;
 
@@ -81,8 +88,10 @@ gimp_config_interface_get_type (void)
       const GTypeInfo config_iface_info =
       {
         sizeof (GimpConfigInterface),
-        (GBaseInitFunc)     gimp_config_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
+        (GBaseInitFunc)      gimp_config_iface_base_init,
+        (GBaseFinalizeFunc)  NULL,
+        (GClassInitFunc)     gimp_config_iface_default_init,
+        (GClassFinalizeFunc) NULL,
       };
 
       config_iface_type = g_type_register_static (G_TYPE_INTERFACE,
@@ -96,24 +105,31 @@ gimp_config_interface_get_type (void)
   return config_iface_type;
 }
 
-static void
-gimp_config_iface_base_init (GimpConfigInterface *config_iface)
+GType
+gimp_config_interface_get_type (void)
 {
-  if (! config_iface->serialize)
-    {
-      config_iface->serialize   = gimp_config_iface_serialize;
-      config_iface->deserialize = gimp_config_iface_deserialize;
-      config_iface->duplicate   = gimp_config_iface_duplicate;
-      config_iface->equal       = gimp_config_iface_equal;
-      config_iface->reset       = gimp_config_iface_reset;
-      config_iface->copy        = gimp_config_iface_copy;
-    }
+  return gimp_config_get_type ();
+}
 
+static void
+gimp_config_iface_default_init (GimpConfigInterface *iface)
+{
+  iface->serialize   = gimp_config_iface_serialize;
+  iface->deserialize = gimp_config_iface_deserialize;
+  iface->duplicate   = gimp_config_iface_duplicate;
+  iface->equal       = gimp_config_iface_equal;
+  iface->reset       = gimp_config_iface_reset;
+  iface->copy        = gimp_config_iface_copy;
+}
+
+static void
+gimp_config_iface_base_init (GimpConfigInterface *iface)
+{
   /*  always set these to NULL since we don't want to inherit them
    *  from parent classes
    */
-  config_iface->serialize_property   = NULL;
-  config_iface->deserialize_property = NULL;
+  iface->serialize_property   = NULL;
+  iface->deserialize_property = NULL;
 }
 
 static gboolean
@@ -259,6 +275,10 @@ gimp_config_iface_copy (GimpConfig  *src,
 {
   return gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 }
+
+
+/*  public functions  */
+
 
 /**
  * gimp_config_serialize_to_file:
