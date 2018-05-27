@@ -42,8 +42,8 @@ header files installed.
      @BABL_REQUIRED_VERSION@ or newer. You can get them from http://gegl.org/ or clone
      them from the GNOME git repository:
 
-       git://git.gnome.org/babl
-       git://git.gnome.org/gegl
+       https://gitlab.gnome.org/GNOME/babl.git
+       https://gitlab.gnome.org/GNOME/gegl.git
 
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf

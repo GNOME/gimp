@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <moduleset>
-	<repository type="git" name="git.gnome.org" default="yes"
-		href="git://git.gnome.org/"/>
+	<repository type="git" name="gitlab.gnome.org" default="yes"
+		href="https://gitlab.gnome.org/GNOME/"/>
 
 	<include href="gtk+.moduleset"/>
 	<include href="webkitgtk.moduleset"/>
