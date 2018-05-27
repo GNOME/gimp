@@ -24,7 +24,6 @@ void   gimp_fonts_set_config (Gimp                *gimp);
 void   gimp_fonts_exit       (Gimp                *gimp);
 
 void   gimp_fonts_load       (Gimp                *gimp,
-                              GimpInitStatusFunc   status_callback,
                               GError             **error);
 void   gimp_fonts_reset      (Gimp                *gimp);
 

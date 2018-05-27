@@ -46,7 +46,7 @@ fonts_refresh_invoker (GimpProcedure         *procedure,
                        const GimpValueArray  *args,
                        GError               **error)
 {
-  gimp_fonts_load (gimp, NULL, error);
+  gimp_fonts_load (gimp, error);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
