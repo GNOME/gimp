@@ -46,60 +46,38 @@ enum
 };
 
 
-static void  gimp_color_managed_base_init (GimpColorManagedInterface *iface);
+G_DEFINE_INTERFACE (GimpColorManaged, gimp_color_managed, G_TYPE_OBJECT)
 
 
 static guint gimp_color_managed_signals[LAST_SIGNAL] = { 0 };
 
 
+/*  private functions  */
+
+
 GType
 gimp_color_managed_interface_get_type (void)
 {
-  static GType iface_type = 0;
-
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpColorManagedInterface),
-        (GBaseInitFunc)     gimp_color_managed_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpColorManagedInterface",
-                                           &iface_info, 0);
-
-      g_type_interface_add_prerequisite (iface_type, G_TYPE_OBJECT);
-    }
-
-  return iface_type;
+  return gimp_color_managed_get_type ();
 }
 
 static void
-gimp_color_managed_base_init (GimpColorManagedInterface *iface)
+gimp_color_managed_default_init (GimpColorManagedInterface *iface)
 {
-  static gboolean initialized = FALSE;
-
-  if (! initialized)
-    {
-      gimp_color_managed_signals[PROFILE_CHANGED] =
-        g_signal_new ("profile-changed",
-                      G_TYPE_FROM_INTERFACE (iface),
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpColorManagedInterface,
-                                       profile_changed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0);
-
-      iface->get_icc_profile   = NULL;
-      iface->get_color_profile = NULL;
-      iface->profile_changed   = NULL;
-
-      initialized = TRUE;
-    }
+  gimp_color_managed_signals[PROFILE_CHANGED] =
+    g_signal_new ("profile-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                                   profile_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
+
+
+/*  public functions  */
+
 
 /**
  * gimp_color_managed_get_icc_profile:
