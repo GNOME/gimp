@@ -117,6 +117,8 @@ libappcore_a_sources = \
 	gimpbrushpipe-load.h			\
 	gimpbuffer.c				\
 	gimpbuffer.h				\
+	gimpcancelable.c			\
+	gimpcancelable.h			\
 	gimpchannel.c				\
 	gimpchannel.h				\
 	gimpchannel-combine.c			\
