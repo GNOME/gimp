@@ -328,15 +328,18 @@ print_preview_button_press_event (GtkWidget      *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1 && preview->inside)
     {
-      GdkCursor *cursor;
+      GdkDisplay *display = gtk_widget_get_display (widget);
+      GdkSeat    *seat    = gdk_display_get_default_seat (display);
+      GdkCursor  *cursor;
 
       cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
                                            GDK_FLEUR);
 
-      if (gdk_pointer_grab (event->window, FALSE,
-                            (GDK_BUTTON1_MOTION_MASK |
-                             GDK_BUTTON_RELEASE_MASK),
-                            NULL, cursor, event->time) == GDK_GRAB_SUCCESS)
+      if (gdk_seat_grab (seat, gdk_event_get_window ((GdkEvent *) event),
+                         GDK_SEAT_CAPABILITY_ALL_POINTING, FALSE,
+                         cursor,
+                         (GdkEvent *) event,
+                         NULL, NULL) == GDK_GRAB_SUCCESS)
         {
           preview->orig_offset_x = preview->image_offset_x;
           preview->orig_offset_y = preview->image_offset_y;
@@ -361,8 +364,11 @@ print_preview_button_release_event (GtkWidget      *widget,
 
   if (preview->dragging)
     {
-      gdk_display_pointer_ungrab (gtk_widget_get_display (widget),
-                                  event->time);
+      GdkDisplay *display = gtk_widget_get_display (widget);
+      GdkSeat    *seat    = gdk_display_get_default_seat (display);
+
+      gdk_seat_ungrab (seat);
+
       preview->dragging = FALSE;
 
       print_preview_set_inside (preview,
@@ -431,8 +437,8 @@ print_preview_draw (GtkWidget *widget,
                     cairo_t   *cr)
 {
   PrintPreview  *preview = PRINT_PREVIEW (widget);
-  GtkStyle      *style   = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
+  GdkRGBA        color;
   gdouble        paper_width;
   gdouble        paper_height;
   gdouble        left_margin;
@@ -467,10 +473,12 @@ print_preview_draw (GtkWidget *widget,
   /* draw page background */
   cairo_rectangle (cr, 0, 0, scale * paper_width, scale * paper_height);
 
-  gdk_cairo_set_source_color (cr, &style->black);
+  color = (GdkRGBA) { 0.0, 0.0, 0.0, 1.0 };
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_stroke_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, &style->white);
+  color = (GdkRGBA) { 1.0, 1.0, 1.0, 1.0 };
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_fill (cr);
 
   /* draw page_margins */
@@ -480,7 +488,8 @@ print_preview_draw (GtkWidget *widget,
                    scale * (paper_width - left_margin - right_margin),
                    scale * (paper_height - top_margin - bottom_margin));
 
-  gdk_cairo_set_source_color (cr, &style->mid[gtk_widget_get_state (widget)]);
+  color = (GdkRGBA) { 0.0, 0.0, 0.0, 0.3 };
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_stroke (cr);
 
   cairo_translate (cr,
@@ -494,7 +503,8 @@ print_preview_draw (GtkWidget *widget,
                        scale * preview->image_width,
                        scale * preview->image_height);
 
-      gdk_cairo_set_source_color (cr, &style->black);
+      color = (GdkRGBA) { 0.0, 0.0, 0.0, 1.0 };
+      gdk_cairo_set_source_rgba (cr, &color);
       cairo_stroke (cr);
     }
 
