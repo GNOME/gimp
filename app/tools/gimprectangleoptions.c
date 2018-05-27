@@ -51,281 +51,253 @@ enum
 };
 
 
-static void     gimp_rectangle_options_iface_base_init        (GimpRectangleOptionsInterface *rectangle_options_iface);
+/*  local function prototypes  */
 
-static void     gimp_rectangle_options_fixed_rule_changed     (GtkWidget                     *combo_box,
-                                                               GimpRectangleOptionsPrivate   *private);
+static void     gimp_rectangle_options_fixed_rule_changed     (GtkWidget                   *combo_box,
+                                                               GimpRectangleOptionsPrivate *private);
 
-static void     gimp_rectangle_options_string_current_updates (GimpNumberPairEntry           *entry,
-                                                               GParamSpec                    *param,
-                                                               GimpRectangleOptions          *rectangle_options);
-static void     gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions          *rectangle_options,
-                                                               GtkWidget                     *entry,
-                                                               GtkListStore                  *history);
+static void     gimp_rectangle_options_string_current_updates (GimpNumberPairEntry         *entry,
+                                                               GParamSpec                  *param,
+                                                               GimpRectangleOptions        *rectangle_options);
+static void     gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions        *rectangle_options,
+                                                               GtkWidget                   *entry,
+                                                               GtkListStore                *history);
 
-static gboolean gimp_number_pair_entry_history_select         (GtkEntryCompletion            *completion,
-                                                               GtkTreeModel                  *model,
-                                                               GtkTreeIter                   *iter,
-                                                               GimpNumberPairEntry           *entry);
+static gboolean gimp_number_pair_entry_history_select         (GtkEntryCompletion          *completion,
+                                                               GtkTreeModel                *model,
+                                                               GtkTreeIter                 *iter,
+                                                               GimpNumberPairEntry         *entry);
 
-static void     gimp_number_pair_entry_history_add            (GtkWidget                     *entry,
-                                                               GtkTreeModel                  *model);
+static void     gimp_number_pair_entry_history_add            (GtkWidget                   *entry,
+                                                               GtkTreeModel                *model);
 
 
-GType
-gimp_rectangle_options_interface_get_type (void)
-{
-  static GType iface_type = 0;
+G_DEFINE_INTERFACE (GimpRectangleOptions, gimp_rectangle_options, GIMP_TYPE_TOOL_OPTIONS)
 
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpRectangleOptionsInterface),
-        (GBaseInitFunc)     gimp_rectangle_options_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpRectangleOptionsInterface",
-                                           &iface_info, 0);
-
-      g_type_interface_add_prerequisite (iface_type, GIMP_TYPE_TOOL_OPTIONS);
-    }
-
-  return iface_type;
-}
 
 static void
-gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
+gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
 {
-  static gboolean initialized = FALSE;
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("auto-shrink",
+                                                             NULL,
+                                                             N_("Automatically shrink to the nearest "
+                                                                "rectangular shape in a layer"),
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-  if (! initialized)
-    {
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("auto-shrink",
-                                                                 NULL,
-                                                                 N_("Automatically shrink to the nearest "
-                                                                    "rectangular shape in a layer"),
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("shrink-merged",
+                                                             _("Shrink merged"),
+                                                             _("Use all visible layers when shrinking "
+                                                               "the selection"),
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("shrink-merged",
-                                                                 _("Shrink merged"),
-                                                                 _("Use all visible layers when shrinking "
-                                                                   "the selection"),
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_enum ("guide",
+                                                          NULL,
+                                                          N_("Composition guides such as rule of thirds"),
+                                                          GIMP_TYPE_GUIDES_TYPE,
+                                                          GIMP_GUIDES_NONE,
+                                                          GIMP_CONFIG_PARAM_FLAGS |
+                                                          GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_enum ("guide",
-                                                              NULL,
-                                                              N_("Composition guides such as rule of thirds"),
-                                                              GIMP_TYPE_GUIDES_TYPE,
-                                                              GIMP_GUIDES_NONE,
-                                                              GIMP_CONFIG_PARAM_FLAGS |
-                                                              GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("x",
+                                                            NULL,
+                                                            N_("X coordinate of top left corner"),
+                                                            -GIMP_MAX_IMAGE_SIZE,
+                                                            GIMP_MAX_IMAGE_SIZE,
+                                                            0.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("x",
-                                                                NULL,
-                                                                N_("X coordinate of top left corner"),
-                                                                -GIMP_MAX_IMAGE_SIZE,
-                                                                GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("y",
+                                                            NULL,
+                                                            N_("Y coordinate of top left corner"),
+                                                            -GIMP_MAX_IMAGE_SIZE,
+                                                            GIMP_MAX_IMAGE_SIZE,
+                                                            0.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("y",
-                                                                NULL,
-                                                                N_("Y coordinate of top left corner"),
-                                                                -GIMP_MAX_IMAGE_SIZE,
-                                                                GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("width",
+                                                            NULL,
+                                                            N_("Width of selection"),
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("width",
-                                                                NULL,
-                                                                N_("Width of selection"),
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("height",
+                                                            NULL,
+                                                            N_("Height of selection"),
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("height",
-                                                                NULL,
-                                                                N_("Height of selection"),
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                0.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       gimp_param_spec_unit ("position-unit",
+                                                             NULL,
+                                                             N_("Unit of top left corner coordinate"),
+                                                             TRUE, TRUE,
+                                                             GIMP_UNIT_PIXEL,
+                                                             GIMP_PARAM_READWRITE |
+                                                             G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           gimp_param_spec_unit ("position-unit",
-                                                                 NULL,
-                                                                 N_("Unit of top left corner coordinate"),
-                                                                 TRUE, TRUE,
-                                                                 GIMP_UNIT_PIXEL,
-                                                                 GIMP_PARAM_READWRITE |
-                                                                 G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       gimp_param_spec_unit ("size-unit",
+                                                             NULL,
+                                                             N_("Unit of selection size"),
+                                                             TRUE, TRUE,
+                                                             GIMP_UNIT_PIXEL,
+                                                             GIMP_PARAM_READWRITE |
+                                                             G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           gimp_param_spec_unit ("size-unit",
-                                                                 NULL,
-                                                                 N_("Unit of selection size"),
-                                                                 TRUE, TRUE,
-                                                                 GIMP_UNIT_PIXEL,
-                                                                 GIMP_PARAM_READWRITE |
-                                                                 G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("fixed-rule-active",
+                                                             NULL,
+                                                             N_("Enable lock of aspect ratio, "
+                                                                "width, height or size"),
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("fixed-rule-active",
-                                                                 NULL,
-                                                                 N_("Enable lock of aspect ratio, "
-                                                                    "width, height or size"),
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_enum ("fixed-rule",
+                                                          NULL,
+                                                          N_("Choose what has to be locked"),
+                                                          GIMP_TYPE_RECTANGLE_FIXED_RULE,
+                                                          GIMP_RECTANGLE_FIXED_ASPECT,
+                                                          GIMP_CONFIG_PARAM_FLAGS |
+                                                          GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_enum ("fixed-rule",
-                                                              NULL,
-                                                              N_("Choose what has to be locked"),
-                                                              GIMP_TYPE_RECTANGLE_FIXED_RULE,
-                                                              GIMP_RECTANGLE_FIXED_ASPECT,
-                                                              GIMP_CONFIG_PARAM_FLAGS |
-                                                              GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("desired-fixed-width",
+                                                            NULL,
+                                                            N_("Custom fixed width"),
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("desired-fixed-width",
-                                                                NULL,
-                                                                N_("Custom fixed width"),
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("desired-fixed-height",
+                                                            NULL,
+                                                            N_("Custom fixed height"),
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("desired-fixed-height",
-                                                                NULL,
-                                                                N_("Custom fixed height"),
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("desired-fixed-size-width",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("desired-fixed-size-width",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("desired-fixed-size-height",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("desired-fixed-size-height",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("default-fixed-size-width",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("default-fixed-size-width",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("default-fixed-size-height",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            100.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("default-fixed-size-height",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("overridden-fixed-size",
+                                                             NULL, NULL,
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("overridden-fixed-size",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("aspect-numerator",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            1.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("aspect-numerator",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                1.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("aspect-denominator",
+                                                            NULL, NULL,
+                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            1.0,
+                                                            GIMP_CONFIG_PARAM_FLAGS |
+                                                            GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("aspect-denominator",
-                                                                NULL, NULL,
-                                                                0.0, GIMP_MAX_IMAGE_SIZE,
-                                                                1.0,
-                                                                GIMP_CONFIG_PARAM_FLAGS |
-                                                                GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("default-aspect-numerator",
+                                                            NULL, NULL,
+                                                            0.001, GIMP_MAX_IMAGE_SIZE,
+                                                            1.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("default-aspect-numerator",
-                                                                NULL, NULL,
-                                                                0.001, GIMP_MAX_IMAGE_SIZE,
-                                                                1.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_double ("default-aspect-denominator",
+                                                            NULL, NULL,
+                                                            0.001, GIMP_MAX_IMAGE_SIZE,
+                                                            1.0,
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_double ("default-aspect-denominator",
-                                                                NULL, NULL,
-                                                                0.001, GIMP_MAX_IMAGE_SIZE,
-                                                                1.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("overridden-fixed-aspect",
+                                                             NULL, NULL,
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("overridden-fixed-aspect",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("use-string-current",
+                                                             NULL, NULL,
+                                                             FALSE,
+                                                             GIMP_PARAM_READWRITE |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("use-string-current",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_PARAM_READWRITE |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
+  g_object_interface_install_property (iface,
+                                       gimp_param_spec_unit ("fixed-unit",
+                                                             NULL,
+                                                             N_("Unit of fixed width, height or size"),
+                                                             TRUE, TRUE,
+                                                             GIMP_UNIT_PIXEL,
+                                                             GIMP_PARAM_READWRITE |
+                                                             G_PARAM_CONSTRUCT));
 
-      g_object_interface_install_property (iface,
-                                           gimp_param_spec_unit ("fixed-unit",
-                                                                 NULL,
-                                                                 N_("Unit of fixed width, height or size"),
-                                                                 TRUE, TRUE,
-                                                                 GIMP_UNIT_PIXEL,
-                                                                 GIMP_PARAM_READWRITE |
-                                                                 G_PARAM_CONSTRUCT));
-
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("fixed-center",
-                                                                 _("Expand from center"),
-                                                                 _("Expand selection from center outwards"),
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
-
-      initialized = TRUE;
-    }
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("fixed-center",
+                                                             _("Expand from center"),
+                                                             _("Expand selection from center outwards"),
+                                                             FALSE,
+                                                             GIMP_CONFIG_PARAM_FLAGS |
+                                                             GIMP_PARAM_STATIC_STRINGS));
 }
 
 static void

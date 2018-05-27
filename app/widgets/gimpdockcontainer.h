@@ -22,7 +22,7 @@
 #define __GIMP_DOCK_CONTAINER_H__
 
 
-#define GIMP_TYPE_DOCK_CONTAINER               (gimp_dock_container_interface_get_type ())
+#define GIMP_TYPE_DOCK_CONTAINER               (gimp_dock_container_get_type ())
 #define GIMP_DOCK_CONTAINER(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCK_CONTAINER, GimpDockContainer))
 #define GIMP_IS_DOCK_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCK_CONTAINER))
 #define GIMP_DOCK_CONTAINER_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_DOCK_CONTAINER, GimpDockContainerInterface))
@@ -46,16 +46,16 @@ struct _GimpDockContainerInterface
 };
 
 
-GType               gimp_dock_container_interface_get_type  (void) G_GNUC_CONST;
+GType               gimp_dock_container_get_type           (void) G_GNUC_CONST;
 
-GList             * gimp_dock_container_get_docks           (GimpDockContainer   *container);
-GimpDialogFactory * gimp_dock_container_get_dialog_factory  (GimpDockContainer   *container);
-GimpUIManager     * gimp_dock_container_get_ui_manager      (GimpDockContainer   *container);
-void                gimp_dock_container_add_dock            (GimpDockContainer   *container,
-                                                             GimpDock            *dock,
-                                                             GimpSessionInfoDock *dock_info);
-GimpAlignmentType   gimp_dock_container_get_dock_side       (GimpDockContainer   *container,
-                                                             GimpDock            *dock);
+GList             * gimp_dock_container_get_docks          (GimpDockContainer   *container);
+GimpDialogFactory * gimp_dock_container_get_dialog_factory (GimpDockContainer   *container);
+GimpUIManager     * gimp_dock_container_get_ui_manager     (GimpDockContainer   *container);
+void                gimp_dock_container_add_dock           (GimpDockContainer   *container,
+                                                            GimpDock            *dock,
+                                                            GimpSessionInfoDock *dock_info);
+GimpAlignmentType   gimp_dock_container_get_dock_side      (GimpDockContainer   *container,
+                                                            GimpDock            *dock);
 
 
 #endif  /*  __GIMP_DOCK_CONTAINER_H__  */

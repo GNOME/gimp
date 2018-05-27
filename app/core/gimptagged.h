@@ -22,7 +22,7 @@
 #define __GIMP_TAGGED_H__
 
 
-#define GIMP_TYPE_TAGGED               (gimp_tagged_interface_get_type ())
+#define GIMP_TYPE_TAGGED               (gimp_tagged_get_type ())
 #define GIMP_IS_TAGGED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAGGED))
 #define GIMP_TAGGED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAGGED, GimpTagged))
 #define GIMP_TAGGED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_TAGGED, GimpTaggedInterface))
@@ -51,22 +51,22 @@ struct _GimpTaggedInterface
 };
 
 
-GType      gimp_tagged_interface_get_type (void) G_GNUC_CONST;
+GType      gimp_tagged_get_type       (void) G_GNUC_CONST;
 
-void       gimp_tagged_add_tag            (GimpTagged *tagged,
-                                           GimpTag    *tag);
-void       gimp_tagged_remove_tag         (GimpTagged *tagged,
-                                           GimpTag    *tag);
+void       gimp_tagged_add_tag        (GimpTagged *tagged,
+                                       GimpTag    *tag);
+void       gimp_tagged_remove_tag     (GimpTagged *tagged,
+                                       GimpTag    *tag);
 
-void       gimp_tagged_set_tags           (GimpTagged *tagged,
-                                           GList      *tags);
-GList    * gimp_tagged_get_tags           (GimpTagged *tagged);
+void       gimp_tagged_set_tags       (GimpTagged *tagged,
+                                       GList      *tags);
+GList    * gimp_tagged_get_tags       (GimpTagged *tagged);
 
-gchar    * gimp_tagged_get_identifier     (GimpTagged *tagged);
-gchar    * gimp_tagged_get_checksum       (GimpTagged *tagged);
+gchar    * gimp_tagged_get_identifier (GimpTagged *tagged);
+gchar    * gimp_tagged_get_checksum   (GimpTagged *tagged);
 
-gboolean   gimp_tagged_has_tag            (GimpTagged *tagged,
-                                           GimpTag    *tag);
+gboolean   gimp_tagged_has_tag        (GimpTagged *tagged,
+                                       GimpTag    *tag);
 
 
 #endif  /* __GIMP_TAGGED_H__ */

@@ -27,44 +27,20 @@
 #include "gimpwindowstrategy.h"
 
 
-static void   gimp_window_strategy_iface_base_init (GimpWindowStrategyInterface *strategy_iface);
+G_DEFINE_INTERFACE (GimpWindowStrategy, gimp_window_strategy, G_TYPE_OBJECT)
 
 
-GType
-gimp_window_strategy_interface_get_type (void)
-{
-  static GType iface_type = 0;
+/*  private functions  */
 
-  if (! iface_type)
-    {
-      const GTypeInfo iface_info =
-      {
-        sizeof (GimpWindowStrategyInterface),
-        (GBaseInitFunc)     gimp_window_strategy_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                           "GimpWindowStrategyInterface",
-                                           &iface_info,
-                                           0);
-    }
-
-  return iface_type;
-}
 
 static void
-gimp_window_strategy_iface_base_init (GimpWindowStrategyInterface *strategy_iface)
+gimp_window_strategy_default_init (GimpWindowStrategyInterface *iface)
 {
-  static gboolean initialized = FALSE;
-
-  if (initialized)
-    return;
-
-  initialized = TRUE;
-
-  strategy_iface->show_dockable_dialog = NULL;
 }
+
+
+/*  public functions  */
+
 
 GtkWidget *
 gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,

@@ -22,7 +22,7 @@
 #define __GIMP_PICKABLE_H__
 
 
-#define GIMP_TYPE_PICKABLE               (gimp_pickable_interface_get_type ())
+#define GIMP_TYPE_PICKABLE               (gimp_pickable_get_type ())
 #define GIMP_IS_PICKABLE(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PICKABLE))
 #define GIMP_PICKABLE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PICKABLE, GimpPickable))
 #define GIMP_PICKABLE_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_PICKABLE, GimpPickableInterface))
@@ -63,7 +63,7 @@ struct _GimpPickableInterface
 };
 
 
-GType           gimp_pickable_interface_get_type    (void) G_GNUC_CONST;
+GType           gimp_pickable_get_type              (void) G_GNUC_CONST;
 
 void            gimp_pickable_flush                 (GimpPickable        *pickable);
 GimpImage     * gimp_pickable_get_image             (GimpPickable        *pickable);

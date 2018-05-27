@@ -39,81 +39,49 @@ enum
 };
 
 
-/*  local function prototypes  */
-
-static void   gimp_projectable_iface_base_init (GimpProjectableInterface *iface);
+G_DEFINE_INTERFACE (GimpProjectable, gimp_projectable, GIMP_TYPE_VIEWABLE)
 
 
 static guint projectable_signals[LAST_SIGNAL] = { 0 };
 
 
-GType
-gimp_projectable_interface_get_type (void)
-{
-  static GType projectable_iface_type = 0;
+/*  private functions  */
 
-  if (! projectable_iface_type)
-    {
-      const GTypeInfo projectable_iface_info =
-      {
-        sizeof (GimpProjectableInterface),
-        (GBaseInitFunc)     gimp_projectable_iface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      projectable_iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                                       "GimpProjectableInterface",
-                                                       &projectable_iface_info,
-                                                       0);
-
-      g_type_interface_add_prerequisite (projectable_iface_type,
-                                         GIMP_TYPE_VIEWABLE);
-    }
-
-  return projectable_iface_type;
-}
 
 static void
-gimp_projectable_iface_base_init (GimpProjectableInterface *iface)
+gimp_projectable_default_init (GimpProjectableInterface *iface)
 {
-  static gboolean initialized = FALSE;
+  projectable_signals[INVALIDATE] =
+    g_signal_new ("invalidate",
+                  G_TYPE_FROM_CLASS (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProjectableInterface, invalidate),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
-  if (! initialized)
-    {
-      projectable_signals[INVALIDATE] =
-        g_signal_new ("invalidate",
-                      G_TYPE_FROM_CLASS (iface),
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpProjectableInterface, invalidate),
-                      NULL, NULL,
-                      gimp_marshal_VOID__INT_INT_INT_INT,
-                      G_TYPE_NONE, 4,
-                      G_TYPE_INT,
-                      G_TYPE_INT,
-                      G_TYPE_INT,
-                      G_TYPE_INT);
+  projectable_signals[FLUSH] =
+    g_signal_new ("flush",
+                  G_TYPE_FROM_CLASS (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProjectableInterface, flush),
+                  NULL, NULL,
+                  gimp_marshal_VOID__BOOLEAN,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_BOOLEAN);
 
-      projectable_signals[FLUSH] =
-        g_signal_new ("flush",
-                      G_TYPE_FROM_CLASS (iface),
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpProjectableInterface, flush),
-                      NULL, NULL,
-                      gimp_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1,
-                      G_TYPE_BOOLEAN);
-
-      projectable_signals[STRUCTURE_CHANGED] =
-        g_signal_new ("structure-changed",
-                      G_TYPE_FROM_CLASS (iface),
-                      G_SIGNAL_RUN_FIRST,
-                      G_STRUCT_OFFSET (GimpProjectableInterface, structure_changed),
-                      NULL, NULL,
-                      gimp_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0);
-
-      initialized = TRUE;
-    }
+  projectable_signals[STRUCTURE_CHANGED] =
+    g_signal_new ("structure-changed",
+                  G_TYPE_FROM_CLASS (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProjectableInterface, structure_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 

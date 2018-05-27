@@ -22,7 +22,7 @@
 #define __GIMP_PROGRESS_H__
 
 
-#define GIMP_TYPE_PROGRESS               (gimp_progress_interface_get_type ())
+#define GIMP_TYPE_PROGRESS               (gimp_progress_get_type ())
 #define GIMP_IS_PROGRESS(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROGRESS))
 #define GIMP_PROGRESS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROGRESS, GimpProgress))
 #define GIMP_PROGRESS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_PROGRESS, GimpProgressInterface))
@@ -61,39 +61,39 @@ struct _GimpProgressInterface
 };
 
 
-GType          gimp_progress_interface_get_type (void) G_GNUC_CONST;
+GType          gimp_progress_get_type         (void) G_GNUC_CONST;
 
-GimpProgress * gimp_progress_start              (GimpProgress        *progress,
-                                                 gboolean             cancellable,
-                                                 const gchar         *format,
-                                                 ...) G_GNUC_PRINTF (3, 4);
-void           gimp_progress_end                (GimpProgress        *progress);
-gboolean       gimp_progress_is_active          (GimpProgress        *progress);
+GimpProgress * gimp_progress_start            (GimpProgress        *progress,
+                                               gboolean             cancellable,
+                                               const gchar         *format,
+                                               ...) G_GNUC_PRINTF (3, 4);
+void           gimp_progress_end              (GimpProgress        *progress);
+gboolean       gimp_progress_is_active        (GimpProgress        *progress);
 
-void           gimp_progress_set_text           (GimpProgress        *progress,
-                                                 const gchar         *format,
-                                                 ...) G_GNUC_PRINTF (2, 3);
-void           gimp_progress_set_text_literal   (GimpProgress        *progress,
-                                                 const gchar         *message);
-void           gimp_progress_set_value          (GimpProgress        *progress,
-                                                 gdouble              percentage);
-gdouble        gimp_progress_get_value          (GimpProgress        *progress);
-void           gimp_progress_pulse              (GimpProgress        *progress);
+void           gimp_progress_set_text         (GimpProgress        *progress,
+                                               const gchar         *format,
+                                               ...) G_GNUC_PRINTF (2, 3);
+void           gimp_progress_set_text_literal (GimpProgress        *progress,
+                                               const gchar         *message);
+void           gimp_progress_set_value        (GimpProgress        *progress,
+                                               gdouble              percentage);
+gdouble        gimp_progress_get_value        (GimpProgress        *progress);
+void           gimp_progress_pulse            (GimpProgress        *progress);
 
-guint32        gimp_progress_get_window_id      (GimpProgress        *progress);
+guint32        gimp_progress_get_window_id    (GimpProgress        *progress);
 
-gboolean       gimp_progress_message            (GimpProgress        *progress,
-                                                 Gimp                *gimp,
-                                                 GimpMessageSeverity  severity,
-                                                 const gchar         *domain,
-                                                 const gchar         *message);
+gboolean       gimp_progress_message          (GimpProgress        *progress,
+                                               Gimp                *gimp,
+                                               GimpMessageSeverity  severity,
+                                               const gchar         *domain,
+                                               const gchar         *message);
 
-void           gimp_progress_cancel             (GimpProgress        *progress);
+void           gimp_progress_cancel           (GimpProgress        *progress);
 
-void           gimp_progress_update_and_flush   (gint                 min,
-                                                 gint                 max,
-                                                 gint                 current,
-                                                 gpointer             data);
+void           gimp_progress_update_and_flush (gint                 min,
+                                               gint                 max,
+                                               gint                 current,
+                                               gpointer             data);
 
 
 #endif /* __GIMP_PROGRESS_H__ */

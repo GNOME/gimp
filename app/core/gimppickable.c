@@ -44,60 +44,28 @@
 
 /*  local function prototypes  */
 
-static void   gimp_pickable_interface_base_init    (GimpPickableInterface *iface);
-
 static void   gimp_pickable_real_get_pixel_average (GimpPickable          *pickable,
                                                     const GeglRectangle   *rect,
                                                     const Babl            *format,
                                                     gpointer               pixel);
 
 
+G_DEFINE_INTERFACE (GimpPickable, gimp_pickable, GIMP_TYPE_OBJECT)
+
+
 /*  private functions  */
 
 
-GType
-gimp_pickable_interface_get_type (void)
-{
-  static GType pickable_iface_type = 0;
-
-  if (! pickable_iface_type)
-    {
-      const GTypeInfo pickable_iface_info =
-      {
-        sizeof (GimpPickableInterface),
-        (GBaseInitFunc)     gimp_pickable_interface_base_init,
-        (GBaseFinalizeFunc) NULL,
-      };
-
-      pickable_iface_type = g_type_register_static (G_TYPE_INTERFACE,
-                                                    "GimpPickableInterface",
-                                                    &pickable_iface_info,
-                                                    0);
-
-      g_type_interface_add_prerequisite (pickable_iface_type, GIMP_TYPE_OBJECT);
-    }
-
-  return pickable_iface_type;
-}
-
 static void
-gimp_pickable_interface_base_init (GimpPickableInterface *iface)
+gimp_pickable_default_init (GimpPickableInterface *iface)
 {
-  static gboolean initialized = FALSE;
+  iface->get_pixel_average = gimp_pickable_real_get_pixel_average;
 
-  if (! initialized)
-    {
-      g_object_interface_install_property (iface,
-                                           g_param_spec_object ("buffer",
-                                                                NULL, NULL,
-                                                                GEGL_TYPE_BUFFER,
-                                                                GIMP_PARAM_READABLE));
-
-      initialized = TRUE;
-    }
-
-  if (! iface->get_pixel_average)
-    iface->get_pixel_average = gimp_pickable_real_get_pixel_average;
+  g_object_interface_install_property (iface,
+                                       g_param_spec_object ("buffer",
+                                                            NULL, NULL,
+                                                            GEGL_TYPE_BUFFER,
+                                                            GIMP_PARAM_READABLE));
 }
 
 static void
