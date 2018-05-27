@@ -446,7 +446,9 @@ libappcore_a_sources = \
 	gimpundostack.c				\
 	gimpundostack.h				\
 	gimpviewable.c				\
-	gimpviewable.h
+	gimpviewable.h				\
+	gimpwaitable.c				\
+	gimpwaitable.h
 
 libappcore_a_built_sources = \
 	core-enums.c	\
