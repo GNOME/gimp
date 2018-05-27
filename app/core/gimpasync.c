@@ -66,23 +66,23 @@ struct _GimpAsyncCallbackInfo
 
 struct _GimpAsyncPrivate
 {
-  GMutex          mutex;
-  GCond           cond;
+  GMutex         mutex;
+  GCond          cond;
 
-  GQueue          callbacks;
+  GQueue         callbacks;
 
-  gpointer        result;
-  GDestroyNotify  result_destroy_func;
+  gpointer       result;
+  GDestroyNotify result_destroy_func;
 
-  guint           idle_id;
+  guint          idle_id;
 
-  gboolean        stopped;
-  gboolean        finished;
-  gboolean        synced;
-  gboolean        canceled;
+  gboolean       stopped;
+  gboolean       finished;
+  gboolean       synced;
+  gboolean       canceled;
 
 #ifdef TIME_ASYNC_OPS
-  guint64         start_time;
+  guint64        start_time;
 #endif
 };
 
@@ -453,7 +453,7 @@ gimp_async_is_finished (GimpAsync *async)
  * 'async' shall be in the "stopped" state, and should have completed normally.
  *
  * may only be called on the async thread, or on the main thread when 'async'
- * synced.
+ * is synced.
  */
 gpointer
 gimp_async_get_result (GimpAsync *async)
