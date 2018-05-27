@@ -79,7 +79,7 @@ Git
 GIMP is available from GNOME Git. You can use the following commands
 to get GIMP from the the git server:
 
-    $ git clone git://git.gnome.org/gimp
+    $ git clone https://gitlab.gnome.org/GNOME/gimp.git
 
 You can read more on using GNOME's git service at these URLs:
 
