@@ -115,7 +115,7 @@ win32_command (const gchar *command)
 
 static gboolean
 starts_with_dir (const gchar *string,
-		 const gchar *test)
+                 const gchar *test)
 {
   return g_str_has_prefix (string, g_strconcat (test, "/", NULL)) ||
     strcmp (string, test) == 0;
@@ -123,7 +123,7 @@ starts_with_dir (const gchar *string,
 
 static gchar *
 one_line_output (const gchar *program,
-		 const gchar *args)
+                 const gchar *args)
 {
   gchar *command = g_strconcat (program, " ", args, NULL);
   FILE  *pipe    = popen (command, "r");
@@ -186,22 +186,22 @@ get_runtime_prefix (gchar slash)
     {
       r = strrchr (path, G_DIR_SEPARATOR);
       if (r != NULL)
-	{
-	  *r = '\0';
-	  if (strlen (path) >= 4 &&
-	      g_ascii_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
-	    {
-	      r[-4] = '\0';
-	      prefix = path;
-	      if (slash == '/')
-		{
-		  /* Use forward slashes, less quoting trouble in Makefiles */
-		  while ((p = strchr (prefix, '\\')) != NULL)
-		    *p = '/';
-		}
-	      return prefix;
-	    }
-	}
+        {
+          *r = '\0';
+          if (strlen (path) >= 4 &&
+              g_ascii_strcasecmp (r - 4, G_DIR_SEPARATOR_S "bin") == 0)
+            {
+              r[-4] = '\0';
+              prefix = path;
+              if (slash == '/')
+                {
+                  /* Use forward slashes, less quoting trouble in Makefiles */
+                  while ((p = strchr (prefix, '\\')) != NULL)
+                    *p = '/';
+                }
+              return prefix;
+            }
+        }
     }
 
   g_printerr ("Cannot determine GIMP " GIMP_APP_VERSION " installation location\n");
@@ -436,9 +436,9 @@ maybe_run (gchar *cmd)
 
 static void
 do_build_2 (const gchar *cflags,
-	    const gchar *libs,
-	    const gchar *install_dir,
-	    const gchar *what)
+            const gchar *libs,
+            const gchar *install_dir,
+            const gchar *what)
 {
   gchar       *cmd;
   const gchar *dest_dir;
@@ -538,18 +538,18 @@ do_build_2 (const gchar *cflags,
     }
 
   cmd = g_strdup_printf ("%s %s%s %s %s%s %s%s %s%s %s %s",
-			 env_cc,
-			 lang_flag,
-			 env_cflags,
-			 cflags,
-			 output_flag,
-			 g_shell_quote (dest_exe),
-			 g_shell_quote (what),
-			 here_comes_linker_flags,
-			 env_ldflags,
-			 windows_subsystem_flag,
-			 libs,
-			 env_libs);
+                         env_cc,
+                         lang_flag,
+                         env_cflags,
+                         cflags,
+                         output_flag,
+                         g_shell_quote (dest_exe),
+                         g_shell_quote (what),
+                         here_comes_linker_flags,
+                         env_ldflags,
+                         windows_subsystem_flag,
+                         libs,
+                         env_libs);
 
   maybe_run (cmd);
 }
@@ -642,7 +642,7 @@ do_install_admin_nogimpui (const gchar *what)
 
 static void
 do_install_bin_2 (const gchar *dir,
-		  const gchar *what)
+                  const gchar *what)
 {
   g_mkdir_with_parents (dir,
                         S_IRUSR | S_IXUSR | S_IWUSR |
@@ -669,7 +669,7 @@ do_install_admin_bin (const gchar *what)
 
 static void
 do_uninstall (const gchar *dir,
-	      const gchar *what)
+              const gchar *what)
 {
   maybe_run (g_strconcat (REMOVE, " ",
                           g_shell_quote (g_strconcat (dir, G_DIR_SEPARATOR_S,
@@ -761,9 +761,9 @@ main (int    argc,
   while (++argi < argc)
     {
       if (strcmp (argv[argi], "-n") == 0 ||
-	  strcmp (argv[argi], "--just-print") == 0 ||
-	  strcmp (argv[argi], "--dry-run") == 0 ||
-	  strcmp (argv[argi], "--recon") == 0)
+          strcmp (argv[argi], "--just-print") == 0 ||
+          strcmp (argv[argi], "--dry-run") == 0 ||
+          strcmp (argv[argi], "--recon") == 0)
         {
           dry_run = TRUE;
         }
@@ -816,75 +816,75 @@ main (int    argc,
           silent = TRUE;
         }
       else if (strcmp (argv[argi], "--version") == 0)
-	{
-	  g_print ("%d.%d.%d\n",
+        {
+          g_print ("%d.%d.%d\n",
                    GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION, GIMP_MICRO_VERSION);
-	  exit (EXIT_SUCCESS);
-	}
+          exit (EXIT_SUCCESS);
+        }
       else if (strcmp (argv[argi], "-n") == 0 ||
-	       strcmp (argv[argi], "--just-print") == 0 ||
-	       strcmp (argv[argi], "--dry-run") == 0 ||
-	       strcmp (argv[argi], "--recon") == 0)
-	;			/* Already handled */
+               strcmp (argv[argi], "--just-print") == 0 ||
+               strcmp (argv[argi], "--dry-run") == 0 ||
+               strcmp (argv[argi], "--recon") == 0)
+        ; /* Already handled */
       else if (strcmp (argv[argi], "--includedir") == 0)
-	do_includedir ();
+        do_includedir ();
       else if (strcmp (argv[argi], "--cflags") == 0)
-	do_cflags ();
+        do_cflags ();
       else if (strcmp (argv[argi], "--cflags-noui") == 0)
-	do_cflags_noui ();
+        do_cflags_noui ();
       else if (strcmp (argv[argi], "--cflags-nogimpui") == 0)
-	do_cflags_nogimpui ();
+        do_cflags_nogimpui ();
       else if (strcmp (argv[argi], "--libs") == 0)
-	do_libs ();
+        do_libs ();
       else if (strcmp (argv[argi], "--libs-noui") == 0)
-	do_libs_noui ();
+        do_libs_noui ();
       else if (strcmp (argv[argi], "--libs-nogimpui") == 0)
-	do_libs_nogimpui ();
+        do_libs_nogimpui ();
       else if (g_str_has_prefix (argv[argi], "--prefix="))
-	;
+        ;
       else if (g_str_has_prefix (argv[argi], "--exec-prefix="))
-	;
+        ;
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
-	;
+        ;
       else if (strcmp (argv[argi], "--build") == 0)
-	do_build (argv[++argi]);
+        do_build (argv[++argi]);
       else if (strcmp (argv[argi], "--build-noui") == 0)
-	do_build_noui (argv[++argi]);
+        do_build_noui (argv[++argi]);
       else if (strcmp (argv[argi], "--build-nogimpui") == 0)
-	do_build_nogimpui (argv[++argi]);
+        do_build_nogimpui (argv[++argi]);
       else if (strcmp (argv[argi], "--install") == 0)
-	do_install (argv[++argi]);
+        do_install (argv[++argi]);
       else if (strcmp (argv[argi], "--install-noui") == 0)
-	do_install_noui (argv[++argi]);
+        do_install_noui (argv[++argi]);
       else if (strcmp (argv[argi], "--install-nogimpui") == 0)
-	do_install_nogimpui (argv[++argi]);
+        do_install_nogimpui (argv[++argi]);
       else if (strcmp (argv[argi], "--install-admin") == 0)
-	do_install_admin (argv[++argi]);
+        do_install_admin (argv[++argi]);
       else if (strcmp (argv[argi], "--install-admin-noui") == 0)
-	do_install_admin_noui (argv[++argi]);
+        do_install_admin_noui (argv[++argi]);
       else if (strcmp (argv[argi], "--install-admin-nogimpui") == 0)
-	do_install_admin_nogimpui (argv[++argi]);
+        do_install_admin_nogimpui (argv[++argi]);
       else if (strcmp (argv[argi], "--install-bin") == 0)
-	do_install_bin (argv[++argi]);
+        do_install_bin (argv[++argi]);
       else if (strcmp (argv[argi], "--install-admin-bin") == 0)
-	do_install_admin_bin (argv[++argi]);
+        do_install_admin_bin (argv[++argi]);
       else if (strcmp (argv[argi], "--uninstall-bin") == 0)
-	do_uninstall_bin (argv[++argi]);
+        do_uninstall_bin (argv[++argi]);
       else if (strcmp (argv[argi], "--uninstall-admin-bin") == 0)
-	do_uninstall_admin_bin (argv[++argi]);
+        do_uninstall_admin_bin (argv[++argi]);
       else if (strcmp (argv[argi], "--install-script") == 0)
-	do_install_script (argv[++argi]);
+        do_install_script (argv[++argi]);
       else if (strcmp (argv[argi], "--install-admin-script") == 0)
-	do_install_admin_script (argv[++argi]);
+        do_install_admin_script (argv[++argi]);
       else if (strcmp (argv[argi], "--uninstall-script") == 0)
-	do_uninstall_script (argv[++argi]);
+        do_uninstall_script (argv[++argi]);
       else if (strcmp (argv[argi], "--uninstall-admin-script") == 0)
-	do_uninstall_admin_script (argv[++argi]);
+        do_uninstall_admin_script (argv[++argi]);
       else
-	{
-	  g_printerr ("Unrecognized switch %s\n", argv[argi]);
-	  usage (EXIT_FAILURE);
-	}
+        {
+          g_printerr ("Unrecognized switch %s\n", argv[argi]);
+          usage (EXIT_FAILURE);
+        }
     }
 
   exit (EXIT_SUCCESS);
