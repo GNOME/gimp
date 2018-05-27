@@ -498,7 +498,7 @@ do_build_2 (const gchar *cflags,
         }
       else
         {
-          g_printerr ("The source file(%s) doesn't have a \"standard\" C or C++ suffix, "
+          g_printerr ("The source file (%s) doesn't have a \"standard\" C or C++ suffix, "
                       "and the tool failed to confirm the language of the file.\n"
                       "Please be explicit about the language of the file "
                       "by renaming it with one of the suffixes: .c .cc .cpp\n",
@@ -507,7 +507,8 @@ do_build_2 (const gchar *cflags,
         }
     }
 
-  *p = '\0';
+  if (p)
+    *p = '\0';
   q = strrchr (dest_exe, G_DIR_SEPARATOR);
 #ifdef G_OS_WIN32
   {
