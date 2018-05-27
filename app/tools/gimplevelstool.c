@@ -38,6 +38,7 @@
 #include "core/gimperror.h"
 #include "core/gimphistogram.h"
 #include "core/gimpimage.h"
+#include "core/gimpwaitable.h"
 
 #include "widgets/gimpcolorbar.h"
 #include "widgets/gimphandlebar.h"
@@ -1001,7 +1002,7 @@ levels_stretch_callback (GtkWidget      *widget,
   GimpTool       *tool        = GIMP_TOOL (levels_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (levels_tool);
 
-  gimp_async_wait (levels_tool->histogram_async);
+  gimp_waitable_wait (GIMP_WAITABLE (levels_tool->histogram_async));
 
   gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
                               levels_tool->histogram,

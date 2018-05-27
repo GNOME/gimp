@@ -56,10 +56,6 @@ GimpAsync * gimp_async_new             (void);
 
 gboolean    gimp_async_is_synced       (GimpAsync         *async);
 
-void        gimp_async_wait            (GimpAsync         *async);
-gboolean    gimp_async_wait_until      (GimpAsync         *async,
-                                        gint64             end_time);
-
 void        gimp_async_add_callback    (GimpAsync         *async,
                                         GimpAsyncCallback  callback,
                                         gpointer           data);
@@ -79,8 +75,9 @@ gpointer    gimp_async_get_result      (GimpAsync         *async);
 
 void        gimp_async_abort           (GimpAsync         *async);
 
-void        gimp_async_cancel          (GimpAsync         *async);
 gboolean    gimp_async_is_canceled     (GimpAsync         *async);
+
+void        gimp_async_cancel_and_wait (GimpAsync         *async);
 
 
 #endif /* __GIMP_ASYNC_H__ */
