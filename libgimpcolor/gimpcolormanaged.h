@@ -55,16 +55,13 @@ struct _GimpColorManagedInterface
 };
 
 
-GType              gimp_color_managed_get_type           (void) G_GNUC_CONST;
+GType              gimp_color_managed_get_type          (void) G_GNUC_CONST;
 
-GIMP_DEPRECATED_FOR (gimp_color_managed_get_type)
-GType              gimp_color_managed_interface_get_type (void) G_GNUC_CONST;
+const guint8     * gimp_color_managed_get_icc_profile   (GimpColorManaged *managed,
+                                                         gsize            *len);
+GimpColorProfile * gimp_color_managed_get_color_profile (GimpColorManaged *managed);
 
-const guint8     * gimp_color_managed_get_icc_profile    (GimpColorManaged *managed,
-                                                          gsize            *len);
-GimpColorProfile * gimp_color_managed_get_color_profile  (GimpColorManaged *managed);
-
-void               gimp_color_managed_profile_changed    (GimpColorManaged *managed);
+void               gimp_color_managed_profile_changed   (GimpColorManaged *managed);
 
 
 G_END_DECLS

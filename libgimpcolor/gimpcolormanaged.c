@@ -55,12 +55,6 @@ static guint gimp_color_managed_signals[LAST_SIGNAL] = { 0 };
 /*  private functions  */
 
 
-GType
-gimp_color_managed_interface_get_type (void)
-{
-  return gimp_color_managed_get_type ();
-}
-
 static void
 gimp_color_managed_default_init (GimpColorManagedInterface *iface)
 {

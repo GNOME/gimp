@@ -105,12 +105,6 @@ gimp_config_get_type (void)
   return config_iface_type;
 }
 
-GType
-gimp_config_interface_get_type (void)
-{
-  return gimp_config_get_type ();
-}
-
 static void
 gimp_config_iface_default_init (GimpConfigInterface *iface)
 {

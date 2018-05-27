@@ -73,9 +73,6 @@ struct _GimpConfigInterface
 
 GType      gimp_config_get_type            (void) G_GNUC_CONST;
 
-GIMP_DEPRECATED_FOR (gimp_config_get_type)
-GType      gimp_config_interface_get_type  (void) G_GNUC_CONST;
-
 gboolean   gimp_config_serialize_to_file   (GimpConfig       *config,
                                             const gchar      *filename,
                                             const gchar      *header,
