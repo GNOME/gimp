@@ -111,11 +111,14 @@ gimp_fonts_load_async (GimpAsync *async,
 }
 
 static void
-gimp_fonts_load_async_callback (GimpAsync    *async,
-                                GimpFontList *fonts)
+gimp_fonts_load_async_callback (GimpAsync *async,
+                                Gimp      *gimp)
 {
   if (gimp_async_is_finished (async))
-    gimp_font_list_restore (fonts);
+    {
+      gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
+      gimp->fonts_loading = FALSE;
+    }
 }
 
 void
@@ -155,6 +158,7 @@ gimp_fonts_load (Gimp    *gimp,
   gimp_fonts_add_directories (gimp, config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
+  gimp->fonts_loading = TRUE;
   /* We perform font cache initialization in a separate thread, so
    * in the case a cache rebuild is to be done it will not block
    * the UI.
@@ -163,7 +167,7 @@ gimp_fonts_load (Gimp    *gimp,
                                    config);
   gimp_async_add_callback (async,
                            (GimpAsyncCallback) gimp_fonts_load_async_callback,
-                           gimp->fonts);
+                           gimp);
   g_object_unref (async);
 
  cleanup:
