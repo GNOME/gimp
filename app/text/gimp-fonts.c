@@ -110,14 +110,22 @@ gimp_fonts_load_async (GimpAsync *async,
   gimp_async_finish (async, NULL);
 }
 
-void
-gimp_fonts_load (Gimp                *gimp,
-                 GimpInitStatusFunc   status_callback,
-                 GError             **error)
+static void
+gimp_fonts_load_async_callback (GimpAsync    *async,
+                                GimpFontList *fonts)
 {
-  FcConfig *config;
-  GFile    *fonts_conf;
-  GList    *path;
+  if (gimp_async_is_finished (async))
+    gimp_font_list_restore (fonts);
+}
+
+void
+gimp_fonts_load (Gimp    *gimp,
+                 GError **error)
+{
+  FcConfig  *config;
+  GFile     *fonts_conf;
+  GList     *path;
+  GimpAsync *async;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (gimp->fonts));
 
@@ -147,36 +155,16 @@ gimp_fonts_load (Gimp                *gimp,
   gimp_fonts_add_directories (gimp, config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
-  if (status_callback)
-    {
-      GimpAsync *async;
-      gint64     end_time;
-
-      /* We perform font cache initialization in a separate thread, so
-       * in the case a cache rebuild is to be done it will not block
-       * the UI.
-       */
-
-      async = gimp_parallel_run_async (
-        (GimpParallelRunAsyncFunc) gimp_fonts_load_async,
-        config);
-
-      do
-        {
-          status_callback (NULL, NULL, 0.6);
-
-          end_time = g_get_monotonic_time () + 0.1 * G_TIME_SPAN_SECOND;
-        }
-      while (! gimp_async_wait_until (async, end_time));
-
-      g_object_unref (async);
-    }
-  else
-    {
-      gimp_fonts_load_func (config);
-    }
-
-  gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
+  /* We perform font cache initialization in a separate thread, so
+   * in the case a cache rebuild is to be done it will not block
+   * the UI.
+   */
+  async = gimp_parallel_run_async ((GimpParallelRunAsyncFunc) gimp_fonts_load_async,
+                                   config);
+  gimp_async_add_callback (async,
+                           (GimpAsyncCallback) gimp_fonts_load_async_callback,
+                           gimp->fonts);
+  g_object_unref (async);
 
  cleanup:
   gimp_container_thaw (GIMP_CONTAINER (gimp->fonts));
@@ -364,7 +352,7 @@ gimp_fonts_notify_font_path (GObject    *gobject,
 {
   GError *error = NULL;
 
-  gimp_fonts_load (gimp, NULL, &error);
+  gimp_fonts_load (gimp, &error);
 
   if (error)
     {

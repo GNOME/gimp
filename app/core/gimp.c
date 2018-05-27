@@ -799,8 +799,8 @@ gimp_restore (Gimp                *gimp,
   /*  initialize the list of fonts  */
   if (! gimp->no_fonts)
     {
-      status_callback (NULL, _("Fonts (this may take a while)"), 0.7);
-      gimp_fonts_load (gimp, status_callback, error);
+      status_callback (NULL, _("Fonts"), 0.7);
+      gimp_fonts_load (gimp, error);
     }
 
   /*  initialize the template list  */
