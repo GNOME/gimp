@@ -1,9 +1,7 @@
 /Makefile
 /Makefile.in
 /gimp-2.99.1
-/gimp-3.*.1
 /gimprc-2.99.5
-/gimprc-3.*.5
-/gimptool-3.0.1
+/gimptool-2.99.1
 /Wilber.xcf
 /Wilber_Construction_Kit.xcf
