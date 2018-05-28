@@ -951,8 +951,8 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
   gdouble        value_y = 0.0;
 
   g_return_if_fail (sevent != NULL);
-  g_return_if_fail (GTK_IS_ADJUSTMENT (hadj));
-  g_return_if_fail (GTK_IS_ADJUSTMENT (vadj));
+  g_return_if_fail (hadj == NULL || GTK_IS_ADJUSTMENT (hadj));
+  g_return_if_fail (vadj == NULL || GTK_IS_ADJUSTMENT (vadj));
 
   if (sevent->state & GDK_SHIFT_MASK)
     {
@@ -965,8 +965,15 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
       adj_y = vadj;
     }
 
-  scroll_unit_x = pow (gtk_adjustment_get_page_size (adj_x), 2.0 / 3.0);
-  scroll_unit_y = pow (gtk_adjustment_get_page_size (adj_y), 2.0 / 3.0);
+  if (adj_x)
+    scroll_unit_x = pow (gtk_adjustment_get_page_size (adj_x), 2.0 / 3.0);
+  else
+    scroll_unit_x = 1.0;
+
+  if (adj_y)
+    scroll_unit_y = pow (gtk_adjustment_get_page_size (adj_y), 2.0 / 3.0);
+  else
+    scroll_unit_y = 1.0;
 
   switch (sevent->direction)
     {
@@ -992,17 +999,19 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
       value_y *= scroll_unit_y;
     }
 
-  value_x = CLAMP (value_x +
-                   gtk_adjustment_get_value (adj_x),
-                   gtk_adjustment_get_lower (adj_x),
-                   gtk_adjustment_get_upper (adj_x) -
-                   gtk_adjustment_get_page_size (adj_x));
+  if (adj_x)
+    value_x = CLAMP (value_x +
+                     gtk_adjustment_get_value (adj_x),
+                     gtk_adjustment_get_lower (adj_x),
+                     gtk_adjustment_get_upper (adj_x) -
+                     gtk_adjustment_get_page_size (adj_x));
 
-  value_y = CLAMP (value_y +
-                   gtk_adjustment_get_value (adj_y),
-                   gtk_adjustment_get_lower (adj_y),
-                   gtk_adjustment_get_upper (adj_y) -
-                   gtk_adjustment_get_page_size (adj_y));
+  if (adj_y)
+    value_y = CLAMP (value_y +
+                     gtk_adjustment_get_value (adj_y),
+                     gtk_adjustment_get_lower (adj_y),
+                     gtk_adjustment_get_upper (adj_y) -
+                     gtk_adjustment_get_page_size (adj_y));
 
   if (sevent->state & GDK_SHIFT_MASK)
     {
