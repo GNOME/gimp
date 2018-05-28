@@ -174,8 +174,10 @@ gimp_critical_dialog_init (GimpCriticalDialog *dialog)
 
   buffer = gtk_text_buffer_new (NULL);
   version = gimp_version (TRUE, FALSE);
-  gtk_text_buffer_set_text (buffer, version, -1);
+  text = g_strdup_printf ("```\n%s\n```", version);
+  gtk_text_buffer_set_text (buffer, text, -1);
   g_free (version);
+  g_free (text);
 
   dialog->details = gtk_text_view_new_with_buffer (buffer);
   g_object_unref (buffer);
@@ -470,7 +472,7 @@ gimp_critical_dialog_add (GtkWidget   *dialog,
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (critical->details));
   gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
   if (trace)
-    text = g_strdup_printf ("\n> %s\n\nStack trace:\n%s", message, trace);
+    text = g_strdup_printf ("\n> %s\n\nStack trace:\n```\n%s\n```", message, trace);
   else
     text = g_strdup_printf ("\n> %s\n", message);
   gtk_text_buffer_insert (buffer, &end, text, -1);
