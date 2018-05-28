@@ -39,8 +39,6 @@
 #include "gimppickbutton-private.h"
 #include "gimpwidgetsutils.h"
 
-#include "cursors/gimp-color-picker-cursors.c"
-
 #include "libgimp/libgimp-intl.h"
 
 

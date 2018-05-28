@@ -456,10 +456,14 @@ libappwidgets_a_sources = \
 	gimpwindowstrategy.c		\
 	gimpwindowstrategy.h
 
-libappwidgets_a_built_sources = widgets-enums.c
+libappwidgets_a_built_sources = \
+	gimp-tool-cursors.c	\
+	gimp-tool-cursors.h	\
+	widgets-enums.c
 
 libappwidgets_a_SOURCES = \
-	$(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
+	$(libappwidgets_a_built_sources)	\
+	$(libappwidgets_a_sources)
 
 
 #
@@ -492,3 +496,14 @@ $(srcdir)/widgets-enums.c: xgen-wec
 		touch $@ 2> /dev/null \
 		|| true; \
 	fi
+
+
+gimp-tool-cursors.h: $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/cursors --generate-header \
+	  --target=$@ $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml
+
+gimp-tool-cursors.c: gimp-tool-cursors.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/cursors --generate-source \
+	  --target=$@ $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml

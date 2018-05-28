@@ -6,3 +6,5 @@
 /libappwidgets.a
 /libappwidgets.la
 /xgen-wec
+/gimp-tool-cursors.c
+/gimp-tool-cursors.h

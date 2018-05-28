@@ -1,8 +1,4 @@
 /Makefile
 /Makefile.in
-/.xvpics
-/.thumbnails
-/gimp-color-picker-cursors.c
 /gimp-color-picker-cursors.gresource.xml
-/gimp-tool-cursors.c
 /gimp-tool-cursors.gresource.xml

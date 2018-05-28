@@ -194,8 +194,10 @@ libgimpwidgets_sources = \
 	gimpzoommodel.h
 
 libgimpwidgets_built_sources = \
-	gimpwidgetsenums.c	\
-	gimpwidgetsmarshal.c	\
+	gimp-color-picker-cursors.c	\
+	gimp-color-picker-cursors.h	\
+	gimpwidgetsenums.c		\
+	gimpwidgetsmarshal.c		\
 	gimpwidgetsmarshal.h
 
 libgimpwidgets_extra_sources = gimpwidgetsmarshal.list
@@ -344,6 +346,16 @@ gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
 	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header --body >> xgen-wmc \
 	&& cp xgen-wmc $(@F) \
 	&& rm -f xgen-wmc xgen-wmc~
+
+gimp-color-picker-cursors.h: $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/cursors --generate-header \
+	  --target=$@ $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
+
+gimp-color-picker-cursors.c: gimp-color-picker-cursors.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/cursors --generate-source \
+	  --target=$@ $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
 
 
 #

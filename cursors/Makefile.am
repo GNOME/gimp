@@ -87,10 +87,6 @@ EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf
 
-noinst_DATA = \
-	gimp-tool-cursors.c			\
-	gimp-color-picker-cursors.c
-
 CLEANFILES = \
 	$(noinst_DATA)				\
 	gimp-tool-cursors.gresource.xml		\
@@ -108,12 +104,6 @@ gimp-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-tool-cursors.c: gimp-tool-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ gimp-tool-cursors.gresource.xml
-
-
 gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
@@ -129,8 +119,3 @@ gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	  done; \
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
-
-gimp-color-picker-cursors.c: gimp-color-picker-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ gimp-color-picker-cursors.gresource.xml

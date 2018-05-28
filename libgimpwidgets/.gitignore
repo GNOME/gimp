@@ -13,3 +13,5 @@
 /*.trs
 /*.log
 /xgen-wec
+/gimp-color-picker-cursors.c
+/gimp-color-picker-cursors.h
