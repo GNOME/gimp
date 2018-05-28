@@ -24,6 +24,7 @@ desktop_conf.set('GIMP_APP_VERSION', app_version)
 desktop_conf.set('GIMP_COMMAND', gimp_command)
 desktop_conf.set('GIMP_VERSION', gimp_version)
 desktop_conf.set('MIME_TYPES', ';'.join(MIMEtypes))
+desktop_conf.set('BUG_REPORT_URL', bug_report_url)
 
 desktopfilein = configure_file(
   input : desktopfilename+'.in.in',
@@ -48,8 +49,13 @@ desktopfile = custom_target(desktopfilename,
 )
 
 appdatafilename = 'org.gimp.GIMP.appdata.xml'
+appdatafilein = configure_file(
+  input : appdatafilename+'.in.in',
+  output: appdatafilename+'.in',
+  configuration: desktop_conf,
+)
 appdatafile = custom_target(appdatafilename,
-  input : [ appdatafilename+'.in.in', ],
+  input : [ appdatafilein, ],
   output: [ appdatafilename, ],
   command: [
     intltool_merge,
@@ -65,8 +71,13 @@ appdatafile = custom_target(appdatafilename,
 )
 
 metainfofilename = 'gimp-data-extras.metainfo.xml'
+metainfofilein = configure_file(
+  input : metainfofilename+'.in.in',
+  output: metainfofilename+'.in',
+  configuration: desktop_conf,
+)
 metainfofile = custom_target(metainfofilename,
-  input : [ metainfofilename+'.in', ],
+  input : [ metainfofilein, ],
   output: [ metainfofilename, ],
   command: [
     intltool_merge,
