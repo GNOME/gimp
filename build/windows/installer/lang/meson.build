@@ -15,6 +15,7 @@ isl_input = custom_target('setup.isl',
 
 languages = [
   [ 'ca',   '[ca]',     'WINDOWS-1252', ],
+  [ 'cs',   '[cs]',     'WINDOWS-1250', ],
   [ 'da',   '[da]',     'WINDOWS-1252', ],
   [ 'de',   '[de]',     'WINDOWS-1252', ],
   [ 'el',   '[el]',     'WINDOWS-1253', ],
