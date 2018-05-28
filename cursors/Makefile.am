@@ -87,10 +87,11 @@ EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf
 
-CLEANFILES = \
-	$(noinst_DATA)				\
+noinst_DATA = \
 	gimp-tool-cursors.gresource.xml		\
 	gimp-color-picker-cursors.gresource.xml
+
+CLEANFILES = $(noinst_DATA)
 
 
 gimp-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
