@@ -1,6 +1,7 @@
 /* GIMP theme css file */
 
 * {
+    -gtk-icon-style:                   symbolic;
     -GimpDockWindow-default-height:    300;
     -GimpMenuDock-minimal-width:       200;
     -GimpDockWindow-menu-preview-size: button;
