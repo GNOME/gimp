@@ -161,7 +161,7 @@ screenshot_win32_get_capabilities (void)
 
 GimpPDBStatusType
 screenshot_win32_shoot (ScreenshotValues  *shootvals,
-                        GdkScreen         *screen,
+                        GdkMonitor        *monitor,
                         gint32            *image_ID,
                         GError           **error)
 {
@@ -200,7 +200,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
        * considering above comment. Just make so that it at least
        * compiles!
        */
-      profile = gimp_screen_get_color_profile (screen, shootvals->monitor);
+      profile = gimp_monitor_get_color_profile (monitor);
 
       if (profile)
         {
