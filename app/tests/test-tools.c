@@ -213,6 +213,8 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   g_assert (button_event_type == GDK_BUTTON_PRESS ||
             button_event_type == GDK_BUTTON_RELEASE);
 
+  gdk_event_set_device (event, gdk_seat_get_pointer (seat));
+
   event->button.window     = g_object_ref (window);
   event->button.send_event = TRUE;
   event->button.time       = gtk_get_current_event_time ();
@@ -221,7 +223,6 @@ gimp_test_synthesize_tool_button_event (GimpDisplayShell *shell,
   event->button.axes       = NULL;
   event->button.state      = 0;
   event->button.button     = button;
-  event->button.device     = gdk_seat_get_pointer (seat);
   event->button.x_root     = -1;
   event->button.y_root     = -1;
 
@@ -242,6 +243,8 @@ gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
   GdkDisplay *display = gdk_window_get_display (window);
   GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
+  gdk_event_set_device (event, gdk_seat_get_pointer (seat));
+
   event->motion.window     = g_object_ref (window);
   event->motion.send_event = TRUE;
   event->motion.time       = gtk_get_current_event_time ();
@@ -250,7 +253,6 @@ gimp_test_synthesize_tool_motion_event (GimpDisplayShell *shell,
   event->motion.axes       = NULL;
   event->motion.state      = GDK_BUTTON1_MASK | modifiers;
   event->motion.is_hint    = FALSE;
-  event->motion.device     = gdk_seat_get_pointer (seat);
   event->motion.x_root     = -1;
   event->motion.y_root     = -1;
 
@@ -269,9 +271,13 @@ gimp_test_synthesize_tool_crossing_event (GimpDisplayShell *shell,
 {
   GdkEvent   *event   = gdk_event_new (crossing_event_type);
   GdkWindow  *window  = gtk_widget_get_window (GTK_WIDGET (shell->canvas));
+  GdkDisplay *display = gdk_window_get_display (window);
+  GdkSeat    *seat    = gdk_display_get_default_seat (display);
 
   g_assert (crossing_event_type == GDK_ENTER_NOTIFY ||
             crossing_event_type == GDK_LEAVE_NOTIFY);
+
+  gdk_event_set_device (event, gdk_seat_get_pointer (seat));
 
   event->crossing.window     = g_object_ref (window);
   event->crossing.send_event = TRUE;
