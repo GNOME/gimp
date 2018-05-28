@@ -52,8 +52,8 @@ static GtkWidget *pos_label;       /* XY pos marker */
 static void       gfig_preview_realize  (GtkWidget *widget);
 static gboolean   gfig_preview_events   (GtkWidget *widget,
                                          GdkEvent  *event);
-static gboolean   gfig_preview_expose   (GtkWidget *widget,
-                                         GdkEvent  *event);
+static gboolean   gfig_preview_draw     (GtkWidget *widget,
+                                         cairo_t   *cr);
 
 static gint       gfig_invscale_x        (gint      x);
 static gint       gfig_invscale_y        (gint      y);
@@ -84,8 +84,8 @@ make_preview (void)
                     G_CALLBACK (gfig_preview_events),
                     NULL);
 
-  g_signal_connect_after (gfig_context->preview , "expose-event",
-                          G_CALLBACK (gfig_preview_expose),
+  g_signal_connect_after (gfig_context->preview , "draw",
+                          G_CALLBACK (gfig_preview_draw),
                           NULL);
 
   gtk_widget_set_size_request (gfig_context->preview,
@@ -158,11 +158,9 @@ draw_background (cairo_t  *cr)
 }
 
 static gboolean
-gfig_preview_expose (GtkWidget *widget,
-                     GdkEvent  *event)
+gfig_preview_draw (GtkWidget *widget,
+                   cairo_t   *cr)
 {
-  cairo_t *cr = gdk_cairo_create (event->expose.window);
-
   if (gfig_context->show_background)
     draw_background (cr);
 
@@ -176,7 +174,6 @@ gfig_preview_expose (GtkWidget *widget,
       g_list_free (single);
     }
 
-  cairo_destroy (cr);
   return FALSE;
 }
 
@@ -191,9 +188,6 @@ gfig_preview_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      break;
-
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
       point.x = bevent->x;
