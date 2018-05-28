@@ -23,7 +23,7 @@
 
 #include "gimpcursor.h"
 
-#include "cursors/gimp-tool-cursors.c"
+#include "cursors/gimp-tool-cursors.h"
 
 
 #define cursor_default_x_hot 10

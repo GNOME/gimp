@@ -27,7 +27,7 @@
 #include "gimppickbutton-private.h"
 #include "gimppickbutton-quartz.h"
 
-#include "cursors/gimp-color-picker-cursors.c"
+#include "cursors/gimp-color-picker-cursors.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>

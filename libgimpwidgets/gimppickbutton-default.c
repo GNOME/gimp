@@ -39,7 +39,7 @@
 #include "gimppickbutton-private.h"
 #include "gimpwidgetsutils.h"
 
-#include "cursors/gimp-color-picker-cursors.c"
+#include "cursors/gimp-color-picker-cursors.h"
 
 #include "libgimp/libgimp-intl.h"
 

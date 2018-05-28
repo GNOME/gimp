@@ -45,7 +45,9 @@ EXTRA_DIST = \
 
 noinst_DATA = \
 	gimp-core-pixbufs.c	\
-	gimp-icon-pixbufs.c
+	gimp-core-pixbufs.h	\
+	gimp-icon-pixbufs.c	\
+	gimp-icon-pixbufs.h
 
 CLEANFILES = \
 	$(noinst_DATA)			\
@@ -69,6 +71,11 @@ gimp-core-pixbufs.c: gimp-core-pixbufs.gresource.xml
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-core-pixbufs.gresource.xml
 
+gimp-core-pixbufs.h: gimp-core-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-header \
+	  --target=$@ gimp-core-pixbufs.gresource.xml
+
 
 gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
@@ -81,7 +88,12 @@ gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-icon-pixbufs.h: gimp-icon-pixbufs.gresource.xml
+gimp-icon-pixbufs.c: gimp-icon-pixbufs.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gimp-icon-pixbufs.gresource.xml
+
+gimp-icon-pixbufs.h: gimp-icon-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-header \
 	  --target=$@ gimp-icon-pixbufs.gresource.xml
