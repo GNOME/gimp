@@ -81,8 +81,6 @@ struct _GimpPreviewPrivate
 #define GET_PRIVATE(obj) (((GimpPreview *) (obj))->priv)
 
 
-static void      gimp_preview_class_init          (GimpPreviewClass *klass);
-static void      gimp_preview_init                (GimpPreview      *preview);
 static void      gimp_preview_dispose             (GObject          *object);
 static void      gimp_preview_get_property        (GObject          *object,
                                                    guint             property_id,
@@ -128,41 +126,12 @@ static void      gimp_preview_real_untransform    (GimpPreview      *preview,
                                                    gint             *dest_y);
 
 
-/* FIXME G_DEFINE_TYPE */
+G_DEFINE_ABSTRACT_TYPE (GimpPreview, gimp_preview, GTK_TYPE_BOX)
+
+#define parent_class gimp_preview_parent_class
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
-static GtkBoxClass *parent_class = NULL;
-
-
-GType
-gimp_preview_get_type (void)
-{
-  static GType preview_type = 0;
-
-  if (! preview_type)
-    {
-      const GTypeInfo preview_info =
-      {
-        sizeof (GimpPreviewClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_preview_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPreview),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_preview_init,
-      };
-
-      preview_type = g_type_register_static (GTK_TYPE_BOX,
-                                             "GimpPreview",
-                                             &preview_info,
-                                             G_TYPE_FLAG_ABSTRACT);
-    }
-
-  return preview_type;
-}
 
 static void
 gimp_preview_class_init (GimpPreviewClass *klass)

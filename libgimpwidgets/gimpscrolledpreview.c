@@ -66,8 +66,6 @@ struct _GimpScrolledPreviewPrivate
 #define GET_PRIVATE(obj) (((GimpScrolledPreview *) (obj))->priv)
 
 
-static void      gimp_scrolled_preview_class_init          (GimpScrolledPreviewClass *klass);
-static void      gimp_scrolled_preview_init                (GimpScrolledPreview      *preview);
 static void      gimp_scrolled_preview_dispose             (GObject                  *object);
 
 static void      gimp_scrolled_preview_area_realize        (GtkWidget                *widget,
@@ -100,37 +98,11 @@ static gboolean  gimp_scrolled_preview_nav_popup_draw      (GtkWidget           
 static void      gimp_scrolled_preview_set_cursor          (GimpPreview              *preview);
 
 
-static GimpPreviewClass *parent_class = NULL;
+G_DEFINE_ABSTRACT_TYPE (GimpScrolledPreview, gimp_scrolled_preview,
+                        GIMP_TYPE_PREVIEW)
 
+#define parent_class gimp_scrolled_preview_parent_class
 
-GType
-gimp_scrolled_preview_get_type (void)
-{
-  static GType preview_type = 0;
-
-  if (! preview_type)
-    {
-      const GTypeInfo preview_info =
-      {
-        sizeof (GimpScrolledPreviewClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_scrolled_preview_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpScrolledPreview),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_scrolled_preview_init,
-      };
-
-      preview_type = g_type_register_static (GIMP_TYPE_PREVIEW,
-                                             "GimpScrolledPreview",
-                                             &preview_info,
-                                             G_TYPE_FLAG_ABSTRACT);
-    }
-
-  return preview_type;
-}
 
 static void
 gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
