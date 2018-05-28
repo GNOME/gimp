@@ -77,21 +77,21 @@ gimp_test_utils_set_env_to_subpath (const gchar *root_env_var,
 
 
 /**
- * gimp_test_utils_set_gimp2_directory:
+ * gimp_test_utils_set_gimp3_directory:
  * @root_env_var: Either "GIMP_TESTING_ABS_TOP_SRCDIR" or
  *                "GIMP_TESTING_ABS_TOP_BUILDDIR"
  * @subdir:       Subdir, may be %NULL
  *
- * Sets GIMP2_DIRECTORY to the source dir @root_env_var/@subdir. The
+ * Sets GIMP3_DIRECTORY to the source dir @root_env_var/@subdir. The
  * environment variables is set up by the test runner, see Makefile.am
  **/
 void
-gimp_test_utils_set_gimp2_directory (const gchar *root_env_var,
+gimp_test_utils_set_gimp3_directory (const gchar *root_env_var,
                                      const gchar *subdir)
 {
   gimp_test_utils_set_env_to_subpath (root_env_var,
                                       subdir,
-                                      "GIMP2_DIRECTORY" /*target_env_var*/);
+                                      "GIMP3_DIRECTORY" /*target_env_var*/);
 }
 
 /**

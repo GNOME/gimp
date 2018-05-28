@@ -75,6 +75,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gui_init				\
+	-Wl,-u,$(SYMPREFIX)gimp_tool_cursors_get_resource	\
 	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
 
 # Note that we have some duplicate entries here too to work around

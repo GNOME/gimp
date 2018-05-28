@@ -988,7 +988,7 @@ main (int    argc,
 
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
 
   /* We share the same application instance across all tests. We need
@@ -1003,7 +1003,7 @@ main (int    argc,
   ADD_TEST (write_and_read_gimp_2_8_format);
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
                                        "app/tests/gimpdir-output");
 
   /* Run the tests */

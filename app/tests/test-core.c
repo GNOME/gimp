@@ -267,7 +267,7 @@ main (int    argc,
 
   g_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
 
   /* We share the same application instance across all tests */
@@ -283,7 +283,7 @@ main (int    argc,
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
                                        "app/tests/gimpdir-output");
 
   /* Exit so we don't break script-fu plug-in wire */

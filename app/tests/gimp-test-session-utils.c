@@ -175,7 +175,7 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   gchar             *dockrc_filename         = NULL;
 
   /* Make sure to run this before we use any GIMP functions */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
   gimp_test_utils_setup_menus_dir ();
 
@@ -209,7 +209,7 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
    * dir. There is a hook in Makefile.am that makes sure the output
    * dir exists
    */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
                                        "app/tests/gimpdir-output");
   /* Use normal output names */
   g_unsetenv ("GIMP_TESTING_SESSIONRC_NAME");

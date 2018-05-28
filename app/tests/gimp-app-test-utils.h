@@ -22,7 +22,7 @@
 void            gimp_test_utils_set_env_to_subpath   (const gchar *root_env_var,
                                                       const gchar *subdir,
                                                       const gchar *target_env_var);
-void            gimp_test_utils_set_gimp2_directory  (const gchar *root_env_var,
+void            gimp_test_utils_set_gimp3_directory  (const gchar *root_env_var,
                                                       const gchar *subdir);
 void            gimp_test_utils_setup_menus_dir      (void);
 void            gimp_test_utils_create_image         (Gimp        *gimp,
