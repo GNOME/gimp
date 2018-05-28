@@ -15,6 +15,11 @@ Core:
   - Remove gimp_display_shell_draw_background() and all clipping hacks
     for drawing the canvas background. This optimizes away one entire
     step of drawing of image size, for each expose.
+  - Font loading does not block startup anymore. Only consequence is
+    that the Text tool may not be usable immediately if fonts are not
+    fully loaded yet (and will output an appropriate error if you do
+    so). All non-text related activities can be performed right away.
+  - Change of the URL from bugzilla to gitlab where appropriate.
 
 Build:
 
@@ -22,9 +27,17 @@ Build:
     in HiDPI-aware mode.
   - Put back compatibility DLLs for really old plugins.
   
+Plug-ins:
+
+  - gimptool-2.0 binary now accepts source files with non-standard
+    extensions if it can try to guess appropriate language from the
+    compiler being used. It will also properly quote arguments for shell
+    usage.
+
 Translations:
 
-  - Updated translations: Czech, Finnish, Italian, Romanian, Spanish.
+  - Updated translations: Czech, Finnish, Italian, Polish, Romanian,
+    Spanish.
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
