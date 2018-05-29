@@ -535,6 +535,9 @@ _gp_config_read (GIOChannel      *channel,
   if (! _gimp_wire_read_int32 (channel,
                                &config->timestamp, 1, user_data))
     goto cleanup;
+  if (! _gimp_wire_read_string (channel,
+                                &config->icon_theme_dir, 1, user_data))
+    goto cleanup;
 
   msg->data = config;
   return;
@@ -543,6 +546,7 @@ _gp_config_read (GIOChannel      *channel,
   g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
+  g_free (config->icon_theme_dir);
   g_slice_free (GPConfig, config);
 }
 
@@ -619,6 +623,9 @@ _gp_config_write (GIOChannel      *channel,
   if (! _gimp_wire_write_int32 (channel,
                                 (const guint32 *) &config->timestamp, 1,
                                 user_data))
+    return;
+  if (! _gimp_wire_write_string (channel,
+                                 &config->icon_theme_dir, 1, user_data))
     return;
 }
 

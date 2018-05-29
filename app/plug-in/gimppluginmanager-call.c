@@ -174,6 +174,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       GPProcRun          proc_run;
       gint               display_ID;
       GObject           *monitor;
+      GFile             *icon_theme_dir;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
         {
@@ -193,6 +194,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
         }
 
       display_ID = display ? gimp_get_display_ID (manager->gimp, display) : -1;
+
+      icon_theme_dir = gimp_get_icon_theme_dir (manager->gimp);
 
       config.tile_width       = GIMP_PLUG_IN_TILE_WIDTH;
       config.tile_height      = GIMP_PLUG_IN_TILE_HEIGHT;
@@ -216,6 +219,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                                        &monitor,
                                                        &config.monitor_number);
       config.timestamp        = gimp_get_user_time (manager->gimp);
+      config.icon_theme_dir   = icon_theme_dir ?
+                                  g_file_get_path (icon_theme_dir) :
+                                  NULL;
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);
@@ -232,6 +238,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
                                             name);
 
           g_free (config.display_name);
+          g_free (config.icon_theme_dir);
           g_free (proc_run.params);
 
           g_object_unref (plug_in);
@@ -244,6 +251,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
         }
 
       g_free (config.display_name);
+      g_free (config.icon_theme_dir);
       g_free (proc_run.params);
 
       /* If this is an extension,

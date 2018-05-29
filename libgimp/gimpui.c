@@ -162,9 +162,12 @@ gimp_ui_init (const gchar *prog_name,
 
   gdk_set_program_class (gimp_wm_class ());
 
-  file = g_file_new_for_path (gimp_get_icon_theme_dir ());
-  gimp_icons_set_icon_theme (file);
-  g_object_unref (file);
+  if (gimp_icon_theme_dir ())
+    {
+      file = g_file_new_for_path (gimp_icon_theme_dir ());
+      gimp_icons_set_icon_theme (file);
+      g_object_unref (file);
+    }
 
   gimp_widgets_init (gimp_ui_help_func,
                      gimp_context_get_foreground,

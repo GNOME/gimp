@@ -79,6 +79,7 @@ struct _GPConfig
   gchar   *display_name;
   gint32   monitor_number;
   guint32  timestamp;
+  gchar   *icon_theme_dir;
 };
 
 struct _GPTileReq

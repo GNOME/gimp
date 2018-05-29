@@ -45,6 +45,7 @@ gimp_wm_class
 gimp_display_name
 gimp_monitor_number
 gimp_user_time
+gimp_icon_theme_dir
 gimp_get_progname
 gimp_extension_enable
 gimp_extension_ack
