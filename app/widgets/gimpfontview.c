@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
@@ -100,6 +101,11 @@ gimp_font_view_new (GimpViewType     view_type,
 
   gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
                                        FALSE);
+
+  gimp_container_editor_bind_to_async_set (
+    editor,
+    context->gimp->fonts_async_set,
+    _("Loading fonts (this may take a while...)"));
 
   font_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "fonts",

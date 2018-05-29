@@ -29,6 +29,7 @@
 #include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimptoolinfo.h"
 #include "core/gimpviewable.h"
 
 #include "text/gimptext.h"
@@ -515,6 +516,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GObject         *config    = G_OBJECT (tool_options);
   GimpTextOptions *options   = GIMP_TEXT_OPTIONS (tool_options);
   GtkWidget       *main_vbox = gimp_tool_options_gui (tool_options);
+  GtkWidget       *options_vbox;
   GtkWidget       *table;
   GtkWidget       *vbox;
   GtkWidget       *hbox;
@@ -526,16 +528,35 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkSizeGroup    *size_group;
   gint             row = 0;
 
+  box = gimp_busy_box_new (_("Loading fonts (this may take a while...)"));
+  gtk_container_set_border_width (GTK_CONTAINER (box), 8);
+  gtk_box_pack_start (GTK_BOX (main_vbox), box, FALSE, FALSE, 0);
+
+  g_object_bind_property (
+    tool_options->tool_info->gimp->fonts_async_set, "empty",
+    box,                                            "visible",
+    G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
+  options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL,
+                              gtk_box_get_spacing (GTK_BOX (main_vbox)));
+  gtk_box_pack_start (GTK_BOX (main_vbox), options_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (options_vbox);
+
+  g_object_bind_property (
+    tool_options->tool_info->gimp->fonts_async_set, "empty",
+    options_vbox,                                   "sensitive",
+    G_BINDING_SYNC_CREATE);
+
   hbox = gimp_prop_font_box_new (NULL, GIMP_CONTEXT (tool_options),
                                  _("Font"), 2,
                                  "font-view-type", "font-view-size");
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (options_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (options_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   entry = gimp_prop_size_entry_new (config,
@@ -548,7 +569,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   options->size_entry = entry;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (options_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   button = gimp_prop_check_button_new (config, "use-editor", NULL);
@@ -562,7 +583,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   table = gtk_table_new (6, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (options_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   row = 0;
@@ -622,7 +643,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
     GtkWidget *label;
 
     vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-    gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (options_vbox), vbox, FALSE, FALSE, 0);
     gtk_widget_show (vbox);
 
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
