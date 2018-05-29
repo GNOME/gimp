@@ -89,14 +89,6 @@ static void       gimp_dockable_get_property         (GObject        *object,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
 
-static void       gimp_dockable_get_preferred_width  (GtkWidget      *widget,
-                                                      gint           *minimum_width,
-                                                      gint           *natural_width);
-static void       gimp_dockable_get_preferred_height (GtkWidget      *widget,
-                                                      gint           *minimum_height,
-                                                      gint           *natural_height);
-static void       gimp_dockable_size_allocate        (GtkWidget      *widget,
-                                                      GtkAllocation  *allocation);
 static void       gimp_dockable_drag_leave           (GtkWidget      *widget,
                                                       GdkDragContext *context,
                                                       guint           time);
@@ -142,20 +134,17 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->dispose              = gimp_dockable_dispose;
-  object_class->set_property         = gimp_dockable_set_property;
-  object_class->get_property         = gimp_dockable_get_property;
+  object_class->dispose       = gimp_dockable_dispose;
+  object_class->set_property  = gimp_dockable_set_property;
+  object_class->get_property  = gimp_dockable_get_property;
 
-  widget_class->get_preferred_width  = gimp_dockable_get_preferred_width;
-  widget_class->get_preferred_height = gimp_dockable_get_preferred_height;
-  widget_class->size_allocate        = gimp_dockable_size_allocate;
-  widget_class->style_updated        = gimp_dockable_style_updated;
-  widget_class->drag_leave           = gimp_dockable_drag_leave;
-  widget_class->drag_motion          = gimp_dockable_drag_motion;
-  widget_class->drag_drop            = gimp_dockable_drag_drop;
+  widget_class->style_updated = gimp_dockable_style_updated;
+  widget_class->drag_leave    = gimp_dockable_drag_leave;
+  widget_class->drag_motion   = gimp_dockable_drag_motion;
+  widget_class->drag_drop     = gimp_dockable_drag_drop;
 
-  container_class->add               = gimp_dockable_add;
-  container_class->child_type        = gimp_dockable_child_type;
+  container_class->add        = gimp_dockable_add;
+  container_class->child_type = gimp_dockable_child_type;
 
   gtk_container_class_handle_border_width (container_class);
 
@@ -271,71 +260,6 @@ gimp_dockable_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-    }
-}
-
-static void
-gimp_dockable_size_request (GtkWidget      *widget,
-                            GtkRequisition *requisition)
-{
-  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
-
-  requisition->width  = 0;
-  requisition->height = 0;
-
-  if (child && gtk_widget_get_visible (child))
-    {
-      GtkRequisition child_requisition;
-
-      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
-
-      requisition->width  += child_requisition.width;
-      requisition->height += child_requisition.height;
-    }
-}
-
-static void
-gimp_dockable_get_preferred_width (GtkWidget *widget,
-                                   gint      *minimum_width,
-                                   gint      *natural_width)
-{
-  GtkRequisition requisition;
-
-  gimp_dockable_size_request (widget, &requisition);
-
-  *minimum_width = *natural_width = requisition.width;
-}
-
-static void
-gimp_dockable_get_preferred_height (GtkWidget *widget,
-                                    gint      *minimum_height,
-                                    gint      *natural_height)
-{
-  GtkRequisition requisition;
-
-  gimp_dockable_size_request (widget, &requisition);
-
-  *minimum_height = *natural_height = requisition.height;
-}
-
-static void
-gimp_dockable_size_allocate (GtkWidget     *widget,
-                             GtkAllocation *allocation)
-{
-  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
-
-  gtk_widget_set_allocation (widget, allocation);
-
-  if (child && gtk_widget_get_visible (child))
-    {
-      GtkAllocation child_allocation;
-
-      child_allocation.x      = allocation->x;
-      child_allocation.y      = allocation->y;
-      child_allocation.width  = allocation->width;
-      child_allocation.height = allocation->height;
-
-      gtk_widget_size_allocate (child, &child_allocation);
     }
 }
 
