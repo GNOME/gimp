@@ -24,6 +24,7 @@
 #include <gegl.h>
 
 #include "widgets-types.h"
+#include "gimpwidgets-utils.h"
 
 #include "core/gimpmarshal.h"
 
