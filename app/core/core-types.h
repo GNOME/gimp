@@ -171,6 +171,7 @@ typedef struct _GimpMandala         GimpMandala;
 /*  misc objects  */
 
 typedef struct _GimpAsync           GimpAsync;
+typedef struct _GimpAsyncSet        GimpAsyncSet;
 typedef struct _GimpBuffer          GimpBuffer;
 typedef struct _GimpDrawableFilter  GimpDrawableFilter;
 typedef struct _GimpEnvironTable    GimpEnvironTable;
