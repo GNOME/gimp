@@ -61,5 +61,9 @@ GtkSelectionMode gimp_container_editor_get_selection_mode (GimpContainerEditor *
 void             gimp_container_editor_set_selection_mode (GimpContainerEditor *editor,
                                                            GtkSelectionMode     mode);
 
+void             gimp_container_editor_bind_to_async_set  (GimpContainerEditor *editor,
+                                                           GimpAsyncSet        *async_set,
+                                                           const gchar         *message);
+
 
 #endif  /*  __GIMP_CONTAINER_EDITOR_H__  */
