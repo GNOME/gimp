@@ -681,9 +681,20 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
       info->p->width  > 0 &&
       info->p->height > 0)
     {
+      /*  This used to call gtk_window_set_default_size() which worked
+       *  fine in gtk2 and should continue to work, but doesn't for
+       *  dock windows. gtk_window_resize() seems to work fine for all
+       *  windows. Leave this comment here until we figured what's
+       *  going on...
+       */
+#if 1
+      gtk_window_resize (GTK_WINDOW (info->p->widget),
+                         info->p->width, info->p->height);
+#else
       gtk_window_set_default_size (GTK_WINDOW (info->p->widget),
                                    info->p->width, info->p->height);
-    }
+#endif
+   }
 
   gtk_window_get_size (GTK_WINDOW (info->p->widget), &width, &height);
 
