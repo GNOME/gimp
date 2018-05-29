@@ -129,7 +129,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gimp_parallel_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_parallel_exit
+	-Wl,-u,$(SYMPREFIX)gimp_uncancelable_waitable_new
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a						\
