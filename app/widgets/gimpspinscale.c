@@ -304,7 +304,6 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
   /* Just increase this a bit to make the clickable area larger */
   *minimum_height *= 1.2;
   *natural_height *= 1.2;
-  return;
 }
 
 static void
