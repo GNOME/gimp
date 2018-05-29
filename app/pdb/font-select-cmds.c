@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
+#include "text/gimp-fonts.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -56,6 +57,7 @@ fonts_popup_invoker (GimpProcedure         *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
+          ! gimp_fonts_wait (gimp, error)                        ||
           ! gimp_pdb_dialog_new (gimp, context, progress, gimp->fonts,
                                  popup_title, font_callback, initial_font,
                                  NULL))
@@ -110,6 +112,7 @@ fonts_set_popup_invoker (GimpProcedure         *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
+          ! gimp_fonts_wait (gimp, error)                        ||
           ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
                                  NULL))
         success = FALSE;

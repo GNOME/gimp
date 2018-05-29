@@ -39,7 +39,6 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
-#include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -49,6 +48,7 @@
 #include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
 
+#include "gimp-fonts.h"
 #include "gimptext.h"
 #include "gimptextlayer.h"
 #include "gimptextlayer-transform.h"
@@ -629,14 +629,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
   item     = GIMP_ITEM (layer);
   image    = gimp_item_get_image (item);
 
-  if (! gimp_async_set_is_empty (image->gimp->fonts_async_set))
-    {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
-                            _("Fonts are still loading (this may take a while), "
-                              "text functionality is not available yet."));
-      return FALSE;
-    }
-  else if (gimp_container_is_empty (image->gimp->fonts))
+  gimp_fonts_wait (image->gimp, NULL);
+
+  if (gimp_container_is_empty (image->gimp->fonts))
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
                             _("Due to lack of any fonts, "

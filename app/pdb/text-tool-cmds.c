@@ -127,7 +127,8 @@ text_get_extents_fontname_invoker (GimpProcedure         *procedure,
     {
       gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-      success = text_get_extents (real_fontname, text,
+      success = text_get_extents (gimp,
+                                  real_fontname, text,
                                   &width, &height,
                                   &ascent, &descent);
 
@@ -234,7 +235,8 @@ text_get_extents_invoker (GimpProcedure         *procedure,
     {
       gchar *real_fontname = g_strdup_printf ("%s %d", family, (gint) size);
 
-      success = text_get_extents (real_fontname, text,
+      success = text_get_extents (gimp,
+                                  real_fontname, text,
                                   &width, &height,
                                   &ascent, &descent);
 

@@ -37,6 +37,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer-floating-selection.h"
 
+#include "gimp-fonts.h"
 #include "gimptext.h"
 #include "gimptext-compat.h"
 #include "gimptextlayer.h"
@@ -69,6 +70,9 @@ text_render (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (fontname != NULL, NULL);
   g_return_val_if_fail (text != NULL, NULL);
+
+  if (! gimp_fonts_wait (image->gimp, NULL))
+    return NULL;
 
   if (border < 0)
     border = 0;
@@ -133,7 +137,8 @@ text_render (GimpImage    *image,
 }
 
 gboolean
-text_get_extents (const gchar *fontname,
+text_get_extents (Gimp        *gimp,
+                  const gchar *fontname,
                   const gchar *text,
                   gint        *width,
                   gint        *height,
@@ -146,8 +151,12 @@ text_get_extents (const gchar *fontname,
   PangoFontMap         *fontmap;
   PangoRectangle        rect;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
+
+  if (! gimp_fonts_wait (gimp, NULL))
+    return FALSE;
 
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
   if (! fontmap)
