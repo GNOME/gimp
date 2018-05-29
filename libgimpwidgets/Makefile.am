@@ -76,6 +76,8 @@ lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
 libgimpwidgets_sources = \
 	gimpbrowser.c			\
 	gimpbrowser.h			\
+	gimpbusybox.c			\
+	gimpbusybox.h			\
 	gimpbutton.c			\
 	gimpbutton.h			\
 	gimpcairo-utils.c		\

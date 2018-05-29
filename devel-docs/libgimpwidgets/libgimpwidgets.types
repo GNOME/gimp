@@ -4,6 +4,7 @@
 #include <libgimpwidgets/gimpcontroller.h>
 
 gimp_browser_get_type
+gimp_busy_box_get_type
 gimp_button_get_type
 gimp_cell_renderer_color_get_type
 gimp_cell_renderer_toggle_get_type

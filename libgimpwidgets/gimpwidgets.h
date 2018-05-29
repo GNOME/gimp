@@ -27,6 +27,7 @@
 #include <libgimpwidgets/gimpwidgetstypes.h>
 
 #include <libgimpwidgets/gimpbrowser.h>
+#include <libgimpwidgets/gimpbusybox.h>
 #include <libgimpwidgets/gimpbutton.h>
 #include <libgimpwidgets/gimpcairo-utils.h>
 #include <libgimpwidgets/gimpcellrenderercolor.h>

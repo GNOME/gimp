@@ -9,6 +9,10 @@ EXPORTS
 	gimp_browser_new
 	gimp_browser_set_widget
 	gimp_browser_show_message
+	gimp_busy_box_get_message
+	gimp_busy_box_get_type
+	gimp_busy_box_new
+	gimp_busy_box_set_message
 	gimp_button_extended_clicked
 	gimp_button_get_type
 	gimp_button_new
