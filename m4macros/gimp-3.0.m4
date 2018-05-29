@@ -1,19 +1,19 @@
-# Configure paths for GIMP-2.0
+# Configure paths for GIMP-3.0
 # Manish Singh, Sven Neumann
 # Large parts shamelessly stolen from Owen Taylor
 
-dnl AM_PATH_GIMP_2_0([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
+dnl AM_PATH_GIMP_3_0([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for GIMP, and define GIMP_CFLAGS and GIMP_LIBS
 dnl
-AC_DEFUN([AM_PATH_GIMP_2_0],
+AC_DEFUN([AM_PATH_GIMP_3_0],
 [dnl 
 dnl Get the cflags and libraries from pkg-config
 dnl
 
 AC_ARG_ENABLE(gimptest, [  --disable-gimptest      do not try to compile and run a test GIMP program],, enable_gimptest=yes)
 
-  pkg_name=gimp-2.0
-  pkg_config_args="$pkg_name gimpui-2.0"
+  pkg_name=gimp-3.0
+  pkg_config_args="$pkg_name gimpui-3.0"
 
   no_gimp=""
 
@@ -31,7 +31,7 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      do not try to compile and run
     no_gimp=yes
   fi
 
-  min_gimp_version=ifelse([$1], ,2.0.0,$1)
+  min_gimp_version=ifelse([$1], ,3.0.0,$1)
   AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
 
   if test x$PKG_CONFIG != xno ; then
