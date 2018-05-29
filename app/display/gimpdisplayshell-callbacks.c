@@ -213,6 +213,9 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       /* Reset */
       shell->size_allocate_from_configure_event = FALSE;
     }
+
+  /* undo size request from gimp_display_shell_constructed() */
+  gtk_widget_set_size_request (widget, -1, -1);
 }
 
 gboolean
