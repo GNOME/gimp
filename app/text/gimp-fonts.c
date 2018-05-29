@@ -32,10 +32,13 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-gui.h"
 #include "core/gimp-parallel.h"
 #include "core/gimpasync.h"
 #include "core/gimpasyncset.h"
 #include "core/gimpcancelable.h"
+#include "core/gimpuncancelablewaitable.h"
+#include "core/gimpwaitable.h"
 
 #include "gimp-fonts.h"
 #include "gimpfontlist.h"
@@ -225,6 +228,28 @@ gimp_fonts_reset (Gimp *gimp)
 
   /* Reinit the library with defaults. */
   FcInitReinitialize ();
+}
+
+gboolean
+gimp_fonts_wait (Gimp    *gimp,
+                 GError **error)
+{
+  GimpWaitable *waitable;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_FONT_LIST (gimp->fonts), FALSE);
+  g_return_val_if_fail (GIMP_IS_ASYNC_SET (gimp->fonts_async_set), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  /* don't allow cancellation for now */
+  waitable = gimp_uncancelable_waitable_new (
+    GIMP_WAITABLE (gimp->fonts_async_set));
+
+  gimp_wait (gimp, waitable, _("Loading fonts (this may take a while...)"));
+
+  g_object_unref (waitable);
+
+  return TRUE;
 }
 
 static gboolean
