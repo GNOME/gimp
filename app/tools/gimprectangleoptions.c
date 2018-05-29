@@ -755,6 +755,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
                                                  const gchar  *y_property_name,
                                                  const gchar  *unit_property_name,
                                                  const gchar  *table_label,
+                                                 GtkSizeGroup *label_group,
                                                  GtkWidget   **entry)
 {
   GimpUnit       unit_value;
@@ -777,6 +778,8 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_widget_show (hbox);
 
   label = gtk_label_new (table_label);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_size_group_add_widget (label_group, label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -793,18 +796,17 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
 
   *entry = gimp_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
                                 SB_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_column_spacing (GTK_GRID (*entry), 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (*entry), FALSE);
-  gtk_box_pack_end (GTK_BOX (hbox), *entry, TRUE, TRUE, 0);
-  gtk_widget_show (*entry);
-
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (*entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
-  gtk_widget_show (spinbutton);
+  gtk_box_pack_start (GTK_BOX (hbox), *entry, FALSE, FALSE, 0);
+  gtk_widget_show (*entry);
 
   gimp_prop_coordinates_connect (config,
                                  x_property_name, y_property_name,
@@ -823,6 +825,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget                   *button;
   GtkWidget                   *combo;
   GtkWidget                   *frame;
+  GtkSizeGroup                *label_group;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
@@ -996,11 +999,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_list_free (children);
   }
 
+  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /* X, Y */
   frame = gimp_rectangle_options_prop_dimension_frame_new (config,
                                                            "x", "y",
                                                            "position-unit",
                                                            _("Position:"),
+                                                           label_group,
                                                            &private->position_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1010,9 +1016,12 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                            "width", "height",
                                                            "size-unit",
                                                            _("Size:"),
+                                                           label_group,
                                                            &private->size_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  g_object_unref (label_group);
 
   /*  the Highlight frame  */
   {
