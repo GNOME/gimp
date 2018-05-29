@@ -55,6 +55,7 @@ libexec_PROGRAMS = \
 	blinds \
 	blur \
 	border-average \
+	busy-dialog \
 	cartoon \
 	checkerboard \
 	cml-explorer \
@@ -267,6 +268,24 @@ border_average_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(border_average_RC)
+
+busy_dialog_SOURCES = \
+	busy-dialog.c
+
+busy_dialog_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(bust_dialog_RC)
 
 cartoon_SOURCES = \
 	cartoon.c

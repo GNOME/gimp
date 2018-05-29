@@ -4,6 +4,7 @@ animation_play_RC = animation-play.rc.o
 blinds_RC = blinds.rc.o
 blur_RC = blur.rc.o
 border_average_RC = border-average.rc.o
+busy_dialog_RC = bust-dialog.rc.o
 cartoon_RC = cartoon.rc.o
 checkerboard_RC = checkerboard.rc.o
 cml_explorer_RC = cml-explorer.rc.o
