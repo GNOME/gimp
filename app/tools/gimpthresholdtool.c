@@ -25,11 +25,15 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-gui.h"
 #include "core/gimpasync.h"
+#include "core/gimpcancelable.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimphistogram.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
+#include "core/gimptriviallycancelablewaitable.h"
 #include "core/gimpwaitable.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -399,22 +403,34 @@ static void
 gimp_threshold_tool_auto_clicked (GtkWidget         *button,
                                   GimpThresholdTool *t_tool)
 {
-  GimpHistogramChannel  channel;
-  gint                  n_bins;
-  gdouble               low;
+  GimpTool     *tool = GIMP_TOOL (t_tool);
+  GimpWaitable *waitable;
 
-  gimp_waitable_wait (GIMP_WAITABLE (t_tool->histogram_async));
+  waitable = gimp_trivially_cancelable_waitable_new (
+    GIMP_WAITABLE (t_tool->histogram_async));
 
-  g_object_get (GIMP_FILTER_TOOL (t_tool)->config,
-                "channel", &channel,
-                NULL);
+  gimp_wait (tool->tool_info->gimp, waitable, _("Calculating histogram..."));
 
-  n_bins = gimp_histogram_n_bins (t_tool->histogram);
+  g_object_unref (waitable);
 
-  low = gimp_histogram_get_threshold (t_tool->histogram,
-                                      channel,
-                                      0, n_bins - 1);
+  if (gimp_async_is_synced   (t_tool->histogram_async) &&
+      gimp_async_is_finished (t_tool->histogram_async))
+    {
+      GimpHistogramChannel channel;
+      gint                 n_bins;
+      gdouble              low;
 
-  gimp_histogram_view_set_range (t_tool->histogram_box->view,
-                                 low, n_bins - 1);
+      g_object_get (GIMP_FILTER_TOOL (t_tool)->config,
+                    "channel", &channel,
+                    NULL);
+
+      n_bins = gimp_histogram_n_bins (t_tool->histogram);
+
+      low = gimp_histogram_get_threshold (t_tool->histogram,
+                                          channel,
+                                          0, n_bins - 1);
+
+      gimp_histogram_view_set_range (t_tool->histogram_box->view,
+                                     low, n_bins - 1);
+    }
 }
