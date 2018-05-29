@@ -39,6 +39,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -628,7 +629,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   item     = GIMP_ITEM (layer);
   image    = gimp_item_get_image (item);
 
-  if (image->gimp->fonts_loading)
+  if (! gimp_async_set_is_empty (image->gimp->fonts_async_set))
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
                             _("Fonts are still loading (this may take a while), "
