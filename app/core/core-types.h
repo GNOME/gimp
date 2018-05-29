@@ -80,138 +80,138 @@
 
 /*  base classes  */
 
-typedef struct _GimpObject          GimpObject;
-typedef struct _GimpViewable        GimpViewable;
-typedef struct _GimpFilter          GimpFilter;
-typedef struct _GimpItem            GimpItem;
+typedef struct _GimpObject                      GimpObject;
+typedef struct _GimpViewable                    GimpViewable;
+typedef struct _GimpFilter                      GimpFilter;
+typedef struct _GimpItem                        GimpItem;
 
-typedef struct _Gimp                Gimp;
-typedef struct _GimpImage           GimpImage;
+typedef struct _Gimp                            Gimp;
+typedef struct _GimpImage                       GimpImage;
 
 
 /*  containers  */
 
-typedef struct _GimpContainer         GimpContainer;
-typedef struct _GimpList              GimpList;
-typedef struct _GimpDocumentList      GimpDocumentList;
-typedef struct _GimpDrawableStack     GimpDrawableStack;
-typedef struct _GimpFilteredContainer GimpFilteredContainer;
-typedef struct _GimpFilterStack       GimpFilterStack;
-typedef struct _GimpItemStack         GimpItemStack;
-typedef struct _GimpLayerStack        GimpLayerStack;
-typedef struct _GimpTaggedContainer   GimpTaggedContainer;
+typedef struct _GimpContainer                   GimpContainer;
+typedef struct _GimpList                        GimpList;
+typedef struct _GimpDocumentList                GimpDocumentList;
+typedef struct _GimpDrawableStack               GimpDrawableStack;
+typedef struct _GimpFilteredContainer           GimpFilteredContainer;
+typedef struct _GimpFilterStack                 GimpFilterStack;
+typedef struct _GimpItemStack                   GimpItemStack;
+typedef struct _GimpLayerStack                  GimpLayerStack;
+typedef struct _GimpTaggedContainer             GimpTaggedContainer;
 
 
 /*  not really a container  */
 
-typedef struct _GimpItemTree          GimpItemTree;
+typedef struct _GimpItemTree                    GimpItemTree;
 
 
 /*  context objects  */
 
-typedef struct _GimpContext         GimpContext;
-typedef struct _GimpFillOptions     GimpFillOptions;
-typedef struct _GimpStrokeOptions   GimpStrokeOptions;
-typedef struct _GimpToolOptions     GimpToolOptions;
+typedef struct _GimpContext                     GimpContext;
+typedef struct _GimpFillOptions                 GimpFillOptions;
+typedef struct _GimpStrokeOptions               GimpStrokeOptions;
+typedef struct _GimpToolOptions                 GimpToolOptions;
 
 
 /*  info objects  */
 
-typedef struct _GimpPaintInfo       GimpPaintInfo;
-typedef struct _GimpToolInfo        GimpToolInfo;
+typedef struct _GimpPaintInfo                   GimpPaintInfo;
+typedef struct _GimpToolInfo                    GimpToolInfo;
 
 
 /*  data objects  */
 
-typedef struct _GimpDataFactory      GimpDataFactory;
-typedef struct _GimpData             GimpData;
-typedef struct _GimpBrush            GimpBrush;
-typedef struct _GimpBrushCache       GimpBrushCache;
-typedef struct _GimpBrushClipboard   GimpBrushClipboard;
-typedef struct _GimpBrushGenerated   GimpBrushGenerated;
-typedef struct _GimpBrushPipe        GimpBrushPipe;
-typedef struct _GimpCurve            GimpCurve;
-typedef struct _GimpDynamics         GimpDynamics;
-typedef struct _GimpDynamicsOutput   GimpDynamicsOutput;
-typedef struct _GimpGradient         GimpGradient;
-typedef struct _GimpMybrush          GimpMybrush;
-typedef struct _GimpPalette          GimpPalette;
-typedef struct _GimpPaletteMru       GimpPaletteMru;
-typedef struct _GimpPattern          GimpPattern;
-typedef struct _GimpPatternClipboard GimpPatternClipboard;
-typedef struct _GimpToolPreset       GimpToolPreset;
-typedef struct _GimpTagCache         GimpTagCache;
+typedef struct _GimpDataFactory                 GimpDataFactory;
+typedef struct _GimpData                        GimpData;
+typedef struct _GimpBrush                       GimpBrush;
+typedef struct _GimpBrushCache                  GimpBrushCache;
+typedef struct _GimpBrushClipboard              GimpBrushClipboard;
+typedef struct _GimpBrushGenerated              GimpBrushGenerated;
+typedef struct _GimpBrushPipe                   GimpBrushPipe;
+typedef struct _GimpCurve                       GimpCurve;
+typedef struct _GimpDynamics                    GimpDynamics;
+typedef struct _GimpDynamicsOutput              GimpDynamicsOutput;
+typedef struct _GimpGradient                    GimpGradient;
+typedef struct _GimpMybrush                     GimpMybrush;
+typedef struct _GimpPalette                     GimpPalette;
+typedef struct _GimpPaletteMru                  GimpPaletteMru;
+typedef struct _GimpPattern                     GimpPattern;
+typedef struct _GimpPatternClipboard            GimpPatternClipboard;
+typedef struct _GimpToolPreset                  GimpToolPreset;
+typedef struct _GimpTagCache                    GimpTagCache;
 
 
 /*  drawable objects  */
 
-typedef struct _GimpDrawable        GimpDrawable;
-typedef struct _GimpChannel         GimpChannel;
-typedef struct _GimpLayerMask       GimpLayerMask;
-typedef struct _GimpSelection       GimpSelection;
-typedef struct _GimpLayer           GimpLayer;
-typedef struct _GimpGroupLayer      GimpGroupLayer;
+typedef struct _GimpDrawable                    GimpDrawable;
+typedef struct _GimpChannel                     GimpChannel;
+typedef struct _GimpLayerMask                   GimpLayerMask;
+typedef struct _GimpSelection                   GimpSelection;
+typedef struct _GimpLayer                       GimpLayer;
+typedef struct _GimpGroupLayer                  GimpGroupLayer;
 
 
 /*  undo objects  */
 
-typedef struct _GimpUndo            GimpUndo;
-typedef struct _GimpUndoStack       GimpUndoStack;
-typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
+typedef struct _GimpUndo                        GimpUndo;
+typedef struct _GimpUndoStack                   GimpUndoStack;
+typedef struct _GimpUndoAccumulator             GimpUndoAccumulator;
 
 
 /* Symmetry transformations */
 
-typedef struct _GimpSymmetry        GimpSymmetry;
-typedef struct _GimpMirror          GimpMirror;
-typedef struct _GimpTiling          GimpTiling;
-typedef struct _GimpMandala         GimpMandala;
+typedef struct _GimpSymmetry                    GimpSymmetry;
+typedef struct _GimpMirror                      GimpMirror;
+typedef struct _GimpTiling                      GimpTiling;
+typedef struct _GimpMandala                     GimpMandala;
 
 
 /*  misc objects  */
 
-typedef struct _GimpAsync           GimpAsync;
-typedef struct _GimpAsyncSet        GimpAsyncSet;
-typedef struct _GimpBuffer          GimpBuffer;
-typedef struct _GimpDrawableFilter  GimpDrawableFilter;
-typedef struct _GimpEnvironTable    GimpEnvironTable;
-typedef struct _GimpGuide           GimpGuide;
-typedef struct _GimpHistogram       GimpHistogram;
-typedef struct _GimpIdTable         GimpIdTable;
-typedef struct _GimpImagefile       GimpImagefile;
-typedef struct _GimpInterpreterDB   GimpInterpreterDB;
-typedef struct _GimpObjectQueue     GimpObjectQueue;
-typedef struct _GimpParasiteList    GimpParasiteList;
-typedef struct _GimpPdbProgress     GimpPdbProgress;
-typedef struct _GimpProjection      GimpProjection;
-typedef struct _GimpSettings        GimpSettings;
-typedef struct _GimpSubProgress     GimpSubProgress;
-typedef struct _GimpTag             GimpTag;
-typedef struct _GimpTreeHandler     GimpTreeHandler;
+typedef struct _GimpAsync                       GimpAsync;
+typedef struct _GimpAsyncSet                    GimpAsyncSet;
+typedef struct _GimpBuffer                      GimpBuffer;
+typedef struct _GimpDrawableFilter              GimpDrawableFilter;
+typedef struct _GimpEnvironTable                GimpEnvironTable;
+typedef struct _GimpGuide                       GimpGuide;
+typedef struct _GimpHistogram                   GimpHistogram;
+typedef struct _GimpIdTable                     GimpIdTable;
+typedef struct _GimpImagefile                   GimpImagefile;
+typedef struct _GimpInterpreterDB               GimpInterpreterDB;
+typedef struct _GimpObjectQueue                 GimpObjectQueue;
+typedef struct _GimpParasiteList                GimpParasiteList;
+typedef struct _GimpPdbProgress                 GimpPdbProgress;
+typedef struct _GimpProjection                  GimpProjection;
+typedef struct _GimpSettings                    GimpSettings;
+typedef struct _GimpSubProgress                 GimpSubProgress;
+typedef struct _GimpTag                         GimpTag;
+typedef struct _GimpTreeHandler                 GimpTreeHandler;
 typedef struct _GimpTriviallyCancelableWaitable GimpTriviallyCancelableWaitable;
-typedef struct _GimpUncancelableWaitable GimpUncancelableWaitable;
+typedef struct _GimpUncancelableWaitable        GimpUncancelableWaitable;
 
 
 /*  interfaces  */
 
-typedef struct _GimpCancelable      GimpCancelable;  /* dummy typedef */
-typedef struct _GimpPickable        GimpPickable;    /* dummy typedef */
-typedef struct _GimpProgress        GimpProgress;    /* dummy typedef */
-typedef struct _GimpProjectable     GimpProjectable; /* dummy typedef */
-typedef struct _GimpTagged          GimpTagged;      /* dummy typedef */
-typedef struct _GimpWaitable        GimpWaitable;    /* dummy typedef */
+typedef struct _GimpCancelable                  GimpCancelable;  /* dummy typedef */
+typedef struct _GimpPickable                    GimpPickable;    /* dummy typedef */
+typedef struct _GimpProgress                    GimpProgress;    /* dummy typedef */
+typedef struct _GimpProjectable                 GimpProjectable; /* dummy typedef */
+typedef struct _GimpTagged                      GimpTagged;      /* dummy typedef */
+typedef struct _GimpWaitable                    GimpWaitable;    /* dummy typedef */
 
 
 /*  non-object types  */
 
-typedef struct _GimpBoundSeg        GimpBoundSeg;
-typedef struct _GimpCoords          GimpCoords;
-typedef struct _GimpGradientSegment GimpGradientSegment;
-typedef struct _GimpPaletteEntry    GimpPaletteEntry;
-typedef struct _GimpSamplePoint     GimpSamplePoint;
-typedef struct _GimpScanConvert     GimpScanConvert;
-typedef struct _GimpTempBuf         GimpTempBuf;
-typedef         guint32             GimpTattoo;
+typedef struct _GimpBoundSeg                    GimpBoundSeg;
+typedef struct _GimpCoords                      GimpCoords;
+typedef struct _GimpGradientSegment             GimpGradientSegment;
+typedef struct _GimpPaletteEntry                GimpPaletteEntry;
+typedef struct _GimpSamplePoint                 GimpSamplePoint;
+typedef struct _GimpScanConvert                 GimpScanConvert;
+typedef struct _GimpTempBuf                     GimpTempBuf;
+typedef         guint32                         GimpTattoo;
 
 /* The following hack is made so that we can reuse the definition
  * the cairo definition of cairo_path_t without having to translate
