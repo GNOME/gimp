@@ -441,6 +441,8 @@ libappcore_a_sources = \
 	gimptoolpreset-save.h			\
 	gimptreehandler.c			\
 	gimptreehandler.h			\
+	gimpuncancelablewaitable.c		\
+	gimpuncancelablewaitable.h		\
 	gimpunit.c				\
 	gimpunit.h				\
 	gimpundo.c				\
