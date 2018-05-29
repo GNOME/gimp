@@ -478,9 +478,9 @@ gui_wait_input_async (GimpAsync  *async,
 }
 
 static gboolean
-gui_wait (Gimp           *gimp,
-          GimpWaitable   *waitable,
-          const gchar    *message)
+gui_wait (Gimp         *gimp,
+          GimpWaitable *waitable,
+          const gchar  *message)
 {
   GimpProcedure  *procedure;
   GimpValueArray *args;
@@ -566,7 +566,12 @@ gui_wait (Gimp           *gimp,
   /* signal completion to the plug-in */
   close (output_pipe[1]);
 
-  g_clear_pointer (&input_async, gimp_waitable_wait);
+  if (input_async)
+    {
+      gimp_waitable_wait (GIMP_WAITABLE (input_async));
+
+      g_object_unref (input_async);
+    }
 
   close (input_pipe[0]);
 
