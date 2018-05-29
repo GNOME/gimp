@@ -32,12 +32,16 @@
 #include "operations/gimplevelsconfig.h"
 #include "operations/gimpoperationlevels.h"
 
+#include "core/gimp-gui.h"
 #include "core/gimpasync.h"
+#include "core/gimpcancelable.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
 #include "core/gimperror.h"
 #include "core/gimphistogram.h"
 #include "core/gimpimage.h"
+#include "core/gimptoolinfo.h"
+#include "core/gimptriviallycancelablewaitable.h"
 #include "core/gimpwaitable.h"
 
 #include "widgets/gimpcolorbar.h"
@@ -1001,12 +1005,22 @@ levels_stretch_callback (GtkWidget      *widget,
 {
   GimpTool       *tool        = GIMP_TOOL (levels_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (levels_tool);
+  GimpWaitable   *waitable;
 
-  gimp_waitable_wait (GIMP_WAITABLE (levels_tool->histogram_async));
+  waitable = gimp_trivially_cancelable_waitable_new (
+    GIMP_WAITABLE (levels_tool->histogram_async));
 
-  gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
-                              levels_tool->histogram,
-                              gimp_drawable_is_rgb (tool->drawable));
+  gimp_wait (tool->tool_info->gimp, waitable, _("Calculating histogram..."));
+
+  g_object_unref (waitable);
+
+  if (gimp_async_is_synced   (levels_tool->histogram_async) &&
+      gimp_async_is_finished (levels_tool->histogram_async))
+    {
+      gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
+                                  levels_tool->histogram,
+                                  gimp_drawable_is_rgb (tool->drawable));
+    }
 }
 
 static void
