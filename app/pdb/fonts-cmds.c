@@ -47,6 +47,7 @@ fonts_refresh_invoker (GimpProcedure         *procedure,
                        GError               **error)
 {
   gimp_fonts_load (gimp, error);
+  gimp_fonts_wait (gimp, NULL);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
@@ -69,8 +70,14 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      font_list = gimp_container_get_filtered_name_array (gimp->fonts,
-                                                          filter, &num_fonts);
+      if (! gimp_fonts_wait (gimp, error))
+        success = FALSE;
+
+      if (success)
+        {
+          font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+                                                              filter, &num_fonts);
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

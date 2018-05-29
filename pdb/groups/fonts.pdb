@@ -31,6 +31,7 @@ HELP
 	code => <<'CODE'
 {
   gimp_fonts_load (gimp, error);
+  gimp_fonts_wait (gimp, NULL);
 }
 CODE
     );
@@ -61,8 +62,14 @@ HELP
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code => <<'CODE'
 {
-  font_list = gimp_container_get_filtered_name_array (gimp->fonts,
-                                                      filter, &num_fonts);
+  if (! gimp_fonts_wait (gimp, error))
+    success = FALSE;
+
+  if (success)
+    {
+      font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+                                                          filter, &num_fonts);
+    }
 }
 CODE
     );

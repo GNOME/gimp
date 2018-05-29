@@ -36,6 +36,7 @@ sub fonts_popup {
 {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
+      ! gimp_fonts_wait (gimp, error)                        ||
       ! gimp_pdb_dialog_new (gimp, context, progress, gimp->fonts,
                              popup_title, font_callback, initial_font,
                              NULL))
@@ -86,6 +87,7 @@ sub fonts_set_popup {
 {
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
+      ! gimp_fonts_wait (gimp, error)                        ||
       ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
                              NULL))
     success = FALSE;
@@ -95,7 +97,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h");
+@headers = qw("core/gimp.h"
+              "text/gimp-fonts.h");
 
 @procs = qw(fonts_popup
             fonts_close_popup
