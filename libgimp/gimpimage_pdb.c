@@ -883,7 +883,7 @@ gimp_image_remove_layer (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_freeze_layers (gint32 image_ID)
@@ -918,7 +918,7 @@ gimp_image_freeze_layers (gint32 image_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_thaw_layers (gint32 image_ID)
@@ -1032,7 +1032,7 @@ gimp_image_remove_channel (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_freeze_channels (gint32 image_ID)
@@ -1067,7 +1067,7 @@ gimp_image_freeze_channels (gint32 image_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_thaw_channels (gint32 image_ID)
@@ -1183,7 +1183,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_freeze_vectors (gint32 image_ID)
@@ -1218,7 +1218,7 @@ gimp_image_freeze_vectors (gint32 image_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: 2.10
+ * Since: 2.10.2
  **/
 gboolean
 gimp_image_thaw_vectors (gint32 image_ID)
