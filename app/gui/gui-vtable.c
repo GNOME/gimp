@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <errno.h>
 
 #include <gegl.h>
 #include <gtk/gtk.h>
@@ -26,6 +27,22 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#include <fcntl.h>
+#include <io.h>
+
+#ifndef pipe
+#define pipe(fds) _pipe(fds, 4096, _O_BINARY)
+#endif
+#else
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <unistd.h>
+#endif
+
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
@@ -33,8 +50,12 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-parallel.h"
+#include "core/gimp-spawn.h"
 #include "core/gimp-utils.h"
+#include "core/gimpasync.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcancelable.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
@@ -44,8 +65,12 @@
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
 #include "core/gimpprogress.h"
+#include "core/gimpwaitable.h"
 
 #include "text/gimpfont.h"
+
+#include "pdb/gimppdb.h"
+#include "pdb/gimpprocedure.h"
 
 #include "plug-in/gimppluginmanager-file.h"
 
@@ -121,6 +146,9 @@ static void           gui_display_delete         (GimpObject          *display);
 static void           gui_displays_reconnect     (Gimp                *gimp,
                                                   GimpImage           *old_image,
                                                   GimpImage           *new_image);
+static gboolean       gui_wait                   (Gimp                *gimp,
+                                                  GimpWaitable        *waitable,
+                                                  const gchar         *message);
 static GimpProgress * gui_new_progress           (Gimp                *gimp,
                                                   GimpObject          *display);
 static void           gui_free_progress          (Gimp                *gimp,
@@ -187,6 +215,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.display_create         = gui_display_create;
   gimp->gui.display_delete         = gui_display_delete;
   gimp->gui.displays_reconnect     = gui_displays_reconnect;
+  gimp->gui.wait                   = gui_wait;
   gimp->gui.progress_new           = gui_new_progress;
   gimp->gui.progress_free          = gui_free_progress;
   gimp->gui.pdb_dialog_new         = gui_pdb_dialog_new;
@@ -429,6 +458,112 @@ gui_displays_reconnect (Gimp      *gimp,
                         GimpImage *new_image)
 {
   gimp_displays_reconnect (gimp, old_image, new_image);
+}
+
+static void
+gui_wait_input_async (GimpAsync  *async,
+                      const gint  input_pipe[2])
+{
+  guint8 buffer[1];
+
+  while (read (input_pipe[0], buffer, sizeof (buffer)) == -1 &&
+         errno == EINTR);
+}
+
+static gboolean
+gui_wait (Gimp           *gimp,
+          GimpWaitable   *waitable,
+          const gchar    *message)
+{
+  GimpProcedure  *procedure;
+  GimpValueArray *args;
+  GimpAsync      *input_async = NULL;
+  GError         *error       = NULL;
+  gint            input_pipe[2];
+  gint            output_pipe[2];
+
+  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "plug-in-busy-dialog");
+
+  if (! procedure)
+    return FALSE;
+
+  if (pipe (input_pipe))
+    return FALSE;
+
+  if (pipe (output_pipe))
+    {
+      close (input_pipe[0]);
+      close (input_pipe[1]);
+
+      return FALSE;
+    }
+
+  gimp_spawn_set_cloexec (input_pipe[0]);
+  gimp_spawn_set_cloexec (output_pipe[1]);
+
+  args = gimp_procedure_get_arguments (procedure);
+  gimp_value_array_truncate (args, 5);
+
+  g_value_set_int    (gimp_value_array_index (args, 0),
+                      GIMP_RUN_INTERACTIVE);
+  g_value_set_int    (gimp_value_array_index (args, 1),
+                      output_pipe[0]);
+  g_value_set_int    (gimp_value_array_index (args, 2),
+                      input_pipe[1]);
+  g_value_set_string (gimp_value_array_index (args, 3),
+                      message);
+  g_value_set_int    (gimp_value_array_index (args, 4),
+                      GIMP_IS_CANCELABLE (waitable));
+
+  gimp_procedure_execute_async (procedure, gimp,
+                                gimp_get_user_context (gimp),
+                                NULL, args, NULL, &error);
+
+  gimp_value_array_unref (args);
+
+  close (input_pipe[1]);
+  close (output_pipe[0]);
+
+  if (error)
+    {
+      g_clear_error (&error);
+
+      close (input_pipe[0]);
+      close (output_pipe[1]);
+
+      return FALSE;
+    }
+
+  if (GIMP_IS_CANCELABLE (waitable))
+    {
+      /* listens for a cancellation request */
+      input_async = gimp_parallel_run_async (
+        TRUE,
+        (GimpParallelRunAsyncFunc) gui_wait_input_async,
+        input_pipe);
+
+      while (! gimp_waitable_wait_for (waitable, 0.1 * G_TIME_SPAN_SECOND))
+        {
+          /* check for a cancellation request */
+          if (gimp_waitable_try_wait (GIMP_WAITABLE (input_async)))
+            {
+              gimp_cancelable_cancel (GIMP_CANCELABLE (waitable));
+
+              break;
+            }
+        }
+    }
+
+  gimp_waitable_wait (waitable);
+
+  /* signal completion to the plug-in */
+  close (output_pipe[1]);
+
+  g_clear_pointer (&input_async, gimp_waitable_wait);
+
+  close (input_pipe[0]);
+
+  return TRUE;
 }
 
 static GimpProgress *

@@ -41,6 +41,10 @@ struct _GimpGui
                                              const gchar         *help_domain,
                                              const gchar         *help_id);
 
+  gboolean       (* wait)                   (Gimp                *gimp,
+                                             GimpWaitable        *waitable,
+                                             const gchar         *message);
+
   const gchar  * (* get_program_class)      (Gimp                *gimp);
   gchar        * (* get_display_name)       (Gimp                *gimp,
                                              gint                 display_ID,
@@ -149,6 +153,11 @@ void           gimp_help                   (Gimp                *gimp,
                                             GimpProgress        *progress,
                                             const gchar         *help_domain,
                                             const gchar         *help_id);
+
+void           gimp_wait                   (Gimp                *gimp,
+                                            GimpWaitable        *waitable,
+                                            const gchar         *format,
+                                            ...) G_GNUC_PRINTF (3, 4);
 
 GimpProgress * gimp_new_progress           (Gimp                *gimp,
                                             GimpObject          *display);
