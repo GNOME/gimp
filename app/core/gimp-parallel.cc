@@ -24,6 +24,14 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 extern "C"
 {
 
@@ -174,7 +182,22 @@ gimp_parallel_run_async (gboolean                 independent,
     {
       GThread *thread = g_thread_new (
         "async-ind",
-        (GThreadFunc) gimp_parallel_run_async_execute_task,
+        [] (gpointer data) -> gpointer
+        {
+          GimpParallelRunAsyncTask *task = (GimpParallelRunAsyncTask *) data;
+
+          /* lower the thread's priority */
+#if defined (G_OS_WIN32)
+          SetThreadPriority (GetCurrentThread (), THREAD_MODE_BACKGROUND_BEGIN);
+#elif defined (HAVE_UNISTD_H) && defined (__gnu_linux__)
+          nice (+10) != -1;
+                  /* ^-- avoid "unused result" warning */
+#endif
+
+          gimp_parallel_run_async_execute_task (task);
+
+          return NULL;
+        },
         task);
 
       gimp_async_add_callback (async,
