@@ -18,6 +18,24 @@ GIMP_BROWSER_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpbusybox</FILE>
+<TITLE>GimpBusyBox</TITLE>
+GimpBusyBox
+gimp_busy_box_new
+gimp_busy_box_set_message
+gimp_busy_box_get_message
+<SUBSECTION Standard>
+GIMP_BUSY_BOX
+GIMP_IS_BUSY_BOX
+GIMP_TYPE_BUSY_BOX
+gimp_busy_box_get_type
+GimpBusyBoxClass
+GIMP_BUSY_BOX_CLASS
+GIMP_IS_BUSY_BOX_CLASS
+GIMP_BUSY_BOX_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpbutton</FILE>
 <TITLE>GimpButton</TITLE>
 GimpButton

@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpBrowser                   GimpBrowser;
+typedef struct _GimpBusyBox                   GimpBusyBox;
 typedef struct _GimpButton                    GimpButton;
 typedef struct _GimpCellRendererColor         GimpCellRendererColor;
 typedef struct _GimpCellRendererToggle        GimpCellRendererToggle;
