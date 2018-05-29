@@ -58,6 +58,27 @@ gimp_waitable_wait (GimpWaitable *waitable)
 }
 
 gboolean
+gimp_waitable_try_wait (GimpWaitable *waitable)
+{
+  GimpWaitableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
+
+  iface = GIMP_WAITABLE_GET_INTERFACE (waitable);
+
+  if (iface->try_wait)
+    {
+      return iface->try_wait (waitable);
+    }
+  else
+    {
+      gimp_waitable_wait (waitable);
+
+      return TRUE;
+    }
+}
+
+gboolean
 gimp_waitable_wait_until (GimpWaitable *waitable,
                           gint64        end_time)
 {
@@ -85,6 +106,13 @@ gimp_waitable_wait_for (GimpWaitable *waitable,
 {
   g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), FALSE);
 
-  return gimp_waitable_wait_until (waitable,
-                                   g_get_monotonic_time () + wait_duration);
+  if (wait_duration <= 0)
+    {
+      return gimp_waitable_try_wait (waitable);
+    }
+  else
+    {
+      return gimp_waitable_wait_until (waitable,
+                                       g_get_monotonic_time () + wait_duration);
+    }
 }

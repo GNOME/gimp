@@ -36,6 +36,7 @@ struct _GimpWaitableInterface
 
   /*  virtual functions  */
   void       (* wait)       (GimpWaitable *waitable);
+  gboolean   (* try_wait)   (GimpWaitable *waitable);
   gboolean   (* wait_until) (GimpWaitable *waitable,
                              gint64        end_time);
 };
@@ -44,6 +45,7 @@ struct _GimpWaitableInterface
 GType      gimp_waitable_get_type   (void) G_GNUC_CONST;
 
 void       gimp_waitable_wait       (GimpWaitable *waitable);
+gboolean   gimp_waitable_try_wait   (GimpWaitable *waitable);
 gboolean   gimp_waitable_wait_until (GimpWaitable *waitable,
                                      gint64        end_time);
 gboolean   gimp_waitable_wait_for   (GimpWaitable *waitable,
