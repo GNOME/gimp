@@ -52,6 +52,7 @@ animation_optimize_libexecdir = $(gimpplugindir)/plug-ins/animation-optimize
 blinds_libexecdir = $(gimpplugindir)/plug-ins/blinds
 blur_libexecdir = $(gimpplugindir)/plug-ins/blur
 border_average_libexecdir = $(gimpplugindir)/plug-ins/border-average
+busy_dialog_libexecdir = $(gimpplugindir)/plug-ins/busy-dialog
 cartoon_libexecdir = $(gimpplugindir)/plug-ins/cartoon
 checkerboard_libexecdir = $(gimpplugindir)/plug-ins/checkerboard
 cml_explorer_libexecdir = $(gimpplugindir)/plug-ins/cml-explorer
@@ -146,6 +147,7 @@ animation_optimize_libexec_PROGRAMS = animation-optimize
 blinds_libexec_PROGRAMS = blinds
 blur_libexec_PROGRAMS = blur
 border_average_libexec_PROGRAMS = border-average
+busy_dialog_libexec_PROGRAMS = busy-dialog
 cartoon_libexec_PROGRAMS = cartoon
 checkerboard_libexec_PROGRAMS = checkerboard
 cml_explorer_libexec_PROGRAMS = cml-explorer
@@ -358,6 +360,24 @@ border_average_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(border_average_RC)
+
+busy_dialog_SOURCES = \
+	busy-dialog.c
+
+busy_dialog_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(bust_dialog_RC)
 
 cartoon_SOURCES = \
 	cartoon.c
