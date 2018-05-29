@@ -224,12 +224,13 @@ layers_edit_text_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_TEXT_TOOL (active_tool))
     {
-      GimpDisplayShell *shell;
+      if (gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer))
+        {
+          GimpDisplayShell *shell;
 
-      gimp_text_tool_set_layer (GIMP_TEXT_TOOL (active_tool), layer);
-
-      shell = gimp_display_get_shell (active_tool->display);
-      gtk_widget_grab_focus (shell->canvas);
+          shell = gimp_display_get_shell (active_tool->display);
+          gtk_widget_grab_focus (shell->canvas);
+        }
     }
 }
 
