@@ -30,6 +30,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpprogress.h"
+#include "gimpwaitable.h"
 
 #include "about.h"
 
@@ -190,6 +191,46 @@ gimp_show_message (Gimp                *gimp,
   gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
                        NULL, NULL, &desc, NULL);
   g_printerr ("%s-%s: %s\n\n", domain, desc, message);
+}
+
+void
+gimp_wait (Gimp           *gimp,
+           GimpWaitable   *waitable,
+           const gchar    *format,
+           ...)
+{
+  va_list  args;
+  gchar   *message;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_WAITABLE (waitable));
+  g_return_if_fail (format != NULL);
+
+  if (gimp_waitable_wait_for (waitable, 0.5 * G_TIME_SPAN_SECOND))
+    return;
+
+  va_start (args, format);
+
+  message = g_strdup_vprintf (format, args);
+
+  va_end (args);
+
+  if (! gimp->console_messages &&
+      gimp->gui.wait           &&
+      gimp->gui.wait (gimp, waitable, message))
+    {
+      return;
+    }
+
+  /* Translator:  This message is displayed while GIMP is waiting for
+   * some operation to finish.  The %s argument is a message describing
+   * the operation.
+   */
+  g_printerr (_("Please wait: %s\n"), message);
+
+  gimp_waitable_wait (waitable);
+
+  g_free (message);
 }
 
 void
