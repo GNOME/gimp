@@ -87,6 +87,8 @@ libappcore_a_sources = \
 	gimp-utils.h				\
 	gimpasync.c				\
 	gimpasync.h				\
+	gimpasyncset.c				\
+	gimpasyncset.h				\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\
