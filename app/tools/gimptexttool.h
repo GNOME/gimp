@@ -106,7 +106,7 @@ void       gimp_text_tool_register               (GimpToolRegisterCallback  call
 
 GType      gimp_text_tool_get_type               (void) G_GNUC_CONST;
 
-void       gimp_text_tool_set_layer              (GimpTextTool *text_tool,
+gboolean   gimp_text_tool_set_layer              (GimpTextTool *text_tool,
                                                   GimpLayer    *layer);
 
 gboolean   gimp_text_tool_get_has_text_selection (GimpTextTool *text_tool);
