@@ -187,6 +187,7 @@ typedef struct _GimpSettings        GimpSettings;
 typedef struct _GimpSubProgress     GimpSubProgress;
 typedef struct _GimpTag             GimpTag;
 typedef struct _GimpTreeHandler     GimpTreeHandler;
+typedef struct _GimpTriviallyCancelableWaitable GimpTriviallyCancelableWaitable;
 typedef struct _GimpUncancelableWaitable GimpUncancelableWaitable;
 
 
