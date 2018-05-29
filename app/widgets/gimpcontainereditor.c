@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimpviewable.h"
@@ -66,6 +67,8 @@ struct _GimpContainerEditorPrivate
   GimpMenuFactory *menu_factory;
   gchar           *menu_identifier;
   gchar           *ui_path;
+  GtkWidget       *busy_box;
+  GBinding        *async_set_binding;
 };
 
 
@@ -278,6 +281,13 @@ gimp_container_editor_constructed (GObject *object)
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->view));
 
+  editor->priv->busy_box = gimp_busy_box_new (NULL);
+  gtk_box_pack_start (GTK_BOX (editor), editor->priv->busy_box, TRUE, TRUE, 0);
+
+  g_object_bind_property (editor->priv->busy_box, "visible",
+                          editor->view,           "visible",
+                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
   /*  Connect "select-item" with G_CONNECT_AFTER because it's a
    *  RUN_LAST signal and the default handler selecting the row must
    *  run before signal connections. See bug #784176.
@@ -307,6 +317,8 @@ static void
 gimp_container_editor_dispose (GObject *object)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
+
+  gimp_container_editor_bind_to_async_set (editor, NULL, NULL);
 
   g_clear_object (&editor->priv->container);
   g_clear_object (&editor->priv->context);
@@ -537,4 +549,27 @@ gimp_container_editor_get_show_button_bar (GimpDocked *docked)
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (docked);
 
   return gimp_docked_get_show_button_bar (GIMP_DOCKED (editor->view));
+}
+
+void
+gimp_container_editor_bind_to_async_set (GimpContainerEditor *editor,
+                                         GimpAsyncSet        *async_set,
+                                         const gchar         *message)
+{
+  g_return_if_fail (GIMP_IS_CONTAINER_EDITOR (editor));
+  g_return_if_fail (async_set == NULL || GIMP_IS_ASYNC_SET (async_set));
+  g_return_if_fail (async_set == NULL || message != NULL);
+
+  g_clear_object (&editor->priv->async_set_binding);
+
+  if (async_set)
+    {
+      gimp_busy_box_set_message (GIMP_BUSY_BOX (editor->priv->busy_box),
+                                 message);
+
+      editor->priv->async_set_binding = g_object_bind_property (
+        async_set,              "empty",
+        editor->priv->busy_box, "visible",
+        G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+    }
 }
