@@ -340,6 +340,7 @@ const gchar  * gimp_wm_class            (void) G_GNUC_CONST;
 const gchar  * gimp_display_name        (void) G_GNUC_CONST;
 gint           gimp_monitor_number      (void) G_GNUC_CONST;
 guint32        gimp_user_time           (void) G_GNUC_CONST;
+const gchar  * gimp_icon_theme_dir      (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 

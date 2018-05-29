@@ -416,6 +416,7 @@ EXPORTS
 	gimp_histogram
 	gimp_histogram_channel_get_type
 	gimp_hue_saturation
+	gimp_icon_theme_dir
 	gimp_image_add_channel
 	gimp_image_add_hguide
 	gimp_image_add_layer

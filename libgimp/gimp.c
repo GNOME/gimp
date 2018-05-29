@@ -228,6 +228,7 @@ static gchar         *_wm_class          = NULL;
 static gchar         *_display_name      = NULL;
 static gint           _monitor_number    = 0;
 static guint32        _timestamp         = 0;
+static gchar         *_icon_theme_dir    = NULL;
 static const gchar   *progname           = NULL;
 
 static gchar          write_buffer[WRITE_BUFFER_SIZE];
@@ -1616,6 +1617,23 @@ gimp_user_time (void)
 }
 
 /**
+ * gimp_get_icon_theme_dir:
+ *
+ * Returns the directory of the current icon theme.
+ *
+ * This is a constant value given at plug-in configuration time.
+ *
+ * Return value: the icon theme directory
+ *
+ * Since: 2.10.4
+ **/
+const gchar *
+gimp_icon_theme_dir (void)
+{
+  return _icon_theme_dir;
+}
+
+/**
  * gimp_get_progname:
  *
  * Returns the plug-in's executable name.
@@ -2293,6 +2311,7 @@ gimp_config (GPConfig *config)
   _display_name     = g_strdup (config->display_name);
   _monitor_number   = config->monitor_number;
   _timestamp        = config->timestamp;
+  _icon_theme_dir   = g_strdup (config->icon_theme_dir);
 
   if (config->app_name)
     g_set_application_name (config->app_name);
