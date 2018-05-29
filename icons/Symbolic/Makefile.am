@@ -9,6 +9,14 @@ icons_DATA = \
 ## official icon themes have the same list.
 include $(top_srcdir)/icons/icon-list.mk
 
+if ENABLE_VECTOR_ICONS
+icons24_DATA = \
+	$(symbolic_vector24_images)
+
+scalable_DATA = \
+	$(symbolic_scalable_images)
+endif
+
 # Vector icons are now committed into the repository.
 # librsvg is just too buggy to handle build-time extraction with
 # acceptable quality.
