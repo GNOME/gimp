@@ -43,9 +43,8 @@
  *
  * Similarly, upon creation, a GimpAsync object is said to be "unsynced".  It
  * becomes synced once the execution of any of the completion callbacks added
- * through 'gimp_async_add_callback()' had started, after a call to
- * 'gimp_waitable_wait()', or after a successful call to
- * 'gimp_waitable_wait_until()' or 'gimp_waitable_wait_for()'.
+ * through 'gimp_async_add_callback()' had started, after a successful call to
+ * one of the 'gimp_waitable_wait()' family of functions.
  *
  * Note that certain GimpAsync functions may only be called during a certain
  * state, on a certain thread, or depending on whether or nor the object is
@@ -100,6 +99,7 @@ static void       gimp_async_cancelable_iface_init (GimpCancelableInterface *ifa
 static void       gimp_async_finalize              (GObject               *object);
 
 static void       gimp_async_wait                  (GimpWaitable          *waitable);
+static gboolean   gimp_async_try_wait              (GimpWaitable          *waitable);
 static gboolean   gimp_async_wait_until            (GimpWaitable          *waitable,
                                                     gint64                 end_time);
 
@@ -137,6 +137,7 @@ static void
 gimp_async_waitable_iface_init (GimpWaitableInterface *iface)
 {
   iface->wait       = gimp_async_wait;
+  iface->try_wait   = gimp_async_try_wait;
   iface->wait_until = gimp_async_wait_until;
 }
 
@@ -208,6 +209,33 @@ gimp_async_wait (GimpWaitable *waitable)
   g_mutex_unlock (&async->priv->mutex);
 
   gimp_async_run_callbacks (async);
+}
+
+/* same as 'gimp_async_wait()', but returns immediately if 'waitable' is not in
+ * the "stopped" state.
+ *
+ * returns TRUE if 'waitable' has transitioned to the "stopped" state, or FALSE
+ * otherwise.
+ */
+static gboolean
+gimp_async_try_wait (GimpWaitable *waitable)
+{
+  GimpAsync *async = GIMP_ASYNC (waitable);
+
+  g_mutex_lock (&async->priv->mutex);
+
+  if (! async->priv->stopped)
+    {
+      g_mutex_unlock (&async->priv->mutex);
+
+      return FALSE;
+    }
+
+  g_mutex_unlock (&async->priv->mutex);
+
+  gimp_async_run_callbacks (async);
+
+  return TRUE;
 }
 
 /* same as 'gimp_async_wait()', taking an additional 'end_time' parameter,
