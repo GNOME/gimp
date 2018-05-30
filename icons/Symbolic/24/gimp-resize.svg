@@ -114,28 +114,6 @@
       <g
          transform="matrix(1.5000001,0,0,1.5000001,0,-526.18118)"
          id="g3997">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect28186-4"
-           width="15.988289"
-           height="16"
-           x="-6.5595884e-10"
-           y="1036.3622"
-           rx="0" />
-        <rect
-           style="opacity:0.3;fill:none;stroke:none"
-           id="rect6884"
-           width="15.988289"
-           height="16"
-           x="-6.5595884e-10"
-           y="1036.3622" />
-        <rect
-           y="1036.3622"
-           x="0.011710172"
-           height="16"
-           width="15.988289"
-           id="rect15601"
-           style="fill:none" />
         <g
            id="g3962"
            transform="matrix(0.82520201,0,0,0.82315071,2.7850577,181.63361)" />

@@ -141,21 +141,6 @@
     <g
        id="gimp-gradient-spiral-clockwise"
        transform="translate(158.11767,-906.73851)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect28186-4-5"
-         width="16"
-         height="16"
-         x="0"
-         y="1037.1747"
-         rx="0" />
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect6884-4"
-         width="16"
-         height="16"
-         x="0"
-         y="1037.1747" />
       <path
          style="fill:url(#linearGradient7583);fill-opacity:1;stroke:none"
          d="m 1,1038.1747 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

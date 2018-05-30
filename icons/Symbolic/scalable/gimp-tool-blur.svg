@@ -124,14 +124,6 @@
        transform="translate(-252.46406,126.44743)"
        id="gimp-tool-blur"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect12656"
-         width="16"
-         height="16"
-         x="-120"
-         y="0"
-         transform="translate(241.0002,217)" />
       <path
          transform="matrix(1.0909091,0,0,1,250.63656,217)"
          style="fill:url(#linearGradient10408);fill-opacity:1;stroke:none"

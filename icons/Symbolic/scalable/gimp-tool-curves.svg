@@ -133,16 +133,6 @@
        transform="translate(-46.58816,-28.52783)"
        id="gimp-tool-curves"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect5103"
-         width="16"
-         height="16"
-         x="-140"
-         y="60"
-         transform="translate(241.0002,217)"
-         rx="1"
-         ry="1" />
       <path
          style="fill:url(#linearGradient9850);fill-opacity:1;stroke:none;stroke-opacity:1"
          d="m -139,61 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

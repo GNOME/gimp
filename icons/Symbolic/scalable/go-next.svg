@@ -80,23 +80,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1036.3622)">
-    <rect
-       style="fill:none;stroke:none"
-       id="rect28186-4"
-       width="16"
-       height="16"
-       x="-16"
-       y="1036.3622"
-       rx="0"
-       transform="scale(-1,1)" />
-    <rect
-       style="opacity:0.3;fill:none;stroke:none"
-       id="rect6884"
-       width="16"
-       height="16"
-       x="-16"
-       y="1036.3622"
-       transform="scale(-1,1)" />
     <path
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.98300517;marker:none;enable-background:accumulate"
        d="m 7.6830953,1038.3626 a 0.98645275,0.9967777 0 0 0 -0.2176913,0.023 0.98645275,0.9967777 0 0 0 -0.4931771,1.713 l 3.2326211,3.2665 H 2 v 1.9934 h 8.212554 l -3.2403271,3.2742 a 1.0026217,1.013116 0 1 0 1.417884,1.4328 l 4.9317711,-4.9836 0.678118,-0.7164 -0.678118,-0.7163 -4.9317711,-4.9833 a 0.98645275,0.9967777 0 0 0 -0.7070156,-0.3037 z"

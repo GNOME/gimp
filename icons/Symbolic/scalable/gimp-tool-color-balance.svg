@@ -197,14 +197,6 @@
        id="gimp-tool-color-balance"
        style="display:inline">
       <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect4940"
-         width="16"
-         height="16"
-         x="-180"
-         y="60"
-         transform="translate(241.0002,217)" />
-      <rect
          style="fill:url(#linearGradient7139);fill-opacity:1;stroke:none"
          id="rect4942"
          width="3.9999969"

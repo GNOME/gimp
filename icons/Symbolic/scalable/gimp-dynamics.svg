@@ -151,14 +151,6 @@
        id="gimp-dynamics"
        style="display:inline"
        transform="translate(-96.911768,-488.16554)">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect13138"
-         width="16"
-         height="16"
-         x="-200"
-         y="342"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7728);fill-opacity:1;stroke:none"
          d="m 42.529331,562.64322 c 0.631195,0.5364 1.57798,0.45896 2.114209,-0.17163 0.536485,-0.63148 0.4587,-1.57858 -0.172417,-2.11475 -0.63139,-0.53647 -1.578096,-0.45903 -2.114239,0.17155 -0.536436,0.63128 -0.458843,1.57848 0.172447,2.11483 z"

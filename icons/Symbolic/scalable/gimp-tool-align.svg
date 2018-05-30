@@ -143,14 +143,6 @@
        id="gimp-tool-align"
        style="display:inline">
       <rect
-         style="opacity:0.3;fill:none;fill-opacity:1;stroke:none"
-         id="rect4900"
-         width="16"
-         height="16"
-         x="-60"
-         y="0"
-         transform="translate(241.0002,217)" />
-      <rect
          style="fill:url(#linearGradient6992);fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect4939"
          width="2"

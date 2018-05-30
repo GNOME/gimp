@@ -15,7 +15,7 @@
    width="1322.0306"
    height="388.46494"
    id="svg7384"
-   inkscape:version="0.92.2 5c3e80d, 2017-08-06"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="symbolic-scalable.svg"
    viewBox="0 0 1322.0306 388.46493">
   <metadata
@@ -49,13 +49,13 @@
      inkscape:window-height="741"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="1207.5593"
-     inkscape:cy="86.772172"
+     inkscape:zoom="4"
+     inkscape:cx="23.076469"
+     inkscape:cy="189.76678"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="stock"
+     inkscape:current-layer="tools"
      showborder="false"
      inkscape:snap-nodes="true"
      inkscape:snap-bbox="true"
@@ -19723,7 +19723,7 @@
        transform="translate(-483.08718,76.090276)"
        inkscape:label="gimp-tool-airbrush">
       <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1;marker:none"
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1;marker:none;opacity:0"
          id="rect2941"
          width="16"
          height="16"
@@ -19870,7 +19870,7 @@
          height="15.97829"
          width="16.000002"
          id="rect63349"
-         style="fill:none;stroke:none" />
+         style="fill:none;stroke:none;opacity:0" />
     </g>
     <g
        style="display:inline"
@@ -19892,7 +19892,7 @@
          height="16"
          width="15.999998"
          id="rect63426"
-         style="fill:none;stroke:none" />
+         style="fill:none;stroke:none;opacity:0" />
       <path
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccccc"
@@ -19904,14 +19904,14 @@
        style="display:inline"
        id="gimp-tool-rect-select"
        inkscape:label="gimp-tool-rect-select"
-       transform="translate(-481.29044,-19.397125)">
+       transform="translate(-481.71763,-19.152374)">
       <rect
          y="217"
          x="41.000198"
          height="16"
          width="16"
          id="rect74851"
-         style="fill:none;stroke:none" />
+         style="fill:none;stroke:none;opacity:0" />
       <rect
          y="220"
          x="41.000198"
@@ -20118,15 +20118,14 @@
        inkscape:label="gimp-tool-ink"
        transform="matrix(0.99609384,0,0,1,-601.21519,77.090276)">
       <rect
-         ry="0"
-         rx="0.99781346"
-         transform="translate(241.0002,217)"
-         y="-40"
-         x="-80"
+         ry="0.99781346"
+         rx="0.99781352"
+         y="177"
+         x="160.95644"
          height="16"
-         width="16"
+         width="16.062744"
          id="rect18736"
-         style="fill:none;fill-opacity:1;stroke:none" />
+         style="opacity:0;fill:none;fill-opacity:1;stroke:none;stroke-width:1" />
       <path
          inkscape:connector-curvature="0"
          id="rect18742"
@@ -20149,7 +20148,7 @@
          height="16"
          width="16"
          id="rect34084"
-         style="fill:none;fill-opacity:1;stroke:none" />
+         style="fill:none;fill-opacity:1;stroke:none;opacity:0" />
       <path
          inkscape:transform-center-x="-0.34743"
          transform="matrix(1.8190885,0,0,1.9123982,298.8878,106.00494)"
@@ -20223,7 +20222,7 @@
          height="16"
          width="16"
          id="rect11780"
-         style="fill:none;fill-opacity:1;stroke:none" />
+         style="fill:none;fill-opacity:1;stroke:none;opacity:0" />
       <path
          id="rect4875"
          d="m 104.93945,220 c -0.90867,0.38331 -1.20523,1.21717 -0.68062,1.88108 l 3.78781,5.03784 -1.49639,1.63837 1.21173,1.44271 1.37957,-1.71892 1.3528,1.71892 1.20063,-1.38155 -1.45852,-1.69953 3.78781,-5.03784 c 0.52462,-0.66391 0.22804,-1.49777 -0.68063,-1.88108 l -4.20209,5.53514 z"
@@ -20368,7 +20367,7 @@
          height="16"
          width="16"
          id="rect16643"
-         style="fill:none;fill-opacity:1;stroke:none" />
+         style="fill:none;fill-opacity:1;stroke:none;opacity:0" />
       <circle
          style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient10698);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate"
          id="path20580-1"
@@ -20584,7 +20583,7 @@
          x="-200"
          height="16"
          width="16"
-         style="fill:none;stroke:none"
+         style="fill:none;stroke:none;opacity:0"
          id="rect4684" />
       <path
          id="path4672"
@@ -20616,7 +20615,7 @@
          height="16"
          width="16"
          id="rect4708"
-         style="fill:none;fill-opacity:1;stroke:none" />
+         style="fill:none;fill-opacity:1;stroke:none;opacity:0" />
       <ellipse
          transform="matrix(0.83333356,0,0,0.75,212.33357,229)"
          id="path4710"
@@ -21119,7 +21118,7 @@
          height="16"
          width="16"
          id="1234-8"
-         style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="opacity:0;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          inkscape:label="" />
       <path
          sodipodi:nodetypes="cssssscsccccsscccccccccccccc"

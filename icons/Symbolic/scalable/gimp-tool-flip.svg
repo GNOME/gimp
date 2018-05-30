@@ -133,15 +133,6 @@
        transform="translate(-114.09212,-55.946331)"
        id="gimp-tool-flip"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect3742"
-         width="16"
-         height="16"
-         x="-120"
-         y="20"
-         transform="translate(241.0002,217)"
-         rx="0" />
       <path
          style="fill:url(#linearGradient7309);fill-opacity:1;stroke:none"
          d="m -116,25 0,2 3,0 c 0,-2 0,6 0,-4 l -7,0 0,5 0,5 7,0 0,-4 -3,0 0,2 -3,-3 z"

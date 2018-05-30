@@ -311,21 +311,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-1028.3622)">
-    <rect
-       style="fill:none;fill-opacity:1;stroke:none;stroke-width:1.49999976"
-       id="rect3946"
-       width="23.999996"
-       height="23.999996"
-       x="149.47202"
-       y="-122.85622"
-       transform="scale(1,-1)" />
-    <rect
-       style="fill:none;stroke:none"
-       id="rect15294"
-       width="24"
-       height="24"
-       x="1e-06"
-       y="1028.3622" />
     <path
        style="fill:url(#linearGradient7928);fill-opacity:1;stroke:none;stroke-width:1.57736969"
        d="m 17.705668,1031.3622 -2.68e-4,2 2.294602,0 c 1.001348,0 2,0.994 2,2 l 0,10 c 0,1.0059 -1.222726,2 -2.224075,2 l -12.7759264,0 c -1.0013344,0 -2.0000002,-0.9935 -2.0000002,-2 l 0,-3.493 -2.0000002,-4e-4 0,5.4934 c 0,1.0062 0.8657639,2 1.8671123,2 l 17.1328895,0 c 1.001346,0 2,-0.9938 2,-2 l 0,-14 c 0,-1.0062 -0.783844,-2 -1.785191,-2 z"

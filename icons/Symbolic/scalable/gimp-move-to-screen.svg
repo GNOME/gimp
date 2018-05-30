@@ -178,14 +178,6 @@
        id="gimp-move-to-screen"
        style="display:inline"
        transform="translate(-96.98306,-433.28258)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect11856"
-         width="16"
-         height="16"
-         x="-100"
-         y="222"
-         transform="translate(241.0002,217)" />
       <path
          id="path11885"
          d="m 149.0002,447 0,-2 c -3.98964,-0.007 -3.01047,-0.0325 -7,0 l 0,2 c 3.9883,-0.10306 3.00952,-0.0137 7,0 z"

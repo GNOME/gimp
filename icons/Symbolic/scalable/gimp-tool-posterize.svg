@@ -224,14 +224,6 @@
        id="gimp-tool-posterize"
        style="display:inline">
       <rect
-         style="opacity:0.3;fill:none;fill-opacity:1;stroke:none"
-         id="rect5245"
-         width="16"
-         height="16"
-         x="-60"
-         y="60"
-         transform="translate(241.0002,217)" />
-      <rect
          y="283"
          x="-186.0002"
          height="2"

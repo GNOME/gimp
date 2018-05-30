@@ -160,14 +160,6 @@
        id="gimp-edit"
        style="display:inline"
        transform="translate(-96.544889,-433.28258)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect30195"
-         width="16"
-         height="16"
-         x="-100"
-         y="182"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7262);fill-opacity:1;fill-rule:evenodd;stroke:none"
          d="m -86,183 -1,1 2,2 1,-1 c 0,-1 -1,-2 -2,-2 z m -2.397748,2.39775 L -95,192 l 0,2 2,0 6.602252,-6.60225 z"

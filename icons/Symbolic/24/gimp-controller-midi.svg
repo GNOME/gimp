@@ -128,13 +128,6 @@
        id="gimp-controller-midi"
        style="display:inline"
        transform="translate(75.684484,-613.2446)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect18379"
-         width="16"
-         height="16"
-         x="81.000198"
-         y="599" />
       <path
          style="fill:url(#linearGradient7146);fill-opacity:1;stroke:none"
          d="m 83.0002,601 0,12 12,0 0,-12 -4,0 0,8 -2,0 0,-8 -2,0 0,8 -2,0 0,-8 z"

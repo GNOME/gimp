@@ -196,14 +196,6 @@
        id="gimp-join-bevel"
        style="display:inline"
        transform="translate(-96.911768,-488.16554)">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect13323"
-         width="16"
-         height="16"
-         x="-160"
-         y="342"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7817);fill-opacity:1;stroke:none"
          d="m 86.0002,561 -3,3 0,2 0,3 0,5 3,0 0,-10 2,0 1,0 6,0 0,-3 z m 3,6 0,7 3,0 0,-4 3,0 0,-3 z"

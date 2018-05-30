@@ -142,13 +142,6 @@
        id="gimp-histogram-linear"
        style="display:inline"
        transform="translate(-101.02623,-482.99473)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect5420-4"
-         width="16"
-         height="16"
-         x="161.0002"
-         y="599" />
       <path
          style="fill:url(#linearGradient7608);fill-opacity:1;stroke:none"
          d="m 162.0002,611 0,2 0,1 14,0 0,-1 0,-2 -1,0 0,2 -6,0 0,-2 -1,0 0,2 -5,0 0,-2 z"

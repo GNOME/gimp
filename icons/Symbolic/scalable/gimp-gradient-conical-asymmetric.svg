@@ -223,14 +223,6 @@
        id="gimp-gradient-conical-asymmetric"
        style="display:inline"
        transform="translate(-2.7171208,-328.05274)">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect6571"
-         width="16"
-         height="16"
-         x="-60"
-         y="262"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient8002);fill-opacity:1;stroke:none"
          d="m -59,263 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

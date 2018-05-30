@@ -83,14 +83,6 @@
          id="gimp-question"
          style="display:inline"
          transform="translate(-141.0002,517.3622)">
-        <rect
-           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1;marker:none"
-           id="rect19590"
-           width="16"
-           height="16"
-           x="141.0002"
-           y="519"
-           inkscape:label="a" />
         <path
            style="fill:#bebebe;fill-opacity:1;stroke:none"
            d="m -92,302 c -4.418278,0 -8,3.58172 -8,8 0,4.41828 3.581722,8 8,8 4.418278,0 8,-3.58172 8,-8 0,-4.41828 -3.581722,-8 -8,-8 z m 0,2 c 3.313708,0 6,2.68629 6,6 0,3.31371 -2.686292,6 -6,6 -3.313708,0 -6,-2.68629 -6,-6 0,-3.31371 2.686292,-6 6,-6 z"

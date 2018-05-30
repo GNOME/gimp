@@ -189,21 +189,6 @@
       <g
          id="g4039"
          transform="translate(250.20643,-811.77068)">
-        <rect
-           rx="0"
-           y="1036.3622"
-           x="0"
-           height="16"
-           width="16"
-           id="rect28186-4-0"
-           style="fill:none;stroke:none" />
-        <rect
-           y="1036.3622"
-           x="0"
-           height="16"
-           width="16"
-           id="rect6884-9"
-           style="opacity:0.3;fill:none;stroke:none" />
         <path
            id="rect6886-0"
            d="m 1,1037.3622 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

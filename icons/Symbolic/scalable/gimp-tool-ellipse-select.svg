@@ -133,14 +133,6 @@
        transform="translate(-171.4483,-70.57474)"
        id="gimp-tool-ellipse-select"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect4708"
-         width="16"
-         height="16"
-         x="-180"
-         y="40"
-         transform="translate(241.0002,217)" />
       <ellipse
          ry="4"
          rx="6"

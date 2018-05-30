@@ -132,21 +132,6 @@
     <g
        id="gimp-layer-mask"
        transform="translate(24.699696,-899.33285)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect28186-4-21"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622"
-         rx="0" />
-      <rect
-         y="1036.3622"
-         x="0"
-         height="16"
-         width="16"
-         id="rect13518-2"
-         style="fill:none;stroke:none" />
       <path
          id="path13520-2"
          d="m 11,1044.3622 -4,2 -1,0 -2.5,-1.25 -0.84375,1.25 -2.65625,4 12,0 4,-6 z"

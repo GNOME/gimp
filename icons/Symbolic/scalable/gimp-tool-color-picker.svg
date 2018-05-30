@@ -142,16 +142,6 @@
        transform="matrix(1,0,0,0.99724574,-126.58819,139.25433)"
        id="gimp-tool-color-picker"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect33857"
-         width="16"
-         height="16"
-         x="-60"
-         y="-40"
-         transform="translate(241.0002,217)"
-         rx="0.9978134"
-         ry="0.9978134" />
       <path
          style="fill:url(#linearGradient6944);fill-opacity:1;fill-rule:evenodd;stroke:none"
          id="path3620"

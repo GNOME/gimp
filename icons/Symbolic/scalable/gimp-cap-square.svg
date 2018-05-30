@@ -133,14 +133,6 @@
        id="gimp-cap-square"
        style="display:inline"
        transform="translate(-96.895414,-433.28258)">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect29475"
-         width="16"
-         height="16"
-         x="-180"
-         y="182"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7073);fill-opacity:1;stroke:none"
          d="m 64.0002,402 0,13 2,0 0,-11 6,0 0,11 2,0 0,-13 z"

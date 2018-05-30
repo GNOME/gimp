@@ -142,14 +142,6 @@
        id="gimp-invert"
        style="display:inline"
        transform="translate(-78.491934,-513.56533)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect7178"
-         width="16"
-         height="16"
-         x="-80"
-         y="282"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7320);fill-opacity:1;stroke:none"
          d="m -80,282 0,16 16,0 0,-16 z m 1,1 14,0 0,14 -14,0 z"

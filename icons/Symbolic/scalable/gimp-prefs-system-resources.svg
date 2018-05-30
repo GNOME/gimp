@@ -240,13 +240,6 @@
        transform="translate(219.55327,218.58905)"
        id="gimp-prefs-system-resources"
        style="display:inline">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect22433"
-         width="16"
-         height="16"
-         x="115"
-         y="-20" />
       <path
          style="fill:url(#linearGradient8095);fill-opacity:1;stroke:none"
          d="m 121,-16 c -1.108,0 -2,0.892 -2,2 l 0,5 c 0,1.108 0.892,2 2,2 l 5,0 c 1.108,0 2,-0.892 2,-2 l 0,-5 c 0,-1.108 -0.892,-2 -2,-2 z"
