@@ -29,12 +29,6 @@
 #include "gimpwaitable.h"
 
 
-struct _GimpUncancelableWaitablePrivate
-{
-  GimpWaitable *waitable;
-};
-
-
 /*  local function prototypes  */
 
 static void       gimp_uncancelable_waitable_waitable_iface_init (GimpWaitableInterface   *iface);

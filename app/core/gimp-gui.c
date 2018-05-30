@@ -194,9 +194,9 @@ gimp_show_message (Gimp                *gimp,
 }
 
 void
-gimp_wait (Gimp           *gimp,
-           GimpWaitable   *waitable,
-           const gchar    *format,
+gimp_wait (Gimp         *gimp,
+           GimpWaitable *waitable,
+           const gchar  *format,
            ...)
 {
   va_list  args;
