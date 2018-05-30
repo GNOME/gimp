@@ -19,6 +19,7 @@
 
 #include <string.h>
 
+#include <cairo-gobject.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -1906,6 +1907,7 @@ prefs_dialog_new (Gimp       *gimp,
     GtkWidget         *view;
     GtkTreeSelection  *sel;
     gchar            **icon_themes;
+    gint               scale_factor;
     gint               n_icon_themes;
     gint               i;
 
@@ -1919,7 +1921,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_win);
 
-    list_store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
+    list_store = gtk_list_store_new (3, CAIRO_GOBJECT_TYPE_SURFACE, G_TYPE_STRING, G_TYPE_STRING);
 
     view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
     gtk_container_add (GTK_CONTAINER (scrolled_win), view);
@@ -1930,7 +1932,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
                                                  NULL,
                                                  gtk_cell_renderer_pixbuf_new (),
-                                                 "pixbuf", 0,
+                                                 "surface", 0,
                                                  NULL);
     gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
                                                  _("Icon Theme"),
@@ -1945,19 +1947,21 @@ prefs_dialog_new (Gimp       *gimp,
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
+    scale_factor = gtk_widget_get_scale_factor (scrolled_win);
     icon_themes = icon_themes_list_themes (gimp, &n_icon_themes);
 
     for (i = 0; i < n_icon_themes; i++)
       {
-        GtkTreeIter   iter;
-        GFile        *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
-        GFile        *icon_theme_search_path = g_file_get_parent (icon_theme_dir);
-        GtkIconTheme *theme;
-        gchar        *example;
-        GdkPixbuf    *pixbuf;
+        GtkTreeIter      iter;
+        GFile           *icon_theme_dir = icon_themes_get_theme_dir (gimp, icon_themes[i]);
+        GFile           *icon_theme_search_path = g_file_get_parent (icon_theme_dir);
+        GtkIconTheme    *theme;
+        gchar           *example;
+        cairo_surface_t *surface;
 
         theme = gtk_icon_theme_new ();
-        gtk_icon_theme_prepend_search_path (theme, gimp_file_get_utf8_name(icon_theme_search_path));
+        gtk_icon_theme_prepend_search_path (theme,
+                                            gimp_file_get_utf8_name (icon_theme_search_path));
         g_object_unref (icon_theme_search_path);
         gtk_icon_theme_set_custom_theme (theme, icon_themes[i]);
 
@@ -1967,18 +1971,20 @@ prefs_dialog_new (Gimp       *gimp,
             /* If the icon theme didn't explicitly specify an example
              * icon, try "gimp-wilber".
              */
-            example = g_strdup ("gimp-wilber");
+            example = g_strdup ("gimp-wilber-symbolic");
           }
-        pixbuf = gtk_icon_theme_load_icon (theme, example, 16, 0, NULL);
-
+        surface = gtk_icon_theme_load_surface (theme, example, 24,
+                                               scale_factor, NULL,
+                                               GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                               NULL);
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
-                            0, pixbuf,
+                            0, surface,
                             1, icon_themes[i],
                             2, gimp_file_get_utf8_name (icon_theme_dir),
                             -1);
         g_object_unref (theme);
-        g_object_unref (pixbuf);
+        cairo_surface_destroy (surface);
         g_free (example);
 
         if (GIMP_GUI_CONFIG (object)->icon_theme &&
