@@ -65,6 +65,8 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
                    GimpGetColorFunc      get_background_func,
                    GimpEnsureModulesFunc ensure_modules_func)
 {
+  GtkIconTheme *icon_theme;
+
   g_return_if_fail (standard_help_func != NULL);
 
   if (gimp_widgets_initialized)
@@ -79,7 +81,12 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_icons_init ();
 
-  gtk_window_set_default_icon_name (GIMP_ICON_WILBER);
+  icon_theme = gtk_icon_theme_get_for_screen (gdk_screen_get_default ());
+
+  if (gtk_icon_theme_has_icon (icon_theme, GIMP_ICON_WILBER "-symbolic"))
+    gtk_window_set_default_icon_name (GIMP_ICON_WILBER "-symbolic");
+  else
+    gtk_window_set_default_icon_name (GIMP_ICON_WILBER);
 
   gimp_widgets_init_foreign_enums ();
 
