@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * dwm-api-win32.h
+ * screenshot-win32-dwm-api.h
  * Copyright (C) 2018 Gil Eliyahu <gileli121@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
