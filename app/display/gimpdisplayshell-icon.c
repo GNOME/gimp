@@ -88,6 +88,7 @@ gimp_display_shell_icon_update_idle (gpointer data)
       GdkPixbuf *pixbuf;
       gint       width;
       gint       height;
+      gint       scale_factor;
       gdouble    factor = ((gdouble) gimp_image_get_height (image) /
                            (gdouble) gimp_image_get_width  (image));
 
@@ -102,12 +103,16 @@ gimp_display_shell_icon_update_idle (gpointer data)
           width  = MAX (shell->icon_size, 1);
         }
 
+      scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (shell));
+      width  *= scale_factor;
+      height *= scale_factor;
       pixbuf = gimp_viewable_get_pixbuf (GIMP_VIEWABLE (image),
                                          gimp_get_user_context (gimp),
                                          width, height);
 
       icon = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-                             shell->icon_size, shell->icon_size);
+                             shell->icon_size * scale_factor,
+                             shell->icon_size * scale_factor);
 
       memset (gdk_pixbuf_get_pixels (icon), 0,
               gdk_pixbuf_get_height (icon) *
@@ -115,7 +120,7 @@ gimp_display_shell_icon_update_idle (gpointer data)
 
       gdk_pixbuf_copy_area (pixbuf, 0, 0, width, height,
                             icon,
-                            0, shell->icon_size - height);
+                            0, shell->icon_size * scale_factor - height);
 
       pixbuf = gimp_widget_load_icon (GTK_WIDGET (shell), "gimp-wilber-outline",
                                       shell->icon_size_small);
@@ -124,9 +129,10 @@ gimp_display_shell_icon_update_idle (gpointer data)
       height = gdk_pixbuf_get_height (pixbuf);
 
       gdk_pixbuf_composite (pixbuf, icon,
-                            shell->icon_size - width, 0,
-                            width, height,
-                            shell->icon_size - width, 0.0, 1.0, 1.0,
+                            shell->icon_size * scale_factor - width,
+                            0, width, height,
+                            shell->icon_size * scale_factor - width,
+                            0.0, 1.0, 1.0,
                             GDK_INTERP_NEAREST, 255);
       g_object_unref (pixbuf);
     }
