@@ -135,7 +135,7 @@ gimp_fonts_load_async (GimpAsync *async,
 
 static void
 gimp_fonts_load_async_callback (GimpAsync *async,
-                                Gimp      *gimp)
+                                gpointer   data)
 {
   if (gimp_async_is_finished (async) && ! gimp_async_is_canceled (async))
     {
@@ -200,7 +200,7 @@ gimp_fonts_load (Gimp    *gimp,
 
   gimp_async_add_callback (async,
                            (GimpAsyncCallback) gimp_fonts_load_async_callback,
-                           gimp);
+                           NULL);
 
   gimp_async_set_add (gimp->fonts_async_set, async);
 

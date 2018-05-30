@@ -131,10 +131,6 @@ gimp_async_set_init (GimpAsyncSet *async_set)
                                                  GimpAsyncSetPrivate);
 
   async_set->priv->asyncs = g_hash_table_new (NULL, NULL);
-
-#ifdef TIME_ASYNC_SET_OPS
-  async_set->priv->start_time = g_get_monotonic_time ();
-#endif
 }
 
 static void

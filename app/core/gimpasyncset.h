@@ -46,16 +46,16 @@ struct _GimpAsyncSetClass
 };
 
 
-GType          gimp_async_set_get_type   (void) G_GNUC_CONST;
+GType          gimp_async_set_get_type (void) G_GNUC_CONST;
 
-GimpAsyncSet * gimp_async_set_new        (void);
+GimpAsyncSet * gimp_async_set_new      (void);
 
-void           gimp_async_set_add        (GimpAsyncSet *async_set,
-                                          GimpAsync    *async);
-void           gimp_async_set_remove     (GimpAsyncSet *async_set,
-                                          GimpAsync    *async);
-void           gimp_async_set_clear      (GimpAsyncSet *async_set);
-gboolean       gimp_async_set_is_empty   (GimpAsyncSet *async_set);
+void           gimp_async_set_add      (GimpAsyncSet *async_set,
+                                        GimpAsync    *async);
+void           gimp_async_set_remove   (GimpAsyncSet *async_set,
+                                        GimpAsync    *async);
+void           gimp_async_set_clear    (GimpAsyncSet *async_set);
+gboolean       gimp_async_set_is_empty (GimpAsyncSet *async_set);
 
 
 #endif /* __GIMP_ASYNC_SET_H__ */

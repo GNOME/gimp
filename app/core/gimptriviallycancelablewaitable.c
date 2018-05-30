@@ -30,12 +30,6 @@
 #include "gimpwaitable.h"
 
 
-struct _GimpTriviallyCancelableWaitablePrivate
-{
-  GimpWaitable *waitable;
-};
-
-
 /*  local function prototypes  */
 
 static void   gimp_trivially_cancelable_waitable_cancelable_iface_init (GimpCancelableInterface *iface);
