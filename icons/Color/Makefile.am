@@ -47,8 +47,8 @@ EXTRA_DIST = \
 	$(icons128_images)		\
 	$(icons192_images)		\
 	$(icons256_images)		\
-	$(scalable_images)		\
-	$(vector24_images)		\
+	$(color_scalable_images)	\
+	$(color_vector24_images)	\
 	color-scalable.svg
 
 noinst_DATA = \
