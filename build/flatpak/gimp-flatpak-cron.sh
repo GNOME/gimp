@@ -123,7 +123,6 @@ flatpak_build() {
   flatpak_build_baseapp $ARCH
   ret=$?
   if test $ret -eq 0 || test $ret -eq 42; then
-    flatpak_build_branch $ARCH dev no
     flatpak_build_branch $ARCH nightly yes
   fi
 }
