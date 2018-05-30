@@ -18,15 +18,15 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2018-02-11 14:49+0000\n"
-"PO-Revision-Date: 2018-02-19 10:54+0100\n"
-"Last-Translator: scootergrisen\n"
+"PO-Revision-Date: 2018-05-30 15:33+0200\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -489,7 +489,7 @@ msgstr "Fremhævning"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:214
 msgid "Stencil C_hrome..."
-msgstr "Skabelon_krom …"
+msgstr "_Skabelonkrom …"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:215
 msgid ""
@@ -574,7 +574,7 @@ msgstr "Separat lag"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:51
 msgid "_Clothify..."
-msgstr "_Tekstileffekt …"
+msgstr "T_ekstileffekt …"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "Add a cloth-like texture to the selected region (or alpha)"
@@ -630,7 +630,7 @@ msgstr "Uigennemsigtig støj påført i lagtilstanden \"Forskel\""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_Forvræng …"
+msgstr "Forvr_æng …"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
@@ -843,7 +843,7 @@ msgstr "Bogmærke til brugermanualen"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "_Tilpas dine billeder til internettet"
+msgstr "T_ilpas dine billeder til internettet"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
@@ -1250,7 +1250,7 @@ msgstr "Interpolering"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
 msgid "_Predator..."
-msgstr "_Rovdyr …"
+msgstr "Rovd_yr …"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
@@ -1361,7 +1361,7 @@ msgstr "Palet"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "Afrundet r_ektangel …"
+msgstr "Afrundet _rektangel …"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
@@ -1643,7 +1643,7 @@ msgstr "Vend retning"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:389
 msgid "_Weave..."
-msgstr "_Vævning …"
+msgstr "V_ævning …"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:390
 msgid ""
