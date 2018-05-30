@@ -1,5 +1,6 @@
 GIMP version:
 Operating System:
+Package: [flatpak? Installer from gimp.org? If another installer, tell us where from]
 
 # Description of the bug
 
