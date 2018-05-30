@@ -150,15 +150,6 @@
     <g
        id="gimp-tool-perspective-clone"
        transform="translate(-89.245973,-737.032)">
-      <rect
-         ry="0.75"
-         rx="0.75"
-         y="1036.3622"
-         x="-1.6357421e-06"
-         height="16"
-         width="16.000002"
-         id="rect5580-9"
-         style="fill:none;stroke:none;stroke-width:1.00075829" />
       <path
          id="path5582-55"
          d="m 0,1045.3622 0,2 5,0 -1.66667,-2 z m 5,2 5,0 0,-2 -3.33333,0 z"

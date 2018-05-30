@@ -141,28 +141,6 @@
     <g
        id="gimp-layers"
        transform="translate(-15.214314,-899.33287)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect28186-4-81"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622"
-         rx="0" />
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect6884-2"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622" />
-      <rect
-         style="fill:none;stroke:none"
-         id="rect11958-7"
-         width="16"
-         height="16"
-         x="3.642578e-07"
-         y="1036.3622" />
       <path
          style="fill:url(#linearGradient7187);fill-opacity:1;stroke:none;stroke-width:1.23442674"
          d="m 0,1052.3622 3.4285714,-4 12.5714286,0 -3.428571,4 z"

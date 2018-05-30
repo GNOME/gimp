@@ -83,14 +83,6 @@
        id="gimp-shape-circle"
        style="display:inline"
        transform="translate(-156.91149,-354.36275)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect15985"
-         width="16"
-         height="16"
-         x="-120"
-         y="142"
-         transform="translate(241.0002,217)" />
       <circle
          r="4.5"
          cy="150.5"

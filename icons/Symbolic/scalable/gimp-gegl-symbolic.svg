@@ -124,14 +124,6 @@
        id="gimp-gegl"
        style="display:inline"
        transform="translate(-139.12531,-488.60013)">
-      <rect
-         style="opacity:0.02999998;fill:none;stroke:none"
-         id="rect8470"
-         width="16"
-         height="16"
-         x="-160"
-         y="302"
-         transform="translate(241.0002,217)" />
       <path
          transform="matrix(0.34150705,0,0,0.34018438,68.201181,500.31183)"
          style="display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient6878);fill-opacity:1;stroke:none;stroke-width:1;marker:none;enable-background:accumulate"

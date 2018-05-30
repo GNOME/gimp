@@ -160,14 +160,6 @@
        id="gimp-colormap"
        style="display:inline"
        transform="translate(-96.911768,-488.16554)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect13093"
-         width="16"
-         height="16"
-         x="-60"
-         y="322"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient10124);fill-opacity:1;stroke:none"
          d="m -60,322 0,7 7,0 0,-7 z m 1,1 5,0 0,5 -5,0 z"

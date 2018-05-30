@@ -124,13 +124,6 @@
        id="gimp-error"
        style="display:inline;stroke:none"
        transform="translate(-96.457273,-433.28258)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect34534"
-         width="16"
-         height="16"
-         x="161.0002"
-         y="399" />
       <path
          style="color:#bebebe;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient6839);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.78124988;marker:none;enable-background:new"
          d="m 169.03145,400 c -3.85327,0 -6.96875,3.11547 -6.96875,6.96875 0,3.85327 3.11548,6.96875 6.96875,6.96875 3.85327,0 6.96875,-3.11548 6.96875,-6.96875 0,-3.85328 -3.11548,-6.96875 -6.96875,-6.96875 z m -4,5.96875 8,0 0,2 -8,0 z"

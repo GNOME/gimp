@@ -124,14 +124,6 @@
        transform="matrix(-1,0,0,1,81.907865,-418.75387)"
        id="gimp-rotate-90"
        style="display:inline">
-      <rect
-         transform="matrix(0,-1,-1,0,0,0)"
-         style="fill:none;stroke:none"
-         id="rect15902"
-         width="16"
-         height="16"
-         x="-375"
-         y="-77.000198" />
       <path
          id="path15904"
          transform="matrix(-1,0,0,1,536.15797,251.72263)"

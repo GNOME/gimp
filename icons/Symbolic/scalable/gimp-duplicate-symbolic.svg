@@ -133,14 +133,6 @@
        id="gimp-duplicate"
        style="display:inline"
        transform="translate(-119.35071,-372.51009)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect4989"
-         width="16"
-         height="16"
-         x="-180"
-         y="162"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient10196);fill-opacity:1;stroke:none"
          d="m 62.0002,381 0,8 10,0 0,-8 z m 1,1 8,0 0,6 -8,0 z"

@@ -317,14 +317,6 @@
        transform="translate(-249.13728,-50.57474)"
        id="gimp-tool-foreground-select"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect16643"
-         width="16"
-         height="16"
-         x="-80"
-         y="20"
-         transform="translate(241.0002,217)" />
       <circle
          r="2.5"
          cy="342.5"

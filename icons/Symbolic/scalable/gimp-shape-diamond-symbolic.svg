@@ -83,13 +83,6 @@
        id="gimp-shape-diamond"
        style="display:inline"
        transform="translate(-156.1041,-353.19431)">
-      <rect
-         y="359"
-         x="141.0002"
-         height="16"
-         width="16"
-         id="rect16020"
-         style="fill:none;stroke:none" />
       <path
          style="fill:url(#linearGradient6866);fill-opacity:1;stroke:none"
          d="m -99,150 7,-7 7,7 -7,7 z"

@@ -128,15 +128,6 @@
        transform="matrix(0.99805136,0,0,1,-96.22977,-35.946331)"
        id="gimp-tool-cage"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect34193"
-         width="16"
-         height="16"
-         x="-160"
-         y="0"
-         transform="translate(241.0002,217)"
-         rx="0" />
       <circle
          r="2.015625"
          cy="-39.984375"

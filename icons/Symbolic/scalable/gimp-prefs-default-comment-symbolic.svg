@@ -132,18 +132,6 @@
     <g
        transform="translate(100.83394,195.46232)"
        id="gimp-prefs-default-comment">
-      <g
-         style="display:inline"
-         id="user-available"
-         transform="translate(33.999802,-357)">
-        <rect
-           style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1;marker:none"
-           id="rect11252"
-           width="16"
-           height="16"
-           x="41.000198"
-           y="337" />
-      </g>
       <rect
          rx="2"
          style="fill:url(#linearGradient8017);fill-opacity:1;stroke:none"

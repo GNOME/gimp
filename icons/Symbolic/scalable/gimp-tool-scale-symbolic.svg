@@ -143,14 +143,6 @@
        id="gimp-tool-scale"
        style="display:inline">
       <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect3946"
-         width="16"
-         height="16"
-         x="-120"
-         y="-20"
-         transform="translate(241.0002,217)" />
-      <rect
          style="fill:url(#linearGradient7273);fill-opacity:1;stroke:none"
          id="rect4716"
          width="4.0000014"

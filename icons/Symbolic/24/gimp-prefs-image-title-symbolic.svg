@@ -99,13 +99,6 @@
       <g
          id="g724"
          transform="translate(-20,20)">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect15294"
-           width="16"
-           height="16"
-           x="15.000013"
-           y="0" />
         <path
            style="fill:url(#linearGradient8141);fill-opacity:1;stroke:none;stroke-width:1.0476191"
            d="M 15.66668,0.66666666 V 15.333333 H 30.333347 V 0.66666666 Z M 17.000013,2 h 12 v 2 h -12 z m 0,2.6666667 h 12 V 14 h -12 z"

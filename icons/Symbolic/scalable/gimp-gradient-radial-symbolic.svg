@@ -142,14 +142,6 @@
        id="gimp-gradient-radial"
        style="display:inline"
        transform="translate(56.537314,-348.05274)">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect6884"
-         width="16"
-         height="16"
-         x="-180"
-         y="282"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7639);fill-opacity:1;stroke:none"
          d="m -179,283 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

@@ -164,14 +164,6 @@
        transform="translate(-234.41036,-9.0884203)"
        id="gimp-tool-iscissors"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect11780"
-         width="16"
-         height="16"
-         x="-140"
-         y="0"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient10598);fill-opacity:1;stroke:none"
          d="m 104.93945,220 c -0.90867,0.38331 -1.20523,1.21717 -0.68062,1.88108 l 3.78781,5.03784 -1.49639,1.63837 1.21173,1.44271 1.37957,-1.71892 1.3528,1.71892 1.20063,-1.38155 -1.45852,-1.69953 3.78781,-5.03784 c 0.52462,-0.66391 0.22804,-1.49777 -0.68063,-1.88108 l -4.20209,5.53514 z"

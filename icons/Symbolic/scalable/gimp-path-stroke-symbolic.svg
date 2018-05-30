@@ -300,14 +300,6 @@
         <g
            id="path-reverse"
            transform="matrix(0.98384086,0,0,0.98150517,-162.15873,204.79257)">
-          <rect
-             style="fill:none;fill-opacity:1;stroke:none"
-             id="rect15611"
-             width="16"
-             height="16"
-             x="165"
-             y="335"
-             transform="translate(0,512.36218)" />
           <path
              style="fill:none;stroke:url(#linearGradient7644);stroke-width:1.35930598;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
              d="m 166.59124,861.78784 c 0,0 4.71919,-2.94674 8.00107,-5.28846 3.28188,-2.34173 4.58908,-8.54037 4.58908,-8.54037"

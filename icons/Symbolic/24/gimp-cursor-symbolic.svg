@@ -128,14 +128,6 @@
        id="gimp-cursor"
        style="display:inline"
        transform="translate(-55.752028,-612.64312)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect8243"
-         width="16"
-         height="16"
-         x="-120"
-         y="382"
-         transform="translate(241.0002,217)" />
       <path
          style="fill:url(#linearGradient7314);fill-opacity:1;stroke:none"
          d="m 125.0002,601.85133 0,9.14867 0.82307,-0.0129 1.64616,-3.1742 3.06144,5.1871 2.46933,0 -3.88462,-6 3.88462,0 0,-0.89033 -8,-5.10967 z"

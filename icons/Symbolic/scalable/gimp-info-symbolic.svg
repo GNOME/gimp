@@ -151,14 +151,6 @@
        id="gimp-info"
        style="display:inline"
        transform="translate(-96.98306,-433.28258)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect21704"
-         width="16"
-         height="16"
-         x="-200"
-         y="182"
-         transform="translate(241.0002,217)" />
       <path
          style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient10236);fill-opacity:1;stroke:none;stroke-width:2.00000024;marker:none;enable-background:accumulate"
          d="m 49,399 c -2.749575,0 -5,2.25042 -5,5 0,1.58622 0.844588,2.90336 2,3.8125 l 0,2.1875 2e-4,0 1,0 4,0 1,0 -2e-4,0 0,-2.1875 c 1.155412,-0.90914 2,-2.22628 2,-3.8125 0,-2.74958 -2.250425,-5 -5,-5 z m 0,2 c 1.668685,0 3,1.33132 3,3 0,1.11585 -0.595067,2.03788 -1.5,2.5625 l -0.5,0.3125 0,0.5625 2e-4,0.5625 -2,0 -2e-4,-0.5625 0,-0.5625 -0.5,-0.3125 C 46.595067,406.03788 46,405.11585 46,404 c 0,-1.66868 1.331315,-3 3,-3 z"

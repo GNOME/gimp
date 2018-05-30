@@ -151,13 +151,6 @@
        id="gimp-gradient-conical-symmetric"
        style="display:inline"
        transform="translate(196.60087,-368.56383)">
-      <rect
-         y="499"
-         x="41.000198"
-         height="16"
-         width="16"
-         id="rect6674"
-         style="opacity:0.3;fill:none;stroke:none" />
       <path
          id="path6676"
          d="m 42.0002,500 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

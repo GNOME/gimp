@@ -132,13 +132,6 @@
     <g
        transform="translate(315.53261,218.58905)"
        id="gimp-prefs-window-management">
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect28728"
-         width="16"
-         height="16"
-         x="-5"
-         y="-20" />
       <path
          style="fill:url(#linearGradient8033);fill-opacity:1;stroke:none"
          d="m -5,-20 0,11 4,0 0,-6 7,0 0,-5 z m 1,1 9,0 0,1 -9,0 z"

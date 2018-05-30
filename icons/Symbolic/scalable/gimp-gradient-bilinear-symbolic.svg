@@ -299,13 +299,6 @@
        id="gimp-gradient-bilinear"
        style="display:inline"
        transform="translate(-2.9655948,-328.05274)">
-      <rect
-         y="479"
-         x="161.0002"
-         height="16"
-         width="16"
-         id="rect6309"
-         style="fill:none;stroke:none" />
       <path
          id="path6311"
          d="m 162.0002,480 0,14 14,0 0,-14 z m 1,1 12,0 0,12 -12,0 z"

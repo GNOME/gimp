@@ -143,14 +143,6 @@
        id="gimp-tool-colorize"
        style="display:inline">
       <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect5061"
-         width="16"
-         height="16"
-         x="-160"
-         y="60"
-         transform="translate(241.0002,217)" />
-      <rect
          style="fill:url(#linearGradient7127);fill-opacity:1;stroke:none"
          id="rect5063"
          width="10.99999"

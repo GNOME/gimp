@@ -289,33 +289,10 @@
     <g
        id="gimp-selection-add"
        transform="translate(219.87812,-844.23914)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect28186-4-59"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622"
-         rx="0" />
-      <rect
-         style="opacity:0.3;fill:none;stroke:none"
-         id="rect6884-03"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622" />
       <g
          transform="translate(-41.0002,557.3622)"
          style="display:inline"
          id="gimp-selection-intersect-0">
-        <rect
-           transform="translate(241.0002,217)"
-           y="262"
-           x="-200"
-           height="16"
-           width="16"
-           id="rect30145-7"
-           style="fill:none;stroke:none" />
         <rect
            y="483"
            x="44.000198"

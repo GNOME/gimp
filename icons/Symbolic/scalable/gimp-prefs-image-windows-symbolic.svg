@@ -141,13 +141,6 @@
     <g
        transform="translate(117.50524,197.96911)"
        id="gimp-prefs-image-windows">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect5372"
-         width="16"
-         height="16"
-         x="15.000013"
-         y="0" />
       <path
          style="fill:url(#linearGradient7490);fill-opacity:1;stroke:none"
          d="m 16,1 0,14 14,0 0,-14 z m 1,1 12,0 0,1 -12,0 z m 0,2.09375 12,0 L 29,13 17,13 Z"

@@ -250,15 +250,6 @@
        transform="translate(-129.10499,-3.4604573)"
        id="gimp-tool-hue-saturation"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect5188"
-         width="16"
-         height="16"
-         x="-100"
-         y="60"
-         transform="translate(241.0002,217)"
-         rx="0" />
       <path
          style="fill:url(#linearGradient10094);fill-opacity:1;stroke:none"
          d="m 144.0002,277 3,4 3,-4 z"

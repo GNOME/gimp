@@ -141,25 +141,10 @@
     <g
        id="gimp-histogram-logarithmic"
        transform="translate(36.14612,-920.35693)">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect28186-4-80"
-         width="16"
-         height="16"
-         x="0"
-         y="1036.3622"
-         rx="0" />
       <g
          transform="translate(-161.0002,437.3622)"
          style="display:inline"
          id="gimp-histogram-0">
-        <rect
-           y="599"
-           x="161.0002"
-           height="16"
-           width="16"
-           id="rect5420-4-8"
-           style="fill:none;stroke:none" />
         <path
            id="rect5422-9-1"
            d="m 162.0002,611 0,2 0,1 14,0 0,-1 0,-2 -1,0 0,2 -6,0 0,-2 -1,0 0,2 -5,0 0,-2 z"

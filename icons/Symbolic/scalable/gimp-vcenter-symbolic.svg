@@ -154,14 +154,6 @@
          x="-1041.3622"
          y="-21.000017"
          transform="matrix(0,-1,-1,0,0,0)" />
-      <rect
-         style="fill:none;fill-opacity:1"
-         id="rect4166-10"
-         width="24"
-         height="24"
-         x="1028.3622"
-         y="-24.000017"
-         transform="matrix(0,1,-1,0,0,0)" />
       <path
          style="fill:url(#linearGradient10058);fill-opacity:1;stroke:none;stroke-width:1.20939934"
          d="m 18,1033.3622 -6.0352,5 -5.9648,-5 4.041,0 c 0.029,-1.3321 -0.041,-4 -0.041,-4 l 4,0 c 0,0 -0.01,2.6676 -0.019,4 z"

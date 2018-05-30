@@ -353,14 +353,6 @@
        id="gimp-paste-into"
        style="display:inline"
        transform="translate(-75.003998,-568.00406)">
-      <rect
-         rx="0"
-         y="619"
-         x="101.0002"
-         height="16"
-         width="16"
-         id="rect6895"
-         style="fill:none;stroke:none" />
       <path
          id="path6897"
          d="m 105.0002,624 0,6 6,0 2,-2 0,-4 z"

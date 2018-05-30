@@ -194,13 +194,6 @@
     <g
        transform="translate(166.49624,281.52469)"
        id="gimp-prefs-folders-gradients">
-      <rect
-         y="-40"
-         x="75"
-         height="16"
-         width="16"
-         id="rect28489"
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
       <path
          style="display:inline;fill:url(#linearGradient8322);fill-opacity:1;stroke:none"
          d="M 75.53125,-40 C 75.24212,-40 75,-39.75788 75,-39.46875 v 14.9375 C 75,-24.23275 75.23264,-24 75.53125,-24 h 14.9375 C 90.76735,-24 91,-24.23265 91,-24.53125 v -9.63542 c 0,-0.2891 -0.242223,-0.492273 -0.53125,-0.5 H 78.333333 V -26.5 c 0,0.277 -0.389666,0.5 -0.666666,0.5 C 77.389667,-26 77,-26.223 77,-26.5 v -9 c 0,-0.277 0.223,-0.5 0.5,-0.5 H 80.46875 89 v -1.40625 C 89,-37.73345 88.73334,-38 88.40625,-38 H 81 v -1.46875 C 81,-39.7579 80.75788,-40 80.46875,-40 Z M 79,-32.66667 h 10.666667 v 5.333333 H 79 Z"

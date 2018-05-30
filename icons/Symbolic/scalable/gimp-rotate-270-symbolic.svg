@@ -124,14 +124,6 @@
        id="gimp-rotate-270"
        style="display:inline"
        transform="translate(-75.957416,-418.75387)">
-      <rect
-         y="-77.000198"
-         x="-375"
-         height="16"
-         width="16"
-         id="rect15886"
-         style="fill:none;stroke:none"
-         transform="matrix(0,-1,-1,0,0,0)" />
       <path
          id="path15888"
          transform="translate(-378.29269,251.72263)"

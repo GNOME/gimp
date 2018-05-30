@@ -142,15 +142,6 @@
        transform="matrix(1,0,0,1.0015171,-214.35625,61.173579)"
        id="gimp-tool-clone"
        style="display:inline">
-      <rect
-         style="fill:none;fill-opacity:1;stroke:none"
-         id="rect5537"
-         width="16.000002"
-         height="15.975763"
-         x="81.000198"
-         y="237"
-         rx="0.75"
-         ry="0.75" />
       <path
          style="fill:url(#linearGradient10538);fill-opacity:1;stroke:none"
          d="m 83.0002,248 0,3 6,0 -2,-3 z m 6,3 6,0 0,-3 -4,0 z"

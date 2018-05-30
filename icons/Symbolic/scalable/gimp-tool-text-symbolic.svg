@@ -124,13 +124,6 @@
        transform="translate(-93.52141,140.84261)"
        id="gimp-tool-text"
        style="display:inline">
-      <rect
-         style="fill:none;stroke:none"
-         id="rect74840"
-         width="16.000002"
-         height="16"
-         x="81.000198"
-         y="197" />
       <path
          style="fill:url(#linearGradient6896);fill-opacity:1;stroke:none"
          d="m -154,-19 -5,14 3,0 c 1.48614,-4 0.0221,0 1.50824,-4 l 4.98353,0 1.50823,4 3,0 -5,-14 z m 2,3 2.0221,5 -4,0 z"
