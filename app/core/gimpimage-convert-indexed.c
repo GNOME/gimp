@@ -1014,7 +1014,9 @@ gimp_image_convert_indexed (GimpImage               *image,
     }
 
   /*  Set the final palette on the image  */
-  if (remove_duplicates && (palette_type != GIMP_CONVERT_PALETTE_GENERATE))
+  if (remove_duplicates &&
+      (palette_type != GIMP_CONVERT_PALETTE_GENERATE) &&
+      (palette_type != GIMP_CONVERT_PALETTE_MONO))
     {
       guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
       gint   i, j;
