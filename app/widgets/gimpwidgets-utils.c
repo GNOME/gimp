@@ -325,47 +325,41 @@ gimp_widget_load_icon (GtkWidget   *widget,
                        gint         size)
 {
   GtkIconTheme *icon_theme;
-  gint         *icon_sizes;
-  gint          closest_size = -1;
-  gint          min_diff     = G_MAXINT;
-  gint          i;
+  GtkIconInfo  *icon_info;
+  gchar        *name;
+  gint          scale_factor;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
 
   icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+  scale_factor = gtk_widget_get_scale_factor (widget);
+  name = g_strdup_printf ("%s-symbolic", icon_name);
+  /* This will find the symbolic icon and fallback to non-symbolic
+   * depending on icon theme.
+   */
+  icon_info  = gtk_icon_theme_lookup_icon_for_scale (icon_theme, name,
+                                                     size, scale_factor,
+                                                     GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+  g_free (name);
 
-  if (! gtk_icon_theme_has_icon (icon_theme, icon_name))
+  if (! icon_info)
     {
       g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
                   icon_name);
+      icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
+                                                        GIMP_ICON_WILBER_EEK "-symbolic",
+                                                        size, scale_factor,
+                                                        GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
-      return gtk_icon_theme_load_icon (icon_theme, GIMP_ICON_WILBER_EEK,
-                                       size, 0, NULL);
+      return gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                      gtk_widget_get_style_context (widget),
+                                                      NULL, NULL);
     }
 
-  icon_sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
-
-  for (i = 0; icon_sizes[i]; i++)
-    {
-      if (icon_sizes[i] > 0 &&
-          icon_sizes[i] <= size)
-        {
-          if (size - icon_sizes[i] < min_diff)
-            {
-              min_diff     = size - icon_sizes[i];
-              closest_size = icon_sizes[i];
-            }
-        }
-    }
-
-  g_free (icon_sizes);
-
-  if (closest_size != -1)
-    size = closest_size;
-
-  return gtk_icon_theme_load_icon (icon_theme, icon_name, size,
-                                   GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+  return gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                  gtk_widget_get_style_context (widget),
+                                                  NULL, NULL);
 }
 
 GtkIconSize
