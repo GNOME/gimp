@@ -48,21 +48,18 @@
 #define CONF_FNAME "fonts.conf"
 
 
-static gboolean   gimp_fonts_load_fonts_conf        (FcConfig      *config,
-                                                     GFile         *fonts_conf);
-static void       gimp_fonts_add_directories        (Gimp          *gimp,
-                                                     FcConfig      *config,
-                                                     GList         *path,
-                                                     GError       **error);
-static void       gimp_fonts_recursive_add_fontdir  (FcConfig      *config,
-                                                     GFile         *path,
-                                                     GError       **error);
-static void       gimp_fonts_notify_font_path       (GObject       *gobject,
-                                                     GParamSpec    *pspec,
-                                                     Gimp          *gimp);
-static void       gimp_fonts_async_set_notify_empty (GimpAsyncSet  *async_set,
-                                                     GParamSpec    *pspec,
-                                                     Gimp          *gimp);
+static gboolean   gimp_fonts_load_fonts_conf       (FcConfig      *config,
+                                                    GFile         *fonts_conf);
+static void       gimp_fonts_add_directories       (Gimp          *gimp,
+                                                    FcConfig      *config,
+                                                    GList         *path,
+                                                    GError       **error);
+static void       gimp_fonts_recursive_add_fontdir (FcConfig      *config,
+                                                    GFile         *path,
+                                                    GError       **error);
+static void       gimp_fonts_notify_font_path      (GObject       *gobject,
+                                                    GParamSpec    *pspec,
+                                                    Gimp          *gimp);
 
 
 void
@@ -74,10 +71,6 @@ gimp_fonts_init (Gimp *gimp)
   gimp_object_set_name (GIMP_OBJECT (gimp->fonts), "fonts");
 
   gimp->fonts_async_set = gimp_async_set_new ();
-
-  g_signal_connect (gimp->fonts_async_set, "notify::empty",
-                    G_CALLBACK (gimp_fonts_async_set_notify_empty),
-                    gimp);
 }
 
 void
@@ -97,10 +90,6 @@ gimp_fonts_exit (Gimp *gimp)
 
   if (gimp->fonts_async_set)
     {
-      g_signal_handlers_disconnect_by_func (gimp->fonts_async_set,
-                                            G_CALLBACK (gimp_fonts_async_set_notify_empty),
-                                            gimp);
-
       gimp_cancelable_cancel (GIMP_CANCELABLE (gimp->fonts_async_set));
 
       g_clear_object (&gimp->fonts_async_set);
@@ -135,13 +124,18 @@ gimp_fonts_load_async (GimpAsync *async,
 
 static void
 gimp_fonts_load_async_callback (GimpAsync *async,
-                                gpointer   data)
+                                Gimp      *gimp)
 {
-  if (gimp_async_is_finished (async) && ! gimp_async_is_canceled (async))
+  if (gimp_async_is_canceled (async))
+    return;
+
+  if (gimp_async_is_finished (async))
     {
       FcConfig *config = gimp_async_get_result (async);
 
       FcConfigSetCurrent (config);
+
+      gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
     }
 }
 
@@ -200,7 +194,7 @@ gimp_fonts_load (Gimp    *gimp,
 
   gimp_async_add_callback (async,
                            (GimpAsyncCallback) gimp_fonts_load_async_callback,
-                           NULL);
+                           gimp);
 
   gimp_async_set_add (gimp->fonts_async_set, async);
 
@@ -430,13 +424,4 @@ gimp_fonts_notify_font_path (GObject    *gobject,
                             error->message);
       g_error_free (error);
     }
-}
-
-static void
-gimp_fonts_async_set_notify_empty (GimpAsyncSet *async_set,
-                                   GParamSpec   *pspec,
-                                   Gimp         *gimp)
-{
-  if (gimp_async_set_is_empty (async_set))
-    gimp_font_list_restore (GIMP_FONT_LIST (gimp->fonts));
 }
