@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-28 11:32+0000\n"
-"PO-Revision-Date: 2018-05-28 18:04+0200\n"
+"POT-Creation-Date: 2018-05-30 07:38+0000\n"
+"PO-Revision-Date: 2018-05-30 19:10+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -603,7 +603,7 @@ msgstr "Buffertar"
 msgid "Channels"
 msgstr "Kanaler"
 
-#: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:174
+#: ../app/actions/actions.c:123 ../app/dialogs/convert-indexed-dialog.c:178
 #: ../app/dialogs/dialogs.c:382
 msgid "Colormap"
 msgstr "Färgkarta"
@@ -3443,7 +3443,7 @@ msgstr "Töm dokumenthistorik"
 #: ../app/dialogs/color-profile-dialog.c:172
 #: ../app/dialogs/color-profile-dialog.c:190
 #: ../app/dialogs/color-profile-dialog.c:208
-#: ../app/dialogs/convert-indexed-dialog.c:138
+#: ../app/dialogs/convert-indexed-dialog.c:142
 #: ../app/dialogs/convert-precision-dialog.c:165
 #: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
 #: ../app/dialogs/file-open-location-dialog.c:80
@@ -3471,7 +3471,7 @@ msgstr "Töm dokumenthistorik"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1607
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1664
 #: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -6138,7 +6138,7 @@ msgstr "Vänder"
 msgid "Rotating"
 msgstr "Roterar"
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:795
+#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:796
 msgid "Cannot crop because the current selection is empty."
 msgstr "Kan inte beskära eftersom den aktuella markeringen är tom."
 
@@ -6187,7 +6187,7 @@ msgid "Scale Image"
 msgstr "Skala bild"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1585
+#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1586
 #: ../app/dialogs/preferences-dialog.c:1602
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7051,49 +7051,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Till _nytt lager"
 
-#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1434
+#: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:1435
 msgid "Layer Attributes"
 msgstr "Lagerattribut"
 
-#: ../app/actions/layers-commands.c:262
+#: ../app/actions/layers-commands.c:263
 msgid "Edit Layer Attributes"
 msgstr "Redigera lagerattribut"
 
-#: ../app/actions/layers-commands.c:335
+#: ../app/actions/layers-commands.c:336
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:882
 msgid "New Layer"
 msgstr "Nytt lager"
 
-#: ../app/actions/layers-commands.c:338
+#: ../app/actions/layers-commands.c:339
 msgid "Create a New Layer"
 msgstr "Skapa ett nytt lager"
 
-#: ../app/actions/layers-commands.c:436 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:437 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Synlig"
 
-#: ../app/actions/layers-commands.c:701
+#: ../app/actions/layers-commands.c:702
 msgid "Set Layer Boundary Size"
 msgstr "Ställ in storlek på lagergräns"
 
-#: ../app/actions/layers-commands.c:763
+#: ../app/actions/layers-commands.c:764
 msgid "Scale Layer"
 msgstr "Skala lager"
 
-#: ../app/actions/layers-commands.c:805
+#: ../app/actions/layers-commands.c:806
 msgid "Crop Layer to Selection"
 msgstr "Beskär lager till markering"
 
-#: ../app/actions/layers-commands.c:835
+#: ../app/actions/layers-commands.c:836
 msgid "Crop Layer to Content"
 msgstr "Beskär lager till innehåll"
 
-#: ../app/actions/layers-commands.c:848
+#: ../app/actions/layers-commands.c:849
 msgid "Cannot crop because the active layer has no content."
 msgstr "Kan inte beskära eftersom det aktiva lagret inte har något innehåll."
 
-#: ../app/actions/layers-commands.c:855
+#: ../app/actions/layers-commands.c:856
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Kan inte beskära eftersom det aktiva lagret redan är beskuret till "
@@ -12034,6 +12034,15 @@ msgstr "FG till BG (NMI medurs-nyans)"
 msgid "FG to Transparent"
 msgstr "FG till Transparent"
 
+#. Translator:  This message is displayed while GIMP is waiting for
+#. * some operation to finish.  The %s argument is a message describing
+#. * the operation.
+#.
+#: ../app/core/gimp-gui.c:229
+#, c-format
+msgid "Please wait: %s\n"
+msgstr "Var god vänta: %s\n"
+
 #: ../app/core/gimp-spawn.c:186
 #, c-format
 msgid "Failed to fork (%s)"
@@ -12514,7 +12523,7 @@ msgid "Tool Preset"
 msgstr "Verktygsförinställning"
 
 #: ../app/core/gimpcontext.c:753 ../app/core/gimpcontext.c:754
-#: ../app/tools/gimptextoptions.c:530
+#: ../app/tools/gimptextoptions.c:551
 msgid "Font"
 msgstr "Typsnitt"
 
@@ -12652,7 +12661,7 @@ msgstr "Beräknar avståndskarta"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
-#: ../app/tools/gimplevelstool.c:134
+#: ../app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "Nivåer"
 
@@ -12695,7 +12704,7 @@ msgstr "Stil"
 
 #: ../app/core/gimpfilloptions.c:111 ../app/pdb/gimppdbcontext.c:100
 #: ../app/tools/gimpbucketfilloptions.c:132
-#: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:134
+#: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:135
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
@@ -13095,7 +13104,7 @@ msgstr "Konvertera bild till 64-bit gamma-flyttal"
 #. dithering
 #: ../app/core/gimpimage-convert-precision.c:268
 #: ../app/core/gimpimage-convert-precision.c:289
-#: ../app/dialogs/convert-indexed-dialog.c:236
+#: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:221
 #: ../app/tools/gimpgradientoptions.c:136
 msgid "Dithering"
@@ -13732,7 +13741,7 @@ msgid "Line width"
 msgstr "Linjebredd"
 
 #: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:151
-#: ../app/tools/gimptextoptions.c:121
+#: ../app/tools/gimptextoptions.c:122
 msgid "Unit"
 msgstr "Enhet"
 
@@ -13933,7 +13942,7 @@ msgstr "Precision"
 #. gamma
 #: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:139
-#: ../app/operations/gimplevelsconfig.c:140 ../app/tools/gimplevelstool.c:505
+#: ../app/operations/gimplevelsconfig.c:140 ../app/tools/gimplevelstool.c:509
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -14150,7 +14159,7 @@ msgstr "Konvertera bilden till en färgprofil"
 #: ../app/dialogs/color-profile-dialog.c:173
 #: ../app/dialogs/color-profile-dialog.c:191
 #: ../app/dialogs/color-profile-import-dialog.c:105
-#: ../app/dialogs/convert-indexed-dialog.c:139
+#: ../app/dialogs/convert-indexed-dialog.c:143
 #: ../app/dialogs/convert-precision-dialog.c:166
 msgid "C_onvert"
 msgstr "K_onvertera"
@@ -14256,41 +14265,41 @@ msgstr "Bilden ”%s” har en inbäddad färgprofil"
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
-#: ../app/dialogs/convert-indexed-dialog.c:130
+#: ../app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
 msgstr "Konvertering av indexerad färg"
 
-#: ../app/dialogs/convert-indexed-dialog.c:133
+#: ../app/dialogs/convert-indexed-dialog.c:137
 msgid "Convert Image to Indexed Colors"
 msgstr "Konvertera bild indexerad färg"
 
-#: ../app/dialogs/convert-indexed-dialog.c:190
+#: ../app/dialogs/convert-indexed-dialog.c:194
 msgid "_Maximum number of colors:"
 msgstr "_Maximalt antal färger:"
 
-#: ../app/dialogs/convert-indexed-dialog.c:219
+#: ../app/dialogs/convert-indexed-dialog.c:224
 msgid "_Remove unused and duplicate colors from colormap"
 msgstr "_Ta bort oanvända och duplicerade färger från färgkartan"
 
-#: ../app/dialogs/convert-indexed-dialog.c:248
+#: ../app/dialogs/convert-indexed-dialog.c:253
 msgid "Color _dithering:"
 msgstr "Färg_utjämning:"
 
-#: ../app/dialogs/convert-indexed-dialog.c:263
+#: ../app/dialogs/convert-indexed-dialog.c:268
 msgid "Enable dithering of _transparency"
 msgstr "Aktivera färgutjämning av _transparens"
 
-#: ../app/dialogs/convert-indexed-dialog.c:275
+#: ../app/dialogs/convert-indexed-dialog.c:280
 #: ../app/dialogs/preferences-dialog.c:2163
 msgid "Enable dithering of text layers"
 msgstr "Aktivera färgutjämning för textlager"
 
-#: ../app/dialogs/convert-indexed-dialog.c:286
+#: ../app/dialogs/convert-indexed-dialog.c:291
 #: ../app/dialogs/convert-precision-dialog.c:276
 msgid "Dithering text layers will make them uneditable"
 msgstr "Att färgutjämna textlager kommer att göra dem oredigerbara"
 
-#: ../app/dialogs/convert-indexed-dialog.c:410
+#: ../app/dialogs/convert-indexed-dialog.c:415
 #: ../app/pdb/image-convert-cmds.c:159
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Kan inte konvertera till palett med mer än 256 färger."
@@ -15524,7 +15533,7 @@ msgstr "Användargränssnitt"
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: ../app/dialogs/preferences-dialog.c:1725 ../app/tools/gimptextoptions.c:151
+#: ../app/dialogs/preferences-dialog.c:1725 ../app/tools/gimptextoptions.c:152
 msgid "Language"
 msgstr "Språk"
 
@@ -18308,7 +18317,7 @@ msgstr "Välj gråskala baserad på"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Justera nyans, mättnad och ljusstyrka"
 
-#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:135
+#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
 msgstr "Justera färgnivåer"
 
@@ -18325,7 +18334,7 @@ msgid "Replace partial transparency with a color"
 msgstr "Ersätt partiell transparens med en färg"
 
 #: ../app/operations/gimpoperationthreshold.c:84
-#: ../app/tools/gimpthresholdtool.c:90
+#: ../app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
 msgstr "Reducera bilden till två färger med ett tröskelvärde"
 
@@ -19749,9 +19758,9 @@ msgstr "Insticksmodultolkar"
 msgid "Plug-in Environment"
 msgstr "Insticksmodulmiljö"
 
-#: ../app/plug-in/gimppluginmanager-call.c:184
-#: ../app/plug-in/gimppluginmanager-call.c:235
-#: ../app/plug-in/gimppluginmanager-call.c:331
+#: ../app/plug-in/gimppluginmanager-call.c:185
+#: ../app/plug-in/gimppluginmanager-call.c:241
+#: ../app/plug-in/gimppluginmanager-call.c:339
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Misslyckades med att köra insticksmodulen ”%s”"
@@ -19835,7 +19844,7 @@ msgid "Select Range to Adjust"
 msgstr "Välj intervall att justera"
 
 #: ../app/propgui/gimppropgui-color-balance.c:103
-#: ../app/tools/gimplevelstool.c:252
+#: ../app/tools/gimplevelstool.c:256
 msgid "Adjust Color Levels"
 msgstr "Justera färgnivåer"
 
@@ -20136,7 +20145,12 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: ../app/text/gimp-fonts.c:241
+#: ../app/text/gimp-fonts.c:248 ../app/tools/gimptextoptions.c:531
+#: ../app/widgets/gimpfontview.c:108
+msgid "Loading fonts (this may take a while...)"
+msgstr "Läser in typsnitt (det här kan ta en stund…)"
+
+#: ../app/text/gimp-fonts.c:304
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -20145,63 +20159,55 @@ msgstr ""
 "Några typsnitt kunde inte läsas in:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1488
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1545
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
-#: ../app/text/gimptextlayer.c:151
+#: ../app/text/gimptextlayer.c:152
 msgid "Text Layer"
 msgstr "Textlager"
 
-#: ../app/text/gimptextlayer.c:152
+#: ../app/text/gimptextlayer.c:153
 msgid "Rename Text Layer"
 msgstr "Byt namn på textlager"
 
-#: ../app/text/gimptextlayer.c:153
+#: ../app/text/gimptextlayer.c:154
 msgid "Move Text Layer"
 msgstr "Flytta textlager"
 
-#: ../app/text/gimptextlayer.c:154
+#: ../app/text/gimptextlayer.c:155
 msgid "Scale Text Layer"
 msgstr "Skala textlager"
 
-#: ../app/text/gimptextlayer.c:155
+#: ../app/text/gimptextlayer.c:156
 msgid "Resize Text Layer"
 msgstr "Ändra storlek på textlager"
 
-#: ../app/text/gimptextlayer.c:156
+#: ../app/text/gimptextlayer.c:157
 msgid "Flip Text Layer"
 msgstr "Vänd textlager"
 
-#: ../app/text/gimptextlayer.c:157
+#: ../app/text/gimptextlayer.c:158
 msgid "Rotate Text Layer"
 msgstr "Rotera textlager"
 
-#: ../app/text/gimptextlayer.c:158
+#: ../app/text/gimptextlayer.c:159
 msgid "Transform Text Layer"
 msgstr "Transformera textlager"
 
-#: ../app/text/gimptextlayer.c:566
+#: ../app/text/gimptextlayer.c:567
 msgid "Discard Text Information"
 msgstr "Förkasta textinformation"
 
-#: ../app/text/gimptextlayer.c:634
-msgid ""
-"Fonts are still loading (this may take a while), text functionality is not "
-"available yet."
-msgstr ""
-"Typsnitt läses fortfarande in (detta kan ta ett tag), textfunktioner är inte "
-"ännu tillgängliga."
-
-#: ../app/text/gimptextlayer.c:641
+#: ../app/text/gimptextlayer.c:637
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "På grund av brist på typsnitt är textfunktioner inte tillgängliga."
 
-#: ../app/text/gimptextlayer.c:704
+#: ../app/text/gimptextlayer.c:700
 msgid "Empty Text Layer"
 msgstr "Tomt textlager"
 
-#: ../app/text/gimptextlayer.c:757
+#: ../app/text/gimptextlayer.c:753
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20436,7 +20442,7 @@ msgstr ""
 #: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpgradientoptions.c:129
 #: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:89
+#: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Tröskelvärde"
 
@@ -20801,12 +20807,12 @@ msgstr "%s: lägga till kontrollpunkter till alla kanaler"
 msgid "Adjust Color Curves"
 msgstr "Justera färgkurvor"
 
-#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:350
-#: ../app/tools/gimpthresholdtool.c:226
+#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:380
+#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:384
 msgid "R_eset Channel"
 msgstr "Återstäl_l kanal"
 
@@ -20822,7 +20828,7 @@ msgstr "Justera kurvor perceptuellt"
 msgid "Curve _type:"
 msgstr "Kurv_typ:"
 
-#: ../app/tools/gimpcurvestool.c:662 ../app/tools/gimplevelstool.c:750
+#: ../app/tools/gimpcurvestool.c:662 ../app/tools/gimplevelstool.c:754
 msgid "Could not read header: "
 msgstr "Kunde inte läsa huvud: "
 
@@ -21347,7 +21353,7 @@ msgstr "Y:"
 
 #. the color label
 #: ../app/tools/gimpgradienttool-editor.c:1345
-#: ../app/tools/gimptextoptions.c:583
+#: ../app/tools/gimptextoptions.c:604
 msgid "Color:"
 msgstr "Färg:"
 
@@ -21579,80 +21585,84 @@ msgstr "Klicka eller klicka och dra för att lägga till en punkt"
 msgid "Modify Scissors Curve"
 msgstr "Modifiera saxkurva"
 
-#: ../app/tools/gimplevelstool.c:136
+#: ../app/tools/gimplevelstool.c:140
 msgid "_Levels..."
 msgstr "_Nivåer…"
 
-#: ../app/tools/gimplevelstool.c:276
+#: ../app/tools/gimplevelstool.c:280
 msgid "Pick black point for all channels"
 msgstr "Välj svartpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:278
+#: ../app/tools/gimplevelstool.c:282
 msgid "Pick black point for the selected channel"
 msgstr "Välj svartpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:285
+#: ../app/tools/gimplevelstool.c:289
 msgid "Pick gray point for all channels"
 msgstr "Välj gråpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:287
+#: ../app/tools/gimplevelstool.c:291
 msgid "Pick gray point for the selected channel"
 msgstr "Välj gråpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:294
+#: ../app/tools/gimplevelstool.c:298
 msgid "Pick white point for all channels"
 msgstr "Välj vitpunkt för alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:296
+#: ../app/tools/gimplevelstool.c:300
 msgid "Pick white point for the selected channel"
 msgstr "Välj vitpunkt för den markerade kanalen"
 
-#: ../app/tools/gimplevelstool.c:400
+#: ../app/tools/gimplevelstool.c:404
 msgid "Adjust levels in linear light"
 msgstr "Justera nivåer i linjärt ljus"
 
-#: ../app/tools/gimplevelstool.c:401
+#: ../app/tools/gimplevelstool.c:405
 msgid "Adjust levels perceptually"
 msgstr "Justera nivåer perceptuellt"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:410
+#: ../app/tools/gimplevelstool.c:414
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:497
+#: ../app/tools/gimplevelstool.c:501
 msgid "Clamp _input"
 msgstr "Begränsa _indata"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:540
+#: ../app/tools/gimplevelstool.c:544
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:588
+#: ../app/tools/gimplevelstool.c:592
 msgid "Clamp outpu_t"
 msgstr "Begränsa utda_ta"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:603
+#: ../app/tools/gimplevelstool.c:607
 msgid "All Channels"
 msgstr "Alla kanaler"
 
-#: ../app/tools/gimplevelstool.c:615
+#: ../app/tools/gimplevelstool.c:619
 msgid "_Auto Input Levels"
 msgstr "_Automatiska inmatningsnivåer"
 
-#: ../app/tools/gimplevelstool.c:618
+#: ../app/tools/gimplevelstool.c:622
 msgid "Adjust levels for all channels automatically"
 msgstr "Justera nivåer för alla kanaler automatiskt"
 
-#: ../app/tools/gimplevelstool.c:645
+#: ../app/tools/gimplevelstool.c:649
 msgid "Edit these Settings as Curves"
 msgstr "Redigera dessa inställningar som kurvor"
 
-#: ../app/tools/gimplevelstool.c:866
+#: ../app/tools/gimplevelstool.c:870
 msgid "Use _old levels file format"
 msgstr "Använd filformat för _gamla nivåer"
+
+#: ../app/tools/gimplevelstool.c:1013 ../app/tools/gimpthresholdtool.c:412
+msgid "Calculating histogram..."
+msgstr "Beräknar histogram…"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
@@ -22043,7 +22053,7 @@ msgstr "Aktuell"
 msgid "Fixed"
 msgstr "Fast"
 
-#: ../app/tools/gimprectangleoptions.c:1012 ../app/tools/gimptextoptions.c:545
+#: ../app/tools/gimprectangleoptions.c:1012 ../app/tools/gimptextoptions.c:566
 msgid "Size:"
 msgstr "Storlek:"
 
@@ -22314,66 +22324,66 @@ msgstr "Klicka för att smeta"
 msgid "Click to smudge the line"
 msgstr "Klicka för att smeta ut linjen"
 
-#: ../app/tools/gimptextoptions.c:122
+#: ../app/tools/gimptextoptions.c:123
 msgid "Font size unit"
 msgstr "Enhet för teckensnittsstorlek"
 
-#: ../app/tools/gimptextoptions.c:127 ../app/tools/gimptextoptions.c:128
+#: ../app/tools/gimptextoptions.c:128 ../app/tools/gimptextoptions.c:129
 msgid "Font size"
 msgstr "Typsnittsstorlek"
 
-#: ../app/tools/gimptextoptions.c:141
+#: ../app/tools/gimptextoptions.c:142
 msgid "Hinting"
 msgstr "Typsnittsutjämning"
 
-#: ../app/tools/gimptextoptions.c:142
+#: ../app/tools/gimptextoptions.c:143
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Typsnittsutjämning ändrar typsnittets kontur för att ge en tydlig bild vid "
 "små storlekar"
 
-#: ../app/tools/gimptextoptions.c:152
+#: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Textspråket kan ha effekt på hur texten återges."
 
-#: ../app/tools/gimptextoptions.c:166
+#: ../app/tools/gimptextoptions.c:167
 msgid "Justify"
 msgstr "Justera"
 
-#: ../app/tools/gimptextoptions.c:167
+#: ../app/tools/gimptextoptions.c:168
 msgid "Text alignment"
 msgstr "Textjustering"
 
-#: ../app/tools/gimptextoptions.c:174
+#: ../app/tools/gimptextoptions.c:175
 msgid "Indentation"
 msgstr "Indentering"
 
-#: ../app/tools/gimptextoptions.c:175
+#: ../app/tools/gimptextoptions.c:176
 msgid "Indentation of the first line"
 msgstr "Indragning av första raden"
 
-#: ../app/tools/gimptextoptions.c:182
+#: ../app/tools/gimptextoptions.c:183
 msgid "Line spacing"
 msgstr "Radavstånd"
 
-#: ../app/tools/gimptextoptions.c:183
+#: ../app/tools/gimptextoptions.c:184
 msgid "Adjust line spacing"
 msgstr "Justera radavstånd"
 
-#: ../app/tools/gimptextoptions.c:190
+#: ../app/tools/gimptextoptions.c:191
 msgid "Letter spacing"
 msgstr "Bokstavsavstånd"
 
-#: ../app/tools/gimptextoptions.c:191
+#: ../app/tools/gimptextoptions.c:192
 msgid "Adjust letter spacing"
 msgstr "Justera teckenmellanrum"
 
-#: ../app/tools/gimptextoptions.c:198
+#: ../app/tools/gimptextoptions.c:199
 msgid "Box"
 msgstr "Ruta"
 
-#: ../app/tools/gimptextoptions.c:199
+#: ../app/tools/gimptextoptions.c:200
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -22381,67 +22391,71 @@ msgstr ""
 "Huruvida text flödar i en rektangulär form eller byter rad då du trycker på "
 "Enter"
 
-#: ../app/tools/gimptextoptions.c:207
+#: ../app/tools/gimptextoptions.c:208
 msgid "Use editor"
 msgstr "Använd redigerare"
 
-#: ../app/tools/gimptextoptions.c:208
+#: ../app/tools/gimptextoptions.c:209
 msgid "Use an external editor window for text entry"
 msgstr "Använd ett externt redigeringsfönster för textinmatning"
 
-#: ../app/tools/gimptextoptions.c:574
+#: ../app/tools/gimptextoptions.c:595
 msgid "Hinting:"
 msgstr "Typsnittsutjämning:"
 
-#: ../app/tools/gimptextoptions.c:578
+#: ../app/tools/gimptextoptions.c:599
 msgid "Text Color"
 msgstr "Textfärg"
 
-#: ../app/tools/gimptextoptions.c:589
+#: ../app/tools/gimptextoptions.c:610
 msgid "Justify:"
 msgstr "Justera:"
 
-#: ../app/tools/gimptextoptions.c:615
+#: ../app/tools/gimptextoptions.c:636
 msgid "Box:"
 msgstr "Ruta:"
 
-#: ../app/tools/gimptextoptions.c:632
+#: ../app/tools/gimptextoptions.c:653
 msgid "Language:"
 msgstr "Språk:"
 
-#: ../app/tools/gimptexttool.c:203
+#: ../app/tools/gimptexttool.c:211
 msgid "Text"
 msgstr "Text"
 
-#: ../app/tools/gimptexttool.c:204
+#: ../app/tools/gimptexttool.c:212
 msgid "Text Tool: Create or edit text layers"
 msgstr "Textverktyg: Skapa eller redigera textlager"
 
-#: ../app/tools/gimptexttool.c:205
+#: ../app/tools/gimptexttool.c:213
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:959
+#: ../app/tools/gimptexttool.c:992
+msgid "Fonts are still loading"
+msgstr "Typsnitt läses fortfarande in"
+
+#: ../app/tools/gimptexttool.c:1003
 msgid "Text box: "
 msgstr "Textruta: "
 
-#: ../app/tools/gimptexttool.c:1090
+#: ../app/tools/gimptexttool.c:1136
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
-#: ../app/tools/gimptexttool.c:1599 ../app/tools/gimptexttool.c:1602
+#: ../app/tools/gimptexttool.c:1656 ../app/tools/gimptexttool.c:1659
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:1606
+#: ../app/tools/gimptexttool.c:1663
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:1608
+#: ../app/tools/gimptexttool.c:1665
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../app/tools/gimptexttool.c:1630
+#: ../app/tools/gimptexttool.c:1687
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -22459,19 +22473,19 @@ msgstr ""
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
-#: ../app/tools/gimpthresholdtool.c:91
+#: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
 msgstr "_Tröskelvärde…"
 
-#: ../app/tools/gimpthresholdtool.c:191
+#: ../app/tools/gimpthresholdtool.c:195
 msgid "Apply Threshold"
 msgstr "Tillämpa tröskelvärde"
 
-#: ../app/tools/gimpthresholdtool.c:282
+#: ../app/tools/gimpthresholdtool.c:286
 msgid "_Auto"
 msgstr "_Auto"
 
-#: ../app/tools/gimpthresholdtool.c:284
+#: ../app/tools/gimpthresholdtool.c:288
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Justera automatiskt till optimalt binäriserat tröskelvärde"
 
@@ -25394,8 +25408,12 @@ msgstr "rund"
 msgid "fuzzy"
 msgstr "luddig"
 
-#~ msgid "Fonts (this may take a while)"
-#~ msgstr "Typsnitt (det här kan ta en stund)"
+#~ msgid ""
+#~ "Fonts are still loading (this may take a while), text functionality is "
+#~ "not available yet."
+#~ msgstr ""
+#~ "Typsnitt läses fortfarande in (detta kan ta ett tag), textfunktioner är "
+#~ "inte ännu tillgängliga."
 
 #, fuzzy
 #~ msgid "press Enter to validate."
@@ -26047,9 +26065,6 @@ msgstr "luddig"
 
 #~ msgid "Fatal parse error in palette file '%s': Missing magic header."
 #~ msgstr "Ödesdigert tolkningsfel i palettfilen \"%s\": Magisk rubrik saknas."
-
-#~ msgid "Please wait"
-#~ msgstr "Var god vänta"
 
 #~ msgid "Error while parsing '%s'"
 #~ msgstr "Fel vid tolkning av \"%s\""
