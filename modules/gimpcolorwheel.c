@@ -668,23 +668,28 @@ compute_v (GimpColorWheel *wheel,
   return angle / (2.0 * G_PI);
 }
 
-static void
+static gboolean
 set_cross_grab (GimpColorWheel *wheel,
-                guint32         time)
+                GdkEvent       *event)
 {
   GimpColorWheelPrivate *priv = wheel->priv;
+  GdkDisplay            *display;
+  GdkSeat               *seat;
   GdkCursor             *cursor;
+  gboolean               success;
 
-  cursor =
-    gdk_cursor_new_for_display (gtk_widget_get_display (GTK_WIDGET (wheel)),
-                                GDK_CROSSHAIR);
+  display = gtk_widget_get_display (GTK_WIDGET (wheel));
+  seat = gdk_display_get_default_seat (display);
 
-  gdk_pointer_grab (priv->window, FALSE,
-                    GDK_POINTER_MOTION_MASK      |
-                    GDK_POINTER_MOTION_HINT_MASK |
-                    GDK_BUTTON_RELEASE_MASK,
-                    NULL, cursor, time);
+  cursor = gdk_cursor_new_for_display (display, GDK_CROSSHAIR);
+
+  success = (gdk_seat_grab (seat, priv->window,
+                            GDK_SEAT_CAPABILITY_ALL_POINTING, FALSE,
+                            cursor, event, NULL, NULL) == GDK_GRAB_SUCCESS);
+
   g_object_unref (cursor);
+
+  return success;
 }
 
 static gboolean
@@ -715,8 +720,10 @@ gimp_color_wheel_button_press (GtkWidget      *widget,
 
   if (is_in_ring (wheel, x, y))
     {
+      if (! set_cross_grab (wheel, (GdkEvent *) event))
+        return TRUE;
+
       priv->mode = DRAG_H;
-      set_cross_grab (wheel, event->time);
 
       gimp_color_wheel_set_color (wheel,
                                   compute_v (wheel, x, y),
@@ -733,8 +740,10 @@ gimp_color_wheel_button_press (GtkWidget      *widget,
     {
       gdouble s, v;
 
+      if (! set_cross_grab (wheel, (GdkEvent *) event))
+        return TRUE;
+
       priv->mode = DRAG_SV;
-      set_cross_grab (wheel, event->time);
 
       compute_sv (wheel, x, y, &s, &v);
       gimp_color_wheel_set_color (wheel, priv->h, s, v);
@@ -754,6 +763,8 @@ gimp_color_wheel_button_release (GtkWidget      *widget,
 {
   GimpColorWheel        *wheel = GIMP_COLOR_WHEEL (widget);
   GimpColorWheelPrivate *priv  = wheel->priv;
+  GdkDisplay            *display;
+  GdkSeat               *seat;
   DragMode               mode;
   gdouble                x, y;
 
@@ -785,8 +796,10 @@ gimp_color_wheel_button_release (GtkWidget      *widget,
   else
     g_assert_not_reached ();
 
-  gdk_display_pointer_ungrab (gdk_window_get_display (event->window),
-                              event->time);
+  display = gtk_widget_get_display (GTK_WIDGET (wheel));
+  seat = gdk_display_get_default_seat (display);
+
+  gdk_seat_ungrab (seat);
 
   return TRUE;
 }
