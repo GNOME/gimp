@@ -91,14 +91,6 @@
          id="path11633"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
-      <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:2;marker:none"
-         id="rect35735-0-1"
-         width="16"
-         height="16"
-         x="19.99975"
-         y="296"
-         transform="matrix(1,0,0,-1,81.0006,730.9779)" />
       <path
          style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:none;stroke:#bebebe;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate"
          d="m 110.0004,433.9779 0.5,0 c 1.38071,0 2.5,-1.11929 2.5,-2.5 0,-1.38071 -1.1193,-2.50555 -2.5,-2.5 L 105.0002,429"

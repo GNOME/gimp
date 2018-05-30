@@ -116,14 +116,6 @@
          id="gimp-image"
          style="display:inline"
          transform="translate(-133.0002,665.3622)">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect6346"
-           width="16"
-           height="16"
-           x="-100"
-           y="162"
-           transform="translate(241.0002,217)" />
         <path
            style="fill:#bebebe;fill-opacity:1;stroke:none"
            d="M 142.0002,379.9 V 394 h 14 v -14.1 z m 1,1.1 h 12 v 9 h -12 z"

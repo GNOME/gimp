@@ -111,26 +111,6 @@
      transform="translate(0,-1028.3622)">
     <g
        id="g4257">
-      <rect
-         y="1028.3622"
-         x="0"
-         height="24"
-         width="24"
-         id="rect6884"
-         style="opacity:0.3;fill:none;stroke:none;stroke-width:1.5" />
-      <g
-         inkscape:label="gimp-layers"
-         id="gimp-layers"
-         style="display:inline"
-         transform="matrix(1.5,0,0,1.5,-61.500297,369.86224)">
-        <rect
-           style="fill:none;stroke:none"
-           id="rect11958"
-           width="16"
-           height="16"
-           x="41.000198"
-           y="439" />
-      </g>
       <path
          sodipodi:nodetypes="ccccc"
          d="m 6,1035.3622 -6,10 h 18 l 6,-10 z"

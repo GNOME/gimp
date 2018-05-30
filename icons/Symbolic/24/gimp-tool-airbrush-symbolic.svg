@@ -241,15 +241,6 @@
      transform="translate(0,-1028.3622)">
     <g
        id="g11179">
-      <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.5;marker:none"
-         id="rect2941"
-         width="24"
-         height="24"
-         x="-1052.3622"
-         y="0"
-         inkscape:label="audio-volume-high"
-         transform="rotate(-90)" />
       <path
          style="display:inline;fill:url(#linearGradient10444);fill-opacity:1;stroke:none;stroke-width:1.4796741"
          d="m 23.023806,1030.4546 c 0,0 -6.25601,2.8876 -8.978258,4.956 l -3.606432,2.7403 -1.676107,2.7189 c -0.6402274,0.2249 -0.7630095,1.3858 -0.7630095,1.7202 0,0.4224 0.3441473,0.7722 0.7621952,0.7722 0.330961,0 1.4133543,-0.067 1.5985213,-0.6045 l 2.599465,0.2527 0.697371,-0.5125 0.633633,0.7701 1.704648,-1.3393 -0.620588,-0.7572 1.445221,-0.9909 c 2.843968,-1.9498 7.00461,-8.7331 7.00461,-8.7331 0.480126,-0.5657 -0.107701,-1.357 -0.80127,-0.9929 z"

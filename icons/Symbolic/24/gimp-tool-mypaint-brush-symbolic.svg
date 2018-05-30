@@ -61,19 +61,6 @@
        y1="881.35822"
        x2="327.19907"
        y2="881.35822" />
-    <clipPath
-       id="clipPath23756-5"
-       clipPathUnits="userSpaceOnUse">
-      <rect
-         ry="0"
-         rx="0"
-         y="876.36218"
-         x="312"
-         height="16"
-         width="16"
-         id="rect23758-6"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;marker:none;enable-background:accumulate" />
-    </clipPath>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -138,16 +125,6 @@
      transform="translate(0,-1028.3622)">
     <g
        id="g9828">
-      <rect
-         inkscape:transform-center-y="52.3259"
-         inkscape:transform-center-x="-94.752306"
-         y="1028.3622"
-         x="4.1510501e-15"
-         height="24"
-         width="24"
-         id="1234-8"
-         style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         inkscape:label="" />
       <path
          sodipodi:nodetypes="cssssscsccccsscccccccccccccc"
          id="rect23745-5"

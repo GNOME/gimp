@@ -116,14 +116,6 @@
          inkscape:label="gimp-tool-blur"
          id="gimp-tool-blur-2"
          style="display:inline">
-        <rect
-           style="fill:none;fill-opacity:1;stroke:none"
-           id="rect12656-2"
-           width="16"
-           height="16"
-           x="-120"
-           y="0"
-           transform="translate(241.0002,217)" />
         <path
            style="fill:url(#linearGradient10408-3);fill-opacity:1;stroke:none;stroke-width:1.11409664"
            d="m 134.33354,227.66667 c 0,3.2 -1.79872,5.33333 -5.33334,5.33333 -3.53463,0 -5.33333,-2.13333 -5.33333,-5.33333 0,-4.26667 4.26667,-5.33333 5.33333,-10.66666 1.06667,5.33333 5.33334,6.39999 5.33334,10.66666 z"
