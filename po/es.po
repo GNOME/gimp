@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2018-05-25 17:49+0000\n"
-"PO-Revision-Date: 2018-05-26 19:27+0200\n"
+"POT-Creation-Date: 2018-05-28 12:01+0000\n"
+"PO-Revision-Date: 2018-05-30 14:26+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -200,29 +200,44 @@ msgid ""
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
+"En este segundo candidato de lanzamiento antes de GIMP 2.10.0, mientras que "
+"la depuración sigue siendo un objetivo principal, se ha puesto un nuevo "
+"enfoque en la velocidad y la optimización para proporcionar una experiencia "
+"de pintura más fluida. Los cambios más grandes son:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
+"Grandes optimizaciones fundamentales para pintura y visualización, "
+"incluyendo el código de pintura en paralelo."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
+"Las simetrías ahora se conservan en archivos XCF (guardados como parásitos "
+"de imágenes)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
+"Los temas «Claro» y «Oscuro» se han reescrito desde cero para eliminar "
+"varios problemas de usabilidad. Se eliminaron los temas «Más claro» y «Más "
+"oscuro»."
 
+# https://es.wikipedia.org/wiki/%C3%81ngulos_de_navegaci%C3%B3n
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
+"Nuevo control sobre lienzo GimpToolGyroscope, actualmente utilizado para el "
+"filtro de proyección de panorama. El componente proporciona interacción "
+"sobre lienzo para la rotación 3D (guiñada, cabeceo, alabeo)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
@@ -230,12 +245,18 @@ msgid ""
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set."
 msgstr ""
+"Se ha mejorado la depuración de complementos para producir rastreos de pila "
+"desde los complementos con la opción de la línea de comandos --stack-trace-"
+"mode no solo para las señales recibidas sino también para advertencias y "
+"errores críticos cuando se establece la clave de depuración «fatal-warnings»."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
 msgstr ""
+"Para más información, consulte https://www.gimp.org/news/2018/04/17/"
+"gimp-2-10-0-rc2-released/"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
@@ -243,26 +264,32 @@ msgid ""
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
+"GIMP 2.10.0-RC1 es la primera versión candidata antes de la versión estable "
+"de GIMP 2.10.0, con un enfoque en la depuración y la estabilidad. Además de "
+"las muchas correcciones de errores, las mejoras más notables son:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "New dashboard dockable to monitor GIMP resource usage"
-msgstr ""
+msgstr "Nuevo tablero acoplable para monitorizar el uso de recursos de GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
+"Nuevo diálogo de depuración para generar rastreos y otros datos de "
+"depuración, alentando a informar sobre errores"
 
+# después de un fallo/cuelgue/caida
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
+"Las imágenes no guardadas ahora se pueden recuperar después de un bloqueo"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
-#, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Layer masks on layer groups"
-msgstr "No se puede pintar sobre un grupo de capas."
+msgstr "Máscaras de capas en grupos de capas"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
@@ -352,11 +379,11 @@ msgstr ""
 "Para más información, consulte https://www.gimp.org/news/2017/12/12/"
 "gimp-2-9-8-released/"
 
-#: ../desktop/gimp-data-extras.metainfo.xml.in.h:1
+#: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:1
 msgid "Extra files for GIMP"
 msgstr "Archivos adicionales de GIMP"
 
-#: ../desktop/gimp-data-extras.metainfo.xml.in.h:2
+#: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
 msgstr "Patrones, degradados y otros archivos adicionales para GIMP"
 
@@ -676,8 +703,8 @@ msgstr "Archivo"
 msgid "Filters"
 msgstr "Filtros"
 
-#: ../app/actions/actions.c:171 ../app/dialogs/dialogs.c:353
-#: ../app/dialogs/preferences-dialog.c:3108
+#: ../app/actions/actions.c:171 ../app/core/gimp.c:802
+#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:3108
 msgid "Fonts"
 msgstr "Tipografías"
 
@@ -6661,30 +6688,22 @@ msgid "Dismiss the effect of the layer mask"
 msgstr "Ignorar el efecto de la máscara de capa"
 
 #: ../app/actions/layers-actions.c:306
-#| msgctxt "drawable-action"
-#| msgid "Toggle visibility"
 msgctxt "layers-action"
 msgid "Toggle Layer _Visibility"
 msgstr "Alternar la _visibilidad de la capa"
 
 #: ../app/actions/layers-actions.c:312
-#| msgctxt "drawable-action"
-#| msgid "Toggle the linked state"
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
 msgstr "Alternar el estado de en_lazado"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
-#| msgctxt "layers-action"
-#| msgid "L_ock pixels"
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
 msgstr "_Bloquear los píxeles de la capa"
 
 #: ../app/actions/layers-actions.c:324
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgctxt "layers-action"
 msgid "L_ock Position of Layer"
 msgstr "_Bloquear la posición de la capa"
@@ -8391,7 +8410,6 @@ msgid "Tool's Opacity: Set"
 msgstr "Opacidad de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:268
-#| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "Opacidad de la herramienta: asignar el valor predeterminado"
@@ -8442,8 +8460,6 @@ msgid "Tool's Size: Set"
 msgstr "Tamaño de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:312
-#| msgctxt "tool-options-action"
-#| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "Tamaño de la herramienta: asignar el valor predeterminado"
@@ -8490,13 +8506,11 @@ msgstr ""
 
 # Aspect ratio = proporción segun Wordreference
 #: ../app/actions/tools-actions.c:352
-#| msgid "Brush Aspect Ratio"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
 msgstr "Proporción de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:356
-#| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
 msgstr "Proporción de la herramienta: asignar el valor predeterminado"
@@ -8597,7 +8611,6 @@ msgid "Tool's Spacing: Set"
 msgstr "Espaciado de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:444
-#| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
 msgstr "Espaciado de la herramienta: asignar el valor predeterminado"
@@ -8643,14 +8656,11 @@ msgid "Tool's Spacing: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:484
-#| msgid "Tool Preset"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
 msgstr "Dureza de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:488
-#| msgctxt "tool-options-action"
-#| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
 msgstr "Dureza de la herramienta: asignar el valor predeterminado"
@@ -8696,14 +8706,11 @@ msgid "Tool's Hardness: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:528
-#| msgid "Tool Preset"
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
 msgstr "Fuerza de la herramienta: asignar"
 
 #: ../app/actions/tools-actions.c:532
-#| msgctxt "tool-options-action"
-#| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
 msgstr "Fuerza de la herramienta: asignar el valor predeterminado"
@@ -8764,7 +8771,6 @@ msgid "Edit Pa_th"
 msgstr "Editar ru_ta"
 
 #: ../app/actions/vectors-actions.c:55
-#| msgid "Export the active path"
 msgctxt "vectors-action"
 msgid "Edit the active path"
 msgstr "Editar la ruta activa"
@@ -12170,10 +12176,6 @@ msgstr "Buscando archivos de datos"
 msgid "Parasites"
 msgstr "Parásitos"
 
-#: ../app/core/gimp.c:802
-msgid "Fonts (this may take a while)"
-msgstr "Tipografías (esto puede tardar un rato)"
-
 #. initialize the module list
 #: ../app/core/gimp.c:811 ../app/dialogs/preferences-dialog.c:3128
 msgid "Modules"
@@ -12892,7 +12894,7 @@ msgstr "Calculando mapa de distancias"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:116
-#: ../app/tools/gimplevelstool.c:133
+#: ../app/tools/gimplevelstool.c:134
 msgid "Levels"
 msgstr "Niveles"
 
@@ -14193,7 +14195,7 @@ msgstr "Precisión"
 #. gamma
 #: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:139
-#: ../app/operations/gimplevelsconfig.c:140 ../app/tools/gimplevelstool.c:504
+#: ../app/operations/gimplevelsconfig.c:140 ../app/tools/gimplevelstool.c:505
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -18770,7 +18772,7 @@ msgstr ""
 "Herramienta de tono y saturación: ajustar el tono, la saturación y la "
 "luminosidad"
 
-#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:134
+#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:135
 #, fuzzy
 #| msgid "Adjust Color Levels"
 msgid "Adjust color levels"
@@ -18789,7 +18791,7 @@ msgid "Replace partial transparency with a color"
 msgstr "Reemplazar la transparencia parcial con un color"
 
 #: ../app/operations/gimpoperationthreshold.c:84
-#: ../app/tools/gimpthresholdtool.c:89
+#: ../app/tools/gimpthresholdtool.c:90
 #, fuzzy
 #| msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgid "Reduce image to two colors using a threshold"
@@ -20321,7 +20323,7 @@ msgid "Select Range to Adjust"
 msgstr "Seleccione el rango para ajustar"
 
 #: ../app/propgui/gimppropgui-color-balance.c:103
-#: ../app/tools/gimplevelstool.c:251
+#: ../app/tools/gimplevelstool.c:252
 msgid "Adjust Color Levels"
 msgstr "Ajustar los niveles de color"
 
@@ -20635,7 +20637,7 @@ msgstr ""
 "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el "
 "saxofón detrás del palenque de paja."
 
-#: ../app/text/gimp-fonts.c:270
+#: ../app/text/gimp-fonts.c:241
 #, fuzzy, c-format
 #| msgid ""
 #| "Failed to load data:\n"
@@ -20690,17 +20692,27 @@ msgid "Discard Text Information"
 msgstr "Eliminar la información de texto"
 
 #: ../app/text/gimptextlayer.c:634
+#, fuzzy
+#| msgid "Due to lack of any fonts, text functionality is not available."
+msgid ""
+"Fonts are still loading (this may take a while), text functionality is not "
+"available yet."
+msgstr ""
+"Debido a la falta de tipografías la funcionalidad de texto no está "
+"disponible."
+
+#: ../app/text/gimptextlayer.c:641
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Debido a la falta de tipografías la funcionalidad de texto no está "
 "disponible."
 
 # Aquí creo que Empty es adjetivo también
-#: ../app/text/gimptextlayer.c:697
+#: ../app/text/gimptextlayer.c:704
 msgid "Empty Text Layer"
 msgstr "Capa de texto vacía"
 
-#: ../app/text/gimptextlayer.c:750
+#: ../app/text/gimptextlayer.c:757
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20931,7 +20943,7 @@ msgstr ""
 #: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpgradientoptions.c:129
 #: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:88
+#: ../app/tools/gimpthresholdtool.c:89
 msgid "Threshold"
 msgstr "Umbral B/N"
 
@@ -21316,12 +21328,12 @@ msgstr "%s: añadir puntos de control a todos los canales"
 msgid "Adjust Color Curves"
 msgstr "Ajustar las curvas de color"
 
-#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:349
-#: ../app/tools/gimpthresholdtool.c:225
+#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:350
+#: ../app/tools/gimpthresholdtool.c:226
 msgid "Cha_nnel:"
 msgstr "Ca_nal:"
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:379
+#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:380
 msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
@@ -21343,7 +21355,7 @@ msgstr "Invertir los colores"
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
-#: ../app/tools/gimpcurvestool.c:662 ../app/tools/gimplevelstool.c:749
+#: ../app/tools/gimpcurvestool.c:662 ../app/tools/gimplevelstool.c:750
 msgid "Could not read header: "
 msgstr "No se ha podido leer la cabecera:"
 
@@ -21896,7 +21908,7 @@ msgstr "Color del punto final izquierdo"
 #. the position label
 #: ../app/tools/gimpgradienttool-editor.c:1391
 #: ../app/tools/gimpgradienttool-editor.c:1511
-#: ../app/tools/gimprectangleoptions.c:1031
+#: ../app/tools/gimprectangleoptions.c:1003
 msgid "Position:"
 msgstr "Posicionar:"
 
@@ -22135,42 +22147,42 @@ msgstr "Pulse o arrastre para añadir un punto"
 msgid "Modify Scissors Curve"
 msgstr "Modificar la curva de las tijeras"
 
-#: ../app/tools/gimplevelstool.c:135
+#: ../app/tools/gimplevelstool.c:136
 msgid "_Levels..."
 msgstr "_Niveles…"
 
-#: ../app/tools/gimplevelstool.c:275
+#: ../app/tools/gimplevelstool.c:276
 msgid "Pick black point for all channels"
 msgstr "Seleccionar punto negro para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:277
+#: ../app/tools/gimplevelstool.c:278
 msgid "Pick black point for the selected channel"
 msgstr "Seleccionar punto negro para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:284
+#: ../app/tools/gimplevelstool.c:285
 msgid "Pick gray point for all channels"
 msgstr "Seleccionar punto gris para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:286
+#: ../app/tools/gimplevelstool.c:287
 msgid "Pick gray point for the selected channel"
 msgstr "Seleccionar punto gris para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:293
+#: ../app/tools/gimplevelstool.c:294
 msgid "Pick white point for all channels"
 msgstr "Seleccionar punto blanco para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:295
+#: ../app/tools/gimplevelstool.c:296
 msgid "Pick white point for the selected channel"
 msgstr "Seleccionar punto blanco para el canal seleccionado"
 
-#: ../app/tools/gimplevelstool.c:399
+#: ../app/tools/gimplevelstool.c:400
 #, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "Convert the image to linear light"
 msgid "Adjust levels in linear light"
 msgstr "Convertir la imagen a luz lineal"
 
-#: ../app/tools/gimplevelstool.c:400
+#: ../app/tools/gimplevelstool.c:401
 #, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Invert the colors"
@@ -22178,41 +22190,41 @@ msgid "Adjust levels perceptually"
 msgstr "Invertir los colores"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:409
+#: ../app/tools/gimplevelstool.c:410
 msgid "Input Levels"
 msgstr "Niveles de entrada"
 
-#: ../app/tools/gimplevelstool.c:496
+#: ../app/tools/gimplevelstool.c:497
 msgid "Clamp _input"
 msgstr ""
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:539
+#: ../app/tools/gimplevelstool.c:540
 msgid "Output Levels"
 msgstr "Niveles de salida"
 
-#: ../app/tools/gimplevelstool.c:587
+#: ../app/tools/gimplevelstool.c:588
 msgid "Clamp outpu_t"
 msgstr ""
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:602
+#: ../app/tools/gimplevelstool.c:603
 msgid "All Channels"
 msgstr "Todos los canales"
 
-#: ../app/tools/gimplevelstool.c:614
+#: ../app/tools/gimplevelstool.c:615
 msgid "_Auto Input Levels"
 msgstr "Niveles de _entrada automáticos"
 
-#: ../app/tools/gimplevelstool.c:617
+#: ../app/tools/gimplevelstool.c:618
 msgid "Adjust levels for all channels automatically"
 msgstr "Ajustar automáticamente los niveles para todos los canales"
 
-#: ../app/tools/gimplevelstool.c:644
+#: ../app/tools/gimplevelstool.c:645
 msgid "Edit these Settings as Curves"
 msgstr "Editar estos ajustes como curvas"
 
-#: ../app/tools/gimplevelstool.c:865
+#: ../app/tools/gimplevelstool.c:866
 msgid "Use _old levels file format"
 msgstr "Usar el formato antigu_o de archivo de niveles"
 
@@ -22541,92 +22553,92 @@ msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspectiva"
 
-#: ../app/tools/gimprectangleoptions.c:109
+#: ../app/tools/gimprectangleoptions.c:84
 msgid "Automatically shrink to the nearest rectangular shape in a layer"
 msgstr ""
 "Reducir automáticamente a la forma rectangular más cercana dentro de una capa"
 
-#: ../app/tools/gimprectangleoptions.c:117
+#: ../app/tools/gimprectangleoptions.c:92
 msgid "Shrink merged"
 msgstr "Encoger combinado"
 
-#: ../app/tools/gimprectangleoptions.c:118
+#: ../app/tools/gimprectangleoptions.c:93
 msgid "Use all visible layers when shrinking the selection"
 msgstr ""
 "Utilizar todas las capas visibles cuando se está encogiendo la selección"
 
-#: ../app/tools/gimprectangleoptions.c:127
+#: ../app/tools/gimprectangleoptions.c:102
 #: ../app/tools/gimptransformoptions.c:155
 msgid "Composition guides such as rule of thirds"
 msgstr "Guías de composición tales como la regla de los tercios"
 
-#: ../app/tools/gimprectangleoptions.c:136
+#: ../app/tools/gimprectangleoptions.c:111
 msgid "X coordinate of top left corner"
 msgstr "Coordenada X de la esquina superior izquierda"
 
-#: ../app/tools/gimprectangleoptions.c:146
+#: ../app/tools/gimprectangleoptions.c:121
 msgid "Y coordinate of top left corner"
 msgstr "Coordenada Y de la esquina superior izquierda"
 
-#: ../app/tools/gimprectangleoptions.c:156
+#: ../app/tools/gimprectangleoptions.c:131
 msgid "Width of selection"
 msgstr "Anchura de la selección"
 
-#: ../app/tools/gimprectangleoptions.c:165
+#: ../app/tools/gimprectangleoptions.c:140
 msgid "Height of selection"
 msgstr "Altura de la selección"
 
-#: ../app/tools/gimprectangleoptions.c:174
+#: ../app/tools/gimprectangleoptions.c:149
 msgid "Unit of top left corner coordinate"
 msgstr "Unidades de la coordenada de la esquina superior izquierda"
 
-#: ../app/tools/gimprectangleoptions.c:183
+#: ../app/tools/gimprectangleoptions.c:158
 msgid "Unit of selection size"
 msgstr "Unidades del tamaño de la selección"
 
-#: ../app/tools/gimprectangleoptions.c:192
+#: ../app/tools/gimprectangleoptions.c:167
 msgid "Enable lock of aspect ratio, width, height or size"
 msgstr "Permitir bloquear la proporción de aspecto, anchura, altura o tamaño"
 
-#: ../app/tools/gimprectangleoptions.c:201
+#: ../app/tools/gimprectangleoptions.c:176
 msgid "Choose what has to be locked"
 msgstr "Elegir qué se debe bloquear"
 
-#: ../app/tools/gimprectangleoptions.c:210
+#: ../app/tools/gimprectangleoptions.c:185
 msgid "Custom fixed width"
 msgstr "Anchura fija personalizada"
 
-#: ../app/tools/gimprectangleoptions.c:219
+#: ../app/tools/gimprectangleoptions.c:194
 msgid "Custom fixed height"
 msgstr "Altura fija personalizada"
 
-#: ../app/tools/gimprectangleoptions.c:313
+#: ../app/tools/gimprectangleoptions.c:288
 msgid "Unit of fixed width, height or size"
 msgstr "Unidades de anchura, altura o tamaño fijos"
 
-#: ../app/tools/gimprectangleoptions.c:321
+#: ../app/tools/gimprectangleoptions.c:296
 msgid "Expand from center"
 msgstr "Expandir desde el centro"
 
-#: ../app/tools/gimprectangleoptions.c:322
+#: ../app/tools/gimprectangleoptions.c:297
 msgid "Expand selection from center outwards"
 msgstr "Expandir la selección desde el centro hacia fuera"
 
 #. Current, as in what is currently in use.
-#: ../app/tools/gimprectangleoptions.c:774
+#: ../app/tools/gimprectangleoptions.c:746
 msgid "Current"
 msgstr "Actual"
 
-#: ../app/tools/gimprectangleoptions.c:890
+#: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed"
 msgstr "Fijo"
 
-#: ../app/tools/gimprectangleoptions.c:1040 ../app/tools/gimptextoptions.c:545
+#: ../app/tools/gimprectangleoptions.c:1012 ../app/tools/gimptextoptions.c:545
 msgid "Size:"
 msgstr "Tamaño:"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1067
+#: ../app/tools/gimprectangleoptions.c:1039
 msgid "Auto Shrink"
 msgstr "Encoger automáticamente"
 
@@ -23044,19 +23056,19 @@ msgstr ""
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de GIMP"
 
-#: ../app/tools/gimpthresholdtool.c:90
+#: ../app/tools/gimpthresholdtool.c:91
 msgid "_Threshold..."
 msgstr "_Umbral…"
 
-#: ../app/tools/gimpthresholdtool.c:190
+#: ../app/tools/gimpthresholdtool.c:191
 msgid "Apply Threshold"
 msgstr "Aplicar umbral"
 
-#: ../app/tools/gimpthresholdtool.c:281
+#: ../app/tools/gimpthresholdtool.c:282
 msgid "_Auto"
 msgstr "_Auto"
 
-#: ../app/tools/gimpthresholdtool.c:283
+#: ../app/tools/gimpthresholdtool.c:284
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Autoajustar al umbral óptimo de binarización"
 
@@ -24300,13 +24312,13 @@ msgid "Open Bug Tracker"
 msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:132
-#: ../app/widgets/gimpcriticaldialog.c:452
+#: ../app/widgets/gimpcriticaldialog.c:454
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:134
-#: ../app/widgets/gimpcriticaldialog.c:454
+#: ../app/widgets/gimpcriticaldialog.c:456
 #, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Copy brush file location to clipboard"
@@ -24314,17 +24326,17 @@ msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Copiar al portapapeles la ubicación del pincel"
 
 #: ../app/widgets/gimpcriticaldialog.c:136
-#: ../app/widgets/gimpcriticaldialog.c:456
+#: ../app/widgets/gimpcriticaldialog.c:458
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:138
-#: ../app/widgets/gimpcriticaldialog.c:458
+#: ../app/widgets/gimpcriticaldialog.c:460
 msgid "Create a login if you don't have one yet."
 msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:139
-#: ../app/widgets/gimpcriticaldialog.c:459
+#: ../app/widgets/gimpcriticaldialog.c:461
 #, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste the content of a named buffer"
@@ -24332,7 +24344,7 @@ msgid "Paste the clipboard text in a new bug report."
 msgstr "Pegar el contenido de un búfer con nombre"
 
 #: ../app/widgets/gimpcriticaldialog.c:140
-#: ../app/widgets/gimpcriticaldialog.c:460
+#: ../app/widgets/gimpcriticaldialog.c:462
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -24350,80 +24362,80 @@ msgid ""
 "make your software awesome."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:226
+#: ../app/widgets/gimpcriticaldialog.c:228
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:229
+#: ../app/widgets/gimpcriticaldialog.c:231
 msgid "The specified file was not found."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:232
+#: ../app/widgets/gimpcriticaldialog.c:234
 #, fuzzy
 #| msgid "The active path is locked."
 msgid "The specified path was not found."
 msgstr "La ruta activa está bloqueada."
 
-#: ../app/widgets/gimpcriticaldialog.c:235
+#: ../app/widgets/gimpcriticaldialog.c:237
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:238
+#: ../app/widgets/gimpcriticaldialog.c:240
 msgid "The operating system denied access to the specified file."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:241
+#: ../app/widgets/gimpcriticaldialog.c:243
 msgid "The file name association is incomplete or invalid."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:244
+#: ../app/widgets/gimpcriticaldialog.c:246
 msgid "DDE transaction busy"
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:247
+#: ../app/widgets/gimpcriticaldialog.c:249
 #, fuzzy
 #| msgid "User installation failed!"
 msgid "The DDE transaction failed."
 msgstr "¡La instalación de usuario ha fallado!"
 
-#: ../app/widgets/gimpcriticaldialog.c:250
+#: ../app/widgets/gimpcriticaldialog.c:252
 msgid "The DDE transaction timed out."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:253
+#: ../app/widgets/gimpcriticaldialog.c:255
 msgid "The specified DLL was not found."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:256
+#: ../app/widgets/gimpcriticaldialog.c:258
 msgid "There is no application associated with the given file name extension."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:259
+#: ../app/widgets/gimpcriticaldialog.c:261
 msgid "There was not enough memory to complete the operation."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:262
+#: ../app/widgets/gimpcriticaldialog.c:264
 msgid "A sharing violation occurred."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:265
+#: ../app/widgets/gimpcriticaldialog.c:267
 msgid "Unknown Microsoft Windows error."
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:268
+#: ../app/widgets/gimpcriticaldialog.c:270
 #, fuzzy, c-format
 #| msgid "Failed to import paths from '%s': %s"
 msgid "Failed to open '%s': %s"
 msgstr "Fallo al importar rutas desde «%s»: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:418
+#: ../app/widgets/gimpcriticaldialog.c:420
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr ""
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:425
+#: ../app/widgets/gimpcriticaldialog.c:427
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr ""
@@ -24431,12 +24443,12 @@ msgstr ""
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:433
+#: ../app/widgets/gimpcriticaldialog.c:435
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr ""
 
-#: ../app/widgets/gimpcriticaldialog.c:485
+#: ../app/widgets/gimpcriticaldialog.c:487
 msgid "_Restart GIMP"
 msgstr ""
 
@@ -26053,6 +26065,9 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid "Fonts (this may take a while)"
+#~ msgstr "Tipografías (esto puede tardar un rato)"
 
 #, fuzzy
 #~| msgid "Source"
