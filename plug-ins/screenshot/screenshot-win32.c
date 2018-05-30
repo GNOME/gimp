@@ -49,8 +49,8 @@
 #include "screenshot-win32-resource.h"
 
 #include "libgimp/stdplugins-intl.h"
-#include "magnification-api-win32.h"
-#include "dwm-api-win32.h"
+#include "screenshot-win32-magnification-api.h"
+#include "screenshot-win32-dwm-api.h"
 
 /*
  * Application definitions

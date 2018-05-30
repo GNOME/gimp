@@ -44,23 +44,24 @@ libexec_PROGRAMS = screenshot
 EXTRA_PROGRAMS = screenshot
 
 screenshot_SOURCES = \
-	screenshot.c			\
-	screenshot.h			\
-	screenshot-freedesktop.c	\
-	screenshot-freedesktop.h	\
-	screenshot-gnome-shell.c	\
-	screenshot-gnome-shell.h	\
-	screenshot-icon.h		\
-	screenshot-kwin.c		\
-	screenshot-kwin.h		\
-	screenshot-osx.c		\
-	screenshot-osx.h		\
-	screenshot-x11.c		\
-	screenshot-x11.h		\
-	screenshot-win32.rc		\
-	screenshot-win32.c		\
-	screenshot-win32.h		\
-	magnification-api-win32.h	\
+	screenshot.c				\
+	screenshot.h				\
+	screenshot-freedesktop.c		\
+	screenshot-freedesktop.h		\
+	screenshot-gnome-shell.c		\
+	screenshot-gnome-shell.h		\
+	screenshot-icon.h			\
+	screenshot-kwin.c			\
+	screenshot-kwin.h			\
+	screenshot-osx.c			\
+	screenshot-osx.h			\
+	screenshot-x11.c			\
+	screenshot-x11.h			\
+	screenshot-win32.rc			\
+	screenshot-win32.c			\
+	screenshot-win32.h			\
+	screenshot-win32-dwm-api.h		\
+	screenshot-win32-magnification-api.h	\
 	screenshot-win32-resource.h
 
 EXTRA_DIST = \
