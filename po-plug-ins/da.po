@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2018-05-04 18:53+0000\n"
-"PO-Revision-Date: 2018-05-19 09:47+0200\n"
+"PO-Revision-Date: 2018-05-30 14:08+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -40,7 +40,7 @@ msgstr "Stil alle synlige lag i billedet på række"
 
 #: ../plug-ins/common/align-layers.c:163
 msgid "Align Visi_ble Layers..."
-msgstr "Justér _synlige lag …"
+msgstr "Justé_r synlige lag …"
 
 #: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
@@ -569,7 +569,7 @@ msgstr "Skab et skakbrætmønster"
 
 #: ../plug-ins/common/checkerboard.c:94
 msgid "_Checkerboard (legacy)..."
-msgstr "_Skakbræt (forældet) …"
+msgstr "S_kakbræt (forældet) …"
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
@@ -1183,7 +1183,7 @@ msgstr "Stræk farvemætning til at dække det størst mulige område"
 
 #: ../plug-ins/common/color-enhance.c:80
 msgid "_Color Enhance (legacy)"
-msgstr "_Farveforbedring (forældet)"
+msgstr "F_arveforbedring (forældet)"
 
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
@@ -1220,7 +1220,7 @@ msgstr "Arrangér farvekortet"
 
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "_Arrangér farvekort …"
+msgstr "Arran_gér farvekort …"
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -1593,7 +1593,7 @@ msgstr "Beskær automatisk \"ubrugt\" plads fra kanten og i midten"
 
 #: ../plug-ins/common/crop-zealous.c:74
 msgid "_Zealous Crop"
-msgstr "Nidk_ær beskæring"
+msgstr "_Nidkær beskæring"
 
 #: ../plug-ins/common/crop-zealous.c:123
 msgid "Zealous cropping"
@@ -1609,7 +1609,7 @@ msgstr "Bøj billedet ved hjælp af to kontrolkurver"
 
 #: ../plug-ins/common/curve-bend.c:547
 msgid "_Curve Bend..."
-msgstr "_Kurvebøjning …"
+msgstr "Kurveb_øjning …"
 
 #: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -1928,7 +1928,7 @@ msgstr "Opsplit et billede i flere farverumskomponenter"
 
 #: ../plug-ins/common/decompose.c:277 ../plug-ins/common/decompose.c:295
 msgid "_Decompose..."
-msgstr "Op_split …"
+msgstr "_Opsplit …"
 
 #: ../plug-ins/common/decompose.c:383
 msgid "Decomposing"
@@ -2110,7 +2110,7 @@ msgstr "Simulér den glødende kant af et neonlys"
 
 #: ../plug-ins/common/edge-neon.c:140
 msgid "_Neon (legacy)..."
-msgstr "_Neon (forældet) …"
+msgstr "N_eon (forældet) …"
 
 #: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
@@ -2130,7 +2130,7 @@ msgstr "Simulér et billede skabt ved relief"
 
 #: ../plug-ins/common/emboss.c:131
 msgid "_Emboss (legacy)..."
-msgstr "_Relief (forældet) …"
+msgstr "Relief (for_ældet) …"
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -5051,7 +5051,7 @@ msgstr "Transformér billede med Mandelbrot-fraktalen"
 
 #: ../plug-ins/common/fractal-trace.c:121
 msgid "_Fractal Trace (legacy)..."
-msgstr "_Fraktaltransformering (forældet) …"
+msgstr "Fra_ktaltransformering (forældet) …"
 
 #: ../plug-ins/common/fractal-trace.c:471
 #: ../plug-ins/common/fractal-trace.c:707
@@ -5133,7 +5133,7 @@ msgstr "Tegn et gitter på billedet"
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid (legacy)..."
-msgstr "_Gitter (forældet) …"
+msgstr "G_itter (forældet) …"
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
@@ -5552,7 +5552,7 @@ msgstr "Tvær farverne ud for at efterligne et oliemaleri"
 
 #: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy (legacy)..."
-msgstr "_Oliemaleri (forældet) …"
+msgstr "Olie_maleri (forældet) …"
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
@@ -5597,7 +5597,7 @@ msgstr "Efterligner farveforvrængning som på en fotokopimaskine"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy (legacy)..."
-msgstr "_Fotokopi (forældet) …"
+msgstr "Fotoko_pi (forældet) …"
 
 #: ../plug-ins/common/photocopy.c:836
 msgid "Photocopy"
@@ -5733,7 +5733,7 @@ msgstr "Farvelæg billede med brug af et prøvebillede"
 
 #: ../plug-ins/common/sample-colorize.c:303
 msgid "_Sample Colorize..."
-msgstr "_Prøvefarvelægning …"
+msgstr "Pr_øvefarvelægning …"
 
 #: ../plug-ins/common/sample-colorize.c:1325
 msgid "Sample Colorize"
@@ -5865,7 +5865,7 @@ msgstr "Giver billedet et skær ved at gøre højlys intense og udflydende"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow (legacy)..."
-msgstr "_Blødt skær (forældet) …"
+msgstr "Bl_ødt skær (forældet) …"
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
@@ -5990,7 +5990,7 @@ msgstr "Skal effekten vendes om?"
 
 #: ../plug-ins/common/sparkle.c:530
 msgid "A_dd border"
-msgstr "Tilføj _kant"
+msgstr "T_ilføj kant"
 
 #: ../plug-ins/common/sparkle.c:536
 msgid "Draw a border of spikes around the image"
@@ -6220,7 +6220,7 @@ msgstr "Opret kopier af billedet lagt ud som fliser"
 
 #: ../plug-ins/common/tile.c:120
 msgid "_Tile..."
-msgstr "_Fliser …"
+msgstr "F_liser …"
 
 #. Set the tile cache size
 #: ../plug-ins/common/tile.c:197 ../plug-ins/common/tile-small.c:326
@@ -6456,7 +6456,7 @@ msgstr "Den mest brugte metode til at gøre et billede skarpere"
 # "filter.",
 #: ../plug-ins/common/unsharp-mask.c:142
 msgid "_Unsharp Mask (legacy)..."
-msgstr "_Uskarp maskering (forældet) …"
+msgstr "Usk_arp maskering (forældet) …"
 
 #: ../plug-ins/common/unsharp-mask.c:694
 msgid "Merging"
@@ -6539,7 +6539,7 @@ msgstr "Specielle effekter som ingen forstår"
 
 #: ../plug-ins/common/van-gogh-lic.c:817
 msgid "_Van Gogh (LIC)..."
-msgstr "_Van Gogh (LIC) …"
+msgstr "Van Gog_h (LIC) …"
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
@@ -7834,7 +7834,7 @@ msgstr "Lav gentagende kosmiske fraktalflammer"
 
 #: ../plug-ins/flame/flame.c:134
 msgid "_Flame..."
-msgstr "_Flamme …"
+msgstr "F_lamme …"
 
 #: ../plug-ins/flame/flame.c:227
 msgid "Drawing flame"
@@ -9001,7 +9001,7 @@ msgstr "Udfører diverse kunstneriske handlinger"
 
 #: ../plug-ins/gimpressionist/gimp.c:94
 msgid "_GIMPressionist..."
-msgstr "_GIMPressionisme …"
+msgstr "G_IMPressionisme …"
 
 #: ../plug-ins/gimpressionist/gimp.c:164
 msgid "The selection does not intersect the active layer or mask."
@@ -12258,7 +12258,7 @@ msgstr "Rul et af billedets hjørner"
 
 #: ../plug-ins/pagecurl/pagecurl.c:208
 msgid "_Pagecurl..."
-msgstr "_Bladreeffekt …"
+msgstr "Bl_adreeffekt …"
 
 # "effect" er overflødigt
 #: ../plug-ins/pagecurl/pagecurl.c:435
