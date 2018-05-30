@@ -255,6 +255,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GtkBorder                      border;
+  gint                           scale_factor;
   gint                           calc_width;
   gint                           calc_height;
   gint                           pixbuf_width;
@@ -263,6 +264,8 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   gfloat                         yalign;
   gint                           xpad;
   gint                           ypad;
+
+  scale_factor = gtk_widget_get_scale_factor (widget);
 
   if (! priv->icon_name)
     {
@@ -285,8 +288,9 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   pixbuf_width  = gdk_pixbuf_get_width  (priv->pixbuf);
   pixbuf_height = gdk_pixbuf_get_height (priv->pixbuf);
 
-  calc_width  = pixbuf_width  + (gint) xpad * 2;
-  calc_height = pixbuf_height + (gint) ypad * 2;
+  /* The pixbuf size may be bigger than the logical size. */
+  calc_width  = pixbuf_width / scale_factor + (gint) xpad * 2;
+  calc_height = pixbuf_height / scale_factor + (gint) ypad * 2;
 
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_BUTTON);
 
@@ -333,8 +337,11 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   GdkRectangle                   toggle_rect;
   GtkStateFlags                  state;
   gboolean                       active;
+  gint                           scale_factor;
   gint                           xpad;
   gint                           ypad;
+
+  scale_factor = gtk_widget_get_scale_factor (widget);
 
   if (! priv->icon_name)
     {
@@ -375,7 +382,6 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                       &toggle_rect.y,
                                       &toggle_rect.width,
                                       &toggle_rect.height);
-
   gtk_style_context_save (context);
 
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_BUTTON);
@@ -415,10 +421,14 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
       gtk_style_context_get_border (context, 0, &border);
       toggle_rect.x      += border.left;
+      toggle_rect.x      *= scale_factor;
       toggle_rect.y      += border.top;
+      toggle_rect.y      *= scale_factor;
       toggle_rect.width  -= border.left + border.right;
       toggle_rect.height -= border.top + border.bottom;
 
+      /* For high DPI displays, pixbuf size is bigger than logical size. */
+      cairo_scale (cr, (gdouble) 1.0 / scale_factor, (gdouble) 1.0 / scale_factor);
       gdk_cairo_set_source_pixbuf (cr, priv->pixbuf,
                                    toggle_rect.x, toggle_rect.y);
       cairo_paint (cr);
@@ -484,17 +494,37 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
 
   if (priv->icon_name)
     {
-      gint width, height;
+      GdkScreen    *screen;
+      GtkIconTheme *icon_theme;
+      GtkIconInfo  *icon_info;
+      gchar        *icon_name;
+      gint          scale_factor;
+      gint          width, height;
 
       if (! gtk_icon_size_lookup (priv->stock_size, &width, &height))
-        {
-          width  = 20;
-          height = 20;
-        }
+        gtk_icon_size_lookup (DEFAULT_ICON_SIZE, &width, &height);
 
-      priv->pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                               priv->icon_name,
-                                               MIN (width, height), 0, NULL);
+      scale_factor = gtk_widget_get_scale_factor (widget);
+      screen       = gtk_widget_get_screen (widget);
+      icon_theme   = gtk_icon_theme_get_for_screen (screen);
+
+      /* Look for symbolic and fallback to color icon. */
+      icon_name = g_strdup_printf ("%s-symbolic", priv->icon_name);
+      icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme, icon_name,
+                                                        MIN (width, height), scale_factor,
+                                                        GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+
+      g_free (icon_name);
+      if (icon_info)
+        {
+          GdkPixbuf *pixbuf;
+
+          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                            gtk_widget_get_style_context (widget),
+                                                            NULL, NULL);
+          priv->pixbuf = pixbuf;
+          g_object_unref (icon_info);
+        }
     }
 }
 
