@@ -38,9 +38,6 @@ enum
 };
 
 
-typedef struct _GimpAsyncSetCallbackInfo GimpAsyncSetCallbackInfo;
-
-
 struct _GimpAsyncSetPrivate
 {
   GHashTable *asyncs;
