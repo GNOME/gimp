@@ -60,6 +60,7 @@ struct _IndexedDialog
   GtkWidget                  *dialog;
   GimpContext                *context;
   GimpContainer              *container;
+  GtkWidget                  *duplicates_toggle;
 };
 
 
@@ -73,6 +74,9 @@ static gboolean    convert_dialog_palette_filter  (GimpObject    *object,
 static void        convert_dialog_palette_changed (GimpContext   *context,
                                                    GimpPalette   *palette,
                                                    IndexedDialog *private);
+static void        convert_dialog_type_update     (GtkWidget     *widget,
+                                                   IndexedDialog *private);
+
 
 
 /*  public functions  */
@@ -172,8 +176,8 @@ convert_indexed_dialog_new (GimpImage                  *image,
                                            GIMP_CONVERT_PALETTE_CUSTOM :
                                            GIMP_CONVERT_PALETTE_MONO),
                                           gtk_label_new (_("Colormap")),
-                                          G_CALLBACK (gimp_radio_button_update),
-                                          &private->palette_type,
+                                          G_CALLBACK (convert_dialog_type_update),
+                                          private,
                                           &button);
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
@@ -216,20 +220,21 @@ convert_indexed_dialog_new (GimpImage                  *image,
 
   vbox = gtk_bin_get_child (GTK_BIN (frame));
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Remove unused and duplicate "
-                                                 "colors from colormap"));
+  private->duplicates_toggle = toggle =
+    gtk_check_button_new_with_mnemonic (_("_Remove unused and duplicate "
+                                          "colors from colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 private->remove_duplicates);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 3);
   gtk_widget_show (toggle);
 
+  if (private->palette_type == GIMP_CONVERT_PALETTE_GENERATE ||
+      private->palette_type == GIMP_CONVERT_PALETTE_MONO)
+    gtk_widget_set_sensitive (toggle, FALSE);
+
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &private->remove_duplicates);
-
-  g_object_bind_property (button, "active",
-                          toggle, "sensitive",
-                          G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 
   /*  dithering  */
 
@@ -414,4 +419,18 @@ convert_dialog_palette_changed (GimpContext   *context,
     {
       private->custom_palette = palette;
     }
+}
+
+static void
+convert_dialog_type_update (GtkWidget     *widget,
+                            IndexedDialog *private)
+{
+  gimp_radio_button_update (widget, &private->palette_type);
+
+  if (private->duplicates_toggle)
+    gtk_widget_set_sensitive (private->duplicates_toggle,
+                              private->palette_type !=
+                              GIMP_CONVERT_PALETTE_GENERATE &&
+                              private->palette_type !=
+                              GIMP_CONVERT_PALETTE_MONO);
 }
