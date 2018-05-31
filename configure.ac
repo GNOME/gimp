@@ -59,7 +59,7 @@ m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
-m4_define([webkit_required_version], [2.4.11])
+m4_define([webkitgtk_required_version], [2.4.11])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([wmf_required_version], [0.2.8])
@@ -156,7 +156,7 @@ BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
-WEBKIT_REQUIRED_VERSION=webkit_required_version
+WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 ATK_REQUIRED_VERSION=atk_required_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
@@ -187,7 +187,7 @@ AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
 AC_SUBST(FREETYPE2_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
-AC_SUBST(WEBKIT_REQUIRED_VERSION)
+AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
