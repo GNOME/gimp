@@ -139,7 +139,7 @@ gui_unique_win32_idle_open (IdleOpenData *data)
   if (data->file)
     {
       file_open_from_command_line (unique_gimp, data->file,
-                                   data->as_new, NULL, 0);
+                                   data->as_new, NULL);
     }
   else
     {
@@ -249,7 +249,7 @@ gui_unique_quartz_idle_open (GFile *file)
 
   if (file)
     {
-      file_open_from_command_line (unique_gimp, file, FALSE, NULL, 0);
+      file_open_from_command_line (unique_gimp, file, FALSE, NULL);
     }
 
   return FALSE;
