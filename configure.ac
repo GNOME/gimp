@@ -749,13 +749,13 @@ if test "x$GDBUS_CODEGEN" = xno; then
   add_deps_error([gdbus-codegen], [Could not find gdbus-codegen in your PATH.])
 fi
 
-AC_MSG_CHECKING([if GLib is version 2.43.0 or newer])
-if $PKG_CONFIG --atleast-version=2.43.0 glib-2.0; then
-  have_glib_2_43=yes
+AC_MSG_CHECKING([if GLib is version 2.57.0 or newer])
+if $PKG_CONFIG --atleast-version=2.57.0 glib-2.0; then
+  have_glib_2_57=yes
 else
-  have_glib_2_43=no
+  have_glib_2_57=no
 fi
-AC_MSG_RESULT($have_glib_2_43)
+AC_MSG_RESULT($have_glib_2_57)
 
 AC_PATH_PROG(GEGL, gegl, no)
 if test "x$GEGL" = xno; then
@@ -813,13 +813,13 @@ CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version,,
                   [add_deps_error([fontconfig >= fontconfig_required_version])])
 
-AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
-if $PKG_CONFIG --atleast-version=1.32.0 pango; then
-  have_pango_1_32=yes
+AC_MSG_CHECKING([if Pango is version 1.43.0 or newer])
+if $PKG_CONFIG --atleast-version=1.43.0 pango; then
+  have_pango_1_43=yes
 else
-  have_pango_1_32=no
+  have_pango_1_43=no
 fi
-AC_MSG_RESULT($have_pango_1_32)
+AC_MSG_RESULT($have_pango_1_43)
 
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
@@ -2443,11 +2443,11 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_43" != "xyes"; then
+if test "x$have_glib_2_57" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_32" != "xyes"; then
+if test "x$have_pango_1_43" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 
