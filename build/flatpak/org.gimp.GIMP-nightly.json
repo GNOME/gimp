@@ -1,8 +1,6 @@
 {
     "id": "org.gimp.GIMP",
     "branch": "master",
-    "base": "org.gimp.BaseApp",
-    "base-version": "stable",
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.28",
     "sdk": "org.gnome.Sdk",
@@ -27,6 +25,307 @@
                 "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
                 "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
+        {
+            "name": "python",
+            "modules": [
+                {
+                    "name": "py2cairo",
+                    "rm-configure": true,
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
+                            "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
+                        },
+                        {
+                            "type": "script",
+                            "commands": [
+                                "libtoolize --force",
+                                "aclocal",
+                                "autoheader",
+                                "automake --force-missing --add-missing --foreign",
+                                "autoconf"
+                            ],
+                            "dest-filename": "autogen.sh"
+                        }
+                    ]
+                },
+                {
+                    "name": "pygobject",
+                    "config-opts": [ "--disable-introspection" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.7.tar.xz",
+                            "sha256": "bb9d25a3442ca7511385a7c01b057492095c263784ef31231ffe589d83a96a5a"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                        }
+                    ]
+                },
+                {
+                    "name": "pygtk",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
+                            "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "gexiv2",
+            "modules": [
+                {
+                    "name": "exiv2",
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
+                            "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} config/" ]
+                        }
+                    ]
+                }
+            ],
+            "config-opts": [ "--disable-introspection" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.10/gexiv2-0.10.6.tar.xz",
+                    "sha256": "132788919667254b42c026ab39ab3c3a5be59be8575c05fa4b371ca8aed55825"
+                }
+            ]
+        },
+        {
+            "name": "openexr",
+            "modules": [
+                {
+                    "name": "ilmbase",
+                    "config-opts": [ "--disable-static" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
+                            "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                        }
+                    ]
+                }
+            ],
+            "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
+            "cleanup": [ "/bin", "/share/doc" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.0.tar.gz",
+                    "sha256": "36a012f6c43213f840ce29a8b182700f6cf6b214bea0d5735594136b44914231"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                }
+            ]
+        },
+        {
+            "name": "libraw",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/share/doc" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.libraw.org/data/LibRaw-0.18.0.tar.gz",
+                    "sha256": "d56a0c9a0e6d1b8c8c5585346acf2cfb0554eee0f0948da66f580cd65c8c5c9b"
+                }
+            ]
+        },
+        {
+            "name": "poppler",
+            "modules": [
+                {
+                    "name": "popplerdata",
+                    "no-autogen": true,
+                    "make-install-args": ["prefix=/app"],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
+                            "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
+                        }
+                    ]
+                }
+            ],
+            "config-opts": [ "--disable-libopenjpeg", "--disable-introspection" ],
+            "cleanup": [ "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-0.51.0.tar.xz",
+                    "sha256": "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f"
+                }
+            ]
+        },
+        {
+            "name": "duplicate-dependencies",
+            "modules": [
+                {
+                    "name": "libpng",
+                    "cleanup": [ "/bin", "/share" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libpng/libpng-1.6.34.tar.xz/sha512/89407c5abc1623faaa3992fc1e4a62def671d9a7401108dfceee895d5f16fe7030090bea89b34a36d377d8e6a5d40046886991f663ce075d1a2d31bf9eaf3c51/libpng-1.6.34.tar.xz",
+                            "sha256": "2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6"
+                        }
+                    ]
+                },
+                {
+                    "name": "lcms2",
+                    "config-opts": [ "--disable-static" ],
+                    "cleanup": [ "/bin", "/share" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://src.fedoraproject.org/repo/pkgs/rpms/lcms2/lcms2-2.9.tar.gz/sha512/e30ad5a9a1ab9e7aaace9431434caa19a5ff6143db46644aba971a5ee37a265b26bf738e886d766405a7eb45a9d620d67c7ab3684ace86a107cf5a76642c04a5/lcms2-2.9.tar.gz",
+                            "sha256": "a83cd711db57404e17bc943a4c9742d7a98560918ad3d0a4f511428f96d1ad5b"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "aalib",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/info", "/man" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/aalib/aalib-1.4rc5.tar.gz/9801095c42bba12edebd1902bcf0a990/aalib-1.4rc5.tar.gz",
+                    "sha256": "fbddda9230cf6ee2a4f5706b4b11e2190ae45f5eda1f0409dc4f99b35e0a70ee"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                }
+            ]
+        },
+        {
+            "name": "libmng",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libmng/libmng-2.0.3.tar.gz/7e9a12ba2a99dff7e736902ea07383d4/libmng-2.0.3.tar.gz",
+                    "sha256": "cf112a1fb02f5b1c0fce5cab11ea8243852c139e669c44014125874b14b7dfaa"
+                }
+            ]
+        },
+        {
+            "name": "libwebp",
+            "config-opts": [ "--disable-static", "--enable-libwebpmux", "--enable-libwebpdemux" ],
+            "cleanup": [ "/share", "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz",
+                    "sha256": "c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40"
+                }
+            ]
+        },
+        {
+            "name": "libwmf",
+            "config-opts": [ "--disable-static", "--disable-dependency-tracking" ],
+            "cleanup": [ "/share/doc", "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libwmf/libwmf-0.2.8.4.tar.gz/d1177739bf1ceb07f57421f0cee191e0/libwmf-0.2.8.4.tar.gz",
+                    "sha256": "5b345c69220545d003ad52bfd035d5d6f4f075e65204114a9e875e84895a7cf8"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
+                }
+            ]
+        },
+        {
+            "name": "ghostscript",
+            "config-opts": [ "--disable-cups" ],
+            "make-args": [ "so" ],
+            "make-install-args": [ "soinstall" ],
+            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.20/doc/", "/share/ghostscript/9.20/examples" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20.tar.xz",
+                    "sha256": "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} lcms2/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
+                                  "rm -rf libpng/pngread.c"
+                                ]
+                }
+            ]
+        },
+        {
+            "name": "libmypaint",
+            "config-opts": [ "--disable-gegl", "--disable-introspection" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.3.0/libmypaint-1.3.0.tar.xz",
+                    "sha256": "6a07d9d57fea60f68d218a953ce91b168975a003db24de6ac01ad69dcc94a671"
+                }
+            ]
+        },
+        {
+            "name": "mypaint-brushes",
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/Jehan/mypaint-brushes.git",
+                    "branch": "v1.3.0",
+                    "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
+                }
+            ]
+        },
+        {
+            "name": "openjpeg",
+            "cmake": true,
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
+                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
+                }
+            ]
+        },
         {
             "name" : "fribidi",
             "sources" : [
