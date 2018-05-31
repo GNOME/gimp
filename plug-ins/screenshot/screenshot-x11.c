@@ -128,7 +128,9 @@ select_window (ScreenshotValues *shootvals,
   if (gdk_keymap_get_entries_for_keyval (keymap, GDK_KEY_Escape,
                                          &keys, &num_keys))
     {
-      gdk_error_trap_push ();
+      GdkDisplay *display = gdk_monitor_get_display (monitor);
+
+      gdk_x11_display_error_trap_push (display);
 
 #define X_GRAB_KEY(index, modifiers) \
       XGrabKey (x_dpy, keys[index].keycode, modifiers, x_root, False, \
@@ -148,9 +150,9 @@ select_window (ScreenshotValues *shootvals,
 
 #undef X_GRAB_KEY
 
-      gdk_display_flush (gdk_monitor_get_display (monitor));
+      gdk_display_flush (display);
 
-      if (gdk_error_trap_pop ())
+      if (gdk_x11_display_error_trap_pop (display))
         {
           /* ignore errors */
         }
@@ -559,6 +561,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
                       GError           **error)
 {
   GdkDisplay       *display;
+  GdkScreen        *screen;
   GdkWindow        *window;
   cairo_surface_t  *screenshot;
   cairo_region_t   *shape = NULL;
@@ -567,8 +570,6 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   GdkRectangle      rect;
   GdkRectangle      screen_rect;
   gchar            *name  = NULL;
-  gint              screen_x;
-  gint              screen_y;
   gint              x, y;
 
   /* use default screen if we are running non-interactively */
@@ -590,11 +591,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
     screenshot_delay (shootvals->screenshot_delay);
 
   display = gdk_monitor_get_display (monitor);
-
-  screen_rect.x      = 0;
-  screen_rect.y      = 0;
-  screen_rect.width  = gdk_screen_get_width (gdk_display_get_default_screen (display));
-  screen_rect.height = gdk_screen_get_height (gdk_display_get_default_screen (display));
+  screen  = gdk_display_get_default_screen (display);
 
   if (shootvals->shoot_type == SHOOT_REGION)
     {
@@ -611,7 +608,7 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
     {
       if (shootvals->shoot_type == SHOOT_ROOT)
         {
-          window = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
+          window = gdk_screen_get_root_window (screen);
 
           /* FIXME: figure monitor */
         }
@@ -637,11 +634,14 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
       rect.y = y;
     }
 
+  window = gdk_screen_get_root_window (screen);
+
+  gdk_window_get_origin (window, &screen_rect.x, &screen_rect.y);
+  screen_rect.width  = gdk_window_get_width (window);
+  screen_rect.height = gdk_window_get_height (window);
+
   if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return GIMP_PDB_EXECUTION_ERROR;
-
-  window = gdk_screen_get_root_window (gdk_display_get_default_screen (display));
-  gdk_window_get_origin (window, &screen_x, &screen_y);
 
   screenshot = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
                                            rect.width, rect.height);
@@ -649,8 +649,8 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   cr = cairo_create (screenshot);
 
   gdk_cairo_set_source_window (cr, window,
-                               - (rect.x - screen_x),
-                               - (rect.y - screen_y));
+                               - (rect.x - screen_rect.x),
+                               - (rect.y - screen_rect.y));
   cairo_paint (cr);
 
   cairo_destroy (cr);
