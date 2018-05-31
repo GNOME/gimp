@@ -14,6 +14,8 @@ libgimpmodule
 libgimpthumb
 libgimpwidgets
 modules
+plug-ins/common/animation-play.c
+plug-ins/common/curve-bend.c
 plug-ins/imagemap/imap_cern_parse.c
 plug-ins/imagemap/imap_csim_parse.c
 plug-ins/imagemap/imap_ncsa_parse.c
