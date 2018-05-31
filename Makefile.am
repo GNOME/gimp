@@ -13,7 +13,7 @@ SUBDIRS = \
 	po			\
 	po-libgimp		\
 	po-plug-ins		\
-	po-python		\
+##	po-python		\
 	po-script-fu		\
 	po-tips			\
 	po-windows-installer	\

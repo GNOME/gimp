@@ -2737,7 +2737,9 @@ m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
-po-python/Makefile.in
+]
+dnl po-python/Makefile.in
+[
 po-script-fu/Makefile.in
 po-tips/Makefile.in
 po-windows-installer/Makefile.in
