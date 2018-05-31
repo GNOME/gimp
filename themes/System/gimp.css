@@ -5,7 +5,7 @@
     -GimpDockWindow-default-height:    300;
     -GimpMenuDock-minimal-width:       200;
     -GimpDockWindow-menu-preview-size: button;
-    -GimpToolPalette-tool-icon-size:   button;
+    -GimpToolPalette-tool-icon-size:   large-toolbar;
     -GimpToolPalette-button-relief:    none;
     -GimpDockbook-tab-icon-size:       button;
     -GimpColorNotebook-tab-icon-size:  button;
