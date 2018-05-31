@@ -560,6 +560,9 @@ gimp_container_editor_bind_to_async_set (GimpContainerEditor *editor,
   g_return_if_fail (async_set == NULL || GIMP_IS_ASYNC_SET (async_set));
   g_return_if_fail (async_set == NULL || message != NULL);
 
+  if (! async_set && ! editor->priv->async_set_binding)
+    return;
+
   g_clear_object (&editor->priv->async_set_binding);
 
   if (async_set)
@@ -571,5 +574,9 @@ gimp_container_editor_bind_to_async_set (GimpContainerEditor *editor,
         async_set,              "empty",
         editor->priv->busy_box, "visible",
         G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+    }
+  else
+    {
+      gtk_widget_hide (editor->priv->busy_box);
     }
 }
