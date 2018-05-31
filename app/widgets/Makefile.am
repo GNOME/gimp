@@ -468,7 +468,10 @@ libappwidgets_a_SOURCES = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-wec
+gen_sources = \
+	gimp-tool-cursors.c	\
+	gimp-tool-cursors.h	\
+	xgen-wec
 CLEANFILES = $(gen_sources)
 
 xgen-wec: $(srcdir)/widgets-enums.h $(GIMP_MKENUMS) Makefile.am

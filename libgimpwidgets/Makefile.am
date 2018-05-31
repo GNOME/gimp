@@ -312,7 +312,12 @@ endif
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-wec xgen-wmh xgen-wmc
+gen_sources = \
+	gimp-color-picker-cursors.c	\
+	gimp-color-picker-cursors.h	\
+	xgen-wec 			\
+	xgen-wmh			\
+	xgen-wmc
 CLEANFILES = $(gen_sources)
 
 xgen-wec: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS) Makefile.am
