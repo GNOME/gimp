@@ -64,8 +64,6 @@ struct _GimpToolPalettePrivate
                                                     GimpToolPalettePrivate)
 
 
-static void     gimp_tool_palette_dispose             (GObject        *object);
-
 static GtkSizeRequestMode
                 gimp_tool_palette_get_request_mode    (GtkWidget       *widget);
 static void     gimp_tool_palette_get_preferred_width (GtkWidget       *widget,
@@ -95,9 +93,6 @@ static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
                                                        GdkEventButton  *bevent,
                                                        GimpToolPalette *palette);
 
-static void     gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
-                                                       GimpToolPalette *palette);
-
 
 G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
 
@@ -107,10 +102,7 @@ G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
 static void
 gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  object_class->dispose           = gimp_tool_palette_dispose;
 
   widget_class->get_request_mode               = gimp_tool_palette_get_request_mode;
   widget_class->get_preferred_width            = gimp_tool_palette_get_preferred_width;
@@ -161,24 +153,6 @@ gimp_tool_palette_get_preferred_width (GtkWidget *widget,
     {
       *min_width = *pref_width = button_width;
     }
-}
-
-static void
-gimp_tool_palette_dispose (GObject *object)
-{
-  GimpToolPalettePrivate *private = GET_PRIVATE (object);
-
-  if (private->toolbox)
-    {
-      GimpContext *context = gimp_toolbox_get_context (private->toolbox);
-
-      if (context)
-        g_signal_handlers_disconnect_by_func (context->gimp->config,
-                                              G_CALLBACK (gimp_tool_palette_config_size_changed),
-                                              object);
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -245,6 +219,7 @@ gimp_tool_palette_style_updated (GtkWidget *widget)
   Gimp                   *gimp;
   GtkReliefStyle          relief;
   GList                  *list;
+  GtkIconSize             tool_icon_size;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -255,10 +230,12 @@ gimp_tool_palette_style_updated (GtkWidget *widget)
 
   gtk_widget_style_get (widget,
                         "button-relief",  &relief,
+                        "tool-icon-size", &tool_icon_size,
                         NULL);
 
-  gimp_tool_palette_config_size_changed (GIMP_GUI_CONFIG (gimp->config),
-                                         GIMP_TOOL_PALETTE (widget));
+  gtk_tool_palette_set_icon_size (GTK_TOOL_PALETTE (widget),
+                                  tool_icon_size);
+
   for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
@@ -357,13 +334,6 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
 
   private = GET_PRIVATE (palette);
 
-  if (private->toolbox)
-    {
-      context = gimp_toolbox_get_context (private->toolbox);
-      g_signal_handlers_disconnect_by_func (GIMP_GUI_CONFIG (context->gimp->config),
-                                            G_CALLBACK (gimp_tool_palette_config_size_changed),
-                                            palette);
-    }
   private->toolbox = toolbox;
 
   context = gimp_toolbox_get_context (toolbox);
@@ -419,14 +389,6 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
   gimp_tool_palette_tool_changed (context,
                                   gimp_context_get_tool (context),
                                   palette);
-
-  /* Update the toolbox icon size on config change. */
-  g_signal_connect (GIMP_GUI_CONFIG (context->gimp->config),
-                    "size-changed",
-                    G_CALLBACK (gimp_tool_palette_config_size_changed),
-                    palette);
-  gimp_tool_palette_config_size_changed (GIMP_GUI_CONFIG (context->gimp->config),
-                                         palette);
 }
 
 gboolean
@@ -543,39 +505,4 @@ gimp_tool_palette_tool_button_press (GtkWidget       *widget,
     }
 
   return FALSE;
-}
-
-static void
-gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
-                                       GimpToolPalette *palette)
-{
-  GimpIconSize size;
-  GtkIconSize  tool_icon_size;
-
-  size = gimp_gui_config_detect_icon_size (config);
-  /* Match GimpIconSize with GtkIconSize for the toolbox icons. */
-  switch (size)
-    {
-    case GIMP_ICON_SIZE_SMALL:
-      tool_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
-      break;
-    case GIMP_ICON_SIZE_MEDIUM:
-      tool_icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
-      break;
-    case GIMP_ICON_SIZE_LARGE:
-      tool_icon_size = GTK_ICON_SIZE_DND;
-      break;
-    case GIMP_ICON_SIZE_HUGE:
-      tool_icon_size = GTK_ICON_SIZE_DIALOG;
-      break;
-    default:
-      /* GIMP_ICON_SIZE_DEFAULT:
-       * let's use the size set by the theme. */
-      gtk_widget_style_get (GTK_WIDGET (palette),
-                            "tool-icon-size", &tool_icon_size,
-                            NULL);
-      break;
-    }
-
-  gtk_tool_palette_set_icon_size (GTK_TOOL_PALETTE (palette), tool_icon_size);
 }

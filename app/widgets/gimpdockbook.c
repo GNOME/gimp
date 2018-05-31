@@ -137,7 +137,6 @@ static gboolean     gimp_dockbook_tab_drag_drop         (GtkWidget      *widget,
                                                          gint            y,
                                                          guint           time);
 
-static GtkIconSize  gimp_dockbook_get_tab_icon_size     (GimpDockbook   *dockbook);
 static void         gimp_dockbook_add_tab_timeout       (GimpDockbook   *dockbook,
                                                          GimpDockable   *dockable);
 static void         gimp_dockbook_remove_tab_timeout    (GimpDockbook   *dockbook);
@@ -768,12 +767,16 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   GtkWidget      *tab_widget;
   GimpDockWindow *dock_window;
   GtkAction      *action = NULL;
+  GtkIconSize     tab_size = DEFAULT_TAB_ICON_SIZE;
 
+  gtk_widget_style_get (GTK_WIDGET (dockbook),
+                        "tab-icon-size", &tab_size,
+                        NULL);
   tab_widget =
     gimp_dockable_create_tab_widget (dockable,
                                      gimp_dock_get_context (dockbook->p->dock),
                                      gimp_dockable_get_tab_style (dockable),
-                                     gimp_dockbook_get_tab_icon_size (dockbook));
+                                     tab_size);
 
   if (! GIMP_IS_VIEW (tab_widget))
     {
@@ -1185,41 +1188,6 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
   gtk_drag_finish (context, dropped, TRUE, time);
 
   return TRUE;
-}
-
-static GtkIconSize
-gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
-{
-  Gimp        *gimp;
-  GimpIconSize size;
-  GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
-
-  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
-
-  size = gimp_gui_config_detect_icon_size (GIMP_GUI_CONFIG (gimp->config));
-  /* Match GimpIconSize with GtkIconSize. */
-  switch (size)
-    {
-    case GIMP_ICON_SIZE_SMALL:
-    case GIMP_ICON_SIZE_MEDIUM:
-      tab_size = GTK_ICON_SIZE_MENU;
-      break;
-    case GIMP_ICON_SIZE_LARGE:
-      tab_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
-      break;
-    case GIMP_ICON_SIZE_HUGE:
-      tab_size = GTK_ICON_SIZE_DND;
-      break;
-    default:
-      /* GIMP_ICON_SIZE_DEFAULT:
-       * let's use the size set by the theme. */
-      gtk_widget_style_get (GTK_WIDGET (dockbook),
-                            "tab-icon-size", &tab_size,
-                            NULL);
-      break;
-    }
-
-  return tab_size;
 }
 
 static void

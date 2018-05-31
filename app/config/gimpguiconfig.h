@@ -67,7 +67,6 @@ struct _GimpGuiConfig
   gboolean             prefer_dark_theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
-  GimpIconSize         icon_size;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;
@@ -99,7 +98,5 @@ struct _GimpGuiConfigClass
 
 
 GType  gimp_gui_config_get_type (void) G_GNUC_CONST;
-
-GimpIconSize gimp_gui_config_detect_icon_size (GimpGuiConfig *config);
 
 #endif /* GIMP_GUI_CONFIG_H__ */

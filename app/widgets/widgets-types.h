@@ -194,7 +194,6 @@ typedef struct _GimpHighlightableButton      GimpHighlightableButton;
 typedef struct _GimpHistogramBox             GimpHistogramBox;
 typedef struct _GimpHistogramView            GimpHistogramView;
 typedef struct _GimpIconPicker               GimpIconPicker;
-typedef struct _GimpIconSizeScale            GimpIconSizeScale;
 typedef struct _GimpImageCommentEditor       GimpImageCommentEditor;
 typedef struct _GimpImageParasiteView        GimpImageParasiteView;
 typedef struct _GimpImageProfileView         GimpImageProfileView;
