@@ -34,7 +34,7 @@
   SF-DRAWABLE   "Input Drawable"   0
   SF-OPTION     _"Direction"       '(_"Horizontal"
                                      _"Vertical")
-  SF-ADJUSTMENT _"Position (in %)" '(50 0 100 1 10 0 1)
+  SF-ADJUSTMENT _"Position (in %)" '(50 0 100 1 10 2 1)
 )
 
 (script-fu-menu-register "script-fu-guide-new-percent"
