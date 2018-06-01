@@ -813,10 +813,8 @@ gimp_data_set_file (GimpData *data,
   if (private->internal)
     return;
 
-  if (private->file)
-    g_object_unref (private->file);
+  g_set_object (&private->file, file);
 
-  private->file      = g_object_ref (file);
   private->writable  = FALSE;
   private->deletable = FALSE;
 

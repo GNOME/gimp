@@ -131,17 +131,10 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
   gtk_text_buffer_set_text (buffer, "", 0);
 
-  if (view->priv->profile)
-    g_object_unref (view->priv->profile);
-
-  view->priv->profile = profile;
-
-  if (view->priv->profile)
+  if (g_set_object (&view->priv->profile, profile) && profile)
     {
       GtkTextIter  iter;
       const gchar *text;
-
-      g_object_ref (view->priv->profile);
 
       gtk_text_buffer_get_start_iter (buffer, &iter);
 

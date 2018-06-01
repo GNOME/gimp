@@ -895,16 +895,8 @@ gimp_color_button_set_color_config (GimpColorButton *button,
 
   priv = GET_PRIVATE (button);
 
-  if (config != priv->config)
+  if (g_set_object (&priv->config, config))
     {
-      if (priv->config)
-        g_object_unref (priv->config);
-
-      priv->config = config;
-
-      if (priv->config)
-        g_object_ref (priv->config);
-
       if (priv->color_area)
         gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->color_area),
                                           priv->config);

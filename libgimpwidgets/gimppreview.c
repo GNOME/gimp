@@ -941,16 +941,7 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
 
   priv = GET_PRIVATE (preview);
 
-  if (cursor != priv->default_cursor)
-    {
-      if (priv->default_cursor)
-        g_object_unref (priv->default_cursor);
-
-      if (cursor)
-        g_object_ref (cursor);
-
-      priv->default_cursor = cursor;
-    }
+  g_set_object (&priv->default_cursor, cursor);
 }
 
 GdkCursor *

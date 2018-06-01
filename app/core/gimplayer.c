@@ -2452,7 +2452,7 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
 
-  if (layer->fs.drawable != drawable)
+  if (g_set_object (&layer->fs.drawable, drawable))
     {
       if (layer->fs.segs)
         {
@@ -2460,14 +2460,6 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
           layer->fs.segs     = NULL;
           layer->fs.num_segs = 0;
         }
-
-      if (layer->fs.drawable)
-        g_object_unref (layer->fs.drawable);
-
-      layer->fs.drawable = drawable;
-
-      if (layer->fs.drawable)
-        g_object_ref (layer->fs.drawable);
 
       g_object_notify (G_OBJECT (layer), "floating-selection");
     }

@@ -2123,19 +2123,14 @@ gimp_context_real_set_tool (GimpContext  *context,
 
   /*  disconnect from the old tool's signals  */
   if (context->tool_info)
-    {
-      g_signal_handlers_disconnect_by_func (context->tool_info,
-                                            gimp_context_tool_dirty,
-                                            context);
-      g_object_unref (context->tool_info);
-    }
+    g_signal_handlers_disconnect_by_func (context->tool_info,
+                                          gimp_context_tool_dirty,
+                                          context);
 
-  context->tool_info = tool_info;
+  g_set_object (&context->tool_info, tool_info);
 
   if (tool_info)
     {
-      g_object_ref (tool_info);
-
       g_signal_connect_object (tool_info, "name-changed",
                                G_CALLBACK (gimp_context_tool_dirty),
                                context,
@@ -2250,19 +2245,14 @@ gimp_context_real_set_paint_info (GimpContext   *context,
 
   /*  disconnect from the old paint info's signals  */
   if (context->paint_info)
-    {
-      g_signal_handlers_disconnect_by_func (context->paint_info,
-                                            gimp_context_paint_info_dirty,
-                                            context);
-      g_object_unref (context->paint_info);
-    }
+    g_signal_handlers_disconnect_by_func (context->paint_info,
+                                          gimp_context_paint_info_dirty,
+                                          context);
 
-  context->paint_info = paint_info;
+  g_set_object (&context->paint_info, paint_info);
 
   if (paint_info)
     {
-      g_object_ref (paint_info);
-
       g_signal_connect_object (paint_info, "name-changed",
                                G_CALLBACK (gimp_context_paint_info_dirty),
                                context,
@@ -2608,19 +2598,14 @@ gimp_context_real_set_brush (GimpContext *context,
 
   /*  disconnect from the old brush's signals  */
   if (context->brush)
-    {
-      g_signal_handlers_disconnect_by_func (context->brush,
-                                            gimp_context_brush_dirty,
-                                            context);
-      g_object_unref (context->brush);
-    }
+    g_signal_handlers_disconnect_by_func (context->brush,
+                                          gimp_context_brush_dirty,
+                                          context);
 
-  context->brush = brush;
+  g_set_object (&context->brush, brush);
 
   if (brush)
     {
-      g_object_ref (brush);
-
       g_signal_connect_object (brush, "name-changed",
                                G_CALLBACK (gimp_context_brush_dirty),
                                context,
@@ -2729,19 +2714,14 @@ gimp_context_real_set_dynamics (GimpContext  *context,
 
   /*  disconnect from the old dynamics' signals  */
   if (context->dynamics)
-    {
-      g_signal_handlers_disconnect_by_func (context->dynamics,
-                                            gimp_context_dynamics_dirty,
-                                            context);
-      g_object_unref (context->dynamics);
-    }
+    g_signal_handlers_disconnect_by_func (context->dynamics,
+                                          gimp_context_dynamics_dirty,
+                                          context);
 
-  context->dynamics = dynamics;
+  g_set_object (&context->dynamics, dynamics);
 
   if (dynamics)
     {
-      g_object_ref (dynamics);
-
       g_signal_connect_object (dynamics, "name-changed",
                                G_CALLBACK (gimp_context_dynamics_dirty),
                                context,
@@ -2853,19 +2833,14 @@ gimp_context_real_set_mybrush (GimpContext *context,
 
   /*  disconnect from the old mybrush's signals  */
   if (context->mybrush)
-    {
-      g_signal_handlers_disconnect_by_func (context->mybrush,
-                                            gimp_context_mybrush_dirty,
-                                            context);
-      g_object_unref (context->mybrush);
-    }
+    g_signal_handlers_disconnect_by_func (context->mybrush,
+                                          gimp_context_mybrush_dirty,
+                                          context);
 
-  context->mybrush = brush;
+  g_set_object (&context->mybrush, brush);
 
   if (brush)
     {
-      g_object_ref (brush);
-
       g_signal_connect_object (brush, "name-changed",
                                G_CALLBACK (gimp_context_mybrush_dirty),
                                context,
@@ -2976,19 +2951,14 @@ gimp_context_real_set_pattern (GimpContext *context,
 
   /*  disconnect from the old pattern's signals  */
   if (context->pattern)
-    {
-      g_signal_handlers_disconnect_by_func (context->pattern,
-                                            gimp_context_pattern_dirty,
-                                            context);
-      g_object_unref (context->pattern);
-    }
+    g_signal_handlers_disconnect_by_func (context->pattern,
+                                          gimp_context_pattern_dirty,
+                                          context);
 
-  context->pattern = pattern;
+  g_set_object (&context->pattern, pattern);
 
   if (pattern)
     {
-      g_object_ref (pattern);
-
       g_signal_connect_object (pattern, "name-changed",
                                G_CALLBACK (gimp_context_pattern_dirty),
                                context,
@@ -3099,19 +3069,14 @@ gimp_context_real_set_gradient (GimpContext  *context,
 
   /*  disconnect from the old gradient's signals  */
   if (context->gradient)
-    {
-      g_signal_handlers_disconnect_by_func (context->gradient,
-                                            gimp_context_gradient_dirty,
-                                            context);
-      g_object_unref (context->gradient);
-    }
+    g_signal_handlers_disconnect_by_func (context->gradient,
+                                          gimp_context_gradient_dirty,
+                                          context);
 
-  context->gradient = gradient;
+  g_set_object (&context->gradient, gradient);
 
   if (gradient)
     {
-      g_object_ref (gradient);
-
       g_signal_connect_object (gradient, "name-changed",
                                G_CALLBACK (gimp_context_gradient_dirty),
                                context,
@@ -3222,19 +3187,14 @@ gimp_context_real_set_palette (GimpContext *context,
 
   /*  disconnect from the old palette's signals  */
   if (context->palette)
-    {
-      g_signal_handlers_disconnect_by_func (context->palette,
-                                            gimp_context_palette_dirty,
-                                            context);
-      g_object_unref (context->palette);
-    }
+    g_signal_handlers_disconnect_by_func (context->palette,
+                                          gimp_context_palette_dirty,
+                                          context);
 
-  context->palette = palette;
+  g_set_object (&context->palette, palette);
 
   if (palette)
     {
-      g_object_ref (palette);
-
       g_signal_connect_object (palette, "name-changed",
                                G_CALLBACK (gimp_context_palette_dirty),
                                context,
@@ -3338,19 +3298,14 @@ gimp_context_real_set_tool_preset (GimpContext    *context,
 
   /*  disconnect from the old tool preset's signals  */
   if (context->tool_preset)
-    {
-      g_signal_handlers_disconnect_by_func (context->tool_preset,
-                                            gimp_context_tool_preset_dirty,
-                                            context);
-      g_object_unref (context->tool_preset);
-    }
+    g_signal_handlers_disconnect_by_func (context->tool_preset,
+                                          gimp_context_tool_preset_dirty,
+                                          context);
 
-  context->tool_preset = tool_preset;
+  g_set_object (&context->tool_preset, tool_preset);
 
   if (tool_preset)
     {
-      g_object_ref (tool_preset);
-
       g_signal_connect_object (tool_preset, "name-changed",
                                G_CALLBACK (gimp_context_tool_preset_dirty),
                                context,
@@ -3494,19 +3449,14 @@ gimp_context_real_set_font (GimpContext *context,
 
   /*  disconnect from the old font's signals  */
   if (context->font)
-    {
-      g_signal_handlers_disconnect_by_func (context->font,
-                                            gimp_context_font_dirty,
-                                            context);
-      g_object_unref (context->font);
-    }
+    g_signal_handlers_disconnect_by_func (context->font,
+                                          gimp_context_font_dirty,
+                                          context);
 
-  context->font = font;
+  g_set_object (&context->font, font);
 
   if (font)
     {
-      g_object_ref (font);
-
       g_signal_connect_object (font, "name-changed",
                                G_CALLBACK (gimp_context_font_dirty),
                                context,
@@ -3621,19 +3571,14 @@ gimp_context_real_set_buffer (GimpContext *context,
 
   /*  disconnect from the old buffer's signals  */
   if (context->buffer)
-    {
-      g_signal_handlers_disconnect_by_func (context->buffer,
-                                            gimp_context_buffer_dirty,
-                                            context);
-      g_object_unref (context->buffer);
-    }
+    g_signal_handlers_disconnect_by_func (context->buffer,
+                                          gimp_context_buffer_dirty,
+                                          context);
 
-  context->buffer = buffer;
+  g_set_object (&context->buffer, buffer);
 
   if (buffer)
     {
-      g_object_ref (buffer);
-
       g_signal_connect_object (buffer, "name-changed",
                                G_CALLBACK (gimp_context_buffer_dirty),
                                context,
@@ -3747,19 +3692,14 @@ gimp_context_real_set_imagefile (GimpContext   *context,
 
   /*  disconnect from the old imagefile's signals  */
   if (context->imagefile)
-    {
-      g_signal_handlers_disconnect_by_func (context->imagefile,
-                                            gimp_context_imagefile_dirty,
-                                            context);
-      g_object_unref (context->imagefile);
-    }
+    g_signal_handlers_disconnect_by_func (context->imagefile,
+                                          gimp_context_imagefile_dirty,
+                                          context);
 
-  context->imagefile = imagefile;
+  g_set_object (&context->imagefile, imagefile);
 
   if (imagefile)
     {
-      g_object_ref (imagefile);
-
       g_signal_connect_object (imagefile, "name-changed",
                                G_CALLBACK (gimp_context_imagefile_dirty),
                                context,
@@ -3873,19 +3813,14 @@ gimp_context_real_set_template (GimpContext  *context,
 
   /*  disconnect from the old template's signals  */
   if (context->template)
-    {
-      g_signal_handlers_disconnect_by_func (context->template,
-                                            gimp_context_template_dirty,
-                                            context);
-      g_object_unref (context->template);
-    }
+    g_signal_handlers_disconnect_by_func (context->template,
+                                          gimp_context_template_dirty,
+                                          context);
 
-  context->template = template;
+  g_set_object (&context->template, template);
 
   if (template)
     {
-      g_object_ref (template);
-
       g_signal_connect_object (template, "name-changed",
                                G_CALLBACK (gimp_context_template_dirty),
                                context,

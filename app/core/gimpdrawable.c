@@ -813,17 +813,10 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
     gimp_image_undo_push_drawable_mod (gimp_item_get_image (item), undo_desc,
                                        drawable, FALSE);
 
-  /*  ref new before unrefing old, they might be the same  */
-  g_object_ref (buffer);
-
   if (drawable->private->buffer)
-    {
-      old_has_alpha = gimp_drawable_has_alpha (drawable);
+    old_has_alpha = gimp_drawable_has_alpha (drawable);
 
-      g_object_unref (drawable->private->buffer);
-    }
-
-  drawable->private->buffer = buffer;
+  g_set_object (&drawable->private->buffer, buffer);
 
   if (drawable->private->buffer_source_node)
     gegl_node_set (drawable->private->buffer_source_node,

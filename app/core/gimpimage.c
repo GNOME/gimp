@@ -2118,16 +2118,8 @@ gimp_image_set_imported_file (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->imported_file != file)
+  if (g_set_object (&private->imported_file, file))
     {
-      if (private->imported_file)
-        g_object_unref (private->imported_file);
-
-      private->imported_file = file;
-
-      if (private->imported_file)
-        g_object_ref (private->imported_file);
-
       gimp_object_name_changed (GIMP_OBJECT (image));
     }
 }
@@ -2151,16 +2143,8 @@ gimp_image_set_exported_file (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->exported_file != file)
+  if (g_set_object (&private->exported_file, file))
     {
-      if (private->exported_file)
-        g_object_unref (private->exported_file);
-
-      private->exported_file = file;
-
-      if (private->exported_file)
-        g_object_ref (private->exported_file);
-
       gimp_object_name_changed (GIMP_OBJECT (image));
     }
 }
@@ -2184,16 +2168,7 @@ gimp_image_set_save_a_copy_file (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->save_a_copy_file != file)
-    {
-      if (private->save_a_copy_file)
-        g_object_unref (private->save_a_copy_file);
-
-      private->save_a_copy_file = file;
-
-      if (private->save_a_copy_file)
-        g_object_ref (private->save_a_copy_file);
-    }
+  g_set_object (&private->save_a_copy_file, file);
 }
 
 static gchar *

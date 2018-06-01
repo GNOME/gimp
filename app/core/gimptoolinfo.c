@@ -272,16 +272,7 @@ gimp_tool_info_set_standard (Gimp         *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
-  if (tool_info != gimp->standard_tool_info)
-    {
-      if (gimp->standard_tool_info)
-        g_object_unref (gimp->standard_tool_info);
-
-      gimp->standard_tool_info = tool_info;
-
-      if (gimp->standard_tool_info)
-        g_object_ref (gimp->standard_tool_info);
-    }
+  g_set_object (&gimp->standard_tool_info, tool_info);
 }
 
 GimpToolInfo *

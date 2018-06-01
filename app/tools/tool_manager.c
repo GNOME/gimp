@@ -638,11 +638,9 @@ tool_manager_select_tool (Gimp     *gimp,
           tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
           tool_manager_focus_display_active (gimp, NULL);
         }
-
-      g_object_unref (tool_manager->active_tool);
     }
 
-  tool_manager->active_tool = g_object_ref (tool);
+  g_set_object (&tool_manager->active_tool, tool);
 }
 
 static void

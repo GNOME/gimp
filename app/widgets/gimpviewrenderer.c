@@ -538,24 +538,16 @@ gimp_view_renderer_set_color_config (GimpViewRenderer *renderer,
   if (color_config != renderer->priv->color_config)
     {
       if (renderer->priv->color_config)
-        {
-          g_signal_handlers_disconnect_by_func (renderer->priv->color_config,
-                                                gimp_view_renderer_config_notify,
-                                                renderer);
+        g_signal_handlers_disconnect_by_func (renderer->priv->color_config,
+                                              gimp_view_renderer_config_notify,
+                                              renderer);
 
-          g_object_unref (renderer->priv->color_config);
-        }
-
-      renderer->priv->color_config = color_config;
+      g_set_object (&renderer->priv->color_config, color_config);
 
       if (renderer->priv->color_config)
-        {
-          g_object_ref (renderer->priv->color_config);
-
-          g_signal_connect (renderer->priv->color_config, "notify",
-                            G_CALLBACK (gimp_view_renderer_config_notify),
-                            renderer);
-        }
+        g_signal_connect (renderer->priv->color_config, "notify",
+                          G_CALLBACK (gimp_view_renderer_config_notify),
+                          renderer);
 
       gimp_view_renderer_config_notify (G_OBJECT (renderer->priv->color_config),
                                         NULL, renderer);
@@ -701,28 +693,20 @@ static void
 gimp_view_renderer_real_set_context (GimpViewRenderer *renderer,
                                      GimpContext      *context)
 {
-  if (renderer->context)
+  if (renderer->context &&
+      renderer->priv->color_config ==
+      renderer->context->gimp->config->color_management)
     {
-      if (renderer->priv->color_config ==
-          renderer->context->gimp->config->color_management)
-        {
-          gimp_view_renderer_set_color_config (renderer, NULL);
-        }
-
-      g_object_unref (renderer->context);
+      gimp_view_renderer_set_color_config (renderer, NULL);
     }
 
-  renderer->context = context;
+  g_set_object (&renderer->context, context);
 
-  if (renderer->context)
+  if (renderer->context &&
+      renderer->priv->color_config == NULL)
     {
-      g_object_ref (renderer->context);
-
-      if (renderer->priv->color_config == NULL)
-        {
-          gimp_view_renderer_set_color_config (renderer,
-                                               renderer->context->gimp->config->color_management);
-        }
+      gimp_view_renderer_set_color_config (renderer,
+                                           renderer->context->gimp->config->color_management);
     }
 }
 
@@ -967,19 +951,12 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
           dest += dest_stride;
         }
 
-      if (renderer->priv->pixbuf)
-        g_object_unref (renderer->priv->pixbuf);
-
+      g_clear_object (&renderer->priv->pixbuf);
       renderer->priv->pixbuf = new;
     }
   else
     {
-      g_object_ref (pixbuf);
-
-      if (renderer->priv->pixbuf)
-        g_object_unref (renderer->priv->pixbuf);
-
-      renderer->priv->pixbuf = pixbuf;
+      g_set_object (&renderer->priv->pixbuf, pixbuf);
     }
 }
 
