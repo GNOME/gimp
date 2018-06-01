@@ -932,17 +932,10 @@ gimp_set_clipboard_image (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
 
-  /* ref first, it could be the same as gimp->clipboard_image, but
-   * don't bail if equal because always we want the signal emission
-   */
-  if (image)
-    g_object_ref (image);
-
   g_clear_object (&gimp->clipboard_buffer);
-  g_clear_object (&gimp->clipboard_image);
+  g_set_object (&gimp->clipboard_image, image);
 
-  gimp->clipboard_image = image;
-
+  /* we want the signal emission */
   g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
 }
 
@@ -961,15 +954,10 @@ gimp_set_clipboard_buffer (Gimp       *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
 
-  /* see above */
-  if (buffer)
-    g_object_ref (buffer);
-
   g_clear_object (&gimp->clipboard_image);
-  g_clear_object (&gimp->clipboard_buffer);
+  g_set_object (&gimp->clipboard_buffer, buffer);
 
-  gimp->clipboard_buffer = buffer;
-
+  /* we want the signal emission */
   g_signal_emit (gimp, gimp_signals[CLIPBOARD_CHANGED], 0);
 }
 
@@ -1022,16 +1010,7 @@ gimp_set_default_context (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (context != gimp->default_context)
-    {
-      if (gimp->default_context)
-        g_object_unref (gimp->default_context);
-
-      gimp->default_context = context;
-
-      if (gimp->default_context)
-        g_object_ref (gimp->default_context);
-    }
+  g_set_object (&gimp->default_context, context);
 }
 
 GimpContext *
@@ -1049,16 +1028,7 @@ gimp_set_user_context (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  if (context != gimp->user_context)
-    {
-      if (gimp->user_context)
-        g_object_unref (gimp->user_context);
-
-      gimp->user_context = context;
-
-      if (gimp->user_context)
-        g_object_ref (gimp->user_context);
-    }
+  g_set_object (&gimp->user_context, context);
 }
 
 GimpContext *

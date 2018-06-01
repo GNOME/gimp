@@ -1471,17 +1471,14 @@ gimp_color_wheel_set_color_config (GimpColorWheel  *wheel,
           g_signal_handlers_disconnect_by_func (priv->config,
                                                 gimp_color_wheel_destroy_transform,
                                                 wheel);
-          g_object_unref (priv->config);
 
           gimp_color_wheel_destroy_transform (wheel);
         }
 
-      priv->config = config;
+      g_set_object (&priv->config, config);
 
       if (priv->config)
         {
-          g_object_ref (priv->config);
-
           g_signal_connect_swapped (priv->config, "notify",
                                     G_CALLBACK (gimp_color_wheel_destroy_transform),
                                     wheel);

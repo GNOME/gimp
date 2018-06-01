@@ -878,14 +878,12 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
                                             gimp_brush_core_invalidate_cache,
                                             core);
       gimp_brush_end_use (core->main_brush);
-      g_clear_object (&core->main_brush);
     }
 
-  core->main_brush = brush;
+  g_set_object (&core->main_brush, brush);
 
   if (core->main_brush)
     {
-      g_object_ref (core->main_brush);
       gimp_brush_begin_use (core->main_brush);
       g_signal_connect (core->main_brush, "invalidate-preview",
                         G_CALLBACK (gimp_brush_core_invalidate_cache),
@@ -897,13 +895,7 @@ static void
 gimp_brush_core_real_set_dynamics (GimpBrushCore *core,
                                    GimpDynamics  *dynamics)
 {
-  if (dynamics == core->dynamics)
-    return;
-
-  g_clear_object (&core->dynamics);
-
-  if (dynamics)
-    core->dynamics = g_object_ref (dynamics);
+  g_set_object (&core->dynamics, dynamics);
 }
 
 void

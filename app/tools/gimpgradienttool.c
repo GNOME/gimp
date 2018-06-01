@@ -984,20 +984,15 @@ gimp_gradient_tool_set_gradient (GimpGradientTool *gradient_tool,
                                  GimpGradient     *gradient)
 {
   if (gradient_tool->gradient)
-    {
-      g_signal_handlers_disconnect_by_func (gradient_tool->gradient,
-                                            G_CALLBACK (gimp_gradient_tool_gradient_dirty),
-                                            gradient_tool);
+    g_signal_handlers_disconnect_by_func (gradient_tool->gradient,
+                                          G_CALLBACK (gimp_gradient_tool_gradient_dirty),
+                                          gradient_tool);
 
-      g_object_unref (gradient_tool->gradient);
-    }
 
-  gradient_tool->gradient = gradient;
+  g_set_object (&gradient_tool->gradient, gradient);
 
   if (gradient_tool->gradient)
     {
-      g_object_ref (gradient);
-
       g_signal_connect_swapped (gradient_tool->gradient, "dirty",
                                 G_CALLBACK (gimp_gradient_tool_gradient_dirty),
                                 gradient_tool);
@@ -1074,15 +1069,8 @@ gimp_gradient_tool_set_tentative_gradient (GimpGradientTool *gradient_tool,
   g_return_if_fail (GIMP_IS_GRADIENT_TOOL (gradient_tool));
   g_return_if_fail (gradient == NULL || GIMP_IS_GRADIENT (gradient));
 
-  if (gradient != gradient_tool->tentative_gradient)
+  if (g_set_object (&gradient_tool->tentative_gradient, gradient))
     {
-      g_clear_object (&gradient_tool->tentative_gradient);
-
-      gradient_tool->tentative_gradient = gradient;
-
-      if (gradient)
-        g_object_ref (gradient);
-
       if (gradient_tool->render_node)
         {
           gegl_node_set (gradient_tool->render_node,

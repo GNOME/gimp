@@ -465,22 +465,18 @@ gimp_container_view_real_set_context (GimpContainerView *view,
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  if (private->context)
+  if (private->context &&
+      private->container)
     {
-      if (private->container)
-        gimp_container_view_disconnect_context (view);
-
-      g_object_unref (private->context);
+      gimp_container_view_disconnect_context (view);
     }
 
-  private->context = context;
+  g_set_object (&private->context, context);
 
-  if (private->context)
+  if (private->context &&
+      private->container)
     {
-      g_object_ref (private->context);
-
-      if (private->container)
-        gimp_container_view_connect_context (view);
+      gimp_container_view_connect_context (view);
     }
 }
 

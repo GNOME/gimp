@@ -2054,11 +2054,7 @@ gimp_item_set_parasites (GimpItem         *item,
 
   private = GET_PRIVATE (item);
 
-  if (parasites != private->parasites)
-    {
-      g_object_unref (private->parasites);
-      private->parasites = g_object_ref (parasites);
-    }
+  g_set_object (&private->parasites, parasites);
 }
 
 /**

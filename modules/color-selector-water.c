@@ -239,17 +239,14 @@ colorsel_water_set_config (GimpColorSelector *selector,
           g_signal_handlers_disconnect_by_func (water->config,
                                                 colorsel_water_destroy_transform,
                                                 water);
-          g_object_unref (water->config);
 
           colorsel_water_destroy_transform (water);
         }
 
-      water->config = config;
+      g_set_object (&water->config, config);
 
       if (water->config)
         {
-          g_object_ref (water->config);
-
           g_signal_connect_swapped (water->config, "notify",
                                     G_CALLBACK (colorsel_water_destroy_transform),
                                     water);

@@ -635,17 +635,14 @@ gimp_color_select_set_config (GimpColorSelector *selector,
           g_signal_handlers_disconnect_by_func (select->config,
                                                 gimp_color_select_notify_config,
                                                 select);
-          g_object_unref (select->config);
 
           gimp_color_select_destroy_transform (select);
         }
 
-      select->config = config;
+      g_set_object (&select->config, config);
 
       if (select->config)
         {
-          g_object_ref (select->config);
-
           g_signal_connect (select->config, "notify",
                             G_CALLBACK (gimp_color_select_notify_config),
                             select);

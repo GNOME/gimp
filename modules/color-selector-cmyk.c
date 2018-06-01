@@ -271,22 +271,16 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
   if (config != module->config)
     {
       if (module->config)
-        {
-          g_signal_handlers_disconnect_by_func (module->config,
-                                                colorsel_cmyk_config_changed,
-                                                module);
-          g_object_unref (module->config);
-        }
+        g_signal_handlers_disconnect_by_func (module->config,
+                                              colorsel_cmyk_config_changed,
+                                              module);
 
-      module->config = config;
+      g_set_object (&module->config, config);
 
       if (module->config)
-        {
-          g_object_ref (module->config);
-          g_signal_connect_swapped (module->config, "notify",
-                                    G_CALLBACK (colorsel_cmyk_config_changed),
-                                    module);
-        }
+        g_signal_connect_swapped (module->config, "notify",
+                                  G_CALLBACK (colorsel_cmyk_config_changed),
+                                  module);
 
       colorsel_cmyk_config_changed (module);
     }

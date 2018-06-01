@@ -327,24 +327,16 @@ gimp_pickable_button_set_pickable (GimpPickableButton *button,
   if (pickable != button->private->pickable)
     {
       if (button->private->pickable)
-        {
-          g_signal_handlers_disconnect_by_func (button->private->pickable,
-                                                gimp_pickable_button_notify_buffer,
-                                                button);
+        g_signal_handlers_disconnect_by_func (button->private->pickable,
+                                              gimp_pickable_button_notify_buffer,
+                                              button);
 
-          g_object_unref (button->private->pickable);
-        }
-
-      button->private->pickable = pickable;
+      g_set_object (&button->private->pickable, pickable);
 
       if (button->private->pickable)
-        {
-          g_object_ref (button->private->pickable);
-
-          g_signal_connect (button->private->pickable, "notify::buffer",
-                            G_CALLBACK (gimp_pickable_button_notify_buffer),
-                            button);
-        }
+        g_signal_connect (button->private->pickable, "notify::buffer",
+                          G_CALLBACK (gimp_pickable_button_notify_buffer),
+                          button);
 
       gimp_view_set_viewable (GIMP_VIEW (button->private->view),
                               GIMP_VIEWABLE (pickable));

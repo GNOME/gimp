@@ -184,11 +184,7 @@ gimp_color_tool_finalize (GObject *object)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (object);
 
-  if (color_tool->options)
-    {
-      g_object_unref (color_tool->options);
-      color_tool->options = NULL;
-    }
+  g_clear_object (&color_tool->options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -644,10 +640,7 @@ gimp_color_tool_enable (GimpColorTool    *color_tool,
       return;
     }
 
-  if (color_tool->options)
-    g_object_unref (color_tool->options);
-
-  color_tool->options = g_object_ref (options);
+  g_set_object (&color_tool->options, options);
 
   /*  color picking doesn't snap, see bug #768058  */
   color_tool->saved_snap_to = gimp_tool_control_get_snap_to (tool->control);
@@ -671,11 +664,7 @@ gimp_color_tool_disable (GimpColorTool *color_tool)
       return;
     }
 
-  if (color_tool->options)
-    {
-      g_object_unref (color_tool->options);
-      color_tool->options = NULL;
-    }
+  g_clear_object (&color_tool->options);
 
   gimp_tool_control_set_snap_to (tool->control, color_tool->saved_snap_to);
   color_tool->saved_snap_to = FALSE;
