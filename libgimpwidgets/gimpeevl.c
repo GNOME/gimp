@@ -46,13 +46,15 @@
  *
  *   signed factor ::= ( '+' | '-' )? factor ;
  *
- *   unit factor   ::= factor unit? ;
+ *   factor        ::= quantity ( '^' signed factor )? ;
  *
- *   factor        ::= number | '(' expression ')' ;
+ *   quantity      ::= number unit? | '(' expression ')' ;
  *
  *   number        ::= ? what g_strtod() consumes ? ;
  *
- *   unit          ::= ? what not g_strtod() consumes and not whitespace ? ;
+ *   unit          ::= simple unit ( '^' signed factor )? ;
+ *
+ *   simple unit   ::= ? what not g_strtod() consumes and not whitespace ? ;
  *
  * The code should match the EBNF rather closely (except for the
  * non-terminal unit factor, which is inlined into factor) for
@@ -69,6 +71,8 @@
 #include <string.h>
 
 #include <glib-object.h>
+
+#include "libgimpmath/gimpmath.h"
 
 #include "gimpeevl.h"
 #include "gimpwidgets-error.h"
@@ -128,6 +132,7 @@ static GimpEevlQuantity gimp_eevl_term                     (GimpEevl            
 static GimpEevlQuantity gimp_eevl_ratio                    (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_signed_factor            (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_factor                   (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_quantity                 (GimpEevl              *eva);
 static gboolean         gimp_eevl_accept                   (GimpEevl              *eva,
                                                             GimpEevlTokenType      token_type,
                                                             GimpEevlToken         *consumed_token);
@@ -387,18 +392,42 @@ gimp_eevl_signed_factor (GimpEevl *eva)
 static GimpEevlQuantity
 gimp_eevl_factor (GimpEevl *eva)
 {
-  GimpEevlQuantity evaluated_factor = { 0, 0 };
+  GimpEevlQuantity evaluated_factor;
+
+  evaluated_factor = gimp_eevl_quantity (eva);
+
+  if (gimp_eevl_accept (eva, '^', NULL))
+    {
+      GimpEevlQuantity evaluated_exponent;
+
+      evaluated_exponent = gimp_eevl_signed_factor (eva);
+
+      if (evaluated_exponent.dimension != 0)
+        gimp_eevl_error (eva, "Exponent is not a dimensionless quantity");
+
+      evaluated_factor.value      = pow (evaluated_factor.value,
+                                         evaluated_exponent.value);
+      evaluated_factor.dimension *= evaluated_exponent.value;
+    }
+
+  return evaluated_factor;
+}
+
+static GimpEevlQuantity
+gimp_eevl_quantity (GimpEevl *eva)
+{
+  GimpEevlQuantity evaluated_quantity = { 0, 0 };
   GimpEevlToken    consumed_token;
 
   if (gimp_eevl_accept (eva,
                         GIMP_EEVL_TOKEN_NUM,
                         &consumed_token))
     {
-      evaluated_factor.value = consumed_token.value.fl;
+      evaluated_quantity.value = consumed_token.value.fl;
     }
   else if (gimp_eevl_accept (eva, '(', NULL))
     {
-      evaluated_factor = gimp_eevl_expression (eva);
+      evaluated_quantity = gimp_eevl_expression (eva);
       gimp_eevl_expect (eva, ')', 0);
     }
   else
@@ -424,8 +453,24 @@ gimp_eevl_factor (GimpEevl *eva)
                                            &result,
                                            eva->options.data))
         {
-          evaluated_factor.value      /= result.value;
-          evaluated_factor.dimension  += result.dimension;
+          if (gimp_eevl_accept (eva, '^', NULL))
+            {
+              GimpEevlQuantity evaluated_exponent;
+
+              evaluated_exponent = gimp_eevl_signed_factor (eva);
+
+              if (evaluated_exponent.dimension != 0)
+                {
+                  gimp_eevl_error (eva,
+                                   "Exponent is not a dimensionless quantity");
+                }
+
+              result.value      = pow (result.value, evaluated_exponent.value);
+              result.dimension *= evaluated_exponent.value;
+            }
+
+          evaluated_quantity.value     /= result.value;
+          evaluated_quantity.dimension += result.dimension;
         }
       else
         {
@@ -433,7 +478,7 @@ gimp_eevl_factor (GimpEevl *eva)
         }
     }
 
-  return evaluated_factor;
+  return evaluated_quantity;
 }
 
 static gboolean
