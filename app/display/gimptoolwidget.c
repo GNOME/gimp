@@ -91,6 +91,7 @@ static void     gimp_tool_widget_properties_changed (GObject         *object,
                                                      guint            n_pspecs,
                                                      GParamSpec     **pspecs);
 
+static void     gimp_tool_widget_real_leave_notify  (GimpToolWidget  *widget);
 static gboolean gimp_tool_widget_real_key_press     (GimpToolWidget  *widget,
                                                      GdkEventKey     *kevent);
 
@@ -113,6 +114,7 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
   object_class->get_property                = gimp_tool_widget_get_property;
   object_class->dispatch_properties_changed = gimp_tool_widget_properties_changed;
 
+  klass->leave_notify                       = gimp_tool_widget_real_leave_notify;
   klass->key_press                          = gimp_tool_widget_real_key_press;
 
   widget_signals[CHANGED] =
@@ -284,6 +286,12 @@ gimp_tool_widget_properties_changed (GObject     *object,
                                                               pspecs);
 
   g_signal_emit (object, widget_signals[CHANGED], 0);
+}
+
+static void
+gimp_tool_widget_real_leave_notify (GimpToolWidget *widget)
+{
+  gimp_tool_widget_set_status (widget, NULL);
 }
 
 static gboolean
@@ -808,6 +816,15 @@ gimp_tool_widget_hover (GimpToolWidget   *widget,
   if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover)
     GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover (widget,
                                                 coords, state, proximity);
+}
+
+void
+gimp_tool_widget_leave_notify (GimpToolWidget *widget)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify)
+    GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify (widget);
 }
 
 gboolean
