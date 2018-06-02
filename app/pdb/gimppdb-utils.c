@@ -346,8 +346,7 @@ gimp_pdb_get_font (Gimp         *gimp,
       return NULL;
     }
 
-  font = (GimpFont *)
-    gimp_container_get_child_by_name (gimp->fonts, name);
+  font = (GimpFont *) gimp_pdb_get_data_factory_item (gimp->font_factory, name);
 
   if (! font)
     {

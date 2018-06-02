@@ -40,8 +40,6 @@
 
 #include "paint/gimp-paint.h"
 
-#include "text/gimp-fonts.h"
-
 #include "xcf/xcf.h"
 
 #include "gimp.h"
@@ -254,8 +252,6 @@ gimp_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
-  gimp_fonts_init (gimp);
-
   gimp_data_factories_init (gimp);
 
   gimp->tool_info_list = g_object_new (GIMP_TYPE_LIST,
@@ -393,8 +389,6 @@ gimp_finalize (GObject *object)
 
   gimp_data_factories_exit (gimp);
 
-  gimp_fonts_exit (gimp);
-
   g_clear_object (&gimp->named_buffers);
   g_clear_object (&gimp->clipboard_buffer);
   g_clear_object (&gimp->clipboard_image);
@@ -507,8 +501,6 @@ gimp_real_initialize (Gimp               *gimp,
 
   status_callback (_("Initialization"), NULL, 0.0);
 
-  gimp_fonts_set_config (gimp);
-
   /*  set the last values used to default values  */
   gimp->image_new_last_template =
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
@@ -554,8 +546,6 @@ gimp_real_exit (Gimp     *gimp,
   gimp_modules_unload (gimp);
 
   gimp_data_factories_save (gimp);
-
-  gimp_fonts_reset (gimp);
 
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
@@ -795,13 +785,6 @@ gimp_restore (Gimp                *gimp,
 
   /*  initialize the lists of gimp brushes, dynamics, patterns etc.  */
   gimp_data_factories_load (gimp, status_callback);
-
-  /*  initialize the list of fonts  */
-  if (! gimp->no_fonts)
-    {
-      status_callback (NULL, _("Fonts"), 0.7);
-      gimp_fonts_load (gimp, error);
-    }
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.8);

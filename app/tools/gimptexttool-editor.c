@@ -31,6 +31,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
@@ -186,9 +187,10 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
 
   if (! text_tool->style_overlay)
     {
-      Gimp    *gimp = GIMP_CONTEXT (options)->gimp;
-      gdouble  xres = 1.0;
-      gdouble  yres = 1.0;
+      Gimp          *gimp = GIMP_CONTEXT (options)->gimp;
+      GimpContainer *fonts;
+      gdouble        xres = 1.0;
+      gdouble        yres = 1.0;
 
       text_tool->style_overlay = gimp_overlay_frame_new ();
       gtk_container_set_border_width (GTK_CONTAINER (text_tool->style_overlay),
@@ -203,10 +205,12 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       if (text_tool->image)
         gimp_image_get_resolution (text_tool->image, &xres, &yres);
 
+      fonts = gimp_data_factory_get_container (gimp->font_factory);
+
       text_tool->style_editor = gimp_text_style_editor_new (gimp,
                                                             text_tool->proxy,
                                                             text_tool->buffer,
-                                                            gimp->fonts,
+                                                            fonts,
                                                             xres, yres);
       gtk_container_add (GTK_CONTAINER (text_tool->style_overlay),
                          text_tool->style_editor);

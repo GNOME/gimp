@@ -30,8 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer-filter.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
-#include "text/gimp-fonts.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -46,8 +46,8 @@ fonts_refresh_invoker (GimpProcedure         *procedure,
                        const GimpValueArray  *args,
                        GError               **error)
 {
-  gimp_fonts_load (gimp, error);
-  gimp_fonts_wait (gimp, NULL);
+  gimp_data_factory_data_refresh (gimp->font_factory, context);
+  gimp_data_factory_data_wait (gimp->font_factory);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }
@@ -70,12 +70,12 @@ fonts_get_list_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (! gimp_fonts_wait (gimp, error))
+      if (! gimp_data_factory_data_wait (gimp->font_factory))
         success = FALSE;
 
       if (success)
         {
-          font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+          font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
                                                               filter, &num_fonts);
         }
     }

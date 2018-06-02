@@ -222,17 +222,6 @@ static void gimp_context_palette_list_thaw   (GimpContainer    *container,
 static void gimp_context_real_set_palette    (GimpContext      *context,
                                               GimpPalette      *palette);
 
-/*  tool preset  */
-static void gimp_context_tool_preset_dirty     (GimpToolPreset   *tool_preset,
-                                                GimpContext      *context);
-static void gimp_context_tool_preset_removed   (GimpContainer    *container,
-                                                GimpToolPreset   *tool_preset,
-                                                GimpContext      *context);
-static void gimp_context_tool_preset_list_thaw (GimpContainer    *container,
-                                                GimpContext      *context);
-static void gimp_context_real_set_tool_preset  (GimpContext      *context,
-                                                GimpToolPreset   *tool_preset);
-
 /*  font  */
 static void gimp_context_font_dirty          (GimpFont         *font,
                                               GimpContext      *context);
@@ -243,6 +232,17 @@ static void gimp_context_font_list_thaw      (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_font       (GimpContext      *context,
                                               GimpFont         *font);
+
+/*  tool preset  */
+static void gimp_context_tool_preset_dirty     (GimpToolPreset   *tool_preset,
+                                                GimpContext      *context);
+static void gimp_context_tool_preset_removed   (GimpContainer    *container,
+                                                GimpToolPreset   *tool_preset,
+                                                GimpContext      *context);
+static void gimp_context_tool_preset_list_thaw (GimpContainer    *container,
+                                                GimpContext      *context);
+static void gimp_context_real_set_tool_preset  (GimpContext      *context,
+                                                GimpToolPreset   *tool_preset);
 
 /*  buffer  */
 static void gimp_context_buffer_dirty        (GimpBuffer       *buffer,
@@ -313,8 +313,8 @@ enum
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
-  TOOL_PRESET_CHANGED,
   FONT_CHANGED,
+  TOOL_PRESET_CHANGED,
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   TEMPLATE_CHANGED,
@@ -340,8 +340,8 @@ static const gchar * const gimp_context_prop_names[] =
   "pattern",
   "gradient",
   "palette",
-  "tool-preset",
   "font",
+  "tool-preset",
   "buffer",
   "imagefile",
   "template"
@@ -533,16 +533,6 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_PALETTE);
 
-  gimp_context_signals[TOOL_PRESET_CHANGED] =
-    g_signal_new ("tool-preset-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpContextClass, tool_preset_changed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__OBJECT,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_TOOL_PRESET);
-
   gimp_context_signals[FONT_CHANGED] =
     g_signal_new ("font-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -552,6 +542,16 @@ gimp_context_class_init (GimpContextClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_FONT);
+
+  gimp_context_signals[TOOL_PRESET_CHANGED] =
+    g_signal_new ("tool-preset-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, tool_preset_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_TOOL_PRESET);
 
   gimp_context_signals[BUFFER_CHANGED] =
     g_signal_new ("buffer-changed",
@@ -615,8 +615,8 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->pattern_changed         = NULL;
   klass->gradient_changed        = NULL;
   klass->palette_changed         = NULL;
-  klass->tool_preset_changed     = NULL;
   klass->font_changed            = NULL;
+  klass->tool_preset_changed     = NULL;
   klass->buffer_changed          = NULL;
   klass->imagefile_changed       = NULL;
   klass->template_changed        = NULL;
@@ -631,8 +631,8 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PATTERN]     = GIMP_TYPE_PATTERN;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_GRADIENT]    = GIMP_TYPE_GRADIENT;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_PALETTE]     = GIMP_TYPE_PALETTE;
-  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL_PRESET] = GIMP_TYPE_TOOL_PRESET;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_FONT]        = GIMP_TYPE_FONT;
+  gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL_PRESET] = GIMP_TYPE_TOOL_PRESET;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_BUFFER]      = GIMP_TYPE_BUFFER;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGEFILE]   = GIMP_TYPE_IMAGEFILE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TEMPLATE]    = GIMP_TYPE_TEMPLATE;
@@ -741,18 +741,18 @@ gimp_context_class_init (GimpContextClass *klass)
                            GIMP_TYPE_PALETTE,
                            GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL_PRESET,
-                           gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL_PRESET],
-                           _("Tool Preset"),
-                           _("Tool Preset"),
-                           GIMP_TYPE_TOOL_PRESET,
-                           GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_FONT,
                            gimp_context_prop_names[GIMP_CONTEXT_PROP_FONT],
                            _("Font"),
                            _("Font"),
                            GIMP_TYPE_FONT,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_TOOL_PRESET,
+                           gimp_context_prop_names[GIMP_CONTEXT_PROP_TOOL_PRESET],
+                           _("Tool Preset"),
+                           _("Tool Preset"),
+                           GIMP_TYPE_TOOL_PRESET,
                            GIMP_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
@@ -811,11 +811,11 @@ gimp_context_init (GimpContext *context)
   context->palette         = NULL;
   context->palette_name    = NULL;
 
-  context->tool_preset      = NULL;
-  context->tool_preset_name = NULL;
-
   context->font            = NULL;
   context->font_name       = NULL;
+
+  context->tool_preset      = NULL;
+  context->tool_preset_name = NULL;
 
   context->buffer          = NULL;
   context->buffer_name     = NULL;
@@ -919,19 +919,20 @@ gimp_context_constructed (GObject *object)
                            G_CALLBACK (gimp_context_palette_list_thaw),
                            object, 0);
 
+  container = gimp_data_factory_get_container (gimp->font_factory);
+  g_signal_connect_object (container, "remove",
+                           G_CALLBACK (gimp_context_font_removed),
+                           object, 0);
+  g_signal_connect_object (container, "thaw",
+                           G_CALLBACK (gimp_context_font_list_thaw),
+                           object, 0);
+
   container = gimp_data_factory_get_container (gimp->tool_preset_factory);
   g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_tool_preset_removed),
                            object, 0);
   g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_tool_preset_list_thaw),
-                           object, 0);
-
-  g_signal_connect_object (gimp->fonts, "remove",
-                           G_CALLBACK (gimp_context_font_removed),
-                           object, 0);
-  g_signal_connect_object (gimp->fonts, "thaw",
-                           G_CALLBACK (gimp_context_font_list_thaw),
                            object, 0);
 
   g_signal_connect_object (gimp->named_buffers, "remove",
@@ -981,8 +982,8 @@ gimp_context_dispose (GObject *object)
   g_clear_object (&context->pattern);
   g_clear_object (&context->gradient);
   g_clear_object (&context->palette);
-  g_clear_object (&context->tool_preset);
   g_clear_object (&context->font);
+  g_clear_object (&context->tool_preset);
   g_clear_object (&context->buffer);
   g_clear_object (&context->imagefile);
   g_clear_object (&context->template);
@@ -1007,8 +1008,8 @@ gimp_context_finalize (GObject *object)
   g_clear_pointer (&context->pattern_name,     g_free);
   g_clear_pointer (&context->gradient_name,    g_free);
   g_clear_pointer (&context->palette_name,     g_free);
-  g_clear_pointer (&context->tool_preset_name, g_free);
   g_clear_pointer (&context->font_name,        g_free);
+  g_clear_pointer (&context->tool_preset_name, g_free);
   g_clear_pointer (&context->buffer_name,      g_free);
   g_clear_pointer (&context->imagefile_name,   g_free);
   g_clear_pointer (&context->template_name,    g_free);
@@ -1071,11 +1072,11 @@ gimp_context_set_property (GObject      *object,
     case GIMP_CONTEXT_PROP_PALETTE:
       gimp_context_set_palette (context, g_value_get_object (value));
       break;
-    case GIMP_CONTEXT_PROP_TOOL_PRESET:
-      gimp_context_set_tool_preset (context, g_value_get_object (value));
-      break;
     case GIMP_CONTEXT_PROP_FONT:
       gimp_context_set_font (context, g_value_get_object (value));
+      break;
+    case GIMP_CONTEXT_PROP_TOOL_PRESET:
+      gimp_context_set_tool_preset (context, g_value_get_object (value));
       break;
     case GIMP_CONTEXT_PROP_BUFFER:
       gimp_context_set_buffer (context, g_value_get_object (value));
@@ -1157,11 +1158,11 @@ gimp_context_get_property (GObject    *object,
     case GIMP_CONTEXT_PROP_PALETTE:
       g_value_set_object (value, gimp_context_get_palette (context));
       break;
-    case GIMP_CONTEXT_PROP_TOOL_PRESET:
-      g_value_set_object (value, gimp_context_get_tool_preset (context));
-      break;
     case GIMP_CONTEXT_PROP_FONT:
       g_value_set_object (value, gimp_context_get_font (context));
+      break;
+    case GIMP_CONTEXT_PROP_TOOL_PRESET:
+      g_value_set_object (value, gimp_context_get_tool_preset (context));
       break;
     case GIMP_CONTEXT_PROP_BUFFER:
       g_value_set_object (value, gimp_context_get_buffer (context));
@@ -1192,8 +1193,8 @@ gimp_context_get_memsize (GimpObject *object,
   memsize += gimp_string_get_memsize (context->mybrush_name);
   memsize += gimp_string_get_memsize (context->pattern_name);
   memsize += gimp_string_get_memsize (context->palette_name);
-  memsize += gimp_string_get_memsize (context->tool_preset_name);
   memsize += gimp_string_get_memsize (context->font_name);
+  memsize += gimp_string_get_memsize (context->tool_preset_name);
   memsize += gimp_string_get_memsize (context->buffer_name);
   memsize += gimp_string_get_memsize (context->imagefile_name);
   memsize += gimp_string_get_memsize (context->template_name);
@@ -1257,8 +1258,8 @@ gimp_context_serialize_property (GimpConfig       *config,
     case GIMP_CONTEXT_PROP_PATTERN:
     case GIMP_CONTEXT_PROP_GRADIENT:
     case GIMP_CONTEXT_PROP_PALETTE:
-    case GIMP_CONTEXT_PROP_TOOL_PRESET:
     case GIMP_CONTEXT_PROP_FONT:
+    case GIMP_CONTEXT_PROP_TOOL_PRESET:
       serialize_obj = g_value_get_object (value);
       break;
 
@@ -1345,16 +1346,16 @@ gimp_context_deserialize_property (GimpConfig *object,
       name_loc  = &context->palette_name;
       break;
 
+    case GIMP_CONTEXT_PROP_FONT:
+      container = gimp_data_factory_get_container (context->gimp->font_factory);
+      current   = (GimpObject *) context->font;
+      name_loc  = &context->font_name;
+      break;
+
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       container = gimp_data_factory_get_container (context->gimp->tool_preset_factory);
       current   = (GimpObject *) context->tool_preset;
       name_loc  = &context->tool_preset_name;
-      break;
-
-    case GIMP_CONTEXT_PROP_FONT:
-      container = context->gimp->fonts;
-      current   = (GimpObject *) context->font;
-      name_loc  = &context->font_name;
       break;
 
     default:
@@ -1691,19 +1692,19 @@ gimp_context_copy_property (GimpContext         *src,
       dest_name_loc   = &dest->palette_name;
       break;
 
-    case GIMP_CONTEXT_PROP_TOOL_PRESET:
-      gimp_context_real_set_tool_preset (dest, src->tool_preset);
-      object          = src->tool_preset;
-      src_name        = src->tool_preset_name;
-      dest_name_loc   = &dest->tool_preset_name;
-      break;
-
     case GIMP_CONTEXT_PROP_FONT:
       gimp_context_real_set_font (dest, src->font);
       object          = src->font;
       standard_object = gimp_font_get_standard ();
       src_name        = src->font_name;
       dest_name_loc   = &dest->font_name;
+      break;
+
+    case GIMP_CONTEXT_PROP_TOOL_PRESET:
+      gimp_context_real_set_tool_preset (dest, src->tool_preset);
+      object          = src->tool_preset;
+      src_name        = src->tool_preset_name;
+      dest_name_loc   = &dest->tool_preset_name;
       break;
 
     case GIMP_CONTEXT_PROP_BUFFER:
@@ -3209,116 +3210,6 @@ gimp_context_real_set_palette (GimpContext *context,
 }
 
 
-/********************************************************************************/
-/*  tool preset *****************************************************************/
-
-GimpToolPreset *
-gimp_context_get_tool_preset (GimpContext *context)
-{
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  return context->tool_preset;
-}
-
-void
-gimp_context_set_tool_preset (GimpContext    *context,
-                              GimpToolPreset *tool_preset)
-{
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! tool_preset || GIMP_IS_TOOL_PRESET (tool_preset));
-  context_find_defined (context, GIMP_CONTEXT_PROP_TOOL_PRESET);
-
-  gimp_context_real_set_tool_preset (context, tool_preset);
-}
-
-void
-gimp_context_tool_preset_changed (GimpContext *context)
-{
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-
-  g_signal_emit (context,
-                 gimp_context_signals[TOOL_PRESET_CHANGED], 0,
-                 context->tool_preset);
-}
-
-static void
-gimp_context_tool_preset_dirty (GimpToolPreset *tool_preset,
-                                GimpContext    *context)
-{
-  g_free (context->tool_preset_name);
-  context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
-
-  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
-                 GIMP_CONTEXT_PROP_TOOL_PRESET);
-}
-
-static void
-gimp_context_tool_preset_removed (GimpContainer  *container,
-                                  GimpToolPreset *tool_preset,
-                                  GimpContext    *context)
-{
-  if (tool_preset == context->tool_preset)
-    {
-      context->tool_preset = NULL;
-
-      g_signal_handlers_disconnect_by_func (tool_preset,
-                                            gimp_context_tool_preset_dirty,
-                                            context);
-      g_object_unref (tool_preset);
-
-      if (! gimp_container_frozen (container))
-        gimp_context_tool_preset_list_thaw (container, context);
-    }
-}
-
-static void
-gimp_context_tool_preset_list_thaw (GimpContainer *container,
-                                    GimpContext   *context)
-{
-  GimpToolPreset *tool_preset;
-
-  tool_preset = gimp_context_find_object (context, container,
-                                          context->tool_preset_name, NULL);
-
-  gimp_context_real_set_tool_preset (context, tool_preset);
-}
-
-static void
-gimp_context_real_set_tool_preset (GimpContext    *context,
-                                   GimpToolPreset *tool_preset)
-{
-  if (context->tool_preset == tool_preset)
-    return;
-
-  if (context->tool_preset_name)
-    {
-      g_free (context->tool_preset_name);
-      context->tool_preset_name = NULL;
-    }
-
-  /*  disconnect from the old tool preset's signals  */
-  if (context->tool_preset)
-    g_signal_handlers_disconnect_by_func (context->tool_preset,
-                                          gimp_context_tool_preset_dirty,
-                                          context);
-
-  g_set_object (&context->tool_preset, tool_preset);
-
-  if (tool_preset)
-    {
-      g_signal_connect_object (tool_preset, "name-changed",
-                               G_CALLBACK (gimp_context_tool_preset_dirty),
-                               context,
-                               0);
-
-      context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
-    }
-
-  g_object_notify (G_OBJECT (context), "tool-preset");
-  gimp_context_tool_preset_changed (context);
-}
-
-
 /*****************************************************************************/
 /*  font     *****************************************************************/
 
@@ -3352,11 +3243,13 @@ void
 gimp_context_set_font_name (GimpContext *context,
                             const gchar *name)
 {
-  GimpObject *font;
+  GimpContainer *container;
+  GimpObject    *font;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  font = gimp_container_get_child_by_name (context->gimp->fonts, name);
+  container = gimp_data_factory_get_container (context->gimp->font_factory);
+  font      = gimp_container_get_child_by_name (container, name);
 
   if (font)
     {
@@ -3468,6 +3361,116 @@ gimp_context_real_set_font (GimpContext *context,
 
   g_object_notify (G_OBJECT (context), "font");
   gimp_context_font_changed (context);
+}
+
+
+/********************************************************************************/
+/*  tool preset *****************************************************************/
+
+GimpToolPreset *
+gimp_context_get_tool_preset (GimpContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return context->tool_preset;
+}
+
+void
+gimp_context_set_tool_preset (GimpContext    *context,
+                              GimpToolPreset *tool_preset)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! tool_preset || GIMP_IS_TOOL_PRESET (tool_preset));
+  context_find_defined (context, GIMP_CONTEXT_PROP_TOOL_PRESET);
+
+  gimp_context_real_set_tool_preset (context, tool_preset);
+}
+
+void
+gimp_context_tool_preset_changed (GimpContext *context)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  g_signal_emit (context,
+                 gimp_context_signals[TOOL_PRESET_CHANGED], 0,
+                 context->tool_preset);
+}
+
+static void
+gimp_context_tool_preset_dirty (GimpToolPreset *tool_preset,
+                                GimpContext    *context)
+{
+  g_free (context->tool_preset_name);
+  context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_TOOL_PRESET);
+}
+
+static void
+gimp_context_tool_preset_removed (GimpContainer  *container,
+                                  GimpToolPreset *tool_preset,
+                                  GimpContext    *context)
+{
+  if (tool_preset == context->tool_preset)
+    {
+      context->tool_preset = NULL;
+
+      g_signal_handlers_disconnect_by_func (tool_preset,
+                                            gimp_context_tool_preset_dirty,
+                                            context);
+      g_object_unref (tool_preset);
+
+      if (! gimp_container_frozen (container))
+        gimp_context_tool_preset_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_tool_preset_list_thaw (GimpContainer *container,
+                                    GimpContext   *context)
+{
+  GimpToolPreset *tool_preset;
+
+  tool_preset = gimp_context_find_object (context, container,
+                                          context->tool_preset_name, NULL);
+
+  gimp_context_real_set_tool_preset (context, tool_preset);
+}
+
+static void
+gimp_context_real_set_tool_preset (GimpContext    *context,
+                                   GimpToolPreset *tool_preset)
+{
+  if (context->tool_preset == tool_preset)
+    return;
+
+  if (context->tool_preset_name)
+    {
+      g_free (context->tool_preset_name);
+      context->tool_preset_name = NULL;
+    }
+
+  /*  disconnect from the old tool preset's signals  */
+  if (context->tool_preset)
+    g_signal_handlers_disconnect_by_func (context->tool_preset,
+                                          gimp_context_tool_preset_dirty,
+                                          context);
+
+  g_set_object (&context->tool_preset, tool_preset);
+
+  if (tool_preset)
+    {
+      g_signal_connect_object (tool_preset, "name-changed",
+                               G_CALLBACK (gimp_context_tool_preset_dirty),
+                               context,
+                               0);
+
+      context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
+    }
+
+  g_object_notify (G_OBJECT (context), "tool-preset");
+  gimp_context_tool_preset_changed (context);
 }
 
 

@@ -28,8 +28,8 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
-#include "text/gimp-fonts.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -57,8 +57,9 @@ fonts_popup_invoker (GimpProcedure         *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-          ! gimp_fonts_wait (gimp, error)                        ||
-          ! gimp_pdb_dialog_new (gimp, context, progress, gimp->fonts,
+          ! gimp_data_factory_data_wait (gimp->font_factory)     ||
+          ! gimp_pdb_dialog_new (gimp, context, progress,
+                                 gimp_data_factory_get_container (gimp->font_factory),
                                  popup_title, font_callback, initial_font,
                                  NULL))
         success = FALSE;
@@ -85,7 +86,9 @@ fonts_close_popup_invoker (GimpProcedure         *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
+          ! gimp_pdb_dialog_close (gimp,
+                                   gimp_data_factory_get_container (gimp->font_factory),
+                                   font_callback))
         success = FALSE;
     }
 
@@ -112,8 +115,10 @@ fonts_set_popup_invoker (GimpProcedure         *procedure,
     {
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-          ! gimp_fonts_wait (gimp, error)                        ||
-          ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
+          ! gimp_data_factory_data_wait (gimp->font_factory)     ||
+          ! gimp_pdb_dialog_set (gimp,
+                                 gimp_data_factory_get_container (gimp->font_factory),
+                                 font_callback, font_name,
                                  NULL))
         success = FALSE;
     }

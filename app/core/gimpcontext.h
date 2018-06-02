@@ -88,11 +88,11 @@ struct _GimpContext
   GimpPalette          *palette;
   gchar                *palette_name;
 
-  GimpToolPreset       *tool_preset;
-  gchar                *tool_preset_name;
-
   GimpFont             *font;
   gchar                *font_name;
+
+  GimpToolPreset       *tool_preset;
+  gchar                *tool_preset_name;
 
   GimpBuffer           *buffer;
   gchar                *buffer_name;
@@ -138,10 +138,10 @@ struct _GimpContextClass
                                GimpGradient         *gradient);
   void (* palette_changed)    (GimpContext          *context,
                                GimpPalette          *palette);
-  void (* tool_preset_changed)(GimpContext          *context,
-                               GimpToolPreset       *tool_preset);
   void (* font_changed)       (GimpContext          *context,
                                GimpFont             *font);
+  void (* tool_preset_changed)(GimpContext          *context,
+                               GimpToolPreset       *tool_preset);
   void (* buffer_changed)     (GimpContext          *context,
                                GimpBuffer           *buffer);
   void (* imagefile_changed)  (GimpContext          *context,
@@ -319,13 +319,6 @@ void             gimp_context_set_palette         (GimpContext     *context,
 void             gimp_context_palette_changed     (GimpContext     *context);
 
 
-/*  tool_preset  */
-GimpToolPreset * gimp_context_get_tool_preset     (GimpContext     *context);
-void             gimp_context_set_tool_preset     (GimpContext     *context,
-                                                   GimpToolPreset  *tool_preset);
-void             gimp_context_tool_preset_changed (GimpContext     *context);
-
-
 /*  font  */
 GimpFont       * gimp_context_get_font            (GimpContext     *context);
 void             gimp_context_set_font            (GimpContext     *context,
@@ -334,6 +327,13 @@ const gchar    * gimp_context_get_font_name       (GimpContext     *context);
 void             gimp_context_set_font_name       (GimpContext     *context,
                                                    const gchar     *name);
 void             gimp_context_font_changed        (GimpContext     *context);
+
+
+/*  tool_preset  */
+GimpToolPreset * gimp_context_get_tool_preset     (GimpContext     *context);
+void             gimp_context_set_tool_preset     (GimpContext     *context,
+                                                   GimpToolPreset  *tool_preset);
+void             gimp_context_tool_preset_changed (GimpContext     *context);
 
 
 /*  buffer  */

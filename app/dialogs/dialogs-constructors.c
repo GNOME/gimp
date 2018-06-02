@@ -45,7 +45,7 @@
 #include "widgets/gimpdynamicsfactoryview.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimperrordialog.h"
-#include "widgets/gimpfontview.h"
+#include "widgets/gimpfontfactoryview.h"
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphistogrameditor.h"
 #include "widgets/gimpimageview.h"
@@ -475,11 +475,11 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
                             GimpUIManager     *ui_manager,
                             gint               view_size)
 {
-  return gimp_font_view_new (GIMP_VIEW_TYPE_LIST,
-                             context->gimp->fonts,
-                             context,
-                             view_size, 1,
-                             gimp_dialog_factory_get_menu_factory (factory));
+  return gimp_font_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                     context->gimp->font_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *
@@ -644,11 +644,11 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
                             GimpUIManager     *ui_manager,
                             gint               view_size)
 {
-  return gimp_font_view_new (GIMP_VIEW_TYPE_GRID,
-                             context->gimp->fonts,
-                             context,
-                             view_size, 1,
-                             gimp_dialog_factory_get_menu_factory (factory));
+  return gimp_font_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                     context->gimp->font_factory,
+                                     context,
+                                     view_size, 1,
+                                     gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

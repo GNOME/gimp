@@ -31,13 +31,13 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer-floating-selection.h"
 
-#include "gimp-fonts.h"
 #include "gimptext.h"
 #include "gimptext-compat.h"
 #include "gimptextlayer.h"
@@ -71,7 +71,7 @@ text_render (GimpImage    *image,
   g_return_val_if_fail (fontname != NULL, NULL);
   g_return_val_if_fail (text != NULL, NULL);
 
-  if (! gimp_fonts_wait (image->gimp, NULL))
+  if (! gimp_data_factory_data_wait (image->gimp->font_factory))
     return NULL;
 
   if (border < 0)
@@ -155,7 +155,7 @@ text_get_extents (Gimp        *gimp,
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
-  if (! gimp_fonts_wait (gimp, NULL))
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
     return FALSE;
 
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
