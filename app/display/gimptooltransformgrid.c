@@ -177,6 +177,7 @@ static void     gimp_tool_transform_grid_hover          (GimpToolWidget        *
                                                          const GimpCoords      *coords,
                                                          GdkModifierType        state,
                                                          gboolean               proximity);
+static void     gimp_tool_transform_grid_leave_notify   (GimpToolWidget        *widget);
 static void     gimp_tool_transform_grid_hover_modifier (GimpToolWidget        *widget,
                                                          GdkModifierType        key,
                                                          gboolean               press,
@@ -217,6 +218,7 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
   widget_class->button_release  = gimp_tool_transform_grid_button_release;
   widget_class->motion          = gimp_tool_transform_grid_motion;
   widget_class->hover           = gimp_tool_transform_grid_hover;
+  widget_class->leave_notify    = gimp_tool_transform_grid_leave_notify;
   widget_class->hover_modifier  = gimp_tool_transform_grid_hover_modifier;
   widget_class->get_cursor      = gimp_tool_transform_grid_get_cursor;
 
@@ -1968,6 +1970,19 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
   private->handle = handle;
 
   gimp_tool_transform_grid_update_hilight (grid);
+}
+
+void
+gimp_tool_transform_grid_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
+  GimpToolTransformGridPrivate *private = grid->private;
+
+  private->handle = GIMP_TRANSFORM_HANDLE_NONE;
+
+  gimp_tool_transform_grid_update_hilight (grid);
+
+  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static void

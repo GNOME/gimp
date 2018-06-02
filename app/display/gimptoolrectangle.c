@@ -305,6 +305,7 @@ static void     gimp_tool_rectangle_hover           (GimpToolWidget        *widg
                                                      const GimpCoords      *coords,
                                                      GdkModifierType        state,
                                                      gboolean               proximity);
+static void     gimp_tool_rectangle_leave_notify    (GimpToolWidget        *widget);
 static gboolean gimp_tool_rectangle_key_press       (GimpToolWidget        *widget,
                                                      GdkEventKey           *kevent);
 static void     gimp_tool_rectangle_motion_modifier (GimpToolWidget        *widget,
@@ -449,6 +450,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   widget_class->button_release  = gimp_tool_rectangle_button_release;
   widget_class->motion          = gimp_tool_rectangle_motion;
   widget_class->hover           = gimp_tool_rectangle_hover;
+  widget_class->leave_notify    = gimp_tool_rectangle_leave_notify;
   widget_class->key_press       = gimp_tool_rectangle_key_press;
   widget_class->motion_modifier = gimp_tool_rectangle_motion_modifier;
   widget_class->get_cursor      = gimp_tool_rectangle_get_cursor;
@@ -1745,6 +1747,16 @@ gimp_tool_rectangle_hover (GimpToolWidget   *widget,
     }
 
   gimp_tool_rectangle_set_function (rectangle, function);
+}
+
+static void
+gimp_tool_rectangle_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolRectangle *rectangle = GIMP_TOOL_RECTANGLE (widget);
+
+  gimp_tool_rectangle_set_function (rectangle, GIMP_TOOL_RECTANGLE_DEAD);
+
+  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static gboolean

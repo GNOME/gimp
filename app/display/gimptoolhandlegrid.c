@@ -78,6 +78,7 @@ struct _GimpToolHandleGridPrivate
   gdouble  last_x;
   gdouble  last_y;
 
+  gboolean hover;
   gdouble  mouse_x;
   gdouble  mouse_y;
 
@@ -116,6 +117,7 @@ static void     gimp_tool_handle_grid_hover        (GimpToolWidget        *widge
                                                     const GimpCoords      *coords,
                                                     GdkModifierType        state,
                                                     gboolean               proximity);
+static void     gimp_tool_handle_grid_leave_notify (GimpToolWidget        *widget);
 static gboolean gimp_tool_handle_grid_get_cursor   (GimpToolWidget        *widget,
                                                     const GimpCoords      *coords,
                                                     GdkModifierType        state,
@@ -168,6 +170,7 @@ gimp_tool_handle_grid_class_init (GimpToolHandleGridClass *klass)
   widget_class->button_release  = gimp_tool_handle_grid_button_release;
   widget_class->motion          = gimp_tool_handle_grid_motion;
   widget_class->hover           = gimp_tool_handle_grid_hover;
+  widget_class->leave_notify    = gimp_tool_handle_grid_leave_notify;
   widget_class->get_cursor      = gimp_tool_handle_grid_get_cursor;
 
   g_object_class_install_property (object_class, PROP_HANDLE_MODE,
@@ -803,6 +806,7 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
   gchar                     *status  = NULL;
   gint                       i;
 
+  private->hover   = TRUE;
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
@@ -874,6 +878,20 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
   g_free (status);
 
   gimp_tool_handle_grid_update_hilight (grid);
+}
+
+static void
+gimp_tool_handle_grid_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
+  GimpToolHandleGridPrivate *private = grid->private;
+
+  private->hover  = FALSE;
+  private->handle = 0;
+
+  gimp_tool_handle_grid_update_hilight (grid);
+
+  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static gboolean
@@ -951,12 +969,17 @@ gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
 
       if (item)
         {
-          gdouble diameter =
-            gimp_canvas_handle_calc_size (item,
-                                          private->mouse_x,
-                                          private->mouse_y,
-                                          GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                                          2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE);
+          gdouble diameter = GIMP_CANVAS_HANDLE_SIZE_CIRCLE;
+
+          if (private->hover)
+            {
+              diameter = gimp_canvas_handle_calc_size (
+                item,
+                private->mouse_x,
+                private->mouse_y,
+                GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE);
+            }
 
           gimp_canvas_handle_set_size (item, diameter, diameter);
           gimp_canvas_item_set_highlight (item, (i + 1) == private->handle);

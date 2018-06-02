@@ -158,6 +158,7 @@ static void     gimp_tool_line_hover           (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
+static void     gimp_tool_line_leave_notify    (GimpToolWidget        *widget);
 static gboolean gimp_tool_line_key_press       (GimpToolWidget        *widget,
                                                 GdkEventKey           *kevent);
 static void     gimp_tool_line_motion_modifier (GimpToolWidget        *widget,
@@ -224,6 +225,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
   widget_class->button_release  = gimp_tool_line_button_release;
   widget_class->motion          = gimp_tool_line_motion;
   widget_class->hover           = gimp_tool_line_hover;
+  widget_class->leave_notify    = gimp_tool_line_leave_notify;
   widget_class->key_press       = gimp_tool_line_key_press;
   widget_class->motion_modifier = gimp_tool_line_motion_modifier;
   widget_class->get_cursor      = gimp_tool_line_get_cursor;
@@ -894,6 +896,20 @@ gimp_tool_line_hover (GimpToolWidget   *widget,
   gimp_tool_line_update_handles (line);
   gimp_tool_line_update_circle (line);
   gimp_tool_line_update_status (line, state, proximity);
+}
+
+static void
+gimp_tool_line_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
+  GimpToolLinePrivate *private = line->private;
+
+  private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
+
+  gimp_tool_line_update_handles (line);
+  gimp_tool_line_update_circle (line);
+
+  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static gboolean
