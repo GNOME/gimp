@@ -62,7 +62,7 @@ enum
 
 struct _GimpFont
 {
-  GimpViewable  parent_instance;
+  GimpData      parent_instance;
 
   PangoContext *pango_context;
 
@@ -73,10 +73,11 @@ struct _GimpFont
 
 struct _GimpFontClass
 {
-  GimpViewableClass   parent_class;
+  GimpDataClass   parent_class;
 };
 
 
+static void          gimp_font_constructed      (GObject       *object);
 static void          gimp_font_finalize         (GObject       *object);
 static void          gimp_font_set_property     (GObject       *object,
                                                  guint          property_id,
@@ -104,7 +105,7 @@ static const gchar * gimp_font_get_sample_string (PangoContext         *context,
                                                   PangoFontDescription *font_desc);
 
 
-G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_DATA)
 
 #define parent_class gimp_font_parent_class
 
@@ -115,6 +116,7 @@ gimp_font_class_init (GimpFontClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
+  object_class->constructed         = gimp_font_constructed;
   object_class->finalize            = gimp_font_finalize;
   object_class->set_property        = gimp_font_set_property;
 
@@ -134,7 +136,15 @@ gimp_font_class_init (GimpFontClass *klass)
 static void
 gimp_font_init (GimpFont *font)
 {
-  font->pango_context = NULL;
+}
+
+static void
+gimp_font_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_data_make_internal (GIMP_DATA (object),
+                           gimp_object_get_name (object));
 }
 
 static void
