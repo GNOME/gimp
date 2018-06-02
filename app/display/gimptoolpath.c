@@ -208,6 +208,7 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
   object_class->get_property    = gimp_tool_path_get_property;
 
   widget_class->changed         = gimp_tool_path_changed;
+  widget_class->focus_changed   = gimp_tool_path_changed;
   widget_class->button_press    = gimp_tool_path_button_press;
   widget_class->button_release  = gimp_tool_path_button_release;
   widget_class->motion          = gimp_tool_path_motion;
@@ -442,7 +443,8 @@ gimp_tool_path_changed (GimpToolWidget *widget)
                              g_array_index (coords, GimpCoords, i + 1).x,
                              g_array_index (coords, GimpCoords, i + 1).y);
 
-                          gimp_canvas_item_set_highlight (item, TRUE);
+                          if (gimp_tool_widget_get_focus (widget))
+                            gimp_canvas_item_set_highlight (item, TRUE);
 
                           private->items = g_list_prepend (private->items, item);
                         }

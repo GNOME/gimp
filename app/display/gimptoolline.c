@@ -139,6 +139,7 @@ static void     gimp_tool_line_get_property    (GObject               *object,
                                                 GParamSpec            *pspec);
 
 static void     gimp_tool_line_changed         (GimpToolWidget        *widget);
+static void     gimp_tool_line_focus_changed   (GimpToolWidget        *widget);
 static gint     gimp_tool_line_button_press    (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 guint32                time,
@@ -218,6 +219,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
   object_class->get_property    = gimp_tool_line_get_property;
 
   widget_class->changed         = gimp_tool_line_changed;
+  widget_class->focus_changed   = gimp_tool_line_focus_changed;
   widget_class->button_press    = gimp_tool_line_button_press;
   widget_class->button_release  = gimp_tool_line_button_release;
   widget_class->motion          = gimp_tool_line_motion;
@@ -612,6 +614,14 @@ gimp_tool_line_changed (GimpToolWidget *widget)
 
   gimp_tool_line_update_handles (line);
   gimp_tool_line_update_circle (line);
+  gimp_tool_line_update_hilight (line);
+}
+
+static void
+gimp_tool_line_focus_changed (GimpToolWidget *widget)
+{
+  GimpToolLine *line = GIMP_TOOL_LINE (widget);
+
   gimp_tool_line_update_hilight (line);
 }
 
@@ -1440,7 +1450,10 @@ static void
 gimp_tool_line_update_hilight (GimpToolLine *line)
 {
   GimpToolLinePrivate *private = line->private;
+  gboolean             focus;
   gint                 i;
+
+  focus = gimp_tool_widget_get_focus (GIMP_TOOL_WIDGET (line));
 
   for (i = GIMP_TOOL_LINE_HANDLE_NONE + 1;
        i < (gint) private->sliders->len;
@@ -1450,7 +1463,7 @@ gimp_tool_line_update_hilight (GimpToolLine *line)
 
       handle = gimp_tool_line_get_handle (line, i);
 
-      gimp_canvas_item_set_highlight (handle, i == private->selection);
+      gimp_canvas_item_set_highlight (handle, focus && i == private->selection);
     }
 }
 
