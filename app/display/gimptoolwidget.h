@@ -69,6 +69,7 @@ struct _GimpToolWidgetClass
                                 const gchar           *separator,
                                 gdouble                y,
                                 const gchar           *help);
+  void     (* focus_changed)   (GimpToolWidget        *widget);
 
   /*  virtual functions  */
   gint     (* button_press)    (GimpToolWidget        *widget,
@@ -118,6 +119,10 @@ GType              gimp_tool_widget_get_type          (void) G_GNUC_CONST;
 
 GimpDisplayShell * gimp_tool_widget_get_shell         (GimpToolWidget  *widget);
 GimpCanvasItem   * gimp_tool_widget_get_item          (GimpToolWidget  *widget);
+
+void               gimp_tool_widget_set_focus         (GimpToolWidget  *widget,
+                                                       gboolean         focus);
+gboolean           gimp_tool_widget_get_focus         (GimpToolWidget  *widget);
 
 /*  for subclasses, to notify the handling tool
  */
