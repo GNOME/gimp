@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdatafactory.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,19 +52,40 @@ struct _GimpDataFactoryLoaderEntry
 #define GIMP_DATA_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY, GimpDataFactoryClass))
 
 
-typedef struct _GimpDataFactoryClass  GimpDataFactoryClass;
-typedef struct _GimpDataFactoryPriv   GimpDataFactoryPriv;
+typedef struct _GimpDataFactoryPrivate GimpDataFactoryPrivate;
+typedef struct _GimpDataFactoryClass   GimpDataFactoryClass;
 
 struct _GimpDataFactory
 {
-  GimpObject           parent_instance;
+  GimpObject              parent_instance;
 
-  GimpDataFactoryPriv *priv;
+  GimpDataFactoryPrivate *priv;
 };
 
 struct _GimpDataFactoryClass
 {
   GimpObjectClass  parent_class;
+
+  void           (* data_init)      (GimpDataFactory *factory,
+                                     GimpContext     *context,
+                                     gboolean         no_data);
+  void           (* data_refresh)   (GimpDataFactory *factory,
+                                     GimpContext     *context);
+  void           (* data_save)      (GimpDataFactory *factory);
+  void           (* data_free)      (GimpDataFactory *factory);
+
+  GimpAsyncSet * (* get_async_set) (GimpDataFactory *factory);
+  gboolean       (* data_wait)     (GimpDataFactory *factory);
+
+  GimpData     * (* data_new)       (GimpDataFactory  *factory,
+                                     GimpContext      *context,
+                                     const gchar      *name);
+  GimpData     * (* data_duplicate) (GimpDataFactory  *factory,
+                                     GimpData         *data);
+  gboolean       (* data_delete)    (GimpDataFactory  *factory,
+                                     GimpData         *data,
+                                     gboolean          delete_from_disk,
+                                     GError          **error);
 };
 
 
@@ -87,6 +108,9 @@ void            gimp_data_factory_data_refresh      (GimpDataFactory  *factory,
                                                      GimpContext      *context);
 void            gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
+
+GimpAsyncSet  * gimp_data_factory_get_async_set     (GimpDataFactory  *factory);
+gboolean        gimp_data_factory_data_wait         (GimpDataFactory  *factory);
 
 GimpData      * gimp_data_factory_data_new          (GimpDataFactory  *factory,
                                                      GimpContext      *context,
