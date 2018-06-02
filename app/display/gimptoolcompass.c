@@ -134,6 +134,7 @@ static void     gimp_tool_compass_hover           (GimpToolWidget        *widget
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    gboolean               proximity);
+static void     gimp_tool_compass_leave_notify    (GimpToolWidget        *widget);
 static void     gimp_tool_compass_motion_modifier (GimpToolWidget        *widget,
                                                    GdkModifierType        key,
                                                    gboolean               press,
@@ -170,6 +171,7 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
   widget_class->button_release  = gimp_tool_compass_button_release;
   widget_class->motion          = gimp_tool_compass_motion;
   widget_class->hover           = gimp_tool_compass_hover;
+  widget_class->leave_notify    = gimp_tool_compass_leave_notify;
   widget_class->motion_modifier = gimp_tool_compass_motion_modifier;
   widget_class->get_cursor      = gimp_tool_compass_get_cursor;
 
@@ -884,6 +886,22 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
 
       gimp_tool_compass_update_hilight (compass);
     }
+}
+
+void
+gimp_tool_compass_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
+  GimpToolCompassPrivate *private = compass->private;
+
+  if (private->point != -1)
+    {
+      private->point = -1;
+
+      gimp_tool_compass_update_hilight (compass);
+    }
+
+  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static void

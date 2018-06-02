@@ -115,6 +115,7 @@ struct _GimpToolPolygonPrivate
   gboolean           supress_handles;
 
   /* Last _oper_update or _motion coords */
+  gboolean           hover;
   GimpVector2        last_coords;
 
   /* A double-click commits the selection, keep track of last
@@ -165,6 +166,7 @@ static void     gimp_tool_polygon_hover           (GimpToolWidget        *widget
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    gboolean               proximity);
+static void     gimp_tool_polygon_leave_notify    (GimpToolWidget        *widget);
 static gboolean gimp_tool_polygon_key_press       (GimpToolWidget        *widget,
                                                    GdkEventKey           *kevent);
 static void     gimp_tool_polygon_motion_modifier (GimpToolWidget        *widget,
@@ -206,6 +208,7 @@ gimp_tool_polygon_class_init (GimpToolPolygonClass *klass)
   widget_class->button_release  = gimp_tool_polygon_button_release;
   widget_class->motion          = gimp_tool_polygon_motion;
   widget_class->hover           = gimp_tool_polygon_hover;
+  widget_class->leave_notify    = gimp_tool_polygon_leave_notify;
   widget_class->key_press       = gimp_tool_polygon_key_press;
   widget_class->motion_modifier = gimp_tool_polygon_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_polygon_hover_modifier;
@@ -956,7 +959,8 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
       handle = g_ptr_array_index (private->handles, i);
       point  = &private->points[private->segment_indices[i]];
 
-      if (handles_wants_to_show      &&
+      if (private->hover             &&
+          handles_wants_to_show      &&
           ! private->supress_handles &&
 
           /* If the first point is hovered while button1 is held down,
@@ -1197,6 +1201,7 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
   gboolean                hovering_first_point;
 
   priv->grabbed_segment_index = INVALID_INDEX;
+  priv->hover                 = TRUE;
 
   if (! priv->supress_handles)
     {
@@ -1276,6 +1281,19 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
     }
 
   gimp_tool_polygon_status_update (polygon, coords, proximity);
+
+  gimp_tool_polygon_changed (widget);
+}
+
+static void
+gimp_tool_polygon_leave_notify (GimpToolWidget *widget)
+{
+  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
+  GimpToolPolygonPrivate *priv    = polygon->private;
+
+  priv->grabbed_segment_index = INVALID_INDEX;
+  priv->hover                 = FALSE;
+  priv->show_pending_point    = FALSE;
 
   gimp_tool_polygon_changed (widget);
 }
