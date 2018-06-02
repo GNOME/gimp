@@ -1,0 +1,741 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpfontfactory.c
+ * Copyright (C) 2003-2018 Michael Natterer <mitch@gimp.org>
+ *
+ * Partly based on code Copyright (C) Sven Neumann <sven@gimp.org>
+ *                                    Manish Singh <yosh@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <pango/pangocairo.h>
+#include <pango/pangofc-fontmap.h>
+#include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
+
+#include "text-types.h"
+
+#include "core/gimp.h"
+#include "core/gimp-parallel.h"
+#include "core/gimpasync.h"
+#include "core/gimpasyncset.h"
+#include "core/gimpcancelable.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpuncancelablewaitable.h"
+#include "core/gimpwaitable.h"
+
+#include "gimpfont.h"
+#include "gimpfontfactory.h"
+
+#include "gimp-intl.h"
+
+
+/* Use fontconfig directly for speed. We can use the pango stuff when/if
+ * fontconfig/pango get more efficient.
+ */
+#define USE_FONTCONFIG_DIRECTLY
+
+#ifdef USE_FONTCONFIG_DIRECTLY
+#include <fontconfig/fontconfig.h>
+#endif
+
+#define CONF_FNAME "fonts.conf"
+
+
+struct _GimpFontFactoryPrivate
+{
+  GimpAsyncSet *async_set;
+};
+
+#define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
+
+
+static void       gimp_font_factory_finalize        (GObject         *object);
+
+static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
+                                                     GimpContext     *context,
+                                                     gboolean         no_data);
+static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
+                                                     GimpContext     *context);
+static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
+static GimpAsyncSet *
+                  gimp_font_factory_get_async_set   (GimpDataFactory *factory);
+static gboolean   gimp_font_factory_data_wait       (GimpDataFactory *factory);
+static GimpData * gimp_font_factory_data_new        (GimpDataFactory *factory,
+                                                     GimpContext     *context,
+                                                     const gchar     *name);
+static GimpData * gimp_font_factory_data_duplicate  (GimpDataFactory *factory,
+                                                     GimpData        *data);
+static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
+                                                     GimpData        *data,
+                                                     gboolean         delete_from_disk,
+                                                     GError         **error);
+
+static void       gimp_font_factory_load            (GimpFontFactory *factory,
+                                                     GError         **error);
+static gboolean   gimp_font_factory_load_fonts_conf (FcConfig        *config,
+                                                     GFile           *fonts_conf);
+static void       gimp_font_factory_add_directories (FcConfig        *config,
+                                                     GList           *path,
+                                                     GError         **error);
+static void       gimp_font_factory_recursive_add_fontdir
+                                                    (FcConfig        *config,
+                                                     GFile           *file,
+                                                     GError         **error);
+static void       gimp_font_factory_load_names      (GimpContainer   *container,
+                                                     PangoFontMap    *fontmap,
+                                                     PangoContext    *context);
+
+
+G_DEFINE_TYPE (GimpFontFactory, gimp_font_factory, GIMP_TYPE_DATA_FACTORY)
+
+#define parent_class gimp_font_factory_parent_class
+
+
+static void
+gimp_font_factory_class_init (GimpFontFactoryClass *klass)
+{
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
+
+  object_class->finalize        = gimp_font_factory_finalize;
+
+  factory_class->data_init      = gimp_font_factory_data_init;
+  factory_class->data_refresh   = gimp_font_factory_data_refresh;
+  factory_class->data_save      = gimp_font_factory_data_save;
+  factory_class->get_async_set  = gimp_font_factory_get_async_set;
+  factory_class->data_wait      = gimp_font_factory_data_wait;
+  factory_class->data_new       = gimp_font_factory_data_new;
+  factory_class->data_duplicate = gimp_font_factory_data_duplicate;
+  factory_class->data_delete    = gimp_font_factory_data_delete;
+
+  g_type_class_add_private (klass, sizeof (GimpFontFactoryPrivate));
+}
+
+static void
+gimp_font_factory_init (GimpFontFactory *factory)
+{
+  factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
+                                               GIMP_TYPE_FONT_FACTORY,
+                                               GimpFontFactoryPrivate);
+
+  factory->priv->async_set = gimp_async_set_new ();
+}
+
+static void
+gimp_font_factory_finalize (GObject *object)
+{
+  GimpFontFactoryPrivate *priv = GET_PRIVATE (object);
+
+  if (priv->async_set)
+    {
+      gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
+
+      g_clear_object (&priv->async_set);
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_font_factory_data_init (GimpDataFactory *factory,
+                             GimpContext     *context,
+                             gboolean         no_data)
+{
+  if (! no_data)
+    {
+      GError *error = NULL;
+
+      gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
+
+      if (error)
+        {
+          gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
+                                GIMP_MESSAGE_INFO,
+                                error->message);
+          g_error_free (error);
+        }
+    }
+}
+
+static void
+gimp_font_factory_data_refresh (GimpDataFactory *factory,
+                                GimpContext     *context)
+{
+  GError *error = NULL;
+
+  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
+
+  if (error)
+    {
+      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
+                            GIMP_MESSAGE_INFO,
+                            error->message);
+      g_error_free (error);
+    }
+}
+
+static void
+gimp_font_factory_data_save (GimpDataFactory *factory)
+{
+  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
+
+  /*  this is not "saving" but this functions is called at the right
+   *  time at exit to reset the config
+   */
+
+  /* if font loading is in progress in another thread, do nothing.  calling
+   * FcInitReinitialize() while loading takes place is unsafe.
+   */
+  if (! gimp_async_set_is_empty (priv->async_set))
+    return;
+
+  /* Reinit the library with defaults. */
+  FcInitReinitialize ();
+}
+
+static GimpAsyncSet *
+gimp_font_factory_get_async_set (GimpDataFactory *factory)
+{
+  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
+
+  return priv->async_set;
+}
+
+static gboolean
+gimp_font_factory_data_wait (GimpDataFactory *factory)
+{
+  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
+  GimpWaitable           *waitable;
+
+  /* don't allow cancellation for now */
+  waitable = gimp_uncancelable_waitable_new (GIMP_WAITABLE (priv->async_set));
+
+  gimp_wait (gimp_data_factory_get_gimp (factory), waitable,
+             _("Loading fonts (this may take a while...)"));
+
+  g_object_unref (waitable);
+
+  return TRUE;
+}
+
+static GimpData *
+gimp_font_factory_data_new (GimpDataFactory *factory,
+                            GimpContext     *context,
+                            const gchar     *name)
+{
+  return NULL;
+}
+
+static GimpData *
+gimp_font_factory_data_duplicate (GimpDataFactory *factory,
+                                  GimpData        *data)
+{
+  return NULL;
+}
+
+static gboolean
+gimp_font_factory_data_delete (GimpDataFactory  *factory,
+                               GimpData         *data,
+                               gboolean          delete_from_disk,
+                               GError          **error)
+{
+  return GIMP_DATA_FACTORY_CLASS (parent_class)->data_delete (factory, data,
+                                                              FALSE, error);
+}
+
+
+/*  public functions  */
+
+GimpDataFactory *
+gimp_font_factory_new (Gimp        *gimp,
+                       const gchar *path_property_name)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (path_property_name != NULL, NULL);
+
+  return g_object_new (GIMP_TYPE_FONT_FACTORY,
+                       "gimp",               gimp,
+                       "data-type",          GIMP_TYPE_FONT,
+                       "path-property-name", path_property_name,
+                       NULL);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_font_factory_load_async (GimpAsync *async,
+                              FcConfig  *config)
+{
+  if (FcConfigBuildFonts (config))
+    {
+      gimp_async_finish (async, config);
+    }
+  else
+    {
+      FcConfigDestroy (config);
+
+      gimp_async_abort (async);
+    }
+}
+
+static void
+gimp_font_factory_load_async_callback (GimpAsync       *async,
+                                       GimpFontFactory *factory)
+{
+  if (gimp_async_is_canceled (async))
+    return;
+
+  if (gimp_async_is_finished (async))
+    {
+      FcConfig      *config = gimp_async_get_result (async);
+      GimpContainer *container;
+      PangoFontMap  *fontmap;
+      PangoContext  *context;
+
+      FcConfigSetCurrent (config);
+
+      container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
+
+      fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+      if (! fontmap)
+        g_error ("You are using a Pango that has been built against a cairo "
+                 "that lacks the Freetype font backend");
+
+      pango_cairo_font_map_set_resolution (PANGO_CAIRO_FONT_MAP (fontmap),
+                                           72.0 /* FIXME */);
+      context = pango_font_map_create_context (fontmap);
+      g_object_unref (fontmap);
+
+      gimp_container_freeze (container);
+
+      gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
+      g_object_unref (context);
+
+      gimp_container_thaw (container);
+    }
+}
+
+static void
+gimp_font_factory_load (GimpFontFactory  *factory,
+                        GError          **error)
+{
+  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
+  GimpContainer          *container;
+  Gimp                   *gimp;
+  FcConfig               *config;
+  GFile                  *fonts_conf;
+  gchar                  *font_path_property;
+  gchar                  *font_path;
+  GList                  *path;
+  GimpAsync              *async;
+
+  if (! gimp_async_set_is_empty (priv->async_set))
+    {
+      /* font loading is already in progress */
+      return;
+    }
+
+  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
+
+  gimp = gimp_data_factory_get_gimp (GIMP_DATA_FACTORY (factory));
+
+  gimp_set_busy (gimp);
+
+  if (gimp->be_verbose)
+    g_print ("Loading fonts\n");
+
+  gimp_container_freeze (container);
+
+  gimp_container_clear (container);
+
+  config = FcInitLoadConfig ();
+
+  if (! config)
+    goto cleanup;
+
+  fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
+  if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
+    goto cleanup;
+
+  fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
+  if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
+    goto cleanup;
+
+  g_object_get (factory,
+                "path-property-name", &font_path_property,
+                NULL);
+
+  g_object_get (gimp->config,
+                font_path_property, &font_path,
+                NULL);
+
+  path = gimp_config_path_expand_to_files (font_path, FALSE);
+  gimp_font_factory_add_directories (config, path, error);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+
+  g_free (font_path);
+  g_free (font_path_property);
+
+  /* We perform font cache initialization in a separate thread, so
+   * in the case a cache rebuild is to be done it will not block
+   * the UI.
+   */
+  async = gimp_parallel_run_async (TRUE,
+                                   (GimpParallelRunAsyncFunc) gimp_font_factory_load_async,
+                                   config);
+
+  gimp_async_add_callback (async,
+                           (GimpAsyncCallback) gimp_font_factory_load_async_callback,
+                           gimp);
+
+  gimp_async_set_add (priv->async_set, async);
+
+  g_object_unref (async);
+
+ cleanup:
+  gimp_container_thaw (container);
+  gimp_unset_busy (gimp);
+}
+
+static gboolean
+gimp_font_factory_load_fonts_conf (FcConfig *config,
+                                   GFile    *fonts_conf)
+{
+  gchar    *path = g_file_get_path (fonts_conf);
+  gboolean  ret  = TRUE;
+
+  if (! FcConfigParseAndLoad (config, (const guchar *) path, FcFalse))
+    {
+      FcConfigDestroy (config);
+      ret = FALSE;
+    }
+
+  g_free (path);
+  g_object_unref (fonts_conf);
+
+  return ret;
+}
+
+static void
+gimp_font_factory_add_directories (FcConfig  *config,
+                                   GList     *path,
+                                   GError   **error)
+{
+  GList *list;
+
+  for (list = path; list; list = list->next)
+    {
+      /* The configured directories must exist or be created. */
+      g_file_make_directory_with_parents (list->data, NULL, NULL);
+
+      /* Do not use FcConfigAppFontAddDir(). Instead use
+       * FcConfigAppFontAddFile() with our own recursive loop.
+       * Otherwise, when some fonts fail to load (e.g. permission
+       * issues), we end up in weird situations where the fonts are in
+       * the list, but are unusable and output many errors.
+       * See bug 748553.
+       */
+      gimp_font_factory_recursive_add_fontdir (config, list->data, error);
+    }
+
+  if (error && *error)
+    {
+      gchar *font_list = g_strdup ((*error)->message);
+
+      g_clear_error (error);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Some fonts failed to load:\n%s"), font_list);
+      g_free (font_list);
+    }
+}
+
+static void
+gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
+                                         GFile     *file,
+                                         GError   **error)
+{
+  GFileEnumerator *enumerator;
+
+  g_return_if_fail (config != NULL);
+
+  enumerator = g_file_enumerate_children (file,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                          G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+  if (enumerator)
+    {
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+        {
+          GFileType  file_type;
+          GFile     *child;
+
+          if (g_file_info_get_is_hidden (info))
+            {
+              g_object_unref (info);
+              continue;
+            }
+
+          file_type = g_file_info_get_file_type (info);
+          child     = g_file_enumerator_get_child (enumerator, info);
+
+          if (file_type == G_FILE_TYPE_DIRECTORY)
+            {
+              gimp_font_factory_recursive_add_fontdir (config, child, error);
+            }
+          else if (file_type == G_FILE_TYPE_REGULAR)
+            {
+              gchar *path = g_file_get_path (child);
+#ifdef G_OS_WIN32
+              gchar *tmp = g_win32_locale_filename_from_utf8 (path);
+
+              g_free (path);
+              /* XXX: g_win32_locale_filename_from_utf8() may return
+               * NULL. So we need to check that path is not NULL before
+               * trying to load with fontconfig.
+               */
+              path = tmp;
+#endif
+
+              if (! path ||
+                  FcFalse == FcConfigAppFontAddFile (config, (const FcChar8 *) path))
+                {
+                  g_printerr ("%s: adding font file '%s' failed.\n",
+                              G_STRFUNC, path);
+                  if (error)
+                    {
+                      if (*error)
+                        {
+                          gchar *current_message = g_strdup ((*error)->message);
+
+                          g_clear_error (error);
+                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                       "%s\n- %s", current_message, path);
+                          g_free (current_message);
+                        }
+                      else
+                        {
+                          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                                       "- %s", path);
+                        }
+                    }
+                }
+              g_free (path);
+            }
+
+          g_object_unref (child);
+          g_object_unref (info);
+        }
+    }
+  else
+    {
+      if (error)
+        {
+          gchar *path = g_file_get_path (file);
+
+          if (*error)
+            {
+              gchar *current_message = g_strdup ((*error)->message);
+
+              g_clear_error (error);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           "%s\n- %s%s", current_message, path,
+                           G_DIR_SEPARATOR_S);
+              g_free (current_message);
+            }
+          else
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           "- %s%s", path, G_DIR_SEPARATOR_S);
+            }
+          g_free (path);
+        }
+    }
+}
+
+static void
+gimp_font_factory_add_font (GimpContainer        *container,
+                            PangoContext         *context,
+                            PangoFontDescription *desc)
+{
+  gchar *name;
+
+  if (! desc)
+    return;
+
+  name = pango_font_description_to_string (desc);
+
+  /* It doesn't look like pango_font_description_to_string() could ever
+   * return NULL. But just to be double sure and avoid a segfault, I
+   * check before validating the string.
+   */
+  if (name && strlen (name) > 0 &&
+      g_utf8_validate (name, -1, NULL))
+    {
+      GimpFont *font;
+
+      font = g_object_new (GIMP_TYPE_FONT,
+                           "name",          name,
+                           "pango-context", context,
+                           NULL);
+
+      gimp_container_add (container, GIMP_OBJECT (font));
+      g_object_unref (font);
+    }
+
+  g_free (name);
+}
+
+#ifdef USE_FONTCONFIG_DIRECTLY
+/* We're really chummy here with the implementation. Oh well. */
+
+/* This is copied straight from make_alias_description in pango, plus
+ * the gimp_font_list_add_font bits.
+ */
+static void
+gimp_font_factory_make_alias (GimpContainer *container,
+                              PangoContext  *context,
+                              const gchar   *family,
+                              gboolean       bold,
+                              gboolean       italic)
+{
+  PangoFontDescription *desc = pango_font_description_new ();
+
+  pango_font_description_set_family (desc, family);
+  pango_font_description_set_style (desc,
+                                    italic ?
+                                    PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+  pango_font_description_set_variant (desc, PANGO_VARIANT_NORMAL);
+  pango_font_description_set_weight (desc,
+                                     bold ?
+                                     PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
+  pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
+
+  gimp_font_factory_add_font (container, context, desc);
+
+  pango_font_description_free (desc);
+}
+
+static void
+gimp_font_factory_load_aliases (GimpContainer *container,
+                                PangoContext  *context)
+{
+  const gchar *families[] = { "Sans-serif", "Serif", "Monospace" };
+  gint         i;
+
+  for (i = 0; i < 3; i++)
+    {
+      gimp_font_factory_make_alias (container, context, families[i],
+                                    FALSE, FALSE);
+      gimp_font_factory_make_alias (container, context, families[i],
+                                    TRUE,  FALSE);
+      gimp_font_factory_make_alias (container, context, families[i],
+                                    FALSE, TRUE);
+      gimp_font_factory_make_alias (container, context, families[i],
+                                    TRUE,  TRUE);
+    }
+}
+
+static void
+gimp_font_factory_load_names (GimpContainer *container,
+                              PangoFontMap  *fontmap,
+                              PangoContext  *context)
+{
+  FcObjectSet *os;
+  FcPattern   *pat;
+  FcFontSet   *fontset;
+  gint         i;
+
+  os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
+                         FC_SLANT, FC_WEIGHT, FC_WIDTH,
+                         NULL);
+  g_return_if_fail (os);
+
+  pat = FcPatternCreate ();
+  if (! pat)
+    {
+      FcObjectSetDestroy (os);
+      g_critical ("%s: FcPatternCreate() returned NULL.", G_STRFUNC);
+      return;
+    }
+
+  fontset = FcFontList (NULL, pat, os);
+
+  FcPatternDestroy (pat);
+  FcObjectSetDestroy (os);
+
+  g_return_if_fail (fontset);
+
+  for (i = 0; i < fontset->nfont; i++)
+    {
+      PangoFontDescription *desc;
+
+      desc = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
+      gimp_font_factory_add_font (container, context, desc);
+      pango_font_description_free (desc);
+    }
+
+  /*  only create aliases if there is at least one font available  */
+  if (fontset->nfont > 0)
+    gimp_font_factory_load_aliases (container, context);
+
+  FcFontSetDestroy (fontset);
+}
+
+#else  /* ! USE_FONTCONFIG_DIRECTLY */
+
+static void
+gimp_font_factory_load_names (GimpContainer *container,
+                              PangoFontMap  *fontmap,
+                              PangoContext  *context)
+{
+  PangoFontFamily **families;
+  PangoFontFace   **faces;
+  gint              n_families;
+  gint              n_faces;
+  gint              i, j;
+
+  pango_font_map_list_families (fontmap, &families, &n_families);
+
+  for (i = 0; i < n_families; i++)
+    {
+      pango_font_family_list_faces (families[i], &faces, &n_faces);
+
+      for (j = 0; j < n_faces; j++)
+        {
+          PangoFontDescription *desc;
+
+          desc = pango_font_face_describe (faces[j]);
+          gimp_font_factory_add_font (container, context, desc);
+          pango_font_description_free (desc);
+        }
+    }
+
+  g_free (families);
+}
+
+#endif /* USE_FONTCONFIG_DIRECTLY */
