@@ -56,6 +56,7 @@ enum
   SNAP_OFFSETS,
   STATUS,
   STATUS_COORDS,
+  FOCUS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -69,6 +70,8 @@ struct _GimpToolWidgetPrivate
   gint              snap_offset_y;
   gint              snap_width;
   gint              snap_height;
+
+  gboolean          focus;
 };
 
 
@@ -167,6 +170,15 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   G_TYPE_STRING,
                   G_TYPE_DOUBLE,
                   G_TYPE_STRING);
+
+  widget_signals[FOCUS_CHANGED] =
+    g_signal_new ("focus-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, focus_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
@@ -318,6 +330,28 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
+}
+
+void
+gimp_tool_widget_set_focus (GimpToolWidget *widget,
+                            gboolean        focus)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  if (focus != widget->private->focus)
+    {
+      widget->private->focus = focus;
+
+      g_signal_emit (widget, widget_signals[FOCUS_CHANGED], 0);
+    }
+}
+
+gboolean
+gimp_tool_widget_get_focus (GimpToolWidget *widget)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+
+  return widget->private->focus;
 }
 
 void
