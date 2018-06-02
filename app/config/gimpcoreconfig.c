@@ -229,7 +229,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          BRUSH_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("brushes");
@@ -239,7 +239,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          BRUSH_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("dynamics");
@@ -249,7 +249,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          DYNAMICS_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("dynamics");
@@ -259,7 +259,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          DYNAMICS_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
 #ifdef ENABLE_BUNDLED_MYPAINT_BRUSHES
@@ -282,7 +282,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          MYPAINT_BRUSH_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
@@ -294,7 +294,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          MYPAINT_BRUSH_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("patterns");
@@ -304,7 +304,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          PATTERN_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("patterns");
@@ -314,7 +314,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          PATTERN_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("palettes");
@@ -324,7 +324,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          PALETTE_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("palettes");
@@ -334,7 +334,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          PALETTE_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("gradients");
@@ -344,7 +344,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GRADIENT_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("gradients");
@@ -354,7 +354,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GRADIENT_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("tool-presets");
@@ -364,7 +364,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          TOOL_PRESET_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_writable_path ("tool-presets");
@@ -374,7 +374,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          TOOL_PRESET_PATH_WRITABLE_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("fonts");
