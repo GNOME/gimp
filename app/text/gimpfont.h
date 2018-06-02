@@ -23,7 +23,7 @@
 #define __GIMP_FONT_H__
 
 
-#include "core/gimpviewable.h"
+#include "core/gimpdata.h"
 
 
 #define GIMP_TYPE_FONT            (gimp_font_get_type ())
