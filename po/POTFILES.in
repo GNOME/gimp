@@ -553,6 +553,7 @@ app/widgets/gimpexportdialog.c
 app/widgets/gimpfiledialog.c
 app/widgets/gimpfileprocview.c
 app/widgets/gimpfilleditor.c
+app/widgets/gimpfontfactoryview.c
 app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
