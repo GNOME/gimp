@@ -91,6 +91,7 @@ struct _GimpToolWidgetClass
                                 const GimpCoords      *coords,
                                 GdkModifierType        state,
                                 gboolean               proximity);
+  void     (* leave_notify)    (GimpToolWidget        *widget);
 
   gboolean (* key_press)       (GimpToolWidget        *widget,
                                 GdkEventKey           *kevent);
@@ -255,6 +256,7 @@ void       gimp_tool_widget_hover           (GimpToolWidget        *widget,
                                              const GimpCoords      *coords,
                                              GdkModifierType        state,
                                              gboolean               proximity);
+void       gimp_tool_widget_leave_notify    (GimpToolWidget        *widget);
 
 gboolean   gimp_tool_widget_key_press       (GimpToolWidget        *widget,
                                              GdkEventKey           *kevent);
