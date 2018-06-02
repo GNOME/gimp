@@ -32,8 +32,8 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
+#include "data-commands.h"
 #include "fonts-actions.h"
-#include "fonts-commands.h"
 
 #include "gimp-intl.h"
 
@@ -47,7 +47,7 @@ static const GimpActionEntry fonts_actions[] =
   { "fonts-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("fonts-action", "_Rescan Font List"), NULL,
     NC_("fonts-action", "Rescan the installed fonts"),
-    G_CALLBACK (fonts_refresh_cmd_callback),
+    G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_FONT_REFRESH }
 };
 

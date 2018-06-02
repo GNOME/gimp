@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
 
 #include "text/gimptext.h"
@@ -185,7 +186,7 @@ gimp_text_editor_new (const gchar     *title,
     }
 
   style_editor = gimp_text_style_editor_new (gimp, text, text_buffer,
-                                             gimp->fonts,
+                                             gimp_data_factory_get_container (gimp->font_factory),
                                              xres, yres);
   gtk_box_pack_start (GTK_BOX (content_area), style_editor, FALSE, FALSE, 0);
   gtk_widget_show (style_editor);

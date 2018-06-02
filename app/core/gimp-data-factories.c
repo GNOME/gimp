@@ -54,6 +54,8 @@
 #include "gimptoolpreset.h"
 #include "gimptoolpreset-load.h"
 
+#include "text/gimpfontfactory.h"
+
 #include "gimp-intl.h"
 
 
@@ -170,6 +172,12 @@ gimp_data_factories_init (Gimp *gimp)
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
                                "palette factory");
 
+  gimp->font_factory =
+    gimp_font_factory_new (gimp,
+                           "font-path");
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->font_factory),
+                               "font factory");
+
   gimp->tool_preset_factory =
     gimp_data_factory_new (gimp,
                            GIMP_TYPE_TOOL_PRESET,
@@ -241,6 +249,9 @@ gimp_data_factories_clear (Gimp *gimp)
   if (gimp->palette_factory)
     gimp_data_factory_data_free (gimp->palette_factory);
 
+  if (gimp->font_factory)
+    gimp_data_factory_data_free (gimp->font_factory);
+
   if (gimp->tool_preset_factory)
     gimp_data_factory_data_free (gimp->tool_preset_factory);
 }
@@ -256,6 +267,7 @@ gimp_data_factories_exit (Gimp *gimp)
   g_clear_object (&gimp->pattern_factory);
   g_clear_object (&gimp->gradient_factory);
   g_clear_object (&gimp->palette_factory);
+  g_clear_object (&gimp->font_factory);
   g_clear_object (&gimp->tool_preset_factory);
   g_clear_object (&gimp->tag_cache);
 }
@@ -270,8 +282,6 @@ gimp_data_factories_get_memsize (Gimp   *gimp,
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->named_buffers),
                                       gui_size);
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->fonts),
-                                      gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->brush_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->dynamics_factory),
@@ -283,6 +293,8 @@ gimp_data_factories_get_memsize (Gimp   *gimp,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->gradient_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
+                                      gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->font_factory),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_preset_factory),
                                       gui_size);
@@ -302,8 +314,9 @@ gimp_data_factories_data_clean (Gimp *gimp)
   gimp_data_factory_data_clean (gimp->dynamics_factory);
   gimp_data_factory_data_clean (gimp->mybrush_factory);
   gimp_data_factory_data_clean (gimp->pattern_factory);
-  gimp_data_factory_data_clean (gimp->palette_factory);
   gimp_data_factory_data_clean (gimp->gradient_factory);
+  gimp_data_factory_data_clean (gimp->palette_factory);
+  gimp_data_factory_data_clean (gimp->font_factory);
   gimp_data_factory_data_clean (gimp->tool_preset_factory);
 }
 
@@ -347,16 +360,21 @@ gimp_data_factories_load (Gimp               *gimp,
   status_callback (NULL, _("Color History"), 0.55);
   gimp_palettes_load (gimp);
 
+  /*  initialize the list of gimp fonts   */
+  status_callback (NULL, _("Fonts"), 0.6);
+  gimp_data_factory_data_init (gimp->font_factory, gimp->user_context,
+                               gimp->no_fonts);
+
   /*  initialize the list of gimp tool presets if we have a GUI  */
   if (! gimp->no_interface)
     {
-      status_callback (NULL, _("Tool Presets"), 0.6);
+      status_callback (NULL, _("Tool Presets"), 0.7);
       gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->user_context,
                                    gimp->no_data);
     }
 
   /* update tag cache */
-  status_callback (NULL, _("Updating tag cache"), 0.65);
+  status_callback (NULL, _("Updating tag cache"), 0.75);
   gimp_tag_cache_load (gimp->tag_cache);
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->brush_factory));
@@ -370,6 +388,8 @@ gimp_data_factories_load (Gimp               *gimp,
                                 gimp_data_factory_get_container (gimp->gradient_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->palette_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->font_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->tool_preset_factory));
 }
@@ -387,6 +407,7 @@ gimp_data_factories_save (Gimp *gimp)
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
+  gimp_data_factory_data_save (gimp->font_factory);
   gimp_data_factory_data_save (gimp->tool_preset_factory);
 
   gimp_palettes_save (gimp);

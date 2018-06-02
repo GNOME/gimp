@@ -98,8 +98,6 @@ libappactions_a_SOURCES = \
 	filters-commands.h		\
 	fonts-actions.c			\
 	fonts-actions.h			\
-	fonts-commands.c		\
-	fonts-commands.h		\
 	gradient-editor-actions.c	\
 	gradient-editor-actions.h	\
 	gradient-editor-commands.c	\

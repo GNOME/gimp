@@ -30,8 +30,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_fonts_load (gimp, error);
-  gimp_fonts_wait (gimp, NULL);
+  gimp_data_factory_data_refresh (gimp->font_factory, context);
+  gimp_data_factory_data_wait (gimp->font_factory);
 }
 CODE
     );
@@ -62,12 +62,12 @@ HELP
         headers => [ qw("core/gimpcontainer-filter.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_fonts_wait (gimp, error))
+  if (! gimp_data_factory_data_wait (gimp->font_factory))
     success = FALSE;
 
   if (success)
     {
-      font_list = gimp_container_get_filtered_name_array (gimp->fonts,
+      font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
                                                           filter, &num_fonts);
     }
 }
@@ -78,7 +78,7 @@ CODE
 
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
-              "text/gimp-fonts.h");
+              "core/gimpdatafactory.h");
 
 @procs = qw(fonts_refresh
             fonts_get_list);

@@ -87,7 +87,7 @@ gimp_font_factory_view_new (GimpViewType     view_type,
                                "menu-factory",      menu_factory,
                                "menu-identifier",   "<Fonts>",
                                "ui-path",           "/fonts-popup",
-                               "action-group",      "fontes",
+                               "action-group",      "fonts",
                                NULL);
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);

@@ -41,6 +41,7 @@
 #include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-undo.h"
@@ -48,7 +49,6 @@
 #include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
 
-#include "gimp-fonts.h"
 #include "gimptext.h"
 #include "gimptextlayer.h"
 #include "gimptextlayer-transform.h"
@@ -615,6 +615,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
   GimpDrawable   *drawable;
   GimpItem       *item;
   GimpImage      *image;
+  GimpContainer  *container;
   GimpTextLayout *layout;
   gdouble         xres;
   gdouble         yres;
@@ -625,13 +626,14 @@ gimp_text_layer_render (GimpTextLayer *layer)
   if (! layer->text)
     return FALSE;
 
-  drawable = GIMP_DRAWABLE (layer);
-  item     = GIMP_ITEM (layer);
-  image    = gimp_item_get_image (item);
+  drawable  = GIMP_DRAWABLE (layer);
+  item      = GIMP_ITEM (layer);
+  image     = gimp_item_get_image (item);
+  container = gimp_data_factory_get_container (image->gimp->font_factory);
 
-  gimp_fonts_wait (image->gimp, NULL);
+  gimp_data_factory_data_wait (image->gimp->font_factory);
 
-  if (gimp_container_is_empty (image->gimp->fonts))
+  if (gimp_container_is_empty (container))
     {
       gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR,
                             _("Due to lack of any fonts, "

@@ -712,7 +712,7 @@ gimp_selection_data_get_font (GtkSelectionData *selection,
 
   return (GimpFont *)
     gimp_selection_data_get_object (selection,
-                                    gimp->fonts,
+                                    gimp_data_factory_get_container (gimp->font_factory),
                                     GIMP_OBJECT (gimp_font_get_standard ()));
 }
 

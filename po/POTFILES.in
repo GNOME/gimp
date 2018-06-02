@@ -397,7 +397,6 @@ app/propgui/gimppropgui.c
 
 app/text/gimpfont.c
 app/text/gimpfontfactory.c
-app/text/gimp-fonts.c
 app/text/gimptext-compat.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
@@ -554,7 +553,6 @@ app/widgets/gimpfiledialog.c
 app/widgets/gimpfileprocview.c
 app/widgets/gimpfilleditor.c
 app/widgets/gimpfontfactoryview.c
-app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c

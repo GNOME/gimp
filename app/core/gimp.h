@@ -94,15 +94,13 @@ struct _Gimp
   GimpBuffer             *clipboard_buffer;
   GimpContainer          *named_buffers;
 
-  GimpContainer          *fonts;
-  GimpAsyncSet           *fonts_async_set;
-
   GimpDataFactory        *brush_factory;
   GimpDataFactory        *dynamics_factory;
   GimpDataFactory        *mybrush_factory;
   GimpDataFactory        *pattern_factory;
   GimpDataFactory        *gradient_factory;
   GimpDataFactory        *palette_factory;
+  GimpDataFactory        *font_factory;
   GimpDataFactory        *tool_preset_factory;
 
   GimpTagCache           *tag_cache;

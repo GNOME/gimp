@@ -34,6 +34,7 @@
 #include "core/gimp.h"
 #include "core/gimpasyncset.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimp-palettes.h"
@@ -282,6 +283,7 @@ gimp_text_tool_constructed (GObject *object)
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (object);
   GimpTextOptions *options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
   GimpTool        *tool      = GIMP_TOOL (text_tool);
+  GimpAsyncSet    *async_set;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -293,7 +295,10 @@ gimp_text_tool_constructed (GObject *object)
                            G_CALLBACK (gimp_text_tool_proxy_notify),
                            text_tool, 0);
 
-  g_signal_connect_object (tool->tool_info->gimp->fonts_async_set,
+  async_set =
+    gimp_data_factory_get_async_set (tool->tool_info->gimp->font_factory);
+
+  g_signal_connect_object (async_set,
                            "notify::empty",
                            G_CALLBACK (gimp_text_tool_fonts_async_set_empty_notify),
                            text_tool, 0);
@@ -779,7 +784,12 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      if (gimp_async_set_is_empty (tool->tool_info->gimp->fonts_async_set))
+      GimpAsyncSet *async_set;
+
+      async_set =
+        gimp_data_factory_get_async_set (tool->tool_info->gimp->font_factory);
+
+      if (gimp_async_set_is_empty (async_set))
         {
           GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                          display);
@@ -985,8 +995,12 @@ gimp_text_tool_start (GimpTextTool  *text_tool,
   GimpTool         *tool  = GIMP_TOOL (text_tool);
   GimpDisplayShell *shell = gimp_display_get_shell (display);
   GimpToolWidget   *widget;
+  GimpAsyncSet     *async_set;
 
-  if (! gimp_async_set_is_empty (tool->tool_info->gimp->fonts_async_set))
+  async_set =
+    gimp_data_factory_get_async_set (tool->tool_info->gimp->font_factory);
+
+  if (! gimp_async_set_is_empty (async_set))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("Fonts are still loading"));

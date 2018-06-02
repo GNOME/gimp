@@ -37,8 +37,8 @@
 #include "pdb/gimppdb.h"
 
 #include "gimpcontainerbox.h"
+#include "gimpfontfactoryview.h"
 #include "gimpfontselect.h"
-#include "gimpfontview.h"
 
 
 static void             gimp_font_select_constructed  (GObject        *object);
@@ -78,11 +78,12 @@ gimp_font_select_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  dialog->view = gimp_font_view_new (GIMP_VIEW_TYPE_LIST,
-                                     dialog->context->gimp->fonts,
-                                     dialog->context,
-                                     GIMP_VIEW_SIZE_MEDIUM, 1,
-                                     dialog->menu_factory);
+  dialog->view =
+    gimp_font_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                dialog->context->gimp->font_factory,
+                                dialog->context,
+                                GIMP_VIEW_SIZE_MEDIUM, 1,
+                                dialog->menu_factory);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
                                        6 * (GIMP_VIEW_SIZE_MEDIUM + 2),

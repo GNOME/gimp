@@ -30,9 +30,9 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
-#include "text/gimpfontlist.h"
 #include "text/gimptext.h"
 
 #include "gimpcolorpanel.h"
@@ -158,7 +158,7 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
   g_object_class_install_property (object_class, PROP_FONTS,
                                    g_param_spec_object ("fonts",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_FONT_LIST,
+                                                        GIMP_TYPE_CONTAINER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -302,7 +302,7 @@ gimp_text_style_editor_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_assert (GIMP_IS_GIMP (editor->gimp));
-  gimp_assert (GIMP_IS_FONT_LIST (editor->fonts));
+  gimp_assert (GIMP_IS_CONTAINER (editor->fonts));
   gimp_assert (GIMP_IS_TEXT (editor->text));
   gimp_assert (GIMP_IS_TEXT_BUFFER (editor->buffer));
 

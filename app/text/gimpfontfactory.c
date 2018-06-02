@@ -406,7 +406,7 @@ gimp_font_factory_load (GimpFontFactory  *factory,
 
   gimp_async_add_callback (async,
                            (GimpAsyncCallback) gimp_font_factory_load_async_callback,
-                           gimp);
+                           factory);
 
   gimp_async_set_add (priv->async_set, async);
 

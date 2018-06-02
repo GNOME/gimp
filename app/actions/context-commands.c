@@ -482,7 +482,7 @@ context_font_select_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
 
   context_select_object ((GimpActionSelectType) value,
-                         context, context->gimp->fonts);
+                         context, gimp_data_factory_get_container (context->gimp->font_factory));
 }
 
 void

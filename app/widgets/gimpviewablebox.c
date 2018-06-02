@@ -558,7 +558,7 @@ font_box_new (GimpContainer *container,
               GimpViewSize   view_size)
 {
   if (! container)
-    container = context->gimp->fonts;
+    container = gimp_data_factory_get_container (context->gimp->font_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
