@@ -220,6 +220,7 @@ gimp_data_factory_view_constructed (GObject *object)
   GimpDataFactoryView     *factory_view = GIMP_DATA_FACTORY_VIEW (object);
   GimpDataFactoryViewPriv *priv         = factory_view->priv;
   GimpContainerEditor     *editor       = GIMP_CONTAINER_EDITOR (object);
+  GimpUIManager           *manager;
   gchar                   *str;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -237,11 +238,14 @@ gimp_data_factory_view_constructed (GObject *object)
                                                     factory_view);
     }
 
+  manager = gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view));
+
   str = g_strdup_printf ("%s-edit", priv->action_group);
-  priv->edit_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
-                                   priv->action_group,
-                                   str, NULL);
+  if (gimp_ui_manager_find_action (manager, priv->action_group, str))
+    priv->edit_button =
+      gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                     priv->action_group,
+                                     str, NULL);
   g_free (str);
 
   if (gimp_data_factory_view_has_data_new_func (factory_view))
@@ -255,24 +259,27 @@ gimp_data_factory_view_constructed (GObject *object)
     }
 
   str = g_strdup_printf ("%s-duplicate", priv->action_group);
-  priv->duplicate_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
-                                   priv->action_group,
-                                   str, NULL);
+  if (gimp_ui_manager_find_action (manager, priv->action_group, str))
+    priv->duplicate_button =
+      gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                     priv->action_group,
+                                     str, NULL);
   g_free (str);
 
   str = g_strdup_printf ("%s-delete", priv->action_group);
-  priv->delete_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
-                                   priv->action_group,
-                                   str, NULL);
+  if (gimp_ui_manager_find_action (manager, priv->action_group, str))
+    priv->delete_button =
+      gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                     priv->action_group,
+                                     str, NULL);
   g_free (str);
 
   str = g_strdup_printf ("%s-refresh", priv->action_group);
-  priv->refresh_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
-                                   priv->action_group,
-                                   str, NULL);
+  if (gimp_ui_manager_find_action (manager, priv->action_group, str))
+    priv->refresh_button =
+      gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                     priv->action_group,
+                                     str, NULL);
   g_free (str);
 
   /* Query tag entry */
@@ -299,18 +306,22 @@ gimp_data_factory_view_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (priv->assign_tag_entry);
 
-  gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (priv->edit_button),
-                                  gimp_data_factory_get_data_type (priv->factory));
-  gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (priv->duplicate_button),
-                                  gimp_data_factory_get_data_type (priv->factory));
-  gimp_container_view_enable_dnd (editor->view,
-                                  GTK_BUTTON (priv->delete_button),
-                                  gimp_data_factory_get_data_type (priv->factory));
+  if (priv->edit_button)
+    gimp_container_view_enable_dnd (editor->view,
+                                    GTK_BUTTON (priv->edit_button),
+                                    gimp_data_factory_get_data_type (priv->factory));
 
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
-                          editor);
+  if (priv->duplicate_button)
+    gimp_container_view_enable_dnd (editor->view,
+                                    GTK_BUTTON (priv->duplicate_button),
+                                    gimp_data_factory_get_data_type (priv->factory));
+
+  if (priv->delete_button)
+    gimp_container_view_enable_dnd (editor->view,
+                                    GTK_BUTTON (priv->delete_button),
+                                    gimp_data_factory_get_data_type (priv->factory));
+
+  gimp_ui_manager_update (manager, editor);
 }
 
 static void
