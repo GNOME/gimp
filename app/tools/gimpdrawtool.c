@@ -666,6 +666,8 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
 
   if (draw_tool->widget)
     {
+      gimp_tool_widget_set_focus (draw_tool->widget, FALSE);
+
       g_signal_handlers_disconnect_by_func (draw_tool->widget,
                                             gimp_draw_tool_widget_status,
                                             draw_tool);
@@ -708,6 +710,8 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
       g_signal_connect (draw_tool->widget, "snap-offsets",
                         G_CALLBACK (gimp_draw_tool_widget_snap_offsets),
                         draw_tool);
+
+      gimp_tool_widget_set_focus (draw_tool->widget, TRUE);
     }
 }
 
