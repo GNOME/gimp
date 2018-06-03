@@ -220,4 +220,17 @@ typedef enum
 } GimpZoomFocus;
 
 
+/*
+ * non-registered enums; register them if needed
+ */
+
+
+typedef enum  /*< pdb-skip, skip >*/
+{
+  GIMP_HIT_NONE,
+  GIMP_HIT_INDIRECT,
+  GIMP_HIT_DIRECT
+} GimpHit;
+
+
 #endif /* __DISPLAY_ENUMS_H__ */

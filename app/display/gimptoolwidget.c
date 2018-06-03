@@ -804,6 +804,22 @@ gimp_tool_widget_motion (GimpToolWidget   *widget,
                                                  coords, time, state);
 }
 
+GimpHit
+gimp_tool_widget_hit (GimpToolWidget   *widget,
+                      const GimpCoords *coords,
+                      GdkModifierType   state,
+                      gboolean          proximity)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), GIMP_HIT_NONE);
+  g_return_val_if_fail (coords != NULL, GIMP_HIT_NONE);
+
+  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit)
+    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit (widget,
+                                                     coords, state, proximity);
+
+  return GIMP_HIT_NONE;
+}
+
 void
 gimp_tool_widget_hover (GimpToolWidget   *widget,
                         const GimpCoords *coords,
