@@ -302,19 +302,23 @@ static void
 gimp_font_factory_load_async_callback (GimpAsync       *async,
                                        GimpFontFactory *factory)
 {
+  GimpContainer *container;
+
+  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
+
   if (gimp_async_is_canceled (async))
-    return;
+    {
+      gimp_container_thaw (container);
+      return;
+    }
 
   if (gimp_async_is_finished (async))
     {
-      FcConfig      *config = gimp_async_get_result (async);
-      GimpContainer *container;
-      PangoFontMap  *fontmap;
-      PangoContext  *context;
+      FcConfig     *config = gimp_async_get_result (async);
+      PangoFontMap *fontmap;
+      PangoContext *context;
 
       FcConfigSetCurrent (config);
-
-      container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
 
       fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
       if (! fontmap)
@@ -325,8 +329,6 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
                                            72.0 /* FIXME */);
       context = pango_font_map_create_context (fontmap);
       g_object_unref (fontmap);
-
-      gimp_container_freeze (container);
 
       gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
       g_object_unref (context);
@@ -344,8 +346,6 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   Gimp                   *gimp;
   FcConfig               *config;
   GFile                  *fonts_conf;
-  gchar                  *font_path_property;
-  gchar                  *font_path;
   GList                  *path;
   GimpAsync              *async;
 
@@ -359,42 +359,31 @@ gimp_font_factory_load (GimpFontFactory  *factory,
 
   gimp = gimp_data_factory_get_gimp (GIMP_DATA_FACTORY (factory));
 
-  gimp_set_busy (gimp);
-
   if (gimp->be_verbose)
     g_print ("Loading fonts\n");
-
-  gimp_container_freeze (container);
-
-  gimp_container_clear (container);
 
   config = FcInitLoadConfig ();
 
   if (! config)
-    goto cleanup;
+    return;
 
   fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    goto cleanup;
+    return;
 
   fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
   if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
-    goto cleanup;
+    return;
 
-  g_object_get (factory,
-                "path-property-name", &font_path_property,
-                NULL);
+  path = gimp_data_factory_get_data_path (GIMP_DATA_FACTORY (factory));
+  if (! path)
+    return;
 
-  g_object_get (gimp->config,
-                font_path_property, &font_path,
-                NULL);
+  gimp_container_freeze (container);
+  gimp_container_clear (container);
 
-  path = gimp_config_path_expand_to_files (font_path, FALSE);
   gimp_font_factory_add_directories (config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
-
-  g_free (font_path);
-  g_free (font_path_property);
 
   /* We perform font cache initialization in a separate thread, so
    * in the case a cache rebuild is to be done it will not block
@@ -411,10 +400,6 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   gimp_async_set_add (priv->async_set, async);
 
   g_object_unref (async);
-
- cleanup:
-  gimp_container_thaw (container);
-  gimp_unset_busy (gimp);
 }
 
 static gboolean
