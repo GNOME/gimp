@@ -1291,7 +1291,7 @@ gimp_context_deserialize_property (GimpConfig *object,
   GimpContainer *container;
   GimpObject    *current;
   gchar        **name_loc;
-  gboolean       no_data = FALSE;
+  gboolean       no_data;
   gchar         *object_name;
 
   switch (property_id)
@@ -1314,56 +1314,61 @@ gimp_context_deserialize_property (GimpConfig *object,
       container = gimp_data_factory_get_container (context->gimp->brush_factory);
       current   = (GimpObject *) context->brush;
       name_loc  = &context->brush_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_DYNAMICS:
       container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
       current   = (GimpObject *) context->dynamics;
       name_loc  = &context->dynamics_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_MYBRUSH:
       container = gimp_data_factory_get_container (context->gimp->mybrush_factory);
       current   = (GimpObject *) context->mybrush;
       name_loc  = &context->mybrush_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
       container = gimp_data_factory_get_container (context->gimp->pattern_factory);
       current   = (GimpObject *) context->pattern;
       name_loc  = &context->pattern_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_GRADIENT:
       container = gimp_data_factory_get_container (context->gimp->gradient_factory);
       current   = (GimpObject *) context->gradient;
       name_loc  = &context->gradient_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_PALETTE:
       container = gimp_data_factory_get_container (context->gimp->palette_factory);
       current   = (GimpObject *) context->palette;
       name_loc  = &context->palette_name;
+      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_FONT:
       container = gimp_data_factory_get_container (context->gimp->font_factory);
       current   = (GimpObject *) context->font;
       name_loc  = &context->font_name;
+      no_data   = context->gimp->no_fonts;
       break;
 
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       container = gimp_data_factory_get_container (context->gimp->tool_preset_factory);
       current   = (GimpObject *) context->tool_preset;
       name_loc  = &context->tool_preset_name;
+      no_data   = context->gimp->no_data;
       break;
 
     default:
       return FALSE;
     }
-
-  if (! no_data)
-    no_data = context->gimp->no_data;
 
   if (gimp_scanner_parse_identifier (scanner, "NULL"))
     {
