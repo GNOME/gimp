@@ -126,12 +126,17 @@ GimpData      * gimp_data_factory_data_get_standard (GimpDataFactory  *factory,
 gboolean        gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
                                                      GimpData         *data,
                                                      GError          **error);
+
 GType           gimp_data_factory_get_data_type     (GimpDataFactory  *factory);
 GimpContainer * gimp_data_factory_get_container     (GimpDataFactory  *factory);
 GimpContainer * gimp_data_factory_get_container_obsolete
                                                     (GimpDataFactory  *factory);
 Gimp          * gimp_data_factory_get_gimp          (GimpDataFactory  *factory);
 gboolean        gimp_data_factory_has_data_new_func (GimpDataFactory  *factory);
+
+GList         * gimp_data_factory_get_data_path     (GimpDataFactory  *factory);
+GList         * gimp_data_factory_get_data_path_writable
+                                                    (GimpDataFactory  *factory);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */
