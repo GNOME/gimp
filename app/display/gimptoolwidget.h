@@ -87,6 +87,10 @@ struct _GimpToolWidgetClass
                                 guint32                time,
                                 GdkModifierType        state);
 
+  GimpHit  (* hit)             (GimpToolWidget        *widget,
+                                const GimpCoords      *coords,
+                                GdkModifierType        state,
+                                gboolean               proximity);
   void     (* hover)           (GimpToolWidget        *widget,
                                 const GimpCoords      *coords,
                                 GdkModifierType        state,
@@ -252,6 +256,10 @@ void       gimp_tool_widget_motion          (GimpToolWidget        *widget,
                                              guint32                time,
                                              GdkModifierType        state);
 
+GimpHit    gimp_tool_widget_hit             (GimpToolWidget        *widget,
+                                             const GimpCoords      *coords,
+                                             GdkModifierType        state,
+                                             gboolean               proximity);
 void       gimp_tool_widget_hover           (GimpToolWidget        *widget,
                                              const GimpCoords      *coords,
                                              GdkModifierType        state,
