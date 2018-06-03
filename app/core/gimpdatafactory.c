@@ -105,8 +105,7 @@ static gint64     gimp_data_factory_get_memsize         (GimpObject          *ob
                                                          gint64              *gui_size);
 
 static void       gimp_data_factory_real_data_init      (GimpDataFactory     *factory,
-                                                         GimpContext         *context,
-                                                         gboolean             no_data);
+                                                         GimpContext         *context);
 static void       gimp_data_factory_real_data_refresh   (GimpDataFactory     *factory,
                                                          GimpContext         *context);
 static void       gimp_data_factory_real_data_save      (GimpDataFactory     *factory);
@@ -338,29 +337,9 @@ gimp_data_factory_get_memsize (GimpObject *object,
 
 static void
 gimp_data_factory_real_data_init (GimpDataFactory *factory,
-                                  GimpContext     *context,
-                                  gboolean         no_data)
+                                  GimpContext     *context)
 {
-  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
-
-  /*  Freeze and thaw the container even if no_data,
-   *  this creates the standard data that serves as fallback.
-   */
-  gimp_container_freeze (priv->container);
-
-  if (! no_data)
-    {
-      if (priv->gimp->be_verbose)
-        {
-          const gchar *name = gimp_object_get_name (factory);
-
-          g_print ("Loading '%s' data\n", name ? name : "???");
-        }
-
-      gimp_data_factory_data_load (factory, context, NULL);
-    }
-
-  gimp_container_thaw (priv->container);
+  gimp_data_factory_data_load (factory, context, NULL);
 }
 
 static void
@@ -664,7 +643,25 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  GIMP_DATA_FACTORY_GET_CLASS (factory)->data_init (factory, context, no_data);
+  /*  Always freeze() and thaw() the container around initialization,
+   *  even if no_data, the thaw() will implicitly make GimpContext
+   *  create the standard data that serves as fallback.
+   */
+  gimp_container_freeze (priv->container);
+
+  if (! no_data)
+    {
+      if (priv->gimp->be_verbose)
+        {
+          const gchar *name = gimp_object_get_name (factory);
+
+          g_print ("Loading '%s' data\n", name ? name : "???");
+        }
+
+      GIMP_DATA_FACTORY_GET_CLASS (factory)->data_init (factory, context);
+    }
+
+  gimp_container_thaw (priv->container);
 
   signal_name = g_strdup_printf ("notify::%s", priv->path_property_name);
   g_signal_connect_object (priv->gimp->config, signal_name,
