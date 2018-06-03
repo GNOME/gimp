@@ -34,10 +34,14 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpasyncset.h"
+#include "gimpcancelable.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
 #include "gimplist.h"
+#include "gimpuncancelablewaitable.h"
+#include "gimpwaitable.h"
 
 #include "gimp-intl.h"
 
@@ -74,6 +78,8 @@ struct _GimpDataFactoryPrivate
   gchar                            *path_property_name;
   gchar                            *writable_property_name;
 
+  GimpAsyncSet                     *async_set;
+
   const GimpDataFactoryLoaderEntry *loader_entries;
   gint                              n_loader_entries;
 
@@ -105,9 +111,6 @@ static void       gimp_data_factory_real_data_refresh   (GimpDataFactory     *fa
                                                          GimpContext         *context);
 static void       gimp_data_factory_real_data_save      (GimpDataFactory     *factory);
 static void       gimp_data_factory_real_data_free      (GimpDataFactory     *factory);
-static GimpAsyncSet *
-                  gimp_data_factory_real_get_async_set  (GimpDataFactory     *factory);
-static gboolean   gimp_data_factory_real_data_wait      (GimpDataFactory     *factory);
 static GimpData * gimp_data_factory_real_data_new       (GimpDataFactory     *factory,
                                                          GimpContext         *context,
                                                          const gchar         *name);
@@ -170,8 +173,6 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
   klass->data_refresh            = gimp_data_factory_real_data_refresh;
   klass->data_save               = gimp_data_factory_real_data_save;
   klass->data_free               = gimp_data_factory_real_data_free;
-  klass->get_async_set           = gimp_data_factory_real_get_async_set;
-  klass->data_wait               = gimp_data_factory_real_data_wait;
   klass->data_new                = gimp_data_factory_real_data_new;
   klass->data_duplicate          = gimp_data_factory_real_data_duplicate;
   klass->data_delete             = gimp_data_factory_real_data_delete;
@@ -211,6 +212,8 @@ gimp_data_factory_init (GimpDataFactory *factory)
   factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                                GIMP_TYPE_DATA_FACTORY,
                                                GimpDataFactoryPrivate);
+
+  factory->priv->async_set = gimp_async_set_new ();
 }
 
 static void
@@ -300,6 +303,13 @@ static void
 gimp_data_factory_finalize (GObject *object)
 {
   GimpDataFactoryPrivate *priv = GET_PRIVATE (object);
+
+  if (priv->async_set)
+    {
+      gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
+
+      g_clear_object (&priv->async_set);
+    }
 
   g_clear_object (&priv->container);
   g_clear_object (&priv->container_obsolete);
@@ -513,18 +523,6 @@ gimp_data_factory_real_data_free (GimpDataFactory *factory)
   gimp_container_thaw (factory->priv->container);
 }
 
-static GimpAsyncSet *
-gimp_data_factory_real_get_async_set (GimpDataFactory *factory)
-{
-  return NULL;
-}
-
-static gboolean
-gimp_data_factory_real_data_wait (GimpDataFactory *factory)
-{
-  return TRUE;
-}
-
 static GimpData *
 gimp_data_factory_real_data_new (GimpDataFactory *factory,
                                  GimpContext     *context,
@@ -726,15 +724,28 @@ gimp_data_factory_get_async_set (GimpDataFactory *factory)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
 
-  return GIMP_DATA_FACTORY_GET_CLASS (factory)->get_async_set (factory);
+  return factory->priv->async_set;
 }
 
 gboolean
 gimp_data_factory_data_wait (GimpDataFactory *factory)
 {
+  GimpDataFactoryPrivate *priv;
+  GimpWaitable           *waitable;
+
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
 
-  return GIMP_DATA_FACTORY_GET_CLASS (factory)->data_wait (factory);
+  priv = GET_PRIVATE (factory);
+
+  /* don't allow cancellation for now */
+  waitable = gimp_uncancelable_waitable_new (GIMP_WAITABLE (priv->async_set));
+
+  gimp_wait (priv->gimp, waitable,
+             _("Loading fonts (this may take a while...)"));
+
+  g_object_unref (waitable);
+
+  return TRUE;
 }
 
 GimpData *
