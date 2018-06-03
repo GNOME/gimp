@@ -71,9 +71,6 @@ static void       gimp_async_set_cancel                (GimpCancelable          
 static void       gimp_async_set_async_callback        (GimpAsync               *async,
                                                         GimpAsyncSet            *async_set);
 
-static void       gimp_async_set_clear_internal        (GimpAsyncSet            *async_set,
-                                                        gboolean                 wait);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpAsyncSet, gimp_async_set, G_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_WAITABLE,
@@ -189,7 +186,17 @@ gimp_async_set_wait (GimpWaitable *waitable)
 {
   GimpAsyncSet *async_set = GIMP_ASYNC_SET (waitable);
 
-  gimp_async_set_clear_internal (async_set, TRUE);
+  while (! gimp_async_set_is_empty (async_set))
+    {
+      GimpAsync      *async;
+      GHashTableIter  iter;
+
+      g_hash_table_iter_init (&iter, async_set->priv->asyncs);
+
+      g_hash_table_iter_next (&iter, (gpointer *) &async, NULL);
+
+      gimp_waitable_wait (GIMP_WAITABLE (async));
+    }
 }
 
 static gboolean
@@ -238,16 +245,17 @@ gimp_async_set_wait_until (GimpWaitable *waitable,
 static void
 gimp_async_set_cancel (GimpCancelable *cancelable)
 {
-  GimpAsyncSet   *async_set = GIMP_ASYNC_SET (cancelable);
-  GimpAsync      *async;
-  GHashTableIter  iter;
+  GimpAsyncSet *async_set = GIMP_ASYNC_SET (cancelable);
+  GList        *list;
 
-  g_hash_table_iter_init (&iter, async_set->priv->asyncs);
+  list = g_hash_table_get_keys (async_set->priv->asyncs);
 
-  while (g_hash_table_iter_next (&iter, (gpointer *) &async, NULL))
-    gimp_cancelable_cancel (GIMP_CANCELABLE (async));
+  g_list_foreach (list, (GFunc) g_object_ref, NULL);
+
+  g_list_foreach (list, (GFunc) gimp_cancelable_cancel, NULL);
+
+  g_list_free_full (list, g_object_unref);
 }
-
 
 static void
 gimp_async_set_async_callback (GimpAsync    *async,
@@ -257,34 +265,6 @@ gimp_async_set_async_callback (GimpAsync    *async,
 
   if (gimp_async_set_is_empty (async_set))
     g_object_notify (G_OBJECT (async_set), "empty");
-}
-
-static void
-gimp_async_set_clear_internal (GimpAsyncSet *async_set,
-                               gboolean      wait)
-{
-  GimpAsync      *async;
-  GHashTableIter  iter;
-
-  if (gimp_async_set_is_empty (async_set))
-    return;
-
-  g_hash_table_iter_init (&iter, async_set->priv->asyncs);
-
-  while (g_hash_table_iter_next (&iter, (gpointer *) &async, NULL))
-    {
-      gimp_async_remove_callback (
-        async,
-        (GimpAsyncCallback) gimp_async_set_async_callback,
-        async_set);
-
-      if (wait)
-        gimp_waitable_wait (GIMP_WAITABLE (async));
-    }
-
-  g_hash_table_remove_all (async_set->priv->asyncs);
-
-  g_object_notify (G_OBJECT (async_set), "empty");
 }
 
 
@@ -339,9 +319,27 @@ gimp_async_set_remove (GimpAsyncSet *async_set,
 void
 gimp_async_set_clear (GimpAsyncSet *async_set)
 {
+  GimpAsync      *async;
+  GHashTableIter  iter;
+
   g_return_if_fail (GIMP_IS_ASYNC_SET (async_set));
 
-  gimp_async_set_clear_internal (async_set, FALSE);
+  if (gimp_async_set_is_empty (async_set))
+    return;
+
+  g_hash_table_iter_init (&iter, async_set->priv->asyncs);
+
+  while (g_hash_table_iter_next (&iter, (gpointer *) &async, NULL))
+    {
+      gimp_async_remove_callback (
+        async,
+        (GimpAsyncCallback) gimp_async_set_async_callback,
+        async_set);
+    }
+
+  g_hash_table_remove_all (async_set->priv->asyncs);
+
+  g_object_notify (G_OBJECT (async_set), "empty");
 }
 
 gboolean
