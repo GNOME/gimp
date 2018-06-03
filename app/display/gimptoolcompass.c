@@ -130,6 +130,10 @@ static void     gimp_tool_compass_motion          (GimpToolWidget        *widget
                                                    const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state);
+static GimpHit  gimp_tool_compass_hit             (GimpToolWidget        *widget,
+                                                   const GimpCoords      *coords,
+                                                   GdkModifierType        state,
+                                                   gboolean               proximity);
 static void     gimp_tool_compass_hover           (GimpToolWidget        *widget,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
@@ -146,6 +150,8 @@ static gboolean gimp_tool_compass_get_cursor      (GimpToolWidget        *widget
                                                    GimpToolCursorType    *tool_cursor,
                                                    GimpCursorModifier    *modifier);
 
+static gint     gimp_tool_compass_get_point       (GimpToolCompass       *compass,
+                                                   const GimpCoords      *coords);
 static void     gimp_tool_compass_update_hilight  (GimpToolCompass       *compass);
 
 
@@ -170,6 +176,7 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
   widget_class->button_press    = gimp_tool_compass_button_press;
   widget_class->button_release  = gimp_tool_compass_button_release;
   widget_class->motion          = gimp_tool_compass_motion;
+  widget_class->hit             = gimp_tool_compass_hit;
   widget_class->hover           = gimp_tool_compass_hover;
   widget_class->leave_notify    = gimp_tool_compass_leave_notify;
   widget_class->motion_modifier = gimp_tool_compass_motion_modifier;
@@ -781,6 +788,20 @@ gimp_tool_compass_motion (GimpToolWidget   *widget,
     }
 }
 
+GimpHit
+gimp_tool_compass_hit (GimpToolWidget   *widget,
+                       const GimpCoords *coords,
+                       GdkModifierType   state,
+                       gboolean          proximity)
+{
+  GimpToolCompass *compass = GIMP_TOOL_COMPASS (widget);
+
+  if (gimp_tool_compass_get_point (compass, coords) >= 0)
+    return GIMP_HIT_DIRECT;
+  else
+    return GIMP_HIT_INDIRECT;
+}
+
 void
 gimp_tool_compass_hover (GimpToolWidget   *widget,
                          const GimpCoords *coords,
@@ -789,85 +810,71 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
 {
   GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
   GimpToolCompassPrivate *private = compass->private;
-  gint                    point   = -1;
-  gint                    i;
+  gint                    point;
 
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
-  for (i = 0; i < private->n_points; i++)
+  point = gimp_tool_compass_get_point (compass, coords);
+
+  if (point >= 0)
     {
-      if (gimp_canvas_item_hit (private->handles[i],
-                                coords->x, coords->y))
+      GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+      gchar           *status;
+
+      if (state & toggle_mask)
         {
-          GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
-          GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
-          gchar           *status;
-
-          point = i;
-
-          if (state & toggle_mask)
-            {
-              if (state & GDK_MOD1_MASK)
-                {
-                  status = gimp_suggest_modifiers (_("Click to place "
-                                                     "vertical and "
-                                                     "horizontal guides"),
-                                                   0,
-                                                   NULL, NULL, NULL);
-                }
-              else
-                {
-                  status = gimp_suggest_modifiers (_("Click to place a "
-                                                     "horizontal guide"),
-                                                   GDK_MOD1_MASK & ~state,
-                                                   NULL, NULL, NULL);
-                }
-
-              gimp_tool_widget_set_status (widget, status);
-              g_free (status);
-              break;
-            }
-
           if (state & GDK_MOD1_MASK)
             {
-              status = gimp_suggest_modifiers (_("Click to place a "
-                                                 "vertical guide"),
-                                               toggle_mask & ~state,
-                                               NULL, NULL, NULL);
-              gimp_tool_widget_set_status (widget, status);
-              g_free (status);
-              break;
-            }
-
-          if ((state & extend_mask) &&
-              ! ((i == 0) && (private->n_points == 3)))
-            {
-              status = gimp_suggest_modifiers (_("Click-Drag to add a "
-                                                 "new point"),
-                                               (toggle_mask |
-                                                GDK_MOD1_MASK) & ~state,
+              status = gimp_suggest_modifiers (_("Click to place "
+                                                 "vertical and "
+                                                 "horizontal guides"),
+                                               0,
                                                NULL, NULL, NULL);
             }
           else
             {
-              if ((i == 0) && (private->n_points == 3))
-                state |= extend_mask;
-              status = gimp_suggest_modifiers (_("Click-Drag to move this "
-                                                 "point"),
-                                               (extend_mask |
-                                                toggle_mask |
-                                                GDK_MOD1_MASK) & ~state,
+              status = gimp_suggest_modifiers (_("Click to place a "
+                                                 "horizontal guide"),
+                                               GDK_MOD1_MASK & ~state,
                                                NULL, NULL, NULL);
             }
-
-          gimp_tool_widget_set_status (widget, status);
-          g_free (status);
-          break;
         }
-    }
+      else if (state & GDK_MOD1_MASK)
+        {
+          status = gimp_suggest_modifiers (_("Click to place a "
+                                             "vertical guide"),
+                                           toggle_mask & ~state,
+                                           NULL, NULL, NULL);
+        }
+      else if ((state & extend_mask) &&
+               ! ((point == 0) && (private->n_points == 3)))
+        {
+          status = gimp_suggest_modifiers (_("Click-Drag to add a "
+                                             "new point"),
+                                           (toggle_mask |
+                                            GDK_MOD1_MASK) & ~state,
+                                           NULL, NULL, NULL);
+        }
+      else
+        {
+          if ((point == 0) && (private->n_points == 3))
+            state |= extend_mask;
 
-  if (point == -1)
+          status = gimp_suggest_modifiers (_("Click-Drag to move this "
+                                             "point"),
+                                           (extend_mask |
+                                            toggle_mask |
+                                            GDK_MOD1_MASK) & ~state,
+                                           NULL, NULL, NULL);
+        }
+
+      gimp_tool_widget_set_status (widget, status);
+
+      g_free (status);
+    }
+  else
     {
       if ((private->n_points > 1) && (state & GDK_MOD1_MASK))
         {
@@ -1007,6 +1014,25 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
     }
 
   return FALSE;
+}
+
+static gint
+gimp_tool_compass_get_point (GimpToolCompass  *compass,
+                             const GimpCoords *coords)
+{
+  GimpToolCompassPrivate *private = compass->private;
+  gint                    i;
+
+  for (i = 0; i < private->n_points; i++)
+    {
+      if (gimp_canvas_item_hit (private->handles[i],
+                                coords->x, coords->y))
+        {
+          return i;
+        }
+    }
+
+  return -1;
 }
 
 static void

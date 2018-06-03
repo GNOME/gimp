@@ -154,6 +154,10 @@ static void     gimp_tool_line_motion          (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state);
+static GimpHit  gimp_tool_line_hit             (GimpToolWidget        *widget,
+                                                const GimpCoords      *coords,
+                                                GdkModifierType        state,
+                                                gboolean               proximity);
 static void     gimp_tool_line_hover           (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 GdkModifierType        state,
@@ -172,6 +176,9 @@ static gboolean gimp_tool_line_get_cursor      (GimpToolWidget        *widget,
                                                 GimpToolCursorType    *tool_cursor,
                                                 GimpCursorModifier    *modifier);
 
+static gint     gimp_tool_line_get_hover       (GimpToolLine          *line,
+                                                const GimpCoords      *coords,
+                                                GdkModifierType        state);
 static GimpControllerSlider *
                 gimp_tool_line_get_slider      (GimpToolLine          *line,
                                                 gint                   slider);
@@ -224,6 +231,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
   widget_class->button_press    = gimp_tool_line_button_press;
   widget_class->button_release  = gimp_tool_line_button_release;
   widget_class->motion          = gimp_tool_line_motion;
+  widget_class->hit             = gimp_tool_line_hit;
   widget_class->hover           = gimp_tool_line_hover;
   widget_class->leave_notify    = gimp_tool_line_leave_notify;
   widget_class->key_press       = gimp_tool_line_key_press;
@@ -810,6 +818,29 @@ gimp_tool_line_motion (GimpToolWidget   *widget,
   gimp_tool_line_update_status (line, state, TRUE);
 }
 
+GimpHit
+gimp_tool_line_hit (GimpToolWidget   *widget,
+                    const GimpCoords *coords,
+                    GdkModifierType   state,
+                    gboolean          proximity)
+{
+  GimpToolLine *line = GIMP_TOOL_LINE (widget);
+
+  if (! (state & GRAB_LINE_MASK))
+    {
+      gint hover = gimp_tool_line_get_hover (line, coords, state);
+
+      if (hover != GIMP_TOOL_LINE_HANDLE_NONE)
+        return GIMP_HIT_DIRECT;
+    }
+  else
+    {
+      return GIMP_HIT_INDIRECT;
+    }
+
+  return GIMP_HIT_NONE;
+}
+
 void
 gimp_tool_line_hover (GimpToolWidget   *widget,
                       const GimpCoords *coords,
@@ -818,80 +849,14 @@ gimp_tool_line_hover (GimpToolWidget   *widget,
 {
   GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
   GimpToolLinePrivate *private = line->private;
-  gint                 i;
 
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
-  private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
-
   if (! (state & GRAB_LINE_MASK))
-    {
-      /* find the closest handle to the cursor */
-      gdouble min_dist     = G_MAXDOUBLE;
-      gint    first_handle = private->sliders->len - 1;
-
-      /* skip the sliders if the two endpoints are the same, in particular so
-       * that if the line is created during a button-press event (as in the
-       * blend tool), the end endpoint is dragged, instead of a slider.
-       */
-      if (private->x1 == private->x2 && private->y1 == private->y2)
-        first_handle = -1;
-
-      for (i = first_handle; i > GIMP_TOOL_LINE_HANDLE_NONE; i--)
-        {
-          GimpCanvasItem *handle;
-
-          if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (i))
-            {
-              const GimpControllerSlider *slider;
-
-              slider = gimp_tool_line_get_slider (line, i);
-
-              if (! slider->visible || ! slider->selectable)
-                continue;
-            }
-
-          handle = gimp_tool_line_get_handle (line, i);
-
-          if (gimp_tool_line_handle_hit (handle,
-                                         private->mouse_x,
-                                         private->mouse_y,
-                                         &min_dist))
-            {
-              private->hover = i;
-            }
-        }
-
-      if (private->hover == GIMP_TOOL_LINE_HANDLE_NONE)
-        {
-          gboolean constrain;
-          gdouble  value;
-          gdouble  dist;
-
-          constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
-
-          value = gimp_tool_line_project_point (line,
-                                                private->mouse_x,
-                                                private->mouse_y,
-                                                constrain,
-                                                &dist);
-
-          if (value >= 0.0 && value <= 1.0 && dist <= LINE_VICINITY)
-            {
-              gboolean can_add;
-
-              g_signal_emit (line, line_signals[CAN_ADD_SLIDER], 0,
-                             value, &can_add);
-
-              if (can_add)
-                {
-                  private->hover            = HOVER_NEW_SLIDER;
-                  private->new_slider_value = value;
-                }
-            }
-        }
-    }
+    private->hover = gimp_tool_line_get_hover (line, coords, state);
+  else
+    private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
 
   gimp_tool_line_update_handles (line);
   gimp_tool_line_update_circle (line);
@@ -1119,6 +1084,85 @@ gimp_tool_line_get_cursor (GimpToolWidget     *widget,
     }
 
   return FALSE;
+}
+
+static gint
+gimp_tool_line_get_hover (GimpToolLine     *line,
+                          const GimpCoords *coords,
+                          GdkModifierType   state)
+{
+  GimpToolLinePrivate *private = line->private;
+  gint                 hover   = GIMP_TOOL_LINE_HANDLE_NONE;
+  gdouble              min_dist;
+  gint                 first_handle;
+  gint                 i;
+
+  /* find the closest handle to the cursor */
+  min_dist     = G_MAXDOUBLE;
+  first_handle = private->sliders->len - 1;
+
+  /* skip the sliders if the two endpoints are the same, in particular so
+   * that if the line is created during a button-press event (as in the
+   * blend tool), the end endpoint is dragged, instead of a slider.
+   */
+  if (private->x1 == private->x2 && private->y1 == private->y2)
+    first_handle = -1;
+
+  for (i = first_handle; i > GIMP_TOOL_LINE_HANDLE_NONE; i--)
+    {
+      GimpCanvasItem *handle;
+
+      if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (i))
+        {
+          const GimpControllerSlider *slider;
+
+          slider = gimp_tool_line_get_slider (line, i);
+
+          if (! slider->visible || ! slider->selectable)
+            continue;
+        }
+
+      handle = gimp_tool_line_get_handle (line, i);
+
+      if (gimp_tool_line_handle_hit (handle,
+                                     private->mouse_x,
+                                     private->mouse_y,
+                                     &min_dist))
+        {
+          hover = i;
+        }
+    }
+
+  if (hover == GIMP_TOOL_LINE_HANDLE_NONE)
+    {
+      gboolean constrain;
+      gdouble  value;
+      gdouble  dist;
+
+      constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+
+      value = gimp_tool_line_project_point (line,
+                                            private->mouse_x,
+                                            private->mouse_y,
+                                            constrain,
+                                            &dist);
+
+      if (value >= 0.0 && value <= 1.0 && dist <= LINE_VICINITY)
+        {
+          gboolean can_add;
+
+          g_signal_emit (line, line_signals[CAN_ADD_SLIDER], 0,
+                         value, &can_add);
+
+          if (can_add)
+            {
+              hover                     = HOVER_NEW_SLIDER;
+              private->new_slider_value = value;
+            }
+        }
+    }
+
+  return hover;
 }
 
 static GimpControllerSlider *
