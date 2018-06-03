@@ -1217,10 +1217,12 @@ gimp_data_make_internal (GimpData    *data,
 
   g_clear_object (&private->file);
 
+  g_free (private->identifier);
   private->identifier = g_strdup (identifier);
-  private->writable   = FALSE;
-  private->deletable  = FALSE;
-  private->internal   = TRUE;
+
+  private->writable  = FALSE;
+  private->deletable = FALSE;
+  private->internal  = TRUE;
 }
 
 gboolean
