@@ -173,6 +173,10 @@ static void     gimp_tool_transform_grid_motion         (GimpToolWidget        *
                                                          const GimpCoords      *coords,
                                                          guint32                time,
                                                          GdkModifierType        state);
+static GimpHit  gimp_tool_transform_grid_hit            (GimpToolWidget        *widget,
+                                                         const GimpCoords      *coords,
+                                                         GdkModifierType        state,
+                                                         gboolean               proximity);
 static void     gimp_tool_transform_grid_hover          (GimpToolWidget        *widget,
                                                          const GimpCoords      *coords,
                                                          GdkModifierType        state,
@@ -189,6 +193,9 @@ static gboolean gimp_tool_transform_grid_get_cursor     (GimpToolWidget        *
                                                          GimpToolCursorType    *tool_cursor,
                                                          GimpCursorModifier    *modifier);
 
+static GimpTransformHandle
+                gimp_tool_transform_grid_get_handle     (GimpToolTransformGrid *grid,
+                                                         const GimpCoords      *coords);
 static void     gimp_tool_transform_grid_update_hilight (GimpToolTransformGrid *grid);
 static void     gimp_tool_transform_grid_update_box     (GimpToolTransformGrid *grid);
 static void     gimp_tool_transform_grid_update_matrix  (GimpToolTransformGrid *grid);
@@ -217,6 +224,7 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
   widget_class->button_press    = gimp_tool_transform_grid_button_press;
   widget_class->button_release  = gimp_tool_transform_grid_button_release;
   widget_class->motion          = gimp_tool_transform_grid_motion;
+  widget_class->hit             = gimp_tool_transform_grid_hit;
   widget_class->hover           = gimp_tool_transform_grid_hover;
   widget_class->leave_notify    = gimp_tool_transform_grid_leave_notify;
   widget_class->hover_modifier  = gimp_tool_transform_grid_hover_modifier;
@@ -1916,6 +1924,23 @@ gimp_tool_transform_get_area_handle (GimpToolTransformGrid *grid,
   return handle;
 }
 
+GimpHit
+gimp_tool_transform_grid_hit (GimpToolWidget   *widget,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              gboolean          proximity)
+{
+  GimpToolTransformGrid *grid = GIMP_TOOL_TRANSFORM_GRID (widget);
+  GimpTransformHandle    handle;
+
+  handle = gimp_tool_transform_grid_get_handle (grid, coords);
+
+  if (handle != GIMP_TRANSFORM_HANDLE_NONE)
+    return GIMP_HIT_DIRECT;
+
+  return GIMP_HIT_INDIRECT;
+}
+
 void
 gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
                                 const GimpCoords *coords,
@@ -1924,18 +1949,9 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
 {
   GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpToolTransformGridPrivate *private = grid->private;
-  GimpTransformHandle           handle  = GIMP_TRANSFORM_HANDLE_NONE;
-  GimpTransformHandle           i;
+  GimpTransformHandle           handle;
 
-  for (i = GIMP_TRANSFORM_HANDLE_NONE + 1; i < GIMP_N_TRANSFORM_HANDLES; i++)
-    {
-      if (private->handles[i] &&
-          gimp_canvas_item_hit (private->handles[i], coords->x, coords->y))
-        {
-          handle = i;
-          break;
-        }
-    }
+  handle = gimp_tool_transform_grid_get_handle (grid, coords);
 
   if (handle == GIMP_TRANSFORM_HANDLE_NONE)
     {
@@ -2234,6 +2250,25 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
     }
 
   return TRUE;
+}
+
+static GimpTransformHandle
+gimp_tool_transform_grid_get_handle (GimpToolTransformGrid *grid,
+                                     const GimpCoords      *coords)
+{
+  GimpToolTransformGridPrivate *private = grid->private;
+  GimpTransformHandle           i;
+
+  for (i = GIMP_TRANSFORM_HANDLE_NONE + 1; i < GIMP_N_TRANSFORM_HANDLES; i++)
+    {
+      if (private->handles[i] &&
+          gimp_canvas_item_hit (private->handles[i], coords->x, coords->y))
+        {
+          return i;
+        }
+    }
+
+  return GIMP_TRANSFORM_HANDLE_NONE;
 }
 
 static void

@@ -127,6 +127,10 @@ static void       gimp_tool_gyroscope_motion          (GimpToolWidget        *wi
                                                        const GimpCoords      *coords,
                                                        guint32                time,
                                                        GdkModifierType        state);
+static GimpHit    gimp_tool_gyroscope_hit             (GimpToolWidget        *widget,
+                                                       const GimpCoords      *coords,
+                                                       GdkModifierType        state,
+                                                       gboolean               proximity);
 static void       gimp_tool_gyroscope_hover           (GimpToolWidget        *widget,
                                                        const GimpCoords      *coords,
                                                        GdkModifierType        state,
@@ -173,6 +177,7 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
   widget_class->button_press    = gimp_tool_gyroscope_button_press;
   widget_class->button_release  = gimp_tool_gyroscope_button_release;
   widget_class->motion          = gimp_tool_gyroscope_motion;
+  widget_class->hit             = gimp_tool_gyroscope_hit;
   widget_class->hover           = gimp_tool_gyroscope_hover;
   widget_class->key_press       = gimp_tool_gyroscope_key_press;
   widget_class->motion_modifier = gimp_tool_gyroscope_motion_modifier;
@@ -507,6 +512,15 @@ gimp_tool_gyroscope_motion (GimpToolWidget   *widget,
   private->last_y = coords->y;
 
   gimp_tool_gyroscope_rotate (gyroscope, &axis);
+}
+
+static GimpHit
+gimp_tool_gyroscope_hit (GimpToolWidget   *widget,
+                         const GimpCoords *coords,
+                         GdkModifierType   state,
+                         gboolean          proximity)
+{
+  return GIMP_HIT_INDIRECT;
 }
 
 static void

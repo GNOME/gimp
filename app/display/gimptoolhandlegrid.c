@@ -113,6 +113,10 @@ static void   gimp_tool_handle_grid_motion         (GimpToolWidget        *widge
                                                     const GimpCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state);
+static GimpHit  gimp_tool_handle_grid_hit          (GimpToolWidget        *widget,
+                                                    const GimpCoords      *coords,
+                                                    GdkModifierType        state,
+                                                    gboolean               proximity);
 static void     gimp_tool_handle_grid_hover        (GimpToolWidget        *widget,
                                                     const GimpCoords      *coords,
                                                     GdkModifierType        state,
@@ -125,6 +129,8 @@ static gboolean gimp_tool_handle_grid_get_cursor   (GimpToolWidget        *widge
                                                     GimpToolCursorType    *tool_cursor,
                                                     GimpCursorModifier    *modifier);
 
+static gint     gimp_tool_handle_grid_get_handle     (GimpToolHandleGrid  *grid,
+                                                      const GimpCoords    *coords);
 static void     gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid  *grid);
 static void     gimp_tool_handle_grid_update_matrix  (GimpToolHandleGrid  *grid);
 
@@ -169,6 +175,7 @@ gimp_tool_handle_grid_class_init (GimpToolHandleGridClass *klass)
   widget_class->button_press    = gimp_tool_handle_grid_button_press;
   widget_class->button_release  = gimp_tool_handle_grid_button_release;
   widget_class->motion          = gimp_tool_handle_grid_motion;
+  widget_class->hit             = gimp_tool_handle_grid_hit;
   widget_class->hover           = gimp_tool_handle_grid_hover;
   widget_class->leave_notify    = gimp_tool_handle_grid_leave_notify;
   widget_class->get_cursor      = gimp_tool_handle_grid_get_cursor;
@@ -795,6 +802,39 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
   private->last_y = coords->y;
 }
 
+static GimpHit
+gimp_tool_handle_grid_hit (GimpToolWidget   *widget,
+                           const GimpCoords *coords,
+                           GdkModifierType   state,
+                           gboolean          proximity)
+{
+  GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
+  GimpToolHandleGridPrivate *private = grid->private;
+
+  if (proximity)
+    {
+      gint handle = gimp_tool_handle_grid_get_handle (grid, coords);
+
+      switch (private->handle_mode)
+        {
+        case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+          if (handle > 0)
+            return GIMP_HIT_DIRECT;
+          else
+            return GIMP_HIT_INDIRECT;
+          break;
+
+        case GIMP_HANDLE_MODE_MOVE:
+        case GIMP_HANDLE_MODE_REMOVE:
+          if (private->handle > 0)
+            return GIMP_HIT_DIRECT;
+          break;
+        }
+    }
+
+  return GIMP_HIT_NONE;
+}
+
 static void
 gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
                              const GimpCoords *coords,
@@ -804,24 +844,12 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
   GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
   GimpToolHandleGridPrivate *private = grid->private;
   gchar                     *status  = NULL;
-  gint                       i;
 
   private->hover   = TRUE;
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
-  private->handle = 0;
-
-  for (i = 0; i < 4; i++)
-    {
-      if (private->handles[i + 1] &&
-          gimp_canvas_item_hit (private->handles[i + 1],
-                                coords->x, coords->y))
-        {
-          private->handle = i + 1;
-          break;
-        }
-    }
+  private->handle = gimp_tool_handle_grid_get_handle (grid, coords);
 
   if (proximity)
     {
@@ -955,6 +983,26 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
     }
 
   return TRUE;
+}
+
+static gint
+gimp_tool_handle_grid_get_handle (GimpToolHandleGrid *grid,
+                                  const GimpCoords   *coords)
+{
+  GimpToolHandleGridPrivate *private = grid->private;
+  gint                       i;
+
+  for (i = 0; i < 4; i++)
+    {
+      if (private->handles[i + 1] &&
+          gimp_canvas_item_hit (private->handles[i + 1],
+                                coords->x, coords->y))
+        {
+          return i + 1;
+        }
+    }
+
+  return 0;
 }
 
 static void
