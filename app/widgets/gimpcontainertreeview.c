@@ -922,7 +922,18 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
+  /* GTK+ 3.x always keeps the row with the cursor selected, so we get
+   * a gazillion selection changed during gtk_tree_store_clear()
+   */
+  g_signal_handlers_block_by_func (tree_view->priv->selection,
+                                   gimp_container_tree_view_selection_changed,
+                                   tree_view);
+
   gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (tree_view->model));
+
+  g_signal_handlers_unblock_by_func (tree_view->priv->selection,
+                                     gimp_container_tree_view_selection_changed,
+                                     tree_view);
 
   parent_view_iface->clear_items (view);
 }
