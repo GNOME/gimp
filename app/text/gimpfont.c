@@ -334,7 +334,7 @@ gimp_font_get_standard (void)
   if (! standard_font)
     {
       standard_font = g_object_new (GIMP_TYPE_FONT,
-                                    "name", "Sans-serif",
+                                    "name", "Standard",
                                     NULL);
 
       gimp_data_clean (standard_font);
