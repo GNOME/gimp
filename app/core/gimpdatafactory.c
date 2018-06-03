@@ -882,6 +882,50 @@ gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
   return factory->priv->data_new_func != NULL;
 }
 
+GList *
+gimp_data_factory_get_data_path (GimpDataFactory *factory)
+{
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+  gchar                  *path = NULL;
+  GList                  *list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  g_object_get (priv->gimp->config,
+                priv->path_property_name, &path,
+                NULL);
+
+  if (path)
+    {
+      list = gimp_config_path_expand_to_files (path, NULL);
+      g_free (path);
+    }
+
+  return list;
+}
+
+GList *
+gimp_data_factory_get_data_path_writable (GimpDataFactory *factory)
+{
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+  gchar                  *path = NULL;
+  GList                  *list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  g_object_get (priv->gimp->config,
+                priv->writable_property_name, &path,
+                NULL);
+
+  if (path)
+    {
+      list = gimp_config_path_expand_to_files (path, NULL);
+      g_free (path);
+    }
+
+  return list;
+}
+
 
 /*  private functions  */
 
@@ -928,22 +972,12 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
                              GimpContext     *context,
                              GHashTable      *cache)
 {
-  gchar *p;
-  gchar *wp;
   GList *path;
   GList *writable_path;
   GList *list;
 
-  g_object_get (factory->priv->gimp->config,
-                factory->priv->path_property_name,     &p,
-                factory->priv->writable_property_name, &wp,
-                NULL);
-
-  path          = gimp_config_path_expand_to_files (p, NULL);
-  writable_path = gimp_config_path_expand_to_files (wp, NULL);
-
-  g_free (p);
-  g_free (wp);
+  path          = gimp_data_factory_get_data_path          (factory);
+  writable_path = gimp_data_factory_get_data_path_writable (factory);
 
   for (list = path; list; list = g_list_next (list))
     {
@@ -967,22 +1001,12 @@ static GFile *
 gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                                 GError          **error)
 {
-  gchar *p;
-  gchar *wp;
   GList *path;
   GList *writable_path;
   GFile *writable_dir = NULL;
 
-  g_object_get (factory->priv->gimp->config,
-                factory->priv->path_property_name,     &p,
-                factory->priv->writable_property_name, &wp,
-                NULL);
-
-  path          = gimp_config_path_expand_to_files (p, NULL);
-  writable_path = gimp_config_path_expand_to_files (wp, NULL);
-
-  g_free (p);
-  g_free (wp);
+  path          = gimp_data_factory_get_data_path          (factory);
+  writable_path = gimp_data_factory_get_data_path_writable (factory);
 
   if (writable_path)
     {
