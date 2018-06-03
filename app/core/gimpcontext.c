@@ -3260,7 +3260,7 @@ gimp_context_set_font_name (GimpContext *context,
       /* No font with this name exists, use the standard font, but
        * keep the intended name around
        */
-      gimp_context_set_font (context, gimp_font_get_standard ());
+      gimp_context_set_font (context, GIMP_FONT (gimp_font_get_standard ()));
 
       g_free (context->font_name);
       context->font_name = g_strdup (name);
@@ -3334,7 +3334,7 @@ gimp_context_real_set_font (GimpContext *context,
     return;
 
   if (context->font_name &&
-      font != gimp_font_get_standard ())
+      font != GIMP_FONT (gimp_font_get_standard ()))
     {
       g_free (context->font_name);
       context->font_name = NULL;
@@ -3355,7 +3355,7 @@ gimp_context_real_set_font (GimpContext *context,
                                context,
                                0);
 
-      if (font != gimp_font_get_standard ())
+      if (font != GIMP_FONT (gimp_font_get_standard ()))
         context->font_name = g_strdup (gimp_object_get_name (font));
     }
 

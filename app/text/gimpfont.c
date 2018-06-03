@@ -326,15 +326,23 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-GimpFont *
+GimpData *
 gimp_font_get_standard (void)
 {
-  static GimpFont *standard_font = NULL;
+  static GimpData *standard_font = NULL;
 
   if (! standard_font)
-    standard_font = g_object_new (GIMP_TYPE_FONT,
-                                  "name", "Sans-serif",
-                                  NULL);
+    {
+      standard_font = g_object_new (GIMP_TYPE_FONT,
+                                    "name", "Sans-serif",
+                                    NULL);
+
+      gimp_data_clean (standard_font);
+      gimp_data_make_internal (standard_font, "gimp-font-standard");
+
+      g_object_add_weak_pointer (G_OBJECT (standard_font),
+                                 (gpointer *) &standard_font);
+    }
 
   return standard_font;
 }
