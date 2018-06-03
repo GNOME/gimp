@@ -37,10 +37,7 @@
 #include "core/gimp-parallel.h"
 #include "core/gimpasync.h"
 #include "core/gimpasyncset.h"
-#include "core/gimpcancelable.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpuncancelablewaitable.h"
-#include "core/gimpwaitable.h"
 
 #include "gimpfont.h"
 #include "gimpfontfactory.h"
@@ -62,13 +59,11 @@
 
 struct _GimpFontFactoryPrivate
 {
-  GimpAsyncSet *async_set;
+  gpointer foo; /* can't have an empty struct */
 };
 
 #define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
 
-
-static void       gimp_font_factory_finalize        (GObject         *object);
 
 static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
                                                      GimpContext     *context,
@@ -76,9 +71,6 @@ static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
 static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
                                                      GimpContext     *context);
 static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
-static GimpAsyncSet *
-                  gimp_font_factory_get_async_set   (GimpDataFactory *factory);
-static gboolean   gimp_font_factory_data_wait       (GimpDataFactory *factory);
 static GimpData * gimp_font_factory_data_new        (GimpDataFactory *factory,
                                                      GimpContext     *context,
                                                      const gchar     *name);
@@ -113,16 +105,11 @@ G_DEFINE_TYPE (GimpFontFactory, gimp_font_factory, GIMP_TYPE_DATA_FACTORY)
 static void
 gimp_font_factory_class_init (GimpFontFactoryClass *klass)
 {
-  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
-
-  object_class->finalize        = gimp_font_factory_finalize;
 
   factory_class->data_init      = gimp_font_factory_data_init;
   factory_class->data_refresh   = gimp_font_factory_data_refresh;
   factory_class->data_save      = gimp_font_factory_data_save;
-  factory_class->get_async_set  = gimp_font_factory_get_async_set;
-  factory_class->data_wait      = gimp_font_factory_data_wait;
   factory_class->data_new       = gimp_font_factory_data_new;
   factory_class->data_duplicate = gimp_font_factory_data_duplicate;
   factory_class->data_delete    = gimp_font_factory_data_delete;
@@ -136,23 +123,6 @@ gimp_font_factory_init (GimpFontFactory *factory)
   factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                                GIMP_TYPE_FONT_FACTORY,
                                                GimpFontFactoryPrivate);
-
-  factory->priv->async_set = gimp_async_set_new ();
-}
-
-static void
-gimp_font_factory_finalize (GObject *object)
-{
-  GimpFontFactoryPrivate *priv = GET_PRIVATE (object);
-
-  if (priv->async_set)
-    {
-      gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
-
-      g_clear_object (&priv->async_set);
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -196,8 +166,6 @@ gimp_font_factory_data_refresh (GimpDataFactory *factory,
 static void
 gimp_font_factory_data_save (GimpDataFactory *factory)
 {
-  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
-
   /*  this is not "saving" but this functions is called at the right
    *  time at exit to reset the config
    */
@@ -205,36 +173,11 @@ gimp_font_factory_data_save (GimpDataFactory *factory)
   /* if font loading is in progress in another thread, do nothing.  calling
    * FcInitReinitialize() while loading takes place is unsafe.
    */
-  if (! gimp_async_set_is_empty (priv->async_set))
+  if (! gimp_async_set_is_empty (gimp_data_factory_get_async_set (factory)))
     return;
 
   /* Reinit the library with defaults. */
   FcInitReinitialize ();
-}
-
-static GimpAsyncSet *
-gimp_font_factory_get_async_set (GimpDataFactory *factory)
-{
-  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
-
-  return priv->async_set;
-}
-
-static gboolean
-gimp_font_factory_data_wait (GimpDataFactory *factory)
-{
-  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
-  GimpWaitable           *waitable;
-
-  /* don't allow cancellation for now */
-  waitable = gimp_uncancelable_waitable_new (GIMP_WAITABLE (priv->async_set));
-
-  gimp_wait (gimp_data_factory_get_gimp (factory), waitable,
-             _("Loading fonts (this may take a while...)"));
-
-  g_object_unref (waitable);
-
-  return TRUE;
 }
 
 static GimpData *
@@ -341,15 +284,17 @@ static void
 gimp_font_factory_load (GimpFontFactory  *factory,
                         GError          **error)
 {
-  GimpFontFactoryPrivate *priv = GET_PRIVATE (factory);
-  GimpContainer          *container;
-  Gimp                   *gimp;
-  FcConfig               *config;
-  GFile                  *fonts_conf;
-  GList                  *path;
-  GimpAsync              *async;
+  GimpContainer *container;
+  Gimp          *gimp;
+  GimpAsyncSet  *async_set;
+  FcConfig      *config;
+  GFile         *fonts_conf;
+  GList         *path;
+  GimpAsync     *async;
 
-  if (! gimp_async_set_is_empty (priv->async_set))
+  async_set = gimp_data_factory_get_async_set (GIMP_DATA_FACTORY (factory));
+
+  if (! gimp_async_set_is_empty (async_set))
     {
       /* font loading is already in progress */
       return;
@@ -397,7 +342,7 @@ gimp_font_factory_load (GimpFontFactory  *factory,
                            (GimpAsyncCallback) gimp_font_factory_load_async_callback,
                            factory);
 
-  gimp_async_set_add (priv->async_set, async);
+  gimp_async_set_add (async_set, async);
 
   g_object_unref (async);
 }

@@ -74,9 +74,6 @@ struct _GimpDataFactoryClass
   void           (* data_save)      (GimpDataFactory *factory);
   void           (* data_free)      (GimpDataFactory *factory);
 
-  GimpAsyncSet * (* get_async_set) (GimpDataFactory *factory);
-  gboolean       (* data_wait)     (GimpDataFactory *factory);
-
   GimpData     * (* data_new)       (GimpDataFactory  *factory,
                                      GimpContext      *context,
                                      const gchar      *name);
