@@ -66,8 +66,7 @@ struct _GimpFontFactoryPrivate
 
 
 static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
-                                                     GimpContext     *context,
-                                                     gboolean         no_data);
+                                                     GimpContext     *context);
 static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
                                                      GimpContext     *context);
 static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
@@ -127,22 +126,18 @@ gimp_font_factory_init (GimpFontFactory *factory)
 
 static void
 gimp_font_factory_data_init (GimpDataFactory *factory,
-                             GimpContext     *context,
-                             gboolean         no_data)
+                             GimpContext     *context)
 {
-  if (! no_data)
+  GError *error = NULL;
+
+  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
+
+  if (error)
     {
-      GError *error = NULL;
-
-      gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
-
-      if (error)
-        {
-          gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
-                                GIMP_MESSAGE_INFO,
-                                error->message);
-          g_error_free (error);
-        }
+      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
+                            GIMP_MESSAGE_INFO,
+                            error->message);
+      g_error_free (error);
     }
 }
 

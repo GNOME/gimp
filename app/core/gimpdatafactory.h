@@ -67,8 +67,7 @@ struct _GimpDataFactoryClass
   GimpObjectClass  parent_class;
 
   void           (* data_init)      (GimpDataFactory *factory,
-                                     GimpContext     *context,
-                                     gboolean         no_data);
+                                     GimpContext     *context);
   void           (* data_refresh)   (GimpDataFactory *factory,
                                      GimpContext     *context);
   void           (* data_save)      (GimpDataFactory *factory);
