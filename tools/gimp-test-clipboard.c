@@ -1,5 +1,5 @@
 /*
- * test-clipboard.c -- do clipboard things
+ * gimp-test-clipboard.c -- do clipboard things
  *
  * Copyright (C) 2005  Michael Natterer <mitch@gimp.org>
  *
@@ -201,7 +201,7 @@ main (gint   argc,
 static void
 test_clipboard_show_version (void)
 {
-  g_print ("test-clipboard (GIMP clipboard testbed) version %s\n",
+  g_print ("gimp-test-clipboard (GIMP clipboard testbed) version %s\n",
            GIMP_VERSION);
 
   exit (EXIT_SUCCESS);
