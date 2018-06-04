@@ -25,17 +25,13 @@
 #include "gimpobject.h"
 
 
-typedef void       (* GimpDataForeachFunc)     (GimpDataFactory *factory,
-                                                GimpData        *data,
-                                                gpointer         user_data);
-
-typedef GimpData * (* GimpDataNewFunc)         (GimpContext     *context,
-                                                const gchar     *name);
-typedef GList    * (* GimpDataLoadFunc)        (GimpContext     *context,
-                                                GFile           *file,
-                                                GInputStream    *input,
-                                                GError         **error);
-typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext     *context);
+typedef GimpData * (* GimpDataNewFunc)         (GimpContext   *context,
+                                                const gchar   *name);
+typedef GList    * (* GimpDataLoadFunc)        (GimpContext   *context,
+                                                GFile         *file,
+                                                GInputStream  *input,
+                                                GError       **error);
+typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext   *context);
 
 
 typedef struct _GimpDataFactoryLoaderEntry GimpDataFactoryLoaderEntry;
@@ -126,11 +122,6 @@ GimpData      * gimp_data_factory_data_get_standard (GimpDataFactory  *factory,
 gboolean        gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
                                                      GimpData         *data,
                                                      GError          **error);
-
-void            gimp_data_factory_data_foreach      (GimpDataFactory  *factory,
-                                                     gboolean          skip_internal,
-                                                     GimpDataForeachFunc  callback,
-                                                     gpointer          user_data);
 
 GType           gimp_data_factory_get_data_type     (GimpDataFactory  *factory);
 GimpContainer * gimp_data_factory_get_container     (GimpDataFactory  *factory);

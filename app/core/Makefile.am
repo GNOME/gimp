@@ -155,8 +155,6 @@ libappcore_a_sources = \
 	gimpdata.h				\
 	gimpdatafactory.c			\
 	gimpdatafactory.h			\
-	gimpdataloaderfactory.c			\
-	gimpdataloaderfactory.h			\
 	gimpdocumentlist.c			\
 	gimpdocumentlist.h			\
 	gimpdrawable.c				\

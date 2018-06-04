@@ -1386,8 +1386,15 @@ gimp_context_deserialize_property (GimpConfig *object,
 
       if (! deserialize_obj)
         {
-          g_free (*name_loc);
-          *name_loc = g_strdup (object_name);
+          if (no_data)
+            {
+              g_free (*name_loc);
+              *name_loc = g_strdup (object_name);
+            }
+          else
+            {
+              deserialize_obj = current;
+            }
         }
 
       g_value_set_object (value, deserialize_obj);
