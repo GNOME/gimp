@@ -38,7 +38,7 @@
 #include "gimpbrushclipboard.h"
 #include "gimpbrushgenerated-load.h"
 #include "gimpbrushpipe-load.h"
-#include "gimpdatafactory.h"
+#include "gimpdataloaderfactory.h"
 #include "gimpdynamics.h"
 #include "gimpdynamics-load.h"
 #include "gimpgradient-load.h"
@@ -62,7 +62,7 @@
 void
 gimp_data_factories_init (Gimp *gimp)
 {
-  static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
+  static const GimpDataLoaderEntry brush_loader_entries[] =
   {
     { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION,           FALSE },
     { gimp_brush_load,           GIMP_BRUSH_PIXMAP_FILE_EXTENSION,    FALSE },
@@ -72,34 +72,34 @@ gimp_data_factories_init (Gimp *gimp)
     { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION,      FALSE }
   };
 
-  static const GimpDataFactoryLoaderEntry dynamics_loader_entries[] =
+  static const GimpDataLoaderEntry dynamics_loader_entries[] =
   {
     { gimp_dynamics_load,        GIMP_DYNAMICS_FILE_EXTENSION,        TRUE  }
   };
 
-  static const GimpDataFactoryLoaderEntry mybrush_loader_entries[] =
+  static const GimpDataLoaderEntry mybrush_loader_entries[] =
   {
     { gimp_mybrush_load,         GIMP_MYBRUSH_FILE_EXTENSION,         FALSE }
   };
 
-  static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
+  static const GimpDataLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
     { gimp_pattern_load_pixbuf,  NULL /* fallback loader */,          FALSE }
   };
 
-  static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
+  static const GimpDataLoaderEntry gradient_loader_entries[] =
   {
     { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION,        TRUE  },
     { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION,    FALSE }
   };
 
-  static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
+  static const GimpDataLoaderEntry palette_loader_entries[] =
   {
     { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  }
   };
 
-  static const GimpDataFactoryLoaderEntry tool_preset_loader_entries[] =
+  static const GimpDataLoaderEntry tool_preset_loader_entries[] =
   {
     { gimp_tool_preset_load,     GIMP_TOOL_PRESET_FILE_EXTENSION,     TRUE  }
   };
@@ -107,68 +107,74 @@ gimp_data_factories_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->brush_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_BRUSH,
-                           "brush-path", "brush-path-writable",
-                           brush_loader_entries,
-                           G_N_ELEMENTS (brush_loader_entries),
-                           gimp_brush_new,
-                           gimp_brush_get_standard);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_BRUSH,
+                                  "brush-path",
+                                  "brush-path-writable",
+                                  gimp_brush_new,
+                                  gimp_brush_get_standard,
+                                  brush_loader_entries,
+                                  G_N_ELEMENTS (brush_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->brush_factory),
                                "brush factory");
 
   gimp->dynamics_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_DYNAMICS,
-                           "dynamics-path", "dynamics-path-writable",
-                           dynamics_loader_entries,
-                           G_N_ELEMENTS (dynamics_loader_entries),
-                           gimp_dynamics_new,
-                           gimp_dynamics_get_standard);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_DYNAMICS,
+                                  "dynamics-path",
+                                  "dynamics-path-writable",
+                                  gimp_dynamics_new,
+                                  gimp_dynamics_get_standard,
+                                  dynamics_loader_entries,
+                                  G_N_ELEMENTS (dynamics_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->dynamics_factory),
                                "dynamics factory");
 
   gimp->mybrush_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_MYBRUSH,
-                           "mypaint-brush-path", "mypaint-brush-path-writable",
-                           mybrush_loader_entries,
-                           G_N_ELEMENTS (mybrush_loader_entries),
-                           NULL,
-                           NULL);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_MYBRUSH,
+                                  "mypaint-brush-path",
+                                  "mypaint-brush-path-writable",
+                                  NULL,
+                                  NULL,
+                                  mybrush_loader_entries,
+                                  G_N_ELEMENTS (mybrush_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->mybrush_factory),
                                "mypaint brush factory");
 
   gimp->pattern_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_PATTERN,
-                           "pattern-path", "pattern-path-writable",
-                           pattern_loader_entries,
-                           G_N_ELEMENTS (pattern_loader_entries),
-                           NULL,
-                           gimp_pattern_get_standard);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_PATTERN,
+                                  "pattern-path",
+                                  "pattern-path-writable",
+                                  NULL,
+                                  gimp_pattern_get_standard,
+                                  pattern_loader_entries,
+                                  G_N_ELEMENTS (pattern_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->pattern_factory),
                                "pattern factory");
 
   gimp->gradient_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_GRADIENT,
-                           "gradient-path", "gradient-path-writable",
-                           gradient_loader_entries,
-                           G_N_ELEMENTS (gradient_loader_entries),
-                           gimp_gradient_new,
-                           gimp_gradient_get_standard);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_GRADIENT,
+                                  "gradient-path",
+                                  "gradient-path-writable",
+                                  gimp_gradient_new,
+                                  gimp_gradient_get_standard,
+                                  gradient_loader_entries,
+                                  G_N_ELEMENTS (gradient_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->gradient_factory),
                                "gradient factory");
 
   gimp->palette_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_PALETTE,
-                           "palette-path", "palette-path-writable",
-                           palette_loader_entries,
-                           G_N_ELEMENTS (palette_loader_entries),
-                           gimp_palette_new,
-                           gimp_palette_get_standard);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_PALETTE,
+                                  "palette-path",
+                                  "palette-path-writable",
+                                  gimp_palette_new,
+                                  gimp_palette_get_standard,
+                                  palette_loader_entries,
+                                  G_N_ELEMENTS (palette_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
                                "palette factory");
 
@@ -179,13 +185,14 @@ gimp_data_factories_init (Gimp *gimp)
                                "font factory");
 
   gimp->tool_preset_factory =
-    gimp_data_factory_new (gimp,
-                           GIMP_TYPE_TOOL_PRESET,
-                           "tool-preset-path", "tool-preset-path-writable",
-                           tool_preset_loader_entries,
-                           G_N_ELEMENTS (tool_preset_loader_entries),
-                           gimp_tool_preset_new,
-                           NULL);
+    gimp_data_loader_factory_new (gimp,
+                                  GIMP_TYPE_TOOL_PRESET,
+                                  "tool-preset-path",
+                                  "tool-preset-path-writable",
+                                  gimp_tool_preset_new,
+                                  NULL,
+                                  tool_preset_loader_entries,
+                                  G_N_ELEMENTS (tool_preset_loader_entries));
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_preset_factory),
                                "tool preset factory");
 

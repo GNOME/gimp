@@ -31,7 +31,7 @@
 #include "gimp-gradients.h"
 #include "gimp-internal-data.h"
 #include "gimpdata.h"
-#include "gimpdatafactory.h"
+#include "gimpdataloaderfactory.h"
 #include "gimperror.h"
 #include "gimpgradient-load.h"
 
