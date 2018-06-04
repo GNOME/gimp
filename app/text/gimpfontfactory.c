@@ -70,9 +70,6 @@ static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
 static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
                                                      GimpContext     *context);
 static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
-static GimpData * gimp_font_factory_data_new        (GimpDataFactory *factory,
-                                                     GimpContext     *context,
-                                                     const gchar     *name);
 static GimpData * gimp_font_factory_data_duplicate  (GimpDataFactory *factory,
                                                      GimpData        *data);
 static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
@@ -109,7 +106,6 @@ gimp_font_factory_class_init (GimpFontFactoryClass *klass)
   factory_class->data_init      = gimp_font_factory_data_init;
   factory_class->data_refresh   = gimp_font_factory_data_refresh;
   factory_class->data_save      = gimp_font_factory_data_save;
-  factory_class->data_new       = gimp_font_factory_data_new;
   factory_class->data_duplicate = gimp_font_factory_data_duplicate;
   factory_class->data_delete    = gimp_font_factory_data_delete;
 
@@ -176,14 +172,6 @@ gimp_font_factory_data_save (GimpDataFactory *factory)
 }
 
 static GimpData *
-gimp_font_factory_data_new (GimpDataFactory *factory,
-                            GimpContext     *context,
-                            const gchar     *name)
-{
-  return NULL;
-}
-
-static GimpData *
 gimp_font_factory_data_duplicate (GimpDataFactory *factory,
                                   GimpData        *data)
 {
@@ -196,8 +184,7 @@ gimp_font_factory_data_delete (GimpDataFactory  *factory,
                                gboolean          delete_from_disk,
                                GError          **error)
 {
-  return GIMP_DATA_FACTORY_CLASS (parent_class)->data_delete (factory, data,
-                                                              FALSE, error);
+  return TRUE;
 }
 
 

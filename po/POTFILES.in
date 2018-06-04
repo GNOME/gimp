@@ -130,6 +130,7 @@ app/core/gimpcurve-load.c
 app/core/gimpcurve-save.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
+app/core/gimpdataloaderfactory.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-edit.c
