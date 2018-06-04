@@ -61,6 +61,8 @@ void     gimp_display_shell_scale_by_values          (GimpDisplayShell *shell,
                                                       gboolean          resize_window);
 
 void     gimp_display_shell_scale_drag               (GimpDisplayShell *shell,
+                                                      gdouble           start_x,
+                                                      gdouble           start_y,
                                                       gdouble           delta_x,
                                                       gdouble           delta_y);
 
