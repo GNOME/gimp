@@ -58,6 +58,7 @@ struct _GimpStatusbar
   GtkWidget           *cursor_label;
   GtkWidget           *unit_combo;
   GtkWidget           *scale_combo;
+  GtkWidget           *rotate_widget;
   GtkWidget           *rotate_label;
   GtkWidget           *horizontal_flip_icon;
   GtkWidget           *vertical_flip_icon;
