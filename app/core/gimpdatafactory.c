@@ -64,11 +64,6 @@ enum
 };
 
 
-typedef void (* GimpDataForeachFunc) (GimpDataFactory *factory,
-                                      GimpData        *data,
-                                      gpointer         user_data);
-
-
 struct _GimpDataFactoryPrivate
 {
   Gimp                             *gimp;
@@ -125,10 +120,6 @@ static gboolean   gimp_data_factory_real_data_delete    (GimpDataFactory     *fa
 static void    gimp_data_factory_path_notify            (GObject             *object,
                                                          const GParamSpec    *pspec,
                                                          GimpDataFactory     *factory);
-static void    gimp_data_factory_data_foreach           (GimpDataFactory     *factory,
-                                                         gboolean             skip_internal,
-                                                         GimpDataForeachFunc  callback,
-                                                         gpointer             user_data);
 
 static void    gimp_data_factory_data_load              (GimpDataFactory     *factory,
                                                          GimpContext         *context,
@@ -879,6 +870,35 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   return TRUE;
 }
 
+void
+gimp_data_factory_data_foreach (GimpDataFactory     *factory,
+                                gboolean             skip_internal,
+                                GimpDataForeachFunc  callback,
+                                gpointer             user_data)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+  g_return_if_fail (callback != NULL);
+
+  list = GIMP_LIST (factory->priv->container)->queue->head;
+
+  if (skip_internal)
+    {
+      while (list && gimp_data_is_internal (GIMP_DATA (list->data)))
+        list = g_list_next (list);
+    }
+
+  while (list)
+    {
+      GList *next = g_list_next (list);
+
+      callback (factory, list->data, user_data);
+
+      list = next;
+    }
+}
+
 GType
 gimp_data_factory_get_data_type (GimpDataFactory *factory)
 {
@@ -978,30 +998,6 @@ gimp_data_factory_path_notify (GObject          *object,
   gimp_data_factory_data_refresh (factory, gimp_get_user_context (priv->gimp));
 
   gimp_unset_busy (priv->gimp);
-}
-
-static void
-gimp_data_factory_data_foreach (GimpDataFactory     *factory,
-                                gboolean             skip_internal,
-                                GimpDataForeachFunc  callback,
-                                gpointer             user_data)
-{
-  GList *list = GIMP_LIST (factory->priv->container)->queue->head;
-
-  if (skip_internal)
-    {
-      while (list && gimp_data_is_internal (GIMP_DATA (list->data)))
-        list = g_list_next (list);
-    }
-
-  while (list)
-    {
-      GList *next = g_list_next (list);
-
-      callback (factory, list->data, user_data);
-
-      list = next;
-    }
 }
 
 static void
