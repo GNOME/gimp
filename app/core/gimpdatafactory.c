@@ -58,7 +58,9 @@ enum
   PROP_GIMP,
   PROP_DATA_TYPE,
   PROP_PATH_PROPERTY_NAME,
-  PROP_WRITABLE_PROPERTY_NAME
+  PROP_WRITABLE_PROPERTY_NAME,
+  PROP_NEW_FUNC,
+  PROP_GET_STANDARD_FUNC
 };
 
 
@@ -78,13 +80,13 @@ struct _GimpDataFactoryPrivate
   gchar                            *path_property_name;
   gchar                            *writable_property_name;
 
+  GimpDataNewFunc                   data_new_func;
+  GimpDataGetStandardFunc           data_get_standard_func;
+
   GimpAsyncSet                     *async_set;
 
   const GimpDataFactoryLoaderEntry *loader_entries;
   gint                              n_loader_entries;
-
-  GimpDataNewFunc                   data_new_func;
-  GimpDataGetStandardFunc           data_get_standard_func;
 };
 
 #define GET_PRIVATE(obj) (((GimpDataFactory *) (obj))->priv)
@@ -202,6 +204,18 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_NEW_FUNC,
+                                   g_param_spec_pointer ("new-func",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_GET_STANDARD_FUNC,
+                                   g_param_spec_pointer ("get-standard-func",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpDataFactoryPrivate));
 }
 
@@ -260,6 +274,14 @@ gimp_data_factory_set_property (GObject      *object,
       priv->writable_property_name = g_value_dup_string (value);
       break;
 
+    case PROP_NEW_FUNC:
+      priv->data_new_func = g_value_get_pointer (value);
+      break;
+
+    case PROP_GET_STANDARD_FUNC:
+      priv->data_get_standard_func = g_value_get_pointer (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -290,6 +312,14 @@ gimp_data_factory_get_property (GObject    *object,
 
     case PROP_WRITABLE_PROPERTY_NAME:
       g_value_set_string (value, priv->writable_property_name);
+      break;
+
+    case PROP_NEW_FUNC:
+      g_value_set_pointer (value, priv->data_new_func);
+      break;
+
+    case PROP_GET_STANDARD_FUNC:
+      g_value_set_pointer (value, priv->data_get_standard_func);
       break;
 
     default:
@@ -621,13 +651,12 @@ gimp_data_factory_new (Gimp                             *gimp,
                           "data-type",              data_type,
                           "path-property-name",     path_property_name,
                           "writable-property-name", writable_property_name,
+                          "new-func",               new_func,
+                          "get-standard-func",      get_standard_func,
                           NULL);
 
-  factory->priv->loader_entries         = loader_entries;
-  factory->priv->n_loader_entries       = n_loader_entries;
-
-  factory->priv->data_new_func          = new_func;
-  factory->priv->data_get_standard_func = get_standard_func;
+  factory->priv->loader_entries   = loader_entries;
+  factory->priv->n_loader_entries = n_loader_entries;
 
   return factory;
 }
