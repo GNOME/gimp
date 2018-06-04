@@ -1493,6 +1493,8 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                    GDK_BUTTON_RELEASE_MASK);
 
   shell->scrolling         = TRUE;
+  shell->scroll_start_x    = x;
+  shell->scroll_start_y    = y;
   shell->scroll_last_x     = x;
   shell->scroll_last_y     = y;
   shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
@@ -1519,6 +1521,8 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   gimp_display_shell_unset_override_cursor (shell);
 
   shell->scrolling         = FALSE;
+  shell->scroll_start_x    = 0;
+  shell->scroll_start_y    = 0;
   shell->scroll_last_x     = 0;
   shell->scroll_last_y     = 0;
   shell->rotating          = FALSE;
@@ -1554,6 +1558,8 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
   else if (shell->scaling)
     {
       gimp_display_shell_scale_drag (shell,
+                                     shell->scroll_start_x,
+                                     shell->scroll_start_y,
                                      shell->scroll_last_x - x,
                                      shell->scroll_last_y - y);
     }
