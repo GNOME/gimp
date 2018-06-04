@@ -42,11 +42,9 @@
 
 
 static void     gimp_combo_tag_entry_constructed       (GObject              *object);
-static void     gimp_combo_tag_entry_dispose           (GObject              *object);
 
 static gboolean gimp_combo_tag_entry_draw              (GtkWidget            *widget,
                                                         cairo_t              *cr);
-static void     gimp_combo_tag_entry_style_updated     (GtkWidget            *widget);
 
 static void     gimp_combo_tag_entry_icon_press        (GtkWidget            *widget,
                                                         GtkEntryIconPosition  icon_pos,
@@ -72,20 +70,15 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed   = gimp_combo_tag_entry_constructed;
-  object_class->dispose       = gimp_combo_tag_entry_dispose;
+  object_class->constructed = gimp_combo_tag_entry_constructed;
 
-  widget_class->draw          = gimp_combo_tag_entry_draw;
-  widget_class->style_updated = gimp_combo_tag_entry_style_updated;
+  widget_class->draw        = gimp_combo_tag_entry_draw;
 }
 
 static void
 gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
 {
-  entry->popup                 = NULL;
-  entry->normal_item_attr      = NULL;
-  entry->selected_item_attr    = NULL;
-  entry->insensitive_item_attr = NULL;
+  entry->popup = NULL;
 
   gtk_widget_add_events (GTK_WIDGET (entry),
                          GDK_BUTTON_PRESS_MASK |
@@ -113,32 +106,6 @@ gimp_combo_tag_entry_constructed (GObject *object)
                            entry, 0);
 }
 
-static void
-gimp_combo_tag_entry_dispose (GObject *object)
-{
-  GimpComboTagEntry *combo_entry = GIMP_COMBO_TAG_ENTRY (object);
-
-  if (combo_entry->normal_item_attr)
-    {
-      pango_attr_list_unref (combo_entry->normal_item_attr);
-      combo_entry->normal_item_attr = NULL;
-    }
-
-  if (combo_entry->selected_item_attr)
-    {
-      pango_attr_list_unref (combo_entry->selected_item_attr);
-      combo_entry->selected_item_attr = NULL;
-    }
-
-  if (combo_entry->insensitive_item_attr)
-    {
-      pango_attr_list_unref (combo_entry->insensitive_item_attr);
-      combo_entry->insensitive_item_attr = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
 static gboolean
 gimp_combo_tag_entry_draw (GtkWidget *widget,
                            cairo_t   *cr)
@@ -160,65 +127,6 @@ gimp_combo_tag_entry_draw (GtkWidget *widget,
   gtk_render_arrow (style, cr, G_PI, x, y, 8);
 
   return FALSE;
-}
-
-static void
-gimp_combo_tag_entry_style_updated (GtkWidget *widget)
-{
-  GimpComboTagEntry          *entry = GIMP_COMBO_TAG_ENTRY (widget);
-  GtkStyleContext            *style = gtk_widget_get_style_context (widget);
-  GdkRGBA                     color;
-  const PangoFontDescription *font_desc;
-  PangoAttribute             *attribute;
-
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
-
-  if (entry->normal_item_attr)
-    pango_attr_list_unref (entry->normal_item_attr);
-  entry->normal_item_attr = pango_attr_list_new ();
-
-  font_desc = gtk_style_context_get_font (style, 0);
-  attribute = pango_attr_font_desc_new (font_desc);
-  pango_attr_list_insert (entry->normal_item_attr, attribute);
-
-  gtk_style_context_get_color (style, 0, &color);
-  attribute = pango_attr_foreground_new (color.red   * 65535.99,
-                                         color.green * 65535.99,
-                                         color.blue  * 65535.99);
-  pango_attr_list_insert (entry->normal_item_attr, attribute);
-
-  if (entry->selected_item_attr)
-    pango_attr_list_unref (entry->selected_item_attr);
-  entry->selected_item_attr = pango_attr_list_copy (entry->normal_item_attr);
-
-  gtk_style_context_get_color (style, GTK_STATE_FLAG_SELECTED, &color);
-  attribute = pango_attr_foreground_new (color.red   * 65535.99,
-                                         color.green * 65535.99,
-                                         color.blue  * 65535.99);
-  pango_attr_list_insert (entry->selected_item_attr, attribute);
-  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED, &color);
-  attribute = pango_attr_background_new (color.red   * 65535.99,
-                                         color.green * 65535.99,
-                                         color.blue  * 65535.99);
-  pango_attr_list_insert (entry->selected_item_attr, attribute);
-
-  if (entry->insensitive_item_attr)
-    pango_attr_list_unref (entry->insensitive_item_attr);
-  entry->insensitive_item_attr = pango_attr_list_copy (entry->normal_item_attr);
-
-  gtk_style_context_get_color (style, GTK_STATE_FLAG_INSENSITIVE, &color);
-  attribute = pango_attr_foreground_new (color.red   * 65535.99,
-                                         color.green * 65535.99,
-                                         color.blue  * 65535.99);
-  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
-  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_INSENSITIVE, &color);
-  attribute = pango_attr_background_new (color.red   * 65535.99,
-                                         color.green * 65535.99,
-                                         color.blue  * 65535.99);
-  pango_attr_list_insert (entry->insensitive_item_attr, attribute);
-
-  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
-                                          &entry->selected_item_color);
 }
 
 /**

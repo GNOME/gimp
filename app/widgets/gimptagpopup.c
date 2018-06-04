@@ -82,6 +82,8 @@ static void     gimp_tag_popup_get_border              (GtkWidget      *widget,
 static gboolean gimp_tag_popup_border_draw             (GtkWidget      *widget,
                                                         cairo_t        *cr,
                                                         GimpTagPopup   *popup);
+static void     gimp_tag_popup_list_style_updated      (GtkWidget      *widget,
+                                                        GimpTagPopup   *popup);
 static gboolean gimp_tag_popup_list_draw               (GtkWidget      *widget,
                                                         cairo_t        *cr,
                                                         GimpTagPopup   *popup);
@@ -191,6 +193,9 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   g_signal_connect (popup, "event",
                     G_CALLBACK (gimp_tag_popup_border_event),
                     NULL);
+  g_signal_connect (popup->tag_area, "style-updated",
+                    G_CALLBACK (gimp_tag_popup_list_style_updated),
+                    popup);
   g_signal_connect (popup->tag_area, "draw",
                     G_CALLBACK (gimp_tag_popup_list_draw),
                     popup);
@@ -229,17 +234,11 @@ gimp_tag_popup_constructed (GObject *object)
 
   gtk_window_set_screen (GTK_WINDOW (popup), gtk_widget_get_screen (entry));
 
-  popup->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
-  popup->layout  = pango_layout_new (popup->context);
-
   gtk_widget_get_allocation (entry, &entry_allocation);
 
   gtk_widget_style_get (GTK_WIDGET (popup),
                         "scroll-arrow-vlength", &popup->scroll_arrow_height,
                         NULL);
-
-  pango_layout_set_attributes (popup->layout,
-                               popup->combo_entry->normal_item_attr);
 
   current_tags  = gimp_tag_entry_parse_tags (GIMP_TAG_ENTRY (popup->combo_entry));
   current_count = g_strv_length (current_tags);
@@ -382,7 +381,6 @@ gimp_tag_popup_dispose (GObject *object)
 
   g_clear_object (&popup->combo_entry);
   g_clear_object (&popup->layout);
-  g_clear_object (&popup->context);
 
   if (popup->tag_data)
     {
@@ -500,6 +498,7 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
                             gint          width)
 {
   PangoFontMetrics *font_metrics;
+  PangoContext     *context;
   gint              x;
   gint              y;
   gint              height = 0;
@@ -510,8 +509,13 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
   x = GIMP_TAG_POPUP_MARGIN;
   y = GIMP_TAG_POPUP_MARGIN;
 
-  font_metrics = pango_context_get_metrics (popup->context,
-                                            pango_context_get_font_description (popup->context),
+  context = gtk_widget_get_pango_context (popup->tag_area);
+
+  if (! popup->layout)
+    popup->layout = pango_layout_new (context);
+
+  font_metrics = pango_context_get_metrics (context,
+                                            pango_context_get_font_description (context),
                                             NULL);
 
   line_height = PANGO_PIXELS ((pango_font_metrics_get_ascent (font_metrics) +
@@ -522,15 +526,19 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
 
   for (i = 0; i < popup->tag_count; i++)
     {
-      PopupTagData *tag_data = &popup->tag_data[i];
-      gint          w, h;
+      PopupTagData   *tag_data = &popup->tag_data[i];
+      PangoRectangle  ink;
+      PangoRectangle  logical;
 
       pango_layout_set_text (popup->layout,
                              gimp_tag_get_name (tag_data->tag), -1);
-      pango_layout_get_pixel_size (popup->layout, &w, &h);
+      pango_layout_get_pixel_extents (popup->layout, &ink, &logical);
 
-      tag_data->bounds.width  = w + 2 * GIMP_TAG_POPUP_PADDING;
-      tag_data->bounds.height = h + 2 * GIMP_TAG_POPUP_PADDING;
+      tag_data->bounds.width  = MAX (ink.width,  logical.width);
+      tag_data->bounds.height = MAX (ink.height, logical.height);
+
+      tag_data->bounds.width  += 2 * GIMP_TAG_POPUP_PADDING;
+      tag_data->bounds.height += 2 * GIMP_TAG_POPUP_PADDING;
 
       if (x + space_width + tag_data->bounds.width +
           GIMP_TAG_POPUP_MARGIN - 1 > width)
@@ -580,6 +588,13 @@ gimp_tag_popup_get_border (GtkWidget *widget,
   border->right  = border_width.right + padding.right;
   border->top    = border_width.top + padding.top;
   border->bottom = border_width.bottom + padding.bottom;
+}
+
+static void
+gimp_tag_popup_list_style_updated (GtkWidget    *widget,
+                                   GimpTagPopup *popup)
+{
+  g_clear_object (&popup->layout);
 }
 
 static gboolean
@@ -756,84 +771,81 @@ gimp_tag_popup_list_draw (GtkWidget    *widget,
                           GimpTagPopup *popup)
 {
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
-  PangoAttribute  *attribute;
-  PangoAttrList   *attributes;
   gint            i;
 
-  cairo_set_line_width (cr, 1.0);
-  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  if (! popup->layout)
+    {
+      GtkBorder     popup_border;
+      GtkAllocation entry_allocation;
+      gint          width;
+
+      gimp_tag_popup_get_border (GTK_WIDGET (popup), &popup_border);
+
+      gtk_widget_get_allocation (GTK_WIDGET (popup->combo_entry),
+                                 &entry_allocation);
+
+      width = (entry_allocation.width -
+               popup_border.left - popup_border.right);
+
+      gimp_tag_popup_layout_tags (popup, width);
+    }
 
   for (i = 0; i < popup->tag_count; i++)
     {
       PopupTagData *tag_data = &popup->tag_data[i];
+
+      gtk_style_context_save (style);
 
       pango_layout_set_text (popup->layout,
                              gimp_tag_get_name (tag_data->tag), -1);
 
       if (tag_data->state_flags & GTK_STATE_FLAG_SELECTED)
         {
-          attributes = pango_attr_list_copy (popup->combo_entry->selected_item_attr);
+          gtk_style_context_add_class (style, GTK_STYLE_CLASS_VIEW);
+          gtk_style_context_set_state (style, GTK_STATE_FLAG_SELECTED);
         }
       else if (tag_data->state_flags & GTK_STATE_FLAG_INSENSITIVE)
         {
-          attributes = pango_attr_list_copy (popup->combo_entry->insensitive_item_attr);
-        }
-      else
-        {
-          attributes = pango_attr_list_copy (popup->combo_entry->normal_item_attr);
+          gtk_style_context_add_class (style, GTK_STYLE_CLASS_VIEW);
+          gtk_style_context_set_state (style, GTK_STATE_FLAG_INSENSITIVE);
         }
 
       if (tag_data == popup->prelight &&
           ! (tag_data->state_flags & GTK_STATE_FLAG_INSENSITIVE))
         {
+          PangoAttribute  *attribute;
+          PangoAttrList   *attributes;
+
+          attributes = pango_attr_list_new ();
+
           attribute = pango_attr_underline_new (PANGO_UNDERLINE_SINGLE);
           pango_attr_list_insert (attributes, attribute);
+
+          pango_layout_set_attributes (popup->layout, attributes);
+          pango_attr_list_unref (attributes);
         }
-
-      pango_layout_set_attributes (popup->layout, attributes);
-      pango_attr_list_unref (attributes);
-
-      if (tag_data->state_flags & GTK_STATE_FLAG_SELECTED)
+      else
         {
-          gdk_cairo_set_source_rgba (cr,
-                                     &popup->combo_entry->selected_item_color);
-
-          cairo_rectangle (cr,
-                           tag_data->bounds.x - 1,
-                           tag_data->bounds.y - popup->scroll_y,
-                           tag_data->bounds.width + 2,
-                           tag_data->bounds.height);
-          cairo_fill (cr);
-
-          cairo_translate (cr, 0.5, 0.5);
-
-          cairo_move_to (cr,
-                         tag_data->bounds.x,
-                         tag_data->bounds.y - popup->scroll_y - 1);
-          cairo_line_to (cr,
-                         tag_data->bounds.x + tag_data->bounds.width - 1,
-                         tag_data->bounds.y - popup->scroll_y - 1);
-
-          cairo_move_to (cr,
-                         tag_data->bounds.x,
-                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height);
-          cairo_line_to (cr,
-                         tag_data->bounds.x + tag_data->bounds.width - 1,
-                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height);
-
-          cairo_stroke (cr);
-
-          cairo_translate (cr, -0.5, -0.5);
+          pango_layout_set_attributes (popup->layout, NULL);
         }
 
-      cairo_move_to (cr,
-                     (tag_data->bounds.x +
-                      GIMP_TAG_POPUP_PADDING),
-                     (tag_data->bounds.y -
-                      popup->scroll_y +
-                      GIMP_TAG_POPUP_PADDING));
+      if (tag_data->state_flags & (GTK_STATE_FLAG_SELECTED |
+                                   GTK_STATE_FLAG_INSENSITIVE))
+        {
+          gtk_render_background (style, cr,
+                                 tag_data->bounds.x,
+                                 tag_data->bounds.y - popup->scroll_y,
+                                 tag_data->bounds.width,
+                                 tag_data->bounds.height);
+        }
 
-      pango_cairo_show_layout (cr, popup->layout);
+      gtk_render_layout (style, cr,
+                         (tag_data->bounds.x +
+                          GIMP_TAG_POPUP_PADDING),
+                         (tag_data->bounds.y -
+                          popup->scroll_y +
+                          GIMP_TAG_POPUP_PADDING),
+                         popup->layout);
 
       if (tag_data == popup->prelight                            &&
           ! (tag_data->state_flags & GTK_STATE_FLAG_INSENSITIVE) &&
@@ -845,6 +857,8 @@ gimp_tag_popup_list_draw (GtkWidget    *widget,
                             tag_data->bounds.width,
                             tag_data->bounds.height);
         }
+
+      gtk_style_context_restore (style);
     }
 
   return FALSE;

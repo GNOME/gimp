@@ -44,7 +44,6 @@ struct _GimpTagPopup
   GtkWidget         *alignment;
   GtkWidget         *tag_area;
 
-  PangoContext      *context;
   PangoLayout       *layout;
 
   PopupTagData      *tag_data;

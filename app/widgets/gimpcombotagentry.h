@@ -35,13 +35,9 @@ typedef struct _GimpComboTagEntryClass  GimpComboTagEntryClass;
 
 struct _GimpComboTagEntry
 {
-  GimpTagEntry    parent_instance;
+  GimpTagEntry  parent_instance;
 
-  GtkWidget      *popup;
-  PangoAttrList  *normal_item_attr;
-  PangoAttrList  *selected_item_attr;
-  PangoAttrList  *insensitive_item_attr;
-  GdkRGBA         selected_item_color;
+  GtkWidget    *popup;
 };
 
 struct _GimpComboTagEntryClass
