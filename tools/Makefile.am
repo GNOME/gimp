@@ -10,21 +10,17 @@ xobjective_cxx = "-xobjective-c++"
 xnone = "-xnone"
 endif
 
-if OS_WIN32
-
 bin_PROGRAMS = \
 	gimptool-@GIMP_TOOL_VERSION@	\
-	gimp-debug-resume
+	gimp-test-clipboard-@GIMP_TOOL_VERSION@
+
+if OS_WIN32
+
+bin_PROGRAMS += gimp-debug-resume
 
 gimp_debug_resume_SOURCES = gimp-debug-resume.c
 
-else
-
-bin_PROGRAMS = gimptool-@GIMP_TOOL_VERSION@
-
 endif
-
-noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
 	kernelgen
@@ -37,12 +33,13 @@ gimptool_@GIMP_TOOL_VERSION@_LDADD = \
 	$(GTK_LIBS)
 
 
+gimp_test_clipboard_@GIMP_TOOL_VERSION@_SOURCES = gimp-test-clipboard.c
+
+gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = $(GTK_LIBS)
+
+
 kernelgen_SOURCES = kernelgen.c
 
-
-test_clipboard_SOURCES = test-clipboard.c
-
-test_clipboard_LDADD = $(GTK_LIBS)
 
 
 if ENABLE_VECTOR_ICONS
