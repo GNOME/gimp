@@ -214,6 +214,7 @@ gimp_font_factory_new (Gimp        *gimp,
                        "gimp",               gimp,
                        "data-type",          GIMP_TYPE_FONT,
                        "path-property-name", path_property_name,
+                       "get-standard-func",  gimp_font_get_standard,
                        NULL);
 }
 
