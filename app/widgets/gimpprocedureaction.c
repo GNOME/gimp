@@ -30,6 +30,7 @@
 #include "pdb/gimpprocedure.h"
 
 #include "gimpprocedureaction.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
