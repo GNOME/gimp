@@ -44,6 +44,7 @@ typedef struct _GimpStatusbar            GimpStatusbar;
 typedef struct _GimpToolDialog           GimpToolDialog;
 typedef struct _GimpToolGui              GimpToolGui;
 typedef struct _GimpToolWidget           GimpToolWidget;
+typedef struct _GimpToolWidgetGroup      GimpToolWidgetGroup;
 
 typedef struct _GimpDisplayXfer          GimpDisplayXfer;
 typedef struct _Selection                Selection;

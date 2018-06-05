@@ -197,7 +197,9 @@ libappdisplay_a_sources = \
 	gimptooltransformgrid.c			\
 	gimptooltransformgrid.h			\
 	gimptoolwidget.c			\
-	gimptoolwidget.h
+	gimptoolwidget.h			\
+	gimptoolwidgetgroup.c			\
+	gimptoolwidgetgroup.h
 
 libappdisplay_a_built_sources = display-enums.c
 
