@@ -40,6 +40,8 @@
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
+#include "core/gimpitem-linked.h"
+#include "core/gimpprogress.h"
 #include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -812,33 +814,54 @@ gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
   GimpDisplay        *display = GIMP_TOOL (measure)->display;
   GimpImage          *image   = gimp_display_get_image (display);
   GimpContext        *context = GIMP_CONTEXT (options);
+  GimpDrawable       *item    = gimp_image_get_active_drawable (image);
+  GimpProgress       *progress;
   gdouble             ax      = measure->x[1] - measure->x[0];
   gdouble             ay      = measure->y[1] - measure->y[0];
-  GimpLayer          *item    = gimp_image_get_active_layer (image);
-  gdouble             angle   = atan (ay / ax);
+  gdouble             angle;
   GimpMatrix3         matrix;
 
+  if (! item)
+    return;
 
+  angle = atan (ay / ax);
   gimp_matrix3_identity (&matrix);
   gimp_transform_matrix_rotate_center (&matrix, measure->x[0], measure->y[0], angle);
+
+  progress = gimp_progress_start (GIMP_PROGRESS (measure), FALSE,
+                                  "%s", _("Straightening"));
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_TRANSFORM,
                                C_("undo-type", "Transform"));
 
-  gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                  context,
-                                  &matrix,
+  if (gimp_item_get_linked (GIMP_ITEM (item)))
+    {
+      gimp_item_linked_transform (GIMP_ITEM (item), context, &matrix,
                                   GIMP_TRANSFORM_BACKWARD,
                                   display->gimp->config->interpolation_type,
                                   GIMP_TRANSFORM_RESIZE_ADJUST,
-                                  NULL);
+                                  progress);
+    }
+  else
+    {
+      gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                      context,
+                                      &matrix,
+                                      GIMP_TRANSFORM_BACKWARD,
+                                      display->gimp->config->interpolation_type,
+                                      GIMP_TRANSFORM_RESIZE_ADJUST,
+                                      progress);
+    }
 
   gimp_image_resize_to_layers (image, context, NULL);
 
   /*  push the undo group end  */
   gimp_image_undo_group_end (image);
+
+  if (progress)
+    gimp_progress_end (progress);
 
   gimp_image_flush (image);
   gimp_tool_control (GIMP_TOOL (measure), GIMP_TOOL_ACTION_HALT, display);
