@@ -722,7 +722,6 @@ void
 gimp_editor_set_box_style (GimpEditor *editor,
                            GtkBox     *box)
 {
-  GimpGuiConfig  *config = NULL;
   GList          *children;
   GList          *list;
   gint            content_spacing;
@@ -732,9 +731,6 @@ gimp_editor_set_box_style (GimpEditor *editor,
 
   g_return_if_fail (GIMP_IS_EDITOR (editor));
   g_return_if_fail (GTK_IS_BOX (box));
-
-  if (editor->priv->ui_manager)
-    config = GIMP_GUI_CONFIG (editor->priv->ui_manager->gimp->config);
 
   gimp_editor_get_styling (editor,
                            &content_spacing,
@@ -820,18 +816,10 @@ static GtkIconSize
 gimp_editor_ensure_button_box (GimpEditor     *editor,
                                GtkReliefStyle *button_relief)
 {
-  GimpGuiConfig *config = NULL;
-  GtkIconSize    button_icon_size;
-  gint           button_spacing;
-  gint           content_spacing;
+  GtkIconSize button_icon_size;
+  gint        button_spacing;
+  gint        content_spacing;
 
-  if (editor->priv->ui_manager)
-    {
-      Gimp *gimp;
-
-      gimp = editor->priv->ui_manager->gimp;
-      config = GIMP_GUI_CONFIG (gimp->config);
-    }
   gimp_editor_get_styling (editor,
                            &content_spacing,
                            &button_icon_size,
