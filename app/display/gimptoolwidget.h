@@ -131,6 +131,8 @@ gboolean           gimp_tool_widget_get_focus         (GimpToolWidget  *widget);
 
 /*  for subclasses, to notify the handling tool
  */
+void               gimp_tool_widget_changed           (GimpToolWidget  *widget);
+
 void               gimp_tool_widget_response          (GimpToolWidget  *widget,
                                                        gint             response_id);
 
