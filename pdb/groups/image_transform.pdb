@@ -77,7 +77,7 @@ HELP
         headers => [ qw("core/gimpimage-resize.h") ],
         code => <<'CODE'
 {
-  gimp_image_resize_to_layers (image, context, NULL);
+  gimp_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
 }
 CODE
     );

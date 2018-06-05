@@ -820,6 +820,9 @@ gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
   gdouble             ay      = measure->y[1] - measure->y[0];
   gdouble             angle;
   GimpMatrix3         matrix;
+  gint                offset_x;
+  gint                offset_y;
+  gdouble             x0, y0, x1, y1;
 
   if (! item)
     return;
@@ -855,7 +858,27 @@ gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
                                       progress);
     }
 
-  gimp_image_resize_to_layers (image, context, NULL);
+  gimp_image_resize_to_layers (image, context, &offset_x, &offset_y,
+                               NULL, NULL, progress);
+
+  /* Keep and transform the measurement points as well. */
+  gimp_matrix3_identity (&matrix);
+  gimp_transform_matrix_rotate_center (&matrix, measure->x[0], measure->y[0], - angle);
+  gimp_matrix3_translate (&matrix, offset_x, offset_y);
+  gimp_matrix3_transform_point (&matrix,
+                                measure->x[0],
+                                measure->y[0],
+                                &x0, &y0);
+  gimp_matrix3_transform_point (&matrix,
+                                measure->x[1],
+                                measure->y[1],
+                                &x1, &y1);
+  g_object_set (measure->widget,
+                "x1", (gint) x0,
+                "y1", (gint) y0,
+                "x2", (gint) x1,
+                "y2", (gint) y1,
+                NULL);
 
   /*  push the undo group end  */
   gimp_image_undo_group_end (image);
@@ -864,5 +887,4 @@ gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
     gimp_progress_end (progress);
 
   gimp_image_flush (image);
-  gimp_tool_control (GIMP_TOOL (measure), GIMP_TOOL_ACTION_HALT, display);
 }

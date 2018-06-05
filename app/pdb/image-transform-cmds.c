@@ -90,7 +90,7 @@ image_resize_to_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_image_resize_to_layers (image, context, NULL);
+      gimp_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
