@@ -41,6 +41,8 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-panorama-projection.h	\
 	gimppropgui-recursive-transform.c	\
 	gimppropgui-recursive-transform.h	\
+	gimppropgui-recursive-transform-plus.c	\
+	gimppropgui-recursive-transform-plus.h	\
 	gimppropgui-shadows-highlights.c	\
 	gimppropgui-shadows-highlights.h	\
 	gimppropgui-spiral.c			\
