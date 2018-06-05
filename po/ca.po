@@ -14332,19 +14332,19 @@ msgstr "Cap"
 
 #: ../app/dialogs/color-profile-import-dialog.c:85
 msgid "Convert to Grayscale Working Space?"
-msgstr "Converteixo a l'espai de treball escala de grisos?"
+msgstr "Converteix a l'espai de treball escala de grisos?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Convert the image to the grayscale working space?"
-msgstr "Converteixo la imatge a l'espai de treball escala de grisos?"
+msgstr "Converteix la imatge a l'espai de treball escala de grisos?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert to RGB Working Space?"
-msgstr "Converteixo a l'espai de treball RGB?"
+msgstr "Converteix a l'espai de treball RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert the image to the RGB working space?"
-msgstr "Converteixo la imatge a l'espai de treball RGB?"
+msgstr "Converteix la imatge a l'espai de treball RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
 msgid "Import the image from a color profile"
