@@ -254,6 +254,10 @@ gimp_image_resize_with_layers (GimpImage    *image,
 void
 gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
+                             gint         *offset_x,
+                             gint         *offset_y,
+                             gint         *new_width,
+                             gint         *new_height,
                              GimpProgress *progress)
 {
   GList    *list;
@@ -296,6 +300,14 @@ gimp_image_resize_to_layers (GimpImage    *image,
   gimp_image_resize (image, context,
                      width, height, -x, -y,
                      progress);
+  if (offset_x)
+    *offset_x = -x;
+  if (offset_y)
+    *offset_y = -y;
+  if (new_width)
+    *new_width = width;
+  if (new_height)
+    *new_height = height;
 }
 
 void

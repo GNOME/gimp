@@ -676,7 +676,7 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
 
   gimp_image_resize_to_layers (image,
                                action_data_get_context (data),
-                               progress);
+                               NULL, NULL, NULL, NULL, progress);
 
   if (progress)
     gimp_progress_end (progress);
