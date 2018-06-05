@@ -110,7 +110,7 @@ static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measur
 static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
                                                    GimpDisplay           *display);
 
-static void          rotate_active_layer          (GtkWidget             *button,
+static void gimp_measure_tool_rotate_active_layer (GtkWidget             *button,
                                                    GimpMeasureTool       *measure);
 
 G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL)
@@ -281,6 +281,7 @@ gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                                    GimpMeasureTool *measure)
 {
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
+
   g_object_get (widget,
                 "n-points", &measure->n_points,
                 "x1",       &measure->x[0],
@@ -362,8 +363,8 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
                          GimpDisplay      *display,
                          const GimpCoords *coords)
 {
-  GimpTool         *tool  = GIMP_TOOL (measure);
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
+  GimpTool           *tool    = GIMP_TOOL (measure);
+  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
 
   measure->n_points = 1;
@@ -398,7 +399,7 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
                     G_CALLBACK (gimp_measure_tool_compass_create_guides),
                     measure);
   g_signal_connect (options->auto_straighten, "clicked",
-                    G_CALLBACK (rotate_active_layer),
+                    G_CALLBACK (gimp_measure_tool_rotate_active_layer),
                     measure);
 
   tool->display = display;
@@ -410,7 +411,7 @@ static void
 gimp_measure_tool_halt (GimpMeasureTool *measure)
 {
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-  GimpTool *tool = GIMP_TOOL (measure);
+  GimpTool           *tool    = GIMP_TOOL (measure);
 
   gtk_widget_set_sensitive (options->auto_straighten, FALSE);
 
@@ -421,7 +422,7 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
 
   g_signal_handlers_disconnect_by_func (options->auto_straighten,
-                                        G_CALLBACK (rotate_active_layer),
+                                        G_CALLBACK (gimp_measure_tool_rotate_active_layer),
                                         measure);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
@@ -804,8 +805,8 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 }
 
 static void
-rotate_active_layer (GtkWidget       *button,
-                     GimpMeasureTool *measure)
+gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
+                                       GimpMeasureTool *measure)
 {
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpDisplay        *display = GIMP_TOOL (measure)->display;
@@ -814,7 +815,7 @@ rotate_active_layer (GtkWidget       *button,
   gdouble             ax      = measure->x[1] - measure->x[0];
   gdouble             ay      = measure->y[1] - measure->y[0];
   GimpLayer          *item    = gimp_image_get_active_layer (image);
-  gdouble             angle   = atan2 (ay, ax);
+  gdouble             angle   = atan (ay / ax);
   GimpMatrix3         matrix;
 
 
