@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 15:25+0200\n"
-"PO-Revision-Date: 2018-06-05 15:28+0200\n"
+"POT-Creation-Date: 2018-06-05 19:14+0200\n"
+"PO-Revision-Date: 2018-06-05 19:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -11614,7 +11614,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:896 ../app/core/core-enums.c:949
-#: ../app/core/gimpdrawable-transform.c:736
+#: ../app/core/gimpdrawable-transform.c:736 ../app/tools/gimpmeasuretool.c:837
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -14707,7 +14707,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
 #: ../app/tools/gimpgradienttool-editor.c:1857
-#: ../app/tools/gimpmeasuretool.c:651 ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/tools/gimpmeasuretool.c:676 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
@@ -14844,11 +14844,11 @@ msgid "_Opacity:"
 msgstr "K_rycie:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:726
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:751
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:754
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:779
 msgid "Height:"
 msgstr "Wysokość:"
 
@@ -17136,7 +17136,7 @@ msgid "Select Rotation Angle"
 msgstr "Wybór kąta obrotu"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:698
+#: ../app/tools/gimpmeasuretool.c:723
 msgid "Angle:"
 msgstr "Kąt:"
 
@@ -17181,8 +17181,8 @@ msgid "not color managed"
 msgstr "bez zarządzania kolorami"
 
 #: ../app/display/gimpdisplayshell-utils.c:149
-#: ../app/tools/gimpmeasuretool.c:528 ../app/tools/gimpmeasuretool.c:681
-#: ../app/tools/gimpmeasuretool.c:737 ../app/tools/gimpmeasuretool.c:765
+#: ../app/tools/gimpmeasuretool.c:553 ../app/tools/gimpmeasuretool.c:706
+#: ../app/tools/gimpmeasuretool.c:762 ../app/tools/gimpmeasuretool.c:790
 msgid "pixels"
 msgstr "piksele"
 
@@ -21835,33 +21835,45 @@ msgstr "_Powiększenie"
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Otwiera oddzielne okno wyświetlające informacje o pomiarach"
 
-#: ../app/tools/gimpmeasuretool.c:121
+#: ../app/tools/gimpmeasureoptions.c:130
+msgid "Auto straighten"
+msgstr "Automatycznie wyprostuj"
+
+#: ../app/tools/gimpmeasureoptions.c:134
+msgid "Rotate the active layer using the measurement line as horizon"
+msgstr "Obraca aktywną warstwę używając linii pomiaru jako horyzontu"
+
+#: ../app/tools/gimpmeasuretool.c:132
 msgid "Measure"
 msgstr "Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:122
+#: ../app/tools/gimpmeasuretool.c:133
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Miarka: umożliwia mierzenie odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:134
 msgid "_Measure"
 msgstr "_Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:156
+#: ../app/tools/gimpmeasuretool.c:167
 msgid "Click-Drag to create a line"
 msgstr "Kliknięcie i przeciągnięcie utworzy linię"
 
-#: ../app/tools/gimpmeasuretool.c:334
+#: ../app/tools/gimpmeasuretool.c:348
 msgid "Add Guides"
 msgstr "Dodanie prowadnic"
 
-#: ../app/tools/gimpmeasuretool.c:645
+#: ../app/tools/gimpmeasuretool.c:670
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:670
+#: ../app/tools/gimpmeasuretool.c:695
 msgid "Distance:"
 msgstr "Odległość:"
+
+#: ../app/tools/gimpmeasuretool.c:832
+msgid "Straightening"
+msgstr "Wyprostowywanie"
 
 #: ../app/tools/gimpmoveoptions.c:143
 msgid "Pick a layer or guide"
