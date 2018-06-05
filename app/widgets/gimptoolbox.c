@@ -93,8 +93,7 @@ static void        gimp_toolbox_get_property            (GObject        *object,
                                                          guint           property_id,
                                                          GValue         *value,
                                                          GParamSpec     *pspec);
-static void        gimp_toolbox_size_allocate           (GtkWidget      *widget,
-                                                         GtkAllocation  *allocation);
+
 static gboolean    gimp_toolbox_button_press_event      (GtkWidget      *widget,
                                                          GdkEventButton *event);
 static void        gimp_toolbox_drag_leave              (GtkWidget      *widget,
@@ -131,9 +130,6 @@ static GtkWidget * toolbox_create_foo_area              (GimpToolbox    *toolbox
                                                          GimpContext    *context);
 static GtkWidget * toolbox_create_image_area            (GimpToolbox    *toolbox,
                                                          GimpContext    *context);
-static void        toolbox_area_notify                  (GimpGuiConfig  *config,
-                                                         GParamSpec     *pspec,
-                                                         GtkWidget      *area);
 static void        toolbox_paste_received               (GtkClipboard   *clipboard,
                                                          const gchar    *text,
                                                          gpointer        data);
@@ -156,7 +152,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   object_class->set_property          = gimp_toolbox_set_property;
   object_class->get_property          = gimp_toolbox_get_property;
 
-  widget_class->size_allocate         = gimp_toolbox_size_allocate;
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
 
   dock_class->get_description         = gimp_toolbox_get_description;
@@ -251,7 +246,9 @@ gimp_toolbox_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (toolbox->p->tool_palette);
 
-  toolbox->p->area_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  toolbox->p->area_box = gtk_flow_box_new ();
+  gtk_flow_box_set_selection_mode (GTK_FLOW_BOX (toolbox->p->area_box),
+                                   GTK_SELECTION_NONE);
   gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_box,
                       FALSE, FALSE, 0);
   gtk_widget_show (toolbox->p->area_box);
@@ -261,35 +258,29 @@ gimp_toolbox_constructed (GObject *object)
 
   toolbox->p->color_area = toolbox_create_color_area (toolbox,
                                                       toolbox->p->context);
-  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->color_area,
-                      FALSE, FALSE, 0);
-  if (config->toolbox_color_area)
-    gtk_widget_show (toolbox->p->color_area);
+  gtk_flow_box_insert (GTK_FLOW_BOX (toolbox->p->area_box),
+                       toolbox->p->color_area, -1);
 
-  g_signal_connect_object (config, "notify::toolbox-color-area",
-                           G_CALLBACK (toolbox_area_notify),
-                           toolbox->p->color_area, 0);
+  g_object_bind_property (config,                 "toolbox-color-area",
+                          toolbox->p->color_area, "visible",
+                          G_BINDING_SYNC_CREATE);
 
   toolbox->p->foo_area = toolbox_create_foo_area (toolbox, toolbox->p->context);
-  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->foo_area,
-                      FALSE, FALSE, 0);
-  if (config->toolbox_foo_area)
-    gtk_widget_show (toolbox->p->foo_area);
+  gtk_flow_box_insert (GTK_FLOW_BOX (toolbox->p->area_box),
+                       toolbox->p->foo_area, -1);
 
-  g_signal_connect_object (config, "notify::toolbox-foo-area",
-                           G_CALLBACK (toolbox_area_notify),
-                           toolbox->p->foo_area, 0);
+  g_object_bind_property (config,               "toolbox-foo-area",
+                          toolbox->p->foo_area, "visible",
+                          G_BINDING_SYNC_CREATE);
 
   toolbox->p->image_area = toolbox_create_image_area (toolbox,
                                                       toolbox->p->context);
-  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->image_area,
-                      FALSE, FALSE, 0);
-  if (config->toolbox_image_area)
-    gtk_widget_show (toolbox->p->image_area);
+  gtk_flow_box_insert (GTK_FLOW_BOX (toolbox->p->area_box),
+                       toolbox->p->image_area, -1);
 
-  g_signal_connect_object (config, "notify::toolbox-image-area",
-                           G_CALLBACK (toolbox_area_notify),
-                           toolbox->p->image_area, 0);
+  g_object_bind_property (config,                 "toolbox-image-area",
+                          toolbox->p->image_area, "visible",
+                          G_BINDING_SYNC_CREATE);
 
   gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox), toolbox->p->vbox);
 }
@@ -345,62 +336,6 @@ gimp_toolbox_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
-    }
-}
-
-static void
-gimp_toolbox_size_allocate (GtkWidget     *widget,
-                            GtkAllocation *allocation)
-{
-  GimpToolbox    *toolbox = GIMP_TOOLBOX (widget);
-  GimpGuiConfig  *config;
-  GtkRequisition  color_requisition;
-  GtkRequisition  foo_requisition;
-  GtkRequisition  image_requisition;
-  gint            width;
-  gint            height;
-  gint            n_areas;
-  gint            area_rows;
-  gint            area_columns;
-
-  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-
-  config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
-
-  gtk_widget_get_preferred_size (toolbox->p->color_area,
-                                 &color_requisition, NULL);
-  gtk_widget_get_preferred_size (toolbox->p->foo_area,
-                                 &foo_requisition, NULL);
-  gtk_widget_get_preferred_size (toolbox->p->image_area,
-                                 &image_requisition, NULL);
-
-  width  = MAX (color_requisition.width,
-                MAX (foo_requisition.width,
-                     image_requisition.width));
-  height = MAX (color_requisition.height,
-                MAX (foo_requisition.height,
-                     image_requisition.height));
-
-  n_areas = (config->toolbox_color_area +
-             config->toolbox_foo_area   +
-             config->toolbox_image_area);
-
-  area_columns = MAX (1, (allocation->width / width));
-  area_rows    = n_areas / area_columns;
-
-  if (n_areas % area_columns)
-    area_rows++;
-
-  if (toolbox->p->area_rows    != area_rows  ||
-      toolbox->p->area_columns != area_columns)
-    {
-      toolbox->p->area_rows    = area_rows;
-      toolbox->p->area_columns = area_columns;
-
-#if 0
-      gtk_widget_set_size_request (toolbox->p->area_box, -1,
-                                   area_rows * height);
-#endif
     }
 }
 
@@ -702,35 +637,6 @@ toolbox_create_image_area (GimpToolbox *toolbox,
   gimp_help_set_help_data (image_area, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
 
   return image_area;
-}
-
-static void
-toolbox_area_notify (GimpGuiConfig *config,
-                     GParamSpec    *pspec,
-                     GtkWidget     *area)
-{
-  GtkWidget *parent = gtk_widget_get_parent (area);
-  gboolean   visible;
-
-  if (config->toolbox_color_area ||
-      config->toolbox_foo_area   ||
-      config->toolbox_image_area)
-    {
-      GtkRequisition req;
-
-      gtk_widget_show (parent);
-
-      gtk_widget_get_preferred_size (area, &req, NULL);
-      gtk_widget_set_size_request (parent, req.width, req.height);
-    }
-  else
-    {
-      gtk_widget_hide (parent);
-      gtk_widget_set_size_request (parent, -1, -1);
-    }
-
-  g_object_get (config, pspec->name, &visible, NULL);
-  g_object_set (area, "visible", visible, NULL);
 }
 
 static void
