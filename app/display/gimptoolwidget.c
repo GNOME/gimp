@@ -281,11 +281,13 @@ gimp_tool_widget_properties_changed (GObject     *object,
                                      guint        n_pspecs,
                                      GParamSpec **pspecs)
 {
+  GimpToolWidget *widget = GIMP_TOOL_WIDGET (object);
+
   G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
                                                               n_pspecs,
                                                               pspecs);
 
-  g_signal_emit (object, widget_signals[CHANGED], 0);
+  gimp_tool_widget_changed (widget);
 }
 
 static void
@@ -360,6 +362,14 @@ gimp_tool_widget_get_focus (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
 
   return widget->private->focus;
+}
+
+void
+gimp_tool_widget_changed (GimpToolWidget *widget)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  g_signal_emit (widget, widget_signals[CHANGED], 0);
 }
 
 void
