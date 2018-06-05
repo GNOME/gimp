@@ -21,6 +21,13 @@ Core:
     so). All non-text related activities can be performed right away.
   - Change of the URL from bugzilla to gitlab where appropriate.
 
+Tools:
+
+  - The Measurement tool now has an "Auto straighten" option allowing to
+    rotate the active drawable (layer, channel…) so that the measurement
+    line is used as horizon. As other transform tools, the feature will
+    work on linked drawables as well.
+
 Build:
 
   - Installer: set compatibility options to run Python plugins
