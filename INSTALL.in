@@ -107,8 +107,9 @@ header files installed.
 
         https://github.com/strukturag/libheif
 
-     Make sure you build libheif with libde265 support, otherwise the
-     plug-in is mostly useless.
+     Make sure you build libheif with libde265 and libx265 support (for
+     respectively decoding and encoding), otherwise the plug-in is
+     mostly useless.
 
  14. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
      or newer) to be present. You will also need PyGTK and the
