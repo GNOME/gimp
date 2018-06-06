@@ -33,6 +33,8 @@ Build:
   - Installer: set compatibility options to run Python plugins
     in HiDPI-aware mode.
   - Put back compatibility DLLs for really old plugins.
+  - Install binary tool `gimp-test-clipboard` on the system to allow
+    people to help us debug clipboard bugs.
   
 Plug-ins:
 
