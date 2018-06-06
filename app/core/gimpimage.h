@@ -174,7 +174,8 @@ void            gimp_image_exported              (GimpImage          *image,
 gint            gimp_image_get_xcf_version       (GimpImage          *image,
                                                   gboolean            zlib_compression,
                                                   gint               *gimp_version,
-                                                  const gchar       **version_string);
+                                                  const gchar       **version_string,
+                                                  gchar             **version_reason);
 
 void            gimp_image_set_xcf_compression   (GimpImage          *image,
                                                   gboolean            compression);

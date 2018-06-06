@@ -2340,11 +2340,22 @@ gint
 gimp_image_get_xcf_version (GimpImage    *image,
                             gboolean      zlib_compression,
                             gint         *gimp_version,
-                            const gchar **version_string)
+                            const gchar **version_string,
+                            gchar       **version_reason)
 {
-  GList *layers;
-  GList *list;
-  gint   version = 0;  /* default to oldest */
+  GList       *layers;
+  GList       *list;
+  GList       *reasons = NULL;
+  gint         version = 0;  /* default to oldest */
+  const gchar *enum_desc;
+
+#define ADD_REASON(_reason)                                       \
+  if (version_reason) {                                           \
+    gchar *tmp = _reason;                                         \
+    if (g_list_find_custom (reasons, tmp, (GCompareFunc) strcmp)) \
+      g_free (tmp);                                               \
+    else                                                          \
+      reasons = g_list_prepend (reasons, (_reason)); }
 
   /* need version 1 for colormaps */
   if (gimp_image_get_colormap (image))
@@ -2380,11 +2391,16 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
           break;
 
-          /*  Since 2.8  */
+          /*  Since 2.6  */
         case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
         case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
+          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
+                               gimp_layer_get_mode (layer),
+                               NULL, NULL, &enum_desc, NULL);
+          ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
+                                       enum_desc, "GIMP 2.6"));
           version = MAX (2, version);
           break;
 
@@ -2394,6 +2410,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_LCH_CHROMA:
         case GIMP_LAYER_MODE_LCH_COLOR:
         case GIMP_LAYER_MODE_LCH_LIGHTNESS:
+          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
+                               gimp_layer_get_mode (layer),
+                               NULL, NULL, &enum_desc, NULL);
+          ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
+                                       enum_desc, "GIMP 2.10"));
           version = MAX (9, version);
           break;
 
@@ -2432,6 +2453,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_MERGE:
         case GIMP_LAYER_MODE_SPLIT:
         case GIMP_LAYER_MODE_PASS_THROUGH:
+          gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
+                               gimp_layer_get_mode (layer),
+                               NULL, NULL, &enum_desc, NULL);
+          ADD_REASON (g_strdup_printf (_("Layer mode '%s' was added in %s"),
+                                       enum_desc, "GIMP 2.10"));
           version = MAX (10, version);
           break;
 
@@ -2445,11 +2471,17 @@ gimp_image_get_xcf_version (GimpImage    *image,
       /* need version 3 for layer trees */
       if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
         {
+          ADD_REASON (g_strdup_printf (_("Layer groups were added in %s"),
+                                       "GIMP 2.8"));
           version = MAX (3, version);
 
           /* need version 13 for group layers with masks */
           if (gimp_layer_get_mask (layer))
-            version = MAX (13, version);
+            {
+              ADD_REASON (g_strdup_printf (_("Masks on layer groups were "
+                                             "added in %s"), "GIMP 2.10"));
+              version = MAX (13, version);
+            }
         }
     }
 
@@ -2461,7 +2493,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
   /* need version 7 for != 8-bit gamma images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
-    version = MAX (7, version);
+    {
+      ADD_REASON (g_strdup_printf (_("High bit-depth images were added "
+                                     "in %s"), "GIMP 2.10"));
+      version = MAX (7, version);
+    }
 
   /* need version 12 for > 8-bit images for proper endian swapping */
   if (gimp_image_get_precision (image) > GIMP_PRECISION_U8_GAMMA)
@@ -2482,7 +2518,13 @@ gimp_image_get_xcf_version (GimpImage    *image,
    * conservative estimate and should never fail
    */
   if (gimp_object_get_memsize (GIMP_OBJECT (image), NULL) >= ((gint64) 1 << 32))
-    version = MAX (11, version);
+    {
+      ADD_REASON (g_strdup_printf (_("Support for image files larger than "
+                                     "4GB was added in %s"), "GIMP 2.10"));
+      version = MAX (11, version);
+    }
+
+#undef ADD_REASON
 
   switch (version)
     {
@@ -2511,6 +2553,24 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;
+    }
+
+  if (version_reason && reasons)
+    {
+      GString *reason = g_string_new (NULL);
+
+      reasons = g_list_sort (reasons, (GCompareFunc) strcmp);
+
+      for (list = reasons; list; list = g_list_next (list))
+        {
+          g_string_append (reason, list->data);
+          if (g_list_next (list))
+            g_string_append_c (reason, '\n');
+        }
+
+      g_list_free (reasons);
+
+      *version_reason = g_string_free (reason, FALSE);
     }
 
   return version;
