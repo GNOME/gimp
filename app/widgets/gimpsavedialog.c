@@ -167,7 +167,10 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   const gchar    *version_string;
   gint            rle_version;
   gint            zlib_version;
-  gchar          *tooltip;
+  gchar          *rle_reason  = NULL;
+  gchar          *zlib_reason = NULL;
+  gchar          *compat_hint;
+  gchar          *compat_tooltip;
 
   g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -251,36 +254,47 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   else
     ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
 
-  gimp_image_get_xcf_version (image, FALSE, &rle_version,  &version_string);
-  gimp_image_get_xcf_version (image, TRUE,  &zlib_version, NULL);
+  gimp_image_get_xcf_version (image, FALSE, &rle_version,
+                              &version_string, &rle_reason);
+  gimp_image_get_xcf_version (image, TRUE,  &zlib_version,
+                              NULL, &zlib_reason);
 
   if (rle_version == zlib_version)
     {
-      tooltip = g_strdup_printf (_("The image uses features from %s, disabling "
-                                   "compression won't make the XCF file "
-                                   "readable by older GIMP versions."),
-                                 version_string);
+      compat_hint =
+        g_strdup_printf (_("The image uses features from %s, disabling "
+                           "compression won't make the XCF file "
+                           "readable by older GIMP versions."),
+                         version_string);
+      compat_tooltip = rle_reason;
+      g_free (zlib_reason);
     }
   else
     {
-      tooltip = g_strdup_printf (_("Keep compression disabled to make the XCF "
-                                   "file readable by %s and later."),
-                                 version_string);
+      compat_hint =
+        g_strdup_printf (_("Keep compression disabled to make the XCF "
+                           "file readable by %s and later."),
+                         version_string);
+      compat_tooltip = zlib_reason;
+      g_free (rle_reason);
     }
 
   if (gimp_image_get_metadata (image))
     {
-      gchar *temp_tooltip;
+      gchar *temp_hint;
 
-      temp_tooltip = g_strconcat (tooltip, "\n",
-                                  _("Metadata won't be visible in GIMP "
-                                    "older than version 2.10."), NULL);
-      g_free (tooltip);
-      tooltip = temp_tooltip;
+      temp_hint = g_strconcat (compat_hint, "\n",
+                               _("Metadata won't be visible in GIMP "
+                                 "older than version 2.10."), NULL);
+      g_free (compat_hint);
+      compat_hint = temp_hint;
     }
 
-  gtk_label_set_text (GTK_LABEL (dialog->compat_info), tooltip);
-  g_free (tooltip);
+  gtk_label_set_text (GTK_LABEL (dialog->compat_info), compat_hint);
+  g_free (compat_hint);
+
+  gimp_help_set_help_data (dialog->compat_info, compat_tooltip, NULL);
+  g_free (compat_tooltip);
 
   gtk_widget_show (dialog->compression_toggle);
   gtk_widget_show (dialog->compat_info);

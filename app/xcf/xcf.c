@@ -374,7 +374,7 @@ xcf_save_stream (Gimp           *gimp,
   info.file_version = gimp_image_get_xcf_version (image,
                                                   info.compression ==
                                                   COMPRESS_ZLIB,
-                                                  NULL, NULL);
+                                                  NULL, NULL, NULL);
 
   if (info.file_version >= 11)
     info.bytes_per_offset = 8;
