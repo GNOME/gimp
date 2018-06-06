@@ -443,6 +443,10 @@ gimp_text_layer_new (GimpImage *image,
                                         gimp_image_get_layer_format (image,
                                                                      TRUE)));
 
+  gimp_layer_set_mode (GIMP_LAYER (layer),
+                       gimp_image_get_default_new_layer_mode (image),
+                       FALSE);
+
   gimp_text_layer_set_text (layer, text);
 
   if (! gimp_text_layer_render (layer))
