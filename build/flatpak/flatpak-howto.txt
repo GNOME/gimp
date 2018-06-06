@@ -5,8 +5,6 @@ Stable build
 ~~~~~~~~~~~~
 
 The stable manifest is maintained at flathub: https://github.com/flathub/org.gimp.GIMP
-This repository is pulled in GIMP repository as a submodule so that we
-can share as much code as possible with the other builds.
 
 To prepare a new build:
 
@@ -36,27 +34,58 @@ Development and nightly builds
 Flathub does not host non-stable builds, therefore they are maintained
 separately on the GIMP repository. Nevertheless they should remain as
 close to the stable manifest as possible since they are meant to become
-stable too.
+stable too eventually.
 
-Building and maintaining
-~~~~~~~~~~~~~~~~~~~~~~~~
+Building
+--------
 
-* Init the submodule if this is the first time:
+* Dependencies:
+  - flatpak (at least 0.9.5)
+  - flatpak-builder (at least 0.9.5)
+  - appstream-compose
+  - a GPG key to sign the builds
 
-> git submodule init
+Note: there are packages of `flatpak` and `flatpak-builder` for most
+      distributions. Check: http://flatpak.org/getting.html
+Note 2: `appstream-compose` is used to parse the appdata file and
+        generate the appstream (metadata like comments, etc.).
+        On Fedora, this is provided by the package `libappstream-glib`,
+        on Ubuntu by `appstream-util`…
 
-* Update it:
+* Install the runtimes and the corresponding SDKs if you haven't already:
 
-> git submodule update
+> flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
+> flatpak install gnome org.gnome.Platform/x86_64/3.28 org.gnome.Sdk/x86_64/3.28
+> flatpak install gnome org.gnome.Platform/i386/3.28 org.gnome.Sdk/i386/3.28
+> flatpak install gnome org.gnome.Platform/arm/3.28 org.gnome.Sdk/arm/3.28
+> flatpak install gnome org.gnome.Platform/aarch64/3.28 org.gnome.Sdk/aarch64/3.28
 
-* Install flatpak and flatpak-builder. There are packages for most
-  distributions. Check: http://flatpak.org/getting.html
-  Use at least flatpak 0.9.5.
+Or simply update them if you have already installed them:
 
-* Make sure `appstream-compose` is installed as well. This is used to parse the
-  appdata file and generate the appstream (metadata like comments, etc.).
-  For instance on Fedora, this is provided by the package `libappstream-glib`,
-  on Ubuntu by `appstream-util`…
+> flatpak update
+
+* Run the build script:
+
+> ./gimp-flatpak-cron.sh <GPGKEY> <REPO> <LOGDIR> <BUILDDIR>
+
+Note that it is named with the "-cron" suffix because it is a good cron
+script for nightlies.
+
+The parameters:
+
+GPGKEY: your GPG key used to sign the builds
+REPO: the directory where the repository is locally.
+      For instance, it could be /var/www/html/flatpak/ (which could map
+      to https://download.gimp.org/flatpak/ for instance)
+LOGDIR: where the logs of the build will be kept (under subdirectories
+        by date).
+BUILDDIR: where the built prefix will be kept for later review.
+
+The export commands will output a commit hash. Save it for further
+verification.
+
+Maintaining the manifests
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * GIMP uses Flatpak's GNOME runtime, which contains a base of libraries,
   some of which are dependencies of GIMP.
@@ -65,23 +94,11 @@ Building and maintaining
 
 > "runtime-version": "3.28"
 
-* Install this runtime and the corresponding SDK if you haven't already:
-
-> flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
-> flatpak install gnome org.gnome.Platform/x86_64/3.28 org.gnome.Sdk/x86_64/3.28
-> flatpak install gnome org.gnome.Platform/i386/3.28 org.gnome.Sdk/i386/3.28
-> flatpak install gnome org.gnome.Platform/arm/3.28 org.gnome.Sdk/arm/3.28
-> flatpak install gnome org.gnome.Platform/aarch64/3.28 org.gnome.Sdk/aarch64/3.28
-
-Or simply update them:
-
-> flatpak update
-
 * Other GIMP dependencies which are not available in the GNOME runtime
   should be built along as modules within GIMP's flatpak.
-  Check format in `org.gimp.GIMP.json` and add modules if necessary.
-  For more information and options, check flatpak builder's manifest
-  format:
+  Check format in `org.gimp.GIMP-nightly.json` and add modules if
+  necessary.  For more information and options, check flatpak builder's
+  manifest format:
   http://flatpak.org/flatpak/flatpak-docs.html#flatpak-builder
 
 * On the other hand, if we increased the runtime version in particular,
@@ -98,7 +115,7 @@ Or simply update them:
   Other than by trial and error, you can find the installed dependencies
   by running:
 
-> flatpak run --devel --command=bash org.gnome.Sdk//3.24
+> flatpak run --devel --command=bash org.gnome.Sdk//3.28
 
 Or if you already have a build:
 
@@ -136,35 +153,6 @@ Or if you already have a build:
   "gimp", "babl" and "gegl" modules, set "branch" to "master", and
   remove any "commit" line.
 
-* Run flatpak builder with the following commands:
-
-> flatpak-builder --ccache --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
-> flatpak-builder --ccache --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
-
-  Note: if you ever want to check the `config.log` of any of the module which
-  failed to compile, it is available in a hidden directory of your working path.
-  For instance GIMP build dir will be `.flatpak-builder/build/gimp-1/`.
-  The number will be incrementing at each build.
-  If you want to check build directories even if the builds are successful, add
-  `--keep-build-dirs` option to your command.
-
-  If it ends successfully, this will have built GIMP in new folders,
-  `gimp-flatpak-build-x86-64/` and `gimp-flatpak-build-i386/`
-  respectively.
-
-* Export the 2 builds:
-
-> flatpak-builder --export-only --gpg-sign=YOUR_GPG_KEY --repo=/path/to/repo --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
-> flatpak-builder --export-only --gpg-sign=YOUR_GPG_KEY --repo=/path/to/repo --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
-
-  If you key was protected with a passphrase, you will need to input it.
-  The same repository will contain all the builds.
-  Note: do not use `flatpak build-export` which is an internal low-level
-  command. See https://github.com/flatpak/flatpak/issues/824
-
-  The export commands will output a commit hash. Save it for further
-  verification.
-
 * Test it locally with:
 
 > flatpak --user remote-add --no-gpg-verify gimp /path/to/repo
@@ -187,14 +175,3 @@ Or remotely:
   Also an entry "(Dev) GNU Image Manipulation Software" should now be
   available in your menus (or GNOME Overview). This will run the flatpak
   build.
-
-* TODO: this is my current state. I still have to probably write a
-  `.flatpakrepo` file which we can upload on `gimp.org` and should allow
-  GNU/Linux users to install GIMP and our flatpak repo in a few clicks.
-  We will also have to sign the repo with GPG, etc.
-
-* TODO: Windows builds are defined in: build/windows/jhbuild/build.jhbuildrc
-  It would be a good idea to compare contents and maybe deactivate some
-  useless options from dependencies. Also if all builds end up having a
-  very similar dependency list, maybe there could be a meta-format from
-  which both the jhbuild and the flatpak manifest could be generated.

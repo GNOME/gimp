@@ -1,3 +1,0 @@
-[submodule "build/flatpak/flathub"]
-	path = build/flatpak/flathub
-	url = https://github.com/flathub/org.gimp.GIMP.git
