@@ -465,13 +465,6 @@ gui_restore_callback (Gimp               *gimp,
 
   gui_vtable_init (gimp);
 
-  if (! gui_config->show_tooltips)
-    gimp_help_disable_tooltips ();
-
-  g_signal_connect (gui_config, "notify::show-tooltips",
-                    G_CALLBACK (gui_show_tooltips_notify),
-                    gimp);
-
   gimp_dialogs_show_help_button (gui_config->use_help &&
                                  gui_config->show_help_button);
 
@@ -772,9 +765,6 @@ gui_exit_after_callback (Gimp     *gimp,
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_user_manual_notify,
                                         gimp);
-  g_signal_handlers_disconnect_by_func (gimp->config,
-                                        gui_show_tooltips_notify,
-                                        gimp);
 
   gimp_action_history_exit (gimp);
 
@@ -805,17 +795,6 @@ gui_exit_after_callback (Gimp     *gimp,
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 
   return FALSE; /* continue exiting */
-}
-
-static void
-gui_show_tooltips_notify (GimpGuiConfig *gui_config,
-                          GParamSpec    *param_spec,
-                          Gimp          *gimp)
-{
-  if (gui_config->show_tooltips)
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
 }
 
 static void

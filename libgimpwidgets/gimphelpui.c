@@ -50,12 +50,6 @@ typedef enum
 } GimpWidgetHelpType;
 
 
-/*  local variables  */
-
-static gboolean tooltips_enabled       = TRUE;
-static gboolean tooltips_enable_called = FALSE;
-
-
 /*  local function prototypes  */
 
 static const gchar * gimp_help_get_help_data        (GtkWidget      *widget,
@@ -84,46 +78,6 @@ static gboolean   gimp_context_help_idle_show_help  (gpointer        data);
 
 
 /*  public functions  */
-
-/**
- * gimp_help_enable_tooltips:
- *
- * Enable tooltips to be shown in the GIMP user interface.
- *
- * As a plug-in author, you don't need to care about this as this
- * function is called for you from gimp_ui_init(). This ensures that
- * the user setting from the GIMP preferences dialog is respected in
- * all plug-in dialogs.
- **/
-void
-gimp_help_enable_tooltips (void)
-{
-  if (! tooltips_enable_called)
-    {
-      tooltips_enable_called = TRUE;
-      tooltips_enabled       = TRUE;
-    }
-}
-
-/**
- * gimp_help_disable_tooltips:
- *
- * Disable tooltips to be shown in the GIMP user interface.
- *
- * As a plug-in author, you don't need to care about this as this
- * function is called for you from gimp_ui_init(). This ensures that
- * the user setting from the GIMP preferences dialog is respected in
- * all plug-in dialogs.
- **/
-void
-gimp_help_disable_tooltips (void)
-{
-  if (! tooltips_enable_called)
-    {
-      tooltips_enable_called = TRUE;
-      tooltips_enabled       = FALSE;
-    }
-}
 
 /**
  * gimp_standard_help_func:
@@ -223,13 +177,10 @@ gimp_help_set_help_data (GtkWidget   *widget,
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (tooltips_enabled)
-    {
-      gtk_widget_set_tooltip_text (widget, tooltip);
+  gtk_widget_set_tooltip_text (widget, tooltip);
 
-      if (GTK_IS_MENU_ITEM (widget))
-        gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
-    }
+  if (GTK_IS_MENU_ITEM (widget))
+    gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
 
   g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }
@@ -253,13 +204,10 @@ gimp_help_set_help_data_with_markup (GtkWidget   *widget,
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  if (tooltips_enabled)
-    {
-      gtk_widget_set_tooltip_markup (widget, tooltip);
+  gtk_widget_set_tooltip_markup (widget, tooltip);
 
-      if (GTK_IS_MENU_ITEM (widget))
-        gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
-    }
+  if (GTK_IS_MENU_ITEM (widget))
+    gimp_help_menu_item_set_tooltip (widget, tooltip, help_id);
 
   g_object_set_qdata (G_OBJECT (widget), GIMP_HELP_ID, (gpointer) help_id);
 }

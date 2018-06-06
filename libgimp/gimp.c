@@ -214,7 +214,6 @@ static gint           _tile_height       = -1;
 static gint           _shm_ID            = -1;
 static guchar        *_shm_addr          = NULL;
 static const gdouble  _gamma_val         = 2.2;
-static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
 static gboolean       _export_exif       = FALSE;
 static gboolean       _export_xmp        = FALSE;
@@ -445,7 +444,7 @@ gimp_main (const GimpPlugInInfo *info,
     {
       g_printerr ("%s is a GIMP plug-in and must be run by GIMP to be used\n",
                   argv[ARG_PROGNAME]);
-      return 1;
+      return EXIT_FAILURE;
     }
 
   gimp_env_init (TRUE);
@@ -460,21 +459,21 @@ gimp_main (const GimpPlugInInfo *info,
 
   if (protocol_version < GIMP_PROTOCOL_VERSION)
     {
-      gimp_message (g_strdup_printf ("Could not execute plug-in \"%s\"\n(%s)\n"
-                                     "because GIMP is using an older version of the "
-                                     "plug-in protocol.",
-                                     gimp_filename_to_utf8 (g_get_prgname ()),
-                                     gimp_filename_to_utf8 (progname)));
-      return 1;
+      g_printerr ("Could not execute plug-in \"%s\"\n(%s)\n"
+                  "because GIMP is using an older version of the "
+                  "plug-in protocol.\n",
+                  gimp_filename_to_utf8 (g_get_prgname ()),
+                  gimp_filename_to_utf8 (progname));
+      return EXIT_FAILURE;
     }
   else if (protocol_version > GIMP_PROTOCOL_VERSION)
     {
-      gimp_message (g_strdup_printf ("Could not execute plug-in \"%s\"\n(%s)\n"
-                                     "because it uses an obsolete version of the "
-                                     "plug-in protocol.",
-                                     gimp_filename_to_utf8 (g_get_prgname ()),
-                                     gimp_filename_to_utf8 (progname)));
-      return 1;
+      g_printerr ("Could not execute plug-in \"%s\"\n(%s)\n"
+                  "because it uses an obsolete version of the "
+                  "plug-in protocol.\n",
+                  gimp_filename_to_utf8 (g_get_prgname ()),
+                  gimp_filename_to_utf8 (progname));
+      return EXIT_FAILURE;
     }
 
   env_string = g_getenv ("GIMP_PLUGIN_DEBUG");
@@ -1400,21 +1399,6 @@ gimp_gamma (void)
 }
 
 /**
- * gimp_show_tool_tips:
- *
- * Returns whether or not the plug-in should show tool-tips.
- *
- * This is a constant value given at plug-in configuration time.
- *
- * Return value: the show_tool_tips boolean
- **/
-gboolean
-gimp_show_tool_tips (void)
-{
-  return _show_tool_tips;
-}
-
-/**
  * gimp_show_help_button:
  *
  * Returns whether or not GimpDialog should automatically add a help
@@ -2170,7 +2154,6 @@ gimp_config (GPConfig *config)
   _shm_ID           = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
-  _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
   _export_exif      = config->export_exif      ? TRUE : FALSE;
   _export_xmp       = config->export_xmp       ? TRUE : FALSE;

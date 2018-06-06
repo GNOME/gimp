@@ -2392,9 +2392,6 @@ prefs_dialog_new (Gimp       *gimp,
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "show-tooltips",
-                          _("Show _tooltips"),
-                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "show-help-button",
                           _("Show help _buttons"),
                           GTK_BOX (vbox2));

@@ -187,8 +187,6 @@ EXPORTS
 	gimp_get_monitor_at_pointer
 	gimp_grid_attach_aligned
 	gimp_help_connect
-	gimp_help_disable_tooltips
-	gimp_help_enable_tooltips
 	gimp_help_id_quark
 	gimp_help_set_help_data
 	gimp_help_set_help_data_with_markup

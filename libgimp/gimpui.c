@@ -174,9 +174,6 @@ gimp_ui_init (const gchar *prog_name,
                      gimp_context_get_background,
                      gimp_ensure_modules);
 
-  if (! gimp_show_tool_tips ())
-    gimp_help_disable_tooltips ();
-
   gimp_dialogs_show_help_button (gimp_show_help_button ());
 
 #ifdef GDK_WINDOWING_QUARTZ
