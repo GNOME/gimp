@@ -1376,6 +1376,10 @@ gimp_group_layer_new (GimpImage *image)
                                                0, 0, 1, 1,
                                                format));
 
+  gimp_layer_set_mode (GIMP_LAYER (group),
+                       gimp_image_get_default_new_layer_mode (image),
+                       FALSE);
+
   return GIMP_LAYER (group);
 }
 
