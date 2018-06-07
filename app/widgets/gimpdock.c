@@ -77,7 +77,8 @@ static void       gimp_dock_real_book_added        (GimpDock     *dock,
 static void       gimp_dock_real_book_removed      (GimpDock     *dock,
                                                     GimpDockbook *dockbook);
 static void       gimp_dock_invalidate_description (GimpDock     *dock);
-static gboolean   gimp_dock_dropped_cb             (GtkWidget    *source,
+static gboolean   gimp_dock_dropped_cb             (GtkWidget    *notebook,
+                                                    GtkWidget    *child,
                                                     gint          insert_index,
                                                     gpointer      data);
 
@@ -290,22 +291,21 @@ gimp_dock_invalidate_description (GimpDock *dock)
 }
 
 static gboolean
-gimp_dock_dropped_cb (GtkWidget *source,
+gimp_dock_dropped_cb (GtkWidget *notebook,
+                      GtkWidget *child,
                       gint       insert_index,
                       gpointer   data)
 {
   GimpDock          *dock     = GIMP_DOCK (data);
-  GimpDockable      *dockable = gimp_dockbook_drag_source_to_dockable (source);
+  GimpDockbook      *dockbook = GIMP_DOCKBOOK (notebook);
+  GimpDockable      *dockable = GIMP_DOCKABLE (child);
   GimpDialogFactory *factory;
-  GtkWidget         *dockbook = NULL;
-
-  if (!dockable )
-    return FALSE;
+  GtkWidget         *new_dockbook;
 
   /*  if dropping to the same dock, take care that we don't try
    *  to reorder the *only* dockable in the dock
    */
-  if (gimp_dockbook_get_dock (gimp_dockable_get_dockbook (dockable)) == dock)
+  if (gimp_dockbook_get_dock (dockbook) == dock)
     {
       GList *children;
       gint   n_books;
@@ -323,15 +323,15 @@ gimp_dock_dropped_cb (GtkWidget *source,
 
   /* Detach the dockable from the old dockbook */
   g_object_ref (dockable);
-  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
+  gtk_notebook_detach_tab (GTK_NOTEBOOK (notebook), child);
 
   /* Create a new dockbook */
   factory = gimp_dock_get_dialog_factory (dock);
-  dockbook = gimp_dockbook_new (gimp_dialog_factory_get_menu_factory (factory));
-  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), insert_index);
+  new_dockbook = gimp_dockbook_new (gimp_dialog_factory_get_menu_factory (factory));
+  gimp_dock_add_book (dock, GIMP_DOCKBOOK (new_dockbook), insert_index);
 
   /* Add the dockable to new new dockbook */
-  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+  gimp_dockbook_add (GIMP_DOCKBOOK (new_dockbook), dockable, -1);
   g_object_unref (dockable);
 
   return TRUE;

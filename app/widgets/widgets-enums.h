@@ -181,9 +181,9 @@ typedef enum  /*< skip >*/
   GIMP_DND_TYPE_IMAGEFILE    = 21,
   GIMP_DND_TYPE_TEMPLATE     = 22,
   GIMP_DND_TYPE_TOOL_INFO    = 23,
-  GIMP_DND_TYPE_DIALOG       = 24,
+  GIMP_DND_TYPE_NOTEBOOK_TAB = 24,
 
-  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_DIALOG
+  GIMP_DND_TYPE_LAST         = GIMP_DND_TYPE_NOTEBOOK_TAB
 } GimpDndType;
 
 typedef enum  /*< skip >*/

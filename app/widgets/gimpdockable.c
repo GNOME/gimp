@@ -67,12 +67,6 @@ struct _GimpDockablePrivate
   GimpDockbook *dockbook;
 
   GimpContext  *context;
-
-  GimpPanedBox *drag_handler;
-
-  /*  drag icon hotspot  */
-  gint          drag_x;
-  gint          drag_y;
 };
 
 
@@ -88,20 +82,6 @@ static void       gimp_dockable_get_property         (GObject        *object,
                                                       guint           property_id,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
-
-static void       gimp_dockable_drag_leave           (GtkWidget      *widget,
-                                                      GdkDragContext *context,
-                                                      guint           time);
-static gboolean   gimp_dockable_drag_motion          (GtkWidget      *widget,
-                                                      GdkDragContext *context,
-                                                      gint            x,
-                                                      gint            y,
-                                                      guint           time);
-static gboolean   gimp_dockable_drag_drop            (GtkWidget      *widget,
-                                                      GdkDragContext *context,
-                                                      gint            x,
-                                                      gint            y,
-                                                      guint           time);
 
 static void       gimp_dockable_style_updated        (GtkWidget      *widget);
 
@@ -124,7 +104,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
 
 #define parent_class gimp_dockable_parent_class
 
-static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
+static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_NOTEBOOK_TAB };
 
 
 static void
@@ -139,9 +119,6 @@ gimp_dockable_class_init (GimpDockableClass *klass)
   object_class->get_property  = gimp_dockable_get_property;
 
   widget_class->style_updated = gimp_dockable_style_updated;
-  widget_class->drag_leave    = gimp_dockable_drag_leave;
-  widget_class->drag_motion   = gimp_dockable_drag_motion;
-  widget_class->drag_drop     = gimp_dockable_drag_drop;
 
   container_class->add        = gimp_dockable_add;
   container_class->child_type = gimp_dockable_child_type;
@@ -172,8 +149,6 @@ gimp_dockable_init (GimpDockable *dockable)
                                              GimpDockablePrivate);
 
   dockable->p->tab_style = GIMP_TAB_STYLE_PREVIEW;
-  dockable->p->drag_x    = GIMP_DOCKABLE_DRAG_OFFSET;
-  dockable->p->drag_y    = GIMP_DOCKABLE_DRAG_OFFSET;
 
   gtk_drag_dest_set (GTK_WIDGET (dockable),
                      0,
@@ -261,69 +236,6 @@ gimp_dockable_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_dockable_drag_leave (GtkWidget      *widget,
-                          GdkDragContext *context,
-                          guint           time)
-{
-  gimp_highlight_widget (widget, FALSE);
-}
-
-static gboolean
-gimp_dockable_drag_motion (GtkWidget      *widget,
-                           GdkDragContext *context,
-                           gint            x,
-                           gint            y,
-                           guint           time)
-{
-  GimpDockable *dockable = GIMP_DOCKABLE (widget);
-
-  if (gimp_paned_box_will_handle_drag (dockable->p->drag_handler,
-                                       widget,
-                                       context,
-                                       x, y,
-                                       time))
-    {
-      gdk_drag_status (context, 0, time);
-      gimp_highlight_widget (widget, FALSE);
-
-      return FALSE;
-    }
-
-  gdk_drag_status (context, GDK_ACTION_MOVE, time);
-  gimp_highlight_widget (widget, TRUE);
-
-  /* Return TRUE so drag_leave() is called */
-  return TRUE;
-}
-
-static gboolean
-gimp_dockable_drag_drop (GtkWidget      *widget,
-                         GdkDragContext *context,
-                         gint            x,
-                         gint            y,
-                         guint           time)
-{
-  GimpDockable *dockable = GIMP_DOCKABLE (widget);
-  gboolean      dropped;
-
-  if (gimp_paned_box_will_handle_drag (dockable->p->drag_handler,
-                                       widget,
-                                       context,
-                                       x, y,
-                                       time))
-    {
-      return FALSE;
-    }
-
-  dropped = gimp_dockbook_drop_dockable (GIMP_DOCKABLE (widget)->p->dockbook,
-                                         gtk_drag_get_source_widget (context));
-
-  gtk_drag_finish (context, dropped, TRUE, time);
-
-  return TRUE;
 }
 
 static void
@@ -562,38 +474,6 @@ gimp_dockable_get_locked (GimpDockable *dockable)
 }
 
 void
-gimp_dockable_set_drag_pos (GimpDockable *dockable,
-                            gint          drag_x,
-                            gint          drag_y)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  dockable->p->drag_x = drag_x;
-  dockable->p->drag_y = drag_y;
-}
-
-void
-gimp_dockable_get_drag_pos (GimpDockable *dockable,
-                            gint         *drag_x,
-                            gint         *drag_y)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  if (drag_x != NULL)
-    *drag_x = dockable->p->drag_x;
-  if (drag_y != NULL)
-    *drag_y = dockable->p->drag_y;
-}
-
-GimpPanedBox *
-gimp_dockable_get_drag_handler (GimpDockable *dockable)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-
-  return dockable->p->drag_handler;
-}
-
-void
 gimp_dockable_set_locked (GimpDockable *dockable,
                           gboolean      lock)
 {
@@ -638,29 +518,6 @@ gimp_dockable_create_tab_widget (GimpDockable *dockable,
                                                 tab_style, size, FALSE);
 }
 
-GtkWidget *
-gimp_dockable_create_drag_widget (GimpDockable *dockable)
-{
-  GtkWidget *frame;
-  GtkWidget *widget;
-
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-
-  widget = gimp_dockable_new_tab_widget_internal (dockable,
-                                                  dockable->p->context,
-                                                  GIMP_TAB_STYLE_ICON_BLURB,
-                                                  GTK_ICON_SIZE_DND,
-                                                  TRUE);
-  gtk_container_set_border_width (GTK_CONTAINER (widget), 6);
-  gtk_container_add (GTK_CONTAINER (frame), widget);
-  gtk_widget_show (widget);
-
-  return frame;
-}
-
 void
 gimp_dockable_set_context (GimpDockable *dockable,
                            GimpContext  *context)
@@ -696,23 +553,6 @@ gimp_dockable_get_menu (GimpDockable  *dockable,
     return gimp_docked_get_menu (GIMP_DOCKED (child), ui_path, popup_data);
 
   return NULL;
-}
-
-/**
- * gimp_dockable_set_drag_handler:
- * @dockable:
- * @handler:
- *
- * Set a drag handler that will be asked if it will handle drag events
- * before the dockable handles the event itself.
- **/
-void
-gimp_dockable_set_drag_handler (GimpDockable *dockable,
-                                GimpPanedBox *handler)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  dockable->p->drag_handler = handler;
 }
 
 void

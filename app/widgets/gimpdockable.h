@@ -74,14 +74,6 @@ GtkWidget     * gimp_dockable_get_icon             (GimpDockable   *dockable,
                                                     GtkIconSize     size);
 
 gboolean        gimp_dockable_get_locked           (GimpDockable   *dockable);
-void            gimp_dockable_set_drag_pos         (GimpDockable   *dockable,
-                                                    gint            drag_x,
-                                                    gint            drag_y);
-void            gimp_dockable_get_drag_pos         (GimpDockable   *dockable,
-                                                    gint           *drag_x,
-                                                    gint           *drag_y);
-GimpPanedBox  * gimp_dockable_get_drag_handler     (GimpDockable   *dockable);
-
 void            gimp_dockable_set_locked           (GimpDockable   *dockable,
                                                     gboolean        lock);
 gboolean        gimp_dockable_is_locked            (GimpDockable   *dockable);
@@ -92,14 +84,11 @@ GtkWidget     * gimp_dockable_create_tab_widget    (GimpDockable   *dockable,
                                                     GimpContext    *context,
                                                     GimpTabStyle    tab_style,
                                                     GtkIconSize     size);
-GtkWidget     * gimp_dockable_create_drag_widget   (GimpDockable   *dockable);
 void            gimp_dockable_set_context          (GimpDockable   *dockable,
                                                     GimpContext    *context);
 GimpUIManager * gimp_dockable_get_menu             (GimpDockable   *dockable,
                                                     const gchar   **ui_path,
                                                     gpointer       *popup_data);
-void            gimp_dockable_set_drag_handler     (GimpDockable   *dockable,
-                                                    GimpPanedBox   *drag_handler);
 
 void            gimp_dockable_detach               (GimpDockable   *dockable);
 

@@ -303,7 +303,8 @@ typedef void        (* GimpMenuPositionFunc)         (GtkMenu           *menu,
                                                       gint              *x,
                                                       gint              *y,
                                                       gpointer           data);
-typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *source,
+typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *notebook,
+                                                      GtkWidget         *child,
                                                       gint               insert_index,
                                                       gpointer           data);
 

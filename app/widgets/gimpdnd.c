@@ -599,7 +599,7 @@ static const GimpDndDataDef dnd_data_defs[] =
   },
 
   {
-    GIMP_TARGET_DIALOG,
+    GIMP_TARGET_NOTEBOOK_TAB,
 
     NULL,
     NULL,

@@ -79,7 +79,8 @@ static void      gimp_dock_columns_get_property      (GObject         *object,
                                                       guint            property_id,
                                                       GValue          *value,
                                                       GParamSpec      *pspec);
-static gboolean  gimp_dock_columns_dropped_cb        (GtkWidget       *source,
+static gboolean  gimp_dock_columns_dropped_cb        (GtkWidget       *notebook,
+                                                      GtkWidget       *child,
                                                       gint             insert_index,
                                                       gpointer         data);
 static void      gimp_dock_columns_real_dock_added   (GimpDockColumns *dock_columns,
@@ -286,29 +287,27 @@ gimp_dock_columns_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_dock_columns_dropped_cb (GtkWidget *source,
+gimp_dock_columns_dropped_cb (GtkWidget *notebook,
+                              GtkWidget *child,
                               gint       insert_index,
                               gpointer   data)
 {
   GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (data);
-  GimpDockable    *dockable     = gimp_dockbook_drag_source_to_dockable (source);
-  GtkWidget       *dockbook     = NULL;
-
-  if (! dockable)
-    return FALSE;
+  GimpDockable    *dockable     = GIMP_DOCKABLE (child);
+  GtkWidget       *new_dockbook = NULL;
 
   /* Create a new dock (including a new dockbook) */
   gimp_dock_columns_prepare_dockbook (dock_columns,
                                       insert_index,
-                                      &dockbook);
+                                      &new_dockbook);
 
   /* Move the dockable to the new dockbook */
-  g_object_ref (dockbook);
+  g_object_ref (new_dockbook);
   g_object_ref (dockable);
-  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
-  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), dockable, -1);
+  gtk_notebook_detach_tab (GTK_NOTEBOOK (notebook), child);
+  gimp_dockbook_add (GIMP_DOCKBOOK (new_dockbook), dockable, -1);
   g_object_unref (dockable);
-  g_object_unref (dockbook);
+  g_object_unref (new_dockbook);
 
   return TRUE;
 }
