@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-05 19:14+0200\n"
-"PO-Revision-Date: 2018-06-05 19:15+0200\n"
+"POT-Creation-Date: 2018-06-07 16:21+0200\n"
+"PO-Revision-Date: 2018-06-07 16:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -11614,7 +11614,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:896 ../app/core/core-enums.c:949
-#: ../app/core/gimpdrawable-transform.c:736 ../app/tools/gimpmeasuretool.c:837
+#: ../app/core/gimpdrawable-transform.c:736 ../app/tools/gimpmeasuretool.c:840
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -12980,17 +12980,43 @@ msgstr " (zastąpiony)"
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2556
+#: ../app/core/gimpimage.c:2402 ../app/core/gimpimage.c:2416
+#: ../app/core/gimpimage.c:2459
+#, c-format
+msgid "Layer mode '%s' was added in %s"
+msgstr "Tryb warstwy „%s” został dodany w %s"
+
+#: ../app/core/gimpimage.c:2474
+#, c-format
+msgid "Layer groups were added in %s"
+msgstr "Grupy warstw zostały dodane w %s"
+
+#: ../app/core/gimpimage.c:2481
+#, c-format
+msgid "Masks on layer groups were added in %s"
+msgstr "Maski na grupach warstw zostały dodane w %s"
+
+#: ../app/core/gimpimage.c:2497
+#, c-format
+msgid "High bit-depth images were added in %s"
+msgstr "Obrazy o głębi wysokobitowej zostały dodane w %s"
+
+#: ../app/core/gimpimage.c:2522
+#, c-format
+msgid "Support for image files larger than 4GB was added in %s"
+msgstr "Obsługa plików obrazów większych niż 4 GB została dodana w %s"
+
+#: ../app/core/gimpimage.c:2616
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2608
+#: ../app/core/gimpimage.c:2668
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3492
+#: ../app/core/gimpimage.c:3552
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -12998,47 +13024,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3544
+#: ../app/core/gimpimage.c:3604
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3585
+#: ../app/core/gimpimage.c:3645
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4312
+#: ../app/core/gimpimage.c:4372
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4354 ../app/core/gimpimage.c:4385
+#: ../app/core/gimpimage.c:4414 ../app/core/gimpimage.c:4445
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4379
+#: ../app/core/gimpimage.c:4439
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4546
+#: ../app/core/gimpimage.c:4606
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4574 ../app/core/gimpimage.c:4598
+#: ../app/core/gimpimage.c:4634 ../app/core/gimpimage.c:4658
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4654
+#: ../app/core/gimpimage.c:4714
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4684 ../app/core/gimpimage.c:4691
+#: ../app/core/gimpimage.c:4744 ../app/core/gimpimage.c:4751
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -20324,19 +20350,19 @@ msgstr "Obrót warstwy tekstowej"
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:567
+#: ../app/text/gimptextlayer.c:571
 msgid "Discard Text Information"
 msgstr "Odrzucanie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:639
+#: ../app/text/gimptextlayer.c:643
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:702
+#: ../app/text/gimptextlayer.c:706
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:755
+#: ../app/text/gimptextlayer.c:759
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -21871,7 +21897,7 @@ msgstr "Pomiary odległości i kątów"
 msgid "Distance:"
 msgstr "Odległość:"
 
-#: ../app/tools/gimpmeasuretool.c:832
+#: ../app/tools/gimpmeasuretool.c:835
 msgid "Straightening"
 msgstr "Wyprostowywanie"
 
@@ -24811,7 +24837,7 @@ msgstr ""
 msgid "All XCF images"
 msgstr "Wszystkie obrazy XCF"
 
-#: ../app/widgets/gimpsavedialog.c:259
+#: ../app/widgets/gimpsavedialog.c:265
 #, c-format
 msgid ""
 "The image uses features from %s, disabling compression won't make the XCF "
@@ -24820,7 +24846,7 @@ msgstr ""
 "Obraz używa funkcji z wersji %s, wyłączenie kompresji nie spowoduje, że plik "
 "XCF będzie mógł być otwierany w poprzednich wersjach programu GIMP."
 
-#: ../app/widgets/gimpsavedialog.c:266
+#: ../app/widgets/gimpsavedialog.c:275
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
@@ -24828,11 +24854,11 @@ msgstr ""
 "Wyłączenie kompresji spowoduje, że plik XCF będzie mógł być odczytywany "
 "przez wersję %s i późniejsze."
 
-#: ../app/widgets/gimpsavedialog.c:276
+#: ../app/widgets/gimpsavedialog.c:287
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Metadane nie będą widoczne w programie GIMP starszym niż wersja 2.10."
 
-#: ../app/widgets/gimpsavedialog.c:329
+#: ../app/widgets/gimpsavedialog.c:343
 msgid "Save this XCF file with better but slower compression"
 msgstr "Zapisanie tego pliku XCF z lepszą, ale wolniejszą kompresją"
 
