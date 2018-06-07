@@ -281,7 +281,7 @@ dockable_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (sensitive) != 0)
 
 
-  locked = gimp_dockable_is_locked (dockable);
+  locked = gimp_dockable_get_locked (dockable);
 
   SET_SENSITIVE ("dockable-detach-tab", (! locked &&
                                          (n_pages > 1 || n_books > 1)));

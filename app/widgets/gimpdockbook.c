@@ -415,7 +415,7 @@ gimp_dockbook_page_added (GtkNotebook *notebook,
   gtk_notebook_set_tab_label (notebook, child, tab_widget);
   gtk_notebook_set_menu_label (notebook, child, menu_widget);
 
-  if (! gimp_dockable_is_locked (dockable))
+  if (! gimp_dockable_get_locked (dockable))
     {
       gtk_notebook_set_tab_reorderable (notebook, child, TRUE);
       gtk_notebook_set_tab_detachable (notebook, child, TRUE);
@@ -905,7 +905,7 @@ gimp_dockbook_tab_locked_notify (GimpDockable *dockable,
                                  GParamSpec   *pspec,
                                  GimpDockbook *dockbook)
 {
-  gboolean locked = gimp_dockable_is_locked (dockable);
+  gboolean locked = gimp_dockable_get_locked (dockable);
 
   gtk_notebook_set_tab_reorderable (GTK_NOTEBOOK (dockbook),
                                     GTK_WIDGET (dockable), ! locked);

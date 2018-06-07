@@ -70,32 +70,27 @@ struct _GimpDockablePrivate
 };
 
 
-static void       gimp_dockable_session_managed_iface_init
-                                                     (GimpSessionManagedInterface
-                                                                     *iface);
-static void       gimp_dockable_dispose              (GObject        *object);
-static void       gimp_dockable_set_property         (GObject        *object,
-                                                      guint           property_id,
-                                                      const GValue   *value,
-                                                      GParamSpec     *pspec);
-static void       gimp_dockable_get_property         (GObject        *object,
-                                                      guint           property_id,
-                                                      GValue         *value,
-                                                      GParamSpec     *pspec);
+static void       gimp_dockable_session_managed_iface_init (GimpSessionManagedInterface *iface);
 
-static void       gimp_dockable_style_updated        (GtkWidget      *widget);
+static void       gimp_dockable_dispose       (GObject            *object);
+static void       gimp_dockable_set_property  (GObject            *object,
+                                               guint               property_id,
+                                               const GValue       *value,
+                                               GParamSpec         *pspec);
+static void       gimp_dockable_get_property  (GObject            *object,
+                                               guint               property_id,
+                                               GValue             *value,
+                                               GParamSpec         *pspec);
 
-static void       gimp_dockable_add                  (GtkContainer   *container,
-                                                      GtkWidget      *widget);
-static GType      gimp_dockable_child_type           (GtkContainer   *container);
-static GList    * gimp_dockable_get_aux_info         (GimpSessionManaged
-                                                                     *session_managed);
-static void       gimp_dockable_set_aux_info         (GimpSessionManaged
-                                                                     *session_managed,
-                                                      GList          *aux_info);
-static GimpTabStyle
-                  gimp_dockable_convert_tab_style    (GimpDockable   *dockable,
-                                                      GimpTabStyle    tab_style);
+static void       gimp_dockable_style_updated (GtkWidget          *widget);
+
+static void       gimp_dockable_add           (GtkContainer       *container,
+                                               GtkWidget          *widget);
+static GType      gimp_dockable_child_type    (GtkContainer       *container);
+
+static GList    * gimp_dockable_get_aux_info  (GimpSessionManaged *managed);
+static void       gimp_dockable_set_aux_info  (GimpSessionManaged *managed,
+                                               GList              *aux_info);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
@@ -416,12 +411,50 @@ gimp_dockable_get_dockbook (GimpDockable *dockable)
   return dockable->p->dockbook;
 }
 
+void
+gimp_dockable_set_tab_style (GimpDockable *dockable,
+                             GimpTabStyle  tab_style)
+{
+  GtkWidget *child;
+
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  child = gtk_bin_get_child (GTK_BIN (dockable));
+
+  if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
+    tab_style = gimp_preview_tab_style_to_icon (tab_style);
+
+  dockable->p->tab_style = tab_style;
+}
+
 GimpTabStyle
 gimp_dockable_get_tab_style (GimpDockable *dockable)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), -1);
 
   return dockable->p->tab_style;
+}
+
+void
+gimp_dockable_set_locked (GimpDockable *dockable,
+                          gboolean      lock)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  if (dockable->p->locked != lock)
+    {
+      dockable->p->locked = lock ? TRUE : FALSE;
+
+      g_object_notify (G_OBJECT (dockable), "locked");
+    }
+}
+
+gboolean
+gimp_dockable_get_locked (GimpDockable *dockable)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
+
+  return dockable->p->locked;
 }
 
 const gchar *
@@ -463,46 +496,6 @@ gimp_dockable_get_icon (GimpDockable *dockable,
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
   return gtk_image_new_from_icon_name (dockable->p->icon_name, size);
-}
-
-gboolean
-gimp_dockable_get_locked (GimpDockable *dockable)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
-
-  return dockable->p->locked;
-}
-
-void
-gimp_dockable_set_locked (GimpDockable *dockable,
-                          gboolean      lock)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  if (dockable->p->locked != lock)
-    {
-      dockable->p->locked = lock ? TRUE : FALSE;
-
-      g_object_notify (G_OBJECT (dockable), "locked");
-    }
-}
-
-gboolean
-gimp_dockable_is_locked (GimpDockable *dockable)
-{
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
-
-  return dockable->p->locked;
-}
-
-
-void
-gimp_dockable_set_tab_style (GimpDockable *dockable,
-                             GimpTabStyle  tab_style)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  dockable->p->tab_style = gimp_dockable_convert_tab_style (dockable, tab_style);
 }
 
 GtkWidget *
@@ -634,16 +627,4 @@ gimp_dockable_set_aux_info (GimpSessionManaged *session_managed,
 
   if (child)
     gimp_docked_set_aux_info (GIMP_DOCKED (child), aux_info);
-}
-
-static GimpTabStyle
-gimp_dockable_convert_tab_style (GimpDockable *dockable,
-                                 GimpTabStyle  tab_style)
-{
-  GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
-
-  if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
-    tab_style = gimp_preview_tab_style_to_icon (tab_style);
-
-  return tab_style;
 }

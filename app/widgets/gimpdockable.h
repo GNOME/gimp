@@ -56,41 +56,43 @@ struct _GimpDockableClass
 };
 
 
-GType           gimp_dockable_get_type             (void) G_GNUC_CONST;
+GType           gimp_dockable_get_type          (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_dockable_new                  (const gchar    *name,
-                                                    const gchar    *blurb,
-                                                    const gchar    *icon_name,
-                                                    const gchar    *help_id);
-void            gimp_dockable_set_dockbook         (GimpDockable   *dockable,
-                                                    GimpDockbook   *dockbook);
-GimpDockbook  * gimp_dockable_get_dockbook         (GimpDockable   *dockable);
-GimpTabStyle    gimp_dockable_get_tab_style        (GimpDockable   *dockable);
-const gchar   * gimp_dockable_get_name             (GimpDockable   *dockable);
-const gchar   * gimp_dockable_get_blurb            (GimpDockable   *dockable);
-const gchar   * gimp_dockable_get_help_id          (GimpDockable   *dockable);
-const gchar   * gimp_dockable_get_icon_name        (GimpDockable   *dockable);
-GtkWidget     * gimp_dockable_get_icon             (GimpDockable   *dockable,
-                                                    GtkIconSize     size);
+GtkWidget     * gimp_dockable_new               (const gchar   *name,
+                                                 const gchar   *blurb,
+                                                 const gchar   *icon_name,
+                                                 const gchar   *help_id);
 
-gboolean        gimp_dockable_get_locked           (GimpDockable   *dockable);
-void            gimp_dockable_set_locked           (GimpDockable   *dockable,
-                                                    gboolean        lock);
-gboolean        gimp_dockable_is_locked            (GimpDockable   *dockable);
+void            gimp_dockable_set_dockbook      (GimpDockable  *dockable,
+                                                 GimpDockbook  *dockbook);
+GimpDockbook  * gimp_dockable_get_dockbook      (GimpDockable  *dockable);
 
-void            gimp_dockable_set_tab_style        (GimpDockable   *dockable,
-                                                    GimpTabStyle    tab_style);
-GtkWidget     * gimp_dockable_create_tab_widget    (GimpDockable   *dockable,
-                                                    GimpContext    *context,
-                                                    GimpTabStyle    tab_style,
-                                                    GtkIconSize     size);
-void            gimp_dockable_set_context          (GimpDockable   *dockable,
-                                                    GimpContext    *context);
-GimpUIManager * gimp_dockable_get_menu             (GimpDockable   *dockable,
-                                                    const gchar   **ui_path,
-                                                    gpointer       *popup_data);
+void            gimp_dockable_set_tab_style     (GimpDockable  *dockable,
+                                                 GimpTabStyle   tab_style);
+GimpTabStyle    gimp_dockable_get_tab_style     (GimpDockable  *dockable);
 
-void            gimp_dockable_detach               (GimpDockable   *dockable);
+void            gimp_dockable_set_locked        (GimpDockable  *dockable,
+                                                 gboolean       lock);
+gboolean        gimp_dockable_get_locked        (GimpDockable  *dockable);
+
+const gchar   * gimp_dockable_get_name          (GimpDockable  *dockable);
+const gchar   * gimp_dockable_get_blurb         (GimpDockable  *dockable);
+const gchar   * gimp_dockable_get_help_id       (GimpDockable  *dockable);
+const gchar   * gimp_dockable_get_icon_name     (GimpDockable  *dockable);
+GtkWidget     * gimp_dockable_get_icon          (GimpDockable  *dockable,
+                                                 GtkIconSize    size);
+
+GtkWidget     * gimp_dockable_create_tab_widget (GimpDockable  *dockable,
+                                                 GimpContext   *context,
+                                                 GimpTabStyle   tab_style,
+                                                 GtkIconSize    size);
+void            gimp_dockable_set_context       (GimpDockable  *dockable,
+                                                 GimpContext   *context);
+GimpUIManager * gimp_dockable_get_menu          (GimpDockable  *dockable,
+                                                 const gchar  **ui_path,
+                                                 gpointer      *popup_data);
+
+void            gimp_dockable_detach            (GimpDockable  *dockable);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */
