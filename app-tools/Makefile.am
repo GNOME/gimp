@@ -9,6 +9,7 @@ if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
 xobjective_cxx = "-xobjective-c++"
 xnone = "-xnone"
+framework_appkit = -framework AppKit
 endif
 
 if OS_WIN32
@@ -78,4 +79,5 @@ AM_CXXFLAGS = \
 	$(xobjective_cxx)
 
 AM_LDFLAGS = \
+	$(framework_appkit)	\
 	$(xnone)
