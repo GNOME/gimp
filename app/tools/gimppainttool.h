@@ -59,6 +59,9 @@ struct _GimpPaintTool
 
   GimpDisplay   *display;
   GimpDrawable  *drawable;
+
+  gdouble        paint_x;
+  gdouble        paint_y;
 };
 
 struct _GimpPaintToolClass

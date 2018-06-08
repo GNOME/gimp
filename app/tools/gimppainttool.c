@@ -643,46 +643,55 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
       GimpCanvasItem *outline    = NULL;
       gboolean        line_drawn = FALSE;
-      gdouble         last_x, last_y;
       gdouble         cur_x, cur_y;
       gint            off_x, off_y;
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      last_x = core->last_coords.x + off_x;
-      last_y = core->last_coords.y + off_y;
-      cur_x  = core->cur_coords.x + off_x;
-      cur_y  = core->cur_coords.y + off_y;
-
-      if (paint_tool->draw_line &&
-          ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
+      if (gimp_paint_tool_paint_is_active (paint_tool))
         {
-          GimpCanvasGroup *group;
+          cur_x = paint_tool->paint_x + off_x;
+          cur_y = paint_tool->paint_y + off_y;
+        }
+      else
+        {
+          cur_x = core->cur_coords.x + off_x;
+          cur_y = core->cur_coords.y + off_y;
 
-          group = gimp_draw_tool_add_stroke_group (draw_tool);
-          gimp_draw_tool_push_group (draw_tool, group);
+          if (paint_tool->draw_line &&
+              ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
+            {
+              GimpCanvasGroup *group;
+              gdouble          last_x, last_y;
 
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CIRCLE,
-                                     last_x, last_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+              last_x = core->last_coords.x + off_x;
+              last_y = core->last_coords.y + off_y;
 
-          gimp_draw_tool_add_line (draw_tool,
-                                   last_x, last_y,
-                                   cur_x, cur_y);
+              group = gimp_draw_tool_add_stroke_group (draw_tool);
+              gimp_draw_tool_push_group (draw_tool, group);
 
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CIRCLE,
-                                     cur_x, cur_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+              gimp_draw_tool_add_handle (draw_tool,
+                                         GIMP_HANDLE_CIRCLE,
+                                         last_x, last_y,
+                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                         GIMP_HANDLE_ANCHOR_CENTER);
 
-          gimp_draw_tool_pop_group (draw_tool);
+              gimp_draw_tool_add_line (draw_tool,
+                                       last_x, last_y,
+                                       cur_x, cur_y);
 
-          line_drawn = TRUE;
+              gimp_draw_tool_add_handle (draw_tool,
+                                         GIMP_HANDLE_CIRCLE,
+                                         cur_x, cur_y,
+                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                         GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                         GIMP_HANDLE_ANCHOR_CENTER);
+
+              gimp_draw_tool_pop_group (draw_tool);
+
+              line_drawn = TRUE;
+            }
         }
 
       gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
