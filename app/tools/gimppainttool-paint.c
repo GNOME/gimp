@@ -158,12 +158,16 @@ gimp_paint_tool_paint_thread (gpointer data)
 static gboolean
 gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 {
-  GimpDrawable *drawable = paint_tool->drawable;
-  gboolean      update;
+  GimpPaintCore *core     = paint_tool->core;
+  GimpDrawable  *drawable = paint_tool->drawable;
+  gboolean       update;
 
   paint_timeout_pending = TRUE;
 
   g_mutex_lock (&paint_mutex);
+
+  paint_tool->paint_x = core->cur_coords.x;
+  paint_tool->paint_y = core->cur_coords.y;
 
   update = gimp_drawable_flush_paint (drawable);
 
@@ -247,6 +251,9 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
 
   curr_coords.x -= off_x;
   curr_coords.y -= off_y;
+
+  paint_tool->paint_x = curr_coords.x;
+  paint_tool->paint_y = curr_coords.y;
 
   /*  If we use a separate paint thread, enter paint mode before starting the
    *  paint core
