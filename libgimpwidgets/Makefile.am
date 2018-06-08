@@ -215,6 +215,7 @@ libgimpwidgets_@GIMP_API_VERSION@_la_SOURCES = \
 
 libgimpwidgetsinclude_HEADERS = \
 	gimpbrowser.h			\
+	gimpbusybox.h			\
 	gimpbutton.h			\
 	gimpcairo-utils.h		\
 	gimpcellrenderercolor.h		\
