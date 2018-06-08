@@ -33,6 +33,7 @@
 
 #include "gimpcolornotebook.h"
 #include "gimpcolorscales.h"
+#include "gimphelpui.h"
 #include "gimpwidgetsmarshal.h"
 #include "gimp3migration.h"
 
@@ -216,6 +217,7 @@ gimp_color_notebook_style_set (GtkWidget *widget,
 
       image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                             icon_size);
+      gimp_help_set_help_data (image, gettext (selector_class->name), NULL);
 
       gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook->notebook),
                                   GTK_WIDGET (list->data),
@@ -460,6 +462,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
 
   image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         DEFAULT_TAB_ICON_SIZE);
+  gimp_help_set_help_data (image, gettext (selector_class->name), NULL);
 
   gtk_notebook_append_page_menu (GTK_NOTEBOOK (notebook->notebook),
                                  page, image, menu_widget);
