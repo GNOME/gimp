@@ -374,7 +374,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     }
 
   if (FAILED ((hresult = IDirectInputDevice8_SetCooperativeLevel (didevice8,
-                                                                  (HWND) gdk_win32_drawable_get_handle (store->window),
+                                                                  (HWND) gdk_win32_window_get_handle (store->window),
                                                                   DISCL_NONEXCLUSIVE | DISCL_BACKGROUND))))
     {
       g_warning ("IDirectInputDevice8::SetCooperativeLevel failed: %s",
