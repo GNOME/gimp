@@ -2028,6 +2028,10 @@ prefs_dialog_new (Gimp       *gimp,
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_icon_theme_select_callback),
                       gimp);
+
+    prefs_check_button_add (object, "prefer-symbolic-icons",
+                            _("Use symbolic icons if available"),
+                            GTK_BOX (vbox2));
   }
 
   /*************************/

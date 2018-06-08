@@ -66,6 +66,7 @@ struct _GimpGuiConfig
   gboolean             prefer_dark_theme;
   gchar               *icon_theme_path;
   gchar               *icon_theme;
+  gboolean             prefer_symbolic_icons;
   gboolean             use_help;
   gboolean             show_help_button;
   gchar               *help_locales;

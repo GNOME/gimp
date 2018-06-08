@@ -93,6 +93,9 @@ themes_init (Gimp *gimp)
   g_signal_connect (config, "notify::prefer-dark-theme",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
+  g_signal_connect (config, "notify::prefer-symbolic-icons",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
 
   themes_theme_change_notify (config, NULL, gimp);
 }
@@ -327,7 +330,9 @@ themes_theme_change_notify (GimpGuiConfig *config,
 {
   GFile    *theme_css;
   GError   *error = NULL;
+  gchar    *css;
   gboolean  prefer_dark_theme;
+  gboolean  prefer_symbolic_icons;
 
   g_object_get (config, "prefer-dark-theme", &prefer_dark_theme, NULL);
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
@@ -342,10 +347,31 @@ themes_theme_change_notify (GimpGuiConfig *config,
     g_print ("Parsing '%s'\n",
              gimp_file_get_utf8_name (theme_css));
 
-  if (! gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (themes_style_provider),
-                                         theme_css, &error))
+  g_object_get (config, "prefer-symbolic-icons", &prefer_symbolic_icons, NULL);
+  if (g_file_load_contents (theme_css, NULL, &css, NULL, NULL, &error))
     {
-      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+      gchar *css2;
+
+      if (prefer_symbolic_icons)
+        css2 = g_strdup_printf ("%s\n%s", css,
+                                "* { -gtk-icon-style: symbolic; } ");
+      else
+        css2 = g_strdup_printf ("%s\n%s", css,
+                                "* { -gtk-icon-style: regular; } ");
+      if (! gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (themes_style_provider),
+                                             css2, -1, &error))
+        {
+          g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+                      gimp_file_get_utf8_name (theme_css), error->message);
+          g_clear_error (&error);
+        }
+
+      g_free (css2);
+      g_free (css);
+    }
+  else
+    {
+      g_printerr ("%s: error loading %s: %s\n", G_STRFUNC,
                   gimp_file_get_utf8_name (theme_css), error->message);
       g_clear_error (&error);
     }
