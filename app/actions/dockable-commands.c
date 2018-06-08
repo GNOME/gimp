@@ -50,9 +50,7 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
-  gimp_dockbook_add_from_dialog_factory (dockbook,
-                                         value /*identifiers*/,
-                                         -1);
+  gimp_dockbook_add_from_dialog_factory (dockbook, value);
 }
 
 void
@@ -63,12 +61,8 @@ dockable_close_tab_cmd_callback (GtkAction *action,
   GimpDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
-    {
-      g_object_ref (dockable);
-      gimp_dockbook_remove (dockbook, dockable);
-      gtk_widget_destroy (GTK_WIDGET (dockable));
-      g_object_unref (dockable);
-    }
+    gtk_container_remove (GTK_CONTAINER (dockbook),
+                          GTK_WIDGET (dockable));
 }
 
 void
@@ -191,17 +185,17 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                    */
                   if (! gimp_dockable_get_dockbook (GIMP_DOCKABLE (new_dockable)))
                     {
-                      gimp_dockbook_add (dockbook, GIMP_DOCKABLE (new_dockable),
-                                         page_num);
+                      gtk_notebook_insert_page (GTK_NOTEBOOK (dockbook),
+                                                new_dockable, NULL,
+                                                page_num);
+                      gtk_widget_show (new_dockable);
 
-                      g_object_ref (dockable);
-                      gimp_dockbook_remove (dockbook, dockable);
-                      gtk_widget_destroy (GTK_WIDGET (dockable));
-                      g_object_unref (dockable);
+                      gtk_container_remove (GTK_CONTAINER (dockbook),
+                                            dockable);
 
                       gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                                      page_num);
-                    }
+                   }
                 }
             }
 

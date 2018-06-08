@@ -133,8 +133,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
         }
 
       widget = gimp_dockbook_add_from_dialog_factory (GIMP_DOCKBOOK (dockbook),
-                                                      identifiers,
-                                                      -1 /*index*/);
+                                                      identifiers);
     }
 
 

@@ -291,14 +291,10 @@ gimp_dock_dropped_cb (GtkWidget *notebook,
    */
   if (gimp_dockbook_get_dock (dockbook) == dock)
     {
-      GList *children;
-      gint   n_books;
-      gint   n_dockables;
+      GList *children    = gtk_container_get_children (GTK_CONTAINER (dockable));
+      gint   n_dockables = g_list_length (children);
+      gint   n_books     = g_list_length (gimp_dock_get_dockbooks (dock));
 
-      n_books = g_list_length (gimp_dock_get_dockbooks (dock));
-
-      children = gtk_container_get_children (GTK_CONTAINER (gimp_dockable_get_dockbook (dockable)));
-      n_dockables = g_list_length (children);
       g_list_free (children);
 
       if (n_books == 1 && n_dockables == 1)
@@ -315,7 +311,7 @@ gimp_dock_dropped_cb (GtkWidget *notebook,
   gimp_dock_add_book (dock, GIMP_DOCKBOOK (new_dockbook), insert_index);
 
   /* Add the dockable to new new dockbook */
-  gimp_dockbook_add (GIMP_DOCKBOOK (new_dockbook), dockable, -1);
+  gtk_notebook_append_page (GTK_NOTEBOOK (new_dockbook), child, NULL);
   g_object_unref (dockable);
 
   return TRUE;
@@ -560,14 +556,6 @@ gimp_dock_get_vbox (GimpDock *dock)
   return dock->p->paned_vbox;
 }
 
-gint
-gimp_dock_get_id (GimpDock *dock)
-{
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), 0);
-
-  return dock->p->ID;
-}
-
 void
 gimp_dock_set_id (GimpDock *dock,
                   gint      ID)
@@ -577,33 +565,12 @@ gimp_dock_set_id (GimpDock *dock,
   dock->p->ID = ID;
 }
 
-void
-gimp_dock_add (GimpDock     *dock,
-               GimpDockable *dockable,
-               gint          section,
-               gint          position)
+gint
+gimp_dock_get_id (GimpDock *dock)
 {
-  GimpDockbook *dockbook;
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), 0);
 
-  g_return_if_fail (GIMP_IS_DOCK (dock));
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (gimp_dockable_get_dockbook (dockable) == NULL);
-
-  dockbook = GIMP_DOCKBOOK (dock->p->dockbooks->data);
-
-  gimp_dockbook_add (dockbook, dockable, position);
-}
-
-void
-gimp_dock_remove (GimpDock     *dock,
-                  GimpDockable *dockable)
-{
-  g_return_if_fail (GIMP_IS_DOCK (dock));
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (gimp_dockable_get_dockbook (dockable) != NULL);
-  g_return_if_fail (gimp_dockbook_get_dock (gimp_dockable_get_dockbook (dockable)) == dock);
-
-  gimp_dockbook_remove (gimp_dockable_get_dockbook (dockable), dockable);
+  return dock->p->ID;
 }
 
 void

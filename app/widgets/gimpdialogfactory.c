@@ -483,8 +483,9 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
   /*  create the dialog if it was not found  */
   if (! dialog)
     {
-      GtkWidget *dock              = NULL;
-      GtkWidget *dock_window       = NULL;
+      GtkWidget *dock        = NULL;
+      GtkWidget *dockbook    = NULL;
+      GtkWidget *dock_window = NULL;
 
       /* What follows is special-case code for some entires. At some
        * point we might want to abstract this block of code away.
@@ -493,16 +494,12 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         {
           if (entry->dockable)
             {
-              GtkWidget *dockbook;
-
               /*  It doesn't make sense to have a dockable without a dock
                *  so create one. Create a new dock _before_ creating the
                *  dialog. We do this because the new dockable needs to be
                *  created in its dock's context.
                */
-              dock     = gimp_dock_with_window_new (factory,
-                                                    monitor,
-                                                    FALSE /*toolbox*/);
+              dock = gimp_dock_with_window_new (factory, monitor, FALSE);
               dockbook = gimp_dockbook_new (factory->p->menu_factory);
 
               gimp_dock_add_book (GIMP_DOCK (dock),
@@ -565,8 +562,9 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
             {
               if (GIMP_IS_DOCKABLE (dialog))
                 {
-                  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dialog),
-                                 0, 0);
+                  gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
+                                            dialog, NULL);
+                  gtk_widget_show (dialog);
 
                   gtk_widget_show (dock);
                 }

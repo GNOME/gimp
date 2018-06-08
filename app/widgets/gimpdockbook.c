@@ -86,45 +86,44 @@ struct _GimpDockbookPrivate
 };
 
 
-static void         gimp_dockbook_dispose               (GObject        *object);
-static void         gimp_dockbook_finalize              (GObject        *object);
+static void         gimp_dockbook_finalize          (GObject        *object);
 
-static gboolean     gimp_dockbook_drag_motion           (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         gint            x,
-                                                         gint            y,
-                                                         guint           time);
-static gboolean     gimp_dockbook_drag_drop             (GtkWidget      *widget,
-                                                         GdkDragContext *context,
-                                                         gint            x,
-                                                         gint            y,
-                                                         guint           time);
-static gboolean     gimp_dockbook_popup_menu            (GtkWidget      *widget);
+static gboolean     gimp_dockbook_drag_motion       (GtkWidget      *widget,
+                                                     GdkDragContext *context,
+                                                     gint            x,
+                                                     gint            y,
+                                                     guint           time);
+static gboolean     gimp_dockbook_drag_drop         (GtkWidget      *widget,
+                                                     GdkDragContext *context,
+                                                     gint            x,
+                                                     gint            y,
+                                                     guint           time);
+static gboolean     gimp_dockbook_popup_menu        (GtkWidget      *widget);
 
-static GtkNotebook *gimp_dockbook_create_window         (GtkNotebook    *notebook,
-                                                         GtkWidget      *page,
-                                                         gint            x,
-                                                         gint            y);
-static void         gimp_dockbook_page_added            (GtkNotebook    *notebook,
-                                                         GtkWidget      *child,
-                                                         guint           page_num);
-static void         gimp_dockbook_page_removed          (GtkNotebook    *notebook,
-                                                         GtkWidget      *child,
-                                                         guint           page_num);
-static void         gimp_dockbook_page_reordered        (GtkNotebook    *notebook,
-                                                         GtkWidget      *child,
-                                                         guint           page_num);
+static GtkNotebook *gimp_dockbook_create_window     (GtkNotebook    *notebook,
+                                                     GtkWidget      *page,
+                                                     gint            x,
+                                                     gint            y);
+static void         gimp_dockbook_page_added        (GtkNotebook    *notebook,
+                                                     GtkWidget      *child,
+                                                     guint           page_num);
+static void         gimp_dockbook_page_removed      (GtkNotebook    *notebook,
+                                                     GtkWidget      *child,
+                                                     guint           page_num);
+static void         gimp_dockbook_page_reordered    (GtkNotebook    *notebook,
+                                                     GtkWidget      *child,
+                                                     guint           page_num);
 
-static gboolean     gimp_dockbook_menu_button_press     (GimpDockbook   *dockbook,
-                                                         GdkEventButton *bevent,
-                                                         GtkWidget      *button);
-static gboolean     gimp_dockbook_show_menu             (GimpDockbook   *dockbook);
-static void         gimp_dockbook_menu_end              (GimpDockable   *dockable);
-static void         gimp_dockbook_tab_locked_notify     (GimpDockable   *dockable,
-                                                         GParamSpec     *pspec,
-                                                         GimpDockbook   *dockbook);
-static void         gimp_dockbook_help_func             (const gchar    *help_id,
-                                                         gpointer        help_data);
+static gboolean     gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
+                                                     GdkEventButton *bevent,
+                                                     GtkWidget      *button);
+static gboolean     gimp_dockbook_show_menu         (GimpDockbook   *dockbook);
+static void         gimp_dockbook_menu_end          (GimpDockable   *dockable);
+static void         gimp_dockbook_tab_locked_notify (GimpDockable   *dockable,
+                                                     GParamSpec     *pspec,
+                                                     GimpDockbook   *dockbook);
+static void         gimp_dockbook_help_func         (const gchar    *help_id,
+                                                     gpointer        help_data);
 
 
 G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
@@ -173,7 +172,6 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCKABLE);
 
-  object_class->dispose          = gimp_dockbook_dispose;
   object_class->finalize         = gimp_dockbook_finalize;
 
   widget_class->drag_motion      = gimp_dockbook_drag_motion;
@@ -245,30 +243,6 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   g_signal_connect_swapped (dockbook->p->menu_button, "button-press-event",
                             G_CALLBACK (gimp_dockbook_menu_button_press),
                             dockbook);
-}
-
-static void
-gimp_dockbook_dispose (GObject *object)
-{
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
-  GList        *children;
-  GList        *list;
-
-  children = gtk_container_get_children (GTK_CONTAINER (object));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      GimpDockable *dockable = list->data;
-
-      g_object_ref (dockable);
-      gimp_dockbook_remove (dockbook, dockable);
-      gtk_widget_destroy (GTK_WIDGET (dockable));
-      g_object_unref (dockable);
-    }
-
-  g_list_free (children);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -685,47 +659,16 @@ gimp_dockbook_get_ui_manager (GimpDockbook *dockbook)
   return dockbook->p->ui_manager;
 }
 
-void
-gimp_dockbook_add (GimpDockbook *dockbook,
-                   GimpDockable *dockable,
-                   gint          position)
-{
-  g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-  g_return_if_fail (dockbook->p->dock != NULL);
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (gimp_dockable_get_dockbook (dockable) == NULL);
-
-  GIMP_LOG (DND, "Adding GimpDockable %p to GimpDockbook %p", dockable, dockbook);
-
-  if (position == -1)
-    {
-      gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
-                                GTK_WIDGET (dockable),
-                                NULL);
-    }
-  else
-    {
-      gtk_notebook_insert_page (GTK_NOTEBOOK (dockbook),
-                                GTK_WIDGET (dockable),
-                                NULL,
-                                position);
-    }
-
-  gtk_widget_show (GTK_WIDGET (dockable));
-}
-
 /**
  * gimp_dockbook_add_from_dialog_factory:
  * @dockbook:    The #DockBook
  * @identifiers: The dockable identifier(s)
- * @position:    The insert position
  *
  * Add a dockable from the dialog factory associated with the dockbook.
  **/
 GtkWidget *
 gimp_dockbook_add_from_dialog_factory (GimpDockbook *dockbook,
-                                       const gchar  *identifiers,
-                                       gint          position)
+                                       const gchar  *identifiers)
 {
   GtkWidget *dockable;
   GimpDock  *dock;
@@ -754,22 +697,10 @@ gimp_dockbook_add_from_dialog_factory (GimpDockbook *dockbook,
    *  attached to a dockbook.
    */
   if (dockable && ! gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
-    gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), position);
+    gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
+                              dockable, NULL);
 
   return dockable;
-}
-
-void
-gimp_dockbook_remove (GimpDockbook *dockbook,
-                      GimpDockable *dockable)
-{
-  g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (gimp_dockable_get_dockbook (dockable) == dockbook);
-
-  GIMP_LOG (DND, "Removing GimpDockable %p from GimpDockbook %p", dockable, dockbook);
-
-  gtk_container_remove (GTK_CONTAINER (dockbook), GTK_WIDGET (dockable));
 }
 
 /**

@@ -304,8 +304,10 @@ gimp_dock_columns_dropped_cb (GtkWidget *notebook,
   /* Move the dockable to the new dockbook */
   g_object_ref (new_dockbook);
   g_object_ref (dockable);
+
   gtk_notebook_detach_tab (GTK_NOTEBOOK (notebook), child);
-  gimp_dockbook_add (GIMP_DOCKBOOK (new_dockbook), dockable, -1);
+  gtk_notebook_append_page (GTK_NOTEBOOK (new_dockbook), child, NULL);
+
   g_object_unref (dockable);
   g_object_unref (new_dockbook);
 
