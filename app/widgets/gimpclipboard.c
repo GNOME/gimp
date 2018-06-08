@@ -244,11 +244,15 @@ gimp_clipboard_has_image (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                               &&
-      gtk_clipboard_get_owner (clipboard)  != G_OBJECT (gimp) &&
-      gimp_clipboard_wait_for_image (gimp) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      return TRUE;
+      if (gimp_clipboard_wait_for_image (gimp) != GDK_NONE)
+        {
+          return TRUE;
+        }
+
+      return FALSE;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -279,11 +283,15 @@ gimp_clipboard_has_buffer (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                                &&
-      gtk_clipboard_get_owner (clipboard)   != G_OBJECT (gimp) &&
-      gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      return TRUE;
+      if (gimp_clipboard_wait_for_buffer (gimp) != GDK_NONE)
+        {
+          return TRUE;
+        }
+
+      return FALSE;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -312,11 +320,15 @@ gimp_clipboard_has_svg (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                              &&
-      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
-      gimp_clipboard_wait_for_svg (gimp)  != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      return TRUE;
+      if (gimp_clipboard_wait_for_svg (gimp)  != GDK_NONE)
+        {
+          return TRUE;
+        }
+
+      return FALSE;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -345,11 +357,15 @@ gimp_clipboard_has_curve (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                              &&
-      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
-      gimp_clipboard_wait_for_curve (gimp)  != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      return TRUE;
+      if (gimp_clipboard_wait_for_curve (gimp) != GDK_NONE)
+        {
+          return TRUE;
+        }
+
+      return FALSE;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -402,7 +418,6 @@ gimp_clipboard_get_image (Gimp *gimp)
 {
   GimpClipboard *gimp_clip;
   GtkClipboard  *clipboard;
-  GdkAtom        atom;
   GimpImage     *image = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -410,24 +425,30 @@ gimp_clipboard_get_image (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                                        &&
-      gtk_clipboard_get_owner (clipboard)           != G_OBJECT (gimp) &&
-      (atom = gimp_clipboard_wait_for_image (gimp)) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      GtkSelectionData *data;
+      GdkAtom atom = gimp_clipboard_wait_for_image (gimp);
 
-      gimp_set_busy (gimp);
-
-      data = gtk_clipboard_wait_for_contents (clipboard, atom);
-
-      if (data)
+      if (atom != GDK_NONE)
         {
-          image = gimp_selection_data_get_xcf (data, gimp);
+          GtkSelectionData *data;
 
-          gtk_selection_data_free (data);
+          gimp_set_busy (gimp);
+
+          data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+          if (data)
+            {
+              image = gimp_selection_data_get_xcf (data, gimp);
+
+              gtk_selection_data_free (data);
+            }
+
+          gimp_unset_busy (gimp);
         }
 
-      gimp_unset_busy (gimp);
+      return image;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -456,7 +477,6 @@ gimp_clipboard_get_buffer (Gimp *gimp)
 {
   GimpClipboard *gimp_clip;
   GtkClipboard  *clipboard;
-  GdkAtom        atom;
   GimpBuffer    *buffer = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -464,31 +484,37 @@ gimp_clipboard_get_buffer (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                                         &&
-      gtk_clipboard_get_owner (clipboard)            != G_OBJECT (gimp) &&
-      (atom = gimp_clipboard_wait_for_buffer (gimp)) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      GtkSelectionData *data;
+      GdkAtom atom = gimp_clipboard_wait_for_buffer (gimp);
 
-      gimp_set_busy (gimp);
-
-      data = gtk_clipboard_wait_for_contents (clipboard, atom);
-
-      if (data)
+      if (atom != GDK_NONE)
         {
-          GdkPixbuf *pixbuf = gtk_selection_data_get_pixbuf (data);
+          GtkSelectionData *data;
 
-          gtk_selection_data_free (data);
+          gimp_set_busy (gimp);
 
-          if (pixbuf)
+          data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+          if (data)
             {
-              buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"),
-                                                    0, 0);
-              g_object_unref (pixbuf);
+              GdkPixbuf *pixbuf = gtk_selection_data_get_pixbuf (data);
+
+              gtk_selection_data_free (data);
+
+              if (pixbuf)
+                {
+                  buffer = gimp_buffer_new_from_pixbuf (pixbuf, _("Clipboard"),
+                                                        0, 0);
+                  g_object_unref (pixbuf);
+                }
             }
+
+          gimp_unset_busy (gimp);
         }
 
-      gimp_unset_busy (gimp);
+      return buffer;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -518,38 +544,45 @@ gimp_clipboard_get_svg (Gimp  *gimp,
 {
   GimpClipboard *gimp_clip;
   GtkClipboard  *clipboard;
-  GdkAtom        atom;
   gchar         *svg = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (svg_length != NULL, NULL);
 
+  *svg_length = 0;
+
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                                      &&
-      gtk_clipboard_get_owner (clipboard)         != G_OBJECT (gimp) &&
-      (atom = gimp_clipboard_wait_for_svg (gimp)) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      GtkSelectionData *data;
+      GdkAtom atom = gimp_clipboard_wait_for_svg (gimp);
 
-      gimp_set_busy (gimp);
-
-      data = gtk_clipboard_wait_for_contents (clipboard, atom);
-
-      if (data)
+      if (atom != GDK_NONE)
         {
-          const guchar *stream;
+          GtkSelectionData *data;
 
-          stream = gimp_selection_data_get_stream (data, svg_length);
+          gimp_set_busy (gimp);
 
-          if (stream)
-            svg = g_memdup (stream, *svg_length);
+          data = gtk_clipboard_wait_for_contents (clipboard, atom);
 
-          gtk_selection_data_free (data);
+          if (data)
+            {
+              const guchar *stream;
+
+              stream = gimp_selection_data_get_stream (data, svg_length);
+
+              if (stream)
+                svg = g_memdup (stream, *svg_length);
+
+              gtk_selection_data_free (data);
+            }
+
+          gimp_unset_busy (gimp);
         }
 
-      gimp_unset_busy (gimp);
+      return svg;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
@@ -580,7 +613,6 @@ gimp_clipboard_get_curve (Gimp *gimp)
 {
   GimpClipboard *gimp_clip;
   GtkClipboard  *clipboard;
-  GdkAtom        atom;
   GimpCurve     *curve = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -588,24 +620,30 @@ gimp_clipboard_get_curve (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard                                                        &&
-      gtk_clipboard_get_owner (clipboard)           != G_OBJECT (gimp) &&
-      (atom = gimp_clipboard_wait_for_curve (gimp)) != GDK_NONE)
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      GtkSelectionData *data;
+      GdkAtom atom = gimp_clipboard_wait_for_curve (gimp);
 
-      gimp_set_busy (gimp);
-
-      data = gtk_clipboard_wait_for_contents (clipboard, atom);
-
-      if (data)
+      if (atom != GDK_NONE)
         {
-          curve = gimp_selection_data_get_curve (data);
+          GtkSelectionData *data;
 
-          gtk_selection_data_free (data);
+          gimp_set_busy (gimp);
+
+          data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
+          if (data)
+            {
+              curve = gimp_selection_data_get_curve (data);
+
+              gtk_selection_data_free (data);
+            }
+
+          gimp_unset_busy (gimp);
         }
 
-      gimp_unset_busy (gimp);
+      return curve;
     }
 
   gimp_clip = gimp_clipboard_get (gimp);
