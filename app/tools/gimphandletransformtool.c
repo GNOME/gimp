@@ -83,18 +83,19 @@ static void   gimp_handle_transform_tool_modifier_key   (GimpTool               
                                                          GdkModifierType           state,
                                                          GimpDisplay              *display);
 
-static void   gimp_handle_transform_tool_prepare        (GimpTransformTool        *tr_tool);
-static GimpToolWidget *
-              gimp_handle_transform_tool_get_widget     (GimpTransformTool        *tr_tool);
-static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformTool        *tr_tool,
-                                                         GimpToolWidget           *widget);
 static gchar *gimp_handle_transform_tool_get_undo_desc  (GimpTransformTool        *tr_tool);
+
+static void   gimp_handle_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
+static GimpToolWidget *
+              gimp_handle_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
+static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformGridTool    *tg_tool,
+                                                         GimpToolWidget           *widget);
 
 static void   gimp_handle_transform_tool_recalc_points  (GimpGenericTransformTool *generic,
                                                          GimpToolWidget           *widget);
 
 static void   gimp_handle_transform_tool_widget_changed (GimpToolWidget           *widget,
-                                                         GimpTransformTool        *tr_tool);
+                                                         GimpTransformGridTool    *tg_tool);
 
 
 G_DEFINE_TYPE (GimpHandleTransformTool, gimp_handle_transform_tool,
@@ -125,26 +126,26 @@ static void
 gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
 {
   GimpToolClass                 *tool_class    = GIMP_TOOL_CLASS (klass);
-  GimpTransformToolClass        *trans_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass        *tr_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformGridToolClass    *tg_class   = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
   tool_class->modifier_key     = gimp_handle_transform_tool_modifier_key;
 
-  trans_class->prepare         = gimp_handle_transform_tool_prepare;
-  trans_class->get_widget      = gimp_handle_transform_tool_get_widget;
-  trans_class->recalc_matrix   = gimp_handle_transform_tool_recalc_matrix;
-  trans_class->get_undo_desc   = gimp_handle_transform_tool_get_undo_desc;
+  tr_class->get_undo_desc      = gimp_handle_transform_tool_get_undo_desc;
+
+  tg_class->prepare            = gimp_handle_transform_tool_prepare;
+  tg_class->get_widget         = gimp_handle_transform_tool_get_widget;
+  tg_class->recalc_matrix      = gimp_handle_transform_tool_recalc_matrix;
 
   generic_class->recalc_points = gimp_handle_transform_tool_recalc_points;
+
+  tr_class->progress_text      = _("Handle transformation");
 }
 
 static void
 gimp_handle_transform_tool_init (GimpHandleTransformTool *ht_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (ht_tool);
-
-  tr_tool->progress_text = _("Handle transformation");
-
   ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_ADD_TRANSFORM;
 }
 
@@ -202,39 +203,48 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
                                                 state, display);
 }
 
-static void
-gimp_handle_transform_tool_prepare (GimpTransformTool *tr_tool)
+static gchar *
+gimp_handle_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
 {
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->prepare (tr_tool);
+  return g_strdup (C_("undo-type", "Handle transform"));
+}
 
-  tr_tool->trans_info[X0]        = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y0]        = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X1]        = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y1]        = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X2]        = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y2]        = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[X3]        = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y3]        = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[OX0]       = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[OY0]       = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[OX1]       = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[OY1]       = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[OX2]       = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[OY2]       = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[OX3]       = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[OY3]       = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[N_HANDLES] = 0;
+static void
+gimp_handle_transform_tool_prepare (GimpTransformGridTool *tg_tool)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
+
+  tg_tool->trans_info[X0]        = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[Y0]        = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[X1]        = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[Y1]        = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[X2]        = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[Y2]        = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[X3]        = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[Y3]        = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[OX0]       = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[OY0]       = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[OX1]       = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[OY1]       = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[OX2]       = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[OY2]       = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[OX3]       = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[OY3]       = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[N_HANDLES] = 0;
 }
 
 static GimpToolWidget *
-gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
+gimp_handle_transform_tool_get_widget (GimpTransformGridTool *tg_tool)
 {
-  GimpTool                   *tool  = GIMP_TOOL (tr_tool);
+  GimpTool                   *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool          *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpHandleTransformOptions *options;
-  GimpDisplayShell           *shell = gimp_display_get_shell (tool->display);
+  GimpDisplayShell           *shell   = gimp_display_get_shell (tool->display);
   GimpToolWidget             *widget;
 
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
 
   widget = gimp_tool_handle_grid_new (shell,
                                       tr_tool->x1,
@@ -243,23 +253,23 @@ gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
                                       tr_tool->y2);
 
   g_object_set (widget,
-                "n-handles", (gint) tr_tool->trans_info[N_HANDLES],
-                "orig-x1",   tr_tool->trans_info[OX0],
-                "orig-y1",   tr_tool->trans_info[OY0],
-                "orig-x2",   tr_tool->trans_info[OX1],
-                "orig-y2",   tr_tool->trans_info[OY1],
-                "orig-x3",   tr_tool->trans_info[OX2],
-                "orig-y3",   tr_tool->trans_info[OY2],
-                "orig-x4",   tr_tool->trans_info[OX3],
-                "orig-y4",   tr_tool->trans_info[OY3],
-                "trans-x1",  tr_tool->trans_info[X0],
-                "trans-y1",  tr_tool->trans_info[Y0],
-                "trans-x2",  tr_tool->trans_info[X1],
-                "trans-y2",  tr_tool->trans_info[Y1],
-                "trans-x3",  tr_tool->trans_info[X2],
-                "trans-y3",  tr_tool->trans_info[Y2],
-                "trans-x4",  tr_tool->trans_info[X3],
-                "trans-y4",  tr_tool->trans_info[Y3],
+                "n-handles", (gint) tg_tool->trans_info[N_HANDLES],
+                "orig-x1",   tg_tool->trans_info[OX0],
+                "orig-y1",   tg_tool->trans_info[OY0],
+                "orig-x2",   tg_tool->trans_info[OX1],
+                "orig-y2",   tg_tool->trans_info[OY1],
+                "orig-x3",   tg_tool->trans_info[OX2],
+                "orig-y3",   tg_tool->trans_info[OY2],
+                "orig-x4",   tg_tool->trans_info[OX3],
+                "orig-y4",   tg_tool->trans_info[OY3],
+                "trans-x1",  tg_tool->trans_info[X0],
+                "trans-y1",  tg_tool->trans_info[Y0],
+                "trans-x2",  tg_tool->trans_info[X1],
+                "trans-y2",  tg_tool->trans_info[Y1],
+                "trans-x3",  tg_tool->trans_info[X2],
+                "trans-y3",  tg_tool->trans_info[Y2],
+                "trans-x4",  tg_tool->trans_info[X3],
+                "trans-y4",  tg_tool->trans_info[Y3],
                 NULL);
 
   g_object_bind_property (G_OBJECT (options), "handle-mode",
@@ -269,99 +279,95 @@ gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_handle_transform_tool_widget_changed),
-                    tr_tool);
+                    tg_tool);
 
   return widget;
 }
 
 static void
-gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                                          GimpToolWidget    *widget)
+gimp_handle_transform_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
+                                          GimpToolWidget        *widget)
 {
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->recalc_matrix (tr_tool, widget);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->recalc_matrix (tg_tool, widget);
 
   if (widget)
     g_object_set (widget,
                   "transform",   &tr_tool->transform,
                   "show-guides", tr_tool->transform_valid,
-                  "n-handles",   (gint) tr_tool->trans_info[N_HANDLES],
-                  "orig-x1",     tr_tool->trans_info[OX0],
-                  "orig-y1",     tr_tool->trans_info[OY0],
-                  "orig-x2",     tr_tool->trans_info[OX1],
-                  "orig-y2",     tr_tool->trans_info[OY1],
-                  "orig-x3",     tr_tool->trans_info[OX2],
-                  "orig-y3",     tr_tool->trans_info[OY2],
-                  "orig-x4",     tr_tool->trans_info[OX3],
-                  "orig-y4",     tr_tool->trans_info[OY3],
-                  "trans-x1",    tr_tool->trans_info[X0],
-                  "trans-y1",    tr_tool->trans_info[Y0],
-                  "trans-x2",    tr_tool->trans_info[X1],
-                  "trans-y2",    tr_tool->trans_info[Y1],
-                  "trans-x3",    tr_tool->trans_info[X2],
-                  "trans-y3",    tr_tool->trans_info[Y2],
-                  "trans-x4",    tr_tool->trans_info[X3],
-                  "trans-y4",    tr_tool->trans_info[Y3],
+                  "n-handles",   (gint) tg_tool->trans_info[N_HANDLES],
+                  "orig-x1",     tg_tool->trans_info[OX0],
+                  "orig-y1",     tg_tool->trans_info[OY0],
+                  "orig-x2",     tg_tool->trans_info[OX1],
+                  "orig-y2",     tg_tool->trans_info[OY1],
+                  "orig-x3",     tg_tool->trans_info[OX2],
+                  "orig-y3",     tg_tool->trans_info[OY2],
+                  "orig-x4",     tg_tool->trans_info[OX3],
+                  "orig-y4",     tg_tool->trans_info[OY3],
+                  "trans-x1",    tg_tool->trans_info[X0],
+                  "trans-y1",    tg_tool->trans_info[Y0],
+                  "trans-x2",    tg_tool->trans_info[X1],
+                  "trans-y2",    tg_tool->trans_info[Y1],
+                  "trans-x3",    tg_tool->trans_info[X2],
+                  "trans-y3",    tg_tool->trans_info[Y2],
+                  "trans-x4",    tg_tool->trans_info[X3],
+                  "trans-y4",    tg_tool->trans_info[Y3],
                   NULL);
-}
-
-static gchar *
-gimp_handle_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
-{
-  return g_strdup (C_("undo-type", "Handle transform"));
 }
 
 static void
 gimp_handle_transform_tool_recalc_points (GimpGenericTransformTool *generic,
                                           GimpToolWidget           *widget)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (generic);
+  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
 
-  generic->input_points[0]  = (GimpVector2) {tr_tool->trans_info[OX0],
-                                             tr_tool->trans_info[OY0]};
-  generic->input_points[1]  = (GimpVector2) {tr_tool->trans_info[OX1],
-                                             tr_tool->trans_info[OY1]};
-  generic->input_points[2]  = (GimpVector2) {tr_tool->trans_info[OX2],
-                                             tr_tool->trans_info[OY2]};
-  generic->input_points[3]  = (GimpVector2) {tr_tool->trans_info[OX3],
-                                             tr_tool->trans_info[OY3]};
+  generic->input_points[0]  = (GimpVector2) {tg_tool->trans_info[OX0],
+                                             tg_tool->trans_info[OY0]};
+  generic->input_points[1]  = (GimpVector2) {tg_tool->trans_info[OX1],
+                                             tg_tool->trans_info[OY1]};
+  generic->input_points[2]  = (GimpVector2) {tg_tool->trans_info[OX2],
+                                             tg_tool->trans_info[OY2]};
+  generic->input_points[3]  = (GimpVector2) {tg_tool->trans_info[OX3],
+                                             tg_tool->trans_info[OY3]};
 
-  generic->output_points[0] = (GimpVector2) {tr_tool->trans_info[X0],
-                                             tr_tool->trans_info[Y0]};
-  generic->output_points[1] = (GimpVector2) {tr_tool->trans_info[X1],
-                                             tr_tool->trans_info[Y1]};
-  generic->output_points[2] = (GimpVector2) {tr_tool->trans_info[X2],
-                                             tr_tool->trans_info[Y2]};
-  generic->output_points[3] = (GimpVector2) {tr_tool->trans_info[X3],
-                                             tr_tool->trans_info[Y3]};
+  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
+                                             tg_tool->trans_info[Y0]};
+  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
+                                             tg_tool->trans_info[Y1]};
+  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
+                                             tg_tool->trans_info[Y2]};
+  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
+                                             tg_tool->trans_info[Y3]};
 }
 
 static void
-gimp_handle_transform_tool_widget_changed (GimpToolWidget    *widget,
-                                           GimpTransformTool *tr_tool)
+gimp_handle_transform_tool_widget_changed (GimpToolWidget        *widget,
+                                           GimpTransformGridTool *tg_tool)
 {
   gint n_handles;
 
   g_object_get (widget,
                 "n-handles", &n_handles,
-                "orig-x1",   &tr_tool->trans_info[OX0],
-                "orig-y1",   &tr_tool->trans_info[OY0],
-                "orig-x2",   &tr_tool->trans_info[OX1],
-                "orig-y2",   &tr_tool->trans_info[OY1],
-                "orig-x3",   &tr_tool->trans_info[OX2],
-                "orig-y3",   &tr_tool->trans_info[OY2],
-                "orig-x4",   &tr_tool->trans_info[OX3],
-                "orig-y4",   &tr_tool->trans_info[OY3],
-                "trans-x1",  &tr_tool->trans_info[X0],
-                "trans-y1",  &tr_tool->trans_info[Y0],
-                "trans-x2",  &tr_tool->trans_info[X1],
-                "trans-y2",  &tr_tool->trans_info[Y1],
-                "trans-x3",  &tr_tool->trans_info[X2],
-                "trans-y3",  &tr_tool->trans_info[Y2],
-                "trans-x4",  &tr_tool->trans_info[X3],
-                "trans-y4",  &tr_tool->trans_info[Y3],
+                "orig-x1",   &tg_tool->trans_info[OX0],
+                "orig-y1",   &tg_tool->trans_info[OY0],
+                "orig-x2",   &tg_tool->trans_info[OX1],
+                "orig-y2",   &tg_tool->trans_info[OY1],
+                "orig-x3",   &tg_tool->trans_info[OX2],
+                "orig-y3",   &tg_tool->trans_info[OY2],
+                "orig-x4",   &tg_tool->trans_info[OX3],
+                "orig-y4",   &tg_tool->trans_info[OY3],
+                "trans-x1",  &tg_tool->trans_info[X0],
+                "trans-y1",  &tg_tool->trans_info[Y0],
+                "trans-x2",  &tg_tool->trans_info[X1],
+                "trans-y2",  &tg_tool->trans_info[Y1],
+                "trans-x3",  &tg_tool->trans_info[X2],
+                "trans-y3",  &tg_tool->trans_info[Y2],
+                "trans-x4",  &tg_tool->trans_info[X3],
+                "trans-y4",  &tg_tool->trans_info[Y3],
                 NULL);
 
-  tr_tool->trans_info[N_HANDLES] = n_handles;
+  tg_tool->trans_info[N_HANDLES] = n_handles;
 
-  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
 }

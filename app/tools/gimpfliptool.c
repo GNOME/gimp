@@ -54,37 +54,38 @@
 
 /*  local function prototypes  */
 
-static GimpDisplay         * gimp_flip_tool_has_image     (GimpTool           *tool,
-                                                           GimpImage          *image);
-static gboolean              gimp_flip_tool_initialize    (GimpTool           *tool,
-                                                           GimpDisplay        *display,
-                                                           GError            **error);
-static void                  gimp_flip_tool_modifier_key  (GimpTool           *tool,
-                                                           GdkModifierType     key,
-                                                           gboolean            press,
-                                                           GdkModifierType     state,
-                                                           GimpDisplay        *display);
-static void                  gimp_flip_tool_oper_update   (GimpTool           *tool,
-                                                           const GimpCoords   *coords,
-                                                           GdkModifierType     state,
-                                                           gboolean            proximity,
-                                                           GimpDisplay        *display);
-static void                  gimp_flip_tool_cursor_update (GimpTool           *tool,
-                                                           const GimpCoords   *coords,
-                                                           GdkModifierType     state,
-                                                           GimpDisplay        *display);
+static void         gimp_flip_tool_button_press  (GimpTool             *tool,
+                                                  const GimpCoords     *coords,
+                                                  guint32               time,
+                                                  GdkModifierType       state,
+                                                  GimpButtonPressType   press_type,
+                                                  GimpDisplay          *display);
+static void         gimp_flip_tool_modifier_key  (GimpTool             *tool,
+                                                  GdkModifierType       key,
+                                                  gboolean              press,
+                                                  GdkModifierType       state,
+                                                  GimpDisplay          *display);
+static void         gimp_flip_tool_oper_update   (GimpTool             *tool,
+                                                  const GimpCoords     *coords,
+                                                  GdkModifierType       state,
+                                                  gboolean              proximity,
+                                                  GimpDisplay          *display);
+static void         gimp_flip_tool_cursor_update (GimpTool             *tool,
+                                                  const GimpCoords     *coords,
+                                                  GdkModifierType       state,
+                                                  GimpDisplay          *display);
 
-static void                  gimp_flip_tool_draw          (GimpDrawTool       *draw_tool);
+static void         gimp_flip_tool_draw          (GimpDrawTool         *draw_tool);
 
-static gchar               * gimp_flip_tool_get_undo_desc (GimpTransformTool  *tool);
-static GeglBuffer          * gimp_flip_tool_transform     (GimpTransformTool  *tool,
-                                                           GimpItem           *item,
-                                                           GeglBuffer         *orig_buffer,
-                                                           gint                orig_offset_x,
-                                                           gint                orig_offset_y,
-                                                           GimpColorProfile  **buffer_profile,
-                                                           gint               *new_offset_x,
-                                                           gint               *new_offset_y);
+static gchar      * gimp_flip_tool_get_undo_desc (GimpTransformTool    *tr_tool);
+static GeglBuffer * gimp_flip_tool_transform     (GimpTransformTool    *tr_tool,
+                                                  GimpItem             *item,
+                                                  GeglBuffer           *orig_buffer,
+                                                  gint                  orig_offset_x,
+                                                  gint                  orig_offset_y,
+                                                  GimpColorProfile    **buffer_profile,
+                                                  gint                 *new_offset_x,
+                                                  gint                 *new_offset_y);
 
 static GimpOrientationType   gimp_flip_tool_get_flip_type  (GimpFlipTool      *flip);
 
@@ -117,20 +118,19 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
 {
   GimpToolClass          *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass      *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpTransformToolClass *trans_class     = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass *tr_class        = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->has_image      = gimp_flip_tool_has_image;
-  tool_class->initialize     = gimp_flip_tool_initialize;
-  tool_class->modifier_key   = gimp_flip_tool_modifier_key;
-  tool_class->oper_update    = gimp_flip_tool_oper_update;
-  tool_class->cursor_update  = gimp_flip_tool_cursor_update;
+  tool_class->button_press  = gimp_flip_tool_button_press;
+  tool_class->modifier_key  = gimp_flip_tool_modifier_key;
+  tool_class->oper_update   = gimp_flip_tool_oper_update;
+  tool_class->cursor_update = gimp_flip_tool_cursor_update;
 
-  draw_tool_class->draw      = gimp_flip_tool_draw;
+  draw_tool_class->draw     = gimp_flip_tool_draw;
 
-  trans_class->get_undo_desc = gimp_flip_tool_get_undo_desc;
-  trans_class->transform     = gimp_flip_tool_transform;
+  tr_class->get_undo_desc   = gimp_flip_tool_get_undo_desc;
+  tr_class->transform       = gimp_flip_tool_transform;
 
-  trans_class->ok_button_label = _("_Flip");
+  tr_class->progress_text   = _("Flipping");
 }
 
 static void
@@ -151,26 +151,17 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   flip_tool->guide = NULL;
 }
 
-static GimpDisplay *
-gimp_flip_tool_has_image (GimpTool  *tool,
-                          GimpImage *image)
+static void
+gimp_flip_tool_button_press (GimpTool            *tool,
+                             const GimpCoords    *coords,
+                             guint32              time,
+                             GdkModifierType      state,
+                             GimpButtonPressType  press_type,
+                             GimpDisplay         *display)
 {
-  /* avoid committing, and hence flipping, when changing tools */
-  return NULL;
-}
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-static gboolean
-gimp_flip_tool_initialize (GimpTool     *tool,
-                           GimpDisplay  *display,
-                           GError      **error)
-{
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
-
-  /* let GimpTransformTool take control over the draw tool while it's active */
-  if (gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_stop (draw_tool);
-
-  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
+  gimp_transform_tool_transform (tr_tool, display);
 }
 
 static void
@@ -258,7 +249,17 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpFlipTool *flip = GIMP_FLIP_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpFlipTool      *flip    = GIMP_FLIP_TOOL (tool);
+
+  if (! gimp_transform_tool_get_active_item (tr_tool, display, TRUE, NULL))
+    {
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            GIMP_CURSOR_MODIFIER_BAD);
+      return;
+    }
 
   gimp_tool_control_set_toggled (tool->control,
                                  gimp_flip_tool_get_flip_type (flip) ==
@@ -309,7 +310,7 @@ gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
 }
 
 static GeglBuffer *
-gimp_flip_tool_transform (GimpTransformTool *trans_tool,
+gimp_flip_tool_transform (GimpTransformTool *tr_tool,
                           GimpItem          *active_item,
                           GeglBuffer        *orig_buffer,
                           gint               orig_offset_x,
@@ -318,9 +319,9 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           gint              *new_offset_x,
                           gint              *new_offset_y)
 {
-  GimpFlipTool         *flip        = GIMP_FLIP_TOOL (trans_tool);
-  GimpFlipOptions      *options     = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
-  GimpTransformOptions *tr_options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (trans_tool);
+  GimpFlipTool         *flip        = GIMP_FLIP_TOOL (tr_tool);
+  GimpFlipOptions      *options     = GIMP_FLIP_TOOL_GET_OPTIONS (tr_tool);
+  GimpTransformOptions *tr_options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   GimpContext          *context     = GIMP_CONTEXT (options);
   GimpOrientationType   flip_type   = GIMP_ORIENTATION_UNKNOWN;
   gdouble               axis        = 0.0;
@@ -338,13 +339,13 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
       switch (flip_type)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          axis = ((gdouble) trans_tool->x1 +
-                  (gdouble) (trans_tool->x2 - trans_tool->x1) / 2.0);
+          axis = ((gdouble) tr_tool->x1 +
+                  (gdouble) (tr_tool->x2 - tr_tool->x1) / 2.0);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          axis = ((gdouble) trans_tool->y1 +
-                  (gdouble) (trans_tool->y2 - trans_tool->y1) / 2.0);
+          axis = ((gdouble) tr_tool->y1 +
+                  (gdouble) (tr_tool->y2 - tr_tool->y1) / 2.0);
           break;
 
         default:

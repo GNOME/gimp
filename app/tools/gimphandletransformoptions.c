@@ -55,7 +55,7 @@ static void   gimp_handle_transform_options_get_property (GObject         *objec
 
 
 G_DEFINE_TYPE (GimpHandleTransformOptions, gimp_handle_transform_options,
-               GIMP_TYPE_TRANSFORM_OPTIONS)
+               GIMP_TYPE_TRANSFORM_GRID_OPTIONS)
 
 #define parent_class gimp_handle_transform_options_parent_class
 
@@ -134,7 +134,7 @@ GtkWidget *
 gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_transform_options_gui (tool_options);
+  GtkWidget *vbox   = gimp_transform_grid_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *button;
   gint       i;
