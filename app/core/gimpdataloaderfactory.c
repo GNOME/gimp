@@ -44,19 +44,36 @@
 #define GIMP_OBSOLETE_DATA_DIR_NAME "gimp-obsolete-files"
 
 
+typedef struct _GimpDataLoader GimpDataLoader;
+
+struct _GimpDataLoader
+{
+  gchar            *name;
+  GimpDataLoadFunc  load_func;
+  gchar            *extension;
+  gboolean          writable;
+};
+
+
 struct _GimpDataLoaderFactoryPrivate
 {
-  const GimpDataLoaderEntry *loader_entries;
-  gint                       n_loader_entries;
+  GList          *loaders;
+  GimpDataLoader *fallback;
 };
 
 #define GET_PRIVATE(obj) (((GimpDataLoaderFactory *) (obj))->priv)
 
 
+static void   gimp_data_loader_factory_finalize       (GObject         *object);
+
 static void   gimp_data_loader_factory_data_init      (GimpDataFactory *factory,
                                                        GimpContext     *context);
 static void   gimp_data_loader_factory_data_refresh   (GimpDataFactory *factory,
                                                        GimpContext     *context);
+
+static GimpDataLoader *
+              gimp_data_loader_factory_get_loader     (GimpDataFactory *factory,
+                                                       GFile           *file);
 
 static void   gimp_data_loader_factory_load           (GimpDataFactory *factory,
                                                        GimpContext     *context,
@@ -75,6 +92,12 @@ static void   gimp_data_loader_factory_load_data      (GimpDataFactory *factory,
                                                        GFileInfo       *info,
                                                        GFile           *top_directory);
 
+static GimpDataLoader * gimp_data_loader_new          (const gchar     *name,
+                                                       GimpDataLoadFunc load_func,
+                                                       const gchar     *extension,
+                                                       gboolean         writable);
+static void            gimp_data_loader_free          (GimpDataLoader  *loader);
+
 
 G_DEFINE_TYPE (GimpDataLoaderFactory, gimp_data_loader_factory,
                GIMP_TYPE_DATA_FACTORY)
@@ -85,7 +108,10 @@ G_DEFINE_TYPE (GimpDataLoaderFactory, gimp_data_loader_factory,
 static void
 gimp_data_loader_factory_class_init (GimpDataLoaderFactoryClass *klass)
 {
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
+
+  object_class->finalize      = gimp_data_loader_factory_finalize;
 
   factory_class->data_init    = gimp_data_loader_factory_data_init;
   factory_class->data_refresh = gimp_data_loader_factory_data_refresh;
@@ -99,6 +125,19 @@ gimp_data_loader_factory_init (GimpDataLoaderFactory *factory)
   factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                                GIMP_TYPE_DATA_LOADER_FACTORY,
                                                GimpDataLoaderFactoryPrivate);
+}
+
+static void
+gimp_data_loader_factory_finalize (GObject *object)
+{
+  GimpDataLoaderFactoryPrivate *priv = GET_PRIVATE (object);
+
+  g_list_free_full (priv->loaders, (GDestroyNotify) gimp_data_loader_free);
+  priv->loaders = NULL;
+
+  g_clear_pointer (&priv->fallback, gimp_data_loader_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -189,41 +228,88 @@ gimp_data_loader_factory_data_refresh (GimpDataFactory *factory,
 /*  public functions  */
 
 GimpDataFactory *
-gimp_data_loader_factory_new (Gimp                      *gimp,
-                              GType                      data_type,
-                              const gchar               *path_property_name,
-                              const gchar               *writable_property_name,
-                              GimpDataNewFunc            new_func,
-                              GimpDataGetStandardFunc    get_standard_func,
-                              const GimpDataLoaderEntry *loader_entries,
-                              gint                       n_loader_entries)
+gimp_data_loader_factory_new (Gimp                    *gimp,
+                              GType                    data_type,
+                              const gchar             *path_property_name,
+                              const gchar             *writable_property_name,
+                              GimpDataNewFunc          new_func,
+                              GimpDataGetStandardFunc  get_standard_func)
 {
-  GimpDataLoaderFactory *factory;
-
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
   g_return_val_if_fail (path_property_name != NULL, NULL);
   g_return_val_if_fail (writable_property_name != NULL, NULL);
-  g_return_val_if_fail (loader_entries != NULL, NULL);
-  g_return_val_if_fail (n_loader_entries > 0, NULL);
 
-  factory = g_object_new (GIMP_TYPE_DATA_LOADER_FACTORY,
-                          "gimp",                   gimp,
-                          "data-type",              data_type,
-                          "path-property-name",     path_property_name,
-                          "writable-property-name", writable_property_name,
-                          "new-func",               new_func,
-                          "get-standard-func",      get_standard_func,
-                          NULL);
+  return g_object_new (GIMP_TYPE_DATA_LOADER_FACTORY,
+                       "gimp",                   gimp,
+                       "data-type",              data_type,
+                       "path-property-name",     path_property_name,
+                       "writable-property-name", writable_property_name,
+                       "new-func",               new_func,
+                       "get-standard-func",      get_standard_func,
+                       NULL);
+}
 
-  factory->priv->loader_entries   = loader_entries;
-  factory->priv->n_loader_entries = n_loader_entries;
+void
+gimp_data_loader_factory_add_loader (GimpDataFactory  *factory,
+                                     const gchar      *name,
+                                     GimpDataLoadFunc  load_func,
+                                     const gchar      *extension,
+                                     gboolean          writable)
+{
+  GimpDataLoaderFactoryPrivate *priv;
+  GimpDataLoader               *loader;
 
-  return GIMP_DATA_FACTORY (factory);
+  g_return_if_fail (GIMP_IS_DATA_LOADER_FACTORY (factory));
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (load_func != NULL);
+  g_return_if_fail (extension != NULL);
+
+  priv = GET_PRIVATE (factory);
+
+  loader = gimp_data_loader_new (name, load_func, extension, writable);
+
+  priv->loaders = g_list_append (priv->loaders, loader);
+}
+
+void
+gimp_data_loader_factory_add_fallback (GimpDataFactory  *factory,
+                                       const gchar      *name,
+                                       GimpDataLoadFunc  load_func)
+{
+  GimpDataLoaderFactoryPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_DATA_LOADER_FACTORY (factory));
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (load_func != NULL);
+
+  priv = GET_PRIVATE (factory);
+
+  g_clear_pointer (&priv->fallback, gimp_data_loader_free);
+
+  priv->fallback = gimp_data_loader_new (name, load_func, NULL, FALSE);
 }
 
 
 /*  private functions  */
+
+static GimpDataLoader *
+gimp_data_loader_factory_get_loader (GimpDataFactory *factory,
+                                     GFile           *file)
+{
+  GimpDataLoaderFactoryPrivate *priv = GET_PRIVATE (factory);
+  GList                        *list;
+
+  for (list = priv->loaders; list; list = g_list_next (list))
+    {
+      GimpDataLoader *loader = list->data;
+
+      if (gimp_file_has_extension (file, loader->extension))
+        return loader;
+    }
+
+  return priv->fallback;
+}
 
 static void
 gimp_data_loader_factory_load (GimpDataFactory *factory,
@@ -323,34 +409,19 @@ gimp_data_loader_factory_load_data (GimpDataFactory *factory,
                                     GFileInfo       *info,
                                     GFile           *top_directory)
 {
-  GimpDataLoaderFactoryPrivate *priv      = GET_PRIVATE (factory);
-  const GimpDataLoaderEntry    *loader    = NULL;
-  GimpContainer                *container;
-  GimpContainer                *container_obsolete;
-  GList                        *data_list = NULL;
-  GInputStream                 *input;
-  guint64                       mtime;
-  gint                          i;
-  GError                       *error = NULL;
+  GimpDataLoader *loader;
+  GimpContainer  *container;
+  GimpContainer  *container_obsolete;
+  GList          *data_list = NULL;
+  GInputStream   *input;
+  guint64         mtime;
+  GError         *error = NULL;
 
-  for (i = 0; i < priv->n_loader_entries; i++)
-    {
-      loader = &priv->loader_entries[i];
+  loader = gimp_data_loader_factory_get_loader (factory, file);
 
-      /* a loder matches if its extension matches, or if it doesn't
-       * have an extension, which is the case for the fallback loader,
-       * which must be last in the loader array
-       */
-      if (! loader->extension ||
-          gimp_file_has_extension (file, loader->extension))
-        {
-          goto insert;
-        }
-    }
+  if (! loader)
+    return;
 
-  return;
-
- insert:
   container          = gimp_data_factory_get_container          (factory);
   container_obsolete = gimp_data_factory_get_container_obsolete (factory);
 
@@ -467,4 +538,29 @@ gimp_data_loader_factory_load_data (GimpDataFactory *factory,
                     _("Failed to load data:\n\n%s"), error->message);
       g_clear_error (&error);
     }
+}
+
+static GimpDataLoader *
+gimp_data_loader_new (const gchar      *name,
+                      GimpDataLoadFunc  load_func,
+                      const gchar      *extension,
+                      gboolean          writable)
+{
+  GimpDataLoader *loader = g_slice_new (GimpDataLoader);
+
+  loader->name      = g_strdup (name);
+  loader->load_func = load_func;
+  loader->extension = g_strdup (extension);
+  loader->writable  = writable ? TRUE : FALSE;
+
+  return loader;
+}
+
+static void
+gimp_data_loader_free (GimpDataLoader *loader)
+{
+  g_free (loader->name);
+  g_free (loader->extension);
+
+  g_slice_free (GimpDataLoader, loader);
 }
