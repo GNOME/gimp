@@ -31,16 +31,6 @@ typedef GList * (* GimpDataLoadFunc) (GimpContext   *context,
                                       GError       **error);
 
 
-typedef struct _GimpDataLoaderEntry GimpDataLoaderEntry;
-
-struct _GimpDataLoaderEntry
-{
-  GimpDataLoadFunc  load_func;
-  const gchar      *extension;
-  gboolean          writable;
-};
-
-
 #define GIMP_TYPE_DATA_LOADER_FACTORY            (gimp_data_loader_factory_get_type ())
 #define GIMP_DATA_LOADER_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_LOADER_FACTORY, GimpDataLoaderFactory))
 #define GIMP_DATA_LOADER_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_LOADER_FACTORY, GimpDataLoaderFactoryClass))
@@ -65,16 +55,23 @@ struct _GimpDataLoaderFactoryClass
 };
 
 
-GType             gimp_data_loader_factory_get_type (void) G_GNUC_CONST;
+GType             gimp_data_loader_factory_get_type     (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_data_loader_factory_new      (Gimp                      *gimp,
-                                                     GType                      data_type,
-                                                     const gchar               *path_property_name,
-                                                     const gchar               *writable_property_name,
-                                                     GimpDataNewFunc            new_func,
-                                                     GimpDataGetStandardFunc    get_standard_func,
-                                                     const GimpDataLoaderEntry *loader_entries,
-                                                     gint                       n_loader_entries);
+GimpDataFactory * gimp_data_loader_factory_new          (Gimp                   *gimp,
+                                                         GType                   data_type,
+                                                         const gchar            *path_property_name,
+                                                         const gchar            *writable_property_name,
+                                                         GimpDataNewFunc         new_func,
+                                                         GimpDataGetStandardFunc  get_standard_func);
+
+void              gimp_data_loader_factory_add_loader   (GimpDataFactory         *factory,
+                                                         const gchar             *name,
+                                                         GimpDataLoadFunc         load_func,
+                                                         const gchar             *extension,
+                                                         gboolean                 writable);
+void              gimp_data_loader_factory_add_fallback (GimpDataFactory         *factory,
+                                                         const gchar             *name,
+                                                         GimpDataLoadFunc         load_func);
 
 
 #endif  /*  __GIMP_DATA_LOADER_FACTORY_H__  */
