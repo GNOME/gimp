@@ -19,7 +19,7 @@
 #define __GIMP_MEASURE_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "gimptransformoptions.h"
 
 
 #define GIMP_TYPE_MEASURE_OPTIONS            (gimp_measure_options_get_type ())
@@ -30,15 +30,20 @@
 #define GIMP_MEASURE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MEASURE_OPTIONS, GimpMeasureOptionsClass))
 
 
-typedef struct _GimpMeasureOptions   GimpMeasureOptions;
-typedef struct _GimpToolOptionsClass GimpMeasureOptionsClass;
+typedef struct _GimpMeasureOptions      GimpMeasureOptions;
+typedef struct _GimpMeasureOptionsClass GimpMeasureOptionsClass;
 
 struct _GimpMeasureOptions
 {
-  GimpToolOptions  parent_instance;
+  GimpTransformOptions  parent_instance;
 
-  gboolean         use_info_window;
-  GtkWidget       *auto_straighten;
+  gboolean              use_info_window;
+  GtkWidget            *straighten;
+};
+
+struct _GimpMeasureOptionsClass
+{
+  GimpTransformOptionsClass  parent_class;
 };
 
 

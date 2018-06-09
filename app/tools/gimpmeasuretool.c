@@ -30,17 +30,10 @@
 
 #include "tools-types.h"
 
-#include "config/gimpcoreconfig.h"
-
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
-#include "core/gimpimage-resize.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
-#include "core/gimpitem-linked.h"
 #include "core/gimpprogress.h"
 #include "core/gimp-transform-utils.h"
 
@@ -82,6 +75,9 @@ static void     gimp_measure_tool_motion          (GimpTool              *tool,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 
+static void     gimp_measure_tool_recalc_matrix   (GimpTransformTool     *tr_tool);
+static gchar  * gimp_measure_tool_get_undo_desc   (GimpTransformTool     *tr_tool);
+
 static void     gimp_measure_tool_compass_changed (GimpToolWidget        *widget,
                                                    GimpMeasureTool       *measure);
 static void     gimp_measure_tool_compass_response(GimpToolWidget        *widget,
@@ -112,10 +108,10 @@ static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measur
 static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
                                                    GimpDisplay           *display);
 
-static void gimp_measure_tool_rotate_active_layer (GtkWidget             *button,
+static void  gimp_measure_tool_straighten_clicked (GtkWidget             *button,
                                                    GimpMeasureTool       *measure);
 
-G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL)
+G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 #define parent_class gimp_measure_tool_parent_class
 
@@ -140,12 +136,18 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass          *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpTransformToolClass *tr_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   tool_class->control        = gimp_measure_tool_control;
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
+
+  tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
+  tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;
+
+  tr_class->progress_text    = _("Straightening");
 }
 
 static void
@@ -279,6 +281,64 @@ gimp_measure_tool_motion (GimpTool         *tool,
 }
 
 static void
+gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
+{
+  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tr_tool);
+  GimpVector2      p0;
+  GimpVector2      p1;
+  GimpVector2      p2;
+  gdouble          angle;
+
+  if (measure->n_points < 2)
+    {
+      tr_tool->transform_valid = FALSE;
+
+      return;
+    }
+
+  p0.x = measure->x[0];
+  p0.y = measure->y[0];
+
+  p1.x = measure->x[1];
+  p1.y = measure->y[1];
+
+  if (measure->n_points == 2)
+    {
+      p2.x = p1.x;
+      p2.y = p0.y;
+
+      if (p2.x == p0.x)
+        p2.x--;
+    }
+  else
+    {
+      p2.x = measure->x[2];
+      p2.y = measure->y[2];
+    }
+
+  gimp_vector2_sub (&p1, &p1, &p0);
+  gimp_vector2_sub (&p2, &p2, &p0);
+
+  gimp_vector2_normalize (&p1);
+  gimp_vector2_normalize (&p2);
+
+  angle = atan2 (gimp_vector2_cross_product (&p1, &p2).x,
+                 gimp_vector2_inner_product (&p1, &p2));
+
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_rotate_center (&tr_tool->transform,
+                                       p0.x, p0.y, angle);
+
+  tr_tool->transform_valid = TRUE;
+}
+
+static gchar *
+gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  return g_strdup (_("Straighten"));
+}
+
+static void
 gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                                    GimpMeasureTool *measure)
 {
@@ -294,7 +354,7 @@ gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                 "y3",       &measure->y[2],
                 NULL);
 
-  gtk_widget_set_sensitive (options->auto_straighten, measure->n_points >= 2);
+  gtk_widget_set_sensitive (options->straighten, measure->n_points >= 2);
   gimp_measure_tool_dialog_update (measure, GIMP_TOOL (measure)->display);
 }
 
@@ -400,8 +460,8 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   g_signal_connect (measure->widget, "create-guides",
                     G_CALLBACK (gimp_measure_tool_compass_create_guides),
                     measure);
-  g_signal_connect (options->auto_straighten, "clicked",
-                    G_CALLBACK (gimp_measure_tool_rotate_active_layer),
+  g_signal_connect (options->straighten, "clicked",
+                    G_CALLBACK (gimp_measure_tool_straighten_clicked),
                     measure);
 
   tool->display = display;
@@ -415,7 +475,7 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpTool           *tool    = GIMP_TOOL (measure);
 
-  gtk_widget_set_sensitive (options->auto_straighten, FALSE);
+  gtk_widget_set_sensitive (options->straighten, FALSE);
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
@@ -423,8 +483,8 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
 
-  g_signal_handlers_disconnect_by_func (options->auto_straighten,
-                                        G_CALLBACK (gimp_measure_tool_rotate_active_layer),
+  g_signal_handlers_disconnect_by_func (options->straighten,
+                                        G_CALLBACK (gimp_measure_tool_straighten_clicked),
                                         measure);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
@@ -807,84 +867,30 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 }
 
 static void
-gimp_measure_tool_rotate_active_layer (GtkWidget       *button,
-                                       GimpMeasureTool *measure)
+gimp_measure_tool_straighten_clicked (GtkWidget       *button,
+                                      GimpMeasureTool *measure)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-  GimpDisplay        *display = GIMP_TOOL (measure)->display;
-  GimpImage          *image   = gimp_display_get_image (display);
-  GimpContext        *context = GIMP_CONTEXT (options);
-  GimpDrawable       *item    = gimp_image_get_active_drawable (image);
-  GimpProgress       *progress;
-  gdouble             ax      = measure->x[1] - measure->x[0];
-  gdouble             ay      = measure->y[1] - measure->y[0];
-  gdouble             angle;
-  GimpMatrix3         matrix;
-  gint                offset_x;
-  gint                offset_y;
-  gdouble             x0, y0, x1, y1;
+  GimpTool          *tool    = GIMP_TOOL (measure);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (measure);
+  gdouble            x0, y0;
+  gdouble            x1, y1;
 
-  if (! item)
-    return;
-
-  angle = atan (ay / ax);
-  gimp_matrix3_identity (&matrix);
-  gimp_transform_matrix_rotate_center (&matrix, measure->x[0], measure->y[0], angle);
-
-  progress = gimp_progress_start (GIMP_PROGRESS (measure), FALSE,
-                                  "%s", _("Straightening"));
-
-  /* Start a transform undo group */
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM,
-                               C_("undo-type", "Transform"));
-
-  if (gimp_item_get_linked (GIMP_ITEM (item)))
+  if (gimp_transform_tool_transform (tr_tool, tool->display))
     {
-      gimp_item_linked_transform (GIMP_ITEM (item), context, &matrix,
-                                  GIMP_TRANSFORM_BACKWARD,
-                                  display->gimp->config->interpolation_type,
-                                  GIMP_TRANSFORM_RESIZE_ADJUST,
-                                  progress);
+      gimp_matrix3_transform_point (&tr_tool->transform,
+                                    measure->x[0],
+                                    measure->y[0],
+                                    &x0, &y0);
+      gimp_matrix3_transform_point (&tr_tool->transform,
+                                    measure->x[1],
+                                    measure->y[1],
+                                    &x1, &y1);
+
+      g_object_set (measure->widget,
+                    "x1", SIGNED_ROUND (x0),
+                    "y1", SIGNED_ROUND (y0),
+                    "x2", SIGNED_ROUND (x1),
+                    "y2", SIGNED_ROUND (y1),
+                    NULL);
     }
-  else
-    {
-      gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                      context,
-                                      &matrix,
-                                      GIMP_TRANSFORM_BACKWARD,
-                                      display->gimp->config->interpolation_type,
-                                      GIMP_TRANSFORM_RESIZE_ADJUST,
-                                      progress);
-    }
-
-  gimp_image_resize_to_layers (image, context, &offset_x, &offset_y,
-                               NULL, NULL, progress);
-
-  /* Keep and transform the measurement points as well. */
-  gimp_matrix3_identity (&matrix);
-  gimp_transform_matrix_rotate_center (&matrix, measure->x[0], measure->y[0], - angle);
-  gimp_matrix3_translate (&matrix, offset_x, offset_y);
-  gimp_matrix3_transform_point (&matrix,
-                                measure->x[0],
-                                measure->y[0],
-                                &x0, &y0);
-  gimp_matrix3_transform_point (&matrix,
-                                measure->x[1],
-                                measure->y[1],
-                                &x1, &y1);
-  g_object_set (measure->widget,
-                "x1", (gint) x0,
-                "y1", (gint) y0,
-                "x2", (gint) x1,
-                "y2", (gint) y1,
-                NULL);
-
-  /*  push the undo group end  */
-  gimp_image_undo_group_end (image);
-
-  if (progress)
-    gimp_progress_end (progress);
-
-  gimp_image_flush (image);
 }

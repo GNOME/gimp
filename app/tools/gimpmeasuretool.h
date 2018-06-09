@@ -19,7 +19,7 @@
 #define __GIMP_MEASURE_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "gimptransformtool.h"
 
 
 #define GIMP_TYPE_MEASURE_TOOL            (gimp_measure_tool_get_type ())
@@ -37,26 +37,26 @@ typedef struct _GimpMeasureToolClass GimpMeasureToolClass;
 
 struct _GimpMeasureTool
 {
-  GimpDrawTool     parent_instance;
+  GimpTransformTool  parent_instance;
 
-  GimpToolWidget  *widget;
-  GimpToolWidget  *grab_widget;
+  GimpToolWidget    *widget;
+  GimpToolWidget    *grab_widget;
 
-  gint             n_points;
-  gint             x[3];
-  gint             y[3];
+  gint               n_points;
+  gint               x[3];
+  gint               y[3];
 
-  GimpToolGui     *gui;
-  GtkWidget       *distance_label[2];
-  GtkWidget       *angle_label[2];
-  GtkWidget       *width_label[2];
-  GtkWidget       *height_label[2];
-  GtkWidget       *unit_label[4];
+  GimpToolGui       *gui;
+  GtkWidget         *distance_label[2];
+  GtkWidget         *angle_label[2];
+  GtkWidget         *width_label[2];
+  GtkWidget         *height_label[2];
+  GtkWidget         *unit_label[4];
 };
 
 struct _GimpMeasureToolClass
 {
-  GimpDrawToolClass parent_class;
+  GimpTransformToolClass  parent_class;
 };
 
 
