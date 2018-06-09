@@ -52,7 +52,7 @@ static void   gimp_measure_options_get_property (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpMeasureOptions, gimp_measure_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+               GIMP_TYPE_TRANSFORM_OPTIONS)
 
 
 static void
@@ -121,20 +121,34 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *button;
+  GtkWidget *frame;
+  GtkWidget *vbox2;
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Auto straighten"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  /*  the straighten frame  */
+  frame = gimp_frame_new (_("Straighten"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  /*  the transform options  */
+  vbox2 = gimp_transform_options_gui (tool_options, FALSE, TRUE, TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  /*  the straighten button  */
+  button = gtk_button_new_with_label (_("Straighten"));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button,
-                           _("Rotate the active layer using the measurement line as horizon"),
+                           _("Rotate the active layer, selection or path "
+                             "by the measured angle"),
                            NULL);
   gtk_widget_show (button);
 
-  GIMP_MEASURE_OPTIONS (tool_options)->auto_straighten = button;
+  GIMP_MEASURE_OPTIONS (tool_options)->straighten = button;
   return vbox;
 }
