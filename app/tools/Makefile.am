@@ -206,12 +206,16 @@ libapptools_a_sources = \
 	gimptoolcontrol.h		\
 	gimptooloptions-gui.c		\
 	gimptooloptions-gui.h		\
+	gimptransformgridoptions.c     	\
+	gimptransformgridoptions.h     	\
+	gimptransformgridtool.c     	\
+	gimptransformgridtool.h     	\
+	gimptransformgridtoolundo.c	\
+	gimptransformgridtoolundo.h	\
 	gimptransformoptions.c     	\
 	gimptransformoptions.h     	\
 	gimptransformtool.c		\
 	gimptransformtool.h		\
-	gimptransformtoolundo.c		\
-	gimptransformtoolundo.h		\
 	gimpunifiedtransformtool.c	\
 	gimpunifiedtransformtool.h	\
 	gimpvectoroptions.c		\

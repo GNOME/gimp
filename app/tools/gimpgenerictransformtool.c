@@ -35,33 +35,33 @@
 
 #include "gimpgenerictransformtool.h"
 #include "gimptoolcontrol.h"
-#include "gimptransformoptions.h"
+#include "gimptransformgridoptions.h"
 
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_generic_transform_tool_dialog        (GimpTransformTool *tr_tool);
-static void   gimp_generic_transform_tool_dialog_update (GimpTransformTool *tr_tool);
-static void   gimp_generic_transform_tool_prepare       (GimpTransformTool *tr_tool);
-static void   gimp_generic_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                                                         GimpToolWidget    *widget);
+static void   gimp_generic_transform_tool_dialog        (GimpTransformGridTool *tg_tool);
+static void   gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool);
+static void   gimp_generic_transform_tool_prepare       (GimpTransformGridTool *tg_tool);
+static void   gimp_generic_transform_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
+                                                         GimpToolWidget        *widget);
 
 
 G_DEFINE_TYPE (GimpGenericTransformTool, gimp_generic_transform_tool,
-               GIMP_TYPE_TRANSFORM_TOOL)
+               GIMP_TYPE_TRANSFORM_GRID_TOOL)
 
 
 static void
 gimp_generic_transform_tool_class_init (GimpGenericTransformToolClass *klass)
 {
-  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  trans_class->dialog        = gimp_generic_transform_tool_dialog;
-  trans_class->dialog_update = gimp_generic_transform_tool_dialog_update;
-  trans_class->prepare       = gimp_generic_transform_tool_prepare;
-  trans_class->recalc_matrix = gimp_generic_transform_tool_recalc_matrix;
+  tg_class->dialog        = gimp_generic_transform_tool_dialog;
+  tg_class->dialog_update = gimp_generic_transform_tool_dialog_update;
+  tg_class->prepare       = gimp_generic_transform_tool_prepare;
+  tg_class->recalc_matrix = gimp_generic_transform_tool_recalc_matrix;
 }
 
 static void
@@ -70,9 +70,9 @@ gimp_generic_transform_tool_init (GimpGenericTransformTool *unified_tool)
 }
 
 static void
-gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
+gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
+  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
   GtkWidget                *frame;
   GtkWidget                *vbox;
   GtkWidget                *table;
@@ -81,7 +81,7 @@ gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
   gint                      x, y;
 
   frame = gimp_frame_new (_("Transform Matrix"));
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), frame,
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), frame,
                       FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -122,9 +122,10 @@ gimp_generic_transform_tool_dialog (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_generic_transform_tool_dialog_update (GimpTransformTool *tr_tool)
+gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
+  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
 
   if (tr_tool->transform_valid)
     {
@@ -154,9 +155,10 @@ gimp_generic_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_generic_transform_tool_prepare (GimpTransformTool *tr_tool)
+gimp_generic_transform_tool_prepare (GimpTransformGridTool *tg_tool)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
+  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
 
   generic->input_points[0] = (GimpVector2) {tr_tool->x1, tr_tool->y1};
   generic->input_points[1] = (GimpVector2) {tr_tool->x2, tr_tool->y1};
@@ -168,10 +170,11 @@ gimp_generic_transform_tool_prepare (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_generic_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                                           GimpToolWidget    *widget)
+gimp_generic_transform_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
+                                           GimpToolWidget        *widget)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
+  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
 
   if (GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->recalc_points)
     {

@@ -36,7 +36,7 @@
 
 #include "gimpsheartool.h"
 #include "gimptoolcontrol.h"
-#include "gimptransformoptions.h"
+#include "gimptransformgridoptions.h"
 
 #include "gimp-intl.h"
 
@@ -55,25 +55,25 @@ enum
 
 /*  local function prototypes  */
 
-static void             gimp_shear_tool_dialog         (GimpTransformTool *tr_tool);
-static void             gimp_shear_tool_dialog_update  (GimpTransformTool *tr_tool);
+static gchar          * gimp_shear_tool_get_undo_desc  (GimpTransformTool     *tr_tool);
 
-static void             gimp_shear_tool_prepare        (GimpTransformTool *tr_tool);
-static GimpToolWidget * gimp_shear_tool_get_widget     (GimpTransformTool *tr_tool);
-static void             gimp_shear_tool_recalc_matrix  (GimpTransformTool *tr_tool,
-                                                        GimpToolWidget    *widget);
-static gchar          * gimp_shear_tool_get_undo_desc  (GimpTransformTool *tr_tool);
+static void             gimp_shear_tool_dialog         (GimpTransformGridTool *tg_tool);
+static void             gimp_shear_tool_dialog_update  (GimpTransformGridTool *tg_tool);
+static void             gimp_shear_tool_prepare        (GimpTransformGridTool *tg_tool);
+static GimpToolWidget * gimp_shear_tool_get_widget     (GimpTransformGridTool *tg_tool);
+static void             gimp_shear_tool_recalc_matrix  (GimpTransformGridTool *tg_tool,
+                                                        GimpToolWidget        *widget);
 
-static void             gimp_shear_tool_widget_changed (GimpToolWidget    *widget,
-                                                        GimpTransformTool *tr_tool);
+static void             gimp_shear_tool_widget_changed (GimpToolWidget        *widget,
+                                                        GimpTransformGridTool *tg_tool);
 
-static void             shear_x_mag_changed            (GtkAdjustment     *adj,
-                                                        GimpTransformTool *tr_tool);
-static void             shear_y_mag_changed            (GtkAdjustment     *adj,
-                                                        GimpTransformTool *tr_tool);
+static void             shear_x_mag_changed            (GtkAdjustment         *adj,
+                                                        GimpTransformGridTool *tg_tool);
+static void             shear_y_mag_changed            (GtkAdjustment         *adj,
+                                                        GimpTransformGridTool *tg_tool);
 
 
-G_DEFINE_TYPE (GimpShearTool, gimp_shear_tool, GIMP_TYPE_TRANSFORM_TOOL)
+G_DEFINE_TYPE (GimpShearTool, gimp_shear_tool, GIMP_TYPE_TRANSFORM_GRID_TOOL)
 
 
 void
@@ -81,8 +81,8 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SHEAR_TOOL,
-                GIMP_TYPE_TRANSFORM_OPTIONS,
-                gimp_transform_options_gui,
+                GIMP_TYPE_TRANSFORM_GRID_OPTIONS,
+                gimp_transform_grid_options_gui,
                 0,
                 "gimp-shear-tool",
                 _("Shear"),
@@ -96,156 +96,37 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
-  GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass     *tr_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  trans_class->dialog          = gimp_shear_tool_dialog;
-  trans_class->dialog_update   = gimp_shear_tool_dialog_update;
-  trans_class->prepare         = gimp_shear_tool_prepare;
-  trans_class->get_widget      = gimp_shear_tool_get_widget;
-  trans_class->recalc_matrix   = gimp_shear_tool_recalc_matrix;
-  trans_class->get_undo_desc   = gimp_shear_tool_get_undo_desc;
+  tr_class->get_undo_desc   = gimp_shear_tool_get_undo_desc;
 
-  trans_class->ok_button_label = _("_Shear");
+  tg_class->dialog          = gimp_shear_tool_dialog;
+  tg_class->dialog_update   = gimp_shear_tool_dialog_update;
+  tg_class->prepare         = gimp_shear_tool_prepare;
+  tg_class->get_widget      = gimp_shear_tool_get_widget;
+  tg_class->recalc_matrix   = gimp_shear_tool_recalc_matrix;
+
+  tr_class->progress_text   = _("Shearing");
+  tg_class->ok_button_label = _("_Shear");
 }
 
 static void
 gimp_shear_tool_init (GimpShearTool *shear_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (shear_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (shear_tool);
+  GimpTool *tool = GIMP_TOOL (shear_tool);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SHEAR);
-
-  tr_tool->progress_text = _("Shearing");
-}
-
-static void
-gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
-{
-  GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
-  GtkWidget     *vbox;
-  GtkWidget     *scale;
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), vbox,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  shear->x_adj = (GtkAdjustment *)
-    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
-  scale = gimp_spin_scale_new (shear->x_adj, _("Shear magnitude _X"), 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
-
-  g_signal_connect (shear->x_adj, "value-changed",
-                    G_CALLBACK (shear_x_mag_changed),
-                    tr_tool);
-
-  shear->y_adj = (GtkAdjustment *)
-    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
-  scale = gimp_spin_scale_new (shear->y_adj, _("Shear magnitude _Y"), 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
-
-  g_signal_connect (shear->y_adj, "value-changed",
-                    G_CALLBACK (shear_y_mag_changed),
-                    tr_tool);
-}
-
-static void
-gimp_shear_tool_dialog_update (GimpTransformTool *tr_tool)
-{
-  GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
-
-  gtk_adjustment_set_value (shear->x_adj, tr_tool->trans_info[SHEAR_X]);
-  gtk_adjustment_set_value (shear->y_adj, tr_tool->trans_info[SHEAR_Y]);
-}
-
-static void
-gimp_shear_tool_prepare (GimpTransformTool *tr_tool)
-{
-  tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_UNKNOWN;
-  tr_tool->trans_info[SHEAR_X]      = 0.0;
-  tr_tool->trans_info[SHEAR_Y]      = 0.0;
-}
-
-static GimpToolWidget *
-gimp_shear_tool_get_widget (GimpTransformTool *tr_tool)
-{
-  GimpTool         *tool  = GIMP_TOOL (tr_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpToolWidget   *widget;
-
-  widget = gimp_tool_shear_grid_new (shell,
-                                     tr_tool->x1,
-                                     tr_tool->y1,
-                                     tr_tool->x2,
-                                     tr_tool->y2,
-                                     tr_tool->trans_info[ORIENTATION],
-                                     tr_tool->trans_info[SHEAR_X],
-                                     tr_tool->trans_info[SHEAR_Y]);
-
-  g_object_set (widget,
-                "inside-function",  GIMP_TRANSFORM_FUNCTION_SHEAR,
-                "outside-function", GIMP_TRANSFORM_FUNCTION_SHEAR,
-                "frompivot-shear",  TRUE,
-                NULL);
-
-  g_signal_connect (widget, "changed",
-                    G_CALLBACK (gimp_shear_tool_widget_changed),
-                    tr_tool);
-
-  return widget;
-}
-
-static void
-gimp_shear_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                               GimpToolWidget    *widget)
-{
-  gdouble amount;
-
-  if (tr_tool->trans_info[SHEAR_X] == 0.0 &&
-      tr_tool->trans_info[SHEAR_Y] == 0.0)
-    {
-      tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_UNKNOWN;
-    }
-
-  if (tr_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_HORIZONTAL)
-    amount = tr_tool->trans_info[SHEAR_X];
-  else
-    amount = tr_tool->trans_info[SHEAR_Y];
-
-  gimp_matrix3_identity (&tr_tool->transform);
-  gimp_transform_matrix_shear (&tr_tool->transform,
-                               tr_tool->x1,
-                               tr_tool->y1,
-                               tr_tool->x2 - tr_tool->x1,
-                               tr_tool->y2 - tr_tool->y1,
-                               tr_tool->trans_info[ORIENTATION],
-                               amount);
-
-  if (widget)
-    g_object_set (widget,
-                  "transform",   &tr_tool->transform,
-                  "x1",          (gdouble) tr_tool->x1,
-                  "y1",          (gdouble) tr_tool->y1,
-                  "x2",          (gdouble) tr_tool->x2,
-                  "y2",          (gdouble) tr_tool->y2,
-                  "orientation", (gint) tr_tool->trans_info[ORIENTATION],
-                  "shear-x",     tr_tool->trans_info[SHEAR_X],
-                  "shear-y",     tr_tool->trans_info[SHEAR_Y],
-                  NULL);
 }
 
 static gchar *
 gimp_shear_tool_get_undo_desc (GimpTransformTool *tr_tool)
 {
-  gdouble x = tr_tool->trans_info[SHEAR_X];
-  gdouble y = tr_tool->trans_info[SHEAR_Y];
+  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  gdouble                x       = tg_tool->trans_info[SHEAR_X];
+  gdouble                y       = tg_tool->trans_info[SHEAR_Y];
 
-  switch ((gint) tr_tool->trans_info[ORIENTATION])
+  switch ((gint) tg_tool->trans_info[ORIENTATION])
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       return g_strdup_printf (C_("undo-type", "Shear horizontally by %-3.3g"),
@@ -263,56 +144,178 @@ gimp_shear_tool_get_undo_desc (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_shear_tool_widget_changed (GimpToolWidget    *widget,
-                                GimpTransformTool *tr_tool)
+gimp_shear_tool_dialog (GimpTransformGridTool *tg_tool)
+{
+  GimpShearTool *shear = GIMP_SHEAR_TOOL (tg_tool);
+  GtkWidget     *vbox;
+  GtkWidget     *scale;
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tg_tool->gui)), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  shear->x_adj = (GtkAdjustment *)
+    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  scale = gimp_spin_scale_new (shear->x_adj, _("Shear magnitude _X"), 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  g_signal_connect (shear->x_adj, "value-changed",
+                    G_CALLBACK (shear_x_mag_changed),
+                    tg_tool);
+
+  shear->y_adj = (GtkAdjustment *)
+    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  scale = gimp_spin_scale_new (shear->y_adj, _("Shear magnitude _Y"), 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  g_signal_connect (shear->y_adj, "value-changed",
+                    G_CALLBACK (shear_y_mag_changed),
+                    tg_tool);
+}
+
+static void
+gimp_shear_tool_dialog_update (GimpTransformGridTool *tg_tool)
+{
+  GimpShearTool *shear = GIMP_SHEAR_TOOL (tg_tool);
+
+  gtk_adjustment_set_value (shear->x_adj, tg_tool->trans_info[SHEAR_X]);
+  gtk_adjustment_set_value (shear->y_adj, tg_tool->trans_info[SHEAR_Y]);
+}
+
+static void
+gimp_shear_tool_prepare (GimpTransformGridTool *tg_tool)
+{
+  tg_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_UNKNOWN;
+  tg_tool->trans_info[SHEAR_X]     = 0.0;
+  tg_tool->trans_info[SHEAR_Y]     = 0.0;
+}
+
+static GimpToolWidget *
+gimp_shear_tool_get_widget (GimpTransformGridTool *tg_tool)
+{
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
+  GimpToolWidget    *widget;
+
+  widget = gimp_tool_shear_grid_new (shell,
+                                     tr_tool->x1,
+                                     tr_tool->y1,
+                                     tr_tool->x2,
+                                     tr_tool->y2,
+                                     tg_tool->trans_info[ORIENTATION],
+                                     tg_tool->trans_info[SHEAR_X],
+                                     tg_tool->trans_info[SHEAR_Y]);
+
+  g_object_set (widget,
+                "inside-function",  GIMP_TRANSFORM_FUNCTION_SHEAR,
+                "outside-function", GIMP_TRANSFORM_FUNCTION_SHEAR,
+                "frompivot-shear",  TRUE,
+                NULL);
+
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_shear_tool_widget_changed),
+                    tg_tool);
+
+  return widget;
+}
+
+static void
+gimp_shear_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
+                               GimpToolWidget        *widget)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  gdouble            amount;
+
+  if (tg_tool->trans_info[SHEAR_X] == 0.0 &&
+      tg_tool->trans_info[SHEAR_Y] == 0.0)
+    {
+      tg_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_UNKNOWN;
+    }
+
+  if (tg_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_HORIZONTAL)
+    amount = tg_tool->trans_info[SHEAR_X];
+  else
+    amount = tg_tool->trans_info[SHEAR_Y];
+
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_shear (&tr_tool->transform,
+                               tr_tool->x1,
+                               tr_tool->y1,
+                               tr_tool->x2 - tr_tool->x1,
+                               tr_tool->y2 - tr_tool->y1,
+                               tg_tool->trans_info[ORIENTATION],
+                               amount);
+
+  if (widget)
+    g_object_set (widget,
+                  "transform",   &tr_tool->transform,
+                  "x1",          (gdouble) tr_tool->x1,
+                  "y1",          (gdouble) tr_tool->y1,
+                  "x2",          (gdouble) tr_tool->x2,
+                  "y2",          (gdouble) tr_tool->y2,
+                  "orientation", (gint) tg_tool->trans_info[ORIENTATION],
+                  "shear-x",     tg_tool->trans_info[SHEAR_X],
+                  "shear-y",     tg_tool->trans_info[SHEAR_Y],
+                  NULL);
+}
+
+static void
+gimp_shear_tool_widget_changed (GimpToolWidget        *widget,
+                                GimpTransformGridTool *tg_tool)
 {
   GimpOrientationType orientation;
 
   g_object_get (widget,
                 "orientation", &orientation,
-                "shear-x",     &tr_tool->trans_info[SHEAR_X],
-                "shear-y",     &tr_tool->trans_info[SHEAR_Y],
+                "shear-x",     &tg_tool->trans_info[SHEAR_X],
+                "shear-y",     &tg_tool->trans_info[SHEAR_Y],
                 NULL);
 
-  tr_tool->trans_info[ORIENTATION] = orientation;
+  tg_tool->trans_info[ORIENTATION] = orientation;
 
-  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
 }
 
 static void
-shear_x_mag_changed (GtkAdjustment     *adj,
-                     GimpTransformTool *tr_tool)
+shear_x_mag_changed (GtkAdjustment         *adj,
+                     GimpTransformGridTool *tg_tool)
 {
   gdouble value = gtk_adjustment_get_value (adj);
 
-  if (value != tr_tool->trans_info[SHEAR_X])
+  if (value != tg_tool->trans_info[SHEAR_X])
     {
-      tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_HORIZONTAL;
+      tg_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_HORIZONTAL;
 
-      tr_tool->trans_info[SHEAR_X] = value;
-      tr_tool->trans_info[SHEAR_Y] = 0.0;  /* can only shear in one axis */
+      tg_tool->trans_info[SHEAR_X] = value;
+      tg_tool->trans_info[SHEAR_Y] = 0.0;  /* can only shear in one axis */
 
-      gimp_transform_tool_push_internal_undo (tr_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool);
 
-      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
+      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
     }
 }
 
 static void
-shear_y_mag_changed (GtkAdjustment     *adj,
-                     GimpTransformTool *tr_tool)
+shear_y_mag_changed (GtkAdjustment         *adj,
+                     GimpTransformGridTool *tg_tool)
 {
   gdouble value = gtk_adjustment_get_value (adj);
 
-  if (value != tr_tool->trans_info[SHEAR_Y])
+  if (value != tg_tool->trans_info[SHEAR_Y])
     {
-      tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_VERTICAL;
+      tg_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_VERTICAL;
 
-      tr_tool->trans_info[SHEAR_Y] = value;
-      tr_tool->trans_info[SHEAR_X] = 0.0;  /* can only shear in one axis */
+      tg_tool->trans_info[SHEAR_Y] = value;
+      tg_tool->trans_info[SHEAR_X] = 0.0;  /* can only shear in one axis */
 
-      gimp_transform_tool_push_internal_undo (tr_tool);
+      gimp_transform_grid_tool_push_internal_undo (tg_tool);
 
-      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
+      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
     }
 }

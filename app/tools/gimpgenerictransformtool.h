@@ -19,7 +19,7 @@
 #define __GIMP_GENERIC_TRANSFORM_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimptransformgridtool.h"
 
 
 #define GIMP_TYPE_GENERIC_TRANSFORM_TOOL            (gimp_generic_transform_tool_get_type ())
@@ -34,19 +34,19 @@ typedef struct _GimpGenericTransformToolClass GimpGenericTransformToolClass;
 
 struct _GimpGenericTransformTool
 {
-  GimpTransformTool  parent_instance;
+  GimpTransformGridTool  parent_instance;
 
-  GimpVector2        input_points[4];
-  GimpVector2        output_points[4];
+  GimpVector2            input_points[4];
+  GimpVector2            output_points[4];
 
-  GtkWidget         *matrix_table;
-  GtkWidget         *matrix_labels[3][3];
-  GtkWidget         *invalid_label;
+  GtkWidget             *matrix_table;
+  GtkWidget             *matrix_labels[3][3];
+  GtkWidget             *invalid_label;
 };
 
 struct _GimpGenericTransformToolClass
 {
-  GimpTransformToolClass  parent_class;
+  GimpTransformGridToolClass  parent_class;
 
   /*  virtual functions  */
   void   (* recalc_points) (GimpGenericTransformTool *generic,

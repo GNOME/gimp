@@ -32,7 +32,7 @@
 #include "display/gimptooltransformgrid.h"
 
 #include "gimptoolcontrol.h"
-#include "gimptransformoptions.h"
+#include "gimptransformgridoptions.h"
 #include "gimpunifiedtransformtool.h"
 
 #include "gimp-intl.h"
@@ -56,17 +56,18 @@ enum
 
 /*  local function prototypes  */
 
-static void             gimp_unified_transform_tool_prepare        (GimpTransformTool        *tr_tool);
-static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransformTool        *tr_tool);
-static void             gimp_unified_transform_tool_recalc_matrix  (GimpTransformTool        *tr_tool,
-                                                                    GimpToolWidget           *widget);
 static gchar          * gimp_unified_transform_tool_get_undo_desc  (GimpTransformTool        *tr_tool);
+
+static void             gimp_unified_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
+static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
+static void             gimp_unified_transform_tool_recalc_matrix  (GimpTransformGridTool    *tg_tool,
+                                                                    GimpToolWidget           *widget);
 
 static void             gimp_unified_transform_tool_recalc_points  (GimpGenericTransformTool *generic,
                                                                     GimpToolWidget           *widget);
 
 static void             gimp_unified_transform_tool_widget_changed (GimpToolWidget           *widget,
-                                                                    GimpTransformTool        *tr_tool);
+                                                                    GimpTransformGridTool    *tg_tool);
 
 
 G_DEFINE_TYPE (GimpUnifiedTransformTool, gimp_unified_transform_tool,
@@ -80,8 +81,8 @@ gimp_unified_transform_tool_register (GimpToolRegisterCallback  callback,
                                       gpointer                  data)
 {
   (* callback) (GIMP_TYPE_UNIFIED_TRANSFORM_TOOL,
-                GIMP_TYPE_TRANSFORM_OPTIONS,
-                gimp_transform_options_gui,
+                GIMP_TYPE_TRANSFORM_GRID_OPTIONS,
+                gimp_transform_grid_options_gui,
                 GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-unified-transform-tool",
                 _("Unified Transform"),
@@ -96,49 +97,59 @@ gimp_unified_transform_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
 {
-  GimpTransformToolClass        *trans_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformToolClass        *tr_class      = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  trans_class->prepare         = gimp_unified_transform_tool_prepare;
-  trans_class->get_widget      = gimp_unified_transform_tool_get_widget;
-  trans_class->recalc_matrix   = gimp_unified_transform_tool_recalc_matrix;
-  trans_class->get_undo_desc   = gimp_unified_transform_tool_get_undo_desc;
+  tr_class->get_undo_desc      = gimp_unified_transform_tool_get_undo_desc;
+
+  tg_class->prepare            = gimp_unified_transform_tool_prepare;
+  tg_class->get_widget         = gimp_unified_transform_tool_get_widget;
+  tg_class->recalc_matrix      = gimp_unified_transform_tool_recalc_matrix;
 
   generic_class->recalc_points = gimp_unified_transform_tool_recalc_points;
+
+  tr_class->progress_text      = _("Unified transform");
 }
 
 static void
 gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (unified_tool);
+}
 
-  tr_tool->progress_text = _("Unified transform");
+static gchar *
+gimp_unified_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  return g_strdup (C_("undo-type", "Unified Transform"));
 }
 
 static void
-gimp_unified_transform_tool_prepare (GimpTransformTool *tr_tool)
+gimp_unified_transform_tool_prepare (GimpTransformGridTool *tg_tool)
 {
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->prepare (tr_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-  tr_tool->trans_info[PIVOT_X] = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
-  tr_tool->trans_info[PIVOT_Y] = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->prepare (tg_tool);
 
-  tr_tool->trans_info[X0] = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X1] = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y1] = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X2] = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y2] = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[X3] = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[PIVOT_X] = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
+  tg_tool->trans_info[PIVOT_Y] = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
+
+  tg_tool->trans_info[X0] = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[Y0] = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[X1] = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[Y1] = (gdouble) tr_tool->y1;
+  tg_tool->trans_info[X2] = (gdouble) tr_tool->x1;
+  tg_tool->trans_info[Y2] = (gdouble) tr_tool->y2;
+  tg_tool->trans_info[X3] = (gdouble) tr_tool->x2;
+  tg_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
 }
 
 static GimpToolWidget *
-gimp_unified_transform_tool_get_widget (GimpTransformTool *tr_tool)
+gimp_unified_transform_tool_get_widget (GimpTransformGridTool *tg_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (tr_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-  GimpToolWidget   *widget;
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
+  GimpToolWidget    *widget;
 
   widget = gimp_tool_transform_grid_new (shell,
                                          &tr_tool->transform,
@@ -161,16 +172,18 @@ gimp_unified_transform_tool_get_widget (GimpTransformTool *tr_tool)
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_unified_transform_tool_widget_changed),
-                    tr_tool);
+                    tg_tool);
 
   return widget;
 }
 
 static void
-gimp_unified_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                                           GimpToolWidget    *widget)
+gimp_unified_transform_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
+                                           GimpToolWidget        *widget)
 {
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->recalc_matrix (tr_tool, widget);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->recalc_matrix (tg_tool, widget);
 
   if (widget)
     g_object_set (widget,
@@ -179,68 +192,64 @@ gimp_unified_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
                   "y1",        (gdouble) tr_tool->y1,
                   "x2",        (gdouble) tr_tool->x2,
                   "y2",        (gdouble) tr_tool->y2,
-                  "pivot-x",   tr_tool->trans_info[PIVOT_X],
-                  "pivot-y",   tr_tool->trans_info[PIVOT_Y],
+                  "pivot-x",   tg_tool->trans_info[PIVOT_X],
+                  "pivot-y",   tg_tool->trans_info[PIVOT_Y],
                   NULL);
-}
-
-static gchar *
-gimp_unified_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
-{
-  return g_strdup (C_("undo-type", "Unified Transform"));
 }
 
 static void
 gimp_unified_transform_tool_recalc_points (GimpGenericTransformTool *generic,
                                            GimpToolWidget           *widget)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (generic);
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
+  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
 
   generic->input_points[0]  = (GimpVector2) {tr_tool->x1, tr_tool->y1};
   generic->input_points[1]  = (GimpVector2) {tr_tool->x2, tr_tool->y1};
   generic->input_points[2]  = (GimpVector2) {tr_tool->x1, tr_tool->y2};
   generic->input_points[3]  = (GimpVector2) {tr_tool->x2, tr_tool->y2};
 
-  generic->output_points[0] = (GimpVector2) {tr_tool->trans_info[X0],
-                                             tr_tool->trans_info[Y0]};
-  generic->output_points[1] = (GimpVector2) {tr_tool->trans_info[X1],
-                                             tr_tool->trans_info[Y1]};
-  generic->output_points[2] = (GimpVector2) {tr_tool->trans_info[X2],
-                                             tr_tool->trans_info[Y2]};
-  generic->output_points[3] = (GimpVector2) {tr_tool->trans_info[X3],
-                                             tr_tool->trans_info[Y3]};
+  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
+                                             tg_tool->trans_info[Y0]};
+  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
+                                             tg_tool->trans_info[Y1]};
+  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
+                                             tg_tool->trans_info[Y2]};
+  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
+                                             tg_tool->trans_info[Y3]};
 }
 
 static void
-gimp_unified_transform_tool_widget_changed (GimpToolWidget    *widget,
-                                            GimpTransformTool *tr_tool)
+gimp_unified_transform_tool_widget_changed (GimpToolWidget        *widget,
+                                            GimpTransformGridTool *tg_tool)
 {
-  GimpMatrix3 *transform;
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpMatrix3       *transform;
 
   g_object_get (widget,
                 "transform", &transform,
-                "pivot-x",   &tr_tool->trans_info[PIVOT_X],
-                "pivot-y",   &tr_tool->trans_info[PIVOT_Y],
+                "pivot-x",   &tg_tool->trans_info[PIVOT_X],
+                "pivot-y",   &tg_tool->trans_info[PIVOT_Y],
                 NULL);
 
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y1,
-                                &tr_tool->trans_info[X0],
-                                &tr_tool->trans_info[Y0]);
+                                &tg_tool->trans_info[X0],
+                                &tg_tool->trans_info[Y0]);
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y1,
-                                &tr_tool->trans_info[X1],
-                                &tr_tool->trans_info[Y1]);
+                                &tg_tool->trans_info[X1],
+                                &tg_tool->trans_info[Y1]);
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y2,
-                                &tr_tool->trans_info[X2],
-                                &tr_tool->trans_info[Y2]);
+                                &tg_tool->trans_info[X2],
+                                &tg_tool->trans_info[Y2]);
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y2,
-                                &tr_tool->trans_info[X3],
-                                &tr_tool->trans_info[Y3]);
+                                &tg_tool->trans_info[X3],
+                                &tg_tool->trans_info[Y3]);
 
   g_free (transform);
 
-  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
 }

@@ -444,7 +444,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_VECTORS_REMOVE,              /*< desc="Delete path"                    >*/
   GIMP_UNDO_VECTORS_MOD,                 /*< desc="Path modification"              >*/
   GIMP_UNDO_FS_TO_LAYER,                 /*< desc="Floating selection to layer"    >*/
-  GIMP_UNDO_TRANSFORM,                   /*< desc="Transform"                      >*/
+  GIMP_UNDO_TRANSFORM_GRID,              /*< desc="Transform grid"                 >*/
   GIMP_UNDO_PAINT,                       /*< desc="Paint"                          >*/
   GIMP_UNDO_INK,                         /*< desc="Ink"                            >*/
   GIMP_UNDO_FOREGROUND_SELECT,           /*< desc="Select foreground"              >*/
