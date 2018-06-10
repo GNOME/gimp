@@ -74,20 +74,21 @@ struct _GimpTransformToolClass
 };
 
 
-GType      gimp_transform_tool_get_type        (void) G_GNUC_CONST;
+GType      gimp_transform_tool_get_type          (void) G_GNUC_CONST;
 
-GimpItem * gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
-                                                GimpDisplay        *display,
-                                                gboolean            invisible_layer_ok,
-                                                GError            **error);
+GimpItem * gimp_transform_tool_get_active_item   (GimpTransformTool  *tr_tool,
+                                                  GimpDisplay        *display);
+GimpItem * gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
+                                                  GimpDisplay        *display,
+                                                  GError            **error);
 
-gboolean   gimp_transform_tool_bounds          (GimpTransformTool  *tr_tool,
-                                                GimpDisplay        *display);
-void       gimp_transform_tool_recalc_matrix   (GimpTransformTool  *tr_tool,
-                                                GimpDisplay        *display);
+gboolean   gimp_transform_tool_bounds            (GimpTransformTool  *tr_tool,
+                                                  GimpDisplay        *display);
+void       gimp_transform_tool_recalc_matrix     (GimpTransformTool  *tr_tool,
+                                                  GimpDisplay        *display);
 
-gboolean   gimp_transform_tool_transform       (GimpTransformTool  *tr_tool,
-                                                GimpDisplay        *display);
+gboolean   gimp_transform_tool_transform         (GimpTransformTool  *tr_tool,
+                                                  GimpDisplay        *display);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

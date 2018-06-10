@@ -265,19 +265,14 @@ gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
 
 GimpItem *
 gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
-                                     GimpDisplay        *display,
-                                     gboolean            invisible_layer_ok,
-                                     GError            **error)
+                                     GimpDisplay        *display)
 {
   GimpTransformOptions *options;
   GimpImage            *image;
-  GimpItem             *item           = NULL;
-  const gchar          *null_message   = NULL;
-  const gchar          *locked_message = NULL;
+  GimpItem             *item = NULL;
 
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
@@ -288,7 +283,45 @@ gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      item         = GIMP_ITEM (gimp_image_get_active_drawable (image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (image));
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      item = GIMP_ITEM (gimp_image_get_mask (image));
+
+      if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
+        item = NULL;
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+      break;
+    }
+
+  return item;
+}
+
+GimpItem *
+gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
+                                       GimpDisplay        *display,
+                                       GError            **error)
+{
+  GimpTransformOptions *options;
+  GimpItem             *item;
+  const gchar          *null_message   = NULL;
+  const gchar          *locked_message = NULL;
+
+  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  item = gimp_transform_tool_get_active_item (tr_tool, display);
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
       null_message = _("There is no layer to transform.");
 
       if (item)
@@ -298,8 +331,7 @@ gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
           else if (gimp_item_is_position_locked (item))
             locked_message = _("The active layer's position and size are locked.");
 
-          /*  invisible_layer_ok is such a hack, see bug #759194 */
-          if (! invisible_layer_ok && ! gimp_item_is_visible (item))
+          if (! gimp_item_is_visible (item))
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                    _("The active layer is not visible."));
@@ -316,11 +348,7 @@ gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      item         = GIMP_ITEM (gimp_image_get_mask (image));
       null_message = _("There is no selection to transform.");
-
-      if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
-        item = NULL;
 
       if (item)
         {
@@ -333,7 +361,6 @@ gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      item         = GIMP_ITEM (gimp_image_get_active_vectors (image));
       null_message = _("There is no path to transform.");
 
       if (item)
@@ -393,8 +420,8 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  active_item = gimp_transform_tool_get_active_item (tr_tool, display, TRUE,
-                                                     &error);
+  active_item = gimp_transform_tool_check_active_item (tr_tool, display,
+                                                       &error);
 
   if (! active_item)
     {
