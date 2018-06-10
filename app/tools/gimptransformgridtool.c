@@ -247,8 +247,10 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   if (! item)
     return FALSE;
 
-  tool->display  = display;
-  tool->drawable = drawable;
+  tool->display     = display;
+  tool->drawable    = drawable;
+
+  tr_tool->drawable = drawable;
 
   /*  Initialize the transform_grid tool dialog  */
   if (! tg_tool->gui)
@@ -865,7 +867,8 @@ gimp_transform_grid_tool_widget_response (GimpToolWidget        *widget,
 static void
 gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 {
-  GimpTool *tool = GIMP_TOOL (tg_tool);
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));
@@ -891,8 +894,10 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 
   gimp_transform_grid_tool_show_active_item (tg_tool);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  tool->display     = NULL;
+  tool->drawable    = NULL;
+
+  tr_tool->drawable = NULL;
 }
 
 static void
@@ -904,11 +909,6 @@ gimp_transform_grid_tool_commit (GimpTransformGridTool *tg_tool)
 
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));
-
-  /* un-hide the active item before transforming, so that GimpTransformTool
-   * doesn't refuse to transform it.
-   */
-  gimp_transform_grid_tool_show_active_item (tg_tool);
 
   gimp_transform_tool_transform (tr_tool, display);
 }
