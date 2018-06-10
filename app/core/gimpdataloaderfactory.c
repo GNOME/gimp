@@ -354,6 +354,9 @@ gimp_data_loader_factory_load_data (GimpDataFactory *factory,
   container          = gimp_data_factory_get_container          (factory);
   container_obsolete = gimp_data_factory_get_container_obsolete (factory);
 
+  if (gimp_data_factory_get_gimp (factory)->be_verbose)
+    g_print ("  Loading %s\n", gimp_file_get_utf8_name (file));
+
   mtime = g_file_info_get_attribute_uint64 (info,
                                             G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
