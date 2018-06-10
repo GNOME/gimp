@@ -242,7 +242,7 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
   GimpItem              *item;
 
-  item = gimp_transform_tool_get_active_item (tr_tool, display, FALSE, error);
+  item = gimp_transform_tool_check_active_item (tr_tool, display, error);
 
   if (! item)
     return FALSE;
@@ -445,7 +445,8 @@ gimp_transform_grid_tool_cursor_update (GimpTool         *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (! gimp_transform_tool_get_active_item (tr_tool, display, TRUE, NULL))
+  if (display != tool->display &&
+      ! gimp_transform_tool_check_active_item (tr_tool, display, NULL))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -574,8 +575,7 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
           gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
 
           display = tool->display;
-          item    = gimp_transform_tool_get_active_item (tr_tool,
-                                                         display, TRUE, NULL);
+          item    = gimp_transform_tool_get_active_item (tr_tool, display);
           if (item)
             {
               if (show_preview)
@@ -905,6 +905,11 @@ gimp_transform_grid_tool_commit (GimpTransformGridTool *tg_tool)
   /* undraw the tool before we muck around with the transform matrix */
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));
 
+  /* un-hide the active item before transforming, so that GimpTransformTool
+   * doesn't refuse to transform it.
+   */
+  gimp_transform_grid_tool_show_active_item (tg_tool);
+
   gimp_transform_tool_transform (tr_tool, display);
 }
 
@@ -971,10 +976,7 @@ gimp_transform_grid_tool_prepare (GimpTransformGridTool *tg_tool,
 
   if (tg_tool->gui)
     {
-      GimpItem *item = gimp_transform_tool_get_active_item (tr_tool,
-                                                            display, TRUE, NULL);
-
-      g_return_if_fail (item != NULL);
+      GimpItem *item = gimp_transform_tool_get_active_item (tr_tool, display);
 
       gimp_tool_gui_set_shell (tg_tool->gui, gimp_display_get_shell (display));
       gimp_tool_gui_set_viewable (tg_tool->gui, GIMP_VIEWABLE (item));

@@ -252,7 +252,7 @@ gimp_flip_tool_cursor_update (GimpTool         *tool,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpFlipTool      *flip    = GIMP_FLIP_TOOL (tool);
 
-  if (! gimp_transform_tool_get_active_item (tr_tool, display, TRUE, NULL))
+  if (! gimp_transform_tool_check_active_item (tr_tool, display, NULL))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
