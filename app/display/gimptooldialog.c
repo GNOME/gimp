@@ -64,6 +64,8 @@ gimp_tool_dialog_class_init (GimpToolDialogClass *klass)
 
   object_class->dispose = gimp_tool_dialog_dispose;
 
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpToolDialog");
+
   g_type_class_add_private (klass, sizeof (GimpToolDialogPrivate));
 }
 
