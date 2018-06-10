@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-07 16:21+0200\n"
-"PO-Revision-Date: 2018-06-07 16:22+0200\n"
+"POT-Creation-Date: 2018-06-10 15:39+0200\n"
+"PO-Revision-Date: 2018-06-10 15:40+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3503,7 +3503,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1678
-#: ../app/tools/gimptransformtool.c:1215 ../app/widgets/gimpactionview.c:669
+#: ../app/tools/gimptransformgridtool.c:940 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
@@ -6157,14 +6157,14 @@ msgstr "Ustawienie rozdzielczości drukowania"
 
 #: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
-#: ../app/pdb/item-transform-cmds.c:222
+#: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:133
 msgid "Flipping"
 msgstr "Odbijanie"
 
 #: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
-#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:129
+#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:121
 msgid "Rotating"
 msgstr "Obracanie"
 
@@ -6225,7 +6225,7 @@ msgstr "Skalowanie obrazu"
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
 #: ../app/pdb/item-transform-cmds.c:618 ../app/pdb/layer-cmds.c:401
 #: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
-#: ../app/tools/gimpscaletool.c:121
+#: ../app/tools/gimpscaletool.c:113
 msgid "Scaling"
 msgstr "Skalowanie"
 
@@ -7488,7 +7488,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformtool.c:1214
+#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformgridtool.c:939
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -11613,8 +11613,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:896 ../app/core/core-enums.c:949
-#: ../app/core/gimpdrawable-transform.c:736 ../app/tools/gimpmeasuretool.c:840
+#: ../app/core/core-enums.c:896 ../app/core/gimpdrawable-transform.c:736
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -11813,6 +11812,11 @@ msgstr "Usunięcie ścieżki"
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modyfikacja ścieżki"
+
+#: ../app/core/core-enums.c:949
+msgctxt "undo-type"
+msgid "Transform grid"
+msgstr "Siatka przekształcenia"
 
 #: ../app/core/core-enums.c:951
 msgctxt "undo-type"
@@ -14733,7 +14737,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
 #: ../app/tools/gimpgradienttool-editor.c:1857
-#: ../app/tools/gimpmeasuretool.c:676 ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/tools/gimpmeasuretool.c:735 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
@@ -14757,7 +14761,7 @@ msgid "Confirm Scaling"
 msgstr "Potwierdzenie skalowania"
 
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
-#: ../app/tools/gimpscaletool.c:92 ../app/tools/gimpscaletool.c:110
+#: ../app/tools/gimpscaletool.c:93 ../app/tools/gimpscaletool.c:114
 msgid "_Scale"
 msgstr "_Skalowanie"
 
@@ -14870,11 +14874,11 @@ msgid "_Opacity:"
 msgstr "K_rycie:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:751
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:810
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:779
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:838
 msgid "Height:"
 msgstr "Wysokość:"
 
@@ -17101,7 +17105,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
 #: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1449
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:330
 #: ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Piksele aktywnej warstwy są zablokowane."
@@ -17162,7 +17166,7 @@ msgid "Select Rotation Angle"
 msgstr "Wybór kąta obrotu"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:723
+#: ../app/tools/gimpmeasuretool.c:782
 msgid "Angle:"
 msgstr "Kąt:"
 
@@ -17207,8 +17211,8 @@ msgid "not color managed"
 msgstr "bez zarządzania kolorami"
 
 #: ../app/display/gimpdisplayshell-utils.c:149
-#: ../app/tools/gimpmeasuretool.c:553 ../app/tools/gimpmeasuretool.c:706
-#: ../app/tools/gimpmeasuretool.c:762 ../app/tools/gimpmeasuretool.c:790
+#: ../app/tools/gimpmeasuretool.c:612 ../app/tools/gimpmeasuretool.c:765
+#: ../app/tools/gimpmeasuretool.c:821 ../app/tools/gimpmeasuretool.c:849
 msgid "pixels"
 msgstr "piksele"
 
@@ -19028,16 +19032,16 @@ msgstr "Odwrócenie"
 #: ../app/pdb/drawable-transform-cmds.c:355
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
-#: ../app/tools/gimpperspectivetool.c:85
-#: ../app/tools/gimptransformoptions.c:560
-#: ../app/tools/gimptransformoptions.c:569
+#: ../app/tools/gimpperspectivetool.c:86
+#: ../app/tools/gimptransformgridoptions.c:447
+#: ../app/tools/gimptransformgridoptions.c:456
 msgid "Perspective"
 msgstr "Perspektywa"
 
 #: ../app/pdb/drawable-transform-cmds.c:977
 #: ../app/pdb/drawable-transform-cmds.c:1064
 #: ../app/pdb/item-transform-cmds.c:713 ../app/pdb/transform-tools-cmds.c:432
-#: ../app/tools/gimpsheartool.c:119
+#: ../app/tools/gimpsheartool.c:110
 msgid "Shearing"
 msgstr "Nachylanie"
 
@@ -19380,8 +19384,8 @@ msgstr "Przezroczysta próbka"
 msgid "Diagonal neighbors"
 msgstr "Sąsiedzi po przekątnej"
 
-#: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:124
-#: ../app/tools/gimptransformoptions.c:448 ../app/tools/gimpwarpoptions.c:119
+#: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:100
+#: ../app/tools/gimptransformoptions.c:249 ../app/tools/gimpwarpoptions.c:119
 #: ../app/tools/gimpwarpoptions.c:322
 msgid "Interpolation"
 msgstr "Interpolacja"
@@ -20658,7 +20662,7 @@ msgstr "Wyp_ełnienie kubełkiem"
 #: ../app/tools/gimpfiltertool.c:284
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
-#: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:338 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -21062,7 +21066,7 @@ msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
-#: ../app/tools/gimptransformtool.c:1484
+#: ../app/tools/gimptransformtool.c:372
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -21194,48 +21198,44 @@ msgstr "_Ustawienia:"
 msgid "Settings saved to '%s'"
 msgstr "Zapisano ustawienia do „%s”"
 
-#: ../app/tools/gimpflipoptions.c:67
+#: ../app/tools/gimpflipoptions.c:66
 msgid "Flip Type"
 msgstr "Typ odbicia"
 
-#: ../app/tools/gimpflipoptions.c:68
+#: ../app/tools/gimpflipoptions.c:67
 msgid "Direction of flipping"
 msgstr "Kierunek odbicia"
 
-#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:433
-msgid "Transform:"
-msgstr "Przekształcenie:"
-
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:148 ../app/tools/gimpmagnifyoptions.c:191
+#: ../app/tools/gimpflipoptions.c:134 ../app/tools/gimpmagnifyoptions.c:191
 #, c-format
 msgid "Direction  (%s)"
 msgstr "Kierunek  (%s)"
 
-#: ../app/tools/gimpflipoptions.c:170 ../app/tools/gimptransformoptions.c:132
-#: ../app/tools/gimptransformoptions.c:455
+#: ../app/tools/gimpflipoptions.c:156 ../app/tools/gimptransformoptions.c:108
+#: ../app/tools/gimptransformoptions.c:259
 msgid "Clipping"
 msgstr "Przycinanie"
 
-#: ../app/tools/gimpfliptool.c:106
+#: ../app/tools/gimpfliptool.c:107
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/tools/gimpfliptool.c:107
+#: ../app/tools/gimpfliptool.c:108
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Odbicie: odwraca warstwę, zaznaczenie lub ścieżkę, pionowo lub poziomo"
 
-#: ../app/tools/gimpfliptool.c:109 ../app/tools/gimpfliptool.c:133
+#: ../app/tools/gimpfliptool.c:110
 msgid "_Flip"
 msgstr "Od_bicie"
 
-#: ../app/tools/gimpfliptool.c:298
+#: ../app/tools/gimpfliptool.c:299
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Odbicie poziome"
 
-#: ../app/tools/gimpfliptool.c:301
+#: ../app/tools/gimpfliptool.c:302
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Odbicie pionowe"
@@ -21243,7 +21243,7 @@ msgstr "Odbicie pionowe"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
-#: ../app/tools/gimpfliptool.c:307
+#: ../app/tools/gimpfliptool.c:308
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Odbicie"
@@ -21620,25 +21620,25 @@ msgstr "Przenosi uchwyty przekształcenia"
 msgid "Remove transform handles"
 msgstr "Usuwa uchwyty przekształcenia"
 
-#: ../app/tools/gimphandletransformtool.c:115
+#: ../app/tools/gimphandletransformtool.c:116
 msgid "Handle Transform"
 msgstr "Przekształcenie za pomocą uchwytów"
 
-#: ../app/tools/gimphandletransformtool.c:116
+#: ../app/tools/gimphandletransformtool.c:117
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
 "Przekształcenie za pomocą uchwytów: zniekształca warstwę, zaznaczenie lub "
 "ścieżkę za pomocą uchwytów"
 
-#: ../app/tools/gimphandletransformtool.c:118
+#: ../app/tools/gimphandletransformtool.c:119
 msgid "_Handle Transform"
 msgstr "Przekształcenie za pomocą _uchwytów"
 
-#: ../app/tools/gimphandletransformtool.c:146
+#: ../app/tools/gimphandletransformtool.c:143
 msgid "Handle transformation"
 msgstr "Przekształcenie za pomocą uchwytów"
 
-#: ../app/tools/gimphandletransformtool.c:310
+#: ../app/tools/gimphandletransformtool.c:209
 msgctxt "undo-type"
 msgid "Handle transform"
 msgstr "Przekształcenie za pomocą uchwytów"
@@ -21835,7 +21835,7 @@ msgstr "Dopasowanie rozmiaru okna"
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Zmienianie rozmiaru okna obrazu podczas zmiany poziomu powiększenia"
 
-#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
+#: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:92
 #: ../app/widgets/gimpdynamicseditor.c:163
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 msgid "Direction"
@@ -21861,45 +21861,48 @@ msgstr "_Powiększenie"
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Otwiera oddzielne okno wyświetlające informacje o pomiarach"
 
-#: ../app/tools/gimpmeasureoptions.c:130
-msgid "Auto straighten"
-msgstr "Automatycznie wyprostuj"
+#. the straighten frame
+#. the straighten button
+#: ../app/tools/gimpmeasureoptions.c:134 ../app/tools/gimpmeasureoptions.c:144
+#: ../app/tools/gimpmeasuretool.c:336
+msgid "Straighten"
+msgstr "Wyprostuj"
 
-#: ../app/tools/gimpmeasureoptions.c:134
-msgid "Rotate the active layer using the measurement line as horizon"
-msgstr "Obraca aktywną warstwę używając linii pomiaru jako horyzontu"
+#: ../app/tools/gimpmeasureoptions.c:148
+msgid "Rotate the active layer, selection or path by the measured angle"
+msgstr "Obraca aktywną warstwę, zaznaczenie lub ścieżkę o wymierzony kąt"
 
-#: ../app/tools/gimpmeasuretool.c:132
+#: ../app/tools/gimpmeasuretool.c:129
 msgid "Measure"
 msgstr "Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:133
+#: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Miarka: umożliwia mierzenie odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:134
+#: ../app/tools/gimpmeasuretool.c:131
 msgid "_Measure"
 msgstr "_Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:167
+#: ../app/tools/gimpmeasuretool.c:151
+msgid "Straightening"
+msgstr "Wyprostowywanie"
+
+#: ../app/tools/gimpmeasuretool.c:170
 msgid "Click-Drag to create a line"
 msgstr "Kliknięcie i przeciągnięcie utworzy linię"
 
-#: ../app/tools/gimpmeasuretool.c:348
+#: ../app/tools/gimpmeasuretool.c:406
 msgid "Add Guides"
 msgstr "Dodanie prowadnic"
 
-#: ../app/tools/gimpmeasuretool.c:670
+#: ../app/tools/gimpmeasuretool.c:729
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:695
+#: ../app/tools/gimpmeasuretool.c:754
 msgid "Distance:"
 msgstr "Odległość:"
-
-#: ../app/tools/gimpmeasuretool.c:835
-msgid "Straightening"
-msgstr "Wyprostowywanie"
 
 #: ../app/tools/gimpmoveoptions.c:143
 msgid "Pick a layer or guide"
@@ -21986,8 +21989,8 @@ msgid "Show lattice"
 msgstr "Kratka"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:90 ../app/tools/gimptransformoptions.c:554
-#: ../app/tools/gimptransformoptions.c:565
+#: ../app/tools/gimpscaletool.c:91 ../app/tools/gimptransformgridoptions.c:441
+#: ../app/tools/gimptransformgridoptions.c:452
 msgid "Scale"
 msgstr "Skalowanie"
 
@@ -22101,11 +22104,11 @@ msgstr "Nie można narysować grup warstw."
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
 
-#: ../app/tools/gimppainttool.c:806
+#: ../app/tools/gimppainttool.c:815
 msgid "The active layer does not have an alpha channel."
 msgstr "Aktywna warstwa nie ma kanału alfa."
 
-#: ../app/tools/gimppainttool.c:816
+#: ../app/tools/gimppainttool.c:825
 msgid "The active layer's alpha channel is locked."
 msgstr "Kanał alfa aktywnej warstwy jest zablokowany."
 
@@ -22132,19 +22135,19 @@ msgstr "_Klon perspektywy"
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl i kliknięcie ustawi źródło klonowania"
 
-#: ../app/tools/gimpperspectivetool.c:86
+#: ../app/tools/gimpperspectivetool.c:87
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr "Perspektywa: zmienia perspektywę warstwy, zaznaczenia lub ścieżki"
 
-#: ../app/tools/gimpperspectivetool.c:88
+#: ../app/tools/gimpperspectivetool.c:89
 msgid "_Perspective"
 msgstr "_Perspektywa"
 
-#: ../app/tools/gimpperspectivetool.c:117
+#: ../app/tools/gimpperspectivetool.c:110
 msgid "Perspective transformation"
 msgstr "Przekształcenie perspektywiczne"
 
-#: ../app/tools/gimpperspectivetool.c:182
+#: ../app/tools/gimpperspectivetool.c:125
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektywa"
@@ -22163,7 +22166,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Używa wszystkich widocznych warstw podczas zmniejszania zaznaczenia"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformoptions.c:155
+#: ../app/tools/gimptransformgridoptions.c:114
 msgid "Composition guides such as rule of thirds"
 msgstr "Prowadnice kompozycji, takie jak jedna trzecia"
 
@@ -22298,39 +22301,39 @@ msgstr "Rysuje maskę zaznaczonego obszaru"
 msgid "Move the mouse to change threshold"
 msgstr "Poruszenie myszą zmieni próg"
 
-#: ../app/tools/gimprotatetool.c:95 ../app/tools/gimptransformoptions.c:556
+#: ../app/tools/gimprotatetool.c:96 ../app/tools/gimptransformgridoptions.c:443
 msgid "Rotate"
 msgstr "Obrót"
 
-#: ../app/tools/gimprotatetool.c:96
+#: ../app/tools/gimprotatetool.c:97
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr "Obrót: obraca warstwy, zaznaczenia lub ścieżki"
 
-#: ../app/tools/gimprotatetool.c:97
+#: ../app/tools/gimprotatetool.c:98
 msgid "_Rotate"
 msgstr "Ob_rót"
 
-#: ../app/tools/gimprotatetool.c:118
+#: ../app/tools/gimprotatetool.c:122
 msgid "R_otate"
 msgstr "O_bróć"
 
-#: ../app/tools/gimprotatetool.c:193
-msgid "_Angle:"
-msgstr "_Kąt:"
-
-#: ../app/tools/gimprotatetool.c:211
-msgid "Center _X:"
-msgstr "_Poziomy środek:"
-
-#: ../app/tools/gimprotatetool.c:220
-msgid "Center _Y:"
-msgstr "Pi_onowy środek:"
-
-#: ../app/tools/gimprotatetool.c:348
+#: ../app/tools/gimprotatetool.c:177
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
 msgstr "Obrót o %-3.3g° wokół (%g, %g)"
+
+#: ../app/tools/gimprotatetool.c:206
+msgid "_Angle:"
+msgstr "_Kąt:"
+
+#: ../app/tools/gimprotatetool.c:224
+msgid "Center _X:"
+msgstr "_Poziomy środek:"
+
+#: ../app/tools/gimprotatetool.c:233
+msgid "Center _Y:"
+msgstr "Pi_onowy środek:"
 
 #: ../app/tools/gimpsamplepointtool.c:240
 msgid "Remove Sample Point"
@@ -22350,11 +22353,11 @@ msgstr "Przesunięcie punktu wzorcowego: "
 msgid "Add Sample Point: "
 msgstr "Dodanie punktu wzorcowego: "
 
-#: ../app/tools/gimpscaletool.c:91
+#: ../app/tools/gimpscaletool.c:92
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Skalowanie: skaluje warstwę, zaznaczenie lub ścieżkę"
 
-#: ../app/tools/gimpscaletool.c:257
+#: ../app/tools/gimpscaletool.c:135
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
@@ -22438,8 +22441,8 @@ msgstr "Kliknięcie i przeciągnięcie przemieści kopię zaznaczonych pikseli"
 msgid "Click to anchor the floating selection"
 msgstr "Kliknięcie zakotwiczy oderwane zaznaczenie"
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformoptions.c:558
-#: ../app/tools/gimptransformoptions.c:567
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:445
+#: ../app/tools/gimptransformgridoptions.c:454
 msgid "Shear"
 msgstr "Nachylenie"
 
@@ -22451,36 +22454,36 @@ msgstr "Nachylenie: nachyla warstwę, zaznaczenie lub ścieżkę"
 msgid "S_hear"
 msgstr "Nac_hylenie"
 
-#: ../app/tools/gimpsheartool.c:108
+#: ../app/tools/gimpsheartool.c:111
 msgid "_Shear"
 msgstr "_Nachyl"
 
-#: ../app/tools/gimpsheartool.c:136
-msgid "Shear magnitude _X"
-msgstr "_Poziome nachylenie"
-
-#: ../app/tools/gimpsheartool.c:147
-msgid "Shear magnitude _Y"
-msgstr "Pi_onowe nachylenie"
-
-#: ../app/tools/gimpsheartool.c:251
+#: ../app/tools/gimpsheartool.c:132
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
 msgstr "Nachylenie poziome o %-3.3g"
 
-#: ../app/tools/gimpsheartool.c:255
+#: ../app/tools/gimpsheartool.c:136
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
 msgstr "Nachylenie pionowe o %-3.3g"
 
 #. e.g. user entered numbers but no notification callback
-#: ../app/tools/gimpsheartool.c:260
+#: ../app/tools/gimpsheartool.c:141
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
 msgstr "Nachylenie poziome o %-3.3g, pionowe o %-3.3g"
+
+#: ../app/tools/gimpsheartool.c:160
+msgid "Shear magnitude _X"
+msgstr "_Poziome nachylenie"
+
+#: ../app/tools/gimpsheartool.c:171
+msgid "Shear magnitude _Y"
+msgstr "Pi_onowe nachylenie"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -22668,210 +22671,214 @@ msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Nie można pracować na pustym obrazie, należy najpierw dodać warstwę"
 
-#: ../app/tools/gimptransformoptions.c:117
-msgid "Direction of transformation"
-msgstr "Kierunek przekształcenia"
-
-#: ../app/tools/gimptransformoptions.c:125 ../app/tools/gimpwarpoptions.c:120
-msgid "Interpolation method"
-msgstr "Metoda interpolacji"
-
-#: ../app/tools/gimptransformoptions.c:133
-msgid "How to clip"
-msgstr "Jak przycinać"
-
-#: ../app/tools/gimptransformoptions.c:140
+#: ../app/tools/gimptransformgridoptions.c:99
 msgid "Show image preview"
 msgstr "Podgląd obrazu"
 
-#: ../app/tools/gimptransformoptions.c:141
-msgid "Show a preview of the transformed image"
+#: ../app/tools/gimptransformgridoptions.c:100
+msgid "Show a preview of the transform_grided image"
 msgstr "Wyświetlenie podglądu przekształcanego obrazu"
 
-#: ../app/tools/gimptransformoptions.c:147
+#: ../app/tools/gimptransformgridoptions.c:106
 msgid "Image opacity"
 msgstr "Krycie obrazu"
 
-#: ../app/tools/gimptransformoptions.c:148
+#: ../app/tools/gimptransformgridoptions.c:107
 msgid "Opacity of the preview image"
 msgstr "Krycie obrazu podglądu"
 
-#: ../app/tools/gimptransformoptions.c:154
-#: ../app/tools/gimptransformoptions.c:476
+#: ../app/tools/gimptransformgridoptions.c:113
+#: ../app/tools/gimptransformgridoptions.c:363
 msgid "Guides"
 msgstr "Prowadnice"
 
-#: ../app/tools/gimptransformoptions.c:163
+#: ../app/tools/gimptransformgridoptions.c:122
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
 
-#: ../app/tools/gimptransformoptions.c:499
+#: ../app/tools/gimptransformgridoptions.c:386
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 stopni (%s)"
 
-#: ../app/tools/gimptransformoptions.c:506
+#: ../app/tools/gimptransformgridoptions.c:393
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ograniczenie kroków obrotu do 15 stopni"
 
-#: ../app/tools/gimptransformoptions.c:516
+#: ../app/tools/gimptransformgridoptions.c:403
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Stałe proporcje (%s)"
 
-#: ../app/tools/gimptransformoptions.c:523
+#: ../app/tools/gimptransformgridoptions.c:410
 msgid "Keep the original aspect ratio"
 msgstr "Utrzymywanie pierwotnych proporcji"
 
-#: ../app/tools/gimptransformoptions.c:528
+#: ../app/tools/gimptransformgridoptions.c:415
 #, c-format
 msgid "Around center (%s)"
 msgstr "Wokół środka (%s)"
 
-#: ../app/tools/gimptransformoptions.c:535
+#: ../app/tools/gimptransformgridoptions.c:422
 msgid "Scale around the center point"
 msgstr "Skalowanie wokół punktu środkowego"
 
-#: ../app/tools/gimptransformoptions.c:551
+#: ../app/tools/gimptransformgridoptions.c:438
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ograniczenie (%s)"
 
-#: ../app/tools/gimptransformoptions.c:552
+#: ../app/tools/gimptransformgridoptions.c:439
 msgid "Move"
 msgstr "Ruch"
 
-#: ../app/tools/gimptransformoptions.c:553
+#: ../app/tools/gimptransformgridoptions.c:440
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ograniczenie ruchu do 45 stopni od środka (%s)"
 
-#: ../app/tools/gimptransformoptions.c:555
+#: ../app/tools/gimptransformgridoptions.c:442
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Utrzymywanie proporcji podczas skalowania (%s)"
 
-#: ../app/tools/gimptransformoptions.c:557
+#: ../app/tools/gimptransformgridoptions.c:444
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ograniczenie obrotu do 15-stopniowych kroków (%s)"
 
-#: ../app/tools/gimptransformoptions.c:559
+#: ../app/tools/gimptransformgridoptions.c:446
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Nachylanie tylko wzdłuż kierunku krawędzi (%s)"
 
-#: ../app/tools/gimptransformoptions.c:561
+#: ../app/tools/gimptransformgridoptions.c:448
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ograniczenie ruchu uchwytów perspektywy wzdłuż krawędzi i przekątnej (%s)"
 
-#: ../app/tools/gimptransformoptions.c:564
+#: ../app/tools/gimptransformgridoptions.c:451
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Od osi  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:566
+#: ../app/tools/gimptransformgridoptions.c:453
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Skalowanie od punktu osi (%s)"
 
-#: ../app/tools/gimptransformoptions.c:568
+#: ../app/tools/gimptransformgridoptions.c:455
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Nachylanie przeciwległej krawędzi o tę samą wartość (%s)"
 
-#: ../app/tools/gimptransformoptions.c:570
+#: ../app/tools/gimptransformgridoptions.c:457
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Utrzymywanie położenia osi podczas zmieniania perspektywy (%s)"
 
-#: ../app/tools/gimptransformoptions.c:573
+#: ../app/tools/gimptransformgridoptions.c:460
 msgid "Pivot"
 msgstr "Oś"
 
-#: ../app/tools/gimptransformoptions.c:574
+#: ../app/tools/gimptransformgridoptions.c:461
 #, c-format
 msgid "Snap (%s)"
 msgstr "Przyciąganie (%s)"
 
-#: ../app/tools/gimptransformoptions.c:575
+#: ../app/tools/gimptransformgridoptions.c:462
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Przyciąganie osi do rogów i środka (%s)"
 
-#: ../app/tools/gimptransformoptions.c:576
+#: ../app/tools/gimptransformgridoptions.c:463
 msgid "Lock"
 msgstr "Blokowanie"
 
-#: ../app/tools/gimptransformoptions.c:577
+#: ../app/tools/gimptransformgridoptions.c:464
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformtool.c:195
+#: ../app/tools/gimptransformgridtool.c:196
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformtool.c:219
-msgid "Transforming"
-msgstr "Przekształcanie"
-
-#: ../app/tools/gimptransformtool.c:259
-#, c-format
-msgid "The selection does not intersect with the layer."
-msgstr "Zaznaczenie nie przecina się z warstwą."
-
-#: ../app/tools/gimptransformtool.c:514 ../app/tools/gimptransformtool.c:526
+#: ../app/tools/gimptransformgridtool.c:472
+#: ../app/tools/gimptransformgridtool.c:484
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:996
-msgid "The current transform is invalid"
-msgstr "Bieżące przekształcenie jest nieprawidłowe"
+#: ../app/tools/gimptransformoptions.c:93
+msgid "Direction of transformation"
+msgstr "Kierunek przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:1444
+#: ../app/tools/gimptransformoptions.c:101 ../app/tools/gimpwarpoptions.c:120
+msgid "Interpolation method"
+msgstr "Metoda interpolacji"
+
+#: ../app/tools/gimptransformoptions.c:109
+msgid "How to clip"
+msgstr "Jak przycinać"
+
+#: ../app/tools/gimptransformoptions.c:229
+msgid "Transform:"
+msgstr "Przekształcenie:"
+
+#: ../app/tools/gimptransformtool.c:70
+msgid "Transforming"
+msgstr "Przekształcanie"
+
+#: ../app/tools/gimptransformtool.c:325
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1451
+#: ../app/tools/gimptransformtool.c:332
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1464
+#: ../app/tools/gimptransformtool.c:345
+msgid "The selection does not intersect with the layer."
+msgstr "Zaznaczenie nie przecina się z warstwą."
+
+#: ../app/tools/gimptransformtool.c:352
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:365
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1482
+#: ../app/tools/gimptransformtool.c:370
 msgid "The active path's strokes are locked."
 msgstr "Krzywe aktywnej ścieżki są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1486
+#: ../app/tools/gimptransformtool.c:374
 msgid "The active path has no strokes."
 msgstr "Aktywna ścieżka nie ma krzywych."
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimptransformtool.c:439
+msgid "The current transform is invalid"
+msgstr "Bieżące przekształcenie jest nieprawidłowe"
+
+#: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform"
 msgstr "Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:88
+#: ../app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
 "Uniwersalne przekształcenie: przekształca warstwę, zaznaczenie lub ścieżkę"
 
-#: ../app/tools/gimpunifiedtransformtool.c:90
+#: ../app/tools/gimpunifiedtransformtool.c:91
 msgid "_Unified Transform"
 msgstr "_Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:115
+#: ../app/tools/gimpunifiedtransformtool.c:112
 msgid "Unified transform"
 msgstr "Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:190
+#: ../app/tools/gimpunifiedtransformtool.c:123
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Uniwersalne przekształcenie"
@@ -23331,7 +23338,7 @@ msgstr "Procent szerokości pędzla"
 msgid "(None)"
 msgstr "(Brak)"
 
-#: ../app/widgets/gimpclipboard.c:485
+#: ../app/widgets/gimpclipboard.c:508
 msgid "Clipboard"
 msgstr "Schowek"
 
