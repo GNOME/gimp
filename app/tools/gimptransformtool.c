@@ -331,7 +331,8 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
           else if (gimp_item_is_position_locked (item))
             locked_message = _("The active layer's position and size are locked.");
 
-          if (! gimp_item_is_visible (item))
+          if (! gimp_item_is_visible (item) &&
+              GIMP_DRAWABLE (item) != tr_tool->drawable) /* see bug #759194 */
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                    _("The active layer is not visible."));
