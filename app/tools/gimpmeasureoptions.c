@@ -118,11 +118,12 @@ gimp_measure_options_get_property (GObject    *object,
 GtkWidget *
 gimp_measure_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *button;
-  GtkWidget *frame;
-  GtkWidget *vbox2;
+  GObject            *config  = G_OBJECT (tool_options);
+  GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (tool_options);
+  GtkWidget          *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget          *button;
+  GtkWidget          *frame;
+  GtkWidget          *vbox2;
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window", NULL);
@@ -149,6 +150,7 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
                            NULL);
   gtk_widget_show (button);
 
-  GIMP_MEASURE_OPTIONS (tool_options)->straighten = button;
+  options->straighten_button = button;
+
   return vbox;
 }

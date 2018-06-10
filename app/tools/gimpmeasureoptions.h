@@ -38,7 +38,9 @@ struct _GimpMeasureOptions
   GimpTransformOptions  parent_instance;
 
   gboolean              use_info_window;
-  GtkWidget            *straighten;
+
+  /*  options gui  */
+  GtkWidget            *straighten_button;
 };
 
 struct _GimpMeasureOptionsClass

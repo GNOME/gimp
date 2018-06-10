@@ -108,7 +108,8 @@ static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measur
 static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
                                                    GimpDisplay           *display);
 
-static void  gimp_measure_tool_straighten_clicked (GtkWidget             *button,
+static void     gimp_measure_tool_straighten_button_clicked
+                                                  (GtkWidget             *button,
                                                    GimpMeasureTool       *measure);
 
 G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -319,9 +320,6 @@ gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
   gimp_vector2_sub (&p1, &p1, &p0);
   gimp_vector2_sub (&p2, &p2, &p0);
 
-  gimp_vector2_normalize (&p1);
-  gimp_vector2_normalize (&p2);
-
   angle = atan2 (gimp_vector2_cross_product (&p1, &p2).x,
                  gimp_vector2_inner_product (&p1, &p2));
 
@@ -354,7 +352,7 @@ gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                 "y3",       &measure->y[2],
                 NULL);
 
-  gtk_widget_set_sensitive (options->straighten, measure->n_points >= 2);
+  gtk_widget_set_sensitive (options->straighten_button, measure->n_points >= 2);
   gimp_measure_tool_dialog_update (measure, GIMP_TOOL (measure)->display);
 }
 
@@ -460,8 +458,8 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   g_signal_connect (measure->widget, "create-guides",
                     G_CALLBACK (gimp_measure_tool_compass_create_guides),
                     measure);
-  g_signal_connect (options->straighten, "clicked",
-                    G_CALLBACK (gimp_measure_tool_straighten_clicked),
+  g_signal_connect (options->straighten_button, "clicked",
+                    G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
                     measure);
 
   tool->display = display;
@@ -475,7 +473,7 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpTool           *tool    = GIMP_TOOL (measure);
 
-  gtk_widget_set_sensitive (options->straighten, FALSE);
+  gtk_widget_set_sensitive (options->straighten_button, FALSE);
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
@@ -483,9 +481,10 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
 
-  g_signal_handlers_disconnect_by_func (options->straighten,
-                                        G_CALLBACK (gimp_measure_tool_straighten_clicked),
-                                        measure);
+  g_signal_handlers_disconnect_by_func (
+    options->straighten_button,
+    G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
+    measure);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&measure->widget);
@@ -867,16 +866,17 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 }
 
 static void
-gimp_measure_tool_straighten_clicked (GtkWidget       *button,
-                                      GimpMeasureTool *measure)
+gimp_measure_tool_straighten_button_clicked (GtkWidget       *button,
+                                             GimpMeasureTool *measure)
 {
   GimpTool          *tool    = GIMP_TOOL (measure);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (measure);
-  gdouble            x0, y0;
-  gdouble            x1, y1;
 
   if (gimp_transform_tool_transform (tr_tool, tool->display))
     {
+      gdouble x0, y0;
+      gdouble x1, y1;
+
       gimp_matrix3_transform_point (&tr_tool->transform,
                                     measure->x[0],
                                     measure->y[0],
