@@ -53,23 +53,27 @@ GimpDock notebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock button {
+GimpDock button,
+GimpOverlayDialog button,
+GimpToolDialog button {
     padding: 0px 2px 0px 2px;
 }
 
-GimpDock entry {
+GimpDock entry,
+GimpOverlayDialog entry,
+GimpToolDialog entry {
     min-height: 2.5em;
 }
 
-GimpDock spinbutton {
+GimpDock spinbutton,
+GimpOverlayDialog spinbutton,
+GimpToolDialog spinbutton {
     min-height: 2.5em;
 }
 
-GimpDock spinbutton entry {
-    min-height: 0;
-}
-
-GimpDock spinbutton button {
+GimpDock spinbutton button,
+GimpOverlayDialog spinbutton button,
+GimpToolDialog spinbutton button {
     padding: 0 0 0 0;
 }
 
