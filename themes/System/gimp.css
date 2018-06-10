@@ -29,12 +29,20 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
-GimpColorScales spinbutton button {
-    padding: 0 0 0 0;
+GimpColorScales spinbutton {
+    min-height: 0;
 }
 
 GimpColorScales spinbutton entry {
     min-height: 0;
+}
+
+GimpColorScales spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpColorHistory button {
+    padding: 3px 3px 3px 3px;
 }
 
 GimpDock {
@@ -45,15 +53,27 @@ GimpDock notebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock spinbutton button {
-    padding: 0 0 0 0;
+GimpDock button {
+    padding: 0px 2px 0px 2px;
+}
+
+GimpDock entry {
+    min-height: 2.5em;
+}
+
+GimpDock spinbutton {
+    min-height: 2.5em;
 }
 
 GimpDock spinbutton entry {
     min-height: 0;
 }
 
-GimpDockable {
+GimpDock spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpDock frame {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
 }
