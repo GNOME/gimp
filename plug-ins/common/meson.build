@@ -31,6 +31,11 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
+    'busy-dialog',
+    [ 'busy-dialog.c', ],
+    [ gtk3, gegl, gdk_pixbuf, ],
+  ],
+  [
     'cartoon',
     [ 'cartoon.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],

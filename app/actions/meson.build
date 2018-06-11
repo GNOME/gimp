@@ -39,7 +39,6 @@ libappactions_sources = [
   'filters-actions.c',
   'filters-commands.c',
   'fonts-actions.c',
-  'fonts-commands.c',
   'gimpgeglprocedure.c',
   'gradient-editor-actions.c',
   'gradient-editor-commands.c',
