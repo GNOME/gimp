@@ -7,9 +7,8 @@ apptextenums = custom_target('text-enums.c',
 )
 
 libapptext_sources = [
-  'gimp-fonts.c',
   'gimpfont.c',
-  'gimpfontlist.c',
+  'gimpfontfactory.c',
   'gimptext-compat.c',
   'gimptext-parasite.c',
   'gimptext-vectors.c',

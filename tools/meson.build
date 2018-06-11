@@ -24,13 +24,13 @@ executable('kernelgen',
   install: false,
 )
 
-executable('test-clipboard',
-  'test-clipboard.c',
+executable('gimp-test-clipboard',
+  'gimp-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
     gtk3,
   ],
-  install: false,
+  install: true,
 )
 
 if have_vector_icons

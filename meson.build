@@ -240,7 +240,7 @@ math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-babl              = dependency('babl',               version: '>=0.1.50')
+babl              = dependency('babl',               version: '>=0.1.51')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -254,7 +254,7 @@ freetype2         = dependency('freetype2',          version: '>=2.1.7')
 
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>=2.30.8')
 
-gegl              = dependency('gegl-0.4',           version: '>=0.4.2')
+gegl              = dependency('gegl-0.4',           version: '>=0.4.3')
 
 gexiv2            = dependency('gexiv2',             version: '>=0.10.6')
 
@@ -302,6 +302,8 @@ pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
+conf.set('G_DISABLE_DEPRECATED',    glib.version().version_compare('>=2.57'))
+conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('>=1.43'))
 
 
 ################################################################################
@@ -546,7 +548,7 @@ else
 endif
 
 if get_option('with-webkit')
-  webkit = dependency('webkit2gtk-4.0', version: '>=2.0.0')
+  webkit = dependency('webkitgtk-3.0', version: '>=2.4.11')
 else
   webkit = dependency('', required: false)
 endif
