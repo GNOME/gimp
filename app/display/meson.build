@@ -91,6 +91,7 @@ libappdisplay_sources = [
   'gimptoolsheargrid.c',
   'gimptooltransformgrid.c',
   'gimptoolwidget.c',
+  'gimptoolwidgetgroup.c',
   appdisplayenums,
   appcoremarshal,
   gitversion_h,

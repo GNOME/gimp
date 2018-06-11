@@ -22,6 +22,7 @@ gimpwidgetsmarshal = gnome.genmarshal('gimpwidgetsmarshal',
 
 libgimpwidgets_sources = [
   'gimpbrowser.c',
+  'gimpbusybox.c',
   'gimpbutton.c',
   'gimpcairo-utils.c',
   'gimpcellrenderercolor.c',
