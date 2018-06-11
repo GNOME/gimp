@@ -55,8 +55,16 @@ GimpDock notebook tab {
 
 GimpDock button,
 GimpOverlayDialog button,
-GimpToolDialog button {
+GimpToolDialog :not(headerbar) button {
     padding: 0px 2px 0px 2px;
+}
+
+GimpToolDialog headerbar {
+    min-height: 0;
+}
+
+GimpToolDialog headerbar button {
+    padding: 2px 2px 2px 2px;
 }
 
 GimpDock entry,
