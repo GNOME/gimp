@@ -26,7 +26,7 @@ endif
 
 SUBDIRS = \
 	script-fu		\
-##	$(pygimp)		\
+	$(pygimp)		\
 	file-bmp		\
 	$(file_darktable)	\
 	$(file_exr)		\
