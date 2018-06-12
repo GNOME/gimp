@@ -82,7 +82,8 @@ m4_define([poppler_required_version], [0.69.0])
 m4_define([poppler_data_required_version], [0.4.9])
 m4_define([pycairo_required_version], [1.0.2])
 m4_define([pygtk_required_version], [2.10.4])
-m4_define([python2_required_version], [2.5.0])
+# m4_define([python2_required_version], [2.5.0])
+m4_define([python3_required_version], [3.6.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
@@ -180,7 +181,8 @@ PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 PERL_REQUIRED_VERSION=perl_required_version
 POPPLER_REQUIRED_VERSION=poppler_required_version
 POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
-PYTHON2_REQUIRED_VERSION=python2_required_version
+# PYTHON2_REQUIRED_VERSION=python2_required_version
+PYTHON3_REQUIRED_VERSION=python3_required_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
 WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
@@ -213,7 +215,8 @@ AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(POPPLER_REQUIRED_VERSION)
 AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
-AC_SUBST(PYTHON2_REQUIRED_VERSION)
+AC_SUBST(PYTHON3_REQUIRED_VERSION)
+# AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
@@ -2258,9 +2261,9 @@ m4_define([pycheck_error], [
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
-  AM_PATH_PYTHON2(python2_required_version,,
-                  [pycheck_error([Python 2 (python2_required_version or newer)], [it])])
-  AM_CHECK_PYTHON_HEADERS(, [pycheck_error([Python 2 headers], [them])])
+  AM_PATH_PYTHON(python3_required_version,,
+                  [pycheck_error([Python 3 (python3_required_version or newer)], [it])])
+  AM_CHECK_PYTHON_HEADERS(, [pycheck_error([Python 3 headers], [them])])
 
   # Win32 needs all symbols resolved for linking, even for DLLs
   # Assume the link library is in $exec_prefix/libs
@@ -2279,19 +2282,21 @@ if test "x$enable_python" != xno; then
   AC_SUBST(PYLINK_LIBS)
   AC_SUBST(PYBIN_PATH)
 
-  # check for PyGTK
-  PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
-                    [pycheck_error([PyGTK pygtk_required_version or newer], [it])])
+  # # check for PyGTK
+  # PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
+  #                   [pycheck_error([PyGTK pygtk_required_version or newer], [it])])
 
-  AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
-  if test "x$PYGTK_CODEGEN" = xno; then
-     pycheck_error([pygtk-codegen-2.0 script], [it])
-  fi
+  # AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+  # if test "x$PYGTK_CODEGEN" = xno; then
+  #    pycheck_error([pygtk-codegen-2.0 script], [it])
+  # fi
 
-  AC_MSG_CHECKING(for pygtk defs)
-  PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-  AC_SUBST(PYGTK_DEFSDIR)
-  AC_MSG_RESULT($PYGTK_DEFSDIR)
+  # AC_MSG_CHECKING(for pygtk defs)
+  # PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+  # AC_SUBST(PYGTK_DEFSDIR)
+  # AC_MSG_RESULT($PYGTK_DEFSDIR)
+
+  # XXX Check here for something related to Python gobject-introspection & GTK3
 
   PKG_CHECK_MODULES(PYCAIRO, pycairo >= pycairo_required_version,,
                     [pycheck_error([PyCairo pycairo_required_version or newer], [it])])
@@ -3032,7 +3037,7 @@ Optional Plug-Ins:
   Heif >= 1.4.0:             $have_libheif_1_4_0
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
-  Python 2:                  $enable_python
+  Python 3:                $enable_python
   TWAIN (Win32):             $os_win32
   Webpage:                   $have_webkit
   WMF:                       $have_libwmf
