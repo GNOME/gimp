@@ -923,12 +923,12 @@ load_dialog (struct heif_context *heif,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
@@ -1048,7 +1048,7 @@ save_dialog (SaveParams *params)
 
   dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
@@ -1056,7 +1056,7 @@ save_dialog (SaveParams *params)
   lossless_button = gtk_check_button_new_with_label (_("Lossless"));
   gtk_box_pack_start (GTK_BOX (main_vbox), lossless_button, FALSE, FALSE, 0);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   label = gtk_label_new (_("Quality:"));
   quality_slider = gtk_hscale_new_with_range (0, 100, 5);
   gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
