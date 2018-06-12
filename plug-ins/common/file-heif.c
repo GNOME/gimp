@@ -1058,7 +1058,8 @@ save_dialog (SaveParams *params)
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   label = gtk_label_new (_("Quality:"));
-  quality_slider = gtk_hscale_new_with_range (0, 100, 5);
+  quality_slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                             0, 100, 5);
   gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
