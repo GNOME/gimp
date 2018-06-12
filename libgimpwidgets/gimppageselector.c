@@ -216,6 +216,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   GtkWidget               *button;
   GtkWidget               *label;
   GtkWidget               *combo;
+  GtkCellRenderer         *renderer;
 
   selector->priv = G_TYPE_INSTANCE_GET_PRIVATE (selector,
                                                 GIMP_TYPE_PAGE_SELECTOR,
@@ -251,14 +252,28 @@ gimp_page_selector_init (GimpPageSelector *selector)
                                     G_TYPE_BOOLEAN);
 
   priv->view = gtk_icon_view_new_with_model (GTK_TREE_MODEL (priv->store));
-  gtk_icon_view_set_text_column (GTK_ICON_VIEW (priv->view),
-                                 COLUMN_LABEL);
-  gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (priv->view),
-                                   COLUMN_THUMBNAIL);
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (priv->view),
                                     GTK_SELECTION_MULTIPLE);
   gtk_container_add (GTK_CONTAINER (sw), priv->view);
   gtk_widget_show (priv->view);
+
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (priv->view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (priv->view), renderer,
+                                  "pixbuf", COLUMN_THUMBNAIL,
+                                  NULL);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (priv->view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (priv->view), renderer,
+                                  "text", COLUMN_LABEL,
+                                  NULL);
+  g_object_set (renderer,
+                "alignment", PANGO_ALIGN_CENTER,
+                "wrap-mode", PANGO_WRAP_WORD_CHAR,
+                "xalign",    0.5,
+                "yalign",    0.0,
+                NULL);
 
   g_signal_connect (priv->view, "selection-changed",
                     G_CALLBACK (gimp_page_selector_selection_changed),
