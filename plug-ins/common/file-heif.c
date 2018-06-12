@@ -762,6 +762,7 @@ load_thumbnails (struct heif_context *heif,
       gint                      thumbnail_width;
       gint                      thumbnail_height;
 
+      images[i].ID         = IDs[i];
       images[i].caption[0] = 0;
       images[i].thumbnail  = NULL;
 
