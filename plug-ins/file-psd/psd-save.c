@@ -1455,50 +1455,42 @@ create_merged_image (gint32 image_id)
 
   projection = gimp_layer_new_from_visible (image_id, image_id, "psd-save");
 
+  if (! gimp_drawable_has_alpha (projection))
+    return projection;
+
   if (gimp_image_base_type (image_id) != GIMP_INDEXED)
     {
-      GeglBuffer           *buffer             = gimp_drawable_get_buffer (projection);
-      const Babl           *format             = get_pixel_format (projection);
-      gboolean              transparency_found = FALSE;
-      gint                  bpp                = babl_format_get_bytes_per_pixel (format);
-      gint                  n_components       = babl_format_get_n_components (format);
-      gint                  width              = gegl_buffer_get_width (buffer);
-      gint                  height             = gegl_buffer_get_height (buffer);
-      GeglBufferIterator   *iter               = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 0, width, height),
-                                                                           0, format,
-                                                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      GeglBuffer         *buffer             = gimp_drawable_get_buffer (projection);
+      const Babl         *format             = get_pixel_format (projection);
+      gboolean            transparency_found = FALSE;
+      gint                bpp                = babl_format_get_bytes_per_pixel (format);
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *data = iter->data[0];
-          gint y;
+          guchar *d = iter->data[0];
+          gint    i;
 
-          for (y = 0; y < iter->roi->height; y++)
+          for (i = 0; i < iter->length; i++)
             {
-              guchar *d = data;
-              gint x;
+              gint32 alpha = d[bpp - 1];
 
-              for (x = 0; x < iter->roi->width; x++)
+              if (alpha < 255)
                 {
-                  gint32 alpha = d[bpp - 1];
+                  gint c;
 
-                  if (alpha < 255)
-                    {
-                      gint i;
+                  transparency_found = TRUE;
 
-                      transparency_found = TRUE;
-
-                      /* blend against white, photoshop does this. */
-                      for (i = 0; i < bpp - 1; i++)
-                        d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
-                    }
-
+                  /* blend against white, photoshop does this. */
+                  for (c = 0; c < bpp - 1; c++)
+                    d[c] = ((guint32) d[c] * alpha + 128) / 255 + 255 - alpha;
                 }
 
               d += bpp;
             }
-
-          data += n_components;
         }
 
       g_object_unref (buffer);
@@ -1508,8 +1500,7 @@ create_merged_image (gint32 image_id)
     }
   else
     {
-      if (gimp_drawable_has_alpha (projection))
-        gimp_layer_flatten (projection);  /* PSDs don't support transparency information in indexed images*/
+      gimp_layer_flatten (projection);  /* PSDs don't support transparency information in indexed images*/
     }
 
   return projection;
