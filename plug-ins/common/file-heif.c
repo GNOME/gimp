@@ -715,7 +715,7 @@ save_image (GFile             *file,
 }
 
 
-/*  the dialogs  */
+/*  the load dialog  */
 
 #define MAX_THUMBNAIL_SIZE 320
 
@@ -895,23 +895,31 @@ load_thumbnails (struct heif_context *heif,
   return TRUE;
 }
 
+static void
+load_dialog_item_activated (GtkIconView *icon_view,
+                            GtkTreePath *path,
+                            GtkDialog   *dialog)
+{
+  gtk_dialog_response (dialog, GTK_RESPONSE_OK);
+}
 
 static gboolean
 load_dialog (struct heif_context *heif,
              uint32_t            *selected_image)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *frame;
-  HeifImage    *heif_images;
-  GtkListStore *list_store;
-  GtkTreeIter   iter;
-  GtkWidget    *scrolled_window;
-  GtkWidget    *icon_view;
-  gint          n_images;
-  gint          i;
-  gint          selected_idx = -1;
-  gboolean      run          = FALSE;
+  GtkWidget       *dialog;
+  GtkWidget       *main_vbox;
+  GtkWidget       *frame;
+  HeifImage       *heif_images;
+  GtkListStore    *list_store;
+  GtkTreeIter      iter;
+  GtkWidget       *scrolled_window;
+  GtkWidget       *icon_view;
+  GtkCellRenderer *renderer;
+  gint             n_images;
+  gint             i;
+  gint             selected_idx = -1;
+  gboolean         run          = FALSE;
 
   n_images = heif_context_get_number_of_top_level_images (heif);
 
@@ -977,13 +985,31 @@ load_dialog (struct heif_context *heif,
   gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
   gtk_widget_show (scrolled_window);
 
-  icon_view = gtk_icon_view_new ();
-  gtk_icon_view_set_model (GTK_ICON_VIEW (icon_view),
-                           GTK_TREE_MODEL (list_store));
-  gtk_icon_view_set_text_column (GTK_ICON_VIEW (icon_view), 0);
-  gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (icon_view), 1);
+  icon_view = gtk_icon_view_new_with_model (GTK_TREE_MODEL (list_store));
   gtk_container_add (GTK_CONTAINER (scrolled_window), icon_view);
   gtk_widget_show (icon_view);
+
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (icon_view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (icon_view), renderer,
+                                  "pixbuf", 1,
+                                  NULL);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (icon_view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (icon_view), renderer,
+                                  "text", 0,
+                                  NULL);
+  g_object_set (renderer,
+                "alignment", PANGO_ALIGN_CENTER,
+                "wrap-mode", PANGO_WRAP_WORD_CHAR,
+                "xalign",    0.5,
+                "yalign",    0.0,
+                NULL);
+
+  g_signal_connect (icon_view, "item-activated",
+                    G_CALLBACK (load_dialog_item_activated),
+                    dialog);
 
   /* pre-select the primary image */
 
@@ -1036,9 +1062,12 @@ load_dialog (struct heif_context *heif,
   return run;
 }
 
+
+/*  the save dialog  */
+
 static void
-lossless_button_toggled (GtkToggleButton *source,
-                         GtkWidget       *slider)
+save_dialog_lossless_button_toggled (GtkToggleButton *source,
+                                     GtkWidget       *slider)
 {
   gboolean lossless = gtk_toggle_button_get_active (source);
 
@@ -1080,7 +1109,7 @@ save_dialog (SaveParams *params)
   gtk_widget_set_sensitive (quality_slider, !params->lossless);
 
   g_signal_connect (lossless_button, "toggled",
-                    G_CALLBACK (lossless_button_toggled),
+                    G_CALLBACK (save_dialog_lossless_button_toggled),
                     quality_slider);
 
   gtk_widget_show_all (dialog);
