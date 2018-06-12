@@ -906,6 +906,7 @@ load_dialog (struct heif_context *heif,
   HeifImage    *heif_images;
   GtkListStore *list_store;
   GtkTreeIter   iter;
+  GtkWidget    *scrolled_window;
   GtkWidget    *icon_view;
   gint          n_images;
   gint          i;
@@ -934,7 +935,7 @@ load_dialog (struct heif_context *heif,
                       main_vbox, TRUE, TRUE, 0);
 
   frame = gimp_frame_new (_("Select Image"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   /* prepare list store with all thumbnails and caption */
@@ -967,12 +968,21 @@ load_dialog (struct heif_context *heif,
       gtk_list_store_set (list_store, &iter, 1, pixbuf, -1);
     }
 
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_widget_set_size_request (scrolled_window,
+                               2   * MAX_THUMBNAIL_SIZE,
+                               1.5 * MAX_THUMBNAIL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
   icon_view = gtk_icon_view_new ();
   gtk_icon_view_set_model (GTK_ICON_VIEW (icon_view),
                            GTK_TREE_MODEL (list_store));
   gtk_icon_view_set_text_column (GTK_ICON_VIEW (icon_view), 0);
   gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (icon_view), 1);
-  gtk_container_add (GTK_CONTAINER (frame), icon_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), icon_view);
   gtk_widget_show (icon_view);
 
   /* pre-select the primary image */
