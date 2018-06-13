@@ -765,7 +765,7 @@ on_read_error (png_structp     png_ptr,
   gint                    end;
   gint                    num;
 
-  g_warning (_("Error loading PNG file: %s"), error_msg);
+  g_printerr (_("Error loading PNG file: %s\n"), error_msg);
 
   /* Flush the current half-read row of tiles */
 
@@ -1271,10 +1271,10 @@ load_image (const gchar  *filename,
         }
     }
 
+  png_read_end (pp, info);
+
   /* Switch back to default error handler */
   png_set_error_fn (pp, NULL, NULL, NULL);
-
-  png_read_end (pp, info);
 
   if (png_get_text (pp, info, &text, &num_texts))
     {
