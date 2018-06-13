@@ -318,6 +318,13 @@ load_wmf_size (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+  /* allow to redefine path to the font directory */
+  char *wmffontdir = getenv("WMF_FONTDIR");
+  char* wmffontdirs[2] = { wmffontdir, NULL };
+  if (wmffontdir) {
+    flags |= WMF_OPT_FONTDIRS;
+    api_options.fontdirs = wmffontdirs;
+  }
   err = wmf_api_create (&API, flags, &api_options);
   if (err != wmf_E_None)
     success = FALSE;
@@ -781,6 +788,13 @@ wmf_get_pixbuf (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+  /* allow to redefine path to the font directory */
+  char *wmffontdir = getenv("WMF_FONTDIR");
+  char* wmffontdirs[2] = { wmffontdir, NULL };
+  if (wmffontdir) {
+    flags |= WMF_OPT_FONTDIRS;
+    api_options.fontdirs = wmffontdirs;
+  }
   err = wmf_api_create (&API, flags, &api_options);
   if (err != wmf_E_None)
     goto _wmf_error;
@@ -890,6 +904,13 @@ wmf_load_file (const gchar  *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+  /* allow to redefine path to the font directory */
+  char *wmffontdir = getenv("WMF_FONTDIR");
+  char* wmffontdirs[2] = { wmffontdir, NULL };
+  if (wmffontdir) {
+    flags |= WMF_OPT_FONTDIRS;
+    api_options.fontdirs = wmffontdirs;
+  }
   err = wmf_api_create (&API, flags, &api_options);
   if (err != wmf_E_None)
     goto _wmf_error;
