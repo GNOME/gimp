@@ -27,8 +27,6 @@
 
 #include "gimpicons.h"
 
-#include "icons/Color/gimp-icon-pixbufs.c"
-
 #include "libgimp/libgimp-intl.h"
 
 
