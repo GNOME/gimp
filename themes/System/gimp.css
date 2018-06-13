@@ -53,17 +53,10 @@ GimpDock notebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock :not(toolpalette) button,
+GimpDock :not(toolbutton) > button,
 GimpOverlayDialog button,
 GimpToolDialog :not(headerbar) button {
     padding: 0px 2px 0px 2px;
-}
-
-/* the above "GimpDock :not(toolpalette) button" doesn't work, so set
- * the tool button style explicitly
- */
-GimpDock toolpalette button {
-    padding: 4px 4px 4px 4px;
 }
 
 GimpToolDialog headerbar {
@@ -97,7 +90,7 @@ GimpDock frame {
     -GimpFrame-label-spacing:    2;
 }
 
-GimpDisplayShell grid>button {
+GimpDisplayShell grid > button {
     min-height: 0;
     min-width: 0;
     padding: 0 0 0 0;
