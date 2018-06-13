@@ -966,12 +966,22 @@ gimp_scroll_adjustment_values (GdkEventScroll *sevent,
     }
 
   if (adj_x)
-    scroll_unit_x = pow (gtk_adjustment_get_page_size (adj_x), 2.0 / 3.0);
+    {
+      gdouble page_size = gtk_adjustment_get_page_size (adj_x);
+      gdouble pow_unit  = pow (page_size, 2.0 / 3.0);
+
+      scroll_unit_x = MIN (page_size / 2.0, pow_unit);
+    }
   else
     scroll_unit_x = 1.0;
 
   if (adj_y)
-    scroll_unit_y = pow (gtk_adjustment_get_page_size (adj_y), 2.0 / 3.0);
+    {
+      gdouble page_size = gtk_adjustment_get_page_size (adj_y);
+      gdouble pow_unit  = pow (page_size, 2.0 / 3.0);
+
+      scroll_unit_y = MIN (page_size / 2.0, pow_unit);
+    }
   else
     scroll_unit_y = 1.0;
 
