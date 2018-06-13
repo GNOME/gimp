@@ -113,7 +113,8 @@ GtkWidget * gimp_gradient_editor_new      (GimpContext        *context,
 
 void        gimp_gradient_editor_update   (GimpGradientEditor *editor);
 void        gimp_gradient_editor_zoom     (GimpGradientEditor *editor,
-                                           GimpZoomType        zoom_type);
+                                           GimpZoomType        zoom_type,
+                                           gdouble             delta);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */

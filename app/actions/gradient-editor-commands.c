@@ -716,7 +716,7 @@ gradient_editor_zoom_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
 
-  gimp_gradient_editor_zoom (editor, (GimpZoomType) value);
+  gimp_gradient_editor_zoom (editor, (GimpZoomType) value, 1.0);
 }
 
 

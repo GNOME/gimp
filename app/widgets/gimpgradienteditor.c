@@ -77,7 +77,7 @@
 #define EPSILON 1e-10
 
 #define GRAD_SCROLLBAR_STEP_SIZE 0.05
-#define GRAD_SCROLLBAR_PAGE_SIZE 0.75
+#define GRAD_SCROLLBAR_PAGE_SIZE 0.5
 
 #define GRAD_VIEW_SIZE            96
 #define GRAD_CONTROL_HEIGHT       14
@@ -214,21 +214,13 @@ static void      control_draw_all                 (GimpGradientEditor *editor,
                                                    gint                height,
                                                    gdouble             left,
                                                    gdouble             right);
-static void      control_draw_normal_handle       (GimpGradientEditor *editor,
+static void      control_draw_handle              (GimpGradientEditor *editor,
+                                                   GtkStyleContext    *style,
                                                    cairo_t            *cr,
                                                    gdouble             pos,
                                                    gint                height,
-                                                   gboolean            selected);
-static void      control_draw_middle_handle       (GimpGradientEditor *editor,
-                                                   cairo_t            *cr,
-                                                   gdouble             pos,
-                                                   gint                height,
-                                                   gboolean            selected);
-static void      control_draw_handle              (cairo_t            *cr,
-                                                   const GdkRGBA      *border,
-                                                   const GdkRGBA      *fill,
-                                                   gint                xpos,
-                                                   gint                height);
+                                                   gboolean            middle,
+                                                   GtkStateFlags       flags);
 
 static gint      control_calc_p_pos               (GimpGradientEditor *editor,
                                                    gdouble             pos);
@@ -273,17 +265,6 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 
   editor_class->set_data    = gimp_gradient_editor_set_data;
   editor_class->title       = _("Gradient Editor");
-
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("handle-color",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boxed ("handle-color-selected",
-                                                               NULL, NULL,
-                                                               GDK_TYPE_RGBA,
-                                                               GIMP_PARAM_READABLE));
 }
 
 static void
@@ -306,8 +287,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   GtkWidget      *hbox;
   GtkWidget      *hint_vbox;
   GimpRGB         transp;
-  GtkCssProvider *css;
-  const gchar    *str;
 
   gimp_rgba_set (&transp, 0.0, 0.0, 0.0, 0.0);
 
@@ -449,19 +428,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gimp_rgba_set (&editor->saved_colors[7], 0.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[8], 0.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[9], 1.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
-
-  str =
-    "GimpGradientEditor {\n"
-    "  -GimpGradientEditor-handle-color: mix (@text_color, @base_color, 0.5);\n"
-    "  -GimpGradientEditor-handle-color-selected: mix (@selected_fg_color, @selected_bg_color, 0.5);\n"
-    "}\n";
-
-  css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css, str, -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (editor)),
-                                  GTK_STYLE_PROVIDER (css),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (css);
 }
 
 static void
@@ -582,7 +548,8 @@ gimp_gradient_editor_update (GimpGradientEditor *editor)
 
 void
 gimp_gradient_editor_zoom (GimpGradientEditor *editor,
-                           GimpZoomType        zoom_type)
+                           GimpZoomType        zoom_type,
+                           gdouble             delta)
 {
   GtkAdjustment *adjustment;
   gdouble        old_value;
@@ -591,6 +558,22 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
   gdouble        page_size = 1.0;
 
   g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
+
+  if (zoom_type == GIMP_ZOOM_SMOOTH)
+    {
+      if (delta < 0)
+        zoom_type = GIMP_ZOOM_IN;
+      else if (delta > 0)
+        zoom_type = GIMP_ZOOM_OUT;
+      else
+        return;
+
+      delta = ABS (delta);
+    }
+  else
+    {
+      delta = 1.0;
+    }
 
   adjustment = editor->scroll_data;
 
@@ -602,7 +585,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
     case GIMP_ZOOM_IN_MAX:
     case GIMP_ZOOM_IN_MORE:
     case GIMP_ZOOM_IN:
-      editor->zoom_factor++;
+      editor->zoom_factor += delta;
 
       page_size = 1.0 / editor->zoom_factor;
       value     = old_value + (old_page_size - page_size) / 2.0;
@@ -613,7 +596,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
       if (editor->zoom_factor <= 1)
         return;
 
-      editor->zoom_factor--;
+      editor->zoom_factor -= delta;
 
       page_size = 1.0 / editor->zoom_factor;
       value     = old_value - (page_size - old_page_size) / 2.0;
@@ -630,6 +613,9 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
       value     = 0.0;
       page_size = 1.0;
+      break;
+
+    case GIMP_ZOOM_SMOOTH: /* can't happen, see above switch() */
       break;
     }
 
@@ -895,14 +881,21 @@ view_events (GtkWidget          *widget,
 
         if (sevent->state & gimp_get_toggle_behavior_mask ())
           {
+            gdouble delta;
+
             switch (sevent->direction)
               {
               case GDK_SCROLL_UP:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0);
                 break;
 
               case GDK_SCROLL_DOWN:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0);
+                break;
+
+              case GDK_SCROLL_SMOOTH:
+                gdk_event_get_scroll_deltas (event, NULL, &delta);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta);
                 break;
 
               default:
@@ -911,29 +904,13 @@ view_events (GtkWidget          *widget,
           }
         else
           {
-            GtkAdjustment *adj   = editor->scroll_data;
-            gfloat         value = gtk_adjustment_get_value (adj);
+            gdouble value;
 
-            switch (sevent->direction)
-              {
-              case GDK_SCROLL_UP:
-                value -= gtk_adjustment_get_page_increment (adj) / 2;
-                break;
+            gimp_scroll_adjustment_values (sevent,
+                                           editor->scroll_data, NULL,
+                                           &value, NULL);
 
-              case GDK_SCROLL_DOWN:
-                value += gtk_adjustment_get_page_increment (adj) / 2;
-                break;
-
-              default:
-                break;
-              }
-
-            value = CLAMP (value,
-                           gtk_adjustment_get_lower (adj),
-                           gtk_adjustment_get_upper (adj) -
-                           gtk_adjustment_get_page_size (adj));
-
-            gtk_adjustment_set_value (adj, value);
+            gtk_adjustment_set_value (editor->scroll_data, value);
           }
       }
       break;
@@ -1102,27 +1079,36 @@ control_events (GtkWidget          *widget,
 
         if (sevent->state & gimp_get_toggle_behavior_mask ())
           {
-            if (sevent->direction == GDK_SCROLL_UP)
-              gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
-            else
-              gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
+            gdouble delta;
+
+            switch (sevent->direction)
+              {
+              case GDK_SCROLL_UP:
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0);
+                break;
+
+              case GDK_SCROLL_DOWN:
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0);
+                break;
+
+              case GDK_SCROLL_SMOOTH:
+                gdk_event_get_scroll_deltas (event, NULL, &delta);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta);
+                break;
+
+              default:
+                break;
+              }
           }
         else
           {
-            GtkAdjustment *adj = editor->scroll_data;
-            gfloat         new_value;
+            gdouble value;
 
-            new_value = (gtk_adjustment_get_value (adj) +
-                         ((sevent->direction == GDK_SCROLL_UP) ?
-                          - gtk_adjustment_get_page_increment (adj) / 2 :
-                          gtk_adjustment_get_page_increment (adj) / 2));
+            gimp_scroll_adjustment_values (sevent,
+                                           editor->scroll_data, NULL,
+                                           &value, NULL);
 
-            new_value = CLAMP (new_value,
-                               gtk_adjustment_get_lower (adj),
-                               gtk_adjustment_get_upper (adj) -
-                               gtk_adjustment_get_page_size (adj));
-
-            gtk_adjustment_set_value (adj, new_value);
+            gtk_adjustment_set_value (editor->scroll_data, value);
           }
       }
       break;
@@ -1726,91 +1712,93 @@ control_draw_all (GimpGradientEditor *editor,
                   gdouble             left,
                   gdouble             right)
 {
-  GtkStyleContext        *control_style;
+  GtkStyleContext        *style;
   GimpGradientSegment    *seg;
   GradientEditorDragMode  handle;
-  GdkRGBA                 color;
   gint                    sel_l;
   gint                    sel_r;
   gdouble                 g_pos;
-  gboolean                selected;
+  GtkStateFlags           flags;
 
   if (! gradient)
     return;
 
   /* Draw selection */
 
-  control_style = gtk_widget_get_style_context (editor->control);
+  style = gtk_widget_get_style_context (editor->control);
 
   sel_l = control_calc_p_pos (editor, editor->control_sel_l->left);
   sel_r = control_calc_p_pos (editor, editor->control_sel_r->right);
 
-  gtk_style_context_add_class (control_style, GTK_STYLE_CLASS_ENTRY);
+  gtk_style_context_save (style);
 
-  gtk_style_context_get_background_color (control_style, 0,
-                                          &color);
-  gdk_cairo_set_source_rgba (cr, &color);
-  cairo_rectangle (cr, 0, 0, width, height);
-  cairo_fill (cr);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_VIEW);
+  gtk_render_background (style, cr, 0, 0, width, height);
 
-  gtk_style_context_get_background_color (control_style, GTK_STATE_FLAG_SELECTED,
-                                          &color);
-  gdk_cairo_set_source_rgba (cr, &color);
-  cairo_rectangle (cr, sel_l, 0, sel_r - sel_l + 1, height);
-  cairo_fill (cr);
+  gtk_style_context_set_state (style, GTK_STATE_FLAG_SELECTED);
+  gtk_render_background (style, cr,sel_l, 0, sel_r - sel_l + 1, height);
 
-  gtk_style_context_remove_class (control_style, GTK_STYLE_CLASS_ENTRY);
+  gtk_style_context_restore (style);
 
   /* Draw handles */
 
-  selected = FALSE;
+  flags = GTK_STATE_FLAG_NORMAL;
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
       if (seg == editor->control_sel_l)
-        selected = TRUE;
+        flags = GTK_STATE_FLAG_SELECTED;
 
-      control_draw_normal_handle (editor, cr, seg->left,   height, selected);
-      control_draw_middle_handle (editor, cr, seg->middle, height, selected);
+      control_draw_handle (editor, style, cr, seg->left,
+                           height, FALSE, flags);
+      control_draw_handle (editor, style, cr, seg->middle,
+                           height, TRUE,  flags);
 
       /* Draw right handle only if this is the last segment */
       if (seg->next == NULL)
-        control_draw_normal_handle (editor, cr, seg->right, height, selected);
+        control_draw_handle (editor, style, cr, seg->right,
+                             height, FALSE, flags);
 
       if (seg == editor->control_sel_r)
-        selected = FALSE;
+        flags = GTK_STATE_FLAG_NORMAL;
     }
 
   /* Draw the handle which is closest to the mouse position */
+
+  flags = GTK_STATE_FLAG_PRELIGHT;
 
   g_pos = control_calc_g_pos (editor, editor->control_last_x);
 
   seg_get_closest_handle (gradient, CLAMP (g_pos, 0.0, 1.0), &seg, &handle);
 
-  selected = (seg &&
-              seg_in_selection (gradient, seg,
-                                editor->control_sel_l, editor->control_sel_r));
+  if (seg && seg_in_selection (gradient, seg,
+                               editor->control_sel_l, editor->control_sel_r))
+    flags |= GTK_STATE_FLAG_SELECTED;
 
   switch (handle)
     {
     case GRAD_DRAG_LEFT:
       if (seg)
         {
-          control_draw_normal_handle (editor, cr, seg->left, height, selected);
+          control_draw_handle (editor, style, cr, seg->left,
+                               height, FALSE, flags);
         }
       else
         {
           seg = gimp_gradient_segment_get_last (gradient->segments);
 
-          selected = (seg == editor->control_sel_r);
+          if (seg == editor->control_sel_r)
+            flags |= GTK_STATE_FLAG_SELECTED;
 
-          control_draw_normal_handle (editor, cr, seg->right, height, selected);
+          control_draw_handle (editor, style, cr, seg->right,
+                               height, FALSE, flags);
         }
 
       break;
 
     case GRAD_DRAG_MIDDLE:
-      control_draw_middle_handle (editor, cr, seg->middle, height, selected);
+      control_draw_handle (editor, style, cr, seg->middle,
+                           height, TRUE, flags);
       break;
 
     default:
@@ -1819,59 +1807,59 @@ control_draw_all (GimpGradientEditor *editor,
 }
 
 static void
-control_draw_normal_handle (GimpGradientEditor *editor,
-                            cairo_t            *cr,
-                            gdouble             pos,
-                            gint                height,
-                            gboolean            selected)
+control_draw_handle (GimpGradientEditor *editor,
+                     GtkStyleContext    *style,
+                     cairo_t            *cr,
+                     gdouble             pos,
+                     gint                height,
+                     gboolean            middle,
+                     GtkStateFlags       flags)
 {
-  GdkRGBA border;
-  GdkRGBA fill = { 0.0, 0.0, 0.0, 1.0 };
+  GdkRGBA  color;
+  gint     xpos     = control_calc_p_pos (editor, pos);
+  gboolean selected = (flags & GTK_STATE_FLAG_SELECTED) != 0;
 
-  gimp_get_style_color (GTK_WIDGET (editor),
-                        selected ? "handle-color-selected" : "handle-color",
-                        &border);
+  cairo_save (cr);
 
-  control_draw_handle (cr, &border, &fill,
-                       control_calc_p_pos (editor, pos), height);
-}
-
-static void
-control_draw_middle_handle (GimpGradientEditor *editor,
-                            cairo_t            *cr,
-                            gdouble             pos,
-                            gint                height,
-                            gboolean            selected)
-{
-  GdkRGBA border;
-  GdkRGBA fill = { 1.0, 1.0, 1.0, 1.0 };
-
-  gimp_get_style_color (GTK_WIDGET (editor),
-                        selected ? "handle-color-selected" : "handle-color",
-                        &border);
-
-  control_draw_handle (cr, &border, &fill,
-                       control_calc_p_pos (editor, pos), height);
-}
-
-static void
-control_draw_handle (cairo_t        *cr,
-                     const GdkRGBA *border,
-                     const GdkRGBA *fill,
-                     gint           xpos,
-                     gint           height)
-{
   cairo_move_to (cr, xpos, 0);
   cairo_line_to (cr, xpos - height / 2.0, height);
   cairo_line_to (cr, xpos + height / 2.0, height);
   cairo_line_to (cr, xpos, 0);
 
-  gdk_cairo_set_source_rgba (cr, fill);
+  gtk_style_context_save (style);
+
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_VIEW);
+
+  gtk_style_context_save (style);
+
+  gtk_style_context_set_state (style, flags);
+
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &color);
+
+  gtk_style_context_restore (style);
+
+  if (middle)
+    color.alpha = 0.5;
+
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_fill_preserve (cr);
 
-  gdk_cairo_set_source_rgba (cr, border);
+  if (selected)
+    gtk_style_context_set_state (style, flags &= ~GTK_STATE_FLAG_SELECTED);
+  else
+    gtk_style_context_set_state (style, flags |= GTK_STATE_FLAG_SELECTED);
+
+  gtk_style_context_get_color (style, gtk_style_context_get_state (style),
+                               &color);
+
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_set_line_width (cr, 1);
   cairo_stroke (cr);
+
+  gtk_style_context_restore (style);
+
+  cairo_restore (cr);
 }
 
 /*****/
