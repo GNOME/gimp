@@ -233,7 +233,7 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
-static void
+void
 gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
 {
   GimpFreeSelectToolPrivate *private = fst->private;
