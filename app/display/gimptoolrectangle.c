@@ -1069,6 +1069,8 @@ gimp_tool_rectangle_notify (GObject    *object,
       ! strcmp (pspec->name, "y2"))
     {
       gimp_tool_rectangle_update_int_rect (rectangle);
+
+      gimp_tool_rectangle_update_options (rectangle);
     }
   else if (! strcmp  (pspec->name, "x") &&
            ! PIXEL_FEQUAL (private->x1, private->x))
