@@ -261,9 +261,11 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   /* Selection Bounding Box */
 
-  frame = gimp_frame_new (_("Selection Bounding Box"));
+  frame = gimp_frame_new (_("Selection"));
   gtk_box_pack_start (GTK_BOX (view->priv->selection_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
+
+  gimp_help_set_help_data (frame, _("The selection's bounding box"), NULL);
 
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
