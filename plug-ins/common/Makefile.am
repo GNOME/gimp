@@ -285,7 +285,7 @@ busy_dialog_LDADD = \
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
-	$(bust_dialog_RC)
+	$(busy_dialog_RC)
 
 cartoon_SOURCES = \
 	cartoon.c
