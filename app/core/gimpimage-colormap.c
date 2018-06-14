@@ -182,6 +182,8 @@ gimp_image_set_colormap (GimpImage    *image,
                          gboolean      push_undo)
 {
   GimpImagePrivate *private;
+  GimpPaletteEntry *entry;
+  gint              i;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (colormap != NULL || n_colors == 0);
@@ -194,34 +196,26 @@ gimp_image_set_colormap (GimpImage    *image,
 
   if (private->colormap)
     memset (private->colormap, 0, GIMP_IMAGE_COLORMAP_SIZE);
+  else
+    gimp_image_colormap_init (image);
 
   if (colormap)
-    {
-      if (! private->colormap)
-        {
-          gimp_image_colormap_init (image);
-        }
+    memcpy (private->colormap, colormap, n_colors * 3);
 
-      memcpy (private->colormap, colormap, n_colors * 3);
-    }
+  /* make sure the image's colormap always has at least one color.  when
+   * n_colors == 0, use black.
+   */
+  private->n_colors = MAX (n_colors, 1);
 
-  private->n_colors = n_colors;
+  gimp_data_freeze (GIMP_DATA (private->palette));
 
-  if (private->palette)
-    {
-      GimpPaletteEntry *entry;
-      gint              i;
+  while ((entry = gimp_palette_get_entry (private->palette, 0)))
+    gimp_palette_delete_entry (private->palette, entry);
 
-      gimp_data_freeze (GIMP_DATA (private->palette));
+  for (i = 0; i < private->n_colors; i++)
+    gimp_image_colormap_set_palette_entry (image, i);
 
-      while ((entry = gimp_palette_get_entry (private->palette, 0)))
-        gimp_palette_delete_entry (private->palette, entry);
-
-      for (i = 0; i < private->n_colors; i++)
-        gimp_image_colormap_set_palette_entry (image, i);
-
-      gimp_data_thaw (GIMP_DATA (private->palette));
-    }
+  gimp_data_thaw (GIMP_DATA (private->palette));
 
   gimp_image_colormap_changed (image, -1);
 }
