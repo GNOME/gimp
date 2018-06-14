@@ -106,7 +106,6 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
   gtk_widget_show (viewport);
 
   editor->p->options_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  g_object_set (editor->p->options_vbox, "valign", GTK_ALIGN_START, NULL);
   gtk_container_set_border_width (GTK_CONTAINER (editor->p->options_vbox), 2);
   gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
   gtk_widget_show (editor->p->options_vbox);
