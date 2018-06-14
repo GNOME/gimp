@@ -1025,6 +1025,8 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
+  gimp_free_select_tool_halt (GIMP_FREE_SELECT_TOOL (fg_select));
+
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                fg_select->trimap, 0, 0, &color, TRUE);
