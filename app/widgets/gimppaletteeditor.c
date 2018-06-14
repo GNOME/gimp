@@ -168,7 +168,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
   GtkWidget      *viewport;
   GtkWidget      *hbox;
-  GtkWidget      *label;
+  GtkWidget      *icon;
   GtkWidget      *spinbutton;
 
   editor->zoom_factor = 1.0;
@@ -240,6 +240,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   /*  The color name entry  */
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
+  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_name), 1);
   gtk_entry_set_text (GTK_ENTRY (editor->color_name), _("Undefined"));
   gtk_editable_set_editable (GTK_EDITABLE (editor->color_name), FALSE);
   gtk_widget_show (editor->color_name);
@@ -248,9 +249,9 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     G_CALLBACK (palette_editor_color_name_changed),
                     editor);
 
-  label = gtk_label_new (_("Columns:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  icon = gtk_image_new_from_icon_name (GIMP_ICON_GRID, GTK_ICON_SIZE_MENU);
+  gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
+  gtk_widget_show (icon);
 
   editor->columns_adj = (GtkAdjustment *)
     gtk_adjustment_new (0, 0, 64, 1, 4, 0);
@@ -258,6 +259,8 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+
+  gimp_help_set_help_data (spinbutton, _("Set the number of columns"), NULL);
 
   g_signal_connect (editor->columns_adj, "value-changed",
                     G_CALLBACK (palette_editor_columns_changed),
