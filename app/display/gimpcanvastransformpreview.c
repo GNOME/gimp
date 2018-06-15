@@ -61,23 +61,27 @@ typedef struct _GimpCanvasTransformPreviewPrivate GimpCanvasTransformPreviewPriv
 
 struct _GimpCanvasTransformPreviewPrivate
 {
-  GimpDrawable *drawable;
-  GimpMatrix3   transform;
-  gdouble       x1, y1;
-  gdouble       x2, y2;
-  gdouble       opacity;
+  GimpDrawable  *drawable;
+  GimpMatrix3    transform;
+  gdouble        x1, y1;
+  gdouble        x2, y2;
+  gdouble        opacity;
 
-  GeglNode     *node;
-  GeglNode     *source_node;
-  GeglNode     *convert_format_node;
-  GeglNode     *mask_source_node;
-  GeglNode     *opacity_node;
-  GeglNode     *cache_node;
-  GeglNode     *transform_node;
-  GimpDrawable *node_drawable;
-  GimpDrawable *node_mask;
-  gdouble       node_opacity;
-  GimpMatrix3   node_matrix;
+  GeglNode      *node;
+  GeglNode      *source_node;
+  GeglNode      *convert_format_node;
+  GeglNode      *mask_source_node;
+  GeglNode      *mask_translate_node;
+  GeglNode      *mask_crop_node;
+  GeglNode      *opacity_node;
+  GeglNode      *cache_node;
+  GeglNode      *transform_node;
+
+  GimpDrawable  *node_drawable;
+  GimpDrawable  *node_mask;
+  GeglRectangle  node_rect;
+  gdouble        node_opacity;
+  GimpMatrix3    node_matrix;
 };
 
 #define GET_PRIVATE(transform_preview) \
@@ -451,6 +455,18 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
                              "operation", "gimp:buffer-source-validate",
                              NULL);
 
+      private->mask_translate_node =
+        gegl_node_new_child (private->node,
+                             "operation", "gegl:translate",
+                             NULL);
+
+      private->mask_crop_node =
+        gegl_node_new_child (private->node,
+                             "operation", "gegl:crop",
+                             "width",     0.0,
+                             "height",    0.0,
+                             NULL);
+
       private->opacity_node =
         gegl_node_new_child (private->node,
                              "operation", "gegl:opacity",
@@ -473,8 +489,14 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
                            private->transform_node,
                            NULL);
 
+      gegl_node_link_many (private->mask_source_node,
+                           private->mask_translate_node,
+                           private->mask_crop_node,
+                           NULL);
+
       private->node_drawable = NULL;
       private->node_mask     = NULL;
+      private->node_rect     = *GEGL_RECTANGLE (0, 0, 0, 0);
       private->node_opacity  = 1.0;
       gimp_matrix3_identity (&private->node_matrix);
     }
@@ -527,19 +549,43 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
 
   if (has_mask)
     {
-      GimpDrawable *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
+      GimpDrawable  *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
+      GeglRectangle  rect;
+
+      rect.x      = offset_x;
+      rect.y      = offset_y;
+      rect.width  = gimp_item_get_width  (GIMP_ITEM (private->drawable));
+      rect.height = gimp_item_get_height (GIMP_ITEM (private->drawable));
 
       if (mask != private->node_mask)
         {
-          private->node_mask = mask;
-
           gegl_node_set (private->mask_source_node,
                          "buffer", gimp_drawable_get_buffer (mask),
                          NULL);
-
-          gegl_node_connect_to (private->mask_source_node, "output",
-                                private->opacity_node,     "aux");
         }
+
+      if (! gegl_rectangle_equal (&rect, &private->node_rect))
+        {
+          private->node_rect = rect;
+
+          gegl_node_set (private->mask_translate_node,
+                         "x", (gdouble) -rect.x,
+                         "y", (gdouble) -rect.y,
+                         NULL);
+
+          gegl_node_set (private->mask_crop_node,
+                         "width",  (gdouble) rect.width,
+                         "height", (gdouble) rect.height,
+                         NULL);
+        }
+
+      if (! private->node_mask)
+        {
+          gegl_node_connect_to (private->mask_crop_node, "output",
+                                private->opacity_node,   "aux");
+        }
+
+      private->node_mask = mask;
     }
   else if (private->node_mask)
     {
