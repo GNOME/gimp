@@ -260,7 +260,7 @@ sgiOpen(const char *filename,	/* I - File to open */
   if (mode == SGI_READ)
     file = g_fopen(filename, "rb");
   else
-    file = g_fopen(filename, "wb+");
+    file = g_fopen(filename, "w+b");
 
   if (file == NULL)
     return (NULL);
