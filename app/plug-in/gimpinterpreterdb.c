@@ -752,7 +752,7 @@ resolve_magic (GimpInterpreterDB *db,
       list = list->next;
     }
 
-  return resolve_extension (db, program_path);
+  return NULL;
 }
 
 gchar *
@@ -762,8 +762,7 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
 {
   GFile        *file;
   GInputStream *input;
-  gsize         bytes_read;
-  gchar         buffer[BUFSIZE];
+  gchar        *program = NULL;
 
   g_return_val_if_fail (GIMP_IS_INTERPRETER_DB (db), NULL);
   g_return_val_if_fail (program_path != NULL, NULL);
@@ -775,22 +774,31 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
   input = G_INPUT_STREAM (g_file_read (file, NULL, NULL));
   g_object_unref (file);
 
-  if (! input)
-    return resolve_extension (db, program_path);
+  if (input)
+    {
+      gsize bytes_read;
+      gchar buffer[BUFSIZE];
 
-  memset (buffer, 0, sizeof (buffer));
-  g_input_stream_read_all (input, buffer,
-                           sizeof (buffer) - 1, /* leave one nul at the end */
-                           &bytes_read, NULL, NULL);
-  g_object_unref (input);
+      memset (buffer, 0, sizeof (buffer));
+      g_input_stream_read_all (input, buffer,
+                               sizeof (buffer) - 1, /* leave one nul at the end */
+                               &bytes_read, NULL, NULL);
+      g_object_unref (input);
 
-  if (bytes_read == 0)
-    return resolve_extension (db, program_path);
+      if (bytes_read)
+        {
+          if (bytes_read > 3 && buffer[0] == '#' && buffer[1] == '!')
+            program = resolve_sh_bang (db, program_path, buffer, bytes_read, interp_arg);
 
-  if (bytes_read > 3 && buffer[0] == '#' && buffer[1] == '!')
-    return resolve_sh_bang (db, program_path, buffer, bytes_read, interp_arg);
+          if (! program)
+            program = resolve_magic (db, program_path, buffer);
+        }
+    }
 
-  return resolve_magic (db, program_path, buffer);
+  if (! program)
+    program = resolve_extension (db, program_path);
+
+  return program;
 }
 
 static void
