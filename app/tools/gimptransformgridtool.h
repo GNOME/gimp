@@ -74,20 +74,20 @@ struct _GimpTransformGridToolClass
   GimpTransformToolClass  parent_class;
 
   /*  virtual functions  */
-  void             (* dialog)        (GimpTransformGridTool  *tg_tool);
-  void             (* dialog_update) (GimpTransformGridTool  *tg_tool);
-  void             (* prepare)       (GimpTransformGridTool  *tg_tool);
-  GimpToolWidget * (* get_widget)    (GimpTransformGridTool  *tg_tool);
-  void             (* recalc_matrix) (GimpTransformGridTool  *tg_tool,
-                                      GimpToolWidget         *widget);
-  GeglBuffer     * (* transform)     (GimpTransformGridTool  *tg_tool,
-                                      GimpItem               *item,
-                                      GeglBuffer             *orig_buffer,
-                                      gint                    orig_offset_x,
-                                      gint                    orig_offset_y,
-                                      GimpColorProfile      **buffer_profile,
-                                      gint                   *new_offset_x,
-                                      gint                   *new_offset_y);
+  void             (* dialog)         (GimpTransformGridTool  *tg_tool);
+  void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);
+  void             (* prepare)        (GimpTransformGridTool  *tg_tool);
+  GimpToolWidget * (* get_widget)     (GimpTransformGridTool  *tg_tool);
+  void             (* update_widget)  (GimpTransformGridTool  *tg_tool);
+  void             (* widget_changed) (GimpTransformGridTool  *tg_tool);
+  GeglBuffer     * (* transform)      (GimpTransformGridTool  *tg_tool,
+                                       GimpItem               *item,
+                                       GeglBuffer             *orig_buffer,
+                                       gint                    orig_offset_x,
+                                       gint                    orig_offset_y,
+                                       GimpColorProfile      **buffer_profile,
+                                       gint                   *new_offset_x,
+                                       gint                   *new_offset_y);
 
   const gchar *ok_button_label;
 };
@@ -95,8 +95,6 @@ struct _GimpTransformGridToolClass
 
 GType   gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
 
-void    gimp_transform_grid_tool_recalc_matrix      (GimpTransformGridTool *tg_tool,
-                                                     GimpToolWidget        *widget);
 void    gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool);
 
 

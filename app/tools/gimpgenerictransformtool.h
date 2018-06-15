@@ -49,8 +49,7 @@ struct _GimpGenericTransformToolClass
   GimpTransformGridToolClass  parent_class;
 
   /*  virtual functions  */
-  void   (* recalc_points) (GimpGenericTransformTool *generic,
-                            GimpToolWidget           *widget);
+  void   (* recalc_points) (GimpGenericTransformTool *generic);
 };
 
 
