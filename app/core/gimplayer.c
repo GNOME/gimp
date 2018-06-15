@@ -1654,11 +1654,6 @@ gimp_layer_real_transform (GimpLayer              *layer,
                            GimpTransformResize     clip_result,
                            GimpProgress           *progress)
 {
-  /* FIXME: make interpolated transformations work on layers without alpha */
-  if (interpolation_type != GIMP_INTERPOLATION_NONE &&
-      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    gimp_layer_add_alpha (layer);
-
   GIMP_ITEM_CLASS (parent_class)->transform (GIMP_ITEM (layer),
                                              context, matrix, direction,
                                              interpolation_type,
