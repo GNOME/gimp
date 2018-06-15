@@ -214,7 +214,7 @@ get_runtime_prefix (gchar slash)
   exit (EXIT_FAILURE);
 #else
   /* On Unix assume the executable package is in the same prefix as the developer stuff */
-  return pkg_config ("--variable=prefix gimp-2.0");
+  return pkg_config ("--variable=prefix gimp-3.0");
 #endif
 }
 
@@ -355,7 +355,7 @@ not libgimpui, append -nogimpui.\n");
 static gchar *
 get_includedir (void)
 {
-  return pkg_config ("--variable=includedir gimp-2.0");
+  return pkg_config ("--variable=includedir gimp-3.0");
 }
 
 static void
@@ -370,7 +370,7 @@ do_includedir (void)
 static gchar *
 get_cflags (void)
 {
-  return pkg_config ("--cflags gimpui-2.0");
+  return pkg_config ("--cflags gimpui-3.0");
 }
 
 static void
@@ -385,7 +385,7 @@ do_cflags (void)
 static gchar *
 get_cflags_noui (void)
 {
-  return pkg_config ("--cflags gimp-2.0");
+  return pkg_config ("--cflags gimp-3.0");
 }
 
 static void
@@ -400,7 +400,7 @@ do_cflags_noui (void)
 static gchar *
 get_cflags_nogimpui (void)
 {
-  return pkg_config ("--cflags gimp-2.0 gtk+-2.0");
+  return pkg_config ("--cflags gimp-3.0 gtk+-3.0");
 }
 
 static void
@@ -415,7 +415,7 @@ do_cflags_nogimpui (void)
 static gchar *
 get_libs (void)
 {
-  return pkg_config ("--libs gimpui-2.0");
+  return pkg_config ("--libs gimpui-3.0");
 }
 
 static void
@@ -430,7 +430,7 @@ do_libs (void)
 static gchar *
 get_libs_noui (void)
 {
-  return pkg_config ("--libs gimp-2.0");
+  return pkg_config ("--libs gimp-3.0");
 }
 
 static void
@@ -445,7 +445,7 @@ do_libs_noui (void)
 static gchar *
 get_libs_nogimpui (void)
 {
-  return pkg_config ("--libs gimp-2.0 gtk+-2.0");
+  return pkg_config ("--libs gimp-3.0 gtk+-3.0");
 }
 
 static void
