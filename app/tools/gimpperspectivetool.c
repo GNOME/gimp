@@ -58,14 +58,10 @@ static gchar          * gimp_perspective_tool_get_undo_desc  (GimpTransformTool 
 
 static void             gimp_perspective_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_perspective_tool_get_widget     (GimpTransformGridTool    *tg_tool);
-static void             gimp_perspective_tool_recalc_matrix  (GimpTransformGridTool    *tg_tool,
-                                                              GimpToolWidget           *widget);
+static void             gimp_perspective_tool_update_widget  (GimpTransformGridTool    *tg_tool);
+static void             gimp_perspective_tool_widget_changed (GimpTransformGridTool    *tg_tool);
 
-static void             gimp_perspective_tool_recalc_points  (GimpGenericTransformTool *generic,
-                                                              GimpToolWidget           *widget);
-
-static void             gimp_perspective_tool_widget_changed (GimpToolWidget           *widget,
-                                                              GimpTransformGridTool    *tg_tool);
+static void             gimp_perspective_tool_recalc_points  (GimpGenericTransformTool *generic);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -103,7 +99,8 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 
   tg_class->prepare            = gimp_perspective_tool_prepare;
   tg_class->get_widget         = gimp_perspective_tool_get_widget;
-  tg_class->recalc_matrix      = gimp_perspective_tool_recalc_matrix;
+  tg_class->update_widget      = gimp_perspective_tool_update_widget;
+  tg_class->widget_changed     = gimp_perspective_tool_widget_changed;
 
   generic_class->recalc_points = gimp_perspective_tool_recalc_points;
 
@@ -164,61 +161,30 @@ gimp_perspective_tool_get_widget (GimpTransformGridTool *tg_tool)
                 "use-center-handle",       TRUE,
                 NULL);
 
-  g_signal_connect (widget, "changed",
-                    G_CALLBACK (gimp_perspective_tool_widget_changed),
-                    tg_tool);
-
   return widget;
 }
 
 static void
-gimp_perspective_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
-                                     GimpToolWidget        *widget)
+gimp_perspective_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->recalc_matrix (tg_tool, widget);
-
-  if (widget)
-    g_object_set (widget,
-                  "transform", &tr_tool->transform,
-                  "x1",        (gdouble) tr_tool->x1,
-                  "y1",        (gdouble) tr_tool->y1,
-                  "x2",        (gdouble) tr_tool->x2,
-                  "y2",        (gdouble) tr_tool->y2,
-                  NULL);
+  g_object_set (tg_tool->widget,
+                "transform", &tr_tool->transform,
+                "x1",        (gdouble) tr_tool->x1,
+                "y1",        (gdouble) tr_tool->y1,
+                "x2",        (gdouble) tr_tool->x2,
+                "y2",        (gdouble) tr_tool->y2,
+                NULL);
 }
 
 static void
-gimp_perspective_tool_recalc_points (GimpGenericTransformTool *generic,
-                                     GimpToolWidget           *widget)
-{
-  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
-
-  generic->input_points[0]  = (GimpVector2) {tr_tool->x1, tr_tool->y1};
-  generic->input_points[1]  = (GimpVector2) {tr_tool->x2, tr_tool->y1};
-  generic->input_points[2]  = (GimpVector2) {tr_tool->x1, tr_tool->y2};
-  generic->input_points[3]  = (GimpVector2) {tr_tool->x2, tr_tool->y2};
-
-  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
-                                             tg_tool->trans_info[Y0]};
-  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
-                                             tg_tool->trans_info[Y1]};
-  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
-                                             tg_tool->trans_info[Y2]};
-  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
-                                             tg_tool->trans_info[Y3]};
-}
-
-static void
-gimp_perspective_tool_widget_changed (GimpToolWidget        *widget,
-                                      GimpTransformGridTool *tg_tool)
+gimp_perspective_tool_widget_changed (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpMatrix3       *transform;
 
-  g_object_get (widget,
+  g_object_get (tg_tool->widget,
                 "transform", &transform,
                 NULL);
 
@@ -241,5 +207,26 @@ gimp_perspective_tool_widget_changed (GimpToolWidget        *widget,
 
   g_free (transform);
 
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
+}
+
+static void
+gimp_perspective_tool_recalc_points (GimpGenericTransformTool *generic)
+{
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
+  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
+
+  generic->input_points[0]  = (GimpVector2) {tr_tool->x1, tr_tool->y1};
+  generic->input_points[1]  = (GimpVector2) {tr_tool->x2, tr_tool->y1};
+  generic->input_points[2]  = (GimpVector2) {tr_tool->x1, tr_tool->y2};
+  generic->input_points[3]  = (GimpVector2) {tr_tool->x2, tr_tool->y2};
+
+  generic->output_points[0] = (GimpVector2) {tg_tool->trans_info[X0],
+                                             tg_tool->trans_info[Y0]};
+  generic->output_points[1] = (GimpVector2) {tg_tool->trans_info[X1],
+                                             tg_tool->trans_info[Y1]};
+  generic->output_points[2] = (GimpVector2) {tg_tool->trans_info[X2],
+                                             tg_tool->trans_info[Y2]};
+  generic->output_points[3] = (GimpVector2) {tg_tool->trans_info[X3],
+                                             tg_tool->trans_info[Y3]};
 }

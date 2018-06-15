@@ -61,17 +61,15 @@ static gboolean         gimp_rotate_tool_key_press      (GimpTool              *
                                                          GdkEventKey           *kevent,
                                                          GimpDisplay           *display);
 
+static void             gimp_rotate_tool_recalc_matrix  (GimpTransformTool     *tr_tool);
 static gchar          * gimp_rotate_tool_get_undo_desc  (GimpTransformTool     *tr_tool);
 
 static void             gimp_rotate_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_dialog_update  (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_prepare        (GimpTransformGridTool *tg_tool);
 static GimpToolWidget * gimp_rotate_tool_get_widget     (GimpTransformGridTool *tg_tool);
-static void             gimp_rotate_tool_recalc_matrix  (GimpTransformGridTool *tg_tool,
-                                                         GimpToolWidget        *widget);
-
-static void             gimp_rotate_tool_widget_changed (GimpToolWidget        *widget,
-                                                         GimpTransformGridTool *tg_tool);
+static void             gimp_rotate_tool_update_widget  (GimpTransformGridTool *tg_tool);
+static void             gimp_rotate_tool_widget_changed (GimpTransformGridTool *tg_tool);
 
 static void             rotate_angle_changed            (GtkAdjustment         *adj,
                                                          GimpTransformGridTool *tg_tool);
@@ -110,13 +108,15 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
 
   tool_class->key_press     = gimp_rotate_tool_key_press;
 
+  tr_class->recalc_matrix   = gimp_rotate_tool_recalc_matrix;
   tr_class->get_undo_desc   = gimp_rotate_tool_get_undo_desc;
 
   tg_class->dialog          = gimp_rotate_tool_dialog;
   tg_class->dialog_update   = gimp_rotate_tool_dialog_update;
   tg_class->prepare         = gimp_rotate_tool_prepare;
   tg_class->get_widget      = gimp_rotate_tool_get_widget;
-  tg_class->recalc_matrix   = gimp_rotate_tool_recalc_matrix;
+  tg_class->update_widget   = gimp_rotate_tool_update_widget;
+  tg_class->widget_changed  = gimp_rotate_tool_widget_changed;
 
   tr_class->progress_text   = _("Rotating");
   tg_class->ok_button_label = _("R_otate");
@@ -166,6 +166,20 @@ gimp_rotate_tool_key_press (GimpTool    *tool,
     }
 
   return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
+}
+
+static void
+gimp_rotate_tool_recalc_matrix (GimpTransformTool *tr_tool)
+{
+  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_rotate_center (&tr_tool->transform,
+                                       tg_tool->trans_info[PIVOT_X],
+                                       tg_tool->trans_info[PIVOT_Y],
+                                       tg_tool->trans_info[ANGLE]);
+
+  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->recalc_matrix (tr_tool);
 }
 
 static gchar *
@@ -330,45 +344,32 @@ gimp_rotate_tool_get_widget (GimpTransformGridTool *tg_tool)
                 "use-pivot-handle", TRUE,
                 NULL);
 
-  g_signal_connect (widget, "changed",
-                    G_CALLBACK (gimp_rotate_tool_widget_changed),
-                    tg_tool);
-
   return widget;
 }
 
 static void
-gimp_rotate_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
-                                GimpToolWidget        *widget)
+gimp_rotate_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-  gimp_matrix3_identity (&tr_tool->transform);
-  gimp_transform_matrix_rotate_center (&tr_tool->transform,
-                                       tg_tool->trans_info[PIVOT_X],
-                                       tg_tool->trans_info[PIVOT_Y],
-                                       tg_tool->trans_info[ANGLE]);
-
-  if (widget)
-    g_object_set (widget,
-                  "transform", &tr_tool->transform,
-                  "angle",     tg_tool->trans_info[ANGLE],
-                  "pivot-x",   tg_tool->trans_info[PIVOT_X],
-                  "pivot-y",   tg_tool->trans_info[PIVOT_Y],
-                  NULL);
+  g_object_set (tg_tool->widget,
+                "transform", &tr_tool->transform,
+                "angle",     tg_tool->trans_info[ANGLE],
+                "pivot-x",   tg_tool->trans_info[PIVOT_X],
+                "pivot-y",   tg_tool->trans_info[PIVOT_Y],
+                NULL);
 }
 
 static void
-gimp_rotate_tool_widget_changed (GimpToolWidget        *widget,
-                                 GimpTransformGridTool *tg_tool)
+gimp_rotate_tool_widget_changed (GimpTransformGridTool *tg_tool)
 {
-  g_object_get (widget,
+  g_object_get (tg_tool->widget,
                 "angle",   &tg_tool->trans_info[ANGLE],
                 "pivot-x", &tg_tool->trans_info[PIVOT_X],
                 "pivot-y", &tg_tool->trans_info[PIVOT_Y],
                 NULL);
 
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
 }
 
 static void
@@ -381,11 +382,14 @@ rotate_angle_changed (GtkAdjustment         *adj,
 
   if (ABS (value - tg_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
     {
+      GimpTool          *tool    = GIMP_TOOL (tg_tool);
+      GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
       tg_tool->trans_info[ANGLE] = value;
 
       gimp_transform_grid_tool_push_internal_undo (tg_tool);
 
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
 
 #undef ANGLE_EPSILON
@@ -401,11 +405,14 @@ rotate_center_changed (GtkWidget             *widget,
   if ((px != tg_tool->trans_info[PIVOT_X]) ||
       (py != tg_tool->trans_info[PIVOT_Y]))
     {
+      GimpTool          *tool    = GIMP_TOOL (tg_tool);
+      GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+
       tg_tool->trans_info[PIVOT_X] = px;
       tg_tool->trans_info[PIVOT_Y] = py;
 
       gimp_transform_grid_tool_push_internal_undo (tg_tool);
 
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
 }

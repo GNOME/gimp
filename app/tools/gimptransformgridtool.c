@@ -107,7 +107,7 @@ static void      gimp_transform_grid_tool_options_notify     (GimpTool          
 
 static void      gimp_transform_grid_tool_draw               (GimpDrawTool           *draw_tool);
 
-static void gimp_transform_grid_tool_transform_recalc_matrix (GimpTransformTool      *tr_tool);
+static void      gimp_transform_grid_tool_recalc_matrix      (GimpTransformTool      *tr_tool);
 static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool      *tr_tool,
                                                               GimpItem               *item,
                                                               GeglBuffer             *orig_buffer,
@@ -117,6 +117,7 @@ static GeglBuffer * gimp_transform_grid_tool_transform       (GimpTransformTool 
                                                               gint                   *new_offset_x,
                                                               gint                   *new_offset_y);
 
+static void     gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool  *tg_tool);
 static GeglBuffer * gimp_transform_grid_tool_real_transform  (GimpTransformGridTool  *tg_tool,
                                                               GimpItem               *item,
                                                               GeglBuffer             *orig_buffer,
@@ -140,12 +141,14 @@ static void      gimp_transform_grid_tool_dialog_update      (GimpTransformGridT
 static void      gimp_transform_grid_tool_prepare            (GimpTransformGridTool  *tg_tool,
                                                               GimpDisplay            *display);
 static GimpToolWidget * gimp_transform_grid_tool_get_widget  (GimpTransformGridTool  *tg_tool);
+static void      gimp_transform_grid_tool_update_widget      (GimpTransformGridTool  *tg_tool);
 
 static void      gimp_transform_grid_tool_response           (GimpToolGui            *gui,
                                                               gint                    response_id,
                                                               GimpTransformGridTool  *tg_tool);
 
 static void      gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool  *tg_tool);
+static void      gimp_transform_grid_tool_update_preview     (GimpTransformGridTool  *tg_tool);
 static void      gimp_transform_grid_tool_hide_active_item   (GimpTransformGridTool  *tg_tool,
                                                               GimpItem               *item);
 static void      gimp_transform_grid_tool_show_active_item   (GimpTransformGridTool  *tg_tool);
@@ -184,13 +187,15 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
 
   draw_class->draw           = gimp_transform_grid_tool_draw;
 
-  tr_class->recalc_matrix    = gimp_transform_grid_tool_transform_recalc_matrix;
+  tr_class->recalc_matrix    = gimp_transform_grid_tool_recalc_matrix;
   tr_class->transform        = gimp_transform_grid_tool_transform;
 
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
   klass->prepare             = NULL;
-  klass->recalc_matrix       = NULL;
+  klass->get_widget          = NULL;
+  klass->update_widget       = NULL;
+  klass->widget_changed      = gimp_transform_grid_tool_real_widget_changed;
   klass->transform           = gimp_transform_grid_tool_real_transform;
 
   klass->ok_button_label     = _("_Transform");
@@ -264,8 +269,8 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   /*  Initialize the tool-specific trans_info, and adjust the tool dialog  */
   gimp_transform_grid_tool_prepare (tg_tool, display);
 
-  /*  Recalculate the transform_grid tool  */
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
+  /*  Recalculate the tool's transformation matrix  */
+  gimp_transform_tool_recalc_matrix (tr_tool, display);
 
   /*  Get the on-canvas gui  */
   tg_tool->widget = gimp_transform_grid_tool_get_widget (tg_tool);
@@ -294,6 +299,7 @@ gimp_transform_grid_tool_control (GimpTool       *tool,
                                   GimpToolAction  action,
                                   GimpDisplay    *display)
 {
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
 
   switch (action)
@@ -302,7 +308,7 @@ gimp_transform_grid_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, display);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -350,6 +356,7 @@ gimp_transform_grid_tool_button_release (GimpTool              *tool,
                                          GimpButtonReleaseType  release_type,
                                          GimpDisplay           *display)
 {
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
 
   gimp_tool_control_halt (tool->control);
@@ -380,7 +387,7 @@ gimp_transform_grid_tool_button_release (GimpTool              *tool,
               sizeof (TransInfo));
 
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, display);
     }
 }
 
@@ -488,6 +495,7 @@ static gboolean
 gimp_transform_grid_tool_undo (GimpTool    *tool,
                                GimpDisplay *display)
 {
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
   GList                 *item;
 
@@ -506,7 +514,7 @@ gimp_transform_grid_tool_undo (GimpTool    *tool,
           sizeof (TransInfo));
 
   /*  recalculate the tool's transformation matrix  */
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+  gimp_transform_tool_recalc_matrix (tr_tool, display);
 
   return TRUE;
 }
@@ -515,6 +523,7 @@ static gboolean
 gimp_transform_grid_tool_redo (GimpTool    *tool,
                                GimpDisplay *display)
 {
+  GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tool);
   GList                 *item;
 
@@ -533,7 +542,7 @@ gimp_transform_grid_tool_redo (GimpTool    *tool,
           sizeof (TransInfo));
 
   /*  recalculate the tool's transformation matrix  */
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+  gimp_transform_tool_recalc_matrix (tr_tool, display);
 
   return TRUE;
 }
@@ -561,7 +570,7 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
   if (! strcmp (pspec->name, "direction"))
     {
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
   else if (! strcmp (pspec->name, "show-preview"))
     {
@@ -716,11 +725,17 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_transform_grid_tool_transform_recalc_matrix (GimpTransformTool *tr_tool)
+gimp_transform_grid_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
 
-  gimp_transform_grid_tool_recalc_matrix (tg_tool, NULL);
+  gimp_transform_grid_tool_dialog_update (tg_tool);
+  gimp_transform_grid_tool_update_sensitivity (tg_tool);
+  gimp_transform_grid_tool_update_widget (tg_tool);
+  gimp_transform_grid_tool_update_preview (tg_tool);
+
+  if (tg_tool->gui)
+    gimp_tool_gui_show (tg_tool->gui);
 }
 
 static GeglBuffer *
@@ -760,6 +775,23 @@ gimp_transform_grid_tool_transform (GimpTransformTool  *tr_tool,
   return new_buffer;
 }
 
+static void
+gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool *tg_tool)
+{
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpToolWidget    *widget  = tg_tool->widget;
+
+  /* supress the call to GimpTransformGridTool::update_widget() when
+   * recalculating the matrix
+   */
+  tg_tool->widget = NULL;
+
+  gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
+
+  tg_tool->widget = widget;
+}
+
 static GeglBuffer *
 gimp_transform_grid_tool_real_transform (GimpTransformGridTool  *tg_tool,
                                          GimpItem               *item,
@@ -786,61 +818,8 @@ static void
 gimp_transform_grid_tool_widget_changed (GimpToolWidget        *widget,
                                          GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpTransformGridOptions *options    = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
-  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_OPTIONS (options);
-  GimpMatrix3               matrix     = tr_tool->transform;
-  gint                      i;
-
-  if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
-    gimp_matrix3_invert (&matrix);
-
-  if (tg_tool->preview)
-    {
-      gboolean show_preview = gimp_transform_grid_options_show_preview (options) &&
-                              tr_tool->transform_valid;
-
-      gimp_canvas_item_begin_change (tg_tool->preview);
-      gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
-      g_object_set (tg_tool->preview,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tg_tool->preview);
-    }
-
-  if (tg_tool->boundary_in)
-    {
-      gimp_canvas_item_begin_change (tg_tool->boundary_in);
-      gimp_canvas_item_set_visible (tg_tool->boundary_in,
-                                    tr_tool->transform_valid);
-      g_object_set (tg_tool->boundary_in,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tg_tool->boundary_in);
-    }
-
-  if (tg_tool->boundary_out)
-    {
-      gimp_canvas_item_begin_change (tg_tool->boundary_out);
-      gimp_canvas_item_set_visible (tg_tool->boundary_out,
-                                    tr_tool->transform_valid);
-      g_object_set (tg_tool->boundary_out,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tg_tool->boundary_out);
-    }
-
-  for (i = 0; i < tg_tool->strokes->len; i++)
-    {
-      GimpCanvasItem *item = g_ptr_array_index (tg_tool->strokes, i);
-
-      gimp_canvas_item_begin_change (item);
-      gimp_canvas_item_set_visible (item, tr_tool->transform_valid);
-      g_object_set (item,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (item);
-    }
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->widget_changed)
+    GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->widget_changed (tg_tool);
 }
 
 static void
@@ -1041,12 +1020,33 @@ gimp_transform_grid_tool_get_widget (GimpTransformGridTool *tg_tool)
 }
 
 static void
+gimp_transform_grid_tool_update_widget (GimpTransformGridTool *tg_tool)
+{
+  if (tg_tool->widget &&
+      GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->update_widget)
+    {
+      g_signal_handlers_block_by_func (
+        tg_tool->widget,
+        G_CALLBACK (gimp_transform_grid_tool_widget_changed),
+        tg_tool);
+
+      GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->update_widget (tg_tool);
+
+      g_signal_handlers_unblock_by_func (
+        tg_tool->widget,
+        G_CALLBACK (gimp_transform_grid_tool_widget_changed),
+        tg_tool);
+    }
+}
+
+static void
 gimp_transform_grid_tool_response (GimpToolGui           *gui,
                                    gint                   response_id,
                                    GimpTransformGridTool *tg_tool)
 {
-  GimpTool    *tool    = GIMP_TOOL (tg_tool);
-  GimpDisplay *display = tool->display;
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpDisplay       *display = tool->display;
 
   switch (response_id)
     {
@@ -1070,7 +1070,7 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
               sizeof (TransInfo));
 
       /*  recalculate the tool's transformtion matrix  */
-      gimp_transform_grid_tool_recalc_matrix (tg_tool, tg_tool->widget);
+      gimp_transform_tool_recalc_matrix (tr_tool, display);
 
       /*  update the undo actions / menu items  */
       gimp_image_flush (gimp_display_get_image (display));
@@ -1103,6 +1103,68 @@ gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool *tg_tool)
                                         tr_tool->transform_valid);
   gimp_tool_gui_set_response_sensitive (tg_tool->gui, RESPONSE_RESET,
                                         g_list_next (tg_tool->undo_list) != NULL);
+}
+
+static void
+gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
+{
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *options    = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_OPTIONS (options);
+  GimpMatrix3               matrix;
+  gint                      i;
+
+  matrix = tr_tool->transform;
+
+  if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&matrix);
+
+  if (tg_tool->preview)
+    {
+      gboolean show_preview = gimp_transform_grid_options_show_preview (options) &&
+                              tr_tool->transform_valid;
+
+      gimp_canvas_item_begin_change (tg_tool->preview);
+      gimp_canvas_item_set_visible (tg_tool->preview, show_preview);
+      g_object_set (tg_tool->preview,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tg_tool->preview);
+    }
+
+  if (tg_tool->boundary_in)
+    {
+      gimp_canvas_item_begin_change (tg_tool->boundary_in);
+      gimp_canvas_item_set_visible (tg_tool->boundary_in,
+                                    tr_tool->transform_valid);
+      g_object_set (tg_tool->boundary_in,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tg_tool->boundary_in);
+    }
+
+  if (tg_tool->boundary_out)
+    {
+      gimp_canvas_item_begin_change (tg_tool->boundary_out);
+      gimp_canvas_item_set_visible (tg_tool->boundary_out,
+                                    tr_tool->transform_valid);
+      g_object_set (tg_tool->boundary_out,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tg_tool->boundary_out);
+    }
+
+  for (i = 0; i < tg_tool->strokes->len; i++)
+    {
+      GimpCanvasItem *item = g_ptr_array_index (tg_tool->strokes, i);
+
+      gimp_canvas_item_begin_change (item);
+      gimp_canvas_item_set_visible (item, tr_tool->transform_valid);
+      g_object_set (item,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (item);
+    }
 }
 
 static void
@@ -1154,34 +1216,6 @@ static void
 trans_info_free (TransInfo *info)
 {
   g_slice_free (TransInfo, info);
-}
-
-void
-gimp_transform_grid_tool_recalc_matrix (GimpTransformGridTool *tg_tool,
-                                        GimpToolWidget        *widget)
-{
-  GimpTool          *tool;
-  GimpTransformTool *tr_tool;
-
-  g_return_if_fail (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool));
-  g_return_if_fail (widget == NULL || GIMP_IS_TOOL_WIDGET (widget));
-
-  tool    = GIMP_TOOL (tg_tool);
-  tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-
-  gimp_transform_tool_bounds (tr_tool, tool->display);
-
-  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->recalc_matrix)
-    {
-      GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->recalc_matrix (tg_tool,
-                                                                   widget);
-    }
-
-  gimp_transform_grid_tool_dialog_update (tg_tool);
-  gimp_transform_grid_tool_update_sensitivity (tg_tool);
-
-  if (tg_tool->gui)
-    gimp_tool_gui_show (tg_tool->gui);
 }
 
 void
