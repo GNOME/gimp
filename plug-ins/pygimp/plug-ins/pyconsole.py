@@ -192,6 +192,9 @@ class _ReadLine(object):
 
         return self.modal_raw_input_result
 
+    def modal_input(self, text):
+        return eval(self.modal_raw_input(text))
+
     # Each time the insert mark is modified, move the cursor to it.
     def on_buf_mark_set(self, buffer, iter, mark):
         if mark is not buffer.get_insert():
@@ -522,7 +525,8 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
         # this. Therefore, replace this function with our own modal raw
         # input function.
         exec "import __builtin__" in self.locals
-        self.locals['__builtin__'].__dict__['raw_input'] = lambda text: self.modal_raw_input(text)
+        self.locals['__builtin__'].__dict__['raw_input'] = lambda text='': self.modal_raw_input(text)
+        self.locals['__builtin__'].__dict__['input'] = lambda text='': self.modal_input(text)
 
         self.start_script = start_script
         self.completer = completer
