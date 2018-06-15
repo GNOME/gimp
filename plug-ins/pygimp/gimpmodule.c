@@ -28,10 +28,6 @@
 
 #include <sysmodule.h>
 
-#include <glib-object.h>
-
-#include <pygobject.h>
-
 #include "pygimp-util.h"
 
 #include "pygimp-intl.h"
