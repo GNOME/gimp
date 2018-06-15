@@ -45,6 +45,9 @@
 #include "gimp-intl.h"
 
 
+#define EPSILON 1e-6
+
+
 /*  index into trans_info array  */
 enum
 {
@@ -258,20 +261,27 @@ gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-  g_object_set (tg_tool->widget,
-                "transform", &tr_tool->transform,
-                "x1",        (gdouble) tr_tool->x1,
-                "y1",        (gdouble) tr_tool->y1,
-                "x2",        (gdouble) tr_tool->x2,
-                "y2",        (gdouble) tr_tool->y2,
-                NULL);
+  g_object_set (
+    tg_tool->widget,
+    "transform", &tr_tool->transform,
+    "x1",        (gdouble) tr_tool->x1,
+    "y1",        (gdouble) tr_tool->y1,
+    "x2",        (gdouble) tr_tool->x2,
+    "y2",        (gdouble) tr_tool->y2,
+    "pivot-x",   (tg_tool->trans_info[X0] + tg_tool->trans_info[X1]) / 2.0,
+    "pivot-y",   (tg_tool->trans_info[Y0] + tg_tool->trans_info[Y1]) / 2.0,
+    NULL);
 }
 
 static void
 gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
 {
+  GimpTool          *tool    = GIMP_TOOL (tg_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpMatrix3       *transform;
+  gdouble            x0, y0;
+  gdouble            x1, y1;
+  gint               width, height;
 
   g_object_get (tg_tool->widget,
                 "transform", &transform,
@@ -279,14 +289,56 @@ gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool)
 
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x1, tr_tool->y1,
-                                &tg_tool->trans_info[X0],
-                                &tg_tool->trans_info[Y0]);
+                                &x0,         &y0);
   gimp_matrix3_transform_point (transform,
                                 tr_tool->x2, tr_tool->y2,
-                                &tg_tool->trans_info[X1],
-                                &tg_tool->trans_info[Y1]);
+                                &x1,         &y1);
 
   g_free (transform);
+
+  width  = ROUND (x1 - x0);
+  height = ROUND (y1 - y0);
+
+  if (width > 0)
+    {
+      tg_tool->trans_info[X0] = x0;
+      tg_tool->trans_info[X1] = x1;
+    }
+  else if (fabs (x0 - tg_tool->trans_info[X0]) < EPSILON)
+    {
+      tg_tool->trans_info[X1] = tg_tool->trans_info[X0] + 1.0;
+    }
+  else if (fabs (x1 - tg_tool->trans_info[X1]) < EPSILON)
+    {
+      tg_tool->trans_info[X0] = tg_tool->trans_info[X1] - 1.0;
+    }
+  else
+    {
+      tg_tool->trans_info[X0] = (x0 + x1) / 2.0 - 0.5;
+      tg_tool->trans_info[X1] = (x0 + x1) / 2.0 + 0.5;
+    }
+
+  if (height > 0)
+    {
+      tg_tool->trans_info[Y0] = y0;
+      tg_tool->trans_info[Y1] = y1;
+    }
+  else if (fabs (y0 - tg_tool->trans_info[Y0]) < EPSILON)
+    {
+      tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] + 1.0;
+    }
+  else if (fabs (y1 - tg_tool->trans_info[Y1]) < EPSILON)
+    {
+      tg_tool->trans_info[Y0] = tg_tool->trans_info[Y1] - 1.0;
+    }
+  else
+    {
+      tg_tool->trans_info[Y0] = (y0 + y1) / 2.0 - 0.5;
+      tg_tool->trans_info[Y1] = (y0 + y1) / 2.0 + 0.5;
+    }
+
+  if (width <= 0 || height <= 0)
+    gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
 
   GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->widget_changed (tg_tool);
 }
