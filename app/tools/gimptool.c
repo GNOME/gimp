@@ -329,7 +329,8 @@ gimp_tool_real_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      tool->display = NULL;
+      tool->display  = NULL;
+      tool->drawable = NULL;
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
