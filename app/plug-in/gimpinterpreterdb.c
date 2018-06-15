@@ -72,7 +72,8 @@ static void     gimp_interpreter_db_add_binfmt_misc  (GimpInterpreterDB  *db,
                                                       GFile              *file,
                                                       gchar              *buffer);
 
-static gboolean gimp_interpreter_db_add_extension    (GimpInterpreterDB  *db,
+static gboolean gimp_interpreter_db_add_extension    (GFile              *file,
+                                                      GimpInterpreterDB  *db,
                                                       gchar             **tokens);
 static gboolean gimp_interpreter_db_add_magic        (GimpInterpreterDB  *db,
                                                       gchar             **tokens);
@@ -340,7 +341,7 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB *db,
   switch (type[0])
     {
     case 'E':
-      if (! gimp_interpreter_db_add_extension (db, tokens))
+      if (! gimp_interpreter_db_add_extension (file, db, tokens))
         goto bail;
       break;
 
@@ -364,7 +365,8 @@ out:
 }
 
 static gboolean
-gimp_interpreter_db_add_extension (GimpInterpreterDB  *db,
+gimp_interpreter_db_add_extension (GFile              *file,
+                                   GimpInterpreterDB  *db,
                                    gchar             **tokens)
 {
   const gchar *name      = tokens[0];
@@ -378,7 +380,21 @@ gimp_interpreter_db_add_extension (GimpInterpreterDB  *db,
       if (extension[0] == '\0' || extension[0] == '/')
         return FALSE;
 
-      prog = g_strdup (program);
+      if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
+        {
+          prog = g_find_program_in_path (program);
+          if (! prog || ! g_file_test (prog, G_FILE_TEST_IS_EXECUTABLE))
+            {
+              g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
+                         gimp_file_get_utf8_name (file),
+                         gimp_filename_to_utf8 (program));
+              if (prog)
+                g_free (prog);
+              return FALSE;
+            }
+        }
+      else
+        prog = g_strdup (program);
 
       g_hash_table_insert (db->extensions, g_strdup (extension), prog);
       g_hash_table_insert (db->extension_names, g_strdup (name), prog);
