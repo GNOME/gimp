@@ -23,6 +23,8 @@
  * platforms.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -214,7 +216,7 @@ get_runtime_prefix (gchar slash)
   exit (EXIT_FAILURE);
 #else
   /* On Unix assume the executable package is in the same prefix as the developer stuff */
-  return pkg_config ("--variable=prefix gimp-2.0");
+  return pkg_config ("--variable=prefix gimp-" GIMP_PKGCONFIG_VERSION);
 #endif
 }
 
@@ -302,7 +304,7 @@ static void
 usage (int exit_status)
 {
   g_print ("\
-Usage: gimptool-2.0 [OPTION]...\n\
+Usage: gimptool-" GIMP_TOOL_VERSION " [OPTION]...\n\
 \n\
 General options:\n\
   --help                  print this message\n\
@@ -355,7 +357,7 @@ not libgimpui, append -nogimpui.\n");
 static gchar *
 get_includedir (void)
 {
-  return pkg_config ("--variable=includedir gimp-2.0");
+  return pkg_config ("--variable=includedir gimp-" GIMP_PKGCONFIG_VERSION);
 }
 
 static void
@@ -370,7 +372,7 @@ do_includedir (void)
 static gchar *
 get_cflags (void)
 {
-  return pkg_config ("--cflags gimpui-2.0");
+  return pkg_config ("--cflags gimpui-" GIMP_PKGCONFIG_VERSION);
 }
 
 static void
@@ -385,7 +387,7 @@ do_cflags (void)
 static gchar *
 get_cflags_noui (void)
 {
-  return pkg_config ("--cflags gimp-2.0");
+  return pkg_config ("--cflags gimp-" GIMP_PKGCONFIG_VERSION);
 }
 
 static void
@@ -400,7 +402,7 @@ do_cflags_noui (void)
 static gchar *
 get_cflags_nogimpui (void)
 {
-  return pkg_config ("--cflags gimp-2.0 gtk+-2.0");
+  return pkg_config ("--cflags gimp-" GIMP_PKGCONFIG_VERSION " gtk+-2.0");
 }
 
 static void
@@ -415,7 +417,7 @@ do_cflags_nogimpui (void)
 static gchar *
 get_libs (void)
 {
-  return pkg_config ("--libs gimpui-2.0");
+  return pkg_config ("--libs gimpui-" GIMP_PKGCONFIG_VERSION);
 }
 
 static void
@@ -430,7 +432,7 @@ do_libs (void)
 static gchar *
 get_libs_noui (void)
 {
-  return pkg_config ("--libs gimp-2.0");
+  return pkg_config ("--libs gimp-" GIMP_PKGCONFIG_VERSION);
 }
 
 static void
@@ -445,7 +447,7 @@ do_libs_noui (void)
 static gchar *
 get_libs_nogimpui (void)
 {
-  return pkg_config ("--libs gimp-2.0 gtk+-2.0");
+  return pkg_config ("--libs gimp-" GIMP_PKGCONFIG_VERSION " gtk+-2.0");
 }
 
 static void

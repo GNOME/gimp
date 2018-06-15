@@ -137,6 +137,12 @@ AC_SUBST(GIMP_USER_VERSION)
 AC_SUBST(GIMP_UNSTABLE)
 AC_SUBST(GIMP_FULL_NAME)
 
+# Version strings used in some source, though it seems unnecessary to
+# declare them in the public API (libgimpbase/gimpversion.h).
+AC_DEFINE(GIMP_PKGCONFIG_VERSION, "gimp_pkgconfig_version",
+          [libgimp pkg-config version])
+AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
+          [GIMP tools version])
 
 # These are used in the .pc files
 GLIB_REQUIRED_VERSION=glib_required_version
