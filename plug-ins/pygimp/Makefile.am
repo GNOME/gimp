@@ -155,6 +155,7 @@ install-env-file:
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(pyinterpdir)'
 	echo 'python=$(PYBIN_PATH)' > '$(DESTDIR)$(pyinterpfile)'
+	echo 'python2=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
 	echo '/usr/bin/python=$(PYBIN_PATH)' >> '$(DESTDIR)$(pyinterpfile)'
 	echo ':Python:E::py::python2:' >> '$(DESTDIR)$(pyinterpfile)'
 
