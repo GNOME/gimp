@@ -42,11 +42,15 @@ Plug-ins:
     extensions if it can try to guess appropriate language from the
     compiler being used. It will also properly quote arguments for shell
     usage.
+  - Run explicitly Python 2 as Python plug-in interpreter to prevent
+    breakage on systems where Python 3 is the default.
+  - raw_input()'s argument in Python console is now optional, and
+    input() support has been added.
 
 Translations:
 
-  - Updated translations: Czech, Finnish, Italian, Polish, Romanian,
-    Spanish.
+  - Updated translations: Catalan, Czech, Danish, Dutch, Finnish, Greek,
+    Italian, Polish, Romanian, Spanish, Swedish.
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
