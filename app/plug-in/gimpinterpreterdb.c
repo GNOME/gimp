@@ -294,14 +294,22 @@ gimp_interpreter_db_add_program (GimpInterpreterDB  *db,
 
   if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
     {
-      g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
-                 gimp_file_get_utf8_name (file),
-                 gimp_filename_to_utf8 (program));
-      return;
+      program = g_find_program_in_path (program);
+      if (! program || ! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
+        {
+          g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
+                     gimp_file_get_utf8_name (file),
+                     gimp_filename_to_utf8 (program));
+          if (program)
+            g_free (program);
+          return;
+        }
     }
+  else
+    program = g_strdup (program);
 
   if (! g_hash_table_lookup (db->programs, name))
-    g_hash_table_insert (db->programs, g_strdup (name), g_strdup (program));
+    g_hash_table_insert (db->programs, g_strdup (name), program);
 }
 
 static void
