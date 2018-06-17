@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-recursive-transform-plus.c
+ * gimppropgui-recursive-transform.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
