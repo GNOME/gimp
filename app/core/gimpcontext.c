@@ -61,9 +61,13 @@ typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
                                           GimpContext *dest);
 
 
-#define context_find_defined(context,prop) \
+#define context_find_defined(context, prop)                              \
   while (!(((context)->defined_props) & (1 << (prop))) && (context)->parent) \
     (context) = (context)->parent
+
+#define COPY_NAME(src, dest, member)            \
+  g_free (dest->member);                        \
+  dest->member = g_strdup (src->member)
 
 
 /*  local function prototypes  */
@@ -102,6 +106,10 @@ static gboolean   gimp_context_deserialize_property (GimpConfig       *config,
                                                      GParamSpec       *pspec,
                                                      GScanner         *scanner,
                                                      GTokenType       *expected);
+static GimpConfig * gimp_context_duplicate          (GimpConfig       *config);
+static gboolean     gimp_context_copy               (GimpConfig       *src,
+                                                     GimpConfig       *dest,
+                                                     GParamFlags       flags);
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
@@ -378,6 +386,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpContext, gimp_context, GIMP_TYPE_VIEWABLE,
                                                 gimp_context_config_iface_init))
 
 #define parent_class gimp_context_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 
@@ -830,10 +840,17 @@ gimp_context_init (GimpContext *context)
 static void
 gimp_context_config_iface_init (GimpConfigInterface *iface)
 {
+  parent_config_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_config_iface)
+    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+
   iface->serialize            = gimp_context_serialize;
   iface->deserialize          = gimp_context_deserialize;
   iface->serialize_property   = gimp_context_serialize_property;
   iface->deserialize_property = gimp_context_deserialize_property;
+  iface->duplicate            = gimp_context_duplicate;
+  iface->copy                 = gimp_context_copy;
 }
 
 static void
@@ -1289,81 +1306,70 @@ gimp_context_deserialize_property (GimpConfig *object,
 {
   GimpContext   *context = GIMP_CONTEXT (object);
   GimpContainer *container;
-  GimpObject    *current;
+  gpointer       standard;
   gchar        **name_loc;
-  gboolean       no_data;
   gchar         *object_name;
 
   switch (property_id)
     {
     case GIMP_CONTEXT_PROP_TOOL:
       container = context->gimp->tool_info_list;
-      current   = (GimpObject *) context->tool_info;
+      standard  = gimp_tool_info_get_standard (context->gimp);
       name_loc  = &context->tool_name;
-      no_data   = TRUE;
       break;
 
     case GIMP_CONTEXT_PROP_PAINT_INFO:
       container = context->gimp->paint_info_list;
-      current   = (GimpObject *) context->paint_info;
+      standard  = gimp_paint_info_get_standard (context->gimp);
       name_loc  = &context->paint_name;
-      no_data   = TRUE;
       break;
 
     case GIMP_CONTEXT_PROP_BRUSH:
       container = gimp_data_factory_get_container (context->gimp->brush_factory);
-      current   = (GimpObject *) context->brush;
+      standard  = gimp_brush_get_standard (context);
       name_loc  = &context->brush_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_DYNAMICS:
       container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
-      current   = (GimpObject *) context->dynamics;
+      standard  = gimp_dynamics_get_standard (context);
       name_loc  = &context->dynamics_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_MYBRUSH:
       container = gimp_data_factory_get_container (context->gimp->mybrush_factory);
-      current   = (GimpObject *) context->mybrush;
+      standard  = gimp_mybrush_get_standard (context);
       name_loc  = &context->mybrush_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
       container = gimp_data_factory_get_container (context->gimp->pattern_factory);
-      current   = (GimpObject *) context->pattern;
+      standard  = gimp_pattern_get_standard (context);
       name_loc  = &context->pattern_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_GRADIENT:
       container = gimp_data_factory_get_container (context->gimp->gradient_factory);
-      current   = (GimpObject *) context->gradient;
+      standard  = gimp_gradient_get_standard (context);
       name_loc  = &context->gradient_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_PALETTE:
       container = gimp_data_factory_get_container (context->gimp->palette_factory);
-      current   = (GimpObject *) context->palette;
+      standard  = gimp_palette_get_standard (context);
       name_loc  = &context->palette_name;
-      no_data   = context->gimp->no_data;
       break;
 
     case GIMP_CONTEXT_PROP_FONT:
       container = gimp_data_factory_get_container (context->gimp->font_factory);
-      current   = (GimpObject *) context->font;
+      standard  = gimp_font_get_standard ();
       name_loc  = &context->font_name;
-      no_data   = context->gimp->no_fonts;
       break;
 
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       container = gimp_data_factory_get_container (context->gimp->tool_preset_factory);
-      current   = (GimpObject *) context->tool_preset;
+      standard  = NULL;
       name_loc  = &context->tool_preset_name;
-      no_data   = context->gimp->no_data;
       break;
 
     default:
@@ -1386,18 +1392,15 @@ gimp_context_deserialize_property (GimpConfig *object,
 
       if (! deserialize_obj)
         {
-          if (no_data)
-            {
-              g_free (*name_loc);
-              *name_loc = g_strdup (object_name);
-            }
-          else
-            {
-              deserialize_obj = current;
-            }
-        }
+          g_value_set_object (value, standard);
 
-      g_value_set_object (value, deserialize_obj);
+          g_free (*name_loc);
+          *name_loc = g_strdup (object_name);
+        }
+      else
+        {
+          g_value_set_object (value, deserialize_obj);
+        }
 
       g_free (object_name);
     }
@@ -1407,6 +1410,57 @@ gimp_context_deserialize_property (GimpConfig *object,
     }
 
   return TRUE;
+}
+
+static GimpConfig *
+gimp_context_duplicate (GimpConfig *config)
+{
+  GimpContext *context = GIMP_CONTEXT (config);
+  GimpContext *new;
+
+  new = GIMP_CONTEXT (parent_config_iface->duplicate (config));
+
+  COPY_NAME (context, new, tool_name);
+  COPY_NAME (context, new, paint_name);
+  COPY_NAME (context, new, brush_name);
+  COPY_NAME (context, new, dynamics_name);
+  COPY_NAME (context, new, mybrush_name);
+  COPY_NAME (context, new, pattern_name);
+  COPY_NAME (context, new, gradient_name);
+  COPY_NAME (context, new, palette_name);
+  COPY_NAME (context, new, font_name);
+  COPY_NAME (context, new, tool_preset_name);
+  COPY_NAME (context, new, buffer_name);
+  COPY_NAME (context, new, imagefile_name);
+  COPY_NAME (context, new, template_name);
+
+  return GIMP_CONFIG (new);
+}
+
+static gboolean
+gimp_context_copy (GimpConfig  *src,
+                   GimpConfig  *dest,
+                   GParamFlags  flags)
+{
+  GimpContext *src_context  = GIMP_CONTEXT (src);
+  GimpContext *dest_context = GIMP_CONTEXT (dest);
+  gboolean     success      = parent_config_iface->copy (src, dest, flags);
+
+  COPY_NAME (src_context, dest_context, tool_name);
+  COPY_NAME (src_context, dest_context, paint_name);
+  COPY_NAME (src_context, dest_context, brush_name);
+  COPY_NAME (src_context, dest_context, dynamics_name);
+  COPY_NAME (src_context, dest_context, mybrush_name);
+  COPY_NAME (src_context, dest_context, pattern_name);
+  COPY_NAME (src_context, dest_context, gradient_name);
+  COPY_NAME (src_context, dest_context, palette_name);
+  COPY_NAME (src_context, dest_context, font_name);
+  COPY_NAME (src_context, dest_context, tool_preset_name);
+  COPY_NAME (src_context, dest_context, buffer_name);
+  COPY_NAME (src_context, dest_context, imagefile_name);
+  COPY_NAME (src_context, dest_context, template_name);
+
+  return success;
 }
 
 
@@ -1597,11 +1651,6 @@ gimp_context_copy_property (GimpContext         *src,
                             GimpContext         *dest,
                             GimpContextPropType  prop)
 {
-  gpointer   object          = NULL;
-  gpointer   standard_object = NULL;
-  gchar     *src_name        = NULL;
-  gchar    **dest_name_loc   = NULL;
-
   g_return_if_fail (GIMP_IS_CONTEXT (src));
   g_return_if_fail (GIMP_IS_CONTEXT (dest));
   g_return_if_fail ((prop >= GIMP_CONTEXT_PROP_FIRST) &&
@@ -1619,18 +1668,12 @@ gimp_context_copy_property (GimpContext         *src,
 
     case GIMP_CONTEXT_PROP_TOOL:
       gimp_context_real_set_tool (dest, src->tool_info);
-      object          = src->tool_info;
-      standard_object = gimp_tool_info_get_standard (src->gimp);
-      src_name        = src->tool_name;
-      dest_name_loc   = &dest->tool_name;
+      COPY_NAME (src, dest, tool_name);
       break;
 
     case GIMP_CONTEXT_PROP_PAINT_INFO:
       gimp_context_real_set_paint_info (dest, src->paint_info);
-      object          = src->paint_info;
-      standard_object = gimp_paint_info_get_standard (src->gimp);
-      src_name        = src->paint_name;
-      dest_name_loc   = &dest->paint_name;
+      COPY_NAME (src, dest, paint_name);
       break;
 
     case GIMP_CONTEXT_PROP_FOREGROUND:
@@ -1651,90 +1694,61 @@ gimp_context_copy_property (GimpContext         *src,
 
     case GIMP_CONTEXT_PROP_BRUSH:
       gimp_context_real_set_brush (dest, src->brush);
-      object          = src->brush;
-      standard_object = gimp_brush_get_standard (src);
-      src_name        = src->brush_name;
-      dest_name_loc   = &dest->brush_name;
+      COPY_NAME (src, dest, brush_name);
       break;
 
     case GIMP_CONTEXT_PROP_DYNAMICS:
       gimp_context_real_set_dynamics (dest, src->dynamics);
-      object          = src->dynamics;
-      standard_object = gimp_dynamics_get_standard (src);
-      src_name        = src->dynamics_name;
-      dest_name_loc   = &dest->dynamics_name;
+      COPY_NAME (src, dest, dynamics_name);
       break;
 
     case GIMP_CONTEXT_PROP_MYBRUSH:
       gimp_context_real_set_mybrush (dest, src->mybrush);
-      object          = src->mybrush;
-      standard_object = gimp_mybrush_get_standard (src);
-      src_name        = src->mybrush_name;
-      dest_name_loc   = &dest->mybrush_name;
+      COPY_NAME (src, dest, mybrush_name);
       break;
 
     case GIMP_CONTEXT_PROP_PATTERN:
       gimp_context_real_set_pattern (dest, src->pattern);
-      object          = src->pattern;
-      standard_object = gimp_pattern_get_standard (src);
-      src_name        = src->pattern_name;
-      dest_name_loc   = &dest->pattern_name;
+      COPY_NAME (src, dest, pattern_name);
       break;
 
     case GIMP_CONTEXT_PROP_GRADIENT:
       gimp_context_real_set_gradient (dest, src->gradient);
-      object          = src->gradient;
-      standard_object = gimp_gradient_get_standard (src);
-      src_name        = src->gradient_name;
-      dest_name_loc   = &dest->gradient_name;
+      COPY_NAME (src, dest, gradient_name);
       break;
 
     case GIMP_CONTEXT_PROP_PALETTE:
       gimp_context_real_set_palette (dest, src->palette);
-      object          = src->palette;
-      standard_object = gimp_palette_get_standard (src);
-      src_name        = src->palette_name;
-      dest_name_loc   = &dest->palette_name;
+      COPY_NAME (src, dest, palette_name);
       break;
 
     case GIMP_CONTEXT_PROP_FONT:
       gimp_context_real_set_font (dest, src->font);
-      object          = src->font;
-      standard_object = gimp_font_get_standard ();
-      src_name        = src->font_name;
-      dest_name_loc   = &dest->font_name;
+      COPY_NAME (src, dest, font_name);
       break;
 
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       gimp_context_real_set_tool_preset (dest, src->tool_preset);
-      object          = src->tool_preset;
-      src_name        = src->tool_preset_name;
-      dest_name_loc   = &dest->tool_preset_name;
+      COPY_NAME (src, dest, tool_preset_name);
       break;
 
     case GIMP_CONTEXT_PROP_BUFFER:
       gimp_context_real_set_buffer (dest, src->buffer);
+      COPY_NAME (src, dest, buffer_name);
       break;
 
     case GIMP_CONTEXT_PROP_IMAGEFILE:
       gimp_context_real_set_imagefile (dest, src->imagefile);
+      COPY_NAME (src, dest, imagefile_name);
       break;
 
     case GIMP_CONTEXT_PROP_TEMPLATE:
       gimp_context_real_set_template (dest, src->template);
+      COPY_NAME (src, dest, template_name);
       break;
 
     default:
       break;
-    }
-
-  if (src_name && dest_name_loc)
-    {
-      if (! object || (standard_object && object == standard_object))
-        {
-          g_free (*dest_name_loc);
-          *dest_name_loc = g_strdup (src_name);
-        }
     }
 }
 
@@ -1752,6 +1766,7 @@ gimp_context_copy_properties (GimpContext         *src,
     if ((1 << prop) & prop_mask)
       gimp_context_copy_property (src, dest, prop);
 }
+
 
 /*  attribute access functions  */
 
@@ -1883,6 +1898,7 @@ gimp_context_changed_by_type (GimpContext *context,
                  gimp_context_signals[prop], 0,
                  object);
 }
+
 
 /*****************************************************************************/
 /*  image  *******************************************************************/
@@ -2416,6 +2432,7 @@ gimp_context_swap_colors (GimpContext *context)
   gimp_context_real_set_foreground (context, &bg);
   gimp_context_real_set_background (bg_context, &fg);
 }
+
 
 /*****************************************************************************/
 /*  opacity  *****************************************************************/
