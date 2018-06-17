@@ -500,21 +500,36 @@ gimp_device_info_get_device (GimpDeviceInfo  *info,
   return info->device;
 }
 
-void
+gboolean
 gimp_device_info_set_device (GimpDeviceInfo *info,
                              GdkDevice      *device,
                              GdkDisplay     *display)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (info));
-  g_return_if_fail ((device == NULL && display == NULL) ||
-                    (GDK_IS_DEVICE (device) && GDK_IS_DISPLAY (display)));
-  g_return_if_fail ((info->device == NULL && GDK_IS_DEVICE (device)) ||
-                    (GDK_IS_DEVICE (info->device) && device == NULL));
-  g_return_if_fail (device == NULL ||
-                    strcmp (device->name,
-                            gimp_object_get_name (info)) == 0);
+  g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), FALSE);
+  g_return_val_if_fail ((device == NULL && display == NULL) ||
+                        (GDK_IS_DEVICE (device) && GDK_IS_DISPLAY (display)),
+                        FALSE);
+
+  if (device && info->device)
+    {
+      g_printerr ("%s: trying to set GdkDevice '%s' on GimpDeviceInfo "
+                  "which already has a device\n",
+                  G_STRFUNC, gdk_device_get_name (device));
+      return FALSE;
+    }
+  else if (! device && ! info->device)
+    {
+      g_printerr ("%s: trying to unset GdkDevice of GimpDeviceInfo '%s'"
+                  "which has no device\n",
+                  G_STRFUNC, gimp_object_get_name (info));
+      return FALSE;
+    }
+
+  g_return_val_if_fail (device == NULL ||
+                        strcmp (gdk_device_get_name (device),
+                                gimp_object_get_name (info)) == 0, FALSE);
 
   if (device)
     {
@@ -578,6 +593,8 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
   gimp_object_name_changed (GIMP_OBJECT (info));
 
   g_object_notify (G_OBJECT (info), "device");
+
+  return TRUE;
 }
 
 void

@@ -69,7 +69,7 @@ GimpDeviceInfo * gimp_device_info_new               (Gimp            *gimp,
 
 GdkDevice      * gimp_device_info_get_device        (GimpDeviceInfo  *info,
                                                      GdkDisplay     **display);
-void             gimp_device_info_set_device        (GimpDeviceInfo  *info,
+gboolean         gimp_device_info_set_device        (GimpDeviceInfo  *info,
                                                      GdkDevice       *device,
                                                      GdkDisplay      *display);
 
