@@ -55,7 +55,8 @@ GimpDock notebook tab {
 
 GimpDock :not(toolbutton) > button,
 GimpOverlayDialog button,
-GimpToolDialog :not(headerbar) button {
+GimpToolDialog :not(headerbar) button,
+GimpTextStyleEditor button {
     padding: 0px 2px 0px 2px;
 }
 
@@ -69,19 +70,22 @@ GimpToolDialog headerbar button {
 
 GimpDock entry,
 GimpOverlayDialog entry,
-GimpToolDialog entry {
+GimpToolDialog entry,
+GimpTextStyleEditor entry {
     min-height: 2.5em;
 }
 
 GimpDock spinbutton,
 GimpOverlayDialog spinbutton,
-GimpToolDialog spinbutton {
+GimpToolDialog spinbutton,
+GimpTextStyleEditor spinbutton {
     min-height: 2.5em;
 }
 
 GimpDock spinbutton button,
 GimpOverlayDialog spinbutton button,
-GimpToolDialog spinbutton button {
+GimpToolDialog spinbutton button,
+GimpTextStyleEditor spinbutton button {
     padding: 0 0 0 0;
 }
 
