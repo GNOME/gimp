@@ -66,8 +66,11 @@ struct _GimpClipboard
 
 
 static GimpClipboard * gimp_clipboard_get        (Gimp             *gimp);
-static void            gimp_clipboard_clear      (GimpClipboard    *gimp_clip);
+
+static GimpClipboard * gimp_clipboard_new        (gboolean          verbose);
 static void            gimp_clipboard_free       (GimpClipboard    *gimp_clip);
+
+static void      gimp_clipboard_clear            (GimpClipboard    *gimp_clip);
 
 static GdkAtom * gimp_clipboard_wait_for_targets (Gimp             *gimp,
                                                   gint             *n_targets);
@@ -77,19 +80,19 @@ static GdkAtom   gimp_clipboard_wait_for_svg     (Gimp             *gimp);
 static GdkAtom   gimp_clipboard_wait_for_curve   (Gimp             *gimp);
 
 static void      gimp_clipboard_send_image       (GtkClipboard     *clipboard,
-                                                  GtkSelectionData *selection_data,
+                                                  GtkSelectionData *data,
                                                   guint             info,
                                                   Gimp             *gimp);
 static void      gimp_clipboard_send_buffer      (GtkClipboard     *clipboard,
-                                                  GtkSelectionData *selection_data,
+                                                  GtkSelectionData *data,
                                                   guint             info,
                                                   Gimp             *gimp);
 static void      gimp_clipboard_send_svg         (GtkClipboard     *clipboard,
-                                                  GtkSelectionData *selection_data,
+                                                  GtkSelectionData *data,
                                                   guint             info,
                                                   Gimp             *gimp);
 static void      gimp_clipboard_send_curve       (GtkClipboard     *clipboard,
-                                                  GtkSelectionData *selection_data,
+                                                  GtkSelectionData *data,
                                                   guint             info,
                                                   Gimp             *gimp);
 
@@ -100,7 +103,6 @@ void
 gimp_clipboard_init (Gimp *gimp)
 {
   GimpClipboard *gimp_clip;
-  GSList        *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -108,104 +110,10 @@ gimp_clipboard_init (Gimp *gimp)
 
   g_return_if_fail (gimp_clip == NULL);
 
-  gimp_clip = g_slice_new0 (GimpClipboard);
+  gimp_clip = gimp_clipboard_new (gimp->be_verbose);
 
   g_object_set_data_full (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY,
                           gimp_clip, (GDestroyNotify) gimp_clipboard_free);
-
-  gimp_clip->pixbuf_formats = gimp_pixbuf_get_formats ();
-
-  for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
-    {
-      GdkPixbufFormat *format = list->data;
-
-      if (gdk_pixbuf_format_is_writable (format))
-        {
-          gchar **mime_types;
-          gchar **type;
-
-          mime_types = gdk_pixbuf_format_get_mime_types (format);
-
-          for (type = mime_types; *type; type++)
-            gimp_clip->n_buffer_target_entries++;
-
-          g_strfreev (mime_types);
-        }
-    }
-
-  /*  the image_target_entries have the XCF target, and all pixbuf
-   *  targets that are also in buffer_target_entries
-   */
-  gimp_clip->n_image_target_entries = gimp_clip->n_buffer_target_entries + 1;
-  gimp_clip->image_target_entries   = g_new0 (GtkTargetEntry,
-                                              gimp_clip->n_image_target_entries);
-
-  gimp_clip->image_target_entries[0].target = g_strdup ("image/x-xcf");
-  gimp_clip->image_target_entries[0].flags  = 0;
-  gimp_clip->image_target_entries[0].info   = 0;
-
-  if (gimp_clip->n_buffer_target_entries > 0)
-    {
-      gint i = 0;
-
-      gimp_clip->buffer_target_entries = g_new0 (GtkTargetEntry,
-                                                 gimp_clip->n_buffer_target_entries);
-
-      for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
-        {
-          GdkPixbufFormat *format = list->data;
-
-          if (gdk_pixbuf_format_is_writable (format))
-            {
-              gchar  *format_name;
-              gchar **mime_types;
-              gchar **type;
-
-              format_name = gdk_pixbuf_format_get_name (format);
-              mime_types  = gdk_pixbuf_format_get_mime_types (format);
-
-              for (type = mime_types; *type; type++)
-                {
-                  const gchar *mime_type = *type;
-
-                  if (gimp->be_verbose)
-                    g_printerr ("clipboard: writable pixbuf format: %s\n",
-                                mime_type);
-
-                  gimp_clip->image_target_entries[i + 1].target = g_strdup (mime_type);
-                  gimp_clip->image_target_entries[i + 1].flags  = 0;
-                  gimp_clip->image_target_entries[i + 1].info   = i + 1;
-
-                  gimp_clip->buffer_target_entries[i].target = g_strdup (mime_type);
-                  gimp_clip->buffer_target_entries[i].flags  = 0;
-                  gimp_clip->buffer_target_entries[i].info   = i;
-
-                  i++;
-                }
-
-              g_strfreev (mime_types);
-              g_free (format_name);
-            }
-        }
-    }
-
-  gimp_clip->n_svg_target_entries = 2;
-  gimp_clip->svg_target_entries   = g_new0 (GtkTargetEntry, 2);
-
-  gimp_clip->svg_target_entries[0].target = g_strdup ("image/svg");
-  gimp_clip->svg_target_entries[0].flags  = 0;
-  gimp_clip->svg_target_entries[0].info   = 0;
-
-  gimp_clip->svg_target_entries[1].target = g_strdup ("image/svg+xml");
-  gimp_clip->svg_target_entries[1].flags  = 0;
-  gimp_clip->svg_target_entries[1].info   = 1;
-
-  gimp_clip->n_curve_target_entries = 1;
-  gimp_clip->curve_target_entries   = g_new0 (GtkTargetEntry, 1);
-
-  gimp_clip->curve_target_entries[0].target = g_strdup ("application/x-gimp-curve");
-  gimp_clip->curve_target_entries[0].flags  = 0;
-  gimp_clip->curve_target_entries[0].info   = 0;
 }
 
 void
@@ -218,8 +126,11 @@ gimp_clipboard_exit (Gimp *gimp)
   clipboard = gtk_clipboard_get_for_display (gdk_display_get_default (),
                                              GDK_SELECTION_CLIPBOARD);
 
-  if (clipboard && gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
-    gtk_clipboard_store (clipboard);
+  if (clipboard &&
+      gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
+    {
+      gtk_clipboard_store (clipboard);
+    }
 
   g_object_set_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY, NULL);
 }
@@ -323,7 +234,7 @@ gimp_clipboard_has_svg (Gimp *gimp)
   if (clipboard &&
       gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp))
     {
-      if (gimp_clipboard_wait_for_svg (gimp)  != GDK_NONE)
+      if (gimp_clipboard_wait_for_svg (gimp) != GDK_NONE)
         {
           return TRUE;
         }
@@ -743,7 +654,8 @@ gimp_clipboard_set_buffer (Gimp       *gimp,
 
       /*  mark the first entry (image/png) as suitable for storing  */
       if (gimp_clip->n_buffer_target_entries > 0)
-        gtk_clipboard_set_can_store (clipboard, gimp_clip->buffer_target_entries, 1);
+        gtk_clipboard_set_can_store (clipboard,
+                                     gimp_clip->buffer_target_entries, 1);
     }
   else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
@@ -788,7 +700,8 @@ gimp_clipboard_set_svg (Gimp        *gimp,
                                     G_OBJECT (gimp));
 
       /*  mark the first entry (image/svg) as suitable for storing  */
-      gtk_clipboard_set_can_store (clipboard, gimp_clip->svg_target_entries, 1);
+      gtk_clipboard_set_can_store (clipboard,
+                                   gimp_clip->svg_target_entries, 1);
     }
   else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
@@ -862,7 +775,8 @@ gimp_clipboard_set_curve (Gimp      *gimp,
                                     (GtkClipboardClearFunc) NULL,
                                     G_OBJECT (gimp));
 
-      gtk_clipboard_set_can_store (clipboard, gimp_clip->curve_target_entries, 1);
+      gtk_clipboard_set_can_store (clipboard,
+                                   gimp_clip->curve_target_entries, 1);
     }
   else if (gtk_clipboard_get_owner (clipboard) == G_OBJECT (gimp))
     {
@@ -879,13 +793,107 @@ gimp_clipboard_get (Gimp *gimp)
   return g_object_get_data (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY);
 }
 
-static void
-gimp_clipboard_clear (GimpClipboard *gimp_clip)
+static GimpClipboard *
+gimp_clipboard_new (gboolean verbose)
 {
-  g_clear_object (&gimp_clip->image);
-  g_clear_object (&gimp_clip->buffer);
-  g_clear_pointer (&gimp_clip->svg, g_free);
-  g_clear_object (&gimp_clip->curve);
+  GimpClipboard *gimp_clip = g_slice_new0 (GimpClipboard);
+  GSList        *list;
+
+  gimp_clip->pixbuf_formats = gimp_pixbuf_get_formats ();
+
+  for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
+    {
+      GdkPixbufFormat *format = list->data;
+
+      if (gdk_pixbuf_format_is_writable (format))
+        {
+          gchar **mime_types;
+          gchar **type;
+
+          mime_types = gdk_pixbuf_format_get_mime_types (format);
+
+          for (type = mime_types; *type; type++)
+            gimp_clip->n_buffer_target_entries++;
+
+          g_strfreev (mime_types);
+        }
+    }
+
+  /*  the image_target_entries have the XCF target, and all pixbuf
+   *  targets that are also in buffer_target_entries
+   */
+  gimp_clip->n_image_target_entries = gimp_clip->n_buffer_target_entries + 1;
+  gimp_clip->image_target_entries   = g_new0 (GtkTargetEntry,
+                                              gimp_clip->n_image_target_entries);
+
+  gimp_clip->image_target_entries[0].target = g_strdup ("image/x-xcf");
+  gimp_clip->image_target_entries[0].flags  = 0;
+  gimp_clip->image_target_entries[0].info   = 0;
+
+  if (gimp_clip->n_buffer_target_entries > 0)
+    {
+      gint i = 0;
+
+      gimp_clip->buffer_target_entries = g_new0 (GtkTargetEntry,
+                                                 gimp_clip->n_buffer_target_entries);
+
+      for (list = gimp_clip->pixbuf_formats; list; list = g_slist_next (list))
+        {
+          GdkPixbufFormat *format = list->data;
+
+          if (gdk_pixbuf_format_is_writable (format))
+            {
+              gchar  *format_name;
+              gchar **mime_types;
+              gchar **type;
+
+              format_name = gdk_pixbuf_format_get_name (format);
+              mime_types  = gdk_pixbuf_format_get_mime_types (format);
+
+              for (type = mime_types; *type; type++)
+                {
+                  const gchar *mime_type = *type;
+
+                  if (verbose)
+                    g_printerr ("clipboard: writable pixbuf format: %s\n",
+                                mime_type);
+
+                  gimp_clip->image_target_entries[i + 1].target = g_strdup (mime_type);
+                  gimp_clip->image_target_entries[i + 1].flags  = 0;
+                  gimp_clip->image_target_entries[i + 1].info   = i + 1;
+
+                  gimp_clip->buffer_target_entries[i].target = g_strdup (mime_type);
+                  gimp_clip->buffer_target_entries[i].flags  = 0;
+                  gimp_clip->buffer_target_entries[i].info   = i;
+
+                  i++;
+                }
+
+              g_strfreev (mime_types);
+              g_free (format_name);
+            }
+        }
+    }
+
+  gimp_clip->n_svg_target_entries = 2;
+  gimp_clip->svg_target_entries   = g_new0 (GtkTargetEntry, 2);
+
+  gimp_clip->svg_target_entries[0].target = g_strdup ("image/svg");
+  gimp_clip->svg_target_entries[0].flags  = 0;
+  gimp_clip->svg_target_entries[0].info   = 0;
+
+  gimp_clip->svg_target_entries[1].target = g_strdup ("image/svg+xml");
+  gimp_clip->svg_target_entries[1].flags  = 0;
+  gimp_clip->svg_target_entries[1].info   = 1;
+
+  gimp_clip->n_curve_target_entries = 1;
+  gimp_clip->curve_target_entries   = g_new0 (GtkTargetEntry, 1);
+
+  gimp_clip->curve_target_entries[0].target = g_strdup ("application/x-gimp-curve");
+  gimp_clip->curve_target_entries[0].flags  = 0;
+  gimp_clip->curve_target_entries[0].info   = 0;
+
+  return gimp_clip;
 }
 
 static void
@@ -918,6 +926,15 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
   g_free (gimp_clip->curve_target_entries);
 
   g_slice_free (GimpClipboard, gimp_clip);
+}
+
+static void
+gimp_clipboard_clear (GimpClipboard *gimp_clip)
+{
+  g_clear_object (&gimp_clip->image);
+  g_clear_object (&gimp_clip->buffer);
+  g_clear_pointer (&gimp_clip->svg, g_free);
+  g_clear_object (&gimp_clip->curve);
 }
 
 static GdkAtom *
@@ -1121,7 +1138,7 @@ gimp_clipboard_wait_for_curve (Gimp *gimp)
 
 static void
 gimp_clipboard_send_image (GtkClipboard     *clipboard,
-                           GtkSelectionData *selection_data,
+                           GtkSelectionData *data,
                            guint             info,
                            Gimp             *gimp)
 {
@@ -1135,7 +1152,7 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
         g_printerr ("clipboard: sending image data as '%s'\n",
                     gimp_clip->image_target_entries[info].target);
 
-      gimp_selection_data_set_xcf (selection_data, gimp_clip->image);
+      gimp_selection_data_set_xcf (data, gimp_clip->image);
     }
   else
     {
@@ -1154,7 +1171,7 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
             g_printerr ("clipboard: sending image data as '%s'\n",
                         gimp_clip->image_target_entries[info].target);
 
-          gtk_selection_data_set_pixbuf (selection_data, pixbuf);
+          gtk_selection_data_set_pixbuf (data, pixbuf);
         }
       else
         {
@@ -1167,7 +1184,7 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
 
 static void
 gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
-                            GtkSelectionData *selection_data,
+                            GtkSelectionData *data,
                             guint             info,
                             Gimp             *gimp)
 {
@@ -1187,7 +1204,7 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
         g_printerr ("clipboard: sending pixbuf data as '%s'\n",
                     gimp_clip->buffer_target_entries[info].target);
 
-      gtk_selection_data_set_pixbuf (selection_data, pixbuf);
+      gtk_selection_data_set_pixbuf (data, pixbuf);
     }
   else
     {
@@ -1199,7 +1216,7 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
 
 static void
 gimp_clipboard_send_svg (GtkClipboard     *clipboard,
-                         GtkSelectionData *selection_data,
+                         GtkSelectionData *data,
                          guint             info,
                          Gimp             *gimp)
 {
@@ -1213,7 +1230,7 @@ gimp_clipboard_send_svg (GtkClipboard     *clipboard,
         g_printerr ("clipboard: sending SVG data as '%s'\n",
                     gimp_clip->svg_target_entries[info].target);
 
-      gimp_selection_data_set_stream (selection_data,
+      gimp_selection_data_set_stream (data,
                                       (const guchar *) gimp_clip->svg,
                                       strlen (gimp_clip->svg));
     }
@@ -1223,7 +1240,7 @@ gimp_clipboard_send_svg (GtkClipboard     *clipboard,
 
 static void
 gimp_clipboard_send_curve (GtkClipboard     *clipboard,
-                           GtkSelectionData *selection_data,
+                           GtkSelectionData *data,
                            guint             info,
                            Gimp             *gimp)
 {
@@ -1237,7 +1254,7 @@ gimp_clipboard_send_curve (GtkClipboard     *clipboard,
         g_printerr ("clipboard: sending curve data as '%s'\n",
                     gimp_clip->curve_target_entries[info].target);
 
-      gimp_selection_data_set_curve (selection_data, gimp_clip->curve);
+      gimp_selection_data_set_curve (data, gimp_clip->curve);
     }
 
   gimp_unset_busy (gimp);
