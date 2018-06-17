@@ -581,14 +581,11 @@ gimp_dockable_detach (GimpDockable *dockable)
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 
   g_object_ref (dockable);
-
   gtk_container_remove (GTK_CONTAINER (dockable->p->dockbook),
                         GTK_WIDGET (dockable));
 
   gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
                             GTK_WIDGET (dockable), NULL);
-  gtk_widget_show (GTK_WIDGET (dockable));
-
   g_object_unref (dockable);
 
   gtk_widget_show (GTK_WIDGET (dock_window));

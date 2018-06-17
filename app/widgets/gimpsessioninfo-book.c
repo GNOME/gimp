@@ -267,8 +267,6 @@ gimp_session_info_book_restore (GimpSessionInfoBook *info,
         {
           gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
                                     GTK_WIDGET (dockable), NULL);
-          gtk_widget_show (GTK_WIDGET (dockable));
-
           n_dockables++;
         }
     }

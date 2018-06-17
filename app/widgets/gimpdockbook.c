@@ -404,6 +404,7 @@ gimp_dockbook_page_added (GtkNotebook *notebook,
                     G_CALLBACK (gimp_dockbook_tab_locked_notify),
                     dockbook);
 
+  gtk_widget_show (child);
   gtk_notebook_set_current_page (notebook, page_num);
 
   g_signal_emit (dockbook, dockbook_signals[DOCKABLE_ADDED], 0, dockable);
